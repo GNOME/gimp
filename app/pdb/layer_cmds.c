@@ -21,14 +21,13 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 #include "base/base-types.h"
 #include "core/core-types.h"
 #include "core/gimpimage.h"
@@ -566,7 +565,13 @@ layer_delete_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gtk_object_sink (GTK_OBJECT (layer));
+    {
+      if (! gimp_drawable_gimage (GIMP_DRAWABLE (layer)))
+	{
+	  g_object_unref (G_OBJECT (layer));
+	  success = TRUE;
+	}
+    }
 
   return procedural_db_return_args (&layer_delete_proc, success);
 }

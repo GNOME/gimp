@@ -31,35 +31,40 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "gimpinktool-blob.h"
 
 
+typedef enum
+{
+  EDGE_NONE  = 0,
+  EDGE_LEFT  = 1 << 0,
+  EDGE_RIGHT = 1 << 1
+} EdgeType;
+
+
 static Blob *
-blob_new (int y, int height)
+blob_new (gint y,
+	  gint height)
 {
   Blob *result;
 
-  result = g_malloc (sizeof (Blob) +  sizeof(BlobSpan) * (height-1));
-  result->y = y;
+  result = g_malloc (sizeof (Blob) +  sizeof (BlobSpan) * (height - 1));
+
+  result->y      = y;
   result->height = height;
 
   return result;
 }
 
-typedef enum {
-  EDGE_NONE = 0,
-  EDGE_LEFT = 1 << 0,
-  EDGE_RIGHT = 1 << 1
-} EdgeType;
-
 static void
-blob_fill (Blob *b, EdgeType *present)
+blob_fill (Blob     *b,
+	   EdgeType *present)
 {
-  int start;
-  int x1, x2, i1, i2;
-  int i;
+  gint start;
+  gint x1, x2, i1, i2;
+  gint i;
 
   /* Mark empty lines at top and bottom as unused */
 
@@ -109,11 +114,11 @@ blob_fill (Blob *b, EdgeType *present)
       /* Find empty gaps */
       if (!(present[i1+1] & EDGE_LEFT))
 	{
-	  int increment;	/* fractional part */
-	  int denom;		/* denominator of fraction */
-	  int step;		/* integral step */
-	  int frac;		/* fractional step */
-	  int reverse;
+	  gint increment;	/* fractional part */
+	  gint denom;		/* denominator of fraction */
+	  gint step;		/* integral step */
+	  gint frac;		/* fractional step */
+	  gint reverse;
 
 	  /* find bottom of gap */
 	  i2 = i1+2;

@@ -56,6 +56,7 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	gradients-commands.h		\
 	gui.c				\
 	gui.h				\
+	gui-types.h			\
 	image-commands.c		\
 	image-commands.h		\
 	indicator-area.c		\

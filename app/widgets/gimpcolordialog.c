@@ -32,7 +32,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimp/gimpcolorselector.h"
 
-#include "apptypes.h"
+#include "gui-types.h"
 
 #include "color-area.h"
 #include "color-notebook.h"

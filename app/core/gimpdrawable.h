@@ -148,9 +148,9 @@ GimpParasite  * gimp_drawable_parasite_find      (const GimpDrawable *drawable,
 						  const gchar        *name);
 gchar        ** gimp_drawable_parasite_list      (const GimpDrawable *drawable,
 						  gint               *count);
-Tattoo          gimp_drawable_get_tattoo         (const GimpDrawable *drawable);
+GimpTattoo      gimp_drawable_get_tattoo         (const GimpDrawable *drawable);
 void            gimp_drawable_set_tattoo         (GimpDrawable       *drawable,
-						  Tattoo              tattoo);
+						  GimpTattoo          tattoo);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

@@ -91,7 +91,7 @@ gimp_help (const gchar *help_path,
       if (help_data && strlen (help_data))
 	idle_help->help_data = g_strdup (help_data);
 
-      gtk_idle_add ((GtkFunction) gimp_idle_help, (gpointer) idle_help);
+      g_idle_add (gimp_idle_help, idle_help);
     }
 }
 
@@ -99,7 +99,7 @@ gimp_help (const gchar *help_path,
 /*  local functions  */
 /*********************/
 
-static gint
+static gboolean
 gimp_idle_help (gpointer data)
 {
   GimpIdleHelp *idle_help;

@@ -39,18 +39,13 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <stdio.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 
-#include "apptypes.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "widgets/gimpdialogfactory.h"
 

@@ -678,6 +678,8 @@ GPL
 	my $out = $out{$group};
         my $tool_eek = 0;
         my $widgets_eek = 0;
+        my $display_eek = 0;
+        my $gui_eek = 0;
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
@@ -691,6 +693,16 @@ GPL
         if (exists $out->{headers}->{q|"widgets/widgets-types.h"|}) {
 	    $widgets_eek = 1;
 	    delete $out->{headers}->{q|"widgets/widgets-types.h"|};
+	}
+
+        if (exists $out->{headers}->{q|"display/display-types.h"|}) {
+	    $display_eek = 1;
+	    delete $out->{headers}->{q|"display/display-types.h"|};
+	}
+
+        if (exists $out->{headers}->{q|"gui/gui-types.h"|}) {
+	    $gui_eek = 1;
+	    delete $out->{headers}->{q|"gui/gui-types.h"|};
 	}
 
 	my @headers = sort {
@@ -719,11 +731,18 @@ GPL
 	    if ($eek == 0 && !/^</) {
 		$eek      = 1;
 		$headers .= "\n";
-		$headers .= '#include <gtk/gtk.h>';
+
+		if ($tool_eek == 1 || $widgets_eek == 1 ||
+		    $display_eek == 1 || $gui_eek == 1) {
+		    $headers .= '#include <gtk/gtk.h>';
+		} else {
+		    $headers .= '#include <glib-object.h>';
+		}
+
 		$headers .= "\n\n";
 		$headers .= '#include "libgimpbase/gimpbasetypes.h"';
 		$headers .= "\n\n";
-		$headers .= '#include "core/core-types.h"';
+		$headers .= '#include "pdb-types.h"';
 		$headers .= "\n";
 
 		if ($tool_eek == 1) {
@@ -733,6 +752,16 @@ GPL
 
 		if ($widgets_eek == 1) {
 		    $headers .= '#include "widgets/widgets-types.h"';
+		    $headers .= "\n";		    
+		}
+
+		if ($display_eek == 1) {
+		    $headers .= '#include "display/display-types.h"';
+		    $headers .= "\n";		    
+		}
+
+		if ($gui_eek == 1) {
+		    $headers .= '#include "gui/gui-types.h"';
 		    $headers .= "\n";		    
 		}
 
@@ -824,8 +853,8 @@ HEADER
 	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
-	print IFILE qq@#include <gtk/gtk.h>\n\n@;
-	print IFILE qq@#include "core/core-types.h"\n\n@;
+	print IFILE qq@#include <glib-object.h>\n\n@;
+	print IFILE qq@#include "pdb-types.h"\n\n@;
 	print IFILE qq@#include "app_procs.h"\n\n@;
 	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";

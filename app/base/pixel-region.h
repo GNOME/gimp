@@ -60,50 +60,51 @@ struct _PixelRegionIterator
 
 /*  PixelRegion functions  */
 
-void     pixel_region_init          (PixelRegion *PR, 
-				     TileManager *tiles, 
-				     gint         x, 
-				     gint         y, 
-				     gint         w, 
-				     gint         h, 
-				     gboolean     dirty);
-void     pixel_region_resize        (PixelRegion *PR, 
-				     gint         x, 
-				     gint         y, 
-				     gint         w, 
-				     gint         h);
-void     pixel_region_get_async     (PixelRegion *PR, 
-				     gint         ulx, 
-				     gint         uly, 
-				     gint         lrx, 
-				     gint         lry);
-void     pixel_region_get_row       (PixelRegion *PR, 
-				     gint         x, 
-				     gint         y, 
-				     gint         w, 
-				     guchar      *data, 
-				     gint         subsample);
-void     pixel_region_set_row       (PixelRegion *PR, 
-				     gint         x, 
-				     gint         y, 
-				     gint         w, 
-				     guchar      *data);
-void     pixel_region_get_col       (PixelRegion *PR, 
-				     gint         x, 
-				     gint         y, 
-				     gint         h, 
-				     guchar      *data, 
-				     gint         subsample);
-void     pixel_region_set_col       (PixelRegion *PR, 
-				     gint         x, 
-				     gint         y, 
-				     gint         h, 
-				     guchar      *data);
-gboolean pixel_region_has_alpha     (PixelRegion *PR);
-gpointer pixel_regions_register     (gint         num_regions, 
+void     pixel_region_init          (PixelRegion         *PR, 
+				     TileManager         *tiles, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 w, 
+				     gint                 h, 
+				     gboolean             dirty);
+void     pixel_region_resize        (PixelRegion         *PR, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 w, 
+				     gint                 h);
+void     pixel_region_get_async     (PixelRegion         *PR, 
+				     gint                 ulx, 
+				     gint                 uly, 
+				     gint                 lrx, 
+				     gint                 lry);
+void     pixel_region_get_row       (PixelRegion         *PR, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 w, 
+				     guchar              *data, 
+				     gint                 subsample);
+void     pixel_region_set_row       (PixelRegion         *PR, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 w, 
+				     guchar              *data);
+void     pixel_region_get_col       (PixelRegion         *PR, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 h, 
+				     guchar              *data, 
+				     gint                 subsample);
+void     pixel_region_set_col       (PixelRegion         *PR, 
+				     gint                 x, 
+				     gint                 y, 
+				     gint                 h, 
+				     guchar              *data);
+gboolean pixel_region_has_alpha     (PixelRegion         *PR);
+
+gpointer pixel_regions_register     (gint                 num_regions, 
 				     ...);
-gpointer pixel_regions_process      (gpointer     PRI_ptr);
-void     pixel_regions_process_stop (gpointer     PRI_ptr);
+gpointer pixel_regions_process      (PixelRegionIterator *PRI);
+void     pixel_regions_process_stop (PixelRegionIterator *PRI);
 
 
 #endif /* __PIXEL_REGION_H__ */

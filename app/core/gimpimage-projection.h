@@ -81,7 +81,7 @@ struct _GimpImage
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
 
-  Tattoo             tattoo_state;          /*  the next unique tattoo to use*/
+  GimpTattoo         tattoo_state;          /*  the next unique tattoo to use*/
 
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
@@ -262,10 +262,10 @@ void            gimp_image_parasite_attach   (GimpImage          *gimage,
 void            gimp_image_parasite_detach   (GimpImage          *gimage,
 					      const gchar        *parasite);
 
-Tattoo          gimp_image_get_new_tattoo    (GimpImage          *gimage);
+GimpTattoo      gimp_image_get_new_tattoo    (GimpImage          *gimage);
 gboolean        gimp_image_set_tattoo_state  (GimpImage          *gimage,
-					      Tattoo              val);
-Tattoo          gimp_image_get_tattoo_state  (GimpImage          *gimage);
+					      GimpTattoo          val);
+GimpTattoo      gimp_image_get_tattoo_state  (GimpImage          *gimage);
 
 void            gimp_image_set_paths         (GimpImage          *gimage,
 					      PathList           *paths);
@@ -303,9 +303,9 @@ gint            gimp_image_get_channel_index     (const GimpImage   *gimage,
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage   *gimage);
 GimpChannel   * gimp_image_get_active_channel    (const GimpImage   *gimage);
 GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage   *gimage,
-						  Tattoo             tatoo);
+						  GimpTattoo         tatoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage   *gimage,
-						  Tattoo             tatoo);
+						  GimpTattoo         tatoo);
 GimpChannel   * gimp_image_get_channel_by_name   (const GimpImage   *gimage,
 						  const gchar       *name);
 GimpChannel   * gimp_image_get_mask              (const GimpImage   *gimage);

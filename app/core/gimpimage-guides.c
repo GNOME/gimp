@@ -1666,7 +1666,8 @@ gimp_image_parasite_detach (GimpImage   *gimage,
 {
   GimpParasite *p;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage) && parasite != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (parasite != NULL);
 
   if (!(p = gimp_parasite_list_find (gimage->parasites, parasite)))
     return;
@@ -1677,31 +1678,35 @@ gimp_image_parasite_detach (GimpImage   *gimage,
   gimp_parasite_list_remove (gimage->parasites, parasite);
 }
 
-Tattoo
-gimp_image_get_new_tattoo (GimpImage *image)
+GimpTattoo
+gimp_image_get_new_tattoo (GimpImage *gimage)
 {
-  image->tattoo_state++;
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
 
-  if (image->tattoo_state <= 0)
-    g_warning ("Tattoo state has become corrupt (2.1 billion operation limit exceded)");
+  gimage->tattoo_state++;
 
-  return image->tattoo_state;
+  if (gimage->tattoo_state <= 0)
+    g_warning ("gimp_image_get_new_tattoo(): Tattoo state has become corrupt (2.1 billion operation limit exceded)");
+
+  return gimage->tattoo_state;
 }
 
-Tattoo
-gimp_image_get_tattoo_state (GimpImage *image)
+GimpTattoo
+gimp_image_get_tattoo_state (GimpImage *gimage)
 {
-  return (image->tattoo_state);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
+
+  return gimage->tattoo_state;
 }
 
 gboolean
-gimp_image_set_tattoo_state (GimpImage *gimage, 
-			     Tattoo     val)
+gimp_image_set_tattoo_state (GimpImage  *gimage, 
+			     GimpTattoo  val)
 {
   GList       *list;
   gboolean     retval = TRUE;
   GimpChannel *channel;
-  Tattoo       maxval = 0;
+  GimpTattoo   maxval = 0;
   Path        *pptr   = NULL;
   PathList    *plist;
 
@@ -1711,7 +1716,7 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      Tattoo ltattoo;
+      GimpTattoo ltattoo;
       
       ltattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (list->data));
       if (ltattoo > maxval)
@@ -1733,7 +1738,8 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      Tattoo ctattoo;
+      GimpTattoo ctattoo;
+
       channel = (GimpChannel *) list->data;
       
       ctattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
@@ -1751,8 +1757,8 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
       
   if (plist && plist->bz_paths)
     {
-      Tattoo  ptattoo;
-      GSList *pl;
+      GimpTattoo  ptattoo;
+      GSList     *pl;
 
       for (pl = plist->bz_paths; pl; pl = g_slist_next (pl))
 	{
@@ -2520,7 +2526,7 @@ gimp_image_get_active_channel (const GimpImage *gimage)
 
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *gimage, 
-				Tattoo           tattoo)
+				GimpTattoo       tattoo)
 {
   GimpLayer *layer;
   GList     *list;
@@ -2542,7 +2548,7 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *gimage, 
-				  Tattoo           tattoo)
+				  GimpTattoo       tattoo)
 {
   GimpChannel *channel;
   GList       *list;

@@ -25,8 +25,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"

@@ -26,10 +26,11 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "gui-types.h"
+
+#include "splash.h"
 
 #include "appenv.h"
-#include "splash.h"
 
 #include "libgimp/gimpintl.h"
 

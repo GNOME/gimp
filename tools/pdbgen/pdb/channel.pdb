@@ -210,7 +210,16 @@ HELP
     @inargs = ( &channel_arg );
     $inargs[0]->{desc} .= ' to delete';
 
-    %invoke = ( code => 'gtk_object_sink (GTK_OBJECT (channel));' );
+    %invoke = ( code => <<'CODE' );
+{
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (channel)))
+    {
+      g_object_unref (G_OBJECT (channel));
+      success = TRUE;
+    }
+
+}
+CODE
 }
 
 sub channel_combine_masks {

@@ -21,13 +21,12 @@
 #include <stdio.h>
 #include <string.h> /* strcpy, strlen */
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
-#include "tools/tools-types.h" /* EEK */
 
 #include "base/tile.h"
 #include "base/tile-manager.h"

@@ -344,13 +344,11 @@ pixel_regions_register (gint num_regions,
 
 
 gpointer
-pixel_regions_process (gpointer PRI_ptr)
+pixel_regions_process (PixelRegionIterator *PRI)
 {
   GSList              *list;
   PixelRegionHolder   *PRH;
-  PixelRegionIterator *PRI;
 
-  PRI = (PixelRegionIterator *) PRI_ptr;
   PRI->process_count++;
 
   /*  Unref all referenced tiles and increment the offsets  */
@@ -390,13 +388,11 @@ pixel_regions_process (gpointer PRI_ptr)
 }
 
 void
-pixel_regions_process_stop (gpointer PRI_ptr)
+pixel_regions_process_stop (PixelRegionIterator *PRI)
 {
   GSList              *list;
   PixelRegionHolder   *PRH;
-  PixelRegionIterator *PRI;
 
-  PRI = (PixelRegionIterator *) PRI_ptr;
   PRI->process_count++;
 
   /*  Unref all referenced tiles and increment the offsets  */

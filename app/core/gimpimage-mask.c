@@ -20,9 +20,10 @@
 
 #include <glib-object.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "core-types.h"
+#include "pdb/pdb-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
@@ -39,7 +40,6 @@
 #include "gimptoolinfo.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h" /* EEK */
 #include "undo.h"
 
 #include "pdb/procedural_db.h"
@@ -142,7 +142,7 @@ gimage_mask_invalidate (GimpImage *gimage)
   GimpChannel *mask;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, SELECTION_OFF);
+  gdisplays_selection_visibility (gimage, 0 /* SELECTION_OFF */);
 
   mask = gimp_image_get_mask (gimage);
   mask->boundary_known = FALSE;

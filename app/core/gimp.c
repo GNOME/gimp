@@ -25,6 +25,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
+#include "pdb/pdb-types.h"
 
 #include "base/tile-manager.h"
 
@@ -146,6 +147,7 @@ gimp_init (Gimp *gimp)
 
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
 					     GIMP_CONTAINER_POLICY_STRONG);
+  gimp->standard_tool_info  = NULL;
 
   gimp_documents_init (gimp);
 
@@ -209,6 +211,8 @@ gimp_finalize (GObject *object)
 
   if (gimp->documents)
     gimp_documents_exit (gimp);
+
+  gimp_tool_info_set_standard (gimp, NULL);
 
   if (gimp->tool_info_list)
     {

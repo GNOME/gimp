@@ -25,11 +25,10 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 #include "tools/tools-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 #include "base/base-types.h"
 #include "base/tile-manager.h"
 #include "core/core-types.h"

@@ -96,7 +96,7 @@ struct _GimpContext
   guint32           defined_props;
 
   GimpImage	   *image;
-  GDisplay	   *display;
+  gpointer          display;
 
   GimpToolInfo     *tool_info;
   gchar            *tool_name;
@@ -129,7 +129,7 @@ struct _GimpContextClass
   void (* image_changed)      (GimpContext      *context,
 			       GimpImage        *image);
   void (* display_changed)    (GimpContext      *context,
-			       GDisplay         *display);
+			       gpointer          display);
 
   void (* tool_changed)       (GimpContext      *context,
 			       GimpToolInfo     *tool_info);

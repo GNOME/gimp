@@ -166,7 +166,7 @@ path_distance (Path    *bzp,
   return ret;
 }
 
-Tattoo
+GimpTattoo
 path_get_tattoo (Path* p)
 {
   if (!p)
@@ -179,8 +179,8 @@ path_get_tattoo (Path* p)
 }
 
 Path*
-path_get_path_by_tattoo (GimpImage *gimage,
-			 Tattoo     tattoo)
+path_get_path_by_tattoo (GimpImage  *gimage,
+			 GimpTattoo  tattoo)
 {
   GSList   *tlist;
   PathList *plp;

@@ -23,7 +23,7 @@
 struct _PathList
 {
   GimpImage *gimage;
-  GDisplay  *gdisp; /* This is a hack.. Needed so we can get back to 
+  gpointer   gdisp; /* This is a hack.. Needed so we can get back to 
                      * the same display that these curves were added
 		     * too. That way when an entry in the paths dialog
 		     * is clicked the bezier tool can be targeted at 
@@ -42,30 +42,30 @@ typedef enum
   BEZIER = 1
 } PathType;
 
-Path*         path_new                  (GimpImage *gimage,
-					 PathType   ptype,
-					 GSList    *path_details,
-					 gint       closed,
-					 gint       state,
-					 gint       locked,
-					 gint       tattoo,  
-					 gchar     *name);
-Path*         path_copy                 (GimpImage *gimage, 
-					 Path      *path);
-void          path_free                 (Path      *path);
+Path*         path_new                  (GimpImage  *gimage,
+					 PathType    ptype,
+					 GSList     *path_details,
+					 gint        closed,
+					 gint        state,
+					 gint        locked,
+					 gint        tattoo,  
+					 gchar      *name);
+Path*         path_copy                 (GimpImage  *gimage, 
+					 Path       *path);
+void          path_free                 (Path       *path);
 
-Tattoo        path_get_tattoo           (Path      *path);
-Path*         path_get_path_by_tattoo   (GimpImage *gimage, 
-					 Tattoo     tattoo);
+GimpTattoo    path_get_tattoo           (Path       *path);
+Path*         path_get_path_by_tattoo   (GimpImage  *gimage, 
+					 GimpTattoo  tattoo);
 
-void          path_stroke               (GimpImage *gimage,
-					 PathList  *pl,
-					 Path      *bzp);
-gint          path_distance             (Path      *bzp,
-					 gdouble    dist,
-					 gint      *x,
-					 gint      *y, 
-					 gdouble   *grad);
+void          path_stroke               (GimpImage  *gimage,
+					 PathList   *pl,
+					 Path       *bzp);
+gint          path_distance             (Path       *bzp,
+					 gdouble     dist,
+					 gint       *x,
+					 gint       *y, 
+					 gdouble    *grad);
 
 PathPoint*            path_point_new            (guint      type, 
 						 gdouble    x, 

@@ -251,118 +251,64 @@ static GHashTable *parse_func_hash = NULL;
 
 static ParseFunc funcs[] =
 {
-  { "gamma-correction",          TT_DOUBLE,
-    &(gimprc.gamma_val), NULL },
-  { "marching-ants-speed",       TT_INT,
-    &(gimprc.marching_speed), NULL },
-  { "last-opened-size",          TT_INT,
-    &(gimprc.last_opened_size), NULL },
-  { "transparency-type",         TT_INT,
-    &(gimprc.transparency_type), NULL },
-  { "perfect-mouse",             TT_BOOLEAN,
-    &(gimprc.perfectmouse), NULL },
-  { "transparency-size",         TT_INT,
-    &(gimprc.transparency_size), NULL },
-  { "min-colors",                TT_INT,
-    &(gimprc.min_colors), NULL },
-  { "install-colormap",          TT_BOOLEAN,
-    &(gimprc.install_cmap), NULL },
-  { "colormap-cycling",          TT_BOOLEAN,
-    &(gimprc.cycled_marching_ants), NULL },
-  { "default-threshold",         TT_INT,
-    &(gimprc.default_threshold), NULL },
-  { "allow-resize-windows",      TT_BOOLEAN,
-    &(gimprc.allow_resize_windows), NULL },
-  { "dont-allow-resize-windows", TT_BOOLEAN,       NULL,
-    &(gimprc.allow_resize_windows) },
-  { "cursor-updating",           TT_BOOLEAN,       NULL,
-    &(gimprc.no_cursor_updating) },
-  { "no-cursor-updating",        TT_BOOLEAN,
-    &(gimprc.no_cursor_updating), NULL },
-  { "preview-size",              TT_XPREVSIZE,     NULL, NULL },
-  { "nav-preview-size",          TT_XNAVPREVSIZE,  NULL, NULL },
-  { "show-rulers",               TT_BOOLEAN,
-    &(gimprc.show_rulers), NULL },
-  { "dont-show-rulers",          TT_BOOLEAN,       NULL,
-    &(gimprc.show_rulers) },
-  { "show-statusbar",            TT_BOOLEAN,
-    &(gimprc.show_statusbar), NULL },
-  { "dont-show-statusbar",       TT_BOOLEAN,       NULL,
-    &(gimprc.show_statusbar) },
-  { "auto-save",                 TT_BOOLEAN,
-    &(gimprc.auto_save), NULL },
-  { "dont-auto-save",            TT_BOOLEAN,       NULL,
-    &(gimprc.auto_save) },
-  { "confirm-on-close",          TT_BOOLEAN,
-    &(gimprc.confirm_on_close), NULL },
-  { "dont-confirm-on-close",     TT_BOOLEAN,       NULL,
-    &(gimprc.confirm_on_close) },
-  { "save-session-info",         TT_BOOLEAN,
-    &(gimprc.save_session_info), NULL },
-  { "dont-save-session-info",    TT_BOOLEAN,       NULL,
-    &(gimprc.save_session_info)},
-  { "save-device-status",        TT_BOOLEAN,
-    &(gimprc.save_device_status), NULL },
-  { "dont-save-device-status",   TT_BOOLEAN,       NULL,
-    &(gimprc.save_device_status)},
-  { "always-restore-session",    TT_BOOLEAN,
-    &(gimprc.always_restore_session), NULL },
-  { "show-tips",                 TT_BOOLEAN,
-    &(gimprc.show_tips), NULL },
-  { "dont-show-tips",            TT_BOOLEAN,       NULL,
-    &(gimprc.show_tips) },
-  { "last-tip-shown",            TT_INT,
-    &(gimprc.last_tip), NULL },
-  { "show-tool-tips",            TT_BOOLEAN,
-    &(gimprc.show_tool_tips), NULL },
-  { "dont-show-tool-tips",       TT_BOOLEAN,       NULL,
-    &(gimprc.show_tool_tips) },
-  { "default-dot-for-dot",       TT_BOOLEAN,
-    &(gimprc.default_dot_for_dot), NULL },
-  { "monitor-xresolution",       TT_DOUBLE,
-    &(gimprc.monitor_xres), NULL },
-  { "monitor-yresolution",       TT_DOUBLE,
-    &(gimprc.monitor_yres), NULL },
-  { "image-title-format",        TT_STRING,
-    &(gimprc.image_title_format), NULL },
-  { "parasite",                  TT_XPARASITE,     NULL, NULL },
-  { "global-paint-options",      TT_BOOLEAN,
-    &(gimprc.global_paint_options), NULL },
-  { "show-indicators",           TT_BOOLEAN,
-    &(gimprc.show_indicators), NULL },
-  { "dont-show-indicators",      TT_BOOLEAN,       NULL,
-    &(gimprc.show_indicators) },
-  { "no-global-paint-options",   TT_BOOLEAN,       NULL,
-    &(gimprc.global_paint_options) },
-  { "max-new-image-size",        TT_MEMSIZE,
-    &(gimprc.max_new_image_size), NULL },
-  { "trust-dirty-flag",		 TT_BOOLEAN,
-    &(gimprc.trust_dirty_flag), NULL },
-  { "dont-trust-dirty-flag",     TT_BOOLEAN,	   NULL,
-    &(gimprc.trust_dirty_flag) },
-  { "use-help",                  TT_BOOLEAN,
-    &(gimprc.use_help), NULL },
-  { "dont-use-help",             TT_BOOLEAN,       NULL,
-    &(gimprc.use_help) },
-  { "nav-window-per-display",    TT_BOOLEAN,
-    &(gimprc.nav_window_per_display), NULL },
-  { "nav-window-follows-auto",   TT_BOOLEAN,       NULL,
-    &(gimprc.nav_window_per_display) },
-  { "info-window-follows-mouse", TT_BOOLEAN,
-    &(gimprc.info_window_follows_mouse), NULL },
-  { "info-window-per-display",   TT_BOOLEAN,       NULL,
-    &(gimprc.info_window_follows_mouse) },
-  { "help-browser",              TT_XHELPBROWSER,
-    &(gimprc.help_browser), NULL },
-  { "cursor-mode",               TT_XCURSORMODE,
-    &(gimprc.cursor_mode), NULL },
-  { "disable-tearoff-menus",     TT_BOOLEAN,
-    &(gimprc.disable_tearoff_menus), NULL },
-  { "theme-path",                TT_PATH,
-    &(gimprc.theme_path), NULL },
-  { "theme",                     TT_STRING,
-    &(gimprc.theme), NULL },
+  { "gamma-correction",          TT_DOUBLE,        &gimprc.gamma_val, NULL                 },
+  { "marching-ants-speed",       TT_INT,           &gimprc.marching_speed, NULL            },
+  { "last-opened-size",          TT_INT,           &gimprc.last_opened_size, NULL          },
+  { "transparency-type",         TT_INT,           &gimprc.transparency_type, NULL         },
+  { "perfect-mouse",             TT_BOOLEAN,       &gimprc.perfectmouse, NULL              },
+  { "transparency-size",         TT_INT,           &gimprc.transparency_size, NULL        },
+  { "min-colors",                TT_INT,           &gimprc.min_colors, NULL                },
+  { "install-colormap",          TT_BOOLEAN,       &gimprc.install_cmap, NULL              },
+  { "colormap-cycling",          TT_BOOLEAN,       &gimprc.cycled_marching_ants, NULL      },
+  { "default-threshold",         TT_INT,           &gimprc.default_threshold, NULL         },
+  { "allow-resize-windows",      TT_BOOLEAN,       &gimprc.allow_resize_windows, NULL      },
+  { "dont-allow-resize-windows", TT_BOOLEAN,       NULL, &gimprc.allow_resize_windows      },
+  { "cursor-updating",           TT_BOOLEAN,       NULL, &gimprc.no_cursor_updating        },
+  { "no-cursor-updating",        TT_BOOLEAN,       &gimprc.no_cursor_updating, NULL        },
+  { "preview-size",              TT_XPREVSIZE,     &gimprc.preview_size, NULL              },
+  { "nav-preview-size",          TT_XNAVPREVSIZE,  &gimprc.nav_preview_size, NULL          },
+  { "show-rulers",               TT_BOOLEAN,       &gimprc.show_rulers, NULL               },
+  { "dont-show-rulers",          TT_BOOLEAN,       NULL, &gimprc.show_rulers               },
+  { "show-statusbar",            TT_BOOLEAN,       &gimprc.show_statusbar, NULL            },
+  { "dont-show-statusbar",       TT_BOOLEAN,       NULL, &gimprc.show_statusbar            },
+  { "auto-save",                 TT_BOOLEAN,       &gimprc.auto_save, NULL                 },
+  { "dont-auto-save",            TT_BOOLEAN,       NULL, &gimprc.auto_save                 },
+  { "confirm-on-close",          TT_BOOLEAN,       &gimprc.confirm_on_close, NULL          },
+  { "dont-confirm-on-close",     TT_BOOLEAN,       NULL, &gimprc.confirm_on_close          },
+  { "save-session-info",         TT_BOOLEAN,       &gimprc.save_session_info, NULL         },
+  { "dont-save-session-info",    TT_BOOLEAN,       NULL, &gimprc.save_session_info         },
+  { "save-device-status",        TT_BOOLEAN,       &gimprc.save_device_status, NULL        },
+  { "dont-save-device-status",   TT_BOOLEAN,       NULL, &gimprc.save_device_status        },
+  { "always-restore-session",    TT_BOOLEAN,       &gimprc.always_restore_session , NULL   },
+  { "show-tips",                 TT_BOOLEAN,       &gimprc.show_tips, NULL                 },
+  { "dont-show-tips",            TT_BOOLEAN,       NULL, &gimprc.show_tips                 },
+  { "last-tip-shown",            TT_INT,           &gimprc.last_tip, NULL                  },
+  { "show-tool-tips",            TT_BOOLEAN,       &gimprc.show_tool_tips, NULL            },
+  { "dont-show-tool-tips",       TT_BOOLEAN,       NULL, &gimprc.show_tool_tips            },
+  { "default-dot-for-dot",       TT_BOOLEAN,       &gimprc.default_dot_for_dot, NULL       },
+  { "monitor-xresolution",       TT_DOUBLE,        &gimprc.monitor_xres, NULL              },
+  { "monitor-yresolution",       TT_DOUBLE,        &gimprc.monitor_yres, NULL              },
+  { "image-title-format",        TT_STRING,        &gimprc.image_title_format, NULL        },
+  { "global-paint-options",      TT_BOOLEAN,       &gimprc.global_paint_options, NULL      },
+  { "show-indicators",           TT_BOOLEAN,       &gimprc.show_indicators, NULL           },
+  { "dont-show-indicators",      TT_BOOLEAN,       NULL, &gimprc.show_indicators           },
+  { "no-global-paint-options",   TT_BOOLEAN,       NULL, &gimprc.global_paint_options      },
+  { "max-new-image-size",        TT_MEMSIZE,       &gimprc.max_new_image_size, NULL        },
+  { "trust-dirty-flag",		 TT_BOOLEAN,       &gimprc.trust_dirty_flag, NULL          },
+  { "dont-trust-dirty-flag",     TT_BOOLEAN,	   NULL, &gimprc.trust_dirty_flag          },
+  { "use-help",                  TT_BOOLEAN,       &gimprc.use_help, NULL                  },
+  { "dont-use-help",             TT_BOOLEAN,       NULL, &gimprc.use_help                  },
+  { "nav-window-per-display",    TT_BOOLEAN,       &gimprc.nav_window_per_display, NULL    },
+  { "nav-window-follows-auto",   TT_BOOLEAN,       NULL, &gimprc.nav_window_per_display    },
+  { "info-window-follows-mouse", TT_BOOLEAN,       &gimprc.info_window_follows_mouse, NULL },
+  { "info-window-per-display",   TT_BOOLEAN,       NULL, &gimprc.info_window_follows_mouse },
+  { "help-browser",              TT_XHELPBROWSER,  &gimprc.help_browser, NULL              },
+  { "cursor-mode",               TT_XCURSORMODE,   &gimprc.cursor_mode, NULL               },
+  { "disable-tearoff-menus",     TT_BOOLEAN,       &gimprc.disable_tearoff_menus, NULL     },
+  { "theme-path",                TT_PATH,          &gimprc.theme_path, NULL                },
+  { "theme",                     TT_STRING,        &gimprc.theme, NULL                     },
 
+  { "parasite",                  TT_XPARASITE,     NULL, NULL },
   { "plug-in",                   TT_XPLUGIN,       NULL, NULL },
   { "plug-in-def",               TT_XPLUGINDEF,    NULL, NULL },
   { "menu-path",                 TT_XMENUPATH,     NULL, NULL },
@@ -1369,22 +1315,22 @@ parse_preview_size (gpointer val1p,
   if (token == TOKEN_SYMBOL)
     {
       if (strcmp (token_sym, "none") == 0)
-	gimprc.preview_size = 0;
+	*((gint *) val1p) = 0;
       else if (strcmp (token_sym, "tiny") == 0)
-	gimprc.preview_size = 24;
+	*((gint *) val1p) = 24;
       else if (strcmp (token_sym, "small") == 0)
-	gimprc.preview_size = 32;
+	*((gint *) val1p) = 32;
       else if (strcmp (token_sym, "medium") == 0)
-	gimprc.preview_size = 48;
+	*((gint *) val1p) = 48;
       else if (strcmp (token_sym, "large") == 0)
-	gimprc.preview_size = 64;
+	*((gint *) val1p) = 64;
       else if (strcmp (token_sym, "huge") == 0)
-	gimprc.preview_size = 128;
+	*((gint *) val1p) = 128;
       else
-	gimprc.preview_size = 0;
+	*((gint *) val1p) = 0;
     }
   else if (token == TOKEN_NUMBER)
-    gimprc.preview_size = token_num;
+    *((gint *) val1p) = token_num;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -1407,20 +1353,19 @@ parse_nav_preview_size (gpointer val1p,
 
   if (token == TOKEN_SYMBOL)
     {
-/*       if (strcmp (token_sym, "none") == 0) */
-/* 	preview_size = 0; */
-/*       else  */
-      if (strcmp (token_sym, "small") == 0)
-	gimprc.nav_preview_size = 48;
+      if (strcmp (token_sym, "none") == 0)
+ 	*((gint *) val1p) = 0;
+      else if (strcmp (token_sym, "small") == 0)
+	*((gint *) val1p) = 48;
       else if (strcmp (token_sym, "medium") == 0)
-	gimprc.nav_preview_size = 80;
+	*((gint *) val1p) = 80;
       else if (strcmp (token_sym, "large") == 0)
-	gimprc.nav_preview_size = 112;
+	*((gint *) val1p) = 112;
       else
-	gimprc.nav_preview_size = 112;
+	*((gint *) val1p) = 0;
     }
   else if (token == TOKEN_NUMBER)
-    gimprc.nav_preview_size = token_num;
+    *((gint *) val1p) = token_num;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2779,9 +2724,9 @@ parse_help_browser (gpointer val1p,
   token = get_next_token ();
 
   if (strcmp (token_sym, "gimp") == 0)
-    gimprc.help_browser = HELP_BROWSER_GIMP;
+    *((gint *) val1p) = HELP_BROWSER_GIMP;
   else if (strcmp (token_sym, "netscape") == 0)
-    gimprc.help_browser = HELP_BROWSER_NETSCAPE;
+    *((gint *) val1p) = HELP_BROWSER_NETSCAPE;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2803,11 +2748,11 @@ parse_cursor_mode (gpointer val1p,
   token = get_next_token ();
 
   if (strcmp (token_sym, "tool-icon") == 0)
-    gimprc.cursor_mode = CURSOR_MODE_TOOL_ICON;
+    *((CursorMode *) val1p) = CURSOR_MODE_TOOL_ICON;
   else if (strcmp (token_sym, "tool-crosshair") == 0)
-    gimprc.cursor_mode = CURSOR_MODE_TOOL_CROSSHAIR;
+    *((CursorMode *) val1p) = CURSOR_MODE_TOOL_CROSSHAIR;
   else if (strcmp (token_sym, "crosshair") == 0)
-    gimprc.cursor_mode = CURSOR_MODE_CROSSHAIR;
+    *((CursorMode *) val1p) = CURSOR_MODE_CROSSHAIR;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -3089,15 +3034,19 @@ static inline gchar *
 preview_size_to_str (gpointer val1p,
 		     gpointer val2p)
 {
-  if (gimprc.preview_size >= 128)
+  gint size;
+
+  size = *((gint *) val1p);
+
+  if (size >= 128)
     return g_strdup ("huge");
-  else if (gimprc.preview_size >= 64)
+  else if (size >= 64)
     return g_strdup ("large");
-  else if (gimprc.preview_size >= 48)
+  else if (size >= 48)
     return g_strdup ("medium");
-  else if (gimprc.preview_size >= 32)
+  else if (size >= 32)
     return g_strdup ("small");
-  else if (gimprc.preview_size >= 24)
+  else if (size >= 24)
     return g_strdup ("tiny");
   else
     return g_strdup ("none");
@@ -3107,14 +3056,18 @@ static inline gchar *
 nav_preview_size_to_str (gpointer val1p,
 			 gpointer val2p)
 {
-  if (gimprc.nav_preview_size >= 112)
+  gint size;
+
+  size = *((gint *) val1p);
+
+  if (size >= 112)
     return g_strdup ("large");
-  else if (gimprc.nav_preview_size >= 80)
+  else if (size >= 80)
     return g_strdup ("medium");
-  else if (gimprc.nav_preview_size >= 48)
+  else if (size >= 48)
     return g_strdup ("small");
   else
-    return g_strdup ("large");
+    return g_strdup ("none");
 }
 
 
@@ -3122,14 +3075,18 @@ static inline gchar *
 units_to_str (gpointer val1p,
 	      gpointer val2p)
 {
-  return g_strdup (gimp_unit_get_identifier (*((GimpUnit*)val1p)));
+  return g_strdup (gimp_unit_get_identifier (*((GimpUnit *) val1p)));
 }
 
 static inline gchar *
 help_browser_to_str (gpointer val1p,
 		     gpointer val2p)
 {
-  if (gimprc.help_browser == HELP_BROWSER_NETSCAPE)
+  gint browser;
+
+  browser = *((gint *) val1p);
+
+  if (browser == HELP_BROWSER_NETSCAPE)
     return g_strdup ("netscape");
   else
     return g_strdup ("gimp");
@@ -3139,9 +3096,13 @@ static inline gchar *
 cursor_mode_to_str (gpointer val1p,
 		    gpointer val2p)
 {
-  if (gimprc.cursor_mode == CURSOR_MODE_TOOL_ICON)
+  CursorMode mode;
+
+  mode = *((CursorMode *) val1p);
+
+  if (mode == CURSOR_MODE_TOOL_ICON)
     return g_strdup ("tool-icon");
-  else if (gimprc.cursor_mode == CURSOR_MODE_TOOL_CROSSHAIR)
+  else if (mode == CURSOR_MODE_TOOL_CROSSHAIR)
     return g_strdup ("tool-crosshair");
   else
     return g_strdup ("crosshair");

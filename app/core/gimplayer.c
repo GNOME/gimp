@@ -25,8 +25,6 @@
 
 #include <glib-object.h>
 
-#include <gtk/gtk.h> /* EEK */
-
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -45,7 +43,6 @@
 #include "gimpparasitelist.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h" /* EEK */
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -1292,10 +1289,10 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
     return;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, SELECTION_OFF);
+  gdisplays_selection_visibility (gimage, 0 /* SELECTION_OFF */);
 
   /*  clear the affected region surrounding the layer  */
-  gdisplays_selection_visibility (gimage, SELECTION_LAYER_OFF);
+  gdisplays_selection_visibility (gimage, 1 /* SELECTION_LAYER_OFF */);
 
   /*  get the selection mask channel  */
   mask = gimp_image_get_mask (gimage);

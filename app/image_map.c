@@ -35,81 +35,34 @@
 #include "image_map.h"
 
 
-#define WAITING 0
-#define WORKING 1
+typedef enum
+{
+  IMAGE_MAP_WAITING,
+  IMAGE_MAP_WORKING
+} ImageMapState;
 
-#define WORK_DELAY 1
 
 struct _ImageMap
 {
-  GDisplay          *gdisp;
-  GimpDrawable      *drawable;
-  TileManager       *undo_tiles;
-  ImageMapApplyFunc  apply_func;
-  gpointer           user_data;
-  PixelRegion        srcPR, destPR;
-  void              *pr;
-  gint               state;
-  gint               idle;
+  GDisplay            *gdisp;
+  GimpDrawable        *drawable;
+  TileManager         *undo_tiles;
+  ImageMapApplyFunc    apply_func;
+  gpointer             user_data;
+  PixelRegion          srcPR;
+  PixelRegion          destPR;
+  PixelRegionIterator *PRI;
+  ImageMapState        state;
+  guint                idle_id;
 };
 
 
-/**************************/
-/*  Function definitions  */
+/*  local function prototypes  */
 
-static gint
-image_map_do (gpointer data)
-{
-  ImageMap    *image_map;
-  GimpImage   *gimage;
-  PixelRegion  shadowPR;
-  gint         x, y, w, h;
+static gboolean   image_map_do (gpointer data);
 
-  image_map = (ImageMap *) data;
 
-  if (! (gimage = gimp_drawable_gimage (image_map->drawable)))
-    {
-      image_map->state = WAITING;
-
-      return FALSE;
-    }
-
-  /*  Process the pixel regions and apply the image mapping  */
-  (* image_map->apply_func) (&image_map->srcPR,
-			     &image_map->destPR,
-			     image_map->user_data);
-
-  x = image_map->destPR.x;
-  y = image_map->destPR.y;
-  w = image_map->destPR.w;
-  h = image_map->destPR.h;
-
-  /*  apply the results  */
-  pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
-			  FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
-
-  /*  display the results  */
-  if (image_map->gdisp)
-    {
-      gimp_drawable_update (image_map->drawable,
-			    x, y,
-			    w, h);
-      gdisplay_flush_now (image_map->gdisp);
-    }
-
-  image_map->pr = pixel_regions_process (image_map->pr);
-
-  if (image_map->pr == NULL)
-    {
-      image_map->state = WAITING;
-      gdisplays_flush ();
-
-      return FALSE;
-    }
-
-  return TRUE;
-}
+/*  public functions  */
 
 ImageMap *
 image_map_create (GDisplay     *gdisp,
@@ -118,7 +71,6 @@ image_map_create (GDisplay     *gdisp,
   ImageMap *image_map;
 
   g_return_val_if_fail (gdisp != NULL, NULL);
-  g_return_val_if_fail (drawable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   image_map = g_new0 (ImageMap, 1);
@@ -126,7 +78,10 @@ image_map_create (GDisplay     *gdisp,
   image_map->gdisp      = gdisp;
   image_map->drawable   = drawable;
   image_map->undo_tiles = NULL;
-  image_map->state      = WAITING;
+  image_map->apply_func = NULL;
+  image_map->user_data  = NULL;
+  image_map->state      = IMAGE_MAP_WAITING;
+  image_map->idle_id    = 0;
 
   /* Interactive tools based on image_map disable the undo stack
    * to avert any unintented undo interaction through the UI
@@ -154,12 +109,13 @@ image_map_apply (ImageMap          *image_map,
   image_map->user_data  = apply_data;
 
   /*  If we're still working, remove the timer  */
-  if (image_map->state == WORKING)
+  if (image_map->state == IMAGE_MAP_WORKING)
     {
-      gtk_idle_remove (image_map->idle);
-      pixel_regions_process_stop (image_map->pr);
+      g_source_remove (image_map->idle_id);
+      image_map->idle_id = 0;
 
-      image_map->pr = NULL;
+      pixel_regions_process_stop (image_map->PRI);
+      image_map->PRI = NULL;
     }
 
   /*  Make sure the drawable is still valid  */
@@ -236,11 +192,13 @@ image_map_apply (ImageMap          *image_map,
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   /*  Apply the image transformation to the pixels  */
-  image_map->pr = pixel_regions_register (2, &image_map->srcPR, &image_map->destPR);
+  image_map->PRI = pixel_regions_register (2,
+					   &image_map->srcPR,
+					   &image_map->destPR);
 
   /*  Start the intermittant work procedure  */
-  image_map->state = WORKING;
-  image_map->idle  = gtk_idle_add (image_map_do, image_map);
+  image_map->state   = IMAGE_MAP_WORKING;
+  image_map->idle_id = g_idle_add (image_map_do, image_map);
 }
 
 void
@@ -250,12 +208,13 @@ image_map_commit (ImageMap *image_map)
 
   g_return_if_fail (image_map != NULL);
 
-  if (image_map->state == WORKING)
+  if (image_map->state == IMAGE_MAP_WORKING)
     {
-      gtk_idle_remove (image_map->idle);
+      g_source_remove (image_map->idle_id);
+      image_map->idle_id = 0;
 
       /*  Finish the changes  */
-      while (image_map_do (image_map)) ;
+      while (image_map_do (image_map));
     }
 
   /*  Make sure the drawable is still valid  */
@@ -287,14 +246,16 @@ image_map_clear (ImageMap *image_map)
 
   g_return_if_fail (image_map != NULL);
 
-  if (image_map->state == WORKING)
+  if (image_map->state == IMAGE_MAP_WORKING)
     {
-      gtk_idle_remove (image_map->idle);
-      pixel_regions_process_stop (image_map->pr);
-      image_map->pr = NULL;
+      g_source_remove (image_map->idle_id);
+      image_map->idle_id = 0;
+
+      pixel_regions_process_stop (image_map->PRI);
+      image_map->PRI = NULL;
     }
 
-  image_map->state = WAITING;
+  image_map->state = IMAGE_MAP_WAITING;
 
   /*  Make sure the drawable is still valid  */
   if (! gimp_drawable_gimage (image_map->drawable))
@@ -411,4 +372,61 @@ image_map_get_color_at (ImageMap *image_map,
     {
       return NULL;
     }
+}
+
+
+/*  private functions  */
+
+static gboolean
+image_map_do (gpointer data)
+{
+  ImageMap    *image_map;
+  GimpImage   *gimage;
+  PixelRegion  shadowPR;
+  gint         x, y, w, h;
+
+  image_map = (ImageMap *) data;
+
+  if (! (gimage = gimp_drawable_gimage (image_map->drawable)))
+    {
+      image_map->state = IMAGE_MAP_WAITING;
+
+      return FALSE;
+    }
+
+  /*  Process the pixel regions and apply the image mapping  */
+  (* image_map->apply_func) (&image_map->srcPR,
+			     &image_map->destPR,
+			     image_map->user_data);
+
+  x = image_map->destPR.x;
+  y = image_map->destPR.y;
+  w = image_map->destPR.w;
+  h = image_map->destPR.h;
+
+  /*  apply the results  */
+  pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
+  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
+			  FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
+
+  /*  display the results  */
+  if (image_map->gdisp)
+    {
+      gimp_drawable_update (image_map->drawable,
+			    x, y,
+			    w, h);
+      gdisplay_flush_now (image_map->gdisp);
+    }
+
+  image_map->PRI = pixel_regions_process (image_map->PRI);
+
+  if (image_map->PRI == NULL)
+    {
+      image_map->state = IMAGE_MAP_WAITING;
+      gdisplays_flush ();
+
+      return FALSE;
+    }
+
+  return TRUE;
 }

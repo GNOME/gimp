@@ -20,8 +20,9 @@
 #define __GDISPLAY_H__
 
 
-/* FIXME: don't include gdisplay.h from core/ */
-#include "widgets/widgets-types.h"
+/* FIXME: move the display stuff to display/ */
+
+#include "display/display-types.h"
 
 
 typedef enum

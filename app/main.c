@@ -52,8 +52,8 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static void     gimp_sigfatal_handler (gint sig_num);
-static void     gimp_sigchld_handler  (gint sig_num);
+static void   gimp_sigfatal_handler (gint sig_num);
+static void   gimp_sigchld_handler  (gint sig_num);
 #endif
 
 

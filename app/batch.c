@@ -27,7 +27,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "core/core-types.h"
 

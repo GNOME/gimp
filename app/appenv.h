@@ -20,6 +20,21 @@
 #define __APPENV_H__
 
 
+typedef enum
+{
+  MESSAGE_BOX,
+  CONSOLE,
+  ERROR_CONSOLE
+} MessageHandlerType;
+
+typedef enum
+{
+  STACK_TRACE_NEVER,
+  STACK_TRACE_QUERY,
+  STACK_TRACE_ALWAYS
+} StackTraceMode;
+
+
 /*  command line options  */
 extern gboolean         no_interface;
 extern gboolean         no_splash;

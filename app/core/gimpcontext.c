@@ -1366,7 +1366,7 @@ gimp_context_tool_list_thaw (GimpContainer *container,
       (context,
        GIMP_TOOL_INFO (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_tool (context, gimp_tool_info_get_standard ());
+    gimp_context_real_set_tool (context, gimp_tool_info_get_standard (context->gimp));
 }
 
 /*  the active tool disappeared  */
@@ -1394,7 +1394,7 @@ gimp_context_real_set_tool (GimpContext  *context,
 			    GimpToolInfo *tool_info)
 {
   if (! standard_tool_info)
-    standard_tool_info = gimp_tool_info_get_standard ();
+    standard_tool_info = gimp_tool_info_get_standard (context->gimp);
 
   if (context->tool_info == tool_info)
     return;

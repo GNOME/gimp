@@ -20,15 +20,19 @@
 #define __CORE_TYPES_H__
 
 
-/* EEK */
-#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>  /* EEK */
 
-#include "apptypes.h"
+#include "libgimpbase/gimpbasetypes.h"
+#include "libgimpmath/gimpmath.h"
+
+#include "base/base-types.h"
+#include "plug-in/plug-in-types.h"
+
+#include "undo_types.h"  /* EEK */
 
 
 /*  enums  */
 
-/* Base image types */
 typedef enum
 {
   RGB,
@@ -36,7 +40,6 @@ typedef enum
   INDEXED
 } GimpImageBaseType;
 
-/* Image types */
 typedef enum
 {
   RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
@@ -47,7 +50,6 @@ typedef enum
   INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
 } GimpImageType;
 
-/* Channel types */
 typedef enum
 {
   RED_CHANNEL,
@@ -58,13 +60,44 @@ typedef enum
   ALPHA_CHANNEL
 } ChannelType;
 
+typedef enum  /*< chop=ADD_ >*/
+{
+  ADD_WHITE_MASK,
+  ADD_BLACK_MASK,
+  ADD_ALPHA_MASK,
+  ADD_SELECTION_MASK,
+  ADD_INV_SELECTION_MASK
+} AddMaskType;
+
 typedef enum
 {
   APPLY,
   DISCARD
 } MaskApplyMode;
 
-/* Fill types */
+typedef enum
+{
+  HORIZONTAL,
+  VERTICAL,
+  UNKNOWN
+} OrientationType;
+
+typedef enum /*< skip >*/
+{
+  ORIENTATION_UNKNOWN,
+  ORIENTATION_HORIZONTAL,
+  ORIENTATION_VERTICAL
+} InternalOrientationType;
+
+/*  Selection Boolean operations  */
+typedef enum /*< chop=CHANNEL_OP_ >*/
+{
+  CHANNEL_OP_ADD,
+  CHANNEL_OP_SUB,
+  CHANNEL_OP_REPLACE,
+  CHANNEL_OP_INTERSECT
+} ChannelOps;
+
 typedef enum
 {
   FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
@@ -74,7 +107,6 @@ typedef enum
   NO_FILL		/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
 
-/* Transfer modes */
 typedef enum  /*< chop=GIMP_ >*/
 {
   GIMP_SHADOWS,
@@ -140,6 +172,11 @@ typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 
 
+/*  other objects  */
+
+typedef struct _ImageMap            ImageMap; /* temp_hack, will be an object */
+
+
 /*  non-object types  */
 
 typedef struct _GimpCoreConfig      GimpCoreConfig;
@@ -147,6 +184,17 @@ typedef struct _GimpCoreConfig      GimpCoreConfig;
 typedef struct _GimpGuide           GimpGuide;
 
 typedef struct _GimpImageNewValues  GimpImageNewValues;
+
+typedef struct _GimpProgress        GimpProgress;
+
+typedef         guint32             GimpTattoo;
+
+
+/*  EEK stuff  */
+
+typedef struct _Path                Path;
+typedef struct _PathPoint           PathPoint;
+typedef struct _PathList            PathList;
 
 
 /*  stuff which is forward declared here so we don't need to cross-include it  */

@@ -1,3 +1,106 @@
+2001-08-17  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added app/display/ and app/plug-in/. Empty for
+	now except for the types files.
+
+	* app/Makefile.am
+	* app/appenums.h
+	* app/apptypes.h: removed.
+
+	* app/display/Makefile.am
+	* app/display/display-types.h
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/gui/Makefile.am
+	* app/gui/gui-types.h
+	* app/pdb/Makefile.am
+	* app/pdb/pdb-types.h: new files for typedefs.
+
+	* app/appenv.h: added MessageHandlerType and StackTraceMode here.
+
+	* app/undo_types.h: moved undo struct typedefs here.
+
+	* app/tools/tools-types.h
+	* app/core/core-types.h: added some enums and Tattoo here
+	(renamed to GimpTattoo).
+
+	* app/gdisplay.h: temp_hack: #include "display/display-types.h"
+
+	* app/gimphelp.c: s/gtk_idle_add/g_idle_add/
+
+	* app/gimprc.c: don't use "gimprc" in token handlers but the
+	passed "val1p" and "val2p".
+
+	* app/image_map.[ch]: cleanup in preparation of making a GObject
+	out of it.
+
+	* app/base/pixel-region.[ch]: no need to pass the
+	PixelRegionIterator around as void pointer.
+
+	* app/core/gimp.[ch]
+	* app/core/gimpcontext.[ch]
+	* app/core/gimptoolinfo.[ch]
+	* app/tools/tool_manager.c
+	* app/widgets/gimpdnd.c: added the standard_tool_info to the Gimp
+	object.
+
+	* app/batch.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/file-utils.c
+	* app/interface.c
+	* app/main.c
+	* app/path.[ch]
+	* app/pathP.h
+	* app/plug_in.h
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer.c
+	* app/gui/color-area.c
+	* app/gui/color-notebook.c
+	* app/gui/colormap-dialog.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/error-console-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradient-select.c
+	* app/gui/indicator-area.c
+	* app/gui/info-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/session.c
+	* app/gui/splash.c
+	* app/gui/view-commands.c
+	* app/tools/gimpinktool-blob.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimppreview.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c: changed accordingly: s/Tattoo/GimpTattoo/, include
+	the new types files, include <glib-object.h> instead of >gtk/gtk.h>.
+	Bad hacks to get rid of SELECTION_OFF and friends in core/ (will
+	be replaced ba a signal soon).
+
+	* tools/pdbgen/Makefile.am: changed list of headers scanned for
+	enums accordingly.
+
+	* app/pdb/procedural_db.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: same fixes as above, added
+	hacks to ensure that all foo-types.h files are included before all
+	other gimp internal includes, include "pdb-types.h" unconditionally.
+
+	* tools/pdbgen/enums.pl
+	* app/pdb/*_cmds.c: regenerated.
+
 2001-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]

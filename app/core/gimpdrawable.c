@@ -883,7 +883,7 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
   gimp_parasite_list_remove (drawable->parasites, parasite);
 }
 
-Tattoo
+GimpTattoo
 gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0); 
@@ -893,11 +893,11 @@ gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 
 void
 gimp_drawable_set_tattoo (GimpDrawable *drawable,
-			  Tattoo        val)
+			  GimpTattoo    tattoo)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  drawable->tattoo = val;
+  drawable->tattoo = tattoo;
 }
 
 gboolean

@@ -23,7 +23,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "gui-types.h"
 #include "tools/tools-types.h"
 
 #include "core/gimp.h"
@@ -78,7 +78,6 @@
 #include "app_procs.h"
 #include "devices.h"
 #include "docindex.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "module_db.h"
 #include "undo_history.h"
@@ -238,16 +237,13 @@ GtkWidget *
 dialogs_undo_history_get (GimpDialogFactory *factory,
 			  GimpContext       *context)
 {
-  GDisplay  *gdisp;
   GimpImage *gimage;
   GtkWidget *undo_history;
 
-  gdisp = gimp_context_get_display (context);
+  gimage = gimp_context_get_image (context);
 
-  if (! gdisp)
+  if (! gimage)
     return NULL;
-
-  gimage = gdisp->gimage;
 
   undo_history = g_object_get_data (G_OBJECT (gimage), "undo-history");
 

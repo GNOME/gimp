@@ -33,12 +33,14 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #include <direct.h>		/* For _mkdir() */
 #define mkdir(path,mode) _mkdir(path)
 #endif
+
+#include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 

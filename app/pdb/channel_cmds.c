@@ -21,14 +21,14 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
+#include "core/core-types.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "pdb_glue.h"
@@ -255,7 +255,14 @@ channel_delete_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gtk_object_sink (GTK_OBJECT (channel));
+    {
+      if (! gimp_drawable_gimage (GIMP_DRAWABLE (channel)))
+	{
+	  g_object_unref (G_OBJECT (channel));
+	  success = TRUE;
+	}
+    
+    }
 
   return procedural_db_return_args (&channel_delete_proc, success);
 }

@@ -21,13 +21,12 @@
 #include <stdio.h>
 #include <string.h> /* strcmp, memcmp */
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
-#include "tools/tools-types.h" /* EEK */
 
 #include "base/tile.h"
 #include "base/tile-manager.h"
@@ -147,16 +146,16 @@ static Path *
 xcf_load_path (GimpImage *gimage,
 	       XcfInfo   *info)
 {
-  Path     *bzp;
-  gchar    *name;
-  guint32   locked;
-  guint8    state;
-  guint32   closed;
-  guint32   num_points;
-  guint32   version; /* changed from num_paths */
-  Tattoo    tattoo = 0;
-  GSList   *pts_list = NULL;
-  PathType  ptype;
+  Path       *bzp;
+  gchar      *name;
+  guint32     locked;
+  guint8      state;
+  guint32     closed;
+  guint32     num_points;
+  guint32     version; /* changed from num_paths */
+  GimpTattoo  tattoo = 0;
+  GSList     *pts_list = NULL;
+  PathType    ptype;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
   info->cp += xcf_read_int32 (info->fp, &locked, 1);
@@ -191,8 +190,8 @@ xcf_load_path (GimpImage *gimage,
   else if (version == 3)
     {
       /* Has extra tatto field */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *)&ptype, 1);
-      info->cp += xcf_read_int32 (info->fp, (guint32 *)&tattoo, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
       while (num_points-- > 0)
 	{
 	  PathPoint *bpt;

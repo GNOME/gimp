@@ -22,11 +22,11 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "app_procs.h"
@@ -43,7 +43,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimpbase/gimpbase.h"
@@ -571,7 +570,13 @@ image_delete_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gtk_object_sink (GTK_OBJECT (gimage));
+    {
+      if (gimage->disp_count == 0)
+	{
+	  g_object_unref (G_OBJECT (gimage));
+	  success = TRUE;
+	}
+    }
 
   return procedural_db_return_args (&image_delete_proc, success);
 }
@@ -2011,7 +2016,7 @@ image_set_cmap_invoker (Gimp     *gimp,
       gimage->num_cols = num_bytes / 3;
     
       /* A colormap alteration affects the whole image */
-      gdisplays_update_area (gimage, 0, 0, gimage->width, gimage->height);
+      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
     }
 
   return procedural_db_return_args (&image_set_cmap_proc, success);

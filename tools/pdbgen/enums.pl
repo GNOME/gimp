@@ -130,7 +130,7 @@ package Gimp::CodeGen::enums;
 	},
     MessageHandlerType =>
 	{ contig => 1,
-	  header => 'appenums.h',
+	  header => 'appenv.h',
 	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
 	  mapping => { MESSAGE_BOX => '0',
 		       CONSOLE => '1',
@@ -138,86 +138,12 @@ package Gimp::CodeGen::enums;
 	},
     StackTraceMode =>
 	{ contig => 1,
-	  header => 'appenums.h',
+	  header => 'appenv.h',
 	  symbols => [ qw(STACK_TRACE_NEVER STACK_TRACE_QUERY
 			  STACK_TRACE_ALWAYS) ],
 	  mapping => { STACK_TRACE_NEVER => '0',
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
-	},
-    BrushApplicationMode =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(HARD SOFT PRESSURE) ],
-	  mapping => { HARD => '0',
-		       SOFT => '1',
-		       PRESSURE => '2' }
-	},
-    PaintApplicationMode =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(CONSTANT INCREMENTAL) ],
-	  mapping => { CONSTANT => '0',
-		       INCREMENTAL => '1' },
-	  nicks   => { CONSTANT => 'CONTINUOUS' }
-	},
-    AddMaskType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
-			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK) ],
-	  mapping => { ADD_WHITE_MASK => '0',
-		       ADD_BLACK_MASK => '1',
-		       ADD_ALPHA_MASK => '2',
-		       ADD_SELECTION_MASK => '3',
-		       ADD_INV_SELECTION_MASK => '4' },
-	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
-		       ADD_BLACK_MASK => 'BLACK_MASK',
-		       ADD_ALPHA_MASK => 'ALPHA_MASK',
-		       ADD_SELECTION_MASK => 'SELECTION_MASK',
-		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK' }
-	},
-    GradientPaintMode =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
-			  LOOP_TRIANGLE ONCE_END_COLOR) ],
-	  mapping => { ONCE_FORWARD => '0',
-		       ONCE_BACKWARDS => '1',
-		       LOOP_SAWTOOTH => '2',
-		       LOOP_TRIANGLE => '3',
-		       ONCE_END_COLOR => '4' }
-	},
-    OrientationType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
-	  mapping => { HORIZONTAL => '0',
-		       VERTICAL => '1',
-		       UNKNOWN => '2' }
-	},
-    ChannelOps =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUB CHANNEL_OP_REPLACE
-			  CHANNEL_OP_INTERSECT) ],
-	  mapping => { CHANNEL_OP_ADD => '0',
-		       CHANNEL_OP_SUB => '1',
-		       CHANNEL_OP_REPLACE => '2',
-		       CHANNEL_OP_INTERSECT => '3' },
-	  nicks   => { CHANNEL_OP_ADD => 'ADD',
-		       CHANNEL_OP_SUB => 'SUB',
-		       CHANNEL_OP_REPLACE => 'REPLACE',
-		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
-	},
-    RunModeType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
-			  RUN_WITH_LAST_VALS) ],
-	  mapping => { RUN_INTERACTIVE => '0',
-		       RUN_NONINTERACTIVE => '1',
-		       RUN_WITH_LAST_VALS => '2' }
 	},
     LayerModeEffects =>
 	{ contig => 1,
@@ -313,12 +239,50 @@ package Gimp::CodeGen::enums;
 		       INDEXED_CHANNEL => '4',
 		       ALPHA_CHANNEL => '5' }
 	},
+    AddMaskType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
+			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK) ],
+	  mapping => { ADD_WHITE_MASK => '0',
+		       ADD_BLACK_MASK => '1',
+		       ADD_ALPHA_MASK => '2',
+		       ADD_SELECTION_MASK => '3',
+		       ADD_INV_SELECTION_MASK => '4' },
+	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
+		       ADD_BLACK_MASK => 'BLACK_MASK',
+		       ADD_ALPHA_MASK => 'ALPHA_MASK',
+		       ADD_SELECTION_MASK => 'SELECTION_MASK',
+		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK' }
+	},
     MaskApplyMode =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
 	  symbols => [ qw(APPLY DISCARD) ],
 	  mapping => { APPLY => '0',
 		       DISCARD => '1' }
+	},
+    OrientationType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
+	  mapping => { HORIZONTAL => '0',
+		       VERTICAL => '1',
+		       UNKNOWN => '2' }
+	},
+    ChannelOps =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUB CHANNEL_OP_REPLACE
+			  CHANNEL_OP_INTERSECT) ],
+	  mapping => { CHANNEL_OP_ADD => '0',
+		       CHANNEL_OP_SUB => '1',
+		       CHANNEL_OP_REPLACE => '2',
+		       CHANNEL_OP_INTERSECT => '3' },
+	  nicks   => { CHANNEL_OP_ADD => 'ADD',
+		       CHANNEL_OP_SUB => 'SUB',
+		       CHANNEL_OP_REPLACE => 'REPLACE',
+		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
 	},
     GimpFillType =>
 	{ contig => 1,
@@ -385,6 +349,42 @@ package Gimp::CodeGen::enums;
 		       FSLOWBLEED_DITHER => '2',
 		       FIXED_DITHER => '3',
 		       NODESTRUCT_DITHER => '4' }
+	},
+    RunModeType =>
+	{ contig => 1,
+	  header => 'plug-in/plug-in-types.h',
+	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
+			  RUN_WITH_LAST_VALS) ],
+	  mapping => { RUN_INTERACTIVE => '0',
+		       RUN_NONINTERACTIVE => '1',
+		       RUN_WITH_LAST_VALS => '2' }
+	},
+    BrushApplicationMode =>
+	{ contig => 1,
+	  header => 'tools/tools-types.h',
+	  symbols => [ qw(HARD SOFT PRESSURE) ],
+	  mapping => { HARD => '0',
+		       SOFT => '1',
+		       PRESSURE => '2' }
+	},
+    PaintApplicationMode =>
+	{ contig => 1,
+	  header => 'tools/tools-types.h',
+	  symbols => [ qw(CONSTANT INCREMENTAL) ],
+	  mapping => { CONSTANT => '0',
+		       INCREMENTAL => '1' },
+	  nicks   => { CONSTANT => 'CONTINUOUS' }
+	},
+    GradientPaintMode =>
+	{ contig => 1,
+	  header => 'tools/tools-types.h',
+	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
+			  LOOP_TRIANGLE ONCE_END_COLOR) ],
+	  mapping => { ONCE_FORWARD => '0',
+		       ONCE_BACKWARDS => '1',
+		       LOOP_SAWTOOTH => '2',
+		       LOOP_TRIANGLE => '3',
+		       ONCE_END_COLOR => '4' }
 	},
     GradientType =>
 	{ contig => 1,

@@ -23,6 +23,11 @@
 #include <time.h>      /* time_t */
 #include <sys/types.h> /* pid_t  */
 
+
+/* FIXME: move the plugin stuff to plug-in/ */
+
+#include "plug-in/plug-in-types.h"
+
 #include "pdb/procedural_db.h"
 
 

@@ -3,7 +3,6 @@
 noinst_LIBRARIES = libapppdb.a
 
 libapppdb_a_SOURCES = @STRIP_BEGIN@ \
-	pdb_glue.h		\
 	internal_procs.c	\
 	internal_procs.h	\
 	procedural_db.c		\
@@ -32,6 +31,8 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	paths_cmds.c		\
 	pattern_select_cmds.c	\
 	patterns_cmds.c		\
+	pdb_glue.h		\
+	pdb-types.h		\
 	plug_in_cmds.c		\
 	procedural_db_cmds.c	\
 	selection_cmds.c	\

@@ -81,7 +81,9 @@ GimpToolInfo * gimp_tool_info_new          (GimpContext  *context,
 					    const gchar  *stock_id,
 					    GdkPixbuf    *stock_pixbuf);
 
-GimpToolInfo * gimp_tool_info_get_standard (void);
+void           gimp_tool_info_set_standard (Gimp         *gimp,
+					    GimpToolInfo *tool_info);
+GimpToolInfo * gimp_tool_info_get_standard (Gimp         *gimp);
 
 
 #endif  /*  __GIMP_TOOL_INFO_H__  */

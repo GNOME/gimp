@@ -19,9 +19,6 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <gtk/gtk.h>
 
 #include "core-types.h"
 
@@ -30,10 +27,6 @@
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimptoolinfo.h"
-
-/* GRMPF */
-#include "tools/tools-types.h"
-#include "tools/gimprectselecttool.h"
 
 
 static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
@@ -296,36 +289,30 @@ gimp_tool_info_new (GimpContext  *context,
   return tool_info;
 }
 
-GimpToolInfo *
-gimp_tool_info_get_standard (void)
+void
+gimp_tool_info_set_standard (Gimp         *gimp,
+			     GimpToolInfo *tool_info)
 {
-  static GimpToolInfo *standard_tool_info = NULL;
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
-  if (! standard_tool_info)
+  if (gimp->standard_tool_info)
     {
-      GdkPixbuf *pixbuf;
-
-      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			       TRUE,
-			       8,
-			       22,
-			       22);
-
-      standard_tool_info =
-	gimp_tool_info_new (NULL,
-			    GIMP_TYPE_RECT_SELECT_TOOL,
-                            FALSE,
-			    "gimp:standard_tool",
-			    "Standard Tool",
-			    "Well something must be broken",
-			    "<Image>/Tools/Default Tool", NULL,
-			    NULL, NULL,
-			    NULL,
-			    GTK_STOCK_STOP,
-			    pixbuf);
-
-      g_object_unref (G_OBJECT (pixbuf));
+      g_object_unref (G_OBJECT (gimp->standard_tool_info));
     }
 
-  return standard_tool_info;
+  gimp->standard_tool_info = tool_info;
+
+  if (gimp->standard_tool_info)
+    {
+      g_object_ref (G_OBJECT (gimp->standard_tool_info));
+    }
+}
+
+GimpToolInfo *
+gimp_tool_info_get_standard (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return gimp->standard_tool_info;
 }

@@ -55,6 +55,7 @@
 #include "gimppreview.h"
 #include "gimptoolinfopreview.h"
 
+#include "display/display-types.h"
 #include "image_render.h"
 
 

@@ -386,7 +386,15 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => 'gtk_object_sink (GTK_OBJECT (gimage));' );
+    %invoke = ( code => <<'CODE' );
+{
+  if (gimage->disp_count == 0)
+    {
+      g_object_unref (G_OBJECT (gimage));
+      success = TRUE;
+    }
+}
+CODE
 }
 
 sub image_free_shadow {
@@ -847,9 +855,7 @@ HELP
 			      %%desc%%' } }
     );
 
-    %invoke = (
-	headers => [ qw("gdisplay.h") ],
-	code => <<'CODE'
+    %invoke = ( code => <<'CODE'
 {
   if (gimage->cmap == NULL)
     gimage->cmap = g_new (guchar, COLORMAP_SIZE);
@@ -860,7 +866,7 @@ HELP
   gimage->num_cols = num_bytes / 3;
 
   /* A colormap alteration affects the whole image */
-  gdisplays_update_area (gimage, 0, 0, gimage->width, gimage->height);
+  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 }
 CODE
     );

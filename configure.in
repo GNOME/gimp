@@ -875,9 +875,11 @@ app/Makefile
 app/makefile.mingw
 app/base/Makefile
 app/core/Makefile
+app/display/Makefile
 app/gui/Makefile
 app/paint-funcs/Makefile
 app/pdb/Makefile
+app/plug-in/Makefile
 app/tools/Makefile
 app/widgets/Makefile
 app/xcf/Makefile

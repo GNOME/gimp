@@ -128,6 +128,8 @@ tool_manager_init (Gimp *gimp)
   /* register internal tools */
   tools_init (gimp);
 
+  gimp_tool_info_set_standard (gimp, tool_manager_get_info_by_type (gimp, GIMP_TYPE_RECT_SELECT_TOOL));
+
   if (! gimprc.global_paint_options && tool_manager->active_tool)
     {
       tool_context =

@@ -23,6 +23,7 @@
 #include "core/core-types.h"
 
 #include "widgets/widgets-types.h"
+#include "display/display-types.h"
 
 
 /*  tools  */
@@ -48,6 +49,42 @@ typedef void   (* ToolOptionsResetFunc) (GimpToolOptions *tool_options);
 
 
 /*  enums  */
+
+/* Brush application types  */
+typedef enum
+{
+  HARD,     /* pencil */
+  SOFT,     /* paintbrush */
+  PRESSURE  /* paintbrush with variable pressure */
+} BrushApplicationMode;
+
+/* Paint application modes  */
+typedef enum
+{
+  CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
+  INCREMENTAL  /* convolve, smudge */
+} PaintApplicationMode;
+
+/* gradient paint modes */
+typedef enum
+{
+  ONCE_FORWARD,    /* paint through once, then stop */
+  ONCE_BACKWARDS,  /* paint once, then stop, but run the gradient the other way */
+  LOOP_SAWTOOTH,   /* keep painting, looping through the grad start->end,start->end /|/|/| */
+  LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
+  ONCE_END_COLOR   /* paint once, but keep painting with the end color */
+} GradientPaintMode;
+
+typedef enum /*< skip >*/
+{
+  SELECTION_ADD       = CHANNEL_OP_ADD,
+  SELECTION_SUB       = CHANNEL_OP_SUB,
+  SELECTION_REPLACE   = CHANNEL_OP_REPLACE,
+  SELECTION_INTERSECT = CHANNEL_OP_INTERSECT,
+  SELECTION_MOVE_MASK,
+  SELECTION_MOVE,
+  SELECTION_ANCHOR
+} SelectOps;
 
 /*  The possible states for tools  */
 typedef enum /*< skip >*/

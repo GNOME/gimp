@@ -27,9 +27,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -51,7 +48,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "gui-types.h"
 
 #include "appenv.h"
 

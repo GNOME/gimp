@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs base core pdb xcf tools widgets gui
+SUBDIRS = paint-funcs base core pdb plug-in xcf tools display widgets gui
 
 scriptdata =
 
@@ -103,8 +103,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 	app_procs.c		\
 	app_procs.h		\
-	appenums.h		\
-	apptypes.h		\
 	main.c			\
 	\
 	batch.c			\
@@ -153,8 +151,10 @@ INCLUDES = @STRIP_BEGIN@ \
 gimp_LDADD = @STRIP_BEGIN@ \
 	gui/libappgui.a							\
 	tools/libapptools.a						\
+	display/libappdisplay.a						\
 	widgets/libappwidgets.a						\
 	xcf/libappxcf.a							\
+	plug-in/libappplug-in.a						\
 	pdb/libapppdb.a							\
 	core/libappcore.a						\
 	paint-funcs/libapppaint-funcs.a					\

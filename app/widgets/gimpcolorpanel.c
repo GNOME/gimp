@@ -24,6 +24,7 @@
 
 #include "widgets-types.h"
 
+#include "gui/gui-types.h"
 #include "gui/color-notebook.h"
 
 #include "gimpcolorpanel.h"

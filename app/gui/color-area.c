@@ -29,7 +29,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"

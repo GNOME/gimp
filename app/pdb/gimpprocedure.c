@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 
 #include "core/gimp.h"
 

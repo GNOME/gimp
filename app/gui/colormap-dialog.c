@@ -29,7 +29,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -42,7 +42,6 @@
 
 #include "colormaps.h"
 #include "image_render.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

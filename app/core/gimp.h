@@ -75,6 +75,7 @@ struct _Gimp
   GHashTable            *procedural_ht;
 
   GimpContainer         *tool_info_list;
+  GimpToolInfo          *standard_tool_info;
 
   /*  the opened and saved images in MRU order  */
   GimpContainer         *documents;

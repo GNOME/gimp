@@ -15,67 +15,75 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __UNDO_TYPES_H__
 #define __UNDO_TYPES_H__
 
+
+typedef struct _LayerUndo     LayerUndo;
+typedef struct _LayerMaskUndo LayerMaskUndo;
+typedef struct _FStoLayerUndo FStoLayerUndo;
+typedef         GSList        PathUndo;
 
 
 /*  Undo types  */
 
 /* NOTE: If you change this list, please update the textual mapping at
- * the bottom of undo.c as well. */
+ *  the bottom of undo.c as well.
+ */
 typedef enum
 {
-    /* Type UNDO_NULL (0) is special - in the gimpimage structure it means
-     * there is no undo group currently being added to. */
+  /* Type UNDO_NULL (0) is special - in the gimpimage structure it
+   * means there is no undo group currently being added to.
+   */
 
-    UNDO_NULL = 0, /* Picky compilers demand this in the enumeration - gosgood@idt.net */
-    IMAGE_UNDO,
-    IMAGE_MOD_UNDO,
-    MASK_UNDO,
-    LAYER_DISPLACE_UNDO,
-    TRANSFORM_UNDO,
-    PAINT_UNDO,
-    LAYER_ADD_UNDO,
-    LAYER_REMOVE_UNDO,
-    LAYER_MOD,
-    LAYER_MASK_ADD_UNDO,
-    LAYER_MASK_REMOVE_UNDO,
-    LAYER_RENAME_UNDO,
-    LAYER_REPOSITION_UNDO,
-    CHANNEL_ADD_UNDO,
-    CHANNEL_REMOVE_UNDO,
-    CHANNEL_MOD,
-    FS_TO_LAYER_UNDO,
-    GIMAGE_MOD,
-    FS_RIGOR,
-    FS_RELAX,
-    GUIDE_UNDO,
-    TEXT_UNDO,
+  UNDO_NULL = 0, /* Picky compilers demand this in the enumeration - gosgood@idt.net */
+  IMAGE_UNDO,
+  IMAGE_MOD_UNDO,
+  MASK_UNDO,
+  LAYER_DISPLACE_UNDO,
+  TRANSFORM_UNDO,
+  PAINT_UNDO,
+  LAYER_ADD_UNDO,
+  LAYER_REMOVE_UNDO,
+  LAYER_MOD,
+  LAYER_MASK_ADD_UNDO,
+  LAYER_MASK_REMOVE_UNDO,
+  LAYER_RENAME_UNDO,
+  LAYER_REPOSITION_UNDO,
+  CHANNEL_ADD_UNDO,
+  CHANNEL_REMOVE_UNDO,
+  CHANNEL_MOD,
+  FS_TO_LAYER_UNDO,
+  GIMAGE_MOD,
+  FS_RIGOR,
+  FS_RELAX,
+  GUIDE_UNDO,
+  TEXT_UNDO,
 
-    FLOAT_MASK_UNDO,
-    EDIT_PASTE_UNDO,
-    EDIT_CUT_UNDO,
-    TRANSFORM_CORE_UNDO,
+  FLOAT_MASK_UNDO,
+  EDIT_PASTE_UNDO,
+  EDIT_CUT_UNDO,
+  TRANSFORM_CORE_UNDO,
 
-    PAINT_CORE_UNDO,
-    FLOATING_LAYER_UNDO,
-    LINKED_LAYER_UNDO,
-    LAYER_APPLY_MASK_UNDO,
-    LAYER_MERGE_UNDO,
-    FS_ANCHOR_UNDO,
-    GIMAGE_MOD_UNDO,
-    CROP_UNDO,
-    LAYER_SCALE_UNDO,
-    LAYER_RESIZE_UNDO,
-    QMASK_UNDO,	
-    PARASITE_ATTACH_UNDO,
-    PARASITE_REMOVE_UNDO,
-    RESOLUTION_UNDO,
-    IMAGE_SCALE_UNDO,
-    IMAGE_RESIZE_UNDO,
+  PAINT_CORE_UNDO,
+  FLOATING_LAYER_UNDO,
+  LINKED_LAYER_UNDO,
+  LAYER_APPLY_MASK_UNDO,
+  LAYER_MERGE_UNDO,
+  FS_ANCHOR_UNDO,
+  GIMAGE_MOD_UNDO,
+  CROP_UNDO,
+  LAYER_SCALE_UNDO,
+  LAYER_RESIZE_UNDO,
+  QMASK_UNDO,	
+  PARASITE_ATTACH_UNDO,
+  PARASITE_REMOVE_UNDO,
+  RESOLUTION_UNDO,
+  IMAGE_SCALE_UNDO,
+  IMAGE_RESIZE_UNDO,
 
-    MISC_UNDO = 100
+  MISC_UNDO = 100
 } UndoType;
 
 

@@ -20,9 +20,9 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 
 #include "app_procs.h"
 

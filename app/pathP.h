@@ -28,13 +28,13 @@ struct _PathPoint
 
 struct _Path
 {
-  GSList    *path_details;
-  gint       pathtype; /* Only beziers to start with */
-  gboolean   closed;
-  guint32    state;
-  guint32    locked;   /* Only bottom bit used */
-  Tattoo     tattoo;   /* The tattoo for the path */
-  gchar     *name;
+  GSList     *path_details;
+  gint        pathtype; /* Only beziers to start with */
+  gboolean    closed;
+  guint32     state;
+  guint32     locked;   /* Only bottom bit used */
+  GimpTattoo  tattoo;   /* The tattoo for the path */
+  gchar      *name;
 };
 
 gboolean      path_set_path        (GimpImage *gimage, 

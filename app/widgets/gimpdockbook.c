@@ -272,6 +272,12 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 				     position);
     }
 
+  /*  Now this is evil: GtkNotebook's menu_item "activate" callback
+   *  gets it's notebook context from gtk_menu_get_attach_widget()
+   *  which badly fails because we hijacked the menu and attached it
+   *  to our own item_factory menu. As a workaround, we disconnect
+   *  gtk's handler and install our own. --Mitch
+   */
   {
     GtkWidget *menu_item;
     GList     *widget_list;
@@ -294,12 +300,13 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
 	if ((GtkWidget *) widget_list->data == (GtkWidget *) dockable)
 	  {
-	    /*  EEK: disconnect GtkNotebook's own handler  */
+	    /*  disconnect GtkNotebook's handler  */
 	    g_signal_handlers_disconnect_matched (G_OBJECT (menu_item),
 						  G_SIGNAL_MATCH_DATA,
 						  0, 0,
 						  NULL, NULL, page);
 
+	    /*  and install our own  */
 	    g_signal_connect (G_OBJECT (menu_item), "activate",
 			      G_CALLBACK (gimp_dockbook_menu_switch_page),
 			      dockable);

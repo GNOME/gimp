@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "display/display-types.h"
 
 #include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
@@ -56,6 +56,7 @@ static gint   gdisplay_delete  (GtkWidget *widget,
 				GdkEvent  *event,
 				GDisplay  *display);
 
+
 static GtkTargetEntry display_target_table[] =
 {
   GIMP_TARGET_LAYER,
@@ -65,8 +66,7 @@ static GtkTargetEntry display_target_table[] =
   GIMP_TARGET_PATTERN,
   GIMP_TARGET_BUFFER
 };
-static guint display_n_targets = (sizeof (display_target_table) /
-				  sizeof (display_target_table[0]));
+
 
 static void
 gdisplay_destroy (GtkWidget *widget,
@@ -190,7 +190,7 @@ create_display_shell (GDisplay *gdisp,
   /*  dnd stuff  */
   gtk_drag_dest_set (gdisp->shell,
 		     GTK_DEST_DEFAULT_ALL,
-		     display_target_table, display_n_targets,
+		     display_target_table, G_N_ELEMENTS (display_target_table),
 		     GDK_ACTION_COPY);
 
   gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_LAYER,

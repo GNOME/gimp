@@ -20,8 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"

@@ -33,7 +33,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -56,6 +56,10 @@
 #define geteuid() 0
 #define getegid() 0
 #endif
+
+#include <glib-object.h>
+
+#include <gtk/gtk.h> /* EEK */
 
 #include "core/core-types.h"
 

@@ -352,7 +352,15 @@ HELP
     @inargs = ( &layer_arg );
     $inargs[0]->{desc} .= ' to delete';
 
-    %invoke = ( code => 'gtk_object_sink (GTK_OBJECT (layer));' );
+    %invoke = ( code => <<'CODE' );
+{
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (layer)))
+    {
+      g_object_unref (G_OBJECT (layer));
+      success = TRUE;
+    }
+}
+CODE
 }
 
 sub layer_translate {

@@ -21,14 +21,13 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "core/core-types.h"
+#include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 #include "appenv.h"
 
 static ProcRecord message_proc;

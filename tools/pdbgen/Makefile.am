@@ -49,13 +49,15 @@ EXTRA_DIST = \
 
 enum_headers = \
 	../../libgimpbase/gimpbasetypes.h	\
-	../../app/appenums.h			\
+	../../app/appenv.h			\
 	../../app/paint-funcs/paint-funcs.h	\
 	../../app/base/base-types.h		\
 	../../app/core/core-types.h		\
 	../../app/core/gimpdrawable-offset.h	\
 	../../app/core/gimpimage.h		\
 	../../app/core/gimpimage-convert.h	\
+	../../app/plug-in/plug-in-types.h	\
+	../../app/tools/tools-types.h		\
 	../../app/tools/gimpblendtool.h		\
 	../../app/tools/gimpbucketfilltool.h	\
 	../../app/tools/gimpclonetool.h		\
