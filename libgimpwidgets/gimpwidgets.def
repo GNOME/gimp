@@ -29,6 +29,15 @@ EXPORTS
 	gimp_color_display_load_state
 	gimp_color_display_new
 	gimp_color_display_save_state
+	gimp_color_display_stack_add
+	gimp_color_display_stack_changed
+	gimp_color_display_stack_clone
+	gimp_color_display_stack_convert
+	gimp_color_display_stack_get_type
+	gimp_color_display_stack_new
+	gimp_color_display_stack_remove
+	gimp_color_display_stack_reorder_down
+	gimp_color_display_stack_reorder_up
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
 	gimp_color_scale_entry_new
