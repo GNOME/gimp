@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
+"POT-Creation-Date: 2004-09-05 02:40+0200\n"
 "PO-Revision-Date: 2004-03-21 01:54+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -21,7 +21,7 @@ msgstr "Penseelselectie"
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Fontselectie"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:98
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
@@ -209,35 +209,72 @@ msgid "percent"
 msgstr "procent"
 
 #: libgimpbase/gimpbaseenums.c:15
+msgid "Small"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:16
+msgid "Medium"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Large"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "Light Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "Mid-Tone Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:39
+msgid "Dark Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "White Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Gray Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+#, fuzzy
+msgid "Black Only"
+msgstr "Zwart"
+
+#: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
 #, fuzzy
 msgid "Grayscale"
 msgstr "Converteren naar grijswaarden"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
 msgstr ""
 
@@ -476,6 +513,19 @@ msgstr ""
 "Klik op de druppelaar en vervolgens op een kleur op het scherm om die kleur "
 "te selecteren."
 
+#: libgimpwidgets/gimppreviewarea.c:114
+msgid "Check Size"
+msgstr ""
+
+#: libgimpwidgets/gimppreviewarea.c:121
+msgid "Check Style"
+msgstr ""
+
+#. a toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:246
+msgid "_Preview"
+msgstr ""
+
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Verankeren"
@@ -556,7 +606,7 @@ msgstr "Eenheid"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:811
+#: libgimpwidgets/gimpwidgets.c:1000
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -564,18 +614,18 @@ msgstr ""
 "Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
 "Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:1004
 msgid "_New Seed"
 msgstr "_Nieuw brongetal"
 
-#: libgimpwidgets/gimpwidgets.c:828
+#: libgimpwidgets/gimpwidgets.c:1017
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
 "een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
-#: libgimpwidgets/gimpwidgets.c:832
+#: libgimpwidgets/gimpwidgets.c:1021
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 
@@ -675,65 +725,70 @@ msgstr "Zwartpuntcompensatie"
 msgid "CMYK color selector"
 msgstr "CMYK-kleurkiezer"
 
-#: modules/colorsel_cmyk.c:132
+#: modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:149
+#: modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:156
+#: modules/colorsel_cmyk.c:154
 msgid "Cyan"
 msgstr "Cyaan"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr "Geel"
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:157
 msgid "Black"
 msgstr "Zwart"
 
 # Zwart-onttrekking (%):
-#: modules/colorsel_cmyk.c:193
-msgid "Black Pullout (%):"
+#: modules/colorsel_cmyk.c:191
+#, fuzzy
+msgid "Black _Pullout:"
 msgstr "Zwart-onttrekking (%):"
 
+#: modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
 # Driehoekige kleurkiezer in schilderstijl
-#: modules/colorsel_triangle.c:110
+#: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr "Painterachtige driehoekige kleurkiezer"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:170
 msgid "Triangle"
 msgstr "Driehoek"
 
-#: modules/colorsel_water.c:104
+#: modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "Waterverfachtige kleurkiezer"
 
-#: modules/colorsel_water.c:176
+#: modules/colorsel_water.c:154
 msgid "Watercolor"
 msgstr "Waterverf"
 
-#: modules/colorsel_water.c:251
+#: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druk"
 

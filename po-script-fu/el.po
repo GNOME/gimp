@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:08+0200\n"
+"POT-Creation-Date: 2004-09-05 02:42+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -44,101 +44,112 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1135
-#: plug-ins/script-fu/script-fu-scripts.c:1137
+#: plug-ins/script-fu/script-fu-interface.c:192
+#: plug-ins/script-fu/script-fu-interface.c:194
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Πρόγραμμα εντολών:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1149
+#: plug-ins/script-fu/script-fu-interface.c:206
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Πρόγραμμα εντολών:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1188
-msgid "About"
+#: plug-ins/script-fu/script-fu-interface.c:213
+#, fuzzy
+msgid "_About"
 msgstr "Περί"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1198
+#: plug-ins/script-fu/script-fu-interface.c:238
 #, fuzzy
 msgid "Script Arguments"
 msgstr "Ορίσματα"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1221
+#: plug-ins/script-fu/script-fu-interface.c:269
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1264
+#: plug-ins/script-fu/script-fu-interface.c:313
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1334
+#: plug-ins/script-fu/script-fu-interface.c:395
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1338
+#: plug-ins/script-fu/script-fu-interface.c:399
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-interface.c:411
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-interface.c:418
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-interface.c:426
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1372
+#: plug-ins/script-fu/script-fu-interface.c:433
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1380
+#: plug-ins/script-fu/script-fu-interface.c:441
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:495
+#, fuzzy
+msgid "Script Progress"
+msgstr "Ορίσματα"
+
+#: plug-ins/script-fu/script-fu-interface.c:503
+msgid "(none)"
+msgstr ""
+
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1998
+#: plug-ins/script-fu/script-fu-interface.c:986
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-interface.c:992
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-interface.c:998
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2018
+#: plug-ins/script-fu/script-fu-interface.c:1006
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2043
+#: plug-ins/script-fu/script-fu-scripts.c:549
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 03:34+0200\n"
+"POT-Creation-Date: 2004-09-05 02:40+0200\n"
 "PO-Revision-Date: 2003-11-07 16:26+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <opensource@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -196,7 +196,7 @@ msgid "Co_lors"
 msgstr "Wa_rna"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:885 plug-ins/common/borderaverage.c:383
+#: plug-ins/FractalExplorer/Dialogs.c:885 plug-ins/common/borderaverage.c:382
 msgid "Number of Colors"
 msgstr "Bilangan Warna"
 
@@ -278,9 +278,9 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:1017
 #: plug-ins/FractalExplorer/Dialogs.c:1058 plug-ins/Lighting/lighting_ui.c:369
 #: plug-ins/common/CML_explorer.c:166 plug-ins/common/align_layers.c:417
-#: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2900
-#: plug-ins/common/postscript.c:2912 plug-ins/common/psp.c:420
-#: plug-ins/fits/fits.c:1017
+#: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2903
+#: plug-ins/common/postscript.c:2915 plug-ins/common/psp.c:420
+#: plug-ins/fits/fits.c:1016
 msgid "None"
 msgstr "Tiada"
 
@@ -373,9 +373,9 @@ msgstr "_Fraktal"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:581 plug-ins/common/CML_explorer.c:2000
 #: plug-ins/common/bz2.c:254 plug-ins/common/bz2.c:327
-#: plug-ins/common/channel_mixer.c:1186 plug-ins/common/curve_bend.c:863
+#: plug-ins/common/channel_mixer.c:1186 plug-ins/common/curve_bend.c:862
 #: plug-ins/common/dicom.c:651 plug-ins/common/gbr.c:590
-#: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1228
+#: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1254
 #: plug-ins/common/gtm.c:228 plug-ins/common/gz.c:311 plug-ins/common/gz.c:420
 #: plug-ins/common/jpeg.c:1365 plug-ins/common/mng.c:557
 #: plug-ins/common/mng.c:941 plug-ins/common/pat.c:437
@@ -415,9 +415,9 @@ msgstr "Simpan Parameter Fraktal"
 #: plug-ins/FractalExplorer/Dialogs.c:2082
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:309 plug-ins/common/CML_explorer.c:2215
-#: plug-ins/common/channel_mixer.c:1108 plug-ins/common/curve_bend.c:915
+#: plug-ins/common/channel_mixer.c:1108 plug-ins/common/curve_bend.c:914
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:331
-#: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:639
+#: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:648
 #: plug-ins/common/jpeg.c:817 plug-ins/common/mng.c:1112
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:336 plug-ins/common/png.c:676
@@ -430,7 +430,7 @@ msgstr "Simpan Parameter Fraktal"
 #: plug-ins/faxg3/faxg3.c:221 plug-ins/fits/fits.c:341
 #: plug-ins/flame/flame.c:408 plug-ins/gfig/gfig.c:430
 #: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
-#: plug-ins/help/domain.c:380 plug-ins/winicon/icoload.c:128
+#: plug-ins/help/domain.c:419 plug-ins/winicon/icoload.c:128
 #: plug-ins/xjt/xjt.c:2530 plug-ins/xjt/xjt.c:2538
 #, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -541,7 +541,7 @@ msgstr "Kesan Pencahayaan..."
 
 #. don't translate '<Image>'
 #: plug-ins/Lighting/lighting_main.c:204 plug-ins/common/flarefx.c:198
-#: plug-ins/common/nova.c:204 plug-ins/common/sparkle.c:193
+#: plug-ins/common/nova.c:205 plug-ins/common/sparkle.c:193
 #: plug-ins/gflare/gflare.c:835
 #, fuzzy
 msgid "<Image>/Filters/Light Effects"
@@ -663,7 +663,7 @@ msgid "Position"
 msgstr "Kedudukan"
 
 #: plug-ins/Lighting/lighting_ui.c:426 plug-ins/common/flarefx.c:731
-#: plug-ins/common/mblur.c:864 plug-ins/common/nova.c:457
+#: plug-ins/common/mblur.c:864 plug-ins/common/nova.c:460
 #: plug-ins/common/papertile.c:267 plug-ins/flame/flame.c:1203
 #: plug-ins/gflare/gflare.c:2645
 msgid "_X:"
@@ -674,7 +674,7 @@ msgid "Light source X position in XYZ space"
 msgstr "Kedudukan X sumber cahaya dalam ruang XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:439 plug-ins/common/flarefx.c:752
-#: plug-ins/common/mblur.c:870 plug-ins/common/nova.c:478
+#: plug-ins/common/mblur.c:870 plug-ins/common/nova.c:481
 #: plug-ins/common/papertile.c:276 plug-ins/flame/flame.c:1217
 #: plug-ins/gflare/gflare.c:2649
 msgid "_Y:"
@@ -877,7 +877,7 @@ msgstr "Peta _Persekitaran"
 msgid "Lighting Effects"
 msgstr "Kesan Pencahayaan"
 
-#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/gimpressionist/preview.c:177
+#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/gimpressionist/preview.c:181
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "_Kemas kini"
@@ -930,9 +930,9 @@ msgstr "Petakan ke Objek"
 
 #: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:369
 #: plug-ins/common/displace.c:158 plug-ins/common/fractaltrace.c:133
-#: plug-ins/common/illusion.c:112 plug-ins/common/lic.c:791
+#: plug-ins/common/illusion.c:113 plug-ins/common/lic.c:791
 #: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
-#: plug-ins/common/tileit.c:235 plug-ins/common/tiler.c:73
+#: plug-ins/common/tileit.c:230 plug-ins/common/tiler.c:73
 #: plug-ins/common/warp.c:254
 #, fuzzy
 msgid "<Image>/Filters/Map"
@@ -1020,7 +1020,7 @@ msgstr "_Kedalaman"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kualiti pelicinan. Lebih tinggi lebih baik, tetapi lebih perlahan"
 
-#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:808
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:721
 #: plug-ins/common/wind.c:983 plug-ins/imagemap/imap_preferences.c:538
 msgid "_Threshold:"
 msgstr "_Ambang:"
@@ -1101,7 +1101,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Kedudukan objek Z dalam ruang XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1070 plug-ins/common/postscript.c:3064
+#: plug-ins/MapObject/mapobject_ui.c:1070 plug-ins/common/postscript.c:3067
 msgid "Rotation"
 msgstr "Putaran"
 
@@ -1248,7 +1248,7 @@ msgstr "Colormap teruk"
 #. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:314
 #: plug-ins/common/dicom.c:299 plug-ins/common/gbr.c:336
-#: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:644
+#: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:653
 #: plug-ins/common/jpeg.c:824 plug-ins/common/pat.c:309
 #: plug-ins/common/pcx.c:311 plug-ins/common/pix.c:342
 #: plug-ins/common/png.c:683 plug-ins/common/pnm.c:404
@@ -1288,10 +1288,10 @@ msgstr ""
 #.
 #: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
 #: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:361
-#: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:298
-#: plug-ins/common/compose.c:618 plug-ins/common/decompose.c:586
-#: plug-ins/common/dicom.c:446 plug-ins/common/film.c:952
-#: plug-ins/common/gifload.c:860 plug-ins/common/jpeg.c:984
+#: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:289
+#: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:584
+#: plug-ins/common/dicom.c:446 plug-ins/common/film.c:950
+#: plug-ins/common/gifload.c:867 plug-ins/common/jpeg.c:984
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
 #: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2184
@@ -1299,8 +1299,8 @@ msgstr ""
 #: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
 #: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
-#: plug-ins/fits/fits.c:512 plug-ins/gfig/gfig-dialog.c:1288
-#: plug-ins/gimpressionist/general.c:115 plug-ins/sgi/sgi.c:380
+#: plug-ins/fits/fits.c:510 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:380
 #: plug-ins/twain/twain.c:574 plug-ins/winsnap/winsnap.c:1237
 msgid "Background"
 msgstr "Latar belakang"
@@ -1323,7 +1323,7 @@ msgstr "Tidak boleh mengendalikan jenis imej tak diketahui"
 #. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:586
 #: plug-ins/common/gbr.c:595 plug-ins/common/gif.c:1004
-#: plug-ins/common/gih.c:1233 plug-ins/common/gtm.c:248
+#: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:248
 #: plug-ins/common/jpeg.c:1320 plug-ins/common/pat.c:442
 #: plug-ins/common/pcx.c:549 plug-ins/common/pix.c:525
 #: plug-ins/common/png.c:1187 plug-ins/common/pnm.c:781
@@ -1331,7 +1331,7 @@ msgstr "Tidak boleh mengendalikan jenis imej tak diketahui"
 #: plug-ins/common/sunras.c:521 plug-ins/common/tga.c:1037
 #: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1005
 #: plug-ins/common/xpm.c:624 plug-ins/common/xwd.c:543
-#: plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:685 plug-ins/sgi/sgi.c:549
+#: plug-ins/fits/fits.c:459 plug-ins/gfli/gfli.c:685 plug-ins/sgi/sgi.c:549
 #: plug-ins/xjt/xjt.c:1686
 #, c-format
 msgid "Saving '%s'..."
@@ -1448,36 +1448,36 @@ msgstr "AlienMap2"
 msgid "<Image>/Filters/Colors/Map"
 msgstr "<Image>/Filters/Colors/_Max RGB..."
 
-#: plug-ins/common/AlienMap2.c:336
+#: plug-ins/common/AlienMap2.c:340
 msgid "AlienMap2: Transforming..."
 msgstr "AlienMap2: Penjelmaan..."
 
-#: plug-ins/common/AlienMap2.c:407
+#: plug-ins/common/AlienMap2.c:411
 msgid "AlienMap2"
 msgstr "AlienMap2"
 
-#: plug-ins/common/AlienMap2.c:455 plug-ins/common/AlienMap2.c:479
-#: plug-ins/common/AlienMap2.c:503
+#: plug-ins/common/AlienMap2.c:464 plug-ins/common/AlienMap2.c:488
+#: plug-ins/common/AlienMap2.c:512
 msgid "Number of cycles covering full value range"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:467 plug-ins/common/AlienMap2.c:491
-#: plug-ins/common/AlienMap2.c:515
+#: plug-ins/common/AlienMap2.c:476 plug-ins/common/AlienMap2.c:500
+#: plug-ins/common/AlienMap2.c:524
 msgid "Phase angle, range 0-360"
 msgstr ""
 
 #. Propagate Mode
-#: plug-ins/common/AlienMap2.c:529 plug-ins/common/hot.c:589
-#: plug-ins/common/vpropagate.c:1048 plug-ins/common/waves.c:323
+#: plug-ins/common/AlienMap2.c:538 plug-ins/common/hot.c:589
+#: plug-ins/common/vpropagate.c:1052 plug-ins/common/waves.c:324
 msgid "Mode"
 msgstr "Mod"
 
-#: plug-ins/common/AlienMap2.c:533
+#: plug-ins/common/AlienMap2.c:542
 #, fuzzy
 msgid "_RGB color model"
 msgstr "Model Warna _RGB"
 
-#: plug-ins/common/AlienMap2.c:534
+#: plug-ins/common/AlienMap2.c:543
 #, fuzzy
 msgid "_HSL color model"
 msgstr "Model Warna _HSL"
@@ -1689,8 +1689,8 @@ msgid "Randoms from seed (shared)"
 msgstr "Rawak dari seed (terkongsi)"
 
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:308
-#: plug-ins/common/decompose.c:141 plug-ins/gimpressionist/orientation.c:168
-#: plug-ins/gimpressionist/size.c:162
+#: plug-ins/common/decompose.c:141 plug-ins/gimpressionist/orientation.c:162
+#: plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Warna"
 
@@ -1700,8 +1700,8 @@ msgid "Saturation"
 msgstr "Ketepuan"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/CML_explorer.c:310
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:139
-#: plug-ins/gimpressionist/size.c:133
+#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:138
+#: plug-ins/gimpressionist/size.c:141
 msgid "Value"
 msgstr "Nilai"
 
@@ -1714,9 +1714,9 @@ msgstr "(Tiada)"
 msgid "CML _Explorer..."
 msgstr "CML_explorer: evoluting..."
 
-#: plug-ins/common/CML_explorer.c:475 plug-ins/common/checkerboard.c:101
-#: plug-ins/common/diffraction.c:186 plug-ins/common/gqbist.c:422
-#: plug-ins/common/grid.c:159 plug-ins/common/jigsaw.c:415
+#: plug-ins/common/CML_explorer.c:475 plug-ins/common/checkerboard.c:100
+#: plug-ins/common/diffraction.c:184 plug-ins/common/gqbist.c:422
+#: plug-ins/common/grid.c:156 plug-ins/common/jigsaw.c:395
 #: plug-ins/common/sinus.c:198 plug-ins/maze/maze.c:175
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern"
@@ -2184,7 +2184,7 @@ msgstr "Mengoptimumkan Animasi..."
 msgid "Apply _Lens..."
 msgstr "Gunakan kanta..."
 
-#: plug-ins/common/apply_lens.c:119 plug-ins/common/glasstile.c:121
+#: plug-ins/common/apply_lens.c:119 plug-ins/common/glasstile.c:123
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects"
 msgstr "<Image>/Filters/Glass Effects/_Glass Tile..."
@@ -2265,57 +2265,56 @@ msgstr "Auto-Panjangkan HSV..."
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
 msgstr ""
 
-#: plug-ins/common/blinds.c:147
+#: plug-ins/common/blinds.c:134
 #, fuzzy
 msgid "_Blinds..."
 msgstr "Penghadang cahaya"
 
-#: plug-ins/common/blinds.c:154 plug-ins/common/curve_bend.c:579
+#: plug-ins/common/blinds.c:141 plug-ins/common/curve_bend.c:578
 #: plug-ins/common/emboss.c:156 plug-ins/common/engrave.c:105
 #: plug-ins/common/iwarp.c:259 plug-ins/common/mosaic.c:316
-#: plug-ins/common/newsprint.c:542 plug-ins/common/polar.c:184
-#: plug-ins/common/ripple.c:144 plug-ins/common/shift.c:116
-#: plug-ins/common/video.c:1825 plug-ins/common/vpropagate.c:274
-#: plug-ins/common/waves.c:132 plug-ins/common/whirlpinch.c:184
+#: plug-ins/common/newsprint.c:542 plug-ins/common/polar.c:183
+#: plug-ins/common/ripple.c:143 plug-ins/common/shift.c:116
+#: plug-ins/common/video.c:1824 plug-ins/common/vpropagate.c:274
+#: plug-ins/common/waves.c:135 plug-ins/common/whirlpinch.c:184
 #: plug-ins/common/wind.c:195 plug-ins/pagecurl/pagecurl.c:244
 #, fuzzy
 msgid "<Image>/Filters/Distorts"
 msgstr "<Image>/Filters/Distorts/Wi_nd..."
 
-#: plug-ins/common/blinds.c:216
+#: plug-ins/common/blinds.c:203
 msgid "Adding Blinds..."
 msgstr "Menambah Penghadang Cahaya..."
 
-#. Get the preview image and store it also set has_alpha
-#: plug-ins/common/blinds.c:255
+#: plug-ins/common/blinds.c:240
 msgid "Blinds"
 msgstr "Penghadang cahaya"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:287 plug-ins/common/ripple.c:474
+#: plug-ins/common/blinds.c:278 plug-ins/common/ripple.c:474
 msgid "Orientation"
 msgstr "Orientasi"
 
-#: plug-ins/common/blinds.c:291 plug-ins/common/ripple.c:478
-#: plug-ins/common/tileit.c:424 plug-ins/pagecurl/pagecurl.c:540
+#: plug-ins/common/blinds.c:282 plug-ins/common/ripple.c:478
+#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:540
 msgid "_Horizontal"
 msgstr "_Mengufuk"
 
-#: plug-ins/common/blinds.c:292 plug-ins/common/ripple.c:479
-#: plug-ins/common/tileit.c:434 plug-ins/pagecurl/pagecurl.c:539
+#: plug-ins/common/blinds.c:283 plug-ins/common/ripple.c:479
+#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:539
 msgid "_Vertical"
 msgstr "_Menegak"
 
-#: plug-ins/common/blinds.c:302 plug-ins/common/fractaltrace.c:734
+#: plug-ins/common/blinds.c:293 plug-ins/common/fractaltrace.c:734
 #: plug-ins/common/papertile.c:358
 msgid "_Transparent"
 msgstr "_Lut sinar"
 
-#: plug-ins/common/blinds.c:325
+#: plug-ins/common/blinds.c:316
 msgid "_Displacement:"
 msgstr "_Sasaran:"
 
-#: plug-ins/common/blinds.c:334
+#: plug-ins/common/blinds.c:325
 #, fuzzy
 msgid "_Number of segments:"
 msgstr "_Bil Segmen:"
@@ -2325,51 +2324,50 @@ msgstr "_Bil Segmen:"
 msgid "_Blur"
 msgstr "Kabur"
 
-#: plug-ins/common/blur.c:154 plug-ins/common/gauss.c:241
+#: plug-ins/common/blur.c:154 plug-ins/common/gauss.c:244
 #: plug-ins/common/mblur.c:164 plug-ins/common/pixelize.c:180
-#: plug-ins/common/sel_gauss.c:112
+#: plug-ins/common/sel_gauss.c:113
 #, fuzzy
 msgid "<Image>/Filters/Blur"
 msgstr "<Image>/Filters/Blur/_Blur..."
 
-#: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:275
-#: plug-ins/common/unsharp.c:906
+#: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:262
 msgid "Blurring..."
 msgstr "Mengkaburkan..."
 
-#: plug-ins/common/borderaverage.c:99
+#: plug-ins/common/borderaverage.c:97
 #, fuzzy
 msgid "_Border Average..."
 msgstr "Purata Sempadan..."
 
-#: plug-ins/common/borderaverage.c:107 plug-ins/common/ccanalyze.c:117
+#: plug-ins/common/borderaverage.c:105 plug-ins/common/ccanalyze.c:117
 #: plug-ins/common/channel_mixer.c:226 plug-ins/common/colorify.c:116
 #: plug-ins/common/colortoalpha.c:106 plug-ins/common/compose.c:302
 #: plug-ins/common/decompose.c:251 plug-ins/common/hot.c:224
-#: plug-ins/common/max_rgb.c:119 plug-ins/common/semiflatten.c:86
+#: plug-ins/common/max_rgb.c:121 plug-ins/common/semiflatten.c:86
 #: plug-ins/common/smooth_palette.c:95 plug-ins/common/vinvert.c:93
 #: plug-ins/fp/fp.c:329
 #, fuzzy
 msgid "<Image>/Filters/Colors"
 msgstr "<Image>/Filters/Colors/_Hot..."
 
-#: plug-ins/common/borderaverage.c:164
+#: plug-ins/common/borderaverage.c:163
 msgid "Border Average..."
 msgstr "Purata Sempadan..."
 
-#: plug-ins/common/borderaverage.c:342
+#: plug-ins/common/borderaverage.c:341
 msgid "Borderaverage"
 msgstr "Puratasempadan"
 
-#: plug-ins/common/borderaverage.c:356
+#: plug-ins/common/borderaverage.c:355
 msgid "Border Size"
 msgstr "Saiz Sempadan"
 
-#: plug-ins/common/borderaverage.c:364
+#: plug-ins/common/borderaverage.c:363
 msgid "_Thickness:"
 msgstr "_Ketebalan:"
 
-#: plug-ins/common/borderaverage.c:391
+#: plug-ins/common/borderaverage.c:390
 #, fuzzy
 msgid "_Bucket size:"
 msgstr "Saiz Buket:"
@@ -2436,12 +2434,12 @@ msgstr "_Azimuth:"
 msgid "_Elevation:"
 msgstr "_Peningkatan:"
 
-#: plug-ins/common/bumpmap.c:1045 plug-ins/common/postscript.c:3018
+#: plug-ins/common/bumpmap.c:1045 plug-ins/common/postscript.c:3021
 #, fuzzy
 msgid "_X offset:"
 msgstr "Ofset _X:"
 
-#: plug-ins/common/bumpmap.c:1055 plug-ins/common/postscript.c:3027
+#: plug-ins/common/bumpmap.c:1055 plug-ins/common/postscript.c:3030
 #, fuzzy
 msgid "_Y offset:"
 msgstr "Ofset _Y:"
@@ -2478,6 +2476,30 @@ msgstr "Auto-Panjangkan Kontras..."
 #: plug-ins/common/c_astretch.c:154
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
+
+#: plug-ins/common/cartoon.c:225 plug-ins/common/dog.c:275
+#: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:222
+#: plug-ins/common/photocopy.c:238 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:979
+#: plug-ins/sgi/sgi.c:532 plug-ins/xjt/xjt.c:1677
+#, fuzzy
+msgid "Cannot operate on indexed color images."
+msgstr "xjt: tidak boelh beroperasi ke atas imej warna berindeks"
+
+#: plug-ins/common/cartoon.c:754
+#, fuzzy
+msgid "Cartoon"
+msgstr "K_apsyen"
+
+#: plug-ins/common/cartoon.c:773 plug-ins/common/photocopy.c:811
+#, fuzzy
+msgid "_Mask radius:"
+msgstr "Jejari _Kabur:"
+
+#: plug-ins/common/cartoon.c:784
+#, fuzzy
+msgid "_Percent black:"
+msgstr "Peratus"
 
 #: plug-ins/common/ccanalyze.c:110
 #, fuzzy
@@ -2549,8 +2571,7 @@ msgid "Channel Mixer"
 msgstr "Saluran"
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:540 plug-ins/common/unsharp.c:720
-#: plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:540 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "_Pralihat"
 
@@ -2561,22 +2582,22 @@ msgstr "Aras Output:"
 
 #: plug-ins/common/channel_mixer.c:619 plug-ins/common/diffraction.c:498
 #: plug-ins/common/diffraction.c:536 plug-ins/common/diffraction.c:574
-#: plug-ins/common/exchange.c:426 plug-ins/common/noisify.c:392
-#: plug-ins/common/noisify.c:399
+#: plug-ins/common/exchange.c:426 plug-ins/common/noisify.c:432
+#: plug-ins/common/noisify.c:439
 msgid "_Red:"
 msgstr "_Merah:"
 
 #: plug-ins/common/channel_mixer.c:637 plug-ins/common/diffraction.c:507
 #: plug-ins/common/diffraction.c:545 plug-ins/common/diffraction.c:583
-#: plug-ins/common/exchange.c:480 plug-ins/common/noisify.c:393
-#: plug-ins/common/noisify.c:400
+#: plug-ins/common/exchange.c:480 plug-ins/common/noisify.c:433
+#: plug-ins/common/noisify.c:440
 msgid "_Green:"
 msgstr "_Hijau:"
 
 #: plug-ins/common/channel_mixer.c:656 plug-ins/common/diffraction.c:516
 #: plug-ins/common/diffraction.c:554 plug-ins/common/diffraction.c:592
-#: plug-ins/common/exchange.c:534 plug-ins/common/noisify.c:394
-#: plug-ins/common/noisify.c:401
+#: plug-ins/common/exchange.c:534 plug-ins/common/noisify.c:434
+#: plug-ins/common/noisify.c:441
 msgid "_Blue:"
 msgstr "_Biru:"
 
@@ -2605,7 +2626,7 @@ msgstr "Perwakilan Saluran"
 msgid "Channel Mixer File Operation Warning"
 msgstr "Amaran Operasi Fail CML"
 
-#: plug-ins/common/checkerboard.c:94
+#: plug-ins/common/checkerboard.c:93
 #, fuzzy
 msgid "_Checkerboard..."
 msgstr "Papan dam"
@@ -2623,7 +2644,7 @@ msgid "_Psychobilly"
 msgstr "_Psychobilly"
 
 #: plug-ins/common/checkerboard.c:365 plug-ins/common/papertile.c:287
-#: plug-ins/gimpressionist/sizemap.c:466
+#: plug-ins/gimpressionist/sizemap.c:487
 msgid "_Size:"
 msgstr "_Saiz:"
 
@@ -2672,24 +2693,24 @@ msgstr "Warna ke Alfa"
 msgid "<Image>/Layer/Transparency/Modify"
 msgstr "<Image>/Layer/Transparency/_Threshold Alpha..."
 
-#: plug-ins/common/colortoalpha.c:178
+#: plug-ins/common/colortoalpha.c:177
 msgid "Removing color..."
 msgstr "Mengeluarkan warna..."
 
-#: plug-ins/common/colortoalpha.c:320
+#: plug-ins/common/colortoalpha.c:318
 msgid "Color to Alpha"
 msgstr "Warna ke Alfa"
 
-#: plug-ins/common/colortoalpha.c:336 plug-ins/common/mapcolor.c:623
+#: plug-ins/common/colortoalpha.c:334 plug-ins/common/mapcolor.c:623
 #: plug-ins/gfli/gfli.c:838 plug-ins/gfli/gfli.c:901
 msgid "From:"
 msgstr "Dari:"
 
-#: plug-ins/common/colortoalpha.c:340
+#: plug-ins/common/colortoalpha.c:338
 msgid "Color to Alpha Color Picker"
 msgstr "Warna ke Pemilih Warna Alfa"
 
-#: plug-ins/common/colortoalpha.c:351
+#: plug-ins/common/colortoalpha.c:349
 #, fuzzy
 msgid "to alpha"
 msgstr "ke Alfa"
@@ -2819,33 +2840,33 @@ msgstr "<Image>/Image/Transform/_Guillotine"
 msgid "Could not get layers for image %d"
 msgstr "Tidak dapat lapisan untuk imej %d"
 
-#: plug-ins/common/compose.c:414
+#: plug-ins/common/compose.c:413
 msgid "Composing..."
 msgstr "Menggubah..."
 
-#: plug-ins/common/compose.c:483
+#: plug-ins/common/compose.c:482
 msgid "Drawables have different size"
 msgstr "Lukisan mempunyai saiz yang berlainan"
 
-#: plug-ins/common/compose.c:500
+#: plug-ins/common/compose.c:499
 msgid "Images have different size"
 msgstr "Imej mempunyai saiz yang berlainan"
 
-#: plug-ins/common/compose.c:514
+#: plug-ins/common/compose.c:513
 msgid "Error in getting layer IDs"
 msgstr "Ralat dalam mendapatkan lapis IDs"
 
-#: plug-ins/common/compose.c:531
+#: plug-ins/common/compose.c:530
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Imej bukannya imej kelabu (bpp=%d)"
 
-#: plug-ins/common/compose.c:1091
+#: plug-ins/common/compose.c:1094
 msgid "Compose"
 msgstr "Gubah"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1107
+#: plug-ins/common/compose.c:1110
 msgid "Compose Channels"
 msgstr "Gubah Saluran"
 
@@ -2853,7 +2874,7 @@ msgstr "Gubah Saluran"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1118
+#: plug-ins/common/compose.c:1121
 msgid "Channel Representations"
 msgstr "Perwakilan Saluran"
 
@@ -2882,7 +2903,7 @@ msgid "E_xtend"
 msgstr "M_eluaskan"
 
 #: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:358
-#: plug-ins/common/edge.c:699 plug-ins/common/ripple.c:492
+#: plug-ins/common/edge.c:719 plug-ins/common/ripple.c:492
 msgid "_Wrap"
 msgstr "_Lipat"
 
@@ -3007,7 +3028,7 @@ msgid "_Cubism..."
 msgstr "Kubik"
 
 #: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:113
-#: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:84
+#: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:86
 #, fuzzy
 msgid "<Image>/Filters/Artistic"
 msgstr "<Image>/Filters/Artistic/_Cubism..."
@@ -3032,53 +3053,54 @@ msgid "_Use background color"
 msgstr "_Guna Warna Latar Belakang"
 
 #: plug-ins/common/cubism.c:358
-msgid "Cubistic Transformation"
+#, fuzzy
+msgid "Cubistic Transformation..."
 msgstr "Penjelmaan Kubik"
 
-#: plug-ins/common/curve_bend.c:570
+#: plug-ins/common/curve_bend.c:569
 #, fuzzy
 msgid "_Curve Bend..."
 msgstr "Bend Lengkung..."
 
-#: plug-ins/common/curve_bend.c:705
+#: plug-ins/common/curve_bend.c:704
 #, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "CurveBend beroperasi pada lapisan sahaja (tetapi dipanggil pada saluran atau "
 "topeng)"
 
-#: plug-ins/common/curve_bend.c:723
+#: plug-ins/common/curve_bend.c:722
 #, fuzzy
 msgid "Cannot operate on layers with masks."
 msgstr "xjt: tidak boelh beroperasi ke atas imej warna berindeks"
 
-#: plug-ins/common/curve_bend.c:738
+#: plug-ins/common/curve_bend.c:737
 #, fuzzy
 msgid "Cannot operate on empty selections."
 msgstr "Tidak boleh mengendalikan jenis imej tak diketahui"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1241
+#: plug-ins/common/curve_bend.c:1240
 msgid "Curve Bend"
 msgstr "Bend Lengkung"
 
 #. Preview area, top of column
 #. "Preview" label in first row, third column
-#: plug-ins/common/curve_bend.c:1271 plug-ins/common/dog.c:1021
-#: plug-ins/gimpressionist/orientmap.c:494
-#: plug-ins/gimpressionist/sizemap.c:416 plug-ins/ifscompose/ifscompose.c:928
+#: plug-ins/common/curve_bend.c:1269 plug-ins/common/dog.c:1021
+#: plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/gimpressionist/sizemap.c:437 plug-ins/ifscompose/ifscompose.c:928
 msgid "Preview"
 msgstr "Pralihat"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1305
+#: plug-ins/common/curve_bend.c:1303
 #, fuzzy
 msgid "_Preview once"
 msgstr "_Pralihat Sekali"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1314
+#: plug-ins/common/curve_bend.c:1312
 #, fuzzy
 msgid "Automatic pre_view"
 msgstr "Pra_lihat Automatik"
@@ -3086,110 +3108,110 @@ msgstr "Pra_lihat Automatik"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1324 plug-ins/common/mosaic.c:530
+#: plug-ins/common/curve_bend.c:1322 plug-ins/common/mosaic.c:530
 #: plug-ins/common/ripple.c:446 plug-ins/gfig/gfig-dialog.c:1227
 msgid "Options"
 msgstr "Opsyen"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1338
+#: plug-ins/common/curve_bend.c:1336
 msgid "Rotat_e:"
 msgstr "Puta_r:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1356
+#: plug-ins/common/curve_bend.c:1354
 msgid "Smoo_thing"
 msgstr "Meli_cinkan"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1366 plug-ins/common/gqbist.c:848
+#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:848
 #: plug-ins/common/mosaic.c:536 plug-ins/common/ripple.c:455
 msgid "_Antialiasing"
 msgstr "_Pelicinan"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1376
+#: plug-ins/common/curve_bend.c:1374
 #, fuzzy
 msgid "Work on cop_y"
 msgstr "Sedang Menyalin"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1386
+#: plug-ins/common/curve_bend.c:1384
 msgid "Modify Curves"
 msgstr "Ubah suai Lengkung"
 
-#: plug-ins/common/curve_bend.c:1414
+#: plug-ins/common/curve_bend.c:1412
 msgid "Curve for Border"
 msgstr "Lengkung untuk Sempadan"
 
-#: plug-ins/common/curve_bend.c:1418
+#: plug-ins/common/curve_bend.c:1416
 msgid "_Upper"
 msgstr "_Atas"
 
-#: plug-ins/common/curve_bend.c:1419
+#: plug-ins/common/curve_bend.c:1417
 msgid "_Lower"
 msgstr "_Bawah"
 
-#: plug-ins/common/curve_bend.c:1429
+#: plug-ins/common/curve_bend.c:1427
 msgid "Curve Type"
 msgstr "Jenis Lengkung"
 
-#: plug-ins/common/curve_bend.c:1433
+#: plug-ins/common/curve_bend.c:1431
 msgid "Smoot_h"
 msgstr "Lici_n"
 
-#: plug-ins/common/curve_bend.c:1434
+#: plug-ins/common/curve_bend.c:1432
 msgid "_Free"
 msgstr "_Bebas"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1449
+#: plug-ins/common/curve_bend.c:1447
 msgid "_Copy"
 msgstr "_Salin"
 
-#: plug-ins/common/curve_bend.c:1454
+#: plug-ins/common/curve_bend.c:1452
 msgid "Copy the active curve to the other border"
 msgstr "Salin lengkung yang aktif ke sempadan lain"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1461
+#: plug-ins/common/curve_bend.c:1459
 msgid "_Mirror"
 msgstr "_Cermin"
 
-#: plug-ins/common/curve_bend.c:1466
+#: plug-ins/common/curve_bend.c:1464
 msgid "Mirror the active curve to the other border"
 msgstr "Cerminkan lengkung aktif ke sempadan lain"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1473
+#: plug-ins/common/curve_bend.c:1472
 msgid "S_wap"
 msgstr "S_aling tukar"
 
-#: plug-ins/common/curve_bend.c:1478
+#: plug-ins/common/curve_bend.c:1477
 msgid "Swap the two curves"
 msgstr "Saling tukar dua lengkung itu"
 
-#: plug-ins/common/curve_bend.c:1490
+#: plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
 msgstr "Set semula lengkung aktif"
 
-#: plug-ins/common/curve_bend.c:1507
+#: plug-ins/common/curve_bend.c:1506
 msgid "Load the curves from a file"
 msgstr "Muatkan lengkung daripada suatu fail"
 
-#: plug-ins/common/curve_bend.c:1519
+#: plug-ins/common/curve_bend.c:1518
 msgid "Save the curves to a file"
 msgstr "Simpan lengkung ke suatu fail"
 
-#: plug-ins/common/curve_bend.c:2054
+#: plug-ins/common/curve_bend.c:2053
 msgid "Load Curve Points from file"
 msgstr "Muatkan Titik Lengkung daripada fail"
 
-#: plug-ins/common/curve_bend.c:2081
+#: plug-ins/common/curve_bend.c:2080
 msgid "Save Curve Points to file"
 msgstr "Simpan Titik Lengkung ke fail"
 
-#: plug-ins/common/curve_bend.c:2966
+#: plug-ins/common/curve_bend.c:2965
 msgid "Curve Bend..."
 msgstr "Bend Lengkung..."
 
@@ -3333,21 +3355,21 @@ msgstr "kemerahan_cr709f"
 msgid "_Decompose..."
 msgstr "Berpecah"
 
-#: plug-ins/common/decompose.c:331
+#: plug-ins/common/decompose.c:330
 msgid "Decomposing..."
 msgstr "Berpecah..."
 
-#: plug-ins/common/decompose.c:1190
+#: plug-ins/common/decompose.c:1188
 msgid "Decompose"
 msgstr "Berpecah"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1206
+#: plug-ins/common/decompose.c:1204
 #, fuzzy
 msgid "Extract Channels"
 msgstr "Ekstrak Saluran:"
 
-#: plug-ins/common/decompose.c:1234
+#: plug-ins/common/decompose.c:1232
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "Berpecah kepada _Lapisan-lapisan"
@@ -3357,9 +3379,9 @@ msgstr "Berpecah kepada _Lapisan-lapisan"
 msgid "_Deinterlace..."
 msgstr "Deinterlace..."
 
-#: plug-ins/common/deinterlace.c:94 plug-ins/common/despeckle.c:165
-#: plug-ins/common/destripe.c:141 plug-ins/common/nlfilt.c:131
-#: plug-ins/common/sharpen.c:150 plug-ins/common/unsharp.c:166
+#: plug-ins/common/deinterlace.c:94 plug-ins/common/despeckle.c:152
+#: plug-ins/common/destripe.c:141 plug-ins/common/nlfilt.c:133
+#: plug-ins/common/sharpen.c:131 plug-ins/common/unsharp.c:153
 #, fuzzy
 msgid "<Image>/Filters/Enhance"
 msgstr "<Image>/Filters/Enhance/_Sharpen..."
@@ -3428,7 +3450,7 @@ msgstr "Skala 1:"
 msgid "Sca_le 2:"
 msgstr "Skala 2:"
 
-#: plug-ins/common/despeckle.c:158
+#: plug-ins/common/despeckle.c:145
 #, fuzzy
 msgid "Des_peckle..."
 msgstr "Despeckle"
@@ -3459,42 +3481,42 @@ msgstr "Despeckle"
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:384
+#: plug-ins/common/despeckle.c:371
 msgid "Despeckling..."
 msgstr "Despeckling..."
 
-#: plug-ins/common/despeckle.c:594
+#: plug-ins/common/despeckle.c:579
 msgid "Despeckle"
 msgstr "Despeckle"
 
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:673 plug-ins/gimpressionist/orientmap.c:542
+#: plug-ins/common/despeckle.c:608 plug-ins/gimpressionist/orientmap.c:616
 msgid "Type"
 msgstr "Jenis"
 
-#: plug-ins/common/despeckle.c:681
+#: plug-ins/common/despeckle.c:616
 msgid "_Adaptive"
 msgstr "_Mudah suai"
 
-#: plug-ins/common/despeckle.c:691
+#: plug-ins/common/despeckle.c:626
 msgid "R_ecursive"
 msgstr "R_ekursif"
 
-#: plug-ins/common/despeckle.c:712 plug-ins/common/nlfilt.c:376
-#: plug-ins/common/nova.c:361 plug-ins/common/unsharp.c:775
-#: plug-ins/common/whirlpinch.c:697 plug-ins/gflare/gflare.c:2678
-#: plug-ins/imagemap/imap_circle.c:279
+#: plug-ins/common/despeckle.c:647 plug-ins/common/neon.c:722
+#: plug-ins/common/nlfilt.c:376 plug-ins/common/nova.c:362
+#: plug-ins/common/unsharp.c:695 plug-ins/common/whirlpinch.c:697
+#: plug-ins/gflare/gflare.c:2678 plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "_Jejari:"
 
-#: plug-ins/common/despeckle.c:725
+#: plug-ins/common/despeckle.c:660
 #, fuzzy
 msgid "_Black level:"
 msgstr "Aras _Hitam:"
 
-#: plug-ins/common/despeckle.c:738
+#: plug-ins/common/despeckle.c:673
 #, fuzzy
 msgid "_White level:"
 msgstr "Aras _Putih:"
@@ -3513,7 +3535,7 @@ msgid "Destripe"
 msgstr "Destripe"
 
 #: plug-ins/common/destripe.c:585 plug-ins/common/gtm.c:581
-#: plug-ins/common/postscript.c:2841 plug-ins/common/postscript.c:3000
+#: plug-ins/common/postscript.c:2844 plug-ins/common/postscript.c:3003
 #: plug-ins/common/smooth_palette.c:428 plug-ins/common/tile.c:418
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3541,7 +3563,7 @@ msgstr ""
 "'%s'\n"
 "bukan fail PCX"
 
-#: plug-ins/common/diffraction.c:179
+#: plug-ins/common/diffraction.c:177
 #, fuzzy
 msgid "_Diffraction Patterns..."
 msgstr "Corak Pecahan Cahaya"
@@ -3569,7 +3591,8 @@ msgstr "Ko_ntur"
 msgid "Sharp edges"
 msgstr "Tepi _tajam"
 
-#: plug-ins/common/diffraction.c:612 plug-ins/flame/flame.c:1033
+#: plug-ins/common/diffraction.c:612 plug-ins/common/softglow.c:708
+#: plug-ins/flame/flame.c:1033
 msgid "_Brightness:"
 msgstr "_Kecerahan:"
 
@@ -3616,12 +3639,12 @@ msgstr "Perpindahan _Y:"
 msgid "On Edges:"
 msgstr "Pada Tepi:"
 
-#: plug-ins/common/displace.c:360 plug-ins/common/edge.c:709
-#: plug-ins/common/ripple.c:493 plug-ins/common/waves.c:327
+#: plug-ins/common/displace.c:360 plug-ins/common/edge.c:732
+#: plug-ins/common/ripple.c:493 plug-ins/common/waves.c:328
 msgid "_Smear"
 msgstr "_Comot"
 
-#: plug-ins/common/displace.c:362 plug-ins/common/edge.c:719
+#: plug-ins/common/displace.c:362 plug-ins/common/edge.c:745
 #: plug-ins/common/fractaltrace.c:736 plug-ins/common/newsprint.c:407
 #: plug-ins/common/ripple.c:494
 msgid "_Black"
@@ -3632,8 +3655,8 @@ msgstr "_Hitam"
 msgid "Difference of Gaussians..."
 msgstr "Kabur Gaussian Terpilih..."
 
-#: plug-ins/common/dog.c:174 plug-ins/common/edge.c:167
-#: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:123
+#: plug-ins/common/dog.c:174 plug-ins/common/edge.c:176
+#: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:126
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect"
 msgstr "<Image>/Filters/Edge-Detect/_Laplace"
@@ -3642,13 +3665,6 @@ msgstr "<Image>/Filters/Edge-Detect/_Laplace"
 #, fuzzy
 msgid "DoG Edge Detect"
 msgstr "Mengesan Tepi"
-
-#: plug-ins/common/dog.c:275 plug-ins/common/gauss.c:409
-#: plug-ins/common/sel_gauss.c:202 plug-ins/gflare/gflare.c:979
-#: plug-ins/sgi/sgi.c:532 plug-ins/xjt/xjt.c:1677
-#, fuzzy
-msgid "Cannot operate on indexed color images."
-msgstr "xjt: tidak boelh beroperasi ke atas imej warna berindeks"
 
 #: plug-ins/common/dog.c:319
 #, fuzzy
@@ -3670,7 +3686,7 @@ msgstr "J_ejari:"
 msgid "_Normalize"
 msgstr "_Normal"
 
-#: plug-ins/common/dog.c:360 plug-ins/gimpressionist/paper.c:143
+#: plug-ins/common/dog.c:360 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Songsang"
 
@@ -3680,51 +3696,57 @@ msgstr "_Songsang"
 msgid "Source"
 msgstr "Sumber 1:"
 
-#: plug-ins/common/edge.c:160
+#: plug-ins/common/edge.c:169
 #, fuzzy
 msgid "_Edge..."
 msgstr "Sudut"
 
-#: plug-ins/common/edge.c:233
+#: plug-ins/common/edge.c:241
 msgid "Edge Detection..."
 msgstr "Mengesan Tepi..."
 
-#: plug-ins/common/edge.c:642
+#: plug-ins/common/edge.c:650
 msgid "Edge Detection"
 msgstr "Mengesan Tepi"
 
-#. compression
-#: plug-ins/common/edge.c:657
-msgid "Algorithm"
-msgstr "Algoritma"
-
-#: plug-ins/common/edge.c:661
-msgid "_Sobel"
+#: plug-ins/common/edge.c:678
+#, fuzzy
+msgid "Sobel"
 msgstr "_Sobel"
 
-#: plug-ins/common/edge.c:662
-msgid "_Prewitt"
+#: plug-ins/common/edge.c:679
+#, fuzzy
+msgid "Prewitt"
 msgstr "_Prewitt"
 
-#: plug-ins/common/edge.c:663 plug-ins/common/lic.c:655
-msgid "_Gradient"
-msgstr "_Kecerunan"
+#: plug-ins/common/edge.c:680 plug-ins/common/sinus.c:898
+msgid "Gradient"
+msgstr "Kecerunan"
 
-#: plug-ins/common/edge.c:664
-msgid "_Roberts"
+#: plug-ins/common/edge.c:681
+#, fuzzy
+msgid "Roberts"
 msgstr "_Roberts"
 
-#: plug-ins/common/edge.c:665
-msgid "_Differential"
+#: plug-ins/common/edge.c:682
+#, fuzzy
+msgid "Differential"
 msgstr "_Perbezaan"
 
-#: plug-ins/common/edge.c:666 plug-ins/common/laplace.c:95
-msgid "_Laplace"
+#: plug-ins/common/edge.c:683
+#, fuzzy
+msgid "Laplace"
 msgstr "_Laplace"
 
-#: plug-ins/common/edge.c:683 plug-ins/common/unsharp.c:792
-msgid "_Amount:"
-msgstr "_Jumlah:"
+#: plug-ins/common/edge.c:692
+#, fuzzy
+msgid "_Algorithm:"
+msgstr "Algoritma"
+
+#: plug-ins/common/edge.c:700
+#, fuzzy
+msgid "A_mount:"
+msgstr "Jumlah:"
 
 #: plug-ins/common/emboss.c:149
 #, fuzzy
@@ -3769,9 +3791,9 @@ msgstr "Melorek..."
 msgid "Engrave"
 msgstr "Lorek"
 
-#: plug-ins/common/engrave.c:221 plug-ins/common/film.c:1209
-#: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2850
-#: plug-ins/common/postscript.c:3009 plug-ins/common/smooth_palette.c:433
+#: plug-ins/common/engrave.c:221 plug-ins/common/film.c:1207
+#: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2853
+#: plug-ins/common/postscript.c:3012 plug-ins/common/smooth_palette.c:433
 #: plug-ins/common/tile.c:422 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -3842,129 +3864,129 @@ msgstr "_Ambang Kunci"
 msgid "_Film..."
 msgstr "Filem"
 
-#: plug-ins/common/film.c:327
+#: plug-ins/common/film.c:326
 msgid "Composing Images..."
 msgstr "Menggubah Imej..."
 
-#: plug-ins/common/film.c:438 plug-ins/common/guillotine.c:180
+#: plug-ins/common/film.c:437 plug-ins/common/guillotine.c:184
 #: plug-ins/helpbrowser/dialog.c:464
 msgid "Untitled"
 msgstr "Tidak Berjudul"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:706
+#: plug-ins/common/film.c:704
 msgid "Temporary"
 msgstr "Sementara"
 
-#: plug-ins/common/film.c:1085
+#: plug-ins/common/film.c:1083
 msgid "Available Images:"
 msgstr "Imej Yang Ada"
 
-#: plug-ins/common/film.c:1086
+#: plug-ins/common/film.c:1084
 msgid "On Film:"
 msgstr "Atas Filem:"
 
 #. Create selection
-#: plug-ins/common/film.c:1172 plug-ins/imagemap/imap_selection.c:404
+#: plug-ins/common/film.c:1170 plug-ins/imagemap/imap_selection.c:404
 #: plug-ins/rcm/rcm_dialog.c:159
 msgid "Selection"
 msgstr "Pemilihan"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1182 plug-ins/common/film.c:1455
+#: plug-ins/common/film.c:1180 plug-ins/common/film.c:1453
 msgid "Film"
 msgstr "Filem"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1191
+#: plug-ins/common/film.c:1189
 #, fuzzy
 msgid "_Fit height to images"
 msgstr "_Padankan Tinggi ikut Imej"
 
 #. Film color
-#: plug-ins/common/film.c:1227
+#: plug-ins/common/film.c:1225
 msgid "Select Film Color"
 msgstr "Pilih Warna Filem"
 
-#: plug-ins/common/film.c:1232 plug-ins/common/film.c:1283
-#: plug-ins/common/nova.c:348
+#: plug-ins/common/film.c:1230 plug-ins/common/film.c:1281
+#: plug-ins/common/nova.c:349
 msgid "Co_lor:"
 msgstr "Wa_rna:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1241
+#: plug-ins/common/film.c:1239
 msgid "Numbering"
 msgstr "Penomboran"
 
-#: plug-ins/common/film.c:1259
+#: plug-ins/common/film.c:1257
 #, fuzzy
 msgid "Start _index:"
 msgstr "_Indeks Mula:"
 
-#: plug-ins/common/film.c:1273
+#: plug-ins/common/film.c:1271
 msgid "_Font:"
 msgstr "_Fon:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1278
+#: plug-ins/common/film.c:1276
 msgid "Select Number Color"
 msgstr "Pilih Warna Nombor"
 
-#: plug-ins/common/film.c:1293
+#: plug-ins/common/film.c:1291
 #, fuzzy
 msgid "At _bottom"
 msgstr "Di _Bawah"
 
-#: plug-ins/common/film.c:1294
+#: plug-ins/common/film.c:1292
 #, fuzzy
 msgid "At _top"
 msgstr "Di _Atas"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1307
+#: plug-ins/common/film.c:1305
 msgid "Image Selection"
 msgstr "Pemilihan Imej"
 
-#: plug-ins/common/film.c:1335
+#: plug-ins/common/film.c:1333
 #, fuzzy
 msgid "All Values are Fractions of the Film Height"
 msgstr "Semula Nilai adalah Pecahan bagi Tinggi Filem"
 
-#: plug-ins/common/film.c:1338
+#: plug-ins/common/film.c:1336
 msgid "Ad_vanced"
 msgstr "La_njutan"
 
-#: plug-ins/common/film.c:1357
+#: plug-ins/common/film.c:1355
 #, fuzzy
 msgid "Image _height:"
 msgstr "_Tinggi Imej:"
 
-#: plug-ins/common/film.c:1368
+#: plug-ins/common/film.c:1366
 #, fuzzy
 msgid "Image spac_ing:"
 msgstr "Lang_kauan Imej:"
 
-#: plug-ins/common/film.c:1379
+#: plug-ins/common/film.c:1377
 #, fuzzy
 msgid "_Hole offset:"
 msgstr "Ofset _Lubang:"
 
-#: plug-ins/common/film.c:1390
+#: plug-ins/common/film.c:1388
 #, fuzzy
 msgid "Ho_le width:"
 msgstr "Lebar Lu_bang"
 
-#: plug-ins/common/film.c:1401
+#: plug-ins/common/film.c:1399
 #, fuzzy
 msgid "Hol_e height:"
 msgstr "Tinggi Lub_ang:"
 
-#: plug-ins/common/film.c:1412
+#: plug-ins/common/film.c:1410
 #, fuzzy
 msgid "Hole sp_acing:"
 msgstr "La_ngkauan Lubang:"
 
-#: plug-ins/common/film.c:1423
+#: plug-ins/common/film.c:1421
 #, fuzzy
 msgid "_Number height:"
 msgstr "Tinggi _Nombor:"
@@ -4036,41 +4058,46 @@ msgstr "Y_1:"
 msgid "Y_2:"
 msgstr "Y_2:"
 
-#: plug-ins/common/gauss.c:154
+#: plug-ins/common/gauss.c:157
 #, fuzzy
 msgid "_Gaussian Blur..."
 msgstr "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
 
-#: plug-ins/common/gauss.c:389 plug-ins/common/gauss.c:437
+#: plug-ins/common/gauss.c:408
+#, fuzzy
+msgid "Gaussian Blur..."
+msgstr "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
+
+#: plug-ins/common/gauss.c:461
 #, fuzzy
 msgid "Gaussian Blur"
 msgstr "Kabur Gaussian IIR"
 
 #. parameter settings
-#: plug-ins/common/gauss.c:452
+#: plug-ins/common/gauss.c:488
 msgid "Blur Radius"
 msgstr "Jejari Kabur"
 
-#: plug-ins/common/gauss.c:466 plug-ins/common/jigsaw.c:2587
-#: plug-ins/common/spread.c:325
+#: plug-ins/common/gauss.c:502 plug-ins/common/jigsaw.c:2517
+#: plug-ins/common/spread.c:381
 msgid "_Horizontal:"
 msgstr "_Mengufuk:"
 
-#: plug-ins/common/gauss.c:470 plug-ins/common/jigsaw.c:2604
-#: plug-ins/common/spread.c:329
+#: plug-ins/common/gauss.c:506 plug-ins/common/jigsaw.c:2534
+#: plug-ins/common/spread.c:385
 msgid "_Vertical:"
 msgstr "_Menegak:"
 
-#: plug-ins/common/gauss.c:479
+#: plug-ins/common/gauss.c:529
 #, fuzzy
 msgid "Blur Method"
 msgstr "Jenis Kabur"
 
-#: plug-ins/common/gauss.c:483
+#: plug-ins/common/gauss.c:533
 msgid "_IIR"
 msgstr ""
 
-#: plug-ins/common/gauss.c:484
+#: plug-ins/common/gauss.c:534
 #, fuzzy
 msgid "_RLE"
 msgstr "RLE"
@@ -4095,8 +4122,8 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
-#: plug-ins/common/gbr.c:410 plug-ins/common/gih.c:488
-#: plug-ins/common/gih.c:1128 plug-ins/gflare/gflare.c:2977
+#: plug-ins/common/gbr.c:410 plug-ins/common/gih.c:497
+#: plug-ins/common/gih.c:1154 plug-ins/gflare/gflare.c:2977
 msgid "Unnamed"
 msgstr "Tidak bernama"
 
@@ -4110,12 +4137,12 @@ msgid "Save as Brush"
 msgstr "Simpan sebagai Berus"
 
 #. attach labels
-#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:787
+#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:775
 msgid "Spacing:"
 msgstr "Langkauan:"
 
-#: plug-ins/common/gbr.c:698 plug-ins/common/gih.c:880
-#: plug-ins/common/pat.c:525 plug-ins/gimpressionist/presets.c:604
+#: plug-ins/common/gbr.c:698 plug-ins/common/gih.c:904
+#: plug-ins/common/pat.c:525 plug-ins/gimpressionist/presets.c:642
 msgid "Description:"
 msgstr "Huraian:"
 
@@ -4303,112 +4330,108 @@ msgstr "'%s' bukan fail HRZ"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
-#: plug-ins/common/gifload.c:862
+#: plug-ins/common/gifload.c:869
 #, fuzzy, c-format
 msgid "Background (%d%s)"
 msgstr "Latar Belakang (%dms)"
 
-#: plug-ins/common/gifload.c:910 plug-ins/common/iwarp.c:782
+#: plug-ins/common/gifload.c:917 plug-ins/common/iwarp.c:782
 #: plug-ins/common/iwarp.c:814
 #, c-format
 msgid "Frame %d"
 msgstr "Bingkai %d"
 
-#: plug-ins/common/gifload.c:912
+#: plug-ins/common/gifload.c:919
 #, fuzzy, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Bingkai %d (%dms)"
 
-#: plug-ins/common/gifload.c:942
+#: plug-ins/common/gifload.c:949
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
 
-#: plug-ins/common/gih.c:196 plug-ins/common/gih.c:218
+#: plug-ins/common/gih.c:205 plug-ins/common/gih.c:227
 msgid "GIMP brush (animated)"
 msgstr ""
 
-#: plug-ins/common/gih.c:312
+#: plug-ins/common/gih.c:321
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Lapisan %s tidak mempunyai rangkaian alfa, langkau"
 
-#: plug-ins/common/gih.c:481
+#: plug-ins/common/gih.c:490
 msgid "Error in GIMP brush pipe file."
 msgstr "Ralat di fail berus paip GIMP."
 
-#: plug-ins/common/gih.c:547
+#: plug-ins/common/gih.c:556
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Fail berus GIMP kelihatan seperti rosak."
 
-#: plug-ins/common/gih.c:695
+#: plug-ins/common/gih.c:704
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Tidak boleh memuatkan satu berus dalam paip, sudah putus asa."
 
-#: plug-ins/common/gih.c:843
+#: plug-ins/common/gih.c:867
 msgid "Save as Brush Pipe"
 msgstr "Simpan sebagai Berus Paip"
 
-#: plug-ins/common/gih.c:866
+#: plug-ins/common/gih.c:890
 #, fuzzy
 msgid "Spacing (percent):"
 msgstr "Langkaun (Peratus):"
 
-#: plug-ins/common/gih.c:933
+#: plug-ins/common/gih.c:957
 msgid "Pixels"
 msgstr "Piksel"
 
-#: plug-ins/common/gih.c:938
+#: plug-ins/common/gih.c:962
 #, fuzzy
 msgid "Cell size:"
 msgstr "Saiz Sel:"
 
-#: plug-ins/common/gih.c:950
+#: plug-ins/common/gih.c:974
 #, fuzzy
 msgid "Number of cells:"
 msgstr "Bilangan Sel:"
 
-#: plug-ins/common/gih.c:975
+#: plug-ins/common/gih.c:999
 msgid " Rows of "
 msgstr " Baris pada "
 
-#: plug-ins/common/gih.c:987
+#: plug-ins/common/gih.c:1011
 #, fuzzy
 msgid " Columns on each layer"
 msgstr " Lajur bagi setiap Lapisan"
 
-#: plug-ins/common/gih.c:991
+#: plug-ins/common/gih.c:1015
 msgid " (Width Mismatch!) "
 msgstr " (Lebar Tidak Padan!) "
 
-#: plug-ins/common/gih.c:995
+#: plug-ins/common/gih.c:1019
 msgid " (Height Mismatch!) "
 msgstr " (Tinggi Tidak Padan!) "
 
-#: plug-ins/common/gih.c:1000
+#: plug-ins/common/gih.c:1024
 msgid "Display as:"
 msgstr "Dipaparkan sebagai:"
 
-#: plug-ins/common/gih.c:1009
+#: plug-ins/common/gih.c:1033
 msgid "Dimension:"
 msgstr "Dimensi"
 
-#: plug-ins/common/gih.c:1047
+#: plug-ins/common/gih.c:1110
 msgid "Ranks:"
 msgstr "Pangkat:"
 
-#: plug-ins/common/gih.c:1084
-msgid "Selection:"
-msgstr "Pemilihan:"
-
-#: plug-ins/common/glasstile.c:114
+#: plug-ins/common/glasstile.c:116
 #, fuzzy
 msgid "_Glass Tile..."
 msgstr "Jubin Gelas..."
 
-#: plug-ins/common/glasstile.c:193
+#: plug-ins/common/glasstile.c:194
 msgid "Glass Tile..."
 msgstr "Jubin Gelas..."
 
@@ -4416,12 +4439,12 @@ msgstr "Jubin Gelas..."
 msgid "Glass Tile"
 msgstr "Jubin Gelas..."
 
-#: plug-ins/common/glasstile.c:265
+#: plug-ins/common/glasstile.c:270
 #, fuzzy
 msgid "Tile _width:"
 msgstr "_Lebar Jubin:"
 
-#: plug-ins/common/glasstile.c:279 plug-ins/common/mosaic.c:622
+#: plug-ins/common/glasstile.c:284 plug-ins/common/mosaic.c:622
 #, fuzzy
 msgid "Tile _height:"
 msgstr "_Tinggi Jubin:"
@@ -4458,56 +4481,56 @@ msgstr "Kecerunan Map..."
 msgid "Gradient Map..."
 msgstr "Kecerunan Map..."
 
-#: plug-ins/common/grid.c:152
+#: plug-ins/common/grid.c:149
 #, fuzzy
 msgid "_Grid..."
 msgstr "Panduan..."
 
-#: plug-ins/common/grid.c:245
+#: plug-ins/common/grid.c:241
 msgid "Drawing Grid..."
 msgstr "Lukisan Grid..."
 
-#: plug-ins/common/grid.c:639 plug-ins/gfig/gfig-dialog.c:1350
+#: plug-ins/common/grid.c:623 plug-ins/gfig/gfig-dialog.c:1350
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr "Grid"
 
 #. attach labels
-#: plug-ins/common/grid.c:718
+#: plug-ins/common/grid.c:702
 msgid "Horizontal"
 msgstr "Mengufuk"
 
-#: plug-ins/common/grid.c:720
+#: plug-ins/common/grid.c:704
 msgid "Vertical"
 msgstr "Menegak"
 
-#: plug-ins/common/grid.c:722
+#: plug-ins/common/grid.c:706
 msgid "Intersection"
 msgstr "Persilangan"
 
 #. Width and Height
-#: plug-ins/common/grid.c:725 plug-ins/common/svg.c:695
+#: plug-ins/common/grid.c:709 plug-ins/common/svg.c:695
 #: plug-ins/print/gimp_main_window.c:992
 #: plug-ins/print/gimp_main_window.c:1199
 msgid "Width:"
 msgstr "Lebar:"
 
 #. attach labels
-#: plug-ins/common/grid.c:850
+#: plug-ins/common/grid.c:842
 msgid "Offset:"
 msgstr "Ofset:"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:886
+#: plug-ins/common/grid.c:881
 msgid "Horizontal Color"
 msgstr "Warna Mengufuk"
 
-#: plug-ins/common/grid.c:901
+#: plug-ins/common/grid.c:899
 msgid "Vertical Color"
 msgstr "Warna Menegak"
 
-#: plug-ins/common/grid.c:916
+#: plug-ins/common/grid.c:917
 msgid "Intersection Color"
 msgstr "Warna Persilangan"
 
@@ -4647,17 +4670,17 @@ msgstr "Sel-_Langkauan:"
 msgid "The amount of cellspacing."
 msgstr "Jumlah langkaunsel."
 
-#: plug-ins/common/guillotine.c:71
+#: plug-ins/common/guillotine.c:72
 #, fuzzy
 msgid "_Guillotine"
 msgstr "Guillotine..."
 
-#: plug-ins/common/guillotine.c:78
+#: plug-ins/common/guillotine.c:79
 #, fuzzy
 msgid "<Image>/Image/Transform"
 msgstr "<Image>/Image/Transform/_Autocrop"
 
-#: plug-ins/common/guillotine.c:104
+#: plug-ins/common/guillotine.c:105
 msgid "Guillotine..."
 msgstr "Guillotine..."
 
@@ -4699,11 +4722,11 @@ msgstr "Kurangkan _Kecerahan"
 msgid "Reduce _Saturation"
 msgstr "Kurangkan _Ketepuan"
 
-#: plug-ins/common/hot.c:616 plug-ins/common/waves.c:328
+#: plug-ins/common/hot.c:616 plug-ins/common/waves.c:329
 msgid "_Blacken"
 msgstr "_Kehitaman"
 
-#: plug-ins/common/illusion.c:105
+#: plug-ins/common/illusion.c:106
 #, fuzzy
 msgid "_Illusion..."
 msgstr "Ilusi..."
@@ -4712,20 +4735,20 @@ msgstr "Ilusi..."
 msgid "Illusion..."
 msgstr "Ilusi..."
 
-#: plug-ins/common/illusion.c:399
+#: plug-ins/common/illusion.c:398
 msgid "Illusion"
 msgstr "Ilusi"
 
-#: plug-ins/common/illusion.c:431
+#: plug-ins/common/illusion.c:435
 #, fuzzy
 msgid "_Divisions:"
 msgstr "_Pembahagian:"
 
-#: plug-ins/common/illusion.c:441
+#: plug-ins/common/illusion.c:445
 msgid "Mode _1"
 msgstr "Mod _1"
 
-#: plug-ins/common/illusion.c:456
+#: plug-ins/common/illusion.c:460
 msgid "Mode _2"
 msgstr "Mod _2"
 
@@ -4833,70 +4856,70 @@ msgstr "_Seting"
 msgid "IWarp"
 msgstr "IWarp"
 
-#: plug-ins/common/jigsaw.c:408
+#: plug-ins/common/jigsaw.c:388
 #, fuzzy
 msgid "_Jigsaw..."
 msgstr "Jigsaw"
 
-#: plug-ins/common/jigsaw.c:465
+#: plug-ins/common/jigsaw.c:445
 msgid "Assembling Jigsaw..."
 msgstr "Jigsaw Dihimpunkan"
 
-#: plug-ins/common/jigsaw.c:2546
+#: plug-ins/common/jigsaw.c:2472
 msgid "Jigsaw"
 msgstr "Jigsaw"
 
-#: plug-ins/common/jigsaw.c:2575
+#: plug-ins/common/jigsaw.c:2505
 msgid "Number of Tiles"
 msgstr "Bilangan Jubin"
 
-#: plug-ins/common/jigsaw.c:2590
+#: plug-ins/common/jigsaw.c:2520
 msgid "Number of pieces going across"
 msgstr "Bilangan serpihan yang bersilang"
 
-#: plug-ins/common/jigsaw.c:2607
+#: plug-ins/common/jigsaw.c:2537
 msgid "Number of pieces going down"
 msgstr "Bilangan serpihan yang kebawah"
 
-#: plug-ins/common/jigsaw.c:2621
+#: plug-ins/common/jigsaw.c:2551
 msgid "Bevel Edges"
 msgstr "Serong Tepi"
 
-#: plug-ins/common/jigsaw.c:2631
+#: plug-ins/common/jigsaw.c:2561
 #, fuzzy
 msgid "_Bevel width:"
 msgstr "Lebar _Serong:"
 
-#: plug-ins/common/jigsaw.c:2635
+#: plug-ins/common/jigsaw.c:2565
 msgid "Degree of slope of each piece's edge"
 msgstr "Darjah kecondongan bagi setiap tepi serpihan "
 
-#: plug-ins/common/jigsaw.c:2648
+#: plug-ins/common/jigsaw.c:2578
 msgid "H_ighlight:"
 msgstr "Tonjol:"
 
-#: plug-ins/common/jigsaw.c:2652
+#: plug-ins/common/jigsaw.c:2582
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Jumlah penonjolan ditepi bagi setiap serpihan "
 
 #. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2669
+#: plug-ins/common/jigsaw.c:2599
 msgid "Jigsaw Style"
 msgstr "Gaya Jigsaw"
 
-#: plug-ins/common/jigsaw.c:2673
+#: plug-ins/common/jigsaw.c:2603
 msgid "_Square"
 msgstr "_Segi Empat Sama"
 
-#: plug-ins/common/jigsaw.c:2674
+#: plug-ins/common/jigsaw.c:2604
 msgid "C_urved"
 msgstr "Lengkung"
 
-#: plug-ins/common/jigsaw.c:2678
+#: plug-ins/common/jigsaw.c:2608
 msgid "Each piece has straight sides"
 msgstr "Setiap serpihan mempunyai bahagian yang lurus"
 
-#: plug-ins/common/jigsaw.c:2679
+#: plug-ins/common/jigsaw.c:2609
 msgid "Each piece has curved sides"
 msgstr "Setiap serpihan mempunyai tepi yang lengkung"
 
@@ -5008,6 +5031,10 @@ msgstr "Titik-Apungan"
 msgid "Comment"
 msgstr "Komen"
 
+#: plug-ins/common/laplace.c:95
+msgid "_Laplace"
+msgstr "_Laplace"
+
 #: plug-ins/common/laplace.c:228
 msgid "Laplace..."
 msgstr "Laplace.."
@@ -5043,6 +5070,10 @@ msgstr "Kesan Operator"
 #: plug-ins/common/lic.c:654
 msgid "_Derivative"
 msgstr "_Terbitan"
+
+#: plug-ins/common/lic.c:655
+msgid "_Gradient"
+msgstr "_Kecerunan"
 
 #: plug-ins/common/lic.c:661
 msgid "Convolve"
@@ -5206,29 +5237,29 @@ msgstr "Julat destinasi warna"
 msgid "To:"
 msgstr "Kepada:"
 
-#: plug-ins/common/max_rgb.c:112
+#: plug-ins/common/max_rgb.c:114
 #, fuzzy
 msgid "_Max RGB..."
 msgstr "Maks RGB..."
 
-#: plug-ins/common/max_rgb.c:151
+#: plug-ins/common/max_rgb.c:153
 msgid "Can only operate on RGB drawables."
 msgstr "Hanya boleh beroperasi pada pelukisan RGB."
 
-#: plug-ins/common/max_rgb.c:230
+#: plug-ins/common/max_rgb.c:248
 msgid "Max RGB..."
 msgstr "Maks RGB..."
 
-#: plug-ins/common/max_rgb.c:255
+#: plug-ins/common/max_rgb.c:273
 msgid "Max RGB"
 msgstr "Maks RGB"
 
-#: plug-ins/common/max_rgb.c:283
+#: plug-ins/common/max_rgb.c:305
 #, fuzzy
 msgid "_Hold the maximal channels"
 msgstr "_Pegang Saluran Maksimum"
 
-#: plug-ins/common/max_rgb.c:286
+#: plug-ins/common/max_rgb.c:308
 #, fuzzy
 msgid "Ho_ld the minimal channels"
 msgstr "P_egang Saluran Minimum"
@@ -5480,6 +5511,25 @@ msgstr "_Variasi Warna:"
 msgid "Unable to add additional point.\n"
 msgstr "Tidak dapat menambah titik tambahan.\n"
 
+#: plug-ins/common/neon.c:135
+#, fuzzy
+msgid "_Neon..."
+msgstr "Video/RGB"
+
+#: plug-ins/common/neon.c:204
+#, fuzzy
+msgid "Neon..."
+msgstr "Newsprint..."
+
+#: plug-ins/common/neon.c:688
+#, fuzzy
+msgid "Neon Detection"
+msgstr "Mengesan Tepi"
+
+#: plug-ins/common/neon.c:737 plug-ins/common/unsharp.c:708
+msgid "_Amount:"
+msgstr "_Jumlah:"
+
 #: plug-ins/common/newsprint.c:135
 msgid "Round"
 msgstr "Bulat"
@@ -5605,16 +5655,16 @@ msgstr "Pelicinan"
 msgid "O_versample:"
 msgstr "Terlebih sampel:"
 
-#: plug-ins/common/nlfilt.c:124
+#: plug-ins/common/nlfilt.c:126
 #, fuzzy
 msgid "_NL Filter..."
 msgstr "Penapis NL..."
 
-#: plug-ins/common/nlfilt.c:245
+#: plug-ins/common/nlfilt.c:246
 msgid "NL Filter..."
 msgstr "Penapis NL..."
 
-#: plug-ins/common/nlfilt.c:322
+#: plug-ins/common/nlfilt.c:323
 msgid "NL Filter"
 msgstr "Penapis NL"
 
@@ -5641,46 +5691,46 @@ msgstr "Peningkatan _Sudut"
 msgid "A_lpha:"
 msgstr "A_lfa:"
 
-#: plug-ins/common/nlfilt.c:451 plug-ins/common/waves.c:441
+#: plug-ins/common/nlfilt.c:461 plug-ins/common/waves.c:445
 #, fuzzy
 msgid "_Do preview"
 msgstr "_Laksana Pralihat"
 
-#: plug-ins/common/noisify.c:129
+#: plug-ins/common/noisify.c:133
 #, fuzzy
 msgid "_Scatter RGB..."
 msgstr "Scattering HSV..."
 
-#: plug-ins/common/noisify.c:136 plug-ins/common/randomize.c:274
+#: plug-ins/common/noisify.c:140 plug-ins/common/randomize.c:274
 #: plug-ins/common/randomize.c:275 plug-ins/common/randomize.c:276
-#: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:107
+#: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:106
 #, fuzzy
 msgid "<Image>/Filters/Noise"
 msgstr "<Image>/Filters/Noise/_Slur..."
 
-#: plug-ins/common/noisify.c:209
+#: plug-ins/common/noisify.c:215
 msgid "Adding Noise..."
 msgstr "Tambahkan Hinggar..."
 
-#: plug-ins/common/noisify.c:334
+#: plug-ins/common/noisify.c:373
 #, fuzzy
 msgid "Scatter RGB"
 msgstr "Scatter HSV"
 
-#: plug-ins/common/noisify.c:362
+#: plug-ins/common/noisify.c:399
 #, fuzzy
 msgid "_Independent RGB"
 msgstr "_Tak Bergantung"
 
-#: plug-ins/common/noisify.c:382 plug-ins/common/noisify.c:386
+#: plug-ins/common/noisify.c:422 plug-ins/common/noisify.c:426
 msgid "_Gray:"
 msgstr "_Kelabu:"
 
-#: plug-ins/common/noisify.c:387 plug-ins/common/noisify.c:402
+#: plug-ins/common/noisify.c:427 plug-ins/common/noisify.c:442
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: plug-ins/common/noisify.c:412
+#: plug-ins/common/noisify.c:452
 #, c-format
 msgid "Channel #%d:"
 msgstr "Saluuran #%d:"
@@ -5689,38 +5739,38 @@ msgstr "Saluuran #%d:"
 msgid "Normalizing..."
 msgstr "Penormalan"
 
-#: plug-ins/common/nova.c:196
+#: plug-ins/common/nova.c:197
 #, fuzzy
 msgid "Su_perNova..."
 msgstr "SuperNova"
 
-#: plug-ins/common/nova.c:281
+#: plug-ins/common/nova.c:282
 msgid "Rendering SuperNova..."
 msgstr "Merender SuperNova..."
 
-#: plug-ins/common/nova.c:321
+#: plug-ins/common/nova.c:322
 msgid "SuperNova"
 msgstr "SuperNova"
 
-#: plug-ins/common/nova.c:344
+#: plug-ins/common/nova.c:345
 msgid "SuperNova Color Picker"
 msgstr "Pemetik Warna SuperNova"
 
-#: plug-ins/common/nova.c:373
+#: plug-ins/common/nova.c:374
 msgid "_Spokes:"
 msgstr "_Tanda:"
 
-#: plug-ins/common/nova.c:388
+#: plug-ins/common/nova.c:389
 #, fuzzy
 msgid "R_andom hue:"
 msgstr "Warna R_awak:"
 
 #. to avoid side effects while initialization
-#: plug-ins/common/nova.c:445
+#: plug-ins/common/nova.c:448
 msgid "Center of SuperNova"
 msgstr "Di tengah SuperNova"
 
-#: plug-ins/common/nova.c:517
+#: plug-ins/common/nova.c:527
 #, fuzzy
 msgid "S_how cursor"
 msgstr "T_unjuk Kursor"
@@ -5869,6 +5919,31 @@ msgstr ""
 msgid "Unusual PCX flavour, giving up"
 msgstr "Perisa PCX yang tak biasa, mengalah"
 
+#: plug-ins/common/photocopy.c:155
+#, fuzzy
+msgid "_Photocopy..."
+msgstr "Panas..."
+
+#: plug-ins/common/photocopy.c:793
+#, fuzzy
+msgid "Photocopy"
+msgstr "Fotograf"
+
+#: plug-ins/common/photocopy.c:822 plug-ins/common/sharpen.c:518
+#: plug-ins/common/softglow.c:722
+msgid "_Sharpness:"
+msgstr "_Ketajaman:"
+
+#: plug-ins/common/photocopy.c:833
+#, fuzzy
+msgid "Percent _black:"
+msgstr "Peratus"
+
+#: plug-ins/common/photocopy.c:844
+#, fuzzy
+msgid "Percent _white:"
+msgstr "Peratus"
+
 #: plug-ins/common/pix.c:141 plug-ins/common/pix.c:159
 msgid "Alias|Wavefront PIX image"
 msgstr ""
@@ -5894,21 +5969,21 @@ msgstr "_Lebar Piksel"
 msgid "Pixel _Height:"
 msgstr "_Tinggi Piksel"
 
-#: plug-ins/common/plasma.c:186
+#: plug-ins/common/plasma.c:184
 #, fuzzy
 msgid "_Plasma..."
 msgstr "Plasma..."
 
-#: plug-ins/common/plasma.c:193 plug-ins/common/snoise.c:196
+#: plug-ins/common/plasma.c:191 plug-ins/common/snoise.c:196
 #, fuzzy
 msgid "<Image>/Filters/Render/Clouds"
 msgstr "<Image>/Filters/Render/Clouds/_Plasma..."
 
-#: plug-ins/common/plasma.c:271
+#: plug-ins/common/plasma.c:267
 msgid "Plasma..."
 msgstr "Plasma..."
 
-#: plug-ins/common/plasma.c:310
+#: plug-ins/common/plasma.c:306
 msgid "Plasma"
 msgstr "Plasma"
 
@@ -5952,7 +6027,7 @@ msgstr "<Toolbox>/Xtns/_Unit Editor"
 msgid "Details <<"
 msgstr "Perincian <<"
 
-#: plug-ins/common/plugindetails.c:238 plug-ins/common/plugindetails.c:1144
+#: plug-ins/common/plugindetails.c:238 plug-ins/common/plugindetails.c:1145
 msgid "Details >>"
 msgstr "Perincian >>"
 
@@ -5981,48 +6056,48 @@ msgstr "Blurb:"
 msgid "Help:"
 msgstr "Tolong:"
 
-#: plug-ins/common/plugindetails.c:968
+#: plug-ins/common/plugindetails.c:969
 msgid "Plugin Descriptions"
 msgstr "Huraian Plugin"
 
-#: plug-ins/common/plugindetails.c:973
+#: plug-ins/common/plugindetails.c:974
 msgid "Search by Name"
 msgstr "Carian dengan Nama"
 
-#: plug-ins/common/plugindetails.c:1016
+#: plug-ins/common/plugindetails.c:1017
 msgid "Name"
 msgstr "Nama"
 
-#: plug-ins/common/plugindetails.c:1024 plug-ins/common/plugindetails.c:1090
+#: plug-ins/common/plugindetails.c:1025 plug-ins/common/plugindetails.c:1091
 #, fuzzy
 msgid "Ins date"
 msgstr "Tarikh Ins"
 
-#: plug-ins/common/plugindetails.c:1032
+#: plug-ins/common/plugindetails.c:1033
 #, fuzzy
 msgid "Menu path"
 msgstr "Laluan Menu"
 
-#: plug-ins/common/plugindetails.c:1040 plug-ins/common/plugindetails.c:1098
+#: plug-ins/common/plugindetails.c:1041 plug-ins/common/plugindetails.c:1099
 #, fuzzy
 msgid "Image types"
 msgstr "Jenis Imej"
 
-#: plug-ins/common/plugindetails.c:1062
+#: plug-ins/common/plugindetails.c:1063
 msgid "List View"
 msgstr "Senarai Paparan"
 
-#: plug-ins/common/plugindetails.c:1082
+#: plug-ins/common/plugindetails.c:1083
 #, fuzzy
 msgid "Menu path/name"
 msgstr "Laluan/Nama Menu"
 
-#: plug-ins/common/plugindetails.c:1119
+#: plug-ins/common/plugindetails.c:1120
 #, fuzzy
 msgid "Tree view"
 msgstr "Paparan Pokok"
 
-#: plug-ins/common/plugindetails.c:1133
+#: plug-ins/common/plugindetails.c:1134
 msgid "Search:"
 msgstr "Carian:"
 
@@ -6176,7 +6251,7 @@ msgstr "Mentah"
 msgid "Ascii"
 msgstr "Ascii"
 
-#: plug-ins/common/polar.c:177
+#: plug-ins/common/polar.c:176
 msgid "P_olar Coords..."
 msgstr ""
 
@@ -6265,93 +6340,93 @@ msgstr "PostScript tidak boleh mengendalikan imej dengan saluran alfa"
 msgid "Error starting ghostscript (%s)"
 msgstr ""
 
-#: plug-ins/common/postscript.c:2360 plug-ins/common/postscript.c:2492
-#: plug-ins/common/postscript.c:2642 plug-ins/common/postscript.c:2770
+#: plug-ins/common/postscript.c:2363 plug-ins/common/postscript.c:2495
+#: plug-ins/common/postscript.c:2645 plug-ins/common/postscript.c:2773
 #: plug-ins/common/sunras.c:1457 plug-ins/common/sunras.c:1565
-#: plug-ins/fits/fits.c:831 plug-ins/fits/fits.c:955
+#: plug-ins/fits/fits.c:830 plug-ins/fits/fits.c:954
 #, fuzzy
 msgid "Write error occurred"
 msgstr "Ralat tulis berlaku"
 
-#: plug-ins/common/postscript.c:2796
+#: plug-ins/common/postscript.c:2799
 msgid "Load PostScript"
 msgstr "MuatKan PostScript"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2816
+#: plug-ins/common/postscript.c:2819
 msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2832 plug-ins/common/svg.c:816
+#: plug-ins/common/postscript.c:2835 plug-ins/common/svg.c:816
 #: plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Resolusi:"
 
-#: plug-ins/common/postscript.c:2860
+#: plug-ins/common/postscript.c:2863
 msgid "Pages:"
 msgstr "Halaman:"
 
-#: plug-ins/common/postscript.c:2866
+#: plug-ins/common/postscript.c:2869
 msgid "Try Bounding Box"
 msgstr "Cuba"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2879
+#: plug-ins/common/postscript.c:2882
 msgid "Coloring"
 msgstr "Pewarnaan"
 
-#: plug-ins/common/postscript.c:2883
+#: plug-ins/common/postscript.c:2886
 msgid "B/W"
 msgstr "B/W"
 
-#: plug-ins/common/postscript.c:2884 plug-ins/rcm/rcm_dialog.c:441
+#: plug-ins/common/postscript.c:2887 plug-ins/rcm/rcm_dialog.c:441
 msgid "Gray"
 msgstr "Kelabu"
 
-#: plug-ins/common/postscript.c:2885 plug-ins/common/xpm.c:462
-#: plug-ins/gimpressionist/color.c:43 plug-ins/gimpressionist/general.c:143
+#: plug-ins/common/postscript.c:2888 plug-ins/common/xpm.c:462
+#: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:151
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1399
 msgid "Color"
 msgstr "Warna"
 
-#: plug-ins/common/postscript.c:2886 plug-ins/fits/fits.c:1005
+#: plug-ins/common/postscript.c:2889 plug-ins/fits/fits.c:1004
 msgid "Automatic"
 msgstr "Automatik"
 
-#: plug-ins/common/postscript.c:2896
+#: plug-ins/common/postscript.c:2899
 #, fuzzy
 msgid "Text antialiasing"
 msgstr "Pelicinan Teks "
 
-#: plug-ins/common/postscript.c:2901 plug-ins/common/postscript.c:2913
+#: plug-ins/common/postscript.c:2904 plug-ins/common/postscript.c:2916
 msgid "Weak"
 msgstr "Lemah"
 
-#: plug-ins/common/postscript.c:2902 plug-ins/common/postscript.c:2914
+#: plug-ins/common/postscript.c:2905 plug-ins/common/postscript.c:2917
 msgid "Strong"
 msgstr "Kuat"
 
-#: plug-ins/common/postscript.c:2908
+#: plug-ins/common/postscript.c:2911
 #, fuzzy
 msgid "Graphic antialiasing"
 msgstr "Pelicinan Grafik"
 
-#: plug-ins/common/postscript.c:2960
+#: plug-ins/common/postscript.c:2963
 msgid "Save as PostScript"
 msgstr "Simpan sebagai PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2984
+#: plug-ins/common/postscript.c:2987
 msgid "Image Size"
 msgstr "Saiz Imej"
 
-#: plug-ins/common/postscript.c:3033
+#: plug-ins/common/postscript.c:3036
 #, fuzzy
 msgid "_Keep aspect ratio"
 msgstr "_Biarkan Nisbah Aspek"
 
-#: plug-ins/common/postscript.c:3039
+#: plug-ins/common/postscript.c:3042
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -6360,37 +6435,37 @@ msgstr ""
 "diberi tanpa merubah nisbah aspek."
 
 #. Unit
-#: plug-ins/common/postscript.c:3048
+#: plug-ins/common/postscript.c:3051
 msgid "Unit"
 msgstr "Unit"
 
-#: plug-ins/common/postscript.c:3052
+#: plug-ins/common/postscript.c:3055
 msgid "_Inch"
 msgstr "_Inci"
 
-#: plug-ins/common/postscript.c:3053
+#: plug-ins/common/postscript.c:3056
 msgid "_Millimeter"
 msgstr "_Milimeter"
 
 #. Format
-#: plug-ins/common/postscript.c:3079
+#: plug-ins/common/postscript.c:3082
 msgid "Output"
 msgstr "Output"
 
-#: plug-ins/common/postscript.c:3085
+#: plug-ins/common/postscript.c:3088
 #, fuzzy
 msgid "_PostScript level 2"
 msgstr "Aras 2 _PostScript"
 
-#: plug-ins/common/postscript.c:3094
+#: plug-ins/common/postscript.c:3097
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _Terkurung"
 
-#: plug-ins/common/postscript.c:3103
+#: plug-ins/common/postscript.c:3106
 msgid "P_review"
 msgstr "Pralihat"
 
-#: plug-ins/common/postscript.c:3124
+#: plug-ins/common/postscript.c:3127
 #, fuzzy
 msgid "Preview _size:"
 msgstr "_Saiz Pralihat:"
@@ -6471,7 +6546,7 @@ msgstr "U_lang:"
 msgid "Number of times to apply filter"
 msgstr "Berapa kali gunakan penapis"
 
-#: plug-ins/common/ripple.c:137
+#: plug-ins/common/ripple.c:136
 #, fuzzy
 msgid "_Ripple..."
 msgstr "Rippling..."
@@ -6717,25 +6792,25 @@ msgstr "_Semua Skrin"
 msgid "Grab _After"
 msgstr "selepas"
 
-#: plug-ins/common/sel_gauss.c:105
+#: plug-ins/common/sel_gauss.c:106
 #, fuzzy
 msgid "_Selective Gaussian Blur..."
 msgstr "Kabur Gaussian Terpilih..."
 
-#: plug-ins/common/sel_gauss.c:185
+#: plug-ins/common/sel_gauss.c:186
 msgid "Selective Gaussian Blur..."
 msgstr "Kabur Gaussian Terpilih..."
 
-#: plug-ins/common/sel_gauss.c:221
+#: plug-ins/common/sel_gauss.c:225
 msgid "Selective Gaussian Blur"
 msgstr "Kabur Gaussian Terpilih"
 
-#: plug-ins/common/sel_gauss.c:241
+#: plug-ins/common/sel_gauss.c:260
 #, fuzzy
 msgid "_Blur radius:"
 msgstr "Jejari _Kabur:"
 
-#: plug-ins/common/sel_gauss.c:248
+#: plug-ins/common/sel_gauss.c:270
 #, fuzzy
 msgid "_Max. delta:"
 msgstr "_Maks. Delta:"
@@ -6749,7 +6824,7 @@ msgstr "Separa-Meratakan..."
 msgid "Semi-Flattening..."
 msgstr "Separa-Meratakan..."
 
-#: plug-ins/common/sharpen.c:143
+#: plug-ins/common/sharpen.c:124
 #, fuzzy
 msgid "_Sharpen..."
 msgstr "Menajamkan..."
@@ -6757,17 +6832,13 @@ msgstr "Menajamkan..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/sharpen.c:327
+#: plug-ins/common/sharpen.c:316
 msgid "Sharpening..."
 msgstr "Menajamkan..."
 
-#: plug-ins/common/sharpen.c:498
+#: plug-ins/common/sharpen.c:486
 msgid "Sharpen"
 msgstr "Tajam"
-
-#: plug-ins/common/sharpen.c:570
-msgid "_Sharpness:"
-msgstr "_Ketajaman:"
 
 #: plug-ins/common/shift.c:109
 #, fuzzy
@@ -6899,10 +6970,6 @@ msgstr "Warna K_edua:"
 msgid "Blend Settings"
 msgstr "Seting Blend"
 
-#: plug-ins/common/sinus.c:898
-msgid "Gradient"
-msgstr "Kecerunan"
-
 #: plug-ins/common/sinus.c:902
 msgid "L_inear"
 msgstr "L_inear"
@@ -6983,31 +7050,45 @@ msgstr "Saiz _X:"
 msgid "_Y size:"
 msgstr "Saiz _Y:"
 
-#: plug-ins/common/sobel.c:116
+#: plug-ins/common/sobel.c:119
 #, fuzzy
 msgid "_Sobel..."
 msgstr "_Sobel"
 
-#: plug-ins/common/sobel.c:222
+#: plug-ins/common/sobel.c:228
 msgid "Sobel Edge Detection"
 msgstr "Pengesanan Tepi Sobel"
 
-#: plug-ins/common/sobel.c:237
+#: plug-ins/common/sobel.c:256
 msgid "Sobel _Horizontally"
 msgstr "Sobel _Mengufuk"
 
-#: plug-ins/common/sobel.c:246
+#: plug-ins/common/sobel.c:268
 msgid "Sobel _Vertically"
 msgstr "Sobel_Menegak"
 
-#: plug-ins/common/sobel.c:255
+#: plug-ins/common/sobel.c:280
 #, fuzzy
 msgid "_Keep sign of result (one direction only)"
 msgstr "_Simpan Hasil Isyarat (satu Arah sahaja)"
 
-#: plug-ins/common/sobel.c:316
+#: plug-ins/common/sobel.c:366
 msgid "Sobel Edge Detecting..."
 msgstr "Pengesanan Tepi Sobel"
+
+#: plug-ins/common/softglow.c:138
+#, fuzzy
+msgid "_Softglow..."
+msgstr "_Sobel"
+
+#: plug-ins/common/softglow.c:660
+msgid "Softglow"
+msgstr ""
+
+#: plug-ins/common/softglow.c:694
+#, fuzzy
+msgid "_Glow radius:"
+msgstr "Jejari _Kabur:"
 
 #: plug-ins/common/sparkle.c:186
 #, fuzzy
@@ -7154,7 +7235,7 @@ msgstr "Gunakan Warna Latar Depan"
 msgid "Use the background color"
 msgstr "Gunakan Warna Latar Belakang"
 
-#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:137
+#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:147
 msgid "Solid"
 msgstr "Pepejal"
 
@@ -7240,7 +7321,7 @@ msgid "Color Selection Dialog"
 msgstr "Pemilihan Warna Dialog"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2663 plug-ins/gimpressionist/paper.c:168
+#: plug-ins/common/spheredesigner.c:2663 plug-ins/gimpressionist/paper.c:176
 #: plug-ins/ifscompose/ifscompose.c:581
 msgid "Scale:"
 msgstr "Skala"
@@ -7302,7 +7383,7 @@ msgstr "Rendering Sfera..."
 msgid "Sphere _Designer..."
 msgstr "Perekabentuk Sfera"
 
-#: plug-ins/common/spread.c:100
+#: plug-ins/common/spread.c:99
 #, fuzzy
 msgid "Sp_read..."
 msgstr "Menyebarkan..."
@@ -7311,11 +7392,11 @@ msgstr "Menyebarkan..."
 msgid "Spreading..."
 msgstr "Menyebarkan..."
 
-#: plug-ins/common/spread.c:300
+#: plug-ins/common/spread.c:343
 msgid "Spread"
 msgstr "Sebaran"
 
-#: plug-ins/common/spread.c:309
+#: plug-ins/common/spread.c:366
 msgid "Spread Amount"
 msgstr "Jumlah Sebaran"
 
@@ -7390,7 +7471,7 @@ msgstr "Tidak boleh mengoperasikan jenis imej tak diketahui"
 #: plug-ins/common/sunras.c:1207 plug-ins/common/sunras.c:1302
 #: plug-ins/common/xwd.c:1340 plug-ins/common/xwd.c:1502
 #: plug-ins/common/xwd.c:1699 plug-ins/common/xwd.c:1949
-#: plug-ins/fits/fits.c:679
+#: plug-ins/fits/fits.c:677
 msgid "EOF encountered on reading"
 msgstr "EOF ditemui semasa membaca"
 
@@ -7617,7 +7698,7 @@ msgstr "Komen:"
 msgid "_Tile..."
 msgstr "Tiler..."
 
-#: plug-ins/common/tile.c:193 plug-ins/common/tileit.c:326
+#: plug-ins/common/tile.c:193 plug-ins/common/tileit.c:321
 msgid "Tiling..."
 msgstr "Penjubinan..."
 
@@ -7633,51 +7714,51 @@ msgstr "Jubinkan ke Saiz Baru"
 msgid "C_reate New Image"
 msgstr "W_ujudkan Imej Baru"
 
-#: plug-ins/common/tileit.c:228
+#: plug-ins/common/tileit.c:223
 #, fuzzy
 msgid "_Small Tiles..."
 msgstr "S_emua Jubin"
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:369
+#: plug-ins/common/tileit.c:364
 msgid "TileIt"
 msgstr "TileIt"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:412 plug-ins/ifscompose/ifscompose.c:637
+#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:637
 msgid "Flip"
 msgstr "Terbalikkan"
 
-#: plug-ins/common/tileit.c:460
+#: plug-ins/common/tileit.c:455
 #, fuzzy
 msgid "A_ll tiles"
 msgstr "S_emua Jubin"
 
-#: plug-ins/common/tileit.c:474
+#: plug-ins/common/tileit.c:469
 #, fuzzy
 msgid "Al_ternate tiles"
 msgstr "Jubin Pi_lihan"
 
-#: plug-ins/common/tileit.c:488
+#: plug-ins/common/tileit.c:483
 #, fuzzy
 msgid "_Explicit tile"
 msgstr "Jubin _Nyata"
 
-#: plug-ins/common/tileit.c:494
+#: plug-ins/common/tileit.c:489
 msgid "Ro_w:"
 msgstr "Bari_s"
 
-#: plug-ins/common/tileit.c:518
+#: plug-ins/common/tileit.c:513
 msgid "Col_umn:"
 msgstr "Laj_ur"
 
-#: plug-ins/common/tileit.c:570
+#: plug-ins/common/tileit.c:565
 msgid "O_pacity:"
 msgstr "K_elegapan:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:579
+#: plug-ins/common/tileit.c:574
 #, fuzzy
 msgid "Number of Segments"
 msgstr "_Bil Segmen:"
@@ -7830,16 +7911,16 @@ msgstr "Wujudkan unit baru daripada awal."
 msgid "Create a new unit with the currently selected unit as template."
 msgstr "Wujudkan unit baru dengan unit semasa yang dipilih sebagai templat."
 
-#: plug-ins/common/unsharp.c:159
+#: plug-ins/common/unsharp.c:146
 #, fuzzy
 msgid "_Unsharp Mask..."
 msgstr "Topengan Taktajam"
 
-#: plug-ins/common/unsharp.c:382
+#: plug-ins/common/unsharp.c:372
 msgid "Merging..."
 msgstr "Dicantumkan..."
 
-#: plug-ins/common/unsharp.c:745
+#: plug-ins/common/unsharp.c:661
 msgid "Unsharp Mask"
 msgstr "Topengan Taktajam"
 
@@ -7883,7 +7964,7 @@ msgstr "_Hek"
 msgid "_Dots"
 msgstr "_Dot"
 
-#: plug-ins/common/video.c:1818
+#: plug-ins/common/video.c:1817
 #, fuzzy
 msgid "Vi_deo..."
 msgstr "Video/RGB"
@@ -7974,60 +8055,60 @@ msgstr "Mod"
 msgid "_Dilate"
 msgstr "_Deflate"
 
-#: plug-ins/common/vpropagate.c:462
+#: plug-ins/common/vpropagate.c:466
 msgid "Value Propagating..."
 msgstr "Menyebarkan Nilai..."
 
-#: plug-ins/common/vpropagate.c:1033
+#: plug-ins/common/vpropagate.c:1037
 msgid "Value Propagate"
 msgstr "Sebaran Nilai"
 
 #. Parameter settings
-#: plug-ins/common/vpropagate.c:1077
+#: plug-ins/common/vpropagate.c:1081
 #, fuzzy
 msgid "Propagate"
 msgstr "Mod Sebaran"
 
-#: plug-ins/common/vpropagate.c:1090
+#: plug-ins/common/vpropagate.c:1094
 #, fuzzy
 msgid "Lower t_hreshold:"
 msgstr "A_mbang Bawah:"
 
-#: plug-ins/common/vpropagate.c:1099
+#: plug-ins/common/vpropagate.c:1103
 #, fuzzy
 msgid "_Upper threshold:"
 msgstr "Ambang _Atas:"
 
-#: plug-ins/common/vpropagate.c:1108
+#: plug-ins/common/vpropagate.c:1112
 #, fuzzy
 msgid "_Propagating rate:"
 msgstr "_Menyebarkan Kadar:"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1120
 #, fuzzy
 msgid "To l_eft"
 msgstr "Ke K_iri"
 
-#: plug-ins/common/vpropagate.c:1119
+#: plug-ins/common/vpropagate.c:1123
 #, fuzzy
 msgid "To _right"
 msgstr "Ke _Kanan"
 
-#: plug-ins/common/vpropagate.c:1122
+#: plug-ins/common/vpropagate.c:1126
 #, fuzzy
 msgid "To _top"
 msgstr "Ke _Atas"
 
-#: plug-ins/common/vpropagate.c:1125
+#: plug-ins/common/vpropagate.c:1129
 #, fuzzy
 msgid "To _bottom"
 msgstr "Ke _Bawah"
 
-#: plug-ins/common/vpropagate.c:1134
+#: plug-ins/common/vpropagate.c:1138
 msgid "Propagating _Alpha Channel"
 msgstr "Menyebarkan Saluran _Alfa"
 
-#: plug-ins/common/vpropagate.c:1145
+#: plug-ins/common/vpropagate.c:1149
 msgid "Propagating Value Channel"
 msgstr "Menyebarkan Saluran Nilai"
 
@@ -8075,7 +8156,7 @@ msgstr "Lipatan"
 msgid "Smear"
 msgstr "Comot"
 
-#: plug-ins/common/warp.c:510 plug-ins/fits/fits.c:993
+#: plug-ins/common/warp.c:510 plug-ins/fits/fits.c:992
 #: plug-ins/flame/flame.c:1127 plug-ins/gfig/gfig-dialog.c:1401
 msgid "Black"
 msgstr "Hitam"
@@ -8171,32 +8252,32 @@ msgstr "Cari kecerunan XY..."
 msgid "Flow Step %d..."
 msgstr "Langkah Carta %d..."
 
-#: plug-ins/common/waves.c:125
+#: plug-ins/common/waves.c:128
 #, fuzzy
 msgid "_Waves..."
 msgstr "Simpas Sebagai..."
 
-#: plug-ins/common/waves.c:296
+#: plug-ins/common/waves.c:298
 msgid "Waves"
 msgstr "Alun"
 
-#: plug-ins/common/waves.c:334
+#: plug-ins/common/waves.c:335
 msgid "_Reflective"
 msgstr "_Memantul"
 
-#: plug-ins/common/waves.c:350
+#: plug-ins/common/waves.c:351
 msgid "_Amplitude:"
 msgstr "_Keluasan:"
 
-#: plug-ins/common/waves.c:359
+#: plug-ins/common/waves.c:360
 msgid "_Phase:"
 msgstr "_Fasa:"
 
-#: plug-ins/common/waves.c:368
+#: plug-ins/common/waves.c:369
 msgid "_Wavelength:"
 msgstr "_Panjangalun:"
 
-#: plug-ins/common/waves.c:509
+#: plug-ins/common/waves.c:513
 msgid "Waving..."
 msgstr "Dialunkan..."
 
@@ -8355,7 +8436,7 @@ msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 "Nilai yang lebih tinggi menghadkan kesan kepada kawasan imej yang sedikit"
 
-#: plug-ins/common/wind.c:1002 plug-ins/gimpressionist/orientmap.c:590
+#: plug-ins/common/wind.c:1002 plug-ins/gimpressionist/orientmap.c:669
 msgid "_Strength:"
 msgstr "_Kekuatan:"
 
@@ -8724,29 +8805,29 @@ msgstr "Fail FITS tidak memaparkan imej"
 msgid "FITS save cannot handle images with alpha channels"
 msgstr "FITS tidak boleh simpan imej yang mempunyai saluran alfa"
 
-#: plug-ins/fits/fits.c:974
+#: plug-ins/fits/fits.c:973
 msgid "Load FITS File"
 msgstr "Memuatkan Fail FITS"
 
-#: plug-ins/fits/fits.c:989
+#: plug-ins/fits/fits.c:988
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "Penggantian Piksel BLANK/NaN"
 
-#: plug-ins/fits/fits.c:994 plug-ins/gfig/gfig-dialog.c:1290
+#: plug-ins/fits/fits.c:993 plug-ins/gfig/gfig-dialog.c:1290
 #: plug-ins/gfig/gfig-dialog.c:1402
 msgid "White"
 msgstr "Putih"
 
-#: plug-ins/fits/fits.c:1001
+#: plug-ins/fits/fits.c:1000
 #, fuzzy
 msgid "Pixel value scaling"
 msgstr "Pengskalaan Nilai Piksel"
 
-#: plug-ins/fits/fits.c:1006
+#: plug-ins/fits/fits.c:1005
 msgid "By DATAMIN/DATAMAX"
 msgstr "Oleh DATAMIN/DATAMAX"
 
-#: plug-ins/fits/fits.c:1013
+#: plug-ins/fits/fits.c:1012
 msgid "Image Composing"
 msgstr "Menggubah Imej"
 
@@ -8797,8 +8878,8 @@ msgstr "_Rawak"
 msgid "Same"
 msgstr "Sama"
 
-#: plug-ins/flame/flame.c:729 plug-ins/gimpressionist/orientation.c:149
-#: plug-ins/gimpressionist/size.c:143
+#: plug-ins/flame/flame.c:729 plug-ins/gimpressionist/orientation.c:146
+#: plug-ins/gimpressionist/size.c:149
 msgid "Random"
 msgstr "Rawak"
 
@@ -9206,7 +9287,7 @@ msgstr "Sembunyikan Titik Kawalan"
 msgid "Max undo:"
 msgstr "Buat asal Maks:"
 
-#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:157
+#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Lut sinar"
 
@@ -9298,7 +9379,7 @@ msgstr "Pusingan Jam"
 msgid "Anti-Clockwise"
 msgstr "Lawan Pusingan Jam"
 
-#: plug-ins/gfig/gfig-dialog.c:1656 plug-ins/gimpressionist/orientation.c:131
+#: plug-ins/gfig/gfig-dialog.c:1656 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientasi:"
@@ -9548,7 +9629,7 @@ msgstr "Opsyen Cat Rays"
 msgid "Second Flares Paint Options"
 msgstr "Opsyen Cat Flare kedua"
 
-#: plug-ins/gflare/gflare.c:3409 plug-ins/gimpressionist/general.c:109
+#: plug-ins/gflare/gflare.c:3409 plug-ins/gimpressionist/general.c:115
 #: plug-ins/imagemap/imap_preferences.c:443
 msgid "_General"
 msgstr "_Am"
@@ -9659,296 +9740,296 @@ msgstr "GFLI 1.3 - Muatkan framestack"
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Simpan framestack"
 
-#: plug-ins/gimpressionist/brush.c:213
+#: plug-ins/gimpressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr "Hanya boleh simpan lukisan!"
 
-#: plug-ins/gimpressionist/brush.c:218
+#: plug-ins/gimpressionist/brush.c:235
 #, fuzzy
 msgid "Save Brush"
 msgstr "Simpan berus"
 
-#: plug-ins/gimpressionist/brush.c:458
+#: plug-ins/gimpressionist/brush.c:481
 msgid "_Brush"
 msgstr "_Berus"
 
-#: plug-ins/gimpressionist/brush.c:494 plug-ins/print/gimp_color_window.c:402
+#: plug-ins/gimpressionist/brush.c:518 plug-ins/print/gimp_color_window.c:402
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: plug-ins/gimpressionist/brush.c:511
+#: plug-ins/gimpressionist/brush.c:536
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ubah gama (kecerahan) bagi berus yang dipilih"
 
-#: plug-ins/gimpressionist/brush.c:519
+#: plug-ins/gimpressionist/brush.c:544
 msgid "Select:"
 msgstr "Plih:"
 
-#: plug-ins/gimpressionist/brush.c:548
+#: plug-ins/gimpressionist/brush.c:573
 msgid "Aspect ratio:"
 msgstr "Nisbah aspek:"
 
-#: plug-ins/gimpressionist/brush.c:552
+#: plug-ins/gimpressionist/brush.c:577
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Tentukan nisbah aspek bagi berus"
 
-#: plug-ins/gimpressionist/brush.c:561 plug-ins/gimpressionist/paper.c:180
+#: plug-ins/gimpressionist/brush.c:586 plug-ins/gimpressionist/paper.c:188
 msgid "Relief:"
 msgstr "Kelegaan:"
 
-#: plug-ins/gimpressionist/brush.c:565 plug-ins/gimpressionist/paper.c:184
+#: plug-ins/gimpressionist/brush.c:590 plug-ins/gimpressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 "Tentukan jumlah persembunyian untuk digunakan pada imej (dalam peratus)"
 
-#: plug-ins/gimpressionist/color.c:37
+#: plug-ins/gimpressionist/color.c:42
 msgid "Co_lor"
 msgstr "Wa_rna"
 
-#: plug-ins/gimpressionist/color.c:47
+#: plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "P_urata di bawah berus"
 
-#: plug-ins/gimpressionist/color.c:49
+#: plug-ins/gimpressionist/color.c:54
 msgid "C_enter of brush"
 msgstr "T_engah berus"
 
-#: plug-ins/gimpressionist/color.c:56
+#: plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Warna dihasilkan daripada purata semua piksel di bawah berus"
 
-#: plug-ins/gimpressionist/color.c:60
+#: plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Sampelkan warna daripada piksel di dalam tengah berus itu"
 
-#: plug-ins/gimpressionist/color.c:71
+#: plug-ins/gimpressionist/color.c:76
 msgid "Color _noise:"
 msgstr "Kebisingan warna:"
 
-#: plug-ins/gimpressionist/color.c:75
+#: plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "Tambah kebisingan rawak pada warna"
 
-#: plug-ins/gimpressionist/general.c:123
+#: plug-ins/gimpressionist/general.c:131
 msgid "Keep original"
 msgstr "Simpan yang asal"
 
-#: plug-ins/gimpressionist/general.c:124
+#: plug-ins/gimpressionist/general.c:132
 msgid "Preserve the original image as a background"
 msgstr "Kekalkan imej asal sebagai latar belakang"
 
-#: plug-ins/gimpressionist/general.c:128
+#: plug-ins/gimpressionist/general.c:137
 msgid "From paper"
 msgstr "Dari kertas"
 
-#: plug-ins/gimpressionist/general.c:129
+#: plug-ins/gimpressionist/general.c:138
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Salin tekstur bagi kertas pilihan sebagai latar belakang"
 
-#: plug-ins/gimpressionist/general.c:138
+#: plug-ins/gimpressionist/general.c:148
 msgid "Solid colored background"
 msgstr "Latar belakang berwarna pejal"
 
-#: plug-ins/gimpressionist/general.c:158
+#: plug-ins/gimpressionist/general.c:167
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 "Gunakan latar belakang lut sinar, Hanya goresan yang dicat akan dapat dilihat"
 
-#: plug-ins/gimpressionist/general.c:176
+#: plug-ins/gimpressionist/general.c:184
 msgid "Paint edges"
 msgstr "Cat tepi"
 
-#: plug-ins/gimpressionist/general.c:181
+#: plug-ins/gimpressionist/general.c:189
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Pilih jika untuk meletakkan goresan sepanjang jalan ke tepi imej"
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:185 plug-ins/maze/maze_face.c:276
+#: plug-ins/gimpressionist/general.c:194 plug-ins/maze/maze_face.c:276
 msgid "Tileable"
 msgstr "Berjubin"
 
-#: plug-ins/gimpressionist/general.c:189
+#: plug-ins/gimpressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Pilih jika imej yang dihasilkan perlu kelihatan berjubin"
 
-#: plug-ins/gimpressionist/general.c:193
+#: plug-ins/gimpressionist/general.c:203
 msgid "Drop Shadow"
 msgstr "Gugurkan Bayang"
 
-#: plug-ins/gimpressionist/general.c:198
+#: plug-ins/gimpressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Tambah suatu kesan bayang pada setiap goresan berus"
 
-#: plug-ins/gimpressionist/general.c:210
+#: plug-ins/gimpressionist/general.c:221
 msgid "Edge darken:"
 msgstr "Tepi digelapkan:"
 
-#: plug-ins/gimpressionist/general.c:214
+#: plug-ins/gimpressionist/general.c:225
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Berapa banyak untuk \"menggelapkan\" tepi bagi setiap goresan berus"
 
-#: plug-ins/gimpressionist/general.c:219
+#: plug-ins/gimpressionist/general.c:230
 msgid "Shadow darken:"
 msgstr "Bayang digelapkan:"
 
-#: plug-ins/gimpressionist/general.c:223
+#: plug-ins/gimpressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Berapa banyak untuk \"menggelapkan\" bayang yang gugur"
 
-#: plug-ins/gimpressionist/general.c:228
+#: plug-ins/gimpressionist/general.c:239
 msgid "Shadow depth:"
 msgstr "Kedalaman bayang:"
 
-#: plug-ins/gimpressionist/general.c:232
+#: plug-ins/gimpressionist/general.c:243
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "Kedalaman bagi bayang yang gugur, cth berapa jauh ia perlu berada dari objek "
 "itu"
 
-#: plug-ins/gimpressionist/general.c:237
+#: plug-ins/gimpressionist/general.c:248
 msgid "Shadow blur:"
 msgstr "Kaburan bayang:"
 
-#: plug-ins/gimpressionist/general.c:241
+#: plug-ins/gimpressionist/general.c:252
 msgid "How much to blur the drop shadow"
 msgstr "Berapa banyak untuk mengaburkan bayang yang gugur"
 
-#: plug-ins/gimpressionist/general.c:246
+#: plug-ins/gimpressionist/general.c:257
 #, fuzzy
 msgid "Deviation threshold:"
 msgstr "Ambang sisihan:"
 
-#: plug-ins/gimpressionist/general.c:250
+#: plug-ins/gimpressionist/general.c:261
 msgid "A bailout-value for adaptive selections"
 msgstr "Satu nilai-bailout untuk pemilihan mudah suai"
 
-#: plug-ins/gimpressionist/gimp.c:77
+#: plug-ins/gimpressionist/gimp.c:79
 #, fuzzy
 msgid "_GIMPressionist..."
 msgstr "GIMPressionist"
 
-#: plug-ins/gimpressionist/gimp.c:316
+#: plug-ins/gimpressionist/gimp.c:351
 msgid "Painting..."
 msgstr "Mengecat..."
 
-#: plug-ins/gimpressionist/gimpressionist.c:116
+#: plug-ins/gimpressionist/gimpressionist.c:117
 msgid "The GIMPressionist"
 msgstr "GIMPressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:195
+#: plug-ins/gimpressionist/gimpressionist.c:196
 msgid "Gimpressionist"
 msgstr "Gimpressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:199
+#: plug-ins/gimpressionist/gimpressionist.c:200
 msgid "A_bout"
 msgstr "T_entang"
 
-#: plug-ins/gimpressionist/orientation.c:75
+#: plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr "Or_ientasi"
 
-#: plug-ins/gimpressionist/orientation.c:89
+#: plug-ins/gimpressionist/orientation.c:88
 msgid "Directions:"
 msgstr "Arah:"
 
-#: plug-ins/gimpressionist/orientation.c:93
+#: plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Bilangan arah (cth. berus) untuk digunakan"
 
-#: plug-ins/gimpressionist/orientation.c:101
+#: plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
 msgstr "Mulakan sudut:"
 
-#: plug-ins/gimpressionist/orientation.c:105
+#: plug-ins/gimpressionist/orientation.c:104
 #, fuzzy
 msgid "The starting angle of the first brush to create"
 msgstr "Sudut berus pertama yang diwujudkan"
 
-#: plug-ins/gimpressionist/orientation.c:113
+#: plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
 msgstr "Sudut span:"
 
-#: plug-ins/gimpressionist/orientation.c:117
+#: plug-ins/gimpressionist/orientation.c:116
 #, fuzzy
 msgid "The angle span of the first brush to create"
 msgstr "Sudut berus pertama yang diwujudkan"
 
-#: plug-ins/gimpressionist/orientation.c:140
+#: plug-ins/gimpressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Biar nilai (kecerahan) bagi rantau tentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:144
-#: plug-ins/gimpressionist/size.c:138
+#: plug-ins/gimpressionist/orientation.c:142
+#: plug-ins/gimpressionist/size.c:145
 msgid "Radius"
 msgstr "Jejari"
 
-#: plug-ins/gimpressionist/orientation.c:145
+#: plug-ins/gimpressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Jarak dari tengah imej menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:150
+#: plug-ins/gimpressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr "Pilih satu arah rawak bagi setiap goresan"
 
-#: plug-ins/gimpressionist/orientation.c:154
-#: plug-ins/gimpressionist/size.c:148
+#: plug-ins/gimpressionist/orientation.c:150
+#: plug-ins/gimpressionist/size.c:153
 msgid "Radial"
 msgstr "Jejari"
 
-#: plug-ins/gimpressionist/orientation.c:155
+#: plug-ins/gimpressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Biar arah dari tengah menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:163
-#: plug-ins/gimpressionist/size.c:157
+#: plug-ins/gimpressionist/orientation.c:158
+#: plug-ins/gimpressionist/size.c:161
 msgid "Flowing"
 msgstr "Aliran"
 
-#: plug-ins/gimpressionist/orientation.c:164
-#: plug-ins/gimpressionist/size.c:158
+#: plug-ins/gimpressionist/orientation.c:159
+#: plug-ins/gimpressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Goresan mengikut satu corak \"aliran\""
 
-#: plug-ins/gimpressionist/orientation.c:169
+#: plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Warna bagi rantau menentukan arah bagi goresan"
 
-#: plug-ins/gimpressionist/orientation.c:173
-#: plug-ins/gimpressionist/size.c:167
+#: plug-ins/gimpressionist/orientation.c:166
+#: plug-ins/gimpressionist/size.c:169
 msgid "Adaptive"
 msgstr "Mudah suai"
 
-#: plug-ins/gimpressionist/orientation.c:174
+#: plug-ins/gimpressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Arah yang paling sepadan dengan imej asal dipilih"
 
-#: plug-ins/gimpressionist/orientation.c:182
-#: plug-ins/gimpressionist/size.c:177
+#: plug-ins/gimpressionist/orientation.c:174
+#: plug-ins/gimpressionist/size.c:178
 msgid "Manual"
 msgstr "Manual"
 
-#: plug-ins/gimpressionist/orientation.c:183
+#: plug-ins/gimpressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr "Tentukan orientasi goresan secara manual"
 
-#: plug-ins/gimpressionist/orientation.c:195
+#: plug-ins/gimpressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr "Buka Editor Peta Orientasi"
 
-#: plug-ins/gimpressionist/orientmap.c:436
+#: plug-ins/gimpressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr "Editor Peta Orientasi"
 
-#: plug-ins/gimpressionist/orientmap.c:458
+#: plug-ins/gimpressionist/orientmap.c:530
 msgid "Vectors"
 msgstr "Vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:470
+#: plug-ins/gimpressionist/orientmap.c:542
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9956,59 +10037,59 @@ msgstr ""
 "Medan vektor. Klik-kiri untuk alihkan vektor yang dipilih, Klik-kanan untuk "
 "halakannya kepada tetikus, Klik-tengah untuk tambah satu vektor baru."
 
-#: plug-ins/gimpressionist/orientmap.c:492
-#: plug-ins/gimpressionist/sizemap.c:414
+#: plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/gimpressionist/sizemap.c:435
 msgid "Adjust the preview's brightness"
 msgstr "Laraskan kecerahan pralihat"
 
-#: plug-ins/gimpressionist/orientmap.c:513
+#: plug-ins/gimpressionist/orientmap.c:587
 msgid "Select previous vector"
 msgstr "Pilih vektor sebelumnya"
 
-#: plug-ins/gimpressionist/orientmap.c:519
+#: plug-ins/gimpressionist/orientmap.c:593
 msgid "Select next vector"
 msgstr "Pilih vektor seterusnya"
 
-#: plug-ins/gimpressionist/orientmap.c:521
-#: plug-ins/gimpressionist/sizemap.c:445
+#: plug-ins/gimpressionist/orientmap.c:595
+#: plug-ins/gimpressionist/sizemap.c:466
 msgid "A_dd"
 msgstr "T_ambah"
 
-#: plug-ins/gimpressionist/orientmap.c:525
+#: plug-ins/gimpressionist/orientmap.c:599
 msgid "Add new vector"
 msgstr "Tambah vektor baru"
 
-#: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/sizemap.c:452
+#: plug-ins/gimpressionist/orientmap.c:601
+#: plug-ins/gimpressionist/sizemap.c:473
 msgid "_Kill"
 msgstr "_Hapus"
 
-#: plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/orientmap.c:605
 msgid "Delete selected vector"
 msgstr "Hapuskan vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:546
+#: plug-ins/gimpressionist/orientmap.c:620
 msgid "_Normal"
 msgstr "_Normal"
 
-#: plug-ins/gimpressionist/orientmap.c:547
+#: plug-ins/gimpressionist/orientmap.c:621
 msgid "Vorte_x"
 msgstr "Vorte_x"
 
-#: plug-ins/gimpressionist/orientmap.c:548
+#: plug-ins/gimpressionist/orientmap.c:622
 msgid "Vortex_2"
 msgstr "Vortex_2"
 
-#: plug-ins/gimpressionist/orientmap.c:549
+#: plug-ins/gimpressionist/orientmap.c:623
 msgid "Vortex_3"
 msgstr "Voetex_3"
 
-#: plug-ins/gimpressionist/orientmap.c:555
-#: plug-ins/gimpressionist/sizemap.c:497
+#: plug-ins/gimpressionist/orientmap.c:629
+#: plug-ins/gimpressionist/sizemap.c:518
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: plug-ins/gimpressionist/orientmap.c:560
+#: plug-ins/gimpressionist/orientmap.c:637
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -10016,226 +10097,226 @@ msgstr ""
 "Mod-voronoi membuatkan hanya vektor terhampir kepada titik yang diberi "
 "mempunyai sebarang pengaruh"
 
-#: plug-ins/gimpressionist/orientmap.c:569
+#: plug-ins/gimpressionist/orientmap.c:647
 msgid "A_ngle:"
 msgstr "S_udut:"
 
-#: plug-ins/gimpressionist/orientmap.c:573
+#: plug-ins/gimpressionist/orientmap.c:651
 msgid "Change the angle of the selected vector"
 msgstr "Ubah sudut bagi vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:579
+#: plug-ins/gimpressionist/orientmap.c:658
 msgid "Ang_le offset:"
 msgstr "Sud_ut ofset:"
 
-#: plug-ins/gimpressionist/orientmap.c:583
+#: plug-ins/gimpressionist/orientmap.c:662
 msgid "Offset all vectors with a given angle"
 msgstr "Ofset semua vektor dengan sudut yang diberi"
 
-#: plug-ins/gimpressionist/orientmap.c:594
+#: plug-ins/gimpressionist/orientmap.c:673
 msgid "Change the strength of the selected vector"
 msgstr "Ubah kekuatan vektor yang dipilih"
 
-#: plug-ins/gimpressionist/orientmap.c:600
+#: plug-ins/gimpressionist/orientmap.c:680
 msgid "S_trength exp.:"
 msgstr "Eks. kekuatan:"
 
-#: plug-ins/gimpressionist/orientmap.c:604
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/orientmap.c:684
+#: plug-ins/gimpressionist/sizemap.c:513
 msgid "Change the exponent of the strength"
 msgstr "Ubah eksponen bagi kekuatan"
 
-#: plug-ins/gimpressionist/paper.c:115
+#: plug-ins/gimpressionist/paper.c:120
 msgid "P_aper"
 msgstr "K_ertas"
 
-#: plug-ins/gimpressionist/paper.c:149
+#: plug-ins/gimpressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr "Songsangkan tekstur Kertas"
 
-#: plug-ins/gimpressionist/paper.c:152
+#: plug-ins/gimpressionist/paper.c:159
 msgid "O_verlay"
 msgstr "L_apisan"
 
-#: plug-ins/gimpressionist/paper.c:157
+#: plug-ins/gimpressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Gunakan kertas sebagaimana ia (tanpa menyembunyikannya)"
 
-#: plug-ins/gimpressionist/paper.c:172
+#: plug-ins/gimpressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Tentukan skala bagi tekstur (dalam peratus bagi fail asal)"
 
-#: plug-ins/gimpressionist/placement.c:42
+#: plug-ins/gimpressionist/placement.c:49
 msgid "Pl_acement"
 msgstr "Pe_letakan"
 
-#: plug-ins/gimpressionist/placement.c:48
+#: plug-ins/gimpressionist/placement.c:55
 msgid "Placement"
 msgstr "Peletakan"
 
-#: plug-ins/gimpressionist/placement.c:52
+#: plug-ins/gimpressionist/placement.c:59
 msgid "Randomly"
 msgstr "Secara Rawak"
 
-#: plug-ins/gimpressionist/placement.c:54
+#: plug-ins/gimpressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr "Diagihkan dengan tepat"
 
-#: plug-ins/gimpressionist/placement.c:61
+#: plug-ins/gimpressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr "Letakkan goresan secara rawak di sekitar imej"
 
-#: plug-ins/gimpressionist/placement.c:64
+#: plug-ins/gimpressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr "Goresan-goresan itu diagihkan secara tepat melalui imej tersebut"
 
-#: plug-ins/gimpressionist/placement.c:79
+#: plug-ins/gimpressionist/placement.c:91
 msgid "Stroke _density:"
 msgstr "Densiti _goresan:"
 
-#: plug-ins/gimpressionist/placement.c:83
+#: plug-ins/gimpressionist/placement.c:95
 msgid "The relative density of the brush strokes"
 msgstr "Densiti relatif bagi goresan berus"
 
-#: plug-ins/gimpressionist/placement.c:89
+#: plug-ins/gimpressionist/placement.c:101
 msgid "Centerize"
 msgstr "Tengah"
 
-#: plug-ins/gimpressionist/placement.c:93
+#: plug-ins/gimpressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokuskan goresan berus di kawasan tengah imej"
 
 #.
-#. * gimp_filename_to_utf8() and g_strerror() return temporary strings
+#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: plug-ins/gimpressionist/ppmtool.c:521
+#: plug-ins/gimpressionist/ppmtool.c:630
 #, fuzzy, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 "Gagal untuk menyimpan fail PPM '%s':\n"
 "%s"
 
-#: plug-ins/gimpressionist/presets.c:583
+#: plug-ins/gimpressionist/presets.c:621
 msgid "Save Current"
 msgstr "Simpan Semasa"
 
-#: plug-ins/gimpressionist/presets.c:822
+#: plug-ins/gimpressionist/presets.c:863
 #, fuzzy
 msgid "The Gimpressionist Defaults"
 msgstr "Gimpressionist"
 
-#: plug-ins/gimpressionist/presets.c:937
+#: plug-ins/gimpressionist/presets.c:979
 msgid "_Presets"
 msgstr "_Praset"
 
-#: plug-ins/gimpressionist/presets.c:952
+#: plug-ins/gimpressionist/presets.c:994
 msgid "Save current..."
 msgstr "Simpan semasa..."
 
-#: plug-ins/gimpressionist/presets.c:957
+#: plug-ins/gimpressionist/presets.c:999
 msgid "Save the current settings to the specified file"
 msgstr "Simpan seting semasa ke fail yang dinyatakan"
 
-#: plug-ins/gimpressionist/presets.c:985
+#: plug-ins/gimpressionist/presets.c:1027
 msgid "Reads the selected Preset into memory"
 msgstr "Baca Praset yang dipilih ke memori"
 
-#: plug-ins/gimpressionist/presets.c:991
+#: plug-ins/gimpressionist/presets.c:1033
 msgid "Deletes the selected Preset"
 msgstr "Hapuskan Praset yang dipilih"
 
-#: plug-ins/gimpressionist/presets.c:997
+#: plug-ins/gimpressionist/presets.c:1039
 msgid "Reread the folder of Presets"
 msgstr "Baca semula folder Praset"
 
-#: plug-ins/gimpressionist/preview.c:183
+#: plug-ins/gimpressionist/preview.c:187
 msgid "Refresh the Preview window"
 msgstr "Muat semula tetingkap Pralihat"
 
-#: plug-ins/gimpressionist/preview.c:191
+#: plug-ins/gimpressionist/preview.c:195
 msgid "Revert to the original image"
 msgstr "Kembali ke imej asal"
 
-#: plug-ins/gimpressionist/repaint.c:918
+#: plug-ins/gimpressionist/repaint.c:1160
 msgid "Update"
 msgstr "Kemas kini"
 
-#: plug-ins/gimpressionist/size.c:69
+#: plug-ins/gimpressionist/size.c:77
 msgid "_Size"
 msgstr "_Saiz"
 
-#: plug-ins/gimpressionist/size.c:83
+#: plug-ins/gimpressionist/size.c:91
 msgid "Sizes:"
 msgstr "Saiz:"
 
-#: plug-ins/gimpressionist/size.c:87
+#: plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr "Bilangan saiz berus untuk digunakan"
 
-#: plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
 msgstr "Saiz minimum:"
 
-#: plug-ins/gimpressionist/size.c:99
+#: plug-ins/gimpressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr "Berus paling kecil yang diwujudkan"
 
-#: plug-ins/gimpressionist/size.c:107
+#: plug-ins/gimpressionist/size.c:115
 msgid "Maximum size:"
 msgstr "Saiz maksimum:"
 
-#: plug-ins/gimpressionist/size.c:111
+#: plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
 msgstr "Berus paling besar yang diwujudkan"
 
-#: plug-ins/gimpressionist/size.c:125
+#: plug-ins/gimpressionist/size.c:133
 msgid "Size:"
 msgstr "Saiz:"
 
-#: plug-ins/gimpressionist/size.c:134
+#: plug-ins/gimpressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Biarkan nilai (kecerahan) bagi rantau menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:139
+#: plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Jarak dari tengah imej menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:144
+#: plug-ins/gimpressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr "Pilih saiz rawak bagi setiap goresan"
 
-#: plug-ins/gimpressionist/size.c:149
+#: plug-ins/gimpressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Biarkan arah dari tengah menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:163
+#: plug-ins/gimpressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Warna bagi rantau menentukan saiz goresan"
 
-#: plug-ins/gimpressionist/size.c:168
+#: plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Saiz berus yang paling sepadan dengan imej asal dipilih"
 
-#: plug-ins/gimpressionist/size.c:178
+#: plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr "Tentukan saiz goresan secara manual"
 
-#: plug-ins/gimpressionist/size.c:189
+#: plug-ins/gimpressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr "Buka Editor Peta Saiz"
 
-#: plug-ins/gimpressionist/sizemap.c:362
+#: plug-ins/gimpressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr "Editor Peta Saiz"
 
-#: plug-ins/gimpressionist/sizemap.c:384
+#: plug-ins/gimpressionist/sizemap.c:405
 msgid "Smvectors"
 msgstr "Smvektor"
 
-#: plug-ins/gimpressionist/sizemap.c:394
+#: plug-ins/gimpressionist/sizemap.c:415
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10243,39 +10324,39 @@ msgstr ""
 "Medan smvektor. Klik-kiri untuk alihkan smvektor yang dipilih, Klik-kanan "
 "untuk halakannya kepada tetikus, Klik-tengah untuk tambah smvektor baru."
 
-#: plug-ins/gimpressionist/sizemap.c:436
+#: plug-ins/gimpressionist/sizemap.c:457
 msgid "Select previous smvector"
 msgstr "Pilih smvektor sebelumnya"
 
-#: plug-ins/gimpressionist/sizemap.c:443
+#: plug-ins/gimpressionist/sizemap.c:464
 msgid "Select next smvector"
 msgstr "Pilih smvektor seterusnya"
 
-#: plug-ins/gimpressionist/sizemap.c:450
+#: plug-ins/gimpressionist/sizemap.c:471
 msgid "Add new smvector"
 msgstr "Tambah smvektor baru"
 
-#: plug-ins/gimpressionist/sizemap.c:457
+#: plug-ins/gimpressionist/sizemap.c:478
 msgid "Delete selected smvector"
 msgstr "Hapuskan smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:470
+#: plug-ins/gimpressionist/sizemap.c:491
 msgid "Change the angle of the selected smvector"
 msgstr "Ubah sudut smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:477
+#: plug-ins/gimpressionist/sizemap.c:498
 msgid "S_trength:"
 msgstr "K_ekuatan"
 
-#: plug-ins/gimpressionist/sizemap.c:481
+#: plug-ins/gimpressionist/sizemap.c:502
 msgid "Change the strength of the selected smvector"
 msgstr "Ubah kekuatan bagi smvektor yang dipilih"
 
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:509
 msgid "St_rength exp.:"
 msgstr "Eks. Ke_kuatan:"
 
-#: plug-ins/gimpressionist/sizemap.c:504
+#: plug-ins/gimpressionist/sizemap.c:525
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10284,7 +10365,7 @@ msgstr ""
 "mempunyai sebarang pengaruh"
 
 #. don't translate the gimprc entry
-#: plug-ins/gimpressionist/utils.c:132
+#: plug-ins/gimpressionist/utils.c:135
 #, c-format
 msgid ""
 "It is highly recommended to add\n"
@@ -10295,24 +10376,24 @@ msgstr ""
 " (gimpressionist-path \"%s\")\n"
 "(atau yang sama) ke dalam fail gipmrc anda."
 
-#: plug-ins/help/domain.c:161
+#: plug-ins/help/domain.c:175
 msgid "The GIMP help files are not installed."
 msgstr ""
 
-#: plug-ins/help/domain.c:163
+#: plug-ins/help/domain.c:177
 msgid "There is a problem with the GIMP help files."
 msgstr ""
 
-#: plug-ins/help/domain.c:168
+#: plug-ins/help/domain.c:182
 msgid "Please check your installation."
 msgstr ""
 
-#: plug-ins/help/domain.c:174
+#: plug-ins/help/domain.c:188
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr ""
 
-#: plug-ins/help/domain.c:414
+#: plug-ins/help/domain.c:445
 #, fuzzy, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -12427,6 +12508,9 @@ msgstr "Ralat: Tak boleh membaca failciri XJT %s"
 #, fuzzy, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Ralat: failciri XJT %s kosong"
+
+#~ msgid "Selection:"
+#~ msgstr "Pemilihan:"
 
 #, fuzzy
 #~ msgid "E_nable antialiasing"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
+"POT-Creation-Date: 2004-09-05 02:40+0200\n"
 "PO-Revision-Date: 2004-04-22 00:59+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
 msgid "_Browse..."
 msgstr "_Bla gjennom..."
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Skrifttypevalg"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:98
 msgid "Gradient Selection"
 msgstr "Graderingsvalg"
 
@@ -206,35 +206,72 @@ msgid "percent"
 msgstr "prosent"
 
 #: libgimpbase/gimpbaseenums.c:15
+msgid "Small"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:16
+msgid "Medium"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Large"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "Light Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "Mid-Tone Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:39
+msgid "Dark Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "White Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Gray Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+#, fuzzy
+msgid "Black Only"
+msgstr "Sort"
+
+#: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
 #, fuzzy
 msgid "Grayscale"
 msgstr "Konverter til gråtoner"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
 msgstr ""
 
@@ -460,6 +497,19 @@ msgstr ""
 "Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
 "for å velge denne fargen."
 
+#: libgimpwidgets/gimppreviewarea.c:114
+msgid "Check Size"
+msgstr ""
+
+#: libgimpwidgets/gimppreviewarea.c:121
+msgid "Check Style"
+msgstr ""
+
+#. a toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:246
+msgid "_Preview"
+msgstr ""
+
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Anker"
@@ -540,7 +590,7 @@ msgstr "Enhet"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:811
+#: libgimpwidgets/gimpwidgets.c:1000
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -548,16 +598,16 @@ msgstr ""
 "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
 "lar deg gjenta en gitt «tilfeldig» operasjon"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:1004
 msgid "_New Seed"
 msgstr "_Nytt frø"
 
-#: libgimpwidgets/gimpwidgets.c:828
+#: libgimpwidgets/gimpwidgets.c:1017
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
 
-#: libgimpwidgets/gimpwidgets.c:832
+#: libgimpwidgets/gimpwidgets.c:1021
 #, fuzzy
 msgid "_Randomize"
 msgstr "Gjø_r tilfeldig"
@@ -652,63 +702,68 @@ msgstr "_Svartpunktskompensering"
 msgid "CMYK color selector"
 msgstr "CMYK fargevelger"
 
-#: modules/colorsel_cmyk.c:132
+#: modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:149
+#: modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:156
+#: modules/colorsel_cmyk.c:154
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr "Yellow"
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:157
 msgid "Black"
 msgstr "Sort"
 
-#: modules/colorsel_cmyk.c:193
-msgid "Black Pullout (%):"
+#: modules/colorsel_cmyk.c:191
+#, fuzzy
+msgid "Black _Pullout:"
 msgstr "Begrensing av sort (%):"
 
-#: modules/colorsel_triangle.c:110
+#: modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr "Fargevelger i malerstil"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:170
 msgid "Triangle"
 msgstr "Trekant"
 
-#: modules/colorsel_water.c:104
+#: modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "Fargevelger i vannfargestil"
 
-#: modules/colorsel_water.c:176
+#: modules/colorsel_water.c:154
 msgid "Watercolor"
 msgstr "Vannfarge"
 
-#: modules/colorsel_water.c:251
+#: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Trykk"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
+"POT-Creation-Date: 2004-09-05 02:40+0200\n"
 "PO-Revision-Date: 2003-01-30 23:28+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Chọn Đơn Vị"
 
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
 msgid "_Browse..."
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Chọn Đơn Vị"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:98
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Chọn Đơn Vị"
@@ -210,35 +210,72 @@ msgid "percent"
 msgstr "phần trăm"
 
 #: libgimpbase/gimpbaseenums.c:15
+msgid "Small"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:16
+msgid "Medium"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Large"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "Light Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "Mid-Tone Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:39
+msgid "Dark Checks"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "White Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Gray Only"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+#, fuzzy
+msgid "Black Only"
+msgstr "/Đen"
+
+#: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
 #, fuzzy
 msgid "Grayscale"
 msgstr "Chuyển đổi sang Cân Bằng Xám"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
 msgstr ""
 
@@ -469,6 +506,19 @@ msgid ""
 "that color."
 msgstr ""
 
+#: libgimpwidgets/gimppreviewarea.c:114
+msgid "Check Size"
+msgstr ""
+
+#: libgimpwidgets/gimppreviewarea.c:121
+msgid "Check Style"
+msgstr ""
+
+#. a toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:246
+msgid "_Preview"
+msgstr ""
+
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Neo"
@@ -549,7 +599,7 @@ msgstr "Đơn Vị"
 msgid "Factor"
 msgstr "Tác nhân"
 
-#: libgimpwidgets/gimpwidgets.c:811
+#: libgimpwidgets/gimpwidgets.c:1000
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -557,15 +607,15 @@ msgstr ""
 "Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên - Điều này cho phép "
 "nhắc lại hoạt động \"ngẫu nhiên\" được trao"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:1004
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:828
+#: libgimpwidgets/gimpwidgets.c:1017
 msgid "Seed random number generator with a generated random number"
 msgstr "Gieo trình sinh số ngẫu nhiên bằng số ngẫu nhiên được tạo"
 
-#: libgimpwidgets/gimpwidgets.c:832
+#: libgimpwidgets/gimpwidgets.c:1021
 #, fuzzy
 msgid "_Randomize"
 msgstr "Để ngẫ_u nhiên"
@@ -661,67 +711,71 @@ msgstr ""
 msgid "CMYK color selector"
 msgstr "Trình chọn màu kiểu dáng màu nước"
 
-#: modules/colorsel_cmyk.c:132
+#: modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:149
+#: modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:156
+#: modules/colorsel_cmyk.c:154
 #, fuzzy
 msgid "Cyan"
 msgstr "Bỏ qua"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr ""
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:157
 #, fuzzy
 msgid "Black"
 msgstr "/Đen"
 
-#: modules/colorsel_cmyk.c:193
-msgid "Black Pullout (%):"
+#: modules/colorsel_cmyk.c:191
+msgid "Black _Pullout:"
 msgstr ""
 
-#: modules/colorsel_triangle.c:110
+#: modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:170
 #, fuzzy
 msgid "Triangle"
 msgstr "_Tam giác"
 
-#: modules/colorsel_water.c:104
+#: modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "Trình chọn màu kiểu dáng màu nước"
 
-#: modules/colorsel_water.c:176
+#: modules/colorsel_water.c:154
 #, fuzzy
 msgid "Watercolor"
 msgstr "Màu n_ước"
 
-#: modules/colorsel_water.c:251
+#: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Áp lực"
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:08+0200\n"
+"POT-Creation-Date: 2004-09-05 02:42+0200\n"
 "PO-Revision-Date: 2004-03-20 14:50+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -40,85 +40,96 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1135
-#: plug-ins/script-fu/script-fu-scripts.c:1137
+#: plug-ins/script-fu/script-fu-interface.c:192
+#: plug-ins/script-fu/script-fu-interface.c:194
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1149
+#: plug-ins/script-fu/script-fu-interface.c:206
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1188
-msgid "About"
+#: plug-ins/script-fu/script-fu-interface.c:213
+#, fuzzy
+msgid "_About"
 msgstr "O"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1198
+#: plug-ins/script-fu/script-fu-interface.c:238
 msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1221
+#: plug-ins/script-fu/script-fu-interface.c:269
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1264
+#: plug-ins/script-fu/script-fu-interface.c:313
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu odabir boje"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1334
+#: plug-ins/script-fu/script-fu-interface.c:395
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Odabir Datoteke"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1338
+#: plug-ins/script-fu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu odabir mape"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-interface.c:411
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Odabir Fonta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-interface.c:418
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu Odabir Uzorka"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Odabir Uzorka"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1372
+#: plug-ins/script-fu/script-fu-interface.c:433
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Odabir Gradijenta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1380
+#: plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Odabir Kista"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1998
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:495
+#, fuzzy
+msgid "Script Progress"
+msgstr "Argumenti Skripte"
+
+#: plug-ins/script-fu/script-fu-interface.c:503
+msgid "(none)"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:986
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-interface.c:992
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-interface.c:998
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2018
+#: plug-ins/script-fu/script-fu-interface.c:1006
 msgid "Image Types:"
 msgstr "Vrste Slika:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2043
+#: plug-ins/script-fu/script-fu-scripts.c:549
 #, c-format
 msgid ""
 "Error while executing\n"

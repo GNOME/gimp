@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:08+0200\n"
+"POT-Creation-Date: 2004-09-05 02:42+0200\n"
 "PO-Revision-Date: 2004-07-15 00:10+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -46,85 +46,96 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1135
-#: plug-ins/script-fu/script-fu-scripts.c:1137
+#: plug-ins/script-fu/script-fu-interface.c:192
+#: plug-ins/script-fu/script-fu-interface.c:194
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1149
+#: plug-ins/script-fu/script-fu-interface.c:206
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1188
-msgid "About"
+#: plug-ins/script-fu/script-fu-interface.c:213
+#, fuzzy
+msgid "_About"
 msgstr "О программе"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1198
+#: plug-ins/script-fu/script-fu-interface.c:238
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1221
+#: plug-ins/script-fu/script-fu-interface.c:269
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1264
+#: plug-ins/script-fu/script-fu-interface.c:313
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1334
+#: plug-ins/script-fu/script-fu-interface.c:395
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1338
+#: plug-ins/script-fu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу: Выбор каталога"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-interface.c:411
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-interface.c:418
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1372
+#: plug-ins/script-fu/script-fu-interface.c:433
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1380
+#: plug-ins/script-fu/script-fu-interface.c:441
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1998
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:495
+#, fuzzy
+msgid "Script Progress"
+msgstr "Аргументы скрипта"
+
+#: plug-ins/script-fu/script-fu-interface.c:503
+msgid "(none)"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:986
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-interface.c:992
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-interface.c:998
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2018
+#: plug-ins/script-fu/script-fu-interface.c:1006
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2043
+#: plug-ins/script-fu/script-fu-scripts.c:549
 #, c-format
 msgid ""
 "Error while executing\n"
