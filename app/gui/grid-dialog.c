@@ -369,10 +369,6 @@ static void
 cancel_callback (GtkWidget  *widget,
                  GtkWidget  *dialog)
 {
-  GimpDisplayShell *shell;
-
-  shell = g_object_get_data (G_OBJECT (dialog), "shell");
-
   gtk_widget_destroy (dialog);
 }
 

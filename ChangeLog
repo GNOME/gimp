@@ -1,3 +1,8 @@
+2003-06-28  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/gui/grid-dialog.c (cancel_callback): removed unneeded
+	variable.
+
 2003-06-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_is_active): new
