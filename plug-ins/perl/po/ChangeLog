@@ -1,3 +1,8 @@
+Fri May  5 21:49:29 CEST 2000  Marc Lehmann <pcg@goof.com>
+	
+        * $alltarget was never set (have to have a look at the logs).
+        Probably was responsible for the "gmo's don't build" problem.
+
 Thu Apr  6 22:38:51 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * Makefile.PL: msgmerge will no longer be called under any

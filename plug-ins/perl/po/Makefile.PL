@@ -4,6 +4,7 @@ do '../config.pl';
 
 print "Portable message objects...";
 if ($MSGFMT =~ /./ && $MSGFMT ne "no") {
+   $alltarget = "update-gmo";
    for (<*.po>) {
       my ($po) = /(.*)\.po$/;
       print " $po";
@@ -14,6 +15,7 @@ if ($MSGFMT =~ /./ && $MSGFMT ne "no") {
       $mofiles   .= " $po.gmo";
    }
 } else {
+   $alltarget = "";
    print " skipped";
 }
 print "\n";
