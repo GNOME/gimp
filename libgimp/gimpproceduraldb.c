@@ -90,11 +90,18 @@ void
 gimp_procedural_db_get_data (gchar    *identifier,
 			     gpointer  data)
 {
-  gint size;
+  gint     size;
+  gpointer hack;
 
   _gimp_procedural_db_get_data (identifier,
 				&size,
-				data);
+				&hack);
+
+  if (hack)
+    {
+      memcpy (data, hack, size * sizeof (guint8));
+      g_free (hack);
+    }
 }
 
 void
