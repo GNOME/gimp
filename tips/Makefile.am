@@ -9,6 +9,7 @@ tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
 tips_POFILES = \
 	da.po	\
 	de.po	\
+	es.po	\
 	ja.po	\
 	pl.po	\
 	pt.po	\
