@@ -137,7 +137,7 @@ sanity_check_filename_encoding (void)
   gchar  *result;
   GError *error = NULL;
 
-  result = g_filename_to_utf8 ("foobar", -1, NULL, NULL, &error);
+  result = g_filename_to_utf8 ("", -1, NULL, NULL, &error);
 
   if (result)
     {
