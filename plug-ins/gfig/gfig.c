@@ -2093,7 +2093,7 @@ paint_page (void)
                              _("Background:"), 0.0, 0.5,
                              page_menu_bg, 1, FALSE);
 
-  toggle = gtk_check_button_new_with_label (_("Reverse Line"));
+  toggle = gtk_check_button_new_with_label (_("Reverse line"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2108,7 +2108,7 @@ paint_page (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (vbox2);
 
-  toggle = gtk_check_button_new_with_label (_("Scale to Image"));
+  toggle = gtk_check_button_new_with_label (_("Scale to image"));
   gtk_box_pack_end (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 selvals.scaletoimage);
@@ -2138,7 +2138,7 @@ paint_page (void)
   g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", scale_scale);
   g_object_set_data (G_OBJECT (toggle), "user_data", scale_scale_data);
 
-  toggle = gtk_check_button_new_with_label (_("Approx. Circles/Ellipses"));
+  toggle = gtk_check_button_new_with_label (_("Approx. circles/ellipses"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 4, 5,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2294,7 +2294,7 @@ brush_page (void)
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
   pencil_hbox = gtk_hbox_new (FALSE, 4);
-  label = gtk_label_new (_("No Options..."));
+  label = gtk_label_new (_("No options..."));
   gtk_box_pack_start (GTK_BOX (pencil_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), pencil_hbox, 0, 2, 1, 2,
@@ -2309,7 +2309,7 @@ brush_page (void)
                     brush_page_pw);
 
   /* Start of new brush selection code */
-  brush_sel_button = button = gtk_button_new_with_label (_("Set Brush..."));
+  brush_sel_button = button = gtk_button_new_with_label (_("Set brush..."));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (brush_sel_button)->child), 2, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_brush_callback),
@@ -2443,7 +2443,7 @@ select_page (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Fill Type:"), 0.0, 0.5,
+                             _("Fill type:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   /* 6 */
@@ -2460,8 +2460,8 @@ select_page (void)
                              scale, 1, FALSE);
 
   /* 7 */
-  combo = gimp_int_combo_box_new (_("Each Selection"), FILL_EACH,
-                                  _("All Selections"), FILL_AFTER,
+  combo = gimp_int_combo_box_new (_("Each selection"), FILL_EACH,
+                                  _("All selections"), FILL_AFTER,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
@@ -2535,7 +2535,7 @@ options_page (void)
   gtk_widget_show (table);
 
   /* Put buttons in */
-  toggle = gtk_check_button_new_with_label (_("Show Image"));
+  toggle = gtk_check_button_new_with_label (_("Show image"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2546,7 +2546,7 @@ options_page (void)
                     NULL);
   gtk_widget_show (toggle);
 
-  button = gtk_button_new_with_label (_("Reload Image"));
+  button = gtk_button_new_with_label (_("Reload image"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (reload_button_callback),
@@ -2566,7 +2566,7 @@ options_page (void)
                     GINT_TO_POINTER (GRID_TYPE_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Grid Type:"), 0.0, 0.5,
+                             _("Grid type:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   gfig_opt_widget.gridtypemenu = combo;
@@ -2577,7 +2577,7 @@ options_page (void)
                                   _("Grey"),      GFIG_GREY_GC,
                                   _("Darker"),    GTK_STATE_ACTIVE,
                                   _("Lighter"),   GTK_STATE_PRELIGHT,
-                                  _("Very Dark"), GTK_STATE_SELECTED,
+                                  _("Very dark"), GTK_STATE_SELECTED,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
@@ -2586,11 +2586,11 @@ options_page (void)
                     GINT_TO_POINTER (GRID_RENDER_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Grid Color:"), 0.0, 0.5,
+                             _("Grid color:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                                    _("Max Undo:"), 0, 50,
+                                    _("Max undo:"), 0, 50,
                                     selvals.maxundo, MIN_UNDO, MAX_UNDO, 1, 2, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
@@ -2598,7 +2598,7 @@ options_page (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &selvals.maxundo);
 
-  toggle = gtk_check_button_new_with_label (_("Show Position"));
+  toggle = gtk_check_button_new_with_label (_("Show position"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2609,7 +2609,7 @@ options_page (void)
                           NULL);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Hide Control Points"));
+  toggle = gtk_check_button_new_with_label (_("Hide control points"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 3, 4, 5,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (toggle, "toggled",
@@ -2653,7 +2653,7 @@ grid_frame (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Show Grid"));
+  toggle = gtk_check_button_new_with_label (_("Show grid"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -2664,7 +2664,7 @@ grid_frame (void)
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
 
-  toggle = gtk_check_button_new_with_label (_("Snap to Grid"));
+  toggle = gtk_check_button_new_with_label (_("Snap to grid"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -2676,7 +2676,7 @@ grid_frame (void)
   /* 17/10/2003 (Maurits): this option is not implemented. Therefore removing
      it from the user interface */
 
-  toggle = gtk_check_button_new_with_label (_("Lock on Grid"));
+  toggle = gtk_check_button_new_with_label (_("Lock on grid"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -2824,7 +2824,7 @@ add_objects_list (void)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (merge_button_callback),
                     list);
-  gimp_help_set_help_data (button, _("Merge Gfig Object collection into the "
+  gimp_help_set_help_data (button, _("Merge Gfig Ooject collection into the "
                                      "current edit session"), NULL);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
@@ -3275,7 +3275,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
 
   /*  the dialog  */
   options->query_box =
-    gimp_dialog_new (_("Enter Gfig Object Name"), "gfig",
+    gimp_dialog_new (_("Enter Gfig object name"), "gfig",
                      NULL, 0,
                      gimp_standard_help_func, HELP_ID,
 
@@ -3300,7 +3300,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Gfig Object Name:"));
+  label = gtk_label_new (_("Gfig object name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -3355,7 +3355,7 @@ gfig_rescan_list (void)
     }
 
   /*  the dialog  */
-  dlg = gimp_dialog_new (_("Rescan for Gfig Objects"), "gfig",
+  dlg = gimp_dialog_new (_("Rescan for Gfig objects"), "gfig",
                          NULL, 0,
                          gimp_standard_help_func, HELP_ID,
 
@@ -3372,7 +3372,7 @@ gfig_rescan_list (void)
                     G_CALLBACK (gtk_widget_destroyed),
                     &dlg);
 
-  patheditor = gimp_path_editor_new (_("Add Gfig Path"), gfig_path);
+  patheditor = gimp_path_editor_new (_("Add Gfig path"), gfig_path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
                       TRUE, TRUE, 0);
@@ -3586,7 +3586,7 @@ gfig_paint_callback (void)
     {
       if (ccount == obj_show_single || obj_show_single == -1)
         {
-          sprintf (buf, _("Gfig Layer %d"), layer_count++);
+          sprintf (buf, _("Gfig layer %d"), layer_count++);
 
           if (selvals.painttype != PAINT_SELECTION_TYPE)
             {
@@ -3847,7 +3847,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
                            "\"%s\" from the list and from disk?"),
                          sel_obj->draw_name);
 
-  delete_dialog = gimp_query_boolean_box (_("Delete Gfig Drawing"),
+  delete_dialog = gimp_query_boolean_box (_("Delete Gfig drawing"),
                                           gtk_widget_get_toplevel (list),
                                           gimp_standard_help_func, HELP_ID,
                                           FALSE,

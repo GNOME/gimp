@@ -339,7 +339,7 @@ plasma_dialog (GimpDrawable  *drawable,
 
   seed = gimp_random_seed_new (&pvals.seed, &pvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("Random _Seed:"), 0.0, 0.5,
+				     _("Random _seed:"), 0.0, 0.5,
 				     seed, 2, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (seed));

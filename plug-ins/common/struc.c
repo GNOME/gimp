@@ -1275,10 +1275,10 @@ struc_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &svals.direction, svals.direction,
 
-                                    _("_Top-Right"),    TOP_RIGHT,    NULL,
-                                    _("Top-_Left"),     TOP_LEFT,     NULL,
-                                    _("_Bottom-Left"),  BOTTOM_LEFT,  NULL,
-                                    _("Bottom-_Right"), BOTTOM_RIGHT, NULL,
+                                    _("_Top-right"),    TOP_RIGHT,    NULL,
+                                    _("Top-_left"),     TOP_LEFT,     NULL,
+                                    _("_Bottom-left"),  BOTTOM_LEFT,  NULL,
+                                    _("Bottom-_right"), BOTTOM_RIGHT, NULL,
 
                                     NULL);
 

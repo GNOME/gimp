@@ -1036,7 +1036,7 @@ new_channel (const chan_tmpl *ct)
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
   gtk_widget_show (hbox2);
 
-  label = gtk_label_new_with_mnemonic (_("_Spot Function:"));
+  label = gtk_label_new_with_mnemonic (_("_Spot function:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1241,7 +1241,7 @@ newsprint_dialog (GimpDrawable *drawable)
                     &st);
 
   st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				      _("C_ell Size:"), SCALE_WIDTH, 7,
+				      _("C_ell size:"), SCALE_WIDTH, 7,
 				      pvals.cell_width,
 				      3.0, 100.0, 1.0, 5.0, 0,
 				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
@@ -1270,7 +1270,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       /* black pullout */
       st.pull = gimp_scale_entry_new (GTK_TABLE (st.pull_table), 0, 0,
-				      _("B_lack Pullout (%):"), SCALE_WIDTH, 0,
+				      _("B_lack pullout (%):"), SCALE_WIDTH, 0,
 				      pvals.k_pullout,
 				      0, 100, 1, 10, 0,
 				      TRUE, 0, 0,
@@ -1340,7 +1340,7 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      toggle = gtk_check_button_new_with_mnemonic (_("_Lock Channels"));
+      toggle = gtk_check_button_new_with_mnemonic (_("_Lock channels"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    pvals_ui.lock_channels);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
@@ -1350,7 +1350,7 @@ newsprint_dialog (GimpDrawable *drawable)
 			G_CALLBACK (gimp_toggle_button_update),
 			&pvals_ui.lock_channels);
 
-      button = gtk_button_new_with_mnemonic (_("_Factory Defaults"));
+      button = gtk_button_new_with_mnemonic (_("_Factory defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 

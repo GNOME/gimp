@@ -461,7 +461,7 @@ ripple_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.antialias);
 
-  toggle = gtk_check_button_new_with_mnemonic ( _("_Retain Tilability"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Retain tilability"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
   gtk_widget_show (toggle);

@@ -340,7 +340,7 @@ open_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &p.params.move_max_rate);
 
-  button = gtk_check_button_new_with_mnemonic (_("_Wrap Around"));
+  button = gtk_check_button_new_with_mnemonic (_("_Wrap around"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				p.params.wrap_around);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 1, 2);
@@ -357,13 +357,13 @@ open_dialog (void)
 
 				    _("_Transparent"),
 				    BACKGROUND_TYPE_TRANSPARENT, NULL,
-				    _("I_nverted Image"),
+				    _("I_nverted image"),
 				    BACKGROUND_TYPE_INVERTED, NULL,
 				    _("Im_age"),
 				    BACKGROUND_TYPE_IMAGE, NULL,
-				    _("Fo_reground Color"),
+				    _("Fo_reground color"),
 				    BACKGROUND_TYPE_FOREGROUND, NULL,
-				    _("Bac_kground Color"),
+				    _("Bac_kground color"),
 				    BACKGROUND_TYPE_BACKGROUND, NULL,
 				    _("S_elect here:"),
 				    BACKGROUND_TYPE_COLOR, &button,

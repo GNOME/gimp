@@ -9,6 +9,12 @@
 
 2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins:  changed dialogs to follow HIG capitalization style 
+	wherever they didn't.  Scripts remain to be done.  Partially
+	fixes bug #123699.
+
+2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimphistogrambox.[ch]:
 	* app/tools/gimpthresholdtool.c: Changed the threshold tool dialog 
 	so that it uses a two-triangle-slider scale of the sort used in the 

@@ -252,7 +252,7 @@ sobel_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Keep Sign of Result (one Direction only)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result (one direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.keep_sign);
   gtk_widget_show (toggle);

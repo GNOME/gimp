@@ -336,8 +336,8 @@ shift_dialog (gint32 image_ID)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &shvals.orientation, shvals.orientation,
 
-                                    _("Shift _Horizontally"), HORIZONTAL, NULL,
-                                    _("Shift _Vertically"),   VERTICAL,   NULL,
+                                    _("Shift _horizontally"), HORIZONTAL, NULL,
+                                    _("Shift _vertically"),   VERTICAL,   NULL,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -360,7 +360,7 @@ shift_dialog (gint32 image_ID)
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
 			      (gdouble) shvals.shift_amount);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-				_("Shift _Amount:"), 1, 0, 0.0);
+				_("Shift _amount:"), 1, 0, 0.0);
 
   g_signal_connect (size_entry, "value_changed",
                     G_CALLBACK (shift_amount_callback),

@@ -888,7 +888,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
                       G_CALLBACK (design_op_callback),
                       GINT_TO_POINTER (OP_TRANSLATE));
 
-  ifsD->rotate_button = gtk_toggle_button_new_with_label (_("Rotate/Scale"));
+  ifsD->rotate_button = gtk_toggle_button_new_with_label (_("Rotate/scale"));
   gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->rotate_button,
                       TRUE, TRUE, 0);
   gtk_widget_show (ifsD->rotate_button);
@@ -917,7 +917,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   util_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
-  button = gtk_button_new_with_label (_("Render Options"));
+  button = gtk_button_new_with_label (_("Render options"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (ifs_options_dialog),
                     NULL);
@@ -983,14 +983,14 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_widget_set_sensitive (ifsD->redo_button, FALSE);
   gtk_widget_show (ifsD->redo_button);
 
-  button = gtk_button_new_with_mnemonic (_("Select _All"));
+  button = gtk_button_new_with_mnemonic (_("Select _all"));
   gtk_box_pack_start (GTK_BOX (util_hbox), button,
                       TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (design_area_select_all_callback), NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_mnemonic (_("Recompute _Center"));
+  button = gtk_button_new_with_mnemonic (_("Recompute _center"));
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (recompute_center_cb), NULL);
@@ -1033,7 +1033,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Relative Probability:"));
+  label = gtk_label_new (_("Relative probability:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

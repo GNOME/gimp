@@ -1043,7 +1043,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Sample _Density:"), SCALE_WIDTH, 5,
+			      _("Sample _density:"), SCALE_WIDTH, 5,
 			      config.cp.sample_density,
 			      0.1, 20, 1, 5, 2,
 			      TRUE, 0, 0,
@@ -1054,7 +1054,7 @@ dialog (void)
                     &config.cp.sample_density);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Spa_tial Oversample:"), SCALE_WIDTH, 5,
+			      _("Spa_tial oversample:"), SCALE_WIDTH, 5,
 			      config.cp.spatial_oversample,
 			      1, 4, 0.01, 0.1, 0,
 			      TRUE, 0, 0,
@@ -1065,7 +1065,7 @@ dialog (void)
                     &config.cp.spatial_oversample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("Spatial _Filter Radius:"), SCALE_WIDTH, 5,
+			      _("Spatial _filter radius:"), SCALE_WIDTH, 5,
 			      config.cp.spatial_filter_radius,
 			      0, 4, 0.2, 1, 2,
 			      TRUE, 0, 0,
@@ -1126,7 +1126,7 @@ dialog (void)
 
     gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
                                 GIMP_INT_STORE_VALUE,    GRADIENT_DRAWABLE,
-                                GIMP_INT_STORE_LABEL,    _("Custom Gradient"),
+                                GIMP_INT_STORE_LABEL,    _("Custom gradient"),
                                 GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
                                 -1);
 

@@ -370,7 +370,7 @@ lens_dialog (GimpDrawable *drawable)
   gtk_widget_show (vbox);
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
-    (NULL, _("_Keep Original Surroundings"));
+    (NULL, _("_Keep original surroundings"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);

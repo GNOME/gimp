@@ -280,10 +280,10 @@ dialog (GimpDrawable *drawable)
                                     G_CALLBACK (radio_callback),
                                     &pvals.max_p, pvals.max_p,
 
-                                    _("_Hold the Maximal Channels"),
+                                    _("_Hold the maximal channels"),
                                     MAX_CHANNELS, &max,
 
-                                    _("Ho_ld the Minimal Channels"),
+                                    _("Ho_ld the minimal channels"),
                                     MIN_CHANNELS, &min,
 
                                     NULL);

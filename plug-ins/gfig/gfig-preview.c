@@ -537,7 +537,7 @@ make_status (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Draw Name:"));
+  label = gtk_label_new (_("Draw name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -640,7 +640,7 @@ gfig_pos_labels (void)
   gtk_widget_show (hbox);
 
   /* Position labels */
-  label = gtk_label_new (_("XY Position:"));
+  label = gtk_label_new (_("XY position:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -634,7 +634,7 @@ solid_noise_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random Seed:"), 1.0, 0.5,
+				     _("_Random seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
@@ -686,7 +686,7 @@ solid_noise_dialog (void)
 
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_X Size:"), SCALE_WIDTH, 0,
+			      _("_X size:"), SCALE_WIDTH, 0,
 			      snvals.xsize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -699,7 +699,7 @@ solid_noise_dialog (void)
 
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("_Y Size:"), SCALE_WIDTH, 0,
+			      _("_Y size:"), SCALE_WIDTH, 0,
 			      snvals.ysize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);

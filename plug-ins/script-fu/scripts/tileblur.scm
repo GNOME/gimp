@@ -68,9 +68,9 @@
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-ADJUSTMENT _"Radius" '(5 0 128 1 1 0 0)
-    SF-TOGGLE     _"Blur Vertically" TRUE
-    SF-TOGGLE     _"Blur Horizontally" TRUE
-    SF-OPTION     _"Blur Type" '(_"IIR" _"RLE")
+    SF-TOGGLE     _"Blur vertically" TRUE
+    SF-TOGGLE     _"Blur horizontally" TRUE
+    SF-OPTION     _"Blur type" '(_"IIR" _"RLE")
 )
 
 

@@ -738,7 +738,7 @@ randomize_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.seed, &pivals.randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random Seed:"), 0.0, 0.5,
+				     _("_Random seed:"), 0.0, 0.5,
 				     seed_hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));

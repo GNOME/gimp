@@ -345,11 +345,11 @@ pluginCoreIA (piArgs       *argp,
                                     G_CALLBACK (nlfilt_radio_button_update),
                                     &argp->filter, argp->filter,
 
-                                    _("_Alpha Trimmed Mean"),
+                                    _("_Alpha trimmed mean"),
                                     filter_alpha_trim, NULL,
-                                    _("Op_timal Estimation"),
+                                    _("Op_timal estimation"),
                                     filter_opt_est, NULL,
-                                    _("_Edge Enhancement"),
+                                    _("_Edge enhancement"),
                                     filter_edge_enhance, NULL,
 
                                     NULL);
@@ -448,7 +448,7 @@ mw_preview_new (GtkWidget    *parent,
   gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->frame);
 
-  button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("_Do preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

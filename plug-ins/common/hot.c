@@ -598,7 +598,7 @@ pluginCoreIA (piArgs *argp)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Create _New Layer"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Create _New layer"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

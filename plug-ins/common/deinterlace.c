@@ -285,8 +285,8 @@ deinterlace_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &DeinterlaceValue, DeinterlaceValue,
 
-                                    _("Keep o_dd Fields"),  ODD_FIELDS,  NULL,
-                                    _("Keep _even Fields"), EVEN_FIELDS, NULL,
+                                    _("Keep o_dd fields"),  ODD_FIELDS,  NULL,
+                                    _("Keep _even fields"), EVEN_FIELDS, NULL,
 
                                     NULL);
 

@@ -373,7 +373,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-              _("F_lare Intensity:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("F_lare intensity:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Flare Intensity"), NULL);
@@ -383,7 +383,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-              _("_Spike Length:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("_Spike length:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_len, 1, 100, 1, 10, 0,
               TRUE, 0, 0,
               _("Adjust the Spike Length"), NULL);
@@ -393,7 +393,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-              _("Sp_ike Points:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("Sp_ike points:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_pts, 0, 16, 1, 4, 0,
               TRUE, 0, 0,
               _("Adjust the Number of Spikes"), NULL);
@@ -403,7 +403,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-              _("Spi_ke Angle (-1: Random):"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("Spi_ke angle (-1: random):"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_angle, -1, 360, 1, 15, 0,
               TRUE, 0, 0,
               _("Adjust the Spike Angle "
@@ -414,7 +414,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-              _("Spik_e Density:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("Spik_e density:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.density, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Spike Density"), NULL);
@@ -434,7 +434,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
-              _("_Random Hue:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("_Random hue:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Value how much the Hue should "
@@ -445,7 +445,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
-              _("Rando_m Saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
+              _("Rando_m saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Value how much the Saturation should "
@@ -462,7 +462,7 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Preserve Luminosity"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Preserve luminosity"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                 svals.preserve_luminosity);
@@ -487,7 +487,7 @@ sparkle_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.inverse);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("A_dd Border"));
+  toggle = gtk_check_button_new_with_mnemonic (_("A_dd border"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_widget_show (toggle);
@@ -504,18 +504,18 @@ sparkle_dialog (void)
                                    G_CALLBACK (gimp_radio_button_update),
                                    &svals.colortype, svals.colortype,
 
-                                   _("_Natural Color"),    NATURAL,    &r1,
-                                   _("_Foreground Color"), FOREGROUND, &r2,
-                                   _("_Background Color"), BACKGROUND, &r3,
+                                   _("_Natural color"),    NATURAL,    &r1,
+                                   _("_Foreground color"), FOREGROUND, &r2,
+                                   _("_Background color"), BACKGROUND, &r3,
 
                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  gimp_help_set_help_data (r1, _("Use the Color of the Image"), NULL);
-  gimp_help_set_help_data (r2, _("Use the Foreground Color"), NULL);
-  gimp_help_set_help_data (r3, _("Use the Background Color"), NULL);
+  gimp_help_set_help_data (r1, _("Use the color of the image"), NULL);
+  gimp_help_set_help_data (r2, _("Use the foreground color"), NULL);
+  gimp_help_set_help_data (r3, _("Use the background color"), NULL);
 
   gtk_widget_show (dlg);
 

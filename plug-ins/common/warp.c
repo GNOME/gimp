@@ -425,7 +425,7 @@ warp_dialog (GimpDrawable *drawable)
   g_object_unref (spin_group);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Step Size:"), 0.0, 0.5,
+                                     _("Step size:"), 0.0, 0.5,
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
   g_object_unref (label_group);
@@ -448,7 +448,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.iter);
 
   /*  Displacement map menu  */
-  label = gtk_label_new (_("Displacement Map:"));
+  label = gtk_label_new (_("Displacement map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -466,7 +466,7 @@ warp_dialog (GimpDrawable *drawable)
   /* ======================================================================= */
 
   /*  Displacement Type  */
-  label = gtk_label_new (_("On Edges:"));
+  label = gtk_label_new (_("On edges:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -522,7 +522,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == BLACK);
 
-  toggle = gtk_radio_button_new_with_label (group, _("FG Color"));
+  toggle = gtk_radio_button_new_with_label (group, _("FG color"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -558,7 +558,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Dither Size:"), 0.0, 0.5,
+                                     _("Dither size:"), 0.0, 0.5,
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
@@ -571,7 +571,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                     _("Rotation Angle:"), 0.0, 0.5,
+                                     _("Rotation angle:"), 0.0, 0.5,
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
@@ -593,7 +593,7 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.substeps);
 
   /*  Magnitude map menu  */
-  label = gtk_label_new (_("Magnitude Map:"));
+  label = gtk_label_new (_("Magnitude map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -615,7 +615,7 @@ warp_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle_hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Use Magnitude Map"));
+  toggle = gtk_check_button_new_with_label (_("Use magnitude map"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
   gtk_widget_show (toggle);
@@ -645,7 +645,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Gradient Scale:"), 0.0, 0.5,
+                                     _("Gradient scale:"), 0.0, 0.5,
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
@@ -678,7 +678,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                     _("Vector Mag:"), 0.0, 0.5,
+                                     _("Vector mag:"), 0.0, 0.5,
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 

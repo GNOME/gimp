@@ -700,7 +700,7 @@ whirl_pinch_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Whirl Angle:"), SCALE_WIDTH, 7,
+			      _("_Whirl angle:"), SCALE_WIDTH, 7,
 			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -709,7 +709,7 @@ whirl_pinch_dialog (void)
                     &wpvals.whirl);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Pinch Amount:"), SCALE_WIDTH, 7,
+			      _("_Pinch amount:"), SCALE_WIDTH, 7,
 			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -1225,7 +1225,7 @@ CML_explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("New Seed"));
+  button = gtk_button_new_with_label (_("New seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1236,7 +1236,7 @@ CML_explorer_dialog (void)
   random_sensitives[0].widget = button;
   random_sensitives[0].logic  = TRUE;
 
-  button = gtk_button_new_with_label (_("Fix Seed"));
+  button = gtk_button_new_with_label (_("Fix seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1247,7 +1247,7 @@ CML_explorer_dialog (void)
   random_sensitives[1].widget = button;
   random_sensitives[1].logic  = TRUE;
 
-  button = gtk_button_new_with_label (_("Random Seed"));
+  button = gtk_button_new_with_label (_("Random seed"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1316,7 +1316,7 @@ CML_explorer_dialog (void)
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_widget_show (vbox);
 
-      frame = gimp_frame_new (_("Channel Independed Parameters"));
+      frame = gimp_frame_new (_("Channel Independent Parameters"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1338,13 +1338,13 @@ CML_explorer_dialog (void)
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
 				    combo, &VALS.initial_value);
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Initial Value:"), 0.0, 0.5,
+                                         _("Initial value:"), 0.0, 0.5,
                                          combo, 2, FALSE);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Zoom Scale:"), SCALE_WIDTH, 3,
+				  _("Zoom scale:"), SCALE_WIDTH, 3,
 				  VALS.scale, 1, 10, 1, 2, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1353,7 +1353,7 @@ CML_explorer_dialog (void)
 				   adj, &VALS.scale);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Start Offset:"), SCALE_WIDTH, 3,
+				  _("Start offset:"), SCALE_WIDTH, 3,
 				  VALS.start_offset, 0, 100, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1386,7 +1386,7 @@ CML_explorer_dialog (void)
 
       button =
 	gtk_button_new_with_label
-	(_("Switch to \"From Seed\" with the last Seed"));
+	(_("Switch to \"From seed\" with the last seed"));
       gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
       gtk_widget_show (button);
 
@@ -1440,7 +1440,7 @@ CML_explorer_dialog (void)
                         &copy_source);
 
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Source Channel:"), 0.0, 0.5,
+                                         _("Source channel:"), 0.0, 0.5,
                                          combo, 1, FALSE);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
@@ -1455,11 +1455,11 @@ CML_explorer_dialog (void)
                         &copy_destination);
 
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                         _("Destination Channel:"), 0.0, 0.5,
+                                         _("Destination channel:"), 0.0, 0.5,
                                          combo, 1, FALSE);
       gtk_size_group_add_widget (group, label);
 
-      button = gtk_button_new_with_label (_("Copy Parameters"));
+      button = gtk_button_new_with_label (_("Copy parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (button);
@@ -1488,7 +1488,7 @@ CML_explorer_dialog (void)
                         &selective_load_source);
 
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Source Channel in File:"),
+                                         _("Source channel in file:"),
                                          0.0, 0.5,
                                          combo, 1, FALSE);
       gtk_size_group_add_widget (group, label);
@@ -1503,7 +1503,7 @@ CML_explorer_dialog (void)
                         &selective_load_destination);
 
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                         _("Destination Channel:"),
+                                         _("Destination channel:"),
                                          0.0, 0.5,
                                          combo, 1, FALSE);
       gtk_size_group_add_widget (group, label);
@@ -1558,7 +1558,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				combo, &param->function);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Function Type:"), 0.0, 0.5,
+			     _("Function type:"), 0.0, 0.5,
 			     combo, 2, FALSE);
   index++;
 
@@ -1588,11 +1588,11 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				combo, &param->arrange);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Misc Arrange:"), 0.0, 0.5,
+			     _("Misc arrange:"), 0.0, 0.5,
 			     combo, 2, FALSE);
   index++;
 
-  toggle = gtk_check_button_new_with_label (_("Use Cyclic Range"));
+  toggle = gtk_check_button_new_with_label (_("Use cyclic range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				param->cyclic_range);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, index, index + 1);
@@ -1602,7 +1602,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Mod. Rate:"), SCALE_WIDTH, 5,
+			      _("Mod. rate:"), SCALE_WIDTH, 5,
 			      param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1611,7 +1611,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Env. Sensitivity:"), SCALE_WIDTH, 5,
+			      _("Env. sensitivity:"), SCALE_WIDTH, 5,
 			      param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1620,7 +1620,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Diffusion Dist.:"), SCALE_WIDTH, 5,
+			      _("Diffusion dist.:"), SCALE_WIDTH, 5,
 			      param->diffusion_dist, 2, 10, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1629,7 +1629,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("# of Subranges:"), SCALE_WIDTH, 5,
+			      _("# of subranges:"), SCALE_WIDTH, 5,
 			      param->range_num, 1, 10, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1638,7 +1638,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("P(ower Factor):"), SCALE_WIDTH, 5,
+			      _("P(ower factor):"), SCALE_WIDTH, 5,
 			      param->power, 0.0, 10.0, 0.1, 1.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1656,7 +1656,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range Low:"), SCALE_WIDTH, 5,
+			      _("Range low:"), SCALE_WIDTH, 5,
 			      param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1665,7 +1665,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range High:"), SCALE_WIDTH, 5,
+			      _("Range high:"), SCALE_WIDTH, 5,
 			      param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1677,7 +1677,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   chank[0] = GINT_TO_POINTER (channel_id);
   chank[1] = param;
 
-  button = gtk_button_new_with_label (_("Plot the Graph of the Settings"));
+  button = gtk_button_new_with_label (_("Plot a graph of the settings"));
   gtk_table_attach_defaults (GTK_TABLE (table), button,
 			     0, 3, index, index + 1);
   gtk_widget_show (button);
@@ -1722,7 +1722,7 @@ CML_dialog_advanced_panel_new (void)
       index = 0;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Ch. Sensitivity:"), SCALE_WIDTH, 0,
+				  _("Ch. sensitivity:"), SCALE_WIDTH, 0,
 				  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1732,7 +1732,7 @@ CML_dialog_advanced_panel_new (void)
       index++;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Mutation Rate:"), SCALE_WIDTH, 0,
+				  _("Mutation rate:"), SCALE_WIDTH, 0,
 				  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1742,7 +1742,7 @@ CML_dialog_advanced_panel_new (void)
       index++;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Mutation Dist.:"), SCALE_WIDTH, 0,
+				  _("Mutation dist.:"), SCALE_WIDTH, 0,
 				  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);

@@ -808,7 +808,7 @@ iwarp (void)
       if (do_animate_ping_pong)
 	{
 	  st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
-	  gimp_progress_init (_("Ping Pong"));
+	  gimp_progress_init (_("Ping pong"));
 	  g_free (st);
 
 	  for (i = 0; i < animate_num_frames; i++)
@@ -1107,7 +1107,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Deform Radius:"), SCALE_WIDTH, 4,
+				     _("_Deform radius:"), SCALE_WIDTH, 4,
 				     iwarp_vals.deform_area_radius,
 				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
 				     TRUE, 0, 0,
@@ -1117,7 +1117,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.deform_area_radius);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("D_eform Amount:"), SCALE_WIDTH, 4,
+				     _("D_eform amount:"), SCALE_WIDTH, 4,
 				     iwarp_vals.deform_amount,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
@@ -1140,7 +1140,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_mnemonic (_("Adaptive S_upersample"));
+  button = gtk_check_button_new_with_mnemonic (_("Adaptive s_upersample"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_supersample);
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
@@ -1160,7 +1160,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Ma_x Depth:"), SCALE_WIDTH, 5,
+				     _("Ma_x depth:"), SCALE_WIDTH, 5,
 				     iwarp_vals.max_supersample_depth,
 				     1.0, 5.0, 1.1, 1.0, 0,
 				     TRUE, 0, 0,

@@ -2344,7 +2344,7 @@ dlg_run (void)
                     NULL);
   dlg_preview_calc_window ();
 
-  button = gtk_check_button_new_with_mnemonic (_("A_uto Update Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("A_uto update preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 dlg->update_preview);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -2699,7 +2699,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Hue Rotation:"), SCALE_WIDTH, 6,
+			      _("_Hue rotation:"), SCALE_WIDTH, 6,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -2744,7 +2744,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_mnemonic (_("A_daptive Supersampling"));
+  button = gtk_check_button_new_with_mnemonic (_("A_daptive supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				pvals.use_asupsample);
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);

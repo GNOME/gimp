@@ -2628,7 +2628,7 @@ dialog_box (void)
 
   /* number of blending lines */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Bevel Width:"), SCALE_WIDTH, 4,
+			      _("_Bevel width:"), SCALE_WIDTH, 4,
 			      config.blend_lines,
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,

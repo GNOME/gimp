@@ -188,28 +188,28 @@ typedef struct
 static ModeParam modes[num_mode] =
 {
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("More _White (Larger Value)"),
+    N_("More _white (larger value)"),
     initialize_white,      propagate_white,       set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("More Blac_k (Smaller Value)"),
+    N_("More blac_k (smaller value)"),
     initialize_black,      propagate_black,       set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("_Middle Value to Peaks"),
+    N_("_Middle value to peaks"),
     initialize_middle,     propagate_middle,      set_middle_to_peak },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("_Foreground to Peaks"),
+    N_("_Foreground to peaks"),
     initialize_middle,     propagate_middle,      set_foreground_to_peak },
   { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("O_nly Foreground"),
+    N_("O_nly foreground"),
     initialize_foreground, propagate_a_color,     set_value },
   { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("Only B_ackground"),
+    N_("Only b_ackground"),
     initialize_background, propagate_a_color,     set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
-    N_("Mor_e Opaque"),
+    N_("Mor_e opaque"),
     NULL,                  propagate_opaque,      set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
-    N_("More T_ransparent"),
+    N_("More t_ransparent"),
     NULL,                  propagate_transparent, set_value },
 };
 
@@ -1088,7 +1088,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Lower T_hreshold:"), SCALE_WIDTH, 4,
+			      _("Lower t_hreshold:"), SCALE_WIDTH, 4,
 			      vpvals.lower_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1097,7 +1097,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     &vpvals.lower_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Upper Threshold:"), SCALE_WIDTH, 4,
+			      _("_Upper threshold:"), SCALE_WIDTH, 4,
 			      vpvals.upper_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1106,7 +1106,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     &vpvals.upper_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Propagating Rate:"), SCALE_WIDTH, 4,
+			      _("_Propagating rate:"), SCALE_WIDTH, 4,
 			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1114,16 +1114,16 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &vpvals.propagating_rate);
 
-  gtk_table_add_toggle (table, _("To L_eft"), 0, 1, 4,
+  gtk_table_add_toggle (table, _("To l_eft"), 0, 1, 4,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Right2Left]);
-  gtk_table_add_toggle (table, _("To _Right"), 2, 3, 4,
+  gtk_table_add_toggle (table, _("To _right"), 2, 3, 4,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Left2Right]);
-  gtk_table_add_toggle (table, _("To _Top"), 1, 2, 3,
+  gtk_table_add_toggle (table, _("To _top"), 1, 2, 3,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Bottom2Top]);
-  gtk_table_add_toggle (table, _("To _Bottom"), 1, 2, 5,
+  gtk_table_add_toggle (table, _("To _bottom"), 1, 2, 5,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
 

@@ -238,14 +238,14 @@ sel_gauss_dialog (void)
 				     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
 				     0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Blur Radius:"), 0.0, 0.5,
+			     _("_Blur radius:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bvals.radius);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Max. Delta:"), 128, 0,
+			      _("_Max. delta:"), 128, 0,
 			      bvals.maxdelta, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);

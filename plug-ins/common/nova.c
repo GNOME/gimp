@@ -385,7 +385,7 @@ nova_dialog (GimpDrawable *drawable)
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                                  _("R_andom Hue:"), SCALE_WIDTH, 8,
+                                  _("R_andom hue:"), SCALE_WIDTH, 8,
                                   pvals.randomhue, 0, 360, 1, 15, 0,
                                   TRUE, 0, 0,
                                   NULL, NULL);
@@ -514,7 +514,7 @@ nova_center_create (GimpDrawable *drawable)
 
   gtk_widget_show (frame);
 
-  check = gtk_check_button_new_with_mnemonic (_("S_how Cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("S_how cursor"));
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);

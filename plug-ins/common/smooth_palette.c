@@ -441,7 +441,7 @@ dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
-			     _("_Search Depth:"), 0.0, 0.5,
+			     _("_Search depth:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

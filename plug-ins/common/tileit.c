@@ -457,7 +457,7 @@ tileit_dialog (void)
   gtk_widget_show (table);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
-					       _("A_ll Tiles"));
+					       _("A_ll tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -471,7 +471,7 @@ tileit_dialog (void)
                     &exp_call.type);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
-					       _("Al_ternate Tiles"));
+					       _("Al_ternate tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -485,7 +485,7 @@ tileit_dialog (void)
                     &exp_call.type);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
-					       _("_Explicit Tile"));
+					       _("_Explicit tile"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);

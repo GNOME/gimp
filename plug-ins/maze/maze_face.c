@@ -212,7 +212,7 @@ maze_dialog (void)
   gtk_widget_show (table);
 
   /* entscale == Entry and Scale pair function found in pixelize.c */
-  entry = entscale_int_new (table, 0, trow, _("Width (Pixels):"),
+  entry = entscale_int_new (table, 0, trow, _("Width (pixels):"),
                             &mvals.width,
                             1, sel_w/4, TRUE,
                             (EntscaleIntCallbackFunc) height_width_callback,
@@ -229,7 +229,7 @@ maze_dialog (void)
   gtk_table_set_row_spacing (GTK_TABLE (table), trow, 12);
   trow++;
 
-  entry = entscale_int_new (table, 0, trow, _("Height (Pixels):"),
+  entry = entscale_int_new (table, 0, trow, _("Height (pixels):"),
                             &mvals.height,
                             1, sel_h/4, TRUE,
                             (EntscaleIntCallbackFunc) height_width_callback,
@@ -296,8 +296,8 @@ maze_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
 				    &mvals.algorithm, mvals.algorithm,
 
-				    _("Depth First"),      DEPTH_FIRST,     NULL,
-				    _("Prim's Algorithm"), PRIMS_ALGORITHM, NULL,
+				    _("Depth first"),      DEPTH_FIRST,     NULL,
+				    _("Prim's algorithm"), PRIMS_ALGORITHM, NULL,
 
 				    NULL);
 

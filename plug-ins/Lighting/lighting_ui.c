@@ -349,7 +349,7 @@ create_options_page (void)
 			   _("Enable/disable environment mapping (reflection)"),
 			   NULL);
   */
-  toggle = gtk_check_button_new_with_mnemonic (_("T_ransparent Background"));
+  toggle = gtk_check_button_new_with_mnemonic (_("T_ransparent background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -362,7 +362,7 @@ create_options_page (void)
 			   _("Make destination image transparent where bump "
 			     "height is zero"),NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Cre_ate New Image"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Cre_ate new image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -374,7 +374,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Create a new image when applying filter"), NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("High _Quality Preview"));
+  toggle = gtk_check_button_new_with_mnemonic (_("High _Quality preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.previewquality);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -394,7 +394,7 @@ create_options_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.antialiasing);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
@@ -498,11 +498,11 @@ create_light_page (void)
   gtk_widget_show (combo);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("L_ight Type:"), 0.0, 0.5, ebox, 1, FALSE);
+			     _("L_ight yype:"), 0.0, 0.5, ebox, 1, FALSE);
 
   gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
-  colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
+  colorbutton = gimp_color_button_new (_("Select lightsource color"),
 				       64, 16,
 				       &mapvals.lightsource.color,
 				       GIMP_COLOR_AREA_FLAT);
@@ -513,7 +513,7 @@ create_light_page (void)
 		    G_CALLBACK (interactive_preview_callback),
 		    NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Lig_ht Color:"), 0.0, 0.5,
+			     _("Lig_ht color:"), 0.0, 0.5,
 			     colorbutton, 1, FALSE);
 
   gimp_help_set_help_data (colorbutton,
@@ -872,7 +872,7 @@ create_bump_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Bump Mapping"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable bump mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bump_mapped);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
@@ -904,7 +904,7 @@ create_bump_page (void)
                               &mapvals.bumpmap_id);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Bumpm_ap Image:"), 0.0, 0.5,
+			     _("Bumpm_ap image:"), 0.0, 0.5,
 			     combo, 1, FALSE);
 
   combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
@@ -925,7 +925,7 @@ create_bump_page (void)
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Ma_ximum Height:"), 0.0, 0.5,
+			     _("Ma_ximum height:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -960,7 +960,7 @@ create_environment_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Environment Mapping"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable environment mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
@@ -996,7 +996,7 @@ create_environment_page (void)
   gtk_widget_show (combo);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("En_vironment Image:"), 0.0, 0.5,
+			     _("En_vironment image:"), 0.0, 0.5,
 			     ebox, 1, FALSE);
   gimp_help_set_help_data (ebox, _("Environment image to use"), NULL);
 

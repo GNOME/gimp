@@ -736,7 +736,7 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   hbox = gimp_random_seed_new (&svals.seed, &svals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("R_andom Seed:"), 1.0, 0.5,
+				     _("R_andom seed:"), 1.0, 0.5,
 				     hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
@@ -745,7 +745,7 @@ sinus_dialog (void)
 		    "value_changed", G_CALLBACK (sinus_random_update), NULL);
   gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Force Tiling?"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Force tiling?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -797,9 +797,9 @@ sinus_dialog (void)
 				        G_CALLBACK (sinus_radio_button_update),
 				        &svals.colors, svals.colors,
 
-				        _("Bl_ack & White"),
+				        _("Bl_ack & white"),
 				        B_W, NULL,
-				        _("_Foreground & Background"),
+				        _("_Foreground & background"),
 				        USE_FG_BG, NULL,
 				        _("C_hoose here:"),
 				        USE_COLORS, NULL,
@@ -814,7 +814,7 @@ sinus_dialog (void)
       hbox = gtk_hbox_new (FALSE, 12);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-      push_col1 = gimp_color_button_new (_("First Color"), 32, 32,
+      push_col1 = gimp_color_button_new (_("First color"), 32, 32,
 					 &svals.col1,
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
@@ -824,7 +824,7 @@ sinus_dialog (void)
                         G_CALLBACK (gimp_color_button_get_color),
                         &svals.col1);
 
-      push_col2 = gimp_color_button_new (_("Second Color"), 32, 32,
+      push_col2 = gimp_color_button_new (_("Second color"), 32, 32,
 					 &svals.col2,
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);

@@ -528,10 +528,10 @@ dialog (void)
      gint i;
      gchar *name[] =
      {
-       N_("Upper Left"),
-       N_("Upper Right"),
-       N_("Lower Left"),
-       N_("Lower Right")
+       N_("Upper left"),
+       N_("Upper right"),
+       N_("Lower left"),
+       N_("Lower right")
      };
 
      button = NULL;
@@ -616,7 +616,7 @@ dialog (void)
    gtk_container_add (GTK_CONTAINER (frame), scale);
    gtk_widget_show (scale);
 
-   shade_button = gtk_check_button_new_with_label (_("Shade under Curl"));
+   shade_button = gtk_check_button_new_with_label (_("Shade under curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				 curl.do_shade_under ? TRUE : FALSE);
    gtk_box_pack_start (GTK_BOX (vbox), shade_button, FALSE, FALSE, 0);
@@ -627,8 +627,8 @@ dialog (void)
                      GINT_TO_POINTER (8));
 
    gradient_button =
-     gtk_check_button_new_with_label (_("Use Current Gradient\n"
-					"instead of FG/BG-Color"));
+     gtk_check_button_new_with_label (_("Use current gradient\n"
+					"instead of FG/BG-color"));
    gtk_label_set_justify (GTK_LABEL (GTK_BIN (gradient_button)->child),
 			  GTK_JUSTIFY_LEFT);
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),

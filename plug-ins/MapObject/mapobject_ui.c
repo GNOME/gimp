@@ -503,7 +503,7 @@ create_options_page (void)
 
   /* General options */
 
-  frame = gimp_frame_new (_("General Options"));
+  frame = gimp_frame_new (_("General options"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -539,7 +539,7 @@ create_options_page (void)
 
   gimp_help_set_help_data (ebox, _("Type of object to map to"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Transparent Background"));
+  toggle = gtk_check_button_new_with_label (_("Transparent background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -552,7 +552,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Make image transparent outside object"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Tile Source Image"));
+  toggle = gtk_check_button_new_with_label (_("Tile source image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.tiled);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -566,7 +566,7 @@ create_options_page (void)
 			   _("Tile source image: useful for infinite planes"),
 			   NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Create New Image"));
+  toggle = gtk_check_button_new_with_label (_("Create new image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -585,7 +585,7 @@ create_options_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Enable _Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Enable _antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.antialiasing);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
@@ -665,9 +665,9 @@ create_light_page (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);  gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("Point Light"),       POINT_LIGHT,
-                                  _("Directional Light"), DIRECTIONAL_LIGHT,
-                                  _("No Light"),          NO_LIGHT,
+  combo = gimp_int_combo_box_new (_("Point light"),       POINT_LIGHT,
+                                  _("Directional light"), DIRECTIONAL_LIGHT,
+                                  _("No light"),          NO_LIGHT,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  mapvals.lightsource.type);
@@ -681,17 +681,17 @@ create_light_page (void)
   gtk_widget_show (combo);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Lightsource Type:"), 0.0, 0.5,
+			     _("Lightsource type:"), 0.0, 0.5,
 			     ebox, 1, FALSE);
 
   gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
-  colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
+  colorbutton = gimp_color_button_new (_("Select lightsource color"),
 				       64, 16,
 				       &mapvals.lightsource.color,
 				       GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Lightsource Color:"), 0.0, 0.5,
+			     _("Lightsource color:"), 0.0, 0.5,
 			     colorbutton, 1, FALSE);
 
   g_signal_connect (colorbutton, "color_changed",
@@ -1452,7 +1452,7 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Show Preview _Wireframe"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Show preview _wireframe"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

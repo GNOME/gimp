@@ -157,20 +157,20 @@ static GtkObject    *entry_phase_bl   = NULL;
 
 static const gchar *ctext[][2] =
 {
-  { N_("_Modify Red Channel"),   N_("_Modify Hue Channel")        },
-  { N_("Mo_dify Green Channel"), N_("Mo_dify Saturation Channel") },
-  { N_("Mod_ify Blue Channel"),  N_("Mod_ify Luminosity Channel") }
+  { N_("_Modify red channel"),   N_("_Modify hue channel")        },
+  { N_("Mo_dify green channel"), N_("Mo_dify saturation channel") },
+  { N_("Mod_ify blue channel"),  N_("Mod_ify luminosity channel") }
 };
 
 static const gchar *etext[][2] =
 {
   { N_("Red _Frequency:"),       N_("Hue _Frequency:")            },
-  { N_("Green Fr_equency:"),     N_("Saturation Fr_equency:")     },
-  { N_("Blue Freq_uency:"),      N_("Luminosity Freq_uency:")     },
+  { N_("Green fr_equency:"),     N_("Saturation fr_equency:")     },
+  { N_("Blue freq_uency:"),      N_("Luminosity freq_uency:")     },
 
   { N_("Red _Phaseshift:"),      N_("Hue _Phaseshift:")           },
-  { N_("Green Ph_aseshift:"),    N_("Saturation Ph_aseshift:")    },
-  { N_("Blue Pha_seshift:"),     N_("Luminosity Pha_seshift:")    },
+  { N_("Green ph_aseshift:"),    N_("Saturation ph_aseshift:")    },
+  { N_("Blue pha_seshift:"),     N_("Luminosity pha_seshift:")    },
 };
 static gint elabel_maxwidth = 0;
 
@@ -530,8 +530,8 @@ alienmap2_dialog (void)
                               G_CALLBACK (alienmap2_radio_update),
                               &wvals.colormodel, wvals.colormodel,
 
-                              _("_RGB Color Model"), RGB_MODEL, NULL,
-                              _("_HSL Color Model"), HSL_MODEL, NULL,
+                              _("_RGB color model"), RGB_MODEL, NULL,
+                              _("_HSL color model"), HSL_MODEL, NULL,
 
                               NULL);
 
