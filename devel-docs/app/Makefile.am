@@ -93,14 +93,14 @@ GTKDOC_LIBS = \
         $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la       \
         $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la   \
         $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la     \
+        $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la   \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la \
         $(GTK_LIBS)                                                          \
         $(LIBART_LIBS)                                                       \
         $(PANGOFT2_LIBS)                                                     \
         $(FONTCONFIG_LIBS)                                                   \
         $(FREETYPE_LIBS)                                                     \
-        $(GIMP_THREAD_LIBS)                                                  \
-        $(GIMP_MP_LIBS)                                                      \
+        $(GTHREAD_LIBS)                                                      \
         $(INTLLIBS)                                                          \
         $(REGEXREPL)
 

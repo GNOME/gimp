@@ -100,15 +100,11 @@
   <part id="app-config-part">
     <title>Config</title>
     <chapter id="app-config-interface">
-      <title>The GimpConfig Interface</title>
-      <xi:include href="xml/gimpconfig.xml" />
-      <xi:include href="xml/gimpconfig-serialize.xml" />
-      <xi:include href="xml/gimpconfig-deserialize.xml" />
+      <title>GimpConfig extensions</title>
       <xi:include href="xml/gimpconfig-dump.xml" />
-      <xi:include href="xml/gimpconfig-error.xml" />
-      <xi:include href="xml/gimpconfig-path.xml" />
-      <xi:include href="xml/gimpconfig-params.xml" />
+      <xi:include href="xml/gimpconfig-file.xml" />
       <xi:include href="xml/gimpconfig-utils.xml" />
+      <xi:include href="xml/gimpxmlparser.xml" />
     </chapter>
 
     <chapter id="app-config-objects">
@@ -119,13 +115,9 @@
       <xi:include href="xml/gimpguiconfig.xml" />
       <xi:include href="xml/gimppluginconfig.xml" />
       <xi:include href="xml/gimprc.xml" />
-    </chapter>
-
-    <chapter id="app-config-lowlevel">
-      <title>Lowlevel Serializing/Deserializing Functions</title>
-      <xi:include href="xml/gimpconfigwriter.xml" />
-      <xi:include href="xml/gimpscanner.xml" />
-      <xi:include href="xml/gimpxmlparser.xml" />
+      <xi:include href="xml/gimprc-serialize.xml" />
+      <xi:include href="xml/gimprc-deserialize.xml" />
+      <xi:include href="xml/gimprc-unknown.xml" />
     </chapter>
   </part>
 
@@ -804,7 +796,6 @@
       <xi:include href="xml/gimpunitstore.xml" />
       <xi:include href="xml/gimpunitcombobox.xml" />
       <xi:include href="xml/gimpscalecombobox.xml" />
-      <xi:include href="xml/gimpenumwidgets.xml" />
       <xi:include href="xml/gimppropwidgets.xml" />
       <xi:include href="xml/gimpwidgets-constructors.xml" />
     </chapter>
