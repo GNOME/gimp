@@ -18,22 +18,36 @@
 #ifndef __GIMP_ENUMS_H__
 #define __GIMP_ENUMS_H__
 
-
 typedef enum
 {
-  RGB     = 0,
-  GRAY    = 1,
-  INDEXED = 2
+  RGB         = 0,
+  GRAY        = 1,
+  INDEXED     = 2,
+  U16_RGB     = 3,
+  U16_GRAY    = 4,
+  U16_INDEXED = 5,
+  FLOAT_RGB   = 6,
+  FLOAT_GRAY  = 7
 } GImageType;
 
 typedef enum
 {
-  RGB_IMAGE      = 0,
-  RGBA_IMAGE     = 1,
-  GRAY_IMAGE     = 2,
-  GRAYA_IMAGE    = 3,
-  INDEXED_IMAGE  = 4,
-  INDEXEDA_IMAGE = 5
+  RGB_IMAGE          = 0,
+  RGBA_IMAGE         = 1,
+  GRAY_IMAGE         = 2,
+  GRAYA_IMAGE        = 3,
+  INDEXED_IMAGE      = 4,
+  INDEXEDA_IMAGE     = 5,
+  U16_RGB_IMAGE      = 6,
+  U16_RGBA_IMAGE     = 7,
+  U16_GRAY_IMAGE     = 8,
+  U16_GRAYA_IMAGE    = 9,
+  U16_INDEXED_IMAGE  = 10,
+  U16_INDEXEDA_IMAGE = 11, 
+  FLOAT_RGB_IMAGE    = 12,
+  FLOAT_RGBA_IMAGE   = 13,
+  FLOAT_GRAY_IMAGE   = 14,
+  FLOAT_GRAYA_IMAGE  = 15
 } GDrawableType;
 
 typedef enum
