@@ -430,7 +430,7 @@ tiff_warning(const gchar *module,
   /* Ignore the warnings about unregistered private tags (>= 32768) */
   if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
     {
-      ap_test = ap;
+      G_VA_COPY (ap_test, ap);
       if (va_arg (ap_test, int) >= 32768)
 	return;
     }

@@ -1,3 +1,8 @@
+2004-01-31  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/tiff.c (tiff_warning): use G_VA_COPY for copying
+	va_lists.
+
 2004-02-01  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: initialize variable
