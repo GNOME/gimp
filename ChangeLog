@@ -1,6 +1,13 @@
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
+	* NEWS.pre-2-0: moved old NEWS to this new file.
+
+	* NEWS: list bugs fixed since 2.0.0.
+
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
 	* docs/Makefile.am: don't install gimptool symlinks to
 	gimptool-2.0 and its manpage. gimp.m4 as installed with gimp-1.2
 	looks for gimptool (bug #139024).
