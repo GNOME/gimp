@@ -2785,9 +2785,9 @@ msgstr "Traducido por"
 #: app/gui/about-dialog.c:54
 msgid "translator-credits"
 msgstr ""
-"Pablo G. del Campo\n"
-"Francisco Javier F. Serrador\n"
-"Francisco Vila"
+"Pablo G. del Campo <pablodc@bigfoot.com>\n"
+"Francisco Javier F. Serrador <serrador@arrakis.es>\n"
+"Francisco Vila <francisco.vila@hispalinux.es>"
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
