@@ -363,10 +363,9 @@ type_dialog (gint selected)
   /*  file save type  */
   frame = gimp_frame_new (_("Data Formatting"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER(toggle_vbox), 4);
+  toggle_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;

@@ -1,3 +1,10 @@
+2004-05-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/aa.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/apply_lens.c: HIG-ified.
+
 2004-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimptoolinfo.c: made the "visible" property serializable.

@@ -394,7 +394,6 @@ static int
 align_layers_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
   GtkWidget *toggle;
@@ -412,16 +411,12 @@ align_layers_dialog (void)
 
                          NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table,
+                      FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   combo = gimp_int_combo_box_new (_("None"),                 H_NONE,
@@ -437,8 +432,8 @@ align_layers_dialog (void)
                     &VALS.h_style);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Horizontal Style:"), 1.0, 0.5,
-                             combo, 1, FALSE);
+                             _("_Horizontal Style:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
 
   combo = gimp_int_combo_box_new (_("Left Edge"),  H_BASE_LEFT,
@@ -452,8 +447,8 @@ align_layers_dialog (void)
                     &VALS.h_base);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Ho_rizontal Base:"), 1.0, 0.5,
-                             combo, 1, FALSE);
+                             _("Ho_rizontal Base:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   combo = gimp_int_combo_box_new (_("None"),                 V_NONE,
                                   _("Collect"),              V_COLLECT,
@@ -468,8 +463,8 @@ align_layers_dialog (void)
                     &VALS.v_style);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Vertical Style:"), 1.0, 0.5,
-                             combo, 1, FALSE);
+                             _("_Vertical Style:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   combo = gimp_int_combo_box_new (_("Top Edge"),    V_BASE_TOP,
                                   _("Center"),      V_BASE_CENTER,
@@ -482,13 +477,22 @@ align_layers_dialog (void)
                     &VALS.v_base);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Ver_tical Base:"), 1.0, 0.5,
-                             combo, 1, FALSE);
+                             _("Ver_tical Base:"), 0.0, 0.5,
+                             combo, 2, FALSE);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+                              _("_Grid Size:"), SCALE_WIDTH, 0,
+                              VALS.grid_size, 0, 200, 1, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &VALS.grid_size);
 
   toggle = gtk_check_button_new_with_mnemonic
     (_("_Ignore the Bottom Layer even if Visible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 5, 6);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -499,21 +503,12 @@ align_layers_dialog (void)
     (_("_Use the (Invisible) Bottom Layer as the Base"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 VALS.base_is_bottom_layer);
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 5, 6);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 6, 7);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &VALS.base_is_bottom_layer);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-                              _("_Grid Size:"), SCALE_WIDTH, 0,
-                              VALS.grid_size, 0, 200, 1, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &VALS.grid_size);
 
   gtk_widget_show (dlg);
 

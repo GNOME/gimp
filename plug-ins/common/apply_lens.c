@@ -51,16 +51,16 @@
 
 /* Declare local functions.
  */
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static void drawlens    (GimpDrawable *drawable);
+static void      drawlens    (GimpDrawable *drawable);
+static gboolean  lens_dialog (GimpDrawable *drawable);
 
-static gint lens_dialog (GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -341,7 +341,7 @@ drawlens (GimpDrawable *drawable)
   gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
-static gint
+static gboolean
 lens_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -364,7 +364,7 @@ lens_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
@@ -406,7 +406,7 @@ lens_dialog (GimpDrawable *drawable)
                         &lvals.set_transparent);
   }
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new_with_mnemonic (_("_Lens Refraction Index:"));

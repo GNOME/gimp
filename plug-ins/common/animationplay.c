@@ -495,139 +495,105 @@ build_dialog (GimpImageBaseType  basetype,
                     G_CALLBACK (window_response),
                     NULL);
 
-  {
-    /* The 'playback' half of the dialog */
-    if (total_frames > 1)
-      windowname = g_strconcat (_("Playback:"), " ",imagename, NULL);
-    else
-      windowname = g_strdup (imagename);
-    frame = gtk_frame_new (windowname);
-    g_free (windowname);
+  /* The 'playback' half of the dialog */
+  if (total_frames > 1)
+    windowname = g_strconcat (_("Playback:"), " ",imagename, NULL);
+  else
+    windowname = g_strdup (imagename);
 
-    gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+  frame = gimp_frame_new (windowname);
+
+  g_free (windowname);
+
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
                         frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-    {
-      hbox = gtk_hbox_new (FALSE, 5);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
-      {
-        vbox = gtk_vbox_new (FALSE, 5);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
-        gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_widget_show (vbox);
 
-        {
-          hbox2 = gtk_hbox_new (FALSE, 0);
-          gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
+  if (total_frames > 1)
+    gtk_widget_show (hbox2);
 
-          {
-            psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
-            g_signal_connect (psbutton, "toggled",
-                              G_CALLBACK (playstop_callback), NULL);
-            gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
-            gtk_widget_show (psbutton);
+  psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
+  g_signal_connect (psbutton, "toggled",
+                    G_CALLBACK (playstop_callback), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
+  gtk_widget_show (psbutton);
 
-            button = gtk_button_new_with_label ( _("Rewind"));
-            g_signal_connect (button, "clicked",
-                              G_CALLBACK (rewind_callback), NULL);
-            gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-            gtk_widget_show (button);
+  button = gtk_button_new_with_label ( _("Rewind"));
+  g_signal_connect (button, "clicked",
+                      G_CALLBACK (rewind_callback), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-            button = gtk_button_new_with_label ( _("Step"));
-            g_signal_connect (button, "clicked",
-                              G_CALLBACK (step_callback), NULL);
-            gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-            gtk_widget_show (button);
-          }
-          /* If there aren't multiple frames, playback controls make no
-             sense */
-          /*      if (total_frames<=1) gtk_widget_set_sensitive (hbox2, FALSE);
-          gtk_widget_show(hbox2);*/
+  button = gtk_button_new_with_label ( _("Step"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (step_callback), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-          if (total_frames>1)
-            gtk_widget_show(hbox2);
+  hbox2 = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
 
-          hbox2 = gtk_hbox_new (TRUE, 0);
-          gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
-          {
-            frame2 = gtk_frame_new (NULL);
-            gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-            gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
+  frame2 = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
+  gtk_widget_show (frame2);
 
-            {
-              eventbox = gtk_event_box_new();
-              gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
+  eventbox = gtk_event_box_new();
+  gtk_widget_add_events (eventbox, GDK_BUTTON_PRESS_MASK);
+  gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
+  gtk_widget_show (eventbox);
 
-              {
-                drawing_area = gtk_drawing_area_new ();
-                gtk_widget_set_size_request (drawing_area, width, height);
-                gtk_container_add (GTK_CONTAINER (eventbox),
-                                   GTK_WIDGET (drawing_area));
-                gtk_widget_show (drawing_area);
-              }
-              gtk_widget_show(eventbox);
-              gtk_widget_set_events (eventbox,
-                                     gtk_widget_get_events (eventbox)
-                                     | GDK_BUTTON_PRESS_MASK);
-            }
-            gtk_widget_show(frame2);
-          }
-          gtk_widget_show(hbox2);
+  drawing_area = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (drawing_area, width, height);
+  gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (drawing_area));
+  gtk_widget_show (drawing_area);
 
-          progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
+  progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress), TRUE, TRUE, 0);
+  if (total_frames > 1)
+    gtk_widget_show (GTK_WIDGET (progress));
 
-          gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
-                              TRUE, TRUE, 0);
-          if (total_frames>1)
-            gtk_widget_show (GTK_WIDGET (progress));
-        }
-        gtk_widget_show(vbox);
-
-      }
-      gtk_widget_show(hbox);
-
-    }
-    gtk_widget_show(frame);
-
-  }
-  gtk_widget_show(dlg);
-
+  gtk_widget_show (dlg);
 
   /* let's get into shape. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
-  {
-    shape_drawing_area = gtk_drawing_area_new ();
-    {
-      gtk_widget_set_size_request (shape_drawing_area, width, height);
-      gtk_container_add (GTK_CONTAINER (shape_window), shape_drawing_area);
-    }
-    gtk_widget_show (shape_drawing_area);
-    gtk_widget_set_events (shape_drawing_area,
-                           gtk_widget_get_events (shape_drawing_area)
-                           | GDK_BUTTON_PRESS_MASK);
-    gtk_widget_realize (shape_window);
 
-    gdk_window_set_back_pixmap(shape_window->window, NULL, 0);
+  shape_drawing_area = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (shape_drawing_area, width, height);
+  gtk_container_add (GTK_CONTAINER (shape_window), shape_drawing_area);
+  gtk_widget_show (shape_drawing_area);
+  gtk_widget_add_events (shape_drawing_area, GDK_BUTTON_PRESS_MASK);
+  gtk_widget_realize (shape_window);
 
-    cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
-                                         GDK_CENTER_PTR);
-    gdk_window_set_cursor(shape_window->window, cursor);
-    gdk_cursor_unref (cursor);
+  gdk_window_set_back_pixmap (shape_window->window, NULL, 0);
 
-    g_signal_connect (shape_window, "button_press_event",
-                      G_CALLBACK (shape_pressed),NULL);
-    g_signal_connect (shape_window, "button_release_event",
-                      G_CALLBACK (shape_released),NULL);
-    g_signal_connect (shape_window, "motion_notify_event",
-                      G_CALLBACK (shape_motion),NULL);
+  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
+                                       GDK_CENTER_PTR);
+  gdk_window_set_cursor(shape_window->window, cursor);
+  gdk_cursor_unref (cursor);
 
-    icon_pos = g_new (CursorOffset, 1);
-    g_object_set_data (G_OBJECT (shape_window), "cursor-offset", icon_pos);
-  }
+  g_signal_connect (shape_window, "button_press_event",
+                    G_CALLBACK (shape_pressed),NULL);
+  g_signal_connect (shape_window, "button_release_event",
+                    G_CALLBACK (shape_released),NULL);
+  g_signal_connect (shape_window, "motion_notify_event",
+                    G_CALLBACK (shape_motion),NULL);
+
+  icon_pos = g_new (CursorOffset, 1);
+  g_object_set_data (G_OBJECT (shape_window), "cursor-offset", icon_pos);
+
   /*  gtk_widget_show (shape_window);*/
 
   g_signal_connect (eventbox, "button_press_event",
@@ -642,20 +608,18 @@ build_dialog (GimpImageBaseType  basetype,
   root_win = gdk_get_default_root_window ();
 }
 
-
-
 static void
 do_playback (void)
 {
   int i;
 
-  width     = gimp_image_width(image_id);
-  height    = gimp_image_height(image_id);
+  width     = gimp_image_width (image_id);
+  height    = gimp_image_height (image_id);
   layers    = gimp_image_get_layers (image_id, &total_frames);
-  imagetype = gimp_image_base_type(image_id);
+  imagetype = gimp_image_base_type (image_id);
 
   if (imagetype == GIMP_INDEXED)
-    palette = gimp_image_get_cmap(image_id, &ncolours);
+    palette = gimp_image_get_cmap (image_id, &ncolours);
   else if (imagetype == GIMP_GRAY)
     {
       /* This is a bit sick, until this plugin ever gets
