@@ -1152,10 +1152,10 @@ design_op_menu_create (GtkWidget *window)
     { "redo",       GTK_STOCK_REDO,   NULL,                "<control>Y", NULL,
       G_CALLBACK (redo)
     },
-    { "select-all", NULL,             "Select _All",       "<control>A", NULL,
+    { "select-all", NULL,         N_("Select _All"),       "<control>A", NULL,
       G_CALLBACK (design_area_select_all_callback)
     },
-    { "center",     NULL,             "Recompute _Center", "<control>C", NULL,
+    { "center",     NULL,         N_("Recompute _Center"), "<control>C", NULL,
       G_CALLBACK (recompute_center_cb)
     }
   };
