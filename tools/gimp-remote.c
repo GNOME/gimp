@@ -349,8 +349,8 @@ main (gint    argc,
 
   for (i = 1; i < argc; i++)
     {
-      gchar    *file_uri  = NULL;
-      gboolean  options   = TRUE;
+      gchar    *file_uri = NULL;
+      gboolean  options  = TRUE;
 
       if (strlen (argv[i]) == 0)
         continue;
@@ -384,7 +384,7 @@ main (gint    argc,
             {
               gchar *abs = g_build_filename (cwd, argv[i], NULL);
 
-              file_uri = g_strconcat (abs, NULL, NULL);
+              file_uri = g_filename_to_uri (abs, NULL, NULL);
 
               g_free (abs);
             }
@@ -394,11 +394,14 @@ main (gint    argc,
           file_uri = g_strdup (argv[i]);
         }
 
-      if (file_list->len > 0)
-        file_list = g_string_append_c (file_list, '\n');
+      if (file_uri)
+        {
+          if (file_list->len > 0)
+            file_list = g_string_append_c (file_list, '\n');
 
-      file_list = g_string_append (file_list, file_uri);
-      g_free (file_uri);
+          file_list = g_string_append (file_list, file_uri);
+          g_free (file_uri);
+        }
     }
 
   display = gdk_display_get_default ();

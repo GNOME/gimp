@@ -1,5 +1,10 @@
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
+	* tools/gimp-remote.c (main): correctly convert relative paths to
+	URIs. Append the resulting URI only if it's not NULL.
+
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.c (toolbox_create_tools): connect to
 	"accel-changed" of the accel_group using connect_object(), not
 	just connect() so we don't crash when it's emitted after the
