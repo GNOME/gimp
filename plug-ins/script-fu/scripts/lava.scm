@@ -39,7 +39,7 @@
     
     (gimp-context-push)
 
-    (gimp-image-undo-disable image)
+    (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -92,7 +92,7 @@
    
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
-    (gimp-image-undo-enable image)
+    (gimp-image-undo-group-end image)
     (gimp-displays-flush)
 
     (gimp-context-pop)))
