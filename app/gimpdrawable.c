@@ -325,12 +325,12 @@ void
 gimp_drawable_set_name (GimpDrawable *drawable,
 			gchar        *name)
 {
-  GSList *list, *listb, *base_list;
+  GSList       *list, *listb, *base_list;
   GimpDrawable *drawableb;
-  gint number = 1;
-  gchar *newname;
-  gchar *ext;
-  gchar numberbuf[20];
+  gint          number = 1;
+  gchar        *newname;
+  gchar        *ext;
+  gchar         numberbuf[20];
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (name != NULL);
@@ -341,7 +341,7 @@ gimp_drawable_set_name (GimpDrawable *drawable,
       drawable->name = NULL;
     }
 
-  if (drawable->gimage == 0 || drawable->gimage->layers == 0)
+  if (drawable->gimage == NULL || drawable->gimage->layers == NULL)
     {
       /* no other layers to check name against */
       drawable->name = g_strdup (name);
@@ -355,8 +355,7 @@ gimp_drawable_set_name (GimpDrawable *drawable,
   else
     base_list = NULL;
 
-  list = base_list;
-  while (list)
+  for (list = base_list; list; list = g_slist_next (list))
     {
       drawableb = GIMP_DRAWABLE (list->data);
       if (drawable != drawableb &&
@@ -369,7 +368,7 @@ gimp_drawable_set_name (GimpDrawable *drawable,
 	    {
 	      number = atoi(ext+1);
 	      /* Check if there really was the number we think after the # */
-	      sprintf (numberbuf, "#%d", number);
+	      g_snprintf (numberbuf, sizeof (numberbuf), "#%d", number);
 	      if (strcmp (ext, numberbuf) != 0)
 		{
 		  /* No, so just ignore the # */
@@ -382,14 +381,14 @@ gimp_drawable_set_name (GimpDrawable *drawable,
 	      number = 1;
 	      ext = &newname[strlen (newname)];
 	    }
-	  sprintf (ext, "#%d", number+1);
+	  sprintf (ext, "#%d", number + 1);
 	  listb = base_list;
 	  while (listb) /* make sure the new name is unique */
 	    {
 	      drawableb = GIMP_DRAWABLE (listb->data);
-	      if (drawable !=
-		  drawableb && strcmp (newname,
-				       gimp_drawable_get_name(drawableb)) == 0)
+
+	      if (drawable != drawableb &&
+		  strcmp (newname, gimp_drawable_get_name (drawableb)) == 0)
 		{
 		  number++;
 		  sprintf (ext, "#%d", number+1);
@@ -403,8 +402,8 @@ gimp_drawable_set_name (GimpDrawable *drawable,
 	  g_free (newname);
 	  return;
 	}
-      list = list->next;
     }
+
   drawable->name = g_strdup (name);
 }
 
@@ -413,7 +412,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 			    gint          x,
 			    gint          y)
 {
-  Tile *tile;
+  Tile   *tile;
   guchar *src;
   guchar *dest;
 
@@ -551,7 +550,8 @@ gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 }
 
 void
-gimp_drawable_set_tattoo (GimpDrawable *drawable, Tattoo val)
+gimp_drawable_set_tattoo (GimpDrawable *drawable,
+			  Tattoo        val)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -699,7 +699,7 @@ gimp_drawable_init (GimpDrawable *drawable)
     gimp_drawable_table = g_hash_table_new (g_direct_hash, NULL);
 
   g_hash_table_insert (gimp_drawable_table,
-		       (gpointer) drawable->ID,
+		       GINT_TO_POINTER (drawable->ID),
 		       (gpointer) drawable);
 }
 
@@ -727,7 +727,7 @@ gimp_drawable_destroy (GtkObject *object)
     gtk_object_unref (GTK_OBJECT (drawable->parasites));
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 void
@@ -738,7 +738,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImageType  type,
 			 gchar         *name)
 {
-  gint bpp;
+  gint     bpp;
   gboolean alpha;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));

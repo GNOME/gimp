@@ -1,3 +1,8 @@
+2000-10-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdrawable.[ch]
+	* libgimp/gimpsizeentry.c
+
 2000-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/gauss_iir.c

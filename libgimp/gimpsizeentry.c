@@ -154,14 +154,14 @@ gimp_size_entry_class_init (GimpSizeEntryClass *class)
 static void
 gimp_size_entry_init (GimpSizeEntry *gse)
 {
-  gse->fields = NULL;
-  gse->number_of_fields = 0;
-  gse->unitmenu = NULL;
-  gse->unit = GIMP_UNIT_PIXEL;
-  gse->menu_show_pixels = TRUE;
+  gse->fields            = NULL;
+  gse->number_of_fields  = 0;
+  gse->unitmenu          = NULL;
+  gse->unit              = GIMP_UNIT_PIXEL;
+  gse->menu_show_pixels  = TRUE;
   gse->menu_show_percent = TRUE;
-  gse->show_refval = FALSE;
-  gse->update_policy = GIMP_SIZE_ENTRY_UPDATE_NONE;
+  gse->show_refval       = FALSE;
+  gse->update_policy     = GIMP_SIZE_ENTRY_UPDATE_NONE;
 }
 
 GtkType
@@ -250,12 +250,12 @@ gimp_size_entry_new (gint                       number_of_fields,
   g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
 			NULL);
 
-  gse = gtk_type_new (gimp_size_entry_get_type ());
+  gse = gtk_type_new (GIMP_TYPE_SIZE_ENTRY);
 
   gse->number_of_fields = number_of_fields;
-  gse->unit = unit;
-  gse->show_refval = show_refval;
-  gse->update_policy = update_policy;
+  gse->unit             = unit;
+  gse->show_refval      = show_refval;
+  gse->update_policy    = update_policy;
 
   gtk_table_resize (GTK_TABLE (gse),
 		    1 + gse->show_refval + 2,

@@ -15,8 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __GIMPDRAWABLE_H__
-#define __GIMPDRAWABLE_H__
+
+#ifndef __GIMP_DRAWABLE_H__
+#define __GIMP_DRAWABLE_H__
 
 #include "apptypes.h"
 #include "gimpobject.h"
@@ -87,4 +88,4 @@ void		 gimp_drawable_deallocate         (GimpDrawable *);
 GimpImage *      gimp_drawable_gimage             (GimpDrawable*);
 void             gimp_drawable_set_gimage         (GimpDrawable*, GimpImage *);
 
-#endif /* __GIMPDRAWABLE_H__ */
+#endif /* __GIMP_DRAWABLE_H__ */
