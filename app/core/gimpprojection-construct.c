@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <string.h>
@@ -3696,7 +3697,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   list = gimage->layers;
-  ratio = (double) width / (double) gimage->width;
+  ratio = MIN (1.0, (gdouble) width / (gdouble) gimage->width);
 
   switch (gimp_image_base_type (gimage))
     {

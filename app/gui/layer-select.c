@@ -40,11 +40,12 @@ struct _LayerSelect
   GdkPixmap *layer_pixmap;
   GtkWidget *preview;
 
-  GImage   *gimage;
-  Layer    *current_layer;
-  gboolean  dirty;
-  gint      image_width, image_height;
-  gdouble   ratio;
+  GImage    *gimage;
+  Layer     *current_layer;
+  gboolean   dirty;
+  gint       image_width;
+  gint       image_height;
+  gdouble    ratio;
 };
 
 /*  layer widget function prototypes  */
@@ -92,14 +93,18 @@ layer_select_init (GImage  *gimage,
       if (preview_size)
 	{
 	  layer_select->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-	  gtk_preview_size (GTK_PREVIEW (layer_select->preview), preview_size, preview_size);
+	  gtk_preview_size (GTK_PREVIEW (layer_select->preview), 
+			    preview_size, preview_size);
 	}
 
       /*  The shell and main vbox  */
       layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell), "layer_select", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (layer_select->shell), _("Layer Select"));
-      gtk_window_set_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
+      gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell), 
+			      "layer_select", "Gimp");
+      gtk_window_set_title (GTK_WINDOW (layer_select->shell), 
+			    _("Layer Select"));
+      gtk_window_set_position (GTK_WINDOW (layer_select->shell), 
+			       GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (layer_select->shell), "event",
 			  (GtkSignalFunc) layer_select_events,
 			  layer_select);
@@ -124,18 +129,22 @@ layer_select_init (GImage  *gimage,
 
       layer_select->layer_preview = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (layer_select->layer_preview),
-			     layer_select->image_width, layer_select->image_height);
+			     layer_select->image_width, 
+			     layer_select->image_height);
       gtk_widget_set_events (layer_select->layer_preview, PREVIEW_EVENT_MASK);
       gtk_signal_connect (GTK_OBJECT (layer_select->layer_preview), "event",
 			  (GtkSignalFunc) preview_events, layer_select);
-      gtk_object_set_user_data (GTK_OBJECT (layer_select->layer_preview), layer_select);
-      gtk_container_add (GTK_CONTAINER (alignment), layer_select->layer_preview);
+      gtk_object_set_user_data (GTK_OBJECT (layer_select->layer_preview), 
+				layer_select);
+      gtk_container_add (GTK_CONTAINER (alignment), 
+			 layer_select->layer_preview);
       gtk_widget_show (layer_select->layer_preview);
       gtk_widget_show (alignment);
 
       /*  the layer name label */
       layer_select->label = gtk_label_new (_("Layer"));
-      gtk_box_pack_start (GTK_BOX (hbox), layer_select->label, FALSE, FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (hbox), 
+			  layer_select->label, FALSE, FALSE, 2);
       gtk_widget_show (layer_select->label);
 
       gtk_widget_show (hbox);
@@ -163,7 +172,8 @@ layer_select_update_preview_size (void)
 {
   if (layer_select != NULL)
     {
-      gtk_preview_size (GTK_PREVIEW (layer_select->preview), preview_size, preview_size);
+      gtk_preview_size (GTK_PREVIEW (layer_select->preview), 
+			preview_size, preview_size);
       if (GTK_WIDGET_VISIBLE (layer_select->shell))
         gtk_widget_draw (layer_select->layer_preview, NULL);
     }  
@@ -178,9 +188,9 @@ static void
 layer_select_advance (LayerSelect *layer_select,
 		      gint         dir)
 {
-  gint index;
-  gint length;
-  gint count;
+  gint    index;
+  gint    length;
+  gint    count;
   GSList *list;
   GSList *nth;
   Layer  *layer;
@@ -259,7 +269,8 @@ static void
 layer_select_set_gimage (LayerSelect *layer_select,
 			 GImage      *gimage)
 {
-  gint image_width, image_height;
+  gint image_width;
+  gint image_height;
 
   layer_select->gimage = gimage;
   layer_select->current_layer = gimage->active_layer;
@@ -267,12 +278,14 @@ layer_select_set_gimage (LayerSelect *layer_select,
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
-    layer_select->ratio = (double) preview_size / (double) gimage->width;
+    layer_select->ratio = 
+      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->width);
   else
-    layer_select->ratio = (double) preview_size / (double) gimage->height;
+    layer_select->ratio = 
+      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->height);
 
-  image_width = (int) (layer_select->ratio * gimage->width);
-  image_height = (int) (layer_select->ratio * gimage->height);
+  image_width = (gint) (layer_select->ratio * gimage->width);
+  image_height = (gint) (layer_select->ratio * gimage->height);
 
   if (layer_select->image_width != image_width ||
       layer_select->image_height != image_height)
@@ -312,7 +325,7 @@ static gint
 layer_select_events (GtkWidget *widget,
 		     GdkEvent  *event)
 {
-  GdkEventKey *kevent;
+  GdkEventKey    *kevent;
   GdkEventButton *bevent;
 
   switch (event->type)
@@ -405,29 +418,36 @@ preview_redraw (LayerSelect *layer_select)
 {
   Layer   *layer;
   TempBuf *preview_buf;
-  gint w, h;
-  gint offx, offy;
+  gint     w, h;
+  gint     offx, offy;
 
   if (! (layer =  (layer_select->current_layer)))
     return;
 
   if (! layer_select->layer_pixmap)
-    layer_select->layer_pixmap = gdk_pixmap_new (layer_select->layer_preview->window,
-						 layer_select->image_width,
-						 layer_select->image_height,
-						 -1);
+    layer_select->layer_pixmap = 
+      gdk_pixmap_new (layer_select->layer_preview->window,
+		      layer_select->image_width,
+		      layer_select->image_height,
+		      -1);
 
   if (layer_is_floating_sel (layer))
-    render_fs_preview (layer_select->layer_preview, layer_select->layer_pixmap);
+    render_fs_preview (layer_select->layer_preview, 
+		       layer_select->layer_pixmap);
   else
     {
-      int off_x, off_y;
+      gint off_x;
+      gint off_y;
+
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+
       /*  determine width and height  */
-      w = (int) (layer_select->ratio * drawable_width (GIMP_DRAWABLE(layer)));
-      h = (int) (layer_select->ratio * drawable_height (GIMP_DRAWABLE(layer)));
-      offx = (int) (layer_select->ratio * off_x);
-      offy = (int) (layer_select->ratio * off_y);
+      w = (gint) (layer_select->ratio * 
+		  drawable_width (GIMP_DRAWABLE(layer)));
+      h = (gint) (layer_select->ratio * 
+		  drawable_height (GIMP_DRAWABLE(layer)));
+      offx = (gint) (layer_select->ratio * off_x);
+      offy = (gint) (layer_select->ratio * off_y);
 
       preview_buf = layer_preview (layer, w, h);
       preview_buf->x = offx;
@@ -446,8 +466,8 @@ preview_redraw (LayerSelect *layer_select)
 		       0, 0, 0, 0,
 		       layer_select->image_width, layer_select->image_height);
 
-      /*  make sure the image has been transfered completely to the pixmap before
-       *  we use it again...
+      /*  make sure the image has been transfered completely 
+       *  to the pixmap before we use it again...
        */
       gdk_flush ();
     }

@@ -210,9 +210,10 @@ edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       gpointer        gdisp_ptr)
 {
-  gint x, y;
-  GDisplay * gdisp;
-  Layer *layer;
+  gint      x;
+  gint      y;
+  GDisplay *gdisp;
+  Layer    *layer;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -281,6 +282,9 @@ edit_selection_button_release (Tool           *tool,
   else
     {
       path_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
+
+      layer = gimage_get_active_layer (gdisp->gimage);
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
     }
     
   undo_push_group_end (gdisp->gimage);

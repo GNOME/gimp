@@ -19,27 +19,20 @@
 #ifndef __GIMPPREVIEWCACHE_H__
 #define __GIMPPREVIEWCACHE_H__
 
+
 #include "temp_buf.h"
 
-typedef struct _PreviewCache {
-  TempBuf* preview;
-  gint     width;
-  gint     height;
-} PreviewCache;
 
-typedef struct _PreviewNearest {
-  PreviewCache *pc;
-  gint   width;
-  gint   height;
-} PreviewNearest;
-
-#define MAX_CACHE_PREVIEWS 5
-#define PREVIEW_CACHE_PRIME_WIDTH 112
+#define PREVIEW_CACHE_PRIME_WIDTH  112
 #define PREVIEW_CACHE_PRIME_HEIGHT 112
 
-TempBuf * gimp_preview_cache_get(GSList **,gint,gint);
-void      gimp_preview_cache_add(GSList **,TempBuf *);
-void      gimp_preview_cache_invalidate(GSList **);
+
+TempBuf * gimp_preview_cache_get        (GSList  **plist, 
+					 gint      width, 
+					 gint      height);
+void      gimp_preview_cache_add        (GSList  **plist, 
+					 TempBuf  *buf);
+void      gimp_preview_cache_invalidate (GSList  **plist);
 
 
 #endif /* __GIMPPREVIEWCACHE_H__ */

@@ -68,7 +68,7 @@ typedef struct _LayersDialog LayersDialog;
 
 struct _LayersDialog
 {
-  GtkWidget     *vbox;
+  GtkWidget     *vbox; 
   GtkWidget     *mode_option_menu;
   GtkWidget     *layer_list;
   GtkWidget     *scrolled_win;
@@ -799,7 +799,8 @@ render_preview (TempBuf   *preview_buf,
 	  cb = buf;
 	}
 
-      /*  The interesting stuff between leading & trailing vertical transparency  */
+      /*  The interesting stuff between leading & trailing 
+	  vertical transparency  */
       if (i >= y1 && i < y2)
 	{
 	  /*  Handle the leading transparency  */
@@ -819,15 +820,21 @@ render_preview (TempBuf   *preview_buf,
 
 		      if ((j + offset) & 0x4)
 			{
-			  temp_buf[j * 3 + 0] = blend_dark_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = blend_dark_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = blend_dark_check [(a | s[BLUE_PIX])];
+			  temp_buf[j * 3 + 0] = 
+			    blend_dark_check [(a | s[RED_PIX])];
+			  temp_buf[j * 3 + 1] = 
+			    blend_dark_check [(a | s[GREEN_PIX])];
+			  temp_buf[j * 3 + 2] = 
+			    blend_dark_check [(a | s[BLUE_PIX])];
 			}
 		      else
 			{
-			  temp_buf[j * 3 + 0] = blend_light_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = blend_light_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = blend_light_check [(a | s[BLUE_PIX])];
+			  temp_buf[j * 3 + 0] = 
+			    blend_light_check [(a | s[RED_PIX])];
+			  temp_buf[j * 3 + 1] = 
+			    blend_light_check [(a | s[GREEN_PIX])];
+			  temp_buf[j * 3 + 2] = 
+			    blend_light_check [(a | s[BLUE_PIX])];
 			}
 		    }
 		  else
@@ -847,23 +854,31 @@ render_preview (TempBuf   *preview_buf,
 			{
 			  if (color_buf)
 			    {
-			      temp_buf[j * 3 + 0] = blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = blend_dark_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 0] = 
+				blend_dark_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 1] = 
+				blend_dark_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 2] = 
+				blend_dark_check [(a | s[GRAY_PIX])];
 			    }
 			  else
-			    temp_buf[j] = blend_dark_check [(a | s[GRAY_PIX + channel])];
+			    temp_buf[j] = 
+			      blend_dark_check [(a | s[GRAY_PIX + channel])];
 			}
 		      else
 			{
 			  if (color_buf)
 			    {
-			      temp_buf[j * 3 + 0] = blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = blend_light_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 0] = 
+				blend_light_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 1] = 
+				blend_light_check [(a | s[GRAY_PIX])];
+			      temp_buf[j * 3 + 2] = 
+				blend_light_check [(a | s[GRAY_PIX])];
 			    }
 			  else
-			    temp_buf[j] = blend_light_check [(a | s[GRAY_PIX + channel])];
+			    temp_buf[j] = 
+			      blend_light_check [(a | s[GRAY_PIX + channel])];
 			}
 		    }
 		  else
@@ -896,7 +911,8 @@ render_preview (TempBuf   *preview_buf,
 	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
 	}
 
-      gtk_preview_draw_row (GTK_PREVIEW (preview_widget), temp_buf, 0, i, width);
+      gtk_preview_draw_row (GTK_PREVIEW (preview_widget), 
+			    temp_buf, 0, i, width);
     }
 }
 
@@ -971,9 +987,11 @@ layers_dialog_preview_extents (void)
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
-    layersD->ratio = (gdouble) preview_size / (gdouble) gimage->width;
+    layersD->ratio = 
+      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->width);
   else
-    layersD->ratio = (gdouble) preview_size / (gdouble) gimage->height;
+    layersD->ratio = 
+      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->height);
 
   if (preview_size)
     {
@@ -995,13 +1013,13 @@ layers_dialog_preview_extents (void)
 static void
 layers_dialog_set_menu_sensitivity (void)
 {
-  gboolean  fs;         /*  no floating sel  */
-  gboolean  ac;         /*  no active channel  */
-  gboolean  lm;         /*  layer mask  */
-  gboolean  gimage;     /*  is there a gimage  */
-  gboolean  lp;         /*  layers present  */
+  gboolean  fs;         /*  no floating sel        */
+  gboolean  ac;         /*  no active channel      */
+  gboolean  lm;         /*  layer mask             */
+  gboolean  gimage;     /*  is there a gimage      */
+  gboolean  lp;         /*  layers present         */
   gboolean  alpha;      /*  alpha channel present  */
-  gboolean  indexed;    /*  is indexed  */
+  gboolean  indexed;    /*  is indexed             */
   gboolean  next_alpha;
   GSList   *list; 
   GSList   *next;
@@ -1092,7 +1110,8 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Merge Down", fs && ac && gimage && lp && next);
   SET_SENSITIVE ("Flatten Image", fs && ac && gimage && lp);
 
-  SET_SENSITIVE ("Add Layer Mask...", fs && ac && gimage && !lm && lp && alpha && !indexed);
+  SET_SENSITIVE ("Add Layer Mask...", 
+		 fs && ac && gimage && !lm && lp && alpha && !indexed);
   SET_SENSITIVE ("Apply Layer Mask", fs && ac && gimage && lm && lp);
   SET_SENSITIVE ("Delete Layer Mask", fs && ac && gimage && lm && lp);
   SET_SENSITIVE ("Mask to Selection", fs && ac && gimage && lm && lp);
@@ -1200,7 +1219,8 @@ layers_dialog_unset_layer (Layer *layer)
     {
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), NULL);
       gtk_list_unselect_item (GTK_LIST (layersD->layer_list), index);
-      gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), layer_widget);
+      gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), 
+				layer_widget);
     }
 
   suspend_gimage_notify--;

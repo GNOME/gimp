@@ -1,3 +1,14 @@
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/edit_selection.c
+	* app/gimpimage.c
+	* app/layer_select.c
+	* app/layers_dialog.c: when computing a preview, limit the scale ratio
+	to a maximum of 1.0. By doing so we avoid to scale drawables up if the
+	image (canvas) size becomes larger than the drawable. Fixes bug #31098.
+
+	* app/gimppreviewcache.[ch]: indented
+
 2000-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: forgot to bump gimp-print's version number and
