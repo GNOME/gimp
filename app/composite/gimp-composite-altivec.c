@@ -246,6 +246,136 @@ gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   StoreUnalignedLess(b, A, length);
 };
 
+void
+gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,e,alpha_a,alpha_b;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      d=vec_min(alpha_a, alpha_b);
+
+      a=vec_andc(a, alphamask);
+      a=vec_adds(a, d);
+      b=vec_andc(b, alphamask);
+      d=vec_subs(a, b);
+      e=vec_subs(b, a);
+      d=vec_add(d,e);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+ 
+  alpha_a=vec_and(a,alphamask);
+  alpha_b=vec_and(b,alphamask);
+  d=vec_min(alpha_a,alpha_b);
+
+  a=vec_andc(a,alphamask);
+  a=vec_adds(a,d);
+  b=vec_andc(b,alphamask);
+  d=vec_subs(a,b);
+  e=vec_subs(b, a);
+  d=vec_add(d,e);
+ 
+  StoreUnalignedLess(d, D, length);
+};
+
+void
+gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      d=vec_min(a, b);
+   
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  d=vec_min(a, b);
+ 
+  StoreUnalignedLess(d, D, length);
+};
+
+void 
+gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,alpha_a,alpha_b;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      d=vec_min(alpha_a, alpha_b);
+ 
+      a=vec_andc(a, alphamask);
+      a=vec_adds(a, d);
+      b=vec_andc(b, alphamask);
+      d=vec_max(a, b);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+ 
+  alpha_a=vec_and(a,alphamask);
+  alpha_b=vec_and(b,alphamask);
+  d=vec_min(alpha_a,alpha_b);
+   
+  a=vec_andc(a,alphamask);
+  a=vec_adds(a,d);
+  b=vec_andc(b,alphamask);
+  d=vec_max(a, b);
+
+  StoreUnalignedLess(d, D, length);
+};
 
 #endif /* COMPILE_IS_OKAY */
 

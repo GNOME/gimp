@@ -76,6 +76,39 @@ gimp_composite_altivec_test (int iterations, int n_pixels)
     }
   gimp_composite_regression_timer_report ("addition_rgba8_rgba8_rgba8", ft0, ft1);
 
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_DARKEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_DARKEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_darken_rgba8_rgba8_rgba8_altivec, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("darken", &generic_ctx, &special_ctx))
+    {
+      printf("darken_rgba8_rgba8_rgba8 failed\n");
+      return (1);
+    }
+  gimp_composite_regression_timer_report ("darken_rgba8_rgba8_rgba8", ft0, ft1);
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_difference_rgba8_rgba8_rgba8_altivec, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("difference", &generic_ctx, &special_ctx))
+    {
+      printf("difference_rgba8_rgba8_rgba8 failed\n");
+      return (1);
+    }
+  gimp_composite_regression_timer_report ("difference_rgba8_rgba8_rgba8", ft0, ft1);
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_LIGHTEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_LIGHTEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_lighten_rgba8_rgba8_rgba8_altivec, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("lighten", &generic_ctx, &special_ctx))
+    {
+      printf("lighten_rgba8_rgba8_rgba8 failed\n");
+      return (1);
+    }
+  gimp_composite_regression_timer_report ("lighten_rgba8_rgba8_rgba8", ft0, ft1);
+
   gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
   gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
   ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
