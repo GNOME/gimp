@@ -1,3 +1,10 @@
+2000-01-07  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* modules/colorsel_water.c: Add OS/2 support.
+
+	* modules/modregister.c (mod_color_selector_unregister): fix
+	OS/2 bug. Use "gimp_color_selector_unregister".
+
 2000-01-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/Makefile.am

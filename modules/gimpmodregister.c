@@ -63,7 +63,7 @@ mod_color_selector_unregister (GimpColorSelectorID id,
     color_unreg_func unreg_func;
     gboolean status;
     
-    unreg_func = (color_unreg_func) get_main_func("gimp_color_selector_unregiste");
+    unreg_func = (color_unreg_func) get_main_func("gimp_color_selector_unregister");
     if (unreg_func)
     {
 	status = (*unreg_func) (id, callback, data);
