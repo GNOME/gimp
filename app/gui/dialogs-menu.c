@@ -134,7 +134,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
     NULL,
     GIMP_HELP_DOCK_TAB_DETACH, NULL },
 
-  MENU_SEPARATOR ("/---"),
+  MENU_SEPARATOR ("/properties-separator"),
 
   MENU_BRANCH (N_("/Preview Si_ze")),
 
@@ -206,7 +206,8 @@ dialogs_menu_update (GtkItemFactory *factory,
   gboolean                list_view_available = FALSE;
   gboolean                grid_view_available = FALSE;
   GimpPreviewSize         preview_size        = -1;
-  GimpTabStyle            tab_style;
+  GimpTabStyle            tab_style           = -1;
+  gint                    n_pages             = 0;
 
   if (GIMP_IS_DOCKBOOK (data))
     {
@@ -266,12 +267,19 @@ dialogs_menu_update (GtkItemFactory *factory,
 
   tab_style = dockable->tab_style;
 
+  n_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook));
+
 #define SET_ACTIVE(path,active) \
         gimp_item_factory_set_active (factory, (path), (active) != 0)
 #define SET_VISIBLE(path,active) \
         gimp_item_factory_set_visible (factory, (path), (active) != 0)
 #define SET_SENSITIVE(path,sensitive) \
         gimp_item_factory_set_sensitive (factory, (path), (sensitive) != 0)
+
+  SET_VISIBLE ("/properties-separator",
+               preview_size != -1 ||
+               n_pages       > 1  ||
+               view_type    != -1);
 
   SET_VISIBLE ("/Preview Size", preview_size != -1);
 
@@ -315,21 +323,28 @@ dialogs_menu_update (GtkItemFactory *factory,
         }
     }
 
-  if (tab_style == GIMP_TAB_STYLE_ICON)
-    SET_ACTIVE ("/Tab Style/Icon", TRUE);
-  else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
-    SET_ACTIVE ("/Tab Style/Current Status", TRUE);
-  else if (tab_style == GIMP_TAB_STYLE_NAME)
-    SET_ACTIVE ("/Tab Style/Text", TRUE);
-  else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
-    SET_ACTIVE ("/Tab Style/Icon & Text", TRUE);
-  else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
-    SET_ACTIVE ("/Tab Style/Status & Text", TRUE);
+  SET_VISIBLE ("/Tab Style", n_pages > 1);
 
-  SET_SENSITIVE ("/Tab Style/Current Status",
-                 GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview);
-  SET_SENSITIVE ("/Tab Style/Status & Text",
-                 GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview);
+  if (n_pages > 1)
+    {
+      GimpDockedInterface *docked_iface;
+
+      docked_iface = GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child);
+
+      if (tab_style == GIMP_TAB_STYLE_ICON)
+        SET_ACTIVE ("/Tab Style/Icon", TRUE);
+      else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
+        SET_ACTIVE ("/Tab Style/Current Status", TRUE);
+      else if (tab_style == GIMP_TAB_STYLE_NAME)
+        SET_ACTIVE ("/Tab Style/Text", TRUE);
+      else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
+        SET_ACTIVE ("/Tab Style/Icon & Text", TRUE);
+      else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
+        SET_ACTIVE ("/Tab Style/Status & Text", TRUE);
+
+      SET_SENSITIVE ("/Tab Style/Current Status", docked_iface->get_preview);
+      SET_SENSITIVE ("/Tab Style/Status & Text",  docked_iface->get_preview);
+    }
 
   SET_VISIBLE ("/View as Grid", view_type != -1);
   SET_VISIBLE ("/View as List", view_type != -1);
@@ -347,14 +362,14 @@ dialogs_menu_update (GtkItemFactory *factory,
 
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
+      GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dockbook->dock);
+
       SET_VISIBLE ("/image-menu-separator",     TRUE);
       SET_VISIBLE ("/Show Image Menu",          TRUE);
       SET_VISIBLE ("/Auto Follow Active Image", TRUE);
 
-      SET_ACTIVE ("/Show Image Menu",
-                  GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
-      SET_ACTIVE ("/Auto Follow Active Image",
-                  GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+      SET_ACTIVE ("/Show Image Menu",          image_dock->show_image_menu);
+      SET_ACTIVE ("/Auto Follow Active Image", image_dock->auto_follow_active);
     }
   else
     {
