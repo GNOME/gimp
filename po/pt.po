@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-12-13 01:36+0000\n"
-"PO-Revision-Date: 2003-12-13 01:40+0000\n"
+"POT-Creation-Date: 2003-12-24 01:39+0000\n"
+"PO-Revision-Date: 2003-12-24 01:40+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,8 @@ msgstr ""
 
 #: app/main.c:512
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-cpu-accel           Não utilizar optimizações especiais de CPU.\n"
+msgstr ""
+"  --no-cpu-accel           Não utilizar optimizações especiais de CPU.\n"
 
 #: app/main.c:513
 msgid ""
@@ -341,13 +342,13 @@ msgstr "Impossível abrir '%s' para leitura: %s"
 #: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:509
 #: app/core/gimpgradient.c:594 app/core/gimppalette.c:590 app/gui/themes.c:237
 #: app/tools/gimpcurvestool.c:1323 app/tools/gimplevelstool.c:1492
-#: app/vectors/gimpvectors-export.c:77 app/xcf/xcf.c:334
+#: app/vectors/gimpvectors-export.c:81 app/xcf/xcf.c:334
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossível abrir '%s' para escrita: %s"
 
 #: app/config/gimpconfig-utils.c:492 app/config/gimpconfig-utils.c:515
-#: app/vectors/gimpvectors-export.c:111
+#: app/vectors/gimpvectors-export.c:94
 #, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Erro ao escrever '%s': %s"
@@ -1069,12 +1070,12 @@ msgid "Indexed-Alpha"
 msgstr "Alfa-Indexado"
 
 #: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1714
-#: app/gui/user-install-dialog.c:1285
+#: app/gui/user-install-dialog.c:1292
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: app/core/core-enums.c:363 app/gui/preferences-dialog.c:1716
-#: app/gui/user-install-dialog.c:1287
+#: app/gui/user-install-dialog.c:1294
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -1240,12 +1241,12 @@ msgstr "Selecção Flutuante"
 msgid "Anchor Floating Selection"
 msgstr "Ancorar Selecção Flutuante"
 
-#: app/core/core-enums.c:577 app/core/gimp-edit.c:115
+#: app/core/core-enums.c:577 app/core/gimp-edit.c:116
 #: app/widgets/gimpbufferview.c:143
 msgid "Paste"
 msgstr "Colar"
 
-#: app/core/core-enums.c:578 app/core/gimp-edit.c:265
+#: app/core/core-enums.c:578 app/core/gimp-edit.c:271
 msgid "Cut"
 msgstr "Cortar"
 
@@ -1272,7 +1273,7 @@ msgstr "Anexar Informações Anexas"
 msgid "Remove Parasite"
 msgstr "Remover Informações Anexas"
 
-#: app/core/core-enums.c:584 app/vectors/gimpvectors-import.c:206
+#: app/core/core-enums.c:584 app/vectors/gimpvectors-import.c:257
 msgid "Import Paths"
 msgstr "Importar Caminhos"
 
@@ -1401,27 +1402,27 @@ msgstr "FS Relax"
 msgid "EEK: can't undo"
 msgstr "EEK: impossível desfazer"
 
-#: app/core/gimp-edit.c:107 app/core/gimp-edit.c:179
+#: app/core/gimp-edit.c:108 app/core/gimp-edit.c:184
 msgid "Pasted Layer"
 msgstr "Camada colada"
 
-#: app/core/gimp-edit.c:206
+#: app/core/gimp-edit.c:212
 msgid "Clear"
 msgstr "Limpar"
 
-#: app/core/gimp-edit.c:222
+#: app/core/gimp-edit.c:228
 msgid "Fill with FG Color"
 msgstr "Preencher com Cor de 1º Plano"
 
-#: app/core/gimp-edit.c:226 app/core/gimp-edit.c:243
+#: app/core/gimp-edit.c:232 app/core/gimp-edit.c:249
 msgid "Fill with BG Color"
 msgstr "Preencher com Cor de Fundo"
 
-#: app/core/gimp-edit.c:230 app/core/gimp-edit.c:333
+#: app/core/gimp-edit.c:236 app/core/gimp-edit.c:339
 msgid "Fill with White"
 msgstr "Preencher com Branco"
 
-#: app/core/gimp-edit.c:234
+#: app/core/gimp-edit.c:240
 msgid "Fill with Transparency"
 msgstr "Preencher com Transparente"
 
@@ -1539,7 +1540,7 @@ msgstr "Expressão UTF-8 inválida no ficheiro de pincel '%s'."
 #: app/core/gimpbrush.c:634 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1272 app/core/gimpitem.c:444
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:150
-#: app/tools/gimpvectortool.c:333
+#: app/tools/gimpvectortool.c:332
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -1928,7 +1929,7 @@ msgstr "Impossível desfazer %s"
 
 #: app/core/gimpimage.c:1064 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:661 app/gui/palette-import-dialog.c:587
-#: app/pdb/image_cmds.c:3396 app/widgets/gimpdatafactoryview.c:299
+#: app/pdb/image_cmds.c:3393 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Sem título"
 
@@ -2420,53 +2421,53 @@ msgid "Custom Color"
 msgstr "Cor Personalizada"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:790
+#: app/display/gimpdisplayshell.c:793
 msgid "Set Canvas Padding Color"
 msgstr "Definir Cor de Espaçamento Tela"
 
-#: app/display/gimpdisplayshell.c:799
+#: app/display/gimpdisplayshell.c:802
 msgid "Set canvas padding color"
 msgstr "Definir a cor de espaçamento da tela"
 
-#: app/display/gimpdisplayshell.c:812
+#: app/display/gimpdisplayshell.c:815
 msgid "/From _Theme"
 msgstr "/Do _Tema"
 
-#: app/display/gimpdisplayshell.c:815
+#: app/display/gimpdisplayshell.c:818
 msgid "/_Light Check Color"
 msgstr "/_Verificação de Tons Suaves"
 
-#: app/display/gimpdisplayshell.c:818
+#: app/display/gimpdisplayshell.c:821
 msgid "/_Dark Check Color"
 msgstr "/Verificação de Tons _Escuros"
 
-#: app/display/gimpdisplayshell.c:824
+#: app/display/gimpdisplayshell.c:827
 msgid "/Select _Custom Color..."
 msgstr "/Seleccionar _Cor Personalizada..."
 
-#: app/display/gimpdisplayshell.c:828
+#: app/display/gimpdisplayshell.c:831
 msgid "/As in _Preferences"
 msgstr "/Como nas _Preferências"
 
-#: app/display/gimpdisplayshell.c:857
+#: app/display/gimpdisplayshell.c:860
 msgid "Toggle QuickMask"
 msgstr "Alternar MárcaraRápida"
 
-#: app/display/gimpdisplayshell.c:1738
+#: app/display/gimpdisplayshell.c:1741
 #, c-format
 msgid "Close %s?"
 msgstr "Fechar %s?"
 
-#: app/display/gimpdisplayshell.c:1740
+#: app/display/gimpdisplayshell.c:1743
 #, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr "Foram feitas alterações a '%s' Ainda assim fechar?"
 
-#: app/display/gimpdisplayshell-dnd.c:77
+#: app/display/gimpdisplayshell-dnd.c:78
 msgid "Drop New Layer"
 msgstr "Largar Nova Camada"
 
-#: app/display/gimpdisplayshell-dnd.c:120
+#: app/display/gimpdisplayshell-dnd.c:121
 msgid "Drop New Path"
 msgstr "Descartar Novo Caminho"
 
@@ -3176,7 +3177,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Gravar _Selecção em Ficheiro..."
 
 #: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:714
-#: app/widgets/gimpdnd.c:1233 app/widgets/gimpdocumentview.c:477
+#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:477
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -4686,7 +4687,7 @@ msgid "Extended"
 msgstr "Estendida"
 
 #: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1696
-#: app/gui/user-install-dialog.c:1270 app/widgets/gimpgrideditor.c:266
+#: app/gui/user-install-dialog.c:1277 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
 msgstr "Pixels"
@@ -4705,7 +4706,7 @@ msgstr "X:"
 
 #: app/gui/info-window.c:169 app/gui/info-window.c:192
 #: app/gui/resize-dialog.c:391 app/gui/resize-dialog.c:637
-#: app/tools/gimpcroptool.c:981 app/tools/gimprotatetool.c:195
+#: app/tools/gimpcroptool.c:982 app/tools/gimprotatetool.c:195
 #: app/tools/gimpscaletool.c:200 app/tools/gimpsheartool.c:175
 #: app/widgets/gimptemplateeditor.c:380
 msgid "Y:"
@@ -4771,7 +4772,7 @@ msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
-#: app/gui/user-install-dialog.c:1289
+#: app/gui/user-install-dialog.c:1296
 msgid "dpi"
 msgstr "dpi"
 
@@ -4814,7 +4815,7 @@ msgstr "Largura Camada:"
 
 #: app/gui/layers-commands.c:718 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
-#: app/tools/gimpcroptool.c:998 app/tools/gimpscaletool.c:174
+#: app/tools/gimpcroptool.c:999 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
@@ -5671,7 +5672,7 @@ msgstr "Número Mínimo de Cores:"
 msgid "Install Colormap"
 msgstr "Instalar Mapa de Cores"
 
-#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:953
+#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:960
 msgid "Monitor Resolution"
 msgstr "Resolução do Monitor"
 
@@ -5741,7 +5742,7 @@ msgstr "Número Mínimo de Níveis Desfazer:"
 msgid "Maximum Undo Memory:"
 msgstr "Memória Máxima Desfazer:"
 
-#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1162
+#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1169
 msgid "Tile Cache Size:"
 msgstr "Tamanho Cache Blocos:"
 
@@ -5851,7 +5852,7 @@ msgstr "Seleccionar Dir Temp"
 msgid "Swap Dir:"
 msgstr "Dir Swap:"
 
-#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1184
+#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1191
 msgid "Select Swap Dir"
 msgstr "Seleccionar Dir Swap"
 
@@ -6722,15 +6723,15 @@ msgstr ""
 "Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
 "Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:803
+#: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
 msgstr "Pasta Pessoal do GIMP"
 
-#: app/gui/user-install-dialog.c:804
+#: app/gui/user-install-dialog.c:805
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Clique em \"Continuar\" para criar a sua pasta pessoal GIMP."
 
-#: app/gui/user-install-dialog.c:842
+#: app/gui/user-install-dialog.c:849
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
@@ -6739,7 +6740,7 @@ msgstr ""
 "Para uma instalação adequada do GIMP, tem de ser\n"
 "criada uma pasta chamada '<b>%s</b>'."
 
-#: app/gui/user-install-dialog.c:849
+#: app/gui/user-install-dialog.c:856
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -6749,11 +6750,11 @@ msgstr ""
 "Clique num dos ficheiros ou pastas na árvore para\n"
 "obter mais informações sobre o item seleccionado."
 
-#: app/gui/user-install-dialog.c:935
+#: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
 msgstr "Registo de Instalação Utilizador"
 
-#: app/gui/user-install-dialog.c:936
+#: app/gui/user-install-dialog.c:943
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -6761,26 +6762,26 @@ msgstr ""
 "Aguarde que a sua pasta\n"
 "pessoal do GIMP seja criada..."
 
-#: app/gui/user-install-dialog.c:943
+#: app/gui/user-install-dialog.c:950
 msgid "GIMP Performance Tuning"
 msgstr "Ajuste do Desempenho GIMP"
 
-#: app/gui/user-install-dialog.c:944
+#: app/gui/user-install-dialog.c:951
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Clique em \"Continuar\" para aceitar as configurações acima."
 
-#: app/gui/user-install-dialog.c:948
+#: app/gui/user-install-dialog.c:955
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para desempenho óptimo do GIMP, poderão ter de ser ajustadas algumas "
 "configurações.</b>"
 
-#: app/gui/user-install-dialog.c:954
+#: app/gui/user-install-dialog.c:961
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Clique em \"Continuar\" para iniciar o GIMP."
 
-#: app/gui/user-install-dialog.c:958
+#: app/gui/user-install-dialog.c:965
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6788,31 +6789,31 @@ msgstr ""
 "<b>Para exibir imagens no seu tamanho natural, o GIMP tem de conhecer a "
 "resolução do seu monitor.</b>"
 
-#: app/gui/user-install-dialog.c:963
+#: app/gui/user-install-dialog.c:970
 msgid "Aborting Installation..."
 msgstr "A Abortar a Instalação..."
 
-#: app/gui/user-install-dialog.c:1046 app/gui/user-install-dialog.c:1079
+#: app/gui/user-install-dialog.c:1053 app/gui/user-install-dialog.c:1086
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "A criar pasta '%s'..."
 
-#: app/gui/user-install-dialog.c:1060
+#: app/gui/user-install-dialog.c:1067
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Incapaz de criar pasta '%s': %s"
 
-#: app/gui/user-install-dialog.c:1092
+#: app/gui/user-install-dialog.c:1099
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "Incapaz de criar pasta: %s"
 
-#: app/gui/user-install-dialog.c:1104
+#: app/gui/user-install-dialog.c:1111
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "A copiar ficheiro '%s' de '%s'..."
 
-#: app/gui/user-install-dialog.c:1150
+#: app/gui/user-install-dialog.c:1157
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6824,7 +6825,7 @@ msgstr ""
 "memória.\n"
 "Considere a memória utilizada por outros processos em execução."
 
-#: app/gui/user-install-dialog.c:1174
+#: app/gui/user-install-dialog.c:1181
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6836,11 +6837,11 @@ msgstr ""
 "ficheiros local com espaço livre suficiente (centenas de MB). Num sistema\n"
 "UNIX, pode utilizar o directório temp geral (\"/tmp\" ou \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1189
+#: app/gui/user-install-dialog.c:1196
 msgid "Swap Folder:"
 msgstr "Pasta Swap:"
 
-#: app/gui/user-install-dialog.c:1240
+#: app/gui/user-install-dialog.c:1247
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6848,12 +6849,12 @@ msgstr ""
 "O GIMP pode obter esta informação do gestor de janelas.\n"
 "No entanro, normalmente isto não indica valores úteis."
 
-#: app/gui/user-install-dialog.c:1248
+#: app/gui/user-install-dialog.c:1255
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Obter Resolução do sistema de janelas (Actualmente %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1268
+#: app/gui/user-install-dialog.c:1275
 msgid ""
 "Alternatively, you can set\n"
 "the monitor resolution manually."
@@ -6861,7 +6862,7 @@ msgstr ""
 "Alternativamente, pode definir\n"
 "a resolução do monitor manualmente."
 
-#: app/gui/user-install-dialog.c:1313
+#: app/gui/user-install-dialog.c:1320
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6869,12 +6870,12 @@ msgstr ""
 "Você também pode pressionar o botão \"Calibrar\" para abrir uma janela\n"
 "que permite a deteminação interactiva da resolução do seu monitor."
 
-#: app/gui/user-install-dialog.c:1316
+#: app/gui/user-install-dialog.c:1323
 msgid "Calibrate"
 msgstr "Calibrar"
 
 #: app/gui/vectors-commands.c:178 app/pdb/paths_cmds.c:1134
-#: app/tools/gimpvectortool.c:1782 app/widgets/gimpvectorstreeview.c:285
+#: app/tools/gimpvectortool.c:1779 app/widgets/gimpvectorstreeview.c:285
 msgid "Path to Selection"
 msgstr "Caminho para Selecção"
 
@@ -7084,7 +7085,7 @@ msgstr "Saturação de Matiz"
 msgid "Threshold"
 msgstr "Limite"
 
-#: app/pdb/image_cmds.c:3528
+#: app/pdb/image_cmds.c:3525
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7205,7 +7206,7 @@ msgstr "Procedimentos de texto"
 msgid "Transform Tool procedures"
 msgstr "Procedimentos de Ferramentas Transformação"
 
-#: app/pdb/procedural_db.c:242
+#: app/pdb/procedural_db.c:243
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7214,7 +7215,7 @@ msgstr ""
 "Erro de chamada PDB:\n"
 "procedimento '%s' não encontrado"
 
-#: app/pdb/procedural_db.c:280 app/pdb/procedural_db.c:383
+#: app/pdb/procedural_db.c:281 app/pdb/procedural_db.c:384
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7223,19 +7224,19 @@ msgstr ""
 "Erro na chamada PDB para o procedimento '%s':\n"
 "Tipo incorrecto de argumento nº%d (esperado %s, obtido %s)"
 
-#: app/pdb/procedural_db_cmds.c:81
+#: app/pdb/procedural_db_cmds.c:83
 msgid "Internal GIMP procedure"
 msgstr "Procedimento interno do GIMP"
 
-#: app/pdb/procedural_db_cmds.c:82
+#: app/pdb/procedural_db_cmds.c:84
 msgid "GIMP Plug-In"
 msgstr "Plug-In do GIMP"
 
-#: app/pdb/procedural_db_cmds.c:83
+#: app/pdb/procedural_db_cmds.c:85
 msgid "GIMP Extension"
 msgstr "Extensão do GIMP"
 
-#: app/pdb/procedural_db_cmds.c:84
+#: app/pdb/procedural_db_cmds.c:86
 msgid "Temporary Procedure"
 msgstr "Procedimento Temporário"
 
@@ -7783,30 +7784,30 @@ msgid "/Tools/Transform Tools/_Crop & Resize"
 msgstr "/Ferramentas/Ferramentas Transformação/Re_cortar & Redimensionar"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:928
+#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:929
 msgid "Crop: "
 msgstr "Recorta: "
 
-#: app/tools/gimpcroptool.c:960
+#: app/tools/gimpcroptool.c:961
 msgid "Crop & Resize Information"
 msgstr "Informações sobre Recorte & Redimensionamento"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:978
+#: app/tools/gimpcroptool.c:979
 msgid "Origin X:"
 msgstr "Origem X:"
 
 #. the pixel size labels
-#: app/tools/gimpcroptool.c:995 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:996 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Largura:"
 
-#: app/tools/gimpcroptool.c:1021
+#: app/tools/gimpcroptool.c:1022
 msgid "From Selection"
 msgstr "A Partir da Selecção"
 
-#: app/tools/gimpcroptool.c:1029
+#: app/tools/gimpcroptool.c:1030
 msgid "Auto Shrink"
 msgstr "Auto-Encolhimento"
 
@@ -8644,88 +8645,88 @@ msgstr "Criar e editar caminhos"
 msgid "/Tools/_Paths"
 msgstr "/Ferramentas/Ca_minhos"
 
-#: app/tools/gimpvectortool.c:355
+#: app/tools/gimpvectortool.c:354
 msgid "Add Stroke"
 msgstr "Adicionar Pincelada"
 
-#: app/tools/gimpvectortool.c:371
+#: app/tools/gimpvectortool.c:370
 msgid "Add Anchor"
 msgstr "Adicionar Âncora"
 
-#: app/tools/gimpvectortool.c:392
+#: app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
 msgstr "Inserir Âncora"
 
-#: app/tools/gimpvectortool.c:419
+#: app/tools/gimpvectortool.c:418
 msgid "Drag Handle"
 msgstr "Arrastar Pega"
 
-#: app/tools/gimpvectortool.c:441
+#: app/tools/gimpvectortool.c:440
 msgid "Drag Anchor"
 msgstr "Arrastar Âncora"
 
-#: app/tools/gimpvectortool.c:454
+#: app/tools/gimpvectortool.c:453
 msgid "Drag Anchors"
 msgstr "Arrastar Âncoras"
 
-#: app/tools/gimpvectortool.c:473
+#: app/tools/gimpvectortool.c:472
 msgid "Drag Curve"
 msgstr "Arrastar Curva"
 
-#: app/tools/gimpvectortool.c:495
+#: app/tools/gimpvectortool.c:494
 msgid "Connect Strokes"
 msgstr "Ligar Pinceladas"
 
-#: app/tools/gimpvectortool.c:531
+#: app/tools/gimpvectortool.c:530
 msgid "Convert Edge"
 msgstr "Converter Margem"
 
-#: app/tools/gimpvectortool.c:560
+#: app/tools/gimpvectortool.c:559
 msgid "Delete Anchor"
 msgstr "Remover Âncora"
 
-#: app/tools/gimpvectortool.c:581
+#: app/tools/gimpvectortool.c:580
 msgid "Delete Segment"
 msgstr "Remover Segmento"
 
-#: app/tools/gimpvectortool.c:768
+#: app/tools/gimpvectortool.c:767
 msgid "Move Anchors"
 msgstr "Mover Âncoras"
 
-#: app/tools/gimpvectortool.c:1110
+#: app/tools/gimpvectortool.c:1114
 msgid "Click to pick Path to edit"
 msgstr "Clique para seleccionar Caminho a editar"
 
-#: app/tools/gimpvectortool.c:1113
+#: app/tools/gimpvectortool.c:1117
 msgid "Click to create a new Path"
 msgstr "Clique para criar um novo Caminho"
 
-#: app/tools/gimpvectortool.c:1116
+#: app/tools/gimpvectortool.c:1120
 msgid "Click to create a new component of the path"
 msgstr "Clique para criar um novo componente do caminho"
 
-#: app/tools/gimpvectortool.c:1119
+#: app/tools/gimpvectortool.c:1123
 msgid "Click to create a new anchor, use SHIFT to create a new component."
 msgstr ""
 "Clique para criar uma nova âncora, utilize SHIFT para criar um novo "
 "componente."
 
-#: app/tools/gimpvectortool.c:1123
+#: app/tools/gimpvectortool.c:1127
 msgid "Click-Drag to move the anchor around"
 msgstr "Clique-Arraste para mover a âncora"
 
-#: app/tools/gimpvectortool.c:1126
+#: app/tools/gimpvectortool.c:1130
 msgid "Click-Drag to move the anchors around"
 msgstr "Clique-Arraste para mover as âncoras"
 
-#: app/tools/gimpvectortool.c:1129
+#: app/tools/gimpvectortool.c:1133
 msgid ""
 "Click-Drag to move the handle around. SHIFT moves the opposite handle "
 "symmetrically."
 msgstr ""
 "Clique-Arraste para mover a pega. SHIFT move simetricamente a pega oposta."
 
-#: app/tools/gimpvectortool.c:1133
+#: app/tools/gimpvectortool.c:1137
 msgid ""
 "Click-Drag to change the shape of the curve. SHIFT moves the opposite "
 "handles of the endpoints symmetrically."
@@ -8733,33 +8734,33 @@ msgstr ""
 "Clique-Arraste para alterar a forma da curva. SHIFT move simetricamente as "
 "pegas dos pontos finais opostos."
 
-#: app/tools/gimpvectortool.c:1138 app/tools/gimpvectortool.c:1142
+#: app/tools/gimpvectortool.c:1142 app/tools/gimpvectortool.c:1146
 msgid ""
 "Click-Drag to move the component around. SHIFT moves the complete path "
 "around."
 msgstr "Clique-Arraste para mover o componente. SHIFT move o caminho completo."
 
-#: app/tools/gimpvectortool.c:1146
+#: app/tools/gimpvectortool.c:1150
 msgid "Click to insert an anchor on the path."
 msgstr "Clique para inserir uma âncora no caminho."
 
-#: app/tools/gimpvectortool.c:1149
+#: app/tools/gimpvectortool.c:1153
 msgid "Click to delete this anchor."
 msgstr "Clique para apagar esta âncora."
 
-#: app/tools/gimpvectortool.c:1152
+#: app/tools/gimpvectortool.c:1156
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Clique para ligar esta âncora ao ponto final seleccionado."
 
-#: app/tools/gimpvectortool.c:1156
+#: app/tools/gimpvectortool.c:1160
 msgid "Click to open up the path."
 msgstr "Clique para abrir o caminho."
 
-#: app/tools/gimpvectortool.c:1159
+#: app/tools/gimpvectortool.c:1163
 msgid "Click to make this node angular."
 msgstr "Clique para tornar este nó ângular."
 
-#: app/tools/gimpvectortool.c:1807
+#: app/tools/gimpvectortool.c:1804
 msgid "There is no active layer or channel to stroke to"
 msgstr "Não existe nenhuma camada ou canal activo para aclarar"
 
@@ -8791,14 +8792,18 @@ msgstr "Rodar Caminho"
 msgid "Cannot stroke empty path."
 msgstr "Incapaz de aclarar caminho vazio."
 
-#: app/vectors/gimpvectors-import.c:217
+#: app/vectors/gimpvectors-import.c:268
 msgid "Imported Path"
 msgstr "Caminho Importado"
 
-#: app/vectors/gimpvectors-import.c:239
+#: app/vectors/gimpvectors-import.c:291
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Nenhum caminho encontrado em '%s'"
+
+#: app/vectors/gimpvectors-import.c:293
+msgid "No paths found in the buffer"
+msgstr "Nenhum caminho encontrado no buffer"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9056,7 +9061,7 @@ msgstr "1º Plano: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Fundo: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1197
+#: app/widgets/gimpdnd.c:1250
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9067,7 +9072,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1201
+#: app/widgets/gimpdnd.c:1254
 msgid "Invalid UTF-8"
 msgstr "UTF-8 inválido"
 
@@ -9352,7 +9357,7 @@ msgstr "Remover esta imagem"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:319
+#: app/widgets/gimpitemtreeview.c:351
 #, c-format
 msgid ""
 "%s\n"
@@ -9361,7 +9366,7 @@ msgstr ""
 "%s\n"
 "%s  Para Topo"
 
-#: app/widgets/gimpitemtreeview.c:333
+#: app/widgets/gimpitemtreeview.c:365
 #, c-format
 msgid ""
 "%s\n"
@@ -9370,11 +9375,11 @@ msgstr ""
 "%s\n"
 "%s  Para Fundo"
 
-#: app/widgets/gimpitemtreeview.c:1278
+#: app/widgets/gimpitemtreeview.c:1357
 msgid "Set Item Exclusive Visible"
 msgstr "Definir Item Exclusivamente Visível"
 
-#: app/widgets/gimpitemtreeview.c:1284
+#: app/widgets/gimpitemtreeview.c:1363
 msgid "Set Item Exclusive Linked"
 msgstr "Definir Item Exclusivamente Ligado"
 
