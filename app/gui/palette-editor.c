@@ -589,6 +589,7 @@ palette_entries_load (char *filename)
   char           *tok;
   FILE           *fp;
   int             r, g, b;
+  int             linenum;
   GSList *list;
   gint pos = 0;
   PaletteEntriesP p_entries = NULL;
@@ -609,37 +610,73 @@ palette_entries_load (char *filename)
   if (!(fp = fopen (filename, "rb")))
     {
       palette_entries_free (entries);
+      g_warning (_("failed to open palette file %s: can't happen?"), filename);
       return;
     }
 
+  linenum = 0;
+
   fread (str, 13, 1, fp);
   str[13] = '\0';
+  linenum++;
   if (strcmp (str, "GIMP Palette\n"))
     {
+      /* bad magic, but maybe it has \r\n at the end of lines? */
+      if (!strcmp (str, "GIMP Palette\r"))
+	g_message (_("Loading palette %s:\nCorrupt palette: missing magic header\nDoes this file need converting from DOS?"), filename);
+      else
+	g_message (_("Loading palette %s:\nCorrupt palette: missing magic header"), filename);
       fclose (fp);
+      palette_entries_free (entries);
       return;
     }
 
   while (!feof (fp))
     {
       if (!fgets (str, 512, fp))
-	continue;
+      {
+	if (feof (fp))
+	  break;
+	g_message (_("Loading palette %s (line %d):\nRead error"),
+		   filename, linenum);
+	fclose (fp);
+	palette_entries_free (entries);
+	return;
+      }
+
+      linenum++;
 
       if (str[0] != '#')
 	{
 	  tok = strtok (str, " \t");
-	  if (tok)
+	  if (tok) {
 	    r = atoi (tok);
+	  } else {
+	    g_message (_("Loading palette %s (line %d):\nMissing RED component"), filename, linenum);
+	    /* maybe we should just abort? */
+	  }
 
 	  tok = strtok (NULL, " \t");
-	  if (tok)
+	  if (tok) {
 	    g = atoi (tok);
+	  } else {
+	    g_message (_("Loading palette %s (line %d):\nMissing GREEN component"), filename, linenum);
+	  }
 
 	  tok = strtok (NULL, " \t");
-	  if (tok)
+	  if (tok) {
 	    b = atoi (tok);
+	  } else {
+	    g_message (_("Loading palette %s (line %d):\nMissing BLUE component"), filename, linenum);
+	  }
 
+	  /* optional name */
 	  tok = strtok (NULL, "\n");
+
+	  if (r < 0 || r > 255 ||
+	      g < 0 || g > 255 ||
+	      b < 0 || b > 255)
+	      g_message (_("Loading palette %s (line %d):\nRGB value out of range"), filename, linenum);
 
 	  palette_add_entry (entries, tok, r, g, b);
 	} /* if */
@@ -651,7 +688,7 @@ palette_entries_load (char *filename)
   entries->changed = 0;
 
   list = palette_entries_list;
-  
+
   while (list)
     {
       p_entries = (PaletteEntriesP) list->data;
