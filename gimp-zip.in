@@ -9,6 +9,7 @@ cd @prefix@
 
 rm $ZIP
 zip -r $ZIP -@ <<EOF
+etc/gimp/1.2
 bin/gimp.exe
 lib/libgimp-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/libgimpui-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
@@ -18,6 +19,8 @@ share/gimp/1.2
 EOF
 
 zip -r $ZIP lib/locale/*/LC_MESSAGES/gimp*.mo
+
+zip -d $ZIP lib/gimp/1.2/plug-ins/gif.exe
 
 rm $DEVZIP
 zip -r $DEVZIP -@ <<EOF
