@@ -272,7 +272,7 @@ load_image (gchar *filename)
   wwidth = img.Width;
   wheight = img.Height;
   
-  image_ID = gimp_image_new (wwidth, wheight, RGB);
+  image_ID = gimp_image_new (wwidth, wheight, GIMP_RGB);
   gimp_image_set_filename (image_ID, filename);
 
   moreframes = TRUE;

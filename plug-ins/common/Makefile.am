@@ -115,12 +115,14 @@ libexec_PROGRAMS = \
 	semiflatten \
 	sharpen \
 	shift \
+	sinus \
 	smooth_palette \
 	snoise \
 	sobel \
 	sparkle \
 	spheredesigner \
 	spread \
+	struc \
 	sunras \
 	tga \
 	threshold_alpha \
@@ -1035,6 +1037,15 @@ shift_LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
+sinus_SOURCES = \
+	sinus.c
+
+sinus_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
 smooth_palette_SOURCES = \
 	smooth_palette.c
 
@@ -1084,6 +1095,15 @@ spread_SOURCES = \
 	spread.c
 
 spread_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+struc_SOURCES = \
+	struc.c
+
+struc_LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
