@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <menubar>
+
+    <menu action="file-menu">
+      <menuitem action="file-new" />
+      <menuitem action="file-open" />
+      <menu action="file-open-recent-menu">
+        <menuitem action="file-open-recent-empty" />
+        <separator />
+        <menuitem action="dialogs-document-history" />
+      </menu>
+      <menu action="file-acquire-menu">
+      </menu>
+      <separator />
+      <menuitem action="dialogs-preferences" />
+      <menu action="dialogs-menu" />
+        <menu action="dialogs-new-dock-menu">
+          <menuitem action="dialogs-new-dock-lcp" />
+          <menuitem action="dialogs-new-dock-data" />
+          <menuitem action="dialogs-new-dock-stuff" />
+        </menu>
+        <menuitem action="dialogs-tool-options" />
+	<menuitem action="dialogs-device-status" />
+	<separator />
+        <menuitem action="dialogs-layers" />
+        <menuitem action="dialogs-channels" />
+        <menuitem action="dialogs-vectors" />
+        <menuitem action="dialogs-indexed-palette" />
+        <menuitem action="dialogs-histogram" />
+        <menuitem action="dialogs-selection-editor" />
+        <menuitem action="dialogs-navigation" />
+        <menuitem action="dialogs-undo-history" />
+        <separator />
+        <menuitem action="dialogs-colors" />
+        <menuitem action="dialogs-brushes" />
+        <menuitem action="dialogs-patterns" />
+        <menuitem action="dialogs-graidents" />
+        <menuitem action="dialogs-palettes" />
+        <menuitem action="dialogs-fonts" />
+        <menuitem action="dialogs-buffers" />
+        <separator />
+        <menuitem action="dialogs-images" />
+        <menuitem action="dialogs-document-history" />
+        <menuitem action="dialogs-templates" />
+        <menuitem action="dialogs-tools" />
+        <menuitem action="dialogs-error-console" />
+      </menu>
+      <menu action="debug-menu">
+        <menuitem action="debug-mem-profile" />
+        <menuitem action="debug-dump-items" />
+      </menu>
+      <separator />
+      <menuitem action="file-quit" />
+    </menu>
+
+    <menu action="extensions-menu">
+      <menuitem action="dicloag-module-manager" />
+      <separator />
+    </menu>
+
+    <menu action="help-menu">
+      <menuitem action="help-help" />
+      <menuitem action="help-context-help" />
+      <separator />
+      <menuitem action="dialogs-tips" />
+      <menuitem action="dialogs-about" />
+    </menu>
+
+  </menubar>
+</ui>

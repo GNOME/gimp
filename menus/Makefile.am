@@ -20,6 +20,7 @@ menudata_DATA = \
 	patterns-menu.xml		\
 	qmask-menu.xml			\
 	templates-menu.xml		\
+	toolbox-menu.xml		\
 	vectors-menu.xml
 
 EXTRA_DIST = $(menudata_DATA)

@@ -1,5 +1,9 @@
 2004-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* menus/toolbox-menu.xml: added the toolbox menu.
+
+2004-04-19  Michael Natterer  <mitch@gimp.org>
+
 	More GtkAction stuff (still unused):
 
 	* configure.in: added new directories menus/ and app/actions/
