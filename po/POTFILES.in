@@ -92,7 +92,6 @@ app/pattern_select.c
 app/patterns.c
 app/pencil.c
 app/perspective_tool.c
-app/pixmapbrush.c
 app/plug_in.c
 app/posterize.c
 app/preferences_dialog.c
