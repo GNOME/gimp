@@ -1,3 +1,13 @@
+2003-12-27  Manish Singh  <yosh@gimp.org>
+
+	* app/main.c
+	* app/plug-in/plug-in-shm.c
+	* libgimp/gimp.c: POSIX shared memory tile transport implementation,
+	and a little code cleanup of the SysV and Win32 implementations.
+
+	* configure.in: checks for shm_open, default to POSIX shared memory
+	transport on OS X.
+
 2003-12-27  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/jigsaw.c (jigsaw): actually don't crash when

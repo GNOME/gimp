@@ -518,8 +518,7 @@ fi
 dnl MacOS X has broken SysV shm
 case "$host_os" in
   darwin* | rhapsody* | machten*)
-    # We can put something else here when something that works is implemented
-    shmdefault=none
+    shmdefault=posix
     ;;
   *)
     shmdefault=sysv
@@ -527,15 +526,18 @@ case "$host_os" in
 esac
 
 shmtype=auto
-AC_ARG_WITH(shm, [  --with-shm=none|sysv|auto     shared memory transport type (default=auto)], shmtype=$with_shm)
+AC_ARG_WITH(shm, [  --with-shm=none|sysv|posix|auto    shared memory transport type (default=auto)], shmtype=$with_shm)
 
 case $shmtype in
-  none|sysv) ;;
+  none|sysv|posix) ;;
   auto) shmtype=$shmdefault ;;
-  *) AC_MSG_ERROR([Invalid shared memory transport type: use none, sysv, or auto.]);;
+  *) AC_MSG_ERROR([Invalid shared memory transport type: use none, sysv, posix, or auto.]);;
 esac
 
-if test "x$shmtype" = "xsysv"; then
+
+if test "x$platform_win32" = "xyes"; then
+  shmtype=win32
+elif test "x$shmtype" = "xsysv"; then
   AC_CHECK_HEADER(sys/ipc.h,
     [AC_DEFINE(HAVE_IPC_H, 1,
                [Define to 1 if you have the <sys/ipc.h> heacder file.])],
@@ -544,6 +546,7 @@ if test "x$shmtype" = "xsysv"; then
     [AC_DEFINE(HAVE_SHM_H, 1,
                [Define to 1 if you have the <sys/shm.h> header file.])],
     no_sys_shm=yes)
+
   if test "$ac_cv_header_sys_shm_h" = "yes"; then
     AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
     AC_TRY_RUN([
@@ -574,9 +577,30 @@ if test "x$shmtype" = "xsysv"; then
         AC_MSG_RESULT(yes),
       AC_MSG_RESULT(no),
       AC_MSG_RESULT(assuming no))
+
+    AC_DEFINE(USE_SYSV_SHM, 1, [Define to 1 to use SYSV shared memory])
+  else
+    shmtype=none
+  fi
+elif test "x$shmtype" = "xposix"; then
+  AC_CHECK_LIB(rt, shm_open)
+
+  AC_CHECK_HEADER(sys/mman.h,
+    [AC_DEFINE(HAVE_MMAN_H, 1,
+               [Define to 1 if you have the <sys/mman.h> heacder file.])],
+    no_sys_mman=yes)
+
+  if test "$ac_cv_func_mmap" = "yes" &&
+     test "$ac_cv_lib_rt_shm_open" = "yes" &&
+     test "$ac_cv_header_sys_mman_h" = "yes"; then
+    AC_DEFINE(USE_POSIX_SHM, 1, [Define to 1 to use POSIX shared memory])
+  else
+    shmtype=none
   fi
 fi
 
+AC_MSG_CHECKING(for shared memory transport type)
+AC_MSG_RESULT($shmtype)
 
 ########################
 # Define a symbol prefix

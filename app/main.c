@@ -223,7 +223,7 @@ main (int    argc,
 
   g_set_application_name (_("The GIMP"));
 
-#if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
+#if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
   use_shm = TRUE;
 #endif
 
