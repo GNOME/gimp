@@ -200,6 +200,22 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_get_sub_thumbnail_data ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@src_x: 
+@src_y: 
+@src_width: 
+@src_height: 
+@dest_width: 
+@dest_height: 
+@bpp: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_color_uchar ##### -->
 <para>
 

@@ -297,6 +297,7 @@ gimp_drawable_set_pixel
 gimp_drawable_get_tile
 gimp_drawable_get_tile2
 gimp_drawable_get_thumbnail_data
+gimp_drawable_get_sub_thumbnail_data
 gimp_drawable_get_color_uchar
 gimp_drawable_merge_shadow
 gimp_drawable_fill
@@ -837,6 +838,7 @@ gimp_image_undo_thaw
 GimpPixbufTransparency
 gimp_image_get_thumbnail
 gimp_drawable_get_thumbnail
+gimp_drawable_get_sub_thumbnail
 </SECTION>
 
 <SECTION>

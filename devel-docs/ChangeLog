@@ -1,3 +1,10 @@
+2004-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: updated.
+
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimppixbuf.sgml: regenerated.
+
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
 	* */Makefile.am: simplified by including $(top_srcdir)/gtk-doc.make

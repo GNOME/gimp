@@ -47,3 +47,19 @@ Get a thumbnail pixbuf for a drawable or image.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_get_sub_thumbnail ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@src_x: 
+@src_y: 
+@src_width: 
+@src_height: 
+@dest_width: 
+@dest_height: 
+@alpha: 
+@Returns: 
+
+
