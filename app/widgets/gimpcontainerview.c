@@ -337,46 +337,56 @@ gimp_container_view_set_context (GimpContainerView *view,
   if (context == view->context)
     return;
 
-  if (view->context && view->container)
+  if (view->context)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->context),
-					    gimp_container_view_context_changed,
-					    view);
+      if (view->container)
+        {
+          g_signal_handlers_disconnect_by_func (G_OBJECT (view->context),
+                                                gimp_container_view_context_changed,
+                                                view);
 
-      if (view->dnd_widget)
-	{
-	  gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
-	  gimp_dnd_viewable_dest_remove (GTK_WIDGET (view->dnd_widget),
-                                         view->container->children_type);
-	}
+          if (view->dnd_widget)
+            {
+              gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
+              gimp_dnd_viewable_dest_remove (GTK_WIDGET (view->dnd_widget),
+                                             view->container->children_type);
+            }
+        }
+
+      g_object_unref (G_OBJECT (view->context));
     }
 
   view->context = context;
 
-  if (view->context && view->container)
+  if (view->context)
     {
-      GimpObject  *object;
-      const gchar *signal_name;
+      g_object_ref (G_OBJECT (view->context));
 
-      signal_name =
-	gimp_context_type_to_signal_name (view->container->children_type);
+      if (view->container)
+        {
+          GimpObject  *object;
+          const gchar *signal_name;
 
-      g_signal_connect_object (G_OBJECT (view->context), signal_name,
-			       G_CALLBACK (gimp_container_view_context_changed),
-			       G_OBJECT (view),
-			       0);
+          signal_name =
+            gimp_context_type_to_signal_name (view->container->children_type);
 
-      object = gimp_context_get_by_type (view->context,
-					 view->container->children_type);
+          g_signal_connect_object (G_OBJECT (view->context), signal_name,
+                                   G_CALLBACK (gimp_container_view_context_changed),
+                                   G_OBJECT (view),
+                                   0);
 
-      gimp_container_view_select_item (view,
-				       object ? GIMP_VIEWABLE (object) : NULL);
+          object = gimp_context_get_by_type (view->context,
+                                             view->container->children_type);
 
-      if (view->dnd_widget)
-        gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
-                                    view->container->children_type,
-                                    gimp_container_view_viewable_dropped,
-                                    view);
+          gimp_container_view_select_item (view,
+                                           object ? GIMP_VIEWABLE (object) : NULL);
+
+          if (view->dnd_widget)
+            gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
+                                        view->container->children_type,
+                                        gimp_container_view_viewable_dropped,
+                                        view);
+        }
     }
 }
 

@@ -307,32 +307,42 @@ gimp_container_menu_set_context (GimpContainerMenu *menu,
   if (context == menu->context)
     return;
 
-  if (menu->context && menu->container)
+  if (menu->context)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (menu->context),
-					    gimp_container_menu_context_changed,
-					    menu);
+      if (menu->container)
+        {
+          g_signal_handlers_disconnect_by_func (G_OBJECT (menu->context),
+                                                gimp_container_menu_context_changed,
+                                                menu);
+        }
+
+      g_object_unref (G_OBJECT (menu->context));
     }
 
   menu->context = context;
 
-  if (menu->context && menu->container)
+  if (menu->context)
     {
-      GimpObject  *object;
-      const gchar *signal_name;
+      g_object_ref (G_OBJECT (menu->context));
 
-      signal_name =
-	gimp_context_type_to_signal_name (menu->container->children_type);
+      if (menu->container)
+        {
+          GimpObject  *object;
+          const gchar *signal_name;
 
-      g_signal_connect (G_OBJECT (menu->context), signal_name,
-			G_CALLBACK (gimp_container_menu_context_changed),
-			menu);
+          signal_name =
+            gimp_context_type_to_signal_name (menu->container->children_type);
 
-      object = gimp_context_get_by_type (menu->context,
-					 menu->container->children_type);
+          g_signal_connect (G_OBJECT (menu->context), signal_name,
+                            G_CALLBACK (gimp_container_menu_context_changed),
+                            menu);
 
-      gimp_container_menu_select_item (menu,
-				       object ? GIMP_VIEWABLE (object) : NULL);
+          object = gimp_context_get_by_type (menu->context,
+                                             menu->container->children_type);
+
+          gimp_container_menu_select_item (menu,
+                                           object ? GIMP_VIEWABLE (object) : NULL);
+        }
     }
 }
 

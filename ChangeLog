@@ -1,3 +1,10 @@
+2002-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainermenu.c
+	* app/widgets/gimpcontainerview.c: ref/unref menu->context and
+	view->context in gimp_container_[menu|view]_real_set_context() so
+	it can't be finalized under our feet.
+
 2002-10-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.[ch]: added utility function
