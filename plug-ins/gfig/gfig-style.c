@@ -191,13 +191,13 @@ gfig_load_style (Style *style,
   if (1 != sscanf (load_buf2, "<Style %s>", name))
     {
       /* no style data */
-      fprintf (stderr, "No style data\n");
+      g_printerr ("No style data\n");
       fseek (fp, offset, SEEK_SET);
       return TRUE;
     }
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Loading style '%s' -- ", name);
+    g_printerr ("Loading style '%s' -- ", name);
 
   /* nuke final > in name */
   *strrchr (name, '>') = '\0';
@@ -239,7 +239,7 @@ gfig_load_style (Style *style,
     }
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "done\n");
+    g_printerr ("done\n");
 
   return FALSE;
 }
@@ -286,13 +286,13 @@ gfig_load_styles (GFigObj *gfig,
                   FILE *fp)
 {
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Loading global styles -- ");
+    g_printerr ("Loading global styles -- ");
 
   /* currently we only have the default style */
   gfig_load_style (&gfig_context->default_style, fp);
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "done\n");
+    g_printerr ("done\n");
 
   return FALSE;
 }
@@ -309,7 +309,7 @@ gfig_save_style (Style *style,
   gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Saving style %s, brush name '%s'\n", style->name, style->brush_name);
+    g_printerr ("Saving style %s, brush name '%s'\n", style->name, style->brush_name);
 
   g_string_append_printf (string, "<Style %s>\n", style->name);
   g_string_append_printf (string, "BrushName:      %s\n",          style->brush_name);
@@ -352,7 +352,7 @@ gfig_style_save_as_attributes (Style   *style,
   gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Saving style %s as attributes\n", style->name);
+    g_printerr ("Saving style %s as attributes\n", style->name);
   g_string_append_printf (string, "BrushName=\"%s\" ",  style->brush_name);
 
   g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",
@@ -381,9 +381,10 @@ gfig_save_styles (GString *string)
   gint k;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Saving global styles.\n");
+    g_printerr ("Saving global styles.\n");
 
-  gfig_style_copy (&gfig_context->default_style, gfig_context->current_style, "object");
+  gfig_style_copy (&gfig_context->default_style,
+                   gfig_context->current_style, "object");
 
   for (k = 1; k < gfig_context->num_styles; k++)
     gfig_save_style (gfig_context->style[k], string);
@@ -403,7 +404,7 @@ set_foreground_callback (GimpColorButton *button,
   GimpRGB color2;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Setting foreground color from color selector\n");
+    g_printerr ("Setting foreground color from color selector\n");
 
   gimp_color_button_get_color (button, &color2);
   gimp_rgba_set (&gfig_context->default_style.foreground,
@@ -527,7 +528,7 @@ gfig_style_copy (Style *style1,
     g_message ("Eror: name is NULL in gfig_style_copy.");
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Copying style %s as style %s\n", style0->name, name);
+    g_printerr ("Copying style %s as style %s\n", style0->name, name);
 
   gfig_rgba_copy (&style1->foreground, &style0->foreground);
   gfig_rgba_copy (&style1->background, &style0->background);
@@ -552,7 +553,7 @@ void
 gfig_style_apply (Style *style)
 {
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Applying style '%s' -- ", style->name);
+    g_printerr ("Applying style '%s' -- ", style->name);
 
   gimp_context_set_foreground (&style->foreground);
 
@@ -569,7 +570,7 @@ gfig_style_apply (Style *style)
   gfig_context->current_style = style;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "done.\n");
+    g_printerr ("done.\n");
 }
 
 void
@@ -595,7 +596,7 @@ gfig_read_gimp_style (Style *style,
     g_message ("Error: name is NULL in gfig_read_gimp_style.");
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Reading Gimp settings as style %s\n", name);
+    g_printerr ("Reading Gimp settings as style %s\n", name);
   style->name = g_strdup (name);
 
   gimp_context_get_foreground (&style->foreground);
@@ -630,7 +631,7 @@ gfig_style_set_context_from_style (Style *style)
   gboolean enable_repaint;
 
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Setting context from style '%s' -- ", style->name);
+    g_printerr ("Setting context from style '%s' -- ", style->name);
 
   enable_repaint = gfig_context->enable_repaint;
   gfig_context->enable_repaint = FALSE;
@@ -657,7 +658,7 @@ gfig_style_set_context_from_style (Style *style)
 
   gfig_context->bdesc.name = style->brush_name;
   if (gfig_context->debug_styles)
-    fprintf (stderr, "done.\n");
+    g_printerr ("done.\n");
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
                                  (gint) style->fill_type);
@@ -674,14 +675,15 @@ gfig_style_set_context_from_style (Style *style)
 void
 gfig_style_set_style_from_context (Style *style)
 {
-  GimpRGB color;
+  GimpRGB  color;
 
   style->name = "object";
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
                                &color);
   if (gfig_context->debug_styles)
-    fprintf (stderr, "Setting foreground color to %lg %lg %lg\n", color.r, color.g, color.b);
+    g_printerr ("Setting foreground color to %lg %lg %lg\n",
+                color.r, color.g, color.b);
 
   gfig_rgba_copy (&style->foreground, &color);
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),

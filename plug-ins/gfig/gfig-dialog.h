@@ -26,18 +26,15 @@
 #ifndef __GFIG_DIALOG_H__
 #define __GFIG_DIALOG_H__
 
-#define RESPONSE_UNDO    1
-#define RESPONSE_CLEAR   2
-#define RESPONSE_SAVE    3
-#define RESPONSE_PAINT   4
-
 gint   undo_water_mark;  /* Last slot filled in -1 = no undo */
 GList *undo_table[MAX_UNDO];
 
-gint   gfig_dialog             (void);
-void   update_options          (GFigObj *old_obj);
+gboolean  gfig_dialog                      (void);
+void      gfig_dialog_action_set_sensitive (const gchar *name,
+                                            gboolean     sensitive);
 
-void   tool_option_page_update (GtkWidget *button,
-                                GtkWidget *notebook);
+void      options_update                   (GFigObj     *old_obj);
+void      tool_option_page_update          (GtkWidget   *button,
+                                            GtkWidget   *notebook);
 
 #endif /* __GFIG_DIALOG_H__ */

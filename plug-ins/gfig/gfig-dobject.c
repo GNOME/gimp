@@ -830,7 +830,7 @@ object_start (GdkPoint *pnt,
   if (obj_creating)
     {
       if (gfig_context->debug_styles)
-        fprintf (stderr, "Creating object, setting style from context\n");
+        g_printerr ("Creating object, setting style from context\n");
       gfig_style_set_style_from_context (&obj_creating->style);
       gfig_context->current_style = &obj_creating->style;
     }
@@ -1004,8 +1004,7 @@ clear_undo (void)
 
   undo_water_mark = -1;
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
-                                     RESPONSE_UNDO, FALSE);
+  gfig_dialog_action_set_sensitive ("undo", FALSE);
 }
 
 void
@@ -1037,10 +1036,10 @@ setup_undo (void)
     {
       undo_water_mark++;
     }
-  undo_table[undo_water_mark] = copy_all_objs (gfig_context->current_obj->obj_list);
+  undo_table[undo_water_mark] =
+    copy_all_objs (gfig_context->current_obj->obj_list);
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
-                                     RESPONSE_UNDO, TRUE);
+  gfig_dialog_action_set_sensitive ("undo", TRUE);
 
   gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
 }
@@ -1063,7 +1062,7 @@ new_obj_2edit (GFigObj *obj)
   obj_show_single = -1;
 
   /* Change options */
-  update_options (old_current);
+  options_update (old_current);
 
   /* redraw with new */
   gtk_widget_queue_draw (gfig_context->preview);
@@ -1072,13 +1071,12 @@ new_obj_2edit (GFigObj *obj)
     {
       g_message (_("Editing read-only object - "
                    "you will not be able to save it"));
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
-                                         RESPONSE_SAVE, FALSE);
+
+      gfig_dialog_action_set_sensitive ("save", FALSE);
     }
   else
     {
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
-                                         RESPONSE_SAVE, TRUE);
+      gfig_dialog_action_set_sensitive ("save", TRUE);
     }
 }
 

@@ -141,68 +141,68 @@ typedef struct
   GtkWidget     *showcontrol;
 } GfigOptWidgets;
 
-static GfigOptWidgets gfig_opt_widget = { NULL, NULL, NULL, NULL, NULL, NULL };
-static gchar         *gfig_path       = NULL;
-static GtkWidget     *page_menu_bg;
-static GtkWidget     *tool_options_notebook;
-static GtkWidget     *fill_type_notebook;
+static GfigOptWidgets  gfig_opt_widget = { NULL, NULL, NULL, NULL, NULL, NULL };
+static gchar          *gfig_path       = NULL;
+static GtkWidget      *page_menu_bg;
+static GtkWidget      *tool_options_notebook;
+static GtkWidget      *fill_type_notebook;
+
+static GtkActionGroup *gfig_actions    = NULL;
 
 
-static void       gfig_response             (GtkWidget *widget,
-                                             gint       response_id,
-                                             gpointer   data);
-static void       gfig_load_menu_callback   (GtkWidget *widget,
-                                             gpointer   data);
-static void       gfig_new_gc               (void);
-static void       gfig_save_menu_callback   (GtkWidget *widget,
-                                             gpointer   data);
-static void       gfig_list_load_all        (const gchar *path);
-static void       gfig_list_free_all        (void);
-static void       create_save_file_chooser  (GFigObj   *obj,
-                                             gchar     *tpath,
-                                             GtkWidget *parent);
-static void       create_notebook_pages     (GtkWidget *notebook);
-static void       select_combo_callback     (GtkWidget *widget,
-                                             gpointer   data);
-static void       adjust_grid_callback      (GtkWidget *widget,
-                                             gpointer   data);
-static void       options_dialog_callback   (GtkWidget *widget,
-                                             gpointer   data);
-static gint       gfig_scale_x              (gint       x);
-static gint       gfig_scale_y              (gint       y);
-static void       toggle_show_image         (void);
-static void       gridtype_combo_callback   (GtkWidget *widget,
-                                             gpointer data);
+static void       gfig_response              (GtkWidget *widget,
+                                              gint       response_id,
+                                              gpointer   data);
+static void       gfig_load_action_callback  (GtkAction *action,
+                                              gpointer   data);
+static void       gfig_save_action_callback  (GtkAction *action,
+                                              gpointer   data);
+static void       gfig_list_load_all         (const gchar *path);
+static void       gfig_list_free_all         (void);
+static void       create_notebook_pages      (GtkWidget *notebook);
+static void       select_combo_callback      (GtkWidget *widget,
+                                              gpointer   data);
+static void       gfig_grid_action_callback  (GtkAction *action,
+                                              gpointer   data);
+static void       gfig_prefs_action_callback (GtkAction *action,
+                                              gpointer   data);
+static gint       gfig_scale_x               (gint       x);
+static gint       gfig_scale_y               (gint       y);
+static void       toggle_show_image          (void);
+static void       gridtype_combo_callback    (GtkWidget *widget,
+                                              gpointer data);
 
-static void      load_file_chooser_response (GtkFileChooser *chooser,
-                                             gint            response_id,
-                                             gpointer        data);
-static void      save_file_chooser_response (GtkFileChooser *chooser,
-                                             gint            response_id,
-                                             GFigObj        *obj);
-static void     paint_combo_callback       (GtkWidget *widget,
-                                            gpointer   data);
+static void      load_file_chooser_response  (GtkFileChooser *chooser,
+                                              gint            response_id,
+                                              gpointer        data);
+static void      save_file_chooser_response  (GtkFileChooser *chooser,
+                                              gint            response_id,
+                                              GFigObj        *obj);
+static void     paint_combo_callback         (GtkWidget *widget,
+                                              gpointer   data);
 
-static void     select_button_clicked      (gint       type);
-static void     select_button_clicked_lt   (void);
-static void     select_button_clicked_gt   (void);
-static void     select_button_clicked_eq   (void);
-static void     raise_selected_obj_to_top  (GtkWidget *widget,
-                                            gpointer   data);
+static void     select_button_clicked        (gint       type);
+static void     select_button_clicked_lt     (void);
+static void     select_button_clicked_gt     (void);
+static void     select_button_clicked_eq     (void);
+static void     raise_selected_obj_to_top    (GtkWidget *widget,
+                                              gpointer   data);
 static void     lower_selected_obj_to_bottom (GtkWidget *widget,
                                               gpointer   data);
-static void     raise_selected_obj         (GtkWidget *widget,
-                                            gpointer   data);
-static void     lower_selected_obj         (GtkWidget *widget,
-                                            gpointer   data);
+static void     raise_selected_obj           (GtkWidget *widget,
+                                              gpointer   data);
+static void     lower_selected_obj           (GtkWidget *widget,
+                                              gpointer   data);
 
-static void     toggle_obj_type            (GtkRadioAction *action,
-                                            GtkRadioAction *current,
-                                            gpointer        data);
+static void     toggle_obj_type              (GtkRadioAction *action,
+                                              GtkRadioAction *current,
+                                              gpointer        data);
+static void     gfig_new_gc                  (void);
 
-static GtkUIManager *create_ui_manager     (GtkWidget *window);
+static GtkUIManager *create_ui_manager       (GtkWidget *window);
 
-gint
+
+gboolean
 gfig_dialog (void)
 {
   GtkWidget    *main_hbox;
@@ -303,8 +303,6 @@ gfig_dialog (void)
                                    NULL, 0,
                                    gimp_standard_help_func, HELP_ID,
 
-                                   GTK_STOCK_UNDO,   RESPONSE_UNDO,
-                                   GTK_STOCK_CLEAR,  RESPONSE_CLEAR,
                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                    GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
 
@@ -317,9 +315,6 @@ gfig_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
-                                     RESPONSE_UNDO, undo_water_mark >= 0);
-
   /* build the menu */
   ui_manager = create_ui_manager (top_level_dlg);
   menubar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-menubar");
@@ -331,6 +326,8 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
                       toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
+
+  gfig_dialog_action_set_sensitive ("undo", undo_water_mark >= 0);
 
   /* Main box */
   main_hbox = gtk_hbox_new (FALSE, 12);
@@ -561,42 +558,6 @@ gfig_response (GtkWidget *widget,
 
   switch (response_id)
     {
-    case RESPONSE_UNDO:
-      if (undo_water_mark >= 0)
-        {
-          /* Free current objects an reinstate previous */
-          free_all_objs (gfig_context->current_obj->obj_list);
-          gfig_context->current_obj->obj_list = NULL;
-          tmp_bezier = tmp_line = obj_creating = NULL;
-          gfig_context->current_obj->obj_list = undo_table[undo_water_mark];
-          undo_water_mark--;
-          /* Update the screen */
-          gtk_widget_queue_draw (gfig_context->preview);
-          /* And preview */
-          gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
-        }
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         RESPONSE_UNDO, undo_water_mark >= 0);
-      gfig_paint_callback ();
-      break;
-
-    case RESPONSE_CLEAR:
-      /* Make sure we can get back - if we have some objects to get back to */
-      if (!gfig_context->current_obj->obj_list)
-        return;
-
-      setup_undo ();
-      /* Free all objects */
-      free_all_objs (gfig_context->current_obj->obj_list);
-      gfig_context->current_obj->obj_list = NULL;
-      obj_creating = NULL;
-      tmp_line = NULL;
-      tmp_bezier = NULL;
-      gtk_widget_queue_draw (gfig_context->preview);
-      gfig_paint_callback ();
-      break;
-
     case GTK_RESPONSE_CANCEL:
       /* if we created a new layer, delete it */
       if (gfig_context->using_new_layer)
@@ -617,20 +578,40 @@ gfig_response (GtkWidget *widget,
           gfig_context->enable_repaint = TRUE;
           gfig_paint_callback ();
         }
-
-      gtk_widget_destroy (widget);
       break;
 
     case GTK_RESPONSE_OK:  /* Close button */
       gfig_style_copy (&gfig_context->default_style,
                        gfig_context->current_style, "object");
       gfig_save_as_parasite ();
-      gtk_widget_destroy (widget);
       break;
 
     default:
-      gtk_widget_destroy (widget);
       break;
+    }
+
+  gtk_widget_destroy (widget);
+}
+
+void
+gfig_dialog_action_set_sensitive (const gchar *name,
+                                  gboolean     sensitive)
+{
+  g_return_if_fail (name != NULL);
+
+  if (gfig_actions)
+    {
+      GtkAction *action = gtk_action_group_get_action (gfig_actions, name);
+
+      if (! action)
+        {
+          g_warning ("%s: Unable to set sensitivity of action "
+                     "which doesn't exist: %s",
+                     G_STRFUNC, name);
+          return;
+        }
+
+      g_object_set (action, "sensitive", sensitive ? TRUE : FALSE, NULL);
     }
 }
 
@@ -653,8 +634,8 @@ gfig_get_user_writable_dir (void)
 }
 
 static void
-gfig_load_menu_callback (GtkWidget *widget,
-                         gpointer   data)
+gfig_load_action_callback (GtkAction *action,
+                           gpointer   data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -697,37 +678,97 @@ gfig_load_menu_callback (GtkWidget *widget,
 }
 
 static void
-gfig_new_gc (void)
+gfig_save_action_callback (GtkAction *action,
+                           gpointer   data)
 {
-  GdkColor fg, bg;
+  static GtkWidget *dialog = NULL;
 
-  /*  create a new graphics context  */
-  gfig_gc = gdk_gc_new (gfig_context->preview->window);
+  if (!dialog)
+    {
+      gchar *dir;
 
-  gdk_gc_set_function (gfig_gc, GDK_INVERT);
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
+                                     GTK_WINDOW (data),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-  fg.pixel = 0xFFFFFFFF;
-  bg.pixel = 0x00000000;
-  gdk_gc_set_foreground (gfig_gc, &fg);
-  gdk_gc_set_background (gfig_gc, &bg);
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-  gdk_gc_set_line_attributes (gfig_gc, 1,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+                                     NULL);
+
+      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
+
+      /* FIXME: GFigObj should be a GObject and g_signal_connect_object()
+       *        should be used here.
+       */
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (save_file_chooser_response),
+                        gfig_context->current_obj);
+
+      dir = gfig_get_user_writable_dir ();
+      if (dir)
+        {
+          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), dir);
+          g_free (dir);
+        }
+
+      gtk_widget_show (dialog);
+    }
+  else
+    {
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 static void
-gfig_save_menu_callback (GtkWidget *widget,
-                         gpointer   data)
+gfig_close_action_callback (GtkAction *action,
+                            gpointer   data)
 {
-  create_save_file_chooser (gfig_context->current_obj, NULL, GTK_WIDGET (data));
+  gtk_dialog_response (GTK_DIALOG (data), GTK_RESPONSE_OK);
 }
 
 static void
-gfig_close_menu_callback (GtkWidget *widget,
+gfig_undo_action_callback (GtkAction *action,
+                           gpointer   data)
+{
+  if (undo_water_mark >= 0)
+    {
+      /* Free current objects an reinstate previous */
+      free_all_objs (gfig_context->current_obj->obj_list);
+      gfig_context->current_obj->obj_list = NULL;
+      tmp_bezier = tmp_line = obj_creating = NULL;
+      gfig_context->current_obj->obj_list = undo_table[undo_water_mark];
+      undo_water_mark--;
+      /* Update the screen */
+      gtk_widget_queue_draw (gfig_context->preview);
+      /* And preview */
+      gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
+    }
+
+  gfig_dialog_action_set_sensitive ("undo", undo_water_mark >= 0);
+  gfig_paint_callback ();
+}
+
+static void
+gfig_clear_action_callback (GtkWidget *widget,
                           gpointer   data)
 {
-  gtk_dialog_response (GTK_DIALOG (top_level_dlg), GTK_RESPONSE_OK);
+  /* Make sure we can get back - if we have some objects to get back to */
+  if (!gfig_context->current_obj->obj_list)
+    return;
+
+  setup_undo ();
+  /* Free all objects */
+  free_all_objs (gfig_context->current_obj->obj_list);
+  gfig_context->current_obj->obj_list = NULL;
+  obj_creating = NULL;
+  tmp_line = NULL;
+  tmp_bezier = NULL;
+  gtk_widget_queue_draw (gfig_context->preview);
+  gfig_paint_callback ();
 }
+
 
 /* Given a point x, y draw a circle */
 void
@@ -794,55 +835,6 @@ gfig_list_free_all (void)
   gfig_list = NULL;
 }
 
-static void
-create_save_file_chooser (GFigObj   *obj,
-                          gchar     *tpath,
-                          GtkWidget *parent)
-{
-  static GtkWidget *dialog = NULL;
-
-  if (!dialog)
-    {
-      dialog =
-        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
-                                     GTK_WINDOW (parent),
-                                     GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                                     NULL);
-
-      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
-
-      g_signal_connect (dialog, "response",
-                        G_CALLBACK (save_file_chooser_response),
-                        obj);
-
-      if (tpath)
-        {
-          gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), tpath);
-        }
-      else
-        {
-          gchar *dir = gfig_get_user_writable_dir ();
-
-          if (dir)
-            {
-              gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
-                                                   dir);
-              g_free (dir);
-            }
-        }
-
-      gtk_widget_show (dialog);
-    }
-  else
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-}
-
 static GtkUIManager *
 create_ui_manager (GtkWidget *window)
 {
@@ -854,25 +846,33 @@ create_ui_manager (GtkWidget *window)
 
     { "open", GTK_STOCK_OPEN,
       NULL, "<control>O", NULL,
-      G_CALLBACK (gfig_load_menu_callback) },
+      G_CALLBACK (gfig_load_action_callback) },
 
     { "save", GTK_STOCK_SAVE,
       NULL, "<control>S", NULL,
-      G_CALLBACK (gfig_save_menu_callback) },
+      G_CALLBACK (gfig_save_action_callback) },
 
     { "close", GTK_STOCK_CLOSE,
       NULL, "<control>C", NULL,
-      G_CALLBACK (gfig_close_menu_callback) },
+      G_CALLBACK (gfig_close_action_callback) },
 
     { "gfig-edit-menu", NULL, "_Edit" },
 
+    { "undo", GTK_STOCK_UNDO,
+      N_("_Undo"), "<control>Z", NULL,
+      G_CALLBACK (gfig_undo_action_callback) },
+
+    { "clear", GTK_STOCK_CLEAR,
+      N_("_Clear"), NULL, NULL,
+      G_CALLBACK (gfig_clear_action_callback) },
+
     { "grid", GIMP_STOCK_GRID,
       N_("_Grid"), "<control>G", NULL,
-      G_CALLBACK (adjust_grid_callback) },
+      G_CALLBACK (gfig_grid_action_callback) },
 
-    { "options", GTK_STOCK_PREFERENCES,
+    { "prefs", GTK_STOCK_PREFERENCES,
       NULL, "<control>P", NULL,
-      G_CALLBACK (options_dialog_callback) },
+      G_CALLBACK (gfig_prefs_action_callback) },
 
     { "raise", GTK_STOCK_GO_UP,
       NULL, "<control>U", N_("Raise selected object"),
@@ -946,15 +946,16 @@ create_ui_manager (GtkWidget *window)
   };
 
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();
-  GtkActionGroup *group      = gtk_action_group_new ("Actions");
 
-  gtk_action_group_set_translation_domain (group, NULL);
+  gfig_actions = gtk_action_group_new ("Actions");
 
-  gtk_action_group_add_actions (group,
+  gtk_action_group_set_translation_domain (gfig_actions, NULL);
+
+  gtk_action_group_add_actions (gfig_actions,
                                 actions,
                                 G_N_ELEMENTS (actions),
                                 window);
-  gtk_action_group_add_radio_actions (group,
+  gtk_action_group_add_radio_actions (gfig_actions,
                                       radio_actions,
                                       G_N_ELEMENTS (radio_actions),
                                       LINE,
@@ -965,8 +966,8 @@ create_ui_manager (GtkWidget *window)
                               gtk_ui_manager_get_accel_group (ui_manager));
   gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
 
-  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
-  g_object_unref (group);
+  gtk_ui_manager_insert_action_group (ui_manager, gfig_actions, -1);
+  g_object_unref (gfig_actions);
 
   gtk_ui_manager_add_ui_from_string (ui_manager,
                                      "<ui>"
@@ -977,8 +978,10 @@ create_ui_manager (GtkWidget *window)
                                      "      <menuitem action=\"close\" />"
                                      "    </menu>"
                                      "    <menu name=\"Edit\" action=\"gfig-edit-menu\">"
+                                     "      <menuitem action=\"undo\" />"
+                                     "      <menuitem action=\"clear\" />"
                                      "      <menuitem action=\"grid\" />"
-                                     "      <menuitem action=\"options\" />"
+                                     "      <menuitem action=\"prefs\" />"
                                      "    </menu>"
                                      "  </menubar>"
                                      "</ui>",
@@ -1189,8 +1192,8 @@ select_combo_callback (GtkWidget *widget,
 }
 
 static void
-options_dialog_callback (GtkWidget *widget,
-                         gpointer   data)
+gfig_prefs_action_callback (GtkAction *widget,
+                            gpointer   data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -1336,8 +1339,8 @@ options_dialog_callback (GtkWidget *widget,
 }
 
 static void
-adjust_grid_callback (GtkWidget *widget,
-                      gpointer   data)
+gfig_grid_action_callback (GtkAction *action,
+                           gpointer   data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -1441,7 +1444,7 @@ adjust_grid_callback (GtkWidget *widget,
 }
 
 void
-update_options (GFigObj *old_obj)
+options_update (GFigObj *old_obj)
 {
   /* Save old vals */
   if (selvals.opts.gridspacing != old_obj->opts.gridspacing)
@@ -2104,4 +2107,23 @@ gfig_draw_line (gint x0, gint y0, gint x1, gint y1)
                  gfig_scale_y (y0),
                  gfig_scale_x (x1),
                  gfig_scale_y (y1));
+}
+
+static void
+gfig_new_gc (void)
+{
+  GdkColor fg, bg;
+
+  /*  create a new graphics context  */
+  gfig_gc = gdk_gc_new (gfig_context->preview->window);
+
+  gdk_gc_set_function (gfig_gc, GDK_INVERT);
+
+  fg.pixel = 0xFFFFFFFF;
+  bg.pixel = 0x00000000;
+  gdk_gc_set_foreground (gfig_gc, &fg);
+  gdk_gc_set_background (gfig_gc, &bg);
+
+  gdk_gc_set_line_attributes (gfig_gc, 1,
+                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
