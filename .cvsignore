@@ -24,3 +24,4 @@ ABOUT-NLS
 .xvpics
 gimptool-win32.c
 gimp-zip
+autom4te.cache
