@@ -1150,7 +1150,6 @@ plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
-plug-ins/tools/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile

@@ -1,3 +1,8 @@
+2003-04-17  Pedro Gimeno  <usr352@wanadoo.es>
+
+	* configure.in: Removed the plug-ins/tools/Makefile line that was
+	left over when the tool plug-ins were removed.
+
 2003-04-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/old-photo.scm: applied a modified
