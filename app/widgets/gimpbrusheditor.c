@@ -36,19 +36,20 @@
 #include "libgimp/gimpintl.h"
 
 
+#define BRUSH_PREVIEW_WIDTH  128
+#define BRUSH_PREVIEW_HEIGHT  96
+
+
 /*  local function prototypes  */
 
-static void   gimp_brush_editor_class_init (GimpBrushEditorClass *klass);
-static void   gimp_brush_editor_init       (GimpBrushEditor      *editor);
+static void   gimp_brush_editor_class_init   (GimpBrushEditorClass *klass);
+static void   gimp_brush_editor_init         (GimpBrushEditor      *editor);
 
-static void   gimp_brush_editor_set_data       (GimpDataEditor  *editor,
-                                                GimpData        *data);
+static void   gimp_brush_editor_set_data     (GimpDataEditor       *editor,
+                                              GimpData             *data);
 
-static void   gimp_brush_editor_update_brush   (GtkAdjustment   *adjustment,
-                                                GimpBrushEditor *editor);
-static void   gimp_brush_editor_preview_resize (GtkWidget       *widget,
-                                                GtkAllocation   *allocation,
-                                                GimpBrushEditor *editor);
+static void   gimp_brush_editor_update_brush (GtkAdjustment        *adjustment,
+                                              GimpBrushEditor      *editor);
 
 
 static GimpDataEditorClass *parent_class = NULL;
@@ -104,17 +105,14 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  g_signal_connect_after (frame, "size_allocate",
-			  G_CALLBACK (gimp_brush_editor_preview_resize),
-			  editor);
-
   editor->preview = gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW,
                                                     GIMP_TYPE_BRUSH,
-                                                    125, 100, 0,
+                                                    BRUSH_PREVIEW_WIDTH,
+                                                    BRUSH_PREVIEW_HEIGHT, 0,
                                                     FALSE, FALSE, TRUE);
-
-  /*  ensure a minimal size  */
-  gtk_widget_set_size_request (editor->preview, 125, 100);
+  gtk_widget_set_size_request (editor->preview,
+                               BRUSH_PREVIEW_WIDTH, BRUSH_PREVIEW_HEIGHT);
+  gimp_preview_set_expand (GIMP_PREVIEW (editor->preview), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);
 
@@ -185,8 +183,8 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   GimpBrushEditor *brush_editor;
   gdouble          radius   = 0.0;
   gdouble          hardness = 0.0;
-  gdouble          angle    = 0.0;
   gdouble          ratio    = 0.0;
+  gdouble          angle    = 0.0;
 
   brush_editor = GIMP_BRUSH_EDITOR (editor);
 
@@ -195,35 +193,29 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gimp_preview_set_viewable (GIMP_PREVIEW (brush_editor->preview),
                              (GimpViewable *) data);
 
-  if (editor->data)
+  if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))
     {
-      if (GIMP_IS_BRUSH_GENERATED (editor->data))
-        {
-          GimpBrushGenerated *brush;
+      GimpBrushGenerated *brush;
 
-          brush = GIMP_BRUSH_GENERATED (editor->data);
+      brush = GIMP_BRUSH_GENERATED (editor->data);
 
-          radius   = gimp_brush_generated_get_radius (brush);
-          hardness = gimp_brush_generated_get_hardness (brush);
-          angle    = gimp_brush_generated_get_angle (brush);
-          ratio    = gimp_brush_generated_get_aspect_ratio (brush);
+      radius   = gimp_brush_generated_get_radius (brush);
+      hardness = gimp_brush_generated_get_hardness (brush);
+      ratio    = gimp_brush_generated_get_aspect_ratio (brush);
+      angle    = gimp_brush_generated_get_angle (brush);
 
-          gtk_widget_set_sensitive (brush_editor->options_table, TRUE);
-        }
-      else
-        {
-          gtk_widget_set_sensitive (brush_editor->options_table, FALSE);
-        }
+      gtk_widget_set_sensitive (brush_editor->options_table,
+                                editor->data_editable);
     }
   else
     {
       gtk_widget_set_sensitive (brush_editor->options_table, FALSE);
     }
 
-  gtk_adjustment_set_value (brush_editor->radius_data,       radius);
-  gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
-  gtk_adjustment_set_value (brush_editor->angle_data,        angle);
+  gtk_adjustment_set_value (brush_editor->radius_data, radius);
+  gtk_adjustment_set_value (brush_editor->hardness_data, hardness);
   gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
+  gtk_adjustment_set_value (brush_editor->angle_data, angle);
 }
 
 
@@ -256,43 +248,33 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
                                 GimpBrushEditor *editor)
 {
   GimpBrushGenerated *brush;
+  gdouble             radius;
+  gdouble             hardness;
+  gdouble             ratio;
+  gdouble             angle;
 
   if (! GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
     return;
 
   brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
 
-  if (((editor->radius_data->value  
-        != gimp_brush_generated_get_radius (brush))
-       || (editor->hardness_data->value
-           != gimp_brush_generated_get_hardness (brush))
-       || (editor->aspect_ratio_data->value
-           != gimp_brush_generated_get_aspect_ratio (brush))
-       || (editor->angle_data->value
-           != gimp_brush_generated_get_angle (brush))))
+  radius   = editor->radius_data->value;
+  hardness = editor->hardness_data->value;
+  ratio    = editor->aspect_ratio_data->value;
+  angle    = editor->angle_data->value;
+
+  if (angle    != gimp_brush_generated_get_radius (brush)       ||
+      hardness != gimp_brush_generated_get_hardness (brush)     ||
+      ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
+      angle    != gimp_brush_generated_get_angle (brush))
     {
       gimp_brush_generated_freeze (brush);
 
-      gimp_brush_generated_set_radius       (brush,
-                                             editor->radius_data->value);
-      gimp_brush_generated_set_hardness     (brush,
-                                             editor->hardness_data->value);
-      gimp_brush_generated_set_aspect_ratio (brush,
-                                             editor->aspect_ratio_data->value);
-      gimp_brush_generated_set_angle        (brush,
-                                             editor->angle_data->value);
+      gimp_brush_generated_set_radius (brush, radius);
+      gimp_brush_generated_set_hardness (brush, hardness);
+      gimp_brush_generated_set_aspect_ratio (brush, ratio);
+      gimp_brush_generated_set_angle (brush, angle);
 
       gimp_brush_generated_thaw (brush);
     }
-}
-
-static void
-gimp_brush_editor_preview_resize (GtkWidget       *widget,
-                                  GtkAllocation   *allocation,
-                                  GimpBrushEditor *editor)
-{
-  gimp_preview_set_size_full (GIMP_PREVIEW (editor->preview),
-                              allocation->width  - 2 * widget->style->xthickness,
-                              allocation->height - 2 * widget->style->ythickness,
-                              0);
 }

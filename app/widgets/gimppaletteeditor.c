@@ -456,7 +456,7 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 				      GdkEventButton    *bevent,
 				      GimpPaletteEditor *editor)
 {
-  if (bevent->button == 3)
+  if (bevent->button == 3 && GIMP_DATA_EDITOR (editor)->data_editable)
     {
       gimp_item_factory_popup_with_data (GIMP_DATA_EDITOR (editor)->item_factory,
                                          editor, NULL);
@@ -542,7 +542,8 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
           g_signal_handler_unblock (editor->color_name,
                                     editor->entry_sig_id);
 
-          gtk_widget_set_sensitive (editor->color_name, TRUE);
+          gtk_widget_set_sensitive (editor->color_name,
+                                    GIMP_DATA_EDITOR (editor)->data_editable);
           /* palette_update_current_entry (editor); */
         }
       else
@@ -573,9 +574,6 @@ palette_editor_draw_color_row (guchar            *colors,
   gint       vspacing;
   gint       i, j;
   GtkWidget *preview;
-
-  if (! palette_editor)
-    return -1;
 
   preview = palette_editor->color_area;
 
@@ -817,7 +815,7 @@ palette_editor_scroll_top_left (GimpPaletteEditor *palette_editor)
   GtkAdjustment *hadj;
   GtkAdjustment *vadj;
 
-  if (! (palette_editor && palette_editor->scrolled_window))
+  if (! palette_editor->scrolled_window)
     return;
 
   hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (palette_editor->scrolled_window));
@@ -846,7 +844,7 @@ palette_editor_redraw (GimpPaletteEditor *editor)
 
   width = editor->color_area->parent->parent->parent->allocation.width;
 
-  if ((editor->columns_valid) && editor->last_width == width)
+  if (editor->columns_valid && editor->last_width == width)
     return;
 
   editor->last_width = width;
@@ -1011,7 +1009,7 @@ palette_editor_drag_color (GtkWidget *widget,
 
   editor = GIMP_PALETTE_EDITOR (data);
 
-  if (editor && GIMP_DATA_EDITOR (editor)->data && editor->dnd_color)
+  if (GIMP_DATA_EDITOR (editor)->data && editor->dnd_color)
     {
       *color = editor->dnd_color->color;
     }
@@ -1030,7 +1028,7 @@ palette_editor_drop_color (GtkWidget     *widget,
 
   editor = GIMP_PALETTE_EDITOR (data);
 
-  if (editor && GIMP_DATA_EDITOR (editor)->data)
+  if (editor && GIMP_DATA_EDITOR (editor)->data_editable)
     {
       editor->color =
 	gimp_palette_add_entry (GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data),
@@ -1057,6 +1055,5 @@ palette_editor_invalidate_preview (GimpPalette       *palette,
     editor->columns = COLUMNS;
 
   editor->columns_valid = FALSE;
-
   palette_editor_redraw (editor);
 }

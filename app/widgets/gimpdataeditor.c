@@ -109,9 +109,10 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 static void
 gimp_data_editor_init (GimpDataEditor *editor)
 {
-  editor->data_type    = G_TYPE_NONE;
-  editor->data         = NULL;
-  editor->item_factory = NULL;
+  editor->data_type     = G_TYPE_NONE;
+  editor->data          = NULL;
+  editor->data_editable = FALSE;
+  editor->item_factory  = NULL;
 
   editor->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry,
@@ -192,10 +193,11 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
     }
 
-  if (editor->data && ! editor->data->internal)
-    gtk_widget_set_sensitive (editor->name_entry, TRUE);
-  else
-    gtk_widget_set_sensitive (editor->name_entry, FALSE);
+  editor->data_editable = (editor->data            &&
+                           editor->data->writeable &&
+                           ! editor->data->internal);
+
+  gtk_widget_set_sensitive (editor->name_entry, editor->data_editable);
 }
 
 gboolean

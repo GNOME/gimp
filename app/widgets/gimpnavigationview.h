@@ -75,16 +75,14 @@ struct _GimpNavigationPreviewClass
 };
 
 
-GType       gimp_navigation_preview_get_type     (void) G_GNUC_CONST;
+GType   gimp_navigation_preview_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_navigation_preview_new          (GimpImage             *gimage,
-                                                  gint                   size);
-void        gimp_navigation_preview_set_marker   (GimpNavigationPreview *preview,
-                                                  gint                   x,
-                                                  gint                   y,
-                                                  gint                   width,
-                                                  gint                   height);
-void        gimp_navigation_preview_grab_pointer (GimpNavigationPreview *preview);
+void    gimp_navigation_preview_set_marker   (GimpNavigationPreview *preview,
+                                              gint                   x,
+                                              gint                   y,
+                                              gint                   width,
+                                              gint                   height);
+void    gimp_navigation_preview_grab_pointer (GimpNavigationPreview *preview);
 
 
 #endif /* __GIMP_NAVIGATION_PREVIEW_H__ */

@@ -50,6 +50,7 @@ struct _GimpPreview
   gboolean             clickable;
   gboolean             eat_button_events;
   gboolean             show_popup;
+  gboolean             expand;
 
   /*< private >*/
   gboolean             in_button;
@@ -105,6 +106,8 @@ void        gimp_preview_set_size_full     (GimpPreview   *preview,
 					    gint           width,
 					    gint           height,
 					    gint           border_width);
+void        gimp_preview_set_expand        (GimpPreview   *preview,
+                                            gboolean       expand);
 void        gimp_preview_set_dot_for_dot   (GimpPreview   *preview,
 					    gboolean       dot_for_dot);
 void        gimp_preview_set_border_color  (GimpPreview   *preview,

@@ -165,8 +165,6 @@ gradient_editor_load_left_cmd_callback (GtkWidget *widget,
     }
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 void
@@ -283,8 +281,6 @@ gradient_editor_load_right_cmd_callback (GtkWidget *widget,
     }
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 void
@@ -330,8 +326,6 @@ gradient_editor_blending_func_cmd_callback (GtkWidget *widget,
   while (aseg != editor->control_sel_r);
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 void
@@ -365,8 +359,6 @@ gradient_editor_coloring_type_cmd_callback (GtkWidget *widget,
   while (aseg != editor->control_sel_r);
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 void
@@ -493,9 +485,7 @@ gradient_editor_flip_cmd_callback (GtkWidget *widget,
   /* Done */
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 void
@@ -601,9 +591,7 @@ gradient_editor_split_midpoint_cmd_callback (GtkWidget *widget,
   editor->control_sel_r = rseg;
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 void
@@ -771,9 +759,7 @@ gradient_editor_delete_cmd_callback (GtkWidget *widget,
   /* Done */
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 void
@@ -801,9 +787,7 @@ gradient_editor_recenter_cmd_callback (GtkWidget *widget,
   while (aseg != editor->control_sel_r);
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 void
@@ -862,9 +846,7 @@ gradient_editor_redistribute_cmd_callback (GtkWidget *widget,
   /* Done */
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 void
@@ -883,8 +865,6 @@ gradient_editor_blend_color_cmd_callback (GtkWidget *widget,
                                           TRUE, FALSE);
 
   gimp_data_dirty (GIMP_DATA_EDITOR (editor)->data);
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 void
@@ -903,8 +883,6 @@ gradient_editor_blend_opacity_cmd_callback (GtkWidget *widget,
                                           FALSE, TRUE);
 
   gimp_data_dirty (GIMP_DATA_EDITOR (editor)->data);
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 
@@ -950,14 +928,12 @@ gradient_editor_left_color_changed (ColorNotebook      *cnb,
     case COLOR_NOTEBOOK_CANCEL:
       gradient_editor_replace_selection (editor, editor->left_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->left_saved_dirty;
-      gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       color_notebook_free (cnb);
       editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
     }
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 static void
@@ -1000,13 +976,12 @@ gradient_editor_right_color_changed (ColorNotebook      *cnb,
     case COLOR_NOTEBOOK_CANCEL:
       gradient_editor_replace_selection (editor, editor->right_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->right_saved_dirty;
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       color_notebook_free (cnb);
       editor->color_notebook = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
     }
-
-  gimp_gradient_editor_update (editor, GRAD_UPDATE_GRADIENT);
 }
 
 static GimpGradientSegment *
@@ -1126,9 +1101,7 @@ gradient_editor_split_uniform_callback (GtkWidget          *widget,
   editor->control_sel_r = rseg;
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }
 
 static void
@@ -1245,7 +1218,5 @@ gradient_editor_replicate_callback (GtkWidget          *widget,
   /* Done */
 
   gimp_data_dirty (GIMP_DATA (gradient));
-
-  gimp_gradient_editor_update (editor,
-                               GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
+  gimp_gradient_editor_update (editor);
 }

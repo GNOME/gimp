@@ -190,6 +190,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->clickable         = FALSE;
   preview->eat_button_events = TRUE;
   preview->show_popup        = FALSE;
+  preview->expand            = FALSE;
 
   preview->in_button         = FALSE;
 
@@ -223,10 +224,18 @@ gimp_preview_size_request (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
-  requisition->width  = (preview->renderer->width +
-                         2 * preview->renderer->border_width);
-  requisition->height = (preview->renderer->height +
-                         2 * preview->renderer->border_width);
+  if (preview->expand)
+    {
+      requisition->width  = 2 * preview->renderer->border_width + 1;
+      requisition->height = 2 * preview->renderer->border_width + 1;
+    }
+  else
+    {
+      requisition->width  = (preview->renderer->width +
+                             2 * preview->renderer->border_width);
+      requisition->height = (preview->renderer->height +
+                             2 * preview->renderer->border_width);
+    }
 
   if (GTK_WIDGET_CLASS (parent_class)->size_request)
     GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
@@ -241,6 +250,66 @@ gimp_preview_size_allocate (GtkWidget     *widget,
   gint         height;
 
   preview = GIMP_PREVIEW (widget);
+
+  if (preview->expand)
+    {
+      width  = MIN (GIMP_PREVIEW_MAX_SIZE,
+                    allocation->width - 2 * preview->renderer->border_width);
+      height = MIN (GIMP_PREVIEW_MAX_SIZE,
+                    allocation->height - 2 * preview->renderer->border_width);
+
+      if (preview->renderer->width  != width ||
+          preview->renderer->height != height)
+        {
+          gint border_width = preview->renderer->border_width;
+
+          if (preview->renderer->size != -1 && preview->renderer->viewable)
+            {
+              gint preview_width;
+              gint preview_height;
+              gint scaled_width;
+              gint scaled_height;
+
+              gimp_viewable_get_preview_size (preview->renderer->viewable,
+                                              GIMP_PREVIEW_MAX_SIZE,
+                                              preview->renderer->is_popup,
+                                              preview->renderer->dot_for_dot,
+                                              &preview_width,
+                                              &preview_height);
+
+              gimp_viewable_calc_preview_size (preview->renderer->viewable,
+                                               preview_width,
+                                               preview_height,
+                                               width, height,
+                                               TRUE, 1.0, 1.0,
+                                               &scaled_width, &scaled_height,
+                                               NULL);
+
+              if (scaled_width > width)
+                {
+                  scaled_height = scaled_height * width / scaled_width;
+                  scaled_width  = scaled_width  * width / scaled_width;
+                }
+              else if (scaled_height > height)
+                {
+                  scaled_width  = scaled_width  * height / scaled_height;
+                  scaled_height = scaled_height * height / scaled_height;
+                }
+
+              gimp_preview_renderer_set_size (preview->renderer,
+                                              MAX (scaled_width, scaled_height),
+                                              border_width);
+            }
+          else
+            {
+              gimp_preview_renderer_set_size_full (preview->renderer,
+                                                   width, height,
+                                                   border_width);
+            }
+
+          gimp_preview_renderer_remove_idle (preview->renderer);
+        }
+    }
 
   width  = (preview->renderer->width +
             2 * preview->renderer->border_width);
@@ -640,6 +709,19 @@ gimp_preview_set_size_full (GimpPreview *preview,
 
   gimp_preview_renderer_set_size_full (preview->renderer, width, height,
                                        border_width);
+}
+
+void
+gimp_preview_set_expand (GimpPreview *preview,
+                         gboolean     expand)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  if (preview->expand != expand)
+    {
+      preview->expand = expand ? TRUE : FALSE;
+      gtk_widget_queue_resize (GTK_WIDGET (preview));
+    }
 }
 
 void

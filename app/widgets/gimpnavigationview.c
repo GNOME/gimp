@@ -53,22 +53,26 @@ enum
 static void   gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass);
 static void   gimp_navigation_preview_init       (GimpNavigationPreview      *preview);
 
-static void   gimp_navigation_preview_destroy    (GtkObject                  *object);
-static void   gimp_navigation_preview_realize    (GtkWidget                  *widget);
-static gboolean   gimp_navigation_preview_expose (GtkWidget                  *widget,
-						  GdkEventExpose             *eevent);
-static gboolean   gimp_navigation_preview_button_press   (GtkWidget          *widget,
-							  GdkEventButton     *bevent);
-static gboolean   gimp_navigation_preview_button_release (GtkWidget          *widget, 
-							  GdkEventButton     *bevent);
-static gboolean   gimp_navigation_preview_scroll         (GtkWidget          *widget, 
-							  GdkEventScroll     *sevent);
-static gboolean   gimp_navigation_preview_motion_notify  (GtkWidget          *widget, 
-							  GdkEventMotion     *mevent);
-static gboolean   gimp_navigation_preview_key_press      (GtkWidget          *widget, 
-							  GdkEventKey        *kevent);
-static void  gimp_navigation_preview_draw_marker (GimpNavigationPreview      *nav_preview,
-						  GdkRectangle               *area);
+static void   gimp_navigation_preview_destroy          (GtkObject      *object);
+static void   gimp_navigation_preview_realize          (GtkWidget      *widget);
+static void   gimp_navigation_preview_size_allocate    (GtkWidget      *widget,
+                                                        GtkAllocation  *allocation);
+static gboolean gimp_navigation_preview_expose         (GtkWidget      *widget,
+                                                        GdkEventExpose *eevent);
+static gboolean gimp_navigation_preview_button_press   (GtkWidget      *widget,
+                                                        GdkEventButton *bevent);
+static gboolean gimp_navigation_preview_button_release (GtkWidget      *widget, 
+                                                        GdkEventButton *bevent);
+static gboolean gimp_navigation_preview_scroll         (GtkWidget      *widget, 
+                                                        GdkEventScroll *sevent);
+static gboolean gimp_navigation_preview_motion_notify  (GtkWidget      *widget, 
+                                                        GdkEventMotion *mevent);
+static gboolean gimp_navigation_preview_key_press      (GtkWidget      *widget, 
+                                                        GdkEventKey    *kevent);
+
+static void gimp_navigation_preview_transform   (GimpNavigationPreview *nav_preview);
+static void gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
+						  GdkRectangle         *area);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
@@ -149,6 +153,7 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
   object_class->destroy              = gimp_navigation_preview_destroy;
 
   widget_class->realize              = gimp_navigation_preview_realize;
+  widget_class->size_allocate        = gimp_navigation_preview_size_allocate;
   widget_class->expose_event         = gimp_navigation_preview_expose;
   widget_class->button_press_event   = gimp_navigation_preview_button_press;
   widget_class->button_release_event = gimp_navigation_preview_button_release;
@@ -214,6 +219,17 @@ gimp_navigation_preview_realize (GtkWidget *widget)
   gdk_gc_set_line_attributes (nav_preview->gc,
 			      BORDER_PEN_WIDTH, 
 			      GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
+}
+
+static void
+gimp_navigation_preview_size_allocate (GtkWidget     *widget,
+                                       GtkAllocation *allocation)
+{
+  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  if (GIMP_PREVIEW (widget)->renderer->viewable)
+    gimp_navigation_preview_transform (GIMP_NAVIGATION_PREVIEW (widget));
 }
 
 static gboolean
@@ -508,6 +524,27 @@ gimp_navigation_preview_key_press (GtkWidget   *widget,
 }
 
 static void
+gimp_navigation_preview_transform (GimpNavigationPreview *nav_preview)
+{
+  GimpPreview *preview;
+  GimpImage   *gimage;
+  gdouble      ratiox, ratioy;
+
+  preview = GIMP_PREVIEW (nav_preview);
+
+  gimage = GIMP_IMAGE (preview->viewable);
+
+  ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
+  ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
+
+  nav_preview->p_x = RINT (nav_preview->x * ratiox);
+  nav_preview->p_y = RINT (nav_preview->y * ratioy);
+
+  nav_preview->p_width  = RINT (nav_preview->width  * ratiox);
+  nav_preview->p_height = RINT (nav_preview->height * ratioy);
+}
+
+static void
 gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 				     GdkRectangle          *area)
 {
@@ -544,25 +581,6 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
     }
 }
 
-GtkWidget *
-gimp_navigation_preview_new (GimpImage *gimage,
-			     gint       size)
-{
-  GtkWidget *preview;
-
-  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
-
-  preview = gimp_preview_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
-                                       GIMP_TYPE_IMAGE,
-                                       size, 0, TRUE);
-
-  if (gimage)
-    gimp_preview_set_viewable (GIMP_PREVIEW (preview), GIMP_VIEWABLE (gimage));
-
-  return preview;
-}
-
 void
 gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
 				    gint                   x,
@@ -572,7 +590,6 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
 {
   GimpPreview *preview;
   GimpImage   *gimage;
-  gdouble      ratiox, ratioy;
 
   g_return_if_fail (GIMP_IS_NAVIGATION_PREVIEW (nav_preview));
 
@@ -598,15 +615,7 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
   nav_preview->width  = CLAMP (width,  1, gimage->width  - nav_preview->x);
   nav_preview->height = CLAMP (height, 1, gimage->height - nav_preview->y);
 
-  /*  transform to preview coordinates  */
-  ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
-  ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
-
-  nav_preview->p_x = RINT (nav_preview->x * ratiox);
-  nav_preview->p_y = RINT (nav_preview->y * ratioy);
-
-  nav_preview->p_width  = RINT (nav_preview->width  * ratiox);
-  nav_preview->p_height = RINT (nav_preview->height * ratioy);
+  gimp_navigation_preview_transform (nav_preview);
 
   /*  draw new marker  */
   if (GTK_WIDGET_DRAWABLE (preview))

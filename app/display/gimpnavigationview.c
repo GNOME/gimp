@@ -62,9 +62,6 @@ static GtkWidget * gimp_navigation_view_new_private (GimpDisplayShell   *shell,
 static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
                                                      GdkEventButton     *bevent,
                                                      GimpDisplayShell   *shell);
-static void   gimp_navigation_view_abox_resized     (GtkWidget          *widget,
-                                                     GtkAllocation      *allocation,
-                                                     GimpNavigationView *view);
 static void   gimp_navigation_view_marker_changed   (GimpNavigationPreview *preview,
                                                      gint                x,
                                                      gint                y,
@@ -147,7 +144,6 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 static void
 gimp_navigation_view_init (GimpNavigationView *view)
 {
-  GtkWidget *abox;
   GtkWidget *frame;
 
   view->shell = NULL;
@@ -157,16 +153,13 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_box_pack_start (GTK_BOX (view), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  g_signal_connect (abox, "size_allocate",
-                    G_CALLBACK (gimp_navigation_view_abox_resized),
-                    view);
-
-  view->preview = gimp_navigation_preview_new (NULL, GIMP_PREVIEW_SIZE_MEDIUM);
-  gtk_container_add (GTK_CONTAINER (abox), view->preview);
+  view->preview = gimp_preview_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
+                                             GIMP_TYPE_IMAGE,
+                                             GIMP_PREVIEW_SIZE_MEDIUM, 0, TRUE);
+  gtk_widget_set_size_request (view->preview,
+                               GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
+  gimp_preview_set_expand (GIMP_PREVIEW (view->preview), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), view->preview);
   gtk_widget_show (view->preview);
 
   g_signal_connect (view->preview, "marker_changed",
@@ -465,71 +458,6 @@ gimp_navigation_view_button_release (GtkWidget        *widget,
     }
 
   return FALSE;
-}
-
-static void
-gimp_navigation_view_abox_resized (GtkWidget          *widget,
-                                   GtkAllocation      *allocation,
-                                   GimpNavigationView *view)
-{
-  GimpPreview *preview;
-
-  preview = GIMP_PREVIEW (view->preview);
-
-  if (! preview->viewable)
-    return;
-
-  if (preview->renderer->width  > allocation->width  ||
-      preview->renderer->height > allocation->height ||
-      (preview->renderer->width  != allocation->width &&
-       preview->renderer->height != allocation->height))
-    {
-      GimpNavigationPreview *nav_preview;
-      GimpImage             *gimage;
-      gint                   width;
-      gint                   height;
-      gboolean               dummy;
-
-      gimage = GIMP_IMAGE (preview->viewable);
-
-      gimp_viewable_calc_preview_size (preview->viewable,
-                                       gimage->width,
-                                       gimage->height,
-                                       MIN (allocation->width,
-                                            GIMP_PREVIEW_MAX_SIZE),
-                                       MIN (allocation->height,
-                                            GIMP_PREVIEW_MAX_SIZE),
-                                       preview->renderer->dot_for_dot,
-                                       gimage->xresolution,
-                                       gimage->yresolution,
-                                       &width,
-                                       &height,
-                                       &dummy);
-
-      if (width > allocation->width)
-        {
-          height = height * allocation->width / width;
-          width  = width  * allocation->width / width;
-        }
-      else if (height > allocation->height)
-        {
-          width  = width  * allocation->height / height;
-          height = height * allocation->height / height;
-        }
-
-      gimp_preview_set_size_full (preview, width, height,
-                                  preview->renderer->border_width);
-
-      /* FIXME: the GimpNavigationPreview should handle this stuff itself */
-
-      nav_preview = GIMP_NAVIGATION_PREVIEW (preview);
-
-      gimp_navigation_preview_set_marker (nav_preview,
-                                          nav_preview->x,
-                                          nav_preview->y,
-                                          nav_preview->width,
-                                          nav_preview->height);
-    }
 }
 
 static void

@@ -44,6 +44,7 @@ struct _GimpDataEditor
 
   GType            data_type;
   GimpData        *data;
+  gboolean         data_editable;
 
   GimpItemFactory *item_factory;
 

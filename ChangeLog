@@ -1,3 +1,42 @@
+2003-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdataeditor.[ch]: added "gboolean data_editable"
+	which gets set in gimp_data_editor_real_set_data(). Set the name
+	entry insensitive if the data is not editable.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpgradienteditor.c: look at editor->data_editable
+	instead of duplicating the logic in all subclasses.
+
+	* app/widgets/gimppreview.[ch]: added "gboolean expand" and
+	gimp_preview_set_expand() like in GtkPreview bacause smooth auto
+	resizing can only be done by the widget itself, not via external
+	callbacks.
+
+	* app/display/gimpnavigationview.c
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpselectioneditor.c: set expand == TRUE. Removed
+	"size_allocate" callbacks. They resize *much* smoother now.
+	Various cleanups.
+
+	* app/widgets/gimpnavigationpreview.c: recalculate the preview
+	coordinates when the size changes.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppreviewrenderer-utils.c
+	* app/widgets/gimppreviewrenderergradient.[ch]: new renderer which
+	is much faster because it projects the gradient without creating
+	intermediate buffers. Rendering can be restricted to an interval
+	from [left...right].
+
+	* app/widgets/gimpgradienteditor.[ch]: undeprecated by using
+	GimpPreview instead of GtkPreview. Cleanup.
+
+	* app/gui/gradient-editor-commands.c: changed accordingly.
+
 2003-03-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpbycolorselecttool.c

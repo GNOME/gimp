@@ -59,9 +59,6 @@ static void   gimp_selection_editor_init       (GimpSelectionEditor      *select
 static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
                                                     GimpImage           *gimage);
 
-static void   gimp_selection_editor_abox_resized   (GtkWidget           *widget,
-                                                    GtkAllocation       *allocation,
-                                                    GimpSelectionEditor *editor);
 static void   gimp_selection_editor_invert_clicked (GtkWidget           *widget,
                                                     GimpImageEditor     *editor);
 static void   gimp_selection_editor_all_clicked    (GtkWidget           *widget,
@@ -128,31 +125,21 @@ gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
 static void
 gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 {
-  GtkWidget       *frame;
-  GtkWidget       *abox;
-  /* FIXME: take value from GimpGuiConfig */ 
-  GimpPreviewSize  nav_preview_size = GIMP_PREVIEW_SIZE_HUGE;
+  GtkWidget *frame;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (selection_editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  gtk_widget_set_size_request (abox, nav_preview_size, nav_preview_size);
-
-  g_signal_connect (abox, "size_allocate",
-                    G_CALLBACK (gimp_selection_editor_abox_resized),
-                    selection_editor);
-
   selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
                                                          GIMP_TYPE_DRAWABLE,
-                                                         nav_preview_size,
+                                                         GIMP_PREVIEW_SIZE_HUGE,
                                                          0, FALSE);
-  gtk_container_add (GTK_CONTAINER (abox), selection_editor->preview);
+  gtk_widget_set_size_request (selection_editor->preview,
+                               GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
+  gimp_preview_set_expand (GIMP_PREVIEW (selection_editor->preview), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), selection_editor->preview);
   gtk_widget_show (selection_editor->preview);
 
   g_signal_connect (selection_editor->preview, "button_press_event",
@@ -252,59 +239,6 @@ gimp_selection_editor_new (GimpImage *gimage)
 }
 
 static void
-gimp_selection_editor_abox_resized (GtkWidget           *widget,
-                                    GtkAllocation       *allocation,
-                                    GimpSelectionEditor *editor)
-{
-  GimpImageEditor *image_editor;
-  GimpPreview     *preview;
-
-  image_editor = GIMP_IMAGE_EDITOR (editor);
-  preview      = GIMP_PREVIEW (editor->preview);
-
-  if (! preview->viewable)
-    return;
-
-  if (preview->renderer->width  > allocation->width  ||
-      preview->renderer->height > allocation->height ||
-      (preview->renderer->width  != allocation->width &&
-       preview->renderer->height != allocation->height))
-    {
-      gint     width;
-      gint     height;
-      gboolean dummy;
-
-      gimp_viewable_calc_preview_size (preview->viewable,
-                                       image_editor->gimage->width,
-                                       image_editor->gimage->height,
-                                       MIN (allocation->width,
-                                            GIMP_PREVIEW_MAX_SIZE),
-                                       MIN (allocation->height,
-                                            GIMP_PREVIEW_MAX_SIZE),
-                                       preview->renderer->dot_for_dot,
-                                       image_editor->gimage->xresolution,
-                                       image_editor->gimage->yresolution,
-                                       &width,
-                                       &height,
-                                       &dummy);
-
-      if (width > allocation->width)
-        {
-          height = height * allocation->width / width;
-          width  = width  * allocation->width / width;
-        }
-      else if (height > allocation->height)
-        {
-          width  = width  * allocation->height / height;
-          height = height * allocation->height / height;
-        }
-
-      gimp_preview_set_size_full (preview, width, height,
-                                  preview->renderer->border_width);
-    }
-}
-
-static void
 gimp_selection_editor_invert_clicked (GtkWidget       *widget,
                                       GimpImageEditor *editor)
 {
@@ -353,6 +287,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                      GimpSelectionEditor *editor)
 {
   GimpImageEditor      *image_editor;
+  GimpPreviewRenderer  *renderer;
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
@@ -365,6 +300,8 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
   if (! image_editor->gimage)
     return TRUE;
+
+  renderer = GIMP_PREVIEW (editor->preview)->renderer;
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (image_editor->gimage->gimp->tool_info_list,
@@ -396,13 +333,11 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
       operation = SELECTION_SUBTRACT;
     }
 
+  x = image_editor->gimage->width  * bevent->x / renderer->width;
+  y = image_editor->gimage->height * bevent->y / renderer->height;
+
   if (options->sample_merged)
     {
-      x = (image_editor->gimage->width  * bevent->x /
-           editor->preview->allocation.width);
-      y = (image_editor->gimage->height * bevent->y /
-           editor->preview->allocation.height);
-
       if (x < 0 || y < 0 ||
           x >= image_editor->gimage->width ||
           y >= image_editor->gimage->height)
@@ -412,14 +347,12 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
     }
   else
     {
-      gint offx, offy;
+      gint off_x, off_y;
 
-      gimp_drawable_offsets (drawable, &offx, &offy);
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
 
-      x = (gimp_drawable_width (drawable) * bevent->x /
-           editor->preview->requisition.width - offx);
-      y = (gimp_drawable_height (drawable) * bevent->y /
-           editor->preview->requisition.height - offy);
+      x -= off_x;
+      y -= off_y;
 
       if (x < 0 || y < 0 ||
 	  x >= gimp_drawable_width (drawable) ||

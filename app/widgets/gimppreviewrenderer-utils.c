@@ -27,12 +27,14 @@
 
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "text/gimptextlayer.h"
 
 #include "gimppreviewrendererbrush.h"
 #include "gimppreviewrendererdrawable.h"
 #include "gimppreviewrenderertextlayer.h"
+#include "gimppreviewrenderergradient.h"
 #include "gimppreviewrendererimage.h"
 
 
@@ -59,6 +61,10 @@ gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {
       type = GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_GRADIENT))
+    {
+      type = GIMP_TYPE_PREVIEW_RENDERER_GRADIENT;
     }
 
   return type;

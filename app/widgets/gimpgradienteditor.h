@@ -39,14 +39,6 @@ typedef enum
   GRAD_DRAG_ALL
 } GradientEditorDragMode;
 
-typedef enum
-{
-  GRAD_UPDATE_GRADIENT = 1 << 0,
-  GRAD_UPDATE_PREVIEW  = 1 << 1,
-  GRAD_UPDATE_CONTROL  = 1 << 2,
-  GRAD_RESET_CONTROL   = 1 << 3
-} GradientEditorUpdateMask;
-
 
 #define GIMP_TYPE_GRADIENT_EDITOR            (gimp_gradient_editor_get_type ())
 #define GIMP_GRADIENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditor))
@@ -62,27 +54,26 @@ struct _GimpGradientEditor
 {
   GimpDataEditor  parent_instance;
 
-  GtkWidget   *hint_label1;
-  GtkWidget   *hint_label2;
-  GtkWidget   *hint_label3;
-  GtkWidget   *scrollbar;
-  GtkWidget   *preview;
-  GtkWidget   *control;
+  GtkWidget      *hint_label1;
+  GtkWidget      *hint_label2;
+  GtkWidget      *hint_label3;
+  GtkWidget      *scrollbar;
+  GtkWidget      *preview;
+  GtkWidget      *control;
 
   /*  Zoom and scrollbar  */
-  guint        zoom_factor;
-  GtkObject   *scroll_data;
+  guint           zoom_factor;
+  GtkObject      *scroll_data;
 
   /*  Instant update  */
-  gboolean     instant_update;
+  gboolean        instant_update;
 
   /*  Color notebook  */
-  ColorNotebook *color_notebook;
+  ColorNotebook  *color_notebook;
 
   /*  Gradient preview  */
-  guchar       *preview_rows[2]; /* For caching redraw info */
-  gint          preview_last_x;
-  gboolean      preview_button_down;
+  gint            preview_last_x;
+  gboolean        preview_button_down;
 
   /*  Gradient control  */
   GdkPixmap              *control_pixmap;
@@ -121,11 +112,10 @@ struct _GimpGradientEditorClass
 
 GType            gimp_gradient_editor_get_type (void) G_GNUC_CONST;
 
-GimpDataEditor * gimp_gradient_editor_new      (Gimp                     *gimp,
-                                                GimpMenuFactory          *menu_factory);
+GimpDataEditor * gimp_gradient_editor_new      (Gimp               *gimp,
+                                                GimpMenuFactory    *menu_factory);
 
-void             gimp_gradient_editor_update   (GimpGradientEditor       *editor,
-                                                GradientEditorUpdateMask  flags);
+void             gimp_gradient_editor_update   (GimpGradientEditor *editor);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */
