@@ -469,7 +469,7 @@ gimp_config_file_copy (const gchar  *source,
   if (sfile == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot open '%s' for reading: %s"),
+                   _("Could not open '%s' for reading: %s"),
                    source, g_strerror (errno));
       return FALSE;
     }
@@ -478,7 +478,7 @@ gimp_config_file_copy (const gchar  *source,
   if (dfile == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot open '%s' for writing: %s"),
+                   _("Could not open '%s' for writing: %s"),
                    dest, g_strerror (errno));
       fclose (sfile);
       return FALSE;

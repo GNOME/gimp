@@ -1,5 +1,11 @@
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-utils.c
+	* app/gui/themes.c: use standard file error message
+	strings. Removes two more translatable strings.
+
+2003-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrush.c (gimp_brush_load_brush): fixed order of
 	parameters after message change.
 

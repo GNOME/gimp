@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 
 #include <gtk/gtk.h>
@@ -185,7 +186,8 @@ themes_apply_theme (Gimp        *gimp,
 
   if (! file)
     {
-      g_message ("Can't open themerc");
+      g_message (_("Could not open '%s' for writing: %s"),
+                 themerc, g_strerror (errno));
       goto cleanup;
     }
 
