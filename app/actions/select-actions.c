@@ -120,12 +120,10 @@ void
 select_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage    *gimage;
+  GimpImage    *gimage   = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     {

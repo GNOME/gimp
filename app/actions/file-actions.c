@@ -189,10 +189,8 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *gimage   = NULL;
+  GimpImage    *gimage   = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     drawable = gimp_image_active_drawable (gimage);

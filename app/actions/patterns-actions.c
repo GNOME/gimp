@@ -39,7 +39,8 @@
 
 static GimpActionEntry patterns_actions[] =
 {
-  { "patterns-popup", GIMP_STOCK_PATTERN, N_("Patterns Menu"), NULL, NULL, NULL,
+  { "patterns-popup", GIMP_STOCK_PATTERN,
+    N_("Patterns Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATTERN_DIALOG },
 
   { "patterns-new", GTK_STOCK_NEW,
@@ -94,11 +95,9 @@ void
 patterns_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContext *context;
+  GimpContext *context = action_data_get_context (user_data);
   GimpPattern *pattern = NULL;
   GimpData    *data    = NULL;
-
-  context = action_data_get_context (user_data);
 
   if (context)
     {

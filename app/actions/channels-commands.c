@@ -62,19 +62,13 @@ struct _ChannelOptions
 
 /*  local function prototypes  */
 
-static ChannelOptions * channels_query_new   (GimpImage       *gimage,
+static ChannelOptions * channel_options_new  (GimpImage       *gimage,
                                               GimpContext     *context,
                                               GimpChannel     *channel,
-                                              GtkWidget       *parent);
-static void   channels_new_channel_query     (GimpImage       *gimage,
-                                              GimpContext     *context,
                                               GtkWidget       *parent);
 static void   channels_new_channel_response  (GtkWidget       *widget,
                                               gint             response_id,
                                               ChannelOptions  *options);
-static void   channels_edit_channel_query    (GimpChannel     *channel,
-                                              GimpContext     *context,
-                                              GtkWidget       *parent);
 static void   channels_edit_channel_response (GtkWidget       *widget,
                                               gint             response_id,
                                               ChannelOptions  *options);
@@ -96,26 +90,42 @@ void
 channels_edit_attributes_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpChannel *channel;
-  GtkWidget   *widget;
+  ChannelOptions *options;
+  GimpImage      *gimage;
+  GimpChannel    *channel;
+  GtkWidget      *widget;
   return_if_no_channel (gimage, channel, data);
   return_if_no_widget (widget, data);
 
-  channels_edit_channel_query (channel, action_data_get_context (data),
-                               widget);
+  options = channel_options_new (gimp_item_get_image (GIMP_ITEM (channel)),
+                                 action_data_get_context (data),
+                                 channel, widget);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (channels_edit_channel_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
 }
 
 void
 channels_new_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
-  GimpImage *gimage;
-  GtkWidget *widget;
+  ChannelOptions *options;
+  GimpImage      *gimage;
+  GtkWidget      *widget;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  channels_new_channel_query (gimage, action_data_get_context (data), widget);
+  options = channel_options_new (gimage, action_data_get_context (data),
+                                 NULL, widget);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (channels_new_channel_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
 }
 
 void
@@ -310,10 +320,10 @@ channels_to_selection_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static ChannelOptions *
-channels_query_new (GimpImage   *gimage,
-                    GimpContext *context,
-                    GimpChannel *channel,
-                    GtkWidget   *parent)
+channel_options_new (GimpImage   *gimage,
+                     GimpContext *context,
+                     GimpChannel *channel,
+                     GtkWidget   *parent)
 {
   ChannelOptions *options;
   GtkWidget      *hbox;
@@ -428,22 +438,6 @@ channels_query_new (GimpImage   *gimage,
 }
 
 static void
-channels_new_channel_query (GimpImage   *gimage,
-                            GimpContext *context,
-                            GtkWidget   *parent)
-{
-  ChannelOptions *options;
-
-  options = channels_query_new (gimage, context, NULL, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (channels_new_channel_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
-static void
 channels_new_channel_response (GtkWidget      *widget,
                                gint            response_id,
                                ChannelOptions *options)
@@ -475,26 +469,6 @@ channels_new_channel_response (GtkWidget      *widget,
     }
 
   gtk_widget_destroy (options->query_box);
-}
-
-static void
-channels_edit_channel_query (GimpChannel *channel,
-                             GimpContext *context,
-                             GtkWidget   *parent)
-{
-  ChannelOptions *options;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  options = channels_query_new (gimp_item_get_image (GIMP_ITEM (channel)),
-                                context, channel, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (channels_edit_channel_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
 }
 
 static void

@@ -38,10 +38,9 @@
 
 /*  local function prototypes  */
 
-static void   gradients_save_as_pov_query    (GimpContainerEditor *editor);
-static void   gradients_save_as_pov_response (GtkWidget           *dialog,
-                                              gint                 response_id,
-                                              GimpGradient        *gradient);
+static void   gradients_save_as_pov_ray_response (GtkWidget    *dialog,
+                                                  gint          response_id,
+                                                  GimpGradient *gradient);
 
 
 /*  public functions  */
@@ -51,20 +50,10 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
 					gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-
-  gradients_save_as_pov_query (editor);
-}
-
-
-/*  private functions  */
-
-static void
-gradients_save_as_pov_query (GimpContainerEditor *editor)
-{
-  GimpContext    *context;
-  GimpGradient   *gradient;
-  GtkFileChooser *chooser;
-  gchar          *title;
+  GimpContext         *context;
+  GimpGradient        *gradient;
+  GtkFileChooser      *chooser;
+  gchar               *title;
 
   context = gimp_container_view_get_context (editor->view);
 
@@ -94,7 +83,7 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
 
   g_signal_connect (chooser, "response",
-                    G_CALLBACK (gradients_save_as_pov_response),
+                    G_CALLBACK (gradients_save_as_pov_ray_response),
                     gradient);
   g_signal_connect (chooser, "delete_event",
                     G_CALLBACK (gtk_true),
@@ -113,10 +102,13 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
   gtk_widget_show (GTK_WIDGET (chooser));
 }
 
+
+/*  private functions  */
+
 static void
-gradients_save_as_pov_response (GtkWidget    *dialog,
-                                gint          response_id,
-                                GimpGradient *gradient)
+gradients_save_as_pov_ray_response (GtkWidget    *dialog,
+                                    gint          response_id,
+                                    GimpGradient *gradient)
 {
   if (response_id == GTK_RESPONSE_OK)
     {

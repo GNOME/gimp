@@ -40,8 +40,8 @@
 
 static GimpActionEntry gradients_actions[] =
 {
-  { "gradients-popup", GIMP_STOCK_GRADIENT, N_("Gradients Menu"),
-    NULL, NULL, NULL,
+  { "gradients-popup", GIMP_STOCK_GRADIENT,
+    N_("Gradients Menu"), NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_DIALOG },
 
   { "gradients-new", GTK_STOCK_NEW,
@@ -102,11 +102,9 @@ void
 gradients_actions_update (GimpActionGroup *group,
                           gpointer         user_data)
 {
-  GimpContext  *context;
+  GimpContext  *context  = action_data_get_context (user_data);
   GimpGradient *gradient = NULL;
   GimpData     *data     = NULL;
-
-  context = action_data_get_context (user_data);
 
   if (context)
     {

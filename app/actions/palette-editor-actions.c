@@ -39,8 +39,8 @@
 
 static GimpActionEntry palette_editor_actions[] =
 {
-  { "palette-editor-popup", GIMP_STOCK_PALETTE, N_("Palette Editor Menu"),
-    NULL, NULL, NULL,
+  { "palette-editor-popup", GIMP_STOCK_PALETTE,
+    N_("Palette Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_EDITOR_DIALOG },
 
   { "palette-editor-edit-color", GIMP_STOCK_EDIT,
@@ -92,16 +92,13 @@ void
 palette_editor_actions_update (GimpActionGroup *group,
                                gpointer         user_data)
 {
-  GimpPaletteEditor *editor;
-  GimpDataEditor    *data_editor;
+  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (user_data);
+  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (user_data);
   GimpContext       *context;
   GimpData          *data;
-  gboolean           editable = FALSE;
+  gboolean           editable    = FALSE;
   GimpRGB            fg;
   GimpRGB            bg;
-
-  editor      = GIMP_PALETTE_EDITOR (user_data);
-  data_editor = GIMP_DATA_EDITOR (user_data);
 
   context = gimp_get_user_context (group->gimp);
 

@@ -43,7 +43,8 @@
 
 static GimpActionEntry tools_actions[] =
 {
-  { "tools-popup", GIMP_STOCK_TOOLS, N_("Tools Menu"), NULL, NULL, NULL,
+  { "tools-popup", GIMP_STOCK_TOOLS,
+    N_("Tools Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOLS_DIALOG },
 
   { "tools-menu",           NULL, N_("_Tools")           },
@@ -62,7 +63,7 @@ static GimpActionEntry tools_actions[] =
 static GimpToggleActionEntry tools_toggle_actions[] =
 {
   { "tools-visibility", GIMP_STOCK_VISIBLE,
-    N_("Show in Toolbox"), NULL, NULL,
+    N_("_Show in Toolbox"), NULL, NULL,
     G_CALLBACK (tools_toggle_visibility_cmd_callback),
     TRUE,
     NULL /* FIXME */ }
@@ -164,13 +165,8 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContext  *context;
-  GimpToolInfo *tool_info = NULL;
-
-  context = gimp_get_user_context (group->gimp);
-
-  if (context)
-    tool_info = gimp_context_get_tool (context);
+  GimpContext  *context   = gimp_get_user_context (group->gimp);
+  GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

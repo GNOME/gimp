@@ -40,7 +40,8 @@
 
 static GimpActionEntry channels_actions[] =
 {
-  { "channels-popup", GIMP_STOCK_CHANNELS, N_("Channels Menu"), NULL, NULL, NULL,
+  { "channels-popup", GIMP_STOCK_CHANNELS,
+    N_("Channels Menu"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_DIALOG },
 
   { "channels-edit-attributes", GIMP_STOCK_EDIT,
@@ -143,14 +144,12 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *gimage;
+  GimpImage   *gimage    = action_data_get_image (data);
   GimpChannel *channel   = NULL;
   gboolean     fs        = FALSE;
   gboolean     component = FALSE;
   GList       *next      = NULL;
   GList       *prev      = NULL;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     {
@@ -163,19 +162,18 @@ channels_actions_update (GimpActionGroup *group,
         }
       else
         {
-          GList *list;
-
           channel = gimp_image_get_active_channel (gimage);
 
-          for (list = GIMP_LIST (gimage->channels)->list;
-               list;
-               list = g_list_next (list))
+          if (channel)
             {
-              if (channel == (GimpChannel *) list->data)
+              GList *list;
+
+              list = g_list_find (GIMP_LIST (gimage->channels)->list, channel);
+
+              if (list)
                 {
                   prev = g_list_previous (list);
                   next = g_list_next (list);
-                  break;
                 }
             }
         }

@@ -40,7 +40,8 @@
 
 static GimpActionEntry palettes_actions[] =
 {
-  { "palettes-popup", GIMP_STOCK_PALETTE, N_("Palettes Menu"), NULL, NULL, NULL,
+  { "palettes-popup", GIMP_STOCK_PALETTE,
+    N_("Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
   { "palettes-new", GTK_STOCK_NEW,
@@ -107,11 +108,9 @@ void
 palettes_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContext *context;
+  GimpContext *context = action_data_get_context (user_data);
   GimpPalette *palette = NULL;
   GimpData    *data    = NULL;
-
-  context = action_data_get_context (user_data);
 
   if (context)
     {

@@ -25,7 +25,6 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
@@ -33,6 +32,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimpitemundo.h"
+#include "core/gimplayermask.h"
 
 #include "dialogs/offset-dialog.h"
 
@@ -109,6 +109,10 @@ drawable_visible_cmd_callback (GtkAction *action,
 
   visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
+  if (GIMP_IS_LAYER_MASK (drawable))
+    drawable =
+      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+
   if (visible != gimp_item_get_visible (GIMP_ITEM (drawable)))
     {
       GimpUndo *undo;
@@ -135,6 +139,10 @@ drawable_linked_cmd_callback (GtkAction *action,
   return_if_no_drawable (gimage, drawable, data);
 
   linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    drawable =
+      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
 
   if (linked != gimp_item_get_linked (GIMP_ITEM (drawable)))
     {

@@ -349,14 +349,12 @@ image_duplicate_cmd_callback (GtkAction *action,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  GimpImage        *gimage;
   GimpImage        *new_gimage;
   return_if_no_display (gdisp, data);
 
-  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gimage = gdisp->gimage;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  new_gimage = gimp_image_duplicate (gimage);
+  new_gimage = gimp_image_duplicate (gdisp->gimage);
 
   gimp_create_display (new_gimage->gimp,
                        new_gimage,

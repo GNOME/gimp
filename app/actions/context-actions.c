@@ -47,6 +47,7 @@ static GimpActionEntry context_actions[] =
   { "context-colors-menu",     GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")     },
   { "context-opacity-menu",    GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")    },
   { "context-paint-mode-menu", GIMP_STOCK_TOOL_PENCIL,    N_("Paint _Mode") },
+  { "context-tool-menu",       GIMP_STOCK_TOOLS,          N_("_Tool")       },
   { "context-brush-menu",      GIMP_STOCK_BRUSH,          N_("_Brush")      },
   { "context-pattern-menu",    GIMP_STOCK_PATTERN,        N_("_Pattern")    },
   { "context-palette-menu",    GIMP_STOCK_PALETTE,        N_("_Palette")    },
@@ -709,15 +710,13 @@ void
 context_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpContext *context;
+  GimpContext *context   = action_data_get_context (data);
   gboolean     generated = FALSE;
   gdouble      radius    = 0.0;
   gint         spikes    = 0;
   gdouble      hardness  = 0.0;
   gdouble      aspect    = 0.0;
   gdouble      angle     = 0.0;
-
-  context = action_data_get_context (data);
 
   if (context)
     {

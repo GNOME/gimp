@@ -58,8 +58,8 @@ static void   edit_actions_pattern_changed    (GimpContext     *context,
 
 static GimpActionEntry edit_actions[] =
 {
-  { "edit-menu",        NULL, N_("_Edit")  },
-  { "edit-buffer-menu", NULL, N_("Buffer") },
+  { "edit-menu",        NULL, N_("_Edit")   },
+  { "edit-buffer-menu", NULL, N_("_Buffer") },
 
   { "edit-undo", GTK_STOCK_UNDO,
     N_("_Undo"), "<control>Z",

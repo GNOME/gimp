@@ -38,7 +38,8 @@
 
 static GimpActionEntry qmask_actions[] =
 {
-  { "qmask-popup", NULL, N_("Quick Mask Menu"), NULL, NULL, NULL,
+  { "qmask-popup", NULL,
+    N_("Quick Mask Menu"), NULL, NULL, NULL,
     GIMP_HELP_QMASK },
 
   { "qmask-configure", NULL,
@@ -80,6 +81,8 @@ static GimpRadioActionEntry qmask_invert_actions[] =
 void
 qmask_actions_setup (GimpActionGroup *group)
 {
+  GtkAction *action;
+
   gimp_action_group_add_actions (group,
                                  qmask_actions,
                                  G_N_ELEMENTS (qmask_actions));
@@ -93,32 +96,51 @@ qmask_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (qmask_invert_actions),
                                        FALSE,
                                        G_CALLBACK (qmask_invert_cmd_callback));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "qmask-active");
+  gtk_action_set_accel_path (action, "<Actions>/qmask/qmask-toggle");
+
+#ifdef __GNUC__
+#warning FIXME: remove accel_path hack
+#endif
+  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
+                     "<Actions>/qmask/qmask-toggle");
 }
 
 void
 qmask_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = action_data_get_image (data);
 
-  gimage = action_data_get_image (data);
-
+#define SET_SENSITIVE(action,sensitive) \
+        gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
 #define SET_ACTIVE(action,active) \
-        gimp_action_group_set_action_active (group, action, (active))
+        gimp_action_group_set_action_active (group, action, (active) != 0)
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, (color), FALSE)
 
+  SET_SENSITIVE ("qmask-active", gimage);
+  SET_SENSITIVE ("qmask-toggle", gimage);
+
   SET_ACTIVE ("qmask-active", gimage && gimage->qmask_state);
   SET_ACTIVE ("qmask-toggle", gimage && gimage->qmask_state);
+
+  SET_SENSITIVE ("qmask-invert-on",  gimage);
+  SET_SENSITIVE ("qmask-invert-off", gimage);
 
   if (gimage && gimage->qmask_inverted)
     SET_ACTIVE ("qmask-invert-on", TRUE);
   else
     SET_ACTIVE ("qmask-invert-off", TRUE);
 
+  SET_SENSITIVE ("qmask-configure", gimage);
+
   if (gimage)
     SET_COLOR ("qmask-configure", &gimage->qmask_color);
 
 #undef SET_SENSITIVE
+#undef SET_ACTIVE
 #undef SET_COLOR
 }

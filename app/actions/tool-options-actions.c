@@ -52,18 +52,25 @@ static void tool_options_actions_update_presets (GimpActionGroup *group,
 
 static GimpActionEntry tool_options_actions[] =
 {
-  { "tool-options-popup", GIMP_STOCK_TOOL_OPTIONS,  N_("Tool Options Menu"),
-    NULL, NULL, NULL,
+  { "tool-options-popup", GIMP_STOCK_TOOL_OPTIONS,
+    N_("Tool Options Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
   { "tool-options-save-menu", GTK_STOCK_SAVE,
-    N_("_Save Options to"), "", NULL },
+    N_("_Save Options to"), "", NULL, NULL,
+    GIMP_HELP_TOOL_OPTIONS_SAVE },
+
   { "tool-options-restore-menu", GTK_STOCK_REVERT_TO_SAVED,
-    N_("_Restore Options from"), "", NULL },
+    N_("_Restore Options from"), "", NULL, NULL,
+    GIMP_HELP_TOOL_OPTIONS_RESTORE },
+
   { "tool-options-rename-menu", GIMP_STOCK_EDIT,
-    N_("Re_name Saved Options"), NULL, NULL },
+    N_("Re_name Saved Options"), NULL, NULL, NULL,
+    GIMP_HELP_TOOL_OPTIONS_RENAME },
+
   { "tool-options-delete-menu", GTK_STOCK_DELETE,
-    N_("_Delete Saved Options"), "", NULL },
+    N_("_Delete Saved Options"), "", NULL, NULL,
+    GIMP_HELP_TOOL_OPTIONS_DELETE },
 
   { "tool-options-save-new", GTK_STOCK_NEW,
     N_("_New Entry..."), "", NULL,
@@ -107,11 +114,8 @@ void
 tool_options_actions_update (GimpActionGroup *group,
                              gpointer         data)
 {
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
-
-  context   = gimp_get_user_context (group->gimp);
-  tool_info = gimp_context_get_tool (context);
+  GimpContext  *context   = gimp_get_user_context (group->gimp);
+  GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
   SET_VISIBLE ("tool-options-save-menu",    tool_info->options_presets);
   SET_VISIBLE ("tool-options-restore-menu", tool_info->options_presets);

@@ -40,7 +40,8 @@
 
 static GimpActionEntry vectors_actions[] =
 {
-  { "vectors-popup", GIMP_STOCK_PATHS, N_("Paths Menu"), NULL, NULL, NULL,
+  { "vectors-popup", GIMP_STOCK_PATHS,
+    N_("Paths Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATH_DIALOG },
 
   { "vectors-path-tool", GIMP_STOCK_TOOL_PATH,
@@ -228,7 +229,7 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage   *gimage;
+  GimpImage   *gimage     = action_data_get_image (data);
   GimpVectors *vectors    = NULL;
   gint         n_vectors  = 0;
   gboolean     mask_empty = TRUE;
@@ -238,37 +239,28 @@ vectors_actions_update (GimpActionGroup *group,
   GList       *next       = NULL;
   GList       *prev       = NULL;
 
-  gimage = action_data_get_image (data);
-
   if (gimage)
     {
-      GList *list;
+      n_vectors  = gimp_container_num_children (gimage->vectors);
+      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      global_buf = FALSE;
 
       vectors = gimp_image_get_active_vectors (gimage);
-
-      n_vectors = gimp_container_num_children (gimage->vectors);
-
-      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
-
-      global_buf = FALSE;
 
       if (vectors)
         {
           GimpItem *item = GIMP_ITEM (vectors);
+          GList    *list;
 
           visible = gimp_item_get_visible (item);
           linked  = gimp_item_get_linked  (item);
-        }
 
-      for (list = GIMP_LIST (gimage->vectors)->list;
-           list;
-           list = g_list_next (list))
-        {
-          if (vectors == (GimpVectors *) list->data)
+          list = g_list_find (GIMP_LIST (gimage->vectors)->list, vectors);
+
+          if (list)
             {
               prev = g_list_previous (list);
               next = g_list_next (list);
-              break;
             }
         }
     }

@@ -25,10 +25,12 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpselection.h"
+#include "core/gimpstrokeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
@@ -47,22 +49,22 @@
 
 /*  local function prototypes  */
 
-static void   gimp_image_mask_feather_callback (GtkWidget   *widget,
-                                                gdouble      size,
-                                                GimpUnit     unit,
-                                                gpointer     data);
-static void   gimp_image_mask_border_callback  (GtkWidget   *widget,
-                                                gdouble      size,
-                                                GimpUnit     unit,
-                                                gpointer     data);
-static void   gimp_image_mask_grow_callback    (GtkWidget   *widget,
-                                                gdouble      size,
-                                                GimpUnit     unit,
-                                                gpointer     data);
-static void   gimp_image_mask_shrink_callback  (GtkWidget   *widget,
-                                                gdouble      size,
-                                                GimpUnit     unit,
-                                                gpointer     data);
+static void   select_feather_callback (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_border_callback  (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_grow_callback    (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_shrink_callback  (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
 
 
 /*  local variables  */
@@ -126,22 +128,22 @@ select_feather_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *qbox;
+  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
 
-  qbox = gimp_query_size_box (_("Feather Selection"),
-                              gdisp->shell,
-                              gimp_standard_help_func,
-                              GIMP_HELP_SELECTION_FEATHER,
-                              _("Feather selection by"),
-                              selection_feather_radius, 0, 32767, 3,
-                              GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                              MIN (gdisp->gimage->xresolution,
-                                   gdisp->gimage->yresolution),
-                              FALSE,
-                              G_OBJECT (gdisp->gimage), "disconnect",
-                              gimp_image_mask_feather_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_size_box (_("Feather Selection"),
+                                gdisp->shell,
+                                gimp_standard_help_func,
+                                GIMP_HELP_SELECTION_FEATHER,
+                                _("Feather selection by"),
+                                selection_feather_radius, 0, 32767, 3,
+                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                                MIN (gdisp->gimage->xresolution,
+                                     gdisp->gimage->yresolution),
+                                FALSE,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                select_feather_callback, gdisp->gimage);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -160,35 +162,34 @@ select_shrink_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *shrink_dialog;
+  GtkWidget   *dialog;
   GtkWidget   *edge_lock;
   return_if_no_display (gdisp, data);
 
-  shrink_dialog =
-    gimp_query_size_box (_("Shrink Selection"),
-                         gdisp->shell,
-			 gimp_standard_help_func,
-			 GIMP_HELP_SELECTION_SHRINK,
-			 _("Shrink selection by"),
-			 selection_shrink_pixels, 1, 32767, 0,
-			 GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-			 MIN (gdisp->gimage->xresolution,
-			      gdisp->gimage->yresolution),
-			 FALSE,
-			 G_OBJECT (gdisp->gimage), "disconnect",
-			 gimp_image_mask_shrink_callback, gdisp->gimage);
+  dialog = gimp_query_size_box (_("Shrink Selection"),
+                                gdisp->shell,
+                                gimp_standard_help_func,
+                                GIMP_HELP_SELECTION_SHRINK,
+                                _("Shrink selection by"),
+                                selection_shrink_pixels, 1, 32767, 0,
+                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                                MIN (gdisp->gimage->xresolution,
+                                     gdisp->gimage->yresolution),
+                                FALSE,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                select_shrink_callback, gdisp->gimage);
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
 
-  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (shrink_dialog)), edge_lock,
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), edge_lock,
                       FALSE, FALSE, 0);
 
-  g_object_set_data (G_OBJECT (shrink_dialog), "edge_lock_toggle", edge_lock);
+  g_object_set_data (G_OBJECT (dialog), "edge_lock_toggle", edge_lock);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),
                                 ! selection_shrink_edge_lock);
   gtk_widget_show (edge_lock);
 
-  gtk_widget_show (shrink_dialog);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -196,22 +197,22 @@ select_grow_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *qbox;
+  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
 
-  qbox = gimp_query_size_box (_("Grow Selection"),
-                              gdisp->shell,
-			      gimp_standard_help_func,
-			      GIMP_HELP_SELECTION_GROW,
-			      _("Grow selection by"),
-			      selection_grow_pixels, 1, 32767, 0,
-			      GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-			      MIN (gdisp->gimage->xresolution,
-				   gdisp->gimage->yresolution),
-			      FALSE,
-			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimp_image_mask_grow_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_size_box (_("Grow Selection"),
+                                gdisp->shell,
+                                gimp_standard_help_func,
+                                GIMP_HELP_SELECTION_GROW,
+                                _("Grow selection by"),
+                                selection_grow_pixels, 1, 32767, 0,
+                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                                MIN (gdisp->gimage->xresolution,
+                                     gdisp->gimage->yresolution),
+                                FALSE,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                select_grow_callback, gdisp->gimage);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -219,22 +220,22 @@ select_border_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *qbox;
+  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
 
-  qbox = gimp_query_size_box (_("Border Selection"),
-                              gdisp->shell,
-			      gimp_standard_help_func,
-			      GIMP_HELP_SELECTION_BORDER,
-			      _("Border selection by"),
-			      selection_border_radius, 1, 32767, 0,
-			      GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-			      MIN (gdisp->gimage->xresolution,
-				   gdisp->gimage->yresolution),
-			      FALSE,
-			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimp_image_mask_border_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_size_box (_("Border Selection"),
+                                gdisp->shell,
+                                gimp_standard_help_func,
+                                GIMP_HELP_SELECTION_BORDER,
+                                _("Border selection by"),
+                                selection_border_radius, 1, 32767, 0,
+                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                                MIN (gdisp->gimage->xresolution,
+                                     gdisp->gimage->yresolution),
+                                FALSE,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                select_border_callback, gdisp->gimage);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -280,14 +281,70 @@ select_stroke_cmd_callback (GtkAction *action,
   gtk_widget_show (dialog);
 }
 
+void
+select_stroke_last_vals_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  GimpContext  *context;
+  GimpObject   *options;
+  GimpItem     *item;
+  gboolean      libart_stroking;
+  return_if_no_image (image, data);
+
+  drawable = gimp_image_active_drawable (image);
+
+  if (! drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  context = gimp_get_user_context (image->gimp);
+
+  options = g_object_get_data (G_OBJECT (context), "saved-stroke-options");
+
+  if (options)
+    {
+      g_object_ref (options);
+      libart_stroking = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (options),
+                                                            "libart-stroking"));
+    }
+  else
+    {
+      options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
+                              "gimp", image->gimp,
+                              NULL);
+      libart_stroking = TRUE;
+    }
+
+  item = GIMP_ITEM (gimp_image_get_mask (image));
+
+  if (libart_stroking)
+    {
+      gimp_item_stroke (item, drawable, context, options, FALSE);
+    }
+  else
+    {
+      gimp_item_stroke (item, drawable, context,
+                        g_object_get_data (G_OBJECT (options),
+                                           "gimp-paint-info"), FALSE);
+    }
+
+  gimp_image_flush (image);
+
+  g_object_unref (options);
+}
+
 
 /*  private functions  */
 
 static void
-gimp_image_mask_feather_callback (GtkWidget *widget,
-                                  gdouble    size,
-                                  GimpUnit   unit,
-                                  gpointer   data)
+select_feather_callback (GtkWidget *widget,
+                         gdouble    size,
+                         GimpUnit   unit,
+                         gpointer   data)
 {
   GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
@@ -315,10 +372,10 @@ gimp_image_mask_feather_callback (GtkWidget *widget,
 }
 
 static void
-gimp_image_mask_border_callback (GtkWidget *widget,
-                                 gdouble    size,
-                                 GimpUnit   unit,
-                                 gpointer   data)
+select_border_callback (GtkWidget *widget,
+                        gdouble    size,
+                        GimpUnit   unit,
+                        gpointer   data)
 {
   GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
@@ -346,10 +403,10 @@ gimp_image_mask_border_callback (GtkWidget *widget,
 }
 
 static void
-gimp_image_mask_grow_callback (GtkWidget *widget,
-                               gdouble    size,
-                               GimpUnit   unit,
-                               gpointer   data)
+select_grow_callback (GtkWidget *widget,
+                      gdouble    size,
+                      GimpUnit   unit,
+                      gpointer   data)
 {
   GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
@@ -377,10 +434,10 @@ gimp_image_mask_grow_callback (GtkWidget *widget,
 }
 
 static void
-gimp_image_mask_shrink_callback (GtkWidget *widget,
-                                 gdouble    size,
-                                 GimpUnit   unit,
-                                 gpointer   data)
+select_shrink_callback (GtkWidget *widget,
+                        gdouble    size,
+                        GimpUnit   unit,
+                        gpointer   data)
 {
   GimpImage *gimage = GIMP_IMAGE (data);
   gint       radius_x;

@@ -36,8 +36,8 @@
 
 static GimpActionEntry error_console_actions[] =
 {
-  { "error-console-popup", GIMP_STOCK_WARNING, N_("Error Console Menu"),
-    NULL, NULL, NULL,
+  { "error-console-popup", GIMP_STOCK_WARNING,
+    N_("Error Console Menu"), NULL, NULL, NULL,
     GIMP_HELP_ERRORS_DIALOG },
 
   { "error-console-clear", GTK_STOCK_CLEAR,
@@ -69,10 +69,8 @@ void
 error_console_actions_update (GimpActionGroup *group,
                               gpointer         data)
 {
-  GimpErrorConsole *console;
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          selection;
-
-  console = GIMP_ERROR_CONSOLE (data);
 
   selection = gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                                     NULL, NULL);

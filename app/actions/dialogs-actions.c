@@ -107,7 +107,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_NAVIGATION_DIALOG },
 
   { "dialogs-undo-history", GIMP_STOCK_UNDO_HISTORY,
-    N_("_Undo History"), NULL, NULL,
+    N_("Undo _History"), NULL, NULL,
     "gimp-undo-history",
     GIMP_HELP_UNDO_DIALOG },
 
@@ -117,7 +117,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_COLOR_DIALOG },
 
   { "dialogs-brushes", GIMP_STOCK_BRUSH,
-    N_("Brus_hes"), "<control><shift>B", NULL,
+    N_("_Brushes"), "<control><shift>B", NULL,
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG },
 
@@ -142,7 +142,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_FONT_DIALOG },
 
   { "dialogs-buffers", GIMP_STOCK_BUFFER,
-    N_("_Buffers"), "", NULL,
+    N_("B_uffers"), "", NULL,
     "gimp-buffer-list|gimp-buffer-grid",
     GIMP_HELP_BUFFER_DIALOG },
 

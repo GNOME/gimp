@@ -39,6 +39,15 @@
 #include "dockable-commands.h"
 
 
+/*  local function prototypes  */
+
+static void   dockable_change_screen_confirm_callback (GtkWidget *query_box,
+                                                       gint       value,
+                                                       gpointer   data);
+static void   dockable_change_screen_destroy_callback (GtkWidget *query_box,
+                                                       GtkWidget *dock);
+
+
 /*  public functions  */
 
 void
@@ -295,27 +304,6 @@ dockable_toggle_auto_cmd_callback (GtkAction *action,
                                             active);
 }
 
-static void
-dockable_change_screen_confirm_callback (GtkWidget *query_box,
-                                         gint       value,
-                                         gpointer   data)
-{
-  GdkScreen *screen;
-
-  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
-                                   value);
-
-  if (screen)
-    gtk_window_set_screen (GTK_WINDOW (data), screen);
-}
-
-static void
-dockable_change_screen_destroy_callback (GtkWidget *query_box,
-                                         GtkWidget *dock)
-{
-  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", NULL);
-}
-
 void
 dockable_change_screen_cmd_callback (GtkAction *action,
                                      gpointer   data)
@@ -360,4 +348,28 @@ dockable_change_screen_cmd_callback (GtkAction *action,
                     dock);
 
   gtk_widget_show (qbox);
+}
+
+
+/*  private functions  */
+
+static void
+dockable_change_screen_confirm_callback (GtkWidget *query_box,
+                                         gint       value,
+                                         gpointer   data)
+{
+  GdkScreen *screen;
+
+  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
+                                   value);
+
+  if (screen)
+    gtk_window_set_screen (GTK_WINDOW (data), screen);
+}
+
+static void
+dockable_change_screen_destroy_callback (GtkWidget *query_box,
+                                         GtkWidget *dock)
+{
+  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", NULL);
 }

@@ -44,7 +44,8 @@
 
 static GimpActionEntry layers_actions[] =
 {
-  { "layers-popup", GIMP_STOCK_LAYERS, N_("Layers Menu"), NULL, NULL, NULL,
+  { "layers-popup", GIMP_STOCK_LAYERS,
+    N_("Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
 
   { "layers-menu",              NULL,                    N_("_Layer")        },
@@ -382,7 +383,7 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *gimage;
+  GimpImage     *gimage     = action_data_get_image (data);
   GimpLayer     *layer      = NULL;
   GimpLayerMask *mask       = FALSE;    /*  layer mask             */
   gboolean       fs         = FALSE;    /*  floating sel           */
@@ -396,48 +397,37 @@ layers_actions_update (GimpActionGroup *group,
   GList         *next       = NULL;
   GList         *prev       = NULL;
 
-  gimage = action_data_get_image (data);
-
   if (gimage)
     {
-      GList *list;
+      fs      = (gimp_image_floating_sel (gimage) != NULL);
+      ac      = (gimp_image_get_active_channel (gimage) != NULL);
+      sel     = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
 
       layer = gimp_image_get_active_layer (gimage);
 
       if (layer)
         {
-          mask = gimp_layer_get_mask (layer);
+          GList *list;
 
+          mask     = gimp_layer_get_mask (layer);
           preserve = gimp_layer_get_preserve_trans (layer);
-        }
+          alpha    = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-      fs  = (gimp_image_floating_sel (gimage) != NULL);
-      ac  = (gimp_image_get_active_channel (gimage) != NULL);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
+          list = g_list_find (GIMP_LIST (gimage->layers)->list, layer);
 
-      alpha = layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-
-      indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
-
-      for (list = GIMP_LIST (gimage->layers)->list;
-           list;
-           list = g_list_next (list))
-        {
-          if (layer == (GimpLayer *) list->data)
+          if (list)
             {
               prev = g_list_previous (list);
               next = g_list_next (list);
-              break;
             }
+
+          if (next)
+            next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
+
+          if (layer)
+            text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
         }
-
-      if (next)
-        next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
-      else
-        next_alpha = FALSE;
-
-      text_layer = (layer &&
-                    gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)));
     }
 
 #define SET_VISIBLE(action,condition) \

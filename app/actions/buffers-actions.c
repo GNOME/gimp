@@ -38,7 +38,8 @@
 
 static GimpActionEntry buffers_actions[] =
 {
-  { "buffers-popup", GIMP_STOCK_BUFFER, N_("Buffers Menu"), NULL, NULL, NULL,
+  { "buffers-popup", GIMP_STOCK_BUFFER,
+    N_("Buffers Menu"), NULL, NULL, NULL,
     GIMP_HELP_BUFFER_DIALOG },
 
   { "buffers-paste", GTK_STOCK_PASTE,
@@ -79,10 +80,8 @@ void
 buffers_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpContext *context;
-  GimpBuffer  *buffer = NULL;
-
-  context = action_data_get_context (data);
+  GimpContext *context = action_data_get_context (data);
+  GimpBuffer  *buffer  = NULL;
 
   if (context)
     buffer = gimp_context_get_buffer (context);

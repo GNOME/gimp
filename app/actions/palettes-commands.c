@@ -43,10 +43,9 @@
 
 /*  local function prototypes  */
 
-static void   palettes_merge_palettes_query    (GimpContainerEditor *editor);
-static void   palettes_merge_palettes_callback (GtkWidget           *widget,
-						const gchar         *palette_name,
-						gpointer             data);
+static void   palettes_merge_palettes_callback (GtkWidget   *widget,
+						const gchar *palette_name,
+						gpointer     data);
 
 
 /*  public functionss */
@@ -68,17 +67,7 @@ palettes_merge_palettes_cmd_callback (GtkAction *action,
 				      gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-
-  palettes_merge_palettes_query (editor);
-}
-
-
-/*  private functions  */
-
-static void
-palettes_merge_palettes_query (GimpContainerEditor *editor)
-{
-  GtkWidget *qbox;
+  GtkWidget           *qbox;
 
   qbox = gimp_query_string_box (_("Merge Palette"),
                                 GTK_WIDGET (editor),
@@ -91,6 +80,9 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
 				editor);
   gtk_widget_show (qbox);
 }
+
+
+/*  private functions  */
 
 static void
 palettes_merge_palettes_callback (GtkWidget   *widget,

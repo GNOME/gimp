@@ -43,13 +43,16 @@
 
 static GimpActionEntry image_actions[] =
 {
-  { "toolbox-menubar", NULL, N_("Toolbox Menu"), NULL, NULL, NULL,
+  { "toolbox-menubar", NULL,
+    N_("Toolbox Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOLBOX },
 
-  { "image-menubar", NULL, N_("Image Menu"), NULL, NULL, NULL,
+  { "image-menubar", NULL,
+    N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "image-popup", NULL, N_("Image Menu"), NULL, NULL, NULL,
+  { "image-popup", NULL,
+    N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
   { "extensions-menu",      NULL, N_("_Xtns")      },
@@ -199,7 +202,7 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage     = action_data_get_image (data);
   gboolean   is_rgb     = FALSE;
   gboolean   is_gray    = FALSE;
   gboolean   is_indexed = FALSE;
@@ -207,8 +210,6 @@ image_actions_update (GimpActionGroup *group,
   gboolean   aux        = FALSE;
   gboolean   lp         = FALSE;
   gboolean   sel        = FALSE;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     {

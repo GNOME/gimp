@@ -82,15 +82,12 @@ void
 colormap_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpImage   *gimage;
-  GimpContext *context;
+  GimpImage   *gimage     = action_data_get_image (data);
+  GimpContext *context    = action_data_get_context (data);
   gboolean     indexed    = FALSE;
   gint         num_colors = 0;
   GimpRGB      fg;
   GimpRGB      bg;
-
-  gimage  = action_data_get_image (data);
-  context = action_data_get_context (data);
 
   if (gimage)
     {

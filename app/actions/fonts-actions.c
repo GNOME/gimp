@@ -40,7 +40,8 @@
 
 static GimpActionEntry fonts_actions[] =
 {
-  { "fonts-popup", GIMP_STOCK_FONT, N_("Fonts Menu"), NULL, NULL, NULL,
+  { "fonts-popup", GIMP_STOCK_FONT,
+    N_("Fonts Menu"), NULL, NULL, NULL,
     GIMP_HELP_FONT_DIALOG },
 
   { "fonts-refresh", GTK_STOCK_REFRESH,
@@ -63,10 +64,8 @@ void
 fonts_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContext *context;
-  GimpFont    *font = NULL;
-
-  context = action_data_get_context (data);
+  GimpContext *context = action_data_get_context (data);
+  GimpFont    *font    = NULL;
 
   if (context)
     font = gimp_context_get_font (context);

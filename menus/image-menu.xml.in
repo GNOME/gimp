@@ -46,12 +46,20 @@
         <menuitem action="context-opacity-opaque" />
         <menuitem action="context-opacity-decrease" />
         <menuitem action="context-opacity-increase" />
+        <menuitem action="context-opacity-decrease-skip" />
+        <menuitem action="context-opacity-increase-skip" />
       </menu>
       <menu action="context-paint-mode-menu" name="Paint Mode">
         <menuitem action="context-paint-mode-first" />
         <menuitem action="context-paint-mode-last" />
         <menuitem action="context-paint-mode-previous" />
         <menuitem action="context-paint-mode-next" />
+      </menu>
+      <menu action="context-tool-menu" name="Tool">
+        <menuitem action="context-tool-select-first" />
+        <menuitem action="context-tool-select-last" />
+        <menuitem action="context-tool-select-previous" />
+        <menuitem action="context-tool-select-next" />
       </menu>
       <separator />
       <menu action="context-brush-menu" name="Brush">
@@ -132,7 +140,7 @@
       </menu>
     </menu>
 
- -->
+-->
 
     <menu action="edit-menu" name="Edit">
       <placeholder name="Undo">
@@ -392,7 +400,9 @@
 	<separator />
         <menuitem action="drawable-offset" />
       </menu>
-<!--
+
+<!-- Layer Properties
+
       <menu action="layers-properties-menu" name="Properties">
         <menuitem action="layers-edit-attributes" />
         <menu action="layers-opacity-menu" name="Opacity">
@@ -411,7 +421,9 @@
         <menuitem action="drawable-linked" />
         <menuitem action="layers-preserve-transparency" />
       </menu>
+
 -->
+
       <separator />
       <placeholder name="Resize">
         <menuitem action="layers-resize" />

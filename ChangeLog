@@ -1,3 +1,48 @@
+2004-10-18  Michael Natterer  <mitch@gimp.org>
+
+	Action code review and pre-release consistency cleanup:
+
+	* app/actions/*-actions.c: added some missing and resolved
+	conflicting mnemonics, added missing help IDs. Cleaned up the
+	*_actions_update() functions.
+
+	* app/actions/channels-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/vectors-actions.c (*_actions_update): simplified
+	the code that figures the prev and next channel,layer,vectors.
+
+	* app/actions/qmask-actions.c: use the same accelerator for
+	"qmask-active" and "qmask-toggle". Fixed action sensitivity.
+
+	* app/actions/channels-commands.c
+	* app/actions/dockable-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/gradients-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/palettes-commands.c
+	* app/actions/image-commands.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c: folded tons of private utility
+	functions into their only callers (they used to be public and
+	called from outside before the switch to action based menus).
+	Renamed functions and variables saying "query" or "qbox" to
+	"dialog". Moved static functions to the end of the files. Misc
+	minor cleanups.
+
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.c: made the "drawable-visible" and
+	"drawable-linked" actions affect the layer if the active drawable
+	is a layer mask.
+
+	* app/actions/select-commands.c: added action to stroke with the
+	last values used in an attempt to address bug #135746 but #if 0'ed
+	it because the approach is too ugly.
+
+	* app/tools/gimpiscissorstool.c: changed mnemonic from I to S.
+
+	* menus/image-menu-xml.in: added more stuff to the (commented out)
+	"context" menu.
+
 2004-10-17  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimppixelrgn.c: some more clues in the documentation

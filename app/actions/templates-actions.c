@@ -38,8 +38,8 @@
 
 static GimpActionEntry templates_actions[] =
 {
-  { "templates-popup", GIMP_STOCK_TEMPLATE, N_("Templates Menu"),
-    NULL, NULL, NULL,
+  { "templates-popup", GIMP_STOCK_TEMPLATE,
+    N_("Templates Menu"), NULL, NULL, NULL,
     GIMP_HELP_TEMPLATE_DIALOG },
 
   { "templates-create-image", GIMP_STOCK_IMAGE,
@@ -86,10 +86,8 @@ void
 templates_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
-  GimpContext  *context;
+  GimpContext  *context  = action_data_get_context (data);
   GimpTemplate *template = NULL;
-
-  context = action_data_get_context (data);
 
   if (context)
     template = gimp_context_get_template (context);
@@ -98,7 +96,7 @@ templates_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("templates-create-image", template);
-  SET_SENSITIVE ("templates-new",          TRUE);
+  SET_SENSITIVE ("templates-new",          context);
   SET_SENSITIVE ("templates-duplicate",    template);
   SET_SENSITIVE ("templates-edit",         template);
   SET_SENSITIVE ("templates-delete",       template);

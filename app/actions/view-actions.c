@@ -446,14 +446,12 @@ void
 view_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay        *gdisp      = NULL;
+  GimpDisplay        *gdisp      = action_data_get_display (data);
   GimpDisplayShell   *shell      = NULL;
   GimpDisplayOptions *options    = NULL;
   GimpImage          *gimage     = NULL;
   gboolean            fullscreen = FALSE;
   gint                n_screens  = 1;
-
-  gdisp = action_data_get_display (data);
 
   if (gdisp)
     {

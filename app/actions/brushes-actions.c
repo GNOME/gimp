@@ -28,7 +28,6 @@
 #include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
@@ -40,11 +39,12 @@
 
 static GimpActionEntry brushes_actions[] =
 {
-  { "brushes-popup", GIMP_STOCK_BRUSH, N_("Brushes Menu"), NULL, NULL, NULL,
+  { "brushes-popup", GIMP_STOCK_BRUSH,
+    N_("Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
   { "brushes-new", GTK_STOCK_NEW,
-    N_("New Brush"), "",
+    N_("_New Brush"), "",
     N_("New brush"),
     G_CALLBACK (data_new_data_cmd_callback),
     GIMP_HELP_BRUSH_NEW },
@@ -95,11 +95,9 @@ void
 brushes_actions_update (GimpActionGroup *group,
                         gpointer         user_data)
 {
-  GimpContext *context;
-  GimpBrush   *brush = NULL;
-  GimpData    *data  = NULL;
-
-  context = action_data_get_context (user_data);
+  GimpContext *context = action_data_get_context (user_data);
+  GimpBrush   *brush   = NULL;
+  GimpData    *data    = NULL;
 
   if (context)
     {

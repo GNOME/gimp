@@ -49,10 +49,21 @@
 #include "gimp-intl.h"
 
 
+typedef struct _RaiseClosure RaiseClosure;
+
+struct _RaiseClosure
+{
+  const gchar *name;
+  gboolean     found;
+};
+
+
 /*  local function prototypes  */
 
-static void   documents_open_image (GimpContext   *context,
-                                    GimpImagefile *imagefile);
+static void   documents_open_image    (GimpContext   *context,
+                                       GimpImagefile *imagefile);
+static void   documents_raise_display (gpointer       data,
+                                       gpointer       user_data);
 
 
 /*  public functions */
@@ -78,31 +89,6 @@ documents_open_document_cmd_callback (GtkAction *action,
   else
     {
       file_file_open_dialog (context->gimp, NULL, GTK_WIDGET (editor));
-    }
-}
-
-typedef struct _RaiseClosure RaiseClosure;
-
-struct _RaiseClosure
-{
-  const gchar *name;
-  gboolean     found;
-};
-
-static void
-documents_raise_display (gpointer data,
-                         gpointer user_data)
-{
-  GimpDisplay  *gdisp   = (GimpDisplay *) data;
-  RaiseClosure *closure = (RaiseClosure *) user_data;
-  const gchar  *uri;
-
-  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
-
-  if (uri && ! strcmp (closure->name, uri))
-    {
-      closure->found = TRUE;
-      gtk_window_present (GTK_WINDOW (gdisp->shell));
     }
 }
 
@@ -274,5 +260,22 @@ documents_open_image (GimpContext   *context,
       g_clear_error (&error);
 
       g_free (filename);
+    }
+}
+
+static void
+documents_raise_display (gpointer data,
+                         gpointer user_data)
+{
+  GimpDisplay  *gdisp   = data;
+  RaiseClosure *closure = user_data;
+  const gchar  *uri;
+
+  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+
+  if (uri && ! strcmp (closure->name, uri))
+    {
+      closure->found = TRUE;
+      gtk_window_present (GTK_WINDOW (gdisp->shell));
     }
 }

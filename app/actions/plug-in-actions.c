@@ -143,11 +143,9 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage     *gimage;
+  GimpImage     *gimage = action_data_get_image (data);
   GimpImageType  type   = -1;
   GSList        *list;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     {

@@ -42,8 +42,8 @@
 
 static GimpActionEntry gradient_editor_actions[] =
 {
-  { "gradient-editor-popup", GIMP_STOCK_GRADIENT, N_("Gradient Editor Menu"),
-    NULL, NULL, NULL,
+  { "gradient-editor-popup", GIMP_STOCK_GRADIENT,
+    N_("Gradient Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_EDITOR_DIALOG },
 
   { "gradient-editor-load-left-color", GTK_STOCK_REVERT_TO_SAVED,
@@ -341,7 +341,7 @@ void
 gradient_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpGradientEditor  *editor;
+  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpContext         *context;
   GimpGradientSegment *left_seg;
   GimpGradientSegment *right_seg;
@@ -351,8 +351,6 @@ gradient_editor_actions_update (GimpActionGroup *group,
   gboolean             coloring_equal = TRUE;
   gboolean             selection;
   gboolean             delete;
-
-  editor = GIMP_GRADIENT_EDITOR (data);
 
   context =
     gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
@@ -397,8 +395,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
   selection = (editor->control_sel_l != editor->control_sel_r);
   delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
 
-#define SET_ACTIVE(action,active) \
-        gimp_action_group_set_action_active (group, action, (active))
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_COLOR(action,color,set_label) \
         gimp_action_group_set_action_color (group, action, (color), (set_label))
 #define SET_LABEL(action,label) \

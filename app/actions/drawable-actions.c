@@ -25,10 +25,9 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -152,12 +151,17 @@ drawable_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          GimpItem      *item          = GIMP_ITEM (drawable);
           GimpImageType  drawable_type = gimp_drawable_type (drawable);
+          GimpItem      *item;
 
           is_rgb     = GIMP_IMAGE_TYPE_IS_RGB     (drawable_type);
           is_gray    = GIMP_IMAGE_TYPE_IS_GRAY    (drawable_type);
           is_indexed = GIMP_IMAGE_TYPE_IS_INDEXED (drawable_type);
+
+          if (GIMP_IS_LAYER_MASK (drawable))
+            item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+          else
+            item = GIMP_ITEM (drawable);
 
           visible = gimp_item_get_visible (item);
           linked  = gimp_item_get_linked  (item);

@@ -77,28 +77,21 @@ struct _VectorsOptions
 
 /*  local function prototypes  */
 
-static VectorsOptions * vectors_query_new   (GimpImage      *gimage,
-                                             GimpContext    *context,
+static VectorsOptions * vectors_options_new (GimpImage      *gimage,
                                              GimpVectors    *vectors,
-                                             GtkWidget      *parent);
-static void   vectors_new_vectors_query     (GimpImage      *gimage,
-                                             GimpContext    *context,
                                              GtkWidget      *parent);
 static void   vectors_new_vectors_response  (GtkWidget      *widget,
                                              gint            response_id,
                                              VectorsOptions *options);
-static void   vectors_edit_vectors_query    (GimpVectors    *vectors,
-                                             GimpContext    *context,
-                                             GtkWidget      *parent);
 static void   vectors_edit_vectors_response (GtkWidget      *widget,
                                              gint            response_id,
                                              VectorsOptions *options);
-static void   vectors_import_query          (GimpImage      *gimage,
+static void   vectors_import_dialog         (GimpImage      *gimage,
                                              GtkWidget      *parent);
 static void   vectors_import_response       (GtkWidget      *dialog,
                                              gint            response_id,
                                              GimpImage      *gimage);
-static void   vectors_export_query          (GimpImage      *gimage,
+static void   vectors_export_dialog         (GimpImage      *gimage,
                                              GimpVectors    *vectors,
                                              GtkWidget      *parent);
 static void   vectors_export_response       (GtkWidget      *dialog,
@@ -147,25 +140,40 @@ void
 vectors_edit_attributes_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *vectors;
-  GtkWidget   *widget;
+  VectorsOptions *options;
+  GimpImage      *gimage;
+  GimpVectors    *vectors;
+  GtkWidget      *widget;
   return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
-  vectors_edit_vectors_query (vectors, action_data_get_context (data), widget);
+  options = vectors_options_new (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                 vectors, widget);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_edit_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
 }
 
 void
 vectors_new_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpImage *gimage;
-  GtkWidget *widget;
+  VectorsOptions *options;
+  GimpImage      *gimage;
+  GtkWidget      *widget;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  vectors_new_vectors_query (gimage, action_data_get_context (data), widget);
+  options = vectors_options_new (gimage, NULL, widget);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_new_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
 }
 
 void
@@ -396,7 +404,7 @@ vectors_import_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  vectors_import_query (gimage, widget);
+  vectors_import_dialog (gimage, widget);
 }
 
 void
@@ -409,7 +417,7 @@ vectors_export_cmd_callback (GtkAction *action,
   return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
-  vectors_export_query (gimage, vectors, widget);
+  vectors_export_dialog (gimage, vectors, widget);
 }
 
 void
@@ -470,10 +478,9 @@ vectors_linked_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static VectorsOptions *
-vectors_query_new (GimpImage   *gimage,
-                   GimpContext *context,
-                   GimpVectors *vectors,
-                   GtkWidget   *parent)
+vectors_options_new (GimpImage   *gimage,
+                     GimpVectors *vectors,
+                     GtkWidget   *parent)
 {
   VectorsOptions *options;
   GtkWidget      *hbox;
@@ -556,22 +563,6 @@ vectors_query_new (GimpImage   *gimage,
 }
 
 static void
-vectors_new_vectors_query (GimpImage   *gimage,
-                           GimpContext *context,
-                           GtkWidget   *parent)
-{
-  VectorsOptions *options;
-
-  options = vectors_query_new (gimage, context, NULL, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (vectors_new_vectors_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
-static void
 vectors_new_vectors_response (GtkWidget      *widget,
                               gint            response_id,
                               VectorsOptions *options)
@@ -597,22 +588,6 @@ vectors_new_vectors_response (GtkWidget      *widget,
 }
 
 static void
-vectors_edit_vectors_query (GimpVectors *vectors,
-                            GimpContext *context,
-                            GtkWidget   *parent)
-{
-  VectorsOptions *options;
-
-  options = vectors_query_new (gimp_item_get_image (GIMP_ITEM (vectors)),
-                               context, vectors, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (vectors_edit_vectors_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-static void
 vectors_edit_vectors_response (GtkWidget      *widget,
                                gint            response_id,
                                VectorsOptions *options)
@@ -635,8 +610,8 @@ vectors_edit_vectors_response (GtkWidget      *widget,
 }
 
 static void
-vectors_import_query (GimpImage *gimage,
-                      GtkWidget *parent)
+vectors_import_dialog (GimpImage *gimage,
+                       GtkWidget *parent)
 {
   GtkWidget     *dialog;
   GtkFileFilter *filter;
@@ -671,7 +646,7 @@ vectors_import_query (GimpImage *gimage,
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("Scalable SVG image (*.svg)"));
-  gtk_file_filter_add_pattern (filter, "*.svg");
+  gtk_file_filter_add_pattern (filter, "*.[Ss][Vv][Gg]");
   gtk_file_filter_add_mime_type (filter, "image/svg+xml");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
@@ -711,9 +686,9 @@ vectors_import_response (GtkWidget *dialog,
 }
 
 static void
-vectors_export_query (GimpImage   *gimage,
-                      GimpVectors *vectors,
-                      GtkWidget   *parent)
+vectors_export_dialog (GimpImage   *gimage,
+                       GimpVectors *vectors,
+                       GtkWidget   *parent)
 {
   GtkWidget *dialog;
 

@@ -39,7 +39,8 @@
 
 static GimpActionEntry images_actions[] =
 {
-  { "images-popup", GIMP_STOCK_IMAGES, N_("Images Menu"), NULL, NULL, NULL,
+  { "images-popup", GIMP_STOCK_IMAGES,
+    N_("Images Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_DIALOG },
 
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
@@ -74,10 +75,8 @@ void
 images_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpContext *context;
-  GimpImage   *image = NULL;
-
-  context = action_data_get_context (data);
+  GimpContext *context = action_data_get_context (data);
+  GimpImage   *image   = NULL;
 
   if (context)
     image = gimp_context_get_image (context);

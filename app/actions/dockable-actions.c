@@ -45,12 +45,13 @@
 
 static GimpActionEntry dockable_actions[] =
 {
-  { "dockable-popup", NULL, N_("Dialogs Menu"), NULL, NULL, NULL,
+  { "dockable-popup", NULL,
+    N_("Dialogs Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCK },
 
   { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, "" },
   { "dockable-add-tab-menu",      NULL, N_("_Add Tab")        },
-  { "dockable-preview-size-menu", NULL, N_("Preview Si_ze")   },
+  { "dockable-preview-size-menu", NULL, N_("_Preview Size")   },
   { "dockable-tab-style-menu",    NULL, N_("_Tab Style")      },
 
   { "dockable-close-tab", GTK_STOCK_CLOSE,
@@ -64,7 +65,7 @@ static GimpActionEntry dockable_actions[] =
     GIMP_HELP_DOCK_TAB_DETACH },
 
   { "dockable-move-to-screen", GIMP_STOCK_MOVE_TO_SCREEN,
-    N_("Move to Screen..."), NULL, NULL,
+    N_("M_ove to Screen..."), NULL, NULL,
     G_CALLBACK (dockable_change_screen_cmd_callback),
     GIMP_HELP_DOCK_CHANGE_SCREEN }
 };
@@ -72,13 +73,13 @@ static GimpActionEntry dockable_actions[] =
 static GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-show-image-menu", NULL,
-    N_("Show Image _Menu"), NULL, NULL,
+    N_("_Show Image Menu"), NULL, NULL,
     G_CALLBACK (dockable_toggle_image_menu_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_IMAGE_MENU },
 
   { "dockable-auto-follow-active", NULL,
-    N_("Auto Follow Active _Image"), NULL, NULL,
+    N_("Auto _Follow Active Image"), NULL, NULL,
     G_CALLBACK (dockable_toggle_auto_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_AUTO_BUTTON }
