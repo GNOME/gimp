@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdatafactoryview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,8 +41,9 @@
 #include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
+#include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
-#include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
@@ -66,6 +67,10 @@ static void   gimp_data_factory_view_select_item       (GimpContainerEditor *edi
 							GimpViewable        *viewable);
 static void   gimp_data_factory_view_activate_item     (GimpContainerEditor *editor,
 							GimpViewable        *viewable);
+static void   gimp_data_factory_view_tree_name_edited  (GtkCellRendererText *cell,
+                                                        const gchar         *path,
+                                                        const gchar         *name,
+                                                        GimpDataFactoryView *view);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -194,6 +199,20 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
     }
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
+
+  if (GIMP_IS_CONTAINER_TREE_VIEW (editor->view))
+    {
+      GimpContainerTreeView *tree_view;
+
+      tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+
+      tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
+      GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+
+      g_signal_connect (tree_view->name_cell, "edited",
+                        G_CALLBACK (gimp_data_factory_view_tree_name_edited),
+                        factory_view);
+    }
 
   factory_view->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
@@ -461,4 +480,38 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
     {
       gimp_data_factory_view_edit_clicked (NULL, view);
     }
+}
+
+static void
+gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
+                                         const gchar         *path_str,
+                                         const gchar         *new_name,
+                                         GimpDataFactoryView *view)
+{
+  GimpContainerTreeView *tree_view;
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_EDITOR (view)->view);
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpPreviewRenderer *renderer;
+      GimpData            *data;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+
+      data = GIMP_DATA (renderer->viewable);
+
+      if (data->writeable && !data->internal)
+        gimp_object_set_name (GIMP_OBJECT (data), new_name);
+
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
 }
