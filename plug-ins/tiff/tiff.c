@@ -868,7 +868,6 @@ save_image (char   *filename,
   int tile_height;
   int y, yend;
   char *name;
-  getchar();
   compression = tsvals.compression;
   fillorder = tsvals.fillorder;
 
