@@ -1,5 +1,12 @@
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/plug-in-actions.c (plug_in_actions_add_proc): fixed
+	bug which would have leaked broken menu translations.
+
+	* app/gui/plug-in-menus.c: removed useless #includes.
+
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-actions.c
 	* app/actions/file-commands.[ch]: remove "file-close" action and
 	callback...

@@ -302,10 +302,10 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       *p2 = '\0';
 
       plug_in_actions_build_path (group, path_original, path_translated);
-
-      g_free (path_original);
-      g_free (path_translated);
     }
+
+  g_free (path_original);
+  g_free (path_translated);
 
   g_free (help_id);
 }

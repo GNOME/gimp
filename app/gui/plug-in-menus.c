@@ -31,10 +31,8 @@
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-proc.h"
-#include "plug-in/plug-in-run.h"
 
 #include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "plug-in-menus.h"
 
