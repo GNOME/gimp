@@ -19,6 +19,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -343,6 +344,8 @@ transform_core_doit (tool, gdisp_ptr)
   int new_layer;
   int i, x, y;
 
+  gimp_add_busy_cursors();
+
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
@@ -427,6 +430,9 @@ transform_core_doit (tool, gdisp_ptr)
 				gdisp->disp_width, gdisp->disp_height);
 	}
     }
+
+  gimp_remove_busy_cursors();
+
   gdisplays_flush ();
 
   transform_core_reset (tool, gdisp_ptr);

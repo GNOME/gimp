@@ -23,6 +23,7 @@
 #include "blend.h"
 #include "brush_select.h"
 #include "buildmenu.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "errors.h"
@@ -788,6 +789,8 @@ blend (GImage       *gimage,
   int bytes;
   int x1, y1, x2, y2;
 
+  gimp_add_busy_cursors();
+
   has_selection = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   has_alpha = drawable_has_alpha (drawable);
@@ -819,6 +822,8 @@ blend (GImage       *gimage,
 
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
+
+  gimp_remove_busy_cursors();
 }
 
 

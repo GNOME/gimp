@@ -18,6 +18,7 @@
 #include <string.h>
 
 #include "gimpimageP.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -347,6 +348,8 @@ gimp_image_resize (GimpImage *gimage, int new_width, int new_height,
   Layer *floating_layer;
   GSList *list;
 
+  gimp_add_busy_cursors();
+
   g_assert (new_width > 0 && new_height > 0);
 
   /*  Get the floating layer if one exists  */
@@ -395,6 +398,8 @@ gimp_image_resize (GimpImage *gimage, int new_width, int new_height,
     floating_sel_rigor (floating_layer, TRUE);
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
+
+  gimp_remove_busy_cursors();
 }
 
 
@@ -407,6 +412,8 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
   GSList *list;
   int old_width, old_height;
   int layer_width, layer_height;
+
+  gimp_add_busy_cursors();
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -459,6 +466,8 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
     floating_sel_rigor (floating_layer, TRUE);
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
+
+  gimp_remove_busy_cursors();
 }
 
 
@@ -1998,8 +2007,10 @@ gimp_image_merge_visible_layers (GimpImage *gimage, MergeType merge_type)
 
   if (merge_list && merge_list->next)
     {
+      gimp_add_busy_cursors();
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
+      gimp_remove_busy_cursors();
       return layer;
     }
   else
@@ -2018,6 +2029,8 @@ gimp_image_flatten (GimpImage *gimage)
   GSList *merge_list = NULL;
   Layer *layer;
 
+  gimp_add_busy_cursors();
+
   layer_list = gimage->layers;
   while (layer_list)
     {
@@ -2030,6 +2043,9 @@ gimp_image_flatten (GimpImage *gimage)
 
   layer = gimp_image_merge_layers (gimage, merge_list, FlattenImage);
   g_slist_free (merge_list);
+
+  gimp_remove_busy_cursors();
+
   return layer;
 }
 
@@ -2069,8 +2085,10 @@ gimp_image_merge_down (GimpImage *gimage,
   
   if (merge_list && merge_list->next)
     {
+      gimp_add_busy_cursors();
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
+      gimp_remove_busy_cursors();
       return layer;
     }
   else 

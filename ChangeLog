@@ -1,3 +1,14 @@
+Sun Jan 10 23:31:45 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/blend.c app/bucket_fill.c app/convert.c app/crop.c
+	app/cursorutil.c app/cursorutil.h app/fuzzy_select.c
+	app/gdisplay.c app/gdisplay.h app/gimage_cmds.c
+	app/gimpimage.c app/transform_core.c app/xcf.c:
+
+	Most lengthy UI-blocking operations now put up an
+	hourglass so the user can see that GIMP is working.
+	Let me know if there are other vital cases.
+
 Sun Jan 10 22:41:51 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	New

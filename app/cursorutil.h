@@ -18,7 +18,10 @@
 #ifndef __CURSORUTIL_H__
 #define __CURSORUTIL_H__
 
-void change_win_cursor(GdkWindow *, GdkCursorType);
-void unset_win_cursor(GdkWindow *);
+void change_win_cursor (GdkWindow *, GdkCursorType);
+void unset_win_cursor  (GdkWindow *);
+
+void gimp_add_busy_cursors    (void);
+void gimp_remove_busy_cursors (void);
 
 #endif /*  __CURSORUTIL_H__  */

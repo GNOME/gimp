@@ -245,6 +245,8 @@ gimage_resize_invoker (Argument *args)
   int new_width, new_height;
   int offx, offy;
 
+  gimp_add_busy_cursors();
+
   success = TRUE;
   if (success)
     {
@@ -268,6 +270,8 @@ gimage_resize_invoker (Argument *args)
 
   if (success)
     gimage_resize (gimage, new_width, new_height, offx, offy);
+
+  gimp_remove_busy_cursors();
 
   return procedural_db_return_args (&gimage_resize_proc, success);
 }

@@ -20,6 +20,7 @@
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "actionarea.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -638,12 +639,15 @@ crop_image (GImage *gimage,
   int off_x, off_y;
   int doff_x, doff_y;
 
+
   width = x2 - x1;
   height = y2 - y1;
 
   /*  Make sure new width and height are non-zero  */
   if (width && height)
   {
+    gimp_add_busy_cursors();
+
     if (options.layer_only)
     {
       undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
@@ -747,6 +751,7 @@ crop_image (GImage *gimage,
       gdisplays_update_full (gimage);
       gdisplays_shrink_wrap (gimage);
     }
+    gimp_remove_busy_cursors();
     gdisplays_flush ();
   }
 }

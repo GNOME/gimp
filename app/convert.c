@@ -27,6 +27,8 @@
    */
 
 /*
+ * 99/01/10 - Hourglass... [Adam]
+ *
  * 98/07/25 - Convert-to-indexed now remembers the last invocation's
  *  settings.  Also, GRAY->INDEXED more flexible.  [Adam]
  *
@@ -70,6 +72,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "convert.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "fsdither.h"
@@ -734,6 +737,8 @@ convert_image (GImage *gimage,
   new_layer_type  = RGBA_GIMAGE;
   new_layer_bytes = 4;
 
+  gimp_add_busy_cursors();
+
   /*  Get the floating layer if one exists  */
   floating_layer = gimage_floating_sel (gimage);
 
@@ -913,6 +918,8 @@ convert_image (GImage *gimage,
   gdisplays_update_full (gimage);
 
   gimp_image_colormap_changed (gimage, -1);
+
+  gimp_remove_busy_cursors();
 }
 
 static void

@@ -11,6 +11,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "cursorutil.h"
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
@@ -300,6 +301,8 @@ xcf_load_invoker (Argument *args)
   int success;
   char id[14];
 
+  gimp_add_busy_cursors();
+
   gimage = NULL;
 
   success = FALSE;
@@ -357,6 +360,8 @@ xcf_load_invoker (Argument *args)
   if (success)
     return_args[1].value.pdb_int = pdb_image_to_id(gimage);
 
+  gimp_remove_busy_cursors();
+
   return return_args;
 }
 
@@ -368,6 +373,8 @@ xcf_save_invoker (Argument *args)
   GImage *gimage;
   char *filename;
   int success;
+
+  gimp_add_busy_cursors();
 
   success = FALSE;
 
@@ -399,6 +406,8 @@ xcf_save_invoker (Argument *args)
     }
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
+
+  gimp_remove_busy_cursors();
 
   return return_args;
 }

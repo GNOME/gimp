@@ -19,6 +19,7 @@
 #include "appenv.h"
 #include "brush_select.h"
 #include "bucket_fill.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "fuzzy_select.h"
 #include "gdisplay.h"
@@ -460,6 +461,8 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	pat_buf = pattern->mask;
     }
 
+  gimp_add_busy_cursors();
+
   bytes = drawable_bytes (drawable);
   has_alpha = drawable_has_alpha (drawable);
 
@@ -533,6 +536,8 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 
   if (new_buf)
     temp_buf_free (pat_buf);
+
+  gimp_remove_busy_cursors();
 }
 
 

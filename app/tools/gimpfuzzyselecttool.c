@@ -19,6 +19,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "boundary.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
@@ -463,6 +464,8 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   GimpDrawable *drawable;
   int use_offsets;
 
+  gimp_add_busy_cursors();
+
   fuzzy_sel = (FuzzySelect *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
   drawable = gimage_active_drawable (gdisp->gimage);
@@ -500,6 +503,8 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 
   /*  free boundary segments  */
   g_free (bsegs);
+
+  gimp_remove_busy_cursors();
 
   return segs;
 }

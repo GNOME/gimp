@@ -17,6 +17,9 @@
  */
 #include "appenv.h"
 #include "cursorutil.h"
+#include "gdisplay.h" /* for gdisplay_*_override_cursor() */
+
+extern GSList* display_list; /* It's in gdisplay.c, FYI */
 
 void
 change_win_cursor (win, cursortype)
@@ -37,4 +40,33 @@ unset_win_cursor (win)
   gdk_window_set_cursor (win, NULL);
 }
      
+void
+gimp_add_busy_cursors (void)
+{
+  GDisplay *gdisp;
+  GSList *list = display_list;
 
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_install_override_cursor(gdisp, GDK_WATCH);
+
+      list = g_slist_next (list);
+    }
+  gdk_flush();
+}
+     
+void
+gimp_remove_busy_cursors (void)
+{
+  GDisplay *gdisp;
+  GSList *list = display_list;
+
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_remove_override_cursor(gdisp);
+
+      list = g_slist_next (list);
+    }
+}

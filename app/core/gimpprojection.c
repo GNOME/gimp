@@ -118,6 +118,7 @@ gdisplay_new (GimpImage       *gimage,
   gdisp->draw_cursor = FALSE;
   gdisp->proximity = FALSE;
   gdisp->have_cursor = FALSE;
+  gdisp->using_override_cursor = FALSE;
 
   gdisp->progressid = FALSE;
 
@@ -384,6 +385,8 @@ idlerender_callback (gpointer data)
 	    {
 	      /* FINISHED */
 	      gdisp->idle_render.active = FALSE;
+/*              gdisplay_remove_override_cursor (gdisp);*/
+
 	      return 0;
 	    }
 	}
@@ -399,6 +402,8 @@ gdisplay_idlerender_init (GDisplay *gdisp)
 {
   GSList *list;
   GArea  *ga, *new_ga;
+
+/*  gdisplay_install_override_cursor(gdisp, GDK_CIRCLE); */
 
   /* We need to merge the IdleRender's and the GDisplay's update_areas list
      to keep track of which of the updates have been flushed and hence need
@@ -1305,7 +1310,45 @@ gdisplay_install_tool_cursor (GDisplay      *gdisp,
   if (gdisp->current_cursor != cursor_type)
     {
       gdisp->current_cursor = cursor_type;
+      if (!gdisp->using_override_cursor)
+	{
+	  change_win_cursor (gdisp->canvas->window, cursor_type);
+	}
+    }
+}
+
+
+/*  install an override-cursor on gdisplay...  */
+void
+gdisplay_install_override_cursor (GDisplay      *gdisp,
+				  GdkCursorType  cursor_type)
+{
+  if ((!gdisp->using_override_cursor) ||
+      (
+       (gdisp->using_override_cursor) &&
+       (gdisp->override_cursor != cursor_type)
+       )
+      )
+    {
+      gdisp->override_cursor = cursor_type;
+      gdisp->using_override_cursor = TRUE;
       change_win_cursor (gdisp->canvas->window, cursor_type);
+    }
+}
+
+
+/*  remove an override-cursor from gdisplay...  */
+void
+gdisplay_remove_override_cursor (GDisplay      *gdisp)
+{
+  if (gdisp->using_override_cursor)
+    {
+      gdisp->using_override_cursor = FALSE;
+      change_win_cursor (gdisp->canvas->window, gdisp->current_cursor);
+    }
+  else
+    {
+      g_warning ("Tried to remove override-cursor from un-overridden gdisp.");
     }
 }
 

@@ -127,11 +127,13 @@ struct _GDisplay
   GSList *display_areas;          /*  Display areas list                      */
 
   GdkCursorType current_cursor;   /*  Currently installed cursor              */
+  GdkCursorType override_cursor;  /*  Overriding cursor (ie. hourglass)       */
 
-  short draw_cursor;		  /* should we draw software cursor ?         */
+  short draw_cursor;	          /* should we draw software cursor ?         */
+  short using_override_cursor;    /* is the cursor overridden? (ie. hourglass)*/
   int cursor_x;			  /* software cursor X value                  */
   int cursor_y;			  /* software cursor Y value                  */
-  short proximity;		  /* is a device in proximity of gdisplay ?   */
+  short proximity;                /* is a device in proximity of gdisplay ?   */
   short have_cursor;		  /* is cursor currently drawn ?              */
 
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
@@ -154,6 +156,8 @@ void       gdisplay_untransform_coords_f   (GDisplay *, double, double, double *
 					    double *, int);
 void       gdisplay_install_tool_cursor    (GDisplay *, GdkCursorType);
 void       gdisplay_remove_tool_cursor     (GDisplay *);
+void       gdisplay_install_override_cursor(GDisplay *, GdkCursorType);
+void       gdisplay_remove_override_cursor (GDisplay *);
 void       gdisplay_set_menu_sensitivity   (GDisplay *);
 void       gdisplay_expose_area            (GDisplay *, int, int, int, int);
 void       gdisplay_expose_guide           (GDisplay *, Guide *);
