@@ -1,8 +1,11 @@
 EXPORTS
+	gimp_add_mask_type_get_type
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
+	gimp_blend_mode_get_type
 	gimp_brightness_contrast
+	gimp_brush_application_mode_get_type
 	gimp_brush_delete
 	gimp_brush_duplicate
 	gimp_brush_get_info
@@ -27,6 +30,7 @@ EXPORTS
 	gimp_brushes_set_paint_mode
 	gimp_brushes_set_popup
 	gimp_brushes_set_spacing
+	gimp_bucket_fill_mode_get_type
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy
@@ -34,13 +38,16 @@ EXPORTS
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
 	gimp_channel_new
+	gimp_channel_ops_get_type
 	gimp_channel_set_color
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
+	gimp_channel_type_get_type
 	gimp_check_size
 	gimp_check_type
 	gimp_clone
 	gimp_clone_default
+	gimp_clone_type_get_type
 	gimp_color_balance
 	gimp_context_get_background
 	gimp_context_get_brush
@@ -64,8 +71,12 @@ EXPORTS
 	gimp_context_set_palette
 	gimp_context_set_pattern
 	gimp_context_swap_colors
+	gimp_convert_dither_type_get_type
+	gimp_convert_palette_type_get_type
+	gimp_convolution_type_get_type
 	gimp_convolve
 	gimp_convolve_default
+	gimp_convolve_type_get_type
 	gimp_curves_explicit
 	gimp_curves_spline
 	gimp_default_display
@@ -77,6 +88,7 @@ EXPORTS
 	gimp_display_new
 	gimp_displays_flush
 	gimp_displays_reconnect
+	gimp_dodge_burn_type_get_type
 	gimp_dodgeburn
 	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
@@ -140,6 +152,7 @@ EXPORTS
 	gimp_extension_process
 	gimp_file_load
 	gimp_file_save
+	gimp_fill_type_get_type
 	gimp_flip
 	gimp_floating_sel_anchor
 	gimp_floating_sel_attach
@@ -171,6 +184,7 @@ EXPORTS
 	gimp_gradient_get_uniform_samples
 	gimp_gradient_new
 	gimp_gradient_rename
+	gimp_gradient_segment_color_get_type
 	gimp_gradient_segment_get_blending_function
 	gimp_gradient_segment_get_coloring_type
 	gimp_gradient_segment_get_left_color
@@ -194,8 +208,10 @@ EXPORTS
 	gimp_gradient_segment_set_middle_pos
 	gimp_gradient_segment_set_right_color
 	gimp_gradient_segment_set_right_pos
+	gimp_gradient_segment_type_get_type
 	gimp_gradient_select_destroy
 	gimp_gradient_select_new
+	gimp_gradient_type_get_type
 	gimp_gradients_close_popup
 	gimp_gradients_get_gradient
 	gimp_gradients_get_gradient_data
@@ -208,7 +224,10 @@ EXPORTS
 	gimp_gradients_set_popup
 	gimp_help
 	gimp_histogram
+	gimp_histogram_channel_get_type
+	gimp_hue_range_get_type
 	gimp_hue_saturation
+	gimp_icon_type_get_type
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
@@ -306,6 +325,7 @@ EXPORTS
 	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
 	gimp_layer_is_floating_sel
+	gimp_layer_mode_effects_get_type
 	gimp_layer_new
 	gimp_layer_new_from_drawable
 	gimp_layer_remove_mask
@@ -323,11 +343,16 @@ EXPORTS
 	gimp_levels
 	gimp_levels_auto
 	gimp_main
+	gimp_mask_apply_mode_get_type
+	gimp_merge_type_get_type
 	gimp_message
 	gimp_message_get_handler
 	gimp_message_set_handler
 	gimp_min_colors
 	gimp_monitor_number
+	gimp_offset_type_get_type
+	gimp_orientation_type_get_type
+	gimp_paint_application_mode_get_type
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_add_entry
@@ -434,6 +459,7 @@ EXPORTS
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
+	gimp_repeat_mode_get_type
 	gimp_rgn_iterate1
 	gimp_rgn_iterate2
 	gimp_rgn_iterator_dest
@@ -442,6 +468,8 @@ EXPORTS
 	gimp_rgn_iterator_src
 	gimp_rgn_iterator_src_dest
 	gimp_rotate
+	gimp_rotation_type_get_type
+	gimp_run_mode_get_type
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale
@@ -468,6 +496,7 @@ EXPORTS
 	gimp_shm_addr
 	gimp_show_help_button
 	gimp_show_tool_tips
+	gimp_size_type_get_type
 	gimp_smudge
 	gimp_smudge_default
 	gimp_temp_name
@@ -484,6 +513,7 @@ EXPORTS
 	gimp_tile_ref_zero
 	gimp_tile_unref
 	gimp_tile_width
+	gimp_transfer_mode_get_type
 	gimp_transform_2d
 	gimp_uninstall_temp_proc
 	gimp_version

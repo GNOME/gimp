@@ -6,6 +6,8 @@
 
 	* libgimp/gimpenums.h: regenerated.
 
+	* libgimp/gimp.def: updated.
+
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: gimp_user_version should be 2.2.
