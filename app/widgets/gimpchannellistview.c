@@ -76,11 +76,6 @@ static void   gimp_channel_list_view_mode_changed   (GimpImage           *gimage
 static void   gimp_channel_list_view_alpha_changed  (GimpImage           *gimage,
 						     GimpChannelListView *view);
 
-static void   gimp_channel_list_view_component_toggle
-                                                    (GtkList             *list,
-						     GtkWidget           *child,
-						     GimpChannelListView *view);
-
 
 static GimpDrawableListViewClass *parent_class = NULL;
 
@@ -150,7 +145,7 @@ gimp_channel_list_view_init (GimpChannelListView *view)
   view->component_list = gtk_list_new ();
 
   /*  FIXME: disable keyboard navigation because as of gtk+-2.0.3,
-   *  GtkList kb navogation with is h-o-r-r-i-b-l-y broken with
+   *  GtkList kb navigation with is h-o-r-r-i-b-l-y broken with
    *  GTK_SELECTION_MULTIPLE  --mitch 05/27/2002
    */
   GTK_WIDGET_UNSET_FLAGS (view->component_list, GTK_CAN_FOCUS);
@@ -161,15 +156,7 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 		     view->component_list);
   gtk_widget_show (view->component_list);
 
-  g_signal_connect (G_OBJECT (view->component_list), "select_child",
-                    G_CALLBACK (gimp_channel_list_view_component_toggle),
-                    view);
-  g_signal_connect (G_OBJECT (view->component_list), "unselect_child",
-                    G_CALLBACK (gimp_channel_list_view_component_toggle),
-                    view);
-
   /*  To Selection button  */
-
   view->toselection_button =
     gimp_editor_add_button (GIMP_EDITOR (container_view),
                             GIMP_STOCK_SELECTION_REPLACE,
@@ -385,31 +372,14 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
       list = g_list_append (list, list_item);
     }
 
-  g_signal_handlers_block_by_func (G_OBJECT (view->component_list),
-				   gimp_channel_list_view_component_toggle,
-				   view);
-
   gtk_list_insert_items (GTK_LIST (view->component_list), list, 0);
-
-  g_signal_handlers_unblock_by_func (G_OBJECT (view->component_list),
-				     gimp_channel_list_view_component_toggle,
-				     view);
-
   gtk_widget_queue_resize (GTK_WIDGET (view->component_frame));
 }
 
 static void
 gimp_channel_list_view_clear_components (GimpChannelListView *view)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (view->component_list),
-				   gimp_channel_list_view_component_toggle,
-				   view);
-
   gtk_list_clear_items (GTK_LIST (view->component_list), 0, -1);
-
-  g_signal_handlers_unblock_by_func (G_OBJECT (view->component_list),
-				     gimp_channel_list_view_component_toggle,
-				     view);
 }
 
 static void
@@ -426,36 +396,4 @@ gimp_channel_list_view_alpha_changed (GimpImage           *gimage,
 {
   gimp_channel_list_view_clear_components (view);
   gimp_channel_list_view_create_components (view);
-}
-
-static void
-gimp_channel_list_view_component_toggle (GtkList             *list,
-					 GtkWidget           *child,
-					 GimpChannelListView *view)
-{
-  GimpComponentListItem *component_item;
-  GimpImage             *gimage;
-  gboolean               active;
-
-  component_item = GIMP_COMPONENT_LIST_ITEM (child);
-  gimage         = GIMP_ITEM_LIST_VIEW (view)->gimage;
-
-#if 0
-  g_print ("gimp_channel_list_view_component_toggle: channel: %d selected: %d\n",
-           component_item->channel, child->state == GTK_STATE_SELECTED);
-#endif
-
-  active = gimp_image_get_component_active (gimage, component_item->channel);
-
-  g_signal_handlers_block_by_func (G_OBJECT (view->component_list),
-                                   gimp_channel_list_view_component_toggle,
-                                   view);
-
-  gimp_image_set_component_active (gimage,
-                                   component_item->channel,
-                                   ! active);
-
-  g_signal_handlers_unblock_by_func (G_OBJECT (view->component_list),
-                                     gimp_channel_list_view_component_toggle,
-                                     view);
 }

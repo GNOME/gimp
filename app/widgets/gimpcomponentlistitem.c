@@ -46,10 +46,12 @@ static void    gimp_component_list_item_set_viewable (GimpListItem    *list_item
 
 static void    gimp_component_list_item_eye_toggled  (GtkWidget       *widget,
                                                       gpointer         data);
-#if 0
 static void    gimp_component_list_item_toggled      (GtkWidget       *widget,
                                                       gpointer         data);
-#endif
+static gboolean gimp_component_list_item_button_press (GtkWidget      *widget,
+                                                       GdkEventButton *bevent);
+static gboolean gimp_component_list_item_button_release (GtkWidget      *widget,
+                                                         GdkEventButton *bevent);
 
 static void    gimp_component_list_item_visibility_changed 
                                                      (GimpImage       *gimage,
@@ -99,13 +101,18 @@ gimp_component_list_item_get_type (void)
 static void
 gimp_component_list_item_class_init (GimpComponentListItemClass *klass)
 {
+  GtkWidgetClass    *widget_class;
   GimpListItemClass *list_item_class;
 
+  widget_class    = GTK_WIDGET_CLASS (klass);
   list_item_class = GIMP_LIST_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  list_item_class->set_viewable = gimp_component_list_item_set_viewable;
+  widget_class->button_press_event   = gimp_component_list_item_button_press;
+  widget_class->button_release_event = gimp_component_list_item_button_release;
+
+  list_item_class->set_viewable      = gimp_component_list_item_set_viewable;
 }
 
 static void
@@ -144,6 +151,16 @@ gimp_component_list_item_init (GimpComponentListItem *list_item)
 				    GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list_item->eye_button), image);
   gtk_widget_show (image);
+
+  g_signal_connect_after (G_OBJECT (list_item), "select",
+                          G_CALLBACK (gimp_component_list_item_toggled),
+                          NULL);
+  g_signal_connect_after (G_OBJECT (list_item), "deselect",
+                          G_CALLBACK (gimp_component_list_item_toggled),
+                          NULL);
+  g_signal_connect_after (G_OBJECT (list_item), "toggle",
+                          G_CALLBACK (gimp_component_list_item_toggled),
+                          NULL);
 }
 
 GtkWidget *
@@ -235,18 +252,6 @@ gimp_component_list_item_set_viewable (GimpListItem *list_item,
 			   G_CALLBACK (gimp_component_list_item_active_changed),
 			   G_OBJECT (list_item),
 			   0);
-
-#if 0
-  g_signal_connect_after (G_OBJECT (list_item), "select",
-                          G_CALLBACK (gimp_component_list_item_toggled),
-                          NULL);
-  g_signal_connect_after (G_OBJECT (list_item), "deselect",
-                          G_CALLBACK (gimp_component_list_item_toggled),
-                          NULL);
-  g_signal_connect_after (G_OBJECT (list_item), "toggle",
-                          G_CALLBACK (gimp_component_list_item_toggled),
-                          NULL);
-#endif
 }
 
 static void
@@ -294,10 +299,31 @@ gimp_component_list_item_eye_toggled (GtkWidget *widget,
     }
 }
 
-#if 0
-static void
-gimp_component_list_item_toggled (GtkWidget *widget,
-                                  gpointer   data)
+static gboolean
+gimp_component_list_item_button_press (GtkWidget      *widget,
+                                       GdkEventButton *bevent)
+{
+  GimpComponentListItem *component_item;
+  GimpListItem          *list_item;
+  GimpImage             *gimage;
+
+  component_item = GIMP_COMPONENT_LIST_ITEM (widget);
+  list_item      = GIMP_LIST_ITEM (widget);
+  gimage         = GIMP_IMAGE (GIMP_PREVIEW (list_item->preview)->viewable);
+
+  if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+    {
+      gtk_grab_add (widget);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_component_list_item_button_release (GtkWidget      *widget,
+                                         GdkEventButton *bevent)
 {
   GimpComponentListItem *component_item;
   GimpListItem          *list_item;
@@ -310,24 +336,59 @@ gimp_component_list_item_toggled (GtkWidget *widget,
 
   active = (widget->state == GTK_STATE_SELECTED);
 
-  if (active != gimp_image_get_component_active (gimage,
-                                                 component_item->channel))
+  if (bevent->button == 1 && GTK_WIDGET_HAS_GRAB (widget))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (gimage),
-				       gimp_component_list_item_active_changed,
-				       list_item);
+      GtkWidget *event_widget;
 
-      gimp_image_set_component_active (gimage, component_item->channel,
-                                       active);
+      gtk_grab_remove (widget);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (gimage),
-					 gimp_component_list_item_active_changed,
-					 list_item);
+      event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
 
-      gimp_image_flush (gimage);
+      /*  eek  */
+      if (event_widget         &&
+          event_widget->parent &&
+          (widget == event_widget         ||
+           widget == event_widget->parent ||
+           widget == event_widget->parent->parent))
+        {
+          gimp_image_set_component_active (gimage,
+                                           component_item->channel,
+                                           ! active);
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_component_list_item_toggled (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpComponentListItem *component_item;
+  GimpListItem          *list_item;
+  GimpImage             *gimage;
+  gboolean               active;
+  gboolean               component_active;
+
+  component_item = GIMP_COMPONENT_LIST_ITEM (widget);
+  list_item      = GIMP_LIST_ITEM (widget);
+  gimage         = GIMP_IMAGE (GIMP_PREVIEW (list_item->preview)->viewable);
+
+  active = (widget->state == GTK_STATE_SELECTED);
+
+  component_active = gimp_image_get_component_active (gimage,
+                                                      component_item->channel);
+
+  if (active != component_active)
+    {
+      if (component_active)
+        gtk_item_select (GTK_ITEM (list_item));
+      else
+        gtk_item_deselect (GTK_ITEM (list_item));
     }
 }
-#endif
 
 static void
 gimp_component_list_item_visibility_changed (GimpImage       *gimage,
@@ -383,23 +444,25 @@ gimp_component_list_item_active_changed (GimpImage       *gimage,
 {
   GimpComponentListItem *component_item;
   gboolean               active;
+  gboolean               component_active;
 
   component_item = GIMP_COMPONENT_LIST_ITEM (data);
 
   if (channel != component_item->channel)
     return;
 
-  active = gimp_image_get_component_active (gimage, component_item->channel);
+  active = (GTK_WIDGET (data)->state == GTK_STATE_SELECTED);
 
-#if 0
-  g_print ("gimp_component_list_item_active_changed: channel: %d active: %d\n",
-           channel, active);
-#endif
+  component_active = gimp_image_get_component_active (gimage,
+                                                      component_item->channel);
 
-  if (active)
-    gtk_item_select (GTK_ITEM (data));
-  else
-    gtk_item_deselect (GTK_ITEM (data));
+  if (active != component_active)
+    {
+      if (component_active)
+        gtk_item_select (GTK_ITEM (data));
+      else
+        gtk_item_deselect (GTK_ITEM (data));
+    }
 }
 
 static gchar *
