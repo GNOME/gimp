@@ -755,7 +755,8 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_BRANCH (N_("/Layer/_Mask")),
 
   { { N_("/Layer/Mask/_Add Layer Mask..."), NULL,
-      layers_mask_add_cmd_callback, 0 },
+      layers_mask_add_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_LAYER_MASK },
     NULL,
     GIMP_HELP_LAYER_MASK_ADD, NULL },
   { { N_("/Layer/Mask/A_pply Layer Mask"), NULL,

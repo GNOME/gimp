@@ -1,5 +1,11 @@
 2004-01-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries)
+	* app/gui/layers-menu.c (layers_menu_entries): use the new
+	GIMP_STOCK_LAYER_MASK icons for "Add Layer Mask".
+
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-channel-indexed-16.png
 	* themes/Default/images/stock-channel-indexed-24.png

@@ -130,7 +130,8 @@ GimpItemFactoryEntry layers_menu_entries[] =
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Add La_yer Mask..."), NULL,
-      layers_mask_add_cmd_callback, 0 },
+      layers_mask_add_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_LAYER_MASK },
     NULL,
     GIMP_HELP_LAYER_MASK_ADD, NULL },
   { { N_("/Apply Layer _Mask"), NULL,
