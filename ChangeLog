@@ -1,5 +1,10 @@
 2004-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/selection-round.scm: removed garbage
+	from beginning of file. Removed DOS line breaks.
+
+2004-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimppixelfetcher.c: added docs derived from a patch from
 	Cai Qian (bug #156271).
 

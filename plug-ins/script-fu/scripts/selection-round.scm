@@ -1,4 +1,4 @@
-ch;; selection-rounded-rectangle.scm -*-scheme-*- 
+;; selection-rounded-rectangle.scm -*-scheme-*- 
 
 ;; The GIMP -- an image manipulation program
 ;; Copyright (C) 1995 Spencer Kimball and Peter Mattis
