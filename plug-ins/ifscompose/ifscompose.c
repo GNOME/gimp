@@ -239,7 +239,6 @@ static void color_map_set_preview_color (GtkWidget *preview,
 					 IfsColor *color);
 static ColorMap *color_map_create (gchar *name,IfsColor *orig_color,
 				   IfsColor *data, gint fixed_point);
-static void color_map_clicked_callback (GtkWidget *widget,ColorMap *colormap);
 static void color_map_color_changed_cb (GtkWidget *widget,
 					ColorMap *color_map);
 static void color_map_update           (ColorMap *color_map);
@@ -2069,9 +2068,6 @@ color_map_create (gchar    *name,
 		      FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
 
-  gtk_signal_connect(GTK_OBJECT (color_map->button), "clicked",
-		     GTK_SIGNAL_FUNC (color_map_clicked_callback),
-		     color_map);
   gtk_signal_connect (GTK_OBJECT (color_map->button), "color_changed",
 		      GTK_SIGNAL_FUNC (color_map_color_changed_cb),
 		      color_map);
@@ -2080,18 +2076,12 @@ color_map_create (gchar    *name,
 }
 
 static void
-color_map_clicked_callback (GtkWidget *widget,
+color_map_color_changed_cb (GtkWidget *widget,
 			    ColorMap  *color_map)
 {
   undo_begin ();
   undo_update (ifsD->current_element);
-}
-
-
-static void
-color_map_color_changed_cb (GtkWidget *widget,
-			    ColorMap  *color_map)
-{
+ 
   color_map->color->vals[0] = color_map->char_color[0] / 255.0;
   color_map->color->vals[1] = color_map->char_color[1] / 255.0;
   color_map->color->vals[2] = color_map->char_color[2] / 255.0;
