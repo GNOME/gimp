@@ -1,5 +1,11 @@
 2004-10-30  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/grid.c (run): applied patch by Joao S. O. Bueno
+	that implements the opacity parameters the way it is documented.
+	Fixes bug #156750.
+
+2004-10-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/glasstile.c: applied patch from Yeti, updated by
 	Kevin Cozens and modified by me. Fixes bug #85261.
 
