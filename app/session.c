@@ -317,10 +317,10 @@ sessionrc_write_info (SessionInfo *info,
     return;
   
   fprintf (fp,"(session-info \"%s\"\n", info->name);
-  fprintf (fp,"   (position %d %d)\n", info->x, info->y);
-  fprintf (fp,"   (size %d %d)", info->width, info->height);
+  fprintf (fp,"    (position %d %d)\n", info->x, info->y);
+  fprintf (fp,"    (size %d %d)", info->width, info->height);
   if ( info->open ) 
-    fprintf (fp,"\n   (open-on-exit)");
+    fprintf (fp,"\n    (open-on-exit)");
   fprintf (fp,")\n\n"); 
 }
 

@@ -1177,7 +1177,7 @@ color_history_write (FILE *fp)
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
-      fprintf (fp, "\n    (color %f %f %f %f)",
+      fprintf (fp, "\n    (color-rgba %f %f %f %f)",
 	       color_history[i].r,
 	       color_history[i].g,
 	       color_history[i].b,

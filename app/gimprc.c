@@ -55,6 +55,7 @@
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"
 #include "libgimp/gimpparasite.h"
+#include "libgimp/gimpcolorspace.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -215,6 +216,7 @@ static gint parse_locale_def (PlugInDef      *plug_in_def);
 static gint parse_help_def   (PlugInDef      *plug_in_def);
 static gint parse_proc_def   (PlugInProcDef **proc_def);
 static gint parse_proc_arg   (ProcArg        *arg);
+static gint parse_color      (GimpRGB        *color);
 static gint parse_unknown    (gchar          *token_sym);
 
        gchar *gimprc_value_to_str (gchar *name);
@@ -538,25 +540,24 @@ void
 save_gimprc_strings (gchar *token,
 		     gchar *value)
 {
-  gchar timestamp[40];  /* variables for parsing and updating gimprc */
-  gchar *name;
-  gchar tokname[51];
-  FILE *fp_new;
-  FILE *fp_old;
-  gchar *cur_line;
-  gchar *prev_line;
-  gchar *error_msg;
-  gboolean found = FALSE;
-  gchar *personal_gimprc;
-  gchar *str;
+  gchar     timestamp[40];  /* variables for parsing and updating gimprc */
+  gchar    *name;
+  gchar     tokname[51];
+  FILE     *fp_new;
+  FILE     *fp_old;
+  gchar    *cur_line;
+  gchar    *prev_line;
+  gchar    *error_msg;
+  gboolean  found = FALSE;
+  gchar    *personal_gimprc;
+  gchar    *str;
   
   UnknownToken *ut;    /* variables to modify unknown_tokens */
   UnknownToken *tmp;
-  GList *list;
-
+  GList        *list;
   
-  g_assert(token != NULL);
-  g_assert(value != NULL);
+  g_assert (token != NULL);
+  g_assert (value != NULL);
   
   /* get the name of the backup file, and the file pointers.  'name'
      is reused in another context later, disregard it here */
@@ -583,7 +584,7 @@ save_gimprc_strings (gchar *token,
     {
       if (!fgets (cur_line, 1024, fp_old))
 	continue;
-      
+
       /* special case: save lines starting with '#-' (added by GIMP) */
       if ((cur_line[0] == '#') && (cur_line[1] == '-'))
 	{
@@ -601,7 +602,7 @@ save_gimprc_strings (gchar *token,
       if (find_token (cur_line, tokname, 50))
 	{
 	  /* check if that entry should be updated */
-	  if (!g_strcasecmp(token, tokname)) /* if they match */
+	  if (!g_strcasecmp (token, tokname)) /* if they match */
 	    {
 	      if (prev_line == NULL)
 		{
@@ -985,7 +986,7 @@ parse_double (gpointer val1p,
   gdouble *nump;
 
   g_assert (val1p != NULL);
-  nump = (gdouble *)val1p;
+  nump = (gdouble *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1010,7 +1011,7 @@ parse_float (gpointer val1p,
   gfloat *nump;
 
   g_assert (val1p != NULL);
-  nump = (gfloat *)val1p;
+  nump = (gfloat *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1027,7 +1028,7 @@ parse_float (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_int (gpointer val1p,
 	   gpointer val2p)
 {
@@ -1035,7 +1036,7 @@ parse_int (gpointer val1p,
   gint *nump;
 
   g_assert (val1p != NULL);
-  nump = (gint *)val1p;
+  nump = (gint *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1052,7 +1053,7 @@ parse_int (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_boolean (gpointer val1p,
 	       gpointer val2p)
 {
@@ -1069,9 +1070,9 @@ parse_boolean (gpointer val1p,
    */
   g_assert (val1p != NULL || val2p != NULL);
   if (val1p != NULL)
-    boolp = (int *)val1p;
+    boolp = (gint *) val1p;
   else
-    boolp = (int *)val2p;
+    boolp = (gint *) val2p;
 
   token = peek_next_token ();
   if (!token)
@@ -1123,8 +1124,8 @@ parse_position (gpointer val1p,
   gint *yp;
 
   g_assert (val1p != NULL && val2p != NULL);
-  xp = (int *)val1p;
-  yp = (int *)val2p;
+  xp = (gint *) val1p;
+  yp = (gint *) val2p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1158,7 +1159,7 @@ parse_mem_size (gpointer val1p,
   guint *sizep;
 
   g_assert (val1p != NULL);
-  sizep = (guint *)val1p;
+  sizep = (guint *) val1p;
 
   token = peek_next_token ();
   if (!token || ((token != TOKEN_NUMBER) &&
@@ -1203,7 +1204,7 @@ parse_image_type (gpointer val1p,
   gint *typep;
   
   g_assert (val1p != NULL);
-  typep = (int *)val1p;
+  typep = (gint *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL))
@@ -1229,11 +1230,11 @@ static gint
 parse_interpolation_type (gpointer val1p,
 			  gpointer val2p)
 {
-  gint token;
+  gint               token;
   InterpolationType *typep;
   
   g_assert (val1p != NULL);
-  typep = (InterpolationType *)val1p;
+  typep = (InterpolationType *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL))
@@ -1366,14 +1367,10 @@ static gint
 parse_plug_in (gpointer val1p,
 	       gpointer val2p)
 {
-  gchar *name;
-  gchar *menu_path;
-  gchar *accelerator;
-  gint token;
-
-  name = NULL;
-  menu_path = NULL;
-  accelerator = NULL;
+  gchar *name        = NULL;
+  gchar *menu_path   = NULL;
+  gchar *accelerator = NULL;
+  gint   token;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -1416,10 +1413,10 @@ static gint
 parse_plug_in_def (gpointer val1p,
 		   gpointer val2p)
 {
-  PlugInDef *plug_in_def;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
-  gint token;
-  gint success;
+  gint           token;
+  gint           success;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -1443,7 +1440,8 @@ parse_plug_in_def (gpointer val1p,
 	{
 	  proc_def->mtime = plug_in_def->mtime;
 	  proc_def->prog = g_strdup (plug_in_def->prog);
-	  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
+	  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs,
+						   proc_def);
 	}
       else if (success == LOCALE_DEF)
 	success = parse_locale_def (plug_in_def);
@@ -1535,13 +1533,12 @@ parse_help_def (PlugInDef *plug_in_def)
   return ERROR;
 }
 
-
 static gint
 parse_proc_def (PlugInProcDef **proc_def)
 {
   PlugInProcDef *pd;
-  gint token;
-  gint i;
+  gint           token;
+  gint           i;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_LEFT_PAREN))
@@ -1555,12 +1552,16 @@ parse_proc_def (PlugInProcDef **proc_def)
   if ((strcmp ("locale-def", token_sym) == 0))
     {
       token = get_next_token ();
-      return LOCALE_DEF;  /* it's a locale_def, let parse_locale_def do the rest */
+
+      /* it's a locale_def, let parse_locale_def do the rest */
+      return LOCALE_DEF;
     }
   if ((strcmp ("help-def", token_sym) == 0))
     {
       token = get_next_token ();
-      return HELP_DEF;  /* it's a help_def, let parse_help_def do the rest */
+
+      /* it's a help_def, let parse_help_def do the rest */
+      return HELP_DEF;
     }
   else if (strcmp ("proc-def", token_sym) != 0)
     return ERROR;
@@ -1689,6 +1690,7 @@ parse_proc_def (PlugInProcDef **proc_def)
   token = get_next_token ();
 
   *proc_def = pd;
+
   return OK;
 
  error:
@@ -1719,6 +1721,7 @@ parse_proc_def (PlugInProcDef **proc_def)
   g_free (pd->db_info.args);
   g_free (pd->db_info.values);
   g_free (pd);
+
   return ERROR;
 }
 
@@ -1727,8 +1730,8 @@ parse_proc_arg (ProcArg *arg)
 {
   gint token;
 
-  arg->arg_type = -1;
-  arg->name = NULL;
+  arg->arg_type    = -1;
+  arg->name        = NULL;
   arg->description = NULL;
 
   token = peek_next_token ();
@@ -1778,15 +1781,91 @@ parse_proc_arg (ProcArg *arg)
 }
 
 static gint
+parse_color (GimpRGB *color)
+{
+  gdouble  col[4] = { 0.0, 0.0, 0.0, 1.0 };
+  gint     token;
+  gint     i;
+  gint     n_channels;
+  gboolean is_hsv;
+
+  g_return_val_if_fail (color != NULL, ERROR);
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_LEFT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_SYMBOL))
+    return ERROR;
+  token = get_next_token ();
+
+  if (! strcmp ("color-rgb", token_sym))
+    {
+      is_hsv     = FALSE;
+      n_channels = 3;
+    }
+  else if (! strcmp ("color-rgba", token_sym))
+    {
+      is_hsv     = FALSE;
+      n_channels = 4;
+    }
+  else if (! strcmp ("color-hsv", token_sym))
+    {
+      is_hsv     = TRUE;
+      n_channels = 3;
+    }
+  else if (! strcmp ("color-hsva", token_sym))
+    {
+      is_hsv     = TRUE;
+      n_channels = 4;
+    }
+  else
+    {
+      return ERROR;
+    }
+
+  for (i = 0; i < n_channels; i++)
+    {
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_NUMBER))
+	return ERROR;
+      token = get_next_token ();
+
+      col[i] = token_num;
+    }
+
+  if (is_hsv)
+    {
+      GimpHSV hsv;
+
+      gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
+      gimp_hsv_clamp (&hsv);
+
+      gimp_hsv_to_rgb (&hsv, color);
+    }
+  else
+    {
+      gimp_rgba_set (color, col[0], col[1], col[2], col[3]);
+      gimp_rgb_clamp (color);
+    }
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static gint
 parse_menu_path (gpointer val1p,
 		 gpointer val2p)
 {
-  gchar *menu_path;
-  gchar *accelerator;
-  gint token;
-
-  menu_path = NULL;
-  accelerator = NULL;
+  gchar *menu_path   = NULL;
+  gchar *accelerator = NULL;
+  gint   token;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -1820,22 +1899,20 @@ static gchar *
 transform_path (gchar    *path,
 		gboolean  destroy)
 {
-  gint   length;
-  gchar *new_path;
-  gchar *home;
-  gchar *token;
-  gchar *tmp;
-  gchar *tmp2;
-  gint   substituted;
-  gint   is_env;
+  gint          length      = 0;
+  gchar        *new_path;
+  gchar        *home;
+  gchar        *token;
+  gchar        *tmp;
+  gchar        *tmp2;
+  gboolean      substituted = FALSE;
+  gboolean      is_env      = FALSE;
   UnknownToken *ut;
 
   home = g_get_home_dir ();
-  length = 0;
-  substituted = FALSE;
-  is_env = FALSE;
 
   tmp = path;
+
   while (*tmp)
     {
 #ifndef G_OS_WIN32
@@ -1846,7 +1923,7 @@ transform_path (gchar    *path,
 	}
       else
 #endif
-	   if (*tmp == '$')
+      if (*tmp == '$')
 	{
 	  tmp += 1;
 	  if (!*tmp || (*tmp != '{'))
@@ -1985,17 +2062,16 @@ transform_path (gchar    *path,
 
 /* Copied from gtk_menu_factory_parse_accelerator() */
 static void
-parse_device_accelerator (const char   *accelerator,
+parse_device_accelerator (const gchar  *accelerator,
 			  GdkDeviceKey *key)
 {
-  gboolean done;
+  gboolean done = FALSE;
 
   g_return_if_fail (accelerator != NULL);
   g_return_if_fail (key != NULL);
 
   key->modifiers = 0;
 
-  done = FALSE;
   while (!done)
     {
       if (strncmp (accelerator, "<shift>", 7) == 0)
@@ -2162,43 +2238,21 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
-	  gdouble color[4];
-
 	  values |= DEVICE_FOREGROUND;
 
-	  for (i = 0; i < 4; i++)
-	    {
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_NUMBER))
-		goto error;
-	      token = get_next_token ();
+	  if (parse_color (&foreground) == ERROR)
+	    goto error;
 
-	      color[i] = token_num;
-	    }
-
-	  gimp_rgba_set (&foreground,
-			 color[0], color[1], color[2], color[3]);
-	  gimp_rgb_clamp (&foreground);
+	  foreground.a = 1.0;
 	}
       else if (!strcmp ("background", token_sym))
 	{
-	  gdouble color[4];
-
 	  values |= DEVICE_BACKGROUND;
 
-	  for (i = 0; i < 4; i++)
-	    {
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_NUMBER))
-		goto error;
-	      token = get_next_token ();
+	  if (parse_color (&background) == ERROR)
+	    goto error;
 
-	      color[i] = token_num;
-	    }
-
-	  gimp_rgba_set (&background,
-			 color[0], color[1], color[2], color[3]);
-	  gimp_rgb_clamp (&background);
+	  background.a = 1.0;
 	}
       else if (!strcmp ("brush", token_sym))
 	{
@@ -2278,8 +2332,8 @@ static gint
 parse_session_info (gpointer val1p, 
 		    gpointer val2p)
 {
-  gint i;
-  gint token;
+  gint         i;
+  gint         token;
   SessionInfo *info = NULL;
 
   token = peek_next_token ();
@@ -2359,50 +2413,20 @@ static gint
 parse_color_history (gpointer val1p, 
 		     gpointer val2p)
 {
-  gint     i;
   gint     token = 0;
   GimpRGB  color;
 
-  /* Parse one color per line: (r g b a) */
+  /* Parse one color per line: (color r g b a) */
 
   while (peek_next_token () == TOKEN_LEFT_PAREN)
     {
-      token = get_next_token ();
-
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_SYMBOL))
+      if (parse_color (&color) == ERROR)
 	return ERROR;
-      token = get_next_token ();
 
-      if (!strcmp ("color", token_sym))
-	{
-	  gdouble col[4];
-
-	  for (i = 0; i < 4; i++)
-	    {
-	      token = peek_next_token ();
-	      if (!token || (token != TOKEN_NUMBER))
-		return ERROR;
-	      token = get_next_token ();
-
-	      col[i] = token_num;
-	    }
-
-	  gimp_rgba_set (&color,
-			 col[0], col[1], col[2], col[3]);
-	  gimp_rgb_clamp (&color);
-
-	  color_history_add_color_from_rc (&color);
-	}
-      else
-	return ERROR;
-      
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_RIGHT_PAREN))
-	return ERROR;
-      token = get_next_token ();
+      color_history_add_color_from_rc (&color);
     }
 
+  token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
     return ERROR;
   token = get_next_token ();
@@ -2414,22 +2438,22 @@ static gint
 parse_unit_info (gpointer val1p, 
 		 gpointer val2p)
 {
-  gint token;
+  gint      token;
+  GimpUnit  unit;
 
-  GimpUnit unit;
-
-  gchar   *identifier   = NULL;
-  gdouble  factor       = 1.0;
-  gint     digits       = 2.0;
-  gchar   *symbol       = NULL;
-  gchar   *abbreviation = NULL;
-  gchar   *singular     = NULL;
-  gchar   *plural       = NULL;
+  gchar    *identifier   = NULL;
+  gdouble   factor       = 1.0;
+  gint      digits       = 2.0;
+  gchar    *symbol       = NULL;
+  gchar    *abbreviation = NULL;
+  gchar    *singular     = NULL;
+  gchar    *plural       = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
     return ERROR;
   token = get_next_token ();
+
   identifier = g_strdup (token_str);
 
   /* Parse options for unit info */
@@ -2506,6 +2530,7 @@ parse_unit_info (gpointer val1p,
 
   unit = gimp_unit_new (identifier, factor, digits,
 			symbol, abbreviation, singular, plural);
+
   /*  make the unit definition persistent  */
   gimp_unit_set_deletion_flag (unit, FALSE);
 
@@ -2531,10 +2556,10 @@ static gint
 parse_parasite (gpointer val1p, 
 		gpointer val2p)
 {
-  gint token;
-  gint res = ERROR;
-  gchar *identifier = NULL;
-  gulong flags = 0;
+  gint          token;
+  gint          res        = ERROR;
+  gchar        *identifier = NULL;
+  gulong        flags      = 0;
   GimpParasite *parasite;
 
   token = get_next_token ();
@@ -2563,8 +2588,9 @@ parse_parasite (gpointer val1p,
 
   res = OK;
 
-error:
+ error:
   g_free (identifier);
+
   return res;
 }
 
@@ -2621,9 +2647,10 @@ parse_cursor_mode (gpointer val1p,
 static gint
 parse_unknown (gchar *token_sym)
 {
-  gint token;
-  UnknownToken *ut, *tmp;
-  GList *list;
+  gint          token;
+  UnknownToken *ut;
+  UnknownToken *tmp;
+  GList        *list;
 
   ut = g_new (UnknownToken, 1);
   ut->token = g_strdup (token_sym);
@@ -2671,8 +2698,7 @@ parse_unknown (gchar *token_sym)
   return OK;
 }
 
-
-gchar* 
+gchar * 
 gimprc_value_to_str (gchar *name)
 {
   return value_to_str (name); /* had a namespace collision */

@@ -597,9 +597,9 @@ devices_write_rc_device (DeviceInfo *device_info,
       break;
     }
   
-  fprintf (fp, "\n        (mode %s)", mode);
+  fprintf (fp, "\n    (mode %s)", mode);
 
-  fprintf (fp, "\n        (axes %d",
+  fprintf (fp, "\n    (axes %d",
 	   gdk_info ? gdk_info->num_axes : device_info->num_axes);
 
   for (i=0; i< (gdk_info ? gdk_info->num_axes : device_info->num_axes); i++)
@@ -636,10 +636,10 @@ devices_write_rc_device (DeviceInfo *device_info,
     }
   fprintf (fp,")");
 
-  fprintf (fp, "\n        (keys %d",
+  fprintf (fp, "\n    (keys %d",
 	   gdk_info ? gdk_info->num_keys : device_info->num_keys);
 
-  for (i=0; i < (gdk_info ? gdk_info->num_keys : device_info->num_keys); i++)
+  for (i = 0; i < (gdk_info ? gdk_info->num_keys : device_info->num_keys); i++)
     {
       GdkModifierType modifiers = gdk_info ? gdk_info->keys[i].modifiers :
 	device_info->keys[i].modifiers;
@@ -674,7 +674,7 @@ devices_write_rc_device (DeviceInfo *device_info,
   if (gimp_context_get_tool (device_info->context) >= FIRST_TOOLBOX_TOOL &&
       gimp_context_get_tool (device_info->context) <= LAST_TOOLBOX_TOOL)
     {
-      fprintf (fp, "\n        (tool \"%s\")",
+      fprintf (fp, "\n    (tool \"%s\")",
 	       tool_info[gimp_context_get_tool (device_info->context)].tool_name);
     }
 
@@ -683,30 +683,30 @@ devices_write_rc_device (DeviceInfo *device_info,
 
     gimp_context_get_foreground (device_info->context, &color);
 
-    fprintf (fp, "\n        (foreground %f %f %f %f)",
-	     color.r, color.g, color.b, color.a);
+    fprintf (fp, "\n    (foreground (color-rgb %f %f %f))",
+	     color.r, color.g, color.b);
 
     gimp_context_get_background (device_info->context, &color);
 
-    fprintf (fp, "\n        (background %f %f %f %f)",
-	     color.r, color.g, color.b, color.a);
+    fprintf (fp, "\n    (background (color-rgb %f %f %f))",
+	     color.r, color.g, color.b);
   }
 
   if (gimp_context_get_brush (device_info->context))
     {
-      fprintf (fp, "\n        (brush \"%s\")",
+      fprintf (fp, "\n    (brush \"%s\")",
 	       GIMP_OBJECT (gimp_context_get_brush (device_info->context))->name);
     }
 
   if (gimp_context_get_pattern (device_info->context))
     {
-      fprintf (fp, "\n        (pattern \"%s\")",
+      fprintf (fp, "\n    (pattern \"%s\")",
 	       gimp_context_get_pattern (device_info->context)->name);
     }
 
   if (gimp_context_get_gradient (device_info->context))
     {
-      fprintf (fp, "\n        (gradient \"%s\")",
+      fprintf (fp, "\n    (gradient \"%s\")",
 	       gimp_context_get_gradient (device_info->context)->name);
     }
 
