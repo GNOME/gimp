@@ -1,3 +1,12 @@
+2004-01-15  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Now that we're in pre-release mode, list all the bugs fixed 
+	in this release, rather than features added. Commits which don't fix 
+	bugs are listed in the "Other contributions" section. Bugs were added 
+	in chronological order according to when the fix was committed (so 
+	the first bug in the list was the one committed soonest after the 
+	2.0pre1 release).
+
 2004-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: moved initialization of the
