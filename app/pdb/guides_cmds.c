@@ -223,11 +223,11 @@ image_delete_guide_invoker (Gimp     *gimp,
   if (success)
     {
       success = FALSE;
-    
+
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
 	  GimpGuide *g = (GimpGuide *) guides->data;
-    
+
 	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
 	      gimp_image_remove_guide (gimage, g, TRUE);
@@ -294,22 +294,22 @@ image_find_next_guide_invoker (Gimp     *gimp,
 	{
 	  success     = FALSE;
 	  guide_found = FALSE;
-    
+
 	  for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	    {
 	      GimpGuide *g = (GimpGuide *) guides->data;
-    
+
 	      if (g->position < 0)
 		continue;
-    
+
 	      if (guide == 0)  /* init - Return first guide ID in list */
 		{
 		  next_guide = g->guide_ID;
-    
+
 		  guide_found = TRUE;
 		  break;
 		}
-    
+
 	      if (! guide_found)
 		{
 		  if (g->guide_ID == guide)
@@ -321,7 +321,7 @@ image_find_next_guide_invoker (Gimp     *gimp,
 		  break;
 		}
 	    }
-    
+
 	  if (guide_found)
 	    success = TRUE;
 	}
@@ -394,15 +394,15 @@ image_get_guide_orientation_invoker (Gimp     *gimp,
   if (success)
     {
       success = FALSE;
-    
+
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
 	  GimpGuide *g = (GimpGuide *) guides->data;
-    
+
 	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
 	      orientation = g->orientation;
-    
+
 	      success = TRUE;
 	      break;
 	    }
@@ -476,15 +476,15 @@ image_get_guide_position_invoker (Gimp     *gimp,
   if (success)
     {
       success = FALSE;
-    
+
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
 	  GimpGuide *g = (GimpGuide *) guides->data;
-    
+
 	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
 	      position = g->position;
-    
+
 	      success = TRUE;
 	      break;
 	    }

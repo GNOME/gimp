@@ -210,7 +210,7 @@ floating_sel_attach_invoker (Gimp     *gimp,
   if (success)
     {
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
-    
+
       if (success)
 	floating_sel_attach (layer, drawable);
     }

@@ -200,11 +200,11 @@ palettes_set_popup_invoker (Gimp     *gimp,
 	  GimpPalette *active = (GimpPalette *)
 	    gimp_container_get_child_by_name (gimp->palette_factory->container,
 					      palette_name);
-    
+
 	  if (active)
 	    {
 	      gimp_context_set_palette (palette_select->context, active);
-    
+
 	      gtk_window_present (GTK_WINDOW (palette_select->shell));
 	    }
 	  else

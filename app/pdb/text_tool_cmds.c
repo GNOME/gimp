@@ -103,16 +103,16 @@ text_fontname_invoker (Gimp     *gimp,
     {
       if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
 	success = FALSE;
-    
+
       if (success)
 	{
 	  gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-    
+
 	  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
 				    border, antialias);
 	  if (text_layer == NULL)
 	    success = FALSE;
-    
+
 	  g_free (real_fontname);
 	}
     }
@@ -239,11 +239,11 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
   if (success)
     {
       real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
-    
+
       success = text_get_extents (real_fontname, text,
 				  &width, &height,
 				  &ascent, &descent);
-    
+
       g_free (real_fontname);
     }
 
@@ -413,16 +413,16 @@ text_invoker (Gimp     *gimp,
     {
       if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
 	success = FALSE;
-    
+
       if (success)
 	{
 	  gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
-    
+
 	  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
 				    border, antialias);
 	  if (text_layer == NULL)
 	    success = FALSE;
-    
+
 	  g_free (real_fontname);
 	}
     }
@@ -620,11 +620,11 @@ text_get_extents_invoker (Gimp     *gimp,
   if (success)
     {
       real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
-    
+
       success = text_get_extents (real_fontname, text,
 				  &width, &height,
 				  &ascent, &descent);
-    
+
       g_free (real_fontname);
     }
 

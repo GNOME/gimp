@@ -1511,12 +1511,12 @@ drawable_merge_shadow_invoker (Gimp     *gimp,
     {
       if (gimp->current_plug_in)
 	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
-    
+
       if (! undo_desc)
 	undo_desc = g_strdup (_("Plug-In"));
-    
+
       gimp_drawable_merge_shadow (drawable, undo, undo_desc);
-    
+
       g_free (undo_desc);
     }
 
@@ -1661,17 +1661,17 @@ drawable_get_pixel_invoker (Gimp     *gimp,
 	{
 	  num_channels = gimp_drawable_bytes (drawable);
 	  pixel = g_new (guint8, num_channels);
-    
+
 	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 					TRUE, TRUE);
-    
+
 	  x %= TILE_WIDTH;
 	  y %= TILE_HEIGHT;
-    
+
 	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
 	    pixel[b] = p[b];
-    
+
 	  tile_release (tile, FALSE);
 	}
       else
@@ -1776,14 +1776,14 @@ drawable_set_pixel_invoker (Gimp     *gimp,
 	{
 	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 					TRUE, TRUE);
-    
+
 	  x %= TILE_WIDTH;
 	  y %= TILE_HEIGHT;
-    
+
 	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
 	    *p++ = *pixel++;
-    
+
 	  tile_release (tile, TRUE);
 	}
       else
@@ -2000,16 +2000,16 @@ drawable_thumbnail_invoker (Gimp     *gimp,
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
       TempBuf   *buf;
       gint       dwidth, dheight;
-    
+
       /* Adjust the width/height ratio */
       dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
       dheight = gimp_item_height (GIMP_ITEM (drawable));
-    
+
       if (dwidth > dheight)
 	req_height = MAX (1, (req_width * dheight) / dwidth);
       else
 	req_width  = MAX (1, (req_height * dwidth) / dheight);
-    
+
       if (gimage->gimp->config->layer_previews)
 	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
 					     req_width, req_height);
@@ -2018,7 +2018,7 @@ drawable_thumbnail_invoker (Gimp     *gimp,
 					       req_width, req_height,
 					       gimp_drawable_has_alpha (drawable) ?
 					       4 : 3);
-    
+
       if (buf)
 	{
 	  num_bytes      = buf->height * buf->width * buf->bytes;
@@ -2026,7 +2026,7 @@ drawable_thumbnail_invoker (Gimp     *gimp,
 	  width          = buf->width;
 	  height         = buf->height;
 	  bpp            = buf->bytes;
-    
+
 	  temp_buf_free (buf);
 	}
       else

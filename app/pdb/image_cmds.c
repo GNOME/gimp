@@ -1011,7 +1011,7 @@ image_get_layers_invoker (Gimp     *gimp,
     {
       list = GIMP_LIST (gimage->layers)->list;
       num_layers = g_list_length (list);
-    
+
       if (num_layers)
 	{
 	  layer_ids = g_new (gint32, num_layers);
@@ -1090,7 +1090,7 @@ image_get_channels_invoker (Gimp     *gimp,
     {
       list = GIMP_LIST (gimage->channels)->list;
       num_channels = g_list_length (list);
-    
+
       if (num_channels)
 	{
 	  channel_ids = g_new (gint32, num_channels);
@@ -1324,7 +1324,7 @@ image_floating_sel_attached_to_invoker (Gimp     *gimp,
   if (success)
     {
       floating_sel = gimp_image_floating_sel (gimage);
-    
+
       if (floating_sel)
 	drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
       else
@@ -1411,7 +1411,7 @@ image_pick_color_invoker (Gimp     *gimp,
       if (!sample_merged)
 	if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
 	  success = FALSE;
-    
+
       if (success)
 	success = gimp_image_pick_color (gimage,
 					 drawable,
@@ -2713,18 +2713,18 @@ image_thumbnail_invoker (Gimp     *gimp,
     {
       TempBuf *buf;
       gint     dwidth, dheight;
-    
+
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
-    
+
       /* Adjust the width/height ratio */
       dwidth  = gimp_image_get_width  (gimage);
       dheight = gimp_image_get_height (gimage);
-    
+
       if (dwidth > dheight)
 	req_height = MAX (1, (req_width * dheight) / dwidth);
       else
 	req_width  = MAX (1, (req_height * dwidth) / dheight);
-    
+
       if (gimage->gimp->config->layer_previews)
 	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
 					     req_width, req_height);
@@ -2733,7 +2733,7 @@ image_thumbnail_invoker (Gimp     *gimp,
 					       req_width, req_height,
 					       gimp_image_has_alpha (gimage) ?
 					       4 : 3);
-    
+
       if (buf)
 	{
 	  num_bytes      = buf->height * buf->width * buf->bytes;
@@ -2741,7 +2741,7 @@ image_thumbnail_invoker (Gimp     *gimp,
 	  width          = buf->width;
 	  height         = buf->height;
 	  bpp            = buf->bytes;
-    
+
 	  temp_buf_free (buf);
 	}
       else
@@ -3207,7 +3207,7 @@ image_set_component_active_invoker (Gimp     *gimp,
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
-    
+
       if (success)
 	gimp_image_set_component_active (gimage, component, active);
     }
@@ -3351,7 +3351,7 @@ image_set_component_visible_invoker (Gimp     *gimp,
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
-    
+
       if (success)
 	gimp_image_set_component_visible (gimage, component, visible);
     }
@@ -3517,7 +3517,7 @@ image_get_name_invoker (Gimp     *gimp,
   if (success)
     {
       filename = gimp_image_get_filename (gimage);
-    
+
       if (filename)
 	{
 	  name = g_path_get_basename (filename);

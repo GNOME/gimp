@@ -97,7 +97,7 @@ channel_new_invoker (Gimp     *gimp,
   if (success)
     {
       GimpRGB rgb_color = color;
-    
+
       rgb_color.a = opacity / 100.0;
       channel = gimp_channel_new (gimage, width, height, name, &rgb_color);
       success = channel != NULL;
@@ -597,7 +597,7 @@ channel_set_color_invoker (Gimp     *gimp,
   if (success)
     {
       GimpRGB rgb_color = color;
-    
+
       rgb_color.a = channel->color.a;
       gimp_channel_set_color (channel, &rgb_color, TRUE);
     }

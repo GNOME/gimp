@@ -196,11 +196,11 @@ fonts_set_popup_invoker (Gimp     *gimp,
 	{
 	  GimpFont *active = (GimpFont *)
 	    gimp_container_get_child_by_name (gimp->fonts, font_name);
-    
+
 	  if (active)
 	    {
 	      gimp_context_set_font (font_select->context, active);
-    
+
 	      gtk_window_present (GTK_WINDOW (font_select->shell));
 	    }
 	  else

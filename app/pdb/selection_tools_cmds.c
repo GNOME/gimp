@@ -91,7 +91,7 @@ by_color_select_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
+
       gimp_channel_select_by_color (gimp_image_get_mask (gimage), drawable,
 				    sample_merged,
 				    &color,
@@ -433,7 +433,7 @@ fuzzy_select_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
+
       gimp_channel_select_fuzzy (gimp_image_get_mask (gimage),
 				 drawable,
 				 sample_merged,

@@ -218,7 +218,7 @@ patterns_set_pattern_invoker (Gimp     *gimp,
     {
       pattern = (GimpPattern *)
 	gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
-    
+
       if (success)
 	gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
       else
@@ -280,7 +280,7 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
 	{
 	  pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
 	}
-    
+
       if (pattern)
 	{
 	  length = pattern->mask->height * pattern->mask->width *

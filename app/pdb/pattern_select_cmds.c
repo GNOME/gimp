@@ -200,11 +200,11 @@ patterns_set_popup_invoker (Gimp     *gimp,
 	  GimpPattern *active = (GimpPattern *)
 	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					      pattern_name);
-    
+
 	  if (active)
 	    {
 	      gimp_context_set_pattern (pattern_select->context, active);
-    
+
 	      gtk_window_present (GTK_WINDOW (pattern_select->shell));
 	    }
 	  else

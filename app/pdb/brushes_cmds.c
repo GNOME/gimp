@@ -236,7 +236,7 @@ brushes_set_brush_invoker (Gimp     *gimp,
     {
       brush = (GimpBrush *)
 	gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-    
+
       if (brush)
 	gimp_context_set_brush (gimp_get_current_context (gimp), brush);
       else
@@ -534,7 +534,7 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
 	{
 	  brush = gimp_context_get_brush (gimp_get_current_context (gimp));
 	}
-    
+
       if (brush)
 	{
 	  length    = brush->mask->height * brush->mask->width;

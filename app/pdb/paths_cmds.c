@@ -162,7 +162,7 @@ path_get_current_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_active_vectors (gimage);
-    
+
       if (vectors)
 	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
@@ -231,7 +231,7 @@ path_set_current_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	gimp_image_set_active_vectors (gimage, vectors);
       else
@@ -291,7 +291,7 @@ path_delete_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	gimp_image_remove_vectors (gimage, vectors);
       else
@@ -356,26 +356,26 @@ path_get_points_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	{
 	  GimpVectorsCompatPoint *points;
 	  gint num_points;
-    
+
 	  path_type = 1; /* BEZIER (1.2 compat) */
-    
+
 	  points = gimp_vectors_compat_get_points (vectors, &num_points,
 						   &path_closed);
-    
+
 	  num_point_details = num_points * 3;
-    
+
 	  if (points)
 	    {
 	      gdouble *curr_point;
 	      gint     i;
-    
+
 	      points_pairs = g_new0 (gdouble, num_point_details);
-    
+
 	      for (i = 0, curr_point = points_pairs;
 		   i < num_points;
 		   i++, curr_point += 3)
@@ -384,7 +384,7 @@ path_get_points_invoker (Gimp     *gimp,
 		  curr_point[1] = points[i].y;
 		  curr_point[2] = points[i].type;
 		}
-    
+
 	      g_free (points);
 	    }
 	  else
@@ -495,7 +495,7 @@ path_set_points_invoker (Gimp     *gimp,
 	closed = TRUE;
       else if ((num_path_points / 3) % 3 != 2)
 	success = FALSE;
-    
+
       if (success)
 	{
 	  GimpVectors            *vectors;
@@ -503,11 +503,11 @@ path_set_points_invoker (Gimp     *gimp,
 	  GimpVectorsCompatPoint *points;
 	  gint                    n_points;
 	  gint                    i;
-    
+
 	  n_points = num_path_points / 3;
-    
+
 	  points = g_new0 (GimpVectorsCompatPoint, n_points);
-    
+
 	  for (i = 0, curr_point_pair = points_pairs;
 	       i < n_points;
 	       i++, curr_point_pair += 3)
@@ -516,12 +516,12 @@ path_set_points_invoker (Gimp     *gimp,
 	      points[i].y    = curr_point_pair[1];
 	      points[i].type = curr_point_pair[2];
 	    }
-    
+
 	  vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
 					     closed);
-    
+
 	  g_free (points);
-    
+
 	  if (vectors)
 	    gimp_image_add_vectors (gimage, vectors, 0);
 	  else
@@ -594,13 +594,13 @@ path_stroke_current_invoker (Gimp     *gimp,
     {
       vectors  = gimp_image_get_active_vectors (gimage);
       drawable = gimp_image_active_drawable (gimage);
-    
+
       if (vectors && drawable)
 	{
 	  GimpToolInfo *tool_info;
-    
+
 	  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
-    
+
 	  success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
 				      GIMP_OBJECT (tool_info->paint_info),
 				      TRUE /* use defaults, not tool option values */);
@@ -659,7 +659,7 @@ path_get_point_at_dist_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_active_vectors (gimage);
-    
+
       if (vectors)
 	{
 	  g_warning ("FIXME: path_get_point_at_dist() is unimplemented");
@@ -752,7 +752,7 @@ path_get_tattoo_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       else
@@ -829,7 +829,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
       else
@@ -894,7 +894,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
-    
+
       if (vectors)
 	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
@@ -970,7 +970,7 @@ path_get_locked_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
       else
@@ -1047,7 +1047,7 @@ path_set_locked_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
       else
@@ -1129,7 +1129,7 @@ path_to_selection_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = gimp_image_get_vectors_by_name (gimage, name);
-    
+
       if (vectors)
 	gimp_channel_select_vectors (gimp_image_get_mask (gimage),
 				     _("Path to Selection"),

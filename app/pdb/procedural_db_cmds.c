@@ -480,20 +480,20 @@ procedural_db_query_invoker (Gimp     *gimp,
       regcomp (&pdb_query.copyright_regex, copyright, 0);
       regcomp (&pdb_query.date_regex, date, 0);
       regcomp (&pdb_query.proc_type_regex, proc_type, 0);
-    
+
       pdb_query.gimp            = gimp;
       pdb_query.list_of_procs   = NULL;
       pdb_query.num_procs       = 0;
       pdb_query.querying_compat = FALSE;
-    
+
       g_hash_table_foreach (gimp->procedural_ht,
 			    procedural_db_query_entry, &pdb_query);
-    
+
       pdb_query.querying_compat = TRUE;
-    
+
       g_hash_table_foreach (gimp->procedural_compat_ht,
 			    procedural_db_query_entry, &pdb_query);
-    
+
       regfree (&pdb_query.name_regex);
       regfree (&pdb_query.blurb_regex);
       regfree (&pdb_query.help_regex);
@@ -600,7 +600,7 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
   if (success)
     {
       proc = procedural_db_lookup (gimp, proc_name);
-    
+
       if (proc)
 	{
 	  get_pdb_strings (&strings, proc, FALSE);
@@ -608,18 +608,18 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
       else
 	{
 	  const gchar *compat_name;
-    
+
 	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
-    
+
 	  if (compat_name)
 	    {
 	      proc = procedural_db_lookup (gimp, compat_name);
-    
+
 	      if (proc)
 		get_pdb_strings (&strings, proc, TRUE);
 	    }
 	}
-    
+
       success = (proc != NULL);
     }
 
@@ -729,17 +729,17 @@ procedural_db_proc_arg_invoker (Gimp     *gimp,
   if (success)
     {
       proc = procedural_db_lookup (gimp, proc_name);
-    
+
       if (! proc)
 	{
 	  const gchar *compat_name;
-    
+
 	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
-    
+
 	  if (compat_name)
 	    proc = procedural_db_lookup (gimp, compat_name);
 	}
-    
+
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
 	arg = &proc->args[arg_num];
       else
@@ -827,17 +827,17 @@ procedural_db_proc_val_invoker (Gimp     *gimp,
   if (success)
     {
       proc = procedural_db_lookup (gimp, proc_name);
-    
+
       if (! proc)
 	{
 	  const gchar *compat_name;
-    
+
 	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
-    
+
 	  if (compat_name)
 	    proc = procedural_db_lookup (gimp, compat_name);
 	}
-    
+
       if (proc && (val_num >= 0 && val_num < proc->num_values))
 	val = &proc->values[val_num];
       else
@@ -924,7 +924,7 @@ procedural_db_get_data_invoker (Gimp     *gimp,
     {
       data = procedural_db_get_data (gimp, identifier, &bytes);
       success = (data != NULL);
-    
+
       if (success)
 	data_copy = g_memdup (data, bytes);
     }

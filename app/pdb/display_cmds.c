@@ -65,9 +65,9 @@ display_new_invoker (Gimp     *gimp,
   if (success)
     {
       display = (GimpDisplay *) gimp_create_display (gimp, gimage, 1.0);
-    
+
       success = (display != NULL);
-    
+
       /* the first display takes ownership of the image */
       if (success && gimage->disp_count == 1)
 	g_object_unref (gimage);

@@ -57,6 +57,8 @@ sub format_code_frag {
     while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
     $code .= "\n";
 
+    $code =~ s/^\s+$//mg;
+
     $code;
 }
 
@@ -883,7 +885,7 @@ internal_procs_init (Gimp               *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
- 
+
 $group_procs
 }
 BODY

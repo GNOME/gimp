@@ -271,49 +271,49 @@ file_load_thumbnail_invoker (Gimp     *gimp,
   if (success)
     {
       uri = g_filename_to_uri (filename, NULL, NULL);
-    
+
       if (uri)
 	{
 	  thumbnail = gimp_thumbnail_new ();
 	  gimp_thumbnail_set_uri (thumbnail, uri);
-    
+
 	  pixbuf = gimp_thumbnail_load_thumb (thumbnail,
 					      GIMP_THUMBNAIL_SIZE_NORMAL,
 					      NULL);
 	}
-    
+
       if (pixbuf)
 	{
 	  width  = gdk_pixbuf_get_width (pixbuf);
 	  height = gdk_pixbuf_get_height (pixbuf);
-    
+
 	  if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
 	    {
 	      GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
 					       width, height);
-    
+
 	      gdk_pixbuf_composite_color (pixbuf, tmp,
 					  0, 0, width, height, 0, 0, 1.0, 1.0,
 					  GDK_INTERP_NEAREST, 255,
 					  0, 0, GIMP_SMALL_CHECKS,
 					  0x666666ff, 0x999999ff);
-    
+
 	      g_object_unref (pixbuf);
 	      pixbuf = tmp;
 	    }
-    
+
 	  num_bytes  = 3 * width * height;
 	  thumb_data = g_memdup (gdk_pixbuf_get_pixels (pixbuf), num_bytes);
-    
+
 	  g_object_unref (pixbuf);
-    
+
 	  success = TRUE;
 	}
       else
 	{
 	  success = FALSE;
 	}
-    
+
 	g_free (uri);
     }
 
@@ -403,25 +403,25 @@ file_save_thumbnail_invoker (Gimp     *gimp,
       image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
       if (! image_uri)
 	success = FALSE;
-    
+
       if (success)
 	{
 	  uri = g_filename_to_uri (filename, NULL, NULL);
 	  if (! uri)
 	    success = FALSE;
-    
+
 	  if (success)
 	    {
 	      if (strcmp (uri, image_uri))
 		success = FALSE;
-    
+
 	      if (success)
 		{
 		  imagefile = gimp_imagefile_new (gimp, uri);
 		  success = gimp_imagefile_save_thumbnail (imagefile, gimage);
 		  g_object_unref (imagefile);
 		}
-    
+
 	      g_free (uri);
 	    }
 	}
@@ -481,15 +481,15 @@ temp_name_invoker (Gimp     *gimp,
     {
       if (id == 0)
 	pid = getpid ();
-    
+
       filename = g_strdup_printf ("gimp_temp_%d%d.%s",
 				  pid, id++, extension);
-    
+
       path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
 				      TRUE, NULL);
-    
+
       name = g_build_filename (path, filename, NULL);
-    
+
       g_free (path);
       g_free (filename);
     }
@@ -561,9 +561,9 @@ register_magic_load_handler_invoker (Gimp     *gimp,
   if (success)
     {
       success = FALSE;
-    
+
       proc = procedural_db_lookup (gimp, name);
-    
+
       if (proc && ((proc->num_args < 3) ||
 		   (proc->num_values < 1) ||
 		   (proc->args[0].arg_type != GIMP_PDB_INT32) ||
@@ -575,21 +575,21 @@ register_magic_load_handler_invoker (Gimp     *gimp,
 		     name);
 	  goto done;
 	}
-    
+
       file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, magics);
-    
+
       if (! file_proc)
 	{
 	  g_message ("attempt to register non-existant load handler \"%s\"",
 		     name);
 	  goto done;
 	}
-    
+
       if (! g_slist_find (gimp->load_procs, file_proc))
 	gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
-    
+
       success = TRUE;
-    
+
     done: ;
     }
 
@@ -709,9 +709,9 @@ register_save_handler_invoker (Gimp     *gimp,
   if (success)
     {
       success = FALSE;
-    
+
       proc = procedural_db_lookup (gimp, name);
-    
+
       if (proc && ((proc->num_args < 5) ||
 		   (proc->args[0].arg_type != GIMP_PDB_INT32) ||
 		   (proc->args[1].arg_type != GIMP_PDB_IMAGE) ||
@@ -723,21 +723,21 @@ register_save_handler_invoker (Gimp     *gimp,
 		     name);
 	  goto done;
 	}
-    
+
       file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, NULL);
-    
+
       if (! file_proc)
 	{
 	  g_message ("attempt to register non-existant save handler \"%s\"",
 		     name);
 	  goto done;
 	}
-    
+
       if (! g_slist_find (gimp->save_procs, file_proc))
 	gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
-    
+
       success = TRUE;
-    
+
     done: ;
     }
 

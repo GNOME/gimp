@@ -76,7 +76,7 @@ internal_procs_init (Gimp               *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
- 
+
   (* status_callback) (_("Internal Procedures"), _("Brush UI"), 0.0);
   register_brush_select_procs (gimp);
 

@@ -205,7 +205,7 @@ edit_paste_invoker (Gimp     *gimp,
     {
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
 		 gimp->global_buffer != NULL);
-    
+
       if (success)
 	{
 	  layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
@@ -408,7 +408,7 @@ edit_bucket_fill_invoker (Gimp     *gimp,
   if (success)
     {
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
+
       if (! gimage)
 	{
 	  success = FALSE;
@@ -416,9 +416,9 @@ edit_bucket_fill_invoker (Gimp     *gimp,
       else
 	{
 	  gboolean do_seed_fill;
-    
+
 	  do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
-    
+
 	  gimp_drawable_bucket_fill (drawable, fill_mode,
 				     paint_mode, opacity / 100.0,
 				     do_seed_fill,
@@ -701,11 +701,11 @@ edit_stroke_invoker (Gimp     *gimp,
     {
       GimpImage    *gimage;
       GimpToolInfo *tool_info;
-    
+
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
+
       tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
-    
+
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
 				  drawable,
 				  GIMP_OBJECT (tool_info->paint_info),

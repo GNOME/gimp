@@ -1,3 +1,9 @@
+2004-03-26  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/app.pl: kill whitespace in blank lines.
+
+	* app/pdb/*.c: regenerated, no code changes, only whitespace.
+
 2004-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-transform.c

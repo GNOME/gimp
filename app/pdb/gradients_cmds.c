@@ -207,7 +207,7 @@ gradients_set_gradient_invoker (Gimp     *gimp,
     {
       gradient = (GimpGradient *)
 	gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
-    
+
       if (gradient)
 	gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
       else
@@ -267,22 +267,22 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
     {
       pos = 0.0;
       delta = 1.0 / (i - 1);
-    
+
       array_length = i * 4;
-    
+
       pv = color_samples = g_new (gdouble, array_length);
-    
+
       gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
-    
+
       while (i--)
 	{
 	  gimp_gradient_get_color_at (gradient, pos, reverse, &color);
-    
+
 	  *pv++ = color.r;
 	  *pv++ = color.g;
 	  *pv++ = color.b;
 	  *pv++ = color.a;
-    
+
 	  pos += delta;
 	}
     }
@@ -368,20 +368,20 @@ gradients_sample_custom_invoker (Gimp     *gimp,
   if (success)
     {
       array_length = i * 4;
-    
+
       pv = color_samples = g_new (gdouble, array_length);
-    
+
       gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
-    
+
       while (i--)
 	{
 	  gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
-    
+
 	  *pv++ = color.r;
 	  *pv++ = color.g;
 	  *pv++ = color.b;
 	  *pv++ = color.a;
-    
+
 	  pos++;
 	}
     }
@@ -480,29 +480,29 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
 	{
 	  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
 	}
-    
+
       if (gradient)
 	{
 	  gdouble *pv;
 	  gdouble  pos, delta;
 	  GimpRGB  color;
 	  gint     i;
-    
+
 	  i     = sample_size;
 	  pos   = 0.0;
 	  delta = 1.0 / (i - 1);
-    
+
 	  pv = values = g_new (gdouble, i * 4);
-    
+
 	  while (i--)
 	    {
 	      gimp_gradient_get_color_at (gradient, pos, reverse, &color);
-    
+
 	      *pv++ = color.r;
 	      *pv++ = color.g;
 	      *pv++ = color.b;
 	      *pv++ = color.a;
-    
+
 	      pos += delta;
 	    }
 	}

@@ -370,11 +370,11 @@ selection_float_invoker (Gimp     *gimp,
   if (success)
     {
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
-    
+
       if (success)
 	{
 	  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-    
+
 	  layer = gimp_selection_float (gimp_image_get_mask (gimage),
 					drawable, TRUE, offx, offy);
 	  if (! layer)
@@ -915,10 +915,10 @@ selection_load_invoker (Gimp     *gimp,
     {
       GimpImage *gimage;
       gint       off_x, off_y;
-    
+
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
-    
+
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
 				   _("Channel to Selection"),
 				   channel, 
@@ -1033,10 +1033,10 @@ selection_combine_invoker (Gimp     *gimp,
     {
       GimpImage *gimage;
       gint       off_x, off_y;
-    
+
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
-    
+
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
 				   _("Channel to Selection"),
 				   channel, 

@@ -163,9 +163,9 @@ airbrush_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
-    
+
       GIMP_AIRBRUSH_OPTIONS (options)->pressure = pressure;
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_AIRBRUSH,
 				    options,
@@ -241,7 +241,7 @@ airbrush_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_AIRBRUSH,
 				    options,
@@ -328,20 +328,20 @@ clone_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
-    
+
       GIMP_CLONE_OPTIONS (options)->clone_type = clone_type;
-    
+
     #ifdef __GNUC__
     #warning FIXME: re-enable clone src_drawable
     #endif
     #if 0
       FIXME
-    
+
       core->src_drawable = src_drawable;
       core->src_x        = srx_x;
       core->src_y        = src_y;
     #endif
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CLONE,
 				    options,
@@ -432,7 +432,7 @@ clone_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CLONE,
 				    options,
@@ -513,12 +513,12 @@ convolve_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
-    
+
       g_object_set (options,
 		    "type", convolve_type,
 		    "rate", pressure,
 		    NULL);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CONVOLVE,
 				    options,
@@ -599,7 +599,7 @@ convolve_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CONVOLVE,
 				    options,
@@ -685,13 +685,13 @@ dodgeburn_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
-    
+
       g_object_set (options,
 		    "type",     dodgeburn_type,
 		    "mode",     dodgeburn_mode,
 		    "exposure", exposure,
 		    NULL);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_DODGE_BURN,
 				    options,
@@ -777,7 +777,7 @@ dodgeburn_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_DODGE_BURN,
 				    options,
@@ -858,12 +858,12 @@ eraser_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
-    
+
       g_object_set (options,
 		    "application-mode", method,
 		    "hard",             hardness,
 		    NULL);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_ERASER,
 				    options,
@@ -944,7 +944,7 @@ eraser_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_ERASER,
 				    options,
@@ -1030,7 +1030,7 @@ paintbrush_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
-    
+
       g_object_set (options,
 		    "application-mode", method,
 		    "use-fade",         fade_out > 0.0,
@@ -1038,7 +1038,7 @@ paintbrush_invoker (Gimp     *gimp,
 		    "use-gradient",     gradient_length > 0.0,
 		    "gradient-length",  gradient_length,
 		    NULL);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PAINTBRUSH,
 				    options,
@@ -1124,7 +1124,7 @@ paintbrush_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PAINTBRUSH,
 				    options,
@@ -1195,7 +1195,7 @@ pencil_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PENCIL,
 				    options,
@@ -1271,11 +1271,11 @@ smudge_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
-    
+
       g_object_set (options,
 		    "rate", pressure,
 		    NULL);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_SMUDGE,
 				    options,
@@ -1351,7 +1351,7 @@ smudge_default_invoker (Gimp     *gimp,
   if (success)
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
-    
+
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_SMUDGE,
 				    options,

@@ -213,7 +213,7 @@ palettes_set_palette_invoker (Gimp     *gimp,
     {
       palette = (GimpPalette *)
 	gimp_container_get_child_by_name (gimp->palette_factory->container, name);
-    
+
       if (palette)
 	gimp_context_set_palette (gimp_get_current_context (gimp), palette);
       else
@@ -277,7 +277,7 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
 	{
 	  palette = gimp_context_get_palette (gimp_get_current_context (gimp));
 	}
-    
+
       if (palette)
 	{
 	  if (entry_num < 0 || entry_num >= palette->n_colors) 
@@ -287,10 +287,10 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
 	  else
 	    {
 	      GimpPaletteEntry *entry;
-    
+
 	      entry = (GimpPaletteEntry *)
 		g_list_nth_data (palette->colors, entry_num);
-    
+
 	      color = entry->color;
 	    }
 	}

@@ -62,7 +62,7 @@ help_invoker (Gimp     *gimp,
       if (! help_domain && gimp->current_plug_in)
 	help_domain = (gchar *)
 	  plug_ins_help_domain (gimp, gimp->current_plug_in->prog, NULL);
-    
+
       gimp_help (gimp, help_domain, help_id);
     }
 

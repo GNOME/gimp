@@ -59,12 +59,12 @@ message_invoker (Gimp     *gimp,
   if (success)
     {
       gchar *domain = NULL;
-    
+
       if (gimp->current_plug_in)
 	domain = plug_in_get_undo_desc (gimp->current_plug_in);
-    
+
       gimp_message (gimp, domain, message);
-    
+
       g_free (domain);
     }
 

@@ -249,20 +249,20 @@ brushes_set_popup_invoker (Gimp     *gimp,
 	  GimpBrush *active = (GimpBrush *)
 	    gimp_container_get_child_by_name (gimp->brush_factory->container,
 					      brush_name);
-    
+
 	  if (active)
 	    {
 	      GtkAdjustment *spacing_adj;
-    
+
 	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (brush_select->view)->spacing_adjustment;
-    
+
 	      gimp_context_set_brush (brush_select->context, active);
 	      gimp_context_set_opacity (brush_select->context, opacity / 100.0);
 	      gimp_context_set_paint_mode (brush_select->context, paint_mode);
-    
+
 	      if (spacing >= 0)
 		gtk_adjustment_set_value (spacing_adj, spacing);
-    
+
 	      gtk_window_present (GTK_WINDOW (brush_select->shell));
 	    }
 	  else

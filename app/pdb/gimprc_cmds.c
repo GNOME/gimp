@@ -72,7 +72,7 @@ gimprc_query_invoker (Gimp     *gimp,
     {
       /*  use edit_config because unknown tokens are set there  */
       value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
-    
+
       if (! value)
 	success = FALSE;
     }

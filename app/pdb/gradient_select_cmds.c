@@ -212,11 +212,11 @@ gradients_set_popup_invoker (Gimp     *gimp,
 	  GimpGradient *active = (GimpGradient *)
 	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      gradient_name);
-    
+
 	  if (active)
 	    {
 	      gimp_context_set_gradient (gradient_select->context, active);
-    
+
 	      gtk_window_present (GTK_WINDOW (gradient_select->shell));
 	    }
 	  else
