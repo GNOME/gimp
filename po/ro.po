@@ -2,10 +2,9 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
+"Project-Id-Version: GIMP 1.2.2\n"
 "POT-Creation-Date: 2001-02-24 13:06+0100\n"
 "POT-Creation-Date: 2001-02-24 13:06+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
