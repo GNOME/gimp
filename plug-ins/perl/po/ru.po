@@ -1,78 +1,69 @@
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Valek Filippov <frob@df.ru>, 2000.
+# Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# Valek Filippov <frob@df.ru>, 2000-2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1\n"
-"POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
-"PO-Revision-Date: 2000-11-04 19:56+03:00\n"
+"Project-Id-Version: gimp-perl\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: 2002-03-10 23:59+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: examples/PDB:0
-msgid " (press Tab to complete)"
-msgstr " (нажмите Tab для завершения)"
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
 
-#: Gimp/Lib.xs:0
-msgid " = [argument error]\n"
-msgstr " = [ошибка аргумента]\n"
+msgid "too many"
+msgstr "слишком много"
 
-#: examples/PDB:0
-msgid " matching functions"
-msgstr "соответствующие функции"
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<Image>/Фильтры/Регистратор/Прозрачная эмблема..."
 
-#: Gimp/Fu.pm:0
-msgid ""
-"       interface-arguments are\n"
-"           -o | --output <filespec>   write image to disk, don't display\n"
-"           -i | --interact            let the user edit the values first\n"
-"       script-arguments are\n"
+msgid "$s: not an integer\n"
+msgstr "$s: не целое число\n"
+
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr "<Image>/Выделение/Выделение скругленного прямоугольника..."
+
+msgid "<Image>/Guides/To Selection..."
+msgstr "<Image>/Направляющие/В выделение..."
+
+msgid "Help for "
+msgstr "Справка о "
+
+msgid "illegal parasite specification, expected three array members"
+msgstr "неверная спецификация паразита, ожидались три элемента массива"
+
+msgid "Last Modified"
+msgstr "Последнее измененное"
+
+msgid "unable to read '$fn': $!"
+msgstr "не удалось прочесть '$fn': $!"
+
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Image>/Фильтры/Отображение/Image Tile..."
+
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Фильтры/Регистратор/Кристалл"
+
+msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid ""
-"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
-"       gimp-arguments are\n"
-"           -gimp <anything>           used internally only\n"
-"           -h | -help | --help | -?   print some help\n"
-"           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
-"PORT)\n"
-"                                      (for more info, see Gimp::Net(3))\n"
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
+"run_mode должен быть INTERACTIVE, NONINTERACTIVE или RUN_WITH_LAST_VALS\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ не является допустимым тэгом импорта для пакета $pkg"
+msgid "Font Selection Dialog ($desc)"
+msgstr "Диалог выбора шрифта ($desc)"
 
-#: Gimp/Fu.pm:0
-msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: недопустимый ключ, попробуйте $0 --help\n"
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr "xlfd_unpack: несовпадающее XLFD \"$fontname\"\n"
 
-#: Gimp/Fu.pm:0
-msgid "$_: unknown/illegal file-save option"
-msgstr "$_: неизвестный/недопустимый параметр сохранения файла"
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Фильтры/Шум/Xach-видение..."
 
-#: Gimp/Fu.pm:0
-msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid ""
-"$function: calling $AUTOLOAD without specifying the :auto import tag is "
-"deprecated!\n"
-msgstr ""
-
-#: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
@@ -80,427 +71,312 @@ msgstr ""
 "$function: название функции содержит необычные символы, хороший стиль - "
 "использование только 0-9, a-z and _"
 
-#: Gimp/Fu.pm:0
-msgid "$s: not an integer\n"
-msgstr "$s: не целое число\n"
+msgid "Help"
+msgstr "Справка"
 
-#: Gimp/Lib.xs:0
-msgid "%s arguments for function '%s'"
-msgstr "%s аргументов для функции '%s'"
-
-#: Gimp/Lib.xs:0
-msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
-
-#: Gimp/Lib.xs:0
-msgid "%s: procedural database execution failed"
-msgstr "%s: сбой выполнения процедурной базы данных"
-
-#: Gimp/Lib.xs:0
-msgid "(UNINITIALIZED)"
-msgstr "(НЕ ИНИЦИАЛИЗИРОВАНО)"
-
-#: UI/UI.pm:0
-msgid "(none)"
-msgstr "(нет)"
-
-#: Gimp/Lib.xs:0
-msgid ", %d bytes data]"
-msgstr ", %d байт данных]"
-
-#: Perl-Server:0
-msgid ", authorization required"
-msgstr ", требуется авторизация"
-
-#: UI/UI.pm:0
-msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-
-#: UI/UI.pm:0
-msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-*-*"
-
-#: examples/logulator:0
-msgid "/Filters/Logulator"
-msgstr "/Фильтры/Регистратор"
-
-#: Perl-Server:0
-msgid "/Xtns/Perl"
-msgstr "/Расш./Perl"
-
-#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
-#: examples/povray:0 examples/stamps:0
-msgid "/Xtns/Render"
-msgstr "/Расш./Визуализация"
-
-#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
-#: examples/povray:0
-msgid "/Xtns/Render/Logos"
-msgstr "/Расш./Визуализация/Эмблемы"
-
-#: examples/povray:0
-msgid "/Xtns/Render/Povray"
-msgstr "/Расш./Визуализация/Povray"
-
-#: UI/UI.pm:0
-msgid "9x15bold"
-msgstr "9x15bold"
-
-#: Gimp/Fu.pm:0
-msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
-
-#: examples/repdup:0
-msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Правка/Повтор и дублирование..."
-
-#: examples/animate_cells:0
-msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Фильтры/Анимация/Анимировать клетки..."
-
-#: examples/blowinout:0
-msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Фильтры/Анимация/BlowInOut..."
-
-#: examples/frame_filter:0
-msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Фильтры/Применить выражение Perl..."
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Фильтры/Размывание/Размывание 2х2"
-
-#: examples/colourtoalpha:0
-msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Фильтрф/Цвета/Цвет -> Альфа-канал..."
-
-#: examples/fire:0
-msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Фильтры/Цвета/Огонь..."
-
-#: examples/map_to_gradient:0
-msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Фильтры/Цвета/Отобразить в градиент..."
-
-#: examples/mirrorsplit:0
-msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Фильтры/Искажения/MirrorSplit..."
-
-#: examples/scratches:0
-msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Фильтры/Искажения/Царапины..."
-
-#: examples/windify:0
-msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Фильтры/Искажения/Windify..."
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Фильтры/Обнаружение края/2х2 обнаружение края"
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Фильтры/Улучшение/2х2 Улучшение контраста"
-
-#: examples/warp-sharp:0
-msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Фильтры/Улучшение/Warp Sharp..."
-
-#: examples/blended2:0
-msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/Фильтры/Регистратор/Смешанный II..."
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Фильтры/Регистратор/Вырезка"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Фильтры/Регистратор/Кристалл"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Фильтры/Регистратор/Imigre-26"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Фильтры/Регистратор/SOTA хром"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Фильтры/Регистратор/Скоростной текст"
-
-#: examples/translogo:0
-msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Фильтры/Регистратор/Прозрачная эмблема..."
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Фильтры/Регистратор/Web-заголовок"
-
-#: examples/image_tile:0
-msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Фильтры/Отображение/Image Tile..."
-
-#: examples/pixelmap:0
-msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Фильтры/Отображение/Отображение точек..."
-
-#: examples/xachlego:0
-msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Фильтры/Отображение/Xach-блоки..."
-
-#: examples/xachshadow:0
-msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Фильтры/Отображение/Xach-тени..."
-
-#: examples/border:0
-msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Фильтры/Разное/Border Average..."
-
-#: examples/gimpmagick:0
-msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/ФИльтры/Разное/Магия..."
-
-#: examples/ditherize:0
-msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Фильтры/Шум/Клишировать..."
-
-#: examples/feedback:0
-msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Фильтры/Шум/Обратная связь..."
-
-#: examples/xachvision:0
-msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Фильтры/Шум/Xach-видение..."
-
-#: examples/dust:0
-msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Фильтры/Визуализация/Добавить пыль..."
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Фильтры/Визуализация/Добавить свечение"
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Фильтры/Визуализация/Чищеный метал..."
-
-#: examples/burst:0
-msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Фильтры/Визуализация/Взрыв..."
-
-#: examples/fit-text:0
-msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Фильтры/Визуализация/Fit Text..."
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Фильтры/Визуализация/Яркие края..."
-
-#: examples/randomblends:0
-msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Фильтры/Визуализация/Случайные смеси..."
-
-#: examples/stampify:0
-msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Фильтры/Визуализация/Штамповать..."
-
-#: examples/tex-to-float:0
-msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Фильтры/Визуализация/Строка TeX..."
-
-#: examples/terral_text:0
-msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/Фильтры/Визуализация/Земляной текст..."
-
-#: examples/perlotine:0
-msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Фильтры/Web/Perl-o-tine..."
-
-#: examples/prep4gif:0
-msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Фильтры/Web/Подготовить для GIF..."
-
-#: examples/webify:0
-msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Фильтры/Web/Webify..."
-
-#: examples/centerguide:0
-msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Направляющие/Центрировать..."
-
-#: examples/guidegrid:0
-msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Направляющие/Сетка..."
-
-#: examples/guide_remove:0
-msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Направляющие/Удалить"
-
-#: examples/guides_to_selection:0
-msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Направляющие/В выделение..."
-
-#: examples/alpha2color:0
-msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Изображение/Альфа/Альфа-канал -> Цвет..."
-
-#: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
 msgstr "<Image>/Изображение/Альфа/Очистить альфа-канал..."
 
-#: examples/layerfuncs:0
-msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Слои/Центрировать слой"
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Фильтры/Отображение/Отображение точек..."
 
-#: examples/frame_reshuffle:0
-msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Слои/Стопка/Переупорядочить..."
+msgid "unable to fork: $!"
+msgstr "не удалось выполнить fork: $!"
 
-#: examples/roundrectsel:0
-msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Выделение/Выделение скругленного прямоугольника..."
+msgid "FG"
+msgstr "Передний план"
 
-#: examples/roundsel:0
-msgid "<Image>/Select/Round..."
-msgstr "<Image>/Выделение/Круг..."
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr "ФАТАЛЬНАЯ ОШИБКА: невозможно создать $tmp: $!\n"
 
-#: examples/triangle:0
-msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Выделение/Треугольник..."
+msgid "/Filters/Logulator"
+msgstr "/Фильтры/Регистратор"
 
-#: examples/gap-vcr:0
-msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Видео/Пульт видеомагнитофона..."
+msgid "dunno how to return param type %d"
+msgstr "неизвестно как вернуть параметр типа %d"
 
-#: examples/view3d:0
-msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Вид/3D поверхность..."
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Изображение/Альфа/Альфа-канал -> Цвет..."
 
-#: Gimp/Fu.pm:0
-msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "Дополенение <Загрузить> вызвано без 3-х стандартных аргументов!\n"
+msgid "Image Types"
+msgstr "Типы изображений"
 
-#: Gimp/Fu.pm:0
-msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "Дополнение <Сохранить> вызвано без 5-и стандартных аргументов!\n"
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Image>/Фильтры/Визуализация/Штамповать..."
 
-#: examples/billboard:0
-msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Расш./Анимация/Доска объявлений..."
+msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr ""
+"невозможно подключиться к серверу gimp (убедитесь, что Perl-Server запущен)"
 
-#: examples/sethspin:0
-msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Расш./Анимация/Seth Spin..."
-
-#: examples/Create_Images:0
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Расш./Создать_изображения"
-
-#: examples/example-fu:0
-msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Расш./Пример Gimp::Fu..."
-
-#: examples/homepage-logo:0
-msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Расш./Логотип домашней страницы"
-
-#: examples/PDB:0
-msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Расш./Исследователь ПБД..."
-
-#: examples/parasite-editor:0
-msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Расш./Редактор паразитов..."
-
-#: examples/example-oo:0
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Расш./Пример дополнения Perl"
-
-#: examples/perlcc:0
-msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Расш./Perl/Центр управления..."
-
-#: Perl-Server:0
-msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Расш./Perl/Сервер"
-
-#: examples/bricks:0
-msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Расш./Визуализация/Кирпичи..."
-
-#: examples/font_table:0
-msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Расш./Визуализация/Таблица шрифтов..."
-
-#: examples/goldenmean:0
-msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Расш./Визуализация/Золотая середина..."
-
-#: examples/fire:0
-msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Горящий текст..."
-
-#: examples/glowing_steel:0
-msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Пылающая сталь"
-
-#: examples/innerbevel:0
-msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Inner Bevel..."
-
-#: examples/pixelmap:0
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Расш./Визуализация/Точкогенератор..."
-
-#: examples/povray:0
-msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Расш./Визуализация/Povray/Настройки..."
-
-#: examples/povray:0
-msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Расш./Визуализация/Povray/Текстура..."
-
-#: examples/randomart1:0
-msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Расш./Визуализация/Случайное искусство #1..."
-
-#: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
 msgstr "<Toolbox>/Расш./Визуализация/Штампы..."
 
-#: examples/yinyang:0
-msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Расш./Визуализация/Yin-Yang..."
+msgid "More..."
+msgstr "Дальше..."
 
-#: examples/visual:0
-msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Расш./Visual Scriptor..."
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Горящий текст..."
 
-#: examples/PDB:0
-msgid "Accelerator"
-msgstr "Ускоритель"
+msgid "interface=... tag is no longer supported\n"
+msgstr "тэг interface=... больше не поддерживается\n"
 
-#: examples/sethspin:0
+msgid "Text"
+msgstr "Текст"
+
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Image>/Фильтры/Визуализация/Случайные смеси..."
+
+msgid "Synopsis"
+msgstr "Резюме"
+
+msgid "Plug-In Path"
+msgstr "Путь дополнения"
+
+msgid "Restore values to the previous ones"
+msgstr "Восстановить предыдущие значения"
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr "Недопустимое описание шрифта по умолчанию для $function: $val\n"
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr ""
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+
+msgid "WARNING: client tried to unlock without holding a lock"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr "<Toolbox>/Расш./Perl/Центр управления..."
+
+msgid "register called with too many or wrong arguments\n"
+msgstr ""
+"регистр вызван со слишком большим числом аргументов или с неверными "
+"аргументами\n"
+
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Image>/Фильтры/Анимация/Анимировать клетки..."
+
+msgid "Spin Layer SRC (250ms)"
+msgstr ""
+
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
+msgstr ""
+
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
+msgstr ""
+"gimp_pixel_rgns_register поддерживает только 1, 2 или 3 аргумента, обновите "
+"до gimp-1.1 и сообщите об этой ошибке"
+
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"ВСТРОЕННАЯ ДОКУМЕНТАЦИЯ В ФОРМАТЕ POD:\n"
+"\n"
+
+msgid "Fileselector for $name"
+msgstr "Выбор файла для $name"
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Расш./Визуализация/Точкогенератор..."
+
+msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
+msgstr "невозможно преобразовать Gimp::Drawable в Gimp::GimpDrawable (id %d)"
+
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Image>/Фильтры/Искажения/MirrorSplit..."
+
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Image>/Фильтры/Шум/Обратная связь..."
+
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Toolbox>/Расш./Анимация/Доска объявлений..."
+
+msgid "unable to create listening unix socket: $!\n"
+msgstr ""
+
+msgid ", %d bytes data]"
+msgstr ", %d байт данных]"
+
+msgid "server requests authorization, but no authorization available\n"
+msgstr "сервер запросил авторизацию, но авторизация не доступна\n"
+
+msgid "pdl height != region height"
+msgstr "pdl-высота != высота области"
+
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Image>/Направляющие/Центрировать..."
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "unable to open $rgb_db_path"
+msgstr "не удалось открыть $rgb_db_path"
+
+msgid "You can't run this script with an INDEXED image!!"
+msgstr "Вы не можете запустить этот скрипт на индексированном изображении!"
+
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
 
-#: examples/PDB:0
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr "<Image>/Фильтры/Визуализация/Добавить свечение"
+
+msgid "function name contains dashes instead of underscores"
+msgstr "название функции содержит дефисы вместо подчеркиваний"
+
+msgid "required callback 'run' not found\n"
+msgstr ""
+
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
+msgstr ""
+
+msgid "required callback 'query' not found\n"
+msgstr ""
+
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
+msgstr ""
+"Ожидалось INT32, а получено '%s'. Добавьте '*1' если вы действительно "
+"намереваетесь посылать строку"
+
+msgid "wrong authorization, aborting connection"
+msgstr "неудачная авторизация, соединение оборвано"
+
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr ""
+
+msgid "WARNING"
+msgstr "ВНИМАНИЕ"
+
+msgid "Brush Selection Dialog"
+msgstr "Диалог выбора кисти"
+
+msgid "(none)"
+msgstr "(нет)"
+
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
+msgstr ""
+"Ожидалось INT32, а получено '%s'. Возможно вы имели в виду '%s' вместо этого "
+"и забыли про 'use strict'"
+
+msgid "authorization required for tcp connections"
+msgstr "для TCP-соединений требуется авторизация"
+
+msgid "[undefined]"
+msgstr "[неопределено]"
+
+msgid "<Image>/Guides/Remove Guides"
+msgstr "<Image>/Направляющие/Удалить"
+
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr ""
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr "Вы не можете запустить этот скрипт без Альфа-канала!!!"
+
+msgid "WARNING: shared locking requested but not implemented"
+msgstr "ВНИМАНИЕ: shared locking запрошен, но не реализован"
+
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr "<Toolbox>/Расш./Визуализация/Yin-Yang..."
+
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Фильтры/Регистратор/SOTA хром"
+
+msgid "%s: procedural database execution failed"
+msgstr "%s: сбой выполнения процедурной базы данных"
+
+msgid "<Image>/Video/VCR Console..."
+msgstr "<Image>/Видео/Пульт видеомагнитофона..."
+
+msgid ", authorization required"
+msgstr ", требуется авторизация"
+
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr "<Toolbox>/Расш./Визуализация/Золотая середина..."
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr ""
+
+msgid "<Image>/View/3D Surface..."
+msgstr "<Image>/Вид/3D поверхность..."
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr "попытка запуска Gimp с параметром \"$opt\"\n"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Inner Bevel..."
+
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+"путь меню _должен_ начинаться с <Image>, <Toolbox>, <Load>, <Save> или "
+"<None>!"
+
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Image>/ФИльтры/Разное/Магия..."
+
+msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Toolbox>/Расш./Perl/Сервер"
+
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr "<Image>/Правка/Повтор и дублирование..."
+
+msgid "accepted unix connection"
+msgstr "принять unix-соединение"
+
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Image>/Фильтры/Цвета/Отобразить в градиент..."
+
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Image>/Фильтры/Регистратор/Imigre-26"
+
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "gimp_tile_get_data еще не реализовано\n"
+
+msgid "dunno how to pass arg type %d"
+msgstr "неизвестно как передать аргумент типа %d"
+
+msgid "Browse"
+msgstr "Просмотр"
+
 msgid "Author"
 msgstr "Автор"
 
-#: UI/UI.pm:0
-msgid "BG"
-msgstr "ФОН"
+msgid "unable to create '$fn': $!"
+msgstr "не удалось создать '$fn': $!"
 
-#: UI/UI.pm:0
+msgid "received QUIT request"
+msgstr "получен запрос на выход (QUIT)"
+
+msgid "unable to create listening tcp socket: $!\n"
+msgstr ""
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-*-*"
+
 msgid ""
 "BLURB:\n"
 "\n"
@@ -518,609 +394,329 @@ msgstr ""
 "\n"
 "$help"
 
-#: examples/example-fu:0
-msgid "Background"
-msgstr "Фон"
-
-#: UI/UI.pm:0
-msgid "Browse"
-msgstr "Просмотр"
-
-#: UI/UI.pm:0
-msgid "Brush Selection Dialog"
-msgstr "Диалог выбора кисти"
-
-#: examples/translogo:0
-msgid "Bumpmap"
-msgstr ""
-
-#: UI/UI.pm:0
-msgid "Cancel"
-msgstr "Отмена"
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "Невозможно вызвать '$AUTOLOAD' в этот момент"
-
-#: examples/PDB:0
-msgid "Close"
-msgstr "Закрыть"
-
-#: UI/UI.pm:0
-msgid "Color"
-msgstr "Цвет"
-
-#: examples/PDB:0
-msgid "Command"
-msgstr "Команда"
-
-#: examples/PDB:0
-msgid "Copyright"
-msgstr "Авторское право"
-
-#: examples/PDB:0
-msgid "DESCRIPTION"
-msgstr "ОПИСАНИЕ"
-
-#: examples/PDB:0
-msgid "Date/Version"
-msgstr "Дата/Версия"
-
-#: UI/UI.pm:0
-msgid "Defaults"
-msgstr "Исх.значения"
-
-#: examples/PDB:0
-msgid "Description"
-msgstr "Описание"
-
-#: UI/UI.pm:0
-msgid "Edit"
-msgstr "Правка"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
-msgstr ""
-"Ожидалось INT32, а получено '%s'. Добавьте '*1' если вы действительно "
-"намереваетесь посылать строку"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
-msgstr ""
-"Ожидалось INT32, а получено '%s'. Возможно вы имели в виду '%s' вместо этого "
-"и забыли про 'use strict'"
-
-#: Gimp/Lib.xs:0
-msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "ФАТАЛЬНО: canonicalize_colour не вернуло значение!"
-
-#: UI/UI.pm:0
-msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "ФАТАЛЬНАЯ ОШИБКА: невозможно создать $tmp: $!\n"
-
-#: UI/UI.pm:0
-msgid "FG"
-msgstr "Передний план"
-
-#: UI/UI.pm:0
-msgid "Fileselector for $name"
-msgstr ""
-
-#: UI/UI.pm:0
-msgid "Font Selection Dialog ($desc)"
-msgstr "Диалог выбора шрифта ($desc)"
-
-#: examples/PDB:0
-msgid "Function Info"
-msgstr "Информация о функции"
-
-#: UI/UI.pm:0
-msgid "Gradient Selection Dialog"
-msgstr "Диалог выбора градиента"
-
-#: UI/UI.pm:0
-msgid "Help for "
-msgstr "Справка о "
-
-#: UI/UI.pm:0
-msgid "Help"
-msgstr "Справка"
-
-#: UI/UI.pm:0
-msgid "Illegal default font description for $function: $val\n"
-msgstr "Недопустимое описание шрифта по умолчанию для $function: $val\n"
-
-#: examples/PDB:0
-msgid "Image Types"
-msgstr "Типы изображений"
-
-#: examples/PDB:0
-msgid "Last Modified"
-msgstr "Последнее измененное"
-
-#: UI/UI.pm:0
-msgid "Load $name"
-msgstr "Загрузить $name"
-
-#: UI/UI.pm:0
-msgid "Load"
-msgstr "Загрузить"
-
-#: examples/PDB:0
-msgid "Menu Path"
-msgstr "Путь меню"
-
-#: examples/PDB:0
-msgid "More..."
-msgstr "Дальше..."
-
-#: examples/PDB:0
-msgid "NAME"
-msgstr "НАЗВАНИЕ"
-
-#: examples/perlotine:0
-msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
-"Не найдено ни вертикальных ни горизонтальных направляющих. Выполнение "
-"прервано."
-
-#: UI/UI.pm:0
 msgid "OK"
 msgstr "OK"
 
-#: examples/PDB:0
-msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "Исследователь ПБД - olof-редакция (еще очень даже альфа-версия)"
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr "gimp_tile_set_data еще не реализовано\n"
 
-#: UI/UI.pm:0
-msgid "Pattern Selection Dialog"
-msgstr "Диалог выбора шаблона"
+msgid "argument incompatible with type IMAGE"
+msgstr "аргумент несовместим с типом ИЗОБРАЖЕНИЕ"
 
-#: examples/PDB:0
-msgid "Plug-In Path"
-msgstr "Путь дополнения"
+msgid "accepting connections on port $port"
+msgstr "принято соединение на порту $port"
 
-#: UI/UI.pm:0
-msgid "Previous"
-msgstr "Предыдущее"
+msgid "<Image>/Filters/Text/Terral Text..."
+msgstr "<Image>/Фильтры/Текст/Земляной текст..."
 
-#: UI/UI.pm:0
-msgid "Reset all values to their default"
-msgstr "Сбросить все значения в исходные"
+msgid "Description"
+msgstr "Описание"
 
-#: UI/UI.pm:0
-msgid "Restore values to the previous ones"
-msgstr "Восстановить предыдущие значения"
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr "params и return_vals должны быть ссылками на массив (даже если пусты)!"
 
-#: UI/UI.pm:0
-msgid "Save $name"
-msgstr "Сохранить $name"
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
 
-#: UI/UI.pm:0
-msgid "Save"
-msgstr "Сохранить"
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Image>/Фильтры/Анимация/BlowInOut..."
 
-#: examples/colorhtml:0
-msgid "Saving '$filename' as COLORHTML..."
-msgstr "Сохранение '$filename' как COLORHTML..."
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr "$_: недопустимый ключ, попробуйте $0 --help\n"
 
-#: examples/dataurl:0
-msgid "Saving '$filename' as DATAURL..."
-msgstr "Сохранение '$filename' как DATAURL..."
-
-#: examples/sethspin:0
-msgid "Seth Spin..."
-msgstr ""
-
-#: examples/PDB:0
-msgid "Shortcuts"
-msgstr "Сокращения"
-
-#: examples/sethspin:0
-msgid "Spin Layer DEST (250ms)"
-msgstr ""
-
-#: examples/sethspin:0
-msgid "Spin Layer SRC (250ms)"
-msgstr ""
-
-#: examples/PDB:0
-msgid "Status"
-msgstr "Состояние"
-
-#: examples/PDB:0
-msgid "Synopsis"
-msgstr "Резюме"
-
-#: examples/PDB:0
-msgid "TYPE"
-msgstr "ТИП"
-
-#: examples/translogo:0
-msgid "Text"
-msgstr "Текст"
-
-#: Gimp/Lib.xs:0
-msgid "This module was built without support for PDL."
-msgstr "Этот модуль был собран без поддержки PDL."
-
-#: Gimp/Lib.xs:0
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Невозможно преобразовать ссылку в тип \"%s\""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
+msgid "<Image>/Filters/Text/TeX String..."
+msgstr "<Image>/Фильтры/Текст/Строка TeX..."
 
-#: examples/colorhtml:0 examples/dataurl:0
-msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "Не удалось открыть '$filename' для записи: $!\n"
+msgid "<Image>/Guides/Guide Grid..."
+msgstr "<Image>/Направляющие/Сетка..."
 
-#: examples/dataurl:0
-msgid "Unable to read temporary image tile $tmp: $!"
-msgstr ""
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr "<Toolbox>/Расш./Исследователь ПБД..."
 
-#: UI/UI.pm:0
-msgid "Unsupported argumenttype $type"
-msgstr "Неподдерживаемый тип аргумента $type"
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Фильтры/Искажения/Windify..."
 
-#: examples/visual:0
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Фильтры/Применить выражение Perl..."
+
+msgid "gimp procedure '%s' not found"
+msgstr "процедура Gimp '%s' не найдена"
+
 msgid "Visual Scriptor"
 msgstr "Визуальный Scriptor"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "WARNING"
-msgstr "ВНИМАНИЕ"
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr "<Image>/Фильтры/Отображение/Xach-блоки..."
 
-#: Gimp/Fu.pm:0
+msgid "server going down..."
+msgstr "сервер отключается..."
+
+msgid "unable to read temporary file $tmp: $!"
+msgstr "невозможно прочесть временный файл $tmp: $!"
+
+msgid "Saving '$filename' as COLORHTML..."
+msgstr "Сохранение '$filename' как COLORHTML..."
+
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr "вызвано как '%s', но '%s' не зарегистрировано в pdb"
+
+msgid "Shortcuts"
+msgstr "Сокращения"
+
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Фильтры/Регистратор/Скоростной текст"
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Расш./Создать_изображения"
+
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr "<Toolbox>/Расш./Редактор паразитов..."
+
+msgid "9x15bold"
+msgstr "9x15bold"
+
+msgid "unauthorized command received, aborting connection"
+msgstr "получена неавторизованная команда, соединение оборвано"
+
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr "<Toolbox>/Расш./Visual Scriptor..."
+
+msgid "NAME"
+msgstr "НАЗВАНИЕ"
+
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
 "ВНИМАНИЕ: $function вернула что-то не являющееся изображением: \"$img\"\n"
 
-#: Perl-Server:0
-msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr ""
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Image>/Фильтры/Цвета/Огонь..."
 
-#: Perl-Server:0
-msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr "<Image>/Фильтры/Регистратор/Web-заголовок"
 
-#: Perl-Server:0
-msgid "WARNING: shared locking requested but not implemented"
-msgstr "ВНИМАНИЕ: shared locking запрошен, но не реализован"
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr "ФАТАЛЬНО: canonicalize_colour не вернуло значение!"
 
-#: examples/translogo:0
-msgid "You can't run this script with an INDEXED image!!"
-msgstr "Вы не можете запустить этот скрипт на индексированном изображении!"
+msgid "export failed"
+msgstr "сбой экспортирования"
 
-#: examples/translogo:0
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Вы не можете запустить этот скрипт без Альфа-канала!!!"
-
-#: examples/prep4gif:0
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "Вам нужны хотя бы 2 слоя для выполнения prep4gif"
-
-#: Gimp/Lib.xs:0
-msgid "[undefined]"
-msgstr "[неопределено]"
-
-#: Gimp/Lib.xs:0
-msgid "[unfinished]\n"
-msgstr "[незавершенное]\n"
-
-#: UI/UI.pm:0
 msgid ""
-"\n"
-"\n"
-"EMBEDDED POD DOCUMENTATION:\n"
-"\n"
-msgstr ""
-"\n"
-"\n"
-"ВСТРОЕННАЯ ДОКУМЕНТАЦИЯ В ФОРМАТЕ POD:\n"
-"\n"
-
-#: Gimp/Lib.xs:0
-msgid "a color must have three components (array elements)"
-msgstr "цвет должен иметь три компонента (элемента массива)"
-
-#: Perl-Server:0
-msgid "accepted tcp connection from "
-msgstr "принято tcp-соединение с "
-
-#: Perl-Server:0
-msgid "accepted unix connection"
-msgstr "принять unix-соединение"
-
-#: Perl-Server:0
-msgid "accepting connections in $host"
-msgstr "приняты соединения в $host"
-
-#: Perl-Server:0
-msgid "accepting connections on $unix_path"
-msgstr "принятие соединения на $unix_path"
-
-#: Perl-Server:0
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "принятие соединения на порту $Gimp::Net::default_tcp_port"
-
-#: Perl-Server:0
-msgid "accepting connections on port $port"
-msgstr "принято соединение на порту $port"
-
-#: Gimp/Lib.xs:0
-msgid "argument incompatible with type IMAGE"
-msgstr "аргумент несовместим с типом ИЗОБРАЖЕНИЕ"
-
-#: Gimp/Lib.xs:0
-msgid "argument is not of type %s"
-msgstr "аргумент не типа %s"
-
-#: Gimp/Lib.xs:0
-msgid "argument type %s expected (not %s)"
-msgstr "ожидался аргумент типа %s (а не %s)"
-
-#: Gimp/Lib.xs:0
-msgid "arguments to main not yet supported!"
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
 msgstr ""
 
-#: Net/Net.pm:0
-msgid "authorization failed: $r[1]\n"
-msgstr "сбой авторизации: $r[1]\n"
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr "<Image>/Фильтры/Обнаружение края/2х2 обнаружение края"
 
-#: Net/Net.pm:0
-msgid "authorization ok, but: $r[1]\n"
-msgstr "авторизация успешна, но: $r[1]\n"
+msgid "<Image>/Layers/Center Layer"
+msgstr "<Image>/Слои/Центрировать слой"
 
-#: Perl-Server:0
-msgid "authorization required for tcp connections"
-msgstr "для TCP-соединений требуется авторизация"
-
-#: Perl-Server:0
-msgid "authorization unnecessary"
-msgstr "авторизация не нужна"
-
-#: Gimp/Lib.xs:0
-msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "вызвано как '%s', но '%s' не зарегистрировано в pdb"
-
-#: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "закрытие соединения %d (%d запросов за %g секунд)"
 
-#: Gimp/Fu.pm:0
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "преобразование к типу $pf_type2string{$type} еще не реализовано\n"
+msgid "Reset all values to their default"
+msgstr "Сбросить все значения в исходные"
 
-#: Net/Net.pm:0
-msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
-"невозможно подключиться к серверу gimp (убедитесь, что Perl-Server запущен)"
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr "<Image>/Фильтры/Разное/Border Average..."
 
-#: Gimp/Lib.xs:0
 msgid ""
-"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr ""
-"несоответствие измерений, измерений в pdl -- %d, а требуется хотя бы %d"
+"conversion from string to type $pf_type2string{$type} is not yet "
+"implemented\n"
+msgstr "преобразование строки к типу $pf_type2string{$type} еще не реализовано\n"
 
-#: Gimp/Lib.xs:0
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n"
+"                                      (for more info, see Gimp::Net(3))\n"
+msgstr ""
+
+msgid "too many arguments"
+msgstr "слишком много аргументов"
+
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
-#: Gimp/Lib.xs:0
-msgid "dunno how to pass arg type %d"
-msgstr "неизвестно как передать аргумент типа %d"
+msgid "Load"
+msgstr "Загрузить"
 
-#: Gimp/Lib.xs:0
-msgid "dunno how to return param type %d"
-msgstr "неизвестно как вернуть параметр типа %d"
-
-#: Net/Net.pm:0
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
-
-#: Net/Net.pm:0
-msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
-"ожидаемая версия протокола  $Gimp::_PROT_VERSION, а сервер использует $r[0]\n"
-
-#: examples/colorhtml:0 examples/dataurl:0
-msgid "export failed"
-msgstr "сбой экспортирования"
-
-#: Gimp/Fu.pm:0
-msgid "function '$exe' not found in this script (must be one of "
-msgstr "функция \"$exe\" в этом скрипте не найдена (должна быть одна из "
-
-#: Gimp/Fu.pm:0
-msgid "function name contains dashes instead of underscores"
-msgstr "название функции содержит дефисы вместо подчеркиваний"
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "function/macro \"$name\" not found in $class"
-msgstr "функция/макрос \"$name\" не найдена в $class"
-
-#: UI/UI.pm:0
-msgid "get current background colour from the gimp"
-msgstr "получить цвет фона из gimp"
-
-#: UI/UI.pm:0
-msgid "get current foreground colour from the gimp"
-msgstr "получить текущий цвет переднего плана из gimp"
-
-#: Gimp/Lib.xs:0
-msgid "gimp procedure '%s' not found"
-msgstr "процедура Gimp '%s' не найдена"
-
-#: Net/Net.xs:0
-msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "функции gimp-perl-pixel требуется модуль PDL::Core"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
-msgstr ""
-"gimp_pixel_rgns_register поддерживает только 1, 2 или 3 аргумента, обновите "
-"до gimp-1.1 и сообщите об этой ошибке"
-
-#: Gimp/Lib.xs:0
-msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data еще не реализовано\n"
-
-#: Gimp/Lib.xs:0
-msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data еще не реализовано\n"
-
-#: Perl-Server:0
-msgid "illegal command received, aborting connection"
-msgstr "получена недопустимая команда, соединение оборвано"
-
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, arrayref expected"
+msgid "unable to grok colour specification"
 msgstr ""
 
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, expected three array members"
-msgstr "неверная спецификация паразита, ожидались три элемента массива"
-
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, reference expected"
-msgstr "недопустимая спецификация паразита, ожидалась ссылка"
-
-#: Gimp/Lib.xs:0
-msgid "illegal type for colour specification"
-msgstr "неправильный тип спецификации цвета"
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "interface '$interface_type' unsupported."
-msgstr "интерфейс '$interface_type' не поддерживается."
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "interface=... tag is no longer supported\n"
-msgstr "тэг interface=... больше не поддерживается\n"
-
-#: Perl-Server:0
-msgid ""
-"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
-
-#: UI/UI.xs:0
-msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr ""
-
-#: Gimp/Lib.xs:0
-msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid ""
-"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
-"путь меню _должен_ начинаться с <Image>, <Toolbox>, <Load>, <Save> или "
-"<None>!"
-
-#: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
 msgstr "дополнительная информация недоступна, используйте --help\n"
 
-#: Gimp/Util.pm:0
-msgid "no font specified, using default"
-msgstr "шрифт не указан, используется установленный по умолчанию"
-
-#: Gimp/Lib.xs:0
-msgid "not enough"
-msgstr "не достаточно"
-
-#: Gimp/Lib.xs:0
-msgid "only blessed scalars accepted here"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
-
-#: Gimp/Lib.xs:0
-msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "params и return_vals должны быть ссылками на массив (даже если пусты)!"
-
-#: Gimp/Lib.xs:0
-msgid "pdl height != region height"
-msgstr "pdl-высота != высота области"
-
-#: Gimp/Lib.xs:0
-msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-arrayref в качестве типа данных для gimp-array"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
-"несоответствие глубины точки растра, pdl имеет %d канальные точки растра, а "
-"требуется %d каналов"
-
-#: Gimp/Lib.xs:0
-msgid "plug-in returned %d more values than expected"
-msgstr "дополнение вернуло на %d значений больше чем ожидалось"
-
-#: Perl-Server:0
-msgid "received QUIT request"
-msgstr "получен запрос на выход (QUIT)"
-
-#: Gimp/Fu.pm:0
-msgid "register called with too many or wrong arguments\n"
-msgstr ""
-"регистр вызван со слишком большим числом аргументов или с неверными "
-"аргументами\n"
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "required callback 'net' not found\n"
-msgstr ""
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "required callback 'query' not found\n"
-msgstr ""
-
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "required callback 'run' not found\n"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
-"run_mode должен быть INTERACTIVE, NONINTERACTIVE или RUN_WITH_LAST_VALS\n"
-
-#: Perl-Server:0
-msgid "server going down..."
-msgstr ""
-
-#: Net/Net.pm:0
-msgid "server requests authorization, but no authorization available\n"
-msgstr "сервер запросил авторизацию, но авторизация не доступна\n"
-
-#: Perl-Server:0
-msgid "server version $Gimp::VERSION started"
-msgstr "запущен сервер версии $Gimp::VERSION"
-
-#: Gimp/Util.pm:0
-msgid "text string is empty"
-msgstr "текстовая строка пуста"
-
-#: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
 
-#: Gimp/Fu.pm:0
+msgid "Gradient Selection Dialog"
+msgstr "Диалог выбора градиента"
+
+msgid " matching functions"
+msgstr "соответствующие функции"
+
+msgid "authorization ok, but: $r[1]\n"
+msgstr "авторизация успешна, но: $r[1]\n"
+
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr "Невозможно вызвать '$AUTOLOAD' в этот момент"
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr "функция/макрос \"$name\" не найдена в $class"
+
+msgid "arguments to main not yet supported!"
+msgstr ""
+
+msgid "accepting connections in $host"
+msgstr "приняты соединения в $host"
+
+msgid " (press Tab to complete)"
+msgstr " (нажмите Tab для завершения)"
+
+msgid "Save $name"
+msgstr "Сохранить $name"
+
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Фильтры/Улучшение/Warp Sharp..."
+
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Фильтры/Web/Подготовить для GIF..."
+
+msgid "illegal type for colour specification"
+msgstr "неправильный тип спецификации цвета"
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr ""
+
+msgid "Seth Spin..."
+msgstr ""
+
+msgid "get current background colour from the gimp"
+msgstr "получить цвет фона из gimp"
+
+msgid "<Image>/Filters/Text/Fit Text..."
+msgstr "<Image>/Фильтры/Текст/Эаполнить текстом..."
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr ""
+"Не найдено ни вертикальных ни горизонтальных направляющих. Выполнение "
+"прервано."
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr "принятие соединения на порту $Gimp::Net::default_tcp_port"
+
+msgid "Menu Path"
+msgstr "Путь меню"
+
+msgid "TYPE"
+msgstr "ТИП"
+
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr "<Toolbox>/Расш./Визуализация/Povray/Текстура..."
+
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "Вам нужны хотя бы 2 слоя для выполнения prep4gif"
+
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr "<Image>/Фильтры/Размывание/Размывание 2х2"
+
+msgid "interface '$interface_type' unsupported."
+msgstr "интерфейс '$interface_type' не поддерживается."
+
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Фильтры/Улучшение/2х2 Улучшение контраста"
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr "Дополенение <Загрузить> вызвано без 3-х стандартных аргументов!\n"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
+
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr "функции gimp-perl-pixel требуется модуль PDL::Core"
+
+msgid "a color must have three components (array elements)"
+msgstr "цвет должен иметь три компонента (элемента массива)"
+
+msgid "Defaults"
+msgstr "Исх.значения"
+
+msgid "Copyright"
+msgstr "Авторское право"
+
+msgid "<Image>/Select/Triangle..."
+msgstr "<Image>/Выделение/Треугольник..."
+
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Фильтры/Визуализация/Взрыв..."
+
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr "<Toolbox>/Расш./Пример Gimp::Fu..."
+
+msgid "/Xtns/Render/Logos"
+msgstr "/Расш./Визуализация/Эмблемы"
+
+msgid "argument is not of type %s"
+msgstr "аргумент не типа %s"
+
+msgid "server version $Gimp::VERSION started"
+msgstr "запущен сервер версии $Gimp::VERSION"
+
+msgid "Background"
+msgstr "Фон"
+
+msgid "%s arguments for function '%s'"
+msgstr "%s аргументов для функции '%s'"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Расш./Визуализация/Эмблемы/Пылающая сталь"
+
+msgid "only blessed scalars accepted here"
+msgstr ""
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+"ожидаемая версия протокола  $Gimp::_PROT_VERSION, а сервер использует $r[0]\n"
+
+msgid "illegal parasite specification, arrayref expected"
+msgstr ""
+
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr ""
+"несоответствие измерений, измерений в pdl -- %d, а требуется хотя бы %d"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Фильтры/Регистратор/Вырезка"
+
+msgid "Function Info"
+msgstr "Информация о функции"
+
+msgid "no font specified, using default"
+msgstr "шрифт не указан, используется установленный по умолчанию"
+
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
@@ -1128,82 +724,208 @@ msgstr ""
 "для запуска этого дополнения в интерактивном\n"
 "режиме требуется модуль gtk-perl\n"
 
-#: examples/PDB:0
-msgid "too many arguments"
-msgstr "слишком много аргументов"
+msgid "authorization failed: $r[1]\n"
+msgstr "сбой авторизации: $r[1]\n"
 
-#: Gimp/Lib.xs:0
-msgid "too many"
-msgstr "слишком много"
+msgid "Previous"
+msgstr "Предыдущее"
 
-#: Net/Net.pm:0
-msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "попытка запуска Gimp с параметром \"$opt\"\n"
+msgid "Command"
+msgstr "Команда"
 
-#: Perl-Server:0
-msgid "unable to accept tcp connection: $!\n"
-msgstr "неудалось принять TCP-соединение: $!\n"
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr ""
 
-#: Perl-Server:0
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr "<Toolbox>/Расш./Визуализация/Кирпичи..."
+
+msgid "DESCRIPTION"
+msgstr "ОПИСАНИЕ"
+
+msgid "Accelerator"
+msgstr "Ускоритель"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Фильтры/Отображение/Xach-тени..."
+
+msgid "argument type %s expected (not %s)"
+msgstr "ожидался аргумент типа %s (а не %s)"
+
+msgid "BG"
+msgstr "ФОН"
+
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr ""
+"несоответствие глубины точки растра, pdl имеет %d канальные точки растра, а "
+"требуется %d каналов"
+
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr "<Image>/Фильтры/Визуализация/Яркие края..."
+
+msgid "This module was built without support for PDL."
+msgstr "Этот модуль был собран без поддержки PDL."
+
+msgid "[unfinished]\n"
+msgstr "[незавершенное]\n"
+
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
+
+msgid "Bumpmap"
+msgstr ""
+
+msgid "Date/Version"
+msgstr "Дата/Версия"
+
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
+msgid "required callback 'net' not found\n"
+msgstr ""
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr "функция \"$exe\" в этом скрипте не найдена (должна быть одна из "
+
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr "<Image>/Фильтрф/Цвета/Цвет -> Альфа-канал..."
+
+msgid "/Xtns/Perl"
+msgstr "/Расш./Perl"
+
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr "<Toolbox>/Расш./Визуализация/Случайное искусство #1..."
+
+msgid "accepted tcp connection from "
+msgstr "принято tcp-соединение с "
+
+msgid "Status"
+msgstr "Состояние"
+
+msgid "Load $name"
+msgstr "Загрузить $name"
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr "Дополнение <Сохранить> вызвано без 5-и стандартных аргументов!\n"
+
 msgid "unable to accept unix connection: $!\n"
 msgstr "невозможно принять unix-соединение: $!\n"
 
-#: Gimp/Lib.xs:0
-msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "невозможно преобразовать Gimp::Drawable в Gimp::GimpDrawable (id %d)"
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr "<Toolbox>/Расш./Пример дополнения Perl"
 
-#: UI/UI.pm:0
-msgid "unable to create '$fn': $!"
-msgstr "не удалось создать '$fn': $!"
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr "<Toolbox>/Расш./Визуализация/Povray/Настройки..."
 
-#: Perl-Server:0
-msgid "unable to create listening tcp socket: $!\n"
-msgstr ""
+msgid "unable to accept tcp connection: $!\n"
+msgstr "неудалось принять TCP-соединение: $!\n"
 
-#: Perl-Server:0
-msgid "unable to create listening unix socket: $!\n"
-msgstr ""
+msgid "(UNINITIALIZED)"
+msgstr "(НЕ ИНИЦИАЛИЗИРОВАНО)"
 
-#: Net/Net.pm:0
-msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr "<Image>/Фильтры/Визуализация/Чищеный метал..."
 
-#: Net/Net.pm:0
-msgid "unable to fork: $!"
-msgstr "не удалось выполнить fork: $!"
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr "perl-arrayref в качестве типа данных для gimp-array"
 
-#: Gimp/Lib.xs:0
-msgid "unable to grok colour specification"
-msgstr ""
+msgid "<Image>/Filters/Web/Webify..."
+msgstr "<Image>/Фильтры/Web/Webify..."
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
-msgid "unable to open $rgb_db_path"
-msgstr "не удалось открыть $rgb_db_path"
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr "Не удалось открыть '$filename' для записи: $!\n"
 
-#: Perl-Server:0
-msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr ""
+msgid "Unsupported argumenttype $type"
+msgstr "Неподдерживаемый тип аргумента $type"
 
-#: UI/UI.pm:0
-msgid "unable to read '$fn': $!"
-msgstr "не удалось прочесть '$fn': $!"
+msgid "/Xtns/Render/Povray"
+msgstr "/Расш./Визуализация/Povray"
 
-#: UI/UI.pm:0
-msgid "unable to read temporary file $tmp: $!"
-msgstr "невозможно прочесть временный файл $tmp: $!"
+msgid "Color"
+msgstr "Цвет"
 
-#: Perl-Server:0
-msgid "unauthorized command received, aborting connection"
-msgstr "получена неавторизованная команда, соединение оборвано"
+msgid "authorization unnecessary"
+msgstr "авторизация не нужна"
 
-#: examples/dataurl:0
+msgid "illegal parasite specification, reference expected"
+msgstr "недопустимая спецификация паразита, ожидалась ссылка"
+
+msgid "too many arguments, use --help\n"
+msgstr "слишком много аргументов, используйте --help\n"
+
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr "<Toolbox>/Расш./Визуализация/Таблица шрифтов..."
+
+msgid "Edit"
+msgstr "Правка"
+
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Image>/Фильтры/Регистратор/Смешанный II..."
+
+msgid "Saving '$filename' as DATAURL..."
+msgstr "Сохранение '$filename' как DATAURL..."
+
+msgid "text string is empty"
+msgstr "текстовая строка пуста"
+
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr "<Image>/Фильтры/Искажения/Царапины..."
+
+msgid "$_: unknown/illegal file-save option"
+msgstr "$_: неизвестный/недопустимый параметр сохранения файла"
+
+msgid "/Xtns/Render"
+msgstr "/Расш./Визуализация"
+
+msgid " = [argument error]\n"
+msgstr " = [ошибка аргумента]\n"
+
+msgid "<Image>/Select/Round..."
+msgstr "<Image>/Выделение/Круг..."
+
+msgid "plug-in returned %d more values than expected"
+msgstr "дополнение вернуло на %d значений больше чем ожидалось"
+
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr "$_ не является допустимым тэгом импорта для пакета $pkg"
+
 msgid "url size is too large ($max > 1024)\n"
 msgstr "размер URL слишком большой ($max > 1024)\n"
 
-#: Perl-Server:0
-msgid "wrong authorization, aborting connection"
-msgstr "неудачная авторизация, соединение оборвано"
+msgid "illegal command received, aborting connection"
+msgstr "получена недопустимая команда, соединение оборвано"
 
-#: Gimp/Compat.pm:0
-msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: несовпадающее XLFD \"$fontname\"\n"
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr "<Image>/Фильтры/Шум/Клишировать..."
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Расш./Анимация/Seth Spin..."
+
+msgid "Pattern Selection Dialog"
+msgstr "Диалог выбора шаблона"
+
+msgid "get current foreground colour from the gimp"
+msgstr "получить текущий цвет переднего плана из gimp"
+
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Фильтры/Визуализация/Добавить пыль..."
+
+msgid "not enough"
+msgstr "не достаточно"
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr "Исследователь ПБД - olof-редакция (еще очень даже альфа-версия)"
+
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Фильтры/Web/Perl-o-tine..."
+
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Слои/Стопка/Переупорядочить..."
+
+msgid "accepting connections on $unix_path"
+msgstr "принятие соединения на $unix_path"
