@@ -1,5 +1,11 @@
 2002-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpenummenu.[ch]: added *_new_with_values() and
+	*_new_with_values_valist() variants to make enum menu creation
+	even more customizable.
+
+2002-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig-params.h: added GIMP_PARAM_RESTART and
 	GIMP_PARAM_CONFIRM flags and changed all param spec macros
 	to have a "flags" parameter.

@@ -172,6 +172,71 @@ gimp_enum_menu_new_with_range (GType      enum_type,
   return GTK_WIDGET (menu);
 }
 
+GtkWidget *
+gimp_enum_menu_new_with_values (GType      enum_type,
+                                GCallback  callback,
+                                gpointer   callback_data,
+                                gint       n_values,
+                                ...)
+{
+  GtkWidget *menu;
+  va_list    args;
+
+  va_start (args, n_values);
+
+  menu = gimp_enum_menu_new_with_values_valist (enum_type,
+                                                callback,
+                                                callback_data,
+                                                n_values,
+                                                args);
+
+  va_end (args);
+
+  return menu;
+}
+
+GtkWidget *
+gimp_enum_menu_new_with_values_valist (GType      enum_type,
+                                       GCallback  callback,
+                                       gpointer   callback_data,
+                                       gint       n_values,
+                                       va_list    args)
+{
+  GimpEnumMenu *menu;
+  GtkWidget    *menu_item;
+  GEnumValue   *value;
+  gint          i;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+  g_return_val_if_fail (n_values > 1, NULL);
+
+  menu = g_object_new (GIMP_TYPE_ENUM_MENU, NULL);
+
+  menu->enum_class = g_type_class_ref (enum_type);
+
+  for (i = 0; i < n_values; i++)
+    {
+      value = g_enum_get_value (menu->enum_class, va_arg (args, gint));
+
+      if (value)
+        {
+          menu_item = gtk_menu_item_new_with_label (gettext (value->value_name));
+          gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+          gtk_widget_show (menu_item);
+
+          g_object_set_data (G_OBJECT (menu_item), "gimp-item-data",
+                             GINT_TO_POINTER (value->value));
+
+          if (callback)
+            g_signal_connect (G_OBJECT (menu_item), "activate",
+                              callback,
+                              callback_data);
+        }
+    }
+
+  return GTK_WIDGET (menu);
+}
+
 /**
  * gimp_enum_option_menu_new:
  * @enum_type: the #GType of an enum.
@@ -220,6 +285,51 @@ gimp_enum_option_menu_new_with_range (GType      enum_type,
   
   option_menu = gtk_option_menu_new ();
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  
+  return option_menu;
+}
+
+GtkWidget *
+gimp_enum_option_menu_new_with_values (GType      enum_type,
+                                       GCallback  callback,
+                                       gpointer   callback_data,
+                                       gint       n_values,
+                                       ...)
+{
+  GtkWidget *option_menu;
+  va_list    args;
+
+  va_start (args, n_values);
+
+  option_menu = gimp_enum_option_menu_new_with_values_valist (enum_type,
+                                                              callback,
+                                                              callback_data,
+                                                              n_values, args);
+
+  va_end (args);
+
+  return option_menu;
+}
+
+GtkWidget *
+gimp_enum_option_menu_new_with_values_valist (GType      enum_type,
+                                              GCallback  callback,
+                                              gpointer   callback_data,
+                                              gint       n_values,
+                                              va_list    args)
+{
+  GtkWidget *option_menu = NULL;
+  GtkWidget *menu;
+
+  menu = gimp_enum_menu_new_with_values_valist (enum_type,
+                                                callback, callback_data,
+                                                n_values, args);
+
+  if (menu)
+    {
+      option_menu = gtk_option_menu_new ();
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+    }
   
   return option_menu;
 }
