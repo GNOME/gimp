@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Make dialog_handler.h bypass the declarations for the exported entry points
- * in this file.
+/* Make dialog_handler.h declare the exported entry points from this
+ * file for export, to match the definition here.
  */
 #define __DIALOG_HANDLER_C_ 1
 

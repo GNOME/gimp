@@ -1,3 +1,16 @@
+2001-03-12  Tor Lillqvist  <tml@iki.fi>
+
+	* app/dialog_handler.h: Change the #ifdef logic: Declare
+	dialog_register and dialog_unregister always, but mark for export
+	only when compiling dialog_handler.c. That way MSVC won't complain
+	when dialog_handler.c calls dialog_unregister without it
+	being defined, and also the declarations and definitions will
+	have identical attributes (both marked for export). Whew. Gcc
+	is a bit less picky, it accepts a declaration that isn't marked
+	for export even if the definition is.
+
+	* app/dialog_handler.c: Change comment correspondingly.
+
 2001-03-11  Daniel Egger  <egger@suse.de>
 
 	* plug-ins/common/sobel.c: Applied patch from
