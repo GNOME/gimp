@@ -42,6 +42,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcursor.h"
+#include "widgets/gimpenummenu.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -140,6 +141,9 @@ static void   curves_preview              (CurvesDialog   *cd);
 static void   curves_channel_callback     (GtkWidget      *widget,
 					   gpointer        data);
 
+static gboolean curves_set_sensitive_callback 
+                                          (gpointer       item_data,
+                                           CurvesDialog   *cd);
 static void   curves_smooth_callback      (GtkWidget      *widget,
 					   gpointer        data);
 static void   curves_free_callback        (GtkWidget      *widget,
@@ -186,8 +190,6 @@ static CurvesDialog * curves_dialog = NULL;
 /*  the curves file dialog  */
 static GtkWidget *file_dlg = NULL;
 static gboolean   load_save;
-
-static GtkWidget *channel_items[5];
 
 static CRMatrix CR_basis =
 {
@@ -306,19 +308,10 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   curves_dialog->color     = gimp_drawable_is_rgb (curves_dialog->drawable);
   curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 
-  /* check for alpha channel */
-  if (gimp_drawable_has_alpha (curves_dialog->drawable))
-    gtk_widget_set_sensitive (channel_items[4], TRUE);
-  else 
-    gtk_widget_set_sensitive (channel_items[4], FALSE);
-  
-  /*  hide or show the channel menu based on image type  */
-  if (curves_dialog->color)
-    for (i = 0; i < 4; i++) 
-       gtk_widget_set_sensitive (channel_items[i], TRUE);
-  else 
-    for (i = 1; i < 4; i++) 
-      gtk_widget_set_sensitive (channel_items[i], FALSE);
+  /* set the sensitivity of the channel menu based on the drawable type */
+  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (curves_dialog->channel_menu),
+                                  (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
+                                  curves_dialog);
 
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
@@ -383,6 +376,11 @@ gimp_curves_tool_button_press (GimpTool        *tool,
       curves_dialog->drawable = drawable;
       curves_dialog->color = gimp_drawable_is_rgb (drawable);
       curves_dialog->image_map = image_map_create (gdisp, drawable);
+
+      gimp_option_menu_set_sensitive 
+        (GTK_OPTION_MENU (curves_dialog->channel_menu),
+         (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
+         curves_dialog);
     }
 
   tool->state = ACTIVE;
@@ -678,20 +676,10 @@ curves_dialog_new (void)
   label = gtk_label_new (_("Modify Curves for Channel:"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
 
-  cd->channel_menu = gimp_option_menu_new2
-    (FALSE,
-     G_CALLBACK (curves_channel_callback),
-     cd,
-     GINT_TO_POINTER (cd->channel),
-
-     _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), &channel_items[0],
-     _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   &channel_items[1],
-     _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN), &channel_items[2],
-     _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),  &channel_items[3],
-     _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA), &channel_items[4],
-
-     NULL);
-
+  cd->channel_menu = 
+    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                               G_CALLBACK (curves_channel_callback),
+                               cd);
   gtk_box_pack_start (GTK_BOX (channel_hbox), cd->channel_menu, FALSE, FALSE, 2);
 
   gtk_widget_show (label);
@@ -1262,6 +1250,27 @@ curves_channel_callback (GtkWidget *widget,
 			       cd->curve_type[cd->channel]);
 
   curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
+}
+
+static gboolean
+curves_set_sensitive_callback (gpointer      item_data,
+                               CurvesDialog *cd)
+{
+  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
+  
+  switch (channel)
+    {
+    case GIMP_HISTOGRAM_VALUE:
+      return TRUE;
+    case GIMP_HISTOGRAM_RED:
+    case GIMP_HISTOGRAM_GREEN:
+    case GIMP_HISTOGRAM_BLUE:
+      return cd->color;
+    case GIMP_HISTOGRAM_ALPHA:
+      return gimp_drawable_has_alpha (cd->drawable);
+    }
+  
+  return FALSE;
 }
 
 static void

@@ -194,12 +194,12 @@ $(srcdir)/gimpmarshal.c: $(srcdir)/gimpmarshal.h
 	&& cp xgen-gmc $(@F) \
 	&& rm -f xgen-gmc xgen-gmc~
 
-$(srcdir)/core-enums.c: $(srcdir)/core-enums.h
-	$(GLIB_MKENUMS) \
-		--fhead "#include <glib-object.h>\n#include \"core-enums.h\"" \
+$(srcdir)/core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"core-enums.h\"\n#include\"libgimp/gimpintl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
-		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
 		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
 		$(srcdir)/core-enums.h > xgen-cec \
 	&& cp xgen-cec $(@F) \

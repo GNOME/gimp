@@ -2054,33 +2054,12 @@ preferences_dialog_create (Gimp *gimp)
 
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_preview_size_callback),
-			   &gimprc.preview_size,
-			   GINT_TO_POINTER (gimprc.preview_size),
-
-			   _("None"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_NONE), NULL,
-			   _("Tiny"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_TINY), NULL,
-			   _("Extra Small"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_EXTRA_SMALL), NULL,
-			   _("Small"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_SMALL), NULL,
-			   _("Medium"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_MEDIUM), NULL,
-			   _("Large"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_LARGE), NULL,
-			   _("Extra Large"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_EXTRA_LARGE), NULL,
-			   _("Huge"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_HUGE), NULL,
-			   _("Gigantic"),
-                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_GIGANTIC), NULL,
-
-			   NULL);
-
+  optionmenu = 
+    gimp_enum_option_menu_new (GIMP_TYPE_PREVIEW_SIZE,
+                               G_CALLBACK (prefs_preview_size_callback),
+                               &gimprc.preview_size);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimprc.preview_size));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Preview Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2425,21 +2404,11 @@ preferences_dialog_create (Gimp *gimp)
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimprc.cursor_mode,
-			   GINT_TO_POINTER (gimprc.cursor_mode),
-
-			   _("Tool Icon"),
-			   GINT_TO_POINTER (GIMP_CURSOR_MODE_TOOL_ICON),      NULL,
-			   _("Tool Icon with Crosshair"),
-			   GINT_TO_POINTER (GIMP_CURSOR_MODE_TOOL_CROSSHAIR), NULL,
-			   _("Crosshair only"),
-			   GINT_TO_POINTER (GIMP_CURSOR_MODE_CROSSHAIR),      NULL,
-
-			   NULL);
-
+  optionmenu = gimp_enum_option_menu_new (GIMP_TYPE_CURSOR_MODE,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimprc.cursor_mode);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimprc.cursor_mode));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Cursor Mode:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2465,40 +2434,20 @@ preferences_dialog_create (Gimp *gimp)
 
   table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
 
-  optionmenu = gimp_option_menu_new2
-    (FALSE,
-     G_CALLBACK (prefs_toggle_callback),
-     &gimprc.transparency_type,
-     GINT_TO_POINTER (gimprc.transparency_type),
-
-     _("Light Checks"),    GINT_TO_POINTER (GIMP_LIGHT_CHECKS), NULL,
-     _("Mid-Tone Checks"), GINT_TO_POINTER (GIMP_GRAY_CHECKS),  NULL,
-     _("Dark Checks"),     GINT_TO_POINTER (GIMP_DARK_CHECKS),  NULL,
-     _("White Only"),      GINT_TO_POINTER (GIMP_WHITE_ONLY),   NULL,
-     _("Gray Only"),       GINT_TO_POINTER (GIMP_GRAY_ONLY),    NULL,
-     _("Black Only"),      GINT_TO_POINTER (GIMP_BLACK_ONLY),   NULL,
-
-     NULL);
-
+  optionmenu = gimp_enum_option_menu_new (GIMP_TYPE_CHECK_TYPE,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimprc.transparency_type);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimprc.transparency_type));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Transparency Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimprc.transparency_size,
-			   GINT_TO_POINTER (gimprc.transparency_size),
-
-			   _("Small"),  
-                           GINT_TO_POINTER (GIMP_SMALL_CHECKS),  NULL,
-			   _("Medium"), 
-                           GINT_TO_POINTER (GIMP_MEDIUM_CHECKS), NULL,
-			   _("Large"),  
-                           GINT_TO_POINTER (GIMP_LARGE_CHECKS),  NULL,
-
-			   NULL);
-
+  optionmenu = gimp_enum_option_menu_new (GIMP_TYPE_CHECK_SIZE,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimprc.transparency_size);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimprc.transparency_size));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Check Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);

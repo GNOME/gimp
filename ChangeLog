@@ -1,5 +1,27 @@
 2002-03-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.[ch]: new function to set the sensitivity
+	of an option_menu.
+
+	* app/base/base-enums.[ch]: register and describe GimpHistogramChannel.
+
+	* app/core/Makefile.am
+	* app/core/core-enums.[ch]: build with gimp-mkenums, added core-enums.c
+	to CVS, added descriptions for GimpPreviewSize.
+	
+	* app/display/Makefile.am
+	* app/display/display-enums.[ch]: build with gimp-mkenums, added 
+	display-enums.c to CVS, added descriptions for GimpCursorMode.
+
+	* app/gui/preferences-dialog.c: more GimpEnumMenus.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.c: use a GimpEnumMenu for the Channel menu.
+	Allow alpha channel in HistogramView. These tools needs more work...
+
+2002-03-17  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-mkenums: allowing NULL for names was a bad idea...
 
 	* app/base/base-enums.[ch]: added more descriptions.

@@ -4,4 +4,3 @@ Makefile.in
 .libs
 *.lo
 libappdisplay.la
-display-enums.c

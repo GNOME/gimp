@@ -326,6 +326,47 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
 }
 
 /**
+ * gimp_option_menu_set_sensitive:
+ * @option_menu: a #GtkOptionMenu as returned by gimp_option_menu_new() or
+ *            gimp_option_menu_new2().
+ * @callback: a function called for each item in the menu to determine the
+ *            the sensitivity state.
+ * @callback_data: data to pass to the @callback function.
+ *
+ * Calls the given @callback for each item in the menu and passes it the
+ * item_data and the @callback_data. The menu item's sensitivity is set
+ * according to the return value of this function.
+ **/
+void
+gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
+                                GimpOptionMenuSensitivityCallback  callback,
+                                gpointer                           callback_data) 
+{
+  GtkWidget *menu_item;
+  GList     *list;
+  gpointer   item_data;
+  gboolean   sensitive;
+
+  g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
+  g_return_if_fail (callback != NULL);
+
+  for (list = GTK_MENU_SHELL (option_menu->menu)->children;
+       list;
+       list = g_list_next (list))
+    {
+      menu_item = GTK_WIDGET (list->data);
+
+      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+        {
+          item_data = g_object_get_data (G_OBJECT (menu_item), 
+                                         "gimp-item-data");
+          sensitive = callback (item_data, callback_data);
+          gtk_widget_set_sensitive (menu_item, sensitive);
+	}
+    }
+}
+
+/**
  * gimp_radio_group_new:
  * @in_frame:    #TRUE if you want a #GtkFrame around the radio button group.
  * @frame_title: The title of the Frame or #NULL if you don't want a title.

@@ -44,6 +44,7 @@
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
@@ -146,6 +147,8 @@ static void   levels_update                        (LevelsDialog  *ld,
 static void   levels_preview                       (LevelsDialog  *ld);
 static void   levels_channel_callback              (GtkWidget     *widget,
 						    gpointer       data);
+static gboolean levels_set_sensitive_callback      (gpointer       item_data,
+                                                    LevelsDialog  *ld);
 static void   levels_reset_callback                (GtkWidget     *widget,
 						    gpointer       data);
 static void   levels_ok_callback                   (GtkWidget     *widget,
@@ -190,8 +193,6 @@ static void      levels_write_to_file              (FILE          *f);
 /*  the levels file dialog  */
 static GtkWidget *file_dlg = NULL;
 static gboolean   load_save;
-
-static GtkWidget *color_option_items[5];
 
 static LevelsDialog *levels_dialog = NULL;
 
@@ -302,25 +303,19 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   levels_dialog->color     = gimp_drawable_is_rgb (levels_dialog->drawable);
   levels_dialog->image_map = image_map_create (gdisp, levels_dialog->drawable);
 
-  /* check for alpha channel */
-  gtk_widget_set_sensitive (color_option_items[4],
-			    gimp_drawable_has_alpha (levels_dialog->drawable));
-  
-  /*  hide or show the channel menu based on image type  */
-  if (levels_dialog->color)
-    for (i = 0; i < 4; i++) 
-       gtk_widget_set_sensitive (color_option_items[i], TRUE);
-  else 
-    for (i = 1; i < 4; i++) 
-       gtk_widget_set_sensitive (color_option_items[i], FALSE);
+  /* set the sensitivity of the channel menu based on the drawable type */
+  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (levels_dialog->channel_menu),
+                                  (GimpOptionMenuSensitivityCallback) levels_set_sensitive_callback,
+                                  levels_dialog);
 
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (levels_dialog->channel_menu),
 			       levels_dialog->channel);
 
 
-  levels_update (levels_dialog, LOW_INPUT | GAMMA | HIGH_INPUT | LOW_OUTPUT | HIGH_OUTPUT | DRAW);
-  levels_update (levels_dialog, INPUT_LEVELS | OUTPUT_LEVELS);
+  levels_update (levels_dialog, (LOW_INPUT | GAMMA | HIGH_INPUT | 
+                                 LOW_OUTPUT | HIGH_OUTPUT |
+                                 DRAW | INPUT_LEVELS | OUTPUT_LEVELS));
 
   gimp_drawable_calculate_histogram (levels_dialog->drawable,
 				     levels_dialog->hist);
@@ -437,26 +432,12 @@ levels_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  ld->channel_menu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (levels_channel_callback),
-			   ld,
-			   GINT_TO_POINTER (ld->channel),
-
-			   _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE),
-			   &color_option_items[0],
-			   _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),
-			   &color_option_items[1],
-			   _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN),
-			   &color_option_items[2],
-			   _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),
-			   &color_option_items[3],
-			   _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA),
-			   &color_option_items[4],
-
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);
+  ld->channel_menu = 
+    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                               G_CALLBACK (levels_channel_callback),
+                               ld);
+  gtk_box_pack_start (GTK_BOX (channel_hbox), 
+                      ld->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (ld->channel_menu);
 
   gtk_widget_show (channel_hbox);
@@ -998,6 +979,27 @@ levels_channel_callback (GtkWidget *widget,
 	} 
     }
   levels_update (ld, ALL);
+}
+
+static gboolean
+levels_set_sensitive_callback (gpointer      item_data,
+                               LevelsDialog *ld)
+{
+  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
+  
+  switch (channel)
+    {
+    case GIMP_HISTOGRAM_VALUE:
+      return TRUE;
+    case GIMP_HISTOGRAM_RED:
+    case GIMP_HISTOGRAM_GREEN:
+    case GIMP_HISTOGRAM_BLUE:
+      return ld->color;
+    case GIMP_HISTOGRAM_ALPHA:
+      return gimp_drawable_has_alpha (ld->drawable);
+    }
+  
+  return FALSE;
 }
 
 static void

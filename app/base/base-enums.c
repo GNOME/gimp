@@ -110,11 +110,11 @@ gimp_check_type_get_type (void)
 
 static const GEnumValue gimp_histogram_channel_enum_values[] =
 {
-  { GIMP_HISTOGRAM_VALUE, "GIMP_HISTOGRAM_VALUE", "value" },
-  { GIMP_HISTOGRAM_RED, "GIMP_HISTOGRAM_RED", "red" },
-  { GIMP_HISTOGRAM_GREEN, "GIMP_HISTOGRAM_GREEN", "green" },
-  { GIMP_HISTOGRAM_BLUE, "GIMP_HISTOGRAM_BLUE", "blue" },
-  { GIMP_HISTOGRAM_ALPHA, "GIMP_HISTOGRAM_ALPHA", "alpha" },
+  { GIMP_HISTOGRAM_VALUE, N_("Value"), "value" },
+  { GIMP_HISTOGRAM_RED, N_("Red"), "red" },
+  { GIMP_HISTOGRAM_GREEN, N_("Green"), "green" },
+  { GIMP_HISTOGRAM_BLUE, N_("Blue"), "blue" },
+  { GIMP_HISTOGRAM_ALPHA, N_("Alpha"), "alpha" },
   { 0, NULL, NULL }
 };
 

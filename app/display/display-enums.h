@@ -26,9 +26,9 @@ GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CURSOR_MODE_TOOL_ICON,
-  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,
-  GIMP_CURSOR_MODE_CROSSHAIR
+  GIMP_CURSOR_MODE_TOOL_ICON,       /*< desc="Tool Icon"                >*/
+  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,  /*< desc="Tool Icon with Crosshair" >*/ 
+  GIMP_CURSOR_MODE_CROSSHAIR        /*< desc="Crosshair only"           >*/
 } GimpCursorMode;
 
 

@@ -4,6 +4,5 @@ Makefile.in
 .libs
 *.lo
 libappcore.la
-core-enums.c
 gimpmarshal.c
 gimpmarshal.h

@@ -98,13 +98,27 @@ GType gimp_check_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_LIGHT_CHECKS = 0,   /*< desc="Light Checks"    >*/
-  GIMP_GRAY_CHECKS  = 1,   /*< desc="Mid-Tone Checks" >*/
-  GIMP_DARK_CHECKS  = 2,   /*< desc="Dark Checks"     >*/
-  GIMP_WHITE_ONLY   = 3,   /*< desc="White Only"      >*/
-  GIMP_GRAY_ONLY    = 4,   /*< desc="Gray Only"       >*/
-  GIMP_BLACK_ONLY   = 5    /*< desc="Black Only"      >*/
+  GIMP_LIGHT_CHECKS = 0,  /*< desc="Light Checks"    >*/
+  GIMP_GRAY_CHECKS  = 1,  /*< desc="Mid-Tone Checks" >*/
+  GIMP_DARK_CHECKS  = 2,  /*< desc="Dark Checks"     >*/
+  GIMP_WHITE_ONLY   = 3,  /*< desc="White Only"      >*/
+  GIMP_GRAY_ONLY    = 4,  /*< desc="Gray Only"       >*/
+  GIMP_BLACK_ONLY   = 5   /*< desc="Black Only"      >*/
 } GimpCheckType;
+
+
+#define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
+
+GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
+  GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
+  GIMP_HISTOGRAM_GREEN = 2,  /*< desc="Green" >*/
+  GIMP_HISTOGRAM_BLUE  = 3,  /*< desc="Blue"  >*/
+  GIMP_HISTOGRAM_ALPHA = 4   /*< desc="Alpha" >*/
+} GimpHistogramChannel;
 
 
 /*
@@ -127,15 +141,6 @@ typedef enum  /*< skip >*/
   GIMP_ALPHA_LUT,
   GIMP_GRAY_LUT = 0  /*< skip >*/
 } GimpChannelLutType;
-
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
-{
-  GIMP_HISTOGRAM_VALUE = 0,
-  GIMP_HISTOGRAM_RED   = 1,
-  GIMP_HISTOGRAM_GREEN = 2,
-  GIMP_HISTOGRAM_BLUE  = 3,
-  GIMP_HISTOGRAM_ALPHA = 4
-} GimpHistogramChannel;
 
 
 #endif /* __BASE_ENUMS_H__ */

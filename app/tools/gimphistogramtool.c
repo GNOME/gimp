@@ -36,6 +36,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
@@ -93,6 +94,9 @@ static HistogramToolDialog *  histogram_tool_dialog_new (void);
 
 static void   histogram_tool_close_callback   (GtkWidget           *widget,
 					       gpointer             data);
+static gboolean histogram_set_sensitive_callback 
+                                              (gpointer             item_data,
+                                               HistogramToolDialog *htd);
 static void   histogram_tool_channel_callback (GtkWidget           *widget,
 					       gpointer             data);
 static void   histogram_tool_gradient_draw    (GtkWidget           *gdisp,
@@ -204,11 +208,11 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
   histogram_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   histogram_dialog->color = gimp_drawable_is_rgb (histogram_dialog->drawable);
 
-  /*  hide or show the channel menu based on image type  */
-  if (histogram_dialog->color)
-    gtk_widget_show (histogram_dialog->channel_menu);
-  else
-    gtk_widget_hide (histogram_dialog->channel_menu);
+  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (histogram_dialog->channel_menu),
+                                  (GimpOptionMenuSensitivityCallback) histogram_set_sensitive_callback,
+                                  histogram_dialog);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (histogram_dialog->channel_menu),
+                                GINT_TO_POINTER (histogram_dialog->channel));
 
   /* calculate the histogram */
   pixel_region_init (&PR, gimp_drawable_data (histogram_dialog->drawable),
@@ -374,34 +378,26 @@ histogram_tool_dialog_new (void)
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   /*  The option menu for selecting channels  */
-  htd->channel_menu = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), htd->channel_menu, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Information on Channel:"));
-  gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  option_menu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (histogram_tool_channel_callback),
-			   htd,
-			   (gpointer) htd->channel,
-
-			   _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, NULL,
-			   _("Red"),   (gpointer) GIMP_HISTOGRAM_RED, NULL,
-			   _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, NULL,
-			   _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE, NULL,
-
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (option_menu);
-
+  htd->channel_menu = 
+    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                               G_CALLBACK (histogram_tool_channel_callback),
+                               htd);
+  gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (htd->channel_menu);
 
   /*  The histogram tool histogram  */
@@ -434,9 +430,6 @@ histogram_tool_dialog_new (void)
   gtk_widget_show (frame);
   gtk_widget_show (grad_hbox);
   histogram_tool_gradient_draw (htd->gradient, GIMP_HISTOGRAM_VALUE);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (hbox);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (4, 4, TRUE);
@@ -500,6 +493,27 @@ histogram_tool_channel_callback (GtkWidget *widget,
 
   gimp_histogram_view_channel (htd->histogram, htd->channel);
   histogram_tool_gradient_draw (htd->gradient, htd->channel);
+}
+
+static gboolean
+histogram_set_sensitive_callback (gpointer             item_data,
+                                  HistogramToolDialog *htd)
+{
+  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
+  
+  switch (channel)
+    {
+    case GIMP_HISTOGRAM_VALUE:
+      return TRUE;
+    case GIMP_HISTOGRAM_RED:
+    case GIMP_HISTOGRAM_GREEN:
+    case GIMP_HISTOGRAM_BLUE:
+      return htd->color;
+    case GIMP_HISTOGRAM_ALPHA:
+      return gimp_drawable_has_alpha (htd->drawable);
+    }
+  
+  return FALSE;
 }
 
 static void

@@ -21,7 +21,7 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen
-   and glib-mkenums. All enums that are not marked with /*< pdb-skip >*/
+   and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
    are exported to libgimp and the PDB. Enums that are not marked with
    /*< skip >*/ are registered with the GType system. If you want the
    enum to be skipped by both scripts, you have to use /*< pdb-skip >*/
@@ -54,16 +54,16 @@ GType gimp_preview_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PREVIEW_SIZE_NONE        = 0,
-  GIMP_PREVIEW_SIZE_TINY        = 16,
-  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,
-  GIMP_PREVIEW_SIZE_SMALL       = 32,
-  GIMP_PREVIEW_SIZE_MEDIUM      = 48,
-  GIMP_PREVIEW_SIZE_LARGE       = 64,
-  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 96,
-  GIMP_PREVIEW_SIZE_HUGE        = 128,
-  GIMP_PREVIEW_SIZE_ENORMOUS    = 192,
-  GIMP_PREVIEW_SIZE_GIGANTIC    = 256
+  GIMP_PREVIEW_SIZE_NONE        = 0,    /*< desc="None"        >*/
+  GIMP_PREVIEW_SIZE_TINY        = 16,   /*< desc="Tiny"        >*/
+  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,   /*< desc="Very Small"  >*/
+  GIMP_PREVIEW_SIZE_SMALL       = 32,   /*< desc="Small"       >*/
+  GIMP_PREVIEW_SIZE_MEDIUM      = 48,   /*< desc="Medium"      >*/
+  GIMP_PREVIEW_SIZE_LARGE       = 64,   /*< desc="Large"       >*/
+  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 96,   /*< desc="Very Large"  >*/
+  GIMP_PREVIEW_SIZE_HUGE        = 128,  /*< desc="Huge"        >*/
+  GIMP_PREVIEW_SIZE_ENORMOUS    = 192,  /*< desc="Enormous"    >*/
+  GIMP_PREVIEW_SIZE_GIGANTIC    = 256   /*< desc="Gigantic"    >*/
 } GimpPreviewSize;
 
 
