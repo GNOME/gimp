@@ -1,3 +1,9 @@
+2000-04-23  Sven Neumann <sven@gimp.org>
+
+	* es.po: cleaned up the messy spanish translation someone 
+	checked in. I have split it into po-files for our different
+	textdomains and added those files, so GIMP compiles again.
+	
 2000-04-23  Tomas Ogren  <stric@ing.umu.se>
 
 	* sv.po: Updated
