@@ -33,6 +33,7 @@
 
 #include "gimp.h"
 #include "gimp-edit.h"
+#include "gimp-utils.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -85,12 +86,16 @@ GimpLayer *
 gimp_edit_paste (GimpImage    *gimage,
 		 GimpDrawable *drawable,
 		 GimpBuffer   *paste,
-		 gboolean      paste_into)
+		 gboolean      paste_into,
+                 gint          viewport_x,
+                 gint          viewport_y,
+                 gint          viewport_width,
+                 gint          viewport_height)
 {
   GimpLayer     *layer;
   GimpImageType  type;
-  gint           x1, y1, x2, y2;
-  gint           cx, cy;
+  gint           center_x;
+  gint           center_y;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -118,22 +123,55 @@ gimp_edit_paste (GimpImage    *gimage,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("Paste"));
 
-  /*  Set the offsets to the center of the image  */
   if (drawable)
     {
-      gimp_item_offsets (GIMP_ITEM (drawable), &cx, &cy);
-      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-      cx += (x1 + x2) >> 1;
-      cy += (y1 + y2) >> 1;
+      /*  if pasting to a drawable  */
+
+      gint     off_x, off_y;
+      gint     x1, y1, x2, y2;
+      gint     paste_x, paste_y;
+      gint     paste_width, paste_height;
+      gboolean have_mask;
+
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      if (! have_mask         &&
+          viewport_width  > 0 &&
+          viewport_height > 0 &&
+          gimp_rectangle_intersect (viewport_x, viewport_y,
+                                    viewport_width, viewport_height,
+                                    off_x, off_y,
+                                    x2 - x1, y2 - y1,
+                                    &paste_x, &paste_y,
+                                    &paste_width, &paste_height))
+        {
+          center_x = paste_x + paste_width  / 2;
+          center_y = paste_y + paste_height / 2;
+        }
+      else
+        {
+          center_x = off_x + (x1 + x2) / 2;
+          center_y = off_y + (y1 + y2) / 2;
+        }
+    }
+  else if (viewport_width > 0 && viewport_height > 0)
+    {
+      /*  if we got a viewport set the offsets to the center of the viewport  */
+
+      center_x = viewport_x + viewport_width  / 2;
+      center_y = viewport_y + viewport_height / 2;
     }
   else
     {
-      cx = gimage->width  >> 1;
-      cy = gimage->height >> 1;
+      /*  otherwise the offsets to the center of the image  */
+
+      center_x = gimage->width  / 2;
+      center_y = gimage->height / 2;
     }
 
-  GIMP_ITEM (layer)->offset_x = cx - (GIMP_ITEM (layer)->width  >> 1);
-  GIMP_ITEM (layer)->offset_y = cy - (GIMP_ITEM (layer)->height >> 1);
+  GIMP_ITEM (layer)->offset_x = center_x - (GIMP_ITEM (layer)->width  / 2);
+  GIMP_ITEM (layer)->offset_y = center_y - (GIMP_ITEM (layer)->height / 2);
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,

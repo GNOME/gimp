@@ -214,3 +214,34 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
   *nx = (x + shell->offset_x) / scalex - offset_x;
   *ny = (y + shell->offset_y) / scaley - offset_y;
 }
+
+void
+gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
+                                         gint             *x,
+                                         gint             *y,
+                                         gint             *width,
+                                         gint             *height)
+{
+  gint x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_untransform_xy (shell,
+                                     0, 0,
+                                     &x1, &y1,
+                                     FALSE, FALSE);
+  gimp_display_shell_untransform_xy (shell,
+                                     shell->disp_width, shell->disp_height,
+                                     &x2, &y2,
+                                     FALSE, FALSE);
+
+  if (x1 < 0) x1 = 0;
+  if (y1 < 0) y1 = 0;
+  if (x2 > shell->gdisp->gimage->width)  x2 = shell->gdisp->gimage->width;
+  if (y2 > shell->gdisp->gimage->height) y2 = shell->gdisp->gimage->height;
+
+  if (x)      *x      = x1;
+  if (y)      *y      = y1;
+  if (width)  *width  = x2 - x1;
+  if (height) *height = y2 - y1;
+}

@@ -173,7 +173,7 @@ edit_paste_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into);
+      layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into, -1, -1, -1, -1);
       success = layer != NULL;
     }
 

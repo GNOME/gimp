@@ -346,8 +346,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
   if (move->moving_guide)
     {
       gboolean delete_guide = FALSE;
-      gint     x1, y1;
-      gint     x2, y2;
+      gint     x, y, width, height;
 
       gimp_tool_control_set_scroll_lock (tool->control, FALSE);
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -363,29 +362,19 @@ gimp_move_tool_button_release (GimpTool        *tool,
           return;
         }
 
-      gimp_display_shell_untransform_xy (shell,
-                                         0, 0,
-                                         &x1, &y1,
-                                         FALSE, FALSE);
-      gimp_display_shell_untransform_xy (shell,
-                                         shell->disp_width, shell->disp_height,
-                                         &x2, &y2,
-                                         FALSE, FALSE);
-
-      if (x1 < 0) x1 = 0;
-      if (y1 < 0) y1 = 0;
-      if (x2 > gdisp->gimage->width)  x2 = gdisp->gimage->width;
-      if (y2 > gdisp->gimage->height) y2 = gdisp->gimage->height;
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
       switch (move->guide_orientation)
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
-	  if ((move->guide_position < y1) || (move->guide_position > y2))
+	  if ((move->guide_position < y) ||
+              (move->guide_position > (y + height)))
 	    delete_guide = TRUE;
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
-	  if ((move->guide_position < x1) || (move->guide_position > x2))
+	  if ((move->guide_position < x) ||
+              (move->guide_position > (x + width)))
 	    delete_guide = TRUE;
 	  break;
 

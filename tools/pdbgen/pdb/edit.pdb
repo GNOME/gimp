@@ -118,7 +118,7 @@ HELP
     );
 
     &invoke('layer != NULL');
-    $cmd = "layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into);\n";
+    $cmd = "layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into, -1, -1, -1, -1);\n";
     $invoke{code} =~ s/(success.*$)/"$cmd  $1"/me;
 }
 

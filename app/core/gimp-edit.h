@@ -27,7 +27,11 @@ const GimpBuffer * gimp_edit_copy         (GimpImage    *gimage,
 GimpLayer        * gimp_edit_paste        (GimpImage    *gimage,
                                            GimpDrawable *drawable,
                                            GimpBuffer   *paste,
-                                           gboolean      paste_into);
+                                           gboolean      paste_into,
+                                           gint          viewport_x,
+                                           gint          viewport_y,
+                                           gint          viewport_width,
+                                           gint          viewport_height);
 GimpImage        * gimp_edit_paste_as_new (Gimp         *gimp,
                                            GimpImage    *gimage,
                                            GimpBuffer   *paste);

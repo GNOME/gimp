@@ -41,6 +41,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-dnd.h"
+#include "gimpdisplayshell-transform.h"
 
 #include "gimp-intl.h"
 
@@ -50,13 +51,12 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   GimpViewable *viewable,
                                   gpointer      data)
 {
-  GimpDisplay  *gdisp;
-  GType         new_type;
-  GimpItem     *new_item;
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *gimage = shell->gdisp->gimage;
+  GType             new_type;
+  GimpItem         *new_item;
 
-  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
-
-  if (gdisp->gimage->gimp->busy)
+  if (gimage->gimp->busy)
     return;
 
   if (GIMP_IS_LAYER (viewable))
@@ -64,34 +64,36 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   else
     new_type = GIMP_TYPE_LAYER;
 
-  new_item = gimp_item_convert (GIMP_ITEM (viewable), gdisp->gimage,
-                                new_type, TRUE);
+  new_item = gimp_item_convert (GIMP_ITEM (viewable), gimage, new_type, TRUE);
 
   if (new_item)
     {
       GimpLayer *new_layer;
+      gint       x, y, width, height;
       gint       off_x, off_y;
 
       new_layer = GIMP_LAYER (new_item);
 
-      gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
       gimp_item_offsets (new_item, &off_x, &off_y);
 
-      off_x = (gdisp->gimage->width  - gimp_item_width  (new_item)) / 2 - off_x;
-      off_y = (gdisp->gimage->height - gimp_item_height (new_item)) / 2 - off_y;
+      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
+      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
 
       gimp_item_translate (new_item, off_x, off_y, FALSE);
 
-      gimp_image_add_layer (gdisp->gimage, new_layer, -1);
+      gimp_image_add_layer (gimage, new_layer, -1);
 
-      gimp_image_undo_group_end (gdisp->gimage);
+      gimp_image_undo_group_end (gimage);
 
-      gimp_image_flush (gdisp->gimage);
+      gimp_image_flush (gimage);
 
-      gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),
-                                gdisp);
+      gimp_context_set_display (gimp_get_user_context (gimage->gimp),
+                                shell->gdisp);
     }
 }
 
@@ -206,17 +208,11 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
+  GimpDisplay *gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
   if (GIMP_IS_PATTERN (viewable))
-    {
-      gimp_display_shell_bucket_fill (gdisp->gimage,
-                                      GIMP_PATTERN_BUCKET_FILL,
-                                      NULL,
-                                      GIMP_PATTERN (viewable));
-    }
+    gimp_display_shell_bucket_fill (gdisp->gimage, GIMP_PATTERN_BUCKET_FILL,
+                                    NULL, GIMP_PATTERN (viewable));
 }
 
 void
@@ -224,14 +220,10 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                const GimpRGB *color,
                                gpointer       data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
-  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
-
-  gimp_display_shell_bucket_fill (gdisp->gimage,
-                                  GIMP_FG_BUCKET_FILL,
-                                  color,
-                                  NULL);
+  gimp_display_shell_bucket_fill (gdisp->gimage, GIMP_FG_BUCKET_FILL,
+                                  color, NULL);
 }
 
 void
@@ -239,22 +231,26 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                                 GimpViewable *viewable,
                                 gpointer      data)
 {
-  GimpBuffer  *buffer;
-  GimpDisplay *gdisp;
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *gimage = shell->gdisp->gimage;
+  GimpBuffer       *buffer;
+  gint              x, y, width, height;
 
-  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
-
-  if (gdisp->gimage->gimp->busy)
+  if (gimage->gimp->busy)
     return;
 
   buffer = GIMP_BUFFER (viewable);
 
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  gimp_edit_paste (gdisp->gimage,
-		   gimp_image_active_drawable (gdisp->gimage),
-		   buffer,
-		   FALSE);
+  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
+		   buffer, FALSE,
+                   x, y, width, height);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gimage);
+
+  gimp_context_set_display (gimp_get_user_context (gimage->gimp),
+                            shell->gdisp);
 }

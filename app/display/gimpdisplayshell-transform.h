@@ -20,39 +20,45 @@
 #define __GIMP_DISPLAY_SHELL_TRANSFORM_H__
 
 
-void  gimp_display_shell_transform_coords   (GimpDisplayShell *shell,
-					     GimpCoords       *image_coords,
-					     GimpCoords       *display_coords);
-void  gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
-					     GimpCoords       *display_coords,
-					     GimpCoords       *image_coords);
+void  gimp_display_shell_transform_coords     (GimpDisplayShell *shell,
+                                               GimpCoords       *image_coords,
+                                               GimpCoords       *display_coords);
+void  gimp_display_shell_untransform_coords   (GimpDisplayShell *shell,
+                                               GimpCoords       *display_coords,
+                                               GimpCoords       *image_coords);
 
-void  gimp_display_shell_transform_xy       (GimpDisplayShell *shell,
-					     gint              x,
-					     gint              y,
-					     gint             *nx,
-					     gint             *ny,
-					     gboolean          use_offsets);
-void  gimp_display_shell_untransform_xy     (GimpDisplayShell *shell,
-					     gint              x,
-					     gint              y,
-					     gint             *nx,
-					     gint             *ny,
-					     gboolean          round,
-					     gboolean          use_offsets);
+void  gimp_display_shell_transform_xy         (GimpDisplayShell *shell,
+                                               gint              x,
+                                               gint              y,
+                                               gint             *nx,
+                                               gint             *ny,
+                                               gboolean          use_offsets);
+void  gimp_display_shell_untransform_xy       (GimpDisplayShell *shell,
+                                               gint              x,
+                                               gint              y,
+                                               gint             *nx,
+                                               gint             *ny,
+                                               gboolean          round,
+                                               gboolean          use_offsets);
 
-void  gimp_display_shell_transform_xy_f     (GimpDisplayShell *shell,
-					     gdouble           x,
-					     gdouble           y,
-					     gdouble          *nx,
-					     gdouble          *ny,
-					     gboolean          use_offsets);
-void  gimp_display_shell_untransform_xy_f   (GimpDisplayShell *shell,
-					     gdouble           x,
-					     gdouble           y,
-					     gdouble          *nx,
-					     gdouble          *ny,
-					     gboolean          use_offsets);
+void  gimp_display_shell_transform_xy_f       (GimpDisplayShell *shell,
+                                               gdouble           x,
+                                               gdouble           y,
+                                               gdouble          *nx,
+                                               gdouble          *ny,
+                                               gboolean          use_offsets);
+void  gimp_display_shell_untransform_xy_f     (GimpDisplayShell *shell,
+                                               gdouble           x,
+                                               gdouble           y,
+                                               gdouble          *nx,
+                                               gdouble          *ny,
+                                               gboolean          use_offsets);
+
+void  gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
+                                               gint             *x,
+                                               gint             *y,
+                                               gint             *width,
+                                               gint             *height);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_TRANSFORM_H__ */

@@ -37,6 +37,8 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
@@ -139,10 +141,17 @@ edit_paste_cmd_callback (GtkWidget *widget,
 
   if (gdisp->gimage->gimp->global_buffer)
     {
+      GimpDisplayShell *shell;
+      gint              x, y, width, height;
+
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
       if (gimp_edit_paste (gdisp->gimage,
-			   gimp_image_active_drawable (gdisp->gimage), 
+			   gimp_image_active_drawable (gdisp->gimage),
 			   gdisp->gimage->gimp->global_buffer,
-			   FALSE))
+			   FALSE, x, y, width, height))
 	{
           gimp_image_flush (gdisp->gimage);
 	}
@@ -158,10 +167,17 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 
   if (gdisp->gimage->gimp->global_buffer)
     {
+      GimpDisplayShell *shell;
+      gint              x, y, width, height;
+
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
       if (gimp_edit_paste (gdisp->gimage,
-			   gimp_image_active_drawable (gdisp->gimage), 
+			   gimp_image_active_drawable (gdisp->gimage),
 			   gdisp->gimage->gimp->global_buffer,
-			   TRUE))
+			   TRUE, x, y, width, height))
 	{
           gimp_image_flush (gdisp->gimage);
 	}

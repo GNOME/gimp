@@ -1,3 +1,43 @@
+2004-01-15  Michael Natterer  <mitch@gimp.org>
+
+	Fixed bug #78732 (don't paste off screen):
+
+	* app/display/gimpdisplayshell-transform.[ch]: added new function
+	gimp_display_shell_untransform_viewport() which returns the
+	visible rectangle of the image in image coordinates.
+
+	* app/core/gimp-edit.[ch] (gimp_edit_paste): added viewport
+	parameters and changed positioning of the pasted layer as follows:
+
+	- if there is a selection, center on the selection (just as before).
+	- if there is no viewport, center on the active drawable.
+	- if the viewport intersects with the active drawable, center
+	  on the intersection.
+	- if the viewport does *not* intersect with the active drawable,
+	  center on the active drawable (off-screen, but better than pasting
+	  something that will be invisible due to floating selection clipping).
+	- if there is no active drawable, center on the viewport.
+	- if there is no active drawable and no viewport, center on the image.
+
+	* app/widgets/gimpbufferview.c (gimp_buffer_view_paste_clicked)
+	(gimp_buffer_view_paste_into_clicked)
+	* app/display/gimpdisplayshell-dnd.c (gimp_display_shell_drop_buffer)
+	* app/gui/edit-commands.c (edit_paste_cmd_callback)
+	(edit_paste_into_cmd_callback): ask the shell for the viewport
+	and pass it to gimp_edit_paste().
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_drawable): center the created layer on
+	the viewport.
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): use
+	gimp_display_shell_untransform_viewport() (its code was taken from
+	here).
+
+	* tools/pdbgen/pdb/edit.pdb: pass "no viewport" to gimp_edit_paste().
+
+	* app/pdb/edit_cmds.c: regenerated.
+
 2004-01-15  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Now that we're in pre-release mode, list all the bugs fixed 

@@ -27,11 +27,20 @@
 
 #include "widgets-types.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "display/display-types.h"
+#endif
+#include "display/display-types.h"
+
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
@@ -195,26 +204,39 @@ static void
 gimp_buffer_view_paste_clicked (GtkWidget      *widget,
 				GimpBufferView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpBuffer          *buffer;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   buffer = gimp_context_get_buffer (editor->view->context);
 
   if (buffer && gimp_container_have (editor->view->container,
 				     GIMP_OBJECT (buffer)))
     {
-      GimpImage *gimage;
+      GimpDisplay *gdisp  = gimp_context_get_display (editor->view->context);
+      GimpImage   *gimage = NULL;
+      gint         x      = -1;
+      gint         y      = -1;
+      gint         width  = -1;
+      gint         height = -1;;
 
-      gimage = gimp_context_get_image (editor->view->context);
+      if (gdisp)
+	{
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+          gimp_display_shell_untransform_viewport (shell,
+                                                   &x, &y, &width, &height);
+
+          gimage = gdisp->gimage;
+        }
+      else
+        {
+          gimage = gimp_context_get_image (editor->view->context);
+        }
 
       if (gimage)
-	{
-	  gimp_edit_paste (gimage,
-			   gimp_image_active_drawable (gimage),
-			   buffer,
-			   FALSE);
+        {
+	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
+			   buffer, FALSE, x, y, width, height);
 
 	  gimp_image_flush (gimage);
 	}
@@ -225,26 +247,39 @@ static void
 gimp_buffer_view_paste_into_clicked (GtkWidget      *widget,
 				     GimpBufferView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpBuffer          *buffer;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   buffer = gimp_context_get_buffer (editor->view->context);
 
   if (buffer && gimp_container_have (editor->view->container,
 				     GIMP_OBJECT (buffer)))
     {
-      GimpImage *gimage;
+      GimpDisplay *gdisp  = gimp_context_get_display (editor->view->context);
+      GimpImage   *gimage = NULL;
+      gint         x      = -1;
+      gint         y      = -1;
+      gint         width  = -1;
+      gint         height = -1;;
 
-      gimage = gimp_context_get_image (editor->view->context);
+      if (gdisp)
+	{
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+          gimp_display_shell_untransform_viewport (shell,
+                                                   &x, &y, &width, &height);
+
+          gimage = gdisp->gimage;
+        }
+      else
+        {
+          gimage = gimp_context_get_image (editor->view->context);
+        }
 
       if (gimage)
-	{
-	  gimp_edit_paste (gimage,
-			   gimp_image_active_drawable (gimage),
-			   buffer,
-			   TRUE);
+        {
+	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
+			   buffer, TRUE, x, y, width, height);
 
 	  gimp_image_flush (gimage);
 	}
@@ -255,24 +290,18 @@ static void
 gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
 				       GimpBufferView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpBuffer          *buffer;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   buffer = gimp_context_get_buffer (editor->view->context);
 
   if (buffer && gimp_container_have (editor->view->container,
 				     GIMP_OBJECT (buffer)))
     {
-      GimpImage *gimage;
-
-      gimage = gimp_context_get_image (editor->view->context);
+      GimpImage *gimage = gimp_context_get_image (editor->view->context);
 
       if (gimage)
-	{
-	  gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
-	}
+        gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
     }
 }
 
@@ -280,10 +309,8 @@ static void
 gimp_buffer_view_delete_clicked (GtkWidget      *widget,
 				 GimpBufferView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpBuffer          *buffer;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   buffer = gimp_context_get_buffer (editor->view->context);
 
@@ -311,9 +338,8 @@ gimp_buffer_view_select_item (GimpContainerEditor *editor,
 
   view = GIMP_BUFFER_VIEW (editor);
 
-  if (viewable &&
-      gimp_container_have (editor->view->container,
-			   GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (editor->view->container,
+                                       GIMP_OBJECT (viewable)))
     {
       paste_sensitive        = TRUE;
       paste_into_sensitive   = TRUE;
@@ -331,16 +357,13 @@ static void
 gimp_buffer_view_activate_item (GimpContainerEditor *editor,
 				GimpViewable        *viewable)
 {
-  GimpBufferView *view;
+  GimpBufferView *view = GIMP_BUFFER_VIEW (editor);
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  view = GIMP_BUFFER_VIEW (editor);
-
-  if (viewable &&
-      gimp_container_have (editor->view->container,
-			   GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (editor->view->container,
+                                       GIMP_OBJECT (viewable)))
     {
       gimp_buffer_view_paste_clicked (NULL, view);
     }
