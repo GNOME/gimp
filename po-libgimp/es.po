@@ -1,16 +1,11 @@
-# translation of gimp-libgimp.HEAD.es.po to Spanish
-# This is the Spanish locale definition for libgimp.
-#
-# Éste es el fichero con los mensajes en español de Gimp.
-# (sección libgimp) Preguntas, consejos y correcciones
-# _constructivas_ son bienvenidos.
-#
-# Copyright (C) 1998-2000,2003 Free Software Foundation, Inc.
+# Spanish translation for gimp-libgimp 1.3.X.
+# Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 # Francisco Javier Fernandez <serrador@arrakis.es>, 2003
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD.es\n"
+"Project-Id-Version: gimp-libgimp 1.3.X\n"
 "POT-Creation-Date: 2003-02-03 19:00+0100\n"
 "PO-Revision-Date: 2003-02-06 16:29-0300\n"
 "Last-Translator: Francisco Javier Fernandez <serrador@arrakis.es>\n"
@@ -28,7 +23,7 @@ msgstr "%s no puede manejar capas"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "Mezclar capas visibles"
+msgstr "Combinar las capas visibles"
 
 #: libgimp/gimpexport.c:179
 #, c-format
