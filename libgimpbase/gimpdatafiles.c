@@ -39,9 +39,9 @@
 #define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
 #define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
 #endif
-/* (Re)define S_IXUSR as _S_IREAD to get scripts, too. */
-#undef S_IXUSR
-#define S_IXUSR _S_IREAD
+#ifndef S_IXUSR
+#define S_IXUSR _S_IEXEC
+#endif
 #endif /* G_OS_WIN32 */
 
 #include "datafiles.h"
@@ -56,6 +56,51 @@
 
 static int filestat_valid = 0;
 static struct stat filestat;
+
+#ifdef G_OS_WIN32
+/*
+ * On Windows there is no concept like the Unix executable flag. There
+ * There is a weak emulation provided by the MS C Runtime using file
+ * extensions (com, exe, cmd, bat). This needs to be extended to treat
+ * scripts (Python, Perl, ...) as executables, too. We use the PATHEXT
+ * variable, which is also used by cmd.exe.
+ */
+gboolean
+is_script (const gchar* filename)
+{
+  const gchar *ext = strrchr (filename, '.');
+  gchar *pathext;
+  static gchar **exts = NULL;
+  gint i;
+
+  if (exts == NULL)
+    {
+      pathext = g_getenv ("PATHEXT");
+      if (pathext != NULL)
+	{
+	  exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
+	  g_free (pathext);
+	}
+      else
+	{
+	  exts = g_new (gchar *, 1);
+	  exts[0] = NULL;
+	}
+    }
+
+  i = 0;
+  while (exts[i] != NULL)
+    {
+      if (g_strcasecmp (ext, exts[i]) == 0)
+	return TRUE;
+      i++;
+    }
+
+  return FALSE;
+}
+#else  /* !G_OS_WIN32 */
+#define is_script(filename) FALSE
+#endif
 
 void
 datafiles_read_directories (char *path_str,
@@ -131,7 +176,9 @@ datafiles_read_directories (char *path_str,
 		  err = stat(filename, &filestat);
 
 		  if (!err && S_ISREG(filestat.st_mode) &&
-		      (!(flags & MODE_EXECUTABLE) || (filestat.st_mode & S_IXUSR)))
+		      (!(flags & MODE_EXECUTABLE) ||
+		       (filestat.st_mode & S_IXUSR) ||
+		       is_script (filename)))
 		    {
 		      filestat_valid = 1;
 		      (*loader_func) (filename);

@@ -193,7 +193,7 @@ void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
 
   alpha=acos(-gimp_vector3_inner_product(&mapvals.secondaxis,normal));
 
-  *v=alpha/M_PI;
+  *v=alpha/G_PI;
 
   if (*v==0.0 || *v==1.0) *u=0.0;
   else
@@ -208,7 +208,7 @@ void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
       else if (fac<-1.0) 
         fac=-1.0;
 
-      *u=acos(fac)/(2.0*M_PI);
+      *u=acos(fac)/(2.0*G_PI);
 	  
       cross_prod=gimp_vector3_cross_product(&mapvals.secondaxis,&mapvals.firstaxis);
       
@@ -445,8 +445,8 @@ void rotatemat(gfloat angle,GimpVector3 *v,gfloat m[16])
    gfloat IdentityMat[16];
    gint cnt;
 
-   s = sin( angle * (M_PI / 180.0) );
-   c = cos( angle * (M_PI / 180.0) );
+   s = sin( angle * (G_PI / 180.0) );
+   c = cos( angle * (G_PI / 180.0) );
 
    mag = sqrt( v->x*v->x + v->y*v->y + v->z*v->z );
 
@@ -951,7 +951,7 @@ gdouble compute_angle(gdouble x,gdouble y)
       if (x<0)
         a = 0;
       else
-        a = M_PI;
+        a = G_PI;
     }
   else
     {
@@ -960,17 +960,17 @@ gdouble compute_angle(gdouble x,gdouble y)
       else
         {
           if (y>0.0)
-            a = M_PI/2.0;
+            a = G_PI/2.0;
           else
-            a = 1.5 * M_PI;
+            a = 1.5 * G_PI;
         }
         
       if (y<0.0 && x>0.0)      /* 4th quad, a is negative */
-        a = 2.0*M_PI + a;
+        a = 2.0*G_PI + a;
       else if (y<0.0 && x<0.0) /* 3rd quad, a is positive */
-        a = M_PI + a;
+        a = G_PI + a;
       else if (y>0.0 && x<0.0) /* 2nd quad, a is negative */
-        a = M_PI + a;
+        a = G_PI + a;
     }
   
   return(a);
@@ -1020,7 +1020,7 @@ gboolean intersect_cylinder(GimpVector3 vp,GimpVector3 dir,FaceIntersectInfo *fa
 
               l = mapvals.cylinder_length/2.0;
 
-              face_intersect[i].u = compute_angle(face_intersect[i].s.x,face_intersect[i].s.z)/(2.0*M_PI);
+              face_intersect[i].u = compute_angle(face_intersect[i].s.x,face_intersect[i].s.z)/(2.0*G_PI);
               face_intersect[i].v = (face_intersect[i].s.y+l)/mapvals.cylinder_length;
 
               /* Mark hitpoint as on the cylinder hull */

@@ -65,8 +65,10 @@ gimpi_OBJECTS = \
 	gimpmatrix.obj	\
 	gimppatheditor.obj\
 	gimpprotocol.obj\
+	gimpquerybox.obj\
 	gimpsizeentry.obj\
 	gimpunitmenu.obj\
+	gimpvector.obj	\
 	gimpwidgets.obj	\
 	gimpwire.obj	\
 	gserialize.obj	\
@@ -95,6 +97,7 @@ gimp_OBJECTS = \
 	gimpselection.obj\
 	gimptile.obj	\
 	gimpunit.obj	\
+	gimpvector.obj	\
 	gimpwire.obj	\
 	gserialize.obj	\
 	parasite.obj	\
@@ -135,6 +138,8 @@ gimptile.obj : gimptile.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimptile.c
 gimpunit.obj : gimpunit.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpunit.c
+gimpvector.obj : gimpvector.c
+	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpvector.c
 gimpwire.obj : gimpwire.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimpwire.c
 gserialize.obj : gserialize.c
@@ -153,6 +158,7 @@ gimpui_OBJECTS = \
 	gimpgradientmenu.obj\
 	gimphelpui.obj	\
 	gimppatternmenu.obj\
+	gimpquerybox.obj\
 	gimpsizeentry.obj\
 	gimpunitmenu.obj\
 	gimpwidgets.obj

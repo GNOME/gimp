@@ -270,8 +270,8 @@ void compute_maps(void)
   
   for (x=0;x<256;x++)
     {
-      sinemap[x]=(guchar)(255.0*(0.5*(sin((M_PI*c*(gdouble)x)-0.5*M_PI)+1.0)));
-      spheremap[x]=(guchar)(255.0*(sqrt(sin(M_PI*(gdouble)x/512.0))));
+      sinemap[x]=(guchar)(255.0*(0.5*(sin((G_PI*c*(gdouble)x)-0.5*G_PI)+1.0)));
+      spheremap[x]=(guchar)(255.0*(sqrt(sin(G_PI*(gdouble)x/512.0))));
       val=(d*exp(-1.0/(8.0*c*((gdouble)x+5.0))));
       
       if (val>255.0)

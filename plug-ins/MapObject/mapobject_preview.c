@@ -504,7 +504,7 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
   /* Compute wireframe points */
   /* ======================== */
 
-  twopifac=(2.0*M_PI)/WIRESIZE;
+  twopifac=(2.0*G_PI)/WIRESIZE;
   
   for (cnt=0;cnt<WIRESIZE;cnt++)
     {

@@ -140,9 +140,23 @@ gimp_parasiterc_save (void)
 
   fclose (fp);
 
+#if defined(G_OS_WIN32) || defined(__EMX__)
+  /* First rename the old parasiterc out of the way */
+  unlink (gimp_personal_rc_file ("parasiterc.bak"));
+  rename (gimp_personal_rc_file ("parasiterc"),
+	  gimp_personal_rc_file ("parasiterc.bak"));
+#endif
+
   if (rename(gimp_personal_rc_file ("#parasiterc.tmp~"),
 	     gimp_personal_rc_file ("parasiterc")) != 0)
-    unlink(gimp_personal_rc_file ("#parasiterc.tmp~"));
+    {
+#if defined(G_OS_WIN32) || defined(__EMX__)
+      /* Rename the old parasiterc back */
+      rename (gimp_personal_rc_file ("parasiterc.bak"),
+	      gimp_personal_rc_file ("parasiterc"));
+#endif
+      unlink(gimp_personal_rc_file ("#parasiterc.tmp~"));
+    }
 }
 
 void

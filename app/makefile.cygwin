@@ -71,7 +71,6 @@ gimp_OBJECTS = \
 	brush_select_cmds.o	\
 	brushes_cmds.o		\
 	bucket_fill.o		\
-	buildmenu.o		\
 	by_color_select.o	\
 	channel.o		\
 	channel_cmds.o		\
@@ -251,7 +250,6 @@ gimp_OBJECTS = \
 	undo_cmds.o		\
 	undo_history.o		\
 	unit_cmds.o		\
-	vector2d.o		\
 	xcf.o			\
 	xinput_airbrush.o
 

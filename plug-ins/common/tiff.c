@@ -391,6 +391,19 @@ run (gchar   *name,
   values[0].data.d_status = status;
 }
 
+static void
+tiff_warning(const char* module, const char* fmt, va_list ap)
+{
+  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
+}
+  
+static void
+tiff_error(const char* module, const char* fmt, va_list ap)
+{
+  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
+  gimp_quit ();
+}
+  
 static gint32
 load_image (gchar *filename) 
 {
@@ -414,6 +427,10 @@ load_image (gchar *filename)
   Parasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   guint16 tmp;
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
+
   tif = TIFFOpen (filename, "r");
   if (!tif) {
     g_message ("TIFF Can't open %s\n", filename);
@@ -1193,6 +1210,9 @@ static gint save_image (char   *filename,
   g3options = 0;
   predictor = 0;
   rowsperstrip = 0;
+
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
 
   tif = TIFFOpen (filename, "w");
   if (!tif) 

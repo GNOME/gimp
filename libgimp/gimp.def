@@ -77,7 +77,6 @@ EXPORTS
 	gimp_gtkrc
 	gimp_help
 	gimp_hls_to_rgb
-	gimp_hls_value
 	gimp_hsv_to_rgb
 	gimp_hsv_to_rgb4
 	gimp_hsv_to_rgb_double
@@ -180,20 +179,21 @@ EXPORTS
 	gimp_layer_width
 	gimp_main
 	gimp_major_version
-	gimp_matrix_determinant
-	gimp_matrix_duplicate
-	gimp_matrix_identity
-	gimp_matrix_invert
-	gimp_matrix_is_diagonal
-	gimp_matrix_is_identity
-	gimp_matrix_is_simple
-	gimp_matrix_mult
-	gimp_matrix_rotate
-	gimp_matrix_scale
-	gimp_matrix_transform_point
-	gimp_matrix_translate
-	gimp_matrix_xshear
-	gimp_matrix_yshear
+	gimp_matrix3_determinant
+	gimp_matrix3_duplicate
+	gimp_matrix3_identity
+	gimp_matrix3_invert
+	gimp_matrix3_is_diagonal
+	gimp_matrix3_is_identity
+	gimp_matrix3_is_simple
+	gimp_matrix3_mult
+	gimp_matrix3_rotate
+	gimp_matrix3_scale
+	gimp_matrix3_transform_point
+	gimp_matrix3_translate
+	gimp_matrix3_xshear
+	gimp_matrix3_yshear
+	gimp_matrix4_to_deg
 	gimp_message
 	gimp_micro_version
 	gimp_minor_version
@@ -267,6 +267,28 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_use_xshm
+	gimp_vector2_add
+	gimp_vector2_cross_product
+	gimp_vector2_inner_product
+	gimp_vector2_length
+	gimp_vector2_mul
+	gimp_vector2_neg
+	gimp_vector2_normalize
+	gimp_vector2_rotate
+	gimp_vector2_set
+	gimp_vector2_sub
+	gimp_vector3_add
+	gimp_vector3_cross_product
+	gimp_vector3_inner_product
+	gimp_vector3_length
+	gimp_vector3_mul
+	gimp_vector3_neg
+	gimp_vector3_normalize
+	gimp_vector3_rotate
+	gimp_vector3_set
+	gimp_vector3_sub
+	gimp_vector_2d_to_3d
+	gimp_vector_3d_to_2d
 	gp_config_write
 	gp_extension_ack_write
 	gp_init

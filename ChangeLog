@@ -1,3 +1,39 @@
+2000-02-15  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def
+	* libgimp/makefile.{cygwin,msc}
+	* app/makefile.{cygwin,msc}
+	* plug-ins/makefile.{cygwin,msc}: Updates.
+
+	* app/datafiles.c (is_script): New Win32-only function, which
+	tests if a file's extension matches one of the extensions in the
+	PATHEXT environment variable (which the cmd.exe command
+	interpreter also uses). This is to avoid starting applications
+	associated with any random data file the user might have dropped
+	in the plug-ins folder, while still supporting plug-ins written in
+	scripting languages.
+
+	* app/gimpparasite.c (gimp_parasiterc_save): (Win32:) Cannot
+	rename to an existing file.
+
+	* plug-ins/Lighting/lighting_image.c
+	* plug-ins/Lighting/lighting_share.c
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_shade.c: Use G_PI.
+
+	* plug-ins/common/gz.c: #ifdef G_OS_WIN32 was used before its
+	potential definition via glib.h.
+
+	* plug-ins/common/jpeg.c: Also recognize Exif files, which are
+	typically produced by digital cameras. The usually have a .jpg
+	file name extension, and would thus already match this plug-in,
+	but add the magic string just in case. They are loaded just fine
+	by libjpeg even if they don't have the JFIF signature.
+
+	* plug-ins/common/tiff.c: Set TIFF warning and error handler, so
+	we get to pass libtiff's messages through the normal channels.
+
 2000-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/libgck/gck/Makefile.am

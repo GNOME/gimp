@@ -36,7 +36,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderavera
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash pmosaic sel_gauss user_filter
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze gimp_ace guash pmosaic sel_gauss user_filter
 
 # The main target
 
@@ -63,7 +63,7 @@ libs-clean :
 
 sub-libs:
 	cd libgck\gck
-	nmake -nologo -f ..\..\makefile.msc TOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj gcklistbox.obj gckmath.obj gckui.obj gckvector.obj" $(TARGET)
+	nmake -nologo -f ..\..\makefile.msc TOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj gckui.obj" $(TARGET)
 	cd ..\..
 
 

@@ -45,12 +45,18 @@ EXPORTS
 	gimp_menu_item_update
 	gimp_option_menu_new
 	gimp_option_menu_new2
+	gimp_option_menu_set_history
 	gimp_pattern_close_popup
 	gimp_pattern_get_pattern_data
 	gimp_pattern_select_widget
 	gimp_pattern_select_widget_close_popup
 	gimp_pattern_select_widget_set_popup
 	gimp_pattern_set_popup
+	gimp_query_boolean_box
+	gimp_query_double_box
+	gimp_query_int_box
+	gimp_query_size_box
+	gimp_query_string_box
 	gimp_radio_button_update
 	gimp_radio_group_new
 	gimp_radio_group_new2

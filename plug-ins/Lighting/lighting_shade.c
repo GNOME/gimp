@@ -374,7 +374,7 @@ void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
 
   alpha=acos(-gimp_vector3_inner_product(&secondaxis,normal));
 
-  *v=alpha/M_PI;
+  *v=alpha/G_PI;
 
   if (*v==0.0 || *v==1.0) *u=0.0;
   else
@@ -389,7 +389,7 @@ void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
       else if (fac<-1.0) 
         fac=-1.0;
 
-      *u=acos(fac)/(2.0*M_PI);
+      *u=acos(fac)/(2.0*G_PI);
 	  
       cross_prod=gimp_vector3_cross_product(&secondaxis,&firstaxis);
       

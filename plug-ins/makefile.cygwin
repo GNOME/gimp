@@ -37,7 +37,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderavera
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash sel_gauss user_filter
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze gimp_ace guash sel_gauss user_filter
 
 # The main target
 
@@ -63,7 +63,7 @@ libs-clean :
 	$(MAKE) -f makefile.cygwin sub-libs TARGET=clean
 
 sub-libs:
-	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o gcklistbox.o gckmath.o gckui.o gckvector.o" $(TARGET)
+	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o gckui.o" $(TARGET)
 
 
 

@@ -347,7 +347,7 @@ query (void)
   gimp_register_magic_load_handler ("file_jpeg_load",
 				    "jpg,jpeg",
 				    "",
-				    "6,string,JFIF");
+				    "6,string,JFIF,6,string,Exif");
   gimp_register_save_handler       ("file_jpeg_save",
 				    "jpg,jpeg",
 				    "");
