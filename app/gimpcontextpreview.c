@@ -88,6 +88,9 @@ static void     gimp_context_preview_draw_pattern_popup   (GimpContextPreview *)
 static void     gimp_context_preview_draw_gradient        (GimpContextPreview *);
 static void     gimp_context_preview_draw_gradient_popup  (GimpContextPreview *);
 
+static gint brush_dirty_callback  (GimpBrush *, GimpContextPreview *);
+static gint brush_rename_callback (GimpBrush *, GimpContextPreview *);
+
 
 static void
 gimp_context_preview_destroy (GtkObject *object)
@@ -196,6 +199,9 @@ gimp_context_preview_update (GimpContextPreview *gcp,
   g_return_if_fail (GIMP_IS_CONTEXT_PREVIEW (gcp));
   g_return_if_fail (gimp_context_preview_data_matches_type (gcp, data));
 
+  if (gcp->data && gcp->type == GCP_BRUSH)
+    gtk_signal_disconnect_by_data (GTK_OBJECT (gcp->data), gcp);
+
   gcp->data = data;
   if (GTK_IS_OBJECT (gcp->data))
     gtk_signal_connect (GTK_OBJECT (gcp->data), "destroy",
@@ -204,6 +210,10 @@ gimp_context_preview_update (GimpContextPreview *gcp,
   {
   case GCP_BRUSH:
     gimp_context_preview_draw_brush (gcp);
+    gtk_signal_connect (GTK_OBJECT (gcp->data), "dirty",
+			GTK_SIGNAL_FUNC (brush_dirty_callback), gcp);
+    gtk_signal_connect (GTK_OBJECT (gcp->data), "rename",
+			GTK_SIGNAL_FUNC (brush_rename_callback), gcp);
     break;
   case GCP_PATTERN:
     gimp_context_preview_draw_pattern (gcp);
@@ -253,9 +263,11 @@ gimp_context_preview_button_press_event (GtkWidget      *widget,
 {
   if (bevent->button == 1)
     {
-      gtk_signal_emit_by_name (GTK_OBJECT (widget), "clicked");
+      gdk_pointer_grab (widget->window, FALSE, GDK_BUTTON_RELEASE_MASK,
+			NULL, NULL, bevent->time);
       gimp_context_preview_popup_open (GIMP_CONTEXT_PREVIEW (widget), 
 				       bevent->x, bevent->y);
+      gtk_signal_emit_by_name (GTK_OBJECT (widget), "clicked");
     }
   return TRUE;
 }
@@ -265,8 +277,10 @@ gimp_context_preview_button_release_event (GtkWidget      *widget,
 					   GdkEventButton *bevent)
 {
   if (bevent->button == 1)
-    gimp_context_preview_popup_close ();
-
+    {
+      gdk_pointer_ungrab (bevent->time);
+      gimp_context_preview_popup_close ();
+    }
   return TRUE;
 }
 
@@ -393,7 +407,6 @@ gimp_context_preview_data_matches_type (GimpContextPreview *gcp,
     }
   return (match);
 }
-
 
 
 /*  brush draw functions */
@@ -558,6 +571,27 @@ gimp_context_preview_draw_brush (GimpContextPreview *gcp)
     }
 
   g_free (buf);
+}
+
+/*  brush callbacks  */
+static gint 
+brush_dirty_callback (GimpBrush          *brush, 
+		      GimpContextPreview *gcp)
+{
+  gimp_context_preview_draw_brush (gcp);
+  gtk_widget_queue_draw (GTK_WIDGET (gcp));
+
+  return TRUE;
+}
+
+static gint 
+brush_rename_callback (GimpBrush          *brush, 
+		       GimpContextPreview *gcp)
+{
+  if (gcp->show_tooltips)
+    gtk_tooltips_set_tip (tool_tips, GTK_WIDGET (gcp), brush->name, NULL);
+
+  return TRUE;
 }
 
 

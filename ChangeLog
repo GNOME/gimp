@@ -1,3 +1,12 @@
+Thu Sep  2 16:46:35 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.c: grab the pointer so that the popups don't
+	get stuck and connect to the brush signals so the preview follows if
+	the brush is edited or renamed.
+	
+	* app/gradient_select.c: update the gradient_preview in the toolbox
+	when editing a gradient.
+
 Thu Sep  2 02:12:20 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/app_procs.c: free the brush dialog before freeing the brushes.

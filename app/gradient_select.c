@@ -243,6 +243,7 @@ sel_update_dialogs(gint row, gradient_t *grad)
   if(gradient_select_dialog)
     gtk_clist_set_text(GTK_CLIST(gradient_select_dialog->clist),row,1,grad->name);  
 
+  gradient_area_update ();  /*  update the indicator_area  */
   import_palette_grad_update(grad);
 }
 
