@@ -47,13 +47,13 @@ can be executed by one of the Gimp scripting extensions.
 Use an alternative gimprc instead of the default one. Useful in
 cases where plugins paths or machine specs may be different.
 .TP 8
-.B \-n, \-\-no-interface
+.B \-i, \-\-no-interface
 Run without a user interface.
 .TP 8
 .B \-r, \-\-restore\-session
 Try to restore saved session.
 .TP 8
-.B \-\-no\-data
+.B \-d, \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful
 in non-interactive situations where startup time is to be minimized.
 .TP 8
@@ -74,16 +74,16 @@ This will result in slower performance than with X shared memory enabled.
 .B \-\-display \fIdisplay\fP
 Use the designated X display.
 .TP 8
-.B \-\-no\-splash
+.B \-s, \-\-no\-splash
 Do not show the splash screen.
 .TP 8
-.B \-\-no\-splash\-image
+.B \-S, \-\-no\-splash\-image
 Do not show the splash screen image as part of the splash screen.
 .TP 8
 .B \-\-debug\-handlers
 Enable debugging signal handlers.
 .TP 8
-.B \-\-console\-messages
+.B \-c, \-\-console\-messages
 Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
 .TP 8

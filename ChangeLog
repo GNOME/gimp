@@ -1,3 +1,9 @@
+2000-08-21  Piers Cornwell  <piers.cornwell@bigfoot.com>
+
+	* app/main.c: Alter some options, and beautify.
+
+	* gimp.1.in: Document the new options.
+
 Mon Aug 21 14:09:55 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/unit.pdb: added get_number_of_built_in_units
