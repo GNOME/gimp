@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.6\n"
-"POT-Creation-Date: 1999-06-06 23:13+0200\n"
+"POT-Creation-Date: 1999-06-07 04:33+0200\n"
 "PO-Revision-Date: 1999-06-06 23:40+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -341,8 +341,9 @@ msgstr "Ljusstyrka-Kontrast går ej att använda på indexerade bilder."
 #: app/curves.c:417 app/file_new_dialog.c:296 app/file_new_dialog.c:486
 #: app/hue_saturation.c:411 app/interface.c:877 app/interface.c:1263
 #: app/layers_dialog.c:2867 app/layers_dialog.c:3085 app/layers_dialog.c:3228
-#: app/layers_dialog.c:3704 app/levels.c:373 app/posterize.c:241
-#: app/preferences_dialog.c:1452 app/resize.c:114 app/threshold.c:318
+#: app/layers_dialog.c:3704 app/levels.c:373 app/module_db.c:263
+#: app/posterize.c:241 app/preferences_dialog.c:1452 app/resize.c:114
+#: app/threshold.c:318
 msgid "OK"
 msgstr "OK"
 
@@ -388,9 +389,10 @@ msgstr "Förhandsvisning"
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1011
 #: app/devices.c:124 app/docindexif.c:95 app/errorconsole.c:228
 #: app/gdisplay_ops.c:352 app/gradient.c:646 app/gradient_select.c:76
-#: app/info_window.c:121 app/lc_dialog.c:177 app/palette.c:2235
-#: app/palette_select.c:59 app/pattern_select.c:90 app/tips_dialog.c:146
-#: app/tools.c:716
+#: app/histogram_tool.c:304 app/info_window.c:121 app/lc_dialog.c:177
+#: app/palette.c:2235 app/palette_select.c:59 app/pattern_select.c:90
+#: app/tips_dialog.c:146 app/tools.c:716 libgimp/gimpfileselection.c:371
+#: libgimp/gimpunitmenu.c:523
 msgid "Close"
 msgstr "Stäng"
 
@@ -418,7 +420,8 @@ msgstr "Aspektratio:"
 msgid "Angle:"
 msgstr "Vinkel:"
 
-#: app/brush_select.c:132 app/palette.c:2243 app/pattern_select.c:89
+#: app/brush_select.c:132 app/module_db.c:307 app/palette.c:2243
+#: app/pattern_select.c:89
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -433,7 +436,7 @@ msgstr "Aktiv"
 #. Create the opacity scale widget
 #: app/brush_select.c:271 app/layers_dialog.c:333 app/tool_options.c:596
 msgid "Opacity:"
-msgstr ""
+msgstr "Opacitet:"
 
 #. Create the paint mode option menu
 #: app/brush_select.c:289 app/layers_dialog.c:306 app/tool_options.c:625
@@ -651,17 +654,17 @@ msgid "error in %s at %d: this shouldn't happen."
 msgstr ""
 
 #: app/channels_dialog.c:1137 app/color_balance.c:413 app/curves.c:424
-#: app/levels.c:282
+#: app/histogram_tool.c:319 app/levels.c:282
 msgid "Red"
 msgstr "Röd"
 
 #: app/channels_dialog.c:1141 app/color_balance.c:440 app/curves.c:425
-#: app/levels.c:283
+#: app/histogram_tool.c:320 app/levels.c:283
 msgid "Green"
 msgstr "Grön"
 
 #: app/channels_dialog.c:1145 app/color_balance.c:467 app/curves.c:426
-#: app/levels.c:284
+#: app/histogram_tool.c:321 app/levels.c:284
 msgid "Blue"
 msgstr "Blå"
 
@@ -685,7 +688,7 @@ msgstr "Kanalnamn: "
 #. the opacity scale
 #: app/channels_dialog.c:1915
 msgid "Fill Opacity: "
-msgstr ""
+msgstr "Fyllnadsopacitet: "
 
 #: app/channels_dialog.c:2066
 msgid "Edit Channel Attributes"
@@ -697,7 +700,7 @@ msgstr "Kanalnamn:"
 
 #: app/channels_dialog.c:2101
 msgid "Fill Opacity"
-msgstr ""
+msgstr "Fyllnadsopacitet"
 
 #: app/clone.c:134
 msgid "Image Source"
@@ -830,7 +833,7 @@ msgstr "Index:"
 msgid "Hex Triplet"
 msgstr "Hex triplett"
 
-#: app/color_picker.c:248 app/histogram_tool.c:311
+#: app/color_picker.c:248 app/histogram_tool.c:312
 msgid "Intensity:"
 msgstr "Intensitet:"
 
@@ -867,40 +870,40 @@ msgstr ""
 msgid "Border Selection"
 msgstr "Kantmarkering"
 
-#: app/commands.c:364
+#: app/commands.c:365
 msgid "Border selection by:"
 msgstr "Kantmarkering med:"
 
-#: app/commands.c:382
+#: app/commands.c:383
 msgid "Feather Selection"
 msgstr "Fjädermarkering"
 
-#: app/commands.c:382
+#: app/commands.c:384
 msgid "Feather selection by:"
 msgstr "Fjädermarkering med:"
 
-#: app/commands.c:400
+#: app/commands.c:402
 msgid "Grow Selection"
 msgstr "Öka markering"
 
-#: app/commands.c:400
+#: app/commands.c:403
 msgid "Grow selection by:"
 msgstr "Öka markering med:"
 
-#: app/commands.c:418
+#: app/commands.c:421
 msgid "Shrink Selection"
 msgstr "Minska markering"
 
-#: app/commands.c:418
+#: app/commands.c:422
 msgid "Shrink selection by:"
 msgstr "Minska markering med:"
 
-#: app/commands.c:1197
+#: app/commands.c:1201
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Fel vid ändrande av storlek: Både bredd och höjd måste vara större än 0."
 
-#: app/commands.c:1246
+#: app/commands.c:1250
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Fel vid omskalning av bild: Både bredd och höjd måste vara större än 0."
@@ -1031,8 +1034,8 @@ msgstr "Automatiskt"
 msgid "Curves Options"
 msgstr "Kurvor - inställningar"
 
-#: app/curves.c:423 app/layers_dialog.c:225 app/levels.c:281
-#: app/paint_funcs.c:97 app/tool_options.c:799
+#: app/curves.c:423 app/histogram_tool.c:318 app/layers_dialog.c:225
+#: app/levels.c:281 app/paint_funcs.c:97 app/tool_options.c:799
 msgid "Value"
 msgstr "Värde"
 
@@ -2289,35 +2292,46 @@ msgstr ""
 msgid "Gradient Selection"
 msgstr ""
 
-#: app/histogram_tool.c:207
+#: app/histogram_tool.c:208
 msgid "Histogram Options"
-msgstr ""
+msgstr "Histogram - inställningar"
 
-#: app/histogram_tool.c:307
-msgid "Mean:"
-msgstr ""
+#: app/histogram_tool.c:252
+msgid "Histogram does not operate on indexed drawables."
+msgstr "Kan ej använda histogram på indexerade bilder."
 
 #: app/histogram_tool.c:308
+msgid "Mean:"
+msgstr "Medel:"
+
+#: app/histogram_tool.c:309
 msgid "Std Dev:"
 msgstr "Med. avvik:"
 
-#: app/histogram_tool.c:309
+#: app/histogram_tool.c:310
 msgid "Median:"
 msgstr "Median:"
 
-#: app/histogram_tool.c:310
+#: app/histogram_tool.c:311
 msgid "Pixels:"
 msgstr "Pixlar:"
 
-#: app/histogram_tool.c:312
+#: app/histogram_tool.c:313
 msgid "Count:"
 msgstr "Antal:"
 
-#: app/histogram_tool.c:313
+#: app/histogram_tool.c:314
 msgid "Percentile:"
 msgstr "Procentuellt:"
 
-# FIXME
+#: app/histogram_tool.c:336 app/tools.c:581
+msgid "Histogram"
+msgstr "Histogram"
+
+#: app/histogram_tool.c:355
+msgid "Information on Channel:"
+msgstr "Information om kanal:"
+
 #: app/hue_saturation.c:301
 msgid "Hue-Saturation Options"
 msgstr "Nyans-Mättnad - inställningar"
@@ -2332,29 +2346,28 @@ msgstr ""
 
 #: app/hue_saturation.c:417
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/hue_saturation.c:418
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: app/hue_saturation.c:419
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/hue_saturation.c:420
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: app/hue_saturation.c:421
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/hue_saturation.c:422
 msgid "M"
-msgstr ""
+msgstr "M"
 
-# FIXME
 #: app/hue_saturation.c:442 app/tools.c:506
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
@@ -3195,11 +3208,11 @@ msgstr ""
 
 #: app/layers_dialog.c:3241
 msgid "White (Full Opacity)"
-msgstr ""
+msgstr "Vit (Full opacitet)"
 
 #: app/layers_dialog.c:3242
 msgid "Black (Full Transparency)"
-msgstr ""
+msgstr "Svart (Full transparenthet)"
 
 #: app/layers_dialog.c:3243
 msgid "Layer's Alpha Channel"
@@ -3811,6 +3824,90 @@ msgstr "Kunde inte öppna fil: %s\n"
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/Arkiv/MRU%02d"
+
+#: app/module_db.c:269
+msgid "Module DB"
+msgstr "Modul DB"
+
+#: app/module_db.c:555
+#, c-format
+msgid "load module: \"%s\"\n"
+msgstr "laddar modul: \"%s\"\n"
+
+#: app/module_db.c:562
+#, c-format
+msgid "skipping module: \"%s\"\n"
+msgstr "hoppar över modul: \"%s\"\n"
+
+#: app/module_db.c:586
+#, c-format
+msgid "module load error: %s: %s"
+msgstr "fel vid laddning av modul: %s: %s"
+
+#: app/module_db.c:604
+msgid "missing module_init() symbol"
+msgstr "module_init() symbolen saknas"
+
+#: app/module_db.c:607
+#, c-format
+msgid "%s: module_init() symbol not found"
+msgstr "%s: module_init() symbolen hittades ej"
+
+#: app/module_db.c:760
+msgid "<No modules>"
+msgstr "<Inga moduler>"
+
+#: app/module_db.c:773 app/module_db.c:782
+msgid "on disk"
+msgstr "på disk"
+
+#: app/module_db.c:773
+msgid "only in memory"
+msgstr "endast i minnet"
+
+#: app/module_db.c:782
+msgid "nowhere (click 'refresh')"
+msgstr "ingenstans (tryck på 'uppdatera')"
+
+#: app/module_db.c:818
+msgid "Load"
+msgstr "Ladda"
+
+#: app/module_db.c:827
+msgid "Unload"
+msgstr "Ladda ur"
+
+#: app/module_db.c:840
+msgid "Purpose: "
+msgstr "Syfte: "
+
+#: app/module_db.c:841
+msgid "Author: "
+msgstr "Författare: "
+
+#: app/module_db.c:842
+msgid "Version: "
+msgstr "Version: "
+
+#: app/module_db.c:843
+msgid "Copyright: "
+msgstr "Copyright: "
+
+#: app/module_db.c:844
+msgid "Date: "
+msgstr "Datum: "
+
+#: app/module_db.c:845
+msgid "Location: "
+msgstr "Placering: "
+
+#: app/module_db.c:846
+msgid "State: "
+msgstr "Tillstånd: "
+
+#: app/module_db.c:865
+msgid "Autoload during startup"
+msgstr "Ladda automatiskt vid start"
 
 #: app/move.c:438
 msgid "Move Tool Options"
@@ -5128,11 +5225,6 @@ msgstr "Markera per färg"
 msgid "/Select/By Color..."
 msgstr "/Markera/Per färg..."
 
-# FIXME
-#: app/tools.c:581
-msgid "Histogram"
-msgstr "Histogram"
-
 #: app/tool_options.c:212 app/tool_options.c:682
 msgid "This tool has no options."
 msgstr "Det här verktyget har inga inställningar."
@@ -5370,6 +5462,89 @@ msgstr "xcf: oj, oj! xcf rle tile laddningsfel: %d"
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr "kunde ej läsa tile-data från xcf-filen: %d (%d) tecken lästa"
+
+#. pseudo unit
+#, fuzzy
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixlar"
+
+#. standard units
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "tum"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "tum"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimeter"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimeter"
+
+#. professional units
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "punkt"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "punkter"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "picas"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procent:"
+
+#: libgimp/gimpfileselection.c:367
+msgid "Select File"
+msgstr "Välj fil"
+
+#: libgimp/gimpfileselection.c:370 libgimp/gimpunitmenu.c:515
+msgid "Select"
+msgstr "Välj"
+
+#: libgimp/gimpenv.c:81
+msgid "warning: no home directory."
+msgstr "varning: ingen hemkatalog"
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Mer..."
+
+#: libgimp/gimpunitmenu.c:336
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:369
+msgid "unit-menu-format contains unknownformat sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:459
+msgid "Unit Selection"
+msgstr "Enhetsval"
+
+#: libgimp/gimpunitmenu.c:485
+msgid "Unit "
+msgstr "Enhet "
+
+#: libgimp/gimpunitmenu.c:487
+msgid "Factor"
+msgstr "Faktor"
 
 #: app/regex.c:976
 msgid "Success"

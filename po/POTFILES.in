@@ -74,6 +74,7 @@ app/levels.c
 app/magnify.c
 app/main.c
 app/menus.c
+app/module_db.c
 app/move.c
 app/paint_core.c
 app/paint_funcs.c
@@ -107,6 +108,10 @@ app/transform_core.c
 app/transform_tool.c
 app/xcf.c
 libgimp/gimpintl.h
+libgimp/gimpunit.c
+libgimp/gimpfileselection.c
+libgimp/gimpenv.c
+libgimp/gimpunitmenu.c
 
 # Originally marked by the authors (GNU people)
 app/regex.c
