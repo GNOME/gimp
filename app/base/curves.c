@@ -372,8 +372,7 @@ curves_control (Tool       *tool,
       break;
 
     case HALT:
-      if (curves_dialog)
-	curves_cancel_callback (NULL, (gpointer) curves_dialog);
+      curves_dialog_hide ();
       break;
 
     default:
@@ -411,6 +410,13 @@ tools_new_curves (void)
 }
 
 void
+curves_dialog_hide (void)
+{
+  if (curves_dialog)
+    curves_cancel_callback (NULL, (gpointer) curves_dialog);
+}
+
+void
 tools_free_curves (Tool *tool)
 {
   Curves * private;
@@ -418,8 +424,7 @@ tools_free_curves (Tool *tool)
   private = (Curves *) tool->private;
 
   /*  Close the color select dialog  */
-  if (curves_dialog)
-    curves_cancel_callback (NULL, (gpointer) curves_dialog);
+  curves_dialog_hide ();
 
   g_free (private);
 }

@@ -105,8 +105,7 @@ brightness_contrast_control (Tool       *tool,
       break;
 
     case HALT:
-      if (brightness_contrast_dialog)
-	brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
+      brightness_contrast_dialog_hide ();
       break;
 
     default:
@@ -142,6 +141,14 @@ tools_new_brightness_contrast (void)
 }
 
 void
+brightness_contrast_dialog_hide (void)
+{
+  if (brightness_contrast_dialog)
+    brightness_contrast_cancel_callback (NULL,
+	                                 (gpointer) brightness_contrast_dialog);
+} 
+  
+void
 tools_free_brightness_contrast (Tool *tool)
 {
   BrightnessContrast * bc;
@@ -149,8 +156,7 @@ tools_free_brightness_contrast (Tool *tool)
   bc = (BrightnessContrast *) tool->private;
 
   /*  Close the brightness-contrast dialog  */
-  if (brightness_contrast_dialog)
-    brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
+  brightness_contrast_dialog_hide ();
 
   g_free (bc);
 }

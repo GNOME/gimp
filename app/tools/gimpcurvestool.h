@@ -65,6 +65,7 @@ struct _CurvesDialog
 Tool * tools_new_curves       (void);
 void   tools_free_curves      (Tool         *tool);
 
+void   curves_dialog_hide     (void);
 void   curves_initialize      (GDisplay     *gdisp);
 void   curves_free            (void);
 float  curves_lut_func        (CurvesDialog *cd,

@@ -176,8 +176,7 @@ levels_control (Tool       *tool,
       break;
 
     case HALT:
-      if (levels_dialog)
-	levels_cancel_callback (NULL, (gpointer) levels_dialog);
+      levels_dialog_hide ();
       break;
 
     default:
@@ -212,6 +211,13 @@ tools_new_levels (void)
 }
 
 void
+levels_dialog_hide (void)
+{
+  if (levels_dialog)
+    levels_cancel_callback (NULL, (gpointer) levels_dialog);
+}
+
+void
 tools_free_levels (Tool *tool)
 {
   Levels * private;
@@ -219,8 +225,7 @@ tools_free_levels (Tool *tool)
   private = (Levels *) tool->private;
 
   /*  Close the color select dialog  */
-  if (levels_dialog)
-    levels_cancel_callback (NULL, (gpointer) levels_dialog);
+  levels_dialog_hide ();
 
   g_free (private);
 }

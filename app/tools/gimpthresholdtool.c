@@ -150,8 +150,7 @@ threshold_control (Tool       *tool,
       break;
 
     case HALT:
-      if (threshold_dialog)
-	threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
+      threshold_dialog_hide ();
       break;
 
     default:
@@ -186,6 +185,13 @@ tools_new_threshold (void)
 }
 
 void
+threshold_dialog_hide (void)
+{
+  if (threshold_dialog)
+    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
+}
+  
+void
 tools_free_threshold (Tool *tool)
 {
   Threshold * thresh;
@@ -193,8 +199,7 @@ tools_free_threshold (Tool *tool)
   thresh = (Threshold *) tool->private;
 
   /*  Close the threshold dialog  */
-  if (threshold_dialog)
-    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
+  threshold_dialog_hide ();
 
   g_free (thresh);
 }

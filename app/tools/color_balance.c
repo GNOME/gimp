@@ -147,8 +147,7 @@ color_balance_control (Tool       *tool,
       break;
 
     case HALT:
-      if (color_balance_dialog)
-	color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
+      color_balance_dialog_hide ();
       break;
 
     default:
@@ -183,6 +182,13 @@ tools_new_color_balance (void)
 }
 
 void
+color_balance_dialog_hide (void)
+{
+  if (color_balance_dialog)
+    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
+} 
+
+void
 tools_free_color_balance (Tool *tool)
 {
   ColorBalance * color_bal;
@@ -190,8 +196,7 @@ tools_free_color_balance (Tool *tool)
   color_bal = (ColorBalance *) tool->private;
 
   /*  Close the color select dialog  */
-  if (color_balance_dialog)
-    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
+  color_balance_dialog_hide ();
 
   g_free (color_bal);
 }

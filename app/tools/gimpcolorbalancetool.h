@@ -61,6 +61,7 @@ Tool * tools_new_color_balance            (void);
 void   tools_free_color_balance           (Tool              *tool);
 
 void   color_balance_initialize           (GDisplay          *gdisp);
+void   color_balance_dialog_hide	  (void);
 void   color_balance                      (PixelRegion       *srcPR,
 					   PixelRegion       *destPR,
 					   void              *data);

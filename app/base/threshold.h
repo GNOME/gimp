@@ -49,6 +49,7 @@ struct _ThresholdDialog
 Tool * tools_new_threshold  (void);
 void   tools_free_threshold (Tool        *tool);
 
+void   threshold_dialog_hide (void);
 void   threshold_initialize (GDisplay    *gdisp);
 void   threshold_2          (void        *data,
 			     PixelRegion *srcPR,

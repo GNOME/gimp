@@ -62,6 +62,7 @@ void   tools_free_hue_saturation         (Tool                 *tool);
 
 void   hue_saturation_initialize         (GDisplay             *gdisp);
 void   hue_saturation_free               (void);
+void   hue_saturation_dialog_hide	 (void);
 void   hue_saturation                    (PixelRegion          *srcPR,
 					  PixelRegion          *destPR,
 					  void                 *data);

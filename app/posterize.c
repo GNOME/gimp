@@ -91,8 +91,7 @@ posterize_control (Tool       *tool,
       break;
 
     case HALT:
-      if (posterize_dialog)
-	posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
+      posterize_dialog_hide ();
       break;
 
     default:
@@ -127,6 +126,13 @@ tools_new_posterize (void)
 }
 
 void
+posterize_dialog_hide (void)
+{
+  if (posterize_dialog)
+    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
+}
+
+void
 tools_free_posterize (Tool *tool)
 {
   Posterize * post;
@@ -134,8 +140,7 @@ tools_free_posterize (Tool *tool)
   post = (Posterize *) tool->private;
 
   /*  Close the posterize dialog  */
-  if (posterize_dialog)
-    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
+  posterize_dialog_hide ();
 
   g_free (post);
 }

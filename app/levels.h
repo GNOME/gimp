@@ -23,6 +23,7 @@
 Tool * tools_new_levels  (void);
 void   tools_free_levels (Tool     *tool);
 
+void   levels_dialog_hide (void);
 void   levels_initialize (GDisplay *gdisp);
 void   levels_free       (void);
 

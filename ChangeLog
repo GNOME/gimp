@@ -1,3 +1,25 @@
+Fri Sep 29 03:10:10 CEST 2000  Daniel Egger  <egger@suse.de>
+
+	* app/brightness_contrast.c:
+	* app/brightness_contrast.h:
+	* app/color_balance.c:
+	* app/color_balance.h:
+	* app/curves.c:
+	* app/curves.h:
+	* app/hue_saturation.c:
+	* app/hue_saturation.h:
+	* app/levels.c:
+	* app/levels.h:
+	* app/posterize.c:
+	* app/posterize.h:
+	* app/threshold.c:
+	* app/threshold.h: Added *_dialog_hide functions which
+	hides the dialog when open.
+	
+	* app/convert.c: Use them to hide dialog before converting
+	image to indexed where the operations would crash the GIMP.
+	Closes bug #23104.
+
 Thu Sep 28 16:03:09 CEST 2000  Daniel Egger  <egger@suse.de>
 
 	* app/menus.c: Simplify a few help paths.

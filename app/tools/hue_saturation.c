@@ -224,8 +224,7 @@ hue_saturation_control (Tool       *tool,
       break;
 
     case HALT:
-      if (hue_saturation_dialog)
-	hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
+      hue_saturation_dialog_hide ();
       break;
 
     default:
@@ -260,6 +259,13 @@ tools_new_hue_saturation (void)
 }
 
 void
+hue_saturation_dialog_hide (void)
+{
+  if (hue_saturation_dialog)
+    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
+} 
+  
+void
 tools_free_hue_saturation (Tool *tool)
 {
   HueSaturation * color_bal;
@@ -267,8 +273,7 @@ tools_free_hue_saturation (Tool *tool)
   color_bal = (HueSaturation *) tool->private;
 
   /*  Close the hue saturation dialog  */
-  if (hue_saturation_dialog)
-    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
+  hue_saturation_dialog_hide ();
 
   g_free (color_bal);
 }

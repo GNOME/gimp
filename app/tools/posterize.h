@@ -23,6 +23,7 @@
 Tool * tools_new_posterize  (void);
 void   tools_free_posterize (Tool     *tool);
 
+void   posterize_dialog_hide (void);
 void   posterize_initialize (GDisplay *gdisp);
 
 #endif  /*  __POSTERIZE_H__  */

@@ -90,6 +90,7 @@
 #include <string.h>
 
 #include "appenv.h"
+#include "color_balance.h"
 #include "convert.h"
 #include "cursorutil.h"
 #include "drawable.h"
@@ -97,6 +98,7 @@
 #include "fsdither.h"
 #include "gdisplay.h"
 #include "gimpui.h"
+#include "hue_saturation.h"
 #include "undo.h"
 #include "palette.h"
 #include "palette_select.h"
@@ -874,6 +876,17 @@ indexed_ok_callback (GtkWidget *widget,
       else
 	dither_type = FIXED_DITHER;
 
+  /*  Close the dialogs when open because they're useless for indexed images
+      and could crash the GIMP when used nevertheless		       */
+ 
+  color_balance_dialog_hide();
+  hue_saturation_dialog_hide ();
+  brightness_contrast_dialog_hide();
+  threshold_dialog_hide ();
+  levels_dialog_hide ();
+  curves_dialog_hide ();
+  posterize_dialog_hide ();
+  
   /*  Convert the image to indexed color  */
   convert_image (dialog->gimage, INDEXED, dialog->num_cols,
 		 dither_type, dialog->alphadither,
