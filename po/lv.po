@@ -1,9 +1,4 @@
 # translation of gimp.HEAD.po to 
-# translation of gimp.HEAD.po to
-# translation of gimp.HEAD.po to
-# translation of gimp.HEAD.po to
-# translation of gimp.HEAD.po to latvian
-# translation of gimp.HEAD.po to latvian
 # translation of gimp.HEAD.po to latvian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -14,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-22 11:01+0100\n"
-"PO-Revision-Date: 2004-11-25 22:44+0200\n"
+"PO-Revision-Date: 2004-12-05 22:07+0200\n"
 "Last-Translator: Gatis Kalnins <gatis.kalnins@metatrons.org>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5202,39 +5197,39 @@ msgstr "Nekorekta UTF-8 rinda paletes failā '%s'"
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr ""
+msgstr "Paletes faila '%s' nolasīšana: Nepareizs stabiņa numurs rindā %d. Tiek izmantota noklusētā vērtība."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:484
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
+msgstr "Paletes faila '%s' nolasīšana: Trūkst komponents SARKANS līnijā %d."
 
 #: app/core/gimppalette.c:492
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
+msgstr "Paletes faila '%s' nolasīšana: Trūkst komponents ZAĻŠ līnijā %d."
 
 #: app/core/gimppalette.c:500
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
+msgstr "Paletes faila '%s' nolasīšana: Trūkst komponents ZILS līnijā %d."
 
 #: app/core/gimppalette.c:510
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
+msgstr "Paletes faila '%s' nolasīšana: RGB vērtība ārpus noteiktā diapazona līnijā %d."
 
 #: app/core/gimppattern.c:337 app/core/gimppattern.c:384
 #: app/core/gimppattern.c:415
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr ""
+msgstr "Fatāla analīzes kļūda šablona failā '%s': nevar nolasīt %d baitus: %s"
 
 #: app/core/gimppattern.c:357
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
+msgstr "Fatāla analīzes kļūda šablona failā '%s': nepareiza šablona formāta versija %d"
 
 #: app/core/gimppattern.c:367
 #, c-format
@@ -5242,112 +5237,114 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
+"Fatāla analīzes kļūda šablona failā '%s': nepareizs šablona dziļums %d.\n"
+"GIMP šabloniem jābūt pelēktoņu vai RGB."
 
 #: app/core/gimppattern.c:393
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "Nekorekta UTF-8 rinda failā '%s'."
 
 #: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:314
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
-msgstr ""
+msgstr "Neizdevās izpildīt %s. Iespējams, pieprasītais modulis nenostartējās."
 
 #: app/core/gimpprogress.c:107 app/core/gimpprogress.c:154
 msgid "Please wait..."
-msgstr ""
+msgstr "Lūdzu gaidiet..."
 
 #: app/core/gimpselection.c:183 app/tools/gimpeditselectiontool.c:258
 msgid "Move Selection"
-msgstr ""
+msgstr "Pārvietot iezīmēto"
 
 #: app/core/gimpselection.c:202
 msgid "Sharpen Selection"
-msgstr ""
+msgstr "Iezīmētā asums"
 
 #: app/core/gimpselection.c:203
 msgid "Select None"
-msgstr ""
+msgstr "Noņemt iezīmējumu"
 
 #: app/core/gimpselection.c:204
 msgid "Select All"
-msgstr ""
+msgstr "Iezīmēt visu"
 
 #: app/core/gimpselection.c:205
 msgid "Invert Selection"
-msgstr ""
+msgstr "Invertēt iezīmēto"
 
 #: app/core/gimpselection.c:307
 msgid "No selection to stroke."
-msgstr ""
+msgstr "Nav iezīmējuma, ko apvilkt."
 
 #: app/core/gimpselection.c:668
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
+msgstr "Nav iespējams izgriezt vai kopēt, jo iezīmētais laukums ir tukšs."
 
 #: app/core/gimpselection.c:815
 msgid "Cannot float selection because the selected region is empty."
-msgstr ""
+msgstr "Nav iespējams izveidot peldošo iezīmējumu, jo iezīmētais laukums ir tukšs."
 
 #: app/core/gimpselection.c:822
 msgid "Float Selection"
-msgstr ""
+msgstr "Peldošais iezīmējums"
 
 #: app/core/gimpselection.c:839
 msgid "Floated Layer"
-msgstr ""
+msgstr "Peldošais slānis"
 
 #: app/core/gimptemplate.c:158
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr ""
+msgstr "Vienība izmantojama, ja atslēgts režīms \"Punkts pēc punkta\""
 
 #: app/core/gimptemplate.c:165
 msgid "The horizontal image resolution."
-msgstr ""
+msgstr "Attēla horizontālā izšķirtspēja."
 
 #: app/core/gimptemplate.c:170
 msgid "The vertical image resolution."
-msgstr ""
+msgstr "Attēla vertikālā izšķirtspēja."
 
 #: app/core/gimptemplate.c:450 app/widgets/widgets-enums.c:24
 msgid "Background"
-msgstr ""
+msgstr "Fons"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
 msgid "pixel"
-msgstr ""
+msgstr "Pikselis"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:787
 #: app/tools/gimpmeasuretool.c:875 app/tools/gimppainttool.c:681
 msgid "pixels"
-msgstr ""
+msgstr "Pikseļi"
 
 #. standard units
 #: app/core/gimpunit.c:58
 msgid "inch"
-msgstr ""
+msgstr "colla"
 
 #: app/core/gimpunit.c:58
 msgid "inches"
-msgstr ""
+msgstr "collas"
 
 #: app/core/gimpunit.c:59
 msgid "millimeter"
-msgstr ""
+msgstr "milimetrs"
 
 #: app/core/gimpunit.c:59
 msgid "millimeters"
-msgstr ""
+msgstr "milimetri"
 
 #. professional units
 #: app/core/gimpunit.c:62
 msgid "point"
-msgstr ""
+msgstr "punkts"
 
 #: app/core/gimpunit.c:62
 msgid "points"
-msgstr ""
+msgstr "punkti"
 
 #: app/core/gimpunit.c:63
 msgid "pica"
@@ -5359,220 +5356,220 @@ msgstr ""
 
 #: app/core/gimpunit.c:70
 msgid "percent"
-msgstr ""
+msgstr "procenti"
 
 #: app/dialogs/about-dialog.c:45
 #, c-format
 msgid "Version %s brought to you by"
-msgstr ""
+msgstr "Versiju %s veidoja"
 
 #: app/dialogs/about-dialog.c:51
 msgid "Translation by"
-msgstr ""
+msgstr "Tulkoja"
 
 #. Translators: insert your names here, separated by newline
 #. we'd prefer just the names, please no email addresses.
 #: app/dialogs/about-dialog.c:54
 msgid "translator-credits"
-msgstr ""
+msgstr "Gatis Kalnins"
 
 #: app/dialogs/about-dialog.c:59
 msgid "Contributions by"
-msgstr ""
+msgstr "Piedaloties"
 
 #: app/dialogs/about-dialog.c:153
 msgid "About The GIMP"
-msgstr ""
+msgstr "Par GIMP"
 
 #: app/dialogs/channel-options-dialog.c:138
 msgid "Channel Name:"
-msgstr ""
+msgstr "Kanāls:"
 
 #: app/dialogs/convert-dialog.c:121
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "Indeksēta krāsu pārveide"
 
 #: app/dialogs/convert-dialog.c:124
 msgid "Convert Image to Indexed Colors"
-msgstr ""
+msgstr "Pārveidot attēlu par indeksētu"
 
 #: app/dialogs/convert-dialog.c:165 app/dialogs/dialogs.c:171
 msgid "Colormap"
-msgstr ""
+msgstr "Krāsu karte"
 
 #: app/dialogs/convert-dialog.c:179
 msgid "_Maximum number of colors:"
-msgstr ""
+msgstr "Maks. krāsu skaits:"
 
 #: app/dialogs/convert-dialog.c:206
 msgid "_Remove unused colors from final palette"
-msgstr ""
+msgstr "Izdzēst neizmantotās krāsas no beigu paletes"
 
 #. dithering
 #: app/dialogs/convert-dialog.c:221 app/tools/gimpblendoptions.c:268
 msgid "Dithering"
-msgstr ""
+msgstr "Tonēšana"
 
 #: app/dialogs/convert-dialog.c:233
 msgid "Color _dithering:"
-msgstr ""
+msgstr "Krāsu tonēšana:"
 
 #: app/dialogs/convert-dialog.c:248
 msgid "Enable dithering of _transparency"
-msgstr ""
+msgstr "Ieslēgt caurspīdīguma tonēšanu"
 
 #: app/dialogs/convert-dialog.c:274
 msgid "Converting to indexed..."
-msgstr ""
+msgstr "Pārveidot par indeksētu..."
 
 #: app/dialogs/convert-dialog.c:382
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "Nevar pārveidot uz paleti, kurā vairāk par 256 krāsām."
 
 #: app/dialogs/dialogs-constructors.c:164 app/gui/gui.c:160
 msgid "GIMP Message"
-msgstr ""
+msgstr "GIMP paziņojums"
 
 #: app/dialogs/dialogs.c:127
 msgid "Devices"
-msgstr ""
+msgstr "Ierīces"
 
 #: app/dialogs/dialogs.c:127
 msgid "Device Status"
-msgstr ""
+msgstr "Ierīces statuss"
 
 #: app/dialogs/dialogs.c:131
 msgid "Errors"
-msgstr ""
+msgstr "Kļūdas"
 
 #: app/dialogs/dialogs.c:152
 msgid "History"
-msgstr ""
+msgstr "Vēsture"
 
 #: app/dialogs/dialogs.c:154
 msgid "Image Templates"
-msgstr ""
+msgstr "Attēlu paraugi"
 
 #: app/dialogs/dialogs.c:175
 msgid "Histogram"
-msgstr ""
+msgstr "Histogramma"
 
 #: app/dialogs/dialogs.c:179
 msgid "Selection"
-msgstr ""
+msgstr "Iezīmējums"
 
 #: app/dialogs/dialogs.c:179
 msgid "Selection Editor"
-msgstr ""
+msgstr "Iezīmējuma redaktors"
 
 #: app/dialogs/dialogs.c:183
 msgid "Undo History"
-msgstr ""
+msgstr "Atsaukumu vēsture"
 
 #: app/dialogs/dialogs.c:189
 msgid "Navigation"
-msgstr ""
+msgstr "Navigācija"
 
 #: app/dialogs/dialogs.c:189
 msgid "Display Navigation"
-msgstr ""
+msgstr "Navigācijas logs"
 
 #: app/dialogs/dialogs.c:195
 msgid "FG/BG"
-msgstr ""
+msgstr "Priekšplāns/Fons"
 
 #: app/dialogs/dialogs.c:195
 msgid "FG/BG Color"
-msgstr ""
+msgstr "Priekšplāna/Fona krāsa"
 
 #: app/dialogs/dialogs.c:201
 msgid "Brush Editor"
-msgstr ""
+msgstr "Otu redaktors"
 
 #: app/dialogs/file-open-location-dialog.c:71
 msgid "Open Location"
-msgstr ""
+msgstr "Atvērt vietu"
 
 #: app/dialogs/file-open-location-dialog.c:104
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "Ievadīt adresi (URI):"
 
 #: app/dialogs/file-save-dialog.c:160
 msgid "File exists"
-msgstr ""
+msgstr "Fails jau eksistē"
 
 #: app/dialogs/file-save-dialog.c:165
 msgid "_Replace"
-msgstr ""
+msgstr "Pārrakstīt"
 
 #: app/dialogs/file-save-dialog.c:175
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr ""
+msgstr "Fails ar nosaukumu '%s' jau eksistē."
 
 #: app/dialogs/file-save-dialog.c:180
 msgid "Do you want to replace it with the image you are saving?"
-msgstr ""
+msgstr "Vai jūs vēlaties to nomainīt pret saglabājamo?"
 
 #: app/dialogs/grid-dialog.c:81
 msgid "Configure Grid"
-msgstr ""
+msgstr "Iestatīt tīlu"
 
 #: app/dialogs/grid-dialog.c:82
 msgid "Configure Image Grid"
-msgstr ""
+msgstr "Iestatīt attēla tīklu"
 
 #: app/dialogs/image-merge-layers-dialog.c:60
 msgid "Merge Layers"
-msgstr ""
+msgstr "Apvienot slāņus"
 
 #: app/dialogs/image-merge-layers-dialog.c:62
 msgid "Layers Merge Options"
-msgstr ""
+msgstr "Slāņu apvienošanas parametri"
 
 #: app/dialogs/image-merge-layers-dialog.c:77
 msgid "Final, Merged Layer should be:"
-msgstr ""
+msgstr "Apvienotajam slānim jābūt:"
 
 #: app/dialogs/image-merge-layers-dialog.c:81
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "Nepieciešamības dēļ paplašināts"
 
 #: app/dialogs/image-merge-layers-dialog.c:84
 msgid "Clipped to image"
-msgstr ""
+msgstr "Nogriezts atbilstoši attēlam"
 
 #: app/dialogs/image-merge-layers-dialog.c:87
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Nogriezts atbilstoši apakšējam slānim"
 
 #: app/dialogs/image-new-dialog.c:95
 msgid "Create a New Image"
-msgstr ""
+msgstr "Izveidot jaunu attēlu"
 
 #: app/dialogs/image-new-dialog.c:130 app/dialogs/preferences-dialog.c:1284
 msgid "_Template:"
-msgstr ""
+msgstr "Paraugs:"
 
 #: app/dialogs/image-new-dialog.c:265
 msgid "Confirm Image Size"
-msgstr ""
+msgstr "Apstiprināt attēla izmēru"
 
 #: app/dialogs/image-new-dialog.c:282 app/dialogs/image-scale-dialog.c:193
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "Jūs mēģinat izveidot attēlu ar %s izmēriem."
 
 #: app/dialogs/image-new-dialog.c:289
 #, c-format
 msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr ""
+msgstr "Attēls aizņems vairāk atmiņas nekā norādīts parametru punktā \"Maksimālais attēla izmērs\" (patlaban %s)."
 
 #: app/dialogs/image-scale-dialog.c:164
 msgid "Confirm Scaling"
-msgstr ""
+msgstr "Apstiprināt mērogošanu"
 
 #: app/dialogs/image-scale-dialog.c:199
 #, c-format
@@ -5580,57 +5577,57 @@ msgid ""
 "Scaling the image to the choosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr ""
+msgstr "Ja attēla izmērs tiks mainīts ar norāditajām vērtībām, tas aizņems vairāk atmiņas nekā norādīts parametru punktā \"Maksimālais attēla izmērs\" (patlaban %s)."
 
 #: app/dialogs/image-scale-dialog.c:214
 msgid ""
 "Scaling the image to the choosen size will shrink some layers completely "
 "away."
-msgstr ""
+msgstr "Attēla mērogošana samazinās vai pat izdzēsīs dažus slāņus."
 
 #: app/dialogs/image-scale-dialog.c:218
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "Vai tiešām vēlaties to izdarīt?"
 
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1514
 #: app/dialogs/preferences-dialog.c:1668
 #: app/widgets/gimpcontrollereditor.c:193
 msgid "General"
-msgstr ""
+msgstr "Galvenais"
 
 #: app/dialogs/info-window.c:83
 msgid "Static Gray"
-msgstr ""
+msgstr "Pastāvīgs pelēkais"
 
 #: app/dialogs/info-window.c:84 app/dialogs/info-window.c:598
 msgid "Grayscale"
-msgstr ""
+msgstr "Pelēktoņu"
 
 #: app/dialogs/info-window.c:85
 msgid "Static Color"
-msgstr ""
+msgstr "Pastāvīgs krāsains"
 
 #: app/dialogs/info-window.c:86
 msgid "Pseudo Color"
-msgstr ""
+msgstr "Pseido krāsains"
 
 #: app/dialogs/info-window.c:87
 msgid "True Color"
-msgstr ""
+msgstr "Patiesās krāsas"
 
 #: app/dialogs/info-window.c:88
 msgid "Direct Color"
-msgstr ""
+msgstr "Tīra krāsa"
 
 #: app/dialogs/info-window.c:131
 msgid "Cursor"
-msgstr ""
+msgstr "Kursors"
 
 #: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1903
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
-msgstr ""
+msgstr "Pikseļi"
 
 #: app/dialogs/info-window.c:151 app/dialogs/info-window.c:157
 #: app/dialogs/info-window.c:173 app/dialogs/info-window.c:179
@@ -5638,999 +5635,999 @@ msgstr ""
 #: app/dialogs/info-window.c:415 app/dialogs/info-window.c:416
 #: app/widgets/gimpcolorframe.c:338
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: app/dialogs/info-window.c:154 app/dialogs/info-window.c:176
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: app/dialogs/info-window.c:160 app/dialogs/info-window.c:182
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: app/dialogs/info-window.c:163 app/pdb/internal_procs.c:212
 msgid "Units"
-msgstr ""
+msgstr "Mērvienības"
 
 #: app/dialogs/info-window.c:227
 msgid "Comment"
-msgstr ""
+msgstr "Komentāri"
 
 #: app/dialogs/info-window.c:238 app/dialogs/info-window.c:612
 #: app/display/gimpdisplayshell-title.c:337
 #: app/display/gimpdisplayshell-title.c:349
 msgid "(none)"
-msgstr ""
+msgstr "(nekā)"
 
 #: app/dialogs/info-window.c:263
 msgid "Info Window"
-msgstr ""
+msgstr "Informācijas logs"
 
 #: app/dialogs/info-window.c:265
 msgid "Image Information"
-msgstr ""
+msgstr "Informācija par attēlu"
 
 #. add the information fields
 #: app/dialogs/info-window.c:282
 msgid "Pixel dimensions:"
-msgstr ""
+msgstr "Izšķirtspēja pikseļos:"
 
 #: app/dialogs/info-window.c:284
 msgid "Print size:"
-msgstr ""
+msgstr "Izmērs drukai:"
 
 #: app/dialogs/info-window.c:286
 msgid "Resolution:"
-msgstr ""
+msgstr "Izšķirtspēja:"
 
 #: app/dialogs/info-window.c:288
 msgid "Scale ratio:"
-msgstr ""
+msgstr "Mēroga koeficients:"
 
 #: app/dialogs/info-window.c:290
 msgid "Number of layers:"
-msgstr ""
+msgstr "Slāņu skaits:"
 
 #: app/dialogs/info-window.c:292
 msgid "Size in memory:"
-msgstr ""
+msgstr "Izmērs atmiņā:"
 
 #: app/dialogs/info-window.c:294
 msgid "Display type:"
-msgstr ""
+msgstr "Attēla tips:"
 
 #: app/dialogs/info-window.c:296
 msgid "Visual class:"
-msgstr ""
+msgstr "Optiskā klase:"
 
 #: app/dialogs/info-window.c:298
 msgid "Visual depth:"
-msgstr ""
+msgstr "Optiskais dziļums:"
 
 #: app/dialogs/info-window.c:563
 #, c-format
 msgid "pixels/%s"
-msgstr ""
+msgstr "pikseļi/%s"
 
 #: app/dialogs/info-window.c:565
 #, c-format
 msgid "%g x %g %s"
-msgstr ""
+msgstr "%g x %g %s"
 
 #: app/dialogs/info-window.c:568 app/dialogs/preferences-dialog.c:1925
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: app/dialogs/info-window.c:595
 msgid "RGB Color"
-msgstr ""
+msgstr "RGB krāsas"
 
 #: app/dialogs/info-window.c:602
 msgid "Indexed Color"
-msgstr ""
+msgstr "Indeksētas krāsas"
 
 #: app/dialogs/info-window.c:602
 msgid "colors"
-msgstr ""
+msgstr "krāsas"
 
 #: app/dialogs/layer-add-mask-dialog.c:64
 msgid "Add a Mask to the Layer"
-msgstr ""
+msgstr "Uzlikt masku slānim"
 
 #: app/dialogs/layer-add-mask-dialog.c:86
 msgid "Initialize Layer Mask to:"
-msgstr ""
+msgstr "Inicializēt slāņa masku:"
 
 #: app/dialogs/layer-add-mask-dialog.c:96
 msgid "In_vert Mask"
-msgstr ""
+msgstr "Invertēt masku"
 
 #: app/dialogs/layer-options-dialog.c:116
 msgid "Layer _Name:"
-msgstr ""
+msgstr "Slāņa nosaukums:"
 
 #. The size labels
 #: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1026
 #: app/tools/gimpselectionoptions.c:524
 msgid "Width:"
-msgstr ""
+msgstr "Platums:"
 
 #: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1030
 #: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
 msgid "Height:"
-msgstr ""
+msgstr "Augstums:"
 
 #: app/dialogs/layer-options-dialog.c:190
 msgid "Layer Fill Type"
-msgstr ""
+msgstr "Slāņa aizpildes tips"
 
 #: app/dialogs/layer-options-dialog.c:205
 msgid "Set Name from _Text"
-msgstr ""
+msgstr "Nosaukums no teksta"
 
 #: app/dialogs/module-dialog.c:122
 msgid "Module Manager"
-msgstr ""
+msgstr "Moduļu pārvaldnieks"
 
 #: app/dialogs/module-dialog.c:124
 msgid "Manage Loadable Modules"
-msgstr ""
+msgstr "Ielādējamo moduļu vadība"
 
 #: app/dialogs/module-dialog.c:168
 msgid "Autoload"
-msgstr ""
+msgstr "Autoielāde"
 
 #: app/dialogs/module-dialog.c:175
 msgid "Module path"
-msgstr ""
+msgstr "Moduļa izvietojums"
 
 #: app/dialogs/module-dialog.c:418
 msgid "<No modules>"
-msgstr ""
+msgstr "<Nav moduļu>"
 
 #: app/dialogs/module-dialog.c:430 app/dialogs/module-dialog.c:439
 msgid "On disk"
-msgstr ""
+msgstr "Uz diska"
 
 #: app/dialogs/module-dialog.c:430
 msgid "Only in memory"
-msgstr ""
+msgstr "Tikai atmiņā"
 
 #: app/dialogs/module-dialog.c:439
 msgid "No longer available"
-msgstr ""
+msgstr "Vairs nav pieejams"
 
 #: app/dialogs/module-dialog.c:475
 msgid "Load"
-msgstr ""
+msgstr "Ielādēt"
 
 #: app/dialogs/module-dialog.c:477
 msgid "Query"
-msgstr ""
+msgstr "Pieprasījums"
 
 #: app/dialogs/module-dialog.c:484
 msgid "Unload"
-msgstr ""
+msgstr "Izlādēt"
 
 #: app/dialogs/module-dialog.c:499
 msgid "Purpose:"
-msgstr ""
+msgstr "Apraksts:"
 
 #: app/dialogs/module-dialog.c:500
 msgid "Author:"
-msgstr ""
+msgstr "Autors:"
 
 #: app/dialogs/module-dialog.c:501
 msgid "Version:"
-msgstr ""
+msgstr "Versija:"
 
 #: app/dialogs/module-dialog.c:502
 msgid "Copyright:"
-msgstr ""
+msgstr "Autortiesības:"
 
 #: app/dialogs/module-dialog.c:503
 msgid "Date:"
-msgstr ""
+msgstr "Datums:"
 
 #: app/dialogs/module-dialog.c:504
 msgid "Location:"
-msgstr ""
+msgstr "Izvietojums:"
 
 #: app/dialogs/module-dialog.c:505
 msgid "State:"
-msgstr ""
+msgstr "Stāvoklis:"
 
 #: app/dialogs/module-dialog.c:506
 msgid "Last Error:"
-msgstr ""
+msgstr "Pēdējā kļūda:"
 
 #: app/dialogs/module-dialog.c:507
 msgid "Available Types:"
-msgstr ""
+msgstr "Pieejamie tipi:"
 
 #: app/dialogs/offset-dialog.c:98
 msgid "Offset Layer"
-msgstr ""
+msgstr "Slāņa nobīde"
 
 #: app/dialogs/offset-dialog.c:100
 msgid "Offset Layer Mask"
-msgstr ""
+msgstr "Slāņa maskas nobīde"
 
 #: app/dialogs/offset-dialog.c:102
 msgid "Offset Channel"
-msgstr ""
+msgstr "Kanāla nobīde"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
 #: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
-msgstr ""
+msgstr "Nobīde"
 
 #: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
 msgid "_X:"
-msgstr ""
+msgstr "X:"
 
 #: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
 msgid "_Y:"
-msgstr ""
+msgstr "Y:"
 
 #: app/dialogs/offset-dialog.c:197
 msgid "Offset by  x/_2, y/2"
-msgstr ""
+msgstr "Nobīdīt par x/2, y/2"
 
 #. The edge behaviour frame
 #: app/dialogs/offset-dialog.c:206
 msgid "Edge Behaviour"
-msgstr ""
+msgstr "Robežu uzvedība"
 
 #: app/dialogs/offset-dialog.c:210
 msgid "_Wrap around"
-msgstr ""
+msgstr "Aizliet ar attēlu"
 
 #: app/dialogs/offset-dialog.c:213
 msgid "Fill with _background color"
-msgstr ""
+msgstr "Aizliet ar fona krāsu"
 
 #: app/dialogs/offset-dialog.c:216
 msgid "Make _transparent"
-msgstr ""
+msgstr "Padarīt caurspīdīgu"
 
 #: app/dialogs/palette-import-dialog.c:171
 msgid "Import Palette"
-msgstr ""
+msgstr "Importēt paleti"
 
 #: app/dialogs/palette-import-dialog.c:173
 msgid "Import a New Palette"
-msgstr ""
+msgstr "Importēt jaunu paleti"
 
 #: app/dialogs/palette-import-dialog.c:179
 msgid "_Import"
-msgstr ""
+msgstr "Imports"
 
 #. The "Source" frame
 #: app/dialogs/palette-import-dialog.c:208
 msgid "Select Source"
-msgstr ""
+msgstr "Izvēlēties avotu"
 
 #: app/dialogs/palette-import-dialog.c:231
 msgid "I_mage"
-msgstr ""
+msgstr "Attēls"
 
 #: app/dialogs/palette-import-dialog.c:246
 msgid "Palette _file"
-msgstr ""
+msgstr "Paletes fails"
 
 #: app/dialogs/palette-import-dialog.c:273
 msgid "Select palette file"
-msgstr ""
+msgstr "Norādīt paletes failu"
 
 #. The "Import" frame
 #: app/dialogs/palette-import-dialog.c:304
 msgid "Import Options"
-msgstr ""
+msgstr "Importa parametri"
 
 #: app/dialogs/palette-import-dialog.c:317
 msgid "New import"
-msgstr ""
+msgstr "Jauns imports"
 
 #: app/dialogs/palette-import-dialog.c:319
 msgid "Palette _Name:"
-msgstr ""
+msgstr "Paletes nosaukums:"
 
 #: app/dialogs/palette-import-dialog.c:325
 msgid "N_umber of colors:"
-msgstr ""
+msgstr "Krāsu skaits:"
 
 #: app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
-msgstr ""
+msgstr "Stabiņi:"
 
 #: app/dialogs/palette-import-dialog.c:350
 msgid "I_nterval:"
-msgstr ""
+msgstr "Intervāls:"
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:362
 msgid "Preview"
-msgstr ""
+msgstr "Priekšskatījums"
 
 #: app/dialogs/preferences-dialog.c:294
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
+msgstr "Jums ir jāpārstartē GIMP, lai izmaiņas stātos spēkā:"
 
 #: app/dialogs/preferences-dialog.c:497
 msgid "Configure Keyboard Shortcuts"
-msgstr ""
+msgstr "Iestatīt klaviatūras īsinājumtaustiņus"
 
 #: app/dialogs/preferences-dialog.c:566
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Jūsu klaviatūras īsinājumtaustiņi tiks atiestatīti uz sākotnējām vērtībām, kad startēsiet GIMP nākošo reizi."
 
 #: app/dialogs/preferences-dialog.c:600
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
+msgstr "Logu parametri tiks atiestatīti uz sākotnējām vērtībām, kad startēsiet GIMP nākošo reizi."
 
 #: app/dialogs/preferences-dialog.c:634
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Ievadierīces parametri tiks atiestatīti uz sākotnējām vērtībām, kad startēsiet GIMP nākošo reizi."
 
 #: app/dialogs/preferences-dialog.c:1053
 msgid "Show _menubar"
-msgstr ""
+msgstr "Rādīt izvēlni"
 
 #: app/dialogs/preferences-dialog.c:1056
 msgid "Show _rulers"
-msgstr ""
+msgstr "Rādīt mērlineālus"
 
 #: app/dialogs/preferences-dialog.c:1059
 msgid "Show scroll_bars"
-msgstr ""
+msgstr "Rādīt ritjoslas"
 
 #: app/dialogs/preferences-dialog.c:1062
 msgid "Show s_tatusbar"
-msgstr ""
+msgstr "Rādīt stāvokļa paneli"
 
 #: app/dialogs/preferences-dialog.c:1070
 msgid "Show s_election"
-msgstr ""
+msgstr "Rādīt iezīmējumu"
 
 #: app/dialogs/preferences-dialog.c:1073
 msgid "Show _layer boundary"
-msgstr ""
+msgstr "Rādīt slāņu robežas"
 
 #: app/dialogs/preferences-dialog.c:1076
 msgid "Show _guides"
-msgstr ""
+msgstr "Rādīt palīglīnijas"
 
 #: app/dialogs/preferences-dialog.c:1079
 msgid "Show gri_d"
-msgstr ""
+msgstr "Rādīt tīklu"
 
 #: app/dialogs/preferences-dialog.c:1085
 msgid "Canvas _padding mode:"
-msgstr ""
+msgstr "Fona krāsa ap attēlu:"
 
 #: app/dialogs/preferences-dialog.c:1090
 msgid "Custom p_adding color:"
-msgstr ""
+msgstr "Izvēles fona krāsa ap attēlu:"
 
 #: app/dialogs/preferences-dialog.c:1091
 msgid "Select custom canvas padding color"
-msgstr ""
+msgstr "Norādīt fona krāsu ap attēlu:"
 
 #: app/dialogs/preferences-dialog.c:1162
 msgid "Preferences"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: app/dialogs/preferences-dialog.c:1265 app/dialogs/preferences-dialog.c:1268
 msgid "New Image"
-msgstr ""
+msgstr "Jauns attēls"
 
 #: app/dialogs/preferences-dialog.c:1306
 msgid "Default Image Grid"
-msgstr ""
+msgstr "Noklusētais attēla tīkls"
 
 #: app/dialogs/preferences-dialog.c:1309
 msgid "Default Grid"
-msgstr ""
+msgstr "Noklusētais tīkls"
 
 #: app/dialogs/preferences-dialog.c:1329
 msgid "User Interface"
-msgstr ""
+msgstr "Lietotāja saskarne"
 
 #: app/dialogs/preferences-dialog.c:1332
 msgid "Interface"
-msgstr ""
+msgstr "Saskarne"
 
 #. Previews
 #: app/dialogs/preferences-dialog.c:1339
 msgid "Previews"
-msgstr ""
+msgstr "Priekšskatījums"
 
 #: app/dialogs/preferences-dialog.c:1342
 msgid "_Enable layer & channel previews"
-msgstr ""
+msgstr "Ieslēgt slāņu un kanālu priekšskatījumus"
 
 #: app/dialogs/preferences-dialog.c:1348
 msgid "Default _layer & channel preview size:"
-msgstr ""
+msgstr "Noklusētais kanālu un slāņu priekšskatījuma izmērs:"
 
 #: app/dialogs/preferences-dialog.c:1351
 msgid "Na_vigation preview size:"
-msgstr ""
+msgstr "Navigācijas priekšskatījuma izmērs:"
 
 #. Keyboard Shortcuts
 #: app/dialogs/preferences-dialog.c:1355
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klaviatūras īsinājumtaustiņi"
 
 #: app/dialogs/preferences-dialog.c:1359
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "Rādīt ātrās piekļuves taustiņus"
 
 #: app/dialogs/preferences-dialog.c:1362
 msgid "Use _dynamic keyboard shortcuts"
-msgstr ""
+msgstr "Izmantot klaviatūras īsinājumtaustiņus"
 
 #: app/dialogs/preferences-dialog.c:1366
 msgid "Configure _Keyboard Shortcuts..."
-msgstr ""
+msgstr "Iestatīt klaviatūras īsinājumtaustiņus..."
 
 #: app/dialogs/preferences-dialog.c:1373
 msgid "_Save keyboard shortcuts on exit"
-msgstr ""
+msgstr "Saglabāt klaviatūras īsinājumtaustiņus iziešanas laikā"
 
 #: app/dialogs/preferences-dialog.c:1377
 msgid "Save Keyboard Shortcuts _Now"
-msgstr ""
+msgstr "Saglabāt klaviatūras īsinājumtaustiņus"
 
 #: app/dialogs/preferences-dialog.c:1384
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr ""
+msgstr "Atiestatīt klaviatūras īsinājumtaustiņu noklusētās vērtības"
 
 #: app/dialogs/preferences-dialog.c:1399 app/dialogs/preferences-dialog.c:1402
 #: app/dialogs/preferences-dialog.c:1438
 msgid "Theme"
-msgstr ""
+msgstr "Tēma"
 
 #: app/dialogs/preferences-dialog.c:1408
 msgid "Select Theme"
-msgstr ""
+msgstr "Izvēlēties tēmu"
 
 #: app/dialogs/preferences-dialog.c:1490
 msgid "Reload C_urrent Theme"
-msgstr ""
+msgstr "Pārlādēt pašreizējo tēmu"
 
 #: app/dialogs/preferences-dialog.c:1502 app/dialogs/preferences-dialog.c:1505
 msgid "Help System"
-msgstr ""
+msgstr "Palīga sistēma"
 
 #: app/dialogs/preferences-dialog.c:1517
 msgid "Show tool _tips"
-msgstr ""
+msgstr "Rādīt rīku paskaidrojumus"
 
 #: app/dialogs/preferences-dialog.c:1520
 msgid "Show help _buttons"
-msgstr ""
+msgstr "Rādīt palīga pogas"
 
 #: app/dialogs/preferences-dialog.c:1523
 msgid "Show tips on _startup"
-msgstr ""
+msgstr "Rādīt dienas padomu starta laikā"
 
 #. Help Browser
 #: app/dialogs/preferences-dialog.c:1527
 msgid "Help Browser"
-msgstr ""
+msgstr "Palīga pārlūks"
 
 #: app/dialogs/preferences-dialog.c:1531
 msgid "H_elp browser to use:"
-msgstr ""
+msgstr "Palīga pārlūka izvēle:"
 
 #: app/dialogs/preferences-dialog.c:1536
 msgid "Web Browser"
-msgstr ""
+msgstr "Interneta pārlūks"
 
 #: app/dialogs/preferences-dialog.c:1540
 msgid "Select web browser"
-msgstr ""
+msgstr "Izvēlēties interneta pārlūku"
 
 #: app/dialogs/preferences-dialog.c:1543
 msgid "_Web browser to use:"
-msgstr ""
+msgstr "Interneta pārlūka izvēle:"
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1568
 msgid "Guide and Grid Snapping"
-msgstr ""
+msgstr "Pielipšana palīglīnijām un tīklam"
 
 #: app/dialogs/preferences-dialog.c:1573
 msgid "_Snap distance:"
-msgstr ""
+msgstr "Lipšanas attālums:"
 
 #. Contiguous Regions
 #: app/dialogs/preferences-dialog.c:1577
 msgid "Finding Contiguous Regions"
-msgstr ""
+msgstr "Saistītā laukuma meklēšana"
 
 #: app/dialogs/preferences-dialog.c:1582
 msgid "Default _threshold:"
-msgstr ""
+msgstr "Noklusētais slieksnis:"
 
 #. Scaling
 #: app/dialogs/preferences-dialog.c:1586
 msgid "Scaling"
-msgstr ""
+msgstr "Mērogošana"
 
 #: app/dialogs/preferences-dialog.c:1590
 msgid "Default _interpolation:"
-msgstr ""
+msgstr "Noklusētā interpolācija:"
 
 #. Global Brush, Pattern, ...
 #: app/dialogs/preferences-dialog.c:1594
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "Zīmēšanas parametri sadalīti starp instrumentiem"
 
 #: app/dialogs/preferences-dialog.c:1607
 msgid "Move Tool"
-msgstr ""
+msgstr "Pārvietot rīku"
 
 #: app/dialogs/preferences-dialog.c:1611
 msgid "Change current layer or path"
-msgstr ""
+msgstr "Mainīt patreizējo slāni vai kontūru"
 
 #: app/dialogs/preferences-dialog.c:1624 app/dialogs/preferences-dialog.c:1627
 msgid "Toolbox"
-msgstr ""
+msgstr "Rīkjosla"
 
 #. Appearance
 #: app/dialogs/preferences-dialog.c:1634 app/dialogs/preferences-dialog.c:1731
 #: app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
-msgstr ""
+msgstr "Izskats"
 
 #: app/dialogs/preferences-dialog.c:1638
 msgid "Show _foreground & background color"
-msgstr ""
+msgstr "Rādīt priekšplāna un fona krāsu"
 
 #: app/dialogs/preferences-dialog.c:1642
 msgid "Show active _brush, pattern & gradient"
-msgstr ""
+msgstr "Rādīt izmantojamās otas, šablonus un gradientus"
 
 #: app/dialogs/preferences-dialog.c:1646
 msgid "Show active _image"
-msgstr ""
+msgstr "Rādīt aktīvo attēlu"
 
 #: app/dialogs/preferences-dialog.c:1656 app/dialogs/preferences-dialog.c:1659
 msgid "Image Windows"
-msgstr ""
+msgstr "Attēla logs"
 
 #: app/dialogs/preferences-dialog.c:1671
 msgid "Use \"_Dot for dot\" by default"
-msgstr ""
+msgstr "Izmantot \"Punkts pēc punkta\" pēc noklusējuma"
 
 #: app/dialogs/preferences-dialog.c:1677
 msgid "Marching _ants speed:"
-msgstr ""
+msgstr "Punktējuma ātrums:"
 
 #. Zoom & Resize Behavior
 #: app/dialogs/preferences-dialog.c:1681
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "Tālummaiņas un mērogošanas noteikumi"
 
 #: app/dialogs/preferences-dialog.c:1685
 msgid "Resize window on _zoom"
-msgstr ""
+msgstr "Mērogot logu tālummaiņas laikā"
 
 #: app/dialogs/preferences-dialog.c:1688
 msgid "Resize window on image _size change"
-msgstr ""
+msgstr "Mērogot logu attēla mērogošanas laikā"
 
 #: app/dialogs/preferences-dialog.c:1694
 msgid "Fit to window"
-msgstr ""
+msgstr "Atbilstoši loga izmēriem"
 
 #: app/dialogs/preferences-dialog.c:1696
 msgid "Initial zoom _ratio:"
-msgstr ""
+msgstr "Tālummaiņas sākotnējās proporcijas:"
 
 #. Mouse Cursors
 #: app/dialogs/preferences-dialog.c:1700
 msgid "Mouse Cursors"
-msgstr ""
+msgstr "Peles kursors"
 
 #: app/dialogs/preferences-dialog.c:1704
 msgid "Show _brush outline"
-msgstr ""
+msgstr "Rādīt otas kontūru"
 
 #: app/dialogs/preferences-dialog.c:1707
 msgid "Show paint _tool cursor"
-msgstr ""
+msgstr "Rādīt zīmēšanas rīka kursoru"
 
 #: app/dialogs/preferences-dialog.c:1713
 msgid "Cursor _mode:"
-msgstr ""
+msgstr "Kursora režīms:"
 
 #: app/dialogs/preferences-dialog.c:1716
 msgid "Cursor re_ndering:"
-msgstr ""
+msgstr "Kursora izskats:"
 
 #: app/dialogs/preferences-dialog.c:1728
 msgid "Image Window Appearance"
-msgstr ""
+msgstr "Attēla loga izskats"
 
 #: app/dialogs/preferences-dialog.c:1739
 msgid "Default Appearance in Normal Mode"
-msgstr ""
+msgstr "Noklusētais izskats normālā režīmā"
 
 #: app/dialogs/preferences-dialog.c:1744
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "Noklusētais izskats pilnekrāna režīmā"
 
 #: app/dialogs/preferences-dialog.c:1753
 msgid "Image Title & Statusbar Format"
-msgstr ""
+msgstr "Attēla virsraksta un stāvokļa joslas formāts"
 
 #: app/dialogs/preferences-dialog.c:1756
 msgid "Title & Status"
-msgstr ""
+msgstr "Virsraksts un statuss"
 
 #: app/dialogs/preferences-dialog.c:1776
 msgid "Standard"
-msgstr ""
+msgstr "Standarta"
 
 #: app/dialogs/preferences-dialog.c:1777
 msgid "Show zoom percentage"
-msgstr ""
+msgstr "Rādīt mērogu procentos"
 
 #: app/dialogs/preferences-dialog.c:1778
 msgid "Show zoom ratio"
-msgstr ""
+msgstr "Rādīt tālummaiņas koeficientu"
 
 #: app/dialogs/preferences-dialog.c:1779
 msgid "Show image size"
-msgstr ""
+msgstr "Rādīt attēla izmēru"
 
 #: app/dialogs/preferences-dialog.c:1780
 msgid "Show memory usage"
-msgstr ""
+msgstr "Rādīt atmiņas noslodzi"
 
 #: app/dialogs/preferences-dialog.c:1791
 msgid "Image Title Format"
-msgstr ""
+msgstr "Attēla faila formāts"
 
 #: app/dialogs/preferences-dialog.c:1792
 msgid "Image Statusbar Format"
-msgstr ""
+msgstr "Attēla stāvokļa joslas formāts"
 
 #: app/dialogs/preferences-dialog.c:1877 app/dialogs/preferences-dialog.c:1880
 msgid "Display"
-msgstr ""
+msgstr "Displejs"
 
 #: app/dialogs/preferences-dialog.c:1893
 msgid "Transparency _type:"
-msgstr ""
+msgstr "Caurspīdīguma tips:"
 
 #: app/dialogs/preferences-dialog.c:1896
 msgid "Check _size:"
-msgstr ""
+msgstr "Pārbaudīt izmēru:"
 
 #: app/dialogs/preferences-dialog.c:1899
 msgid "Get Monitor Resolution"
-msgstr ""
+msgstr "Uzstādīt monitora izšķirtspēju"
 
 #: app/dialogs/preferences-dialog.c:1941
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
-msgstr ""
+msgstr "No logu sistēma (patlaban %d x %d dpi)"
 
 #: app/dialogs/preferences-dialog.c:1964
 msgid "_Manually"
-msgstr ""
+msgstr "Ar roku"
 
 #: app/dialogs/preferences-dialog.c:1979
 msgid "C_alibrate..."
-msgstr ""
+msgstr "Kalibrēt..."
 
 #: app/dialogs/preferences-dialog.c:1999 app/dialogs/preferences-dialog.c:2002
 msgid "Input Devices"
-msgstr ""
+msgstr "Ievadierīces"
 
 #. Extended Input Devices
 #: app/dialogs/preferences-dialog.c:2009
 msgid "Extended Input Devices"
-msgstr ""
+msgstr "Papildus ievadierīces"
 
 #: app/dialogs/preferences-dialog.c:2013
 msgid "Configure E_xtended Input Devices..."
-msgstr ""
+msgstr "Iestatīt papildus ievadierīces..."
 
 #: app/dialogs/preferences-dialog.c:2020
 msgid "_Save input device settings on exit"
-msgstr ""
+msgstr "Saglabāt ievadierīču parametrus iziešanas laikā"
 
 #: app/dialogs/preferences-dialog.c:2024
 msgid "Save Input Device Settings _Now"
-msgstr ""
+msgstr "Saglabāt ievadierīču parametrus"
 
 #: app/dialogs/preferences-dialog.c:2031
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr ""
+msgstr "Atiestatīt saglabātos ievadierīču parametrus uz noklusētajiem"
 
 #: app/dialogs/preferences-dialog.c:2046
 msgid "Additional Input Controllers"
-msgstr ""
+msgstr "Papildus vadības paņēmieni"
 
 #: app/dialogs/preferences-dialog.c:2049
 msgid "Input Controllers"
-msgstr ""
+msgstr "Ievades paņēmieni"
 
 #: app/dialogs/preferences-dialog.c:2090 app/dialogs/preferences-dialog.c:2093
 msgid "Window Management"
-msgstr ""
+msgstr "Logu kontrole"
 
 #: app/dialogs/preferences-dialog.c:2099
 msgid "Window Manager Hints"
-msgstr ""
+msgstr "Logu kontroles stili"
 
 #: app/dialogs/preferences-dialog.c:2105
 msgid "Hint for the _toolbox:"
-msgstr ""
+msgstr "Rīkjoslas stils"
 
 #: app/dialogs/preferences-dialog.c:2109
 msgid "Hint for the _docks:"
-msgstr ""
+msgstr "Citu paneļu stils:"
 
 #: app/dialogs/preferences-dialog.c:2112
 msgid "Focus"
-msgstr ""
+msgstr "Fokuss"
 
 #: app/dialogs/preferences-dialog.c:2116
 msgid "Activate the _focused image"
-msgstr ""
+msgstr "Aktivizēt fokusēto attēlu"
 
 #. Window Positions
 #: app/dialogs/preferences-dialog.c:2120
 msgid "Window Positions"
-msgstr ""
+msgstr "Loga atrašanās vieta"
 
 #: app/dialogs/preferences-dialog.c:2123
 msgid "_Save window positions on exit"
-msgstr ""
+msgstr "Saglabāt loga atrašanās vietu izejot"
 
 #: app/dialogs/preferences-dialog.c:2127
 msgid "Save Window Positions _Now"
-msgstr ""
+msgstr "Saglabāt loga atrašanās vietu"
 
 #: app/dialogs/preferences-dialog.c:2134
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr ""
+msgstr "Atiestatīt saglabāto logu stāvokli uz noklusēto"
 
 #: app/dialogs/preferences-dialog.c:2149 app/dialogs/preferences-dialog.c:2152
 #: app/dialogs/preferences-dialog.c:2300
 msgid "Environment"
-msgstr ""
+msgstr "Vide"
 
 #: app/dialogs/preferences-dialog.c:2160
 msgid "Resource Consumption"
-msgstr ""
+msgstr "Resursu konfigurēšana"
 
 #: app/dialogs/preferences-dialog.c:2170
 msgid "Minimal number of _undo levels:"
-msgstr ""
+msgstr "Minimālais atpakaļsoļu skaits:"
 
 #: app/dialogs/preferences-dialog.c:2173
 msgid "Maximum undo _memory:"
-msgstr ""
+msgstr "Maksimālā atpakaļsoļu atmiņa:"
 
 #: app/dialogs/preferences-dialog.c:2176
 msgid "Tile cache _size:"
-msgstr ""
+msgstr "Bufera izmērs:"
 
 #: app/dialogs/preferences-dialog.c:2179
 msgid "Maximum _new image size:"
-msgstr ""
+msgstr "Jauna attēla maksimālais izmērs:"
 
 #: app/dialogs/preferences-dialog.c:2184
 msgid "Number of _processors to use:"
-msgstr ""
+msgstr "Izmantojamo procesoru skaits:"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2189
 msgid "Image Thumbnails"
-msgstr ""
+msgstr "Attēlu sīkattēli"
 
 #: app/dialogs/preferences-dialog.c:2194
 msgid "Size of _thumbnails:"
-msgstr ""
+msgstr "Sīkattēlu izmērs:"
 
 #: app/dialogs/preferences-dialog.c:2198
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "Maksimālais faila izmērs sīkattēlošanai:"
 
 #. File Saving
 #: app/dialogs/preferences-dialog.c:2202
 msgid "Saving Images"
-msgstr ""
+msgstr "Saglabāt attēlus"
 
 #: app/dialogs/preferences-dialog.c:2205
 msgid "Confirm closing of unsa_ved images"
-msgstr ""
+msgstr "Pieprasīt saglabāšanu nesaglabātu attēlu aizvēršanas laikā"
 
 #: app/dialogs/preferences-dialog.c:2216 app/dialogs/preferences-dialog.c:2219
 msgid "Folders"
-msgstr ""
+msgstr "Mapes"
 
 #: app/dialogs/preferences-dialog.c:2234
 msgid "Temp folder:"
-msgstr ""
+msgstr "Pagaidfailu mape:"
 
 #: app/dialogs/preferences-dialog.c:2234
 msgid "Select Temp Folder"
-msgstr ""
+msgstr "Norādīt pagaidfailu mapi"
 
 #: app/dialogs/preferences-dialog.c:2235
 #: app/dialogs/user-install-dialog.c:1401
 msgid "Swap folder:"
-msgstr ""
+msgstr "Swap mape:"
 
 #: app/dialogs/preferences-dialog.c:2235
 msgid "Select Swap Folder"
-msgstr ""
+msgstr "Izvēlēties swap mapi"
 
 #: app/dialogs/preferences-dialog.c:2268
 msgid "Brush Folders"
-msgstr ""
+msgstr "Otu mapes"
 
 #: app/dialogs/preferences-dialog.c:2270
 msgid "Select Brush Folders"
-msgstr ""
+msgstr "Izvēlēties otu mapes"
 
 #: app/dialogs/preferences-dialog.c:2272
 msgid "Pattern Folders"
-msgstr ""
+msgstr "Šablonu mapes"
 
 #: app/dialogs/preferences-dialog.c:2274
 msgid "Select Pattern Folders"
-msgstr ""
+msgstr "Izvēlēties šablonu mapes"
 
 #: app/dialogs/preferences-dialog.c:2276
 msgid "Palette Folders"
-msgstr ""
+msgstr "Palešu mapes"
 
 #: app/dialogs/preferences-dialog.c:2278
 msgid "Select Palette Folders"
-msgstr ""
+msgstr "Izvēlēties palešu mapes"
 
 #: app/dialogs/preferences-dialog.c:2280
 msgid "Gradient Folders"
-msgstr ""
+msgstr "Gradientu mapes"
 
 #: app/dialogs/preferences-dialog.c:2282
 msgid "Select Gradient Folders"
-msgstr ""
+msgstr "Izvēlēties gradientu mapes"
 
 #: app/dialogs/preferences-dialog.c:2284
 msgid "Font Folders"
-msgstr ""
+msgstr "Šriftu mapes"
 
 #: app/dialogs/preferences-dialog.c:2286
 msgid "Select Font Folders"
-msgstr ""
+msgstr "Izvēlēties šriftu mapes"
 
 #: app/dialogs/preferences-dialog.c:2288
 msgid "Plug-In Folders"
-msgstr ""
+msgstr "Moduļu mapes"
 
 #: app/dialogs/preferences-dialog.c:2290
 msgid "Select Plug-In Folders"
-msgstr ""
+msgstr "Izvēlēties moduļu mapes"
 
 #: app/dialogs/preferences-dialog.c:2292
 msgid "Scripts"
-msgstr ""
+msgstr "Skripti"
 
 #: app/dialogs/preferences-dialog.c:2292
 msgid "Script-Fu Folders"
-msgstr ""
+msgstr "Script-Fu mapes"
 
 #: app/dialogs/preferences-dialog.c:2294
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "Izvēlēties Script-Fu mapes"
 
 #: app/dialogs/preferences-dialog.c:2296
 msgid "Module Folders"
-msgstr ""
+msgstr "Moduļu mapes"
 
 #: app/dialogs/preferences-dialog.c:2298
 msgid "Select Module Folders"
-msgstr ""
+msgstr "Izvēlēties moduļu mapes"
 
 #: app/dialogs/preferences-dialog.c:2300
 msgid "Environment Folders"
-msgstr ""
+msgstr "Vides mapes"
 
 #: app/dialogs/preferences-dialog.c:2302
 msgid "Select Environment Folders"
-msgstr ""
+msgstr "Izvēlēties vides mapes"
 
 #: app/dialogs/preferences-dialog.c:2304
 msgid "Themes"
-msgstr ""
+msgstr "Tēmas"
 
 #: app/dialogs/preferences-dialog.c:2304
 msgid "Theme Folders"
-msgstr ""
+msgstr "Tēmu mapes"
 
 #: app/dialogs/preferences-dialog.c:2306
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "Izvēlēties tēmu mapes"
 
 #: app/dialogs/print-size-dialog.c:129
 msgid "Print Size"
-msgstr ""
+msgstr "Drukas izmērs"
 
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
-msgstr ""
+msgstr "Platums:"
 
 #: app/dialogs/print-size-dialog.c:163 app/widgets/gimpsizebox.c:247
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
-msgstr ""
+msgstr "Augstums:"
 
 #. the resolution labels
 #: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
-msgstr ""
+msgstr "X izšķirtspēja:"
 
 #: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
-msgstr ""
+msgstr "Y izšķirtspēja:"
 
 #: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
-msgstr ""
+msgstr "pikseļi/%a"
 
 #: app/dialogs/quit-dialog.c:84
 msgid "Quit The GIMP"
-msgstr ""
+msgstr "Iziet no GIMP"
 
 #: app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr ""
+msgstr "Ja Jūs vēlaties iziet no GIMP tagad, visas izmaiņas zudīs."
 
 #: app/dialogs/quit-dialog.c:164
 msgid "There is one image with unsaved changes:"
-msgstr ""
+msgstr "Ir nesaglabāts attēls:"
 
 #: app/dialogs/quit-dialog.c:167
 #, c-format
 msgid "There are %d images with unsaved changes:"
-msgstr ""
+msgstr "Ir nesaglabāti %d attēli ar nesaglabātām izmaiņām:"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
-msgstr ""
+msgstr "Audekla izmērs"
 
 #: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:107
 msgid "Layer Size"
-msgstr ""
+msgstr "Slāņa izmērs"
 
 #: app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
-msgstr ""
+msgstr "Kalibrēt attēla izšķirtspēju"
 
 #: app/dialogs/resolution-calibrate-dialog.c:120
 msgid "Measure the rulers and enter their lengths:"
