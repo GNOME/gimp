@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.045 Sun Nov  1 23:40:20 CET 1998
 	- more configuration cleanups
 	- fixed Gimp::Fu to respect RUN_WITH_LAST_VALS again
 	- added more oo-prefixes to channels and layers (see Gimp::OO)
@@ -7,6 +8,8 @@ Revision history for Gimp-Perl extension.
 	- 'require 5.004_04' and added use base declarations
 	- improved future compatibility
 	- improved constant inlining
+	- fixed a serious bug in argument handling when not all arguments
+	  were given
 
 1.0441 Sat Oct 24 22:52:05 CEST 1998
 	- t/run.t does much less when no tests are requested

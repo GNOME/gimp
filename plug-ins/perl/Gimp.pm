@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.0441;
+$VERSION = 1.045;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE

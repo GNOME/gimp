@@ -1049,14 +1049,14 @@ gimp_call_procedure (proc_name, ...)
 		      {
 		        j = 0;
 		        
-		        if (no_runmode || !SvROK (ST(1)))
-    		          for (i = 0; i < nparams && j < items; i++)
+		        if (no_runmode || !SvROK (ST(0)))
+    		          for (i = 0; i < nparams && j < items-1; i++)
 		            {
 		              args[i].type = params[i].type;
-		              if (!i && no_runmode == 2)
+		              if (i==0 && no_runmode == 2)
 		                args->data.d_int32 = RUN_NONINTERACTIVE;
-		              else if ((!SvROK (ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
-		                  && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
+		              else if ((!SvROK(ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
+		                       && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
 		                j++;
 		          
 		              if (croak_str [0])
@@ -1076,8 +1076,8 @@ gimp_call_procedure (proc_name, ...)
 		                  goto error;
 		                }
 		            }
-		          
-		        if (no_runmode || j >= items-1)
+		        
+		        if (no_runmode || i == nparams)
 		          break;
 		        
 		        /* very costly, do better! */
