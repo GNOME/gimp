@@ -144,11 +144,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
       proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
       proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
     {
-      gimp->last_plug_in = proc_rec;
-#if 0
-      FIXME
-      plug_in_menus_update (GIMP_ITEM_FACTORY (item_factory), drawable_type);
-#endif
+      gimp_set_last_plug_in (gimp, proc_def);
     }
 
   g_free (args);

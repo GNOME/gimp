@@ -1,5 +1,20 @@
 2004-08-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.[ch]: changed member "ProcRecord last_plug_in" to
+	PlugInProcDef last_plug_in". Added function
+	gimp_set_last_plug_in() and signal Gimp::last-plug-in-changed.
+
+	* app/actions/plug-in-commands.c
+	* app/plug-in/plug-in-run.c: changed accordingly.
+
+	* app/actions/plug-in-actions.c: factored out updating of the
+	"Reshow Last" and "Rerun Last" actions to a private function.
+	Connect each "plug-in" action group to Gimp::last-plug-in-changed
+	and update the actions' label and sensitivity in the
+	callback. Fixes bug #149139.
+
+2004-08-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimplayertreeview.c: #include "core/gimpimage-undo.h"
 
 2004-08-04  Manish Singh  <yosh@gimp.org>

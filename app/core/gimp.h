@@ -78,7 +78,7 @@ struct _Gimp
   PlugIn                 *current_plug_in;
   GSList                 *open_plug_ins;
   GSList                 *plug_in_stack;
-  ProcRecord             *last_plug_in;
+  PlugInProcDef          *last_plug_in;
 
   PlugInShm              *plug_in_shm;
   GimpEnvironTable       *environ_table;
@@ -137,14 +137,15 @@ struct _GimpClass
 {
   GimpObjectClass  parent_class;
 
-  void     (* initialize)     (Gimp               *gimp,
-                               GimpInitStatusFunc  status_callback);
-  void     (* restore)        (Gimp               *gimp,
-                               GimpInitStatusFunc  status_callback);
-  gboolean (* exit)           (Gimp               *gimp,
-                               gboolean            force);
+  void     (* initialize)           (Gimp               *gimp,
+                                     GimpInitStatusFunc  status_callback);
+  void     (* restore)              (Gimp               *gimp,
+                                     GimpInitStatusFunc  status_callback);
+  gboolean (* exit)                 (Gimp               *gimp,
+                                     gboolean            force);
 
-  void     (* buffer_changed) (Gimp               *gimp);
+  void     (* buffer_changed)       (Gimp               *gimp);
+  void     (* last_plug_in_changed) (Gimp               *gimp);
 };
 
 
@@ -174,6 +175,8 @@ void          gimp_exit                 (Gimp               *gimp,
 
 void          gimp_set_global_buffer    (Gimp               *gimp,
                                          GimpBuffer         *buffer);
+void          gimp_set_last_plug_in     (Gimp               *gimp,
+                                         PlugInProcDef      *proc_def);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

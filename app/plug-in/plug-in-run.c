@@ -39,6 +39,7 @@
 
 #include "plug-in.h"
 #include "plug-in-params.h"
+#include "plug-in-proc.h"
 #include "plug-in-run.h"
 #include "plug-in-shm.h"
 
@@ -196,7 +197,7 @@ plug_in_repeat (Gimp        *gimp,
 
       /* initialize the first three argument types */
       for (i = 0; i < 3; i++)
-	args[i].arg_type = gimp->last_plug_in->args[i].arg_type;
+	args[i].arg_type = gimp->last_plug_in->db_info.args[i].arg_type;
 
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ?
@@ -205,7 +206,7 @@ plug_in_repeat (Gimp        *gimp,
       args[2].value.pdb_int = drawable_ID;
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, context, gimp->last_plug_in,
+      plug_in_run (gimp, context, &gimp->last_plug_in->db_info,
                    args, 3, FALSE, TRUE, display_ID);
 
       g_free (args);

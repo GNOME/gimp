@@ -78,6 +78,7 @@ enum
   RESTORE,
   EXIT,
   BUFFER_CHANGED,
+  LAST_PLUG_IN_CHANGED,
   LAST_SIGNAL
 };
 
@@ -182,6 +183,15 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, buffer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_signals[LAST_PLUG_IN_CHANGED] =
+    g_signal_new ("last-plug-in-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, last_plug_in_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -922,6 +932,17 @@ gimp_set_global_buffer (Gimp       *gimp,
   gimp->have_current_cut_buffer = (buffer != NULL);
 
   g_signal_emit (gimp, gimp_signals[BUFFER_CHANGED], 0);
+}
+
+void
+gimp_set_last_plug_in (Gimp          *gimp,
+                       PlugInProcDef *proc_def)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp->last_plug_in = proc_def;
+
+  g_signal_emit (gimp, gimp_signals[LAST_PLUG_IN_CHANGED], 0);
 }
 
 GimpImage *

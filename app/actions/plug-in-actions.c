@@ -48,6 +48,10 @@
 
 /*  local function prototypes  */
 
+static void     plug_in_actions_last_changed      (Gimp            *gimp,
+                                                   GimpActionGroup *group);
+static void     plug_in_actions_update_last       (GimpActionGroup *group,
+                                                   gpointer         data);
 static gboolean plug_in_actions_check_translation (const gchar     *original,
                                                    const gchar     *translated);
 static void     plug_in_actions_build_path        (GimpActionGroup *group,
@@ -132,6 +136,10 @@ plug_in_actions_setup (GimpActionGroup *group)
           plug_in_actions_add_proc (group, proc_def);
         }
     }
+
+  g_signal_connect_object (group->gimp, "last-plug-in-changed",
+                           G_CALLBACK (plug_in_actions_last_changed),
+                           group, 0);
 }
 
 void
@@ -193,52 +201,10 @@ plug_in_actions_update (GimpActionGroup *group,
           gimp_action_group_set_action_sensitive (group,
                                                   proc_def->db_info.name,
                                                   sensitive);
-
-          if (group->gimp->last_plug_in &&
-              group->gimp->last_plug_in == &proc_def->db_info)
-            {
-              const gchar *progname;
-              const gchar *domain;
-              gchar       *label;
-              gchar       *repeat;
-              gchar       *reshow;
-
-              progname = plug_in_proc_def_get_progname (proc_def);
-              domain   = plug_ins_locale_domain (group->gimp, progname, NULL);
-
-              label = plug_in_proc_def_get_label (proc_def, domain);
-
-              repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
-              reshow = g_strdup_printf (_("R_e-show \"%s\""), label);
-
-              g_free (label);
-
-              gimp_action_group_set_action_label (group, "plug-in-repeat",
-                                                  repeat);
-              gimp_action_group_set_action_label (group, "plug-in-reshow",
-                                                  reshow);
-
-              g_free (repeat);
-              g_free (reshow);
-
-              gimp_action_group_set_action_sensitive (group, "plug-in-repeat",
-                                                      TRUE);
-              gimp_action_group_set_action_sensitive (group, "plug-in-reshow",
-                                                      TRUE);
-	    }
 	}
     }
 
-  if (! group->gimp->last_plug_in)
-    {
-      gimp_action_group_set_action_label (group, "plug-in-repeat",
-                                          _("Repeat Last"));
-      gimp_action_group_set_action_label (group, "plug-in-reshow",
-                                          _("Re-Show Last"));
-
-      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
-      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
-    }
+  plug_in_actions_update_last (group, data);
 }
 
 void
@@ -352,6 +318,57 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
 
 
 /*  private functions  */
+
+static void
+plug_in_actions_last_changed (Gimp            *gimp,
+                              GimpActionGroup *group)
+{
+  plug_in_actions_update_last (group, NULL);
+}
+
+static void
+plug_in_actions_update_last (GimpActionGroup *group,
+                             gpointer         data)
+{
+  if (group->gimp->last_plug_in)
+    {
+      PlugInProcDef *proc_def = group->gimp->last_plug_in;
+      const gchar   *progname;
+      const gchar   *domain;
+      gchar         *label;
+      gchar         *repeat;
+      gchar         *reshow;
+
+      progname = plug_in_proc_def_get_progname (proc_def);
+      domain   = plug_ins_locale_domain (group->gimp, progname, NULL);
+
+      label = plug_in_proc_def_get_label (proc_def, domain);
+
+      repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
+      reshow = g_strdup_printf (_("R_e-show \"%s\""), label);
+
+      g_free (label);
+
+      gimp_action_group_set_action_label (group, "plug-in-repeat", repeat);
+      gimp_action_group_set_action_label (group, "plug-in-reshow", reshow);
+
+      g_free (repeat);
+      g_free (reshow);
+
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
+    }
+  else
+    {
+      gimp_action_group_set_action_label (group, "plug-in-repeat",
+                                          _("Repeat Last"));
+      gimp_action_group_set_action_label (group, "plug-in-reshow",
+                                          _("Re-Show Last"));
+
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
+    }
+}
 
 static gboolean
 plug_in_actions_check_translation (const gchar *original,
