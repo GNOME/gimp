@@ -1,3 +1,7 @@
+2004-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gauss.c: add "..." to the progress text.
+
 2004-08-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpprogress.c: added some gtk-doc comments, could be
@@ -31,7 +35,7 @@
 2004-08-30  Michael Natterer  <mitch@gimp.org>
 
 	Brought the PDB progress into a working state. Fixes bug #6010,
-	addressed bugs #97266 and #135185 and unfortunately reopens bug
+	addresses bugs #97266 and #135185 and unfortunately reopens bug
 	#150194 (will fix that later).
 
 	* libgimpbase/gimpbaseenums.h: added enum GimpProgressCommand.

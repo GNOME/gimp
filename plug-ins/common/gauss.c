@@ -303,7 +303,7 @@ run (const gchar      *name,
 	  break;
 	}
     }
-  else if (strcmp (name, "plug_in_gauss_iir") == 0) 
+  else if (strcmp (name, "plug_in_gauss_iir") == 0)
     {
       if (nparams != 6)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -322,7 +322,7 @@ run (const gchar      *name,
 	    return;
         }
     }
-  else if (strcmp (name, "plug_in_gauss_iir2") == 0) 
+  else if (strcmp (name, "plug_in_gauss_iir2") == 0)
     {
       if (nparams != 5)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -340,7 +340,7 @@ run (const gchar      *name,
 	    return;
         }
     }
-  else if (strcmp (name, "plug_in_gauss_rle") == 0) 
+  else if (strcmp (name, "plug_in_gauss_rle") == 0)
     {
       if (nparams != 6)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -359,7 +359,7 @@ run (const gchar      *name,
 	    return;
         }
     }
-  else if (strcmp (name, "plug_in_gauss_rle2") == 0) 
+  else if (strcmp (name, "plug_in_gauss_rle2") == 0)
     {
       if (nparams != 5)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -386,7 +386,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
-	  gimp_progress_init (_("Gaussian Blur"));
+	  gimp_progress_init (_("Gaussian Blur..."));
 
           /*  set the tile cache size so that the gaussian blur works well  */
           gimp_tile_cache_ntiles (2 *
