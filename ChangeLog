@@ -1,5 +1,9 @@
 2002-05-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in.c: some more minor cleanup.
+
+2002-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.c
 	* app/widgets/gimpdeviceinfo.c: write/parse the "wheel" axis
 	properly when writing/parsing devicerc.

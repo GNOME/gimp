@@ -153,6 +153,7 @@ static void plug_in_handle_proc_install   (PlugIn            *plug_in,
                                            GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (PlugIn            *plug_in,
                                            GPProcUninstall   *proc_uninstall);
+static void plug_in_handle_extension_ack  (PlugIn            *plug_in);
 static void plug_in_handle_has_init       (PlugIn            *plug_in);
 
 static Argument * plug_in_temp_run       (ProcRecord *proc_rec,
@@ -1010,51 +1011,64 @@ plug_in_handle_message (PlugIn      *plug_in,
     case GP_QUIT:
       plug_in_handle_quit (plug_in);
       break;
+
     case GP_CONFIG:
       g_warning ("plug_in_handle_message(): "
 		 "received a config message (should not happen)");
       plug_in_close (plug_in, TRUE);
       break;
+
     case GP_TILE_REQ:
       plug_in_handle_tile_req (plug_in, msg->data);
       break;
+
     case GP_TILE_ACK:
       g_warning ("plug_in_handle_message(): "
 		 "received a tile ack message (should not happen)");
       plug_in_close (plug_in, TRUE);
       break;
+
     case GP_TILE_DATA:
       g_warning ("plug_in_handle_message(): "
 		 "received a tile data message (should not happen)");
       plug_in_close (plug_in, TRUE);
       break;
+
     case GP_PROC_RUN:
       plug_in_handle_proc_run (plug_in, msg->data);
       break;
+
     case GP_PROC_RETURN:
       plug_in_handle_proc_return (plug_in, msg->data);
       plug_in_close (plug_in, FALSE);
       break;
+
     case GP_TEMP_PROC_RUN:
       g_warning ("plug_in_handle_message(): "
 		 "received a temp proc run message (should not happen)");
       plug_in_close (plug_in, TRUE);
       break;
+
     case GP_TEMP_PROC_RETURN:
       plug_in_handle_proc_return (plug_in, msg->data);
       gimp_main_loop_quit (plug_in->gimp);
       break;
+
     case GP_PROC_INSTALL:
       plug_in_handle_proc_install (plug_in, msg->data);
       break;
+
     case GP_PROC_UNINSTALL:
       plug_in_handle_proc_uninstall (plug_in, msg->data);
       break;
+
     case GP_EXTENSION_ACK:
-      gimp_main_loop_quit (plug_in->gimp);
+      plug_in_handle_extension_ack (plug_in);
       break;
+
     case GP_HAS_INIT:
       plug_in_handle_has_init (plug_in);
+      break;
     }
 }
 
@@ -1076,6 +1090,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
   if (tile_req->drawable_ID == -1)
     {
+      /*  this branch communicates with libgimp/gimptile.c:gimp_tile_put()  */
+
       tile_data.drawable_ID = -1;
       tile_data.tile_num    = 0;
       tile_data.shadow      = 0;
@@ -1149,6 +1165,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
     }
   else
     {
+      /*  this branch communicates with libgimp/gimptile.c:gimp_tile_get()  */
+
       if (tile_req->shadow)
 	tm = gimp_drawable_shadow ((GimpDrawable *)
                                    gimp_item_get_by_ID (plug_in->gimp,
@@ -1293,11 +1311,9 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
     }
   else
     {
-      tmp = blocked_plug_ins;
-      while (tmp)
+      for (tmp = blocked_plug_ins; tmp; tmp = g_slist_next (tmp))
 	{
 	  blocked = tmp->data;
-	  tmp = tmp->next;
 
 	  if (blocked->proc_name && proc_return->name && 
 	      strcmp (blocked->proc_name, proc_return->name) == 0)
@@ -1336,7 +1352,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   gchar           *prog = NULL;
   gboolean         add_proc_def;
   gboolean         valid;
-  gint i;
+  gint             i;
 
   /*  Argument checking
    *   --only sanity check arguments when the procedure requests a menu path
@@ -1634,13 +1650,11 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
   PlugInProcDef *proc_def;
   GSList        *tmp;
 
-  tmp = plug_in->temp_proc_defs;
-  while (tmp)
+  for (tmp = plug_in->temp_proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
-      tmp = tmp->next;
 
-      if (strcmp (proc_def->db_info.name, proc_uninstall->name) == 0)
+      if (! strcmp (proc_def->db_info.name, proc_uninstall->name))
 	{
 	  plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
                                                     proc_def);
@@ -1648,6 +1662,12 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
 	  break;
 	}
     }
+}
+
+static void
+plug_in_handle_extension_ack (PlugIn *plug_in)
+{
+  gimp_main_loop_quit (plug_in->gimp);
 }
 
 static void
