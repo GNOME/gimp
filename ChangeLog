@@ -1,3 +1,8 @@
+2004-09-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpscanconvert.c (VALUE_TO_PIXEL): replaced a bitshift
+	with a binary and. Should be unnoticeably faster ;)
+
 2004-09-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.c: removed #if 0'ed code, took assignments

@@ -554,15 +554,18 @@ gimp_scan_convert_render_callback (gpointer            user_data,
                                    ArtSVPRenderAAStep *steps,
                                    gint                n_steps)
 {
-  gint  k, run_x0, run_x1;
-  gint  cur_value = start_value;
-  GimpScanConvert *sc = (GimpScanConvert *) user_data;
+  GimpScanConvert *sc        = user_data;
+  gint             cur_value = start_value;
+  gint             k, run_x0, run_x1;
 
-#define VALUE_TO_PIXEL(x) (sc->antialias ? (x) >> 16 : ((x) >> 23 ? 255 : 0))
+#define VALUE_TO_PIXEL(x) (sc->antialias ? \
+                           ((x) >> 16)   : \
+                           (((x) & (1 << 23) ? 255 : 0)))
 
   if (n_steps > 0)
     {
       run_x1 = steps[0].x;
+
       if (run_x1 > sc->x0)
         memset (sc->buf,
                 VALUE_TO_PIXEL (cur_value),
@@ -571,8 +574,10 @@ gimp_scan_convert_render_callback (gpointer            user_data,
       for (k = 0; k < n_steps - 1; k++)
         {
           cur_value += steps[k].delta;
+
           run_x0 = run_x1;
           run_x1 = steps[k + 1].x;
+
           if (run_x1 > run_x0)
             memset (sc->buf + run_x0 - sc->x0,
                     VALUE_TO_PIXEL (cur_value),
@@ -580,6 +585,7 @@ gimp_scan_convert_render_callback (gpointer            user_data,
         }
 
       cur_value += steps[k].delta;
+
       if (sc->x1 > run_x1)
         memset (sc->buf + run_x1 - sc->x0,
                 VALUE_TO_PIXEL (cur_value),
