@@ -44,6 +44,9 @@
 
 #define SUBSAMPLE 8
 
+#define DIST_SMOOTHER_BUFFER 10
+#define TIME_SMOOTHER_BUFFER 10
+
 /*  the Ink structures  */
 
 typedef Blob *(*BlobFunc) (double, double, double, double, double, double);
@@ -58,6 +61,16 @@ struct _InkTool
   int             x1, y1;       /*  image space coordinate      */
   int             x2, y2;       /*  image space coords          */
 
+  gdouble dt_buffer[DIST_SMOOTHER_BUFFER]; /* circular distance history buffer */
+  gint    dt_index;
+
+  guint32 ts_buffer[TIME_SMOOTHER_BUFFER]; /* circular timing history buffer */
+  gint    ts_index;
+
+  gdouble last_time;      /* previous time of a motion event     */
+  gdouble lastx, lasty;   /* previous position of a motion event */
+
+  gboolean init_velocity;
 };
 
 typedef struct _InkOptions InkOptions;
@@ -70,6 +83,10 @@ struct _InkOptions
   double     sensitivity;
   double     sensitivity_d;
   GtkObject *sensitivity_w;
+
+  double     vel_sensitivity;
+  double     vel_sensitivity_d;
+  GtkObject *vel_sensitivity_w;
 
   double     tilt_sensitivity;
   double     tilt_sensitivity_d;
@@ -122,6 +139,13 @@ static void   ink_button_release          (Tool *, GdkEventButton *, gpointer);
 static void   ink_motion                  (Tool *, GdkEventMotion *, gpointer);
 static void   ink_cursor_update           (Tool *, GdkEventMotion *, gpointer);
 static void   ink_control                 (Tool *, int, gpointer);
+
+static void    time_smoother_add    (InkTool* ink_tool, guint32 value);
+static gdouble time_smoother_result (InkTool* ink_tool);
+static void    time_smoother_init   (InkTool* ink_tool, guint32 initval);
+static void    dist_smoother_add    (InkTool* ink_tool, gdouble value);
+static gdouble dist_smoother_result (InkTool* ink_tool);
+static void    dist_smoother_init   (InkTool* ink_tool, gdouble initval);
 
 static InkOptions *create_ink_options   (void);
 static Argument *ink_invoker              (Argument *);
@@ -201,6 +225,8 @@ reset_ink_options (void)
 			    options->sensitivity_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_sensitivity_w),
 			    options->tilt_sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->vel_sensitivity_w),
+			    options->vel_sensitivity_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
 			    options->tilt_angle_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->function_w), TRUE);
@@ -227,16 +253,17 @@ create_ink_options (void)
 
   /*  the new options structure  */
   options = (InkOptions *) g_malloc (sizeof (InkOptions));
-  options->size             = options->size_d             = 3.0;
+  options->size             = options->size_d             = 4.4;
   options->sensitivity      = options->sensitivity_d      = 1.0;
-  options->tilt_sensitivity = options->tilt_sensitivity_d = 1.0;
+  options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
+  options->tilt_sensitivity = options->tilt_sensitivity_d = 0.4;
   options->tilt_angle       = options->tilt_angle_d       = 0.0;
   options->function         = options->function_d         = blob_ellipse;
   options->aspect           = options->aspect_d           = 1.0;
   options->angle            = options->angle_d            = 0.0;
 
   /*  the main table  */
-  table = gtk_table_new (7, 2, FALSE);
+  table = gtk_table_new (8, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
@@ -308,14 +335,15 @@ create_ink_options (void)
 		      &options->tilt_sensitivity);
   gtk_widget_show (slider);
 
-  /* angle adjust slider */
-  label = gtk_label_new (_("Angle"));
+
+  /* velocity sens slider */
+  label = gtk_label_new (_("Speed"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Adjust:"));
+  label = gtk_label_new (_("Sensitivity:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
@@ -323,6 +351,36 @@ create_ink_options (void)
 
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 4, 6,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->vel_sensitivity_w =
+    gtk_adjustment_new (options->vel_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->vel_sensitivity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gtk_container_add (GTK_CONTAINER (abox), slider);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->vel_sensitivity_w), "value_changed",
+		      (GtkSignalFunc) ink_scale_update,
+		      &options->vel_sensitivity);
+  gtk_widget_show (slider);
+
+
+  /* angle adjust slider */
+  label = gtk_label_new (_("Angle"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Adjust:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 6, 8,
 		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
@@ -337,8 +395,9 @@ create_ink_options (void)
 		      &options->tilt_angle);
 
   /* Brush type radiobuttons */
+
   frame = gtk_frame_new (_("Type"));
-  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 6, 7,
+  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 8, 9,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
@@ -398,7 +457,7 @@ create_ink_options (void)
 
   /* Brush shape widget */
   frame = gtk_frame_new (_("Shape"));
-  gtk_table_attach_defaults (GTK_TABLE (table), frame, 1, 2, 6, 7);
+  gtk_table_attach_defaults (GTK_TABLE (table), frame, 1, 2, 8, 9);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 2);
@@ -644,9 +703,11 @@ paint_blob (GdkDrawable *drawable, GdkGC *gc,
     }
 }
 
+
 static Blob *
 ink_pen_ellipse (gdouble x_center, gdouble y_center,
-		 gdouble pressure, gdouble xtilt, gdouble ytilt)
+		 gdouble pressure, gdouble xtilt, gdouble ytilt,
+		 gdouble velocity)
 {
   double size;
   double tsin, tcos;
@@ -656,10 +717,38 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
   double tscale_c;
   double tscale_s;
   
-  size = ink_options->size * (1 + ink_options->sensitivity * (2*pressure - 1));
-  if (size*SUBSAMPLE < 1) size = 1/SUBSAMPLE;
+  /* Adjust the size depending on pressure. */
 
-  /* Add brush angle/aspect to title vectorially */
+  size = ink_options->size * (1.0 + ink_options->sensitivity *
+			      (2.0 * pressure - 1.0) );
+
+  /* Adjust the size further depending on pointer velocity
+     and velocity-sensitivity.  These 'magic constants' are
+     'feels natural' tigert-approved. --ADM */
+
+  if (velocity < 3.0)
+    velocity = 3.0;
+
+#ifdef VERBOSE
+  g_print("%f (%f) -> ", (float)size, (float)velocity);
+#endif  
+
+  size = ink_options->vel_sensitivity *
+    ((4.5 * size) / (1.0 + ink_options->vel_sensitivity * (2.0*(velocity))))
+    + (1.0 - ink_options->vel_sensitivity) * size;
+
+#ifdef VERBOSE
+  g_print("%f\n", (float)size);
+#endif
+
+  /* Clamp resulting size to sane limits */
+
+  if (size > ink_options->size * (1.0 + ink_options->sensitivity))
+    size = ink_options->size * (1.0 + ink_options->sensitivity);
+
+  if (size*SUBSAMPLE < 1.0) size = 1.0/SUBSAMPLE;
+
+  /* Add brush angle/aspect to tilt vectorially */
 
   /* I'm not happy with the way the brush widget info is combined with
      tilt info from the brush. My personal feeling is that representing
@@ -745,10 +834,17 @@ ink_button_press (Tool           *tool,
   tool->state = ACTIVE;
 
   b = ink_pen_ellipse (x, y, 
-		       bevent->pressure, bevent->xtilt, bevent->ytilt);
+		       bevent->pressure, bevent->xtilt, bevent->ytilt, 10.0);
 
   ink_paste (ink_tool, drawable, b);
   ink_tool->last_blob = b;
+
+  time_smoother_init (ink_tool, bevent->time);
+  ink_tool->last_time = bevent->time;
+  dist_smoother_init (ink_tool, 0.0);
+  ink_tool->init_velocity = TRUE;
+  ink_tool->lastx = x;
+  ink_tool->lasty = y;
 
   gdisplay_flush_now (gdisp);
 }
@@ -779,6 +875,88 @@ ink_button_release (Tool           *tool,
   gdisplays_flush ();
 }
 
+
+
+static void
+dist_smoother_init (InkTool* ink_tool, gdouble initval)
+{
+  gint i;
+
+  ink_tool->dt_index = 0;
+
+  for (i=0; i<DIST_SMOOTHER_BUFFER; i++)
+    {
+      ink_tool->dt_buffer[i] = initval;
+    }
+}
+
+
+static gdouble
+dist_smoother_result (InkTool* ink_tool)
+{
+  gint i;
+  gdouble result = 0.0;
+
+  for (i=0; i<DIST_SMOOTHER_BUFFER; i++)
+    {
+      result += ink_tool->dt_buffer[i];
+    }
+
+  return (result / (gdouble)DIST_SMOOTHER_BUFFER);
+}
+
+
+static void
+dist_smoother_add (InkTool* ink_tool, gdouble value)
+{
+  ink_tool->dt_buffer[ink_tool->dt_index] = value;
+
+  if ((++ink_tool->dt_index) == DIST_SMOOTHER_BUFFER)
+    ink_tool->dt_index = 0;
+}
+
+
+
+static void
+time_smoother_init (InkTool* ink_tool, guint32 initval)
+{
+  gint i;
+
+  ink_tool->ts_index = 0;
+
+  for (i=0; i<TIME_SMOOTHER_BUFFER; i++)
+    {
+      ink_tool->ts_buffer[i] = initval;
+    }
+}
+
+
+static gdouble
+time_smoother_result (InkTool* ink_tool)
+{
+  gint i;
+  guint64 result = 0;
+
+  for (i=0; i<TIME_SMOOTHER_BUFFER; i++)
+    {
+      result += ink_tool->ts_buffer[i];
+    }
+
+  return (result / TIME_SMOOTHER_BUFFER);
+}
+
+
+static void
+time_smoother_add (InkTool* ink_tool, guint32 value)
+{
+  ink_tool->ts_buffer[ink_tool->ts_index] = value;
+
+  if ((++ink_tool->ts_index) == TIME_SMOOTHER_BUFFER)
+    ink_tool->ts_index = 0;
+}
+
+
+
 static void
 ink_motion (Tool           *tool,
 	    GdkEventMotion *mevent,
@@ -790,6 +968,11 @@ ink_motion (Tool           *tool,
   Blob *b, *blob_union;
 
   double x, y;
+  double pressure;
+  double velocity;
+  double dist;
+  gdouble lasttime, thistime;
+  
 
   gdisp = (GDisplay *) gdisp_ptr;
   ink_tool = (InkTool *) tool->private;
@@ -797,8 +980,42 @@ ink_motion (Tool           *tool,
   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
   drawable = gimage_active_drawable (gdisp->gimage);
 
-  b = ink_pen_ellipse (x, y, 
-		       mevent->pressure, mevent->xtilt, mevent->ytilt);
+  lasttime = ink_tool->last_time;
+
+  time_smoother_add (ink_tool, mevent->time);
+  thistime = ink_tool->last_time =
+    time_smoother_result(ink_tool);
+
+  /* The time resolution on X-based GDK motion events is
+     bloody awful, hence the use of the smoothing function.
+     Sadly this also means that there is always the chance of
+     having an indeterminite velocity since this event and
+     the previous several may still appear to issue at the same
+     instant. -ADM */
+
+  if (thistime == lasttime)
+    thistime = lasttime + 1;
+
+  if (ink_tool->init_velocity)
+    {
+      dist_smoother_init (ink_tool, dist = sqrt((ink_tool->lastx-x)*(ink_tool->lastx-x) +
+						(ink_tool->lasty-y)*(ink_tool->lasty-y)));
+      ink_tool->init_velocity = FALSE;
+    }
+  else
+    {
+      dist_smoother_add (ink_tool, sqrt((ink_tool->lastx-x)*(ink_tool->lastx-x) +
+					(ink_tool->lasty-y)*(ink_tool->lasty-y)));
+      dist = dist_smoother_result(ink_tool);
+    }
+
+  ink_tool->lastx = x;
+  ink_tool->lasty = y;
+
+  pressure = mevent->pressure;
+  velocity = 10.0 * sqrt((dist) / (double)(thistime - lasttime));
+  
+  b = ink_pen_ellipse (x, y, pressure, mevent->xtilt, mevent->ytilt, velocity);
   blob_union = blob_convex_union (ink_tool->last_blob, b);
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = b;

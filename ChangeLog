@@ -1,3 +1,7 @@
+Sat Apr 10 15:48:46 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/ink.c: Velocity-sensitivity added to ink tool.
+
 Fri Apr  9 21:45:10 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* text_tool_cmds.c: new file (from pdbgen)
