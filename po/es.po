@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-04-12 19:43+0200\n"
-"PO-Revision-Date: 2004-04-12 19:54+0200\n"
+"PO-Revision-Date: 2004-04-12 20:12+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -959,7 +959,7 @@ msgstr "Frente a transparente"
 
 #: app/core/core-enums.c:39
 msgid "Custom Gradient"
-msgstr "Gradiente personalizado"
+msgstr "Degradado personalizado"
 
 #: app/core/core-enums.c:57
 msgid "FG Color Fill"
@@ -1905,7 +1905,7 @@ msgstr ""
 #: app/core/gimpgradient.c:376
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de gradiente «%s»."
+msgstr "Cadena UTF-8 inválida en el archivo de degradado «%s»."
 
 #: app/core/gimpgradient.c:404
 #, c-format
@@ -1917,7 +1917,7 @@ msgstr ""
 #: app/core/gimpgradient.c:461
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "Segmento corrupto %d en el archivo de gradiente «%s»."
+msgstr "Segmento corrupto %d en el archivo de degradado «%s»."
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
@@ -3490,7 +3490,7 @@ msgstr "Color del punto final izquierdo"
 
 #: app/gui/gradient-editor-commands.c:88
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Color del punto final izquierdo del segmento del gradiente"
+msgstr "Color del punto final izquierdo del segmento del degradado"
 
 #: app/gui/gradient-editor-commands.c:203
 msgid "Right Endpoint Color"
@@ -3498,7 +3498,7 @@ msgstr "Color del punto final derecho"
 
 #: app/gui/gradient-editor-commands.c:205
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "Color del punto final derecho del segmento del gradiente"
+msgstr "Color del punto final derecho del segmento del degradado"
 
 #: app/gui/gradient-editor-commands.c:514
 msgid "Replicate Segment"
@@ -3506,7 +3506,7 @@ msgstr "Replicar segmento"
 
 #: app/gui/gradient-editor-commands.c:515
 msgid "Replicate Gradient Segment"
-msgstr "Replicar segmento del gradiente"
+msgstr "Replicar segmento del degradado"
 
 #: app/gui/gradient-editor-commands.c:519
 msgid "Replicate Selection"
@@ -3514,7 +3514,7 @@ msgstr "Replicar selección"
 
 #: app/gui/gradient-editor-commands.c:520
 msgid "Replicate Gradient Selection"
-msgstr "Replicar selección del gradiente"
+msgstr "Replicar selección del degradado"
 
 #: app/gui/gradient-editor-commands.c:532
 msgid "Replicate"
@@ -3542,7 +3542,7 @@ msgstr "Partir el segmento uniformemente"
 
 #: app/gui/gradient-editor-commands.c:621
 msgid "Split Gradient Segment Uniformly"
-msgstr "Partir el segmento de gradiente uniformemente"
+msgstr "Partir el segmento de degradado uniformemente"
 
 #: app/gui/gradient-editor-commands.c:625
 msgid "Split Segments Uniformly"
@@ -3550,7 +3550,7 @@ msgstr "Partir los segmentos uniformemente"
 
 #: app/gui/gradient-editor-commands.c:626
 msgid "Split Gradient Segments Uniformly"
-msgstr "Partir los segmentos de gradiente uniformemente"
+msgstr "Partir los segmentos de degradado uniformemente"
 
 #: app/gui/gradient-editor-commands.c:638
 msgid "Split"
@@ -3751,7 +3751,7 @@ msgstr "Redistribuir los _tiradores en la selección"
 #: app/gui/gradient-select.c:272
 msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
-"No se puede ejecutar la llamada inversa del gradiente. El complemento "
+"No se puede ejecutar la llamada inversa del degradado. El complemento "
 "correspondiente debe haber fallado."
 
 #: app/gui/gradients-commands.c:73
@@ -3761,15 +3761,15 @@ msgstr "Guardar «%s» como POV-Ray"
 
 #: app/gui/gradients-menu.c:46
 msgid "/_Edit Gradient..."
-msgstr "/_Editar gradiente..."
+msgstr "/_Editar degradado..."
 
 #: app/gui/gradients-menu.c:54
 msgid "/_New Gradient"
-msgstr "/_Nuevo gradiente"
+msgstr "/_Nuevo degradado"
 
 #: app/gui/gradients-menu.c:59
 msgid "/D_uplicate Gradient"
-msgstr "/D_uplicar gradiente"
+msgstr "/D_uplicar degradado"
 
 #: app/gui/gradients-menu.c:64
 msgid "/Save as _POV-Ray..."
@@ -3777,7 +3777,7 @@ msgstr "/Guardar como _POV-Ray..."
 
 #: app/gui/gradients-menu.c:69
 msgid "/_Delete Gradient..."
-msgstr "/B_orrar gradiente..."
+msgstr "/B_orrar degradado..."
 
 #: app/gui/gradients-menu.c:77
 msgid "/_Refresh Gradients"
@@ -4836,11 +4836,12 @@ msgstr "Color directo"
 msgid "Extended"
 msgstr "Extendida"
 
+# Debe ir en minúsculas por las reglas de estilo
 #: app/gui/info-window.c:147 app/gui/preferences-dialog.c:1761
 #: app/gui/user-install-dialog.c:1290 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
-msgstr "Píxeles"
+msgstr "píxeles"
 
 #: app/gui/info-window.c:158 app/gui/info-window.c:164
 #: app/gui/info-window.c:181 app/gui/info-window.c:187
@@ -5141,7 +5142,7 @@ msgstr "Menú de patrones"
 
 #: app/gui/menus.c:184
 msgid "Gradients Menu"
-msgstr "Menú de gradientes"
+msgstr "Menú de degradados"
 
 #: app/gui/menus.c:191
 msgid "Palettes Menu"
@@ -5169,7 +5170,7 @@ msgstr "Menú de imágenes"
 
 #: app/gui/menus.c:233
 msgid "Gradient Editor Menu"
-msgstr "Menú del editor de gradiente"
+msgstr "Menú del editor de degradado"
 
 #: app/gui/menus.c:240
 msgid "Palette Editor Menu"
@@ -5362,9 +5363,10 @@ msgstr "_Importar"
 msgid "Select Source"
 msgstr "Seleccionar origen"
 
+# Es Degradado
 #: app/gui/palette-import-dialog.c:215 app/gui/preferences-dialog.c:1432
 msgid "_Gradient"
-msgstr "_Gradiente"
+msgstr "_Degradado"
 
 #: app/gui/palette-import-dialog.c:227
 msgid "I_mage"
@@ -6214,7 +6216,7 @@ msgstr "Relación de X:"
 
 #: app/gui/resize-dialog.c:448
 msgid "Constrain aspect ratio"
-msgstr "Restringir la relación de aspecto"
+msgstr "Restringir la proporción"
 
 #: app/gui/resize-dialog.c:488
 msgid "_X:"
@@ -7656,7 +7658,7 @@ msgstr "Umbral:"
 
 #: app/tools/gimpblendtool.c:99
 msgid "Fill with a color gradient"
-msgstr "Rellenar con un gradiente de colores"
+msgstr "Rellenar con un degradado de colores"
 
 #: app/tools/gimpblendtool.c:100
 msgid "/Tools/Paint Tools/Blen_d"
@@ -8409,7 +8411,7 @@ msgstr "Patrón:"
 
 #: app/tools/gimppaintoptions-gui.c:186
 msgid "Open the gradient selection dialog"
-msgstr "Abre el diálogo de selección de gradiente"
+msgstr "Abre el diálogo de selección de degradado"
 
 #: app/tools/gimppaintoptions-gui.c:196
 msgid "Reverse"
@@ -8417,7 +8419,7 @@ msgstr "Invertido"
 
 #: app/tools/gimppaintoptions-gui.c:201
 msgid "Gradient:"
-msgstr "Gradiente:"
+msgstr "Degradado:"
 
 #: app/tools/gimppaintoptions-gui.c:236
 msgid "Hard Edge"
@@ -8449,7 +8451,7 @@ msgstr "Largo:"
 
 #: app/tools/gimppaintoptions-gui.c:448
 msgid "Use Color from Gradient"
-msgstr "Utilizar color desde el gradiente"
+msgstr "Utilizar color desde el degradado"
 
 #: app/tools/gimppenciltool.c:53
 msgid "Paint hard edged pixels"
@@ -9823,7 +9825,7 @@ msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
-"El gradiente activo.\n"
+"El degradado activo.\n"
 "Pulse para abrir el diálogo de degradados."
 
 #: app/widgets/gimptoolbox.c:738
