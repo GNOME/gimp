@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-04-26 01:58+0200\n"
-"PO-Revision-Date: 2002-04-26 02:02+0200\n"
+"POT-Creation-Date: 2002-05-23 20:39+0200\n"
+"PO-Revision-Date: 2002-05-24 20:43+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,24 +38,6 @@ msgid ""
 msgstr ""
 "Aby dokonać osobistej instalacji, należy uruchomić GIMP-a bez opcji\n"
 "'--nointerface' w wierszu poleceń\n"
-
-#: app/gimphelp.c:1
-msgid "Could not find GIMP Help Browser"
-msgstr "Nie można odnaleźć przeglądarki pomocy GIMP-a"
-
-#: app/gimphelp.c:1
-msgid ""
-"Could not find the GIMP Help Browser procedure.\n"
-"It probably was not compiled because\n"
-"you don't have GtkXmHTML installed."
-msgstr ""
-"Nie można odnaleźć procedury przeglądarki plików GIMP-a.\n"
-"Prawdopodobnie nie została ona skompilowana z powodu braku\n"
-"zainstalowanej biblioteki GtkXmHTML."
-
-#: app/gimphelp.c:1
-msgid "Use Netscape instead"
-msgstr "Wykorzystanie zamiast tego przeglądarki Netscape"
 
 #: app/gimprc.c:1
 #, c-format
@@ -223,15 +205,6 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(To okno konsoli zostanie zamknięte w ciągu dziesięciu sekund)\n"
 
-#: app/nav_window.c:1
-msgid "Navigation: No Image"
-msgstr "Nawigacja: Brak obrazu"
-
-#: app/nav_window.c:1
-#, c-format
-msgid "Navigation: %s-%d.%d"
-msgstr "Nawigacja: %s-%d.%d"
-
 #: app/undo.c:1
 #, c-format
 msgid "Can't undo %s"
@@ -345,7 +318,6 @@ msgstr "Obraz"
 msgid "Image Mod"
 msgstr "Zmiana obrazu"
 
-#. frame for Image Type
 #: app/gui/file-new-dialog.c:1 app/undo.c:1
 msgid "Image Type"
 msgstr "Typ obrazu"
@@ -452,15 +424,6 @@ msgstr "Historia cofnięć: %s"
 msgid "[ base image ]"
 msgstr "[ obraz bazowy ]"
 
-#: app/display/gimpdisplayshell.c:1 app/pdb/internal_procs.c:1
-#: app/undo_history.c:1
-msgid "Undo"
-msgstr "Cofnij"
-
-#: app/display/gimpdisplayshell.c:1 app/undo_history.c:1
-msgid "Redo"
-msgstr "Ponów"
-
 #: app/base/base-enums.c:1
 msgid "None (Fastest)"
 msgstr "Brak (najszybsza)"
@@ -557,7 +520,22 @@ msgstr "niepoprawna wartość \"%s\" tokenu %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "wartość tokenu %s nie jest poprawnym napisem UTF-8"
 
-#: app/config/gimpconfig.c:1 app/config/gimpconfig.c:1
+#: app/config/gimpconfig.c:1
+#, c-format
+msgid "Failed to create temporary file for '%s': %s"
+msgstr "Nie można utworzyć pliku tymczasowego dla pliku \"%s\": %s"
+
+#: app/config/gimpconfig.c:1
+#, c-format
+msgid "Error when writing to file '%s': %s"
+msgstr "Przy zapisie do pliku \"%s\" wystąpił błąd: %s"
+
+#: app/config/gimpconfig.c:1
+#, c-format
+msgid "Failed to create file '%s': %s"
+msgstr "Nie można utworzyć pliku \"%s\": %s"
+
+#: app/config/gimpconfig.c:1
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Nie można otworzyć pliku \"%s\": %s"
@@ -571,10 +549,9 @@ msgstr ""
 "Przy analizie pliku \"%s\" napotkano błąd w wierszu %d:\n"
 " %s"
 
-#: app/config/gimprc.c:1
-#, c-format
-msgid "Failed to open file '%s': %s"
-msgstr "Nie można otworzyć pliku \"%s\": %s"
+#: app/config/gimpscanner.c:1
+msgid "invalid UTF-8 string"
+msgstr "Niepoprawny napis UTF-8"
 
 #: app/core/core-enums.c:1
 msgid "FG to BG (RGB)"
@@ -621,6 +598,28 @@ msgid "Positioned Color Dithering"
 msgstr "Pozycjonowane ditherowanie kolorów"
 
 #: app/core/core-enums.c:1
+msgid "Foreground"
+msgstr "Aktualny kolor"
+
+#: app/core/core-enums.c:1 app/core/gimpimage-new.c:1
+#: app/gui/offset-dialog.c:1
+msgid "Background"
+msgstr "Tło"
+
+#: app/core/core-enums.c:1
+msgid "White"
+msgstr "Białe"
+
+#: app/core/core-enums.c:1 app/gui/offset-dialog.c:1
+msgid "Transparent"
+msgstr "Przezroczyste"
+
+#: app/core/core-enums.c:1 app/core/core-enums.c:1
+#: app/core/core-enums.c:1 app/tools/gimpbycolorselecttool.c:1
+msgid "None"
+msgstr "Brak"
+
+#: app/core/core-enums.c:1
 msgid "Bi-Linear"
 msgstr "Dwuliniowy"
 
@@ -660,37 +659,32 @@ msgstr "Spiralny (zgodnie ze wskazówkami zegara)"
 msgid "Spiral (anticlockwise)"
 msgstr "Spiralny (przeciwnie do wskazówek zegara)"
 
-#: app/core/core-enums.c:1 app/core/gimpimage-new.c:1
-#: app/display/gimpdisplayshell.c:1 app/gui/preferences-dialog.c:1
+#: app/core/core-enums.c:1 app/core/core-enums.c:1
+#: app/display/gimpdisplayshell.c:1
 msgid "RGB"
 msgstr "RGB"
+
+#: app/core/core-enums.c:1 app/core/core-enums.c:1
+#: app/gui/info-window.c:1 app/gui/info-window.c:1
+msgid "Grayscale"
+msgstr "Odcienie szarości"
+
+#: app/core/core-enums.c:1 app/core/core-enums.c:1
+#: app/widgets/gimpcomponentlistitem.c:1
+msgid "Indexed"
+msgstr "Indeksowany"
 
 #: app/core/core-enums.c:1
 msgid "RGB-Alpha"
 msgstr "RGB-Alfa"
 
-#: app/core/core-enums.c:1 app/core/gimpimage-new.c:1
-#: app/gui/info-window.c:1 app/gui/info-window.c:1
-#: app/gui/preferences-dialog.c:1
-msgid "Grayscale"
-msgstr "Odcienie szarości"
-
 #: app/core/core-enums.c:1
 msgid "Grayscale-Alpha"
 msgstr "Odcienie szarości-Alfa"
 
-#: app/core/core-enums.c:1 app/widgets/gimpcomponentlistitem.c:1
-msgid "Indexed"
-msgstr "Indeksowany"
-
 #: app/core/core-enums.c:1
 msgid "Indexed-Alpha"
 msgstr "Indeksowany-Alfa"
-
-#: app/core/core-enums.c:1 app/core/core-enums.c:1
-#: app/tools/gimpbycolorselecttool.c:1
-msgid "None"
-msgstr "Brak"
 
 #: app/core/core-enums.c:1
 msgid "Tiny"
@@ -723,6 +717,18 @@ msgstr "Fala piłokształtna"
 #: app/core/core-enums.c:1
 msgid "Triangular Wave"
 msgstr "Fala trójkątna"
+
+#: app/core/core-enums.c:1
+msgid "No Thumbnails"
+msgstr "Bez miniaturek"
+
+#: app/core/core-enums.c:1
+msgid "Normal (128x128)"
+msgstr "Zwykłe (128x128)"
+
+#: app/core/core-enums.c:1
+msgid "Large (256x256)"
+msgstr "Duże (256x256)"
 
 #: app/core/core-enums.c:1
 msgid "Shadows"
@@ -855,6 +861,11 @@ msgstr ""
 "Ostrzeżenie: Nie można odczytać danych z\n"
 "\"%s\""
 
+#: app/core/gimpdocumentlist.c:1 app/core/gimpparasitelist.c:1
+#: app/core/gimpunits.c:1 app/plug-in/plug-in-rc.c:1
+msgid "fatal parse error"
+msgstr "poważny błąd przy analizie składniowej"
+
 #: app/core/gimpdrawable.c:1 app/core/gimpdrawable.c:1
 #: app/widgets/gimpdatafactoryview.c:1 app/widgets/gimpdatafactoryview.c:1
 msgid "copy"
@@ -873,7 +884,7 @@ msgstr "Brak deseni dla tej operacji."
 msgid "Transformation"
 msgstr "Przekształć"
 
-#: app/core/gimpedit.c:1 app/core/gimpedit.c:1 app/core/gimpedit.c:1
+#: app/core/gimpedit.c:1 app/core/gimpedit.c:1
 msgid "Pasted Layer"
 msgstr "Wklejona warstwa"
 
@@ -948,24 +959,6 @@ msgstr ""
 msgid "There are not enough visible layers for a merge down."
 msgstr "Liczba warstw jest niewystarczająca dla połączenia w dół."
 
-#: app/core/gimpimage-new.c:1 app/gui/layers-commands.c:1
-msgid "Foreground"
-msgstr "Aktualny kolor"
-
-#: app/core/gimpimage-new.c:1 app/core/gimpimage-new.c:1
-#: app/gui/layers-commands.c:1 app/gui/offset-dialog.c:1
-msgid "Background"
-msgstr "Tło"
-
-#: app/core/gimpimage-new.c:1 app/gui/layers-commands.c:1
-msgid "White"
-msgstr "Białe"
-
-#: app/core/gimpimage-new.c:1 app/gui/layers-commands.c:1
-#: app/gui/offset-dialog.c:1
-msgid "Transparent"
-msgstr "Przezroczyste"
-
 #: app/core/gimpimage-new.c:1
 #, c-format
 msgid "%d Bytes"
@@ -998,7 +991,7 @@ msgstr "%.1f MB"
 
 #: app/core/gimpimage.c:1 app/core/gimppalette-import.c:1
 #: app/core/gimppalette.c:1 app/gui/palette-import-dialog.c:1
-#: app/widgets/gimpdatafactoryview.c:1
+#: app/pdb/image_cmds.c:1 app/widgets/gimpdatafactoryview.c:1
 msgid "Untitled"
 msgstr "BezNazwy"
 
@@ -1047,29 +1040,63 @@ msgstr "Nie można bardziej podnieść ścieżki."
 msgid "Path cannot be lowered more."
 msgstr "Nie można bardziej obniżyć ścieżki."
 
+#: app/core/gimpimagefile.c:1 app/core/gimpimagefile.c:1
+#, c-format
+msgid ""
+"Couldn't write thumbnail for '%s'\n"
+"as '%s'.\n"
+"%s"
+msgstr ""
+"Nie można zapisać miniaturki obrazu \"%s\"\n"
+"jako \"%s\":\n"
+"%s"
+
+#: app/core/gimpimagefile.c:1 app/core/gimpimagefile.c:1
+#, c-format
+msgid ""
+"Couldn't set permissions of thumbnail '%s'.\n"
+"%s"
+msgstr ""
+"Nie można ustawić uprawnień pliku miniaturki \"%s\".\n"
+"%s"
+
+#: app/core/gimpimagefile.c:1
+msgid "Remote image"
+msgstr "Obraz zdalny"
+
+#: app/core/gimpimagefile.c:1
+msgid "Could not open image"
+msgstr "Nie można otworzyć obrazu"
+
 #: app/core/gimpimagefile.c:1
 msgid "No preview available"
 msgstr "Podgląd jest niedostępny"
 
 #: app/core/gimpimagefile.c:1
-msgid "Thumbnail is out of date"
-msgstr "Miniaturka jest nieaktualna"
-
-#. image size
-#: app/core/gimpimagefile.c:1
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "Loading preview ..."
+msgstr "Odczytywanie podglądu ..."
 
 #: app/core/gimpimagefile.c:1
+msgid "Preview is out of date"
+msgstr "Podgląd jest nieaktualny"
+
+#: app/core/gimpimagefile.c:1
+msgid "Cannot create preview"
+msgstr "Nie można utworzyć podglądu"
+
+#: app/core/gimpimagefile.c:1 app/gui/info-window.c:1
 #, c-format
-msgid "%d Layer"
-msgstr "%d Warstwa"
+msgid "%d x %d pixels"
+msgstr "%d x %d pikseli"
+
+#: app/core/gimpimagefile.c:1
+msgid "1 Layer"
+msgstr "1 warstwa"
 
 #: app/core/gimpimagefile.c:1
 #, c-format
 msgid "%d Layers"
-msgstr "%d Warstw"
+msgstr "%d warstw"
 
 #: app/core/gimpimagefile.c:1
 #, c-format
@@ -1080,17 +1107,6 @@ msgid ""
 msgstr ""
 "Nie można otworzyć pliku miniaturki\n"
 "\"%s\":\n"
-"%s"
-
-#: app/core/gimpimagefile.c:1
-#, c-format
-msgid ""
-"Couldn't write thumbnail for '%s'\n"
-"as '%s'.\n"
-"%s"
-msgstr ""
-"Nie można zapisać miniaturki obrazu \"%s\"\n"
-"jako \"%s\":\n"
 "%s"
 
 #: app/core/gimpimagefile.c:1
@@ -1412,6 +1428,14 @@ msgstr "Cofnij operację %s"
 msgid "Redo %s"
 msgstr "Ponów operację %s"
 
+#: app/display/gimpdisplayshell.c:1 app/pdb/internal_procs.c:1
+msgid "Undo"
+msgstr "Cofnij"
+
+#: app/display/gimpdisplayshell.c:1
+msgid "Redo"
+msgstr "Ponów"
+
 #: app/display/gimpdisplayshell.c:1
 msgid "RGB-empty"
 msgstr "RGB-pusty"
@@ -1482,6 +1506,26 @@ msgstr "Aktywne filtry"
 msgid "Layer Select"
 msgstr "Wybór warstwy"
 
+#: app/display/gimpnavigationview.c:1 app/widgets/widgets-enums.c:1
+msgid "Zoom out"
+msgstr "Pomniejszenie"
+
+#: app/display/gimpnavigationview.c:1 app/widgets/widgets-enums.c:1
+msgid "Zoom in"
+msgstr "Powiększenie"
+
+#: app/display/gimpnavigationview.c:1
+msgid "Zoom 1:1"
+msgstr "Powiększenie 1:1"
+
+#: app/display/gimpnavigationview.c:1
+msgid "Zoom to fit window"
+msgstr "Dopasowuje powiększenia do okna"
+
+#: app/display/gimpnavigationview.c:1
+msgid "Shrink Wrap"
+msgstr "Zacieśnia otoczenie"
+
 #: app/display/gimpprogress.c:1
 msgid "Progress"
 msgstr "Postęp"
@@ -1536,6 +1580,10 @@ msgid ""
 msgstr ""
 "Zapis nie powiódł się.\n"
 "%s: %s."
+
+#: app/file/file-utils.c:1
+msgid "Invalid character sequence in URI"
+msgstr "Niepoprawna sekwencja znaków w URI"
 
 #: app/gui/about-dialog.c:1
 msgid "About The GIMP"
@@ -1881,6 +1929,14 @@ msgstr "Edytor gradientów"
 msgid "Palette Editor"
 msgstr "Edytor palet"
 
+#: app/gui/dialogs-constructors.c:1
+msgid "Display Navigation"
+msgstr "Nawigacja obrazem"
+
+#: app/gui/dialogs-constructors.c:1
+msgid "Navigation"
+msgstr "Nawigacja"
+
 #: app/gui/dialogs-constructors.c:1 app/gui/dialogs-constructors.c:1
 #, c-format
 msgid "%s Options"
@@ -1978,6 +2034,7 @@ msgstr "Przywrócenie obrazu"
 
 # c-format
 #: app/gui/file-commands.c:1
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "%s"
@@ -2031,7 +2088,6 @@ msgstr "Y:"
 msgid "pixels/%a"
 msgstr "pikseli/%a"
 
-#. frame for Fill Type
 #: app/gui/file-new-dialog.c:1 app/gui/offset-dialog.c:1
 msgid "Fill Type"
 msgstr "Typ wypełnienia"
@@ -2072,8 +2128,12 @@ msgid "Open Image"
 msgstr "Otwarcie obrazu"
 
 #: app/gui/file-open-dialog.c:1
-msgid "Click to create preview"
-msgstr "Kliknij, aby stworzyć podgląd."
+msgid ""
+"Click to update preview\n"
+"<Ctrl> Click to force update even if preview is up-to-date"
+msgstr ""
+"Kliknij, aby odświeżyć podgląd\n"
+"<Ctrl> Kliknij, aby wymusić odświeżenie podglądu, nawet, jeśli jest aktualny."
 
 #: app/gui/file-open-dialog.c:1
 msgid "_Preview"
@@ -2429,11 +2489,6 @@ msgstr "Głębia wyświetlania:"
 msgid "Info: %s-%d.%d"
 msgstr "Informacje: %s-%d.%d"
 
-#: app/gui/info-window.c:1
-#, c-format
-msgid "%d x %d pixels"
-msgstr "%d x %d pikseli"
-
 #. image resolution
 #: app/gui/info-window.c:1
 #, c-format
@@ -2594,6 +2649,10 @@ msgstr "/Plik/Okna dialogowe/Paleta indeksowana..."
 #: app/gui/menus.c:1
 msgid "/File/Dialogs/Buffers..."
 msgstr "/Plik/Okna dialogowe/Bufory..."
+
+#: app/gui/menus.c:1
+msgid "/File/Dialogs/Navigation..."
+msgstr "/Plik/Okna dialogowe/Nawigacja..."
 
 #: app/gui/menus.c:1
 msgid "/File/Dialogs/Images..."
@@ -2773,6 +2832,10 @@ msgstr "/Widok/Pomniejsz"
 msgid "/View/Zoom to Fit Window"
 msgstr "/Widok/Dopasuj powiększenie do okna"
 
+#: app/gui/menus.c:1
+msgid "/View/Shrink Wrap"
+msgstr "/Widok/Zacieśnij otoczenie"
+
 #. <Image>/View/Zoom
 #: app/gui/menus.c:1
 msgid "/View/Zoom/16:1"
@@ -2853,10 +2916,6 @@ msgstr "/Widok/Pasek stanu"
 #: app/gui/menus.c:1
 msgid "/View/New View"
 msgstr "/Widok/Nowy widok"
-
-#: app/gui/menus.c:1
-msgid "/View/Shrink Wrap"
-msgstr "/Widok/Zacieśnij otoczenie"
 
 #. <Image>/Image/Mode
 #: app/gui/menus.c:1
@@ -3078,6 +3137,10 @@ msgstr "/Okna dialogowe/Paleta indeksowana..."
 #: app/gui/menus.c:1
 msgid "/Dialogs/Buffers..."
 msgstr "/Okna dialogowe/Bufory..."
+
+#: app/gui/menus.c:1
+msgid "/Dialogs/Navigation..."
+msgstr "/Okna dialogowe/Nawigacja..."
 
 #: app/gui/menus.c:1
 msgid "/Dialogs/Images..."
@@ -3369,16 +3432,8 @@ msgid "/Add Tab/Paths..."
 msgstr "/Dodaj zakładkę/Ścieżki..."
 
 #: app/gui/menus.c:1
-msgid "/Add Tab/Old Paths..."
-msgstr "/Dodaj zakładkę/Stare ścieżki..."
-
-#: app/gui/menus.c:1
-msgid "/Add Tab/Document History..."
-msgstr "/Dodaj zakładkę/Historia dokumentów..."
-
-#: app/gui/menus.c:1
-msgid "/Add Tab/Error Console..."
-msgstr "/Dodaj zakładkę/Konsola błędów..."
+msgid "/Add Tab/Tool Options..."
+msgstr "/Dodaj zakładkę/Opcje narzędzia..."
 
 #: app/gui/menus.c:1
 msgid "/Add Tab/Brushes..."
@@ -3405,12 +3460,28 @@ msgid "/Add Tab/Buffers..."
 msgstr "/Dodaj zakładkę/Bufory..."
 
 #: app/gui/menus.c:1
+msgid "/Add Tab/Navigation..."
+msgstr "/Dodaj zakładkę/Nawigacja..."
+
+#: app/gui/menus.c:1
 msgid "/Add Tab/Images..."
 msgstr "/Dodaj zakładkę/Obrazy..."
 
 #: app/gui/menus.c:1
+msgid "/Add Tab/Document History..."
+msgstr "/Dodaj zakładkę/Historia dokumentów..."
+
+#: app/gui/menus.c:1
+msgid "/Add Tab/Error Console..."
+msgstr "/Dodaj zakładkę/Konsola błędów..."
+
+#: app/gui/menus.c:1
 msgid "/Add Tab/Tools..."
 msgstr "/Dodaj zakładkę/Narzędzia..."
+
+#: app/gui/menus.c:1
+msgid "/Add Tab/Old Paths..."
+msgstr "/Dodaj zakładkę/Stare ścieżki..."
 
 #: app/gui/menus.c:1
 msgid "/Remove Tab"
@@ -3691,6 +3762,18 @@ msgid "/Add Color"
 msgstr "/Dodaj kolor"
 
 #: app/gui/menus.c:1
+msgid "/Raise Displays"
+msgstr "/Wysuń widoki"
+
+#: app/gui/menus.c:1
+msgid "/New Display"
+msgstr "/Nowy widok"
+
+#: app/gui/menus.c:1
+msgid "/Delete Image"
+msgstr "/Usuń obraz"
+
+#: app/gui/menus.c:1
 msgid "/Open Image"
 msgstr "/Otwórz obraz"
 
@@ -3707,8 +3790,16 @@ msgid "/Remove Entry"
 msgstr "/Usuń pozycję"
 
 #: app/gui/menus.c:1
-msgid "/Refresh History"
-msgstr "/Odśwież historię"
+msgid "/Recreate Preview"
+msgstr "/Wygeneruj podgląd na nowo"
+
+#: app/gui/menus.c:1
+msgid "/Reload all Previews"
+msgstr "/Odczytaj ponownie wszystkie podglądy"
+
+#: app/gui/menus.c:1
+msgid "/Remove Dangling Entries"
+msgstr "/Usuń nieistniejące pozycje"
 
 #: app/gui/menus.c:1
 msgid "/QMask Active"
@@ -4027,6 +4118,24 @@ msgstr ""
 "Nie można wywołać funkcji powiązanej z deseniem.\n"
 "Być może padła odpowiadająca jej wtyczka."
 
+#: app/gui/plug-in-menus.c:1
+#, c-format
+msgid "Repeat \"%s\""
+msgstr "Powtórz \"%s\""
+
+#: app/gui/plug-in-menus.c:1
+#, c-format
+msgid "Re-show \"%s\""
+msgstr "Wyświetl ponownie \"%s\""
+
+#: app/gui/plug-in-menus.c:1
+msgid "Repeat Last"
+msgstr "Powtórz ostatni"
+
+#: app/gui/plug-in-menus.c:1
+msgid "Re-Show Last"
+msgstr "Wyświetl ponownie ostatni"
+
 #: app/gui/preferences-dialog.c:1
 msgid "Save Preferences ?"
 msgstr "Zapisać preferencje?"
@@ -4132,10 +4241,6 @@ msgid "Dialog Behavior"
 msgstr "Zachowanie się okien dialogowych"
 
 #: app/gui/preferences-dialog.c:1
-msgid "Navigation Window per Display"
-msgstr "Niezależny podgląd nawigacyjny dla każdego obrazu"
-
-#: app/gui/preferences-dialog.c:1
 msgid "Info Window Follows Mouse"
 msgstr "Podążanie okna informacyjnego za myszką"
 
@@ -4180,14 +4285,6 @@ msgstr "Pomoc kontekstowa pod klawiszem \"F1\""
 #: app/gui/preferences-dialog.c:1
 msgid "Help Browser"
 msgstr "Przeglądarka pomocy"
-
-#: app/gui/preferences-dialog.c:1
-msgid "Internal"
-msgstr "Wewnętrzna"
-
-#: app/gui/preferences-dialog.c:1
-msgid "Netscape"
-msgstr "Netscape"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Help Browser to Use:"
@@ -4401,7 +4498,7 @@ msgstr "Automatyczny zapis"
 msgid "Only when Modified"
 msgstr "Tylko po zmodyfikowaniu"
 
-#: app/gui/preferences-dialog.c:1 app/gui/preferences-dialog.c:1
+#: app/gui/preferences-dialog.c:1
 msgid "Always"
 msgstr "Zawsze"
 
@@ -4410,12 +4507,8 @@ msgid "\"File -> Save\" Saves the Image:"
 msgstr "Zapis obrazu po użyciu \"Plik -> Zapisz\":"
 
 #: app/gui/preferences-dialog.c:1
-msgid "Never"
-msgstr "Nigdy"
-
-#: app/gui/preferences-dialog.c:1
-msgid "Try to Write a Thumbnail File:"
-msgstr "Próba zapisu pliku z miniaturką:"
+msgid "Size of Thumbnails Files:"
+msgstr "Wymiary miniaturek:"
 
 #: app/gui/preferences-dialog.c:1 app/gui/preferences-dialog.c:1
 msgid "Folders"
@@ -5422,9 +5515,41 @@ msgstr ""
 "Dla bezpieczeństwa zalecane jest zapisanie obrazów\n"
 "i ponowne uruchomienie GIMP-a."
 
-#: app/plug-in/plug-in-rc.c:1
-msgid "fatal parse error"
-msgstr "poważny błąd przy analizie składniowej"
+#: app/plug-in/plug-ins.c:1
+msgid "Resource configuration"
+msgstr "Konfiguracja zasobów"
+
+#: app/plug-in/plug-ins.c:1
+msgid "New Plug-ins"
+msgstr "Nowe wtyczki"
+
+#: app/plug-in/plug-ins.c:1
+#, c-format
+msgid "querying plug-in: \"%s\"\n"
+msgstr "odpytywanie wtyczki: \"%s\"\n"
+
+#: app/plug-in/plug-ins.c:1
+#, c-format
+msgid "writing \"%s\"\n"
+msgstr "zapisywanie \"%s\"\n"
+
+#. initial the plug-ins
+#: app/plug-in/plug-ins.c:1
+msgid "Plug-ins"
+msgstr "Wtyczki"
+
+#: app/plug-in/plug-ins.c:1
+#, c-format
+msgid "initializing plug-in: \"%s\"\n"
+msgstr "inicjowanie wtyczki: \"%s\"\n"
+
+#: app/plug-in/plug-ins.c:1
+msgid "Starting extensions: "
+msgstr "Uruchamianie rozszerzeń: "
+
+#: app/plug-in/plug-ins.c:1
+msgid "Extensions"
+msgstr "Rozszerzenia"
 
 #: app/tools/gimpcroptool.c:1 app/tools/tools-enums.c:1
 msgid "Crop"
@@ -6674,12 +6799,12 @@ msgid "Keep Width (<Alt>)"
 msgstr "Zachowanie szerokości (<Alt>)"
 
 #: app/widgets/widgets-enums.c:1
-msgid "Zoom in"
-msgstr "Powiększenie"
+msgid "Internal"
+msgstr "Wewnętrzna"
 
 #: app/widgets/widgets-enums.c:1
-msgid "Zoom out"
-msgstr "Pomniejszenie"
+msgid "Netscape"
+msgstr "Netscape"
 
 #: app/widgets/gimpbrusheditor.c:1
 msgid "Hardness:"
@@ -6784,10 +6909,12 @@ msgstr "Usuwa wybraną pozycję"
 #: app/widgets/gimpdocumentview.c:1
 msgid ""
 "Recreate preview\n"
-"<Shift> Reload all previews"
+"<Shift> Reload all previews\n"
+"<Ctrl> Remove Dangling Entries"
 msgstr ""
-"Odświeża podgląd\n"
-"<Shift> Odświeża wszystkie podglądy"
+"Generuje podgląd na nowo\n"
+"<Shift> Odświeża wszystkie podglądy\n"
+"<Ctrl> Usuwa nieistniejące pozycje"
 
 #: app/widgets/gimpfontselection-dialog.c:1
 msgid "GIMP Font Selection"
@@ -6891,10 +7018,40 @@ msgstr "Pozycja uchwytu: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Odległość: %0.6f"
 
+#: app/widgets/gimphelp.c:1
+msgid "Could not find GIMP Help Browser"
+msgstr "Nie można odnaleźć przeglądarki pomocy GIMP-a"
+
+#: app/widgets/gimphelp.c:1
+msgid ""
+"Could not find the GIMP Help Browser procedure.\n"
+"It probably was not compiled because\n"
+"you don't have GtkXmHTML installed."
+msgstr ""
+"Nie można odnaleźć procedury przeglądarki plików GIMP-a.\n"
+"Prawdopodobnie nie została ona skompilowana z powodu braku\n"
+"zainstalowanej biblioteki GtkXmHTML."
+
+#: app/widgets/gimphelp.c:1
+msgid "Use Netscape instead"
+msgstr "Wykorzystanie zamiast tego przeglądarki Netscape"
+
 #: app/widgets/gimpimagedock.c:1
 #, c-format
 msgid "Gimp Dock #%d"
-msgstr "Dok GIMP-a nr %d"
+msgstr "GIMP - dok nr %d"
+
+#: app/widgets/gimpimageview.c:1
+msgid "Raise this image's displays"
+msgstr "Wysuwa widoki obrazu"
+
+#: app/widgets/gimpimageview.c:1
+msgid "Create a new display for this image"
+msgstr "Tworzy nowy widok obrazu"
+
+#: app/widgets/gimpimageview.c:1
+msgid "Delete this image"
+msgstr "Usuwa obraz"
 
 #: app/widgets/gimpitemfactory.c:1
 #, c-format

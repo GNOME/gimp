@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-04-05 22:31+0200\n"
-"PO-Revision-Date: 2002-04-05 22:36+0200\n"
+"POT-Creation-Date: 2002-05-24 20:49+0200\n"
+"PO-Revision-Date: 2002-05-24 20:50+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -156,6 +156,11 @@ msgstr "maska warstwy"
 #: libgimp/gimpexport.c:1
 msgid "a channel (saved selection)"
 msgstr "kanał (zapisane zaznaczenie)"
+
+#: libgimp/gimpmenu.c:1 libgimp/gimpmenu.c:1 libgimp/gimpmenu.c:1
+#: libgimp/gimpmenu.c:1
+msgid "None"
+msgstr "Brak"
 
 #: libgimp/gimpunit.c:1
 msgid "percent"
