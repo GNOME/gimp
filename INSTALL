@@ -1,8 +1,8 @@
 THIS IS A DEVELOPMENT VERSION OF THE GIMP!
 
 If you are looking for the stable version, use GIMP 1.2.  We do
-however encourage you to try GIMP-1.3. Read on further to learn more
-about the installation process...
+however encourage you to try this GIMP-2.0 prerelease. Read on
+further to learn more about the installation process...
 
 
 There are some basic steps to building and installing the GIMP.
@@ -12,7 +12,7 @@ are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
-Please note that GIMP-1.2 and GIMP-1.3 peacefully coexist. You don't
+Please note that GIMP-1.2 and GIMP-1.3/2.0 peacefully coexist. You don't
 need to deinstall the 1.2 version.
 
   1. You need to have installed a recent version of pkg-config available

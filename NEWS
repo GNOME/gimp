@@ -7,8 +7,9 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
-Overview of Changes in GIMP 2.0 pre1
-==================================
+Overview of Changes in GIMP 2.0pre1
+===================================
+- Persistent user preferences for PNG save [Yosh]
 - Replaced old "About" dialog [Simon]
 - Allow removal of text attributes from text layer [Sven]
 - Add optimisation option to png (clear transparent pixels) [Joao]

@@ -1,24 +1,27 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is version 1.3, the developers version of The GIMP. Only use it
-if you are brave and curious and want to participate development
-towards the next stable release GIMP version 2.0. This is a developers
-version. We know it has bugs and it might not even compile. You have
-been warned!
+This is a pre-release of GIMP version 2.0. Actually it still is GIMP-1.3,
+the developers version of The GIMP. But we got pretty close to the final
+2.0 release, the plug-in API has settled and you are encouraged to try
+this software. Your feedback can help to make the 2.0 release a success.
+If you encounter any problems, please report them to our bug-tracker at
+bugzilla.gnome.org. There are still a number of known problems, so please
+check first if your problem has already been reported.
 
-Some features that were present in GIMP 1.2 are disabled or not even
-included in this release. The perl bindings as well as all the perl
-scripts are not any longer included in this source tree. They have
-been moved into its own module called gimp-perl and await being
-porting to GIMP-1.3 and GTK+-2.0.
+GIMP-2.0 installs side-by-side with GIMP-1.2 so there's no need to
+uninstall GIMP-1.2 (but sooner or later you will not be using it any
+longer...).
 
-The new text tool is only halfway done and various other tools and
-functions are broken. Almost everything is under construction. Don't
-even think about using this for daily work. If you are a software
-distributor, dont' dare to ship this package to innocent users.
+Some features that were present in GIMP 1.2 are not included in this
+release. The perl bindings as well as all the perl scripts are not any
+longer included in this source tree. They have been moved into its own
+module called gimp-perl. Sooner or later there will be a gimp-perl
+release for GIMP-2.0. GAP, a set of plug-ins that used to live in the
+Video submenu has also become a separate package. Expect a preview
+release of this software for GIMP-2.0 soon.
 
-For installation instructions, see the file INSTALL.
+For detailed installation instructions, see the file INSTALL.
 
 
 1. Web Resources
@@ -90,7 +93,7 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 ==============
 
 The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc file or by using "themes" (ready-made
+by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
 http://gtk.themes.org.  Additionally GIMP reads ~/.gimp-1.3/gtkrc so
 you can have settings that only apply to The GIMP.
@@ -101,27 +104,6 @@ to ~/.gimp-1.3/menurc. You can also manually change the keybindings to
 any of your choice by editing ~/.gimp-1.3/menurc.
 
 
-5. Bugs
-=======
-
-Since this is a developers version, we are at the moment not really
-interested in receiving too many bug-reports. Some parts of the code
-are unfinished and under heavy development and we know that.
-Bug-reports for incomplete or missing are features are therefore often
-not helpful. Instead of filing a bug you should try to contact the
-person who is working on this particular part of the program (see the
-ChangeLog) or try to fix it yourself. You should report crashes and
-other severe bugs at Bugzilla (http://bugzilla.gnome.org/). Your
-bug-report needs to provide detailed instruction of how to reproduce
-the problem. For reports on crashes, please also include a stack
-trace.
-
-If you experience crashes whenever you try to start gimp-1.3, you are
-most probably using gdkxft or another LD_PRELOAD hack designed for
-gtk+-1.2. These hacks will not work with GTK+-2.0 applications like
-this version of The GIMP.
-
-
 Have fun,
 
   Spencer Kimball
@@ -130,3 +112,4 @@ Have fun,
   Manish Singh
   Sven Neumann
   Michael Natterer
+  Dave Neary
