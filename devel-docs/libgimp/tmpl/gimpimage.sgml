@@ -691,5 +691,6 @@ and operations involving multiple layers.
 @flags: 
 @size: 
 @data: 
+@Returns: 
 
 

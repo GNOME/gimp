@@ -48,8 +48,6 @@ GimpPropWidgets
 @true_text: 
 @false_text: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@label: 
 
 
 <!-- ##### FUNCTION gimp_prop_expander_new ##### -->
@@ -72,8 +70,6 @@ GimpPropWidgets
 @property_name: 
 @store: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@int_store: 
 
 
 <!-- ##### FUNCTION gimp_prop_enum_combo_box_new ##### -->

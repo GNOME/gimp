@@ -70,40 +70,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name: 
+@name: 
 @blurb: 
 @default: 
 @flags: 
@@ -116,40 +83,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name: 
+@name: 
 @blurb: 
 @default: 
 @flags: 
@@ -162,40 +96,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name: 
+@name: 
 @blurb: 
 @min: 
 @max: 
@@ -210,40 +111,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name:
-@\
-                                            name: 
+@name: 
 @blurb: 
 @default: 
 @flags: 
@@ -256,40 +124,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name: 
+@name: 
 @blurb: 
 @enum_type: 
 @default: 
@@ -303,40 +138,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name:
-@\
-                                     name: 
+@name: 
 @blurb: 
 @min: 
 @max: 
@@ -351,40 +153,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name: 
+@name: 
 @blurb: 
 @default: 
 @flags: 
@@ -397,40 +166,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name: 
+@name: 
 @blurb: 
 @min: 
 @max: 
@@ -445,46 +181,11 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name: 
+@name: 
 @blurb: 
 @path_type: 
 @default: 
 @flags: 
-<!-- # Unused Parameters # -->
-@type: 
 
 
 <!-- ##### MACRO GIMP_CONFIG_INSTALL_PROP_STRING ##### -->
@@ -494,40 +195,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name: 
+@name: 
 @blurb: 
 @default: 
 @flags: 
@@ -540,40 +208,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name: 
+@name: 
 @blurb: 
 @min: 
 @max: 
@@ -588,40 +223,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name:
-@\
-                                      name: 
+@name: 
 @blurb: 
 @pixels: 
 @percent: 
@@ -636,40 +238,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name:
-@\
-                                        name: 
+@name: 
 @blurb: 
 @object_type: 
 @flags: 
@@ -682,40 +251,7 @@ gimpconfig-params
 
 @class: 
 @id: 
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name:
-@\
-                                         name: 
+@name: 
 @blurb: 
 @flags: 
 

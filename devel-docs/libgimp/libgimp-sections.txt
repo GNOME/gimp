@@ -615,6 +615,7 @@ gimp_path_set_locked
 gimp_path_set_tattoo
 gimp_path_to_selection
 gimp_path_import
+gimp_path_import_string
 </SECTION>
 
 <SECTION>

@@ -487,5 +487,6 @@ Functions to manipulate drawables.
 @flags: 
 @size: 
 @data: 
+@Returns: 
 
 
