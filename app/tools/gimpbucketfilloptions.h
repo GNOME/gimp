@@ -39,19 +39,9 @@ struct _GimpBucketFillOptions
   GimpPaintOptions    paint_options;
 
   gboolean            fill_transparent;
-  gboolean            fill_transparent_d;
-  GtkWidget          *fill_transparent_w;
-
   gboolean            sample_merged;
-  gboolean            sample_merged_d;
-  GtkWidget          *sample_merged_w;
-
   gdouble             threshold;
-  GtkObject          *threshold_w;
-
   GimpBucketFillMode  fill_mode;
-  GimpBucketFillMode  fill_mode_d;
-  GtkWidget          *fill_mode_w;
 };
 
 

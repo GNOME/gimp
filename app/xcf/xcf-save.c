@@ -843,8 +843,22 @@ xcf_save_prop (XcfInfo   *info,
 	  {
 	    guide = (GimpGuide *) guides->data;
 
-	    position    = guide->position;
-	    orientation = guide->orientation;
+	    position = guide->position;
+
+            switch (guide->orientation)
+              {
+              case GIMP_ORIENTATION_HORIZONTAL:
+                orientation = XCF_ORIENTATION_HORIZONTAL;
+                break;
+
+              case GIMP_ORIENTATION_VERTICAL:
+                orientation = XCF_ORIENTATION_VERTICAL;
+                break;
+
+              default:
+                g_warning ("xcf_save_prop: skipping guide with bad orientation");
+                continue;
+              }
 
 	    xcf_write_int32_check_error (info->fp, (guint32 *) &position,    1);
 	    xcf_write_int8_check_error  (info->fp, (guint8 *)  &orientation, 1);

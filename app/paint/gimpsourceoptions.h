@@ -38,13 +38,8 @@ struct _GimpCloneOptions
 {
   GimpPaintOptions    paint_options;
 
-  GimpCloneType       type;
-  GimpCloneType       type_d;
-  GtkWidget          *type_w;
-
-  GimpCloneAlignMode  aligned;
-  GimpCloneAlignMode  aligned_d;
-  GtkWidget          *aligned_w;
+  GimpCloneType       clone_type;
+  GimpCloneAlignMode  align_mode;
 };
 
 

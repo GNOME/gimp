@@ -39,28 +39,12 @@ struct _GimpBlendOptions
   GimpPaintOptions  paint_options;
 
   gdouble           offset;
-  gdouble           offset_d;
-  GtkObject        *offset_w;
-
   GimpGradientType  gradient_type;
-  GimpGradientType  gradient_type_d;
-  GtkWidget        *gradient_type_w;
-
   GimpRepeatMode    repeat;
-  GimpRepeatMode    repeat_d;
-  GtkWidget        *repeat_w;
    
-  gint              supersample;
-  gint              supersample_d;
-  GtkWidget        *supersample_w;
-
-  gint              max_depth;
-  gint              max_depth_d;
-  GtkObject        *max_depth_w;
-
-  gdouble           threshold;
-  gdouble           threshold_d;
-  GtkObject        *threshold_w;
+  gboolean          supersample;
+  gint              supersample_depth;
+  gdouble           supersample_threshold;
 };
 
 

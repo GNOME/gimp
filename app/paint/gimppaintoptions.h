@@ -20,73 +20,31 @@
 #define __GIMP_PAINT_OPTIONS_H__
 
 
-#include "tools/tools-types.h"
 #include "tools/tool_options.h"
 
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
+typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
 {
-  GtkWidget   *frame;
-
-  gboolean     opacity;
-  gboolean     opacity_d;
-  GtkWidget   *opacity_w;
-
-  gboolean     pressure;
-  gboolean     pressure_d;
-  GtkWidget   *pressure_w;
-
-  gboolean     rate;
-  gboolean     rate_d;
-  GtkWidget   *rate_w;
-
-  gboolean     size;
-  gboolean     size_d;
-  GtkWidget   *size_w;
-  
-  gboolean     color;
-  gboolean     color_d;
-  GtkWidget   *color_w;
+  gboolean   opacity;
+  gboolean   pressure;
+  gboolean   rate;
+  gboolean   size;
+  gboolean   color;
 };
-
-
-typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpGradientOptions
 {
-  GtkWidget    *fade_frame;
+  gboolean   use_fade;
+  gdouble    fade_length;
+  GimpUnit   fade_unit;
 
-  gboolean      use_fade;
-  gboolean      use_fade_d;
-  GtkWidget    *use_fade_w;
-
-  gdouble       fade_out;
-  gdouble       fade_out_d;
-  GtkObject    *fade_out_w;
-
-  GimpUnit      fade_unit;
-  GimpUnit      fade_unit_d;
-  GtkWidget    *fade_unit_w;
-
-  GtkWidget    *gradient_frame;
-
-  gboolean      use_gradient;
-  gboolean      use_gradient_d;
-  GtkWidget    *use_gradient_w;
-
-  gdouble       gradient_length;
-  gdouble       gradient_length_d;
-  GtkObject    *gradient_length_w;
-
-  GimpUnit      gradient_unit;
-  GimpUnit      gradient_unit_d;
-  GtkWidget    *gradient_unit_w;
-
-  gint          gradient_type;
-  gint          gradient_type_d;
-  GtkWidget    *gradient_type_w;
+  gboolean   use_gradient;
+  gdouble    gradient_length;
+  GimpUnit   gradient_unit;
+  gint       gradient_type;
 };
 
 
@@ -102,23 +60,12 @@ typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
 
 struct _GimpPaintOptions
 {
-  GimpToolOptions  parent_instance;
+  GimpToolOptions      parent_instance;
 
-  /*  options used by all paint tools  */
-  GtkObject   *opacity_w;
-  GtkWidget   *paint_mode_w;
+  gboolean             incremental;
+  gboolean             incremental_save;
 
-  /*  the incremental toggle  */
-  gboolean     incremental;
-  gboolean     incremental_d;
-  GtkWidget   *incremental_w;
-
-  gboolean     incremental_save;
-
-  /*  the pressure-sensitivity options  */
   GimpPressureOptions *pressure_options;
-
-  /*  the fade out and gradient options  */
   GimpGradientOptions *gradient_options;
 };
 

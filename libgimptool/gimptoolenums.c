@@ -131,6 +131,26 @@ gimp_rect_select_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_transform_grid_type_enum_values[] =
+{
+  { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't Show Grid"), "none" },
+  { GIMP_TRANSFORM_GRID_TYPE_N_LINES, N_("Number of Grid Lines"), "n-lines" },
+  { GIMP_TRANSFORM_GRID_TYPE_SPACING, N_("Grid Line Spacing"), "spacing" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_transform_grid_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTransformGridType", gimp_transform_grid_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue transform_action_enum_values[] =
 {
   { TRANSFORM_CREATING, "TRANSFORM_CREATING", "creating" },

@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "paint-types.h"
 
@@ -192,7 +192,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
 	  clone->first_stroke = TRUE;
 	}
-      else if (options->aligned == GIMP_CLONE_ALIGN_NO)
+      else if (options->align_mode == GIMP_CLONE_ALIGN_NO)
 	{
 	  orig_src_x = clone->src_x;
 	  orig_src_y = clone->src_y;
@@ -203,7 +203,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       if (clone->init_callback)
         clone->init_callback (clone, clone->callback_data);
 
-      if (options->type == GIMP_PATTERN_CLONE)
+      if (options->clone_type == GIMP_PATTERN_CLONE)
 	if (! gimp_context_get_pattern (context))
 	  g_message (_("No patterns available for this operation."));
       break;
@@ -228,7 +228,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 	  dest_x = paint_core->cur_coords.x;
 	  dest_y = paint_core->cur_coords.y;
 
-          if (options->aligned == GIMP_CLONE_ALIGN_REGISTERED)
+          if (options->align_mode == GIMP_CLONE_ALIGN_REGISTERED)
             {
 	      clone->offset_x = 0;
 	      clone->offset_y = 0;
@@ -252,7 +252,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       if (clone->finish_callback)
         clone->finish_callback (clone, clone->callback_data);
 
-      if (options->aligned == GIMP_CLONE_ALIGN_NO && ! clone->first_stroke)
+      if (options->align_mode == GIMP_CLONE_ALIGN_NO && ! clone->first_stroke)
 	{
 	  clone->src_x = orig_src_x;
 	  clone->src_y = orig_src_y;
@@ -300,7 +300,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   offset_y = clone->offset_y;
 
   /*  Make sure we still have a source if we are doing image cloning */
-  if (options->type == GIMP_IMAGE_CLONE)
+  if (options->clone_type == GIMP_IMAGE_CLONE)
     {
       if (! clone->src_drawable)
 	return;
@@ -325,7 +325,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  switch (options->type)
+  switch (options->clone_type)
     {
     case GIMP_IMAGE_CLONE:
       /*  Set the paint area to transparent  */
@@ -414,7 +414,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
 
       for (y = 0; y < destPR.h; y++)
 	{
-	  switch (options->type)
+	  switch (options->clone_type)
 	    {
 	    case GIMP_IMAGE_CLONE:
 	      gimp_clone_line_image (gimage, src_gimage,

@@ -25,12 +25,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-params.h"
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimprotatetool.h"
@@ -42,17 +43,40 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
+enum
+{
+  PROP_0,
+  PROP_DIRECTION,
+  PROP_INTERPOLATION,
+  PROP_CLIP,
+  PROP_GRID_TYPE,
+  PROP_GRID_SIZE,
+  PROP_SHOW_PATH,
+  PROP_CONSTRAIN_1,
+  PROP_CONSTRAIN_2
+};
+
 
 static void   gimp_transform_options_init       (GimpTransformOptions      *options);
 static void   gimp_transform_options_class_init (GimpTransformOptionsClass *options_class);
 
-static void gimp_transform_tool_grid_type_update    (GtkWidget            *widget,
-                                                     GimpTransformOptions *options);
-static void gimp_transform_tool_grid_density_update (GtkAdjustment        *adj,
-                                                     GimpTransformOptions *options);
-static void gimp_transform_tool_show_path_update    (GtkWidget            *widget,
-                                                     GimpTransformOptions *options);
+static void   gimp_transform_options_set_property (GObject         *object,
+                                                   guint            property_id,
+                                                   const GValue    *value,
+                                                   GParamSpec      *pspec);
+static void   gimp_transform_options_get_property (GObject         *object,
+                                                   guint            property_id,
+                                                   GValue          *value,
+                                                   GParamSpec      *pspec);
+
+static void   gimp_transform_options_reset        (GimpToolOptions *tool_options);
+
+static void   gimp_transform_options_notify       (GimpTransformOptions *options,
+                                                   GParamSpec           *pspec,
+                                                   GtkWidget            *density_box);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -86,49 +110,185 @@ gimp_transform_options_get_type (void)
 static void 
 gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_transform_options_set_property;
+  object_class->get_property = gimp_transform_options_get_property;
+
+  options_class->reset       = gimp_transform_options_reset;
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
+                                 "direction", NULL,
+                                 GIMP_TYPE_TRANSFORM_DIRECTION,
+                                 GIMP_TRANSFORM_FORWARD,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                                 "interpolation", NULL,
+                                 GIMP_TYPE_INTERPOLATION_TYPE,
+                                 GIMP_LINEAR,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
+                                    "clip", NULL,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
+                                 "grid-type", NULL,
+                                 GIMP_TYPE_TRANSFORM_GRID_TYPE,
+                                 GIMP_TRANSFORM_GRID_TYPE_N_LINES,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
+                                "grid-size", NULL,
+                                1, 128, 15,
+                                0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PATH,
+                                    "show-path", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_1,
+                                    "constrain-1", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_2,
+                                    "constrain-2", NULL,
+                                    FALSE,
+                                    0);
 }
 
 static void
 gimp_transform_options_init (GimpTransformOptions *options)
 {
-  options->direction     = options->direction_d    = GIMP_TRANSFORM_FORWARD;
-  options->show_path     = options->show_path_d    = TRUE;
-  options->clip          = options->clip_d         = FALSE;
-  options->grid_type     = options->grid_type_d    = TRANSFORM_GRID_TYPE_N_LINES;
-  options->grid_size     = options->grid_size_d    = 15;
-  options->constrain_1   = options->constrain_1_d  = FALSE;
-  options->constrain_2   = options->constrain_2_d  = FALSE;
+}
+
+static void
+gimp_transform_options_set_property (GObject      *object,
+                                     guint         property_id,
+                                     const GValue *value,
+                                     GParamSpec   *pspec)
+{
+  GimpTransformOptions *options;
+
+  options = GIMP_TRANSFORM_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_DIRECTION:
+      options->direction = g_value_get_enum (value);
+      break;
+    case PROP_INTERPOLATION:
+      options->interpolation = g_value_get_enum (value);
+      break;
+    case PROP_CLIP:
+      options->clip = g_value_get_boolean (value);
+      break;
+    case PROP_GRID_TYPE:
+      options->grid_type = g_value_get_enum (value);
+      break;
+    case PROP_GRID_SIZE:
+      options->grid_size = g_value_get_int (value);
+      break;
+    case PROP_SHOW_PATH:
+      options->show_path = g_value_get_boolean (value);
+      break;
+    case PROP_CONSTRAIN_1:
+      options->constrain_1 = g_value_get_boolean (value);
+      break;
+    case PROP_CONSTRAIN_2:
+      options->constrain_2 = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_transform_options_get_property (GObject    *object,
+                                     guint       property_id,
+                                     GValue     *value,
+                                     GParamSpec *pspec)
+{
+  GimpTransformOptions *options;
+
+  options = GIMP_TRANSFORM_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_DIRECTION:
+      g_value_set_enum (value, options->direction);
+      break;
+    case PROP_INTERPOLATION:
+      g_value_set_enum (value, options->interpolation);
+      break;
+    case PROP_CLIP:
+      g_value_set_boolean (value, options->clip);
+      break;
+    case PROP_GRID_TYPE:
+      g_value_set_enum (value, options->grid_type);
+      break;
+    case PROP_GRID_SIZE:
+      g_value_set_int (value, options->grid_size);
+      break;
+    case PROP_SHOW_PATH:
+      g_value_set_boolean (value, options->show_path);
+      break;
+    case PROP_CONSTRAIN_1:
+      g_value_set_boolean (value, options->constrain_1);
+      break;
+    case PROP_CONSTRAIN_2:
+      g_value_set_boolean (value, options->constrain_2);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_transform_options_reset (GimpToolOptions *tool_options)
+{
+  GimpTransformOptions *options;
+  GParamSpec           *pspec;
+
+  options = GIMP_TRANSFORM_OPTIONS (tool_options);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+                                        "interpolation");
+
+  if (pspec)
+    {
+      G_PARAM_SPEC_ENUM (pspec)->default_value =
+        tool_options->tool_info->gimp->config->interpolation_type;
+    }
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 void
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
+  GObject   *config;
   GimpTransformOptions *options;
   GtkWidget            *vbox;
   GtkWidget            *hbox;
   GtkWidget            *label;
   GtkWidget            *frame;
   GtkWidget            *table;
-  GtkWidget            *grid_density;
+  GtkWidget            *optionmenu;
+  GtkWidget            *button;
 
+  config = G_OBJECT (tool_options);
   options = GIMP_TRANSFORM_OPTIONS (tool_options);
-
-  tool_options->reset_func = gimp_transform_options_reset;
 
   vbox = tool_options->main_vbox;
 
-  options->interpolation =
-    tool_options->tool_info->gimp->config->interpolation_type;
-
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFORM_DIRECTION,
-                                     gtk_label_new (_("Transform Direction")),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->direction,
-                                     &options->direction_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w),
-                               GINT_TO_POINTER (options->direction));
-
+  frame = gimp_prop_enum_radio_frame_new (config, "direction",
+                                          _("Transform Direction"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -141,24 +301,14 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  options->interpolation_w = 
-    gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
-                               G_CALLBACK (gimp_menu_item_update),
-                               &options->interpolation);
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->interpolation_w),
-                                GINT_TO_POINTER (options->interpolation));
-  gtk_box_pack_start (GTK_BOX (hbox), 
-                      options->interpolation_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->interpolation_w);
+  optionmenu = gimp_prop_enum_option_menu_new (config, "interpolation", 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
+  gtk_widget_show (optionmenu);
 
   /*  the clip resulting image toggle button  */
-  options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->clip_w);
-
-  g_signal_connect (options->clip_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->clip);
+  button = gimp_prop_check_button_new (config, "clip", _("Clip Result"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the grid frame  */
   frame = gtk_frame_new (NULL);
@@ -166,25 +316,10 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  the grid type menu  */
-  options->grid_type_w =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (gimp_transform_tool_grid_type_update),
-                           options,
-                           GINT_TO_POINTER (options->grid_type_d),
+  optionmenu = gimp_prop_enum_option_menu_new (config, "grid-type", 0, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), optionmenu);
+  gtk_widget_show (optionmenu);
 
-                           _("Don't Show Grid"),
-                           GINT_TO_POINTER (TRANSFORM_GRID_TYPE_NONE), NULL,
-
-                           _("Number of Grid Lines"),
-                           GINT_TO_POINTER (TRANSFORM_GRID_TYPE_N_LINES), NULL,
-
-                           _("Grid Line Spacing"),
-                           GINT_TO_POINTER (TRANSFORM_GRID_TYPE_SPACING), NULL,
-
-                           NULL);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), options->grid_type_w);
-  gtk_widget_show (options->grid_type_w);
-  
   /*  the grid density scale  */
   table = gtk_table_new (1, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -192,26 +327,20 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  options->grid_size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                               _("Density:"), -1, -1,
-                                               options->grid_size,
-                                               1.0, 128.0, 1.0, 8.0, 0,
-                                               TRUE, 0.0, 0.0,
-                                               NULL, NULL);
-  grid_density = GIMP_SCALE_ENTRY_SPINBUTTON (options->grid_size_w);
+  g_signal_connect (config, "notify",
+                    G_CALLBACK (gimp_transform_options_notify),
+                    table);
 
-  g_signal_connect (options->grid_size_w, "value_changed",
-                    G_CALLBACK (gimp_transform_tool_grid_density_update),
-                    options);
+  gimp_prop_scale_entry_new (config, "grid-size",
+                             GTK_TABLE (table), 0, 0,
+                             _("Density:"),
+                             1.0, 8.0, 0,
+                             FALSE, 0.0, 0.0);
 
   /*  the show_path toggle button  */
-  options->show_path_w = gtk_check_button_new_with_label (_("Show Path"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->show_path_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->show_path_w);
-
-  g_signal_connect (options->show_path_w, "toggled",
-                    G_CALLBACK (gimp_transform_tool_show_path_update),
-                    options);
+  button = gimp_prop_check_button_new (config, "show-path", _("Show Path"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
       tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
@@ -234,188 +363,98 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
           str = g_strdup_printf (_("15 Degrees  %s"),
                                  gimp_get_mod_name_control ());
 
-          options->constrain_1_w = gtk_check_button_new_with_label (str);
-          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (options->constrain_1_w);
+          button = gimp_prop_check_button_new (config, "constrain-1", str);
+          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
 
           g_free (str);
-
-          g_signal_connect (options->constrain_1_w, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
-                            &options->constrain_1);
         }
       else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
           str = g_strdup_printf (_("Keep Height  %s"),
                                  gimp_get_mod_name_control ());
 
-          options->constrain_1_w = gtk_check_button_new_with_label (str);
-          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (options->constrain_1_w);
+          button = gimp_prop_check_button_new (config, "constrain-1", str);
+          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
 
           g_free (str);
 
-          gimp_help_set_help_data (options->constrain_1_w,
+          gimp_help_set_help_data (button,
                                    _("Activate both the \"Keep Height\" and\n"
                                      "\"Keep Width\" toggles to constrain\n"
                                      "the aspect ratio"), NULL);
-
-          g_signal_connect (options->constrain_1_w, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
-                            &options->constrain_1);
 
           str = g_strdup_printf (_("Keep Width  %s"),
                                  gimp_get_mod_name_alt ());
 
-          options->constrain_2_w = gtk_check_button_new_with_label (str);
-          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_2_w,
-                              FALSE, FALSE, 0);
-          gtk_widget_show (options->constrain_2_w);
+          button = gimp_prop_check_button_new (config, "constrain-2", str);
+          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
 
           g_free (str);
 
-          gimp_help_set_help_data (options->constrain_2_w,
+          gimp_help_set_help_data (button,
                                    _("Activate both the \"Keep Height\" and\n"
                                      "\"Keep Width\" toggles to constrain\n"
                                      "the aspect ratio"), NULL);
-
-          g_signal_connect (options->constrain_2_w, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
-                            &options->constrain_2);
         }
     }
 
-  /* Set options to default values */
   gimp_transform_options_reset (tool_options);
-}
-
-void
-gimp_transform_options_reset (GimpToolOptions *tool_options)
-{
-  GimpTransformOptions *options;
-
-  options = GIMP_TRANSFORM_OPTIONS (tool_options);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w),
-                               GINT_TO_POINTER (options->direction_d));
-
-  options->interpolation =
-    tool_options->tool_info->gimp->config->interpolation_type;
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->interpolation_w),
-				GINT_TO_POINTER (options->interpolation));
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
-				options->clip_d);
-
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->grid_type_w),
-                                GINT_TO_POINTER (options->grid_type_d));
-  options->grid_type = options->grid_type_d;
-
-  {
-    GimpToolOptions *tool_options;
-    GimpTool        *active_tool;
-
-    tool_options = (GimpToolOptions *) options;
-
-    active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
-
-    if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-      gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
-
-    gtk_widget_set_sensitive (GTK_BIN (options->grid_type_w->parent)->child,
-                              options->grid_type != TRANSFORM_GRID_TYPE_NONE);
-  }
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
-			    options->grid_size_d);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_path_w),
-				options->show_path_d);
-
-  if (options->constrain_1_w)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_1_w),
-                                  options->constrain_1_d);
-
-  if (options->constrain_2_w)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_2_w),
-                                  options->constrain_2_d);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_transform_tool_grid_type_update (GtkWidget            *widget,
-        	 		      GimpTransformOptions *options)
+gimp_transform_options_notify (GimpTransformOptions *options,
+                               GParamSpec           *pspec,
+                               GtkWidget            *density_box)
 {
-  GimpToolOptions *tool_options;
-  GimpTool        *active_tool;
-
-  tool_options = GIMP_TOOL_OPTIONS (options);
-
-  gimp_menu_item_update (widget, &options->grid_type);
-
-  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
-
-  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-    gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
-
-  gtk_widget_set_sensitive (GTK_BIN (options->grid_type_w->parent)->child,
-                            options->grid_type != TRANSFORM_GRID_TYPE_NONE);
-}
-
-static void
-gimp_transform_tool_grid_density_update (GtkAdjustment        *adj,
-                                         GimpTransformOptions *options)
-{
-  GimpToolOptions *tool_options;
-  GimpTool        *active_tool;
-
-  tool_options = GIMP_TOOL_OPTIONS (options);
-
-  options->grid_size = (gint) (adj->value + 0.5);
-
-  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
-
-  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-    gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
-}
-
-static void
-gimp_transform_tool_show_path_update (GtkWidget            *widget,
-				      GimpTransformOptions *options)
-{
-  GimpToolOptions *tool_options;
-  GimpTool        *active_tool;
-
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
-  if (first_call)
-    {
-      first_call = FALSE;
-      return;
-    }
+  GimpToolOptions   *tool_options;
+  GimpTool          *active_tool;
+  GimpTransformTool *transform_tool;
 
   tool_options = GIMP_TOOL_OPTIONS (options);
 
   active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-    {
-      GimpTransformTool *transform_tool;
-
-      transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
-
-      gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
-
-      gimp_toggle_button_update (widget, &options->show_path);
-
-      gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
-    }
+    transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
   else
+    transform_tool = NULL;
+
+  switch (pspec->param_id)
     {
-      gimp_toggle_button_update (widget, &options->show_path);
+    case PROP_GRID_TYPE:
+      if (transform_tool)
+        gimp_transform_tool_grid_density_changed (transform_tool);
+
+      gtk_widget_set_sensitive (density_box,
+                                options->grid_type !=
+                                GIMP_TRANSFORM_GRID_TYPE_NONE);
+      break;
+
+    case PROP_GRID_SIZE:
+      if (transform_tool)
+        gimp_transform_tool_grid_density_changed (transform_tool);
+      break;
+
+    case PROP_SHOW_PATH:
+      if (transform_tool)
+        {
+#if 0
+          gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
+
+          gimp_toggle_button_update (widget, &options->show_path);
+
+          gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
+#endif
+        }
+      break;
+
+    default:
+      break;
     }
 }

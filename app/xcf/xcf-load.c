@@ -456,11 +456,11 @@ xcf_load_image_props (XcfInfo   *info,
 
 		switch (orientation)
 		  {
-		  case ORIENTATION_HORIZONTAL:
+		  case XCF_ORIENTATION_HORIZONTAL:
 		    guide = gimp_image_add_hguide (gimage);
 		    break;
 
-		  case ORIENTATION_VERTICAL:
+		  case XCF_ORIENTATION_VERTICAL:
 		    guide = gimp_image_add_vguide (gimage);
 		    break;
 

@@ -39,12 +39,7 @@ struct _GimpConvolveOptions
   GimpPaintOptions  paint_options;
 
   GimpConvolveType  type;
-  GimpConvolveType  type_d;
-  GtkWidget        *type_w;
-
   gdouble           rate;
-  gdouble           rate_d;
-  GtkObject        *rate_w;
 };
 
 

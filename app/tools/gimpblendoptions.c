@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-params.h"
+
 #include "core/gimp.h"
 #include "core/gimpgradient.h"
 #include "core/gimptoolinfo.h"
@@ -31,7 +33,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpdock.h"
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimppreview.h"
 
 #include "gimpblendoptions.h"
@@ -40,20 +42,44 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_OFFSET,
+  PROP_GRADIENT_TYPE,
+  PROP_REPEAT,
+  PROP_SUPERSAMPLE,
+  PROP_SUPERSAMPLE_DEPTH,
+  PROP_SUPERSAMPLE_THRESHOLD
+};
+
+
 static void   gimp_blend_options_init       (GimpBlendOptions      *options);
 static void   gimp_blend_options_class_init (GimpBlendOptionsClass *options_class);
 
-static void   gimp_blend_options_reset       (GimpToolOptions  *tool_options);
-static void   blend_options_gradient_clicked (GtkWidget        *widget,
-                                              gpointer          data);
-static void   gradient_type_callback         (GtkWidget        *widget,
-                                              GimpBlendOptions *options);
-static void   blend_options_drop_tool        (GtkWidget        *widget,
-                                              GimpViewable     *viewable,
-                                              gpointer          data);
-static void   blend_options_drop_gradient    (GtkWidget        *widget,
-                                              GimpViewable     *viewable,
-                                              gpointer          data);
+static void   gimp_blend_options_set_property (GObject          *object,
+                                               guint             property_id,
+                                               const GValue     *value,
+                                               GParamSpec       *pspec);
+static void   gimp_blend_options_get_property (GObject          *object,
+                                               guint             property_id,
+                                               GValue           *value,
+                                               GParamSpec       *pspec);
+
+static void   gradient_type_notify            (GimpBlendOptions *options,
+                                               GParamSpec       *pspec,
+                                               GtkWidget        *repeat_menu);
+static void   blend_options_gradient_clicked  (GtkWidget        *widget,
+                                               gpointer          data);
+static void   blend_options_drop_tool         (GtkWidget        *widget,
+                                               GimpViewable     *viewable,
+                                               gpointer          data);
+static void   blend_options_drop_gradient     (GtkWidget        *widget,
+                                               GimpViewable     *viewable,
+                                               gpointer          data);
+
+
+static GimpPaintOptionsClass *parent_class = NULL;
 
 
 GType
@@ -87,46 +113,149 @@ gimp_blend_options_get_type (void)
 static void 
 gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
 {
-  GimpToolOptionsClass *options_class;
+  GObjectClass *object_class;
 
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_blend_options_set_property;
+  object_class->get_property = gimp_blend_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET,
+                                   "offset", NULL,
+                                   0.0, 100.0, 0.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
+                                 "gradient-type", NULL,
+                                 GIMP_TYPE_GRADIENT_TYPE,
+                                 GIMP_LINEAR,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_REPEAT,
+                                 "repeat", NULL,
+                                 GIMP_TYPE_REPEAT_MODE,
+                                 GIMP_REPEAT_NONE,
+                                 0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
+                                    "supersample", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SUPERSAMPLE_DEPTH,
+                                "supersample-depth", NULL,
+                                0, 10, 3,
+                                0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SUPERSAMPLE_THRESHOLD,
+                                   "supersample-threshold", NULL,
+                                   0.0, 4.0, 0.2,
+                                   0);
 }
 
 static void
 gimp_blend_options_init (GimpBlendOptions *options)
 {
-  options->offset  	 = options->offset_d  	    = 0.0;
-  options->gradient_type = options->gradient_type_d = GIMP_LINEAR;
-  options->repeat        = options->repeat_d        = GIMP_REPEAT_NONE;
-  options->supersample   = options->supersample_d   = FALSE;
-  options->max_depth     = options->max_depth_d     = 3;
-  options->threshold     = options->threshold_d     = 0.2;
+}
+
+static void
+gimp_blend_options_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpBlendOptions *options;
+
+  options = GIMP_BLEND_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_OFFSET:
+      options->offset = g_value_get_double (value);
+      break;
+    case PROP_GRADIENT_TYPE:
+      options->gradient_type = g_value_get_enum (value);
+      break;
+    case PROP_REPEAT:
+      options->repeat = g_value_get_enum (value);
+      break;
+
+    case PROP_SUPERSAMPLE:
+      options->supersample = g_value_get_boolean (value);
+      break;
+    case PROP_SUPERSAMPLE_DEPTH:
+      options->supersample_depth = g_value_get_int (value);
+      break;
+    case PROP_SUPERSAMPLE_THRESHOLD:
+      options->supersample_threshold = g_value_get_double (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_blend_options_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpBlendOptions *options;
+
+  options = GIMP_BLEND_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_OFFSET:
+      g_value_set_double (value, options->offset);
+      break;
+    case PROP_GRADIENT_TYPE:
+      g_value_set_enum (value, options->gradient_type);
+      break;
+    case PROP_REPEAT:
+      g_value_set_enum (value, options->repeat);
+      break;
+
+    case PROP_SUPERSAMPLE:
+      g_value_set_boolean (value, options->supersample);
+      break;
+    case PROP_SUPERSAMPLE_DEPTH:
+      g_value_set_int (value, options->supersample_depth);
+      break;
+    case PROP_SUPERSAMPLE_THRESHOLD:
+      g_value_set_double (value, options->supersample_threshold);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 void
 gimp_blend_options_gui (GimpToolOptions *tool_options)
 {
-  GimpBlendOptions *options;
-  GtkWidget        *vbox;
-  GtkWidget        *table;
-  GtkWidget        *frame;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *frame;
+  GtkWidget *optionmenu;
+  GtkWidget *button;
 
-  options = GIMP_BLEND_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
-
-  tool_options->reset_func = gimp_blend_options_reset;
 
   vbox = tool_options->main_vbox;
 
   gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_GRADIENT,
                               blend_options_drop_gradient,
-			      options);
+			      tool_options);
   gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_TOOL_INFO,
                               blend_options_drop_tool,
-			      options);
+			      tool_options);
 
   /*  the offset scale  */
   table = gtk_table_new (4, 3, FALSE);
@@ -135,16 +264,11 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->offset_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					    _("Offset:"), -1, 50,
-					    options->offset,
-					    0.0, 100.0, 1.0, 10.0, 1,
-					    TRUE, 0.0, 0.0,
-					    NULL, NULL);
-
-  g_signal_connect (options->offset_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->offset);
+  gimp_prop_scale_entry_new (config, "offset",
+                             GTK_TABLE (table), 0, 0,
+                             _("Offset:"),
+                             1.0, 10.0, 1,
+                             FALSE, 0.0, 0.0);
 
   /*  the gradient preview  */
   {
@@ -152,7 +276,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
     GtkWidget    *button;
     GtkWidget    *preview;
 
-    gradient = gimp_context_get_gradient (GIMP_CONTEXT (options));
+    gradient = gimp_context_get_gradient (GIMP_CONTEXT (tool_options));
 
     button = gtk_button_new ();
     preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
@@ -165,7 +289,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                                _("Gradient:"), 1.0, 0.5,
                                button, 2, TRUE);
 
-    g_signal_connect_object (options, "gradient_changed",
+    g_signal_connect_object (tool_options, "gradient_changed",
                              G_CALLBACK (gimp_preview_set_viewable),
                              preview,
                              G_CONNECT_SWAPPED);
@@ -175,118 +299,57 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   }
 
   /*  the gradient type menu  */
-  options->gradient_type_w =
-    gimp_enum_option_menu_new (GIMP_TYPE_GRADIENT_TYPE,
-                               G_CALLBACK (gradient_type_callback),
-                               options);
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-                                GINT_TO_POINTER (options->gradient_type));
+  optionmenu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Shape:"), 1.0, 0.5,
-			     options->gradient_type_w, 2, TRUE);
+			     optionmenu, 2, TRUE);
 
   /*  the repeat option  */
-  options->repeat_w = 
-    gimp_enum_option_menu_new (GIMP_TYPE_REPEAT_MODE,
-                               G_CALLBACK (gimp_menu_item_update),
-                               &options->repeat);
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
-                                GINT_TO_POINTER (options->repeat));
+  optionmenu = gimp_prop_enum_option_menu_new (config, "repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
-			     options->repeat_w, 2, TRUE);
+			     optionmenu, 2, TRUE);
 
-  /*  show the table  */
-  gtk_widget_show (table);
+  g_signal_connect (config, "notify::gradient-type",
+                    G_CALLBACK (gradient_type_notify),
+                    optionmenu);
 
   /*  frame for supersampling options  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  /* vbox for the supersampling stuff */
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  /*  supersampling toggle  */
-  options->supersample_w =
-    gtk_check_button_new_with_label (_("Adaptive Supersampling"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
-				options->supersample);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), options->supersample_w);
-  gtk_widget_show (options->supersample_w);
-
-  g_signal_connect (options->supersample_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->supersample);
 
   /*  table for supersampling options  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  /*  automatically set the sensitive state of the table  */
-  gtk_widget_set_sensitive (table, options->supersample);
-  g_object_set_data (G_OBJECT (options->supersample_w), "set_sensitive",
-                     table);
+  /*  supersampling toggle  */
+  button = gimp_prop_check_button_new (config, "supersample",
+                                       _("Adaptive Supersampling"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+  gtk_widget_show (button);
+
+  gtk_widget_set_sensitive (table, GIMP_BLEND_OPTIONS (config)->supersample);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
 
   /*  max depth scale  */
-  options->max_depth_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					       _("Max Depth:"), -1, 4,
-					       options->max_depth,
-					       1.0, 10.0, 1.0, 1.0, 0,
-					       TRUE, 0.0, 0.0,
-					       NULL, NULL);
-
-  g_signal_connect (options->max_depth_w, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &options->max_depth);
+  gimp_prop_scale_entry_new (config, "supersample-depth",
+                             GTK_TABLE (table), 0, 0,
+                             _("Max Depth:"),
+                             1.0, 1.0, 0,
+                             FALSE, 0.0, 0.0);
 
   /*  threshold scale  */
-  options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					       _("Threshold:"), -1, 4,
-					       options->threshold,
-					       0.0, 4.0, 0.01, 0.1, 2,
-					       TRUE, 0.0, 0.0,
-					       NULL, NULL);
-
-  g_signal_connect (options->threshold_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->threshold);
-
-  /*  show the table  */
-  gtk_widget_show (table);
-}
-
-static void
-gimp_blend_options_reset (GimpToolOptions *tool_options)
-{
-  GimpBlendOptions *options;
-
-  options = GIMP_BLEND_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  options->gradient_type = options->gradient_type_d;
-  options->repeat        = options->repeat_d;
-
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-			       options->gradient_type_d);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
-			       options->repeat_d);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->offset_w),
-			    options->offset_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
-				options->supersample_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->max_depth_w),
-			    options->max_depth_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    options->threshold_d);
+  gimp_prop_scale_entry_new (config, "supersample-threshold",
+                             GTK_TABLE (table), 0, 1,
+                             _("Threshold:"),
+                             0.01, 0.1, 2,
+                             FALSE, 0.0, 0.0);
 }
 
 static void
@@ -303,13 +366,11 @@ blend_options_gradient_clicked (GtkWidget *widget,
 }
 
 static void
-gradient_type_callback (GtkWidget        *widget,
-			GimpBlendOptions *options)
+gradient_type_notify (GimpBlendOptions *options,
+                      GParamSpec       *pspec,
+                      GtkWidget        *repeat_menu)
 {
-  gimp_menu_item_update (widget, &options->gradient_type);
-
-  gtk_widget_set_sensitive (options->repeat_w, 
-			    (options->gradient_type < 6));
+  gtk_widget_set_sensitive (repeat_menu, options->gradient_type < 6);
 }
 
 static void

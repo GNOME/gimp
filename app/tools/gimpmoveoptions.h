@@ -39,12 +39,7 @@ struct _GimpMoveOptions
   GimpToolOptions  parent_instence;
 
   gboolean         move_current;
-  gboolean         move_current_d;
-  GtkWidget       *move_current_w[2];
-
   gboolean         move_mask;
-  gboolean         move_mask_d;
-  GtkWidget       *move_mask_w[2];
 };
 
 

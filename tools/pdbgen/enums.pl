@@ -187,6 +187,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_HUES => '5',
 		       GIMP_MAGENTA_HUES => '6' }
 	},
+    GimpOrientationType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_HORIZONTAL GIMP_VERTICAL GIMP_UNKNOWN) ],
+	  mapping => { GIMP_HORIZONTAL => '0',
+		       GIMP_VERTICAL => '1',
+		       GIMP_UNKNOWN => '2' }
+	},
     GimpBlendMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -350,14 +358,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
 		       GIMP_OFFSET_TRANSPARENT => '1' }
-	},
-    OrientationType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
-	  mapping => { HORIZONTAL => '0',
-		       VERTICAL => '1',
-		       UNKNOWN => '2' }
 	},
     SizeType =>
 	{ contig => 1,

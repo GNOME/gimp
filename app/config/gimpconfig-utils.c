@@ -140,7 +140,8 @@ gimp_config_reset_properties (GObject *object)
  
       prop_spec = property_specs[i];
 
-      if (prop_spec->flags & G_PARAM_WRITABLE)
+      if ((prop_spec->flags & G_PARAM_WRITABLE) &&
+          ! G_IS_PARAM_SPEC_OBJECT (prop_spec))
 	{
 	  GValue value = { 0, };
 

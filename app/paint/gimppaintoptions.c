@@ -18,9 +18,12 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "paint-types.h"
+
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -28,28 +31,58 @@
 #include "gimppaintoptions.h"
 
 
-#define DEFAULT_INCREMENTAL     FALSE
+#define DEFAULT_INCREMENTAL       FALSE
 
-#define DEFAULT_OPACITY         TRUE
-#define DEFAULT_PRESSURE        TRUE
-#define DEFAULT_RATE            FALSE
-#define DEFAULT_SIZE            FALSE
-#define DEFAULT_COLOR           FALSE
+#define DEFAULT_PRESSURE_OPACITY  TRUE
+#define DEFAULT_PRESSURE_PRESSURE TRUE
+#define DEFAULT_PRESSURE_RATE     FALSE
+#define DEFAULT_PRESSURE_SIZE     FALSE
+#define DEFAULT_PRESSURE_COLOR    FALSE
 
-#define DEFAULT_USE_FADE        FALSE
-#define DEFAULT_FADE_OUT        100.0
-#define DEFAULT_FADE_UNIT       GIMP_UNIT_PIXEL
-#define DEFAULT_USE_GRADIENT    FALSE
-#define DEFAULT_GRADIENT_LENGTH 100.0
-#define DEFAULT_GRADIENT_UNIT   GIMP_UNIT_PIXEL
-#define DEFAULT_GRADIENT_TYPE   GIMP_GRADIENT_LOOP_TRIANGLE
+#define DEFAULT_USE_FADE          FALSE
+#define DEFAULT_FADE_LENGTH       100.0
+#define DEFAULT_FADE_UNIT         GIMP_UNIT_PIXEL
+#define DEFAULT_USE_GRADIENT      FALSE
+#define DEFAULT_GRADIENT_LENGTH   100.0
+#define DEFAULT_GRADIENT_UNIT     GIMP_UNIT_PIXEL
+#define DEFAULT_GRADIENT_TYPE     GIMP_GRADIENT_LOOP_TRIANGLE
+
+
+enum
+{
+  PROP_0,
+  PROP_INCREMENTAL,
+  PROP_PRESSURE_OPACITY,
+  PROP_PRESSURE_PRESSURE,
+  PROP_PRESSURE_RATE,
+  PROP_PRESSURE_SIZE,
+  PROP_PRESSURE_COLOR,
+  PROP_USE_FADE,
+  PROP_FADE_LENGTH,
+  PROP_FADE_UNIT,
+  PROP_USE_GRADIENT,
+  PROP_GRADIENT_LENGTH,
+  PROP_GRADIENT_UNIT,
+  PROP_GRADIENT_TYPE
+};
 
 
 static void   gimp_paint_options_init       (GimpPaintOptions      *options);
 static void   gimp_paint_options_class_init (GimpPaintOptionsClass *options_class);
 
-static GimpPressureOptions * gimp_pressure_options_new (void);
-static GimpGradientOptions * gimp_gradient_options_new (void);
+static void   gimp_paint_options_set_property (GObject         *object,
+                                               guint            property_id,
+                                               const GValue    *value,
+                                               GParamSpec      *pspec);
+static void   gimp_paint_options_get_property (GObject         *object,
+                                               guint            property_id,
+                                               GValue          *value,
+                                               GParamSpec      *pspec);
+static void   gimp_paint_options_notify       (GObject         *object,
+                                               GParamSpec      *pspec);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -83,16 +116,239 @@ gimp_paint_options_get_type (void)
 static void 
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_paint_options_set_property;
+  object_class->get_property = gimp_paint_options_get_property;
+  object_class->notify       = gimp_paint_options_notify;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INCREMENTAL,
+                                    "incremental", NULL,
+                                    DEFAULT_INCREMENTAL,
+                                    0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
+                                    "pressure-opacity", NULL,
+                                    DEFAULT_PRESSURE_OPACITY,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_PRESSURE,
+                                    "pressure-pressure", NULL,
+                                    DEFAULT_PRESSURE_PRESSURE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_RATE,
+                                    "pressure-rate", NULL,
+                                    DEFAULT_PRESSURE_RATE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_SIZE,
+                                    "pressure-size", NULL,
+                                    DEFAULT_PRESSURE_SIZE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_COLOR,
+                                    "pressure-color", NULL,
+                                    DEFAULT_PRESSURE_COLOR,
+                                    0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
+                                    "use-fade", NULL,
+                                    DEFAULT_USE_FADE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
+                                   "fade-length", NULL,
+                                   1e-5, 32767.0, DEFAULT_FADE_LENGTH,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
+                                 "fade-unit", NULL,
+                                 TRUE, DEFAULT_FADE_UNIT,
+                                 0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
+                                    "use-gradient", NULL,
+                                    DEFAULT_USE_GRADIENT, 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRADIENT_LENGTH,
+                                   "gradient-length", NULL,
+                                   1e-5, 32767.0, DEFAULT_GRADIENT_LENGTH,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_GRADIENT_UNIT,
+                                 "gradient-unit", NULL,
+                                 TRUE, DEFAULT_GRADIENT_UNIT,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
+                                 "gradient-type", NULL,
+                                 GIMP_TYPE_GRADIENT_PAINT_MODE,
+                                 DEFAULT_GRADIENT_TYPE,
+                                 0);
 }
 
 static void
 gimp_paint_options_init (GimpPaintOptions *options)
 {
-  options->incremental      = options->incremental_d = DEFAULT_INCREMENTAL;
   options->incremental_save = DEFAULT_INCREMENTAL;
 
-  options->pressure_options = gimp_pressure_options_new ();
-  options->gradient_options = gimp_gradient_options_new ();
+  options->pressure_options = g_new0 (GimpPressureOptions, 1);
+  options->gradient_options = g_new0 (GimpGradientOptions, 1);
+}
+
+static void
+gimp_paint_options_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpPaintOptions    *options;
+  GimpPressureOptions *pressure_options;
+  GimpGradientOptions *gradient_options;
+
+  options = GIMP_PAINT_OPTIONS (object);
+
+  pressure_options = options->pressure_options;
+  gradient_options = options->gradient_options;
+
+  switch (property_id)
+    {
+    case PROP_INCREMENTAL:
+      options->incremental = g_value_get_boolean (value);
+      break;
+
+    case PROP_PRESSURE_OPACITY:
+      pressure_options->opacity = g_value_get_boolean (value);
+      break;
+    case PROP_PRESSURE_PRESSURE:
+      pressure_options->pressure = g_value_get_boolean (value);
+      break;
+    case PROP_PRESSURE_RATE:
+      pressure_options->rate = g_value_get_boolean (value);
+      break;
+    case PROP_PRESSURE_SIZE:
+      pressure_options->size = g_value_get_boolean (value);
+      break;
+    case PROP_PRESSURE_COLOR:
+      pressure_options->color = g_value_get_boolean (value);
+      break;
+
+    case PROP_USE_FADE:
+      gradient_options->use_fade = g_value_get_boolean (value);
+      break;
+    case PROP_FADE_LENGTH:
+      gradient_options->fade_length = g_value_get_double (value);
+      break;
+    case PROP_FADE_UNIT:
+      gradient_options->fade_unit = g_value_get_int (value);
+      break;
+
+    case PROP_USE_GRADIENT:
+      gradient_options->use_gradient = g_value_get_boolean (value);
+      break;
+    case PROP_GRADIENT_LENGTH:
+      gradient_options->gradient_length = g_value_get_double (value);
+      break;
+    case PROP_GRADIENT_UNIT:
+      gradient_options->gradient_unit = g_value_get_int (value);
+      break;
+    case PROP_GRADIENT_TYPE:
+      gradient_options->gradient_type = g_value_get_enum (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_paint_options_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpPaintOptions    *options;
+  GimpPressureOptions *pressure_options;
+  GimpGradientOptions *gradient_options;
+
+  options = GIMP_PAINT_OPTIONS (object);
+
+  pressure_options = options->pressure_options;
+  gradient_options = options->gradient_options;
+
+  switch (property_id)
+    {
+    case PROP_INCREMENTAL:
+      g_value_set_boolean (value, options->incremental);
+      break;
+
+    case PROP_PRESSURE_OPACITY:
+      g_value_set_boolean (value, pressure_options->opacity);
+      break;
+    case PROP_PRESSURE_PRESSURE:
+      g_value_set_boolean (value, pressure_options->pressure);
+      break;
+    case PROP_PRESSURE_RATE:
+      g_value_set_boolean (value, pressure_options->rate);
+      break;
+    case PROP_PRESSURE_SIZE:
+      g_value_set_boolean (value, pressure_options->size);
+      break;
+    case PROP_PRESSURE_COLOR:
+      g_value_set_boolean (value, pressure_options->color);
+      break;
+
+    case PROP_USE_FADE:
+      g_value_set_boolean (value, gradient_options->use_fade);
+      break;
+    case PROP_FADE_LENGTH:
+      g_value_set_double (value, gradient_options->fade_length);
+      break;
+    case PROP_FADE_UNIT:
+      g_value_set_int (value, gradient_options->fade_unit);
+      break;
+
+    case PROP_USE_GRADIENT:
+      g_value_set_boolean (value, gradient_options->use_gradient);
+      break;
+    case PROP_GRADIENT_LENGTH:
+      g_value_set_double (value, gradient_options->gradient_length);
+      break;
+    case PROP_GRADIENT_UNIT:
+      g_value_set_int (value, gradient_options->gradient_unit);
+      break;
+    case PROP_GRADIENT_TYPE:
+      g_value_set_enum (value, gradient_options->gradient_type);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_paint_options_notify (GObject    *object,
+                           GParamSpec *pspec)
+{
+  GimpPaintOptions *options;
+
+  options = GIMP_PAINT_OPTIONS (object);
+
+  if (pspec->param_id == PROP_USE_GRADIENT)
+    {
+      if (options->gradient_options->use_gradient)
+        {
+          options->incremental_save = options->incremental;
+          options->incremental      = TRUE;
+        }
+      else
+        {
+          options->incremental = options->incremental_save;
+        }
+
+      g_object_notify (object, "incremental");
+    }
+
+  if (G_OBJECT_CLASS (parent_class)->notify)
+    G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 }
 
 GimpPaintOptions *
@@ -110,55 +366,4 @@ gimp_paint_options_new (Gimp  *gimp,
                           NULL);
 
   return options;
-}
-
-
-/*  private functions  */
-
-static GimpPressureOptions *
-gimp_pressure_options_new (void)
-{
-  GimpPressureOptions *pressure;
-
-  pressure = g_new0 (GimpPressureOptions, 1);
-
-  pressure->opacity  = pressure->opacity_d  = DEFAULT_OPACITY;
-  pressure->pressure = pressure->pressure_d = DEFAULT_PRESSURE;
-  pressure->rate     = pressure->rate_d     = DEFAULT_RATE;
-  pressure->size     = pressure->size_d     = DEFAULT_SIZE;
-  pressure->color    = pressure->color_d    = DEFAULT_COLOR;
-
-  pressure->opacity_w  = NULL;
-  pressure->pressure_w = NULL;
-  pressure->rate_w     = NULL;
-  pressure->size_w     = NULL;
-  pressure->color_w    = NULL;
-
-  return pressure;
-}
-
-static GimpGradientOptions *
-gimp_gradient_options_new (void)
-{
-  GimpGradientOptions *gradient;
-
-  gradient = g_new0 (GimpGradientOptions, 1);
-
-  gradient->use_fade        = gradient->use_fade_d        = DEFAULT_USE_FADE;
-  gradient->fade_out        = gradient->fade_out_d        = DEFAULT_FADE_OUT;
-  gradient->fade_unit       = gradient->fade_unit_d       = DEFAULT_FADE_UNIT;
-  gradient->use_gradient    = gradient->use_gradient_d    = DEFAULT_USE_GRADIENT;
-  gradient->gradient_length = gradient->gradient_length_d = DEFAULT_GRADIENT_LENGTH;
-  gradient->gradient_unit   = gradient->gradient_unit_d   = DEFAULT_GRADIENT_UNIT;
-  gradient->gradient_type   = gradient->gradient_type_d   = DEFAULT_GRADIENT_TYPE;
-
-  gradient->use_fade_w        = NULL;
-  gradient->fade_out_w        = NULL;
-  gradient->fade_unit_w       = NULL;
-  gradient->use_gradient_w    = NULL;
-  gradient->gradient_length_w = NULL;
-  gradient->gradient_unit_w   = NULL;
-  gradient->gradient_type_w   = NULL;
-
-  return gradient;
 }

@@ -35,12 +35,11 @@ typedef struct _GimpToolOptionsClass GimpToolOptionsClass;
 
 struct _GimpToolOptions
 {
-  GimpContext               parent_instance;
+  GimpContext   parent_instance;
 
-  GimpToolInfo             *tool_info;
+  GimpToolInfo *tool_info;
 
-  GtkWidget                *main_vbox;
-  GimpToolOptionsResetFunc  reset_func;
+  gpointer      main_vbox;
 };
 
 struct _GimpToolOptionsClass

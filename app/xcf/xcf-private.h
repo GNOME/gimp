@@ -57,6 +57,12 @@ typedef enum
   COMPRESS_FRACTAL           =  3   /* unused */
 } XcfCompressionType;
 
+typedef enum
+{
+  XCF_ORIENTATION_HORIZONTAL = 1,
+  XCF_ORIENTATION_VERTICAL   = 2
+} XcfOrientationType;
+
 
 typedef struct _XcfInfo  XcfInfo;
 

@@ -29,7 +29,7 @@
 #include "procedural_db.h"
 
 #include "config/gimpcoreconfig.h"
-#include "core/core-types.h"
+#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpdrawable-transform.h"
@@ -69,15 +69,11 @@ flip_invoker (Gimp     *gimp,
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
-  if (flip_type < HORIZONTAL || flip_type > VERTICAL)
+  if (flip_type < GIMP_HORIZONTAL || flip_type > GIMP_VERTICAL)
     success = FALSE;
 
   if (success)
     {
-      flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
-		  flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
-		  ORIENTATION_UNKNOWN;
-    
       success = gimp_drawable_transform_flip (drawable, flip_type);
     }
 
@@ -99,7 +95,7 @@ static ProcArg flip_inargs[] =
   {
     GIMP_PDB_INT32,
     "flip_type",
-    "Type of flip: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of flip: GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_"
   }
 };
 
@@ -523,7 +519,7 @@ shear_invoker (Gimp     *gimp,
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
 
   shear_type = args[2].value.pdb_int;
-  if (shear_type < HORIZONTAL || shear_type > VERTICAL)
+  if (shear_type < GIMP_HORIZONTAL || shear_type > GIMP_VERTICAL)
     success = FALSE;
 
   magnitude = args[3].value.pdb_float;
@@ -531,10 +527,6 @@ shear_invoker (Gimp     *gimp,
   if (success)
     {
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-    
-      shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
-		   shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
-		   ORIENTATION_UNKNOWN;
     
       /* Assemble the transformation matrix */
       gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,
@@ -578,7 +570,7 @@ static ProcArg shear_inargs[] =
   {
     GIMP_PDB_INT32,
     "shear_type",
-    "Type of shear: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of shear: GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_"
   },
   {
     GIMP_PDB_FLOAT,

@@ -24,21 +24,39 @@
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
+#include "config/gimpconfig-params.h"
 
-#include "widgets/gimppaletteeditor.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimpcolorpickeroptions.h"
 
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_SAMPLE_MERGED,
+  PROP_SAMPLE_AVERAGE,
+  PROP_AVERAGE_RADIUS,
+  PROP_UPDATE_ACTIVE
+};
+
+
 static void   gimp_color_picker_options_init       (GimpColorPickerOptions      *options);
 static void   gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *options_class);
 
-static void   gimp_color_picker_options_reset      (GimpToolOptions *tool_options);
+static void   gimp_color_picker_options_set_property (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void   gimp_color_picker_options_get_property (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -72,43 +90,116 @@ gimp_color_picker_options_get_type (void)
 static void 
 gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_color_picker_options_set_property;
+  object_class->get_property = gimp_color_picker_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                                    "sample-merged", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
+                                    "sample-average", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
+                                   "average-radius", NULL,
+                                   1.0, 15.0, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_UPDATE_ACTIVE,
+                                    "update-active", NULL,
+                                    TRUE,
+                                    0);
 }
 
 static void
 gimp_color_picker_options_init (GimpColorPickerOptions *options)
 {
-  options->sample_merged  = options->sample_merged_d  = FALSE;
-  options->sample_average = options->sample_average_d = FALSE;
-  options->average_radius = options->average_radius_d = 1.0;
-  options->update_active  = options->update_active_d  = TRUE;
+}
+
+static void
+gimp_color_picker_options_set_property (GObject      *object,
+                                        guint         property_id,
+                                        const GValue *value,
+                                        GParamSpec   *pspec)
+{
+  GimpColorPickerOptions *options;
+
+  options = GIMP_COLOR_PICKER_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
+    case PROP_SAMPLE_AVERAGE:
+      options->sample_average = g_value_get_boolean (value);
+      break;
+    case PROP_AVERAGE_RADIUS:
+      options->average_radius = g_value_get_double (value);
+      break;
+    case PROP_UPDATE_ACTIVE:
+      options->update_active = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_picker_options_get_property (GObject    *object,
+                                        guint       property_id,
+                                        GValue     *value,
+                                        GParamSpec *pspec)
+{
+  GimpColorPickerOptions *options;
+
+  options = GIMP_COLOR_PICKER_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
+      break;
+    case PROP_SAMPLE_AVERAGE:
+      g_value_set_boolean (value, options->sample_average);
+      break;
+    case PROP_AVERAGE_RADIUS:
+      g_value_set_double (value, options->average_radius);
+      break;
+    case PROP_UPDATE_ACTIVE:
+      g_value_set_boolean (value, options->update_active);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 void
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GimpColorPickerOptions *options;
-  GtkWidget              *vbox;
-  GtkWidget              *frame;
-  GtkWidget              *table;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *button;
 
-  options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_color_picker_options_reset;
-
-  /*  the main vbox  */
-  vbox = GIMP_TOOL_OPTIONS (options)->main_vbox;
+  vbox = tool_options->main_vbox;
 
   /*  the sample merged toggle button  */
-  options->sample_merged_w =
-    gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged);
-  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->sample_merged_w);
-
-  g_signal_connect (options->sample_merged_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_merged);
+  button = gimp_prop_check_button_new (config, "sample-merged",
+                                       _("Sample Merged"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the sample average options  */
   frame = gtk_frame_new (NULL);
@@ -122,59 +213,24 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  options->sample_average_w =
-    gtk_check_button_new_with_label (_("Sample Average"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), options->sample_average_w);
-  gtk_widget_show (options->sample_average_w);
+  button = gimp_prop_check_button_new (config, "sample-average",
+                                       _("Sample Average"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+  gtk_widget_show (button);
 
-  g_signal_connect (options->sample_average_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_average);
+  gtk_widget_set_sensitive (table,
+                            GIMP_COLOR_PICKER_OPTIONS (config)->sample_average);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
 
-  gtk_widget_set_sensitive (table, options->sample_average);
-  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
-		     table);
-
-  options->average_radius_w =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Radius:"), -1, -1,
-			  options->average_radius,
-			  1.0, 15.0, 1.0, 3.0, 0,
-			  TRUE, 0.0, 0.0,
-			  NULL, NULL);
-
-  g_signal_connect (options->average_radius_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->average_radius);
+  gimp_prop_scale_entry_new (config, "average-radius",
+                             GTK_TABLE (table), 0, 0,
+                             _("Radius:"),
+                             1.0, 3.0, 0,
+                             FALSE, 0.0, 0.0);
 
   /*  the update active color toggle button  */
-  options->update_active_w =
-    gtk_check_button_new_with_label (_("Update Active Color"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active);
-  gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->update_active_w);
-
-  g_signal_connect (options->update_active_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->update_active);
-}
-
-static void
-gimp_color_picker_options_reset (GimpToolOptions *tool_options)
-{
-  GimpColorPickerOptions *options;
-
-  options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
-			    options->average_radius_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active_d);
+  button = gimp_prop_check_button_new (config, "update-active",
+                                       _("Update Active Color"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 }

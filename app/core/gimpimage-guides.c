@@ -46,7 +46,7 @@ gimp_image_add_hguide (GimpImage *gimage)
   guide->ref_count   = 0;
   guide->position    = -1;
   guide->guide_ID    = gimage->gimp->next_guide_ID++;
-  guide->orientation = ORIENTATION_HORIZONTAL;
+  guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
 
@@ -65,7 +65,7 @@ gimp_image_add_vguide (GimpImage *gimage)
   guide->ref_count   = 0;
   guide->position    = -1;
   guide->guide_ID    = gimage->gimp->next_guide_ID++;
-  guide->orientation = ORIENTATION_VERTICAL;
+  guide->orientation = GIMP_ORIENTATION_VERTICAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
 
@@ -130,12 +130,12 @@ gimp_image_find_guide (GimpImage *gimage,
 
       switch (guide->orientation)
         {
-        case ORIENTATION_HORIZONTAL:
+        case GIMP_ORIENTATION_HORIZONTAL:
           if (ABS (guide->position - y) < GUIDE_EPSILON)
             return guide;
           break;
 
-        case ORIENTATION_VERTICAL:
+        case GIMP_ORIENTATION_VERTICAL:
           if (ABS (guide->position - x) < GUIDE_EPSILON)
             return guide;
           break;
@@ -183,7 +183,7 @@ gimp_image_snap_point (GimpImage *gimage,
 
       switch (guide->orientation)
         {
-        case ORIENTATION_HORIZONTAL:
+        case GIMP_ORIENTATION_HORIZONTAL:
           dist = ABS (guide->position - y);
 
           if (dist < MIN (GUIDE_EPSILON, minydist))
@@ -194,7 +194,7 @@ gimp_image_snap_point (GimpImage *gimage,
             }
           break;
 
-        case ORIENTATION_VERTICAL:
+        case GIMP_ORIENTATION_VERTICAL:
           dist = ABS (guide->position - x);
 
           if (dist < MIN (GUIDE_EPSILON, minxdist))

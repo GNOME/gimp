@@ -37,8 +37,6 @@
 static void   gimp_vector_options_init       (GimpVectorOptions      *options);
 static void   gimp_vector_options_class_init (GimpVectorOptionsClass *options_class);
 
-static void   gimp_vector_options_reset      (GimpToolOptions *tool_options);
-
 
 GType
 gimp_vector_options_get_type (void)
@@ -88,17 +86,5 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 
   gimp_selection_options_gui (tool_options);
 
-  tool_options->reset_func = gimp_vector_options_reset;
-
   vbox = tool_options->main_vbox;
-}
-
-static void
-gimp_vector_options_reset (GimpToolOptions *tool_options)
-{
-  GimpVectorOptions *options;
-
-  options = GIMP_VECTOR_OPTIONS (tool_options);
-
-  gimp_selection_options_reset (tool_options);
 }

@@ -29,6 +29,8 @@
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
 
@@ -39,7 +41,6 @@ static void   gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass);
 static void   gimp_smudge_tool_init       (GimpSmudgeTool      *tool);
 
 static void   gimp_smudge_options_gui     (GimpToolOptions     *tool_options);
-static void   gimp_smudge_options_reset   (GimpToolOptions     *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -123,15 +124,13 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 static void
 gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
-  GimpSmudgeOptions *options;
-  GtkWidget         *vbox;
-  GtkWidget         *table;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
 
-  options = GIMP_SMUDGE_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
-
-  tool_options->reset_func = gimp_smudge_options_reset;
 
   vbox = tool_options->main_vbox;
 
@@ -141,26 +140,9 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                          _("Rate:"), -1, -1,
-                                          options->rate,
-                                          0.0, 100.0, 1.0, 10.0, 1,
-                                          TRUE, 0.0, 0.0,
-                                          NULL, NULL);
-
-  g_signal_connect (options->rate_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->rate);
-}
-
-static void
-gimp_smudge_options_reset (GimpToolOptions *tool_options)
-{
-  GimpSmudgeOptions *options;
-
-  options = GIMP_SMUDGE_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
+  gimp_prop_scale_entry_new (config, "rate",
+                             GTK_TABLE (table), 0, 0,
+                             _("Rate:"),
+                             1.0, 10.0, 1,
+                             FALSE, 0.0, 0.0);
 }

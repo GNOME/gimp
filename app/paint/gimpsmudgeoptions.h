@@ -39,8 +39,6 @@ struct _GimpSmudgeOptions
   GimpPaintOptions  paint_options;
 
   gdouble           rate;
-  gdouble           rate_d;
-  GtkObject        *rate_w;
 };
 
 

@@ -1092,11 +1092,11 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
 
   switch (guide->orientation)
     {
-    case ORIENTATION_HORIZONTAL:
+    case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_add_expose_area (shell, 0, y, shell->disp_width, 1);
       break;
 
-    case ORIENTATION_VERTICAL:
+    case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_add_expose_area (shell, x, 0, 1, shell->disp_height);
       break;
 
@@ -1395,7 +1395,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
   if (x2 > w) x2 = w;
   if (y2 > h) y2 = h;
 
-  if (guide->orientation == ORIENTATION_HORIZONTAL)
+  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
     {
       gimp_display_shell_transform_xy (shell,
                                        0, guide->position, &x, &y, FALSE);
@@ -1405,7 +1405,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
       else
 	gdk_draw_line (shell->canvas->window, normal_hgc, x1, y, x2, y);
     }
-  else if (guide->orientation == ORIENTATION_VERTICAL)
+  else if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
     {
       gimp_display_shell_transform_xy (shell,
                                        guide->position, 0, &x, &y, FALSE);

@@ -231,13 +231,17 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
       switch (options->fill_mode)
         {
         case GIMP_FG_BUCKET_FILL:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
-                                       GINT_TO_POINTER (GIMP_BG_BUCKET_FILL));
+          g_object_set (G_OBJECT (options),
+                        "fill-mode", GIMP_BG_BUCKET_FILL,
+                        NULL);
           break;
+
         case GIMP_BG_BUCKET_FILL:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
-                                       GINT_TO_POINTER (GIMP_FG_BUCKET_FILL));
+          g_object_set (G_OBJECT (options),
+                        "fill-mode", GIMP_FG_BUCKET_FILL,
+                        NULL);
           break;
+
         default:
           break;
         }

@@ -71,10 +71,10 @@
 
 struct _GimpGuide
 {
-  gint                     ref_count;
-  gint                     position;
-  InternalOrientationType  orientation;
-  guint32                  guide_ID;
+  gint                 ref_count;
+  gint                 position;
+  GimpOrientationType  orientation;
+  guint32              guide_ID;
 };
 
 

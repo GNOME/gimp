@@ -350,8 +350,9 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2.0;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w), 
-			    fuzzy_sel->first_threshold + diff);
+  g_object_set (G_OBJECT (options),
+                "threshold", fuzzy_sel->first_threshold + diff,
+                NULL);
 
   /*  calculate the new fuzzy boundary  */
   new_segs = gimp_fuzzy_select_tool_calculate (fuzzy_sel, gdisp, &num_new_segs);

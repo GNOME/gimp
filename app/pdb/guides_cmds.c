@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-types.h"
+#include "core/core-enums.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage.h"
 #include "undo.h"
@@ -458,7 +458,7 @@ static ProcArg image_get_guide_orientation_outargs[] =
   {
     GIMP_PDB_INT32,
     "orientation",
-    "The guide's orientation: { HORIZONTAL (0), VERTICAL (1) }"
+    "The guide's orientation: { GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_ }"
   }
 };
 

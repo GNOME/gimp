@@ -40,6 +40,22 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
+
+GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_VERTICAL,   /*< desc="Vertical"   >*/
+  GIMP_UNKNOWN     /*< desc="Unknown"    >*/
+} GimpOrientationType;
+
+#define GIMP_ORIENTATION_HORIZONTAL GIMP_HORIZONTAL
+#define GIMP_ORIENTATION_VERTICAL   GIMP_VERTICAL
+#define GIMP_ORIENTATION_UNKNOWN    GIMP_UNKNOWN
+
+
 #define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
 
 GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
@@ -242,17 +258,22 @@ typedef enum  /*< pdb-skip >*/
 } GimpTransformDirection;
 
 
+#define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
+
+GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< proxy-resume >*/
+{
+  GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
+  GIMP_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
+  GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
+  GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
+} GimpChannelOps;
+
+
 /*
  * non-registered enums; register them if needed
  */
-
-typedef enum  /*< proxy-resume >*/ /*< skip >*/
-{
-  GIMP_CHANNEL_OP_ADD,
-  GIMP_CHANNEL_OP_SUBTRACT,
-  GIMP_CHANNEL_OP_REPLACE,
-  GIMP_CHANNEL_OP_INTERSECT
-} GimpChannelOps;
 
 typedef enum  /*< proxy-skip >*/ /*< skip >*/
 {

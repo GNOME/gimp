@@ -24,12 +24,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-params.h"
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmagnifyoptions.h"
@@ -37,10 +38,31 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_ALLOW_RESIZE,
+  PROP_ZOOM_TYPE,
+  PROP_THRESHOLD
+};
+
+
 static void   gimp_magnify_options_init       (GimpMagnifyOptions      *options);
 static void   gimp_magnify_options_class_init (GimpMagnifyOptionsClass *options_class);
 
-static void   gimp_magnify_options_reset      (GimpToolOptions *tool_options);
+static void   gimp_magnify_options_set_property (GObject         *object,
+                                                 guint            property_id,
+                                                 const GValue    *value,
+                                                 GParamSpec      *pspec);
+static void   gimp_magnify_options_get_property (GObject         *object,
+                                                 guint            property_id,
+                                                 GValue          *value,
+                                                 GParamSpec      *pspec);
+
+static void   gimp_magnify_options_reset        (GimpToolOptions *tool_options);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -74,59 +96,135 @@ gimp_magnify_options_get_type (void)
 static void 
 gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_magnify_options_set_property;
+  object_class->get_property = gimp_magnify_options_get_property;
+
+  options_class->reset       = gimp_magnify_options_reset;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_RESIZE,
+                                    "allow-resize", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
+                                 "zoom-type", NULL,
+                                 GIMP_TYPE_ZOOM_TYPE,
+                                 GIMP_ZOOM_IN,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                                   "threshold", NULL,
+                                   1.0, 15.0, 5.0,
+                                   0);
 }
 
 static void
 gimp_magnify_options_init (GimpMagnifyOptions *options)
 {
-  options->type_d       = options->type      = GIMP_ZOOM_IN;
-  options->threshold_d  = options->threshold = 5;
+}
+
+static void
+gimp_magnify_options_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpMagnifyOptions *options;
+
+  options = GIMP_MAGNIFY_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_ALLOW_RESIZE:
+      options->allow_resize = g_value_get_boolean (value);
+      break;
+    case PROP_ZOOM_TYPE:
+      options->zoom_type = g_value_get_enum (value);
+      break;
+    case PROP_THRESHOLD:
+      options->threshold = g_value_get_double (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_magnify_options_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpMagnifyOptions *options;
+
+  options = GIMP_MAGNIFY_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_ALLOW_RESIZE:
+      g_value_set_boolean (value, options->allow_resize);
+      break;
+    case PROP_ZOOM_TYPE:
+      g_value_set_enum (value, options->zoom_type);
+      break;
+    case PROP_THRESHOLD:
+      g_value_set_double (value, options->threshold);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_magnify_options_reset (GimpToolOptions *tool_options)
+{
+  GParamSpec *pspec;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+                                        "allow-resize");
+
+  if (pspec)
+    {
+      G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
+        GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
+    }
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 void
 gimp_magnify_options_gui (GimpToolOptions *tool_options)
 {
-  GimpMagnifyOptions *options;
-  GtkWidget          *vbox;
-  GtkWidget          *frame;
-  GtkWidget          *table;
-  gchar              *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *button;
+  gchar     *str;
 
-  options = GIMP_MAGNIFY_OPTIONS (tool_options);
-
-  tool_options->reset_func = gimp_magnify_options_reset;
-
-  options->allow_resize =
-    GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
-  options->type_d       = options->type      = GIMP_ZOOM_IN;
-  options->threshold_d  = options->threshold = 5;
+  config = G_OBJECT (tool_options);
 
   vbox = tool_options->main_vbox;
 
   /*  the allow_resize toggle button  */
-  options->allow_resize_w =
-    gtk_check_button_new_with_label (_("Allow Window Resizing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				options->allow_resize);
-  gtk_box_pack_start (GTK_BOX (vbox),  options->allow_resize_w,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_resize_w);
-
-  g_signal_connect (options->allow_resize_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->allow_resize);
+  button = gimp_prop_check_button_new (config, "allow-resize",
+                                       _("Allow Window Resizing"));
+  gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_ZOOM_TYPE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
+  frame = gimp_prop_enum_radio_frame_new (config, "zoom-type",
+                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -138,31 +236,11 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					       _("Threshold:"), -1, -1,
-					       options->threshold,
-					       1.0, 15.0, 1.0, 3.0, 1,
-					       TRUE, 0.0, 0.0,
-					       NULL, NULL);
+  gimp_prop_scale_entry_new (config, "threshold",
+                             GTK_TABLE (table), 0, 0,
+                             _("Threshold:"),
+                             1.0, 3.0, 1,
+                             FALSE, 0.0, 0.0);
 
-  g_signal_connect (options->threshold_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->threshold);
-}
-
-static void
-gimp_magnify_options_reset (GimpToolOptions *tool_options)
-{
-  GimpMagnifyOptions *options;
-
-  options = GIMP_MAGNIFY_OPTIONS (tool_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    options->threshold_d);
+  gimp_magnify_options_reset (tool_options);
 }

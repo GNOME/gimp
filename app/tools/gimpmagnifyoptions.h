@@ -39,15 +39,8 @@ struct _GimpMagnifyOptions
   GimpToolOptions   parent_instance;
 
   gboolean          allow_resize;
-  GtkWidget        *allow_resize_w;
-
-  GimpZoomType      type;
-  GimpZoomType      type_d;
-  GtkWidget        *type_w;
-
+  GimpZoomType      zoom_type;
   gdouble           threshold;
-  gdouble           threshold_d;
-  GtkObject        *threshold_w;
 };
 
 

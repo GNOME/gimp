@@ -32,6 +32,11 @@ GtkWidget     * gimp_prop_boolean_option_menu_new (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *true_text,
                                                    const gchar *false_text);
+GtkWidget     * gimp_prop_boolean_radio_frame_new (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *title,
+                                                   const gchar *true_text,
+                                                   const gchar *false_text);
 
 
 /*  GParamEnum  */
@@ -40,7 +45,15 @@ GtkWidget     * gimp_prop_enum_option_menu_new    (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         minimum,
                                                    gint         maximum);
+GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gboolean     with_behind_mode);
 
+GtkWidget     * gimp_prop_enum_radio_frame_new    (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *title,
+                                                   gint         minimum,
+                                                   gint         maximum);
 GtkWidget     * gimp_prop_enum_stock_box_new      (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *stock_prefix,
@@ -55,6 +68,19 @@ GtkWidget     * gimp_prop_spin_button_new         (GObject     *config,
                                                    gdouble      step_increment,
                                                    gdouble      page_increment,
                                                    gint         digits);
+
+GtkObject     * gimp_prop_scale_entry_new         (GObject     *config,
+                                                   const gchar *property_name,
+                                                   GtkTable    *table,
+                                                   gint         column,
+                                                   gint         row,
+                                                   const gchar *label,
+                                                   gdouble      step_increment,
+                                                   gdouble      page_increment,
+                                                   gint         digits,
+                                                   gboolean     restrict_scale,
+                                                   gdouble      restricted_lower,
+                                                   gdouble      restricted_upper);
 
 
 /*  GimpParamMemsize  */

@@ -24,11 +24,9 @@
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
+#include "config/gimpconfig-params.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcropoptions.h"
@@ -36,10 +34,29 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_LAYER_ONLY,
+  PROP_ALLOW_ENLARGE,
+  PROP_CROP_TYPE
+};
+
+
 static void   gimp_crop_options_init       (GimpCropOptions      *options);
 static void   gimp_crop_options_class_init (GimpCropOptionsClass *options_class);
 
-static void   gimp_crop_options_reset      (GimpToolOptions *tool_options);
+static void   gimp_crop_options_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void   gimp_crop_options_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -73,89 +90,124 @@ gimp_crop_options_get_type (void)
 static void 
 gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_crop_options_set_property;
+  object_class->get_property = gimp_crop_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
+                                    "layer-only", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_ENLARGE,
+                                    "allow-enlarge", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_TYPE,
+                                 "crop-type", NULL,
+                                 GIMP_TYPE_CROP_TYPE,
+                                 GIMP_CROP,
+                                 0);
 }
 
 static void
 gimp_crop_options_init (GimpCropOptions *options)
 {
-  options->layer_only    = options->layer_only_d    = FALSE;
-  options->allow_enlarge = options->allow_enlarge_d = FALSE;
-  options->type          = options->type_d          = GIMP_CROP;
+}
+
+static void
+gimp_crop_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpCropOptions *options;
+
+  options = GIMP_CROP_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_LAYER_ONLY:
+      options->layer_only = g_value_get_boolean (value);
+      break;
+    case PROP_ALLOW_ENLARGE:
+      options->allow_enlarge = g_value_get_boolean (value);
+      break;
+    case PROP_CROP_TYPE:
+      options->crop_type = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_crop_options_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpCropOptions *options;
+
+  options = GIMP_CROP_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_LAYER_ONLY:
+      g_value_set_boolean (value, options->layer_only);
+      break;
+    case PROP_ALLOW_ENLARGE:
+      g_value_set_boolean (value, options->allow_enlarge);
+      break;
+    case PROP_CROP_TYPE:
+      g_value_set_enum (value, options->crop_type);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 void
 gimp_crop_options_gui (GimpToolOptions *tool_options)
 {
-  GimpCropOptions *options;
-  GtkWidget       *vbox;
-  GtkWidget       *frame;
-  gchar           *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *button;
+  gchar     *str;
 
-  options = GIMP_CROP_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_crop_options_reset;
-
-  /*  the main vbox  */
-  vbox = GIMP_TOOL_OPTIONS (options)->main_vbox;
+  vbox = tool_options->main_vbox;
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CROP_TYPE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
+  frame = gimp_prop_enum_radio_frame_new (config, "crop-type",
+                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   g_free (str);
 
   /*  layer toggle  */
-  options->layer_only_w =
-    gtk_check_button_new_with_label (_("Current Layer only"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only);
-  gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->layer_only_w);
-
-  g_signal_connect (options->layer_only_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->layer_only);
+  button = gimp_prop_check_button_new (config, "layer-only",
+                                       _("Current Layer only"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  enlarge toggle  */
   str = g_strdup_printf (_("Allow Enlarging  %s"), gimp_get_mod_name_alt ());
 
-  options->allow_enlarge_w = gtk_check_button_new_with_label (str);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
-				options->allow_enlarge);
-  gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_enlarge_w);
+  button = gimp_prop_check_button_new (config, "allow-enlarge", str);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   g_free (str);
-
-  g_signal_connect (options->allow_enlarge_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->allow_enlarge);
-}
-
-static void
-gimp_crop_options_reset (GimpToolOptions *tool_options)
-{
-  GimpCropOptions *options;
-
-  options = GIMP_CROP_OPTIONS (tool_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->allow_enlarge_w),
-				options->allow_enlarge_d);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
 }

@@ -39,16 +39,8 @@ struct _GimpDodgeBurnOptions
   GimpPaintOptions   paint_options;
 
   GimpDodgeBurnType  type;
-  GimpDodgeBurnType  type_d;
-  GtkWidget         *type_w;
-
   GimpTransferMode   mode;     /*highlights, midtones, shadows*/
-  GimpTransferMode   mode_d;
-  GtkWidget         *mode_w;
-
   gdouble            exposure;
-  gdouble            exposure_d;
-  GtkObject         *exposure_w;
 };
 
 

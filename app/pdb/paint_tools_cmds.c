@@ -320,8 +320,11 @@ clone_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
     
-      GIMP_CLONE_OPTIONS (options)->type = clone_type;
+      GIMP_CLONE_OPTIONS (options)->clone_type = clone_type;
     
+    #ifdef __GNUC__
+    #warning FIXME: re-enable clone src_drawable
+    #endif
     #if 0
       FIXME
     
@@ -1016,7 +1019,7 @@ paintbrush_invoker (Gimp     *gimp,
     
       options->incremental = method;
     
-      options->gradient_options->fade_out        = fade_out;
+      options->gradient_options->fade_length     = fade_out;
       options->gradient_options->gradient_length = gradient_length;
     
       success = paint_tools_stroke (gimp,

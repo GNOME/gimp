@@ -496,15 +496,17 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
-  if (key == GDK_CONTROL_MASK && options->constrain_1_w)
+  if (key == GDK_CONTROL_MASK)
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_1_w),
-                                    ! options->constrain_1);
+      g_object_set (G_OBJECT (options),
+                    "constrain-1", ! options->constrain_1,
+                    NULL);
     }
-  else if (key == GDK_MOD1_MASK && options->constrain_2_w)
+  else if (key == GDK_MOD1_MASK)
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_2_w),
-                                    ! options->constrain_2);
+      g_object_set (G_OBJECT (options),
+                    "constrain-2", ! options->constrain_2,
+                    NULL);
     }
 }
 
@@ -1013,8 +1015,8 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 
   switch (options->grid_type)
     {
-    case TRANSFORM_GRID_TYPE_N_LINES:
-    case TRANSFORM_GRID_TYPE_SPACING:
+    case GIMP_TRANSFORM_GRID_TYPE_N_LINES:
+    case GIMP_TRANSFORM_GRID_TYPE_SPACING:
       {
         GimpTool *tool;
         gint      i, gci;
@@ -1026,7 +1028,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 
         tool = GIMP_TOOL (tr_tool);
 
-        if (options->grid_type == TRANSFORM_GRID_TYPE_N_LINES)
+        if (options->grid_type == GIMP_TRANSFORM_GRID_TYPE_N_LINES)
           {
             if (width <= height)
               {
@@ -1039,7 +1041,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
                 tr_tool->ngx = tr_tool->ngy * MAX (1, width / height);
               }
           }
-        else /* TRANSFORM_GRID_TYPE_SPACING */
+        else /* GIMP_TRANSFORM_GRID_TYPE_SPACING */
           {
             gint grid_size = MAX (2, options->grid_size);
 

@@ -39,12 +39,7 @@ struct _GimpAirbrushOptions
   GimpPaintOptions  parent_instance;
 
   gdouble           rate;
-  gdouble           rate_d;
-  GtkObject        *rate_w;
-
   gdouble           pressure;
-  gdouble           pressure_d;
-  GtkObject        *pressure_w;
 };
 
 

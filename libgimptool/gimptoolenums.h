@@ -98,6 +98,18 @@ typedef enum /*< pdb-skip >*/
 } GimpRectSelectMode;
 
 
+#define GIMP_TYPE_TRANSFORM_GRID_TYPE (gimp_transform_grid_type_get_type ())
+
+GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_TRANSFORM_GRID_TYPE_NONE,     /*< desc="Don't Show Grid"      >*/
+  GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of Grid Lines" >*/
+  GIMP_TRANSFORM_GRID_TYPE_SPACING   /*< desc="Grid Line Spacing"    >*/
+} GimpTransformGridType;
+
+
 /*  Possible transform functions  */
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {

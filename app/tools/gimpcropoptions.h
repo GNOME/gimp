@@ -39,16 +39,8 @@ struct _GimpCropOptions
   GimpToolOptions  parent_instence;
 
   gboolean         layer_only;
-  gboolean         layer_only_d;
-  GtkWidget       *layer_only_w;
-
   gboolean         allow_enlarge;
-  gboolean         allow_enlarge_d;
-  GtkWidget       *allow_enlarge_w;
-
-  GimpCropType     type;
-  GimpCropType     type_d;
-  GtkWidget       *type_w;
+  GimpCropType     crop_type;
 };
 
 

@@ -1,3 +1,129 @@
+2003-02-07  Michael Natterer  <mitch@gimp.org>
+
+	Added object properties for almost all tool_options values
+	and registered lots of enums with the type system:
+
+	Part I (enum and type cleanup):
+
+	* app/core/core-enums.[ch]
+	* app/core/core-types.h: removed InternalOrientaionType and
+	register GimpOrientationType. Register GimpChannelOps.
+	Removed GimpToolOptionsGUIFunc.
+
+	* app/xcf/xcf-private.h: added XcfOrientationType with the
+	same values as the old InternalOrientationType
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: translate between GimpOrientationType and
+	XcfOrientationType.
+
+	* app/core/gimpdrawable-transform-utils.[ch]
+	* app/core/gimpdrawable-transform.[ch]
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.h
+	* app/display/gimpdisplayshell.c
+	* tools/pdbgen/stddefs.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordingly.
+
+	* app/pdb/guides_cmds.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpenums.h
+	* libgimpproxy/gimpproxytypes.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimptool/gimptoolenums.[ch]: added GimpTransformGridType.
+
+	* libgimptool/gimptooltypes.h: removed GimpToolOptionsResetFunc,
+	added GimpToolOptionsGUIFunc.
+
+	Part II (tool options changes):
+
+	* app/config/gimpconfig-utils.c (gimp_config_reset_properties):
+	don't reset object properties because they have NULL as default
+	value.
+
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_[enum|boolean]_radio_frame_new(),
+	gimp_prop_paint_mode_menu_new() and gimp_prop_scale_entry_new(),
+	which are all needed by the new tool options GUI code.
+
+	* app/tools/tool_options.[ch]: removed the "reset_func" since
+	the virtual reset() method is used now.
+
+	* app/paint/gimpairbrushoptions.[ch]
+	* app/paint/gimpcloneoptions.[ch]
+	* app/paint/gimpconvolveoptions.[ch]
+	* app/paint/gimpdodgeburnoptions.[ch]
+	* app/paint/gimperaseroptions.[ch]
+	* app/paint/gimppaintoptions.[ch]
+	* app/paint/gimpsmudgeoptions.[ch]: added properties all over the
+	place and removed the widget and default_value members from
+	the structs. Renamed some values (e.g. s/type/clone_type/).
+	Don't #include <gtk/gtk.h>.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/paint/paint-types.h
+	* app/paint/paint.c: changed accordingly. Don't #include <gtk/gtk.h>.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: changed accordingly.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+	* app/tools/gimpblendoptions.[ch]
+	* app/tools/gimpbucketfilloptions.[ch]
+	* app/tools/gimpcolorpickeroptions.[ch]
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpflipoptions.[ch]
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimpmagnifyoptions.[ch]
+	* app/tools/gimpmeasureoptions.[ch]
+	* app/tools/gimpmoveoptions.[ch]
+	* app/tools/gimptextoptions.c
+	* app/tools/paint_options.[ch]
+	* app/tools/selection_options.[ch]
+	* app/tools/transform_options.[ch]: ditto: added properties and
+	removed widget and default_value stuff. Removed most reset functions.
+	Use gimp_prop widgets all over the place, renamed some values
+	as above.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectoroptions.c: changed accordingly. Ported
+	the paint_options GUI constructors to gimp_prop widgets.
+
+	* app/widgets/gimpselectioneditor.c
+	* app/gui/tool-options-dialog.c: changed accordingly.
+
 2003-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayer.c

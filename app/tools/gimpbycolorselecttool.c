@@ -271,7 +271,7 @@ gimp_by_color_select_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      sel_tool->op = options->op;
+      sel_tool->op = options->operation;
     }
 }
 

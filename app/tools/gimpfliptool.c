@@ -169,16 +169,20 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      switch (options->type)
+      switch (options->flip_type)
         {
-        case ORIENTATION_HORIZONTAL:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (ORIENTATION_VERTICAL));
+        case GIMP_ORIENTATION_HORIZONTAL:
+          g_object_set (G_OBJECT (options),
+                        "flip-type", GIMP_ORIENTATION_VERTICAL,
+                        NULL);
           break;
-        case ORIENTATION_VERTICAL:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (ORIENTATION_HORIZONTAL));
+
+        case GIMP_ORIENTATION_VERTICAL:
+          g_object_set (G_OBJECT (options),
+                        "flip-type", GIMP_ORIENTATION_HORIZONTAL,
+                        NULL);
           break;
+
         default:
           break;
 	}
@@ -229,7 +233,7 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
     }
 
   gimp_tool_control_set_toggle (tool->control,
-                                (options->type == ORIENTATION_VERTICAL));
+                                options->flip_type == GIMP_ORIENTATION_VERTICAL);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -247,5 +251,5 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 
   return gimp_drawable_transform_tiles_flip (drawable,
                                              trans_tool->original, 
-                                             options->type);
+                                             options->flip_type);
 }

@@ -531,9 +531,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 }
 
 TileManager *
-gimp_drawable_transform_tiles_flip (GimpDrawable            *drawable,
-                                    TileManager             *orig,
-                                    InternalOrientationType  flip_type)
+gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
+                                    TileManager         *orig,
+                                    GimpOrientationType  flip_type)
 {
   TileManager *new;
   PixelRegion  srcPR, destPR;
@@ -554,7 +554,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable            *drawable,
   new = tile_manager_new (orig_width, orig_height, orig_bpp);
   tile_manager_set_offsets (new, orig_x, orig_y);
 
-  if (flip_type == ORIENTATION_HORIZONTAL)
+  if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
     {
       for (i = 0; i < orig_width; i++)
         {
@@ -583,7 +583,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable            *drawable,
   /* Note that the undo structures etc are setup before we enter this
    * function.
    */
-  if (flip_type == ORIENTATION_HORIZONTAL)
+  if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
     path_transform_flip_horz (gimage);
   else
     path_transform_flip_vert (gimage);
@@ -643,8 +643,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 }
 
 gboolean
-gimp_drawable_transform_flip (GimpDrawable            *drawable,
-                              InternalOrientationType  flip_type)
+gimp_drawable_transform_flip (GimpDrawable        *drawable,
+                              GimpOrientationType  flip_type)
 {
   GimpImage   *gimage;
   TileManager *float_tiles;

@@ -48,6 +48,9 @@ static void   gimp_text_options_class_init (GimpTextOptionsClass *options_class)
 static void   gimp_text_options_reset      (GimpToolOptions      *tool_options);
 
 
+static GimpToolOptionsClass *parent_class = NULL;
+
+
 GType
 gimp_text_options_get_type (void)
 {
@@ -79,6 +82,15 @@ gimp_text_options_get_type (void)
 static void 
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  options_class->reset = gimp_text_options_reset;
 }
 
 static void
@@ -91,6 +103,16 @@ gimp_text_options_init (GimpTextOptions *options)
   options->text = GIMP_TEXT (text);
 
   options->buffer = gimp_prop_text_buffer_new (text, "text", -1);
+}
+
+static void
+gimp_text_options_reset (GimpToolOptions *tool_options)
+{
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
+
+  gimp_config_reset (G_OBJECT (options->text));
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 void
@@ -107,8 +129,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gint             digits;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
-
-  tool_options->reset_func = gimp_text_options_reset;
 
   vbox = tool_options->main_vbox;
 
@@ -164,12 +184,4 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), 5,
                            _("Line\nSpacing:"), 0.0, spinbutton,
 			   GIMP_STOCK_LINE_SPACING);
-}
-
-static void
-gimp_text_options_reset (GimpToolOptions *tool_options)
-{
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
-
-  gimp_config_reset (G_OBJECT (options->text));
 }

@@ -386,7 +386,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
     {
       if (crop->function == CROPPING)
 	{
-	  if (options->type == GIMP_CROP)
+	  if (options->crop_type == GIMP_CROP)
 	    crop_tool_crop_image (gdisp->gimage,
 				  crop->x1, crop->y1,
                                   crop->x2, crop->y2, 
@@ -643,32 +643,30 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
   if (state & GDK_MOD1_MASK)
     {
       if (! options->allow_enlarge)
-        {
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->allow_enlarge_w), TRUE);
-        }
+        g_object_set (G_OBJECT (options), "allow-enlarge", TRUE, NULL);
     }
   else
     {
       if (options->allow_enlarge)
-        {
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->allow_enlarge_w), FALSE);
-        }
+        g_object_set (G_OBJECT (options), "allow-enlarge", FALSE, NULL);
     }
 
   if (key == GDK_CONTROL_MASK)
     {
-      switch (options->type)
+      switch (options->crop_type)
         {
         case GIMP_CROP:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_RESIZE));
+          g_object_set (G_OBJECT (options),
+                        "crop-type", GIMP_RESIZE,
+                        NULL);
           break;
+
         case GIMP_RESIZE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_CROP));
+          g_object_set (G_OBJECT (options),
+                        "crop-type", GIMP_CROP,
+                        NULL);
           break;
+
         default:
           break;
         }
@@ -738,9 +736,10 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
     }
 
   gimp_tool_control_set_cursor (tool->control, ctype);
-  gimp_tool_control_set_tool_cursor (tool->control, (options->type == GIMP_CROP ? 
-                                                     GIMP_CROP_TOOL_CURSOR : 
-                                                     GIMP_RESIZE_TOOL_CURSOR));
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     options->crop_type == GIMP_CROP ? 
+                                     GIMP_CROP_TOOL_CURSOR : 
+                                     GIMP_RESIZE_TOOL_CURSOR);
   gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

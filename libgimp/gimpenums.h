@@ -234,6 +234,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_HORIZONTAL,
+  GIMP_VERTICAL,
+  GIMP_UNKNOWN
+} GimpOrientationType;
+
+typedef enum
+{
   GIMP_PAINT_CONSTANT,
   GIMP_PAINT_INCREMENTAL
 } GimpPaintApplicationMode;
@@ -258,13 +265,6 @@ typedef enum
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS
 } GimpTransferMode;
-
-typedef enum
-{
-  GIMP_HORIZONTAL,
-  GIMP_VERTICAL,
-  GIMP_UNKNOWN
-} GimpOrientationType;
 
 typedef enum
 {

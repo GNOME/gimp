@@ -68,10 +68,6 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
-              flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
-              ORIENTATION_UNKNOWN;
-
   success = gimp_drawable_transform_flip (drawable, flip_type);
 }
 CODE
@@ -330,10 +326,6 @@ HELP
 	code => <<'CODE'
 {
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
-               shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
-               ORIENTATION_UNKNOWN;
 
   /* Assemble the transformation matrix */
   gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,

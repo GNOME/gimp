@@ -88,13 +88,13 @@ gimp_drawable_transform_matrix_scale (gint        x1,
 }
 
 void
-gimp_drawable_transform_matrix_shear (gint                     x1,
-                                      gint                     y1,
-                                      gint                     x2,
-                                      gint                     y2,
-                                      InternalOrientationType  orientation,
-                                      gdouble                  amount,
-                                      GimpMatrix3              result)
+gimp_drawable_transform_matrix_shear (gint                 x1,
+                                      gint                 y1,
+                                      gint                 x2,
+                                      gint                 y2,
+                                      GimpOrientationType  orientation,
+                                      gdouble              amount,
+                                      GimpMatrix3          result)
 {
   gint    width;
   gint    height;
@@ -115,7 +115,7 @@ gimp_drawable_transform_matrix_shear (gint                     x1,
   gimp_matrix3_identity  (result);
   gimp_matrix3_translate (result, -cx, -cy);
 
-  if (orientation == ORIENTATION_HORIZONTAL)
+  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
     gimp_matrix3_xshear (result, amount / height);
   else
     gimp_matrix3_yshear (result, amount / width);

@@ -197,14 +197,16 @@ gimp_image_duplicate (GimpImage *gimage)
 
       switch (guide->orientation)
 	{
-	case ORIENTATION_HORIZONTAL:
+	case GIMP_ORIENTATION_HORIZONTAL:
 	  new_guide = gimp_image_add_hguide (new_gimage);
 	  new_guide->position = guide->position;
 	  break;
-	case ORIENTATION_VERTICAL:
+
+	case GIMP_ORIENTATION_VERTICAL:
 	  new_guide = gimp_image_add_vguide (new_gimage);
 	  new_guide->position = guide->position;
 	  break;
+
 	default:
 	  g_error ("Unknown guide orientation.\n");
 	}

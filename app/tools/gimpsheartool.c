@@ -184,7 +184,7 @@ static void
 gimp_shear_tool_prepare (GimpTransformTool *tr_tool,
                          GimpDisplay       *gdisp)
 {
-  tr_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;
+  tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_UNKNOWN;
   tr_tool->trans_info[XSHEAR]       = 0.0;
   tr_tool->trans_info[YSHEAR]       = 0.0;
 }
@@ -203,19 +203,19 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool,
    *  decide using the maximum differential
    */
 
-  if (tr_tool->trans_info[HORZ_OR_VERT] == ORIENTATION_UNKNOWN)
+  if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_UNKNOWN)
     {
       if (abs (diffx) > MIN_MOVE || abs (diffy) > MIN_MOVE)
 	{
 	  if (abs (diffx) > abs (diffy))
 	    {
-	      tr_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
-	      tr_tool->trans_info[ORIENTATION_VERTICAL] = 0.0;
+	      tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_HORIZONTAL;
+	      tr_tool->trans_info[XSHEAR] = 0.0;
 	    }
 	  else
 	    {
-	      tr_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_VERTICAL;
-	      tr_tool->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
+	      tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_VERTICAL;
+	      tr_tool->trans_info[XSHEAR] = 0.0;
 	    }
 	}
       /*  set the current coords to the last ones  */
@@ -227,35 +227,35 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool,
     }
 
   /*  if the direction is known, keep track of the magnitude  */
-  if (tr_tool->trans_info[HORZ_OR_VERT] != ORIENTATION_UNKNOWN)
+  if (tr_tool->trans_info[HORZ_OR_VERT] != GIMP_ORIENTATION_UNKNOWN)
     {
       dir = tr_tool->trans_info[HORZ_OR_VERT];
 
       switch (tr_tool->function)
 	{
 	case TRANSFORM_HANDLE_1:
-	  if (dir == ORIENTATION_HORIZONTAL)
+	  if (dir == GIMP_ORIENTATION_HORIZONTAL)
 	    tr_tool->trans_info[XSHEAR] -= diffx;
 	  else
 	    tr_tool->trans_info[YSHEAR] -= diffy;
 	  break;
 
 	case TRANSFORM_HANDLE_2:
-	  if (dir == ORIENTATION_HORIZONTAL)
+	  if (dir == GIMP_ORIENTATION_HORIZONTAL)
 	    tr_tool->trans_info[XSHEAR] -= diffx;
 	  else
 	    tr_tool->trans_info[YSHEAR] += diffy;
 	  break;
 
 	case TRANSFORM_HANDLE_3:
-	  if (dir == ORIENTATION_HORIZONTAL)
+	  if (dir == GIMP_ORIENTATION_HORIZONTAL)
 	    tr_tool->trans_info[XSHEAR] += diffx;
 	  else
 	    tr_tool->trans_info[YSHEAR] -= diffy;
 	  break;
 
 	case TRANSFORM_HANDLE_4:
-	  if (dir == ORIENTATION_HORIZONTAL)
+	  if (dir == GIMP_ORIENTATION_HORIZONTAL)
 	    tr_tool->trans_info[XSHEAR] += diffx;
 	  else
 	    tr_tool->trans_info[YSHEAR] += diffy;
@@ -273,7 +273,7 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
 {
   gdouble amount;
 
-  if (tr_tool->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
+  if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_HORIZONTAL)
     amount = tr_tool->trans_info[XSHEAR];
   else
     amount = tr_tool->trans_info[YSHEAR];

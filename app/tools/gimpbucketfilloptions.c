@@ -24,15 +24,15 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-params.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbucketfilloptions.h"
@@ -41,10 +41,32 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_FILL_TRANSPARENT,
+  PROP_SAMPLE_MERGED,
+  PROP_THRESHOLD,
+  PROP_FILL_MODE
+};
+
+
 static void   gimp_bucket_fill_options_init       (GimpBucketFillOptions      *options);
 static void   gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *options_class);
 
-static void   gimp_bucket_fill_options_reset      (GimpToolOptions *tool_options);
+static void   gimp_bucket_fill_options_set_property (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void   gimp_bucket_fill_options_get_property (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
+
+static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
+
+
+static GimpPaintOptionsClass *parent_class = NULL;
 
 
 GType
@@ -78,49 +100,144 @@ gimp_bucket_fill_options_get_type (void)
 static void 
 gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_bucket_fill_options_set_property;
+  object_class->get_property = gimp_bucket_fill_options_get_property;
+
+  options_class->reset       = gimp_bucket_fill_options_reset;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
+                                    "fill-transparent",
+                                    _("Allow completely transparent regions "
+                                      "to be filled"),
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                                    "sample-merged",
+                                    _("Base filled area on all visible layers"),
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                                   "threshold",
+                                   _("Maximum color difference"),
+                                   0.0, 255.0, 15.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
+                                 "fill-mode", NULL,
+                                 GIMP_TYPE_BUCKET_FILL_MODE,
+                                 GIMP_FG_BUCKET_FILL,
+                                 0);
 }
 
 static void
 gimp_bucket_fill_options_init (GimpBucketFillOptions *options)
 {
-  options->fill_transparent = options->fill_transparent_d = TRUE;
-  options->sample_merged    = options->sample_merged_d    = FALSE;
-  options->fill_mode        = options->fill_mode_d = GIMP_FG_BUCKET_FILL;
+}
+
+static void
+gimp_bucket_fill_options_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
+{
+  GimpBucketFillOptions *options;
+
+  options = GIMP_BUCKET_FILL_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_FILL_TRANSPARENT:
+      options->fill_transparent = g_value_get_boolean (value);
+      break;
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
+    case PROP_THRESHOLD:
+      options->threshold = g_value_get_double (value);
+      break;
+    case PROP_FILL_MODE:
+      options->fill_mode = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_bucket_fill_options_get_property (GObject    *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec)
+{
+  GimpBucketFillOptions *options;
+
+  options = GIMP_BUCKET_FILL_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_FILL_TRANSPARENT:
+      g_value_set_boolean (value, options->fill_transparent);
+      break;
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
+      break;
+    case PROP_THRESHOLD:
+      g_value_set_double (value, options->threshold);
+      break;
+    case PROP_FILL_MODE:
+      g_value_set_enum (value, options->fill_mode);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
+{
+  GParamSpec *pspec;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+                                        "threshold");
+
+  if (pspec)
+    G_PARAM_SPEC_DOUBLE (pspec)->default_value =
+      GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 void
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GimpBucketFillOptions *options;
-  GtkWidget             *vbox;
-  GtkWidget             *vbox2;
-  GtkWidget             *table;
-  GtkWidget             *frame;
-  gchar                 *str;
+  GObject    *config;
+  GtkWidget  *vbox;
+  GtkWidget  *vbox2;
+  GtkWidget  *table;
+  GtkWidget  *frame;
+  GtkWidget  *button;
+  gchar      *str;
 
-  options = GIMP_BUCKET_FILL_OPTIONS (tool_options);
-
-  options->threshold =
-    GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_bucket_fill_options_reset;
-
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
+  vbox = tool_options->main_vbox;
 
   /*  fill type  */
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_BUCKET_FILL_MODE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->fill_mode,
-                                     &options->fill_mode_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
-                               GINT_TO_POINTER (options->fill_mode));
+  str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
+
+  frame = gimp_prop_enum_radio_frame_new (config, "fill-mode",
+                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -136,35 +253,16 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox2);
 
   /*  the fill transparent areas toggle  */
-  options->fill_transparent_w =
-    gtk_check_button_new_with_label (_("Fill Transparent Areas"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_transparent_w),
-                                options->fill_transparent);
-  gtk_box_pack_start (GTK_BOX (vbox2), options->fill_transparent_w,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (options->fill_transparent_w);
-
-  gimp_help_set_help_data (options->fill_transparent_w,
-                           _("Allow completely transparent regions "
-                             "to be filled"), NULL);
-
-  g_signal_connect (options->fill_transparent_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->fill_transparent);
+  button = gimp_prop_check_button_new (config, "fill-transparent",
+                                       _("Fill Transparent Areas"));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the sample merged toggle  */
-  options->sample_merged_w =
-    gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (options->sample_merged_w);
-
-  gimp_help_set_help_data (options->sample_merged_w,
-			   _("Base filled area on all visible layers"), NULL);
-
-  g_signal_connect (options->sample_merged_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_merged);
+  button = gimp_prop_check_button_new (config, "sample-merged",
+                                       _("Sample Merged"));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the threshold scale  */
   table = gtk_table_new (1, 3, FALSE);
@@ -172,39 +270,11 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					       _("Threshold:"), -1, -1,
-					       options->threshold,
-					       0.0, 255.0, 1.0, 16.0, 1,
-					       TRUE, 0.0, 0.0,
-					       _("Maximum color difference"),
-					       NULL);
-
-  g_signal_connect (options->threshold_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->threshold);
+  gimp_prop_scale_entry_new (config, "threshold",
+                             GTK_TABLE (table), 0, 0,
+                             _("Threshold:"),
+                             1.0, 16.0, 1,
+                             FALSE, 0.0, 0.0);
 
   gimp_bucket_fill_options_reset (tool_options);
-}
-
-static void
-gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
-{
-  GimpBucketFillOptions *options;
-
-  options = GIMP_BUCKET_FILL_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_transparent_w),
-				options->fill_transparent_d);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
-                               GINT_TO_POINTER (options->fill_mode_d));
 }

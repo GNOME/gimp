@@ -40,20 +40,6 @@
 
 typedef enum
 {
-  HORIZONTAL,
-  VERTICAL,
-  UNKNOWN
-} OrientationType;
-
-typedef enum /*< pdb-skip >*/
-{
-  ORIENTATION_UNKNOWN,
-  ORIENTATION_HORIZONTAL,
-  ORIENTATION_VERTICAL
-} InternalOrientationType;
-
-typedef enum
-{
   GIMP_PIXELS,
   GIMP_POINTS
 } SizeType;
@@ -123,6 +109,7 @@ typedef struct _GimpBuffer          GimpBuffer;
 
 typedef struct _GimpPaintInfo       GimpPaintInfo;
 typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
+typedef struct _GimpToolOptions     GimpToolOptions; /*< proxy-include >*/
 
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpDocumentList    GimpDocumentList;
@@ -188,13 +175,6 @@ typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;
 typedef struct _PathList            PathList;
-
-/*  stuff which is forward declared here so we don't need to cross-include it
- */
-
-typedef struct _GimpToolOptions     GimpToolOptions;  /*< proxy-include >*/
-
-typedef void (* GimpToolOptionsGUIFunc) (GimpToolOptions *tool_options);  /*< proxy-include >*/
 
 
 /*  functions  */

@@ -18,9 +18,11 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "paint-types.h"
+
+#include "config/gimpconfig-params.h"
 
 #include "gimpairbrushoptions.h"
 
@@ -29,8 +31,28 @@
 #define AIRBRUSH_DEFAULT_PRESSURE 10.0
 
 
+enum
+{
+  PROP_0,
+  PROP_RATE,
+  PROP_PRESSURE
+};
+
+
 static void   gimp_airbrush_options_init       (GimpAirbrushOptions      *options);
 static void   gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *options_class);
+
+static void   gimp_airbrush_options_set_property (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void   gimp_airbrush_options_get_property (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
+
+
+static GimpPaintOptionsClass *parent_class = NULL;
 
 
 GType
@@ -64,11 +86,74 @@ gimp_airbrush_options_get_type (void)
 static void 
 gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_airbrush_options_set_property;
+  object_class->get_property = gimp_airbrush_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
+                                   "rate", NULL,
+                                   0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PRESSURE,
+                                   "pressure", NULL,
+                                   0.0, 100.0, AIRBRUSH_DEFAULT_PRESSURE,
+                                   0);
 }
 
 static void
 gimp_airbrush_options_init (GimpAirbrushOptions *options)
 {
-  options->rate     = options->rate_d     = AIRBRUSH_DEFAULT_RATE;
-  options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
+}
+
+static void
+gimp_airbrush_options_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
+{
+  GimpAirbrushOptions *options;
+
+  options = GIMP_AIRBRUSH_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_RATE:
+      options->rate = g_value_get_double (value);
+      break;
+    case PROP_PRESSURE:
+      options->pressure = g_value_get_double (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_airbrush_options_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
+{
+  GimpAirbrushOptions *options;
+
+  options = GIMP_AIRBRUSH_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_RATE:
+      g_value_set_double (value, options->rate);
+      break;
+    case PROP_PRESSURE:
+      g_value_set_double (value, options->pressure);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }

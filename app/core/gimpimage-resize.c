@@ -91,14 +91,14 @@ gimp_image_resize (GimpImage *gimage,
 
       switch (guide->orientation)
 	{
-	case ORIENTATION_HORIZONTAL:
+	case GIMP_ORIENTATION_HORIZONTAL:
 	  undo_push_image_guide (gimage, guide);
 	  guide->position += offset_y;
 	  if (guide->position < 0 || guide->position > new_height)
 	    gimp_image_delete_guide (gimage, guide);
 	  break;
 
-	case ORIENTATION_VERTICAL:
+	case GIMP_ORIENTATION_VERTICAL:
 	  undo_push_image_guide (gimage, guide);
 	  guide->position += offset_x;
 	  if (guide->position < 0 || guide->position > new_width)

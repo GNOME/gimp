@@ -210,7 +210,7 @@ tool_options_dialog_tool_changed (GimpContext  *context,
     {
       if (tool_info->tool_options)
 	{
-	  if (! tool_info->tool_options->main_vbox->parent)
+	  if (! GTK_WIDGET (tool_info->tool_options->main_vbox)->parent)
 	    gtk_box_pack_start (GTK_BOX (options_vbox),
 				tool_info->tool_options->main_vbox,
 				FALSE, FALSE, 0);
@@ -219,10 +219,7 @@ tool_options_dialog_tool_changed (GimpContext  *context,
 
 	  visible_tool_options = tool_info->tool_options;
 
-	  if (tool_info->tool_options->reset_func)
-	    gtk_widget_set_sensitive (options_reset_button, TRUE);
-	  else
-	    gtk_widget_set_sensitive (options_reset_button, FALSE);
+          gtk_widget_set_sensitive (options_reset_button, TRUE);
 	}
       else
 	{
@@ -268,6 +265,5 @@ tool_options_dialog_reset_callback (GtkWidget   *widget,
   if (! tool_info)
     return;
 
-  if (tool_info->tool_options->reset_func)
-    tool_info->tool_options->reset_func (tool_info->tool_options);
+  gimp_tool_options_reset (tool_info->tool_options);
 }

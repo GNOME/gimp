@@ -18,9 +18,11 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "paint-types.h"
+
+#include "config/gimpconfig-params.h"
 
 #include "gimpsmudgeoptions.h"
 
@@ -28,8 +30,27 @@
 #define SMUDGE_DEFAULT_RATE 50.0
 
 
+enum
+{
+  PROP_0,
+  PROP_RATE
+};
+
+
 static void   gimp_smudge_options_init       (GimpSmudgeOptions      *options);
 static void   gimp_smudge_options_class_init (GimpSmudgeOptionsClass *options_class);
+
+static void   gimp_smudge_options_set_property (GObject      *object,
+                                                guint         property_id,
+                                                const GValue *value,
+                                                GParamSpec   *pspec);
+static void   gimp_smudge_options_get_property (GObject      *object,
+                                                guint         property_id,
+                                                GValue       *value,
+                                                GParamSpec   *pspec);
+
+
+static GimpPaintOptionsClass *parent_class = NULL;
 
 
 GType
@@ -63,10 +84,64 @@ gimp_smudge_options_get_type (void)
 static void 
 gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_smudge_options_set_property;
+  object_class->get_property = gimp_smudge_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RATE,
+                                   "rate", NULL,
+                                   0.0, 100.0, SMUDGE_DEFAULT_RATE,
+                                   0);
 }
 
 static void
 gimp_smudge_options_init (GimpSmudgeOptions *options)
 {
-  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
+}
+
+static void
+gimp_smudge_options_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpSmudgeOptions *options;
+
+  options = GIMP_SMUDGE_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_RATE:
+      options->rate = g_value_get_double (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_smudge_options_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
+{
+  GimpSmudgeOptions *options;
+
+  options = GIMP_SMUDGE_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_RATE:
+      g_value_set_double (value, options->rate);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }

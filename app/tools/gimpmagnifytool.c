@@ -262,7 +262,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       else
 	scale = MIN ((width / w), (height / h));
 
-      magnify->op = options->type;
+      magnify->op = options->zoom_type;
 
       switch (magnify->op)
 	{
@@ -319,16 +319,20 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      switch (options->type)
+      switch (options->zoom_type)
         {
         case GIMP_ZOOM_IN:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_ZOOM_OUT));
+          g_object_set (G_OBJECT (options),
+                        "zoom-type", GIMP_ZOOM_OUT,
+                        NULL);
           break;
+
         case GIMP_ZOOM_OUT:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_ZOOM_IN));
+          g_object_set (G_OBJECT (options),
+                        "zoom-type", GIMP_ZOOM_IN,
+                        NULL);
           break;
+
         default:
           break;
         }
@@ -345,7 +349,8 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_MAGNIFY_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_ZOOM_OUT));
+  gimp_tool_control_set_toggle (tool->control,
+                                options->zoom_type == GIMP_ZOOM_OUT);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -84,9 +84,9 @@ static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
 
 static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
 
-static void   gimp_move_tool_start_guide    (GimpTool          *tool,
-                                             GimpDisplay       *gdisp,
-                                             OrientationType    orientation);
+static void   gimp_move_tool_start_guide    (GimpTool            *tool,
+                                             GimpDisplay         *gdisp,
+                                             GimpOrientationType  orientation);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -333,12 +333,12 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
       switch (move->guide->orientation)
 	{
-	case ORIENTATION_HORIZONTAL:
+	case GIMP_ORIENTATION_HORIZONTAL:
 	  if ((move->guide->position < y1) || (move->guide->position > y2))
 	    delete_guide = TRUE;
 	  break;
 
-	case ORIENTATION_VERTICAL:
+	case GIMP_ORIENTATION_VERTICAL:
 	  if ((move->guide->position < x1) || (move->guide->position > x2))
 	    delete_guide = TRUE;
 	  break;
@@ -413,7 +413,7 @@ gimp_move_tool_motion (GimpTool        *tool,
 	}
       else
         {
-          if (move->guide->orientation == ORIENTATION_HORIZONTAL)
+          if (move->guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
             move->guide->position = ROUND (coords->y);
           else
             move->guide->position = ROUND (coords->x);
@@ -436,13 +436,15 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_current_w[0]),
-                                   GINT_TO_POINTER (! options->move_current));
+      g_object_set (G_OBJECT (options),
+                    "move-current", ! options->move_current,
+                    NULL);
     }
   else if (key == GDK_MOD1_MASK)
     {
-      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_mask_w[0]),
-                                   GINT_TO_POINTER (! options->move_mask));
+      g_object_set (G_OBJECT (options),
+                    "move-mask", ! options->move_mask,
+                    NULL);
     }
 }
 
@@ -565,14 +567,14 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
     {
       switch (guide->orientation)
         {
-        case ORIENTATION_HORIZONTAL:
+        case GIMP_ORIENTATION_HORIZONTAL:
           gimp_draw_tool_draw_line (draw_tool,
                                     0, guide->position,
                                     tool->gdisp->gimage->width, guide->position,
                                     FALSE);
           break;
 
-        case ORIENTATION_VERTICAL:
+        case GIMP_ORIENTATION_VERTICAL:
           gimp_draw_tool_draw_line (draw_tool,
                                     guide->position, 0,
                                     guide->position, tool->gdisp->gimage->height,
@@ -589,20 +591,20 @@ void
 gimp_move_tool_start_hguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  gimp_move_tool_start_guide (tool, gdisp, HORIZONTAL);
+  gimp_move_tool_start_guide (tool, gdisp, GIMP_ORIENTATION_HORIZONTAL);
 }
 
 void
 gimp_move_tool_start_vguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  gimp_move_tool_start_guide (tool, gdisp, VERTICAL);
+  gimp_move_tool_start_guide (tool, gdisp, GIMP_ORIENTATION_VERTICAL);
 }
 
 static void
-gimp_move_tool_start_guide (GimpTool        *tool,
-                            GimpDisplay     *gdisp,
-                            OrientationType  orientation)
+gimp_move_tool_start_guide (GimpTool            *tool,
+                            GimpDisplay         *gdisp,
+                            GimpOrientationType  orientation)
 {
   GimpMoveTool *move;
 
@@ -624,11 +626,11 @@ gimp_move_tool_start_guide (GimpTool        *tool,
 
   switch (orientation)
     {
-    case HORIZONTAL:
+    case GIMP_ORIENTATION_HORIZONTAL:
       move->guide = gimp_image_add_hguide (gdisp->gimage);
       break;
 
-    case VERTICAL:
+    case GIMP_ORIENTATION_VERTICAL:
       move->guide = gimp_image_add_vguide (gdisp->gimage);
       break;
 

@@ -409,12 +409,12 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
 
       switch (guide->orientation)
 	{
-	case ORIENTATION_HORIZONTAL:
+	case GIMP_ORIENTATION_HORIZONTAL:
 	  if ((guide->position < y1) || (guide->position > y2))
 	    remove_guide = TRUE;
 	  break;
 
-	case ORIENTATION_VERTICAL:
+	case GIMP_ORIENTATION_VERTICAL:
 	  if ((guide->position < x1) || (guide->position > x2))
 	    remove_guide = TRUE;
 	  break;
@@ -430,14 +430,10 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
 	}
       else
 	{
-	  if (guide->orientation == ORIENTATION_HORIZONTAL)
-	    {
-	      guide->position -= y1 ;
-	    }
+	  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+            guide->position -= y1;
 	  else
-	    {
-	      guide->position -= x1;
-	    }
+            guide->position -= x1;
 	}
     }
 }

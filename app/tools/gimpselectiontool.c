@@ -126,7 +126,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
   selection_tool = GIMP_SELECTION_TOOL (tool);
   options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  button_op = options->op;
+  button_op = options->operation;
 
   if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
     {
@@ -136,7 +136,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
             {
               /*  first modifier pressed  */
 
-              selection_tool->saved_op = options->op;
+              selection_tool->saved_op = options->operation;
             }
         }
       else
@@ -162,10 +162,11 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
           button_op = SELECTION_SUBTRACT;
         }
 
-      if (button_op != options->op)
+      if (button_op != options->operation)
         {
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->op_w[0]),
-                                       GINT_TO_POINTER (button_op));
+          g_object_set (G_OBJECT (options),
+                        "operation", button_op,
+                        NULL);
         }
     }
 }
@@ -217,7 +218,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      selection_tool->op = options->op;
+      selection_tool->op = options->operation;
     }
 }
 

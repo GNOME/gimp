@@ -20,8 +20,7 @@
 #define __PAINT_OPTIONS_H__
 
 
-void   gimp_paint_options_gui   (GimpToolOptions *tool_options);
-void   gimp_paint_options_reset (GimpToolOptions *tool_options);
+void   gimp_paint_options_gui (GimpToolOptions *tool_options);
 
 
 #endif  /*  __PAINT_OPTIONS_H__  */

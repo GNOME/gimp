@@ -110,9 +110,8 @@ gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 static void
 gimp_tool_options_init (GimpToolOptions *options)
 {
-  options->tool_info  = NULL;
-  options->main_vbox  = gtk_vbox_new (FALSE, 2);
-  options->reset_func = NULL;
+  options->tool_info = NULL;
+  options->main_vbox = gtk_vbox_new (FALSE, 2);
 }
 
 static void

@@ -29,6 +29,7 @@
 #include "paint/gimperaser.h"
 #include "paint/gimperaseroptions.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimperasertool.h"
@@ -51,7 +52,6 @@ static void   gimp_eraser_tool_cursor_update (GimpTool             *tool,
                                               GimpDisplay          *gdisp);
 
 static void   gimp_eraser_options_gui        (GimpToolOptions   *tool_options);
-static void   gimp_eraser_options_reset      (GimpToolOptions   *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -143,13 +143,14 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
 {
   GimpEraserOptions *options;
 
-  options = (GimpEraserOptions *) tool->tool_info->tool_options;
+  options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
 
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
-                                    ! options->anti_erase);
+      g_object_set (G_OBJECT (options),
+                    "anti-erase", ! options->anti_erase,
+                    NULL);
     }
 }
   
@@ -161,7 +162,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 {
   GimpEraserOptions *options;
 
-  options = (GimpEraserOptions *) tool->tool_info->tool_options;
+  options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_control_set_toggle (tool->control, options->anti_erase);
 
@@ -174,57 +175,28 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_eraser_options_gui (GimpToolOptions *tool_options)
 {
-  GimpEraserOptions *options;
-  GtkWidget         *vbox;
-  gchar             *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  gchar     *str;
 
-  options = GIMP_ERASER_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_eraser_options_reset;
-
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
+  vbox = tool_options->main_vbox;
 
   /* the anti_erase toggle */
   str = g_strdup_printf (_("Anti Erase  %s"), gimp_get_mod_name_control ());
 
-  options->anti_erase_w = gtk_check_button_new_with_label (str);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
-				options->anti_erase);
-  gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->anti_erase_w);
+  button = gimp_prop_check_button_new (config, "anti-erase", str);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   g_free (str);
 
-  g_signal_connect (options->anti_erase_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->anti_erase);
-
   /* the hard toggle */
-  options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
-				options->hard);
-  gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->hard_w);
-
-  g_signal_connect (options->hard_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->hard);
-}
-
-static void
-gimp_eraser_options_reset (GimpToolOptions *tool_options)
-{
-  GimpEraserOptions *options;
-
-  options = GIMP_ERASER_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
-				options->anti_erase_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
-				options->hard_d);
+  button = gimp_prop_check_button_new (config, "hard", _("Hard Edge"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 }

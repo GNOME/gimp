@@ -8,6 +8,26 @@
 
 /* enumerations from "./core-enums.h" */
 
+static const GEnumValue gimp_orientation_type_enum_values[] =
+{
+  { GIMP_HORIZONTAL, N_("Horizontal"), "horizontal" },
+  { GIMP_VERTICAL, N_("Vertical"), "vertical" },
+  { GIMP_UNKNOWN, N_("Unknown"), "unknown" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_orientation_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpOrientationType", gimp_orientation_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_blend_mode_enum_values[] =
 {
   { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), "fg-bg-rgb-mode" },
@@ -323,10 +343,10 @@ gimp_transform_direction_get_type (void)
 
 static const GEnumValue gimp_channel_ops_enum_values[] =
 {
-  { GIMP_CHANNEL_OP_ADD, "GIMP_CHANNEL_OP_ADD", "add" },
-  { GIMP_CHANNEL_OP_SUBTRACT, "GIMP_CHANNEL_OP_SUBTRACT", "subtract" },
-  { GIMP_CHANNEL_OP_REPLACE, "GIMP_CHANNEL_OP_REPLACE", "replace" },
-  { GIMP_CHANNEL_OP_INTERSECT, "GIMP_CHANNEL_OP_INTERSECT", "intersect" },
+  { GIMP_CHANNEL_OP_ADD, N_("Add to the current selection"), "add" },
+  { GIMP_CHANNEL_OP_SUBTRACT, N_("Subtract from the current selection"), "subtract" },
+  { GIMP_CHANNEL_OP_REPLACE, N_("Replace the current selection"), "replace" },
+  { GIMP_CHANNEL_OP_INTERSECT, N_("Intersect with the current selection"), "intersect" },
   { 0, NULL, NULL }
 };
 

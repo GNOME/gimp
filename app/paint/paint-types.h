@@ -19,8 +19,8 @@
 #ifndef __PAINT_TYPES_H__
 #define __PAINT_TYPES_H__
 
-#include "core/core-types.h"
 
+#include "core/core-types.h"
 #include "paint/paint-enums.h"
 
 

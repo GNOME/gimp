@@ -43,7 +43,7 @@ void   gimp_drawable_transform_matrix_shear         (gint         x1,
                                                      gint         y1,
                                                      gint         x2,
                                                      gint         y2,
-                                                     InternalOrientationType  orientation,
+                                                     GimpOrientationType  orientation,
                                                      gdouble      amount,
                                                      GimpMatrix3  result);
 void   gimp_drawable_transform_matrix_perspective   (gint         x1,

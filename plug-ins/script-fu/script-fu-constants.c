@@ -166,6 +166,10 @@ init_generated_constants (void)
   setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
   setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
 
+  setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
+  setvar (cintern ("VERTICAL"), flocons (1), NIL);
+  setvar (cintern ("UNKNOWN"), flocons (2), NIL);
+
   setvar (cintern ("PDB-INT32"), flocons (0), NIL);
   setvar (cintern ("PDB-INT16"), flocons (1), NIL);
   setvar (cintern ("PDB-INT8"), flocons (2), NIL);
@@ -226,10 +230,6 @@ init_generated_constants (void)
   setvar (cintern ("UNIT-POINT"), flocons (3), NIL);
   setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
   setvar (cintern ("UNIT-END"), flocons (5), NIL);
-
-  setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
-  setvar (cintern ("VERTICAL"), flocons (1), NIL);
-  setvar (cintern ("UNKNOWN"), flocons (2), NIL);
 
   setvar (cintern ("PIXELS"), flocons (0), NIL);
   setvar (cintern ("POINTS"), flocons (1), NIL);

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -165,15 +165,15 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
       switch (gradient_options->fade_unit)
         {
         case GIMP_UNIT_PIXEL:
-          fade_out = gradient_options->fade_out;
+          fade_out = gradient_options->fade_length;
           break;
         case GIMP_UNIT_PERCENT:
           fade_out = (MAX (gimage->width, gimage->height) *
-                      gradient_options->fade_out / 100);
+                      gradient_options->fade_length / 100);
           break;
         default:
           unit_factor = gimp_unit_get_factor (gradient_options->fade_unit);
-          fade_out = (gradient_options->fade_out *
+          fade_out = (gradient_options->fade_length *
                       MAX (gimage->xresolution,
                            gimage->yresolution) / unit_factor);
           break;

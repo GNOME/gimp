@@ -40,7 +40,7 @@
 #include "paint/gimpconvolve.h"
 #include "paint/gimpconvolveoptions.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpconvolvetool.h"
@@ -70,7 +70,6 @@ static void   gimp_convolve_tool_cursor_update  (GimpTool              *tool,
                                                  GimpDisplay           *gdisp);
 
 static void    gimp_convolve_options_gui        (GimpToolOptions       *options);
-static void    gimp_convolve_options_reset      (GimpToolOptions       *options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -167,7 +166,7 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 {
   GimpConvolveOptions *options;
 
-  options = (GimpConvolveOptions *) tool->tool_info->tool_options;
+  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
 
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -175,13 +174,17 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_BLUR_CONVOLVE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_SHARPEN_CONVOLVE));
+          g_object_set (G_OBJECT (options),
+                        "type", GIMP_SHARPEN_CONVOLVE,
+                        NULL);
           break;
+
         case GIMP_SHARPEN_CONVOLVE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_BLUR_CONVOLVE));
+          g_object_set (G_OBJECT (options),
+                        "type", GIMP_BLUR_CONVOLVE,
+                        NULL);
           break;
+
         default:
           break;
         }
@@ -196,9 +199,10 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 {
   GimpConvolveOptions *options;
 
-  options = (GimpConvolveOptions *) tool->tool_info->tool_options;
+  options = GIMP_CONVOLVE_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_SHARPEN_CONVOLVE));
+  gimp_tool_control_set_toggle (tool->control,
+                                (options->type == GIMP_SHARPEN_CONVOLVE));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -209,32 +213,24 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_convolve_options_gui (GimpToolOptions *tool_options)
 {
-  GimpConvolveOptions *options;
-  GtkWidget           *vbox;
-  GtkWidget           *table;
-  GtkWidget           *frame;
-  gchar               *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *frame;
+  gchar     *str;
 
-  options = GIMP_CONVOLVE_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_convolve_options_reset;
+  vbox = tool_options->main_vbox;
 
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
+  /*  the type radio box  */
   str = g_strdup_printf (_("Convolve Type  %s"),
                          gimp_get_mod_name_control ());
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVOLVE_TYPE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
+  frame = gimp_prop_enum_radio_frame_new (config, "type",
+                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -246,30 +242,9 @@ gimp_convolve_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("Rate:"), -1, -1,
-					  options->rate,
-					  0.0, 100.0, 1.0, 10.0, 1,
-					  TRUE, 0.0, 0.0,
-					  NULL, NULL);
-
-  g_signal_connect (options->rate_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->rate);
-}
-
-static void
-gimp_convolve_options_reset (GimpToolOptions *tool_options)
-{
-  GimpConvolveOptions *options;
-
-  options = GIMP_CONVOLVE_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
-			    options->rate_d);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
+  gimp_prop_scale_entry_new (config, "rate",
+                             GTK_TABLE (table), 0, 0,
+                             _("Rate:"),
+                             1.0, 10.0, 1,
+                             FALSE, 0.0, 0.0);
 }

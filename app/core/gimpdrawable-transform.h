@@ -43,7 +43,7 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable *drawable,
                                                     gpointer      progress_data);
 TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable *drawable,
                                                     TileManager  *orig,
-                                                    InternalOrientationType flip_type);
+                                                    GimpOrientationType flip_type);
 
 gboolean      gimp_drawable_transform_affine       (GimpDrawable *drawable,
                                                     GimpInterpolationType  interpolation_type,
@@ -51,7 +51,7 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable *drawable,
                                                     GimpMatrix3   matrix,
                                                     GimpTransformDirection direction);
 gboolean      gimp_drawable_transform_flip         (GimpDrawable *drawable,
-                                                    InternalOrientationType flip_type);
+                                                    GimpOrientationType flip_type);
 
 
 TileManager * gimp_drawable_transform_cut          (GimpDrawable *drawable,

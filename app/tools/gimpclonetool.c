@@ -34,7 +34,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimpclonetool.h"
 #include "paint_options.h"
@@ -77,7 +77,6 @@ static void   gimp_clone_posttrace_callback    (GimpClone       *clone,
                                                 gpointer         data);
 
 static void   gimp_clone_options_gui           (GimpToolOptions *tool_options);
-static void   gimp_clone_options_reset         (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -260,7 +259,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  if (options->type == GIMP_IMAGE_CLONE)
+  if (options->clone_type == GIMP_IMAGE_CLONE)
     {
       if (state & GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
@@ -286,7 +285,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-      if (draw_tool->gdisp && options->type == GIMP_IMAGE_CLONE)
+      if (draw_tool->gdisp && options->clone_type == GIMP_IMAGE_CLONE)
         {
           GimpClone *clone;
 
@@ -366,55 +365,25 @@ gimp_clone_posttrace_callback (GimpClone *clone,
 static void
 gimp_clone_options_gui (GimpToolOptions *tool_options)
 {
-  GimpCloneOptions *options;
-  GtkWidget        *vbox;
-  GtkWidget        *frame;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *frame;
 
-  options = GIMP_CLONE_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_clone_options_reset;
+  vbox = tool_options->main_vbox;
 
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CLONE_TYPE,
-                                     gtk_label_new (_("Source")),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
-
+  frame = gimp_prop_enum_radio_frame_new (config, "clone-type",
+                                          _("Source"),
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CLONE_ALIGN_MODE,
-                                     gtk_label_new (_("Alignment")),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->aligned,
-                                     &options->aligned_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w),
-                               GINT_TO_POINTER (options->aligned));
-
+  frame = gimp_prop_enum_radio_frame_new (config, "align-mode",
+                                          _("Alignment"),
+                                          0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-}
-
-static void
-gimp_clone_options_reset (GimpToolOptions *tool_options)
-{
-  GimpCloneOptions *options;
-
-  options = GIMP_CLONE_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w),
-                               GINT_TO_POINTER (options->aligned_d));
 }

@@ -157,14 +157,16 @@ gimp_image_scale (GimpImage             *gimage,
 
       switch (guide->orientation)
 	{
-	case ORIENTATION_HORIZONTAL:
+	case GIMP_ORIENTATION_HORIZONTAL:
 	  undo_push_image_guide (gimage, guide);
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
-	case ORIENTATION_VERTICAL:
+
+	case GIMP_ORIENTATION_VERTICAL:
 	  undo_push_image_guide (gimage, guide);
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
+
 	default:
 	  g_error("Unknown guide orientation II.\n");
 	}

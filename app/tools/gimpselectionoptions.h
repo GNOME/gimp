@@ -39,71 +39,33 @@ struct _GimpSelectionOptions
   GimpToolOptions     parent_instance;
 
   /*  options used by all selection tools  */
-  SelectOps           op;
-  SelectOps           op_d;
-  GtkWidget          *op_w[4]; /*  4 radio buttons  */
-
+  GimpChannelOps      operation;
   gboolean            antialias;
-  gboolean            antialias_d;
-  GtkWidget          *antialias_w;
-
   gboolean            feather;
-  gboolean            feather_d;
-  GtkWidget          *feather_w;
-
   gdouble             feather_radius;
-  gdouble             feather_radius_d;
-  GtkObject          *feather_radius_w;
 
   /*  used by fuzzy, by-color selection  */
   gboolean            select_transparent;
-  gboolean            select_transparent_d;
-  GtkWidget          *select_transparent_w;
-
   gboolean            sample_merged;
-  gboolean            sample_merged_d;
-  GtkWidget          *sample_merged_w;
-
   gdouble             threshold;
-  /* gdouble          threshold_d; (from gimprc) */
-  GtkObject          *threshold_w;
 
   /*  used by rect., ellipse selection  */
   gboolean            auto_shrink;
-  gboolean            auto_shrink_d;
-  GtkWidget          *auto_shrink_w;
-
   gboolean            shrink_merged;
-  gboolean            shrink_merged_d;
-  GtkWidget          *shrink_merged_w;
 
   GimpRectSelectMode  fixed_mode;
-  gboolean            fixed_mode_d;
-  GtkWidget          *fixed_mode_w;
-
   gdouble             fixed_width;
-  gdouble             fixed_width_d;
-  GtkObject          *fixed_width_w;
-
   gdouble             fixed_height;
-  gdouble             fixed_height_d;
-  GtkObject          *fixed_height_w;
-
   GimpUnit            fixed_unit;
-  GimpUnit            fixed_unit_d;
-  GtkWidget          *fixed_unit_w;
 
   /*  used by iscissors */
   gboolean            interactive;
-  gboolean            interactive_d;
-  GtkWidget          *interactive_w;
 };
 
 
 GType   gimp_selection_options_get_type (void) G_GNUC_CONST;
 
 void    gimp_selection_options_gui      (GimpToolOptions *tool_options);
-void    gimp_selection_options_reset    (GimpToolOptions *tool_options);
 
 
 #endif  /*  __SELCTION_OPTIONS_H__  */

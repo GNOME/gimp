@@ -31,20 +31,18 @@
 #include "paint/gimpairbrush.h"
 #include "paint/gimpairbrushoptions.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "gimpairbrushtool.h"
 #include "paint_options.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define MAX_PRESSURE 0.075
-
-
 static void   gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass);
 static void   gimp_airbrush_tool_init       (GimpAirbrushTool      *airbrush);
 
 static void   gimp_airbrush_options_gui     (GimpToolOptions *tool_options);
-static void   gimp_airbrush_options_reset   (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -128,60 +126,30 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 static void
 gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
-  GimpAirbrushOptions *options;
-  GtkWidget           *vbox;
-  GtkWidget           *table;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
 
-  options = GIMP_AIRBRUSH_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_airbrush_options_reset;
+  vbox = tool_options->main_vbox;
 
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  /*  the rate scale  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("Rate:"), -1, -1,
-					  options->rate,
-					  0.0, 150.0, 1.0, 1.0, 1,
-					  TRUE, 0.0, 0.0,
-					  NULL, NULL);
+  gimp_prop_scale_entry_new (config, "rate",
+                             GTK_TABLE (table), 0, 0,
+                             _("Rate:"),
+                             1.0, 1.0, 1,
+                             FALSE, 0.0, 0.0);
 
-  g_signal_connect (options->rate_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->rate);
-
-  /*  the pressure scale  */
-  options->pressure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					      _("Pressure:"), -1, -1,
-					      options->pressure,
-					      0.0, 100.0, 1.0, 1.0, 1,
-					      TRUE, 0.0, 0.0,
-					      NULL, NULL);
-
-  g_signal_connect (options->pressure_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->pressure);
-}
-
-static void
-gimp_airbrush_options_reset (GimpToolOptions *tool_options)
-{
-  GimpAirbrushOptions *options;
-
-  options = (GimpAirbrushOptions *) tool_options;
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
-			    options->rate_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
-			    options->pressure_d);
+  gimp_prop_scale_entry_new (config, "pressure",
+                             GTK_TABLE (table), 0, 1,
+                             _("Pressure:"),
+                             1.0, 1.0, 1,
+                             FALSE, 0.0, 0.0);
 }

@@ -29,7 +29,7 @@
 #include "paint/gimpdodgeburn.h"
 #include "paint/gimpdodgeburnoptions.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdodgeburntool.h"
@@ -52,7 +52,6 @@ static void   gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
                                                  GimpDisplay     *gdisp);
 
 static void   gimp_dodge_burn_options_gui       (GimpToolOptions *tool_options);
-static void   gimp_dodge_burn_options_reset     (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -142,7 +141,7 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
 {
   GimpDodgeBurnOptions *options;
 
-  options = (GimpDodgeBurnOptions *) tool->tool_info->tool_options;
+  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_CONTROL_MASK &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
@@ -150,13 +149,13 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_DODGE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_BURN));
+          g_object_set (G_OBJECT (options), "type", GIMP_BURN, NULL);
           break;
+
         case GIMP_BURN:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                                       GINT_TO_POINTER (GIMP_DODGE));
+          g_object_set (G_OBJECT (options), "type", GIMP_DODGE, NULL);
           break;
+
         default:
           break;
         }
@@ -173,7 +172,7 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 {
   GimpDodgeBurnOptions *options;
 
-  options = (GimpDodgeBurnOptions *) tool->tool_info->tool_options;
+  options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
 
 
   gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
@@ -187,47 +186,31 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 {
-  GimpDodgeBurnOptions *options;
-  GtkWidget            *vbox;
-  GtkWidget            *table;
-  GtkWidget            *frame;
-  gchar                *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *frame;
+  gchar     *str;
 
-  options = GIMP_DODGE_BURN_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_dodge_burn_options_reset;
-
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
+  vbox = tool_options->main_vbox;
 
   /* the type (dodge or burn) */
   str = g_strdup_printf (_("Type  %s"), gimp_get_mod_name_control ());
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_DODGE_BURN_TYPE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
+  frame = gimp_prop_enum_radio_frame_new (config, "type",
+                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   g_free (str);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
-                                     gtk_label_new (_("Mode")),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->mode,
-                                     &options->mode_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w),
-                               GINT_TO_POINTER (options->mode));
-
+  frame = gimp_prop_enum_radio_frame_new (config, "mode",
+                                          _("Mode"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -237,33 +220,9 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->exposure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					      _("Exposure:"), -1, -1,
-					      options->exposure,
-					      0.0, 100.0, 1.0, 10.0, 1,
-					      TRUE, 0.0, 0.0,
-					      NULL, NULL);
-
-  g_signal_connect (options->exposure_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->exposure);
-}
-
-static void
-gimp_dodge_burn_options_reset (GimpToolOptions *tool_options)
-{
-  GimpDodgeBurnOptions *options;
-
-  options = GIMP_DODGE_BURN_OPTIONS (tool_options);
-
-  gimp_paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
-			    options->exposure_d);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w),
-                               GINT_TO_POINTER (options->mode_d));
+  gimp_prop_scale_entry_new (config, "exposure",
+                             GTK_TABLE (table), 0, 0,
+                             _("Exposure:"),
+                             1.0, 10.0, 1,
+                             FALSE, 0.0, 0.0);
 }

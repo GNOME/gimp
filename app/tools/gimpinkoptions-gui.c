@@ -39,6 +39,17 @@
 static void   gimp_ink_options_init       (GimpInkOptions      *options);
 static void   gimp_ink_options_class_init (GimpInkOptionsClass *options_class);
 
+static void   gimp_ink_options_set_property (GObject         *object,
+                                             guint            property_id,
+                                             const GValue    *value,
+                                             GParamSpec      *pspec);
+static void   gimp_ink_options_get_property (GObject         *object,
+                                             guint            property_id,
+                                             GValue          *value,
+                                             GParamSpec      *pspec);
+
+static void   gimp_ink_options_reset        (GimpToolOptions *tool_options);
+
 static void     brush_widget_active_rect    (BrushWidget    *brush_widget,
                                              GtkWidget      *widget,
                                              GdkRectangle   *rect);
@@ -59,7 +70,6 @@ static void     paint_blob                  (GdkDrawable    *drawable,
                                              GdkGC          *gc,
                                              Blob           *blob);
 
-static void     gimp_ink_options_reset (GimpToolOptions *tool_options);
 static void     ink_type_update        (GtkWidget       *radio_button,
                                         GimpInkOptions  *options);
 
@@ -241,6 +251,10 @@ paint_blob (GdkDrawable *drawable,
                      blob->data[i].right + 1, i + blob->y);
 }
 
+
+static GimpPaintOptionsClass *parent_class = NULL;
+
+
 GType
 gimp_ink_options_get_type (void)
 {
@@ -272,6 +286,18 @@ gimp_ink_options_get_type (void)
 static void 
 gimp_ink_options_class_init (GimpInkOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_ink_options_set_property;
+  object_class->get_property = gimp_ink_options_get_property;
+
+  options_class->reset       = gimp_ink_options_reset;
 }
 
 static void
@@ -285,6 +311,22 @@ gimp_ink_options_init (GimpInkOptions *options)
   options->function         = options->function_d         = blob_ellipse;
   options->aspect           = options->aspect_d           = 1.0;
   options->angle            = options->angle_d            = 0.0;
+}
+
+static void
+gimp_ink_options_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+}
+
+static void
+gimp_ink_options_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
 }
 
 void
@@ -303,8 +345,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   options = GIMP_INK_OPTIONS (tool_options);
 
   gimp_paint_options_gui (tool_options);
-
-  ((GimpToolOptions *) options)->reset_func = gimp_ink_options_reset;
 
   vbox = tool_options->main_vbox;
 
@@ -521,8 +561,6 @@ gimp_ink_options_reset (GimpToolOptions *tool_options)
 
   options = GIMP_INK_OPTIONS (tool_options);
 
-  gimp_paint_options_reset (tool_options);
-
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
 			    options->size_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
@@ -542,6 +580,8 @@ gimp_ink_options_reset (GimpToolOptions *tool_options)
   options->aspect = options->aspect_d;
   options->angle  = options->angle_d;
   gtk_widget_queue_draw (options->brush_w->widget);
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 static void

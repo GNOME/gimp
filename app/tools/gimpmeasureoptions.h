@@ -39,8 +39,6 @@ struct _GimpMeasureOptions
   GimpToolOptions  parent_instance;
 
   gboolean         use_info_window;
-  gboolean         use_info_window_d;
-  GtkWidget       *use_info_window_w;
 };
 
 

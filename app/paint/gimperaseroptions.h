@@ -39,12 +39,7 @@ struct _GimpEraserOptions
   GimpPaintOptions  paint_options;
 
   gboolean          hard;
-  gboolean          hard_d;
-  GtkWidget        *hard_w;
-
   gboolean          anti_erase;
-  gboolean          anti_erase_d;
-  GtkWidget        *anti_erase_w;
 };
 
 

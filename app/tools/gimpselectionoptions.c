@@ -25,12 +25,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-params.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpenummenu.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimpellipseselecttool.h"
 #include "gimpfuzzyselecttool.h"
@@ -43,13 +44,46 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
+enum
+{
+  PROP_0,
+  PROP_OPERATION,
+  PROP_ANTIALIAS,
+  PROP_FEATHER,
+  PROP_FEATHER_RADIUS,
+  PROP_SELECT_TRANSPARENT,
+  PROP_SAMPLE_MERGED,
+  PROP_THRESHOLD,
+  PROP_AUTO_SHRINK,
+  PROP_SHRINK_MERGED,
+  PROP_FIXED_MODE,
+  PROP_FIXED_WIDTH,
+  PROP_FIXED_HEIGHT,
+  PROP_FIXED_UNIT,
+  PROP_INTERACTIVE
+};
+
 
 static void   gimp_selection_options_init       (GimpSelectionOptions      *options);
 static void   gimp_selection_options_class_init (GimpSelectionOptionsClass *options_class);
 
-static void   selection_options_fixed_mode_update (GtkWidget            *widget,
-                                                   GimpSelectionOptions *options);
+static void   gimp_selection_options_set_property (GObject         *object,
+                                                   guint            property_id,
+                                                   const GValue    *value,
+                                                   GParamSpec      *pspec);
+static void   gimp_selection_options_get_property (GObject         *object,
+                                                   guint            property_id,
+                                                   GValue          *value,
+                                                   GParamSpec      *pspec);
+
+static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);
+
+static void   selection_options_fixed_mode_notify (GimpSelectionOptions *options,
+                                                   GParamSpec           *pspec,
+                                                   GtkWidget            *fixed_box);
+
+
+static GimpToolOptionsClass *parent_class = NULL;
 
 
 GType
@@ -83,133 +117,300 @@ gimp_selection_options_get_type (void)
 static void 
 gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 {
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_selection_options_set_property;
+  object_class->get_property = gimp_selection_options_get_property;
+
+  options_class->reset       = gimp_selection_options_reset;
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPERATION,
+                                 "operation", NULL,
+                                 GIMP_TYPE_CHANNEL_OPS,
+                                 GIMP_CHANNEL_OP_REPLACE,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                                    "antialias",
+                                    _("Smooth edges"),
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
+                                    "feather", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
+                                   "feather-radius", NULL,
+                                   0.0, 100.0, 10.0,
+                                   0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
+                                    "select-transparent",
+                                    _("Allow completely transparent regions "
+                                      "to be selected"),
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                                    "sample-merged",
+                                    _("Base selection on all visible layers"),
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
+                                   "threshold",
+                                   _("Maximum color difference"),
+                                   0.0, 255.0, 15.0,
+                                   0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_SHRINK,
+                                    "auto-shrink", NULL,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
+                                    "shrink-merged",
+                                    _("Use all visible layers when shrinking "
+                                      "the selection"),
+                                    FALSE,
+                                    0);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FIXED_MODE,
+                                 "fixed-mode", NULL,
+                                 GIMP_TYPE_RECT_SELECT_MODE,
+                                 GIMP_RECT_SELECT_MODE_FREE,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_WIDTH,
+                                   "fixed-width", NULL,
+                                   1e-5, 32767.0, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FIXED_HEIGHT,
+                                   "fixed-height", NULL,
+                                   1e-5, 32767.0, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FIXED_UNIT,
+                                 "fixed-unit", NULL,
+                                 TRUE, GIMP_UNIT_PIXEL,
+                                 0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
+                                    "interactive", NULL,
+                                    FALSE,
+                                    0);
 }
 
 static void
 gimp_selection_options_init (GimpSelectionOptions *options)
 {
-  options->op                 = options->op_d                 = SELECTION_REPLACE;
-  options->feather            = options->feather_d            = FALSE;
-  options->feather_radius     = options->feather_radius_d     = 10.0;
-  options->select_transparent = options->select_transparent_d = TRUE;
-  options->sample_merged      = options->sample_merged_d      = FALSE;
-  options->auto_shrink        = options->auto_shrink_d        = FALSE;
-  options->shrink_merged      = options->shrink_merged_d      = FALSE;
-  options->fixed_mode         = options->fixed_mode_d         = GIMP_RECT_SELECT_MODE_FREE;
-  options->fixed_height       = options->fixed_height_d       = 1;
-  options->fixed_width        = options->fixed_width_d        = 1;
-  options->fixed_unit         = options->fixed_unit_d         = GIMP_UNIT_PIXEL;
-  options->interactive        = options->interactive_d        = FALSE;
+}
+
+static void
+gimp_selection_options_set_property (GObject      *object,
+                                     guint         property_id,
+                                     const GValue *value,
+                                     GParamSpec   *pspec)
+{
+  GimpSelectionOptions *options;
+
+  options = GIMP_SELECTION_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_OPERATION:
+      options->operation = g_value_get_enum (value);
+      break;
+    case PROP_ANTIALIAS:
+      options->antialias = g_value_get_boolean (value);
+      break;
+    case PROP_FEATHER:
+      options->feather = g_value_get_boolean (value);
+      break;
+    case PROP_FEATHER_RADIUS:
+      options->feather_radius = g_value_get_double (value);
+      break;
+
+    case PROP_SELECT_TRANSPARENT:
+      options->select_transparent = g_value_get_boolean (value);
+      break;
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
+    case PROP_THRESHOLD:
+      options->threshold = g_value_get_double (value);
+      break;
+
+    case PROP_AUTO_SHRINK:
+      options->auto_shrink = g_value_get_boolean (value);
+      break;
+    case PROP_SHRINK_MERGED:
+      options->shrink_merged = g_value_get_boolean (value);
+      break;
+
+    case PROP_FIXED_MODE:
+      options->fixed_mode = g_value_get_enum (value);
+      break;
+    case PROP_FIXED_WIDTH:
+      options->fixed_width = g_value_get_double (value);
+      break;
+    case PROP_FIXED_HEIGHT:
+      options->fixed_height = g_value_get_double (value);
+      break;
+    case PROP_FIXED_UNIT:
+      options->fixed_unit = g_value_get_int (value);
+      break;
+
+    case PROP_INTERACTIVE:
+      options->interactive = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_selection_options_get_property (GObject    *object,
+                                     guint       property_id,
+                                     GValue     *value,
+                                     GParamSpec *pspec)
+{
+  GimpSelectionOptions *options;
+
+  options = GIMP_SELECTION_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_OPERATION:
+      g_value_set_enum (value, options->operation);
+      break;
+    case PROP_ANTIALIAS:
+      g_value_set_boolean (value, options->antialias);
+      break;
+    case PROP_FEATHER:
+      g_value_set_boolean (value, options->feather);
+      break;
+    case PROP_FEATHER_RADIUS:
+      g_value_set_double (value, options->feather_radius);
+      break;
+
+    case PROP_SELECT_TRANSPARENT:
+      g_value_set_boolean (value, options->select_transparent);
+      break;
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
+      break;
+    case PROP_THRESHOLD:
+      g_value_set_double (value, options->threshold);
+      break;
+
+    case PROP_AUTO_SHRINK:
+      g_value_set_boolean (value, options->auto_shrink);
+      break;
+    case PROP_SHRINK_MERGED:
+      g_value_set_boolean (value, options->shrink_merged);
+      break;
+
+    case PROP_FIXED_MODE:
+      g_value_set_enum (value, options->fixed_mode);
+      break;
+    case PROP_FIXED_WIDTH:
+      g_value_set_double (value, options->fixed_width);
+      break;
+    case PROP_FIXED_HEIGHT:
+      g_value_set_double (value, options->fixed_height);
+      break;
+    case PROP_FIXED_UNIT:
+      g_value_set_int (value, options->fixed_unit);
+      break;
+
+    case PROP_INTERACTIVE:
+      g_value_set_boolean (value, options->interactive);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_selection_options_reset (GimpToolOptions *tool_options)
+{
+  GimpSelectionOptions *options;
+  GParamSpec           *pspec;
+
+  options = GIMP_SELECTION_OPTIONS (tool_options);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+                                        "antialias");
+
+  if (pspec)
+    {
+      if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+        G_PARAM_SPEC_BOOLEAN (pspec)->default_value = FALSE;
+      else
+        G_PARAM_SPEC_BOOLEAN (pspec)->default_value = TRUE;
+    }
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
+                                        "threshold");
+
+  if (pspec)
+    {
+      G_PARAM_SPEC_DOUBLE (pspec)->default_value =
+        GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+    }
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 void
 gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
+  GObject              *config;
   GimpSelectionOptions *options;
   GtkWidget            *vbox;
+  GtkWidget            *button;
 
+  config  = G_OBJECT (tool_options);
   options = GIMP_SELECTION_OPTIONS (tool_options);
-
-  tool_options->reset_func = gimp_selection_options_reset;
 
   vbox = tool_options->main_vbox;
 
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
-    options->antialias        = options->antialias_d          = FALSE;
-  else
-    options->antialias        = options->antialias_d          = TRUE;
-
-  options->threshold          =
-    GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
-
   /*  the selection operation radio buttons  */
   {
-    SelectOps radio_ops[] =
-    {
-      SELECTION_REPLACE,
-      SELECTION_ADD,
-      SELECTION_SUBTRACT,
-      SELECTION_INTERSECT
-    };
-
-    const gchar *radio_stock_ids[] =
-    {
-      GIMP_STOCK_SELECTION_REPLACE,
-      GIMP_STOCK_SELECTION_ADD,
-      GIMP_STOCK_SELECTION_SUBTRACT,
-      GIMP_STOCK_SELECTION_INTERSECT
-    };
-
-    const gchar *radio_tooltips[] =
-    {
-      _("Replace the current selection"),
-      _("Add to the current selection"),
-      _("Subtract from the current selection"),
-      _("Intersect with the current selection")
-    };
-
     GtkWidget *hbox;
     GtkWidget *label;
-    GtkWidget *image;
-    GSList    *group = NULL;
-    gint       i;
+    GList     *list;
 
-    hbox = gtk_hbox_new (FALSE, 2);
+    hbox = gimp_prop_enum_stock_box_new (config, "operation",
+                                         "gimp-selection", 0, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
+
+    list = gtk_container_get_children (GTK_CONTAINER (hbox));
+    gtk_box_reorder_child (GTK_BOX (hbox), GTK_WIDGET (list->next->next->data),
+                           0);
+    g_list_free (list);
 
     label = gtk_label_new (_("Mode:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    for (i = 0; i < G_N_ELEMENTS (radio_ops); i++)
-      {
-        options->op_w[i] = gtk_radio_button_new (group);
-        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (options->op_w[i]));
-        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (options->op_w[i]), FALSE);
-        gtk_box_pack_start (GTK_BOX (hbox), options->op_w[i], FALSE, FALSE, 0);
-        gtk_widget_show (options->op_w[i]);
-
-        gimp_help_set_help_data (options->op_w[i], radio_tooltips[i], NULL);
-
-        image = gtk_image_new_from_stock (radio_stock_ids[i],
-                                          GTK_ICON_SIZE_BUTTON);
-        gtk_container_add (GTK_CONTAINER (options->op_w[i]), image);
-        gtk_widget_show (image);
-
-        if (radio_ops[i] == options->op)
-          {
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->op_w[i]),
-                                          TRUE);
-          }
-
-        g_object_set_data (G_OBJECT (options->op_w[i]), "gimp-item-data",
-                           GINT_TO_POINTER (radio_ops[i]));
-        g_signal_connect (options->op_w[i], "toggled",
-                          G_CALLBACK (gimp_radio_button_update),
-                          &options->op);
-      }
+    gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   }
 
   /*  the antialias toggle button  */
-  options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-                                options->antialias);
-  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->antialias_w);
-
-  gimp_help_set_help_data (options->antialias_w, _("Smooth edges"), NULL);
+  button = gimp_prop_check_button_new (config, "antialias",
+                                       _("Antialiasing"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
-    {
-      gtk_widget_set_sensitive (options->antialias_w, FALSE);
-    }
-  else
-    {
-      g_signal_connect (options->antialias_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->antialias);
-    }
+    gtk_widget_set_sensitive (button, FALSE);
 
   /*  the feather frame  */
   {
@@ -220,37 +421,26 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
 
-    options->feather_w = gtk_check_button_new_with_label (_("Feather Edges"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-                                  options->feather);
-    gtk_frame_set_label_widget (GTK_FRAME (frame), options->feather_w);
-    gtk_widget_show (options->feather_w);
-
-    g_signal_connect (options->feather_w, "toggled",
-                      G_CALLBACK (gimp_toggle_button_update),
-                      &options->feather);
-
-    /*  the feather radius scale  */
     table = gtk_table_new (1, 3, FALSE);
     gtk_container_set_border_width (GTK_CONTAINER (table), 2);
     gtk_table_set_col_spacings (GTK_TABLE (table), 2);
     gtk_container_add (GTK_CONTAINER (frame), table);
     gtk_widget_show (table);
-  
-    options->feather_radius_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                                      _("Radius:"), -1, -1,
-                                                      options->feather_radius,
-                                                      0.0, 100.0, 1.0, 10.0, 1,
-                                                      TRUE, 0.0, 0.0,
-                                                      NULL, NULL);
 
-    g_signal_connect (options->feather_radius_w, "value_changed",
-                      G_CALLBACK (gimp_double_adjustment_update),
-                      &options->feather_radius);
+    button = gimp_prop_check_button_new (config, "feather",
+                                         _("Feather Edges"));
+    gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+    gtk_widget_show (button);
 
-    /*  grey out label & scale if feather is off  */
     gtk_widget_set_sensitive (table, options->feather);
-    g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", table);
+    g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+ 
+    /*  the feather radius scale  */
+    gimp_prop_scale_entry_new (config, "feather-radius",
+                               GTK_TABLE (table), 0, 0,
+                               _("Radius:"),
+                               1.0, 10.0, 1,
+                               FALSE, 0.0, 0.0);
   }
 
 #if 0
@@ -272,17 +462,10 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   /* selection tool with an interactive boundary that can be toggled */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
-      options->interactive_w =
-	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
-				    options->interactive);
-      gtk_box_pack_start (GTK_BOX (vbox), options->interactive_w,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (options->interactive_w);
-
-      g_signal_connect (options->interactive_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->interactive);
+      button = gimp_prop_check_button_new (config, "interactive",
+                                           _("Show Interactive Boundary"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
     }
 
   /*  selection tools which operate on colors or contiguous regions  */
@@ -303,37 +486,16 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (vbox2);
 
       /*  the select transparent areas toggle  */
-      options->select_transparent_w =
-	gtk_check_button_new_with_label (_("Select Transparent Areas"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->select_transparent_w),
-				    options->select_transparent);
-      gtk_box_pack_start (GTK_BOX (vbox2), options->select_transparent_w,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (options->select_transparent_w);
-
-      gimp_help_set_help_data (options->select_transparent_w,
-                               _("Allow completely transparent regions "
-                                 "to be selected"), NULL);
-
-      g_signal_connect (options->select_transparent_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->select_transparent);
+      button = gimp_prop_check_button_new (config, "select-transparent",
+                                           _("Select Transparent Areas"));
+      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
       /*  the sample merged toggle  */
-      options->sample_merged_w =
-	gtk_check_button_new_with_label (_("Sample Merged"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				    options->sample_merged);
-      gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (options->sample_merged_w);
-
-      gimp_help_set_help_data (options->sample_merged_w,
-                               _("Base selection on all visible layers"), NULL);
-
-      g_signal_connect (options->sample_merged_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->sample_merged);
+      button = gimp_prop_check_button_new (config, "sample-merged",
+                                           _("Sample Merged"));
+      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
       /*  the threshold scale  */
       table = gtk_table_new (1, 3, FALSE);
@@ -341,17 +503,11 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
 
-      options->threshold_w = 
-	gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Threshold:"), -1, -1,
-			      options->threshold,
-			      0.0, 255.0, 1.0, 16.0, 1,
-			      TRUE, 0.0, 0.0,
-			      _("Maximum color difference"), NULL);
-
-      g_signal_connect (options->threshold_w, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &options->threshold);
+      gimp_prop_scale_entry_new (config, "threshold",
+                                 GTK_TABLE (table), 0, 0,
+                                 _("Threshold:"),
+                                 1.0, 16.0, 1,
+                                 FALSE, 0.0, 0.0);
     }
 
   /*  widgets for fixed size select  */
@@ -361,8 +517,10 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       GtkWidget *frame;
       GtkWidget *vbox2;
       GtkWidget *table;
+      GtkWidget *optionmenu;
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
+      GtkObject *adjustment;
 
       frame = gtk_frame_new (NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -373,49 +531,27 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
 
-      options->auto_shrink_w =
-	gtk_check_button_new_with_label (_("Auto Shrink Selection"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->auto_shrink_w),
-				    options->auto_shrink);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), options->auto_shrink_w);
-      gtk_widget_show (options->auto_shrink_w);
-
-      g_signal_connect (options->auto_shrink_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->auto_shrink);
+      button = gimp_prop_check_button_new (config, "auto-shrink",
+                                           _("Auto Shrink Selection"));
+      gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+      gtk_widget_show (button);
 
       gtk_widget_set_sensitive (vbox2, options->auto_shrink);
-      g_object_set_data (G_OBJECT (options->auto_shrink_w), "set_sensitive",
-                         vbox2);
+      g_object_set_data (G_OBJECT (button), "set_sensitive", vbox2);
 
-      options->shrink_merged_w =
-	gtk_check_button_new_with_label (_("Sample Merged"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->shrink_merged_w),
-				    options->shrink_merged);
-      gtk_box_pack_start (GTK_BOX (vbox2), options->shrink_merged_w,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (options->shrink_merged_w);
-
-      gimp_help_set_help_data (options->shrink_merged_w,
-                               _("Use all visible layers when shrinking "
-                                 "the selection"), NULL);
-
-      g_signal_connect (options->shrink_merged_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->shrink_merged);
+      button = gimp_prop_check_button_new (config, "shrink-merged",
+                                           _("Sample Merged"));
+      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
       frame = gtk_frame_new (NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      options->fixed_mode_w =
-        gimp_enum_option_menu_new (GIMP_TYPE_RECT_SELECT_MODE,
-                                   G_CALLBACK (selection_options_fixed_mode_update),
-                                   options);
-      gimp_option_menu_set_history (GTK_OPTION_MENU (options->fixed_mode_w),
-                                    GINT_TO_POINTER (options->fixed_mode_d));
-      gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_mode_w);
-      gtk_widget_show (options->fixed_mode_w);
+      optionmenu = gimp_prop_enum_option_menu_new (config, "fixed-mode",
+                                                   0, 0);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), optionmenu);
+      gtk_widget_show (optionmenu);
 
       table = gtk_table_new (3, 3, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -424,148 +560,50 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), table);
 
       gtk_widget_set_sensitive (table, options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
+      g_signal_connect (config, "notify::fixed-mode",
+                        G_CALLBACK (selection_options_fixed_mode_notify),
+                        table);
 
-      options->fixed_width_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                                     _("Width:"), -1, 5,
-                                                     options->fixed_width,
-                                                     1.0, 100.0, 1.0, 50.0, 1,
-                                                     FALSE, 1e-5, 32767.0,
-                                                     NULL, NULL);
+      adjustment = gimp_prop_scale_entry_new (config, "fixed-width",
+                                              GTK_TABLE (table), 0, 0,
+                                              _("Width:"),
+                                              1.0, 50.0, 1,
+                                              TRUE, 1.0, 100.0);
 
-      width_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_width_w);
+      width_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (adjustment);
 
-      g_signal_connect (options->fixed_width_w, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &options->fixed_width);
+      adjustment = gimp_prop_scale_entry_new (config, "fixed-height",
+                                              GTK_TABLE (table), 0, 1,
+                                              _("Height:"),
+                                              1.0, 50.0, 1,
+                                              TRUE, 1.0, 100.0);
 
-      options->fixed_height_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                                      _("Height:"), -1, 5,
-                                                      options->fixed_height,
-                                                      1.0, 100.0, 1.0, 50.0, 1,
-                                                      FALSE, 1e-5, 32767.0,
-                                                      NULL, NULL);
+      height_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (adjustment);
 
-      height_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_height_w);
-
-      g_signal_connect (options->fixed_height_w, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &options->fixed_height);
-
-      options->fixed_unit_w =
-	gimp_unit_menu_new ("%a", options->fixed_unit, TRUE, TRUE, TRUE);
+      optionmenu = gimp_prop_unit_menu_new (config, "fixed-unit", "%a");
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Unit:"), 1.0, 0.5,
-				 options->fixed_unit_w, 2, TRUE);
+				 optionmenu, 2, TRUE);
 
-      g_object_set_data (G_OBJECT (options->fixed_unit_w), "set_digits",
+      g_object_set_data (G_OBJECT (optionmenu), "set_digits",
                          width_spinbutton);
-      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
+      g_object_set_data (G_OBJECT (optionmenu), "set_digits",
                          height_spinbutton);
-
-      g_signal_connect (options->fixed_unit_w, "unit_changed",
-                        G_CALLBACK (gimp_unit_menu_update),
-                        &options->fixed_unit);
 
       gtk_widget_show (table);
     }
-}
 
-void
-gimp_selection_options_reset (GimpToolOptions *tool_options)
-{
-  GimpSelectionOptions *options;
-
-  options = GIMP_SELECTION_OPTIONS (tool_options);
-
-  if (options->op_w[0])
-    {
-      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->op_w[0]),
-                                   GINT_TO_POINTER (options->op_d));
-    }
-
-  if (options->antialias_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-                                    options->antialias_d);
-    }
-
-  if (options->feather_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-				    options->feather_d);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->feather_radius_w),
-				options->feather_radius_d);
-    }
-
-  if (options->select_transparent_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->select_transparent_w),
-				    options->select_transparent_d);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				    options->sample_merged_d);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-				GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold);
-    }
-
-  if (options->auto_shrink_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->auto_shrink_w),
-				    options->auto_shrink_d);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->shrink_merged_w),
-				    options->shrink_merged_d);
-    }
-
-  if (options->fixed_mode_w)
-    {
-      GtkWidget *spinbutton;
-      gint       digits;
-
-      options->fixed_mode = options->fixed_mode_d;
-      gimp_option_menu_set_history (GTK_OPTION_MENU (options->fixed_mode_w),
-                                    GINT_TO_POINTER (options->fixed_mode));
-      gtk_widget_set_sensitive (GTK_BIN (options->fixed_mode_w->parent)->child,
-                                options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
-
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_width_w),
-				options->fixed_width_d);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_height_w),
-				options->fixed_height_d);
-
-      options->fixed_unit = options->fixed_unit_d;
-      gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->fixed_unit_w),
-			       options->fixed_unit_d);
-
-      digits =
-	((options->fixed_unit_d == GIMP_UNIT_PIXEL) ? 0 :
-	 ((options->fixed_unit_d == GIMP_UNIT_PERCENT) ? 2 :
-	  (MIN (6, MAX (3, gimp_unit_get_digits (options->fixed_unit_d))))));
-
-      spinbutton = g_object_get_data (G_OBJECT (options->fixed_unit_w),
-				      "set_digits");
-      while (spinbutton)
-	{
-	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-
-	  spinbutton = g_object_get_data (G_OBJECT (spinbutton), "set_digits");
-	}
-    }
-
-  if (options->interactive_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
-				    options->interactive_d);
-    }
+  gimp_selection_options_reset (tool_options);
 }
 
 
 /*  private functions  */
 
 static void
-selection_options_fixed_mode_update (GtkWidget            *widget,
-                                     GimpSelectionOptions *options)
+selection_options_fixed_mode_notify (GimpSelectionOptions *options,
+                                     GParamSpec           *pspec,
+                                     GtkWidget            *fixed_box)
 {
-  gimp_menu_item_update (widget, &options->fixed_mode);
-
-  gtk_widget_set_sensitive (GTK_BIN (options->fixed_mode_w->parent)->child,
+  gtk_widget_set_sensitive (fixed_box,
                             options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
 }
