@@ -64,7 +64,7 @@ gimp_histogram_new (void)
 #ifdef ENABLE_MP
   histogram->nthreads   = 0;
   histogram->tmp_values = NULL;
-  histogram->tmp_slot   = NULL;
+  histogram->tmp_slots  = NULL;
 #endif /* ENABLE_MP */
 
   return histogram;

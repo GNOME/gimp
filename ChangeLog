@@ -1,3 +1,8 @@
+2000-12-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphistogram.c: plonk, my "cleanup" yesterday
+	broke ENABLE_MP. Fixes #35668.
+
 2000-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/gradient.c: couldn't resist to heavily indent all function
