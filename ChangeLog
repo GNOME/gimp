@@ -1,5 +1,20 @@
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
+	Improved undo memory calculation for paint operations (bug #153035):
+
+	* app/base/tile-manager.[ch] (tile_manager_get_memsize): added a
+	"gboolean sparse" parameter to get more accurate results for
+	sparse tile-managers.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/core/gimpprojection.c: changed accordingly.
+
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/Makefile.am (libappdialogs_a_SOURCES): added authors.h.
 
 2004-09-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>

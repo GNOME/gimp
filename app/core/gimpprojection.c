@@ -224,7 +224,7 @@ gimp_projection_get_memsize (GimpObject *object,
   gint64          memsize = 0;
 
   if (projection->tiles)
-    memsize += tile_manager_get_memsize (projection->tiles);
+    memsize += tile_manager_get_memsize (projection->tiles, FALSE);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -295,7 +295,7 @@ gimp_drawable_get_memsize (GimpObject *object,
   gint64        memsize  = 0;
 
   if (drawable->tiles)
-    memsize += tile_manager_get_memsize (drawable->tiles);
+    memsize += tile_manager_get_memsize (drawable->tiles, FALSE);
 
   if (drawable->preview_cache)
     *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);

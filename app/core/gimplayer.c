@@ -352,7 +352,7 @@ gimp_layer_get_memsize (GimpObject *object,
     memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
 
   if (layer->fs.backing_store)
-    *gui_size += tile_manager_get_memsize (layer->fs.backing_store);
+    *gui_size += tile_manager_get_memsize (layer->fs.backing_store, FALSE);
 
   *gui_size += layer->fs.num_segs * sizeof (BoundSeg);
 

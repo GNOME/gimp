@@ -441,11 +441,11 @@ tile_manager_map (TileManager *tm,
 {
   Tile **tiles;
   Tile **tile_ptr;
-  gint    ntiles;
-  gint    nrows, ncols;
-  gint    right_tile;
-  gint    bottom_tile;
-  gint    i, j, k;
+  gint   ntiles;
+  gint   nrows, ncols;
+  gint   right_tile;
+  gint   bottom_tile;
+  gint   i, j, k;
 
   g_return_if_fail (tm != NULL);
   g_return_if_fail (srctile != NULL);
@@ -616,16 +616,41 @@ tile_manager_set_offsets (TileManager *tm,
 }
 
 gint64
-tile_manager_get_memsize (const TileManager *tm)
+tile_manager_get_memsize (const TileManager *tm,
+                          gboolean           sparse)
 {
-  gint64 memsize = 0;
+  gint64 memsize;
 
   g_return_val_if_fail (tm != NULL, 0);
 
-  memsize += (sizeof (TileManager) +
-              (gint64) tm->ntile_rows * tm->ntile_cols *
-              (sizeof (Tile) + sizeof (gpointer)) +
-              (gint64) tm->width * tm->height * tm->bpp);
+  /*  the tile manager itself  */
+  memsize = sizeof (TileManager);
+
+  /*  the array of tiles  */
+  memsize += (gint64) tm->ntile_rows * tm->ntile_cols * (sizeof (Tile) +
+                                                         sizeof (gpointer));
+
+  /*  the memory allocated for the tiles   */
+  if (sparse)
+    {
+      if (tm->tiles)
+        {
+          Tile   **tiles = tm->tiles;
+          gint64   size  = TILE_WIDTH * TILE_HEIGHT * tm->bpp;
+          gint     i, j;
+
+          for (i = 0; i < tm->ntile_rows; i++)
+            for (j = 0; j < tm->ntile_cols; j++, tiles++)
+              {
+                if ((*tiles)->dirty)
+                  memsize += size;
+              }
+        }
+    }
+  else
+    {
+      memsize += (gint64) tm->width * tm->height * tm->bpp;
+    }
 
   return memsize;
 }

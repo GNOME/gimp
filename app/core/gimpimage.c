@@ -906,7 +906,7 @@ gimp_image_get_memsize (GimpObject *object,
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
   if (gimage->shadow)
-    memsize += tile_manager_get_memsize (gimage->shadow);
+    memsize += tile_manager_get_memsize (gimage->shadow, FALSE);
 
   if (gimage->projection)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->projection),

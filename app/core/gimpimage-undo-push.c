@@ -619,7 +619,7 @@ gimp_image_undo_push_drawable (GimpImage    *gimage,
                         tile_manager_height (tiles) == gimp_item_height (item),
                         FALSE);
 
-  size = sizeof (DrawableUndo) + tile_manager_get_memsize (tiles);
+  size = sizeof (DrawableUndo) + tile_manager_get_memsize (tiles, sparse);
 
   if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_ITEM_UNDO,
                                    size, sizeof (DrawableUndo),
@@ -652,7 +652,8 @@ undo_pop_drawable (GimpUndo            *undo,
 {
   DrawableUndo *drawable_undo = undo->data;
 
-  undo->size -= tile_manager_get_memsize (drawable_undo->tiles);
+  undo->size -= tile_manager_get_memsize (drawable_undo->tiles,
+                                          drawable_undo->sparse);
 
   gimp_drawable_swap_pixels (GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item),
                              drawable_undo->tiles,
@@ -662,7 +663,8 @@ undo_pop_drawable (GimpUndo            *undo,
                              drawable_undo->width,
                              drawable_undo->height);
 
-  undo->size += tile_manager_get_memsize (drawable_undo->tiles);
+  undo->size += tile_manager_get_memsize (drawable_undo->tiles,
+                                          drawable_undo->sparse);
 
   return TRUE;
 }
@@ -709,7 +711,8 @@ gimp_image_undo_push_drawable_mod (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  size = sizeof (DrawableModUndo) + tile_manager_get_memsize (drawable->tiles);
+  size = sizeof (DrawableModUndo) + tile_manager_get_memsize (drawable->tiles,
+                                                              FALSE);
 
   if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_ITEM_UNDO,
                                    size, sizeof (DrawableModUndo),
@@ -744,7 +747,7 @@ undo_pop_drawable_mod (GimpUndo            *undo,
   GimpImageType    drawable_type;
   gint             offset_x, offset_y;
 
-  undo->size -= tile_manager_get_memsize (drawable_undo->tiles);
+  undo->size -= tile_manager_get_memsize (drawable_undo->tiles, FALSE);
 
   tiles         = drawable_undo->tiles;
   drawable_type = drawable_undo->type;
@@ -760,7 +763,7 @@ undo_pop_drawable_mod (GimpUndo            *undo,
                                 tiles, drawable_type, offset_x, offset_y);
   tile_manager_unref (tiles);
 
-  undo->size += tile_manager_get_memsize (drawable_undo->tiles);
+  undo->size += tile_manager_get_memsize (drawable_undo->tiles, FALSE);
 
   return TRUE;
 }
@@ -824,7 +827,7 @@ gimp_image_undo_push_mask (GimpImage   *gimage,
 
       copy_region (&srcPR, &destPR);
 
-      size += tile_manager_get_memsize (undo_tiles);
+      size += tile_manager_get_memsize (undo_tiles, FALSE);
     }
 
   if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_ITEM_UNDO,
@@ -868,7 +871,7 @@ undo_pop_mask (GimpUndo            *undo,
   guchar       empty  = 0;
 
   if (mu->tiles)
-    undo->size -= tile_manager_get_memsize (mu->tiles);
+    undo->size -= tile_manager_get_memsize (mu->tiles, FALSE);
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
@@ -940,7 +943,7 @@ undo_pop_mask (GimpUndo            *undo,
                         GIMP_ITEM (channel)->height);
 
   if (mu->tiles)
-    undo->size += tile_manager_get_memsize (mu->tiles);
+    undo->size += tile_manager_get_memsize (mu->tiles, FALSE);
 
   return TRUE;
 }
