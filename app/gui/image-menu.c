@@ -120,7 +120,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL,
     "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Sa_ve a Copy..."), NULL,
+  { { N_("/File/Save a Cop_y..."), NULL,
       file_save_a_copy_cmd_callback, 0 },
     NULL,
     "file/dialogs/file_save.html", NULL },
@@ -556,7 +556,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Image/---"),
 
-  { { N_("/Image/_Merge Visible Layers..."), "<control>M",
+  { { N_("/Image/Merge Visible _Layers..."), "<control>M",
       image_merge_layers_cmd_callback, 0 },
     NULL,
     "layers/dialogs/merge_visible_layers.html", NULL },
