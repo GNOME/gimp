@@ -1,3 +1,8 @@
+2001-12-27  DindinX  <David@dindinx.org>
+
+	* app/tools/gimpmagnifytool.c: Added a threshold value determining by how
+	many pixels the mouse should move to use the window mode.
+
 2001-12-27  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am: fixed for 'make dist'.

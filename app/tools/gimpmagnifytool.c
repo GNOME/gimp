@@ -54,6 +54,8 @@ struct _MagnifyOptions
   GimpZoomType  type;
   GimpZoomType  type_d;
   GtkWidget    *type_w[2];
+  gdouble       threshold_d;
+  GtkWidget    *threshold_w;
 };
 
 
@@ -270,7 +272,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       width  = (win_width  * scalesrc) / scaledest;
       height = (win_height * scalesrc) / scaledest;
 
-      if (!w || !h)
+      if ( (w < options->threshold_d) || (h < options->threshold_d))
 	scale = 1;
       else
 	scale = MIN ((width / w), (height / h));
@@ -439,6 +441,7 @@ magnify_options_new (GimpToolInfo *tool_info)
   MagnifyOptions *options;
   GtkWidget      *vbox;
   GtkWidget      *frame;
+  GtkWidget      *hbox, *label, *abox, *scale;
 
   options = g_new0 (MagnifyOptions, 1);
 
@@ -448,6 +451,7 @@ magnify_options_new (GimpToolInfo *tool_info)
 
   options->allow_resize_d = gimprc.resize_windows_on_zoom;
   options->type_d         = options->type = GIMP_ZOOM_IN;
+  options->threshold_d    = 5;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -483,6 +487,32 @@ magnify_options_new (GimpToolInfo *tool_info)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  /*  window threshold */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Threshold:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_box_pack_start( GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_box_pack_start_defaults (GTK_BOX (hbox), abox);
+  gtk_widget_show (abox);
+
+  options->threshold_w =
+          gtk_adjustment_new (options->threshold_d, 1.0, 15.0, 2.0, 2.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_container_add (GTK_CONTAINER (abox), scale);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->threshold_d);
+  gtk_widget_show (scale);
+  gtk_widget_show (hbox);
 
   return (GimpToolOptions *) options;
 }
