@@ -1479,12 +1479,13 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   /* new mult-file preview make: */  
   {
-    GSList *list;
+    GSList *list, *toplist;
 
     /* Have to read the clist before touching anything else */
 
     list= clist_to_slist(GTK_CLIST(fs->file_list));
-
+    toplist = list;
+    
     /* Find a real base directory for the multiple selection */
 
     gtk_file_selection_set_filename (fs, "");
@@ -1531,13 +1532,24 @@ file_open_genbutton_callback (GtkWidget *widget,
 				    _("(could not make preview)"));
 	      }
 	  }
-
         g_free(full_filename);
+        list= g_slist_next(list);
+      }
+    
+    list = toplist;
+    while (list)
+      {
+	if (!(g_slist_next(list)))
+	  {
+	    full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
+                                 (char *) list->data, NULL);
+            gtk_file_selection_set_filename (fs, full_filename);
+	  }
         g_free(list->data);
         list= g_slist_next(list);
       }
-    g_slist_free(list);
-    list= NULL;
+    g_slist_free(toplist);
+    toplist= NULL;
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);

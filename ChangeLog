@@ -1,3 +1,9 @@
+2000-09-24  Seth Burgess  <sjburges@gimp.org>
+	
+	* fileops.c : made the dialog have the name of whatever file was last
+	selected on a multi-list.  Also fixed a memory leak while I was in
+	there.  Closes #25821.
+
 2000-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/resolution_calibrate.[ch]: new files. Code for the resolution 
