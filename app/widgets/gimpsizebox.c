@@ -221,10 +221,10 @@ gimp_size_box_constructor (GType                  type,
                                 TRUE, TRUE,
                                 _("_Width:"),
                                 box->width, box->xresolution,
-                                1, 1, 1, 10,
+                                0, 100000, 0, box->width,
                                 _("H_eight:"),
                                 box->height, box->yresolution,
-                                1, 1, 1, 10);
+                                0, 100000, 0, box->height);
 
   priv->size_entry  = GIMP_SIZE_ENTRY (entry);
   priv->size_chain  = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
