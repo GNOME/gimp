@@ -192,7 +192,7 @@ static int parse_menu_path          (gpointer val1p, gpointer val2p);
 static int parse_session_info       (gpointer val1p, gpointer val2p);
 static int parse_unit_info          (gpointer val1p, gpointer val2p);
 static int parse_parasite           (gpointer val1p, gpointer val2p);
-static int parse_help_broswer       (gpointer val1p, gpointer val2p);
+static int parse_help_browser       (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
