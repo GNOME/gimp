@@ -44,7 +44,6 @@
 
 #include "core/core-types.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
 
@@ -88,19 +87,22 @@ int
 main (int    argc,
       char **argv)
 {
-  gchar     *alternate_system_gimprc = NULL;
-  gchar     *alternate_gimprc        = NULL;
-  gchar    **batch_cmds              = NULL;
-  gboolean   show_help               = FALSE;
-  gboolean   no_interface            = FALSE;
-  gboolean   no_data                 = FALSE;
-  gboolean   no_splash               = FALSE;
-  gboolean   no_splash_image         = FALSE;
-  gboolean   be_verbose              = FALSE;
-  gboolean   use_shm                 = FALSE;
-  gboolean   use_mmx                 = TRUE;
-  gboolean   console_messages        = FALSE;
-  gboolean   restore_session         = FALSE;
+  gchar              *full_prog_name          = NULL;
+  gchar              *alternate_system_gimprc = NULL;
+  gchar              *alternate_gimprc        = NULL;
+  gchar             **batch_cmds              = NULL;
+  gboolean            show_help               = FALSE;
+  gboolean            no_interface            = FALSE;
+  gboolean            no_data                 = FALSE;
+  gboolean            no_splash               = FALSE;
+  gboolean            no_splash_image         = FALSE;
+  gboolean            be_verbose              = FALSE;
+  gboolean            use_shm                 = FALSE;
+  gboolean            use_mmx                 = TRUE;
+  gboolean            console_messages        = FALSE;
+  gboolean            use_debug_handler       = FALSE;
+  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
+  gboolean            restore_session         = FALSE;
   gint       i, j;
 
 #if 0
@@ -110,7 +112,7 @@ main (int    argc,
 
   /* Initialize variables */
 
-  prog_name = argv[0];
+  full_prog_name = argv[0];
 
   /* Initialize i18n support */
 
@@ -148,7 +150,7 @@ main (int    argc,
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))
 	{
-	  gimp_show_help (argv[0]);
+	  gimp_show_help (full_prog_name);
 	  gimp_text_console_exit (FALSE);
 	}
     }
@@ -337,7 +339,7 @@ main (int    argc,
 
   if (show_help)
     {
-      gimp_show_help (argv[0]);
+      gimp_show_help (full_prog_name);
       gimp_text_console_exit (TRUE);
     }
 
@@ -377,8 +379,12 @@ main (int    argc,
 
 #endif /* G_OS_WIN32 */
 
-  /* Initialize the application */
-  app_init (argc - 1,
+  gimp_errors_init (full_prog_name,
+                    use_debug_handler,
+                    stack_trace_mode);
+
+  app_init (full_prog_name,
+            argc - 1,
 	    argv + 1,
             alternate_system_gimprc,
             alternate_gimprc,
@@ -391,6 +397,7 @@ main (int    argc,
             use_shm,
             use_mmx,
             console_messages,
+            stack_trace_mode,
             restore_session);
 
   return 0;

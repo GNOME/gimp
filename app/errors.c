@@ -32,13 +32,18 @@
 
 #include "core/gimp.h"
 
-#include "appenv.h"
 #include "errors.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
 
+
+/*  private variables  */
+
+static gboolean             use_debug_handler = FALSE;
+static GimpStackTraceMode   stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
+static gchar               *full_prog_name    = NULL;
 
 
 /*  local function prototypes  */
@@ -49,6 +54,18 @@ static void   gimp_eek (const gchar *reason,
 
 
 /*  public functions  */
+
+void
+gimp_errors_init (const gchar        *_full_prog_name,
+                  gboolean            _use_debug_handler,
+                  GimpStackTraceMode  _stack_trace_mode)
+{
+  g_return_if_fail (_full_prog_name != NULL);
+
+  use_debug_handler = _use_debug_handler ? TRUE : FALSE;
+  stack_trace_mode  = _stack_trace_mode;
+  full_prog_name    = g_strdup (_full_prog_name);
+}
 
 void
 gimp_message_log_func (const gchar    *log_domain,
@@ -64,7 +81,7 @@ gimp_message_log_func (const gchar    *log_domain,
       return;
     }
 
-  g_printerr ("%s: %s\n", prog_name, message);
+  g_printerr ("%s: %s\n", full_prog_name, message);
 }
 
 void
@@ -112,7 +129,7 @@ gimp_eek (const gchar *reason,
 {
 #ifndef G_OS_WIN32
 
-  g_printerr ("%s: %s: %s\n", prog_name, reason, message);
+  g_printerr ("%s: %s: %s\n", full_prog_name, reason, message);
 
   if (use_handler)
     {
@@ -127,7 +144,7 @@ gimp_eek (const gchar *reason,
 
 	    sigemptyset (&sigset);
 	    sigprocmask (SIG_SETMASK, &sigset, NULL);
-	    g_on_error_query (prog_name);
+	    g_on_error_query (full_prog_name);
 	  }
 	  break;
 
@@ -137,7 +154,7 @@ gimp_eek (const gchar *reason,
 
 	    sigemptyset (&sigset);
 	    sigprocmask (SIG_SETMASK, &sigset, NULL);
-	    g_on_error_stack_trace (prog_name);
+	    g_on_error_stack_trace (full_prog_name);
 	  }
 	  break;
 

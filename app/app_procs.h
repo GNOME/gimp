@@ -37,20 +37,22 @@ extern Gimp *the_gimp;
 gboolean  app_gui_libs_init (gint      *gimp_argc,
                              gchar   ***gimp_argv);
 
-void      app_init          (gint          gimp_argc,
-                             gchar       **gimp_argv,
-                             const gchar  *alternate_system_gimprc,
-                             const gchar  *alternate_gimprc,
-                             const gchar **batch_cmds,
-                             gboolean      no_interface,
-                             gboolean      no_data,
-                             gboolean      no_splash,
-                             gboolean      no_splash_image,
-                             gboolean      be_verbose,
-                             gboolean      use_shm,
-                             gboolean      use_mmx,
-                             gboolean      console_messages,
-                             gboolean      restore_session);
+void      app_init          (const gchar         *full_prog_name,
+                             gint                 gimp_argc,
+                             gchar              **gimp_argv,
+                             const gchar         *alternate_system_gimprc,
+                             const gchar         *alternate_gimprc,
+                             const gchar        **batch_cmds,
+                             gboolean             no_interface,
+                             gboolean             no_data,
+                             gboolean             no_splash,
+                             gboolean             no_splash_image,
+                             gboolean             be_verbose,
+                             gboolean             use_shm,
+                             gboolean             use_mmx,
+                             gboolean             console_messages,
+                             GimpStackTraceMode   stack_trace_mode,
+                             gboolean             restore_session);
 
 
 #endif /* __APP_PROCS_H__ */

@@ -54,7 +54,6 @@
 #include "gui/splash.h"
 #include "gui/user-install-dialog.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
 #include "errors.h"
@@ -80,14 +79,6 @@ static gboolean   app_exit_finish_callback (Gimp        *gimp,
 
 Gimp *the_gimp = NULL;
 
-/*  command-line options  */
-
-gboolean             use_debug_handler       = FALSE;
-GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
-
-/*  other global variables  */
-gchar *prog_name = NULL;  /* our executable name */
-
 
 /*  public functions  */
 
@@ -99,20 +90,22 @@ app_gui_libs_init (gint    *argc,
 }
 
 void
-app_init (gint          gimp_argc,
-	  gchar       **gimp_argv,
-          const gchar  *alternate_system_gimprc,
-          const gchar  *alternate_gimprc,
-          const gchar **batch_cmds,
-          gboolean      no_interface,
-          gboolean      no_data,
-          gboolean      no_splash,
-          gboolean      no_splash_image,
-          gboolean      be_verbose,
-          gboolean      use_shm,
-          gboolean      use_mmx,
-          gboolean      console_messages,
-          gboolean      restore_session)
+app_init (const gchar         *full_prog_name,
+          gint                 gimp_argc,
+          gchar              **gimp_argv,
+          const gchar         *alternate_system_gimprc,
+          const gchar         *alternate_gimprc,
+          const gchar        **batch_cmds,
+          gboolean             no_interface,
+          gboolean             no_data,
+          gboolean             no_splash,
+          gboolean             no_splash_image,
+          gboolean             be_verbose,
+          gboolean             use_shm,
+          gboolean             use_mmx,
+          gboolean             console_messages,
+          GimpStackTraceMode   stack_trace_mode,
+          gboolean             restore_session)
 {
   GimpInitStatusFunc  update_status_func;
   const gchar        *gimp_dir;
@@ -133,7 +126,7 @@ app_init (gint          gimp_argc,
                        console_messages,
                        stack_trace_mode);
 
-  gimp_object_set_name (GIMP_OBJECT (the_gimp), prog_name);
+  gimp_object_set_name (GIMP_OBJECT (the_gimp), full_prog_name);
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,

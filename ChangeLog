@@ -1,3 +1,20 @@
+2003-09-09  Michael Natterer  <mitch@gimp.org>
+
+	Got rid of the last global variables except the_gimp:
+
+	* app/Makefile.am
+	* app/appenv.h: removed this file.
+
+	* app/errors.[ch] (gimp_errors_init): new function which lets the
+	error system know about "full_prog_name", "stack_trace_mode" and
+	"debug_handlers". Remember these values privately.
+
+	* app/app_procs.[ch] (app_init): added "full_prog_name" and
+	"stack_trace_mode" parameters here too.
+
+	* app/main.c (main): call gimp_errors_init() and pass the
+	additional parameters to app_init().
+
 2003-09-09  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors-compat.[ch]: Made

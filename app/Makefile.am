@@ -27,7 +27,6 @@ scriptdata =
 bin_PROGRAMS = gimp-1.3
 
 gimp_1_3_SOURCES = \
-	appenv.h	\
 	app_procs.c	\
 	app_procs.h	\
 	main.c		\
