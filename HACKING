@@ -51,6 +51,12 @@ Note that autogen.sh runs configure for you.  If you wish to pass
 options like --prefix=/usr to configure you can give those options to
 autogen.sh and they will be passed on to configure.
 
+autogen.sh by default passes --enable-gtk-doc to configure in order to
+enable the creation of the GIMP API reference manuals in the devel-docs
+directory. You will need a recent version of gtk-doc as well as a working
+setup for handling DocBook XML. If you run into any problems here, you
+can disable creation of the docs using --disable-gtk-doc with autogen.sh.
+
 
 CVS
 ---
