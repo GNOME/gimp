@@ -1,3 +1,10 @@
+2003-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets-docs.sgml
+	* libgimpwidgets.types: added it here too.
+
+	* libgimpwidgets/tmpl/gimpcolordisplaystack.sgml: updated.
+
 2003-11-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

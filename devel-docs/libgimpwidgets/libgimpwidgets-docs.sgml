@@ -38,6 +38,7 @@
   <part id="libgimpwidgets-colordisplay">
     <title>GIMP Display Filters</title>
     <xi:include href="xml/gimpcolordisplay.xml" />
+    <xi:include href="xml/gimpcolordisplaystack.xml" />
   </part>
 
   <part id="libgimpwidgets-colorselector">
