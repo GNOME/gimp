@@ -1,3 +1,8 @@
+2004-06-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/blur.c: removed randomize and repeat options;
+	made to run without popping a dialog.  (bug #142318)
+
 2004-06-16  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_linux_input.c: enable dial-events for
