@@ -5,6 +5,7 @@
 /* ================= */
 
 #define TILE_CACHE_SIZE 16
+#define NUM_LIGHTS      3
 
 /* Typedefs */
 /* ======== */
@@ -38,6 +39,7 @@ typedef struct
   gdouble  diffuse_ref;
   gdouble  specular_ref;
   gdouble  highlight;
+  gboolean metallic;
   GimpRGB  color;
 } MaterialSettings;
 
@@ -61,7 +63,7 @@ typedef struct
 
   GimpVector3      viewpoint;
   GimpVector3      planenormal;
-  LightSettings    lightsource;
+  LightSettings    lightsource[NUM_LIGHTS];
   MaterialSettings material;
   MaterialSettings ref_material;
 

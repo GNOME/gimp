@@ -34,12 +34,13 @@ extern BackBuffer  backbuf;
 extern gdouble    *xpostab, *ypostab;
 extern gboolean    light_hit;
 extern gboolean    left_button_pressed;
-extern GtkWidget  *spin_pos_x;
-extern GtkWidget  *spin_pos_y;
-extern GtkWidget  *spin_pos_z;
-extern GtkWidget  *spin_dir_x;
-extern GtkWidget  *spin_dir_y;
-extern GtkWidget  *spin_dir_z;
+
+GtkWidget  *spin_pos_x[NUM_LIGHTS];
+GtkWidget  *spin_pos_y[NUM_LIGHTS];
+GtkWidget  *spin_pos_z[NUM_LIGHTS];
+GtkWidget  *spin_dir_x[NUM_LIGHTS];
+GtkWidget  *spin_dir_y[NUM_LIGHTS];
+GtkWidget  *spin_dir_z[NUM_LIGHTS];
 
 /* Externally visible functions */
 

@@ -49,21 +49,38 @@ LightingValues mapvals;
 static void
 set_default_settings (void)
 {
+  gint k;
+
   gimp_vector3_set (&mapvals.viewpoint,   0.5, 0.5, 0.25);
   gimp_vector3_set (&mapvals.planenormal, 0.0, 0.0, 1.0);
 
-  gimp_vector3_set (&mapvals.lightsource.position,   1.0,  0.0, 1.0);
-  gimp_vector3_set (&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
+  gimp_vector3_set (&mapvals.lightsource[0].position,  -1.0, -1.0, 1.0);
+  gimp_vector3_set (&mapvals.lightsource[0].direction, -1.0, -1.0, 1.0);
 
-  gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);
-  mapvals.lightsource.intensity = 1.0;
-  mapvals.lightsource.type      = POINT_LIGHT;
+  gimp_rgba_set (&mapvals.lightsource[0].color, 1.0, 1.0, 1.0, 1.0);
+  mapvals.lightsource[0].intensity = 1.0;
+  mapvals.lightsource[0].type      = POINT_LIGHT;
+
+  /* init lights 2 and 3 pos to upper left and below */
+  gimp_vector3_set (&mapvals.lightsource[1].position,   2.0, -1.0, 1.0);
+  gimp_vector3_set (&mapvals.lightsource[1].direction,  1.0, -1.0, 1.0);
+
+  gimp_vector3_set (&mapvals.lightsource[2].position,   1.0,  2.0, 1.0);
+  gimp_vector3_set (&mapvals.lightsource[2].direction,  0.0,  1.0, 1.0);
+
+  for (k = 1; k < NUM_LIGHTS; k++)
+    {
+      gimp_rgba_set (&mapvals.lightsource[k].color, 0.0, 0.0, 0.0, 1.0);
+      mapvals.lightsource[k].intensity = 1.0;
+      mapvals.lightsource[k].type      = NO_LIGHT;
+    }
 
   mapvals.material.ambient_int  =  0.3;
   mapvals.material.diffuse_int  =  1.0;
   mapvals.material.diffuse_ref  =  0.4;
   mapvals.material.specular_ref =  0.6;
   mapvals.material.highlight    = 27.0;
+  mapvals.material.metallic     = FALSE;
 
   mapvals.pixel_treshold      = 0.25;
   mapvals.max_depth           =  3.0;
@@ -106,10 +123,10 @@ check_drawables (void)
   if (mapvals.bump_mapped)
     {
       if (gimp_drawable_is_indexed (mapvals.bumpmap_id) ||
-	  (gimp_drawable_width (mapvals.drawable_id) !=
-	   gimp_drawable_width (mapvals.bumpmap_id)) ||
-	  (gimp_drawable_height (mapvals.drawable_id) !=
-	   gimp_drawable_height (mapvals.bumpmap_id)))
+          (gimp_drawable_width (mapvals.drawable_id) !=
+           gimp_drawable_width (mapvals.bumpmap_id)) ||
+          (gimp_drawable_height (mapvals.drawable_id) !=
+           gimp_drawable_height (mapvals.bumpmap_id)))
         {
           mapvals.bump_mapped = FALSE;
           mapvals.bumpmap_id  = -1;
@@ -159,16 +176,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_lighting",
-			  "Apply various lighting effects to an image",
-			  "No help yet",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Version 0.2.0, March 15 1998",
-			  N_("_Lighting Effects..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Apply various lighting effects to an image",
+                          "No help yet",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Version 0.2.0, March 15 1998",
+                          N_("_Lighting Effects..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_lighting",
                              N_("<Image>/Filters/Light Effects"));
@@ -221,59 +238,59 @@ run (const gchar      *name,
       /* ================================================ */
 
       if (gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  /* Set the tile cache size */
+        {
+          /* Set the tile cache size */
           /* ======================= */
 
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:
                 if (main_dialog (drawable))
-		  {
-		    compute_image ();
+                  {
+                    compute_image ();
 
-		    gimp_set_data ("plug_in_lighting",
-				   &mapvals, sizeof (LightingValues));
-		    gimp_displays_flush ();
-		  }
+                    gimp_set_data ("plug_in_lighting",
+                                   &mapvals, sizeof (LightingValues));
+                    gimp_displays_flush ();
+                  }
               break;
 
               case GIMP_RUN_WITH_LAST_VALS:
                 image_setup (drawable, FALSE);
                 compute_image ();
-		gimp_displays_flush ();
+                gimp_displays_flush ();
                 break;
 
               case GIMP_RUN_NONINTERACTIVE:
                 if (nparams != 24)
-		  {
-		    status = GIMP_PDB_CALLING_ERROR;
-		  }
+                  {
+                    status = GIMP_PDB_CALLING_ERROR;
+                  }
                 else
                   {
-                    mapvals.bumpmap_id              = param[3].data.d_drawable;
-                    mapvals.envmap_id               = param[4].data.d_drawable;
-                    mapvals.bump_mapped             = (gint) param[5].data.d_int32;
-                    mapvals.env_mapped              = (gint) param[6].data.d_int32;
-                    mapvals.bumpmaptype             = (gint) param[7].data.d_int32;
-                    mapvals.lightsource.type        = (LightType) param[8].data.d_int32;
-		    mapvals.lightsource.color       = param[9].data.d_color;
-                    mapvals.lightsource.position.x  = param[10].data.d_float;
-                    mapvals.lightsource.position.y  = param[11].data.d_float;
-                    mapvals.lightsource.position.z  = param[12].data.d_float;
-                    mapvals.lightsource.direction.x = param[13].data.d_float;
-                    mapvals.lightsource.direction.y = param[14].data.d_float;
-                    mapvals.lightsource.direction.z = param[15].data.d_float;
-                    mapvals.material.ambient_int    = param[16].data.d_float;
-                    mapvals.material.diffuse_int    = param[17].data.d_float;
-                    mapvals.material.diffuse_ref    = param[18].data.d_float;
-                    mapvals.material.specular_ref   = param[19].data.d_float;
-                    mapvals.material.highlight      = param[20].data.d_float;
-                    mapvals.antialiasing            = (gint) param[21].data.d_int32;
-                    mapvals.create_new_image        = (gint) param[22].data.d_int32;
-                    mapvals.transparent_background  = (gint) param[23].data.d_int32;
+                    mapvals.bumpmap_id                 = param[3].data.d_drawable;
+                    mapvals.envmap_id                  = param[4].data.d_drawable;
+                    mapvals.bump_mapped                = (gint) param[5].data.d_int32;
+                    mapvals.env_mapped                 = (gint) param[6].data.d_int32;
+                    mapvals.bumpmaptype                = (gint) param[7].data.d_int32;
+                    mapvals.lightsource[0].type        = (LightType) param[8].data.d_int32;
+                    mapvals.lightsource[0].color       = param[9].data.d_color;
+                    mapvals.lightsource[0].position.x  = param[10].data.d_float;
+                    mapvals.lightsource[0].position.y  = param[11].data.d_float;
+                    mapvals.lightsource[0].position.z  = param[12].data.d_float;
+                    mapvals.lightsource[0].direction.x = param[13].data.d_float;
+                    mapvals.lightsource[0].direction.y = param[14].data.d_float;
+                    mapvals.lightsource[0].direction.z = param[15].data.d_float;
+                    mapvals.material.ambient_int       = param[16].data.d_float;
+                    mapvals.material.diffuse_int       = param[17].data.d_float;
+                    mapvals.material.diffuse_ref       = param[18].data.d_float;
+                    mapvals.material.specular_ref      = param[19].data.d_float;
+                    mapvals.material.highlight         = param[20].data.d_float;
+                    mapvals.antialiasing               = (gint) param[21].data.d_int32;
+                    mapvals.create_new_image           = (gint) param[22].data.d_int32;
+                    mapvals.transparent_background     = (gint) param[23].data.d_int32;
 
                     check_drawables ();
                     image_setup (drawable, FALSE);

@@ -1,3 +1,16 @@
+2004-07-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+	
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_main.h
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_preview.h
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/Lighting/lighting_ui.c:  Made this plug-in support 
+	multiple light sources; implemented three, architecture now 
+	supports any number.  Changed material properties to more intuitve
+	names; added "metallic" property.  Cleaned out some unused,
+	commented-out code.
+	
 2004-07-16  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb.pl: include "libgimpbase/gimpbase.h" instead of
