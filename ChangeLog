@@ -1,3 +1,10 @@
+2003-11-07  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpexport.c: beautified and cleaned up the export
+	dialogs.
+
+	* libgimpwidgets/gimpquerybox.c: cleanups and fixes.
+
 2003-11-07 Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]: New function that appends a

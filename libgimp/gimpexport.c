@@ -317,15 +317,18 @@ confirm_save_dialog (const gchar *message,
 		     const gchar *format_name)
 {
   GtkWidget        *dialog;
-  GtkWidget        *vbox;
+  GtkWidget        *hbox;
+  GtkWidget        *image;
+  GtkWidget        *main_vbox;
   GtkWidget        *label;
+  gchar            *tmp_text;
   gchar            *text;
   GimpExportReturn  retval;
 
   g_return_val_if_fail (message != NULL, GIMP_EXPORT_CANCEL);
   g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
 
-  dialog = gimp_dialog_new (_("Confirm Save"), "confirm_save",
+  dialog = gimp_dialog_new (_("Confirm Save"), "gimp-export-image-confirm",
                             NULL, 0,
 			    gimp_standard_help_func, "dialogs/confirm_save.html",
 
@@ -334,17 +337,34 @@ confirm_save_dialog (const gchar *message,
 
 			    NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_widget_show (hbox);
 
-  text = g_strdup_printf (message, format_name);
-  label = gtk_label_new (text);
+  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING,
+                                    GTK_ICON_SIZE_DIALOG);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
+  tmp_text = g_strdup_printf (message, format_name);
+  text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
+                          tmp_text);
+  g_free (tmp_text);
+
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), text);
   g_free (text);
 
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 4);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
@@ -370,60 +390,68 @@ export_dialog (GSList      *actions,
 	       const gchar *format_name)
 {
   GtkWidget        *dialog;
-  GtkWidget        *image;
-  GtkWidget        *frame;
-  GtkWidget        *main_vbox;
-  GtkWidget        *vbox;
   GtkWidget        *hbox;
-  GtkWidget        *button;
+  GtkWidget        *image;
+  GtkWidget        *main_vbox;
   GtkWidget        *label;
   GSList           *list;
+  gchar            *tmp_text;
   gchar            *text;
-  ExportAction     *action;
   GimpExportReturn  retval;
 
   g_return_val_if_fail (actions != NULL, GIMP_EXPORT_CANCEL);
   g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
 
-  dialog = gimp_dialog_new (_("Export File"), "export_file",
+  dialog = gimp_dialog_new (_("Export File"), "gimp-export-image",
                             NULL, 0,
                             gimp_standard_help_func, "dialogs/export_file.html",
 
-			    _("Ignore"),      GTK_RESPONSE_NO,
+			    _("_Ignore"),     GTK_RESPONSE_NO,
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    _("Export"),      GTK_RESPONSE_OK,
+			    _("_Export"),     GTK_RESPONSE_OK,
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_widget_show (main_vbox);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  /* the headline */
   hbox = gtk_hbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
                                     GTK_ICON_SIZE_DIALOG);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  label = gtk_label_new (NULL);
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
+  /* the headline */
+  tmp_text = g_strdup_printf (_("Your image should be exported before it "
+                                "can be saved as %s for the following reasons:"),
+                              format_name);
   text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
-                          _("Your image should be exported before it "
-                            "can be saved for the following reasons:"));
+                          tmp_text);
+  g_free (tmp_text);
+
+  label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label), text);
   g_free (text);
+
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 4);
   gtk_widget_show (label);
 
-  for (list = actions; list; list = list->next)
+  for (list = actions; list; list = g_slist_next (list))
     {
-      action = (ExportAction *) (list->data);
+      ExportAction *action = list->data;
+      GtkWidget    *frame;
+      GtkWidget    *vbox;
 
       label = gtk_label_new (NULL);
       text = g_strdup_printf (gettext (action->reason), format_name);
@@ -442,7 +470,8 @@ export_dialog (GSList      *actions,
 
       if (action->possibilities[0] && action->possibilities[1])
 	{
-	  GSList *radio_group = NULL;
+          GtkWidget *button;
+	  GSList    *radio_group = NULL;
 
 	  button = gtk_radio_button_new_with_label (radio_group,
 						    gettext (action->possibilities[0]));
@@ -467,26 +496,29 @@ export_dialog (GSList      *actions,
       else if (action->possibilities[0])
 	{
 	  label = gtk_label_new (gettext (action->possibilities[0]));
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 0;
-	}
-      else if (action->possibilities[1])
-	{
-	  label = gtk_label_new (gettext (action->possibilities[1]));
-	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
-	  gtk_widget_show (label);
-	  action->choice = 1;
 	}
 
       gtk_widget_show (vbox);
     }
 
   /* the footline */
-  label = gtk_label_new (_("The export conversion won't modify your original image."));
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+  text = g_strdup_printf ("<span style=\"italic\" size=\"larger\">%s</span>",
+                          _("The export conversion won't modify "
+                            "your original image."));
+
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), text);
+  g_free (text);
+
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 2);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
@@ -534,7 +566,7 @@ export_dialog (GSList      *actions,
  * and drawable_ID is not altered, GIMP_EXPORT_IGNORE is returned and
  * the save_plugin should try to save the original image. If the
  * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the
- * save_plugin should quit itself with status #STATUS_CANCEL.
+ * save_plugin should quit itself with status #GIMP_PDB_CANCEL.
  *
  * Returns: An enum of #GimpExportReturn describing the user_action.
  **/
@@ -561,13 +593,13 @@ gimp_export_image (gint32                 *image_ID,
 
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA ;
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
-  if (!gimp_drawable_is_layer (*drawable_ID)
-      && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+  if (! gimp_drawable_is_layer (*drawable_ID) &&
+      ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
       if (gimp_drawable_is_layer_mask (*drawable_ID))
         {
