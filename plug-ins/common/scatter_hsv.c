@@ -228,7 +228,11 @@ scatter_hsv (gint32 drawable_id)
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   gimp_progress_init (_("Scatter HSV: Scattering..."));
+#ifdef G_OS_WIN32
+  SRAND_FUNC (time (NULL));
+#else
   srand (time (NULL));
+#endif
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
@@ -288,15 +292,27 @@ randomize_value (gint now,
   gdouble rand_val;
   
   steps = max - min + 1;
+#ifdef G_OS_WIN32
+  rand_val = ((double) RAND_FUNC () / (double) G_MAXRAND);
+#else
   rand_val = ((double) rand () / (double) G_MAXRAND);
+#endif
   for (index = 1; index < VALS.holdness; index++)
     {
+#ifdef G_OS_WIN32
+      double tmp = ((double) RAND_FUNC () / (double) G_MAXRAND);
+#else
       double tmp = ((double) rand () / (double) G_MAXRAND);
+#endif
       if (tmp < rand_val)
 	rand_val = tmp;
     }
   
+#ifdef G_OS_WIN32
+  flag = ((G_MAXRAND / 2) < RAND_FUNC ()) ? 1 : -1;
+#else
   flag = ((G_MAXRAND / 2) < rand()) ? 1 : -1;
+#endif
   new = now + flag * ((int) (rand_max * rand_val) % steps);
   
   if (new < min)

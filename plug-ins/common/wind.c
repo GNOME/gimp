@@ -463,7 +463,11 @@ render_blast (GimpDrawable   *drawable,
 	{
 	  gint j, limit;
 	  
+#ifdef G_OS_WIN32
+	  limit = 1 + RAND_FUNC () % 2;
+#else
 	  limit = 1 + rand () % 2;
+#endif
 	  for (j = 0; (j < limit) && (row < y2); j++)
 	    {
 	      row++;
@@ -639,7 +643,11 @@ render_blast_row (guchar *buffer,
 	  /* we have found an edge, do bleeding */
 	  sbi = Ri;
 	      
+#ifdef G_OS_WIN32
+	  weight = RAND_FUNC () % 10;
+#else
 	  weight = rand() % 10;
+#endif
 	  if (weight > 5)
 	    {
 	      random_factor = 2;
@@ -653,7 +661,11 @@ render_blast_row (guchar *buffer,
 	      random_factor = 4;
 	    }
 	  bleed_length = 0;
+#ifdef G_OS_WIN32
+	  switch (RAND_FUNC () % random_factor)
+#else
 	  switch (rand() % random_factor)
+#endif
 	    {
 	    case 3:
 	      bleed_length += strength;
@@ -684,7 +696,11 @@ render_blast_row (guchar *buffer,
 		buffer[i+3] = buffer[Ai];
 	    }
 	  j = lbi - bytes;
+#ifdef G_OS_WIN32
+	  if ((RAND_FUNC () % 10) > 7)
+#else
 	  if ((rand() % 10) > 7)
+#endif
 	    {
 	      skip = 1;
 	    }
@@ -742,7 +758,11 @@ render_wind_row (guchar *sb,
 	      target_colour_A = sb[sbi+3];
 	    }
 
+#ifdef G_OS_WIN32
+	  if (RAND_FUNC () % 3) /* introduce weighted randomness */
+#else
 	  if (rand() % 3) /* introduce weighted randomness */
+#endif
 	    {
 	      bleed_length_max = strength;
 	    }
@@ -752,7 +772,11 @@ render_wind_row (guchar *sb,
 	    }
 
 	  bleed_variation = 1
+#ifdef G_OS_WIN32
+	    + (gint) (bleed_length_max * RAND_FUNC () / (G_MAXRAND + 1.0));
+#else
 	    + (gint) (bleed_length_max * rand() / (G_MAXRAND + 1.0));
+#endif
 
 	  lbi = sbi + bleed_variation * bytes;
 	  if (lbi > lpi)
@@ -777,7 +801,11 @@ render_wind_row (guchar *sb,
 
 	      /* check against original colour */
 	      if (!threshold_exceeded(sb+Ri, sb+i, edge, threshold,(bytes>3))
+#ifdef G_OS_WIN32
+		  && (RAND_FUNC () % 2))
+#else
 		  && (rand() % 2))
+#endif
 		{
 		  break;
 		}

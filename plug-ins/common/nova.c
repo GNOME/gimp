@@ -879,7 +879,11 @@ gauss (void)
   gint i;
 
   for (i = 0; i < 6; i++)
+#ifdef G_OS_WIN32
+    sum += (gdouble) RAND_FUNC () / G_MAXRAND;
+#else
     sum += (gdouble) rand () / G_MAXRAND;
+#endif
 
   return sum / 6;
 }
@@ -918,7 +922,11 @@ nova (GimpDrawable *drawable,
  
    new_alpha = 0.0;
  
+#ifdef G_OS_WIN32
+   SRAND_FUNC (time (NULL));
+#else
    srand (time (NULL));
+#endif
    spoke = g_new (gdouble, pvals.nspoke);
    spokecolor = g_new (guchar, 3 * pvals.nspoke);
 
@@ -928,7 +936,11 @@ nova (GimpDrawable *drawable,
      {
        spoke[i] = gauss();
        h += ((gdouble) pvals.randomhue / 360.0 *
+#ifdef G_OS_WIN32
+	     ((gdouble) RAND_FUNC () / (gdouble) G_MAXRAND - 0.5));
+#else
 	     ((gdouble) rand() / (gdouble) G_MAXRAND - 0.5));
+#endif
        if (h < 0)
 	 h += 1.0;
        else if (h >= 1.0)

@@ -97,7 +97,11 @@
 #define PREVIEW_WIDTH               64
 #define PREVIEW_HEIGHT             220
 
+#ifdef G_OS_WIN32
+#define	RANDOM               ((gdouble) ((gdouble) RAND_FUNC ()/((gdouble) G_MAXRAND)))
+#else
 #define	RANDOM               ((gdouble) ((gdouble) rand ()/((gdouble) G_MAXRAND)))
+#endif
 #define CANNONIZE(p, x)      (255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define HCANNONIZE(p, x)     (254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define POS_IN_TORUS(i,size) ((i < 0) ? size + i : ((size <= i) ? i - size : i))
@@ -642,7 +646,11 @@ CML_main_function (gint preview_p)
   */
   if (VALS.initial_value < CML_INITIAL_RANDOM_FROM_SEED)
     VALS.seed = time (NULL) % (1 << 15);
+#ifdef G_OS_WIN32
+  SRAND_FUNC (VALS.seed);
+#else
   srand (VALS.seed);
+#endif
 
   for (index = 0; index < cell_num; index++)
     {

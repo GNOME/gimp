@@ -742,10 +742,18 @@ sparkle (GimpDrawable *drawable,
 		  {
 		    /* major spikes */
 		    if (svals.spike_angle == -1)
+#ifdef G_OS_WIN32
+		   	spike_angle = 360.0 * RAND_FUNC () / G_MAXRAND;
+#else
 		   	spike_angle = 360.0 * rand () / G_MAXRAND;
+#endif
 		    else
 			spike_angle = svals.spike_angle;
+#ifdef G_OS_WIN32
+		    if (RAND_FUNC () <= G_MAXRAND * svals.density)
+#else
 		    if (rand() <= G_MAXRAND * svals.density)
+#endif
 		      {
 			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
@@ -929,13 +937,21 @@ fspike (GimpPixelRgn *src_rgn,
 	  g = 255 - color[1];
 	  b = 255 - color[2];             
 	  gimp_rgb_to_hsv (&r, &g, &b);  
+#ifdef G_OS_WIN32
+	  r+= (svals.random_hue * ((gdouble) RAND_FUNC () / (gdouble) RAND_MAX - 0.5))*255;
+#else
 	  r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
+#endif
 	  if (r >= 255)
 	    r -= 255;
 	  else if (r < 0) 
 	    r += 255;
-	  b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
+#ifdef G_OS_WIN32
+	  b+= (svals.random_saturation * (2.0 * (gdouble) RAND_FUNC () /
 					  (gdouble) RAND_MAX - 1.0))*255;
+#else
+	  b+= (svals.random_saturation * (2.0 * (gdouble) rand() /					  (gdouble) RAND_MAX - 1.0))*255;
+#endif
 	  if (b > 255) b = 255;
 	  gimp_hsv_to_rgb (&r, &g, &b);
 	  color[0] = 255 - r;

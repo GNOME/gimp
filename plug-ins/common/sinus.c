@@ -1279,7 +1279,11 @@ prepare_coef (params *p)
   double scalex = svals.scalex;
   double scaley = svals.scaley;
 
+#ifdef G_OS_WIN32
+  SRAND_FUNC(svals.seed);
+#else
   srand(svals.seed);
+#endif
   switch (svals.colorization)
     {
     case BILINEAR:
@@ -1295,6 +1299,17 @@ prepare_coef (params *p)
 
   if (svals.perturbation==IDEAL)
     {
+#ifdef G_OS_WIN32
+      p->c11= 0*RAND_FUNC();
+      p->c12= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scaley; /*rand+rand is used to keep */
+      p->c13= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+      p->c21= 0*RAND_FUNC();
+      p->c22= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scaley; /*correspondance beetween Ideal*/
+      p->c23= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+      p->c31= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
+      p->c32= 0*RAND_FUNC();
+      p->c33= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+#else
       p->c11= 0*rand();
       p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley; /*rand+rand is used to keep */
       p->c13= (2*G_PI*rand())/G_MAXRAND;
@@ -1304,9 +1319,21 @@ prepare_coef (params *p)
       p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
       p->c32= 0*rand();
       p->c33= (2*G_PI*rand())/G_MAXRAND;
+#endif
     }
   else
     {
+#ifdef G_OS_WIN32
+      p->c11= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c12= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c13= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+      p->c21= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c22= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c23= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+      p->c31= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scalex;
+      p->c32= (2.0*RAND_FUNC()/(G_MAXRAND+1.0)-1)*scaley;
+      p->c33= (2*G_PI*RAND_FUNC())/G_MAXRAND;
+#else
       p->c11= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
       p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
       p->c13= (2*G_PI*rand())/G_MAXRAND;
@@ -1316,6 +1343,7 @@ prepare_coef (params *p)
       p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
       p->c32= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
       p->c33= (2*G_PI*rand())/G_MAXRAND;
+#endif
     }
 
   if (svals.tiling)

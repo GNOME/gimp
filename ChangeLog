@@ -1,3 +1,20 @@
+2003-02-10  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/cubism.c 
+	* plug-ins/common/noisify.c 
+	* plug-ins/common/nova.c 
+	* plug-ins/common/papertile.c 
+	* plug-ins/common/scatter_hsv.c 
+	* plug-ins/common/sinus.c 
+	* plug-ins/common/snoise.c 
+	* plug-ins/common/sparkle.c 
+	* plug-ins/common/warp.c 
+	* plug-ins/common/wind.c: Apply old fix for #67386 on Win32, to
+	avoid having uncommitted source changes in the Win32 build. Keep
+	old code as such on Unix (even if presumably wrong on many Unix
+	variants).
+
 2003-02-09  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Slight updates. Remove section about libintl, no

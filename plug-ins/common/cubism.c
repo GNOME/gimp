@@ -725,7 +725,11 @@ fp_rand (gdouble val)
 {
   gdouble rand_val;
 
+#ifdef G_OS_WIN32
+  rand_val = (gdouble) RAND_FUNC () / (gdouble) (G_MAXRAND - 1);
+#else
   rand_val = (gdouble) rand () / (gdouble) (G_MAXRAND - 1);
+#endif
   return rand_val * val;
 }
 
@@ -734,7 +738,11 @@ int_rand (gint val)
 {
   gint rand_val;
 
+#ifdef G_OS_WIN32
+  rand_val = RAND_FUNC () % val;
+#else
   rand_val = rand () % val;
+#endif
   return rand_val;
 }
 

@@ -373,7 +373,11 @@ solid_noise_init (void)
   /*  Define the pseudo-random number generator seed  */
   if (snvals.timeseed)
     snvals.seed = time(NULL);
+#ifdef G_OS_WIN32
+  SRAND_FUNC (snvals.seed);
+#else
   srand (snvals.seed);
+#endif
 
   /*  Set scaling factors  */
   if (snvals.tilable)
@@ -406,8 +410,13 @@ solid_noise_init (void)
     perm_tab[i] = i;
   for (i = 0; i < (TABLE_SIZE >> 1); i++)
     {
+#ifdef G_OS_WIN32
+      j = RAND_FUNC () % TABLE_SIZE;
+      k = RAND_FUNC () % TABLE_SIZE;
+#else
       j = rand () % TABLE_SIZE;
       k = rand () % TABLE_SIZE;
+#endif
       t = perm_tab[j];
       perm_tab[j] = perm_tab[k];
       perm_tab[k] = t;
@@ -418,10 +427,17 @@ solid_noise_init (void)
     {
       do
 	{
+#ifdef G_OS_WIN32
 	  grad_tab[i].x =
-	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+	    (double)(RAND_FUNC () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
 	  grad_tab[i].y =
+	    (double)(RAND_FUNC () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+#else
+ 	  grad_tab[i].x =
 	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+ 	  grad_tab[i].y =
+	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+#endif
 	  m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
 	}
       while (m == 0.0 || m > 1.0);

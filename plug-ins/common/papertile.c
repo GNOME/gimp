@@ -439,7 +439,11 @@ static inline gdouble
 drand (void)
 {
   static gdouble R = 2.0 / (gdouble) G_MAXRAND;
+#ifdef G_OS_WIN32
+  return (gdouble) RAND_FUNC () * R - 1.0;
+#else
   return (gdouble) rand () * R - 1.0;
+#endif
 }
 
 static inline void
@@ -556,7 +560,11 @@ filter (void)
   gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
 
   /* TILES */
+#ifdef G_OS_WIN32
+  SRAND_FUNC (0);
+#else
   srand (0);
+#endif
   division_x = p.params.division_x;
   division_y = p.params.division_y;
   if (p.params.fractional_type == FRACTIONAL_TYPE_FORCE)
@@ -646,7 +654,11 @@ filter (void)
 	      t->y      = srcy;
 	      t->height = p.drawable->height - srcy;
 	    }
+#ifdef G_OS_WIN32
+	  t->z = RAND_FUNC ();
+#else
 	  t->z = rand ();
+#endif
 	  random_move (&t->move_x, &t->move_y, move_max_pixels);
 	}
     }

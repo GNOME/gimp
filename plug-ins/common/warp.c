@@ -1320,7 +1320,11 @@ warp_one (GimpDrawable *draw,
   gint    mmag_bytes = 1;
 
 
+#ifdef G_OS_WIN32
+  SRAND_FUNC (time(NULL));                   /* seed random # generator */
+#else
   srand(time(NULL));                   /* seed random # generator */
+#endif
 
   /* ================ Outer Loop calculation ================================ */
 
@@ -1408,8 +1412,13 @@ warp_one (GimpDrawable *draw,
 	      }
 	      
 	      if (dvals.dither != 0.0) {       /* random dither is +/- dvals.dither pixels */
+#ifdef G_OS_WIN32
+		dx += dvals.dither*((gdouble)(RAND_FUNC () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
+		dy += dvals.dither*((gdouble)(RAND_FUNC () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
+#else
 		dx += dvals.dither*((gdouble)(rand() - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
 		dy += dvals.dither*((gdouble)(rand() - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
+#endif
 	      }
 	      
 	      if (dvals.substeps != 1) {   /* trace (substeps) iterations of displacement vector */

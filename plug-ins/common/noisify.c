@@ -218,7 +218,11 @@ run (gchar   *name,
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  seed the random number generator  */
+#ifdef G_OS_WIN32
+      SRAND_FUNC (time (NULL));
+#else
       srand (time (NULL));
+#endif
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
       noisify (drawable, FALSE);
@@ -711,7 +715,11 @@ gauss (void)
   gdouble sum = 0.0;
 
   for (i = 0; i < 4; i++)
+#ifdef G_OS_WIN32
+    sum += RAND_FUNC () & 0x7FFF;
+#else
     sum += rand () & 0x7FFF;
+#endif
 
   return sum * 5.28596089837e-5 - 3.46410161514;
 }
