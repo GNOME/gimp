@@ -155,7 +155,7 @@ union _GimpParamData
   gint32            d_unit;
   GimpParasite      d_parasite;
   gint32            d_tattoo;
-  gint32            d_status;
+  GimpPDBStatusType d_status;
 };
 
 struct _GimpParam
