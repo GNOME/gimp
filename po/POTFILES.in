@@ -1,4 +1,4 @@
-# Files from the Gimp ditribution which have already been
+# Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
 app/about_dialog.c
@@ -19,6 +19,7 @@ app/channel_ops.c
 app/channels_dialog.c
 app/clone.c
 app/color_balance.c
+app/color_notebook.c
 app/color_picker.c
 app/color_select.c
 app/colormap_dialog.i.c
@@ -50,6 +51,7 @@ app/gimpbrush.c
 app/gimpbrushlist.c
 app/gimpdrawable.c
 app/gimpimage.c
+app/gimpprogress.c
 app/gimprc.c
 app/global_edit.c
 app/gradient.c
@@ -76,6 +78,7 @@ app/paint_core.c
 app/paint_funcs.c
 app/paintbrush.c
 app/palette.c
+app/palette_select.c
 app/pattern_select.c
 app/patterns.c
 app/pencil.c
