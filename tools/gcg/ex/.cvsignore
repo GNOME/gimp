@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+.deps
+ostream_s.c
+ostream_t.h
+ostream.h
+ostream_p.h
+ostream_i.h
+file_ostream_s.c
+file_ostream_t.h
+file_ostream.h
+file_ostream_p.h
+file_ostream_i.h
+foo
+strtest

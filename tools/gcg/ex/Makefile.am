@@ -5,7 +5,7 @@ GEN_CODE = ostream_s.c file_ostream_s.c
 noinst_LIBRARIES = libgcgexample.a
 noinst_PROGRAMS = strtest
 
-CFLAGS = -g -Wall -W -I..
+CFLAGS = -g -Wall -W -I.. @GLIB_CFLAGS@
 
 SUFFIXES = .gc .gh
 

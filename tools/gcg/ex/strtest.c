@@ -11,7 +11,9 @@ void close_handler(Ostream* o, gpointer data){
 }
 
 int main(void){
-	Ostream* x = OSTREAM(file_ostream_open("foo"));
+	Ostream* x;
+	gtk_type_init();
+	x = OSTREAM(file_ostream_open("foo"));
 	ostream_connect_putstring(putstring_handler, "foo", x);
 	ostream_connect_close(close_handler, "foo", x);
 	ostream_putstring(x, "Whammo!\n");
