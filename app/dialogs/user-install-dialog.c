@@ -78,12 +78,12 @@ enum
 };
 
 
-static void     user_install_response   (GtkWidget *widget,
-                                         gint       response_id,
-                                         GimpRc    *gimprc);
+static void     user_install_response   (GtkWidget   *widget,
+                                         gint         response_id,
+                                         GimpRc      *gimprc);
 
-static gboolean user_install_run        (void);
-static void     user_install_tuning     (GimpRc    *gimprc);
+static gboolean user_install_run        (const gchar *oldgimp);
+static void     user_install_tuning     (GimpRc      *gimprc);
 
 
 /*  private stuff  */
@@ -108,7 +108,7 @@ static GdkColor    white_color;
 static GdkColor    title_color;
 
 static gchar      *oldgimp         = NULL;
-static gboolean    migrate         = TRUE;
+static gboolean    migrate         = FALSE;
 
 
 typedef enum
@@ -350,16 +350,25 @@ user_install_response (GtkWidget *widget,
     {
     case GPL_PAGE:
       if (oldgimp)
-        notebook_index += 1;
+        notebook_index = MIGRATION_PAGE;
       else
-        notebook_index += 2;
+        notebook_index = TREE_PAGE;
 
       user_install_notebook_set_page (GTK_NOTEBOOK (notebook), notebook_index);
       break;
 
     case MIGRATION_PAGE:
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
-      break;
+      if (migrate)
+        {
+          notebook_index = TREE_PAGE;
+          /* fallthrough */
+        }
+      else
+        {
+          user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
+                                          ++notebook_index);
+          break;
+        }
 
     case TREE_PAGE:
       user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
@@ -372,7 +381,7 @@ user_install_response (GtkWidget *widget,
       gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
                                          GTK_RESPONSE_OK, TRUE);
 
-      if (user_install_run ())
+      if (user_install_run (migrate ? oldgimp : NULL))
         {
           gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
                                              GTK_RESPONSE_OK, TRUE);
@@ -385,6 +394,8 @@ user_install_response (GtkWidget *widget,
           gtk_label_set_text (GTK_LABEL (footer_label),
                               _("Installation failed.  "
                                 "Contact system administrator."));
+
+          notebook_index = TUNING_PAGE; /* skip to last page */
         }
 
       gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
@@ -392,9 +403,14 @@ user_install_response (GtkWidget *widget,
       break;
 
     case LOG_PAGE:
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
-      user_install_tuning (gimprc);
-      break;
+      if (! migrate)
+        {
+          user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
+                                          ++notebook_index);
+          user_install_tuning (gimprc);
+          break;
+        }
+      /* else fallthrough */
 
     case TUNING_PAGE:
       gimp_rc_save (gimprc);
@@ -568,6 +584,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   GdkPixbuf *wilber;
   gchar     *filename;
   gchar     *version;
+  gchar     *title;
   gint       i;
 
   oldgimp = g_strdup (gimp_directory ());
@@ -577,7 +594,9 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   if (version)
     version[2] = '0';
 
-  if (! version || ! g_file_test (oldgimp, G_FILE_TEST_IS_DIR))
+  migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
+
+  if (! migrate)
     {
       g_free (oldgimp);
       oldgimp = NULL;
@@ -586,7 +605,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
 
   dialog = user_install_dialog =
-    gimp_dialog_new (_("GIMP User Installation"), "user_installation",
+    gimp_dialog_new (_("GIMP User Installation"), "gimp-user-installation",
                      NULL, 0,
                      NULL, NULL,
 
@@ -740,12 +759,19 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_widget_show (vbox);
 
   /*  GPL_PAGE  */
+
+  /*  version number  */
+  title = g_strdup_printf (_("Welcome to\n"
+                             "The GIMP %d.%d User Installation"),
+                           GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+
   page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                            _("Welcome to\n"
-                                              "The GIMP User Installation"),
+                                            title,
                                             _("Click \"Continue\" to enter "
                                               "the GIMP user installation."),
                                             12);
+
+  /*  do not free title yet!  */
 
   add_label (GTK_BOX (page),
              _("<b>The GIMP - GNU Image Manipulation Program</b>\n"
@@ -786,12 +812,15 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                               12);
 
     box = gimp_int_radio_group_new (TRUE,
-                                    _("It seems you have a GIMP 2.0 installation."),
+                                    _("It seems you have used GIMP 2.0 before."),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &migrate, migrate,
 
-                                    _("_Migrate user settings"),        TRUE,  NULL,
-                                    _("Do a _fresh user installation"), FALSE, NULL,
+                                    _("_Migrate GIMP 2.0 user settings"),
+                                    TRUE,  NULL,
+
+                                    _("Do a _fresh user installation"),
+                                    FALSE, NULL,
                                     NULL);
 
     gtk_box_pack_start (GTK_BOX (page), box, FALSE, FALSE, 0);
@@ -980,6 +1009,9 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_widget_show (dialog);
 
   gtk_main ();
+
+  g_free (title);
+  g_free (oldgimp);
 }
 
 
@@ -1022,59 +1054,14 @@ print_log (GtkWidget     *view,
 }
 
 static gboolean
-user_install_run (void)
+user_install_create_files (GtkWidget     *log_view,
+                           GtkTextBuffer *log_buffer)
 {
-  GtkWidget     *scrolled_window;
-  GtkTextBuffer *log_buffer;
-  GtkWidget     *log_view;
-  GError        *error = NULL;
-  gchar          dest[1024];
-  gchar          source[1024];
-  gchar          log_line[1024];
-  gint           i;
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_window);
-
-  log_buffer = gtk_text_buffer_new (NULL);
-
-  gtk_text_buffer_create_tag (log_buffer, "bold",
-                              "weight", PANGO_WEIGHT_BOLD,
-                              NULL);
-
-  log_view = gtk_text_view_new_with_buffer (log_buffer);
-  g_object_unref (log_buffer);
-
-  PAGE_STYLE (log_view);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
-  gtk_widget_show (log_view);
-
-  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'..."),
-              gimp_filename_to_utf8 (gimp_directory ()));
-  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
-
-  if (mkdir (gimp_directory (),
-             S_IRUSR | S_IWUSR | S_IXUSR |
-             S_IRGRP | S_IXGRP |
-             S_IROTH | S_IXOTH) == -1)
-    {
-      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot create folder '%s': %s"),
-                   gimp_filename_to_utf8 (gimp_directory ()),
-                   g_strerror (errno));
-      goto break_out_of_loop;
-    }
-
-  print_log (log_view, log_buffer, NULL);
+  gchar   log_line[1024];
+  gchar   dest[1024];
+  gchar   source[1024];
+  gint    i;
+  GError *error = NULL;
 
   for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
     {
@@ -1136,7 +1123,6 @@ user_install_run (void)
     }
 
  break_out_of_loop:
-
   if (error)
     {
       print_log (log_view, log_buffer, error);
@@ -1146,6 +1132,85 @@ user_install_run (void)
     }
 
   return TRUE;
+}
+
+static gboolean
+user_install_migrate_files (const gchar   *oldgimp,
+                            GtkWidget     *log_view,
+                            GtkTextBuffer *log_buffer)
+{
+  GError *error = NULL;
+
+  g_set_error (&error, 0, 0,
+               "Migration of user settings is not yet "
+               "implemented.\nYou're on your own now.");
+
+  print_log (log_view, log_buffer, error);
+  g_clear_error (&error);
+
+  return FALSE;
+}
+
+static gboolean
+user_install_run (const gchar *oldgimp)
+{
+  GtkWidget     *scrolled_window;
+  GtkTextBuffer *log_buffer;
+  GtkWidget     *log_view;
+  gchar          log_line[1024];
+  GError        *error = NULL;
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_window);
+
+  log_buffer = gtk_text_buffer_new (NULL);
+
+  gtk_text_buffer_create_tag (log_buffer, "bold",
+                              "weight", PANGO_WEIGHT_BOLD,
+                              NULL);
+
+  log_view = gtk_text_view_new_with_buffer (log_buffer);
+  g_object_unref (log_buffer);
+
+  PAGE_STYLE (log_view);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
+  gtk_widget_show (log_view);
+
+  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'..."),
+              gimp_filename_to_utf8 (gimp_directory ()));
+  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
+  if (mkdir (gimp_directory (),
+             S_IRUSR | S_IWUSR | S_IXUSR |
+             S_IRGRP | S_IXGRP |
+             S_IROTH | S_IXOTH) == -1)
+    {
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot create folder '%s': %s"),
+                   gimp_filename_to_utf8 (gimp_directory ()),
+                   g_strerror (errno));
+
+      print_log (log_view, log_buffer, error);
+      g_clear_error (&error);
+
+      return FALSE;
+    }
+
+  print_log (log_view, log_buffer, NULL);
+
+  if (oldgimp)
+    return user_install_migrate_files (oldgimp, log_view, log_buffer);
+  else
+    return user_install_create_files (log_view, log_buffer);
 }
 
 static void

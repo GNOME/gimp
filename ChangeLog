@@ -1,5 +1,11 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: fixed page logic for migration
+	user settings. Still missing an implementation to actually copy the
+	files.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpmemsizeentry.c: don't use camel case in memory
 	size identifiers.
 
