@@ -320,17 +320,10 @@ gdt_save (GdtVals *data)
   gimp_drawable_parasite_attach (data->drawable_id, parasite);
   gimp_parasite_free (parasite);
   
-  if (!data->change_layer_name) 
-    {
-      gimp_layer_set_name (data->layer_id, _("GDynText Layer"));
-      gimp_displays_flush ();
-      g_free (lname);
-
-      return;
-    }
-
   /* change the layer name as in GIMP 1.x */
-  gimp_layer_set_name (data->layer_id, lname);
+  if (data->change_layer_name)
+    gimp_layer_set_name (data->layer_id, _("GDynText Layer"));
+
   gimp_displays_flush ();
   g_free (lname);
 }
@@ -496,7 +489,7 @@ gdt_render_text_p (GdtVals  *data,
 				    strspn (text_lines[i], " ") * space_width + xoffs,	        /* x */
 				    (gdouble)layer_oy + i * (text_height + data->line_spacing), /* y */
 				    text_lines[i],
-				    0,  /* border */
+				    -1,  /* border */
 				    data->antialias,
 				    font_size,
 				    font_size_type,

@@ -1,5 +1,11 @@
 2001-06-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gdyntext/ChangeLog
+	* plug-ins/gdyntext/gdyntext.[ch]: ported changes from stable branch,
+	updating GDynText to version 1.5.4.
+
+2001-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_apply.c
 	* plug-ins/common/papertile.c
 	* plug-ins/common/vinvert.c
