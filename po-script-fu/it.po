@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-14 11:35+0200\n"
-"PO-Revision-Date: 2004-05-14 11:39+0200\n"
+"POT-Creation-Date: 2004-05-17 16:43+0200\n"
+"PO-Revision-Date: 2004-05-26 19:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,7 @@ msgstr "Selezione carattere Script-fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-fu Pattern Selection"
-msgstr "Selezione modello Script-Fu"
+msgstr "Selezione motivo Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Gradient Selection"
@@ -157,7 +157,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:153
 msgid "_Start Server..."
-msgstr "Partenza _server..."
+msgstr "Avvia _server..."
 
 #: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
@@ -224,11 +224,11 @@ msgstr "Nessun riscontro"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Script-Fu/Alfa a logotipo/3D _outline..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/C_ontorno 3D..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/3D _outline..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/C_ontorno 3D..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -321,7 +321,7 @@ msgstr "Dimensione font (pixel)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
-msgstr "Sfocatura radiale outline"
+msgstr "Sfocatura radiale contorno"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -502,7 +502,7 @@ msgstr "Valore delta su colore"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Alien Glow/_Freccia..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Incandescenza aliena/_Freccia..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -590,7 +590,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Alien Glow/B_ottone..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Incandescenza aliena/B_ottone..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -726,7 +726,7 @@ msgstr "Premuto"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Upper-Left color"
-msgstr "Alza colore sinistra"
+msgstr "Colore in alto a sinistra"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
@@ -774,7 +774,7 @@ msgstr "<Image>/Script-Fu/Animatori/_Sfumatura..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
-msgstr "Frame intermedio"
+msgstr "Quadri intermedi"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
@@ -802,15 +802,15 @@ msgstr "Gradiente personalizzato"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-HSV"
-msgstr "FG-BG-HSV"
+msgstr "PP-SF-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-RGB"
-msgstr "FG-BG-RGB"
+msgstr "PP-SF-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-Transparent"
-msgstr "Primo piano trasparente"
+msgstr "PP-trasparente"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
@@ -865,7 +865,7 @@ msgstr "Post-incandescenza"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr "Burn-In: necessita di due livelli in totale!"
+msgstr "Burn-In: ha bisogno in totale di due livelli!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
@@ -912,7 +912,7 @@ msgstr "Colore 3"
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
-msgstr "Granularità"
+msgstr "Granulosità"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
@@ -983,11 +983,11 @@ msgstr "Ammontare scheggie"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
-msgstr "Crea ombra staccata"
+msgstr "Crea ombra"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Riempimento sfondo con pattern"
+msgstr "Riempimento sfondo con un motivo"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
@@ -1098,7 +1098,7 @@ msgstr "Sfocatura Y"
 #: plug-ins/script-fu/scripts/clothify.scm.h:5
 #: plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
-msgstr "Definizione"
+msgstr "Profondità"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:6
@@ -1131,16 +1131,16 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/_Fumetto..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
-msgstr "Colore outline"
+msgstr "Colore contorno"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline Size"
-msgstr "Dimensione outline"
+msgstr "Dimensione contorno"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Metallo freddo..."
+msgstr "<Image>/Script-Fu/Alfa a logo/Metallo freddo..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
@@ -1157,7 +1157,7 @@ msgstr "<Image>/Modifica/Copia/Copia _visibile"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Crystal..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Cristallo..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
@@ -1166,7 +1166,7 @@ msgstr "<Image>/Script-Fu/Selezione/_Distorci selezione..."
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
-msgstr "Granularità (1 è bassa)"
+msgstr "Granulosità (1 è bassa)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
@@ -1186,7 +1186,7 @@ msgstr "Soglia (grande 1<-->255 piccola)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<Image>/Script-Fu/Ombre/Crea _ombra staccata..."
+msgstr "<Image>/Script-Fu/Ombre/Crea _ombra..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1225,7 +1225,7 @@ msgstr "Opacità"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<Image>/Script-Fu/Alchimia/Canc_ella ogni altra riga..."
+msgstr "<Image>/Script-Fu/Alchimia/Cancella a righ_e alterne..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1265,7 +1265,7 @@ msgstr "Righe/Colonne"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Script-Fu/Selezione/_Profilo sfumato..."
+msgstr "<Image>/Script-Fu/Selezione/_Contorno sfumato..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1335,7 +1335,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Utilità/_Mappa caratteri..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Active Colors"
-msgstr "Colore attivi"
+msgstr "Colori attivi"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
@@ -1379,7 +1379,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Congelato..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-msgstr "<Image>/Script-Fu/Decorazioni/Bordo _fuzzy..."
+msgstr "<Image>/Script-Fu/Decorazioni/Bordo con_fuso..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add Shadow"
@@ -1387,7 +1387,7 @@ msgstr "Aggiungi ombra"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur Border"
-msgstr "Bordo sfocato"
+msgstr "Sfuoca bordo"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
@@ -1397,12 +1397,14 @@ msgstr "Peso ombra (%)"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _grandi..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _grandi..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _piccoli..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _piccoli..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1446,25 +1448,33 @@ msgstr "Colore ombra"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-bottone a T_ubo..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-"
+"bottone a T_ubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/_Etichetta sotto-sotto-bottone a tubo..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/_Etichetta sotto-"
+"sotto-bottone a tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichette _generali a tubo..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichette "
+"_generali a tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta bottone a _tubo..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta bottone "
+"a _tubo..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1476,23 +1486,23 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/_Lucido..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
-msgstr "Gradiente rilievo (Outline)"
+msgstr "Sfuma gradiente (contorno)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend Gradient (Text)"
-msgstr "Gradiente rilievo (testo)"
+msgstr "Sfuma gradiente (testo)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline Gradient Reverse"
-msgstr "Gradiente inverso profilo"
+msgstr "Gradiente contorno inverso"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
-msgstr "Motivo (profilo)"
+msgstr "Motivo (contorno)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
-msgstr "Motivo (Sovrapposto)"
+msgstr "Motivo (sovrapposto)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
@@ -1509,15 +1519,15 @@ msgstr "Gradiente testo inverso"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
-msgstr "Utilizza sovrapposizione pattern"
+msgstr "Usa sovrapposizione motivo"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Utilizza pattern per l'outline piuttosto dei gradienti"
+msgstr "Usa motivo per il contorno invece del gradiente"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Utilizza pattern per il testo piuttosto dei gradienti"
+msgstr "Utilizza motivo per il testo invece del gradiente"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
@@ -1607,11 +1617,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
-msgstr "Colore frame"
+msgstr "Colore quadro"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame Size"
-msgstr "Dimensione frame"
+msgstr "Dimensione quadro"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
@@ -1667,7 +1677,7 @@ msgstr "Altezza paesaggio"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea Depth"
-msgstr "Profondità mare"
+msgstr "Profondità del mare"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Lava..."
@@ -1946,7 +1956,7 @@ msgstr "Aggiungi sfondo"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
 msgid "Add Drop-Shadow"
-msgstr "Aggiungi ombra staccata"
+msgstr "Aggiungi ombra"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Edge Radius"
@@ -2042,7 +2052,7 @@ msgstr "<Image>/Script-Fu/Animatori/_Globo ruotante..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr "Quadro"
+msgstr "Quadri"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
@@ -2208,7 +2218,7 @@ msgstr "Dimensione effetto (punti * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Modelli/_Torci-piastrella..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/_Torci-piastrella..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
@@ -2216,7 +2226,7 @@ msgstr "Ammontare della rotazione"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Modelli/_Storte..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/_Storte..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2300,7 +2310,7 @@ msgstr "Inizio sfumatura"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text Pattern"
-msgstr "Pattern testo"
+msgstr "Motivi testo"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
@@ -2384,7 +2394,7 @@ msgstr "Oscurità ombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow Depth"
-msgstr "Definizione ombra"
+msgstr "Profondità dell'ombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread Density"
@@ -2416,23 +2426,23 @@ msgstr "<Image>/Script-Fu/Ombre/Effetto-_xach..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop Shadow Blur Radius"
-msgstr "Ombra staccata con sfocatura radiale"
+msgstr "Raggio sfocatura ombra"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop Shadow Color"
-msgstr "Colore ombra staccata"
+msgstr "Colore ombra"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop Shadow Opacity"
-msgstr "Opacità ombra staccata"
+msgstr "Opacità ombra"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop Shadow X Offset"
-msgstr "Spostamento ombra staccata in X"
+msgstr "Spostamento ombra in X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop Shadow Y Offset"
-msgstr "Spostamento ombra staccata in Y"
+msgstr "Spostamento ombra in Y"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Opacity"
