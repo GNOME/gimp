@@ -9,6 +9,8 @@
 	* app/widgets/gimpdnd.c: unset the XdndDirectSave0 property when
 	the drag ends, minor cleanups.
 
+	* app/widgets/gimpimageview.c: removed unused function prototype.
+
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

@@ -45,9 +45,6 @@ static void   gimp_image_view_init          (GimpImageView       *view);
 static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
-static const gchar * gimp_image_view_drag_xds (GtkWidget *widget,
-                                               gpointer   data);
-
 
 static GimpContainerEditorClass *parent_class = NULL;
 
