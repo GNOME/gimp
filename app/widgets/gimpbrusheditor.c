@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
+#include "core/gimpcontext.h"
 
 #include "gimpbrusheditor.h"
 #include "gimpenumwidgets.h"
@@ -289,8 +290,15 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 GtkWidget *
 gimp_brush_editor_new (Gimp *gimp)
 {
+  GimpBrush *brush;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  brush = gimp_context_get_brush (gimp_get_user_context (gimp));
+
   return g_object_new (GIMP_TYPE_BRUSH_EDITOR,
                        "data-factory", gimp->brush_factory,
+                       "data",         brush,
                        NULL);
 }
 

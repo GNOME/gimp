@@ -1,5 +1,14 @@
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdataeditor.[ch]: added "data" property.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.c: pass the current data to
+	g_object_new() so we never end up with initially empty editors.
+
+2004-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdataeditor.[ch]: added CONSTRUCT_ONLY
 	"data-factory" property. Removed gimp_data_editor_construct().
 
