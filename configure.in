@@ -287,21 +287,6 @@ AC_TRY_RUN([#include <math.h>
     AC_MSG_RESULT),
   AC_MSG_RESULT())
 
-LIBS=$gimp_save_LIBS
-
-
-dnl NeXTStep cc seems to need this
-AC_MSG_CHECKING([for extra flags for POSIX compliance])
-AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
-  AC_MSG_RESULT(none needed),
-  gimp_save_CFLAGS=$CFLAGS
-  CFLAGS="$CFLAGS -posix"
-  AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
-    AC_MSG_RESULT(-posix),
-    AC_MSG_RESULT()
-    CFLAGS=$gimp_save_CFLAGS
-    AC_MSG_WARN([Could not determine POSIX flag. (-posix didn't work.)])))
-
 dnl Check for finite or isfinite
 AC_CHECK_FUNCS(finite, , [
   AC_MSG_CHECKING(for finite in <math.h>)
@@ -316,6 +301,21 @@ AC_CHECK_FUNCS(finite, , [
       AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
 AC_SUBST(HAVE_FINITE)
 AC_SUBST(HAVE_ISFINITE)
+
+LIBS=$gimp_save_LIBS
+
+
+dnl NeXTStep cc seems to need this
+AC_MSG_CHECKING([for extra flags for POSIX compliance])
+AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
+  AC_MSG_RESULT(none needed),
+  gimp_save_CFLAGS=$CFLAGS
+  CFLAGS="$CFLAGS -posix"
+  AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
+    AC_MSG_RESULT(-posix),
+    AC_MSG_RESULT()
+    CFLAGS=$gimp_save_CFLAGS
+    AC_MSG_WARN([Could not determine POSIX flag. (-posix didn't work.)])))
 
 dnl check for rint
 AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,

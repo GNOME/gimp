@@ -1130,7 +1130,7 @@ background_jpeg_save (PreviewPersistent *pp)
 	  stat (pp->file_name, &buf);
 	  g_snprintf (temp, sizeof (temp),
 		      _("Size: %ld bytes (%02.01f kB)"),
-		      (gint) buf.st_size, (gdouble) (buf.st_size) / 1024.0);
+		      (glong) buf.st_size, (gdouble) (buf.st_size) / 1024.0);
 	  gtk_label_set_text (GTK_LABEL (preview_size), temp);
 	
 	  /* and load the preview */
