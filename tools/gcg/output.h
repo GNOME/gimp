@@ -29,6 +29,7 @@ typedef struct{
 	/* gboolean docs : 1; */
 } ParamOptions;
 
+PNode* p_prim_varname(PrimType* t);
 PNode* p_cast(PNode* type, PNode* expr);
 PNode* p_params(FunParams* args, ParamOptions* opt);
 PNode* p_primtype(PrimType* t);

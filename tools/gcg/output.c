@@ -63,6 +63,10 @@ PNode* p_params(FunParams* args, ParamOptions* opt){
 		return n;
 }
 
+PNode* p_prim_varname(PrimType* t){
+	return p_c_ident(t->name);
+}
+
 PNode* p_primtype(PrimType* t){
 	return p_lst(p_str(t->module->name),
 		     p_str(t->name),

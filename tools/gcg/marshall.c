@@ -1,11 +1,39 @@
 #include "gcg.h"
 #include "output.h"
+#include "marshall.h"
 
-typedef struct {
+struct _SignalType {
 	Id package;
 	GtkType rettype;
 	GSList* argtypes;
-} SignalType;
+};
+
+SignalType* sig_type(Method* m){
+	SignalType *t=g_new(SignalType, 1);
+	GSList* p=m->params, *a=NULL;
+	t->package = DEF(MEMBER(m)->my_class)->type->module->name;
+	t->rettype = marshalling_type(&m->ret_type);
+	while(p){
+		Param* param=p->data;
+		GtkType* t=g_new(GtkType, 1);
+		*t=marshalling_type(&param->type);
+		a=g_slist_prepend(a, t);
+		p=p->next;
+	}
+	a=g_slist_reverse(a);
+	t->argtypes=a;
+	return t;
+}
+
+void sig_type_free(SignalType* t){
+	GSList* l=t->argtypes;
+	while(l){
+		g_free(l->data);
+		l=l->next;
+	}
+	g_slist_free(t->argtypes);
+	g_free(t);
+}
 
 PNode* p_gtype_name(GtkType t, gboolean abbr){
 	static const struct GTypeName{
@@ -65,40 +93,20 @@ GtkType marshalling_type(Type* t){
 }
 
 
-PNode* p_signal_func_name(Method* s, PNode* basename){
-	SignalType t;
-	GSList* p=s->params, *a=NULL;
-	PNode* ret;
-	t.package = DEF(MEMBER(s)->my_class)->type->module->name;
-	t.rettype = marshalling_type(&s->ret_type);
-	while(p){
-		Param* param=p->data;
-		GtkType* t=g_new(GtkType, 1);
-		*t=marshalling_type(&param->type);
-		a=g_slist_prepend(a, t);
-		p=p->next;
-	}
-	a=g_slist_reverse(a);
-	t.argtypes=a;
-	ret=p_fmt("_~_~_~_~",
-		  p_c_ident(t.package),
-		  basename,
-		  p_gtype_name(t.rettype, TRUE),
-		  p_for(t.argtypes, p_gtabbr, p_nil));
-	while(a){
-		g_free(a->data);
-		a=a->next;
-	}
-	g_slist_free(a);
-	return ret;
+PNode* p_signal_func_name(SignalType* t, PNode* basename){
+	return p_fmt("_~_~_~_~",
+		     p_c_ident(t->package),
+		     basename,
+		     p_gtype_name(t->rettype, TRUE),
+		     p_for(t->argtypes, p_gtabbr, p_nil));
 }
 
-PNode* p_signal_marshaller_name(Method* m){
-	return p_signal_func_name(m, p_str("marshall"));
+PNode* p_signal_marshaller_name(SignalType* t){
+	return p_signal_func_name(t, p_str("marshall"));
 }
 
-PNode* p_signal_demarshaller_name(Method* m){
-	return p_signal_func_name(m, p_str("demarshall"));
+PNode* p_signal_demarshaller_name(SignalType* t){
+	return p_signal_func_name(t, p_str("demarshall"));
 }
 
 PNode* p_handler_type(SignalType* t){
