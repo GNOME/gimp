@@ -135,8 +135,6 @@ static GtkWidget *preview_widget       (GDrawable *drawable);
 static gint flare_dialog               (GDrawable *drawable);
 static void flare_ok_callback          (GtkWidget *widget,
 					gpointer   data);
-static void flare_show_cursor_callback (GtkWidget *widget,
-					gpointer   data);
 
 static GtkWidget * flare_center_create            (GDrawable     *drawable);
 static void	   flare_center_destroy           (GtkWidget     *widget,
@@ -320,7 +318,6 @@ flare_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
-  GtkWidget *toggle;
   GtkWidget *frame;
   FlareCenter *center;
 
@@ -355,18 +352,6 @@ flare_dialog (GDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
-  /* show / hide cursor */
-  toggle = gtk_check_button_new_with_label (_("Show Cursor"));
-  gtk_container_set_border_width (GTK_CONTAINER (toggle), 6);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), center);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), show_cursor);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (flare_show_cursor_callback),
-                      &show_cursor);
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
@@ -384,17 +369,6 @@ flare_ok_callback (GtkWidget *widget,
   fint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-flare_show_cursor_callback (GtkWidget *widget, 
-			    gpointer   data)
-{
-  FlareCenter *center;
-
-  center = gtk_object_get_user_data (GTK_OBJECT (widget));
-  gimp_toggle_button_update (widget, data);
-  FlareFX (center->drawable, TRUE);
 }
 
 /* --- Filter functions --- */
@@ -417,12 +391,10 @@ FlareFX (GDrawable *drawable,
       width  = GTK_PREVIEW (preview)->buffer_width;
       height = GTK_PREVIEW (preview)->buffer_height;
       bytes  = GTK_PREVIEW (preview)->bpp;
-      gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
       xs = (gdouble)fvals.posx * preview_scale_x;
       ys = (gdouble)fvals.posy * preview_scale_y;
 
-      /* now, we clobber the x1 x2 y1 y2 with the real sizes */
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
@@ -772,6 +744,7 @@ flare_center_create (GDrawable *drawable)
   GtkWidget   *label;
   GtkWidget   *pframe;
   GtkWidget   *spinbutton;
+  GtkWidget   *check;
 
   center = g_new (FlareCenter, 1);
   center->drawable = drawable;
@@ -794,7 +767,7 @@ flare_center_create (GDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
 
-  table = gtk_table_new (2, 4, FALSE);
+  table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
@@ -860,11 +833,26 @@ flare_center_create (GDrawable *drawable)
   gtk_object_set_user_data (GTK_OBJECT (frame), center);
   gtk_widget_show (frame);
 
+  /* show / hide cursor */
+  check = gtk_check_button_new_with_label (_("Show Cursor"));
+  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
+  gtk_signal_connect (GTK_OBJECT (check), "toggled",
+                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+                      &show_cursor);
+  gtk_signal_connect_object (GTK_OBJECT (check), "toggled",
+			     GTK_SIGNAL_FUNC (FlareFX),
+			     (gpointer)drawable);
+  gtk_widget_show (check);
+
   flare_center_cursor_update (center);
 
   center->cursor = FALSE;    /* Make sure that the cursor has not been drawn */
   center->in_call = FALSE;   /* End of initialization */
-  FlareFX(drawable, 1);
+
+  FlareFX (drawable, TRUE);
+
   DEBUG1 ("fvals center=%d,%d\n", fvals.posx, fvals.posy);
   DEBUG1 ("center cur=%d,%d\n", center->curx, center->cury);
   

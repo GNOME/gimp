@@ -71,8 +71,6 @@ static void run   (gchar   *name,
 		   GParam **return_vals);
 
 static gint glass_dialog               (GDrawable     *drawable);
-static void tile_int_adjustment_update (GtkAdjustment *adj, 
-					gpointer       data);
 static void glass_ok_callback          (GtkWidget     *widget,
 					gpointer       data);
 
@@ -302,10 +300,12 @@ glass_dialog (GDrawable *drawable)
 			      gtvals.xblock, 10, 50, 2, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (tile_int_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &gtvals.xblock);
+  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
+			     GTK_SIGNAL_FUNC (glasstile),
+			     (gpointer)drawable);
 
   /* Horizontal scale - Height */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -315,8 +315,11 @@ glass_dialog (GDrawable *drawable)
 			      NULL, NULL);
   gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (tile_int_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &gtvals.yblock);
+  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
+			     GTK_SIGNAL_FUNC (glasstile),
+			     (gpointer)drawable);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -327,17 +330,6 @@ glass_dialog (GDrawable *drawable)
   gdk_flush ();
 
   return gt_int.run;
-}
-
-static void
-tile_int_adjustment_update (GtkAdjustment *adj, 
-			    gpointer       data)
-{
-  GDrawable *drawable;
-
-  gimp_int_adjustment_update (adj, data);
-  drawable = gtk_object_get_data (GTK_OBJECT (adj), "drawable");
-  glasstile (drawable, TRUE); 
 }
 
 static void
@@ -362,6 +354,7 @@ preview_widget (GDrawable *drawable)
 	 (GTK_PREVIEW (preview)->bpp);
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
+
   return preview;
 }
 

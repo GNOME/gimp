@@ -20,6 +20,17 @@
  * Contact info: nigel@cs.nwu.edu
  *
  * Version: 1.0.0
+ *
+ * Version: 1.0.1
+ *
+ * tim coppefield [timecop@japan.co.jp]
+ *
+ * Added dynamic preview mode.
+ *
+ * Damn, this plugin is the tightest piece of code I ever seen.
+ * I wish all filters in the plugins operated on guchar *buffer
+ * of the entire image :) sweet stuff.
+ *
  */
 
 #include "config.h"
@@ -35,8 +46,22 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-typedef enum {BEZIER_1, BEZIER_2} style_t;
-typedef enum {LEFT, RIGHT, UP, DOWN} bump_t;
+#define PREVIEW_SIZE    128 
+
+
+typedef enum 
+{
+  BEZIER_1, 
+  BEZIER_2
+} style_t;
+
+typedef enum 
+{
+  LEFT, 
+  RIGHT, 
+  UP, 
+  DOWN
+} bump_t;
 
 
 static void query (void);
@@ -46,14 +71,24 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
-static gint jigsaw     (void);
-static void dialog_box (void);
+static gint jigsaw     (gboolean preview_mode);
 
-static void run_callback          (GtkWidget *widget, gpointer data);
-static void check_button_callback (GtkWidget *widget, gpointer data);
+static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
+static void  dialog_box (void);
+static void  fill_preview_with_thumb (GtkWidget *preview_widget, 
+				      gint32     drawable_ID);
+static GtkWidget *preview_widget  (GDrawable *drawable);
 
-static void draw_jigsaw(guchar *buffer, gint width, gint height, gint bytes);
-static void draw_vertical_border(guchar *buffer, gint width, gint height,
+static void run_callback          (GtkWidget *widget, gpointer   data);
+static void check_button_callback (GtkWidget *widget, gpointer   data);
+
+static void draw_jigsaw           (guchar    *buffer, 
+				   gint       width, 
+				   gint       height, 
+				   gint       bytes, 
+				   gboolean   preview_mode);
+
+static void draw_vertical_border  (guchar *buffer, gint width, gint height,
 				 gint bytes, gint x_offset, gint ytiles,
 				 gint blend_lines, gdouble blend_amount);
 static void draw_horizontal_border(guchar *buffer, gint width,
@@ -306,6 +341,10 @@ static globals_t globals =
   1
 };
 
+/* preview globals */
+static guchar *preview_bits;
+static GtkWidget *preview;
+
 MAIN ()
 
 static void
@@ -329,7 +368,7 @@ query (void)
 			  "Jigsaw puzzle look",
 			  "Nigel Wetten",
 			  "Nigel Wetten",
-			  "1998",
+			  "May 2000",
 			  N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
@@ -365,7 +404,7 @@ run (gchar   *name,
 	  config.style = param[5].data.d_int32;
 	  config.blend_lines = param[6].data.d_int32;
 	  config.blend_amount = param[7].data.d_float;
-	  if (jigsaw() == -1)
+	  if (jigsaw(0) == -1)
 	    {
 	      status = STATUS_EXECUTION_ERROR;
 	    }
@@ -387,7 +426,7 @@ run (gchar   *name,
 	  break;
 	}
       gimp_progress_init( _("Assembling Jigsaw"));
-      if (jigsaw() == -1)
+      if (jigsaw(0) == -1)
 	{
 	  status = STATUS_CALLING_ERROR;
 	  break;
@@ -396,12 +435,13 @@ run (gchar   *name,
       gimp_set_data(PLUG_IN_STORAGE, &globals.tooltips,
 		    sizeof(globals.tooltips));
       gimp_displays_flush();
+      g_free(preview_bits);
       break;
       
     case RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data("plug_in_jigsaw", &config);
-      if (jigsaw() == -1)
+      if (jigsaw(0) == -1)
 	{
 	  status = STATUS_EXECUTION_ERROR;
 	  gimp_message("An execution error occured.");
@@ -424,37 +464,69 @@ run (gchar   *name,
 }
 
 static gint
-jigsaw (void)
+jigsaw (gboolean preview_mode)
 {
   GPixelRgn src_pr, dest_pr;
   guchar *buffer;
   GDrawable *drawable = globals.drawable;
-  gint width = drawable->width;
-  gint height = drawable->height;
-  gint bytes = drawable->bpp;
-  gint buffer_size = bytes * width * height;
+  gint width;
+  gint height;
+  gint bytes;
+  gint buffer_size;
 
   srand((gint)NULL);
 
+  if (preview_mode) 
+    {
+      width  = GTK_PREVIEW (preview)->buffer_width;
+      height = GTK_PREVIEW (preview)->buffer_height;
+      bytes  = GTK_PREVIEW (preview)->bpp;
+    } 
+  else 
+    {
+      width  = drawable->width;
+      height = drawable->height;
+      bytes  = drawable->bpp;
+    }
+ 
   /* setup image buffer */
-  gimp_pixel_rgn_init(&src_pr, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&dest_pr, drawable, 0, 0, width, height, TRUE, TRUE);
+  buffer_size = bytes * width * height;
   buffer = g_malloc(buffer_size);
-  gimp_pixel_rgn_get_rect(&src_pr, buffer, 0, 0, width, height);
 
-  check_config(width, height);
+  if (preview_mode) 
+    {
+      memcpy(buffer, preview_bits, buffer_size);
+    } 
+  else 
+    {
+      gimp_pixel_rgn_init(&src_pr, drawable, 0, 0, width, height, FALSE, FALSE);
+      gimp_pixel_rgn_init(&dest_pr, drawable, 0, 0, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_get_rect(&src_pr, buffer, 0, 0, width, height);
+    }
+
+  check_config (width, height);
   globals.steps[LEFT] = globals.steps[RIGHT] = globals.steps[UP]
     = globals.steps[DOWN] = (config.x < config.y) ?
     (width / config.x * 2) : (height / config.y * 2);
 
-  malloc_cache();
-  draw_jigsaw(buffer, width, height, bytes);
-  free_cache();
+  malloc_cache ();
+  draw_jigsaw (buffer, width, height, bytes, preview_mode);
+  free_cache ();
+
   /* cleanup */
-  gimp_pixel_rgn_set_rect(&dest_pr, buffer, 0, 0, width, height);
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, 0, 0, width, height);
+  if (preview_mode) 
+    {
+      memcpy (GTK_PREVIEW (preview)->buffer, buffer, buffer_size);
+      gtk_widget_queue_draw (preview);
+    } 
+  else 
+    {
+      gimp_pixel_rgn_set_rect(&dest_pr, buffer, 0, 0, width, height);
+      gimp_drawable_flush(drawable);
+      gimp_drawable_merge_shadow(drawable->id, TRUE);
+      gimp_drawable_update(drawable->id, 0, 0, width, height);
+    }
+
   g_free(buffer);
 
   return 0;
@@ -494,10 +566,11 @@ generate_bezier (gint  px[4],
 }
 
 static void
-draw_jigsaw (guchar *buffer,
-	     gint    width,
-	     gint    height,
-	     gint    bytes)
+draw_jigsaw (guchar   *buffer,
+	     gint      width,
+	     gint      height,
+	     gint      bytes,
+	     gboolean  preview_mode)
 {
   gint i;
   gint *x, *y;
@@ -529,14 +602,15 @@ draw_jigsaw (guchar *buffer,
 	{
 	  draw_vertical_border(buffer, width, height, bytes, x[i], ytiles,
 			       blend_lines, blend_amount);
-	  gimp_progress_update((gdouble) i / (gdouble) progress_total);
+	  if (!preview_mode) 
+	    gimp_progress_update ((gdouble) i / (gdouble) progress_total);
 	}
       for (i = 0; i < ylines; i++)
 	{
 	  draw_horizontal_border(buffer, width, bytes, y[i], xtiles,
 				 blend_lines, blend_amount);
-	  gimp_progress_update((gdouble) (i + xlines)
-				/ (gdouble) progress_total);
+	  if (!preview_mode) 
+	    gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
 	}
     }
   else if (style == BEZIER_2)
@@ -546,15 +620,16 @@ draw_jigsaw (guchar *buffer,
 	  draw_bezier_vertical_border(buffer, width, height, bytes, x[i],
 				      xtiles, ytiles, blend_lines,
 				      blend_amount, steps);
-	  gimp_progress_update((gdouble) i / (gdouble) progress_total);
+	  if (!preview_mode) 
+	    gimp_progress_update ((gdouble) i / (gdouble) progress_total);
 	}
       for (i = 0; i < ylines; i++)
 	{
 	  draw_bezier_horizontal_border(buffer, width, height, bytes, y[i],
 					xtiles, ytiles, blend_lines,
 					blend_amount, steps);
-	  gimp_progress_update((gdouble) (i + xlines)
-			       / (gdouble) progress_total);
+	  if (!preview_mode) 
+	    gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
 	}
     }
   else
@@ -562,8 +637,9 @@ draw_jigsaw (guchar *buffer,
       printf("draw_jigsaw: bad style\n");
       exit(1);
     }
-  g_free(globals.gridx);
-  g_free(globals.gridy);
+
+  g_free (globals.gridx);
+  g_free (globals.gridy);
   
   return;
 }
@@ -2284,7 +2360,11 @@ check_config (gint width,
 static void
 dialog_box (void)
 {
+  GDrawable *drawable = globals.drawable;
   GtkWidget *dlg;
+  GtkWidget *main_hbox;
+  GtkWidget *abox;
+
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *rbutton1;
@@ -2320,10 +2400,32 @@ dialog_box (void)
       gimp_help_disable_tooltips ();
     }
 
+  main_hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_hbox);
+
+  /* make a nice frame */
+  frame = gtk_frame_new (_("Preview"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
+  preview = preview_widget (drawable); /* we are here */
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  jigsaw(1); /* render preview */
+  gtk_widget_show (preview);
+  
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   frame = gtk_frame_new (_("Number of Tiles"));
@@ -2345,6 +2447,9 @@ dialog_box (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.x);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (jigsaw),
+		      NULL);
 
   /* ytiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2355,6 +2460,9 @@ dialog_box (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.y);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (jigsaw),
+		      NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -2379,6 +2487,9 @@ dialog_box (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &config.blend_lines);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (jigsaw),
+		      NULL);
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2391,6 +2502,9 @@ dialog_box (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &config.blend_amount);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (jigsaw),
+		      NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -2401,7 +2515,7 @@ dialog_box (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   frame = gimp_radio_group_new2 (TRUE, _("Jigsaw Style"),
-				 gimp_radio_button_update,
+				 jigsaw_radio_button_update,
 				 &config.style, (gpointer) config.style,
 
 				 _("Square"), (gpointer) BEZIER_1, &rbutton1,
@@ -2466,4 +2580,126 @@ check_button_callback (GtkWidget *widget,
       gimp_help_enable_tooltips ();
       globals.tooltips = 1;
     }
+}
+
+static void
+jigsaw_radio_button_update (GtkWidget *widget, 
+			    gpointer data)
+{
+  gimp_radio_button_update (widget, data);
+  jigsaw (TRUE);
+}
+
+
+/* preview library */
+
+static GtkWidget *
+preview_widget (GDrawable *drawable)
+{
+  gint       size;
+  GtkWidget *preview;
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  fill_preview_with_thumb (preview, drawable->id);
+  size = (GTK_PREVIEW (preview)->buffer_width) * 
+	 (GTK_PREVIEW (preview)->buffer_height) * 
+	 (GTK_PREVIEW (preview)->bpp);
+  preview_bits = g_malloc (size);
+  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
+
+  return preview;
+}
+
+static void
+fill_preview_with_thumb (GtkWidget *widget, 
+			 gint32     drawable_ID)
+{
+  guchar  *drawable_data;
+  gint     bpp;
+  gint     x,y;
+  gint     width  = PREVIEW_SIZE;
+  gint     height = PREVIEW_SIZE;
+  guchar  *src;
+  gdouble  r, g, b, a;
+  gdouble  c0, c1;
+  guchar  *p0, *p1;
+  guchar  *even, *odd;
+
+  bpp = 0; /* Only returned */
+  
+  drawable_data = 
+    gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
+
+  if (width < 1 || height < 1)
+    return;
+
+  gtk_preview_size (GTK_PREVIEW (widget), width, height);
+
+  even = g_malloc (width * 3);
+  odd  = g_malloc (width * 3);
+  src = drawable_data;
+
+  for (y = 0; y < height; y++)
+    {
+      p0 = even;
+      p1 = odd;
+      
+      for (x = 0; x < width; x++) 
+	{
+	  if(bpp == 4)
+	    {
+	      r =  ((gdouble)src[x*4+0])/255.0;
+	      g = ((gdouble)src[x*4+1])/255.0;
+	      b = ((gdouble)src[x*4+2])/255.0;
+	      a = ((gdouble)src[x*4+3])/255.0;
+	    }
+	  else if(bpp == 3)
+	    {
+	      r =  ((gdouble)src[x*3+0])/255.0;
+	      g = ((gdouble)src[x*3+1])/255.0;
+	      b = ((gdouble)src[x*3+2])/255.0;
+	      a = 1.0;
+	    }
+	  else
+	    {
+	      r = ((gdouble)src[x*bpp+0])/255.0;
+	      g = b = r;
+	      if(bpp == 2)
+		a = ((gdouble)src[x*bpp+1])/255.0;
+	      else
+		a = 1.0;
+	    }
+	  
+	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
+	    {
+	      c0 = GIMP_CHECK_LIGHT;
+	      c1 = GIMP_CHECK_DARK;
+	    } 
+	  else 
+	    {
+	      c0 = GIMP_CHECK_DARK;
+	      c1 = GIMP_CHECK_LIGHT;
+	    }
+	  
+	*p0++ = (c0 + (r - c0) * a) * 255.0;
+	*p0++ = (c0 + (g - c0) * a) * 255.0;
+	*p0++ = (c0 + (b - c0) * a) * 255.0;
+	
+	*p1++ = (c1 + (r - c1) * a) * 255.0;
+	*p1++ = (c1 + (g - c1) * a) * 255.0;
+	*p1++ = (c1 + (b - c1) * a) * 255.0;
+	
+      } /* for */
+      
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
+	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
+      else
+	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
+
+      src += width * bpp;
+    }
+
+  g_free (even);
+  g_free (odd);
+  g_free (drawable_data);
 }

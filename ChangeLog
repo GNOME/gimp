@@ -1,4 +1,33 @@
 2000-05-23  Sven Neumann  <sven@gimp.org>
+	
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c: a more elegant way to update 
+	the preview when parameters change.
+
+	* plug-ins/common/grid.c: if a selection is active, show the 
+	selected area in the preview.
+	
+	* plug-ins/common/illusion.c: applied modified version of 
+	gimp-timecop-200005-7.illusion which adds a preview to the
+	illusion plug-in.
+
+	* plug-ins/common/jigsaw.c: applied modified version of 
+	gimp-timecop-200005-8.jigsaw which adds a preview to the
+	jigsaw plug-in.
+
+	* plug-ins/common/max_rgb.c: applied modified version of 
+	gimp-timecop-200005-9.max_rgb which adds a preview to the
+	max_rgb plug-in.
+
+	* plug-ins/common/noisify.c: applied modified version of 
+	gimp-timecop-200005-10.noisify which adds a preview to the
+	noisify plug-in.
+
+	* plug-ins/common/nova.c: applied modified version of 
+	gimp-timecop-200005-11.nova which adds a preview to the
+	nova plug-in.
+
+2000-05-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c
 	* plug-ins/common/glasstile.c

@@ -1000,6 +1000,7 @@ fill_preview (GtkWidget *widget,
   GPixelRgn  srcPR;
   gint       width;
   gint       height;
+  gint       x1, x2, y1, y2;
   gint       bpp;
   gint       x, y;
   guchar    *src;
@@ -1008,16 +1009,24 @@ fill_preview (GtkWidget *widget,
   guchar    *p0, *p1;
   guchar    *even, *odd;
   
-  width  = MIN (gimp_drawable_width (drawable->id), PREVIEW_SIZE);
-  height = MIN (gimp_drawable_height (drawable->id), PREVIEW_SIZE);
-  bpp = gimp_drawable_bpp (drawable->id);
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
+  if (x2 - x1 > PREVIEW_SIZE)
+    x2 = x1 + PREVIEW_SIZE;
+  
+  if (y2 - y1 > PREVIEW_SIZE)
+    y2 = y1 + PREVIEW_SIZE;
+  
+  width  = x2 - x1;
+  height = y2 - y1;
+  bpp    = gimp_drawable_bpp (drawable->id);
   
   if (width < 1 || height < 1)
     return;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
 
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, x2, y2, FALSE, FALSE);
 
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
@@ -1025,7 +1034,7 @@ fill_preview (GtkWidget *widget,
 
   for (y = 0; y < height; y++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src, 0, y, width);
+      gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
       p0 = even;
       p1 = odd;
       
