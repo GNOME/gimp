@@ -1185,7 +1185,7 @@ static void
 gimp_context_copy_background (GimpContext *src,
 			      GimpContext *dest)
 {
-  gimp_context_real_set_foreground (dest,
+  gimp_context_real_set_background (dest,
 				    src->background[0],
 				    src->background[1],
 				    src->background[2]);

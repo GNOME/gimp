@@ -1,3 +1,8 @@
+1999-11-15  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimpcontext.c (gimp_context_copy_background): Fix copy&paste
+	error.
+
 Mon Nov 15 21:18:19 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * libgimp/COPYING: Update to COPYING.LIB-2.1. If you feel this
@@ -168,7 +173,6 @@ Sat Nov 13 18:07:51 PST 1999 Manish Singh <yosh@gimp.org>
 	* libgimp/gimpexport.c: Include config.h for ENABLE_NLS.
 
 	* libgimp/makefile.{cygwin,msc}: Add gimpselection.
-
 	* libgimp/gimp.def: Add its entry points.
 
 	* plug-ins/makefile.{cygwin,msc}: Remove rotators.
