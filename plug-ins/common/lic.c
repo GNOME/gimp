@@ -851,12 +851,16 @@ create_main_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
   
-  button = gtk_check_button_new_with_mnemonic( _("C_reate\nNew Image"));
+  button = gtk_check_button_new_with_mnemonic (_("C_reate\nNew Image"));
   gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				licvals.create_new_image == TRUE);
+                                licvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &licvals.create_new_image);
 
   frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
 				 G_CALLBACK (gimp_radio_button_update),
@@ -996,16 +1000,16 @@ static void lic_noninteractive (GimpDrawable *drawable);
 static void
 set_default_settings (void)
 {
-  licvals.filtlen=5;
-  licvals.noisemag=2;
-  licvals.intsteps=25;
-  licvals.minv=-25;
-  licvals.maxv=25;
-  licvals.create_new_image=TRUE;  
-  licvals.effect_channel=2;
-  licvals.effect_operator=1;
-  licvals.effect_convolve=1;
-  licvals.effect_image_id=0;
+  licvals.filtlen          = 5;
+  licvals.noisemag         = 2;
+  licvals.intsteps         = 25;
+  licvals.minv             = -25;
+  licvals.maxv             = 25;
+  licvals.create_new_image = TRUE;  
+  licvals.effect_channel   = 2;
+  licvals.effect_operator  = 1;
+  licvals.effect_convolve  = 1;
+  licvals.effect_image_id  = 0;
 }
 
 static void
@@ -1013,8 +1017,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
