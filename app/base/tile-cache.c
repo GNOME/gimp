@@ -107,7 +107,11 @@ tile_cache_insert (Tile *tile)
        */
       while ((cur_cache_size + max_tile_size) > max_cache_size)
 	{
-	  if (!tile_cache_zorch_next()) goto out;
+	  if (!tile_cache_zorch_next()) 
+	    {
+	      g_warning ("cache: unable to find room for a tile");
+	      goto out;
+	    }
 	}
       
       /* Note the increase in the number of bytes the cache
@@ -225,6 +229,8 @@ static gint
 tile_cache_zorch_next ()
 {
   Tile *tile;
+
+  /* printf("cache zorch: %u/%u\n", cur_cache_size, cur_cache_dirty); */
 
   if      (clean_list.first) tile = clean_list.first;
   else if (dirty_list.first) tile = dirty_list.first;

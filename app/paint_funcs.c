@@ -2615,7 +2615,8 @@ copy_region (PixelRegion *src,
 	      tile_manager_map_tile (dest->tiles,
 				     xstepper, ystepper, 0,
 				     src_tile);
-	      
+
+	      tile_release (src_tile, FALSE);
 	    }	  
 	}
 #if defined (TILE_DEBUG)

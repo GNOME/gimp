@@ -62,6 +62,8 @@ tile_init (Tile *tile,
 }
 
 int tile_ref_count = 0;
+int tile_share_count = 0;
+int tile_active_count = 0;
 
 void
 tile_lock (Tile *tile)
@@ -88,6 +90,7 @@ tile_lock (Tile *tile)
 	  /* There is no data, so the tile must be swapped out */
 	  tile_swap_in (tile);
 	}
+      tile_active_count ++;
     }
   TILE_MUTEX_UNLOCK (tile);
 
@@ -133,6 +136,7 @@ tile_release (Tile *tile, int dirty)
 	     tile cache */
 	  tile_cache_insert (tile);
 	}
+      tile_active_count--;
     }
 
   TILE_MUTEX_UNLOCK (tile);
@@ -142,17 +146,26 @@ void
 tile_alloc (Tile *tile)
 {
   if (tile->data)
-    goto out;
+    return;
 
   /* Allocate the data for the tile.
    */
   tile->data = g_new (guchar, tile_size (tile));
-out:
 }
 
 static void
 tile_destroy (Tile *tile)
 {
+  if (tile->ref_count) 
+    {
+      g_warning ("tried to destroy a ref'd tile");
+      return;
+    }
+  if (tile->share_count)
+    {
+      g_warning ("tried to destroy an attached tile");
+      return;
+    }
   if (tile->data) 
     {
       g_free (tile->data);
@@ -196,6 +209,7 @@ tile_attach (Tile *tile, void *tm, int tile_num)
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
     }
   tile->share_count++;
+  tile_share_count++;
 #ifdef TILE_DEBUG
   g_print("tile_attach: %p -> (%p,%d) *%d\n", tile, tm, tile_num, tile->share_count);
 #endif
@@ -232,6 +246,7 @@ tile_detach (Tile *tile, void *tm, int tile_num)
   *link = tmp->next;
   g_free (tmp);
 
+  tile_share_count--;
   tile->share_count--;
  
   if (tile->share_count == 0 && tile->ref_count == 0)
