@@ -3449,7 +3449,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint         *error_limiter;
   const gshort *fs_err1, *fs_err2;
   const gshort *fs_err3, *fs_err4;
-  const gshort *range_limiter;
+  const guchar *range_limiter;
   gint          src_bytes, dest_bytes;
   const guchar *src;
   guchar       *dest;
@@ -3668,7 +3668,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint         *error_limiter;
   const gshort *fs_err1, *fs_err2;
   const gshort *fs_err3, *fs_err4;
-  const gshort *range_limiter;
+  const guchar *range_limiter;
   gint          src_bytes, dest_bytes;
   const guchar *src;
   guchar       *dest;

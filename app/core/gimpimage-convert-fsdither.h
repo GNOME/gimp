@@ -22,12 +22,12 @@
 /* The following 5 arrays are used in performing floyd-steinberg
  *  error diffusion dithering. The range array allows the quick
  *  bounds checking of pixel values. The 4 error arrays contain
- *  the error computations for the east, south-east, south and 
+ *  the error computations for the east, south-east, south and
  *  south-west pixels surrounding the current pixel respectively.
  */
 
 
-static const short range_array[] = {
+static const guchar range_array[] = {
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -133,7 +133,7 @@ static const short range_array[] = {
   255,  255,  255,  255,  255,
 };
 
-static const short floyd_steinberg_error1[] = {
+static const gshort floyd_steinberg_error1[] = {
  -223, -223, -222, -222, -221, -221, -220, -220, -220, -219,
  -219, -218, -218, -217, -217, -217, -216, -216, -215, -215,
  -214, -214, -213, -213, -213, -212, -212, -211, -211, -210,
@@ -239,7 +239,7 @@ static const short floyd_steinberg_error1[] = {
   222,  223,  223,  224,  224,
 };
 
-static const short floyd_steinberg_error2[] = {
+static const gshort floyd_steinberg_error2[] = {
   -95,  -95,  -95,  -95,  -95,  -94,  -94,  -94,  -94,  -94,
   -93,  -93,  -93,  -93,  -93,  -93,  -92,  -92,  -92,  -92,
   -92,  -91,  -91,  -91,  -91,  -91,  -90,  -90,  -90,  -90,
@@ -345,7 +345,7 @@ static const short floyd_steinberg_error2[] = {
    95,   95,   95,   96,   96,
 };
 
-static const short floyd_steinberg_error3[] = {
+static const gshort floyd_steinberg_error3[] = {
  -159, -159, -159, -158, -158, -158, -157, -157, -157, -156,
  -156, -156, -155, -155, -155, -155, -154, -154, -154, -153,
  -153, -153, -152, -152, -152, -151, -151, -151, -150, -150,
@@ -451,7 +451,7 @@ static const short floyd_steinberg_error3[] = {
   159,  159,  159,  160,  160,
 };
 
-static const short floyd_steinberg_error4[] = {
+static const gshort floyd_steinberg_error4[] = {
   -34,  -33,  -33,  -33,  -33,  -33,  -34,  -33,  -32,  -33,
   -33,  -33,  -33,  -33,  -32,  -31,  -33,  -32,  -32,  -32,
   -32,  -32,  -33,  -32,  -31,  -32,  -32,  -32,  -32,  -32,

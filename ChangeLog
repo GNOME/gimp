@@ -1,3 +1,9 @@
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-convert-fsdither.h
+	* app/core/gimpimage-convertc: save a kilobyte of data by using
+	guchar for the range array.
+
 2005-02-27  Daniel Egger  <de@axiros.com>
 
 	* app/base/Makefile.am
