@@ -1,3 +1,11 @@
+Sat Jul 25 03:09:02 PDT 1998  Jay Cox <jaycox@earthlink.net>
+
+	* app/gimpbrushgenerated.c: swap out the mask if
+	stingy_memory_use is set.
+
+	* app/gimpbrushlist.c: fixed bug related to
+	stingy_memory_use
+
 Fri Jul 24 14:03:13 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/transform*.[ch]: applied gimp-tml-980724-1 for new
@@ -30,6 +38,9 @@ Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@earthlink.net>
         Very minimal.
 
 	* gimpbrush.[ch]: added support for brush axis.
+
+	* gimpbrushgenerated.c: added support for brush axis.
+	Changed the mask intensity function from gamma to gauss(gamma)
 
 	* paint_core.[ch]: replaced the mask field with a brush field.
 	modified paint_core_interpolate to use brush axis.

@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "paint_core.h"
+#include "gimprc.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -145,6 +146,9 @@ gimp_brush_generated_load (char *file_name)
 
   gimp_brush_generated_thaw(brush);
 
+  if (stingy_memory_use)
+    temp_buf_swap (GIMP_BRUSH(brush)->mask);
+
   return brush;
 }
 
@@ -199,6 +203,7 @@ gimp_brush_generated_thaw(GimpBrushGenerated *brush)
   if (brush->freeze == 0)
     gimp_brush_generated_generate(brush);
 }
+
 static
 double gauss(double f)
 { /* this aint' a real gauss function */
@@ -232,7 +237,12 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
   
   if (brush->freeze) /* if we are frozen defer rerendering till later */
     return;
+
   gbrush = GIMP_BRUSH(brush);
+
+  if (stingy_memory_use && gbrush->mask)
+    temp_buf_unswap (gbrush->mask);
+
   if (gbrush->mask)
   {
     temp_buf_free(gbrush->mask);

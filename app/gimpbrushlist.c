@@ -376,7 +376,7 @@ void
 select_brush (GimpBrush * brush)
 {
   /*  Make sure the active brush is swapped before we get a new one... */
-  if (stingy_memory_use)
+  if (stingy_memory_use && active_brush && active_brush->mask)
     temp_buf_swap (active_brush->mask);
 
   if (active_brush)
