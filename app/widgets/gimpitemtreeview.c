@@ -385,8 +385,11 @@ gimp_item_tree_view_new (gint                  preview_size,
   view      = GIMP_CONTAINER_VIEW (item_view);
   tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
 
-  view->preview_size = preview_size;
-  view->reorderable  = TRUE;
+  gimp_container_view_construct (GIMP_CONTAINER_VIEW (item_view),
+                                 NULL, NULL,
+                                 preview_size, TRUE,
+                                 -1, -1);
+
   view->dnd_widget   = NULL;
 
   gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),

@@ -342,6 +342,37 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 }
 
 void
+gimp_container_view_construct (GimpContainerView *view,
+                               GimpContainer     *container,
+                               GimpContext       *context,
+                               gint               preview_size,
+                               gboolean           reorderable,
+                               gint               min_items_x,
+                               gint               min_items_y)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (min_items_x <= 64);
+  g_return_if_fail (min_items_y <= 64);
+
+  view->reorderable = reorderable ? TRUE : FALSE;
+
+  gimp_container_view_set_preview_size (view, preview_size);
+
+  gimp_container_view_set_size_request (view,
+                                        (preview_size + 2) * min_items_x,
+                                        (preview_size + 2) * min_items_y);
+
+  if (container)
+    gimp_container_view_set_container (view, container);
+
+  if (context)
+    gimp_container_view_set_context (view, context);
+}
+
+void
 gimp_container_view_set_context (GimpContainerView *view,
 				 GimpContext       *context)
 {
@@ -453,8 +484,8 @@ gimp_container_view_set_size_request (GimpContainerView *view,
   gint                    border_y;
 
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (width >= view->preview_size);
-  g_return_if_fail (height >= view->preview_size);
+  g_return_if_fail (width  <= 0 || width  >= view->preview_size);
+  g_return_if_fail (height <= 0 || height >= view->preview_size);
 
   sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (view->scrolled_win);
 
@@ -473,8 +504,8 @@ gimp_container_view_set_size_request (GimpContainerView *view,
   border_y = view->scrolled_win->style->ythickness * 2;
 
   gtk_widget_set_size_request (view->scrolled_win,
-                               width  + border_x,
-                               height + border_y);
+                               width  > 0 ? width  + border_x : -1,
+                               height > 0 ? height + border_y : -1);
 }
 
 void

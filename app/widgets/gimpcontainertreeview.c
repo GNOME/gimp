@@ -258,7 +258,6 @@ gimp_container_tree_view_new (GimpContainer *container,
 			      gint           min_items_y)
 {
   GimpContainerTreeView *tree_view;
-  GimpContainerView     *view;
 
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
@@ -270,20 +269,10 @@ gimp_container_tree_view_new (GimpContainer *container,
 
   tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW, NULL);
 
-  view = GIMP_CONTAINER_VIEW (tree_view);
-
-  view->preview_size = preview_size;
-  view->reorderable  = reorderable ? TRUE : FALSE;
-
-  gimp_container_view_set_size_request (view,
-                                        (preview_size + 2) * min_items_x,
-                                        (preview_size + 2) * min_items_y);
-
-  if (container)
-    gimp_container_view_set_container (view, container);
-
-  if (context)
-    gimp_container_view_set_context (view, context);
+  gimp_container_view_construct (GIMP_CONTAINER_VIEW (tree_view),
+                                 container, context,
+                                 preview_size, reorderable,
+                                 min_items_x, min_items_y);
 
   return GTK_WIDGET (tree_view);
 }

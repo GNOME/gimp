@@ -1,3 +1,19 @@
+2003-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.[ch]: added
+	gimp_container_view_construct(). The new function calls
+	gimp_container_view_set_preview_size() instead of simply assigning
+	view->preview_size (Fixes wrongly-sized toggle cells spotted by
+	Jimmac).
+
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpitemtreeview.c: call when creating a view.
+
+	* app/widgets/gimpchanneltreeview.c: check view->component_editor
+	for being non-NULL before accessing it.
+
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: include X11/Xmu/WinUtil.h after including

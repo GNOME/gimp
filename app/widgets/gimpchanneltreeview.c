@@ -234,8 +234,9 @@ gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
 
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
 
-  gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
-                                          view->preview_size);
+  if (channel_view->component_editor)
+    gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
+                                            view->preview_size);
 }
 
 static void

@@ -183,32 +183,21 @@ gimp_container_grid_view_new (GimpContainer *container,
 			      gint           min_items_y)
 {
   GimpContainerGridView *grid_view;
-  GimpContainerView     *view;
 
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size  > 0 &&
 			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
-  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
+  g_return_val_if_fail (min_items_x <= 64, NULL);
+  g_return_val_if_fail (min_items_y <= 64, NULL);
 
   grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
 
-  view = GIMP_CONTAINER_VIEW (grid_view);
-
-  view->preview_size = preview_size;
-  view->reorderable  = reorderable ? TRUE : FALSE;
-
-  gimp_container_view_set_size_request (view,
-                                        (preview_size + 2) * min_items_x,
-                                        (preview_size + 2) * min_items_y);
-
-  if (container)
-    gimp_container_view_set_container (view, container);
-
-  if (context)
-    gimp_container_view_set_context (view, context);
+  gimp_container_view_construct (GIMP_CONTAINER_VIEW (grid_view),
+                                 container, context,
+                                 preview_size, reorderable,
+                                 min_items_x, min_items_y);
 
   return GTK_WIDGET (grid_view);
 }

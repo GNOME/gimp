@@ -94,6 +94,14 @@ struct _GimpContainerViewClass
 
 GType     gimp_container_view_get_type         (void) G_GNUC_CONST;
 
+void      gimp_container_view_construct        (GimpContainerView   *view,
+                                                GimpContainer       *container,
+                                                GimpContext         *context,
+                                                gint                 preview_size,
+                                                gboolean             reorderable,
+                                                gint                 min_items_x,
+                                                gint                 min_items_y);
+
 void      gimp_container_view_set_container    (GimpContainerView   *view,
 						GimpContainer       *container);
 void      gimp_container_view_set_context      (GimpContainerView   *view,
