@@ -42,7 +42,7 @@
 
 GimpItemFactoryEntry brushes_menu_entries[] =
 {
-  { { N_("/_Edit Brush"), NULL,
+  { { N_("/_Edit Brush..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
@@ -96,7 +96,7 @@ brushes_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Edit Brush",
+  SET_SENSITIVE ("/Edit Brush...",
 		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Duplicate Brush",
 		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);

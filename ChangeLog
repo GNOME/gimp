@@ -1,3 +1,13 @@
+2003-10-02  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/brushes-menu.c
+	* app/gui/channels-menu.c
+	* app/gui/colormap-editor-menu.c
+	* app/gui/image-menu.c
+	* app/gui/templates-menu.c
+	* app/gui/vectors-menu.c: added ellipsis back for Edit menu items.
+	Added missing ellipsis for Stroke items.
+
 2003-10-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/FractalExplorer/Events.[ch]: splitting the dialogs and the

@@ -46,7 +46,7 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       "<StockItem>", GIMP_STOCK_TOOL_PATH },
     NULL,
     GIMP_HELP_TOOL_VECTORS, NULL },
-  { { N_("/_Edit Path Attributes"), NULL,
+  { { N_("/_Edit Path Attributes..."), NULL,
       vectors_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
@@ -108,7 +108,7 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SELECTION_TO_PATH },
     NULL,
     GIMP_HELP_SELECTION_TO_PATH, NULL },
-  { { N_("/Stro_ke Path"), NULL,
+  { { N_("/Stro_ke Path..."), NULL,
       vectors_stroke_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PATH_STROKE },
     NULL,
@@ -182,7 +182,7 @@ vectors_menu_update (GtkItemFactory *factory,
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
   SET_SENSITIVE ("/Path Tool",                vectors);
-  SET_SENSITIVE ("/Edit Path Attributes",     vectors);
+  SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
 
   SET_SENSITIVE ("/New Path...",              gimage);
   SET_SENSITIVE ("/Raise Path",               vectors && prev);
@@ -196,7 +196,7 @@ vectors_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Intersect with Selection", vectors);
 
   SET_SENSITIVE ("/Selection to Path",        ! mask_empty);
-  SET_SENSITIVE ("/Stroke Path",              vectors);
+  SET_SENSITIVE ("/Stroke Path...",           vectors);
 
   SET_SENSITIVE ("/Copy Path",                vectors);
   SET_SENSITIVE ("/Paste Path",               global_buf);

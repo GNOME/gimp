@@ -58,7 +58,7 @@ GimpItemFactoryEntry templates_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_TEMPLATE_DUPLICATE, NULL },
-  { { N_("/_Edit Template"), "",
+  { { N_("/_Edit Template..."), "",
       templates_edit_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
@@ -90,7 +90,7 @@ templates_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Create Image from Template...", template);
   SET_SENSITIVE ("/New Template...",               TRUE);
   SET_SENSITIVE ("/Duplicate Template...",         template);
-  SET_SENSITIVE ("/Edit Template",                 template);
+  SET_SENSITIVE ("/Edit Template...",              template);
   SET_SENSITIVE ("/Delete Template",               template);
 
 #undef SET_SENSITIVE
