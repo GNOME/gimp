@@ -38,14 +38,13 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  gdouble            x, y;        /*  upper left hand coordinate  */
-  gdouble            w, h;        /*  width and height  */
+  gint               sx, sy;      /*  start coordinate where the button is
+                                   *  first pressed  */
+  gint               x, y;        /*  upper left coordinate of selection  */
+  gint               w, h;        /*  width, height of selection always >=0  */
+  gint               lx, ly;      /*  last coordinate of mouse cursor  */
   gboolean           center;      /*  is the selection being created from the
                                    *  center out?  */
-  gboolean           moved;       /*  ever moved since button press?  */
-
-  GimpCoords         last_coords; /*  last button_press/motion coords  */
-
   GimpRectSelectMode fixed_mode;
   gdouble            fixed_width;
   gdouble            fixed_height;
@@ -75,15 +74,5 @@ void    gimp_rect_select_tool_rect_select (GimpRectSelectTool       *rect_tool,
                                            gint                      y,
                                            gint                      w,
                                            gint                      h);
-
-void    gimp_rect_select_tool_coords_to_integer (GimpDisplay *display,
-                                                 gdouble      x,
-                                                 gdouble      y,
-                                                 gdouble      w,
-                                                 gdouble      h,
-                                                 gint        *ix,
-                                                 gint        *iy,
-                                                 gint        *iw,
-                                                 gint        *ih);
 
 #endif  /*  __GIMP_RECT_SELECT_TOOL_H__  */

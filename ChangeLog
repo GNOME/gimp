@@ -1,3 +1,11 @@
+2005-03-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpellipseselecttool.c
+
+	* app/tools/gimprectselecttool.[ch]: applied a patch by Nils
+	Bjorklund that should fix bug #143887 (selection rectangle "moves"
+	when starting at the top-right corner).
+
 2005-03-07  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: Reverting previous
