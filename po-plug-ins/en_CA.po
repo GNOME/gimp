@@ -7,16 +7,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-04-10 20:03-0400\n"
-"Last-Translator: Adam Weinberger <adamw@FreeBSD.org>\n"
+"POT-Creation-Date: 2004-04-15 16:34-0400\n"
+"PO-Revision-Date: 2004-04-15 20:03-0400\n"
+"Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
+#: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2895
 #: plug-ins/gflare/gflare.c:898
 #, c-format
 msgid ""
@@ -32,33 +32,12 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:553
 #: plug-ins/FractalExplorer/Dialogs.c:1637 plug-ins/common/AlienMap.c:1149
-#: plug-ins/common/AlienMap2.c:1152 plug-ins/gfig/gfig.c:2616
+#: plug-ins/common/AlienMap2.c:1152 plug-ins/gfig/gfig.c:2608
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:368
 msgid "About"
 msgstr "About"
 
 #. Preview
-#. Create the Preview
-#. ==================
-#. Create the Preview
-#. Preview area, top of column
-#.
-#. * Preview window...
-#.
-#. Preview
-#. hbox created and packed into the dialog
-#. make a nice frame
-#. Preview
-#.
-#. * Preview window...
-#.
-#. Preview
-#.
-#. *	Preview
-#.
-#. Previews: frame
-#. * Misc: Preview settings *
-#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -72,7 +51,7 @@ msgstr "About"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2324
 #: plug-ins/gflare/gflare.c:3242 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/ifscompose/ifscompose.c:924
 #: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
 #: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
 #: plug-ins/rcm/rcm_dialog.c:661
@@ -304,7 +283,6 @@ msgid "Color Function"
 msgstr "Colour Function"
 
 #. Redmode radio frame
-#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -371,14 +349,12 @@ msgstr ""
 "ones and vice versa"
 
 #. Greenmode radio frame
-#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Green"
 
 #. Bluemode radio frame
-#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -434,8 +410,9 @@ msgstr "_Fractals"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
-#: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2542
+#: plug-ins/winicon/icosave.c:218 plug-ins/xjt/xjt.c:1272
+#: plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Could not open '%s' for writing: %s"
@@ -445,26 +422,16 @@ msgstr "Could not open '%s' for writing: %s"
 msgid "Could not write '%s': %s"
 msgstr "Could not write '%s': %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1861
-msgid "Save: No filename given"
-msgstr "Save: No filename given"
-
-#. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1868 plug-ins/gfig/gfig.c:1095
-msgid "Cannot save to a folder."
-msgstr "Cannot save to a folder."
-
-#: plug-ins/FractalExplorer/Dialogs.c:1910
+#: plug-ins/FractalExplorer/Dialogs.c:1894
 msgid "Load Fractal Parameters"
 msgstr "Load Fractal Parameters"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1934
+#: plug-ins/FractalExplorer/Dialogs.c:1925
 msgid "Save Fractal Parameters"
 msgstr "Save Fractal Parameters"
 
 #. Do not rely on librsvg setting GError on failure!
-#. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
+#: plug-ins/FractalExplorer/Dialogs.c:2125 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
@@ -479,19 +446,20 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
 #: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
-#: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
+#: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:403
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/winicon/icoload.c:134
+#: plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Could not open '%s' for reading: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2136
+#: plug-ins/FractalExplorer/Dialogs.c:2133
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' is not a FractalExplorer file"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2142
+#: plug-ins/FractalExplorer/Dialogs.c:2139
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' is corrupt. Line %d Option section incorrect"
@@ -504,7 +472,7 @@ msgstr "<Image>/Filters/Render/_Fractal Explorer..."
 msgid "Rendering Fractal..."
 msgstr "Rendering Fractal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
+#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3826
 #: plug-ins/gflare/gflare.c:3109
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -731,7 +699,7 @@ msgstr "Direction Vector"
 #: plug-ins/Lighting/lighting_ui.c:617 plug-ins/MapObject/mapobject_ui.c:741
 #: plug-ins/MapObject/mapobject_ui.c:796
 #: plug-ins/MapObject/mapobject_ui.c:1045
-#: plug-ins/MapObject/mapobject_ui.c:1092 plug-ins/ifscompose/ifscompose.c:556
+#: plug-ins/MapObject/mapobject_ui.c:1092 plug-ins/ifscompose/ifscompose.c:553
 msgid "X:"
 msgstr "X:"
 
@@ -744,7 +712,7 @@ msgstr "Light source X direction in XYZ space"
 #: plug-ins/MapObject/mapobject_ui.c:809
 #: plug-ins/MapObject/mapobject_ui.c:1057
 #: plug-ins/MapObject/mapobject_ui.c:1102
-#: plug-ins/MapObject/mapobject_ui.c:1201 plug-ins/ifscompose/ifscompose.c:570
+#: plug-ins/MapObject/mapobject_ui.c:1201 plug-ins/ifscompose/ifscompose.c:567
 msgid "Y:"
 msgstr "Y:"
 
@@ -824,7 +792,7 @@ msgstr "Enable/disable bump-mapping (image depth)"
 msgid "Bumpm_ap Image:"
 msgstr "Bumpm_ap Image:"
 
-#: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:706
+#: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:720
 msgid "Linear"
 msgstr "Linear"
 
@@ -832,11 +800,11 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarithmic"
 
-#: plug-ins/Lighting/lighting_ui.c:931 plug-ins/flame/flame.c:707
+#: plug-ins/Lighting/lighting_ui.c:931 plug-ins/flame/flame.c:721
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:932 plug-ins/flame/flame.c:708
+#: plug-ins/Lighting/lighting_ui.c:932 plug-ins/flame/flame.c:722
 msgid "Spherical"
 msgstr "Spherical"
 
@@ -1168,11 +1136,6 @@ msgid "Bad colormap"
 msgstr "Bad colourmap"
 
 #. Set up progress display
-#. put up a progress bar
-#. max. rows allocated
-#. column, highest column ever used
-#. -1  assume fsel is not available (and not attached to any drawable)
-#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1222,7 +1185,7 @@ msgstr "Error reading BMP file header from '%s'"
 #: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
+#: plug-ins/gfig/gfig.c:2067 plug-ins/gfig/gfig.c:2435 plug-ins/sgi/sgi.c:368
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Background"
@@ -1239,8 +1202,6 @@ msgid "Cannot operate on unknown image types."
 msgstr "Cannot operate on unknown image types."
 
 #. And let's begin the progress
-#. init the progress meter
-#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1966,35 +1927,6 @@ msgstr "Align Visible Layers"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#. parameter settings
-#.
-#. * Filter type controls...
-#.
-#. parameter settings
-#. filter routine, initial pass
-#. Parameter settings
-#. left side of the UI is done
-#. right side
-#. parameter settings
-#. preview noisify
-#. parameter settings
-#. Controls
-#.
-#. *  Parameter settings
-#. *
-#. *  First set up the basic containers, label them, etc.
-#.
-#. Parameter Settings
-#. parameter settings
-#.
-#. * Sharpness control...
-#.
-#. parameter settings
-#. Parameter settings
-#. main parameter frame
-#. Parameter settings
-#. Controls
-#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:326
@@ -2036,7 +1968,7 @@ msgid "Fill (right to left)"
 msgstr "Fill (right to left)"
 
 #: plug-ins/common/align_layers.c:430 plug-ins/common/align_layers.c:458
-#: plug-ins/gfig/gfig.c:2660
+#: plug-ins/gfig/gfig.c:2652
 msgid "Snap to Grid"
 msgstr "Snap to Grid"
 
@@ -2915,10 +2847,8 @@ msgid "Automatic Pre_view"
 msgstr "Automatic Pre_view"
 
 #. Options area, bottom of column
-#. the vertical box and its toggle buttons
-#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
-#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
+#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2984
 msgid "Options"
 msgstr "Options"
 
@@ -3648,8 +3578,8 @@ msgid "Image Selection"
 msgstr "Image Selection"
 
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
-msgstr "All Values are Fractions of the Film Heigh"
+msgid "All Values are Fractions of the Film Height"
+msgstr "All Values are Fractions of the Film Height"
 
 #: plug-ins/common/film.c:1355
 msgid "Ad_vanced"
@@ -3875,14 +3805,6 @@ msgid ""
 msgstr ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-
-#: plug-ins/common/gicon.c:426
-msgid "Save as GIcon"
-msgstr "Save as GIcon"
-
-#: plug-ins/common/gicon.c:446
-msgid "Icon Name:"
-msgstr "Icon Name:"
 
 #: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4155,7 +4077,7 @@ msgstr "<Image>/Filters/Render/Pattern/_Grid..."
 msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
-#: plug-ins/common/grid.c:634 plug-ins/gfig/gfig.c:2638
+#: plug-ins/common/grid.c:634 plug-ins/gfig/gfig.c:2630
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
@@ -4197,7 +4119,7 @@ msgstr "Intersection Colour"
 msgid "GIMP Table Magic"
 msgstr "GIMP Table Magic"
 
-#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3099
+#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3091
 msgid "Warning"
 msgstr "Warning"
 
@@ -4936,7 +4858,7 @@ msgstr "Default Chunks Type:"
 msgid "Combine"
 msgstr "Combine"
 
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2389
 msgid "Replace"
 msgstr "Replace"
 
@@ -5162,8 +5084,7 @@ msgid "_Factory Defaults"
 msgstr "_Factory Defaults"
 
 #. anti-alias control
-#. 2
-#: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
+#: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2398
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -6114,7 +6035,6 @@ msgid "Error obtaining Screen Shot"
 msgstr "Error obtaining Screen Shot"
 
 #. single window
-#. Action area
 #: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Grab"
@@ -6619,7 +6539,7 @@ msgstr "Colour Selection Dialog"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2661 plug-ins/gimpressionist/paper.c:152
-#: plug-ins/ifscompose/ifscompose.c:584
+#: plug-ins/ifscompose/ifscompose.c:581
 msgid "Scale:"
 msgstr "Scale:"
 
@@ -7362,7 +7282,7 @@ msgstr "Main Options"
 msgid "Step Size:"
 msgstr "Step Size:"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1295
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1292
 msgid "Iterations:"
 msgstr "Iterations:"
 
@@ -7380,7 +7300,7 @@ msgid "Smear"
 msgstr "Smear"
 
 #: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:989
-#: plug-ins/flame/flame.c:1098 plug-ins/gfig/gfig.c:2572
+#: plug-ins/flame/flame.c:1098 plug-ins/gfig/gfig.c:2564
 msgid "Black"
 msgstr "Black"
 
@@ -7434,7 +7354,7 @@ msgid "Vector Mag:"
 msgstr "Vector Mag:"
 
 #. Angle
-#: plug-ins/common/warp.c:662 plug-ins/ifscompose/ifscompose.c:598
+#: plug-ins/common/warp.c:662 plug-ins/ifscompose/ifscompose.c:595
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -7593,7 +7513,6 @@ msgstr "Wind"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Style"
@@ -7968,8 +7887,8 @@ msgstr "Load FITS File"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "BLANK/NaN Pixel Replacement"
 
-#: plug-ins/fits/fits.c:990 plug-ins/gfig/gfig.c:2077
-#: plug-ins/gfig/gfig.c:2573
+#: plug-ins/fits/fits.c:990 plug-ins/gfig/gfig.c:2069
+#: plug-ins/gfig/gfig.c:2565
 msgid "White"
 msgstr "White"
 
@@ -7997,65 +7916,65 @@ msgstr "Drawing Flame..."
 msgid "Flame works only on RGB drawables."
 msgstr "Flame works only on RGB drawables."
 
-#: plug-ins/flame/flame.c:395
+#: plug-ins/flame/flame.c:393
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr "'%s' is not a regular file"
 
-#: plug-ins/flame/flame.c:610
+#: plug-ins/flame/flame.c:624
 msgid "Edit Flame"
 msgstr "Edit Flame"
 
-#: plug-ins/flame/flame.c:628
+#: plug-ins/flame/flame.c:642
 msgid "Directions"
 msgstr "Directions"
 
-#: plug-ins/flame/flame.c:659
+#: plug-ins/flame/flame.c:673
 msgid "Controls"
 msgstr "Controls"
 
-#: plug-ins/flame/flame.c:674
+#: plug-ins/flame/flame.c:688
 msgid "_Speed:"
 msgstr "_Speed:"
 
-#: plug-ins/flame/flame.c:691
+#: plug-ins/flame/flame.c:705
 msgid "_Randomize"
 msgstr "_Randomize"
 
-#: plug-ins/flame/flame.c:704
+#: plug-ins/flame/flame.c:718
 msgid "Same"
 msgstr "Same"
 
-#: plug-ins/flame/flame.c:705 plug-ins/gimpressionist/orientation.c:128
+#: plug-ins/flame/flame.c:719 plug-ins/gimpressionist/orientation.c:128
 #: plug-ins/gimpressionist/size.c:120
 msgid "Random"
 msgstr "Random"
 
-#: plug-ins/flame/flame.c:709
+#: plug-ins/flame/flame.c:723
 msgid "Swirl"
 msgstr "Swirl"
 
-#: plug-ins/flame/flame.c:710
+#: plug-ins/flame/flame.c:724
 msgid "Horseshoe"
 msgstr "Horseshoe"
 
-#: plug-ins/flame/flame.c:711 plug-ins/gfig/gfig.c:2557
+#: plug-ins/flame/flame.c:725 plug-ins/gfig/gfig.c:2549
 msgid "Polar"
 msgstr "Polar"
 
-#: plug-ins/flame/flame.c:712
+#: plug-ins/flame/flame.c:726
 msgid "Bent"
 msgstr "Bent"
 
-#: plug-ins/flame/flame.c:718
+#: plug-ins/flame/flame.c:732
 msgid "_Variation:"
 msgstr "_Variation:"
 
-#: plug-ins/flame/flame.c:749
+#: plug-ins/flame/flame.c:754
 msgid "Load Flame"
 msgstr "Load Flame"
 
-#: plug-ins/flame/flame.c:771
+#: plug-ins/flame/flame.c:769
 msgid "Save Flame"
 msgstr "Save Flame"
 
@@ -8275,109 +8194,109 @@ msgstr "<Image>/Filters/Render/_Gfig..."
 msgid "First Gfig"
 msgstr "First Gfig"
 
-#: plug-ins/gfig/gfig.c:1119
+#: plug-ins/gfig/gfig.c:1107
 msgid "Save Gfig Drawing"
 msgstr "Save Gfig Drawing"
 
-#: plug-ins/gfig/gfig.c:1272
+#: plug-ins/gfig/gfig.c:1264
 msgid "Show previous object"
 msgstr "Show previous object"
 
-#: plug-ins/gfig/gfig.c:1285
+#: plug-ins/gfig/gfig.c:1277
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig.c:1297
+#: plug-ins/gfig/gfig.c:1289
 msgid "All"
 msgstr "All"
 
-#: plug-ins/gfig/gfig.c:1298
+#: plug-ins/gfig/gfig.c:1290
 msgid "Show all objects"
 msgstr "Show all objects"
 
-#: plug-ins/gfig/gfig.c:1399
+#: plug-ins/gfig/gfig.c:1391
 msgid "Number of Sides/Points/Turns:"
 msgstr "Number of Sides/Points/Turns:"
 
-#: plug-ins/gfig/gfig.c:1415
+#: plug-ins/gfig/gfig.c:1407
 msgid "Clockwise"
 msgstr "Clockwise"
 
-#: plug-ins/gfig/gfig.c:1416
+#: plug-ins/gfig/gfig.c:1408
 msgid "Anti-Clockwise"
 msgstr "Anti-Clockwise"
 
-#: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/gfig/gfig.c:1412 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:499
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: plug-ins/gfig/gfig.c:1452
+#: plug-ins/gfig/gfig.c:1444
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig.c:1457
+#: plug-ins/gfig/gfig.c:1449
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig.c:1462
+#: plug-ins/gfig/gfig.c:1454
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig.c:1467
+#: plug-ins/gfig/gfig.c:1459
 msgid "Create arch"
 msgstr "Create arch"
 
-#: plug-ins/gfig/gfig.c:1476
+#: plug-ins/gfig/gfig.c:1468
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig.c:1484
+#: plug-ins/gfig/gfig.c:1476
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig.c:1493
+#: plug-ins/gfig/gfig.c:1485
 msgid "Create spiral"
 msgstr "Create spiral"
 
-#: plug-ins/gfig/gfig.c:1503
+#: plug-ins/gfig/gfig.c:1495
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig.c:1509
+#: plug-ins/gfig/gfig.c:1501
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig.c:1514
+#: plug-ins/gfig/gfig.c:1506
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig.c:1519
+#: plug-ins/gfig/gfig.c:1511
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig.c:1524
+#: plug-ins/gfig/gfig.c:1516
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
-#: plug-ins/gfig/gfig.c:2978
+#: plug-ins/gfig/gfig.c:1672 plug-ins/gfig/gfig.c:2048
+#: plug-ins/gfig/gfig.c:2970
 msgid "Brush"
 msgstr "Brush"
 
-#: plug-ins/gfig/gfig.c:1681
+#: plug-ins/gfig/gfig.c:1673
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: plug-ins/gfig/gfig.c:1682
+#: plug-ins/gfig/gfig.c:1674
 msgid "Pencil"
 msgstr "Pencil"
 
-#: plug-ins/gfig/gfig.c:1683 plug-ins/gfig/gfig.c:2441
+#: plug-ins/gfig/gfig.c:1675 plug-ins/gfig/gfig.c:2433
 msgid "Pattern"
 msgstr "Pattern"
 
-#: plug-ins/gfig/gfig.c:1690
+#: plug-ins/gfig/gfig.c:1682
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
@@ -8387,38 +8306,38 @@ msgstr ""
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
 
-#: plug-ins/gfig/gfig.c:2037 plug-ins/rcm/rcm_dialog.c:122
+#: plug-ins/gfig/gfig.c:2029 plug-ins/rcm/rcm_dialog.c:122
 msgid "Original"
 msgstr "Original"
 
-#: plug-ins/gfig/gfig.c:2038
+#: plug-ins/gfig/gfig.c:2030
 msgid "New"
 msgstr "New"
 
-#: plug-ins/gfig/gfig.c:2039
+#: plug-ins/gfig/gfig.c:2031
 msgid "Multiple"
 msgstr "Multiple"
 
-#: plug-ins/gfig/gfig.c:2044
+#: plug-ins/gfig/gfig.c:2036
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 "Draw all objects on one layer (original or new) or one object per layer"
 
-#: plug-ins/gfig/gfig.c:2049
+#: plug-ins/gfig/gfig.c:2041
 msgid "Draw on:"
 msgstr "Draw on:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2057 plug-ins/imagemap/imap_selection.c:365
+#: plug-ins/gfig/gfig.c:2049 plug-ins/imagemap/imap_selection.c:365
 #: plug-ins/rcm/rcm_dialog.c:699
 msgid "Selection"
 msgstr "Selection"
 
-#: plug-ins/gfig/gfig.c:2058
+#: plug-ins/gfig/gfig.c:2050
 msgid "Selection+Fill"
 msgstr "Selection+Fill"
 
-#: plug-ins/gfig/gfig.c:2063
+#: plug-ins/gfig/gfig.c:2055
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
@@ -8426,26 +8345,26 @@ msgstr ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 
-#: plug-ins/gfig/gfig.c:2067
+#: plug-ins/gfig/gfig.c:2059
 msgid "Using:"
 msgstr "Using:"
 
-#: plug-ins/gfig/gfig.c:2074 plug-ins/gimpressionist/general.c:120
+#: plug-ins/gfig/gfig.c:2066 plug-ins/gimpressionist/general.c:120
 msgid "Transparent"
 msgstr "Transparent"
 
-#: plug-ins/gfig/gfig.c:2076 plug-ins/gfig/gfig.c:2442
+#: plug-ins/gfig/gfig.c:2068 plug-ins/gfig/gfig.c:2434
 msgid "Foreground"
 msgstr "Foreground"
 
-#: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig.c:2070 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:127
 msgid "Copy"
 msgstr "Copy"
 
-#: plug-ins/gfig/gfig.c:2082
+#: plug-ins/gfig/gfig.c:2074
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
@@ -8453,31 +8372,31 @@ msgstr ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 
-#: plug-ins/gfig/gfig.c:2087
+#: plug-ins/gfig/gfig.c:2079
 msgid "With BG of:"
 msgstr "With BG of:"
 
-#: plug-ins/gfig/gfig.c:2090
+#: plug-ins/gfig/gfig.c:2082
 msgid "Reverse Line"
 msgstr "Reverse Line"
 
-#: plug-ins/gfig/gfig.c:2097
+#: plug-ins/gfig/gfig.c:2089
 msgid "Draw lines in reverse order"
 msgstr "Draw lines in reverse order"
 
-#: plug-ins/gfig/gfig.c:2105
+#: plug-ins/gfig/gfig.c:2097
 msgid "Scale to Image"
 msgstr "Scale to Image"
 
-#: plug-ins/gfig/gfig.c:2113
+#: plug-ins/gfig/gfig.c:2105
 msgid "Scale drawings to images size"
 msgstr "Scale drawings to images size"
 
-#: plug-ins/gfig/gfig.c:2135
+#: plug-ins/gfig/gfig.c:2127
 msgid "Approx. Circles/Ellipses"
 msgstr "Approx. Circles/Ellipses"
 
-#: plug-ins/gfig/gfig.c:2142
+#: plug-ins/gfig/gfig.c:2134
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
@@ -8485,278 +8404,278 @@ msgstr ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 
-#: plug-ins/gfig/gfig.c:2192
+#: plug-ins/gfig/gfig.c:2184
 msgid "Gfig Brush Selection"
 msgstr "Gfig Brush Selection"
 
-#: plug-ins/gfig/gfig.c:2230
+#: plug-ins/gfig/gfig.c:2222
 msgid "Fade out:"
 msgstr "Fade out:"
 
-#: plug-ins/gfig/gfig.c:2253
+#: plug-ins/gfig/gfig.c:2245
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: plug-ins/gfig/gfig.c:2273
+#: plug-ins/gfig/gfig.c:2265
 msgid "Pressure:"
 msgstr "Pressure:"
 
-#: plug-ins/gfig/gfig.c:2291
+#: plug-ins/gfig/gfig.c:2283
 msgid "No Options..."
 msgstr "No Options..."
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:2306
+#: plug-ins/gfig/gfig.c:2298
 msgid "Set Brush..."
 msgstr "Set Brush..."
 
-#: plug-ins/gfig/gfig.c:2395
+#: plug-ins/gfig/gfig.c:2387
 msgid "Add"
 msgstr "Add"
 
-#: plug-ins/gfig/gfig.c:2396
+#: plug-ins/gfig/gfig.c:2388
 msgid "Subtract"
 msgstr "Subtract"
 
-#: plug-ins/gfig/gfig.c:2398
+#: plug-ins/gfig/gfig.c:2390
 msgid "Intersect"
 msgstr "Intersect"
 
-#: plug-ins/gfig/gfig.c:2402
+#: plug-ins/gfig/gfig.c:2394
 msgid "Selection Type:"
 msgstr "Selection Type:"
 
 #. 3
-#: plug-ins/gfig/gfig.c:2415
+#: plug-ins/gfig/gfig.c:2407
 msgid "Feather"
 msgstr "Feather"
 
-#: plug-ins/gfig/gfig.c:2433
+#: plug-ins/gfig/gfig.c:2425
 msgid "Radius:"
 msgstr "Radius:"
 
-#: plug-ins/gfig/gfig.c:2447
+#: plug-ins/gfig/gfig.c:2439
 msgid "Fill Type:"
 msgstr "Fill Type:"
 
-#: plug-ins/gfig/gfig.c:2460
+#: plug-ins/gfig/gfig.c:2452
 msgid "Fill Opacity:"
 msgstr "Fill Opacity:"
 
-#: plug-ins/gfig/gfig.c:2468
+#: plug-ins/gfig/gfig.c:2460
 msgid "Each Selection"
 msgstr "Each Selection"
 
-#: plug-ins/gfig/gfig.c:2469
+#: plug-ins/gfig/gfig.c:2461
 msgid "All Selections"
 msgstr "All Selections"
 
-#: plug-ins/gfig/gfig.c:2473
+#: plug-ins/gfig/gfig.c:2465
 msgid "Fill after:"
 msgstr "Fill after:"
 
-#: plug-ins/gfig/gfig.c:2480
+#: plug-ins/gfig/gfig.c:2472
 msgid "Segment"
 msgstr "Segment"
 
-#: plug-ins/gfig/gfig.c:2481
+#: plug-ins/gfig/gfig.c:2473
 msgid "Sector"
 msgstr "Sector"
 
-#: plug-ins/gfig/gfig.c:2485
+#: plug-ins/gfig/gfig.c:2477
 msgid "Arc as:"
 msgstr "Arc as:"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:2533
+#: plug-ins/gfig/gfig.c:2525
 msgid "Show Image"
 msgstr "Show Image"
 
-#: plug-ins/gfig/gfig.c:2544
+#: plug-ins/gfig/gfig.c:2536
 msgid "Reload Image"
 msgstr "Reload Image"
 
-#: plug-ins/gfig/gfig.c:2556 plug-ins/imagemap/imap_menu.c:366
+#: plug-ins/gfig/gfig.c:2548 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig.c:2558
+#: plug-ins/gfig/gfig.c:2550
 msgid "Isometric"
 msgstr "Isometric"
 
-#: plug-ins/gfig/gfig.c:2562
+#: plug-ins/gfig/gfig.c:2554
 msgid "Grid Type:"
 msgstr "Grid Type:"
 
-#: plug-ins/gfig/gfig.c:2571 plug-ins/gflare/gflare.c:565
+#: plug-ins/gfig/gfig.c:2563 plug-ins/gflare/gflare.c:565
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig.c:2574
+#: plug-ins/gfig/gfig.c:2566
 msgid "Grey"
 msgstr "Grey"
 
-#: plug-ins/gfig/gfig.c:2575
+#: plug-ins/gfig/gfig.c:2567
 msgid "Darker"
 msgstr "Darker"
 
-#: plug-ins/gfig/gfig.c:2576
+#: plug-ins/gfig/gfig.c:2568
 msgid "Lighter"
 msgstr "Lighter"
 
-#: plug-ins/gfig/gfig.c:2577
+#: plug-ins/gfig/gfig.c:2569
 msgid "Very Dark"
 msgstr "Very Dark"
 
-#: plug-ins/gfig/gfig.c:2581
+#: plug-ins/gfig/gfig.c:2573
 msgid "Grid Color:"
 msgstr "Grid Colour:"
 
-#: plug-ins/gfig/gfig.c:2585
+#: plug-ins/gfig/gfig.c:2577
 msgid "Max Undo:"
 msgstr "Max Undo:"
 
-#: plug-ins/gfig/gfig.c:2593
+#: plug-ins/gfig/gfig.c:2585
 msgid "Show Position"
 msgstr "Show Position"
 
-#: plug-ins/gfig/gfig.c:2604
+#: plug-ins/gfig/gfig.c:2596
 msgid "Hide Control Points"
 msgstr "Hide Control Points"
 
-#: plug-ins/gfig/gfig.c:2649
+#: plug-ins/gfig/gfig.c:2641
 msgid "Show Grid"
 msgstr "Show Grid"
 
 #. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
 #. it from the user interface
-#: plug-ins/gfig/gfig.c:2672
+#: plug-ins/gfig/gfig.c:2664
 msgid "Lock on Grid"
 msgstr "Lock on Grid"
 
-#: plug-ins/gfig/gfig.c:2687
+#: plug-ins/gfig/gfig.c:2679
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig.c:2751
+#: plug-ins/gfig/gfig.c:2743
 msgid "Object"
 msgstr "Object"
 
-#: plug-ins/gfig/gfig.c:2788
+#: plug-ins/gfig/gfig.c:2780
 msgid "Create a new Gfig object collection for editing"
 msgstr "Create a new Gfig object collection for editing"
 
-#: plug-ins/gfig/gfig.c:2798
+#: plug-ins/gfig/gfig.c:2790
 msgid "Load a single Gfig object collection"
 msgstr "Load a single Gfig object collection"
 
-#: plug-ins/gfig/gfig.c:2806
+#: plug-ins/gfig/gfig.c:2798
 msgid "Edit Gfig object collection"
 msgstr "Edit Gfig object collection"
 
-#: plug-ins/gfig/gfig.c:2810
+#: plug-ins/gfig/gfig.c:2802
 msgid "_Merge"
 msgstr "_Merge"
 
-#: plug-ins/gfig/gfig.c:2814
+#: plug-ins/gfig/gfig.c:2806
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr "Merge Gfig Object collection into the current edit session"
 
-#: plug-ins/gfig/gfig.c:2823
+#: plug-ins/gfig/gfig.c:2815
 msgid "Delete currently selected Gfig Object collection"
 msgstr "Delete currently selected Gfig Object collection"
 
-#: plug-ins/gfig/gfig.c:2833
+#: plug-ins/gfig/gfig.c:2825
 msgid "Select folder and rescan Gfig object collections"
 msgstr "Select folder and rescan Gfig object collections"
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:2860 plug-ins/gimpressionist/size.c:98
+#: plug-ins/gfig/gfig.c:2852 plug-ins/gimpressionist/size.c:98
 msgid "Size:"
 msgstr "Size:"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig.c:2918
+#: plug-ins/gfig/gfig.c:2910
 msgid "Gfig"
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2973
+#: plug-ins/gfig/gfig.c:2919 plug-ins/gfig/gfig.c:2965
 msgid "Paint"
 msgstr "Paint"
 
-#: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:2978 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Select"
 
-#: plug-ins/gfig/gfig.c:3096
+#: plug-ins/gfig/gfig.c:3088
 #, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "%d unsaved Gfig objects. Continue with exiting?"
 
-#: plug-ins/gfig/gfig.c:3265
+#: plug-ins/gfig/gfig.c:3257
 msgid "Enter Gfig Object Name"
 msgstr "Enter Gfig Object Name"
 
-#: plug-ins/gfig/gfig.c:3290
+#: plug-ins/gfig/gfig.c:3282
 msgid "Gfig Object Name:"
 msgstr "Gfig Object Name:"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3345
+#: plug-ins/gfig/gfig.c:3337
 msgid "Rescan for Gfig Objects"
 msgstr "Rescan for Gfig Objects"
 
-#: plug-ins/gfig/gfig.c:3362
+#: plug-ins/gfig/gfig.c:3354
 msgid "Add Gfig Path"
 msgstr "Add Gfig Path"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3433
+#: plug-ins/gfig/gfig.c:3427
 msgid "Load Gfig object collection"
 msgstr "Load Gfig object collection"
 
-#: plug-ins/gfig/gfig.c:3456
+#: plug-ins/gfig/gfig.c:3455
 msgid "Error in copy layer for onlayers"
 msgstr "Error in copy layer for onlayers"
 
-#: plug-ins/gfig/gfig.c:3569
+#: plug-ins/gfig/gfig.c:3568
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Gfig Layer %d"
 
-#: plug-ins/gfig/gfig.c:3643
+#: plug-ins/gfig/gfig.c:3642
 msgid "About Gfig"
 msgstr "About Gfig"
 
-#: plug-ins/gfig/gfig.c:3670
+#: plug-ins/gfig/gfig.c:3669
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - GIMP plug-in"
 
-#: plug-ins/gfig/gfig.c:3675
+#: plug-ins/gfig/gfig.c:3674
 msgid "Release 2.0"
 msgstr "Release 2.0"
 
-#: plug-ins/gfig/gfig.c:3710
+#: plug-ins/gfig/gfig.c:3709
 msgid "New Gfig Object"
 msgstr "New Gfig Object"
 
-#: plug-ins/gfig/gfig.c:3831
+#: plug-ins/gfig/gfig.c:3830
 msgid "Delete Gfig Drawing"
 msgstr "Delete Gfig Drawing"
 
-#: plug-ins/gfig/gfig.c:3883
+#: plug-ins/gfig/gfig.c:3882
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editing read-only object - you will not be able to save it"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:3982
+#: plug-ins/gfig/gfig.c:3981
 #, c-format
 msgid "%s copy"
 msgstr "%s copy"
 
-#: plug-ins/gfig/gfig.c:4354
+#: plug-ins/gfig/gfig.c:4353
 msgid "Error reading file"
 msgstr "Error reading file"
 
@@ -8809,7 +8728,6 @@ msgid "(none)"
 msgstr "(none)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
-#, c-format
 msgid "<NONE>"
 msgstr "<NONE>"
 
@@ -8894,9 +8812,6 @@ msgstr "Default"
 
 #.
 #. *  Scales
-#.
-#.
-#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2671 plug-ins/gflare/gflare.c:3482
 #: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:3728
@@ -9829,190 +9744,190 @@ msgstr ""
 "installation is not complete. Ensure that your installation is complete "
 "before reporting this error as a bug."
 
-#: plug-ins/ifscompose/ifscompose.c:372
+#: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
 msgstr "<Image>/Filters/Render/Nature/Ifs_Compose..."
 
 #. Asym
-#: plug-ins/ifscompose/ifscompose.c:612
+#: plug-ins/ifscompose/ifscompose.c:609
 msgid "Asymmetry:"
 msgstr "Asymmetry:"
 
 #. Shear
-#: plug-ins/ifscompose/ifscompose.c:626
+#: plug-ins/ifscompose/ifscompose.c:623
 msgid "Shear:"
 msgstr "Shear:"
 
 #. Flip
-#: plug-ins/ifscompose/ifscompose.c:640
+#: plug-ins/ifscompose/ifscompose.c:637
 msgid "Flip"
 msgstr "Flip"
 
 #. Simple color control section
-#: plug-ins/ifscompose/ifscompose.c:671
+#: plug-ins/ifscompose/ifscompose.c:668
 msgid "Simple"
 msgstr "Simple"
 
-#: plug-ins/ifscompose/ifscompose.c:680
+#: plug-ins/ifscompose/ifscompose.c:677
 msgid "IfsCompose: Target"
 msgstr "IfsCompose: Target"
 
-#: plug-ins/ifscompose/ifscompose.c:686
+#: plug-ins/ifscompose/ifscompose.c:683
 msgid "Scale Hue by:"
 msgstr "Scale Hue by:"
 
-#: plug-ins/ifscompose/ifscompose.c:701
+#: plug-ins/ifscompose/ifscompose.c:698
 msgid "Scale Value by:"
 msgstr "Scale Value by:"
 
 #. Full color control section
-#: plug-ins/ifscompose/ifscompose.c:718
+#: plug-ins/ifscompose/ifscompose.c:715
 msgid "Full"
 msgstr "Full"
 
-#: plug-ins/ifscompose/ifscompose.c:725
+#: plug-ins/ifscompose/ifscompose.c:722
 msgid "IfsCompose: Red"
 msgstr "IfsCompose: Red"
 
-#: plug-ins/ifscompose/ifscompose.c:732
+#: plug-ins/ifscompose/ifscompose.c:729
 msgid "IfsCompose: Green"
 msgstr "IfsCompose: Green"
 
-#: plug-ins/ifscompose/ifscompose.c:739
+#: plug-ins/ifscompose/ifscompose.c:736
 msgid "IfsCompose: Blue"
 msgstr "IfsCompose: Blue"
 
-#: plug-ins/ifscompose/ifscompose.c:746
+#: plug-ins/ifscompose/ifscompose.c:743
 msgid "IfsCompose: Black"
 msgstr "IfsCompose: Black"
 
-#: plug-ins/ifscompose/ifscompose.c:808
+#: plug-ins/ifscompose/ifscompose.c:805
 msgid "IfsCompose"
 msgstr "IfsCompose"
 
-#: plug-ins/ifscompose/ifscompose.c:882 plug-ins/imagemap/imap_cmd_move.c:86
+#: plug-ins/ifscompose/ifscompose.c:879 plug-ins/imagemap/imap_cmd_move.c:86
 #: plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Move"
 
-#: plug-ins/ifscompose/ifscompose.c:891
+#: plug-ins/ifscompose/ifscompose.c:888
 msgid "Rotate/Scale"
 msgstr "Rotate/Scale"
 
-#: plug-ins/ifscompose/ifscompose.c:900
+#: plug-ins/ifscompose/ifscompose.c:897
 msgid "Stretch"
 msgstr "Stretch"
 
-#: plug-ins/ifscompose/ifscompose.c:920
+#: plug-ins/ifscompose/ifscompose.c:917
 msgid "Render Options"
 msgstr "Render Options"
 
-#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:482
 msgid "Auto"
 msgstr "Auto"
 
-#: plug-ins/ifscompose/ifscompose.c:986 plug-ins/imagemap/imap_menu.c:270
+#: plug-ins/ifscompose/ifscompose.c:983 plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
 msgstr "Select _All"
 
-#: plug-ins/ifscompose/ifscompose.c:993
+#: plug-ins/ifscompose/ifscompose.c:990
 msgid "Recompute _Center"
 msgstr "Recompute _Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1021
+#: plug-ins/ifscompose/ifscompose.c:1018
 msgid "Spatial Transformation"
 msgstr "Spatial Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:1027
+#: plug-ins/ifscompose/ifscompose.c:1024
 msgid "Color Transformation"
 msgstr "Colour Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:1037
+#: plug-ins/ifscompose/ifscompose.c:1034
 msgid "Relative Probability:"
 msgstr "Relative Probability:"
 
-#: plug-ins/ifscompose/ifscompose.c:1192
+#: plug-ins/ifscompose/ifscompose.c:1189
 msgid "/Move"
 msgstr "/Move"
 
-#: plug-ins/ifscompose/ifscompose.c:1194
+#: plug-ins/ifscompose/ifscompose.c:1191
 msgid "/Rotate\\/Scale"
 msgstr "/Rotate\\/Scale"
 
-#: plug-ins/ifscompose/ifscompose.c:1196
+#: plug-ins/ifscompose/ifscompose.c:1193
 msgid "/Stretch"
 msgstr "/Stretch"
 
-#: plug-ins/ifscompose/ifscompose.c:1199
+#: plug-ins/ifscompose/ifscompose.c:1196
 msgid "/New"
 msgstr "/New"
 
-#: plug-ins/ifscompose/ifscompose.c:1201
+#: plug-ins/ifscompose/ifscompose.c:1198
 msgid "/Delete"
 msgstr "/Delete"
 
-#: plug-ins/ifscompose/ifscompose.c:1203
+#: plug-ins/ifscompose/ifscompose.c:1200
 msgid "/Undo"
 msgstr "/Undo"
 
-#: plug-ins/ifscompose/ifscompose.c:1205
+#: plug-ins/ifscompose/ifscompose.c:1202
 msgid "/Redo"
 msgstr "/Redo"
 
-#: plug-ins/ifscompose/ifscompose.c:1207
+#: plug-ins/ifscompose/ifscompose.c:1204
 msgid "/Select All"
 msgstr "/Select All"
 
-#: plug-ins/ifscompose/ifscompose.c:1209
+#: plug-ins/ifscompose/ifscompose.c:1206
 msgid "/Recompute Center"
 msgstr "/Recompute Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1260
+#: plug-ins/ifscompose/ifscompose.c:1257
 msgid "IfsCompose Options"
 msgstr "IfsCompose Options"
 
-#: plug-ins/ifscompose/ifscompose.c:1282
+#: plug-ins/ifscompose/ifscompose.c:1279
 msgid "Max. Memory:"
 msgstr "Max. Memory:"
 
-#: plug-ins/ifscompose/ifscompose.c:1309
+#: plug-ins/ifscompose/ifscompose.c:1306
 msgid "Subdivide:"
 msgstr "Subdivide:"
 
-#: plug-ins/ifscompose/ifscompose.c:1322
+#: plug-ins/ifscompose/ifscompose.c:1319
 msgid "Spot Radius:"
 msgstr "Spot Radius:"
 
-#: plug-ins/ifscompose/ifscompose.c:1395
+#: plug-ins/ifscompose/ifscompose.c:1392
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Rendering IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1414
+#: plug-ins/ifscompose/ifscompose.c:1411
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copying IFS to image (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1553
+#: plug-ins/ifscompose/ifscompose.c:1550
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2684 plug-ins/ifscompose/ifscompose.c:2696
+#: plug-ins/ifscompose/ifscompose.c:2625 plug-ins/ifscompose/ifscompose.c:2637
 msgid "Open failed"
 msgstr "Open failed"
 
-#: plug-ins/ifscompose/ifscompose.c:2691
+#: plug-ins/ifscompose/ifscompose.c:2632
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "File '%s' doesn't seem to be an IFS Compose file."
 
-#: plug-ins/ifscompose/ifscompose.c:2731
+#: plug-ins/ifscompose/ifscompose.c:2672
 msgid "Save as IFS file"
 msgstr "Save as IFS file"
 
-#: plug-ins/ifscompose/ifscompose.c:2756
+#: plug-ins/ifscompose/ifscompose.c:2697
 msgid "Open IFS file"
 msgstr "Open IFS file"
 
@@ -11655,6 +11570,57 @@ msgstr "<Toolbox>/File/Acquire/_TWAIN..."
 msgid "Transferring TWAIN data..."
 msgstr "Transferring TWAIN data..."
 
+#: plug-ins/winicon/icodialog.c:204
+msgid "1 bpp, 1-bit alpha, 2-slot palette"
+msgstr "1 bpp, 1-bit alpha, 2-slot palette"
+
+#: plug-ins/winicon/icodialog.c:212
+msgid "4 bpp, 1-bit alpha, 16-slot palette"
+msgstr "4 bpp, 1-bit alpha, 16-slot palette"
+
+#: plug-ins/winicon/icodialog.c:220
+msgid "8 bpp, 1-bit alpha, 256-slot palette"
+msgstr "8 bpp, 1-bit alpha, 256-slot palette"
+
+#: plug-ins/winicon/icodialog.c:228
+msgid "32 bpp, 8-bit alpha, no palette"
+msgstr "32 bpp, 8-bit alpha, no palette"
+
+#: plug-ins/winicon/icodialog.c:253
+msgid "GIMP Windows Icon Plugin"
+msgstr "GIMP Windows Icon Plugin"
+
+#: plug-ins/winicon/icodialog.c:276
+msgid "Icon details"
+msgstr "Icon details"
+
+#: plug-ins/winicon/icoload.c:347
+#, c-format
+msgid "Icon #%i"
+msgstr "Icon #%i"
+
+#: plug-ins/winicon/icoload.c:515
+#, c-format
+msgid "Loading %s:"
+msgstr "Loading %s:"
+
+#: plug-ins/winicon/icosave.c:753
+msgid "Windows icons cannot be higher or wider than 255 pixels."
+msgstr "Windows icons cannot be higher or wider than 255 pixels."
+
+#: plug-ins/winicon/icosave.c:769
+#, c-format
+msgid "Saving %s:"
+msgstr "Saving %s:"
+
+#: plug-ins/winicon/main.c:91
+msgid "<Load>/ICO"
+msgstr "<Load>/ICO"
+
+#: plug-ins/winicon/main.c:104
+msgid "<Save>/ICO"
+msgstr "<Save>/ICO"
+
 #: plug-ins/winsnap/winsnap.c:947
 msgid "Grab a single window"
 msgstr "Grab a single window"
@@ -11727,3 +11693,15 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
+
+#~ msgid "Save: No filename given"
+#~ msgstr "Save: No filename given"
+
+#~ msgid "Cannot save to a folder."
+#~ msgstr "Cannot save to a folder."
+
+#~ msgid "Save as GIcon"
+#~ msgstr "Save as GIcon"
+
+#~ msgid "Icon Name:"
+#~ msgstr "Icon Name:"
