@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
-"PO-Revision-Date: 2000-11-08 14:57+01:00\n"
+"Project-Id-Version: GIMP 1.1.30\n"
+"POT-Creation-Date: 2000-12-19 13:53+0100\n"
+"PO-Revision-Date: 2000-12-19 13:54+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1199,6 +1199,14 @@ msgid "Erase before Draw"
 msgstr "Vor dem Zeichnen radieren"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase"
+msgstr "Löschen"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Erase/Fill"
+msgstr "Löschen/Füllen"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
 msgstr "Gerade"
 
@@ -1249,6 +1257,10 @@ msgstr "HG mit Muster füllen"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
+msgstr "Mit HG-Farbe füllen"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:0
+msgid "Fill with BG"
 msgstr "Mit HG-Farbe füllen"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
