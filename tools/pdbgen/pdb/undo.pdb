@@ -1,0 +1,71 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub inargs {
+    @inargs = ( &std_image_arg );
+    $inargs[0]->{desc} = 'The ID of the image in which to pop an undo group';
+}
+
+# The defs
+
+sub undo_push_group_start {
+    $blurb = 'Starts a group undo.';
+
+    $help = <<'HELP';
+This function is used to start a group undo--necessary for logically combining
+two or more undo operations into a single operation. This call must be used in
+conjunction with a 'gimp-undo-push-group-end' call.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    &inargs;
+
+    %invoke = (
+	headers => [ qw("undo.h") ],
+	code => 'undo_push_group_start (gimage, MISC_UNDO);'
+    );
+}
+
+sub undo_push_group_end {
+    $blurb = 'Finish a group undo.';
+
+    $help = <<'HELP';
+This function must be called once for each gimp-undo-push-group call that is
+made.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    &inargs;
+
+    %invoke = (
+	headers => [ qw("undo.h") ],
+	code => 'undo_push_group_end (gimage);'
+    );
+}
+
+@procs = qw(undo_push_group_start undo_push_group_end);
+%exports = (app => [@procs]);
+
+$desc = 'Undo';
+
+1;

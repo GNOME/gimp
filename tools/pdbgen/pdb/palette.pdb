@@ -1,0 +1,188 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub color_blurb {
+    $blurb = "@{[shift]} the current GIMP @{[shift]}ground color.";
+}
+
+sub color_arg {
+    my $ground = (shift) . "ground";
+    {
+	name  => $ground,
+	type  => 'color',
+	desc  => "The $ground color",
+	alias => 'col'
+    }
+}
+
+sub invoke_get {
+    %invoke = (
+	headers => [ qw("gimpimage.h" "palette.h") ],
+	vars => ['guchar r, g, b'],
+	code => <<CODE
+{
+  palette_get_@{[shift]}ground (&r, &g, &b);
+  col = (guchar *) g_new (guchar, 3);
+  col[RED_PIX] = r;
+  col[GREEN_PIX] = g;
+  col[BLUE_PIX] = b;
+}
+CODE
+    );
+}
+
+sub invoke_set {
+    %invoke = (
+	headers => [ qw("gimpimage.h" "palette.h") ],
+	code => <<CODE
+palette_set_@{[shift]}ground (col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+CODE
+    );
+}
+
+sub palette_get_foreground {
+    &color_blurb('Get', 'fore');
+
+    $help = <<'HELP';
+This procedure retrieves the current GIMP foreground color. The foreground
+color is used in a variety of tools such as paint tools, blending, and bucket
+fill.
+HELP
+
+    &std_pdb_misc;
+    @outargs = ( &color_arg('fore') );
+    &invoke_get('fore');
+}
+
+sub palette_get_background {
+    &color_blurb('Get', 'back');
+
+    $help = <<'HELP';
+This procedure retrieves the current GIMP background color. The background
+color is used in a variety of tools such as blending, erasing (with non-alpha
+images), and image filling.
+HELP
+
+    &std_pdb_misc;
+    @outargs = ( &color_arg('back') );
+    &invoke_get('back');
+}
+
+sub palette_set_foreground {
+    &color_blurb('Set', 'fore');
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground color. After this is set,
+operations which use foreground such as paint tools, blending, and bucket fill
+will use the new value.
+HELP
+
+    &std_pdb_misc;
+    @inargs = ( &color_arg('fore') );
+    &invoke_set('fore');
+}
+
+sub palette_set_background {
+    &color_blurb('Set', 'back');
+
+    $help = <<'HELP';
+This procedure sets the current GIMP background color. After this is set,
+operations which use background such as blending, filling images, clearing,
+and erasing (in non-alpha images) will use the new value.
+HELP
+
+    &std_pdb_misc;
+    @inargs = ( &color_arg('back') );
+    &invoke_set('back');
+}
+
+sub palette_set_default_colors {
+    $blurb = <<'BLURB';
+Set the current GIMP foreground and background colors to black and white.
+BLURB
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground and background colors to their
+initial default values, black and white.
+HELP
+
+    &std_pdb_misc;
+
+    %invoke = (
+	headers => [ qw("palette.h") ],
+	code => 'palette_set_default_colors ();'
+    );
+}
+
+sub palette_swap_colors {
+    $blurb = 'Swap the current GIMP foreground and background colors.';
+
+    $help = <<'HELP';
+This procedure swaps the current GIMP foreground and background colors, so that
+the new foreground color becomes the old background color and vice versa.
+HELP
+
+    &std_pdb_misc;
+
+    %invoke = (
+	headers => [ qw("palette.h") ],
+	code => 'palette_swap_colors ();'
+    );
+}
+
+sub palette_refresh {
+    $blurb = 'Refreshes current palettes.';
+
+    $help = <<'HELP';
+This procedure incorporates all palettes currently in the users palette path.
+HELP
+
+    $author = 'Adrian Likins <adrian@gimp.org>';
+    $copyright = 'Adrian Likins';
+    $date = '1998';
+
+    %invoke = (
+	headers => [ qw("palette.h") ],
+	code => <<'CODE'
+{
+  /* FIXME: I've hardcoded success to be TRUE, because brushes_init() is a 
+   *        void function right now.  It'd be nice if it returned a value at 
+   *        some future date, so we could tell if things blew up when reparsing
+   *        the list (for whatever reason). 
+   *                       - Seth "Yes, this is a kludge" Burgess
+   *                         <sjburges@ou.edu>
+   *   -and shamelessly stolen by Adrian Likins for use here...
+   */
+
+  palette_free_palettes ();
+  palette_init_palettes (FALSE);
+}
+CODE
+    );
+}
+
+@procs = qw(palette_get_foreground palette_get_background
+	    palette_set_foreground palette_set_background
+	    palette_set_default_colors palette_swap_colors
+	    palette_refresh);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Palette';
+
+1;

@@ -1,0 +1,99 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The defs
+
+sub display_new {
+    $blurb = 'Create a new display for the specified image.';
+
+    $help = <<'HELP';
+Creates a new display for the specified image. If the image already has a
+display, another is added. Multiple displays are handled transparently by the
+GIMP. The newly created display is returned and can be subsequently destroyed
+with a call to 'gimp-display-delete'. This procedure only makes sense for use
+with the GIMP UI.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'display', type => 'display',
+	  desc => 'The new display' }
+    );
+
+    %invoke = (
+	headers => [ qw("gdisplay.h") ],
+	vars => [ 'guint scale = 0x101' ],
+	code => <<'CODE'
+{
+  if (gimage->layers == NULL)
+    success = FALSE;
+  else
+    success = ((display = gdisplay_new (gimage, scale)) != NULL);
+}
+CODE
+    );
+}
+
+sub display_delete {
+    $blurb = 'Delete the specified display';
+
+    $help = <<'HELP';
+This procedure removes the specified display. If this is the last remaining 
+display for the underlying image, then the image is deleted also.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'display', type => 'display',
+	  desc => 'The display to delete' }
+    );
+
+    %invoke = (
+	headers => [ qw("gdisplay.h") ],
+	code => 'gtk_widget_destroy (display->shell);'
+    );
+}
+
+sub displays_flush {
+    $blurb = 'Flush all internal changes to the user interface';
+
+    $help = <<'HELP';
+This procedure takes no arguments and returns nothing except a success status.
+Its purpose is to flush all pending updates of image manipulations to the user
+interface. It should be called whenever appropriate.
+HELP
+
+    &std_pdb_misc;
+
+    %invoke = (
+	headers => [ qw("gdisplay.h") ],
+	code => 'gdisplays_flush ();'
+    );
+}
+
+@procs = qw(display_new display_delete displays_flush);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'GDisplay procedures';
+
+1;

@@ -1,0 +1,74 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub drawable_arg {
+    { name => 'drawable', type => 'drawable', desc => 'The drawable' }
+}
+
+sub drawable_merge_shadow {
+    $blurb = 'Merge the shadow buffer with the specified drawable.';
+
+    $help = <<'HELP';
+This procedure combines the contents of the image's shadow buffer (for
+temporary processing) with the specified drawable. The "undo" parameter
+specifies whether to add an undo step for the operation. Requesting no undo is
+useful for such applications as 'auto-apply'.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+        { name => 'undo', type => 'boolean',
+	  desc => 'Push merge to undo stack?' }
+    );
+
+    %invoke = (
+	headers => [ qw("drawable.h") ],
+	code => 'drawable_merge_shadow (drawable, undo);'
+    );
+}
+
+sub drawable_fill {
+    $blurb = 'Fill the drawable with the specified fill mode.';
+
+    $help = <<'HELP';
+This procedure fills the drawable with the fill mode. If the fill mode is
+foreground the current foreground color is used. If the fill mode is
+background, the current background color is used. If the fill type is white,
+then white is used. Transparent fill only affects layers with an alpha channel,
+in which case the alpha channel is set to transparent. If the drawable has no
+alpha channel, it is filled to white. No fill leaves the drawable's contents
+undefined. This procedure is unlike the bucket fill tool because it fills
+regardless of a selection
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'fill_type', type => 'enum GimpFillType',
+	  desc => 'The type of fill: $desc' }
+    );
+
+    %invoke = (
+	headers => [ qw("drawable.h") ],
+	code => 'drawable_fill (drawable, fill_type);'
+    );
+}
