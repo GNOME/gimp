@@ -1,3 +1,8 @@
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpplugin.sgml: updated.
+
 2005-03-23  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

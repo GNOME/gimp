@@ -698,6 +698,7 @@ gimp_plugin_domain_register
 gimp_plugin_help_register
 gimp_plugin_icon_register
 gimp_plugin_menu_register
+gimp_plugin_menu_branch_register
 </SECTION>
 
 <SECTION>
