@@ -640,7 +640,7 @@ load_image (const gchar *filename)
           if (bps == 1 && !alpha && spp == 1)
             {
               image_type = GIMP_INDEXED;
-	      layer_type = GIMP_INDEXED_IMAGE;
+              layer_type = GIMP_INDEXED_IMAGE;
 
               is_bw = TRUE;
               fill_bit2byte ();
@@ -1583,8 +1583,8 @@ read_bw (guchar       *source,
       if (col > 0)
         {
           memcpy (dest, bit2byte + *source * 8, col);
-	  dest += col;
-	  source++;
+          dest += col;
+          source++;
         }
 
       source += align;
@@ -2261,15 +2261,15 @@ byte2bit (guchar   *byteline,
     {
       bitval = 0;
       switch (width)
-	{
-	case 7: if (*(byteline++)) bitval |= 0x02;
-	case 6: if (*(byteline++)) bitval |= 0x04;
-	case 5: if (*(byteline++)) bitval |= 0x08;
-	case 4: if (*(byteline++)) bitval |= 0x10;
-	case 3: if (*(byteline++)) bitval |= 0x20;
-	case 2: if (*(byteline++)) bitval |= 0x40;
-	case 1: if (*(byteline++)) bitval |= 0x80;
-	}
+        {
+        case 7: if (*(byteline++)) bitval |= 0x02;
+        case 6: if (*(byteline++)) bitval |= 0x04;
+        case 5: if (*(byteline++)) bitval |= 0x08;
+        case 4: if (*(byteline++)) bitval |= 0x10;
+        case 3: if (*(byteline++)) bitval |= 0x20;
+        case 2: if (*(byteline++)) bitval |= 0x40;
+        case 1: if (*(byteline++)) bitval |= 0x80;
+        }
       *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
     }
 }
