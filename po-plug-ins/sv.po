@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 00:49+0100\n"
-"PO-Revision-Date: 2004-10-26 21:07+0900\n"
+"POT-Creation-Date: 2004-11-02 14:25+0900\n"
+"PO-Revision-Date: 2004-11-02 14:27+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3127,9 +3127,8 @@ msgstr "Typ"
 
 #. parameter settings
 #: plug-ins/common/despeckle.c:456
-#, fuzzy
 msgid "Median"
-msgstr "Radianer"
+msgstr "Median"
 
 #: plug-ins/common/despeckle.c:462
 msgid "_Adaptive"
@@ -6036,61 +6035,52 @@ msgid "Indexed Palette Type"
 msgstr "Indexerad palettyp"
 
 #: plug-ins/common/retinex.c:167
-#, fuzzy
 msgid "_Retinex..."
-msgstr "_Krusar..."
+msgstr "_Retinex..."
 
 #: plug-ins/common/retinex.c:250
-#, fuzzy
 msgid "Retinex..."
-msgstr "Roterar..."
+msgstr "Retinex..."
 
 #: plug-ins/common/retinex.c:252
 msgid "Retinex (4/4): updated..."
-msgstr ""
+msgstr "Retinex (4/4): uppdaterad..."
 
 #: plug-ins/common/retinex.c:289
-#, fuzzy
 msgid "Retinex Image Enhancement"
-msgstr "_Kantförbättring"
+msgstr "Retinex bildförbättring"
 
 #: plug-ins/common/retinex.c:310
 msgid "Level"
-msgstr ""
+msgstr "Nivå"
 
 #: plug-ins/common/retinex.c:314
-#, fuzzy
 msgid "_Uniform"
-msgstr "_Enhetseditor"
+msgstr "_Enhetlig"
 
 #: plug-ins/common/retinex.c:316
-#, fuzzy
 msgid "_Low"
-msgstr "_Lägre"
+msgstr "_Låg"
 
 #: plug-ins/common/retinex.c:318
-#, fuzzy
 msgid "_High"
-msgstr "_Höjd"
+msgstr "_Hög"
 
 #: plug-ins/common/retinex.c:343
-#, fuzzy
 msgid "_Scale:"
-msgstr "Skala:"
+msgstr "_Skala:"
 
 #: plug-ins/common/retinex.c:358
-#, fuzzy
 msgid "_Scale division:"
-msgstr "_Delning:"
+msgstr "_Skaldelning:"
 
 #: plug-ins/common/retinex.c:373
 msgid "_Dynamic:"
-msgstr ""
+msgstr "_Dynamisk:"
 
 #: plug-ins/common/retinex.c:644
-#, fuzzy
 msgid "Retinex: Filtering..."
-msgstr "Gör rörelseoskarp..."
+msgstr "Retinex: filtrering..."
 
 #: plug-ins/common/ripple.c:138
 msgid "_Ripple..."
@@ -7087,11 +7077,8 @@ msgstr "Tröskla alfa"
 msgid "Threshold:"
 msgstr "Tröskelvärde:"
 
-#: plug-ins/common/tiff.c:211
-msgid "TIFF images"
-msgstr "TIFF-bilder"
-
-#: plug-ins/common/tiff.c:232 plug-ins/common/tiff.c:249
+#: plug-ins/common/tiff.c:211 plug-ins/common/tiff.c:232
+#: plug-ins/common/tiff.c:249
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
@@ -8144,9 +8131,8 @@ msgid "Searching - please wait"
 msgstr "Söker - vänta"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:425
-#, fuzzy
 msgid "1 Procedure"
-msgstr "%d procedurer"
+msgstr "1 procedur"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
@@ -8211,9 +8197,8 @@ msgid "_Plug-In Browser"
 msgstr "Bläddrare för insticksmoduler"
 
 #: plug-ins/dbbrowser/plugin-browser.c:418
-#, fuzzy
 msgid "1 Plug-In Interface"
-msgstr "%d gränssnitt för insticksmoduler"
+msgstr "1 gränssnitt för insticksmoduler"
 
 #: plug-ins/dbbrowser/plugin-browser.c:420
 #, c-format
@@ -8468,9 +8453,8 @@ msgstr "Fyll med färgskala"
 
 #. Tool options notebook
 #: plug-ins/gfig/gfig-dialog.c:482
-#, fuzzy
 msgid "Tool options"
-msgstr "Zoomalternativ"
+msgstr "Verktygsalternativ"
 
 #. "show image" checkbutton at bottom of style frame
 #: plug-ins/gfig/gfig-dialog.c:493
@@ -8497,7 +8481,7 @@ msgstr "Spara Gfig-ritning"
 
 #: plug-ins/gfig/gfig-dialog.c:858
 msgid "This tool has no options"
-msgstr ""
+msgstr "Detta verktyg har inga alternativ"
 
 #: plug-ins/gfig/gfig-dialog.c:896
 msgid "Create line"
@@ -8589,9 +8573,8 @@ msgid "Show position"
 msgstr "Visa position"
 
 #: plug-ins/gfig/gfig-dialog.c:1283
-#, fuzzy
 msgid "Show control points"
-msgstr "Göm kontrollpunkter"
+msgstr "Visa kontrollpunkter"
 
 #: plug-ins/gfig/gfig-dialog.c:1312
 msgid "Max undo:"
@@ -8674,9 +8657,8 @@ msgid "Grid color:"
 msgstr "Rutnätsfärg:"
 
 #: plug-ins/gfig/gfig-dialog.c:1659
-#, fuzzy
 msgid "Sides:"
-msgstr "Storlekar:"
+msgstr "Sidor:"
 
 #: plug-ins/gfig/gfig-dialog.c:1669
 msgid "Clockwise"
@@ -8696,15 +8678,15 @@ msgstr "Orientering:"
 msgid "Gfig layer %d"
 msgstr "Gfig lager %d"
 
-#: plug-ins/gfig/gfig-dobject.c:590
+#: plug-ins/gfig/gfig-dobject.c:595
 msgid "Hey where has the object gone ?"
 msgstr "Hallå, vart har objektet tagit vägen ?"
 
-#: plug-ins/gfig/gfig-dobject.c:1020
+#: plug-ins/gfig/gfig-dobject.c:1025
 msgid "Error reading file"
 msgstr "Fel vid inläsning"
 
-#: plug-ins/gfig/gfig-dobject.c:1110
+#: plug-ins/gfig/gfig-dobject.c:1115
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 
@@ -8712,12 +8694,12 @@ msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 msgid "Regular Polygon Number of Sides"
 msgstr "Liksidig polygon antal sidor"
 
-#: plug-ins/gfig/gfig-preview.c:330
+#: plug-ins/gfig/gfig-preview.c:331
 msgid "Object Details"
 msgstr "Objektdetaljer"
 
 #. Position labels
-#: plug-ins/gfig/gfig-preview.c:380
+#: plug-ins/gfig/gfig-preview.c:381
 msgid "XY position:"
 msgstr "XY-position:"
 
@@ -9684,13 +9666,12 @@ msgid "GIMP Help browser"
 msgstr "GIMP hjälpläsare"
 
 #: plug-ins/helpbrowser/dialog.c:390
-#, fuzzy
 msgid "Document not found"
 msgstr "Dokumentet kunde inte hittas"
 
 #: plug-ins/helpbrowser/dialog.c:392
 msgid "The requested URL could not be loaded:"
-msgstr ""
+msgstr "Den angivna adressen kunde inte läsas in:"
 
 #: plug-ins/ifscompose/ifscompose.c:367
 msgid "Ifs_Compose..."
@@ -11691,6 +11672,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil \"%s\"."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
+
+#~ msgid "TIFF images"
+#~ msgstr "TIFF-bilder"
 
 #~ msgid "Despeckling..."
 #~ msgstr "Tar bort damm..."
