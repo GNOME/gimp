@@ -1042,6 +1042,14 @@ bumpmap_dialog (void)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
+  /* Initialise drawable (don't initialise offsets if bumpmap_id is 
+     already known)*/
+  if (bmvals.bumpmap_id == -1) 
+    dialog_new_bumpmap (TRUE);
+  else
+    dialog_new_bumpmap (FALSE);
+
+
   /* Done */
 
   gtk_widget_show (dialog);
@@ -1471,19 +1479,5 @@ static void
 dialog_bumpmap_callback (GtkWidget   *widget,
                          GimpPreview *preview)
 {
-  gint value;
-
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
-
-  if (bmvals.bumpmap_id == value)
-    {
-      dialog_new_bumpmap (FALSE);
-    }
-  else
-    {
-      bmvals.bumpmap_id = value;
-      dialog_new_bumpmap (TRUE);
-    }
-
   gimp_preview_invalidate (preview);
 }

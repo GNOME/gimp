@@ -1,3 +1,9 @@
+2004-11-17  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/bumpmap.c: Fixed initialisation issue
+	that was crashing the plug-in on repeat runs. Fixes bug
+	#158494.
+
 2004-11-17  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/print-size-dialog.c: added missing callbacks for the
