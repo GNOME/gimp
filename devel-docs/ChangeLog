@@ -1,3 +1,10 @@
+2004-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added gimp_check_size() and
+	gimp_check_type().
+
+	* libgimp/tmpl/gimp.sgml: regenerated.
+
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-docs.sgml
