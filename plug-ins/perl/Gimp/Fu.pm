@@ -436,7 +436,7 @@ I recommend ISO format (yyyymmdd or yyyy-mm-dd). Default value is "=pod(DATE)".
 
 The menu entry Gimp should create. It should start either with <Image>, if
 you want an entry in the image menu (the one that opens when clicking into
-an image), <Xtns>, for the Xtns menu or <None> for none.
+an image), <Toolbox>/Xtns, for the Xtns menu or <None> for none.
 
 =item image types
 
