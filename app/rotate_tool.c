@@ -306,8 +306,10 @@ rotate_tool_motion (Tool *tool,
 
   if (transform_core->function == HANDLE_CENTER)
     {
-      transform_core->cx = transform_core->curx;
-      transform_core->cy = transform_core->cury;
+      transform_core->trans_info[CENTER_X] = transform_core->curx;
+      transform_core->trans_info[CENTER_Y] = transform_core->cury;
+      transform_core->cx                   = transform_core->curx;
+      transform_core->cy                   = transform_core->cury;
 
       return;
     }
@@ -363,8 +365,11 @@ rotate_tool_recalc (Tool *tool,
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
-  cx = transform_core->cx;
-  cy = transform_core->cy;
+  cx = transform_core->trans_info[CENTER_X];
+  cy = transform_core->trans_info[CENTER_Y];
+
+  transform_core->cx = cx;
+  transform_core->cy = cy;
 
   /*  assemble the transformation matrix  */
   gimp_matrix3_identity  (transform_core->transform);

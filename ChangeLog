@@ -1,3 +1,9 @@
+2003-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/rotate_tool.c (rotate_tool_motion,recalc): ported back some
+	code from HEAD that fixes the handling of the rotation center
+	across tool pause/resume. Fixes bug #109943.
+
 2003-04-29  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/image_render.c: merged fix for bug #109933 from HEAD branch.
