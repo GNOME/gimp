@@ -20,4 +20,7 @@ WriteMakefile(
     'TYPEMAPS'	=> ["$topdir/typemap",@pdl_typemaps],
     #dynamic_lib	=> { OTHERLDFLAGS => "$LDFLAGS $LIBS $cfg{GLIB_LIBS}" },
     dynamic_lib	=> { OTHERLDFLAGS => "$LDFLAGS $LIBS" },
+    'PM'	=> {
+    		    'Net.pm'	=> '$(INST_LIBDIR)/Net.pm',
+    		   },
 );

@@ -129,6 +129,7 @@ examples/visual
 examples/billboard
 examples/blended2
 examples/dust
+examples/clear_alpha
 pxgettext
 po/ChangeLog
 po/Makefile.PL

@@ -38,4 +38,8 @@ WriteMakefile(
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'macro'	=> { libdir => $libdir, exec_prefix => $exec_prefix, prefix => $prefix },
     'TYPEMAPS'	=> ["$topdir/typemap",@pdl_typemaps],
+    'PM'	=> {
+    		    'UI.pm'		=> '$(INST_LIBDIR)/UI.pm',
+    		    'basewidget.pm'	=> '$(INST_LIBDIR)/basewidget.pm',
+    		   },
 );

@@ -9,7 +9,7 @@ dnl disable some warnings I don't want to see
 if test "x$GCC" = xyes; then
    nowarn="-Wno-parentheses -Wno-unused -Wno-uninitialized"
    GIMP_CFLAGS="$GIMP_CFLAGS $nowarn"
-   GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
+   GIMP_CFLAGS_NOUI="$GIMP_CFLAGS_NOUI $nowarn"
 fi
 
 AC_SUBST(EXTENSIVE_TESTS)dnl from Makefile.PL

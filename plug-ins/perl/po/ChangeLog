@@ -1,15 +1,3 @@
-2000-04-18  Valek Filippov  <frob@df.ru>
-
-	* ru.po: Updated russian translation.
-
-2000-04-17  Yuri Syrota  <rasta@renome.rovno.ua>
-
-	* uk.po: Added Ukrainian translation
-
-Sat Apr  8 23:29:31 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* cs.po: Updated translation.
-
 Thu Apr  6 22:38:51 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * Makefile.PL: msgmerge will no longer be called under any

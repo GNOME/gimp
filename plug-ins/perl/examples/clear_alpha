@@ -1,0 +1,80 @@
+#!/usr/bin/perl
+
+use Gimp::Feature 'pdl';
+use Gimp 1.098;
+use Gimp::Fu;
+use PDL::LiteF;
+
+register "clear_alpha",
+         "This plug-in sets the (hidden) colour in transparent regions to some constant, to support better file compression",
+         "This plug-in sets the (hidden) colour in transparent regions to some constant, to support better file compression",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "20000412",
+         N_"<Image>/Image/Alpha/Clear Alpha...",
+         "RGB*, GRAY*, INDEXED*",	
+         [
+          [PF_SLIDER,	"threshold",	"The threshold to detect 'transparent' with",	0, [0, 255, 1, 10]],
+          [PF_COLOUR,	"colour",	"The colour to set the transparent parts to",	"black"],
+          [PF_BOOL,	"all_layers",	"Apply to all layers instead of only the active one?", 1],
+         ],
+         sub {
+   my($image, $drawable, $thresh, $colour, $all)=@_;
+
+   Gimp->progress_init ("Clearing Alpha...");
+   $image->undo_push_group_start;
+
+   my $colour = pdl byte, @$colour;
+
+   for my $drawable ($all ? $image->get_layers : $drawable) {
+      next unless $drawable->has_alpha;
+
+      my @bounds = $drawable->bounds;
+      my @off = $drawable->offsets;
+
+      $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
+      $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;
+      {
+         my $src = new PixelRgn ($drawable,@bounds,0,0);
+         my $dst = new PixelRgn ($drawable,@bounds,1,1);
+
+         my $iter = Gimp->pixel_rgns_register ($src, $dst);
+         my $area = $bounds[2]*$bounds[3];
+         my $progress = 0;
+
+         do {
+            my $data = $src->data;
+
+            my $mask = $data->slice("-1") <= $thresh;
+            my $rgb  = $data->slice("0:-2");
+
+            $rgb *= !$mask;
+            $rgb += $colour * $mask;
+            
+            $dst->data($data);
+
+            $progress += $src->w*$src->h/$area;
+            Gimp->progress_update ($progress);
+         } while (Gimp->pixel_rgns_process ($iter));
+      }
+
+      $drawable->merge_shadow (1);
+      $drawable->update (@bounds);
+   }
+   $image->undo_push_group_end;
+   Gimp->progress_update (1);
+
+   ();
+};
+
+exit main;
+
+
+
+
+
+
+
+
+
+
