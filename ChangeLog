@@ -1,3 +1,8 @@
+2003-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-templates.c (gimp_templates_load):
+	gimp_list_reverse() after loading so it is in the right order.
+
 2003-04-05  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.c: applied a patch from

@@ -55,6 +55,8 @@ gimp_templates_load (Gimp *gimp)
       g_error_free (error);
     }
 
+  gimp_list_reverse (GIMP_LIST (gimp->templates));
+
   g_free (filename);
 }
 
