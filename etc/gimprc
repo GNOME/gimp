@@ -377,8 +377,8 @@
 #
 # (help-browser gimp)
 
-# This path will be searched for fractals when you use the Fractal Explorer
-# plug-in.  This is a colon-separated list of directories to search.
+# Where to search for fractals used by the Fractal Explorer plug-in.  This is
+# a colon-separated list of directories to search.
 #
 # (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
@@ -396,4 +396,9 @@
 # colon-separated list of directories to search.
 #
 # (gimpressionist-path "${gimp_dir}/gimpressionist:${gimp_data_dir}/gimpressionist")
+
+# This path will be searched for scripts when the Script-Fu plug-in is run. 
+# This is a colon-separated list of directories to search.
+#
+# (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
 
