@@ -353,7 +353,7 @@ layer_copy (layer, add_alpha)
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
     {
-      new_layer->mask = layer_mask_copy (layer->mask);
+      new_layer->mask = layer_mask_ref (layer_mask_copy (layer->mask));
       new_layer->apply_mask = layer->apply_mask;
       new_layer->edit_mask = layer->edit_mask;
       new_layer->show_mask = layer->show_mask;
@@ -428,7 +428,7 @@ layer_add_mask (layer, mask)
   if (layer->mask)
     return NULL;
 
-  layer->mask = mask;
+  layer->mask = layer_mask_ref (mask);
   mask->layer = layer;
 
   /*  Set the application mode in the layer to "apply"  */
@@ -1429,7 +1429,22 @@ layer_mask_get_ID (int ID)
 void
 layer_mask_delete (LayerMask * layermask)
 {
-  gtk_object_destroy (GTK_OBJECT (layermask));
+  gtk_object_unref (GTK_OBJECT (layermask));
+}
+
+LayerMask *
+layer_mask_ref (LayerMask *mask)
+{
+  gtk_object_ref  (GTK_OBJECT (mask));
+  gtk_object_sink (GTK_OBJECT (mask));
+  return mask;
+}
+
+
+void
+layer_mask_unref (LayerMask *mask)
+{
+  gtk_object_unref (GTK_OBJECT (mask));
 }
 
 void

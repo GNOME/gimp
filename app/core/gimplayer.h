@@ -118,6 +118,8 @@ LayerMask *     layer_mask_new	(int, int, int, char *,
 LayerMask *	layer_mask_copy	(LayerMask *);
 void		layer_mask_delete	(LayerMask *);
 LayerMask *	layer_mask_get_ID    (int);
+LayerMask *	layer_mask_ref (LayerMask *);
+void   		layer_mask_unref (LayerMask *);
 
 /* access functions */
 
