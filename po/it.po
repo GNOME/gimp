@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
-"PO-Revision-Date: 2004-12-16 17:36+0100\n"
+"POT-Creation-Date: 2004-12-20 08:05+0100\n"
+"PO-Revision-Date: 2004-12-20 08:24+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4926,7 +4926,7 @@ msgstr "Segmento errato %d nel file gradiente '%s'."
 #: app/core/gimpgradient-load.c:183 app/core/gimpgradient-load.c:197
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
+msgstr "Il file gradiente '%s' è danneggiato: i segmenti non coprono il campo 0-1."
 
 #: app/core/gimpgradient-load.c:281
 #, c-format
@@ -6897,9 +6897,8 @@ msgid "There are %d images with unsaved changes:"
 msgstr "Ci sono %d immagini con cambiamenti non salvati:"
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
-msgstr "Al_za il canale"
+msgstr "Ann_ulla i cambiamenti"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -9119,9 +9118,8 @@ msgid "Center X:"
 msgstr "Centro X:"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Centro X:"
+msgstr "Centro Y:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10883,6 +10881,3 @@ msgstr "Crea e modifica immagini o fotografie"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Editor immagine"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
