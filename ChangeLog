@@ -1,5 +1,9 @@
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: added GIMP_GRAVITY_NONE.
+
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c: don't use gimp_drawable_configure() to
 	resize the text layer, it should only ever be called once. Take
 	the logical rectangle into account when calculating the layer size

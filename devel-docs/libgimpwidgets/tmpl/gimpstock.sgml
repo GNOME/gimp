@@ -255,6 +255,62 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH_WEST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-north-west-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-north-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH_EAST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-north-east-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_WEST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-west-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_EAST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-east-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH_WEST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-south-west-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-south-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH_EAST ##### -->
+<para>
+<inlinegraphic fileref="stock-gravity-south-east-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
 <para>
 <inlinegraphic fileref="stock-char-picker-22.png" format="png"></inlinegraphic>

@@ -45,7 +45,14 @@ HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-duplicate-16.png			\
 	$(IMAGES_DIR)/stock-edit-16.png				\
 	$(IMAGES_DIR)/stock-eye-20.png				\
-	$(IMAGES_DIR)/stock-selection-grow-16.png		\
+	$(IMAGES_DIR)/stock-gravity-east-24.png			\
+	$(IMAGES_DIR)/stock-gravity-north-24.png		\
+	$(IMAGES_DIR)/stock-gravity-north-east-24.png		\
+	$(IMAGES_DIR)/stock-gravity-north-west-24.png		\
+	$(IMAGES_DIR)/stock-gravity-south-24.png		\
+	$(IMAGES_DIR)/stock-gravity-south-east-24.png		\
+	$(IMAGES_DIR)/stock-gravity-south-west-24.png		\
+	$(IMAGES_DIR)/stock-gravity-west-24.png			\
 	$(IMAGES_DIR)/stock-hchain-24.png			\
 	$(IMAGES_DIR)/stock-hchain-broken-24.png		\
 	$(IMAGES_DIR)/stock-info-64.png				\
@@ -71,6 +78,7 @@ HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-scale-16.png			\
 	$(IMAGES_DIR)/stock-selection-add-16.png		\
 	$(IMAGES_DIR)/stock-selection-all-16.png		\
+	$(IMAGES_DIR)/stock-selection-grow-16.png		\
 	$(IMAGES_DIR)/stock-selection-intersect-16.png		\
 	$(IMAGES_DIR)/stock-selection-none-16.png		\
 	$(IMAGES_DIR)/stock-selection-replace-16.png		\
