@@ -446,7 +446,7 @@ main (int    argc,
   gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
 
-  if (stack_trace_mode != STACK_TRACE_NEVER)
+  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER)
     {
       /* these are handled by gimp_fatal_error() */
       gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
