@@ -59,26 +59,23 @@ libappbase_a_SOURCES = \
 	tile-swap.c		\
 	tile-swap.h
 
-EXTRA_DIST = makefile.msc
-
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@
 
-# for automake-1.5
-AM_ASFLAGS = \
-	-I$(top_srcdir)		\
+AM_CCASFLAGS = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir) 	\
 	-I$(top_srcdir)/app
-
-# for automake-1.6
-AM_CCASFLAGS = $(AM_ASFLAGS)
 
 INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
+
+EXTRA_DIST = makefile.msc
 
 #
 # rules to generate built sources

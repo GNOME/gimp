@@ -1,5 +1,15 @@
 2002-11-07  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am: removed mydistcheck hook.
+
+	* app/base/Makefile.am
+	* app/paint-funcs/Makefile.am: removed automake-1.4 and 1.5 specific
+	stuff; made it work correctly for srcdir != builddir.
+
+	* tools/pdbgen/Makefile.am: do not to write into the source tree.
+
+2002-11-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpbrushpreview.c
 	(gimp_brush_preview_render_timeout_func): fixed a bug spotted
 	by Jim Meyer (#97911) and added a missing call to

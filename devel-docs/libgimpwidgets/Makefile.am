@@ -167,6 +167,14 @@ install-data-local:
 	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); \
 	fi)
 
+uninstall-local:
+	(installfiles=`echo $(srcdir)/html/*`; \
+	for i in $$installfiles; do \
+	  rm -f $(DESTDIR)$(TARGET_DIR)/`basename $$i`; \
+	done; \
+	rm -f $(DESTDIR)$(TARGET_DIR)/index.sgml)
+
+
 #
 # Require gtk-doc when making dist
 #
