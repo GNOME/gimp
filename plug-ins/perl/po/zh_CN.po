@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: Sat Nov 10 09:50:47 2001\n"
-"PO-Revision-Date: 2001-12-15 16:30+0800\n"
+"PO-Revision-Date: 2002-02-12 13:10+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -62,19 +62,19 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_：非法选项，请看 $0 --help\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_：未知或非法的文件保存选项"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
-msgstr ""
+msgstr "$function：参数名“$p->[1]”含有非法字符，允许的只有 0-9、a-z 和 _"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
+msgstr "$function：参数或返回值“$p->[1]”含有非法类型“$p->[0]”"
 
 #: Gimp.pm:0
 msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
@@ -82,39 +82,39 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
-msgstr ""
+msgstr "$function：函数名含有非常规字符，好的风格是仅使用 0-9、a-z 和 _"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s：不是整数\n"
 
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
-msgstr ""
+msgstr "%s 个参数传给了函数“%s”"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
+msgstr "%s：过程数据库因无效输入参数而执行失败"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
-msgstr ""
+msgstr "%s：过程数据库执行失败"
 
 #: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
-msgstr ""
+msgstr "(未初始化)"
 
 #: UI/UI.pm:0
 msgid "(none)"
-msgstr ""
+msgstr "(没有)"
 
 #: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
-msgstr ""
+msgstr "，%d 字节数据]"
 
 #: Perl-Server:0
 msgid ", authorization required"
-msgstr ""
+msgstr "，需要身分认证"
 
 #: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
@@ -189,15 +189,15 @@ msgstr "<Image>/滤镜/颜色/火焰..."
 
 #: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr ""
+msgstr "<Image>/滤镜/颜色/映射到渐变..."
 
 #: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr ""
+msgstr "<Image>/滤镜/扭曲/镜像切割..."
 
 #: examples/scratches:0
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr ""
+msgstr "<Image>/滤镜/扭曲/划痕..."
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
@@ -277,7 +277,7 @@ msgstr ""
 
 #: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr ""
+msgstr "<Image>/滤镜/噪音/抖动..."
 
 #: examples/feedback:0
 msgid "<Image>/Filters/Noise/Feedback..."
@@ -289,31 +289,31 @@ msgstr ""
 
 #: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/添加灰尘..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr ""
+msgstr "<Image>/滤镜/绘制/添加炽光"
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/绒质金属..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/爆裂..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/凸出边缘..."
 
 #: examples/randomblends:0
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/随机混和..."
 
 #: examples/stampify:0
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr ""
+msgstr "<Image>/滤镜/绘制/邮票..."
 
 #: examples/fit-text:0
 msgid "<Image>/Filters/Text/Fit Text..."
@@ -321,11 +321,11 @@ msgstr ""
 
 #: examples/tex-to-float:0
 msgid "<Image>/Filters/Text/TeX String..."
-msgstr ""
+msgstr "<Image>/滤镜/文字/TeX 字符串..."
 
 #: examples/terral_text:0
 msgid "<Image>/Filters/Text/Terral Text..."
-msgstr ""
+msgstr "<Image>/滤镜/文字/凸起文字..."
 
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
@@ -341,35 +341,35 @@ msgstr ""
 
 #: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
-msgstr ""
+msgstr "<Image>/参考线/中心线..."
 
 #: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
-msgstr ""
+msgstr "<Image>/参考线/参考网格..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/参考线/去掉参考线"
 
 #: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
-msgstr ""
+msgstr "<Image>/参考线/到选区..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr ""
+msgstr "<Image>/图像/Alpha/Alpha 到颜色..."
 
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/图像/Alpha/清除 Alpha..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr ""
+msgstr "<Image>/图层/居中放置图层"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr ""
+msgstr "<Image>/图层/堆栈/重新排列图层..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
@@ -389,15 +389,15 @@ msgstr ""
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
-msgstr ""
+msgstr "<Image>/查看/3D 表面..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "<Load> 插件调用时没有给出 3 个标准的参数！\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "<Save> 插件调用时没有给出 5 个标准的参数！\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
@@ -413,11 +413,11 @@ msgstr ""
 
 #: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Gimp::Fu 示例..."
 
 #: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/PDB 浏览器..."
 
 #: examples/parasite-editor:0
 msgid "<Toolbox>/Xtns/Parasite Editor..."
@@ -425,7 +425,7 @@ msgstr ""
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Perl 插件示例"
 
 #: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
@@ -437,7 +437,7 @@ msgstr "<Toolbox>/Xtns/Perl/服务器"
 
 #: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/绘制/砖块..."
 
 #: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
@@ -449,11 +449,11 @@ msgstr ""
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/绘制/徽标/燃烧文字..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/Xtns/绘制/徽标/炽热钢块..."
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
@@ -473,11 +473,11 @@ msgstr ""
 
 #: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/绘制/随机艺术 #1..."
 
 #: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/绘制/邮票..."
 
 #: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
@@ -521,7 +521,7 @@ msgstr "画笔选择对话框"
 
 #: examples/translogo:0
 msgid "Bumpmap"
-msgstr ""
+msgstr "凸起映射"
 
 #: UI/UI.pm:0
 #: UI/UI.pm:0
@@ -559,7 +559,7 @@ msgstr "日期/版本"
 
 #: UI/UI.pm:0
 msgid "Defaults"
-msgstr ""
+msgstr "默认值"
 
 #: examples/PDB:0
 msgid "Description"
@@ -669,7 +669,7 @@ msgstr "插件路径"
 
 #: UI/UI.pm:0
 msgid "Previous"
-msgstr ""
+msgstr "上次值"
 
 #: UI/UI.pm:0
 msgid "Reset all values to their default"
