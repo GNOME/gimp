@@ -9,5 +9,6 @@ libgimpbase-decl-list.txt
 libgimpbase-unused.txt
 libgimpbase-undocumented.txt
 html
-sgml
+xml
+version.xml
 *.stamp

@@ -1,75 +1,75 @@
 Developers documentation using gtk-doc
 --------------------------------------
 
-The goal is to provide useful source documentation. Right now this is limited
-to libgimp since that is the part that is used by third-party coders (plug-in
-developers). Other parts of the code may follow later, but not before libgimp
-is properly documented.
+The goal is to provide useful source documentation. Right now this is
+limited to libgimp since that is the part that is used by third-party
+coders (plug-in developers). Other parts of the code may follow later,
+but not before libgimp is properly documented.
 
 
 Principle
 ---------
 
-The documentation is extracted out of the source using gtk-doc. We use a
-combination of comment blocks embedded into the source and additional
-information added manually into the SGML files.
+The documentation is extracted out of the source using gtk-doc. We use
+a combination of comment blocks embedded into the source and
+additional information added manually into SGML template files.
 
 
 Requirements
 ------------
 
-GIMP release tarballs contain a complete set of precompiled HTML files as well
-as SGML files to create other formats. You only need gtk-doc if you want to
-work on the documentation itself.  In that case you will need the following
-utilities:
+GIMP release tarballs contain a complete set of precompiled HTML files
+as well as DocBook XML files to create other formats. You only need
+gtk-doc if you want to work on the documentation itself.  In that case
+you will need the following utilities:
 
 Perl v5 - Most of the scripts used are written in Perl.
 
-DocBook DTD v3.0 - This is the DocBook SGML DTD.
+DocBook DTD v3.0  -  This is the DocBook SGML DTD.
     http://www.ora.com/davenport
 
-Jade v1.1 - This is a DSSSL processor for converting SGML to various formats.
-    http://www.jclark.com/jade
+libxslt & libxml2 (version >= 2.3.6)  -  This is used to convert the
+    XML templates to HTML.
+    http://xmlsoft.org/
 
-Modular DocBook Stylesheets (v1.19+ should be OK) - This is the DSSSL code to
-    convert DocBook to HTML (and a few other formats). It's used together with
-    jade.
-    http://nwalsh.com/docbook/dsssl
-
-gtk-doc - This package automatically generates DocBook documentation for GTK+
-    and converts the DocBook documentation into HTML (and other formats).
+gtk-doc (version >= 1.0)  -  This package automatically generates DocBook
+    documentation from source and is able to convert it into HTML (and
+    other formats).
     ftp://ftp.gtk.org/pub/gtk-doc/
 
 
 HOWTO
 -----
 
-Carefully read the README that comes with gtk-doc. Then read it again! The
-following lines will only give you hints about how our system works. You
-should have understood the principles of gtk-doc before you touch it.
+Carefully read the README that comes with gtk-doc. Then read it again!
+The following lines will only give you hints about how our system
+works. You should have understood the principles of gtk-doc before you
+touch it.
 
-The system is already set up, so unless there are substantial changes to the
-source e.g. new files were added, functions were added, renamed or removed or
-parameters changed, there is no need to touch the Makefile or any other files
-in the toplevel directory.
+The system is already set up, so unless there are substantial changes
+to the source e.g. new files were added, functions were added, renamed
+or removed or parameters changed, there is no need to touch the
+Makefile or any other files in the toplevel directory.
 
-In most cases you will work on the documentation by adding or editing comment
-blocks in the C source and by editing the template SGML files in the tmpl
-directory.
+In most cases you will work on the documentation by adding or editing
+comment blocks in the C source and by editing the template SGML files
+in the tmpl directory.
 
-After you've done any changes to the documentation, running 'make' should
-rebuild the documentation. This will however only work if configure was called
-with the option '--enable-gtk-doc' and gtk-doc was successfully found. If
-everything was set up correctly, running 'make' should do the trick and
-generate the SGML and HTML files for you. Since the dependencies are not
-perfect, you sometimes need to call 'make clean; make' to force regeneration.
+After you've done any changes to the documentation, running 'make'
+should rebuild the documentation. This will however only work if
+configure was called with the option '--enable-gtk-doc' and gtk-doc
+was successfully found. If everything was set up correctly, running
+'make' should do the trick and generate the XML and HTML files for
+you. Since the dependencies are not perfect, you sometimes need to
+call 'make clean; make' to force regeneration.
 
 
 More information
 ----------------
 
-Using the system as described above, you can write documentation without any
-knowledge of SGML and DocBook, but when editing the templates you will
-sometimes want to do a little extra structuring or markup. The best source for
-information about DocBook seems to be "DocBook: The Definitive Guide" which is
-available online at http://www.docbook.org/tdg/html/.
+Using the system as described above, you can write documentation
+without any knowledge of DocBook XML, but when editing the templates
+you will sometimes want to do a little extra structuring or
+markup. The best source for information about DocBook seems to be
+"DocBook: The Definitive Guide" which is available online at
+http://www.docbook.org/tdg/html/.

@@ -1,9 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = \
+	libgimpbase	\
 	libgimpcolor	\
 	libgimpmath	\
-	libgimpbase	\
 	libgimpmodule	\
 	libgimpwidgets	\
 	libgimp

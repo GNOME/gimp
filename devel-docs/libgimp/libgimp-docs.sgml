@@ -1,40 +1,45 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity Gimp SYSTEM "sgml/gimp.sgml">
-<!entity GimpBrushes SYSTEM "sgml/gimpbrushes.sgml">
-<!entity GimpChannel SYSTEM "sgml/gimpchannel.sgml">
-<!entity GimpColor SYSTEM "sgml/gimpcolor.sgml">
-<!entity GimpConvert SYSTEM "sgml/gimpconvert.sgml">
-<!entity GimpDisplay SYSTEM "sgml/gimpdisplay.sgml">
-<!entity GimpDrawable SYSTEM "sgml/gimpdrawable.sgml">
-<!entity GimpEdit SYSTEM "sgml/gimpedit.sgml">
-<!entity GimpFileops SYSTEM "sgml/gimpfileops.sgml">
-<!entity GimpFloatingsel SYSTEM "sgml/gimpfloatingsel.sgml">
-<!entity GimpGimprc SYSTEM "sgml/gimpgimprc.sgml">
-<!entity GimpGradients SYSTEM "sgml/gimpgradients.sgml">
-<!entity GimpGuides SYSTEM "sgml/gimpguides.sgml">
-<!entity GimpHelp SYSTEM "sgml/gimphelp.sgml">
-<!entity GimpImage SYSTEM "sgml/gimpimage.sgml">
-<!entity GimpLayer SYSTEM "sgml/gimplayer.sgml">
-<!entity GimpMessage SYSTEM "sgml/gimpmessage.sgml">
-<!entity GimpMisc SYSTEM "sgml/gimpmisc.sgml">
-<!entity GimpPalette SYSTEM "sgml/gimppalette.sgml">
-<!entity GimpPatterns SYSTEM "sgml/gimppatterns.sgml">
-<!entity GimpPixelrgn SYSTEM "sgml/gimppixelrgn.sgml">
-<!entity GimpPlugin SYSTEM "sgml/gimpplugin.sgml">
-<!entity GimpProceduraldb SYSTEM "sgml/gimpproceduraldb.sgml">
-<!entity GimpSelection SYSTEM "sgml/gimpselection.sgml">
-<!entity GimpTexttool SYSTEM "sgml/gimptexttool.sgml">
-<!entity GimpTile SYSTEM "sgml/gimptile.sgml">
-<!entity GimpTools SYSTEM "sgml/gimptools.sgml">
-<!entity GimpUndo SYSTEM "sgml/gimpundo.sgml">
-<!entity GimpEnums SYSTEM "sgml/gimpenums.sgml">
-<!entity GimpExport SYSTEM "sgml/gimpexport.sgml">
-<!entity GimpMenu SYSTEM "sgml/gimpmenu.sgml">
-<!entity GimpUI SYSTEM "sgml/gimpui.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY Gimp SYSTEM "xml/gimp.xml">
+<!ENTITY GimpBrushes SYSTEM "xml/gimpbrushes.xml">
+<!ENTITY GimpChannel SYSTEM "xml/gimpchannel.xml">
+<!ENTITY GimpColor SYSTEM "xml/gimpcolor.xml">
+<!ENTITY GimpConvert SYSTEM "xml/gimpconvert.xml">
+<!ENTITY GimpDisplay SYSTEM "xml/gimpdisplay.xml">
+<!ENTITY GimpDrawable SYSTEM "xml/gimpdrawable.xml">
+<!ENTITY GimpEdit SYSTEM "xml/gimpedit.xml">
+<!ENTITY GimpFileops SYSTEM "xml/gimpfileops.xml">
+<!ENTITY GimpFloatingsel SYSTEM "xml/gimpfloatingsel.xml">
+<!ENTITY GimpGimprc SYSTEM "xml/gimpgimprc.xml">
+<!ENTITY GimpGradients SYSTEM "xml/gimpgradients.xml">
+<!ENTITY GimpGuides SYSTEM "xml/gimpguides.xml">
+<!ENTITY GimpHelp SYSTEM "xml/gimphelp.xml">
+<!ENTITY GimpImage SYSTEM "xml/gimpimage.xml">
+<!ENTITY GimpLayer SYSTEM "xml/gimplayer.xml">
+<!ENTITY GimpMessage SYSTEM "xml/gimpmessage.xml">
+<!ENTITY GimpMisc SYSTEM "xml/gimpmisc.xml">
+<!ENTITY GimpPalette SYSTEM "xml/gimppalette.xml">
+<!ENTITY GimpPatterns SYSTEM "xml/gimppatterns.xml">
+<!ENTITY GimpPixelrgn SYSTEM "xml/gimppixelrgn.xml">
+<!ENTITY GimpPlugin SYSTEM "xml/gimpplugin.xml">
+<!ENTITY GimpProceduraldb SYSTEM "xml/gimpproceduraldb.xml">
+<!ENTITY GimpSelection SYSTEM "xml/gimpselection.xml">
+<!ENTITY GimpTexttool SYSTEM "xml/gimptexttool.xml">
+<!ENTITY GimpTile SYSTEM "xml/gimptile.xml">
+<!ENTITY GimpTools SYSTEM "xml/gimptools.xml">
+<!ENTITY GimpUndo SYSTEM "xml/gimpundo.xml">
+<!ENTITY GimpEnums SYSTEM "xml/gimpenums.xml">
+<!ENTITY GimpExport SYSTEM "xml/gimpexport.xml">
+<!ENTITY GimpMenu SYSTEM "xml/gimpmenu.xml">
+<!ENTITY GimpUI SYSTEM "xml/gimpui.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
   <chapter id="gimpdefinitions">

@@ -16,7 +16,7 @@ SCANGOBJ_OPTIONS =
 SCAN_OPTIONS =
 
 # Extra options to supply to gtkdoc-mkdb
-MKDB_OPTIONS =
+MKDB_OPTIONS = --sgml-mode --output-format=xml
 
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS = --extra-dir=../libgimpbase/html --extra-dir=../libgimpcolor/html --extra-dir=../libgimpmath/html --extra-dir=../libgimpwidgets/html
@@ -73,7 +73,7 @@ EXTRA_DIST = 				\
 	$(DOC_MODULE).types		\
 	$(DOC_MODULE)-sections.txt
 
-DOC_STAMPS=scan-build.stamp tmpl-build.stamp sgml-build.stamp html-build.stamp \
+DOC_STAMPS=scan-build.stamp tmpl-build.stamp xml-build.stamp html-build.stamp \
 	   $(srcdir)/tmpl.stamp $(srcdir)/sgml.stamp $(srcdir)/html.stamp
 
 SCANOBJ_FILES = 		\
@@ -113,15 +113,15 @@ tmpl-build.stamp: $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections
 tmpl.stamp: tmpl-build.stamp
 	@true
 
-#### sgml ####
+#### xml ####
 
-sgml-build.stamp: tmpl.stamp $(CFILE_GLOB) $(srcdir)/tmpl/*.sgml
-	@echo '*** Building SGML ***'
+xml-build.stamp: tmpl.stamp $(CFILE_GLOB) $(srcdir)/tmpl/*.sgml
+	@echo '*** Building XML ***'
 	cd $(srcdir) && \
 	gtkdoc-mkdb --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) $(MKDB_OPTIONS)
-	touch sgml-build.stamp
+	touch xml-build.stamp
 
-sgml.stamp: sgml-build.stamp
+sgml.stamp: xml-build.stamp
 	@true
 
 #### html ####
@@ -145,7 +145,7 @@ clean-local:
 	rm -f *~ *.bak $(SCANOBJ_FILES) *-unused.txt $(DOC_STAMPS)
 
 maintainer-clean-local: clean
-	cd $(srcdir) && rm -rf sgml html $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
+	cd $(srcdir) && rm -rf xml html $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)
@@ -182,10 +182,10 @@ endif
 
 dist-hook: dist-check-gtkdoc dist-hook-local
 	mkdir $(distdir)/tmpl
-	mkdir $(distdir)/sgml
+	mkdir $(distdir)/xml
 	mkdir $(distdir)/html
 	-cp $(srcdir)/tmpl/*.sgml $(distdir)/tmpl
-	-cp $(srcdir)/sgml/*.sgml $(distdir)/sgml
+	-cp $(srcdir)/xml/*.xml $(distdir)/xml
 	-cp $(srcdir)/html/* $(distdir)/html
 
 .PHONY : dist-hook-local

@@ -1,5 +1,21 @@
 2003-02-06  Sven Neumann  <sven@gimp.org>
 
+	Switched to DocBook XML for the developers documentation:
+	
+	* configure.in: check for gtk-doc >= 1.0.
+
+	* tools/pdbgen/lib.pl: replace <, > and & in comments with their
+	XML entities.
+
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgimprc_pdb.c
+	* libgimp/gimppainttools_pdb.c
+	* libgimp/gimpselection_pdb.c: regenerated.
+
+	* libgimpbase/gimpsignal.c: did the same manually here.
+
+2003-02-06  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/image-menu.c (image_menu_entries): removed /Filters/Text
 	menu branch now that we don't install any plug-in there and
 	gimp-freetype is becoming obsolete.

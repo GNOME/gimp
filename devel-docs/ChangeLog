@@ -1,5 +1,20 @@
 2003-02-06  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am
+	* README.gtkdoc
+	* libgimp*/Makefile.am	
+	* libgimp*/libgimp-docs.sgml: changed to create DocBook XML
+	instead of SGML.
+
+	* libgimp*/version.xml.in: added new file used to include the GIMP
+	version in the generated XML.
+	
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimpunitmenu.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: fixed broken syntax.
+
+2003-02-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/tmpl/gimputils.sgml
 	* libgimpmath/tmpl/gimpmd5.sgml
 	* libgimpmodule/libgimpmodule-sections.txt

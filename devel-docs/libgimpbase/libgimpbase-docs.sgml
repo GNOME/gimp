@@ -1,20 +1,25 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity GimpBaseTypes SYSTEM "sgml/gimpbasetypes.sgml">
-<!entity GimpLimits SYSTEM "sgml/gimplimits.sgml">
-<!entity GimpDatafiles SYSTEM "sgml/gimpdatafiles.sgml">
-<!entity GimpEnv SYSTEM "sgml/gimpenv.sgml">
-<!entity GimpParasite SYSTEM "sgml/gimpparasite.sgml">
-<!entity GimpParasiteIO SYSTEM "sgml/gimpparasiteio.sgml">
-<!entity GimpSignal SYSTEM "sgml/gimpsignal.sgml">
-<!entity GimpUnit SYSTEM "sgml/gimpunit.sgml">
-<!entity GimpUtils SYSTEM "sgml/gimputils.sgml">
-<!entity GimpVersion SYSTEM "sgml/gimpversion.sgml">
-<!entity GimpProtocol SYSTEM "sgml/gimpprotocol.sgml">
-<!entity GimpWire SYSTEM "sgml/gimpwire.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY GimpBaseTypes SYSTEM "xml/gimpbasetypes.xml">
+<!ENTITY GimpLimits SYSTEM "xml/gimplimits.xml">
+<!ENTITY GimpDatafiles SYSTEM "xml/gimpdatafiles.xml">
+<!ENTITY GimpEnv SYSTEM "xml/gimpenv.xml">
+<!ENTITY GimpParasite SYSTEM "xml/gimpparasite.xml">
+<!ENTITY GimpParasiteIO SYSTEM "xml/gimpparasiteio.xml">
+<!ENTITY GimpSignal SYSTEM "xml/gimpsignal.xml">
+<!ENTITY GimpUnit SYSTEM "xml/gimpunit.xml">
+<!ENTITY GimpUtils SYSTEM "xml/gimputils.xml">
+<!ENTITY GimpVersion SYSTEM "xml/gimpversion.xml">
+<!ENTITY GimpProtocol SYSTEM "xml/gimpprotocol.xml">
+<!ENTITY GimpWire SYSTEM "xml/gimpwire.xml">
+<!ENTITY version SYSTEM "version.xml">
 ]>
+
 <book id="index">
   <bookinfo>
     <title>GIMP Base Library Reference Manual</title>
+    <releaseinfo>for GIMP &version;</releaseinfo>
   </bookinfo>
 
   <chapter id="libgimpbase">
