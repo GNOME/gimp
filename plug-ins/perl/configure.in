@@ -50,6 +50,11 @@ CONFIG_H="config.h"
 
 sinclude(configure.frag)
 
+INTLLIBS=
+MSGFMT=:
+AC_SUBST(INTLLIBS)
+AC_SUBST(MSGFMT)
+
 AC_OUTPUT(config.pl)
 
 echo "now invoking perl to complete the configuration..."

@@ -42,6 +42,9 @@ $^W=0;
    pdl_typemaps		=> '',
    INC1			=> '',
    DEFINE1		=> '',
+
+   INTLLIBS		=> q[@INTLLIBS@],
+   MSGFMT		=> q[@MSGFMT@],
 );
 
 sub expand {

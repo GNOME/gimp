@@ -1460,6 +1460,11 @@ done
 
 
 
+INTLLIBS=
+MSGFMT=:
+
+
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -1605,6 +1610,8 @@ s%@CPP@%$CPP%g
 s%@EXTENSIVE_TESTS@%$EXTENSIVE_TESTS%g
 s%@IN_GIMP@%$IN_GIMP%g
 s%@PERL@%$PERL%g
+s%@INTLLIBS@%$INTLLIBS%g
+s%@MSGFMT@%$MSGFMT%g
 
 CEOF
 EOF

@@ -2,6 +2,9 @@
 #ifndef _G_P_P_PORTABILITY_H_
 #define _G_P_P_PORTABILITY_H_
 
+#undef _P_P_PORTABILITY_H_
+#define _P_P_PORTABILITY_H_
+
 /* Perl/Pollution/Portability Version 1.0007-gimp-2 */
 
 /* Copyright (C) 1999, Kenneth Albanowski. This code may be used and
