@@ -110,15 +110,17 @@ static void   run     (gchar      *name,
 static gint32 load_image              (gchar     *filename);
 static gint   save_image              (gchar     *filename,
 				       gchar     *prefix,
-				       gchar     *comment,
 				       gboolean   save_mask,
 				       gint32     image_ID, 
 				       gint32     drawable_ID);
 static gint   save_dialog             (gint32     drawable_ID);
 static void   save_ok_callback        (GtkWidget *widget,
 				       gpointer   data);
+#if 0
+/* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void   comment_entry_callback  (GtkWidget *widget,
 				       gpointer   data);
+#endif
 static void   prefix_entry_callback   (GtkWidget *widget,
 				       gpointer   data);
 static void   mask_ext_entry_callback (GtkWidget *widget,
@@ -444,12 +446,10 @@ run (gchar      *name,
 
 	  if (save_image (param[3].data.d_string,
 			  xsvals.prefix,
-			  xsvals.comment,
 			  FALSE,
 			  image_ID, drawable_ID) 
               && (!xsvals.write_mask || save_image (mask_filename,
                                                     mask_prefix,
-                                                    xsvals.comment,
                                                     TRUE,
                                                     image_ID, drawable_ID)))
 	    {
@@ -932,7 +932,6 @@ load_image (gchar *filename)
 static gboolean
 save_image (gchar    *filename,
 	    gchar    *prefix,
-	    gchar    *comment,
 	    gboolean  save_mask,
 	    gint32    image_ID,
 	    gint32    drawable_ID)
@@ -1002,9 +1001,13 @@ save_image (gchar    *filename,
       return FALSE;
     }
 
+#if 0
   /* Maybe write the image comment. */
+  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
+  /* a future version should write the comment at the end of the file */
   if (*comment)
     fprintf (fp, "/* %s */\n", comment);
+#endif
 
   /* Write out the image height and width. */
   fprintf (fp, "#define %s_width %d\n",  prefix, width);
@@ -1191,7 +1194,10 @@ save_dialog (gint32 drawable_ID)
                       GTK_SIGNAL_FUNC (prefix_entry_callback),
                       NULL);
 
+#if 0
   /* comment string. */
+#if 0
+  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
   entry = gtk_entry_new_with_max_length (MAX_COMMENT);
   gtk_widget_set_usize (entry, 240, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
@@ -1201,6 +1207,7 @@ save_dialog (gint32 drawable_ID)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (comment_entry_callback),
                       NULL);
+#endif
 
   /* hotspot toggle */
   toggle = gtk_check_button_new_with_label (_("Write Hot Spot Values"));
@@ -1268,6 +1275,7 @@ save_dialog (gint32 drawable_ID)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (mask_ext_entry_callback),
                       NULL);
+#endif
 
   gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
   gtk_widget_set_sensitive (entry, xsvals.write_mask);
@@ -1286,6 +1294,8 @@ save_dialog (gint32 drawable_ID)
 
 
 /* Update the comment string. */
+#if 0
+/* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void
 comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
@@ -1294,6 +1304,7 @@ comment_entry_callback (GtkWidget *widget,
   strncpy (xsvals.comment,
 	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
 }
+#endif
 
 static void
 prefix_entry_callback (GtkWidget *widget,

@@ -1,4 +1,9 @@
 2002-11-07  Dave Neary  <bolsh@gimp.org>
+	* plug-ins/common/xbm.c: Applied patch from Raphael
+	Quinet to suppress printing of comments in XBM files.
+	Closes bug #82763.
+
+2002-11-07  Dave Neary  <bolsh@gimp.org>
 	* help/C/images/brush_dialog.png
 	* help/C/dialogs/brush_selection.html: Applied patch from
 	Cameron Gregory <cameron@bloke.com> to add missing help
