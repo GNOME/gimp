@@ -182,6 +182,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   guchar            white[3] = { 255, 255, 255 };
   gint              columns;
   gint              rows;
+  gint              cell_size;
   gint              x, y, i;
 
   palette = GIMP_PALETTE (viewable);
@@ -191,20 +192,23 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
                            0, 0,
                            white);
 
-#define CELL_SIZE 4
+  if (palette->n_columns > 1)
+    cell_size = MAX (4, width / palette->n_columns);
+  else
+    cell_size = 4;
 
-  columns = width  / CELL_SIZE;
-  rows    = height / CELL_SIZE;
+  columns = width  / cell_size;
+  rows    = height / cell_size;
 
   buf = temp_buf_data (temp_buf);
   b   = g_new (guchar, width * 3);
-
-  memset (b, 255, width * 3);
 
   list = palette->colors;
 
   for (y = 0; y < rows && list; y++)
     {
+      memset (b, 255, width * 3);
+
       for (x = 0; x < columns && list; x++)
 	{
 	  entry = (GimpPaletteEntry *) list->data;
@@ -212,25 +216,23 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 	  list = g_list_next (list);
 
 	  gimp_rgb_get_uchar (&entry->color,
-			      &b[x * CELL_SIZE * 3 + 0],
-			      &b[x * CELL_SIZE * 3 + 1],
-			      &b[x * CELL_SIZE * 3 + 2]);
+			      &b[x * cell_size * 3 + 0],
+			      &b[x * cell_size * 3 + 1],
+			      &b[x * cell_size * 3 + 2]);
 
-	  for (i = 1; i < CELL_SIZE; i++)
+	  for (i = 1; i < cell_size; i++)
 	    {
-	      b[(x * CELL_SIZE + i) * 3 + 0] = b[(x * CELL_SIZE) * 3 + 0];
-	      b[(x * CELL_SIZE + i) * 3 + 1] = b[(x * CELL_SIZE) * 3 + 1];
-	      b[(x * CELL_SIZE + i) * 3 + 2] = b[(x * CELL_SIZE) * 3 + 2];
+	      b[(x * cell_size + i) * 3 + 0] = b[(x * cell_size) * 3 + 0];
+	      b[(x * cell_size + i) * 3 + 1] = b[(x * cell_size) * 3 + 1];
+	      b[(x * cell_size + i) * 3 + 2] = b[(x * cell_size) * 3 + 2];
 	    }
 	}
 
-      for (i = 0; i < CELL_SIZE; i++)
+      for (i = 0; i < cell_size; i++)
 	{
-	  memcpy (buf + ((y * CELL_SIZE + i) * width) * 3, b, width * 3);
+	  memcpy (buf + ((y * cell_size + i) * width) * 3, b, width * 3);
 	}
     }
-
-#undef CELL_SIZE
 
   g_free (b);
 

@@ -54,18 +54,15 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
-  g_return_val_if_fail (n_colors > 0, NULL);
+  g_return_val_if_fail (n_colors > 1, NULL);
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
-  dx    = 1.0 / (n_colors - 1);
-  cur_x = 0;
+  dx = 1.0 / (n_colors - 1);
 
-  for (loop = 0; loop < n_colors; loop++)
+  for (loop = 0, cur_x = 0; loop < n_colors; loop++, cur_x += dx)
     {
       gimp_gradient_get_color_at (gradient, cur_x, &color);
-
-      cur_x += dx;
       gimp_palette_add_entry (palette, NULL, &color);
     }
 
@@ -274,7 +271,7 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
-  g_return_val_if_fail (n_colors > 0, NULL);
+  g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
   /*  Get the image information  */

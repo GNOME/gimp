@@ -1,3 +1,14 @@
+2002-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppalette.c (gimp_palette_get_new_preview): adjust
+	the cell_size of the preview dynamically (makes them look nicer).
+
+	* app/core/gimppalette-import.c: require n_colors to be at least
+	2, not 1. Cleanup.
+
+	* app/gui/palette-import-dialog.c: completely chopped and
+	re-assembled source and GUI. Please have a look and comment...
+
 2002-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-text.[ch]: new files that implement the text
