@@ -1,3 +1,7 @@
+2003-08-17  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh (AUTOCONF_REQUIRED_VERSION): check for version 2.54.
+
 2003-08-17  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: bump up minimum autoconf requirement to 2.54 for
