@@ -1,0 +1,32 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="devicestatus">
+  <title>The Device Status Dialog</title>
+  
+  <para>
+    The Device dialog will show you the status of your input devices.
+    This is (only) useful if you have a drawing tablet. If you do have
+    then you will be able to see and adjust what tool, color, brush,
+    pattern and gradient you have assigned to your different pens (i.e
+    input devices).
+  </para>
+  
+  <para>
+    To alter the context each device has, you simply drag and drop
+    brushes, tools etc. with the <mousebutton> middle </mousebutton>
+    mouse button from the respective dialog (e.g you drag and drop
+    tools from the tool box).
+  </para>
+  
+  <para>
+    It can be very wise to set up a standard context for all your
+    tools and save it (and disable saving of device status on exit in
+    the preference dialog). By doing so you will always have the same
+    settings of the tools each time you start <application> GIMP
+    </application>.
+  </para>
+    
+  <para>
+    <ulink url="index.html" type="http"> Index </ulink>
+  </para>
+</sect1>

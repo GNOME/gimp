@@ -1,0 +1,30 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="featherselection">
+  <title> Feather Selection </title>
+    
+  <para>
+    In the Feather dialog you select by how much you want to feather
+    the selection.
+  </para>
+      
+  <para>
+    Feather produces a selection with fuzzy edges. In other words, a
+    feathered selection becomes more and more transparent until it
+    reaches the edges of the selection. Feather allows you to blend a
+    color or image softly into the background.
+  </para>
+      
+  <sect2>
+    <title> Additional Information </title>
+      
+    <para>
+      Default Keyboard Shortcut: Ctrl+Shift+F 
+    </para>
+      
+    <para>
+      <ulink url="index.html" type="http"> Index </ulink>
+    </para>
+
+  </sect2>
+</sect1>    

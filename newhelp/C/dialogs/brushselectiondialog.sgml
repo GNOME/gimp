@@ -1,0 +1,72 @@
+<!DOCTYPE sect1 PUBLIC "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="brushselectiondialog">
+  <title> The Brush Selection Dialog </title>
+
+  <para>
+    It's in this dialog you choose what brush you want to use, and the
+    settings you want to apply to the brush. The dialog displays all
+    the available brushes.  You may also notice some of <application>
+    <acronym> GIMP </acronym> </application>s special features, like
+    colored brushes (pixmap brushes), brushes with a red triangle in
+    the right corner a so called "Image Hose" brush, brushes with
+    artistic text, little flourishes or do odles, etc.
+  </para>
+
+  <para>
+    All of those brushes are relatively easy to create in Gimp and
+    save them in the appropriate format. Gimp also provides you with a
+    <ulink url="brush_editor.html" type="http"> brush editor </ulink>
+    where you can create and edit brushes. <footnote> <para> you can
+    only edit brushes that are created in the brush editor </para>
+    </footnote>
+  </para>
+
+  <sect2 id="Preview">
+    <title>  Preview and Brush Information </title>
+    
+    <para>
+      You will see that some of the brushes in the dialog has a little
+      + sign.  The + sign is indicating that the brush preview is
+      scaled to fit, i.e.  the brush is larger in reality. To view the
+      real size of the brush, click and hold on the brush square and
+      the real size brush will appear (and disappear when you release
+      the mouse).
+    </para>
+
+    <para>
+      When you choose a brush the name and the size of the brush will
+      appear in the brush dialog. The brush size is measured in
+      pixels.
+    </para>
+  </sect2> 
+
+  <sect2 id="Settings">
+    <title> Settings </title>
+    
+    <para>
+      Spacing is the distance between your brush marks. If you set the
+      spacing to 100, the brushmarks will be like a bed of pearls.  If
+      you set the spacing to zero, the brushmarks will create a solid,
+      brush-shaped line. If the spacing is higher than 100 the
+      brushmarks will form a dotted line.  <note> <para> It is mostly
+      not useful to set the spacing to zero since the brush (most
+      notably fuzzy ones) will look unnatural. </para> </note> 
+    </para>
+  </sect2>
+
+  <sect2 id="pixmapbrushes">
+    <title> Pixmap Brushes </title>
+
+    <para>
+      Pixmap brushes are small images that can be used as a brush.
+      Since the brush is a image you can't alter it's color, i.e the
+      color setting in the toolbox will not apply to this image.
+      <note> <para> If you use color as a pressure sensitivity when
+      you paint you will be able to change the color of the pixmap
+      brush.  For information how to create and save a Pixmap Brush
+      please see the <ulink url="../save/filters/gpb.html"
+      type="http"> Gimp Pixmap Brush </ulink> page. </para> </note>
+    </para>
+  </sect2>
+</sect1>

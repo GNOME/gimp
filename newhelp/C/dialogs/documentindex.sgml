@@ -1,0 +1,20 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="documentindexdialog">
+  <title> The Document Index Dialog </title>
+  
+  <para>
+      The document index dialog will enable you to see all previously
+      opened images in <application> GIMP </application>.
+  </para>
+  
+  <para>
+      You can open a image by double clicking on the entry for it or
+      by marking it and clicking open. You are also able to sort the
+      index by either moving the position of a entry or removing it.
+   </para>
+   
+   <para>
+     <ulink url="index.html" type="http"> Index </ulink>
+   </para>
+</sect1> 

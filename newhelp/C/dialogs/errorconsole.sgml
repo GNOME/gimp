@@ -1,0 +1,24 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="errorconsole">
+  <title> The Error Console Dialog </title>
+  
+  <para>
+    The error console will show internal <application> GIMP
+    </application> error messages. An example of such error is when
+    <application> GIMP </application> fails to save or load a image.
+  </para>
+  
+  <para>
+    If you encounter a bug in <application> GIMP </application> it can
+    be wise to open the error console and try to reproduce the bug. If
+    <application> GIMP </application> then produces any error messages
+    you can email <email>bugs@gimp.org</email> that along with a bug
+    description to the <application> GIMP </application> developers at
+    <email>gimp-developer@scam.xcf.berkeley.edu</email>.
+  </para>
+      
+  <para>
+    <ulink url="index.html" type="http"> Index </ulink>
+  </para>
+</sect1>

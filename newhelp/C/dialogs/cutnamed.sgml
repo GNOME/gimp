@@ -1,0 +1,19 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+  <TITLE>Cut Named</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<H1>Cut Named</H1>
+      <P>
+      Lets you cut the current selection to a named buffer. You can cut several parts
+      to different buffers by giving them different names. Later on you are able
+      to paste a selected buffer by invoking
+      <A HREF="paste_named.html"><STRONG>Right-Click|Edit|Buffer|Paste
+      Named</STRONG></A>. If you don't specify a selection, the whole of 
+the current layer is cut.</P>
+      <P>
+      <A href="index.html">Index</A></P>
+
+</BODY></HTML>

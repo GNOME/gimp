@@ -1,0 +1,16 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="aboutdialog">
+  <title> About Dialog </title>
+
+    <para>
+      The About dialog shows which Gimp version that you are using and
+      also, in random order, the people who have contributed to the
+      Gimp project.  To clear the dialog, click anywhere on it.
+    </para>
+
+    <para>
+      <ulink url="index.html" type="http"> Index </ulink>
+    </para>
+
+</sect1>

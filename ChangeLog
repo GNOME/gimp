@@ -1,3 +1,15 @@
+2000-08-04  Daniel Egger  <egger@suse.de>
+	
+	* newhelp: Created new directory which will contain the base
+	of our new SGML help system. Rebecca, Piers and I are
+	currently migrating our old HTML help into SGML.
+
+	If you like to help with creating appropriate Makefiles
+	or scripts, please step forward, there's enough to do.
+
+	* newhelp/ChangeLog
+	* nehelp/*: New files for a new help system. :)
+
 2000-08-03  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 	

@@ -1,0 +1,180 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="converttoindexed">
+  <title> Indexed Mode </title>
+
+  <para>
+    This mode enables you to convert RGB or Grayscale Images to
+    Indexed images. An Indexed image is an image which only has the
+    colors specified in its color palette which is present in the
+    image file. The maximum number of colors in an Indexed image is
+    256. If you want to make transparent GIF images then you can only
+    have a maximum of 255 colors since the last color (i.e color
+    number 256) will be used to determine if the pixel is opaque or
+    transparent.
+  </para>
+  
+  <sect2 id="paletteoptions">
+    <title> Palette Options </title>
+
+    <variablelist>
+      <varlistentry>
+	<term> <guilabel> Generate optimal palette </guilabel> </term>
+        <listitem>
+	  <para>
+	    This is most of the time the best options to create a
+	    indexed image with.  Gimp will evaluate your colors and
+	    create a color palette suitable for the image. You can
+	    specify the amount of colors that you want to have in your
+	    index image but remember that you can't have more than 255
+	    colors if are about to create an indexed image with
+	    transparency.
+	  </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term> <guilabel> Use custom palette </guilabel> </term>
+        <listitem>
+	  <para>
+	    If you want to use a predefined palette you have to use
+	    this option. You then choose your palette from the drop
+	    down menu. By default it's Web palette. The Web palette is
+	    the palette used by web browsers such as Netscape. This
+	    will help you create web safe indexed images images.
+	    <note>
+	      <para>
+		There is some debate if you should index against the
+		Web palette or not. 
+	      </para>
+	    </note>
+	  </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term> <guilabel> Custom Palette Options </guilabel> </term>
+        <listitem>
+	  <para>
+	    Remove unused colors from final palette: If the palette
+	    contains colors that aren't used in the Index image, you
+	    can remove those colors and make the image file size
+	    smaller.  This is a good option so keep it enabled.
+	  </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term> <guilabel> Use black/white (1-bit) palette
+	</guilabel> </term>  
+        <listitem>
+	  <para>
+	    This option will create a "monochrome" image only built up
+	    of either black or white pixels.
+	  </para>
+        </listitem>
+      </varlistentry>
+    </variablelist> 
+  </sect2>
+  
+  <sect2 id="dithering">
+    <title> Dithering </title>
+    <para>
+      An Indexed image can only be built up of a maximum of 256
+      colors. Most of the time this is quite limited and you will not
+      be able to have all the colors in your image represented in this
+      limited color space. The image will look like it is built up of
+      "bands" or "color areas". To make Indexed images look better you
+      can dither them. This means that two or more colors are mixed to
+      mimic the missing color. The disadvantage is that the image can
+      look like it's built up of "dots".
+    </para>
+    
+    <para>
+      <variablelist>
+	<varlistentry>
+	  <term> <guilabel> No color dithering </guilabel> </term>
+	  <listitem>
+	    <para>
+	      Will disable dithering totally.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	  
+	<varlistentry>
+	  <term> <guilabel> Positioned color dithering </guilabel> </term>
+	  <listitem>
+	    <para>
+	      Use this option when you are dealing with animations
+	      such as gif animations. The problem with dithering in
+	      animations is that the dithering will not be constant.
+	      If you choose positioned dithering instead, the
+	      dithering in constant areas will remain constant across
+	      your frames. It is not as good as Floyd Steinberg
+	      dithering, but is better than no dithering at all.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	        
+	<varlistentry>
+	  <term> <guilabel> Floyd Steinberg dithering color dithering
+	  (reduced color bleeding) </guilabel> </term>
+	  <listitem>
+	    <para>
+	      With normal Floyd Steinberg dithering, you may
+	      experience too much color bleeding. This is very visible
+	      when you index gradients, causing an unnatural look. If
+	      you encounter this effect, it is advisable to use this
+	      option (i.e Floyd Steinberg dithering reduced colour
+	      bleeding).
+	    </para>
+	  </listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	  <term> <guilabel> Floyd Steinberg dithering (normal)
+	  </guilabel> </term>
+	  <listitem>
+	    <para>
+	      This is the best option to use when you are indexing
+	      images. It's only in special cases that you will use the
+	      other dithering methods available.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+	
+	<varlistentry>
+	  <term> <guilabel> Enable dithering of transparency
+	  </guilabel> </term>
+	  <listitem>
+	    <para>
+	      Indexed images only have one transparency mode either it
+	      is off (the pixel is totally solid) or on (the pixel is
+	      totally transparent). This makes it very difficult to
+	      index images with smooth transitions from opaque to
+	      transparent. When you enable dithering of transparency,
+	      Gimp will try to mimic the smooth transition by
+	      dithering pixels on and off. 
+	      <note>
+	        <para>
+		  Note: A good alternative to transparency dithering
+		  is the <ulink url="../filters/semiflatten.html"
+		  type="html"> <mousebutton> Right </mousebutton>
+		  Click -&gt; <guimenu> Filters </guimenu> -&gt;
+		  <guisubmenu> Colors </guisubmenu> -&gt;
+		  <guimenuitem> Semi-Flatten </guimenuitem> </ulink>
+		  function.
+		</para>
+	      </note>
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>  
+    
+    <para>
+      <ulink url="index.html" type="html"> Index </ulink>
+    </para>
+
+  </sect2>
+</sect1>

@@ -1,0 +1,47 @@
+<!doctype sect1 public "-//OASIS//DTD DocBook V3.1//EN"[]>
+
+<sect1 id="indexedpalette">
+  <title> Indexed Palette </title>
+  
+  <para>
+    Allows you to edit and alter the palette present in an indexed
+    image. Remember that you can only paint with the colors present
+    in your indexed palette. This is why it's very handy to be able
+    to add or alter colors in the palette.
+  </para>
+  
+  <para>
+    <variablelist>
+      <varlistentry>
+	<term> Altering a color </term>
+	<listitem>
+	  <para>
+	    Choose the color that you want to alter by clicking on it.
+	    Choose <guibutton> edit </guibutton> from the <guimenu>
+	    Operation </guimenu> menu, this will bring up the
+	    <application> GIMP </application> color selector which
+	    enables you to pick a replacement color.
+	   </para> 
+	 </listitem>
+       </varlistentry>
+       
+       <varlistentry>
+	 <term> Adding a color </term>
+	 <listitem>
+	   <para> 
+	     If your indexed image contains less that 256 colors then
+	     you can add a color to your indexed image. Choose
+	     <guibutton> Add </guibutton> from the <guimenu> Operation
+	     </guimenu> menu, a new color will appear as the last
+	     color in the palette. The new palette color is a copy the
+	     previously last entry in the palette. You are now free to
+	     alter the color which you now can paint with in your
+	     indexed image.
+	   </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+      
+    <ulink url="index.html" type="http"> Index </ulink>
+  </para>
+</sect1>
