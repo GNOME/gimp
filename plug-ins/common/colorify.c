@@ -342,7 +342,8 @@ colorify_dialog (GimpRGB *color)
 
   custum_color_button = gimp_color_button_new (_("Colorify Custom Color"),
 					       COLOR_SIZE, COLOR_SIZE,
-					       color, FALSE);
+					       color,
+					       GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (custum_color_button), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      color);
@@ -354,7 +355,8 @@ colorify_dialog (GimpRGB *color)
   for (i = 0; i < 7; i++)
     {
       button = gtk_button_new ();
-      color_area = gimp_color_area_new (&button_color[i], FALSE, 
+      color_area = gimp_color_area_new (&button_color[i], 
+					GIMP_COLOR_AREA_FLAT, 
 					GDK_BUTTON2_MASK);
       gtk_widget_set_usize (GTK_WIDGET (color_area), COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);

@@ -511,7 +511,7 @@ nova_dialog (GimpDrawable *drawable)
 
   button = gimp_color_button_new (_("SuperNova Color Picker"), 
 				  SCALE_WIDTH - 8, 16, 
-				  &pvals.color, FALSE);
+				  &pvals.color, GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      &pvals.color);

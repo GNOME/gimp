@@ -1302,7 +1302,8 @@ script_fu_interface (SFScript *script)
 	  sf_interface->args_widgets[i] =
 	    gimp_color_button_new (_("Script-Fu Color Selection"),
 				   COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT,
-				   &script->arg_values[i].sfa_color, FALSE);
+				   &script->arg_values[i].sfa_color,
+				   GIMP_COLOR_AREA_FLAT);
 	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]),
 			      "color_changed",
 			      GTK_SIGNAL_FUNC (gimp_color_button_get_color),

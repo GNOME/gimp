@@ -362,7 +362,9 @@ exchange_dialog (void)
   gtk_widget_show (preview);
 
   /*  a hidden color_button to handle the threshold more easily  */
-  threshold = gimp_color_button_new (NULL, 1, 1, &xargs.threshold, FALSE);
+  threshold = gimp_color_button_new (NULL, 1, 1, 
+				     &xargs.threshold, 
+				     GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (threshold), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      &xargs.threshold);
@@ -390,7 +392,7 @@ exchange_dialog (void)
 					   _("Color Exchange: From Color"),
 					   SCALE_WIDTH / 2, 16,
 					   framenumber ? &xargs.to : &xargs.from, 
-					   FALSE);
+					   GIMP_COLOR_AREA_FLAT);
       gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
 			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 			  framenumber ? &xargs.to : &xargs.from);

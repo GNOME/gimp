@@ -327,8 +327,9 @@ create_main_window (GdtMainWindow **main_window,
 		(gdouble) (((guint)data->color) >> 8)  / 255.0,
 		(gdouble)  ((guint)data->color)        / 255.0);
   color_button = gimp_color_button_new (_("GDynText: Select Color"), 
-					COLOR_PREVIEW_WIDTH, COLOR_PREVIEW_HEIGHT,
-					&color, FALSE);
+					COLOR_PREVIEW_WIDTH, 
+					COLOR_PREVIEW_HEIGHT,
+					&color, GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (color_button), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &color);

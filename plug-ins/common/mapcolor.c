@@ -653,7 +653,8 @@ add_color_button (gint       csel_index,
 
   button = gimp_color_button_new (gettext (csel_title[csel_index]),
 				  PRV_WIDTH, PRV_HEIGHT,
-				  &plvals.colors[csel_index], FALSE);
+				  &plvals.colors[csel_index], 
+				  GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &plvals.colors[csel_index]);

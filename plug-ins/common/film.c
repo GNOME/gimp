@@ -1245,7 +1245,8 @@ film_dialog (gint32 image_ID)
   /* Film color */
   button = gimp_color_button_new (_("Select Film Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &filmvals.film_color, FALSE);
+				  &filmvals.film_color, 
+				  GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      &filmvals.film_color);
@@ -1293,7 +1294,8 @@ film_dialog (gint32 image_ID)
   /* Numbering color */
   button = gimp_color_button_new (_("Select Number Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &filmvals.number_color, FALSE);
+				  &filmvals.number_color, 
+				  GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      &filmvals.number_color);

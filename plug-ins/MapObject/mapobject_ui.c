@@ -732,7 +732,8 @@ create_light_page (void)
 
   colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
 				       64, 16,
-				       &mapvals.lightsource.color, FALSE);
+				       &mapvals.lightsource.color,
+				       GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &mapvals.lightsource.color);

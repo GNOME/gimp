@@ -910,7 +910,8 @@ dialog (gint32        image_ID,
   /*  attach color selectors  */
   hcolor_button = gimp_color_button_new (_("Horizontal Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
-					 &grid_cfg.hcolor, TRUE);
+					 &grid_cfg.hcolor, 
+					 GIMP_COLOR_AREA_SMALL_CHECKS);
   gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &grid_cfg.hcolor);
@@ -925,7 +926,8 @@ dialog (gint32        image_ID,
 
   vcolor_button = gimp_color_button_new (_("Vertical Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
-					 &grid_cfg.vcolor, TRUE);
+					 &grid_cfg.vcolor, 
+					 GIMP_COLOR_AREA_SMALL_CHECKS);
   gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &grid_cfg.vcolor);
@@ -940,7 +942,8 @@ dialog (gint32        image_ID,
 
   button = gimp_color_button_new (_("Intersection Color"), 
 				  COLOR_BUTTON_WIDTH, 16, 
-				  &grid_cfg.icolor, TRUE);
+				  &grid_cfg.icolor, 
+				  GIMP_COLOR_AREA_SMALL_CHECKS);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &grid_cfg.icolor);

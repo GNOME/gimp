@@ -396,7 +396,9 @@ open_dialog (void)
 
   color_button = gimp_color_button_new (_("Background Color"), 100, 16,
 					&p.params.background_color, 
-					p.drawable_has_alpha);
+					p.drawable_has_alpha ?
+					GIMP_COLOR_AREA_SMALL_CHECKS : 
+					GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (color_button), "color_changed", 
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
 		      &p.params.background_color);

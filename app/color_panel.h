@@ -20,28 +20,28 @@
 #define __COLOR_PANEL_H__
 
 
-typedef struct _ColorPanel ColorPanel;
+#include "libgimp/gimpcolorbutton.h"
 
-struct _ColorPanel
+
+#define GIMP_TYPE_COLOR_PANEL            (gimp_color_panel_get_type ())
+#define GIMP_COLOR_PANEL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanel))
+#define GIMP_COLOR_PANEL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
+#define GIMP_IS_COLOR_PANEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_PANEL))
+#define GIMP_IS_COLOR_PANEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PANEL))
+
+typedef struct _GimpColorPanel       GimpColorPanel;
+typedef struct _GimpColorPanelClass  GimpColorPanelClass;
+
+struct _GimpColorPanelClass
 {
-  /*  The calling procedure is respondible for showing this widget  */
-  GtkWidget *color_panel_widget;
-
-  /*  The actual color  */
-  GimpRGB    color;
-
-  /*  Don't touch this :)  */
-  gpointer   private_part;
+  GimpColorButtonClass  parent_class;
 };
 
-
-ColorPanel * color_panel_new       (GimpRGB    *color,
-				    gboolean    show_alpha,
-				    gint        width,
-				    gint        height);
-
-void         color_panel_set_color (ColorPanel *color_panel,
-				    GimpRGB    *color);
+GtkType     gimp_color_panel_get_type  (void);
+GtkWidget * gimp_color_panel_new       (const GimpRGB     *color,
+					GimpColorAreaType  type,
+					gint               width,
+					gint               height);
 
 
 #endif  /*  __COLOR_PANEL_H__  */

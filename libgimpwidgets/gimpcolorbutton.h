@@ -29,6 +29,9 @@
 #ifndef __GIMP_COLOR_BUTTON_H__
 #define __GIMP_COLOR_BUTTON_H__
 
+#include "libgimp/gimpcolorarea.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -40,7 +43,19 @@ extern "C" {
 #define GIMP_IS_COLOR_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_BUTTON))
 #define GIMP_IS_COLOR_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BUTTON))
 
+
 typedef struct _GimpColorButtonClass  GimpColorButtonClass;
+
+struct _GimpColorButton
+{
+  GtkButton       button;
+
+  gchar          *title;
+
+  GtkWidget      *color_area;
+  GtkWidget      *dialog;
+  GtkItemFactory *item_factory;
+};
 
 struct _GimpColorButtonClass
 {
@@ -51,16 +66,18 @@ struct _GimpColorButtonClass
 
 
 GtkType     gimp_color_button_get_type   (void);
-GtkWidget * gimp_color_button_new        (const gchar     *title,
-					  gint             width,
-					  gint             height,
-					  GimpRGB         *color,
-					  gboolean         alpha);
-void        gimp_color_button_set_color  (GimpColorButton *gcb,
-					  GimpRGB         *color);
-void        gimp_color_button_get_color  (GimpColorButton *gcb,
-					  GimpRGB         *color);/* returns */
-gboolean    gimp_color_button_has_alpha  (GimpColorButton *gcb);
+GtkWidget * gimp_color_button_new        (const gchar       *title,
+					  gint               width,
+					  gint               height,
+					  const GimpRGB     *color,
+					  GimpColorAreaType  alpha);
+void        gimp_color_button_set_color  (GimpColorButton   *gcb,
+					  const GimpRGB     *color);
+void        gimp_color_button_get_color  (GimpColorButton   *gcb,
+					  GimpRGB           *color);
+gboolean    gimp_color_button_has_alpha  (GimpColorButton   *gcb);
+void        gimp_color_button_set_type   (GimpColorButton   *gcb,
+					  GimpColorAreaType  alpha);
 
 
 #ifdef __cplusplus

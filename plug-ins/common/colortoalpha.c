@@ -440,7 +440,8 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
   button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
 				  PRV_WIDTH, PRV_HEIGHT,
-				  &pvals.color, FALSE);
+				  &pvals.color, 
+				  GIMP_COLOR_AREA_FLAT);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
 		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 		      &pvals.color);

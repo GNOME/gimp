@@ -1893,7 +1893,8 @@ sinus_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
       push_col1 = gimp_color_button_new (_("First Color"), 32, 32, 
-					 &svals.col1, TRUE);
+					 &svals.col1, 
+					 GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed", 
 			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 			  &svals.col1);
@@ -1901,7 +1902,8 @@ sinus_dialog (void)
       gtk_widget_show (push_col1);
 
       push_col2 = gimp_color_button_new (_("Second Color"), 32, 32, 
-					 &svals.col2, TRUE);
+					 &svals.col2, 
+					 GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed", 
 			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
 			  &svals.col2);

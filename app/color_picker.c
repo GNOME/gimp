@@ -22,8 +22,9 @@
 
 #include "apptypes.h"
 
+#include "libgimp/gimpcolorarea.h"
+
 #include "appenv.h"
-#include "color_panel.h"
 #include "color_picker.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -88,7 +89,7 @@ gint col_value[5] = { 0, 0, 0, 0, 0 };
 static gint           update_type;
 static GimpImageType  sample_type;
 static InfoDialog    *color_picker_info = NULL;
-static ColorPanel    *color_panel = NULL;
+static GtkWidget     *color_area = NULL;
 static gchar          red_buf   [MAX_INFO_BUF];
 static gchar          green_buf [MAX_INFO_BUF];
 static gchar          blue_buf  [MAX_INFO_BUF];
@@ -263,6 +264,7 @@ color_picker_button_press (Tool           *tool,
   if (! color_picker_info)
     {
       GtkWidget *hbox;
+      GtkWidget *frame;
       GimpRGB    color;
 
       color_picker_info = info_dialog_new (_("Color Picker"),
@@ -305,14 +307,17 @@ color_picker_button_press (Tool           *tool,
 
       gtk_widget_reparent (color_picker_info->info_table, hbox);
 
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
-      color_panel = color_panel_new (&color,
-				     gimp_drawable_has_alpha (tool->drawable),
-				     48, 64);
-      gtk_box_pack_start (GTK_BOX (hbox), color_panel->color_panel_widget,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (color_panel->color_panel_widget);
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+      color_area = gimp_color_area_new (&color,
+					gimp_drawable_has_alpha (tool->drawable) ? GIMP_COLOR_AREA_LARGE_CHECKS : GIMP_COLOR_AREA_FLAT, 0);
+      gtk_widget_set_usize (GTK_WIDGET (color_area), 48, 64);
+      gtk_container_add (GTK_CONTAINER (frame), color_area);
+      gtk_widget_show (color_area);
+      gtk_widget_show (frame);
 
       /*  create the action area  */
       gimp_dialog_create_action_area
@@ -643,8 +648,8 @@ color_picker_info_update (Tool     *tool,
 {
   if (!valid)
     {
-      if (GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
-	gtk_widget_set_sensitive (color_panel->color_panel_widget, FALSE);
+      if (GTK_WIDGET_IS_SENSITIVE (color_area))
+	gtk_widget_set_sensitive (color_area, FALSE);
 
       g_snprintf (red_buf,   MAX_INFO_BUF, _("N/A"));
       g_snprintf (green_buf, MAX_INFO_BUF, _("N/A"));
@@ -662,8 +667,8 @@ color_picker_info_update (Tool     *tool,
       guchar   b = 0;
       guchar   a = 0;
 
-      if (! GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
-	gtk_widget_set_sensitive (color_panel->color_panel_widget, TRUE);
+      if (! GTK_WIDGET_IS_SENSITIVE (color_area))
+	gtk_widget_set_sensitive (color_area, TRUE);
 
       switch (sample_type)
 	{
@@ -730,7 +735,7 @@ color_picker_info_update (Tool     *tool,
 
       gimp_rgba_set_uchar (&color, r, g, b, a);
 
-      color_panel_set_color (color_panel, &color);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color);
     }
 
   info_dialog_update (color_picker_info);
@@ -792,7 +797,7 @@ tools_free_color_picker (Tool *tool)
       info_dialog_free (color_picker_info);
       color_picker_info = NULL;
 
-      color_panel = NULL;
+      color_area = NULL;
     }
 
   g_free (cp_tool);

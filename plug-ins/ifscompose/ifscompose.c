@@ -2017,7 +2017,7 @@ color_map_create (gchar    *name,
 
   color_map->orig_preview = 
     gimp_color_area_new (fixed_point ? data : orig_color, 
-			 FALSE, 0);
+			 GIMP_COLOR_AREA_FLAT, 0);
   gtk_drag_dest_unset (color_map->orig_preview);
   gtk_widget_set_usize (color_map->orig_preview,
 			COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
@@ -2031,7 +2031,8 @@ color_map_create (gchar    *name,
   color_map->button = gimp_color_button_new (name,
 					     COLOR_SAMPLE_SIZE, 
 					     COLOR_SAMPLE_SIZE,
-					     data, FALSE);
+					     data, 
+					     GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button, 
 		      FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);

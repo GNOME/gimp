@@ -41,10 +41,10 @@ static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
 
 struct _GimpColorArea
 {
-  GtkPreview  preview;
+  GtkPreview         preview;
 
-  gboolean    alpha;
-  GimpRGB     color;
+  GimpColorAreaType  type;
+  GimpRGB            color;
 };
 
 enum
@@ -57,7 +57,7 @@ static guint           gimp_color_area_signals[LAST_SIGNAL] = { 0 };
 static GtkWidgetClass *parent_class = NULL;
 
 
-static void  gimp_color_area_class_init (GimpColorAreaClass *class);
+static void  gimp_color_area_class_init (GimpColorAreaClass *klass);
 static void  gimp_color_area_init       (GimpColorArea      *gca);
 static void  gimp_color_area_destroy    (GtkObject          *object);
 static void  gimp_color_area_update     (GimpColorArea      *gca);
@@ -105,13 +105,13 @@ gimp_color_area_get_type (void)
 }
 
 static void
-gimp_color_area_class_init (GimpColorAreaClass *class)
+gimp_color_area_class_init (GimpColorAreaClass *klass)
 {
   GtkObjectClass  *object_class;
   GtkWidgetClass  *widget_class;
 
-  object_class  = (GtkObjectClass*) class;
-  widget_class  = (GtkWidgetClass*) class;
+  object_class  = (GtkObjectClass*) klass;
+  widget_class  = (GtkWidgetClass*) klass;
 
   parent_class = gtk_type_class (gtk_preview_get_type ());
 
@@ -128,7 +128,7 @@ gimp_color_area_class_init (GimpColorAreaClass *class)
   gtk_object_class_add_signals (object_class, gimp_color_area_signals, 
 				LAST_SIGNAL);
 
-  class->color_changed = NULL;
+  klass->color_changed = NULL;
 
   object_class->destroy = gimp_color_area_destroy;
 
@@ -141,7 +141,20 @@ gimp_color_area_class_init (GimpColorAreaClass *class)
 static void
 gimp_color_area_init (GimpColorArea *gca)
 {
-  gca->alpha = FALSE;
+  gimp_rgba_set (&gca->color, 0.0, 0.0, 0.0, 1.0);
+  gca->type = GIMP_COLOR_AREA_FLAT;
+
+  GTK_PREVIEW (gca)->type   = GTK_PREVIEW_COLOR;
+  GTK_PREVIEW (gca)->bpp    = 3;
+  GTK_PREVIEW (gca)->dither = GDK_RGB_DITHER_NORMAL;
+  GTK_PREVIEW (gca)->expand = TRUE;
+
+  gtk_signal_connect_after (GTK_OBJECT (gca), "realize", 
+			    GTK_SIGNAL_FUNC (gimp_color_area_update),
+			    NULL);
+  gtk_signal_connect (GTK_OBJECT (gca), "size_allocate", 
+		      GTK_SIGNAL_FUNC (gimp_color_area_update),
+		      NULL);
 }
 
 static void
@@ -172,9 +185,9 @@ gimp_color_area_destroy (GtkObject *object)
  * Returns: Pointer to the new #GimpColorArea widget.
  **/
 GtkWidget *
-gimp_color_area_new (GimpRGB         *color,
-		     gboolean         alpha,
-		     GdkModifierType  drag_mask)
+gimp_color_area_new (const GimpRGB     *color,
+		     GimpColorAreaType  type,
+		     GdkModifierType    drag_mask)
 {
   GimpColorArea *gca;
 
@@ -183,20 +196,8 @@ gimp_color_area_new (GimpRGB         *color,
   gca = gtk_type_new (gimp_color_area_get_type ());
 
   gca->color = *color;
-  gca->alpha = alpha;
+  gca->type  = type;
  
-  GTK_PREVIEW (gca)->type   = GTK_PREVIEW_COLOR;
-  GTK_PREVIEW (gca)->bpp    = 3;
-  GTK_PREVIEW (gca)->dither = GDK_RGB_DITHER_NORMAL;
-  GTK_PREVIEW (gca)->expand = TRUE;
-
-  gtk_signal_connect_after (GTK_OBJECT (gca), "realize", 
-			    GTK_SIGNAL_FUNC (gimp_color_area_update),
-			    NULL);
-  gtk_signal_connect (GTK_OBJECT (gca), "size_allocate", 
-		      GTK_SIGNAL_FUNC (gimp_color_area_update),
-		      NULL);
-
   gtk_drag_dest_set (GTK_WIDGET (gca),
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
@@ -224,7 +225,7 @@ gimp_color_area_new (GimpRGB         *color,
  **/
 void       
 gimp_color_area_set_color (GimpColorArea *gca,
-			   GimpRGB       *color)
+			   const GimpRGB *color)
 {
   g_return_if_fail (gca != NULL);
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
@@ -258,15 +259,27 @@ gimp_color_area_has_alpha (GimpColorArea *gca)
   g_return_val_if_fail (gca != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_AREA (gca), FALSE);
 
-  return gca->alpha;
+  return gca->type != GIMP_COLOR_AREA_FLAT;
+}
+
+void        
+gimp_color_area_set_type (GimpColorArea     *gca,
+			  GimpColorAreaType  type)
+{
+  g_return_if_fail (gca != NULL);
+  g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
+
+  gca->type = type;
+  gimp_color_area_update (gca);
 }
 
 static void
 gimp_color_area_update (GimpColorArea *gca)
 {
   gint     window_width, window_height;
-  guint    x, y;
   guint    width, height;
+  guint    x, y;
+  guint    check_size = 0;
   guchar   light[3];
   guchar   dark[3];
   guchar   opaque[3];
@@ -289,13 +302,28 @@ gimp_color_area_update (GimpColorArea *gca)
   width  = window_width;
   height = window_height;
 
+  switch (gca->type)
+    {
+    case GIMP_COLOR_AREA_FLAT:
+      check_size = 0;
+      break;
+
+    case GIMP_COLOR_AREA_SMALL_CHECKS:
+      check_size = GIMP_CHECK_SIZE_SM;
+      break;
+
+    case GIMP_COLOR_AREA_LARGE_CHECKS:
+      check_size = GIMP_CHECK_SIZE;
+      break;
+    }
+      
   p = buf = g_new (guchar, width * 3);
 
   opaque[0] = gca->color.r * 255.999;
   opaque[1] = gca->color.g * 255.999;
   opaque[2] = gca->color.b * 255.999;
 
-  if (gca->alpha && gca->color.a < 1.0)
+  if (check_size && gca->color.a < 1.0)
     {
       light[0] = (GIMP_CHECK_LIGHT + 
 		  (gca->color.r - GIMP_CHECK_LIGHT) * gca->color.a) * 255.999;
@@ -327,7 +355,7 @@ gimp_color_area_update (GimpColorArea *gca)
 
 	      frac = (gdouble) (x * height) / (gdouble) width - y;
 	      
-	      if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) & 1) 
+	      if (((x / check_size) ^ (y / check_size)) & 1) 
 		{
 		  if ((gint) frac)
 		    {
@@ -407,7 +435,7 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
 
   color_area = 
     gimp_color_area_new (&color,
-			 gimp_color_area_has_alpha (GIMP_COLOR_AREA (widget)),
+			 GIMP_COLOR_AREA (widget)->type,
 			 0);
 
   gtk_widget_set_usize (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
@@ -483,10 +511,10 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
   vals[1] = gca->color.g * 0xffff;
   vals[2] = gca->color.b * 0xffff;
 
-  if (gca->alpha)
-    vals[3] = gca->color.a * 0xffff;
-  else
+  if (gca->type == GIMP_COLOR_AREA_FLAT)
     vals[3] = 0xffff;
+  else
+    vals[3] = gca->color.a * 0xffff;
 
   gtk_selection_data_set (selection_data,
 			  gdk_atom_intern ("application/x-color", FALSE),

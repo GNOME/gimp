@@ -44,6 +44,13 @@ extern "C" {
 #define GIMP_IS_COLOR_AREA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
 
 
+typedef enum
+{
+  GIMP_COLOR_AREA_FLAT = 0,
+  GIMP_COLOR_AREA_SMALL_CHECKS,
+  GIMP_COLOR_AREA_LARGE_CHECKS
+} GimpColorAreaType;
+
 typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
 struct _GimpColorAreaClass
@@ -55,14 +62,16 @@ struct _GimpColorAreaClass
 
 
 GtkType     gimp_color_area_get_type   (void);
-GtkWidget * gimp_color_area_new        (GimpRGB         *color,
-					gboolean         alpha,
-					GdkModifierType  drag_mask);
-void        gimp_color_area_set_color  (GimpColorArea   *gca,
-					GimpRGB         *color);
-void        gimp_color_area_get_color  (GimpColorArea   *gca,
-					GimpRGB         *color); /* returns */
-gboolean    gimp_color_area_has_alpha  (GimpColorArea   *gca);
+GtkWidget * gimp_color_area_new        (const GimpRGB     *color,
+					GimpColorAreaType  type,
+					GdkModifierType    drag_mask);
+void        gimp_color_area_set_color  (GimpColorArea     *gca,
+					const GimpRGB     *color);
+void        gimp_color_area_get_color  (GimpColorArea     *gca,
+					GimpRGB           *color);
+gboolean    gimp_color_area_has_alpha  (GimpColorArea     *gca);
+void        gimp_color_area_set_type   (GimpColorArea     *gca,
+					GimpColorAreaType  type);
 
 
 #ifdef __cplusplus

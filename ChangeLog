@@ -1,3 +1,32 @@
+2001-01-15  Sven Neumann  <sven@gimp.org>
+
+	* app/color_panel.[ch]: rewritten as proper widget derived from 
+	GimpColorButton
+
+	* app/channels_dialog.c
+	* app/color_picker.c
+	* app/qmask.c: use new GimpColorPanel widget
+
+	* libgimp/gimpcolorarea.[ch]
+	* libgimp/gimpcolorbutton.[ch]: some changes needed to derive from
+	GimpColorButton
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/sinus.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/script-fu/script-fu-scripts.c: follow API changes of
+	GimpColorButton and GimpColorArea
+
 2001-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/channel.[ch]
