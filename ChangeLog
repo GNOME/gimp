@@ -1,3 +1,9 @@
+Thu Oct 21 14:35:05 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	plug-ins/script-fu/script-fu-scripts.c: cleaned up the widget 
+	destruction inserted a few sanity checks. Unfortunately this
+	doesn't really solve our problems.
+
 Thu Oct 21 02:08:36 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/xpm.c: fixed a stupid cut'n'paste error I've 

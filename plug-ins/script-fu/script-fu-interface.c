@@ -158,7 +158,6 @@ typedef struct
 typedef struct
 {
   GtkWidget *status;
-  GtkWidget *entry;
   GtkWidget *about_dialog;
   SFScript  *script;
 } SFInterface;
@@ -190,6 +189,8 @@ static void       script_fu_cleanup_widgets  (SFScript  *script);
 static void       script_fu_ok_callback      (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_close_callback   (GtkWidget *widget,
+					      gpointer   data);
+static gint       script_fu_destroy_callback (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_about_callback   (GtkWidget *widget,
 					      gpointer   data);
@@ -256,7 +257,8 @@ static void       script_fu_brush_preview          (char *, /* Name */
 static SFInterface sf_interface =
 {
   NULL,  /*  status (current command) */
-  NULL   /*  active script    */
+  NULL,  /*  about_dialog             */
+  NULL   /*  active script            */
 };
 
 static struct stat filestat;
@@ -267,6 +269,7 @@ static gchar *last_command = NULL;
 static GList *script_list = NULL;
 
 extern char   siod_err_msg[];
+
 
 /*
  *  Function definitions
@@ -482,10 +485,10 @@ script_fu_add_script (LISP a)
   args[0].description = "Interactive, non-interactive";
 
   script->args_widgets = NULL;
-  script->arg_types = g_new (SFArgType, script->num_args);
-  script->arg_labels = g_new (char *, script->num_args);
-  script->arg_defaults = g_new (SFArgValue, script->num_args);
-  script->arg_values = g_new (SFArgValue, script->num_args);
+  script->arg_types    = g_new (SFArgType, script->num_args);
+  script->arg_labels   = g_new (char *, script->num_args);
+  script->arg_defaults = g_new0 (SFArgValue, script->num_args);
+  script->arg_values   = g_new0 (SFArgValue, script->num_args);
 
   if (script->num_args > 0)
     {
@@ -813,10 +816,11 @@ script_fu_script_proc (char     *name,
 	  /*  First acquire information with a dialog  */
 	  /*  Skip this part if the script takes no parameters */ 
 	  min_args = (script->image_based) ? 2 : 0;
-	  if (script->num_args > min_args) {
-	    script_fu_interface (script); 
-	    break;
-	  }
+	  if (script->num_args > min_args) 
+	    {
+	      script_fu_interface (script); 
+	      break;
+	    }
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
@@ -1092,8 +1096,8 @@ script_fu_interface (SFScript *script)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *bbox;
-  guchar *title;
-  guchar *buf;
+  gchar  *title;
+  gchar  *buf;
   gchar **argv;
   gint argc;
   int start_args;
@@ -1101,6 +1105,8 @@ script_fu_interface (SFScript *script)
   guchar *color_cube;
 
   static gint gtk_initted = FALSE;
+
+  g_return_if_fail (script != NULL);
 
   if (!gtk_initted)
     {
@@ -1126,8 +1132,8 @@ script_fu_interface (SFScript *script)
       gtk_initted = TRUE;
     }
 
-  sf_interface.about_dialog = NULL;
   sf_interface.script = script;
+  sf_interface.about_dialog = NULL;
   
   title = g_new (guchar, strlen ("Script-Fu: ") + strlen (script->description));   
   buf = strstr (script->description, "Script-Fu/");
@@ -1138,13 +1144,13 @@ script_fu_interface (SFScript *script)
 
   dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
-  gtk_window_set_title (GTK_WINDOW (dlg), (const gchar *)title);
+  gtk_window_set_title (GTK_WINDOW (dlg), title);
   gtk_window_set_wmclass (GTK_WINDOW (dlg), "script_fu", "Gimp");
   gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) script_fu_close_callback,
+		      (GtkSignalFunc) script_fu_destroy_callback,
 		      NULL);
   
   /* the vbox holding all widgets */
@@ -1216,9 +1222,10 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_COLOR:
-	  script->args_widgets[i] = gtk_button_new();
+	  script->args_widgets[i] = gtk_button_new ();
 
 	  script->arg_values[i].sfa_color.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+	  script->arg_values[i].sfa_color.dialog = NULL;
 	  gtk_preview_size (GTK_PREVIEW (script->arg_values[i].sfa_color.preview),
 			    COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT);
 	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
@@ -1230,7 +1237,7 @@ script_fu_interface (SFScript *script)
 
 	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "clicked",
 			      (GtkSignalFunc) script_fu_color_preview_callback,
-			      &script->arg_values[i].sfa_color);
+			      &script->arg_values[i].sfa_color);	  
 	  break;
 
 	case SF_TOGGLE:
@@ -1301,6 +1308,7 @@ script_fu_interface (SFScript *script)
 	case SF_FONT:
 	  script->args_widgets[i] = gtk_button_new();
 	  script->arg_values[i].sfa_font.preview = gtk_label_new ("");
+	  script->arg_values[i].sfa_font.dialog = NULL;
 	  gtk_widget_set_usize (script->args_widgets[i], FONT_PREVIEW_WIDTH, 0);
 	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
 			     script->arg_values[i].sfa_font.preview);
@@ -1346,14 +1354,15 @@ script_fu_interface (SFScript *script)
       gtk_box_pack_start (GTK_BOX (hbox), script->args_widgets[i],
                           ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) ||  (script->arg_types[i] == SF_FILENAME) ||(script->arg_types[i] == SF_FONT)),
                           ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FILENAME) || (script->arg_types[i] == SF_FONT)), 0);
-      gtk_widget_show (hbox);
 
       gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
 			1, 2, i, i + 1,
                         GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FILENAME) || (script->arg_types[i] == SF_FONT))
 				    ? GTK_EXPAND : 0),
                         GTK_FILL, 4, 2);
+
       gtk_widget_show (script->args_widgets[i]);
+      gtk_widget_show (hbox);
     }
 
   gtk_widget_show (table);
@@ -1418,7 +1427,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  
+
   g_free (script->args_widgets);
   g_free (title);
   gdk_flush ();
@@ -1471,19 +1480,19 @@ script_fu_gradient_preview(gchar    *name,
 }
 
 static void      
-script_fu_brush_preview(char    *name,       /* Name */
-			gdouble  opacity,    /* opacity */
-			gint     spacing,    /* spacing */
-			gint     paint_mode, /* paint_mode */
-			gint     width,      /* width */
-			gint     height,     /* height */
-			gchar    *mask_data, /* mask data */
-			gint     closing,    /* dialog closing */
-			gpointer udata)      /* user data */
+script_fu_brush_preview (char    *name,       /* Name */
+			 gdouble  opacity,    /* opacity */
+			 gint     spacing,    /* spacing */
+			 gint     paint_mode, /* paint_mode */
+			 gint     width,      /* width */
+			 gint     height,     /* height */
+			 gchar    *mask_data, /* mask data */
+			 gint     closing,    /* dialog closing */
+			 gpointer udata)      /* user data */
 {
   SFBrush *brush = (SFBrush *)udata;
-  g_free(brush->name);
-  brush->name = g_strdup(name);
+  g_free (brush->name);
+  brush->name = g_strdup (name);
   brush->opacity = opacity;
   brush->spacing = spacing;
   brush->paint_mode = paint_mode;
@@ -1496,7 +1505,6 @@ script_fu_font_preview (GtkWidget *preview,
   GdkFont *font;
   gchar *fontname;
   gchar *family;
-  gchar *label;
 
   if (data == NULL) 
     return;
@@ -1512,12 +1520,9 @@ script_fu_font_preview (GtkWidget *preview,
 
       strtok (fontname, "-");
       family = strtok (NULL, "-");
-      *family = toupper (*family);
-  
-      label = g_new (guchar, strlen (family) + 1);
-      sprintf (label, "%s", family);
-      gtk_label_set_text (GTK_LABEL (preview), label);
-      g_free (label);
+      g_strup (family);
+
+      gtk_label_set_text (GTK_LABEL (preview), family);
     }
   else
     {
@@ -1531,6 +1536,8 @@ static void
 script_fu_cleanup_widgets (SFScript *script)
 {
   int i;
+
+  g_return_if_fail (script != NULL);
 
   if (sf_interface.about_dialog != NULL)
     {
@@ -1558,13 +1565,13 @@ script_fu_cleanup_widgets (SFScript *script)
 	  }
 	break;
       case SF_PATTERN:
-  	gimp_pattern_select_widget_close_popup(script->args_widgets[i]); 
+  	gimp_pattern_select_widget_close_popup (script->args_widgets[i]); 
 	break;
       case SF_GRADIENT:
-  	gimp_gradient_select_widget_close_popup(script->args_widgets[i]); 
+  	gimp_gradient_select_widget_close_popup (script->args_widgets[i]); 
 	break;
       case SF_BRUSH:
-  	gimp_brush_select_widget_close_popup(script->args_widgets[i]); 
+  	gimp_brush_select_widget_close_popup (script->args_widgets[i]); 
 	break;
       default:
 	break;
@@ -1756,9 +1763,6 @@ script_fu_ok_callback (GtkWidget *widget,
   /*  disable the current command field  */
   script_fu_disable_cc (err_msg);
 
-  /* Clean up flying widgets before terminating Gtk */
-  script_fu_cleanup_widgets(script);
-
   gtk_main_quit ();
 
   g_free (command);
@@ -1768,10 +1772,19 @@ static void
 script_fu_close_callback (GtkWidget *widget,
 			  gpointer   data)
 {
+  gtk_main_quit ();
+}
+
+static gint
+script_fu_destroy_callback (GtkWidget *widget,
+			    gpointer   data)
+{  
   if (sf_interface.script != NULL)
     script_fu_cleanup_widgets (sf_interface.script);
 
-  gtk_main_quit ();
+  sf_interface.script = NULL;
+  
+  return FALSE;
 }
 
 static void
@@ -1911,6 +1924,8 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       sf_interface.about_dialog = dialog;
+      gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+			  gtk_widget_destroyed, &sf_interface.about_dialog);
     }
   gtk_window_position (GTK_WINDOW (sf_interface.about_dialog), 
 		       GTK_WIN_POS_MOUSE);  
@@ -2029,7 +2044,8 @@ script_fu_color_preview_callback (GtkWidget *widget,
       
   if (!color->dialog)
     {
-      color->dialog = gtk_color_selection_dialog_new (_("Script-Fu Color Picker"));
+      color->dialog = 
+	gtk_color_selection_dialog_new (_("Script-Fu Color Picker"));
       csd = GTK_COLOR_SELECTION_DIALOG (color->dialog);
 
       gtk_widget_destroy (csd->help_button);
@@ -2040,6 +2056,8 @@ script_fu_color_preview_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
 			  (GtkSignalFunc) script_fu_color_preview_delete,
 			  color);
+      gtk_signal_connect (GTK_OBJECT (csd), "destroy",
+			  gtk_widget_destroyed, &color->dialog);
       gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
 			  (GtkSignalFunc) script_fu_color_preview_cancel,
 			  color);
@@ -2081,7 +2099,7 @@ script_fu_color_preview_cancel (GtkWidget *widget,
 
   color = (SFColor *) data;
 
-  gtk_widget_hide(color->dialog);
+  gtk_widget_hide (color->dialog);
 
   color->color[0] = color->old_color[0];
   color->color[1] = color->old_color[1];
@@ -2110,7 +2128,8 @@ script_fu_file_selection_callback (GtkWidget *widget,
   if (file->filename)
     g_free (file->filename);
 
-  file->filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
+  file->filename = 
+    gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
 }
 
 static void
@@ -2133,6 +2152,8 @@ script_fu_font_preview_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (fsd), "delete_event",
 			  (GtkSignalFunc) script_fu_font_dialog_delete,
 			  font);
+      gtk_signal_connect (GTK_OBJECT (fsd), "destroy",
+			  gtk_widget_destroyed, &font->dialog);
       gtk_signal_connect (GTK_OBJECT (fsd->cancel_button), "clicked",
 			  (GtkSignalFunc) script_fu_font_dialog_cancel,
 			  font);
@@ -2204,5 +2225,9 @@ script_fu_about_dialog_delete (GtkWidget *widget,
   script_fu_about_dialog_close (widget, data);
   return TRUE;
 }
+
+
+
+
 
 
