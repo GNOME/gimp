@@ -16,7 +16,6 @@
 	gimp_vector_tool_button_press a lot and finally have a
 	working cursor_update. Still buggy, but I wanted to have it
 	in CVS.
-
 	
 2003-08-17  Sven Neumann  <sven@gimp.org>
 
