@@ -392,7 +392,9 @@ static gint
 export_dialog (GSList      *actions,
 	       const gchar *format_name)
 {
+  GtkWidget    *image;
   GtkWidget    *frame;
+  GtkWidget    *main_vbox;
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *button;
@@ -416,12 +418,14 @@ export_dialog (GSList      *actions,
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
-			    _("Export"), export_export_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
 			    _("Ignore"), export_skip_callback,
 			    NULL, NULL, NULL, FALSE, FALSE,
+
 			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
+
+			    _("Export"), export_export_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
 
 			    NULL);
 
@@ -429,31 +433,51 @@ export_dialog (GSList      *actions,
                     G_CALLBACK (export_cancel_callback),
                     NULL);
 
-  /* the headline */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_widget_show (main_vbox);
 
-  label = gtk_label_new (_("Your image should be exported before it "
-			   "can be saved for the following reasons:"));
+  /* the headline */
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+  
+  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
+                                    GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0); 
+  gtk_widget_show (image);
+
+  label = gtk_label_new (NULL);
+  text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
+                          _("Your image should be exported before it "
+                            "can be saved for the following reasons:"));
+  gtk_label_set_markup (GTK_LABEL (label), text);
+  g_free (text);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
   for (list = actions; list; list = list->next)
     {
       action = (ExportAction *) (list->data);
 
-      text = g_strdup_printf ("%s %s", format_name, gettext (action->reason));
-      frame = gtk_frame_new (text);
+      label = gtk_label_new (NULL);
+      text = g_strdup_printf ("<b>%s %s</b>",
+                              format_name, gettext (action->reason));
+      gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), label);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+      gtk_widget_show (frame);
 
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      vbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
       if (action->possibilities[0] && action->possibilities[1])
 	{
@@ -464,7 +488,7 @@ export_dialog (GSList      *actions,
 	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	  g_signal_connect (G_OBJECT (button), "toggled",
                             G_CALLBACK (export_toggle_callback),
                             &action->choice);
@@ -476,14 +500,14 @@ export_dialog (GSList      *actions,
 	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	  gtk_widget_show (button);
 	} 
       else if (action->possibilities[0])
 	{
 	  label = gtk_label_new (gettext (action->possibilities[0]));
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 0;
 	}
@@ -491,17 +515,17 @@ export_dialog (GSList      *actions,
 	{
 	  label = gtk_label_new (gettext (action->possibilities[1]));
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 1;
-	}      
-      gtk_widget_show (hbox);
-      gtk_widget_show (frame);
+	}     
+ 
+      gtk_widget_show (vbox);
     }
 
   /* the footline */
   label = gtk_label_new (_("The export conversion won't modify your original image."));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
@@ -623,10 +647,12 @@ gimp_export_image (gint32                 *image_ID,
 	  || offset_x || offset_y)
 	{
 	  if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
-	    actions = g_slist_prepend (actions, &export_action_merge_single);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_merge_single);
 	  else
 	    {
-	      actions = g_slist_prepend (actions, &export_action_flatten);
+	      actions = g_slist_prepend (actions,
+                                         &export_action_flatten);
 	      added_flatten = TRUE;
 	    }
 	}
@@ -637,16 +663,20 @@ gimp_export_image (gint32                 *image_ID,
       if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
 	{
 	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-	    actions = g_slist_prepend (actions, &export_action_animate_or_merge);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_animate_or_merge);
 	  else
-	    actions = g_slist_prepend (actions, &export_action_animate_or_flatten);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_animate_or_flatten);
 	}
       else if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
 	{
 	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-	    actions = g_slist_prepend (actions, &export_action_merge);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_merge);
 	  else
-	    actions = g_slist_prepend (actions, &export_action_merge_flat);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_merge_flat);
 	}
     }
 
@@ -657,34 +687,46 @@ gimp_export_image (gint32                 *image_ID,
     case GIMP_RGB:
        if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) )
 	{
-	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) && (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
-	    actions = g_slist_prepend (actions, &export_action_convert_indexed_or_grayscale);
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) &&
+              (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_indexed_or_grayscale);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
-	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_indexed);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
-	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_grayscale);
 	}
       break;
     case GIMP_GRAY:
       if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY) )
 	{
-	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
-	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_indexed);
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
+              (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_rgb_or_indexed);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
-	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_rgb);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
-	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_indexed);
 	}
       break;
     case GIMP_INDEXED:
        if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) )
 	{
-	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
-	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_grayscale);
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && 
+              (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+	    actions = g_slist_prepend (actions, 
+                                       &export_action_convert_rgb_or_grayscale);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
-	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_rgb);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
-	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_grayscale);
 	}
       break;
     }
