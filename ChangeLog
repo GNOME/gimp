@@ -1,3 +1,14 @@
+2003-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-window.c
+	* libgimpcolor/gimpcolorspace.c
+	* libgimpcolor/gimprgb.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c: use ROUND() where appropriate.
+
+	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_render): use
+	gimp_rgb_get_uchar().
+
 2003-06-13  Michael Natterer  <mitch@gimp.org>
 
 	Cleaned up and improved the message system:

@@ -561,13 +561,13 @@ info_window_update_extended (GimpDisplay *gdisp,
                           color[BLUE_PIX]);
       gimp_rgb_to_hsv (&rgb, &hsv);
 
-      g_snprintf (buf, sizeof (buf), "%d", (gint) (hsv.h * 359.999 + 0.5));
+      g_snprintf (buf, sizeof (buf), "%d", ROUND (hsv.h * 360.0));
       gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[0]), buf);
 
-      g_snprintf (buf, sizeof (buf), "%d", (gint) (hsv.s * 99.999 + 0.5));
+      g_snprintf (buf, sizeof (buf), "%d", ROUND (hsv.s * 100.0));
       gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[1]), buf);
 
-      g_snprintf (buf, sizeof (buf), "%d", (gint) (hsv.v * 99.999 + 0.5));
+      g_snprintf (buf, sizeof (buf), "%d", ROUND (hsv.v * 100.0));
       gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[2]), buf);
 
       g_free (color);

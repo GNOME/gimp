@@ -417,10 +417,8 @@ gimp_color_area_render (GimpColorArea *area)
       check_size = GIMP_CHECK_SIZE;
       break;
     }
-      
-  opaque[0] = area->color.r * 255.999;
-  opaque[1] = area->color.g * 255.999;
-  opaque[2] = area->color.b * 255.999;
+
+  gimp_rgb_get_uchar (&area->color, opaque, opaque + 1, opaque + 2);
 
   if (area->color.a == 1.0 || !check_size)
     {

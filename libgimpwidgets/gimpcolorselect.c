@@ -34,6 +34,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -621,35 +622,35 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = (gint) (selector->rgb.b * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->rgb.g * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->rgb.r * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->rgb.b * 255.0);
+      select->pos[1] = ROUND (selector->rgb.g * 255.0);
+      select->pos[2] = ROUND (selector->rgb.r * 255.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = (gint) (selector->rgb.b * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->rgb.r * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->rgb.g * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->rgb.b * 255.0);
+      select->pos[1] = ROUND (selector->rgb.r * 255.0);
+      select->pos[2] = ROUND (selector->rgb.g * 255.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = (gint) (selector->rgb.g * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->rgb.r * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->rgb.b * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->rgb.g * 255.0);
+      select->pos[1] = ROUND (selector->rgb.r * 255.0);
+      select->pos[2] = ROUND (selector->rgb.b * 255.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = (gint) (selector->hsv.v * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->hsv.s * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->hsv.h * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->hsv.v * 255.0);
+      select->pos[1] = ROUND (selector->hsv.s * 255.0);
+      select->pos[2] = ROUND (selector->hsv.h * 255.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = (gint) (selector->hsv.v * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->hsv.h * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->hsv.s * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->hsv.v * 255.0);
+      select->pos[1] = ROUND (selector->hsv.h * 255.0);
+      select->pos[2] = ROUND (selector->hsv.s * 255.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = (gint) (selector->hsv.s * 254.999 + 0.5);
-      select->pos[1] = (gint) (selector->hsv.h * 254.999 + 0.5);
-      select->pos[2] = (gint) (selector->hsv.v * 254.999 + 0.5);
+      select->pos[0] = ROUND (selector->hsv.s * 255.0);
+      select->pos[1] = ROUND (selector->hsv.h * 255.0);
+      select->pos[2] = ROUND (selector->hsv.v * 255.0);
       break;
 
     default:
@@ -743,14 +744,8 @@ gimp_color_select_xy_events (GtkWidget       *widget,
   select->pos[0] = (x * 255) / (XY_DEF_WIDTH - 1);
   select->pos[1] = 255 - (y * 255) / (XY_DEF_HEIGHT - 1);
   
-  if (select->pos[0] < 0)
-    select->pos[0] = 0;
-  if (select->pos[0] > 255)
-    select->pos[0] = 255;
-  if (select->pos[1] < 0)
-    select->pos[1] = 0;
-  if (select->pos[1] > 255)
-    select->pos[1] = 255;
+  select->pos[0] = CLAMP (select->pos[0], 0, 255);
+  select->pos[1] = CLAMP (select->pos[1], 0, 255);
   
   gimp_color_select_draw_xy_marker (select, NULL);
   gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
@@ -1139,7 +1134,7 @@ color_select_update_red_green (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  b = (gint) (csf->rgb.b * 254.999 + 0.5);
+  b = ROUND (csf->rgb.b * 255.0);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1170,7 +1165,7 @@ color_select_update_red_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  g = (gint) (csf->rgb.g * 254.999 + 0.5);
+  g = ROUND (csf->rgb.g * 255.0);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1201,7 +1196,7 @@ color_select_update_green_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  r = (gint) (csf->rgb.r * 254.999 + 0.5);
+  r = ROUND (csf->rgb.r * 255.0);
   g = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (g < 0)

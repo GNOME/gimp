@@ -454,39 +454,39 @@ gimp_hsv_to_rgb_int (gint *hue,
       switch ((gint) h)
 	{
 	case 0:
-	  *hue        = v * 255;
-	  *saturation = t * 255;
-	  *value      = p * 255;
+	  *hue        = ROUND (v * 255.0);
+	  *saturation = ROUND (t * 255.0);
+	  *value      = ROUND (p * 255.0);
 	  break;
 
 	case 1:
-	  *hue        = q * 255;
-	  *saturation = v * 255;
-	  *value      = p * 255;
+	  *hue        = ROUND (q * 255.0);
+	  *saturation = ROUND (v * 255.0);
+	  *value      = ROUND (p * 255.0);
 	  break;
 
 	case 2:
-	  *hue        = p * 255;
-	  *saturation = v * 255;
-	  *value      = t * 255;
+	  *hue        = ROUND (p * 255.0);
+	  *saturation = ROUND (v * 255.0);
+	  *value      = ROUND (t * 255.0);
 	  break;
 
 	case 3:
-	  *hue        = p * 255;
-	  *saturation = q * 255;
-	  *value      = v * 255;
+	  *hue        = ROUND (p * 255.0);
+	  *saturation = ROUND (q * 255.0);
+	  *value      = ROUND (v * 255.0);
 	  break;
 
 	case 4:
-	  *hue        = t * 255;
-	  *saturation = p * 255;
-	  *value      = v * 255;
+	  *hue        = ROUND (t * 255.0);
+	  *saturation = ROUND (p * 255.0);
+	  *value      = ROUND (v * 255.0);
 	  break;
 
 	case 5:
-	  *hue        = v * 255;
-	  *saturation = p * 255;
-	  *value      = q * 255;
+	  *hue        = ROUND (v * 255.0);
+	  *saturation = ROUND (p * 255.0);
+	  *value      = ROUND (q * 255.0);
 	  break;
 	}
     }
@@ -767,7 +767,7 @@ gimp_hsv_to_rgb4 (guchar  *rgb,
 	}
     }
 
-  rgb[0] = hue        * 254.999 + 0.5;
-  rgb[1] = saturation * 254.999 + 0.5;
-  rgb[2] = value      * 254.999 + 0.5;
+  rgb[0] = ROUND (hue        * 255.0);
+  rgb[1] = ROUND (saturation * 255.0);
+  rgb[2] = ROUND (value      * 255.0);
 }
