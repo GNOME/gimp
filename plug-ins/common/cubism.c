@@ -29,6 +29,10 @@
 /* Some useful macros */
 #define SQR(a) ((a) * (a))
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define SCALE_WIDTH 125
 #define BLACK 0
 #define BG    1

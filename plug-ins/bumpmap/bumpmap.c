@@ -98,6 +98,10 @@
 
 /***** Magic numbers *****/
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define PLUG_IN_NAME    "plug_in_bump_map"
 #define PLUG_IN_VERSION "August 1997, 2.04"
 

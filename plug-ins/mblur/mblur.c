@@ -50,6 +50,9 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"

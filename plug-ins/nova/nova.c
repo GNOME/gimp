@@ -65,6 +65,10 @@ static char rcsid[] = "$Id$";
 
 /* Some useful macros */
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #if 0
 #define DEBUG1 printf
 #else

@@ -80,6 +80,10 @@
 #include <sys/stat.h>
 #include <time.h>		/* for seed of random number */
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define PARAM_FILE_FORMAT_VERSION	1.0
 #define	PLUG_IN_NAME	"plug_in_CML_explorer"
 #define SHORT_NAME	"CML_explorer"

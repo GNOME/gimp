@@ -29,8 +29,10 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-
 /* Some useful macros */
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 #define SCALE_WIDTH 200
 #define TILE_CACHE_SIZE 16

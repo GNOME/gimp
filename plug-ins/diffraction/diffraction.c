@@ -33,6 +33,9 @@
 
 
 /***** Magic numbers *****/
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 #define ITERATIONS   100      /* 100 */
 #define WEIRD_FACTOR 0.04     /* 0.04 */

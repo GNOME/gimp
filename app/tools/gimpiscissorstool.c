@@ -39,6 +39,10 @@
 #include "temp_buf.h"
 #include "tools.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 /*  local structures  */
 
 typedef struct _IScissorsOptions IScissorsOptions;

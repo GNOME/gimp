@@ -1,3 +1,8 @@
+Wed Mar 18 15:06:13 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* define M_PI if it's not already defined in lots of
+	source files
+
 Wed Mar 18 16:57:52 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	 * blend.c brightness_contrast.c brush_select.c brushes.c

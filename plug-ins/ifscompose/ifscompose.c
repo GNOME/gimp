@@ -42,6 +42,10 @@
 #include "libgimp/gimp.h"
 #include "ifscompose.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define SCALE_WIDTH     150
 #define ENTRY_WIDTH 60
 #define DESIGN_AREA_MAX_SIZE 256

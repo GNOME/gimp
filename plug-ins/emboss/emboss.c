@@ -37,6 +37,11 @@
 #include <gtk/gtk.h>
 
 #include <plug-ins/megawidget/megawidget.h>
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 static mw_preview_t emboss_do_preview;
 
 struct Grgb {

@@ -40,6 +40,10 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define MAX_PREVIEW_WIDTH 256
 #define MAX_PREVIEW_HEIGHT 256
 #define MAX_DEFORM_AREA_RADIUS 100

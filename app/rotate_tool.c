@@ -33,6 +33,10 @@
 
 #include "tile_manager_pvt.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 /*  index into trans_info array  */
 #define ANGLE          0
 #define REAL_ANGLE     1

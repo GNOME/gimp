@@ -22,6 +22,10 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define ENTRY_WIDTH 100
 
 typedef struct

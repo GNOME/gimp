@@ -48,6 +48,10 @@
 #define inline
 #endif
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define ROUND_TO_INT(val) ((val) + 0.5)
 
 typedef gdouble colRGBA[4];

@@ -40,7 +40,7 @@
 #include "tile_manager_pvt.h"
 
 #define    SQR(x) ((x) * (x))
-/* define pi */
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif  /*  M_PI  */
