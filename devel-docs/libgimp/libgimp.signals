@@ -1,0 +1,42 @@
+<SIGNAL>
+<NAME>GimpColorButton::color-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpColorButton *gimpcolorbutton
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpFileSelection::filename-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpFileSelection *gimpfileselection
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpPathEditor::path-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpPathEditor *gimppatheditor
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpSizeEntry::value-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpSizeEntry *gimpsizeentry
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpSizeEntry::refval-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpSizeEntry *gimpsizeentry
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpSizeEntry::unit-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpSizeEntry *gimpsizeentry
+</SIGNAL>
+
+<SIGNAL>
+<NAME>GimpUnitMenu::unit-changed</NAME>
+<RETURNS>void</RETURNS>
+GimpUnitMenu *gimpunitmenu
+</SIGNAL>
+

@@ -55,6 +55,7 @@ libgimp_docdir = $(HTML_DIR)
 
 EXTRA_DIST =				\
 	libgimp.hierarchy		\
+	libgimp.signals			\
 	libgimp.types			\
 	libgimp-include.c		\
 	libgimp-decl.txt		\

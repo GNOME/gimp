@@ -63,7 +63,7 @@
   <chapter id="libgimpui">
     <title>GIMP User Interface Library</title>
     &GimpChainButton;
-    &GimpColorButton;
+    &GimpColorButton; 
     &GimpFileSelection;
     &GimpPathEditor;
     &GimpSizeEntry;
