@@ -176,7 +176,7 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
                              "tools/transform_rotate.html");
 
           gimp_transform_tool_info_dialog_connect (transform_tool,
-                                                   _("Rotate"));
+                                                   GIMP_STOCK_TOOL_ROTATE);
 
 	  widget =
 	    info_dialog_add_spinbutton (transform_tool->info_dialog, _("Angle:"),

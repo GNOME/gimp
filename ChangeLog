@@ -1,5 +1,30 @@
 2001-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpstock.c: added stock *items* (not only icons)
+	for all tools so they can be used as action buttons.
+
+	* app/tools/gimptransformtool.[ch]: added
+	transform_tool->use_center so subclasses can switch on/off center
+	detection/cursor_update . Added an oper_update() implementation
+	and figure the current handle out there. Reordered button_press()
+	so we don't need to call it recursively.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: use the new stock items instead of
+	_("Rotate") etc.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpscaletool.c: allow the whole thing being dragged
+	around by handling the center separately.
+
+	* app/tools/gimpdrawtool.c: gimp_draw_tool_on_handle(): need to
+	use the radius, not the diameter to check if being over a
+	GIMP_HANDLE_CIRCLE handle.
+
+2001-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.[ch]: use "gimp-item-data" instead of
 	"user_data" as data key when attaching values to radio buttons or
 	menu items. (For backward compat, attach "user_data" additionally,

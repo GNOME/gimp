@@ -173,7 +173,7 @@ gimp_scale_tool_transform (GimpTransformTool *transform_tool,
                              "tools/transform_scale.html");
 
           gimp_transform_tool_info_dialog_connect (transform_tool,
-                                                   _("Scale"));
+                                                   GIMP_STOCK_TOOL_SCALE);
 
 	  info_dialog_add_label (transform_tool->info_dialog,
                                  _("Original Width:"),
@@ -327,10 +327,10 @@ gimp_scale_tool_info_update (GimpTransformTool *transform_tool)
     }
 
   /*  Find current sizes  */
-  x3 = (gint) transform_tool->trans_info [X0];
-  y3 = (gint) transform_tool->trans_info [Y0];
-  x4 = (gint) transform_tool->trans_info [X1];
-  y4 = (gint) transform_tool->trans_info [Y1];
+  x3 = (gint) transform_tool->trans_info[X0];
+  y3 = (gint) transform_tool->trans_info[Y0];
+  x4 = (gint) transform_tool->trans_info[X1];
+  y4 = (gint) transform_tool->trans_info[Y1];
 
   size_vals[0] = x4 - x3;
   size_vals[1] = y4 - y3;
@@ -406,36 +406,44 @@ gimp_scale_tool_motion (GimpTransformTool *transform_tool,
   switch (transform_tool->function)
     {
     case TRANSFORM_HANDLE_1:
-      x1 = &transform_tool->trans_info [X0];
-      y1 = &transform_tool->trans_info [Y0];
-      x2 = &transform_tool->trans_info [X1];
-      y2 = &transform_tool->trans_info [Y1];
+      x1 = &transform_tool->trans_info[X0];
+      y1 = &transform_tool->trans_info[Y0];
+      x2 = &transform_tool->trans_info[X1];
+      y2 = &transform_tool->trans_info[Y1];
       dir_x = dir_y = 1;
       break;
     case TRANSFORM_HANDLE_2:
-      x1 = &transform_tool->trans_info [X1];
-      y1 = &transform_tool->trans_info [Y0];
-      x2 = &transform_tool->trans_info [X0];
-      y2 = &transform_tool->trans_info [Y1];
+      x1 = &transform_tool->trans_info[X1];
+      y1 = &transform_tool->trans_info[Y0];
+      x2 = &transform_tool->trans_info[X0];
+      y2 = &transform_tool->trans_info[Y1];
       dir_x = -1;
       dir_y = 1;
       break;
     case TRANSFORM_HANDLE_3:
-      x1 = &transform_tool->trans_info [X0];
-      y1 = &transform_tool->trans_info [Y1];
-      x2 = &transform_tool->trans_info [X1];
-      y2 = &transform_tool->trans_info [Y0];
+      x1 = &transform_tool->trans_info[X0];
+      y1 = &transform_tool->trans_info[Y1];
+      x2 = &transform_tool->trans_info[X1];
+      y2 = &transform_tool->trans_info[Y0];
       dir_x = 1;
       dir_y = -1;
       break;
     case TRANSFORM_HANDLE_4:
-      x1 = &transform_tool->trans_info [X1];
-      y1 = &transform_tool->trans_info [Y1];
-      x2 = &transform_tool->trans_info [X0];
-      y2 = &transform_tool->trans_info [Y0];
+      x1 = &transform_tool->trans_info[X1];
+      y1 = &transform_tool->trans_info[Y1];
+      x2 = &transform_tool->trans_info[X0];
+      y2 = &transform_tool->trans_info[Y0];
       dir_x = dir_y = -1;
       break;
     case TRANSFORM_HANDLE_CENTER:
+      transform_tool->trans_info[X0] += diff_x;
+      transform_tool->trans_info[Y0] += diff_y;
+      transform_tool->trans_info[X1] += diff_x;
+      transform_tool->trans_info[Y1] += diff_y;
+      transform_tool->trans_info[X2] += diff_x;
+      transform_tool->trans_info[Y2] += diff_y;
+      transform_tool->trans_info[X3] += diff_x;
+      transform_tool->trans_info[Y3] += diff_y;
       return;
     default:
       return;

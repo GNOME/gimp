@@ -147,7 +147,7 @@ gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
 			     "tools/transform_perspective.html");
 
           gimp_transform_tool_info_dialog_connect (transform_tool,
-                                                   _("Transform"));
+                                                   GIMP_STOCK_TOOL_PERSPECTIVE);
 
 	  info_dialog_add_label (transform_tool->info_dialog, _("Matrix:"),
 				 matrix_row_buf[0]);
@@ -221,20 +221,30 @@ perspective_tool_motion (GimpTransformTool *transform_tool,
   switch (transform_tool->function)
     {
     case TRANSFORM_HANDLE_1:
-      transform_tool->trans_info [X0] += diff_x;
-      transform_tool->trans_info [Y0] += diff_y;
+      transform_tool->trans_info[X0] += diff_x;
+      transform_tool->trans_info[Y0] += diff_y;
       break;
     case TRANSFORM_HANDLE_2:
-      transform_tool->trans_info [X1] += diff_x;
-      transform_tool->trans_info [Y1] += diff_y;
+      transform_tool->trans_info[X1] += diff_x;
+      transform_tool->trans_info[Y1] += diff_y;
       break;
     case TRANSFORM_HANDLE_3:
-      transform_tool->trans_info [X2] += diff_x;
-      transform_tool->trans_info [Y2] += diff_y;
+      transform_tool->trans_info[X2] += diff_x;
+      transform_tool->trans_info[Y2] += diff_y;
       break;
     case TRANSFORM_HANDLE_4:
-      transform_tool->trans_info [X3] += diff_x;
-      transform_tool->trans_info [Y3] += diff_y;
+      transform_tool->trans_info[X3] += diff_x;
+      transform_tool->trans_info[Y3] += diff_y;
+      break;
+    case TRANSFORM_HANDLE_CENTER:
+      transform_tool->trans_info[X0] += diff_x;
+      transform_tool->trans_info[Y0] += diff_y;
+      transform_tool->trans_info[X1] += diff_x;
+      transform_tool->trans_info[Y1] += diff_y;
+      transform_tool->trans_info[X2] += diff_x;
+      transform_tool->trans_info[Y2] += diff_y;
+      transform_tool->trans_info[X3] += diff_x;
+      transform_tool->trans_info[Y3] += diff_y;
       break;
     default:
       break;

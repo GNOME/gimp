@@ -141,11 +141,15 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
 static void
 gimp_shear_tool_init (GimpShearTool *shear_tool)
 {
-  GimpTool *tool;
+  GimpTool          *tool;
+  GimpTransformTool *transform_tool;
 
-  tool = GIMP_TOOL (shear_tool);
+  tool           = GIMP_TOOL (shear_tool);
+  transform_tool = GIMP_TRANSFORM_TOOL (shear_tool);
 
   tool->tool_cursor = GIMP_SHEAR_TOOL_CURSOR;
+
+  transform_tool->use_center = FALSE;
 }
 
 static TileManager *
@@ -164,7 +168,7 @@ gimp_shear_tool_transform (GimpTransformTool *transform_tool,
                              "tools/transform_shear.html");
 
           gimp_transform_tool_info_dialog_connect (transform_tool,
-                                                   _("Shear"));
+                                                   GIMP_STOCK_TOOL_SHEAR);
 
 	  info_dialog_add_spinbutton (transform_tool->info_dialog,
 				      _("Shear Magnitude X:"),

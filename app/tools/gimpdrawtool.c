@@ -627,7 +627,9 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
 
       /* FIXME */
       if (width != height)
-        width = (width + height) >> 1;
+        width = (width + height) / 2;
+
+      width /= 2;
 
       return ((SQR (handle_tx - tx) + SQR (handle_ty - ty)) < SQR (width));
 
