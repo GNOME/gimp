@@ -1,3 +1,8 @@
+What's new in GIMP 1.0.4
+
+* Fixes in the menu code - hotkey accelerators for tools work again
+* Fixes for 8 bit visual rendering
+
 What's new in GIMP 1.0.3
 
 * GTK+ 1.2 support. Now the GIMP *requires* GTK+ 1.2

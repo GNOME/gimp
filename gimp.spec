@@ -1,7 +1,7 @@
-%define ver      1.0.3
+%define ver      1.0.4
 %define rel      SNAP
 
-Summary: The GNU Image Manipulation Program
+Summary: The GNU Image Manipulation Program.
 Name: gimp
 Version: %ver
 Release: %rel
@@ -11,9 +11,13 @@ URL: http://www.gimp.org/
 Source: ftp://ftp.gimp.org/pub/gimp/v0.99/v%{PACKAGE_VERSION}/gimp-%{PACKAGE_VERSION}.tar.gz
 BuildRoot: /tmp/gimp-root
 Obsoletes: gimp-data-min
-Requires: gtk+ >= 1.0.1
+Requires: gtk+ >= 1.2
 
 %changelog
+* Wed Mar 31 1999 Matt Wilson <msw@redhat.com>
+- updated for 1.0.4 release
+- requires gtk+ >= 1.2
+
 * Sun Mar 14 1999 Matt Wilson <msw@redhat.com>
 - updated for 1.0.3 release
 - updated group
@@ -83,7 +87,7 @@ inclined.  Alternatively, choose fonts which exist on your system before
 running the scripts.
 
 %package devel
-Summary: GIMP plugin and extension development kit
+Summary: GIMP plugin and extension development kit.
 Group: Development/Libraries
 Requires: gtk+-devel
 Prereq: /sbin/install-info
@@ -91,7 +95,7 @@ Prereq: /sbin/install-info
 Static libraries and header files for writing GIMP plugins and extensions.
 
 %package libgimp
-Summary: GIMP libraries
+Summary: GIMP libraries.
 Group: System Environment/Libraries
 Copyright: LGPL
 %description libgimp
