@@ -61,7 +61,7 @@
 
 #include "config.h"
 
-#define LOGO_WIDTH_MIN 350
+#define LOGO_WIDTH_MIN 300
 #define LOGO_HEIGHT_MIN 110 
 #define NAME "The GIMP"
 #define BROUGHT "brought to you by"
