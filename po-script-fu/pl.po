@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "POT-Creation-Date: 2000-11-05 16:35+0100\n"
-"PO-Revision-Date: 2000-11-06 23:51+0100\n"
+"PO-Revision-Date: 2000-11-09 00:34+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -303,7 +303,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:1
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Animacja/Falowanie..."
 
 #: plug-ins/gap/sel-to-anim-img.scm:1
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -423,7 +423,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Script-Fu/Logo/Otoczka 3D..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
@@ -435,11 +435,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Script-Fu/Logo/Proste I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Script-Fu/Logo/Proste II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
@@ -527,7 +527,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Script-Fu/Logo/Napis na okrêgu..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
@@ -1049,6 +1049,8 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Tylko ciemniejsze\n"
+"(lepsze, ale tylko dla obrazów z du¿± ilo¶ci± bieli)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:1
 #: plug-ins/script-fu/scripts/glossy.scm:1
@@ -1094,7 +1096,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
 msgid "Down"
-msgstr ""
+msgstr "W dó³"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:1
 msgid "Drop Shadow Blur Radius"
@@ -1122,19 +1124,19 @@ msgstr "Rzucanie cienia"
 
 #: plug-ins/script-fu/scripts/predator.scm:1
 msgid "Edge Amount"
-msgstr ""
+msgstr "Ilo¶æ krawêdzi"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:1
 msgid "Edge Only"
-msgstr ""
+msgstr "Tylko krawêd¼"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:1
 msgid "Edge Radius"
-msgstr ""
+msgstr "Promieñ krawêdzi"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:1
 msgid "Edge Width"
-msgstr ""
+msgstr "Szeroko¶æ krawêdzi"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:1
 msgid "Effect Size (pixels * 3)"
@@ -1169,11 +1171,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:1
 msgid "End X"
-msgstr ""
+msgstr "X koñcowe"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:1
 msgid "End Y"
-msgstr ""
+msgstr "Y koñcowe"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:1
 msgid "Ending Blend"
@@ -1249,7 +1251,7 @@ msgstr "Wype³nienie kolorem t³a"
 #: plug-ins/script-fu/scripts/camo.scm:1
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:1
 msgid "Flatten Image"
-msgstr "Sp³aszcz obraz"
+msgstr "Sp³aszczenie obrazu"
 
 #: plug-ins/script-fu/scripts/slide.scm:1
 msgid "Font Color"
@@ -1359,7 +1361,7 @@ msgstr "Ramki"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:1
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "Od lewego górnego do prawego dolnego"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:1
@@ -1507,7 +1509,7 @@ msgstr "Zachowanie t³a"
 #: plug-ins/script-fu/scripts/add-bevel.scm:1
 #: plug-ins/script-fu/scripts/chip-away.scm:1
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Zachowanie warstwy wypuk³o¶ci"
 
 #: plug-ins/script-fu/scripts/circuit.scm:1
 #: plug-ins/script-fu/scripts/lava.scm:1
@@ -1523,7 +1525,7 @@ msgstr "Wysoko¶æ l±du"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
 msgid "Left"
-msgstr ""
+msgstr "W lewo"
 
 #: plug-ins/script-fu/scripts/sphere.scm:1
 msgid "Lighting (degrees)"
@@ -1777,11 +1779,11 @@ msgstr "Losowo¶æ"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:1
 msgid "Relative Distance of Horizon"
-msgstr ""
+msgstr "Wzglêdna odleg³o¶æ horyzontu"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:1
 msgid "Relative Length of Shadow"
-msgstr ""
+msgstr "Wzglêdna d³ugo¶æ cienia"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:1
 msgid "Relative Radius"
@@ -1803,11 +1805,11 @@ msgstr "Szeroko¶æ ta¶my"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
 msgid "Right"
-msgstr "Prawy"
+msgstr "W prawo"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:1
 msgid "Rippling Strength"
-msgstr ""
+msgstr "Si³a falowania"
 
 #: plug-ins/script-fu/scripts/lava.scm:1
 #: plug-ins/script-fu/scripts/swirltile.scm:1
@@ -1816,7 +1818,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:1
 msgid "Round Ratio"
-msgstr ""
+msgstr "Stopieñ zaokr±glenia"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:1
 msgid "Rows"
@@ -2082,7 +2084,7 @@ msgstr "Obracanie od lewej do prawej"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
 msgid "Up"
-msgstr "Góra"
+msgstr "W górê"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:1
 msgid "Upper Color (Active)"

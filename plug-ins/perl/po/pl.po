@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: 2000-11-05 16:35:13+1000\n"
-"PO-Revision-Date: 2000-11-06 17:47+0100\n"
+"PO-Revision-Date: 2000-11-09 00:34+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr " = [b³ad argumentu]\n"
 
 #: examples/PDB:1
 msgid " matching functions"
-msgstr ""
+msgstr " pasuj±ce funkcje"
 
 #: Gimp/Fu.pm:1
 msgid ""
@@ -32,6 +32,12 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
+"       argumentami interfejsu s±\n"
+"           -o | --output <nazwapliku> zapisuje dane do pliku, bez "
+"wy¶wietlania\n"
+"           -i | --interact            pozwala u¿ytkownikowi na modyfikacjê "
+"warto¶ci\n"
+"       argumentami skryptu s±\n"
 
 #: Gimp.pm:1 blib/lib/Gimp.pm:1
 msgid ""
@@ -44,6 +50,17 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
+"U¿ycie: $0 [argumenty GIMP-a..] [argumenty interfejsu..] [argumenty "
+"skryptu..]\n"
+"       argumentami GIMP-a s±\n"
+"           -gimp <cokolwiek>          wykorzystywane tylko wewnêtrznie\n"
+"           -h | -help | --help | -?   wypisuje tekst pomocy\n"
+"           -v | --verbose             wy¶wietla informacje o przebiegu "
+"pracy\n"
+"           --host|--tcp KOMPUTER[:PORT] nawi±zuje po³±czenie z KOMPUTEREM "
+"(opcjonalnie wykorzystuj±c PORT)\n"
+"                                      (aby uzyskaæ wiêcej informacji, zobacz "
+"Gimp::Net(3))\n"
 
 #: Gimp.pm:1 blib/lib/Gimp.pm:1
 msgid "$_ is not a valid import tag for package $pkg"
@@ -55,7 +72,7 @@ msgstr "$_: niepoprawny prze³±cznik, spróbuj $0 --help\n"
 
 #: Gimp/Fu.pm:1
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_: nieznana/niepoprawna opcja zapisu pliku"
 
 #: Gimp/Fu.pm:1
 msgid ""
@@ -109,7 +126,7 @@ msgstr "(brak)"
 
 #: Gimp/Lib.xs:1
 msgid ", %d bytes data]"
-msgstr ""
+msgstr ", %d bajtów danych]"
 
 #: Perl-Server:1
 msgid ", authorization required"
@@ -163,11 +180,11 @@ msgstr ""
 
 #: examples/blowinout:1
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr ""
+msgstr "<Image>/Filtry/Animacja/Rozdmuchiwanie..."
 
 #: examples/frame_filter:1
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtry/Zastosuj wyra¿enie Perl-a..."
+msgstr "<Image>/Filtry/Zastosuj wyra¿enie Perla..."
 
 #: examples/gouge:1
 msgid "<Image>/Filters/Blur/2x2 Blur"
@@ -401,11 +418,11 @@ msgstr "<Toolbox>/Dodatki/Animacja/Billboard..."
 
 #: examples/sethspin:1
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Animacja/Obrót p³aszczyzny..."
 
 #: examples/Create_Images:1
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr ""
+msgstr "<Toolbox>/Dodatki/Tworzenie obrazów"
 
 #: examples/example-fu:1
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
@@ -496,6 +513,8 @@ msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
+"Do obrotu powrotnego wymagana jest parzysta liczba ramek.\n"
+"Zmodyfikikowano ramki do $frames"
 
 #: examples/PDB:1
 msgid "Author"
@@ -713,7 +732,7 @@ msgstr "Zapisywanie \"$filename\" jako DATAURL..."
 
 #: examples/sethspin:1
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Obrót p³aszczyzny..."
 
 #: examples/PDB:1
 msgid "Shortcuts"
@@ -733,7 +752,7 @@ msgstr "Stan"
 
 #: examples/PDB:1
 msgid "Synopsis"
-msgstr ""
+msgstr "Opis"
 
 #: examples/PDB:1
 msgid "TYPE"
@@ -745,7 +764,7 @@ msgstr "Tekst"
 
 #: Gimp/Lib.xs:1
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "Modu³ zosta³ zbudowany bez obs³ugi PDL."
 
 #: Gimp/Lib.xs:1
 msgid "Unable to convert a reference to type '%s'"
@@ -781,11 +800,11 @@ msgstr ""
 
 #: Perl-Server:1
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr ""
+msgstr "OSTRZE¯ENIE: klient przerwa³ po³±czenie trzymaj±c aktywn± blokadê\n"
 
 #: Perl-Server:1
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "OSTRZE¯ENIE: klient próbowa³ zdj±æ blokadê bez jej otrzymania"
 
 #: Perl-Server:1
 msgid "WARNING: shared locking requested but not implemented"
@@ -793,7 +812,7 @@ msgstr ""
 
 #: examples/translogo:1
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
+msgstr "Nie mo¿na uruchomiæ skryptu na obrazie INDEKSOWANYM!!"
 
 #: examples/translogo:1
 msgid "You can't run this script without an ALPHA CHANNEL!!"
@@ -927,7 +946,7 @@ msgstr ""
 
 #: examples/colorhtml:1 examples/dataurl:1
 msgid "export failed"
-msgstr ""
+msgstr "eksport nie powiód³ siê"
 
 #: Gimp/Fu.pm:1
 msgid "function '$exe' not found in this script (must be one of "
@@ -1089,7 +1108,7 @@ msgstr ""
 
 #: Perl-Server:1
 msgid "server going down..."
-msgstr ""
+msgstr "koñczenie pracy serwera..."
 
 #: Net/Net.pm:1
 msgid "server requests authorization, but no authorization available\n"
@@ -1141,7 +1160,7 @@ msgstr "nie mo¿na zaakceptowaæ po³aczenia unix: $!\n"
 
 #: Gimp/Lib.xs:1
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr ""
+msgstr "nie mo¿na przekonwertowaæ Gimp::Drawable na Gimp::GimpDrawable (id %d)"
 
 #: UI/UI.pm:1
 msgid "unable to create '$fn': $!"

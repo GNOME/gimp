@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "POT-Creation-Date: 2000-10-27 18:28+0200\n"
-"PO-Revision-Date: 2000-11-07 17:41+01:00\n"
+"PO-Revision-Date: 2000-11-09 00:34+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -720,8 +720,8 @@ msgstr ""
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
-"¦cie¿ka \"fractalexplorer\" nie jest poprawna - nie odnaleziono "
-"nastêpuj±cych  katalogów:"
+"niepoprawnie skonfigurowana ¶cie¿ka fractalexplorer-path, nie odnaleziono "
+"nastêpuj±cych katalogów"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1
 msgid "My first fractal"
@@ -836,7 +836,7 @@ msgstr "Punktowe"
 
 #: plug-ins/Lighting/lighting_ui.c:1
 msgid "Spot"
-msgstr ""
+msgstr "Umiejscowione"
 
 #: plug-ins/Lighting/lighting_ui.c:1
 msgid "Light Type:"
@@ -1394,7 +1394,7 @@ msgstr "Zapisywanie %s:"
 
 #: plug-ins/bmp/bmpwrite.c:1
 msgid "Save as BMP"
-msgstr "Zapisz jako BMP"
+msgstr "Zapis jako BMP"
 
 #: plug-ins/bmp/bmpwrite.c:1
 msgid "Save Options"
@@ -1736,33 +1736,31 @@ msgstr "Wykorzystanie odwrotnej warto¶ci"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "With random power (0,10)"
-msgstr "Do losowej potêgi (0,10)"
+msgstr "Podniesienie do losowej potêgi (0,10)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "With random power (0,1)"
-msgstr "Do losowej potêgi (0,1)"
+msgstr "Podniesienie do losowej potêgi (0,1)"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "With gradient power (0,1)"
-msgstr "Do losowej potêgi (0,1)"
+msgstr "Podniesienie do potêgi gradientu (0,1)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Multiply rand. value (0,1)"
-msgstr "Pomnó¿ przez warto¶æ losow± (0,1)"
+msgstr "Pomno¿enie przez warto¶æ losow± (0,1)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Multiply rand. value (0,2)"
-msgstr "Pomnó¿ przez warto¶æ losow± (0,2)"
+msgstr "Pomno¿enie przez warto¶æ losow± (0,2)"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Multiply gradient (0,1)"
-msgstr "Pomnó¿ gradient (0,1)"
+msgstr "Pomno¿enie przez gradient (0,1)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "With p and random (0,1)"
-msgstr "Z 'p' i losow± (0,1)"
+msgstr "Z \"p\" i losow± (0,1)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "All black"
@@ -1861,7 +1859,7 @@ msgstr "Ustawienia nasycenia"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Value (Gray Image) Settings"
-msgstr "Ustawienia warto¶ci (Szary obraz)"
+msgstr "Ustawienia warto¶ci (szary obraz)"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Advanced Settings"
@@ -1901,7 +1899,7 @@ msgstr "Ziarno:"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Switch to \"From Seed\" with the last Seed"
-msgstr "Prze³±cza na \"Z ziarna\" z poprzednim ziarnem"
+msgstr "Prze³±cz na \"Z ziarna\" z poprzednim ziarnem"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid ""
@@ -1910,6 +1908,9 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"To samo ziarno losowo¶ci tworzy ten sam obraz, je¶li (1) szeroko¶ci obrazów "
+"s± takie same (to przyczyna ró¿nicy podgl±du i obrazu) oraz (2) wszystkie "
+"warto¶ci modyfikuj±ce s± równe zero."
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Others"
@@ -1961,25 +1962,23 @@ msgstr "Z³o¿enie:"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Misc Arrange:"
-msgstr ""
+msgstr "Typ przekszta³cenia:"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Use Cyclic Range"
 msgstr "Cykliczny zakres"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Mod. Rate:"
-msgstr "Tryb:"
+msgstr "Szybko¶æ zmian:"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Env. Sensitivity:"
 msgstr "Czu³o¶æ ¶rodowiska"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Diffusion Dist.:"
-msgstr "Wspó³czynnik dyfuzji:"
+msgstr "Obszar dyfuzji:"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "# of Subranges:"
@@ -1987,7 +1986,7 @@ msgstr "Liczba podzakresów"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "P(ower Factor):"
-msgstr "P(Wspó³czynnik Mocy):"
+msgstr "P (wspó³czynnik mocy):"
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Parameter k:"
@@ -2086,7 +2085,7 @@ msgstr "B³±d: odczyt parametrów nie powiód³ siê"
 
 #: plug-ins/common/aa.c:1
 msgid "Save as Text"
-msgstr "Zapisz jako tekst"
+msgstr "Zapis jako tekst"
 
 #: plug-ins/common/aa.c:1 plug-ins/common/pnm.c:1
 #: plug-ins/common/sunras.c:1
@@ -2318,17 +2317,15 @@ msgstr "Rozci±ganie HSV..."
 
 #: plug-ins/common/blinds.c:1
 msgid "<Image>/Filters/Distorts/Blinds..."
-msgstr "<Image>/Filtry/Zniekszta³cenia/Blinds..."
+msgstr "<Image>/Filtry/Zniekszta³cenia/Za¶lepianie..."
 
 #: plug-ins/common/blinds.c:1
-#, fuzzy
 msgid "Adding Blinds..."
-msgstr "Dodaje szum..."
+msgstr "Za¶lepianie..."
 
 #: plug-ins/common/blinds.c:1
-#, fuzzy
 msgid "Blinds"
-msgstr "Zlewanie"
+msgstr "Za¶lepianie"
 
 #: plug-ins/common/blinds.c:1 plug-ins/common/grid.c:1
 #: plug-ins/common/ripple.c:1 plug-ins/common/tileit.c:1
@@ -2472,7 +2469,7 @@ msgstr "Przesuniêcie Y:"
 
 #: plug-ins/common/bumpmap.c:1
 msgid "Waterlevel:"
-msgstr ""
+msgstr "Poziom prze¼roczysto¶ci:"
 
 #: plug-ins/common/bz2.c:1 plug-ins/common/bz2.c:1
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
@@ -2563,7 +2560,6 @@ msgid "Color to Alpha Color Picker"
 msgstr "Wybór koloru"
 
 #: plug-ins/common/colortoalpha.c:1
-#, fuzzy
 msgid "to Alpha"
 msgstr "do alfy"
 
@@ -2756,11 +2752,11 @@ msgstr "Kana³y"
 
 #: plug-ins/common/csource.c:1
 msgid "Save as C-Source"
-msgstr "Zapisz jako ¼ród³o C"
+msgstr "Zapis jako ¼ród³o C"
 
 #: plug-ins/common/csource.c:1
 msgid "Prefixed Name:"
-msgstr ""
+msgstr "Nazwa bazowa:"
 
 #: plug-ins/common/csource.c:1 plug-ins/common/mail.c:1
 #: plug-ins/common/tiff.c:1 plug-ins/common/xbm.c:1
@@ -3067,15 +3063,15 @@ msgstr "Skala 2:"
 
 #: plug-ins/common/despeckle.c:1
 msgid "<Image>/Filters/Enhance/Despeckle..."
-msgstr "<Image>/Filtry/Uwydatnianie/Despeckle..."
+msgstr "<Image>/Filtry/Uwydatnianie/Odplamkowanie..."
 
 #: plug-ins/common/despeckle.c:1
 msgid "Despeckling..."
-msgstr ""
+msgstr "Odplamkowywanie..."
 
 #: plug-ins/common/despeckle.c:1
 msgid "Despeckle"
-msgstr ""
+msgstr "Odplamkowanie"
 
 #: plug-ins/common/despeckle.c:1
 msgid "Type"
@@ -3189,7 +3185,7 @@ msgstr "Przesuniêcie Y:"
 
 #: plug-ins/common/displace.c:1 plug-ins/common/warp.c:1
 msgid "On Edges:"
-msgstr "Na Krawêdziach:"
+msgstr "Na krawêdziach:"
 
 #: plug-ins/common/displace.c:1 plug-ins/common/edge.c:1
 #: plug-ins/common/ripple.c:1 plug-ins/common/warp.c:1
@@ -3246,15 +3242,15 @@ msgstr "Podgl±d"
 
 #: plug-ins/common/engrave.c:1
 msgid "<Image>/Filters/Distorts/Engrave..."
-msgstr "<Image>/Filtry/Zniekszta³cenia/Engrave..."
+msgstr "<Image>/Filtry/Zniekszta³cenia/Grawerowanie..."
 
 #: plug-ins/common/engrave.c:1
 msgid "Engraving..."
-msgstr "Ryjê..."
+msgstr "Grawerowanie..."
 
 #: plug-ins/common/engrave.c:1
 msgid "Engrave"
-msgstr "Wyryj"
+msgstr "Grawerowanie"
 
 #: plug-ins/common/engrave.c:1
 msgid "Limit Line Width"
@@ -3533,7 +3529,7 @@ msgstr "Nie mo¿na otworzyæ %s"
 
 #: plug-ins/common/gbr.c:1
 msgid "Save as Brush"
-msgstr "Zapisz jako Pêdzel"
+msgstr "Zapis jako pêdzel"
 
 #: plug-ins/common/gbr.c:1
 msgid "Spacing:"
@@ -3559,7 +3555,7 @@ msgstr "** Dziêkujemy, ¿e wybra³e¶ GIMP-a **"
 
 #: plug-ins/common/gicon.c:1
 msgid "Save as GIcon"
-msgstr "Zapisz jako GIcon"
+msgstr "Zapis jako GIcon"
 
 #: plug-ins/common/gicon.c:1
 msgid "Icon Name:"
@@ -3610,7 +3606,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1
 msgid "Save as GIF"
-msgstr "Zapisz jako GIF"
+msgstr "Zapis jako GIF"
 
 #: plug-ins/common/gif.c:1
 msgid "GIF Options"
@@ -3630,7 +3626,7 @@ msgstr "Opcje animacji GIF"
 
 #: plug-ins/common/gif.c:1
 msgid "Loop forever"
-msgstr "Zapêtl na zawsze"
+msgstr "Zapêtlenie na zawsze"
 
 #: plug-ins/common/gif.c:1
 msgid "Delay between Frames where Unspecified:"
@@ -3646,15 +3642,15 @@ msgstr "Rodzaj ramek animacji, dla których jest nieokre¶lony: "
 
 #: plug-ins/common/gif.c:1
 msgid "I don't Care"
-msgstr "Niewa¿ne"
+msgstr "Bez znaczenia"
 
 #: plug-ins/common/gif.c:1
 msgid "Cumulative Layers (Combine)"
-msgstr ""
+msgstr "Kumulacja warstw (sk³adanie)"
 
 #: plug-ins/common/gif.c:1
 msgid "One Frame per Layer (Replace)"
-msgstr "Jedna ramka na warstwê (zast±p)"
+msgstr "Jedna ramka na warstwê (zastêpowanie)"
 
 #: plug-ins/common/gif.c:1
 msgid "GIF: error writing output file\n"
@@ -3706,11 +3702,11 @@ msgstr "Odstêp (Procenty):"
 
 #: plug-ins/common/gpb.c:1
 msgid "Save as Pixmap Brush"
-msgstr "Zapisz jako pêdzel (pixmapa)"
+msgstr "Zapis jako pêdzel (piksmapa)"
 
 #: plug-ins/common/gpb.c:1
 msgid "Save as Pixmap Brush Pipe"
-msgstr "Zapisz jako pêdzel (pipe)"
+msgstr "Zapis jako pêdzel (potok)"
 
 #: plug-ins/common/gpb.c:1
 msgid "Pixels"
@@ -3742,25 +3738,24 @@ msgstr " (Niedopasowanie wysoko¶ci!) "
 
 #: plug-ins/common/gpb.c:1
 msgid "Display as:"
-msgstr "Wy¶wietl jako:"
+msgstr "Wy¶wietlanie jako:"
 
 #: plug-ins/common/gpb.c:1
 msgid "Dimension:"
 msgstr "Wymiar:"
 
 #: plug-ins/common/gpb.c:1
-#, fuzzy
 msgid "Ranks:"
-msgstr "Promieñ:"
+msgstr "Rzêdy:"
 
 #: plug-ins/common/gpb.c:1
 msgid "Selection:"
-msgstr "Selekcja:"
+msgstr "Zaznaczenie:"
 
 #: plug-ins/common/gpb.c:1
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
-msgstr "Warstwa %s nie ma kana³u alfa, pomijam"
+msgstr "Warstwa %s nie ma kana³u alfa, pominiêcie"
 
 #: plug-ins/common/gqbist.c:1
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
@@ -3974,11 +3969,11 @@ msgstr "gz: brak sensownego rozsze¿enia, próba odgadniêcia formatu pliku\n"
 
 #: plug-ins/common/hot.c:1
 msgid "<Image>/Filters/Colors/Hot..."
-msgstr "<Image>/Filtry/Kolory/Hot..."
+msgstr "<Image>/Filtry/Kolory/Usuwanie gor±cych punktów..."
 
 #: plug-ins/common/hot.c:1 plug-ins/common/hot.c:1
 msgid "Hot"
-msgstr ""
+msgstr "Usuwanie gor±cych punktów"
 
 #: plug-ins/common/hot.c:1
 msgid "Create New Layer"
@@ -4193,7 +4188,7 @@ msgstr "Rozmiar: nieznany"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Save as JPEG"
-msgstr "Zapisz jako JPEG"
+msgstr "Zapis jako JPEG"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Image Preview"
@@ -4213,7 +4208,7 @@ msgstr "Wyg³adzanie:"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Restart markers"
-msgstr "Resetuj markery"
+msgstr "Resetowanie markerów"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Restart frequency (rows):"
@@ -4221,15 +4216,15 @@ msgstr "Czêsto¶æ resetowania (wiersze):"
 
 #: plug-ins/common/jpeg.c:1 plug-ins/xjt/xjt.c:1
 msgid "Optimize"
-msgstr "Optymizuj"
+msgstr "Optymalizacja"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Progressive"
-msgstr "Progresywny"
+msgstr "Przyrostowy"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr "Wymu¶ 'JPEG baseline' (odczytywany przez wszystkie dekodery)"
+msgstr "Wymuszone \"JPEG baseline\" (odczytywane przez wszystkie dekodery)"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Subsampling:"
@@ -4237,19 +4232,19 @@ msgstr "Podpróbkowanie:"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Fast integer"
-msgstr "Szybki sta³o-przecinkowy"
+msgstr "Szybka sta³oprzecinkowa"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Integer"
-msgstr "Sta³o-przecinkowy"
+msgstr "Sta³oprzecinkowa"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Floating-point"
-msgstr "Zmienno-przecinkowy"
+msgstr "Zmiennoprzecinkowa"
 
 #: plug-ins/common/jpeg.c:1
 msgid "DCT method (Speed/quality tradeoff):"
-msgstr "Metoda DCT (Szybko¶æ do jako¶ci):"
+msgstr "Metoda DCT (wybór jako¶æ/szybko¶æ):"
 
 #: plug-ins/common/jpeg.c:1
 msgid "Image comments"
@@ -4592,7 +4587,7 @@ msgstr "Filtr"
 
 #: plug-ins/common/nlfilt.c:1
 msgid "Alpha Trimmed Mean"
-msgstr ""
+msgstr "¦rednia przyciêta do alfy"
 
 #: plug-ins/common/nlfilt.c:1
 msgid "Optimal Estimation"
@@ -4755,7 +4750,7 @@ msgstr "<Image>/Filtry/Odwzorowanie/Kawa³ki papieru..."
 
 #: plug-ins/common/pat.c:1
 msgid "Save as Pattern"
-msgstr "Zapisz jako deseñ"
+msgstr "Zapis jako deseñ"
 
 #: plug-ins/common/pixelize.c:1
 msgid "<Image>/Filters/Blur/Pixelize..."
@@ -4932,7 +4927,7 @@ msgstr ""
 
 #: plug-ins/common/png.c:1
 msgid "Save as PNG"
-msgstr "Zapisz jako PNG"
+msgstr "Zapis jako PNG"
 
 #: plug-ins/common/png.c:1
 msgid "Interlacing (Adam7)"
@@ -5003,7 +4998,7 @@ msgstr "Zapis do pliku PNM nie obs³uguje obrazów z kana³em alfa."
 
 #: plug-ins/common/pnm.c:1
 msgid "Save as PNM"
-msgstr "Zapisz jako PNM"
+msgstr "Zapis jako PNM"
 
 #: plug-ins/common/pnm.c:1
 msgid "Raw"
@@ -5111,7 +5106,7 @@ msgstr "Strony:"
 
 #: plug-ins/common/ps.c:1
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "Prostok±t ograniczaj±cy"
 
 #: plug-ins/common/ps.c:1
 msgid "Coloring"
@@ -5143,7 +5138,7 @@ msgstr "Wyg³adzanie grafiki"
 
 #: plug-ins/common/ps.c:1
 msgid "Save as PostScript"
-msgstr "Zapisz jako PostScript"
+msgstr "Zapis jako PostScript"
 
 #: plug-ins/common/ps.c:1
 msgid "Image Size"
@@ -5159,7 +5154,7 @@ msgstr "Przesuniêcie Y:"
 
 #: plug-ins/common/ps.c:1
 msgid "Keep Aspect Ratio"
-msgstr "Utrzymaj wspó³czynnik proporcji"
+msgstr "Zachowanie wspó³czynnika proporcji"
 
 #: plug-ins/common/ps.c:1
 msgid ""
@@ -5190,21 +5185,20 @@ msgid "PostScript Level 2"
 msgstr "PostScript poziom 2"
 
 #: plug-ins/common/ps.c:1
-#, fuzzy
 msgid "Encapsulated PostScript"
-msgstr "Wczytaj PostScript"
+msgstr "Zagnie¿d¿alny PostScript"
 
 #: plug-ins/common/ps.c:1
 msgid "Preview Size:"
-msgstr "Rozmiar Podgl±du:"
+msgstr "Rozmiar podgl±du:"
 
 #: plug-ins/common/psd.c:1
 msgid "Unnamed channel"
-msgstr "Nienazwany kana³"
+msgstr "Kana³ bez nazwy"
 
 #: plug-ins/common/psp.c:1
 msgid "Save as PSP"
-msgstr "Zapisz jako PSP"
+msgstr "Zapis jako PSP"
 
 #: plug-ins/common/psp.c:1
 msgid "Data Compression"
@@ -5220,27 +5214,27 @@ msgstr "LZ77"
 
 #: plug-ins/common/randomize.c:1
 msgid "Random Hurl 1.7"
-msgstr ""
+msgstr "Losowe rozsypywanie 1.7"
 
 #: plug-ins/common/randomize.c:1
 msgid "Random Pick 1.7"
-msgstr ""
+msgstr "Losowy wybór s±siada 1.7"
 
 #: plug-ins/common/randomize.c:1
 msgid "Random Slur 1.7"
-msgstr ""
+msgstr "Losowe zlewanie 1.7"
 
 #: plug-ins/common/randomize.c:1
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr "<Image>/Filtry/Szum/Hurl..."
+msgstr "<Image>/Filtry/Szum/Rozsypywanie..."
 
 #: plug-ins/common/randomize.c:1
 msgid "<Image>/Filters/Noise/Pick..."
-msgstr "<Image>/Filtry/Szum/Pick..."
+msgstr "<Image>/Filtry/Szum/Wybór s±siada..."
 
 #: plug-ins/common/randomize.c:1
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr "<Image>/Filtry/Szum/Slur..."
+msgstr "<Image>/Filtry/Szum/Zlewanie..."
 
 #: plug-ins/common/randomize.c:1
 msgid "Randomization (%):"
@@ -5296,15 +5290,15 @@ msgstr "<Image>/Warstwy/Obróæ/270 stopni"
 
 #: plug-ins/common/rotate.c:1
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
-msgstr "<Image>/Warstwy/Transformacjê/Obróæ/90 stopni"
+msgstr "<Image>/Warstwy/Transformacje/Obróæ/90 stopni"
 
 #: plug-ins/common/rotate.c:1
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
-msgstr "<Image>/Warstwy/Transformacjê/Obróæ/180 stopni"
+msgstr "<Image>/Warstwy/Transformacje/Obróæ/180 stopni"
 
 #: plug-ins/common/rotate.c:1
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
-msgstr "<Image>/Warstwy/Transformacjê/Obróæ/270 stopni"
+msgstr "<Image>/Warstwy/Transformacje/Obróæ/270 stopni"
 
 #: plug-ins/common/rotate.c:1
 msgid "You can not rotate the whole image if there's a selection."
@@ -5417,9 +5411,8 @@ msgid "Preview (1:4) - Right Click to Jump"
 msgstr "Podgl±d (1:4) - Kliknij prawym"
 
 #: plug-ins/common/scatter_hsv.c:1
-#, fuzzy
 msgid "Holdness:"
-msgstr "Wstrzymaj Intensywno¶æ"
+msgstr "Wstrzymanie:"
 
 #: plug-ins/common/screenshot.c:1 plug-ins/winsnap/winsnap.c:1
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5942,7 +5935,7 @@ msgstr "Wypuk³o¶æ"
 
 #: plug-ins/common/spheredesigner.c:1
 msgid "Exp:"
-msgstr ""
+msgstr "Wyk³adnik:"
 
 #: plug-ins/common/spheredesigner.c:1
 msgid ""
@@ -6024,7 +6017,7 @@ msgstr "Nie mogê odczytaæ kolorów"
 
 #: plug-ins/common/sunras.c:1
 msgid "Type of colormap not supported"
-msgstr "Nie obs³ugiwany typ mapy kolorów "
+msgstr "Nieobs³ugiwany typ palety kolorów "
 
 #: plug-ins/common/sunras.c:1
 msgid "This image depth is not supported"
@@ -6057,30 +6050,30 @@ msgstr "Wyst±pi³ b³±d zapisu"
 
 #: plug-ins/common/sunras.c:1
 msgid "Save as SUNRAS"
-msgstr "Zapisz jako SUNRAS"
+msgstr "Zapis jako SUNRAS"
 
 #: plug-ins/common/sunras.c:1
 msgid "RunLength Encoded"
 msgstr "Kompresja RLE"
 
 #: plug-ins/common/tga.c:1
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr "nie mo¿na otworzyæ \"%s\"\n"
+msgstr "TGA: nie mo¿na otworzyæ \"%s\"\n"
 
 #: plug-ins/common/tga.c:1
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
-msgstr "XBM: nie mogê stworzyæ \"%s\"\n"
+msgstr "TGA: Nie mo¿a odczytaææ stopki z \"%s\"\n"
 
 #: plug-ins/common/tga.c:1
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
-msgstr "XBM: nie mogê stworzyæ \"%s\"\n"
+msgstr "TGA: Nie mo¿na odczytaæ rozszerzenia z \"%s\"\n"
 
 #: plug-ins/common/tga.c:1
 msgid "Save as TGA"
-msgstr "Zapisz jako TGA"
+msgstr "Zapis jako TGA"
 
 #: plug-ins/common/tga.c:1
 msgid "Targa Options"
@@ -6092,7 +6085,7 @@ msgstr "Kompresja RLE"
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
-msgstr "<Image>/Obraz/Alpha/Threshold Alpha..."
+msgstr "<Image>/Obraz/Alpha/Progowanie alfy..."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "The layer preserves transparency."
@@ -6100,15 +6093,15 @@ msgstr "Warstwa zachowuje prze¼roczysto¶æ."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "Nie wybrano obrazu RGBA lub GRAYA"
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "Threshold Alpha: Coloring Transparency..."
-msgstr ""
+msgstr "Progowanie alfy: Kolorowanie prze¼roczysto¶ci..."
 
 #: plug-ins/common/threshold_alpha.c:1
 msgid "Threshold Alpha"
-msgstr "Próg alfa"
+msgstr "Progowanie alfy"
 
 #: plug-ins/common/tiff.c:1
 msgid "TIFF Channel"
@@ -6116,7 +6109,7 @@ msgstr "Kana³y TIFF"
 
 #: plug-ins/common/tiff.c:1
 msgid "Save as TIFF"
-msgstr "Zapisz jako TIFF"
+msgstr "Zapis jako TIFF"
 
 #: plug-ins/common/tiff.c:1
 msgid "Compression"
@@ -6140,19 +6133,19 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:1
 msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Image>/Filtry/Odwzorowanie/Tile..."
+msgstr "<Image>/Filtry/Odwzorowanie/Przeskalowane kafelki..."
 
 #: plug-ins/common/tile.c:1 plug-ins/common/tileit.c:1
 msgid "Tiling..."
-msgstr ""
+msgstr "Uk³adanie kafelek..."
 
 #: plug-ins/common/tile.c:1
 msgid "Tile"
-msgstr ""
+msgstr "Przeskalowane kafelki"
 
 #: plug-ins/common/tile.c:1
 msgid "Tile to New Size"
-msgstr ""
+msgstr "U³o¿enie o nowym rozmiarze"
 
 #: plug-ins/common/tileit.c:1
 msgid "<Image>/Filters/Map/Small Tiles..."
@@ -6200,7 +6193,7 @@ msgstr "<Image>/Filtry/Odwzorowanie/P³ynne na³o¿enie"
 
 #: plug-ins/common/tiler.c:1
 msgid "Tiler..."
-msgstr ""
+msgstr "Uk³adanie kafelek..."
 
 #: plug-ins/common/uniteditor.c:1
 msgid "<Toolbox>/Xtns/Unit Editor..."
@@ -6582,16 +6575,15 @@ msgstr "Skalowanie gradientu:"
 
 #: plug-ins/common/warp.c:1
 msgid "Gradient map selection menu"
-msgstr "Menu selekcji gradientów"
+msgstr "Menu wyboru mapy gradientu"
 
 #: plug-ins/common/warp.c:1
 msgid "Vector Mag:"
-msgstr "Rozmiar wektora:"
+msgstr "Skalowanie rozmiaru wektora:"
 
 #: plug-ins/common/warp.c:1
-#, fuzzy
 msgid "Fixed-direction-vector map selection menu"
-msgstr "Menu selekcji gradientów"
+msgstr "Menu wyboru mapy wektorów o sta³ym kierunku"
 
 #: plug-ins/common/warp.c:1
 msgid "Smoothing X gradient..."
@@ -6608,7 +6600,7 @@ msgstr "Odnajdywanie gradientu XY..."
 #: plug-ins/common/warp.c:1
 #, c-format
 msgid "Flow Step %d..."
-msgstr ""
+msgstr "Krok %d..."
 
 #: plug-ins/common/waves.c:1
 msgid "<Image>/Filters/Distorts/Waves..."
@@ -6871,7 +6863,7 @@ msgstr "XBM: nie mogê stworzyæ \"%s\"\n"
 
 #: plug-ins/common/xbm.c:1
 msgid "Save as XBM"
-msgstr "Zapisz jako XBM"
+msgstr "Zapis jako XBM"
 
 #: plug-ins/common/xbm.c:1
 msgid "XBM Options"
@@ -6907,7 +6899,7 @@ msgstr "Rozszerzenie pliku maski:"
 
 #: plug-ins/common/xpm.c:1
 msgid "Save as XPM"
-msgstr "Zapisz jako XPM"
+msgstr "Zapis jako XPM"
 
 #: plug-ins/common/xpm.c:1
 msgid "Alpha Threshold:"
@@ -6915,19 +6907,19 @@ msgstr "Próg alfa:"
 
 #: plug-ins/common/xwd.c:1
 msgid "can't open file for reading"
-msgstr "nie mogê otworzyæ pliku do odczytu"
+msgstr "nie mo¿na otworzyæ pliku do odczytu"
 
 #: plug-ins/common/xwd.c:1
 msgid "can't open file as XWD file"
-msgstr "nie mogê otworzyæ pliku jako XWD"
+msgstr "nie mo¿na otworzyæ pliku jako XWD"
 
 #: plug-ins/common/xwd.c:1
 msgid "can't get memory for colormap"
-msgstr "niemogê pobraæ pamiêci dla mapy kolorów"
+msgstr "nie mo¿na zaalokowaæ pamiêci na paletê kolorów"
 
 #: plug-ins/common/xwd.c:1
 msgid "can't read color entries"
-msgstr "Nie mogê odczytaæ kolorów"
+msgstr "nie mo¿na odczytaæ kolorów"
 
 #: plug-ins/common/xwd.c:1
 #, c-format
@@ -7054,7 +7046,7 @@ msgstr "Wczytaj plik FITS"
 
 #: plug-ins/fits/fits.c:1
 msgid "BLANK/NaN Pixel Replacement"
-msgstr ""
+msgstr "Zmienianie pikseli pustych/o niepoprawnej warto¶ci"
 
 #: plug-ins/fits/fits.c:1
 msgid "Pixel Value Scaling"
@@ -7062,7 +7054,7 @@ msgstr "Skalowanie warto¶ci piksela"
 
 #: plug-ins/fits/fits.c:1
 msgid "By DATAMIN/DATAMAX"
-msgstr ""
+msgstr "Wed³ug zakresu warto¶ci danych"
 
 #: plug-ins/fits/fits.c:1
 msgid "Image Composing"
@@ -7228,14 +7220,12 @@ msgid "Hue Variations"
 msgstr "Wariacje odcienia"
 
 #: plug-ins/fp/fp_gtk.c:1
-#, fuzzy
 msgid "Roughness"
-msgstr "Jasno¶æ"
+msgstr "Chropowato¶æ"
 
 #: plug-ins/fp/fp_gtk.c:1
-#, fuzzy
 msgid "Affected Range"
-msgstr "Obraz efektów:"
+msgstr "Aktywny zakres"
 
 #: plug-ins/fp/fp_gtk.c:1
 msgid "Shadows"
@@ -7275,7 +7265,7 @@ msgstr "Ca³y obraz"
 
 #: plug-ins/fp/fp_gtk.c:1
 msgid "Selection Only"
-msgstr "Tylko selekcja"
+msgstr "Tylko zaznaczenie"
 
 #: plug-ins/fp/fp_gtk.c:1
 msgid "Selection In Context"
@@ -7286,16 +7276,14 @@ msgid "Display"
 msgstr "Wy¶wietl"
 
 #: plug-ins/fp/fp_gtk.c:1
-#, fuzzy
 msgid "CirclePalette"
-msgstr "Utwórz"
+msgstr "Paleta okrê¿na"
 
 #: plug-ins/fp/fp_gtk.c:1
 msgid "Lighter And Darker"
 msgstr "Ja¶nieszy - ciemniejszy"
 
 #: plug-ins/fp/fp_gtk.c:1
-#, fuzzy
 msgid "Filter Pack Simulation"
 msgstr "Symulacja filtrów"
 
@@ -7354,15 +7342,15 @@ msgstr "Zaznaczenie"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
 msgid "GAP Animated Filter apply"
-msgstr ""
+msgstr "GAP: Zastosowanie filtra do animacji"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
 msgid "Animated Filter apply (init)"
-msgstr ""
+msgstr "Zastosowanie filtra do animacji (inicjowanie)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
 msgid "Gen Code by name"
-msgstr ""
+msgstr "Tworzenie kodu wed³ug nazwy"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
 msgid "Animated Filter apply (by name - please wait)"
@@ -7728,6 +7716,8 @@ msgid ""
 "2nd call of %s\n"
 "(define end-settings)"
 msgstr ""
+"drugie wywo³anie %s\n"
+"(define end-settings)"
 
 #: plug-ins/gap/gap_filter_foreach.c:1
 #, c-format
@@ -7811,7 +7801,7 @@ msgid ""
 "in loss of layer information."
 msgstr ""
 "Format pliku którego u¿ywasz jest\n"
-"ru¿ny od xcf. Operacjê zapisu mog±\n"
+"ru¿ny od xcf. Operacje zapisu mog±\n"
 "spowodowaæ utratê informacji o warstwach."
 
 #: plug-ins/gap/gap_lib.c:1
@@ -8215,11 +8205,13 @@ msgid "Frames Modify"
 msgstr "Modyfikacja ramek"
 
 #: plug-ins/gap/gap_mod_layer.c:1
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Non-Interactive call of %s\n"
 "(for all selected layers)"
-msgstr "Przeprowadzaj akcje na wszystkich odznaczonych warstwach"
+msgstr ""
+"Nieinteraktywne wywo³anie %s\n"
+"(dla wszystkich zaznaczonych warstw)"
 
 #: plug-ins/gap/gap_mod_layer.c:1
 msgid "Select Filter for Animated frames-apply"
@@ -8227,7 +8219,7 @@ msgstr "Wybór filtra zastosowywanego do animacji"
 
 #: plug-ins/gap/gap_mod_layer.c:1
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
+msgstr "GAP: Nie zaznaczono warstwy w ostatniej ramce z zakresu"
 
 #: plug-ins/gap/gap_mod_layer.c:1
 msgid "Modifying Frames/Layer(s)..."
@@ -8322,14 +8314,12 @@ msgstr ""
 "kontrolnym"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Anim Preview"
-msgstr "Podgl±d"
+msgstr "Podgl±d animacji"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Generate Animated Preview as multilayer image"
-msgstr "Podgl±d obrazu"
+msgstr "Utworzenie podgl±du animacji jako obrazu wielowarstwowego"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Copy moving source-layer(s) into frames"
@@ -8396,27 +8386,24 @@ msgstr ""
 "(otwórz drugi obraz tego samego typu przez otwarciem ¶cie¿ki ruchu)"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Object on empty frames"
-msgstr "Szczegó³y obiektu"
+msgstr "Obiekt w pustych ramkach"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Object on one frame"
-msgstr ""
+msgstr "Obiekt w jednej ramce"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Exact Object on frames"
-msgstr ""
+msgstr "Wymuszony obiekt w ramkach"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Anim Preview Mode"
-msgstr "Wielko¶æ podgl±du"
+msgstr "Tryb podgl±du animacji"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Scale Preview"
-msgstr "Podgl±d obrazu"
+msgstr "Skalowanie podgl±du"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Scale down size of the generated animated preview (in %)"
@@ -8648,15 +8635,17 @@ msgstr ""
 "¶cie¿ki (warto¶ci X/Y)"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Rotate Follow"
-msgstr "Obróæ: "
+msgstr "Obrót do ¶cie¿ki"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Ustawia obrót wszystkich punktów kontrolnych na dostosowany do kszta³tu "
+"¶cie¿ki.\n"
+"(Shift: wykorzystuje obrót punktu kontrolnego 1 jako przesuniêcie)"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Delete All Points"
@@ -8742,11 +8731,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Reset Keyframes"
-msgstr ""
+msgstr "Zresetuj ramki kluczowe"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Move Path Controlpointcheck"
-msgstr ""
+msgstr "Przeniesienie punktu kontrolnego ¶cie¿ki"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 msgid "Errors:"
@@ -8765,9 +8754,8 @@ msgid "Copying Layers into Frames..."
 msgstr "Kopiowanie warstw do ramek..."
 
 #: plug-ins/gap/gap_mov_exec.c:1
-#, fuzzy
 msgid "Generating Animated Preview..."
-msgstr "Podgl±d obrazu"
+msgstr "Generowanie podgl±du animacji..."
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Conditions to run mpeg_encode 1.5:"
@@ -8924,6 +8912,7 @@ msgstr "Sta³e tempo bitowe :"
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
 msgstr ""
+"Ignorowanie warto¶ci I/P/QJAKO¦Æ i wykorzystanie sta³ego tempa ramkowego)"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Pattern:"
@@ -8986,14 +8975,12 @@ msgid "Search Algorithmus used for B-frames"
 msgstr "Algorytm wyszukiwania dla B-ramek"
 
 #: plug-ins/gap/gap_mpege.c:1
-#, fuzzy
 msgid "Gen MPEG_ENCODE Parameters"
-msgstr "MPEG_ENCODE Informacjie"
+msgstr "Twprzenie parametrów MPEG_ENCODE"
 
 #: plug-ins/gap/gap_mpege.c:1 plug-ins/gap/gap_mpege.c:1
-#, fuzzy
 msgid "Encode Values"
-msgstr "Wpisz Warto¶æ"
+msgstr "Warto¶ci kodowania"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid ""
@@ -9056,6 +9043,8 @@ msgid ""
 "\n"
 "ERROR: invoked from a single image, animframe required"
 msgstr ""
+"\n"
+"B£¡D: wywo³any z pojedynczego obrazu, wymagana ramka animacji"
 
 #: plug-ins/gap/gap_navigator_dialog.c:1
 msgid ""
@@ -9111,7 +9100,7 @@ msgstr "<Image>/Video/Nawigator VCR..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:1
 msgid "Cant open two or more Video Navigator Windows."
-msgstr ""
+msgstr "Nie mo¿na otworzyæ wiêcej ni¿ jednego okna nawigatora VCR."
 
 #: plug-ins/gap/gap_navigator_dialog.c:1
 #: plug-ins/imagemap/imap_cmd_cut.c:1
@@ -9453,15 +9442,12 @@ msgid "Layer Basename:"
 msgstr "Nazwa bazowa warstwy:"
 
 #: plug-ins/gap/gap_range_ops.c:1
-#, fuzzy
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
 msgstr ""
-"Nowa nazwa warstwy dla wszystkich\n"
-"przetwarzanych warstw gdzie [####] jest\n"
-"zamieniane na numer ramki\n"
-"(U¿ywany tylko przy funkcji zmiana nazwy)"
+"Nazwa bazowa ka¿dej z warstw\n"
+"[####] jest zmieniane na numer ramki"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "Layer Mergemode:"
@@ -9699,9 +9685,8 @@ msgid "GIMP Dynamic Text"
 msgstr "Dynamiczny tekst GIMP-a"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1
-#, fuzzy
 msgid "GDynText: Messages Window"
-msgstr "Okno wiadomo¶æi tekstu dynamicznego"
+msgstr "Tekst dynamiczny: Okno komunikatów"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1
 msgid "GDynText: About ..."
@@ -9828,6 +9813,8 @@ msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
+"Przytrzymanie klawisza Shift przy wciskaniu tego przycisku spowoduje nadanie "
+"warstwie nazwy zgodnej z GIMP-em 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1
 msgid "GDynText: CharMap"
@@ -9873,24 +9860,23 @@ msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Filtry/Renderowanie/Gfig..."
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
 "You need to add an entry like\n"
 "(gfig-path \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Brak ¶cie¿ki fractalexplorer w gimprc:\n"
-"Powiniene¶ dodaæ nastêpuj±ce dane\n"
-"(fractalexplorer-path \"%s\")\n"
-"do twojego pliku %s."
+"Brak ¶cie¿ki gfig w gimprc:\n"
+"Nale¿y dodaæ wiersz postaci\n"
+"(gfig-path \"%s\")\n"
+"do pliku %s."
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy
 msgid "gfig-path misconfigured - the following directories were not found"
 msgstr ""
-"¦cie¿ka 'fractalexplorer' nie jest prawid³owa - nie znaleziono "
-"nastêpuj±cych  katalogów:"
+"niepoprawnie skonfigurowana ¶cie¿ka gfig-path, nie odnaleziono nastêpuj±cych "
+"katalogów"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "First Gfig"
@@ -9948,9 +9934,8 @@ msgid "Close curve on completion"
 msgstr "Zamkniêcie krzywej na koñcu"
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy
 msgid "Show Line Frame"
-msgstr "Podgl±d szkieletu"
+msgstr "Wy¶wietlanie szkieletu liniowego"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Draws lines between the control points. Only during curve creation"
@@ -9962,14 +9947,12 @@ msgid "Regular Polygon Number of Sides"
 msgstr "Liczba k±tów wielok±ta foremnego"
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy
 msgid "Star Number of Points"
-msgstr "Liczba puzzli"
+msgstr "Liczba punktów gwiazdy"
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy
 msgid "Spiral Number of Points"
-msgstr "Liczba puzzli"
+msgstr "Liczba punktów spirali"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Ops"
@@ -10035,7 +10018,7 @@ msgstr "O³ówek"
 
 #: plug-ins/gfig/gfig.c:1 plug-ins/gfig/gfig.c:1
 msgid "Pattern"
-msgstr "Wzór"
+msgstr "Deseñ"
 
 #: plug-ins/gfig/gfig.c:1
 msgid ""
@@ -10043,6 +10026,10 @@ msgid ""
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
+"Wybiera narzêdzie wykorzystywane do malowania na obrazie: pêdzel, o³ówek, "
+"aerograf lub deseñ. Malowanie deseniem okrêgów lub elips jest mo¿liwe tylko, "
+"je¶li zosta³y one przybli¿one liniami (ustawienie \"Przybli¿anie okrêgów i "
+"elips\")."
 
 #: plug-ins/gfig/gfig.c:1 plug-ins/rcm/rcm_dialog.c:1
 msgid "Original"
@@ -10183,16 +10170,15 @@ msgstr "Wszystkie zaznaczenia"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Fill after:"
-msgstr "Wype³nij po:"
+msgstr "Wype³nienie po:"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Segment"
-msgstr "Segment"
+msgstr "Odcinek"
 
 #: plug-ins/gfig/gfig.c:1
-#, fuzzy
 msgid "Sector"
-msgstr "Zaznaczacz"
+msgstr "Obszar"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Arc as:"
@@ -10257,7 +10243,7 @@ msgstr "Wy¶wietlanie siatki"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Lock on Grid"
-msgstr ""
+msgstr "Przypiêcie do siatki"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Grid Spacing:"
@@ -10356,7 +10342,7 @@ msgstr "Odczyt obiektu Gfiga"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Error in copy layer for onlayers"
-msgstr ""
+msgstr "B³±d przy kopiowaniu warstwy do malowania"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Error in creating layer"
@@ -10441,16 +10427,15 @@ msgid ""
 "to your %s file."
 msgstr ""
 "Brak ¶cie¿ki gflare (przeb³ysku) w gimprc:\n"
-"Powiniene¶ dodaæ nastêpuj±ce dane\n"
+"Nale¿y dodaæ wiersz postaci\n"
 "(gflare-path \"%s\")\n"
-"do twojego pliku %s."
+"do pliku %s."
 
 #: plug-ins/gflare/gflare.c:1
-#, fuzzy
 msgid "gflare-path misconfigured - the following directories were not found"
 msgstr ""
-"¦cie¿ka \"fractalexplorer\" nie jest poprawna - nie znaleziono "
-"nastêpuj±cych  katalogów:"
+"niepoprawnie skonfigurowana ¶cie¿ka gflare-path, nie odnaleziono "
+"nastêpuj±cych katalogów"
 
 #: plug-ins/gflare/gflare.c:1
 #, c-format
@@ -10855,7 +10840,7 @@ msgstr "Próg odchylenia"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Warto¶æ przeskoku dla adaptywnych zaznaczeñ"
 
 #: plug-ins/gimpressionist/gimp.c:1
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
@@ -10916,9 +10901,8 @@ msgid "The number of directions (i.e. brushes) to use"
 msgstr "Liczba wykorzystywanych kierunków (pêdzli)"
 
 #: plug-ins/gimpressionist/orientation.c:1
-#, fuzzy
 msgid "The angle of the first brush to create"
-msgstr "Zmienia k±t kana³u zielony/nasycenie"
+msgstr "K±t pierwszego tworzonego pêdzla"
 
 #: plug-ins/gimpressionist/orientation.c:1
 msgid "How large an angle-span to use (360 = full circle)"
@@ -10999,33 +10983,34 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
+"Pole wektorów. Klikniêcie lewym przyciskiem przesuwa zaznaczony wektor, "
+"prawym - zmienia jego kierunek, ¶rodkowym - dodaje nowy wektor."
 
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Adjust the preview's brightness"
-msgstr "Reguluj d³ugo¶æ szpikulców"
+msgstr "Reguluje jasno¶æ podgl±du"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Select previous vector"
-msgstr "Zaznacz poprzedni wektor"
+msgstr "Zaznacza poprzedni wektor"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Select next vector"
-msgstr "Zaznacz poprzedni wektor"
+msgstr "Zaznacza nastêpny wektor"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Add new vector"
-msgstr "Dodaj nowy wektor"
+msgstr "Dodaje nowy wektor"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
 msgid "Kill"
-msgstr ""
+msgstr "Usuñ"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Delete selected vector"
-msgstr "Usuñ zaznaczony wektor"
+msgstr "Usuwa zaznaczony wektor"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Change the angle of the selected vector"
@@ -11037,15 +11022,15 @@ msgstr "Zmienia si³ê zaznaczonego wektora"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Vortex"
-msgstr ""
+msgstr "Wir"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Vortex2"
-msgstr ""
+msgstr "Wir2"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Vortex3"
-msgstr ""
+msgstr "Wir3"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
@@ -11064,15 +11049,13 @@ msgstr "Anuluje wszystkie zmiany i koñczy pracê edytora"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Strength exp.:"
-msgstr "Si³a:"
+msgstr "Wyk³adnik si³y:"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Change the exponent of the strength"
-msgstr "Zmienia intensywno¶æ kana³u zielonego"
+msgstr "Zmienia wyk³adnik si³y"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid "Angle offset:"
@@ -11085,13 +11068,15 @@ msgstr "Przesuwa wszystkie wektory o podanym k±cie"
 #: plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
 msgid "Voronoi"
-msgstr ""
+msgstr "Vornoi"
 
 #: plug-ins/gimpressionist/orientmap.c:1
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
+"Tryb Vornoi sprawia, ¿e tylko wektor najbli¿szy danemu punktowi ma na niego "
+"wp³yw"
 
 #: plug-ins/gimpressionist/paper.c:1 plug-ins/gimpressionist/paper.c:1
 msgid "Paper"
@@ -11198,6 +11183,11 @@ msgid ""
 "feel free to send them to me <vidar@prosalg.no>\n"
 "for inclusion into the next release!\n"
 msgstr ""
+"\n"
+"Je¶li stworzysz i zapamiêtasz ciekawe ustawienia\n"
+"(równie¿ pêdzle lub papiery), wy¶lij je do autora\n"
+"na adres <vidar@prosalg.no> (w jêzyku angielskim), aby\n"
+"mog³y zostaæ do³±czone w kolejnej wersji.\n"
 
 #: plug-ins/gimpressionist/preview.c:1
 msgid "Refresh the Preview window"
@@ -11270,28 +11260,27 @@ msgstr "Edytor mapy rozmiaru"
 
 #: plug-ins/gimpressionist/sizemap.c:1
 msgid "Smvectors"
-msgstr ""
+msgstr "Wektory"
 
 #: plug-ins/gimpressionist/sizemap.c:1
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
+"Pole wektorów. Klikniêcie lewym przyciskiem przesuwa zaznaczony wektor, "
+"prawym - zmienia jego kierunek, ¶rodkowym - dodaje nowy wektor."
 
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Select previous smvector"
-msgstr "Zaznacz poprzedni wektor"
+msgstr "Zaznacza poprzedni wektor"
 
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Select next smvector"
-msgstr "Zaznacz poprzedni wektor"
+msgstr "Zaznacza nastêpny wektor"
 
 #: plug-ins/gimpressionist/sizemap.c:1
-#, fuzzy
 msgid "Add new smvector"
-msgstr "Dodaj nowy wektor"
+msgstr "Dodaje nowy wektor"
 
 #: plug-ins/gimpressionist/sizemap.c:1
 msgid "Delete selected smvector"
@@ -11310,6 +11299,8 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
+"Tryb Vornoi sprawia, ¿e tylko wektor najbli¿szy danemu punktowi ma na niego "
+"wp³yw"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
 #, c-format
@@ -11348,9 +11339,8 @@ msgstr ""
 "b³êdu.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
-#, fuzzy
 msgid "Contents"
-msgstr "Zawarto¶æ komórki:"
+msgstr "Zawarto¶æ"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
 msgid "Index"
@@ -11617,13 +11607,12 @@ msgid "Move Down"
 msgstr "Przesuwa w dó³"
 
 #: plug-ins/imagemap/imap_cmd_move_sash.c:1
-#, fuzzy
 msgid "Move Sash"
-msgstr "Wiêcej nasycenia:"
+msgstr "Przesuwa szarfê"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:1
 msgid "Move Selected Objects"
-msgstr "Przesuñ zaznaczony obiekt"
+msgstr "Przesuwa zaznaczony obiekt"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:1
 #: plug-ins/imagemap/imap_cmd_object_up.c:1
@@ -11904,11 +11893,11 @@ msgstr "Odcienie szaro¶ci"
 
 #: plug-ins/imagemap/imap_menu.c:1
 msgid "Zoom In"
-msgstr "Pomniejsz"
+msgstr "Powiêksz"
 
 #: plug-ins/imagemap/imap_menu.c:1
 msgid "Zoom Out"
-msgstr "Powiêksz"
+msgstr "Pomniejsz"
 
 #: plug-ins/imagemap/imap_menu.c:1
 msgid "Zoom To"
@@ -11948,11 +11937,11 @@ msgstr "Informacje o wtyczce mapy obrazu..."
 
 #: plug-ins/imagemap/imap_polygon.c:1
 msgid "x (pixels)"
-msgstr "x (pikseli)"
+msgstr "x (piksele)"
 
 #: plug-ins/imagemap/imap_polygon.c:1
 msgid "y (pixels)"
-msgstr "y (pikseli)"
+msgstr "y (piksele)"
 
 #: plug-ins/imagemap/imap_polygon.c:1
 msgid "Append"
@@ -11960,7 +11949,7 @@ msgstr "Do³±cz"
 
 #: plug-ins/imagemap/imap_popup.c:1
 msgid "Map Info..."
-msgstr "Informacjê o mapie..."
+msgstr "Informacje o mapie..."
 
 #: plug-ins/imagemap/imap_popup.c:1
 msgid "Tools"
@@ -12004,7 +11993,7 @@ msgstr "Wy¶wietlanie uchwytów obszarów"
 
 #: plug-ins/imagemap/imap_preferences.c:1
 msgid "Keep NCSA circles true"
-msgstr ""
+msgstr "Zachowanie okrêgów NCSA"
 
 #: plug-ins/imagemap/imap_preferences.c:1
 msgid "Show area URL tip"
@@ -12319,7 +12308,7 @@ msgstr "Zawiniêcie strony..."
 
 #: plug-ins/print/gimp_color_window.c:1
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "Regulacja koloru wydruku"
 
 #: plug-ins/print/gimp_color_window.c:1
 msgid "Set Defaults"
@@ -12334,9 +12323,9 @@ msgid "Dither Algorithm:"
 msgstr "Algorytm ditherowania:"
 
 #: plug-ins/print/gimp_main_window.c:1
-#, fuzzy, c-format
+#, c-format
 msgid "%s -- Print v%s"
-msgstr "Drukuj"
+msgstr "%s -- Drukowanie v%s"
 
 #: plug-ins/print/gimp_main_window.c:1
 msgid ""
@@ -12512,11 +12501,11 @@ msgstr "<Image>/Plik/Drukuj (GIMP)..."
 
 #: plug-ins/rcm/rcm.c:1
 msgid "<Image>/Image/Colors/Colormap Rotation..."
-msgstr "<Image>/Obraz/Kolory/Colormap Rotation..."
+msgstr "<Image>/Obraz/Kolory/Obrót palety kolorów..."
 
 #: plug-ins/rcm/rcm.c:1
 msgid "Rotating the colormap..."
-msgstr "Obracanie mapy kolorów..."
+msgstr "Obracanie palety kolorów..."
 
 #: plug-ins/rcm/rcm_callback.c:1 plug-ins/rcm/rcm_dialog.c:1
 msgid "Switch to clockwise"
@@ -12544,15 +12533,15 @@ msgstr "Do"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Treat as this"
-msgstr ""
+msgstr "Traktowanie jak wybrany"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Change to this"
-msgstr ""
+msgstr "Zmiana na wybrany"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "What is Gray?"
-msgstr ""
+msgstr "Rozpoznawanie szaro¶ci"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Units"
@@ -12572,7 +12561,7 @@ msgstr "Stopnie"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Continuous update"
-msgstr "Ci±g³a aktualizacja"
+msgstr "Automatyczna aktualizacja"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Area:"
@@ -12600,17 +12589,16 @@ msgstr "<Image>/Zaznaczenie/Do ¶cie¿ki"
 
 #: plug-ins/sel2path/sel2path.c:1
 msgid "No selection to convert"
-msgstr "Brak selekcji do konwersji"
+msgstr "Brak zaznaczenia do konwersji"
 
 #: plug-ins/sel2path/sel2path.c:1
-#, fuzzy
 msgid "Sel2Path Advanced Settings"
-msgstr "Ustawienia zaawansowane"
+msgstr "Zaawansowane ustawienia Sel2Path"
 
 #: plug-ins/sel2path/sel2path.c:1
 #, c-format
 msgid "print_spline: strange degree (%d)"
-msgstr ""
+msgstr "print_spline: dziwny stopieñ (%d)"
 
 #: plug-ins/sel2path/sel2path.c:1
 msgid "selection_to_path"
@@ -12626,7 +12614,7 @@ msgstr "B³±d wewnêtrzny. Bpp zaznaczenia > 1"
 
 #: plug-ins/sgi/sgi.c:1
 msgid "Save as SGI"
-msgstr "Zapisz jako SGI"
+msgstr "Zapis jako SGI"
 
 #: plug-ins/sgi/sgi.c:1
 msgid "Compression Type"
@@ -12727,7 +12715,7 @@ msgstr ""
 
 #: plug-ins/xjt/xjt.c:1
 msgid "Save as XJT"
-msgstr "Zapisz jako XJT"
+msgstr "Zapis jako XJT"
 
 #: plug-ins/xjt/xjt.c:1
 msgid "Clear Transparent"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2000-10-31 15:20+0100\n"
-"PO-Revision-Date: 2000-11-03 17:58+0100\n"
+"PO-Revision-Date: 2000-11-13 17:52+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1206,7 +1206,7 @@ msgstr ""
 
 #: app/fileops.c:1 app/fileops.c:1
 msgid "Save Image"
-msgstr "Zapisz obraz"
+msgstr "Zapis obrazu"
 
 #: app/fileops.c:1
 msgid "Save Options"
@@ -2409,7 +2409,7 @@ msgid ""
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
 "Kolor narzêdzia i t³a. Czarny i bia³y kwadrat przywraca pierwotne kolory. "
-"Strza³ki zamieniaj± kolory. Podwójne klikniêcie koloru otwiera okno wyboru "
+"Strza³ki zamieniaj± kolory. Dwukrotne klikniêcie koloru otwiera okno wyboru "
 "koloru."
 
 #: app/internal_procs.c:1
@@ -4274,15 +4274,15 @@ msgstr "Przeroczysto¶æ"
 
 #: app/preferences_dialog.c:1
 msgid "Light Checks"
-msgstr "Sprawdzanie jasno¶ci"
+msgstr "Jasna szachownica"
 
 #: app/preferences_dialog.c:1
 msgid "Mid-Tone Checks"
-msgstr "Sprawdzanie pó³tonów"
+msgstr "Zwyk³a szachownica"
 
 #: app/preferences_dialog.c:1
 msgid "Dark Checks"
-msgstr "Sprawdzanie ciemno¶ci"
+msgstr "Ciemna szachownica"
 
 #: app/preferences_dialog.c:1
 msgid "White Only"
@@ -4298,7 +4298,7 @@ msgstr "Tylko czarny"
 
 #: app/preferences_dialog.c:1
 msgid "Transparency Type:"
-msgstr "Typ prze¼roczysto¶ci:"
+msgstr "Renderowanie prze¼roczysto¶ci:"
 
 #: app/preferences_dialog.c:1 app/preferences_dialog.c:1
 #: app/preferences_dialog.c:1
@@ -4317,7 +4317,7 @@ msgstr "Wielki"
 
 #: app/preferences_dialog.c:1
 msgid "Check Size:"
-msgstr "Rozmiar sprawdzania:"
+msgstr "Rozmiar pola szachownicy:"
 
 #: app/preferences_dialog.c:1
 msgid "8-Bit Displays"
