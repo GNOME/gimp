@@ -1,3 +1,7 @@
+2004-01-11  Dave Neary  <bolsh@gimp.org>
+
+	* etc/templaterc: Remove unusual "1200x900" template.
+
 2004-01-11  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: ensure that
