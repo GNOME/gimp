@@ -1,3 +1,12 @@
+2002-02-26  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tips-parser.c: some documentation can't hurt.
+
+	* app/tools/Makefile.am
+	* app/paint/Makfile.am
+	* app/vectors/Makfile.am
+	* plug-ins/tools/Makefile.am: fixed dist target. 
+
 2002-02-26  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpdrawtool.c

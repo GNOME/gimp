@@ -16,6 +16,7 @@ INCLUDES = @STRIP_BEGIN@ \
 noinst_LIBRARIES = libappvectors.a
 
 libappvectors_a_sources = @STRIP_BEGIN@ \
+	vectors-types.h			\
 	gimpanchor.h			\
 	gimpbezierstroke.h		\
 	gimpbezierstroke.c		\

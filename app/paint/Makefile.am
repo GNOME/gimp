@@ -3,6 +3,7 @@
 noinst_LIBRARIES = libapppaint.a
 
 libapppaint_a_SOURCES = @STRIP_BEGIN@ \
+	paint-types.h			\
 	gimpairbrush.c			\
 	gimpairbrush.h			\
 	gimpclone.c			\
@@ -15,6 +16,7 @@ libapppaint_a_SOURCES = @STRIP_BEGIN@ \
 	gimperaser.h			\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
+	gimppaintcore-kernels.h		\
 	gimppaintcore-stroke.c		\
 	gimppaintcore-stroke.h		\
 	gimppaintoptions.c		\

@@ -125,6 +125,20 @@ gimp_tip_free (GimpTip *tip)
   g_free (tip);
 }
 
+/**
+ * gimp_tips_from_file:
+ * @filename: the name of the tips file to parse
+ * @error: return location for a #GError
+ * 
+ * Reads a gimp-tips XML file, creates a new #GimpTip for
+ * each tip entry and returns a #GList of them. If a parser
+ * error occurs at some point, the uncompleted list is
+ * returned and @error is set (unless @error is %NULL).
+ * The message set in @error contains a detailed description
+ * of the problem.
+ * 
+ * Return value: a #Glist of #GimpTips.
+ **/
 GList *
 gimp_tips_from_file (const gchar  *filename,
                      GError      **error)

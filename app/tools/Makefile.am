@@ -72,7 +72,6 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimppaintbrushtool.h		\
 	gimppainttool.c			\
 	gimppainttool.h			\
-	gimppainttool_kernels.h		\
 	gimppathtool.c			\
 	gimppathtool.h			\
 	gimppenciltool.c		\
