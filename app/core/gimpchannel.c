@@ -1399,42 +1399,30 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
                              const GimpRGB *color)
 {
   GimpChannel *channel;
-  gint         x, y;
   gint         width;
   gint         height;
+  PixelRegion  srcPR, destPR;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  width  = gimp_image_get_width  (gimage);
-  height = gimp_image_get_height (gimage);
+  width  = gimp_item_width  (GIMP_ITEM (layer));
+  height = gimp_item_height (GIMP_ITEM (layer));
 
   channel = gimp_channel_new (gimage, width, height, name, color);
 
   gimp_channel_clear (channel, NULL, FALSE);
 
-  if (gimp_rectangle_intersect (0, 0, width, height,
-                                GIMP_ITEM (layer)->offset_x,
-                                GIMP_ITEM (layer)->offset_y,
-                                GIMP_ITEM (layer)->width,
-                                GIMP_ITEM (layer)->height,
-                                &x, &y, &width, &height))
-    {
-      PixelRegion srcPR, destPR;
+  pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (layer)),
+                     0, 0, width, height, FALSE);
+  pixel_region_init (&destPR, gimp_drawable_data (GIMP_DRAWABLE (channel)),
+                     0, 0, width, height, TRUE);
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
-                         x - GIMP_ITEM (layer)->offset_x,
-                         y - GIMP_ITEM (layer)->offset_y,
-                         width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (channel)->tiles,
-                         x, y, width, height, TRUE);
+  extract_alpha_region (&srcPR, NULL, &destPR);
 
-      extract_alpha_region (&srcPR, NULL, &destPR);
-
-      channel->bounds_known = FALSE;
-    }
+  channel->bounds_known = FALSE;
 
   return channel;
 }

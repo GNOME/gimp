@@ -81,6 +81,8 @@ void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
  */
 void              gimp_scan_convert_render     (GimpScanConvert *scan_converter,
                                                 TileManager     *tile_manager,
+                                                gint             off_x,
+                                                gint             off_y,
                                                 gboolean         antialias);
 
 

@@ -568,7 +568,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   iscissors->mask = gimp_channel_new_mask (gdisp->gimage,
                                            gdisp->gimage->width,
                                            gdisp->gimage->height);
-  gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors)->tiles, TRUE);
+  gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors)->tiles, 0, 0, TRUE);
   gimp_scan_convert_free (sc);
 }
 

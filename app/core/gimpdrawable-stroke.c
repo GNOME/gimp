@@ -262,12 +262,13 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
    * of the stroke.
    */
   mask = tile_manager_new (w, h, 1);
-  tile_manager_set_offsets (mask, x1 + x2, y1 + y2);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
   color_region (&maskPR, bg);
 
   /* render the stroke into it */
-  gimp_scan_convert_render (scan_convert, mask, options->antialias);
+  gimp_scan_convert_render (scan_convert, mask,
+                            x1 + x2, y1 + y2,
+                            options->antialias);
 
   bytes = drawable->bytes;
   if (!gimp_drawable_has_alpha (drawable))

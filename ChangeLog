@@ -1,5 +1,21 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_new_from_alpha): create
+	a channel which the size of the layer, not of the image...
+
+	* app/core/gimpchannel-select.c (gimp_channel_select_alpha):
+	...and take the layer's offsets into account.
+
+	* app/core/gimpscanconvert.[ch] (gimp_scan_convert_render): added
+	off_x and off_y parameters and don't use the passed TileManager's
+	offsets.
+
+	* app/core/gimpchannel-select.c
+	* app/core/gimpdrawable-stroke.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c (app_init): fixed starting with --no-splash.
 
 2003-10-06  Michael Natterer  <mitch@gimp.org>

@@ -171,7 +171,7 @@ gimp_channel_select_polygon (GimpChannel    *channel,
                                   gimp_item_height (item));
   gimp_scan_convert_render (scan_convert,
                             gimp_drawable_data (GIMP_DRAWABLE (add_on)),
-                            antialias);
+                            0, 0, antialias);
 
   gimp_scan_convert_free (scan_convert);
 
@@ -255,7 +255,7 @@ gimp_channel_select_vectors (GimpChannel    *channel,
 
       gimp_scan_convert_render (scan_convert,
                                 gimp_drawable_data (GIMP_DRAWABLE (add_on)),
-                                antialias);
+                                0, 0, antialias);
 
       if (feather)
         gimp_channel_feather (add_on,
@@ -330,6 +330,7 @@ gimp_channel_select_alpha (GimpChannel    *channel,
   GimpItem    *item;
   GimpChannel *add_on;
   GimpRGB      color;
+  gint         off_x, off_y;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -347,8 +348,10 @@ gimp_channel_select_alpha (GimpChannel    *channel,
                           feather_radius_y,
                           FALSE /* no undo */);
 
+  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
   gimp_channel_select_channel (channel, _("Alpha to Selection"), add_on,
-                               0, 0, op,
+                               off_x, off_y, op,
                                FALSE, 0.0, 0.0);
 
   g_object_unref (add_on);
