@@ -1,14 +1,13 @@
-# translation of gimp-libgimp.HEAD.sk.po to Slovak
-# gimp-libgimp sk.po
+# Slovak translation of gimp-libgimp.HEAD.pot to Slovak
 # Copyright (C) 2002,2003 Free Software Foundation, Inc.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2002,2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD.sk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 00:16+0200\n"
-"PO-Revision-Date: 2003-04-17 22:40+0100\n"
+"Project-Id-Version: gimp-libgimp.HEAD \n"
+"Report-Msgid-Bugs-To: zdpo@mailbox.sk\n"
+"POT-Creation-Date: 2003-07-16 04:03+0200\n"
+"PO-Revision-Date: 2003-09-01 11:34+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +16,8 @@ msgstr ""
 "X-Generator: KBabel 1.2\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Výber jednotiek"
+msgstr "Výber štetca"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -142,8 +140,7 @@ msgstr "Export"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
-"Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
+msgstr "Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
@@ -169,24 +166,23 @@ msgstr ""
 "Viditeľné vrstvy nebudú uložené."
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Výber jednotiek"
+msgstr "Výber písma"
 
-#: libgimp/gimpgradientmenu.c:103
-#, fuzzy
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
-msgstr "Výber jednotiek"
+msgstr "Výber prechodu"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
+#: libgimp/gimpmenu.c:517
 msgid "None"
 msgstr "Nič"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Náhľad"
 
-#: libgimp/gimpmiscui.c:536
+#: libgimp/gimpmiscui.c:537
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -194,45 +190,48 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"V gimprc nie je %s:\n"
+"Musíte pridať položku ako napr.\n"
+"(%s \"%s\")\n"
+"do vášho %s súbora."
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Výber jednotiek"
+msgstr "Výber vzorky"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "percent"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "v bytoch"
+msgstr "%d bytov"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -427,23 +426,23 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
 msgstr "_Mierka"
 
-#: libgimpwidgets/gimpstock.c:235
+#: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
 msgstr "Orezanie"
 
-#: libgimpwidgets/gimpstock.c:253
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Shear"
 msgstr "_Skosenie"
 
@@ -532,55 +531,51 @@ msgid "Contrast Cycles:"
 msgstr "Cykly kontrastu:"
 
 #: modules/colorsel_cmyk.c:70
-#, fuzzy
 msgid "CMYK color selector"
-msgstr "Výber farieb v štýle vodových farieb"
+msgstr "Výber farieb CMYK"
 
 #: modules/colorsel_cmyk.c:129
-msgid "CMYK"
-msgstr ""
+msgid "_CMYK"
+msgstr "_CMYK"
 
 #: modules/colorsel_cmyk.c:143
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:144
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:145
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:146
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:150
-#, fuzzy
 msgid "Cyan"
-msgstr "Zrušiť"
+msgstr "Azúrová"
 
 #: modules/colorsel_cmyk.c:151
 msgid "Magenta"
-msgstr ""
+msgstr "Purpurová"
 
 #: modules/colorsel_cmyk.c:152
 msgid "Yellow"
-msgstr ""
+msgstr "Žltá"
 
 #: modules/colorsel_cmyk.c:153
-#, fuzzy
 msgid "Black"
-msgstr "/Čierna"
+msgstr "Čierna"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Výber farieb t maliarskeho trojuholníka"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
-msgid "Triangle"
+msgid "_Triangle"
 msgstr "_Trojuholník"
 
 #: modules/colorsel_water.c:104
@@ -588,8 +583,7 @@ msgid "Watercolor style color selector"
 msgstr "Výber farieb v štýle vodových farieb"
 
 #: modules/colorsel_water.c:176
-#, fuzzy
-msgid "Watercolor"
+msgid "_Watercolor"
 msgstr "_Vodné farby"
 
 #: modules/colorsel_water.c:251
@@ -605,3 +599,4 @@ msgstr "Tlak"
 #, fuzzy
 #~ msgid "_Time"
 #~ msgstr "Čas"
+
