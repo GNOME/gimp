@@ -66,9 +66,6 @@ static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
 static void   gimp_navigation_view_abox_resized     (GtkWidget          *widget,
                                                      GtkAllocation      *allocation,
                                                      GimpNavigationView *view);
-static void   gimp_navigation_view_size_notify      (GObject            *config,
-                                                     GParamSpec         *param_spec,
-                                                     GimpNavigationView *view);
 static void   gimp_navigation_view_marker_changed   (GimpNavigationPreview *preview,
                                                      gint                x,
                                                      gint                y,
@@ -151,15 +148,10 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 static void
 gimp_navigation_view_init (GimpNavigationView *view)
 {
-  /* FIXME!! */
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
-
   GtkWidget *abox;
   GtkWidget *frame;
 
   view->shell = NULL;
-
-  /* the preview */
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -170,21 +162,11 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
-/*    gtk_widget_set_size_request (abox, */
-/*                                 3 * config->nav_preview_size, */
-/*                                 3 * config->nav_preview_size); */
-
   g_signal_connect (G_OBJECT (abox), "size_allocate",
                     G_CALLBACK (gimp_navigation_view_abox_resized),
                     view);
 
-  view->preview = gimp_navigation_preview_new (NULL,
-                                               3 * config->nav_preview_size);
-
-  g_signal_connect (G_OBJECT (config), "notify::navigation-preview-size",
-                    G_CALLBACK (gimp_navigation_view_size_notify),
-                    view);
-
+  view->preview = gimp_navigation_preview_new (NULL, GIMP_PREVIEW_SIZE_MEDIUM);
   gtk_container_add (GTK_CONTAINER (abox), view->preview);
   gtk_widget_show (view->preview);
 
@@ -372,10 +354,23 @@ gimp_navigation_view_new_private (GimpDisplayShell *shell,
   GimpNavigationView *view;
 
   g_return_val_if_fail (! shell || GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (! popup || (popup && shell), NULL);
 
   view = g_object_new (GIMP_TYPE_NAVIGATION_VIEW, NULL);
 
-  if (! popup)
+  if (popup)
+    {
+      GimpDisplayConfig *config;
+      GimpPreview       *preview;
+
+      preview = GIMP_PREVIEW (view->preview);
+      config  = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
+      gimp_preview_set_size (preview,
+                             config->nav_preview_size * 3,
+                             preview->border_width);
+    }
+  else
     {
       GtkWidget *hscale;
 
@@ -533,18 +528,6 @@ gimp_navigation_view_abox_resized (GtkWidget          *widget,
                                           nav_preview->width,
                                           nav_preview->height);
     }
-}
-
-static void
-gimp_navigation_view_size_notify (GObject            *config,
-                                  GParamSpec         *param_spec,
-                                  GimpNavigationView *view)
-{
-  GimpPreview *preview = GIMP_PREVIEW (view->preview);
-  gint         size    = GIMP_DISPLAY_CONFIG (config)->nav_preview_size;
-
-  if (size > 0)
-    gimp_preview_set_size (preview, 3 * size, preview->border_width);
 }
 
 static void

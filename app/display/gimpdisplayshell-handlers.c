@@ -66,6 +66,12 @@ static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *g
 static void   gimp_display_shell_check_notify_handler       (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_title_notify_handler       (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_nav_size_notify_handler    (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
 
 static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
@@ -125,6 +131,18 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     "notify::transparency-type",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::image-title-format",
+                    G_CALLBACK (gimp_display_shell_title_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::image-status-format",
+                    G_CALLBACK (gimp_display_shell_title_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::navigation-preview-size",
+                    G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
+                    shell);
 
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
   gimp_display_shell_qmask_changed_handler (gimage, shell);
@@ -147,6 +165,12 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->icon_idle_id = 0;
     }
 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_nav_size_notify_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_title_notify_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
                                         gimp_display_shell_check_notify_handler,
                                         shell);
@@ -298,6 +322,33 @@ gimp_display_shell_check_notify_handler (GObject          *config,
 {
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_flush (shell);
+}
+
+static void
+gimp_display_shell_title_notify_handler (GObject          *config,
+                                         GParamSpec       *param_spec,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_update_title (shell);
+}
+
+static void
+gimp_display_shell_nav_size_notify_handler (GObject          *config,
+                                            GParamSpec       *param_spec,
+                                            GimpDisplayShell *shell)
+{
+  gboolean sensitive;
+
+  if (shell->nav_popup)
+    {
+      gtk_widget_destroy (shell->nav_popup);
+      shell->nav_popup = NULL;
+    }
+
+  sensitive =
+    GIMP_DISPLAY_CONFIG (config)->nav_preview_size != GIMP_PREVIEW_SIZE_NONE;
+
+  gtk_widget_set_sensitive (shell->nav_ebox, sensitive);
 }
 
 static gboolean

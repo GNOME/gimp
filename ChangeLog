@@ -1,5 +1,26 @@
 2002-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]: keep a pointer to the
+	nav_ebox in the GimpDisplayShell struct.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	notify::navigation-preview-size and set the button insensitive for
+	GIMP_PREVIEW_SIZE_NONE. Also destroy an existing nav_popup so it
+	will be automatically re-created on the next click.  Connect to
+	notify::image-title-format and notify::image-status-format and
+	update them accordingly.
+
+	* app/display/gimpnavigationview.c: don't try any voodoo in
+	gimp_navigation_view_init(). Removed the notify handler.
+	Set the popup's size in gimp_navigation_view_new_private().
+
+	* app/gui/preferences-dialog.c: removed the #if 0'ed combo boxes
+	and added an own sub-page for the image title and status format.
+	Select the possible values using a GtkTreeView.  Some more
+	cleanup.
+
+2002-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.c: added gimp_prop_entry_new(),
 	factored lots of stuff out to local utility functions, added some
 	comments to the header, cleanup.

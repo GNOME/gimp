@@ -22,12 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtklistitem.h>
-
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -38,21 +32,11 @@
 #include "config/gimpconfig-params.h"
 #include "config/gimprc.h"
 
-#include "base/tile-cache.h"
-
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpimage.h"
 
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimppropwidgets.h"
-
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell-render.h"
-
-#include "tools/tool_manager.h"
 
 #include "gui.h"
 #include "resolution-calibrate-dialog.h"
@@ -78,9 +62,9 @@ static void        prefs_config_copy_notify       (GObject    *config_copy,
                                                    GParamSpec *param_spec,
                                                    GObject    *config);
 static void        prefs_cancel_callback          (GtkWidget  *widget,
-                                                   GtkWidget  *dlg);
+                                                   GtkWidget  *dialog);
 static void        prefs_ok_callback              (GtkWidget  *widget,
-                                                   GtkWidget  *dlg);
+                                                   GtkWidget  *dialog);
 
 static void   prefs_clear_session_info_callback   (GtkWidget  *widget,
                                                    gpointer    data);
@@ -237,31 +221,31 @@ prefs_restart_notification_save_callback (GtkWidget *widget,
 static void
 prefs_restart_notification (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *label;
 
-  dlg = gimp_dialog_new (_("Save Preferences ?"), "gimp_message",
-			 gimp_standard_help_func,
-			 "dialogs/preferences/preferences.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, FALSE, FALSE,
+  dialog = gimp_dialog_new (_("Save Preferences ?"), "gimp_message",
+                            gimp_standard_help_func,
+                            "dialogs/preferences/preferences.html",
+                            GTK_WIN_POS_MOUSE,
+                            FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_CLOSE, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                            GTK_STOCK_CLOSE, gtk_widget_destroy,
+                            NULL, 1, NULL, FALSE, TRUE,
 
-			 GTK_STOCK_SAVE,
-			 prefs_restart_notification_save_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_SAVE,
+                            prefs_restart_notification_save_callback,
+                            NULL, NULL, NULL, TRUE, FALSE,
 
-			 NULL);
+                            NULL);
 
-  g_signal_connect (G_OBJECT (dlg), "destroy",
+  g_signal_connect (G_OBJECT (dialog), "destroy",
 		    G_CALLBACK (gtk_main_quit),
 		    NULL);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, FALSE, 4);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("At least one of the changes you made will only\n"
@@ -274,24 +258,24 @@ prefs_restart_notification (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 4);
   gtk_widget_show (label);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   gtk_main ();
 }
 
 static void
 prefs_cancel_callback (GtkWidget *widget,
-		       GtkWidget *dlg)
+		       GtkWidget *dialog)
 {
   Gimp    *gimp;
   GObject *config_orig;
 
-  gimp        = g_object_get_data (G_OBJECT (dlg), "gimp");
-  config_orig = g_object_get_data (G_OBJECT (dlg), "config-orig");
+  gimp        = g_object_get_data (G_OBJECT (dialog), "gimp");
+  config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
 
   g_object_ref (config_orig);
 
-  gtk_widget_destroy (dlg);  /*  destroys config_copy  */
+  gtk_widget_destroy (dialog);  /*  destroys config_copy  */
 
   if (! gimp_config_is_equal_to (G_OBJECT (gimp->config), config_orig))
     {
@@ -341,20 +325,20 @@ prefs_cancel_callback (GtkWidget *widget,
 
 static void
 prefs_ok_callback (GtkWidget *widget,
-		   GtkWidget *dlg)
+		   GtkWidget *dialog)
 {
   Gimp    *gimp;
   GObject *config_orig;
   GObject *config_copy;
 
-  gimp        = g_object_get_data (G_OBJECT (dlg), "gimp");
-  config_orig = g_object_get_data (G_OBJECT (dlg), "config-orig");
-  config_copy = g_object_get_data (G_OBJECT (dlg), "config-copy");
+  gimp        = g_object_get_data (G_OBJECT (dialog), "gimp");
+  config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
+  config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
   g_object_ref (config_orig);
   g_object_ref (config_copy);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   if (! gimp_config_is_equal_to (config_copy, config_orig))
     {
@@ -646,9 +630,28 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
   g_value_unset (&val);
 }
 
+static void
+prefs_format_string_select_callback (GtkTreeSelection *sel,
+                                     GtkEntry         *entry)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  GValue        val = { 0, };
+
+  if (! gtk_tree_selection_get_selected (sel, &model, &iter))
+    return;
+
+  gtk_tree_model_get_value (model, &iter, 1, &val);
+
+  gtk_entry_set_text (entry, g_value_get_string (&val));
+
+  g_value_unset (&val);
+}
+
 static GtkWidget *
 prefs_frame_new (gchar        *label,
-		 GtkContainer *parent)
+		 GtkContainer *parent,
+                 gboolean      expand)
 {
   GtkWidget *frame;
   GtkWidget *vbox2;
@@ -656,7 +659,7 @@ prefs_frame_new (gchar        *label,
   frame = gtk_frame_new (label);
 
   if (GTK_IS_BOX (parent))
-    gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (parent), frame, expand, expand, 0);
   else
     gtk_container_add (parent, frame);
 
@@ -875,6 +878,7 @@ prefs_dialog_new (Gimp    *gimp,
   GtkTreeSelection  *sel;
   GtkTreeIter        top_iter;
   GtkTreeIter        child_iter;
+  GtkTreeIter        grandchild_iter;
   gint               page_index;
 
   GtkWidget         *ebox;
@@ -1013,7 +1017,7 @@ prefs_dialog_new (Gimp    *gimp,
   notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
   g_object_set_data (G_OBJECT (dialog), "notebook", notebook);
 
@@ -1178,7 +1182,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &top_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
@@ -1193,21 +1197,21 @@ prefs_dialog_new (Gimp    *gimp,
                          GTK_TABLE (table), 3);
 
   /* Dialog Bahaviour */
-  vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "info-window-per-display",
                           _("_Info Window Per Display"),
                           GTK_BOX (vbox2));
 
   /* Menus */
-  vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "tearoff-menus",
                           _("Disable _Tearoff Menus"),
                           GTK_BOX (vbox2));
 
   /* Window Positions */
-  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "save-session-info",
                           _("_Save Window Positions on Exit"),
@@ -1245,7 +1249,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "show-tool-tips",
                           _("Show Tool _Tips"),
@@ -1257,7 +1261,7 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show Tips on _Startup"),
                           GTK_BOX (vbox2));
 
-  vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
@@ -1280,7 +1284,8 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
@@ -1314,7 +1319,8 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Input Device Settings"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Input Device Settings"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   {
     GtkWidget *input_dialog;
@@ -1382,7 +1388,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "default-dot-for-dot",
                           _("Use \"_Dot for Dot\" by default"),
@@ -1400,89 +1406,14 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show S_tatusbar"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
 
-#if 0
-  /* The title and status format strings */
-  {
-    GtkWidget *combo;
-    GtkWidget *comboitem;
-
-    const gchar *format_strings[] =
-    {
-      NULL,
-      "%f-%p.%i (%t)",
-      "%f-%p.%i (%t) %z%%",
-      "%f-%p.%i (%t) %d:%s",
-      "%f-%p.%i (%t) %s:%d",
-      "%f-%p.%i (%t) %m"
-    };
-
-    const gchar *combo_strings[] =
-    {
-      N_("Custom"),
-      N_("Standard"),
-      N_("Show zoom percentage"),
-      N_("Show zoom ratio"),
-      N_("Show reversed zoom ratio"),
-      N_("Show memory usage")
-    };
-
-    g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (combo_strings));
-
-    format_strings[0] = display_config->image_title_format;
-
-    combo = gtk_combo_new ();
-    gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
-    gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
-
-    for (i = 0; i < G_N_ELEMENTS (combo_strings); i++)
-      {
-        comboitem = gtk_list_item_new_with_label (gettext (combo_strings[i]));
-        gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-                                   format_strings[i]);
-        gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-        gtk_widget_show (comboitem);
-      }
-
-    gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                               _("Image Title Format:"), 1.0, 0.5,
-                               combo, 1, FALSE);
-
-    g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
-                      G_CALLBACK (prefs_string_callback), 
-                      &display_config->image_title_format);
-
-    format_strings[0] = display_config->image_status_format;
-
-    combo = gtk_combo_new ();
-    gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
-    gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
-
-    for (i = 0; i < G_N_ELEMENTS (combo_strings); i++)
-      {
-        comboitem = gtk_list_item_new_with_label (gettext (combo_strings[i]));
-        gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-                                   format_strings[i]);
-        gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-        gtk_widget_show (comboitem);
-      }
-
-    gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                               _("Image Status Format:"), 1.0, 0.5,
-                               combo, 1, FALSE);
-
-    g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
-                      G_CALLBACK (prefs_string_callback), 
-                      &display_config->image_status_format);
-  }
-#endif
-
-  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "perfect-mouse",
                           _("Perfect-but-Slow _Pointer Tracking"),
@@ -1496,6 +1427,136 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "cursor-mode", 0, 0,
                               _("Cursor M_ode:"),
                               GTK_TABLE (table), 0);
+
+
+  /****************************************************/
+  /*  Interface / Image Windows / Image Title Format  */
+  /****************************************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Image Title & Statusbar Format"),
+                                     "image-windows.png",
+				     GTK_TREE_STORE (tree),
+				     _("Title & Status"),
+				     "dialogs/preferences/image_windows.html",
+				     &child_iter,
+				     &grandchild_iter,
+				     page_index++);
+
+  {
+    const gchar *format_strings[] =
+    {
+      NULL,
+      "%f-%p.%i (%t)",
+      "%f-%p.%i (%t) %z%%",
+      "%f-%p.%i (%t) %d:%s",
+      "%f-%p.%i (%t) %s:%d",
+      "%f-%p.%i (%t) %m"
+    };
+
+    const gchar *format_names[] =
+    {
+      N_("Custom"),
+      N_("Standard"),
+      N_("Show zoom percentage"),
+      N_("Show zoom ratio"),
+      N_("Show reversed zoom ratio"),
+      N_("Show memory usage")
+    };
+
+    gchar *formats[] =
+    {
+      display_config->image_title_format,
+      display_config->image_status_format
+    };
+
+    const gchar *format_titles[] =
+    {
+      N_("Image Title Format"),
+      N_("Image Statusbar Format")
+    };
+
+    const gchar *format_properties[] =
+    {
+      "image-title-format",
+      "image-status-format"
+    };
+
+    gint format;
+
+    g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (format_names));
+    g_assert (G_N_ELEMENTS (formats)        == G_N_ELEMENTS (format_titles));
+    g_assert (G_N_ELEMENTS (formats)        == G_N_ELEMENTS (format_properties));
+
+    for (format = 0; format < G_N_ELEMENTS (formats); format++)
+      {
+        GtkListStore      *list_store;
+        GtkWidget         *view;
+        GtkWidget         *scrolled_win;
+        GtkWidget         *entry;
+        GtkCellRenderer   *rend;
+        GtkTreeViewColumn *col;
+        GtkTreeIter        iter;
+        GtkTreeSelection  *sel;
+        gint               i;
+
+        format_strings[0] = formats[format];
+
+        vbox2 = prefs_frame_new (gettext (format_titles[format]),
+                                          GTK_CONTAINER (vbox), TRUE);
+
+        entry = gimp_prop_entry_new (config, format_properties[format], 0);
+        gtk_box_pack_start (GTK_BOX (vbox2), entry, FALSE, FALSE, 0);
+        gtk_widget_show (entry);
+
+        scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                             GTK_SHADOW_IN);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                        GTK_POLICY_NEVER,
+                                        GTK_POLICY_AUTOMATIC);
+        gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
+        gtk_widget_show (scrolled_win);
+
+        list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+        view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+        gtk_container_add (GTK_CONTAINER (scrolled_win), view);
+        gtk_widget_show (view);
+
+        g_object_unref (list_store);
+
+        rend = gtk_cell_renderer_text_new ();
+        col = gtk_tree_view_column_new_with_attributes (NULL, rend,
+                                                        "text", 0,
+                                                        NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+        rend = gtk_cell_renderer_text_new ();
+        col = gtk_tree_view_column_new_with_attributes (NULL, rend,
+                                                        "text", 1,
+                                                        NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+        sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+        g_signal_connect (G_OBJECT (sel), "changed",
+                          G_CALLBACK (prefs_format_string_select_callback),
+                          entry);
+
+        for (i = 0; i < G_N_ELEMENTS (format_strings); i++)
+          {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                0, format_names[i],
+                                1, format_strings[i],
+                                -1);
+
+            if (i == 0)
+              gtk_tree_selection_select_iter (sel, &iter);
+          }
+      }
+  }
 
 
   /*************************/
@@ -1525,7 +1586,7 @@ prefs_dialog_new (Gimp    *gimp,
                               _("Check _Size:"),
                               GTK_TABLE (table), 1);
 
-  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
 
   if (gdk_rgb_get_visual ()->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
@@ -1557,7 +1618,8 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Get Monitor Resolution"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Get Monitor Resolution"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   {
     gdouble  xres, yres;
@@ -1670,7 +1732,8 @@ prefs_dialog_new (Gimp    *gimp,
 				     &top_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Resource Consumption"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "stingy-memory-use",
                           _("Conservative Memory Usage"),
@@ -1695,7 +1758,7 @@ prefs_dialog_new (Gimp    *gimp,
                          GTK_TABLE (table), 2);
 #endif /* ENABLE_MP */
 
-  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 

@@ -410,7 +410,6 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   GtkWidget         *inner_table;
   GtkWidget         *arrow;
   GtkWidget         *image;
-  GtkWidget         *nav_ebox;
   gint               image_width, image_height;
   gint               n_width, n_height;
   gint               s_width, s_height;
@@ -680,17 +679,17 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 		    shell);
 
   /*  the navigation window button  */
-  nav_ebox = gtk_event_box_new ();
+  shell->nav_ebox = gtk_event_box_new ();
 
   image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (nav_ebox), image); 
+  gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image); 
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (nav_ebox), "button_press_event",
+  g_signal_connect (G_OBJECT (shell->nav_ebox), "button_press_event",
 		    G_CALLBACK (gimp_display_shell_nav_button_press),
 		    shell);
 
-  gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
+  gimp_help_set_help_data (shell->nav_ebox, NULL, "#nav_window_button");
 
   /*  create the contents of the status area *********************************/
 
@@ -720,7 +719,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   /*  fill the lower_hbox  */
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmask, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox), nav_ebox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->nav_ebox, FALSE, FALSE, 0);
 
   gtk_box_pack_end (GTK_BOX (main_vbox), shell->statusbar, FALSE, FALSE, 0);
 
@@ -740,7 +739,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_show (shell->padding_button);
 
   gtk_widget_show (shell->qmask);
-  gtk_widget_show (nav_ebox);
+  gtk_widget_show (shell->nav_ebox);
 
   if (config->show_statusbar)
     {
