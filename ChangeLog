@@ -1,3 +1,7 @@
+2003-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h: tweaked some blurbs.
+
 2003-07-30  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl: fixed UTF-8 check.

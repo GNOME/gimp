@@ -20,11 +20,12 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
    "custom color.")
 
 #define FS_CANVAS_PADDING_MODE_BLURB \
-N_("Specifies how the area around the image should be drawn.")
+N_("Specifies how the area around the image should be drawn when in " \
+   "fullscreen mode.")
 
 #define FS_CANVAS_PADDING_COLOR_BLURB \
-N_("Sets the canvas padding color used if the padding mode is set to " \
-   "custom color.")
+N_("Sets the canvas padding color used when in fullscreen mode and " \
+   "the padding mode is set to custom color.")
 
 #define COLORMAP_CYCLING_BLURB \
 N_("Specify that marching ants for selected regions will be drawn with " \
@@ -262,20 +263,20 @@ N_("When enabled, the statusbar is visible by default. This can also be " \
    "toggled with the \"View->Show Statusbar\" command.")
 
 #define FS_SHOW_MENUBAR_BLURB \
-N_("When enabled, the menubar is visible by default. This can also be " \
-   "toggled with the \"View->Show Menubar\" command.")
+N_("When enabled, the menubar is visible by default in fullscreen mode. "\
+   "This can also be toggled with the \"View->Show Menubar\" command.")
 
 #define FS_SHOW_RULERS_BLURB \
-N_("When enabled, the rulers are visible by default. This can also be " \
-   "toggled with the \"View->Show Rulers\" command.")
+N_("When enabled, the rulers are visible by default in fullscreen mode. "\
+   "This can also be toggled with the \"View->Show Rulers\" command.")
 
 #define FS_SHOW_SCROLLBARS_BLURB \
-N_("When enabled, the scrollbars are visible by default. This can also be " \
-   "toggled with the \"View->Show Scrollbars\" command.")
+N_("When enabled, the scrollbars are visible by default in fullscreen mode. "\
+   "This can also be toggled with the \"View->Show Scrollbars\" command.")
 
 #define FS_SHOW_STATUSBAR_BLURB \
-N_("When enabled, the statusbar is visible by default. This can also be " \
-   "toggled with the \"View->Show Statusbar\" command.")
+N_("When enabled, the statusbar is visible by default in fullscreen mode. "\
+   "This can also be toggled with the \"View->Show Statusbar\" command.")
 
 #define SHOW_TIPS_BLURB \
 N_("Enable to display a handy GIMP tip on startup.")
