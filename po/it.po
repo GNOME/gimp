@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-15 19:10+0200\n"
+"PO-Revision-Date: 2003-10-20 13:21+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1664,9 +1664,8 @@ msgstr "Invertita"
 
 #. push an undo
 #: app/core/gimpdrawable-offset.c:317
-#, fuzzy
 msgid "Offset Drawable"
-msgstr "Offset disegnabile"
+msgstr "Impostazione disegnabile"
 
 #: app/core/gimpdrawable-stroke.c:324
 msgid "Render Stroke"
@@ -2524,7 +2523,7 @@ msgstr "Zoom a finestra intera"
 #: app/display/gimpnavigationview.c:415
 #, fuzzy
 msgid "Shrink Wrap"
-msgstr "Riposiziona vista"
+msgstr "Comprimi involucro"
 
 #: app/display/gimpprogress.c:136
 msgid "Progress"
@@ -2947,9 +2946,8 @@ msgid "/Add Tab/Na_vigation"
 msgstr "/Aggiungi scheda/Na_vigazione"
 
 #: app/gui/dialogs-menu.c:89
-#, fuzzy
 msgid "/Add Tab/_Undo History"
-msgstr "/Aggiungi scheda/Cronologia undo"
+msgstr "/Aggiungi scheda/Cronologia _undo"
 
 #: app/gui/dialogs-menu.c:94
 msgid "/Add Tab/Colo_rs"
@@ -3241,17 +3239,15 @@ msgid "New Image"
 msgstr "Nuova immagine"
 
 #: app/gui/file-new-dialog.c:99
-#, fuzzy
 msgid "Create a New Image"
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "Crea una nuova immagine"
 
 #: app/gui/file-new-dialog.c:135
-#, fuzzy
 msgid "From _Template:"
-msgstr "Dal Server X"
+msgstr "Dal modello:"
 
 #: app/gui/file-new-dialog.c:277
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are trying to create an image with\n"
 "an initial size of %s.\n"
@@ -3265,15 +3261,15 @@ msgid ""
 "setting (currently %s) in the\n"
 "Preferences dialog."
 msgstr ""
-"State cercando di creare una immagine la quale\n"
-"ha una dimensione iniziale di %s.\n"
+"State cercando di creare una immagine \n"
+"di dimensione iniziale %s.\n"
 "\n"
 "Segliere OK per creare questa immagine comunque.\n"
 "Segliere Cancella se non intendete creare\n"
 "un immagine così ampia.\n"
 "\n"
 "Per prevenire questa finestra di dialogo,\n"
-"aumentate la \"Massima Dimensione Immagine\"\n"
+"aumentate la \"Massima dimensione immagine\"\n"
 "(attualmente %s) nelle preferenze generali."
 
 #: app/gui/file-new-dialog.c:292
@@ -3345,82 +3341,72 @@ msgstr ""
 "Probabilmente il corrispondente plug-in è andato in crash."
 
 #: app/gui/gradient-editor-commands.c:85
-#, fuzzy
 msgid "Left Endpoint Color"
-msgstr "Colore punto finale sinistro"
+msgstr "Colore capo sinistro"
 
 #: app/gui/gradient-editor-commands.c:87
-#, fuzzy
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Colore punto finale sinistro"
+msgstr "Segmento gradiente del colore capo sinistro"
 
 #: app/gui/gradient-editor-commands.c:203
-#, fuzzy
 msgid "Right Endpoint Color"
-msgstr "Colore punto finale destro"
+msgstr "Colore capo destro"
 
 #: app/gui/gradient-editor-commands.c:205
-#, fuzzy
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "Colore punto finale destro"
+msgstr "Segmento gradiente del colore capo destro"
 
 #: app/gui/gradient-editor-commands.c:515
-#, fuzzy
 msgid "Replicate Segment"
 msgstr "Replica segmento"
 
 #: app/gui/gradient-editor-commands.c:516
-#, fuzzy
 msgid "Replicate Gradient Segment"
-msgstr "Replica segmento"
+msgstr "Replica segmento gradiente"
 
 #: app/gui/gradient-editor-commands.c:520
-#, fuzzy
 msgid "Replicate Selection"
 msgstr "Replica la selezione"
 
 #: app/gui/gradient-editor-commands.c:521
-#, fuzzy
 msgid "Replicate Gradient Selection"
-msgstr "Replica la selezione"
+msgstr "Replica la selezione del gradiente"
 
 #: app/gui/gradient-editor-commands.c:535
 msgid "Replicate"
 msgstr "Replica"
 
 #: app/gui/gradient-editor-commands.c:548
-#, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
-msgstr "repliche da applicare al segmento selezionato"
+msgstr ""
+"Seleziona il numero di repliche\n"
+"da applicare al segmento selezionato."
 
 #: app/gui/gradient-editor-commands.c:551
-#, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
-msgstr "Selezionare il numero di "
+msgstr ""
+"Selezionare il numero di\n"
+"repliche della selezione."
 
 #: app/gui/gradient-editor-commands.c:621
-#, fuzzy
 msgid "Split Segment Uniformly"
-msgstr "Dividi uniformità segmento"
+msgstr "Dividi il segmento uniformemente"
 
 #: app/gui/gradient-editor-commands.c:622
-#, fuzzy
 msgid "Split Gradient Segment Uniformly"
-msgstr "Dividi uniformità segmento"
+msgstr "Dividi il segmento di gradiente uniformemente"
 
 #: app/gui/gradient-editor-commands.c:626
-#, fuzzy
 msgid "Split Segments Uniformly"
-msgstr "Dividi il segmento uniformemente"
+msgstr "Dividi i segmenti uniformemente"
 
 #: app/gui/gradient-editor-commands.c:627
-#, fuzzy
 msgid "Split Gradient Segments Uniformly"
-msgstr "Dividi il segmento uniformemente"
+msgstr "Dividi i segmenti di gradiente uniformemente"
 
 #: app/gui/gradient-editor-commands.c:642
 msgid "Split"
@@ -3441,14 +3427,13 @@ msgid ""
 msgstr "che desiderate ottenere dividento il segmento nella selezione"
 
 #: app/gui/gradient-editor-menu.c:63
-#, fuzzy
 msgid "/L_eft Endpoint's Color..."
-msgstr "Colore punto finale sinistro"
+msgstr "/Color_e capo sinistro..."
 
 #: app/gui/gradient-editor-menu.c:68
 #, fuzzy
 msgid "/_Load Left Color From"
-msgstr "Tagli di colore:"
+msgstr "/Carica il co_lore sinistro da:"
 
 #: app/gui/gradient-editor-menu.c:70
 #, fuzzy
@@ -3471,14 +3456,13 @@ msgid "/Load Left Color From/_BG Color"
 msgstr "Da sinistra a destra"
 
 #: app/gui/gradient-editor-menu.c:100
-#, fuzzy
 msgid "/_Save Left Color To"
-msgstr "Tagli di colore:"
+msgstr "/_Salva il colore sinistro su"
 
 #: app/gui/gradient-editor-menu.c:115
 #, fuzzy
 msgid "/R_ight Endpoint's Color..."
-msgstr "Colore punto finale destro"
+msgstr "/Colore punto finale destro..."
 
 #: app/gui/gradient-editor-menu.c:120
 #, fuzzy
@@ -9001,16 +8985,14 @@ msgstr ""
 "righe:"
 
 #: app/tools/gimptextoptions.c:337
-#, fuzzy
 msgid "Create Path from Text"
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "Crea tracciato dal testo"
 
 #: app/tools/gimptexttool.c:116
 msgid "Add text to the image"
 msgstr "Aggiungi testo all'immagine"
 
 #: app/tools/gimptexttool.c:117
-#, fuzzy
 msgid "/Tools/Te_xt"
 msgstr "/Strumenti/Testo"
 
@@ -9745,7 +9727,6 @@ msgstr ""
 "%s  In basso"
 
 #: app/widgets/gimpitemtreeview.c:1197
-#, fuzzy
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
@@ -10037,21 +10018,18 @@ msgid "Behind"
 msgstr "Dietro"
 
 #: app/widgets/gimpwidgets-constructors.c:48
-#, fuzzy
 msgid "Color Erase"
-msgstr "Palette del colore"
+msgstr "Cancellazione colore"
 
 #: app/widgets/gimpwidgets-constructors.c:50
 #: app/widgets/gimpwidgets-constructors.c:83
-#, fuzzy
 msgid "Multiply"
-msgstr "Multipla (Burn)"
+msgstr "Multipla"
 
 #: app/widgets/gimpwidgets-constructors.c:51
 #: app/widgets/gimpwidgets-constructors.c:84
-#, fuzzy
 msgid "Divide"
-msgstr "Dispositivi"
+msgstr "Divisione"
 
 #: app/widgets/gimpwidgets-constructors.c:52
 #: app/widgets/gimpwidgets-constructors.c:85
@@ -10067,25 +10045,25 @@ msgstr "Sovrapposta"
 #: app/widgets/gimpwidgets-constructors.c:90
 #, fuzzy
 msgid "Hard Light"
-msgstr "Passaggio deciso"
+msgstr "Luce forte"
 
 #: app/widgets/gimpwidgets-constructors.c:58
 #: app/widgets/gimpwidgets-constructors.c:91
 #, fuzzy
 msgid "Soft Light"
-msgstr "Passaggio deciso"
+msgstr "Luce debole"
 
 #: app/widgets/gimpwidgets-constructors.c:59
 #: app/widgets/gimpwidgets-constructors.c:92
 #, fuzzy
 msgid "Grain Extract"
-msgstr "Editor dei gradienti"
+msgstr "Estrazione grani"
 
 #: app/widgets/gimpwidgets-constructors.c:60
 #: app/widgets/gimpwidgets-constructors.c:93
 #, fuzzy
 msgid "Grain Merge"
-msgstr "Incolla"
+msgstr "Fusione grani"
 
 #: app/widgets/gimpwidgets-constructors.c:62
 #: app/widgets/gimpwidgets-constructors.c:95
@@ -10123,14 +10101,13 @@ msgid "Saturation"
 msgstr "Saturazione"
 
 #: app/widgets/gimpwidgets-utils.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Message repeated %d times."
-msgstr "Messaggio ripetuto %d volte"
+msgstr "Messaggio ripetuto %d volte."
 
 #: app/widgets/gimpwidgets-utils.c:124
-#, fuzzy
 msgid "Message repeated once."
-msgstr "Messaggio ripetuto una volta"
+msgstr "Messaggio ripetuto una volta."
 
 #: app/widgets/gimpwidgets-utils.c:144
 msgid ""
@@ -10176,9 +10153,9 @@ msgid "Error writing XCF: %s"
 msgstr "Errore durante la scrittura del file XCF: %s"
 
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
-#, fuzzy, c-format
+#, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "Non è possibile aprire \"%s\""
+msgstr "Impossibile posizionarsi sul file XCF: %s"
 
 #: app/xcf/xcf.c:261
 #, c-format
