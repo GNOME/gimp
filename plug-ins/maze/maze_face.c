@@ -24,11 +24,8 @@
  *
  */
 
-#ifndef SOLO_COMPILE
 #include "config.h"
-#endif
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
@@ -74,7 +71,9 @@ gchar buffer[BUFSIZE];
 
 gboolean     maze_dialog         (void);
 
-static void  maze_msg            (const gchar *msg);
+static void  maze_msg            (const gchar *format,
+                                  ...) G_GNUC_PRINTF (1, 2);
+
 static void  maze_response       (GtkWidget   *widget,
                                   gint         response_id,
                                   gpointer     data);
@@ -199,7 +198,7 @@ maze_dialog (void)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, FALSE, FALSE, 0);
 
 #ifdef SHOW_PRNG_PRIVATES
   table = gtk_table_new (8, 3, FALSE);
@@ -304,7 +303,10 @@ maze_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   msg_label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), msg_label, FALSE, FALSE, 12);
+  gimp_label_set_attributes (GTK_LABEL (msg_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), msg_label, FALSE, FALSE, 0);
 
   gtk_widget_show_all (dlg);
 
@@ -364,9 +366,6 @@ divbox_new (guint      *max,
   gtk_box_pack_start (GTK_BOX (hbox), *div_entry, FALSE, FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), buttonbox, FALSE, FALSE, 0);
 #else
-  gtk_misc_set_padding (GTK_MISC (arrowl), 2, 2);
-  gtk_misc_set_padding (GTK_MISC (arrowr), 2, 2);
-
   gtk_box_pack_start (GTK_BOX (hbox), buttonl, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), *div_entry, FALSE, FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), buttonr, FALSE, FALSE, 0);
@@ -568,11 +567,9 @@ maze_help (void)
 				    &nparams, &nreturn_vals,
 				    &params, &return_vals))
     {
-      gchar *message = g_strdup_printf (_("Opening %s"), MAZE_URL);
-      gint   baz;
+      gint baz;
 
-      maze_msg (message);
-      g_free (message);
+      maze_msg (_("Opening %s"), MAZE_URL);
 
       gimp_run_procedure ("plug_in_web_browser", &baz,
 			  GIMP_PDB_STRING, MAZE_URL,
@@ -580,17 +577,25 @@ maze_help (void)
     }
   else
     {
-      gchar *message = g_strdup_printf (_("See %s"), MAZE_URL);
-
-      maze_msg (message);
-      g_free (message);
+      maze_msg (_("See %s"), MAZE_URL);
     }
 }
 
 static void
-maze_msg (const gchar *msg)
+maze_msg (const gchar *format,
+          ...)
 {
-  gtk_label_set_text (GTK_LABEL (msg_label), msg);
+  gchar *message;
+
+  va_list args;
+
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  gtk_label_set_text (GTK_LABEL (msg_label), message);
+
+  g_free (message);
 }
 
 static void
@@ -617,9 +622,7 @@ static void
 maze_entry_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  gint *text_val;
-
-  text_val = (gint *) data;
+  gint *text_val = (gint *) data;
 
   *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
