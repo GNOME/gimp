@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-26 21:33+0900\n"
-"PO-Revision-Date: 2004-10-26 21:35+0900\n"
+"POT-Creation-Date: 2004-10-26 21:56+0900\n"
+"PO-Revision-Date: 2004-10-26 21:56+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -101,7 +101,7 @@ msgstr "Script-Fu-penselväljare"
 #. the script progress frame
 #: plug-ins/script-fu/script-fu-interface.c:531
 msgid "Script Progress"
-msgstr "Skript lägesrapport"
+msgstr "Skriptförlopp"
 
 #: plug-ins/script-fu/script-fu-interface.c:539
 msgid "(none)"
