@@ -80,6 +80,10 @@ struct _TextOptions
   int          border;
   int          border_d;
   GtkObject   *border_w;
+
+  int          use_dyntext;
+  int          use_dyntext_d;
+  GtkWidget   *use_dyntext_w;
 };
 
 
@@ -120,6 +124,8 @@ text_options_reset (void)
 				options->antialias_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
 			    options->border_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_dyntext_w),
+				options->use_dyntext_d);
 }
 
 static TextOptions *
@@ -131,14 +137,16 @@ text_options_new (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *spinbutton;
+  GtkWidget *sep;
 
   /*  the new text tool options structure  */
   options = (TextOptions *) g_malloc (sizeof (TextOptions));
   tool_options_init ((ToolOptions *) options,
 		     _("Text Tool Options"),
 		     text_options_reset);
-  options->antialias = options->antialias_d = TRUE;
-  options->border    = options->border_d    = 0;
+  options->antialias   = options->antialias_d   = TRUE;
+  options->border      = options->border_d      = 0;
+  options->use_dyntext = options->use_dyntext_d = FALSE;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -161,13 +169,13 @@ text_options_new (void)
 
   label = gtk_label_new (_("Border:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
 
   options->border_w =
     gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
-  gtk_signal_connect(GTK_OBJECT (options->border_w), "changed",
-		     (GtkSignalFunc) tool_options_int_adjustment_update,
-		     &options->border);
+  gtk_signal_connect (GTK_OBJECT (options->border_w), "changed",
+		      (GtkSignalFunc) tool_options_int_adjustment_update,
+		      &options->border);
   spinbutton =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
@@ -178,6 +186,32 @@ text_options_new (void)
   gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
+
+  /*  antialias toggle  */
+  options->use_dyntext_w =
+    gtk_check_button_new_with_label (_("Use Dynamic Text"));
+  gtk_signal_connect (GTK_OBJECT (options->use_dyntext_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->use_dyntext);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_dyntext_w),
+				options->use_dyntext_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->use_dyntext_w,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (options->use_dyntext_w);
+
+  /*  let the toggle callback set the sensitive states  */
+  gtk_widget_set_sensitive (options->antialias_w, ! options->use_dyntext_d);
+  gtk_widget_set_sensitive (spinbutton, ! options->use_dyntext_d);
+  gtk_widget_set_sensitive (label, ! options->use_dyntext_d);
+  gtk_object_set_data (GTK_OBJECT (options->use_dyntext_w), "inverse_sensitive",
+		       options->antialias_w);
+  gtk_object_set_data (GTK_OBJECT (options->antialias_w), "inverse_sensitive",
+		       spinbutton);
+  gtk_object_set_data (GTK_OBJECT (spinbutton), "inverse_sensitive", label);
 
   return options;
 }
@@ -223,6 +257,34 @@ tools_free_text (Tool *tool)
 }
 
 static void
+text_call_gdyntext (GDisplay     *gdisp,
+		    GimpDrawable *drawable)
+{
+  ProcRecord *proc_rec;
+  Argument   *args;
+
+  /*  find the gDynText PDB record  */
+  if ((proc_rec = procedural_db_lookup ("plug_in_dynamic_text")) == NULL)
+    {
+      g_message (_("text_call_gdyntext: gDynText procedure lookup failed"));
+      return;
+    }
+
+  /*  plug-in arguments as if called by <Image>/Filters/...  */
+  args = g_new (Argument, 3);
+  args[0].arg_type = PDB_INT32;
+  args[0].value.pdb_int = RUN_INTERACTIVE;
+  args[1].arg_type = PDB_IMAGE;
+  args[1].value.pdb_int = (gint32) pdb_image_to_id (gdisp->gimage);
+  args[2].arg_type = PDB_DRAWABLE;
+  args[2].value.pdb_int = (gint32) drawable->ID;
+
+  plug_in_run (proc_rec, args, 3, FALSE, TRUE, gdisp->ID);
+
+  g_free (args);
+}
+
+static void
 text_button_press (Tool           *tool,
 		   GdkEventButton *bevent,
 		   gpointer        gdisp_ptr)
@@ -232,6 +294,7 @@ text_button_press (Tool           *tool,
   TextTool *text_tool;
 
   gdisp = gdisp_ptr;
+
   text_tool = tool->private;
   text_tool->gdisp_ptr = gdisp_ptr;
 
@@ -242,13 +305,21 @@ text_button_press (Tool           *tool,
 			       &text_tool->click_x, &text_tool->click_y,
 			       TRUE, 0);
 
-  if ((layer = gimage_pick_correlate_layer (gdisp->gimage, text_tool->click_x, text_tool->click_y)))
+  if ((layer = gimage_pick_correlate_layer (gdisp->gimage,
+					    text_tool->click_x,
+					    text_tool->click_y)))
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (layer_is_floating_sel (layer))
       {
 	init_edit_selection (tool, gdisp_ptr, bevent, LayerTranslate);
 	return;
       }
+
+  if (text_options->use_dyntext)
+    {
+      text_call_gdyntext (gdisp, gimage_active_drawable (gdisp->gimage));
+      return;
+    }
 
   if (!text_tool->shell)
     text_create_dialog (text_tool);
@@ -337,7 +408,7 @@ text_create_dialog (TextTool *text_tool)
 				  (text_tool->shell)->ok_button),
 		      "clicked", GTK_SIGNAL_FUNC(text_ok_callback),
 		      text_tool);
-  
+
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
 				  (text_tool->shell)->cancel_button),
 		      "clicked", GTK_SIGNAL_FUNC(text_cancel_callback),

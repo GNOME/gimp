@@ -99,13 +99,11 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
       incremental_save = options->incremental;
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    TRUE);
-      gtk_widget_set_sensitive (options->incremental_w, FALSE);
     }
   else
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    incremental_save);
-      gtk_widget_set_sensitive (options->incremental_w, TRUE);
     }
 }
 
@@ -235,14 +233,6 @@ paintbrush_options_new (void)
   radio_frame = gtk_frame_new (_("Gradient Type"));
   gtk_table_attach_defaults (GTK_TABLE (table), radio_frame, 0, 2, 3, 4);
 
-  /*  automatically set the sensitive state of the gradient stuff  */
-  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
-		       scale);
-  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
-		       label);
-  gtk_object_set_data (GTK_OBJECT (label), "set_sensitive",
-		       radio_frame);
-
   radio_box = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
@@ -273,6 +263,20 @@ paintbrush_options_new (void)
 		      &options->incremental);
   gtk_widget_show (options->incremental_w);
   
+  /*  automatically set the sensitive state of the gradient stuff  */
+  gtk_widget_set_sensitive (scale, options->use_gradient_d);
+  gtk_widget_set_sensitive (label, options->use_gradient_d);
+  gtk_widget_set_sensitive (radio_frame, options->use_gradient_d);
+  gtk_widget_set_sensitive (options->incremental_w, ! options->use_gradient_d);
+  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
+		       scale);
+  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
+		       label);
+  gtk_object_set_data (GTK_OBJECT (label), "set_sensitive",
+		       radio_frame);
+  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "inverse_sensitive",
+		       options->incremental_w);
+
   return options;
 }
 

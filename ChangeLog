@@ -1,5 +1,16 @@
 1999-04-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/paintbrush.c: fixed a sensitive setting bug I introduced
+	with the last change.
+
+	* app/text_tool.c: added a toggle button which enables calling
+	gDynText.
+
+	* app/tool_options.c: the toggle callback does some more sensitive
+	settings.
+
+1999-04-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/bucket_fill.c
 	* app/clone.c
 	* app/convolve.c

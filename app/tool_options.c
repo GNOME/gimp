@@ -37,6 +37,7 @@ tool_options_toggle_update (GtkWidget *widget,
   /*  a tool options toggle button can set the sensitive state of
    *  an arbitrary list of widgets
    */
+
   set_sensitive =
     gtk_object_get_data (GTK_OBJECT (widget), "set_sensitive");
   while (set_sensitive)
@@ -44,6 +45,15 @@ tool_options_toggle_update (GtkWidget *widget,
       gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), *toggle_val);
       set_sensitive =
 	gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
+    }
+
+  set_sensitive =
+    gtk_object_get_data (GTK_OBJECT (widget), "inverse_sensitive");
+  while (set_sensitive)
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! *toggle_val);
+      set_sensitive =
+	gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
     }
 }
 
