@@ -1,3 +1,15 @@
+Sun Nov  1 21:20:04 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* libgimp/gimpfeatures.h.in: new feature: GIMP_HAVE_RESOLUTION_INFO
+	* plug-ins/newsprint/newsprint.c: updated to version 0.50:
+	 - use resolution info from images to set initial value of "Input
+	   SPI" slider.
+	 - Sliders now locked togther correctly.
+	 - Got rid of timing message.
+	 - Fixed compile warnings on Alphas.
+	 - Option menu to select the channel to edit to save screen real
+ 	   estate (tickles a cosmetic bug in gtk, get the latest version).
+	 - Moved from <Image>/Filter/Misc to .../Render
 
 Sat Oct 31 21:47:14 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 

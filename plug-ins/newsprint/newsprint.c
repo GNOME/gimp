@@ -23,7 +23,7 @@
  */
 
 /*
- * version 0.01
+ * version 0.50
  * This version requires gtk-1.0.4 or above.
  *
  * This plug-in puts an image through a screen at a particular angle
@@ -43,6 +43,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
@@ -51,7 +52,7 @@
 static char rcsid[] = "$Id$";
 #endif
 
-#define VERSION "v0.01"
+#define VERSION "v0.50"
 
 /* Some useful macros */
 #ifdef DEBUG
@@ -73,7 +74,7 @@ static char rcsid[] = "$Id$";
 #endif
 
 
-#define TIMINGS
+/*#define TIMINGS*/
 
 #ifdef TIMINGS
 #include <sys/time.h>
@@ -286,6 +287,8 @@ typedef struct _channel_st {
     Entscale	*entscale;	/* angle entscale widget */
     GtkWidget	*option_menu;	/* popup for spot function */
     GtkWidget	*menuitem[NUM_SPOTFN];	/* menuitems for each spot function */
+    GtkWidget	*ch_menuitem;	/* menuitem for the channel selector */
+    gint	ch_menu_num;	/* this channel's position in the selector */
     struct _channel_st *next;	/* circular list of channels in locked group */
 } channel_st;
 
@@ -295,7 +298,13 @@ typedef struct _channel_st {
 typedef struct {
     GtkWidget	*dlg;	/* main dialog itself */
     Entscale	*pull;	/* black pullout percentage */
+    Entscale	*input_spi;
+    Entscale	*output_lpi;
+    Entscale	*cellsize;
     GtkWidget	*vbox;	/* container for screen info */    
+    GtkWidget	*current_ch; /* which channel is currently being edited */
+    GtkWidget	*channel_menu;		/* menu of channels */
+    GtkWidget	*channel_option;	/* option menu for channels */
     /* room for up to 4 channels per colourspace */
     channel_st	*chst[NUM_CS][4];
 } NewsprintDialog_st;
@@ -334,8 +343,8 @@ static const NewsprintValues factory_defaults =
 };
 
 static const NewsprintUIValues factory_defaults_ui = {
-    75,		/* input spi */
-     7.5,	/* output lpi */
+    72,		/* input spi */
+     7.2,	/* output lpi */
     FALSE	/* lock channels */
 };
 
@@ -550,7 +559,7 @@ query()
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
-			  "<Image>/Filters/Misc/Newsprint",
+			  "<Image>/Filters/Render/Newsprint",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -793,7 +802,7 @@ preview_update(channel_st *st)
 
 	    gtk_preview_draw_row(GTK_PREVIEW(prev->widget),
 				 row, 0, y, SPOT_PREVIEW_SZ*2+1);
-	}
+}
 
 	/* redraw preview widget */
 	gtk_widget_draw(prev->widget, NULL);
@@ -811,7 +820,7 @@ newsprint_menu_callback(GtkWidget *widget,
 			gpointer   data)
 {
     channel_st *st = data;
-    gpointer *ud;
+    gpointer ud;
     gint menufn;
     static gint in_progress = FALSE;
 
@@ -828,7 +837,7 @@ newsprint_menu_callback(GtkWidget *widget,
     in_progress = TRUE;
 
     ud = gtk_object_get_user_data(GTK_OBJECT(widget));
-    menufn = (gint)ud;
+    menufn = GPOINTER_TO_INT(ud);
 
     *(st->spotfn_num) = menufn;
 
@@ -880,6 +889,71 @@ angle_callback(gdouble new_val, gpointer data)
     }
 }
 
+
+static void
+spi_callback(gdouble new_val, gpointer data)
+{
+    NewsprintDialog_st *st = data;
+    Entscale *save;
+
+    save = st->input_spi;
+    st->input_spi = NULL;
+    
+    if (st->output_lpi)
+	entscale_set_value(st->output_lpi, new_val / pvals.cell_width);
+
+    st->input_spi = save;
+}
+
+static void
+lpi_callback(gdouble new_val, gpointer data)
+{
+    NewsprintDialog_st *st = data;
+    Entscale *save;
+
+    save = st->output_lpi;
+    st->output_lpi = NULL;
+    
+    if (st->cellsize)
+	entscale_set_value(st->cellsize, pvals_ui.input_spi / new_val);
+
+    st->output_lpi = save;
+}
+
+static void
+cellsize_callback(gdouble new_val, gpointer data)
+{
+    NewsprintDialog_st *st = data;
+    Entscale *save;
+
+    save = st->cellsize;
+    st->cellsize = NULL;
+    
+    if (st->output_lpi)
+	entscale_set_value(st->output_lpi,
+			   pvals_ui.input_spi / pvals.cell_width);
+
+    st->cellsize = save;
+}
+
+
+static void
+newsprint_channel_select_callback(GtkWidget *widget,
+				  gpointer  data)
+{
+    NewsprintDialog_st *st = data;
+    channel_st *chst;
+
+    chst = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+    /* hide the current channel, and show our channel */
+    if (st->current_ch)
+	gtk_widget_hide(st->current_ch);
+
+    gtk_widget_show(chst->frame);
+
+    st->current_ch = chst->frame;
+}
 
 
 static void
@@ -980,7 +1054,8 @@ new_channel(const chan_tmpl *ct)
 	gtk_signal_connect(GTK_OBJECT(chst->menuitem[i]), "activate",
 			   (GtkSignalFunc) newsprint_menu_callback,
 			   chst);
-	gtk_object_set_user_data(GTK_OBJECT(chst->menuitem[i]), (gpointer*)i);
+	gtk_object_set_user_data(GTK_OBJECT(chst->menuitem[i]),
+				 GINT_TO_POINTER(i));
 	gtk_widget_show(chst->menuitem[i]);
 	gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(chst->menuitem[i]));
 	sf++;
@@ -1028,6 +1103,11 @@ new_channel(const chan_tmpl *ct)
 
     gtk_widget_show(table);
 
+    /* create the menuitem used to select this channel for editing */
+    chst->ch_menuitem = gtk_menu_item_new_with_label(ct->name);
+    gtk_object_set_user_data(GTK_OBJECT(chst->ch_menuitem), chst);
+    /* signal attachment and showing left to caller */
+
     /* deliberately don't show the chst->frame, leave that up to
      * the caller */
 
@@ -1040,6 +1120,7 @@ new_channel(const chan_tmpl *ct)
 static void
 gen_channels(NewsprintDialog_st *st, gint colourspace)
 {
+    static int cur_menu_num = 0;
     const chan_tmpl *ct;
     channel_st	**chst;
     channel_st	*base = NULL;
@@ -1052,6 +1133,18 @@ gen_channels(NewsprintDialog_st *st, gint colourspace)
     while(ct->name)
     {
 	chst[i] = new_channel(ct);
+
+	/* only link in the menuitem if we're doing multiple channels */
+	if (st->channel_menu)
+	{
+	    gtk_signal_connect(GTK_OBJECT(chst[i]->ch_menuitem), "activate",
+			      (GtkSignalFunc)newsprint_channel_select_callback,
+			       st);
+	    gtk_menu_append(GTK_MENU(st->channel_menu),
+			    GTK_WIDGET(chst[i]->ch_menuitem));
+	    chst[i]->ch_menu_num = cur_menu_num;
+	    cur_menu_num++;
+	}
 
 	if (i)
 	    chst[i-1]->next = chst[i];
@@ -1116,6 +1209,9 @@ newsprint_dialog (GDrawable *drawable)
     for(i=0; i<NUM_CS; i++)
 	st.chst[i][0] = NULL;
 
+    /* we haven't shown any channels yet */
+    st.current_ch = NULL;
+
     /* need to know the bpp, so we can tell if we're doing 
      * RGB/CMYK or grey style of dialog box */
     bpp = gimp_drawable_bpp(drawable->id);
@@ -1168,21 +1264,29 @@ newsprint_dialog (GDrawable *drawable)
     gtk_container_border_width (GTK_CONTAINER (table), 10);
     gtk_container_add (GTK_CONTAINER (frame), table);
 
-    entscale_new(table, 0, 0, "Input SPI ",
-		 ENTSCALE_INT, &pvals_ui.input_spi,
-		 1.0, 1200.0, 5.0, FALSE/*constrain*/,
-		 NULL, NULL);
-  
-    entscale_new(table, 0, 1, "Output LPI ",
-		 ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
-		 1.0, 1200.0, 5.0, FALSE/*constrain*/,
-		 NULL, NULL);
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+    pvals_ui.input_spi =
+	gimp_image_get_resolution(gimp_drawable_image_id(drawable->id));
+#endif
 
-    entscale_new(table, 0, 2, "Cell size ",
-		 ENTSCALE_INT, &pvals.cell_width,
-		 3.0, 100.0, 1.0, FALSE/*constrain*/,
-		 NULL, NULL);
-    /* XXX still need interlocks between these. Maybe use callback fns? */
+    st.input_spi  = NULL;
+    st.output_lpi = NULL;
+    st.cellsize   = NULL;
+
+    st.input_spi = entscale_new(table, 0, 0, "Input SPI ",
+				ENTSCALE_INT, &pvals_ui.input_spi,
+				1.0, 1200.0, 5.0, FALSE/*constrain*/,
+				spi_callback, &st);
+
+    st.output_lpi = entscale_new(table, 0, 1, "Output LPI ",
+				 ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
+				 1.0, 1200.0, 5.0, FALSE/*constrain*/,
+				 lpi_callback, &st);
+
+    st.cellsize = entscale_new(table, 0, 2, "Cell size ",
+			       ENTSCALE_INT, &pvals.cell_width,
+			       3.0, 100.0, 1.0, FALSE/*constrain*/,
+			       cellsize_callback, &st);
 
     gtk_widget_show(table);
     gtk_widget_show(frame);
@@ -1197,6 +1301,11 @@ newsprint_dialog (GDrawable *drawable)
 
     st.vbox = gtk_vbox_new(FALSE, 1);
     gtk_container_add (GTK_CONTAINER (frame), st.vbox);
+
+    /* we only create the channel menu and option menu if there are 
+     * more than one channels involved */
+    st.channel_menu   = NULL;
+    st.channel_option = NULL;
 
     /* optional portion begins */
     if (bpp != 1)
@@ -1224,33 +1333,33 @@ newsprint_dialog (GDrawable *drawable)
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+				     (pvals.colourspace == CS_RGB));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
 			    GINT_TO_POINTER(CS_RGB));
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_RGB));
 	gtk_widget_show (toggle);
 
 	toggle = gtk_radio_button_new_with_label (group, "CMYK");
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+				     (pvals.colourspace == CS_CMYK));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
 			    GINT_TO_POINTER(CS_CMYK));
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_CMYK));
 	gtk_widget_show (toggle);
 
 	toggle = gtk_radio_button_new_with_label (group, "Intensity");
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+				     (pvals.colourspace == CS_INTENSITY));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
 			    GINT_TO_POINTER(CS_INTENSITY));
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_INTENSITY));
 	gtk_widget_show (toggle);
 
 	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 0, 1,
@@ -1261,7 +1370,10 @@ newsprint_dialog (GDrawable *drawable)
 
 	/* channel lock & factory defaults button */
 	align = gtk_alignment_new(0.0, 1.0, 0.1, 1.0);
-	hbox = gtk_hbox_new(TRUE, 10);
+	hbox = gtk_hbutton_box_new();
+	gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbox), 10);
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbox), GTK_BUTTONBOX_SPREAD);
+
 	gtk_container_add(GTK_CONTAINER(align), hbox);
 	gtk_box_pack_start(GTK_BOX(st.vbox), align, TRUE, FALSE, 0);
 	/* make sure it went in the right place, since colourspace
@@ -1281,6 +1393,13 @@ newsprint_dialog (GDrawable *drawable)
 	gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
 
+	st.channel_menu   = gtk_menu_new();
+	st.channel_option = gtk_option_menu_new();
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(st.channel_option),
+				 st.channel_menu);
+	gtk_widget_show(st.channel_option);
+	gtk_box_pack_start(GTK_BOX(hbox), st.channel_option, TRUE, TRUE, 0);
+
 	button = gtk_button_new_with_label("Factory defaults");
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) newsprint_defaults_callback,
@@ -1298,12 +1417,19 @@ newsprint_dialog (GDrawable *drawable)
     {
 	channel_st **chst;
 
+	printf("making channels\n");
+
 	gen_channels(&st, pvals.colourspace);
 
 	chst = st.chst[pvals.colourspace];
 
 	for(i=0; i < cspace_nchans[pvals.colourspace]; i++)
-	    gtk_widget_show(GTK_WIDGET(chst[i]->frame));
+	    gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
+
+	/* select the first channel to edit */
+	gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
+				    chst[0]->ch_menu_num);
+	gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
     }
 
     gtk_widget_show(st.vbox);
@@ -1408,13 +1534,18 @@ newsprint_cspace_update (GtkWidget *widget,
 	    chst = st->chst[old_cs];
 
 	    for(i=0; i < cspace_nchans[old_cs]; i++)
-		gtk_widget_hide(GTK_WIDGET(chst[i]->frame));
+		gtk_widget_hide(GTK_WIDGET(chst[i]->ch_menuitem));
 	}
 
 	/* show the new channels */
 	chst = st->chst[new_cs];
 	for(i=0; i < cspace_nchans[new_cs]; i++)
-	    gtk_widget_show(GTK_WIDGET(chst[i]->frame));
+	    gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
+
+	/* and select the first one */
+	gtk_option_menu_set_history(GTK_OPTION_MENU(st->channel_option),
+				    chst[0]->ch_menu_num);
+	gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
     }
 }
 
