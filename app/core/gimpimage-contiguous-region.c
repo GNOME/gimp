@@ -33,6 +33,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
+#include "gimpimage-projection.h"
 
 
 /*  local function prototypes  */
@@ -98,9 +99,9 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 
   if (sample_merged)
     {
-      pixel_region_init (&srcPR, gimp_image_composite (gimage), 0, 0,
+      pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
 			 gimage->width, gimage->height, FALSE);
-      type = gimp_image_composite_type (gimage);
+      type = gimp_image_projection_type (gimage);
       has_alpha = (type == RGBA_GIMAGE ||
 		   type == GRAYA_GIMAGE ||
 		   type == INDEXEDA_GIMAGE);
@@ -178,15 +179,15 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   /*  Get the image information  */
   if (sample_merged)
     {
-      bytes  = gimp_image_composite_bytes (gimage);
-      d_type = gimp_image_composite_type (gimage);
+      bytes  = gimp_image_projection_bytes (gimage);
+      d_type = gimp_image_projection_type (gimage);
       has_alpha = (d_type == RGBA_GIMAGE ||
 		   d_type == GRAYA_GIMAGE ||
 		   d_type == INDEXEDA_GIMAGE);
       indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
       width = gimage->width;
       height = gimage->height;
-      pixel_region_init (&imagePR, gimp_image_composite (gimage),
+      pixel_region_init (&imagePR, gimp_image_projection (gimage),
 			 0, 0, width, height, FALSE);
     }
   else

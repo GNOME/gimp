@@ -40,6 +40,7 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-projection.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasite.h"
@@ -2314,7 +2315,7 @@ undo_pop_gimage_mod (GimpImage *gimage,
   data[2] = gimage->base_type;
   gimage->base_type = tmp;
 
-  gimp_image_projection_realloc (gimage);
+  gimp_image_projection_allocate (gimage);
 
   gimage_mask_invalidate (gimage);
 

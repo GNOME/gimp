@@ -30,6 +30,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-projection.h"
 #include "core/gimpunit.h"
 
 #include "display/gimpdisplay.h"
@@ -537,7 +538,7 @@ info_window_update_extended (GimpDisplay *gdisp,
     }
 
   /* fill in color information */
-  if (! (color = gimp_image_get_color_at (gdisp->gimage, tx, ty))
+  if (! (color = gimp_image_projection_get_color_at (gdisp->gimage, tx, ty))
       || (tx < 0.0 && ty < 0.0))
     {
       for (i = 0; i < 4; i++)
@@ -545,7 +546,7 @@ info_window_update_extended (GimpDisplay *gdisp,
     }
   else
     {
-      sample_type = gimp_image_composite_type (gdisp->gimage);
+      sample_type = gimp_image_projection_type (gdisp->gimage);
 
       for (i = RED_PIX;
            i <= (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type) ? 

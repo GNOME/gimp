@@ -29,6 +29,7 @@
 #include "base/tile.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-projection.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"

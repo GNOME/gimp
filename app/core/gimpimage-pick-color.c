@@ -28,6 +28,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
 #include "gui/info-dialog.h"
@@ -561,10 +562,10 @@ pick_color_do (GimpImage    *gimage,
     }
   else
     {
-      sample_type = gimp_image_composite_type (gimage);
+      sample_type = gimp_image_projection_type (gimage);
       is_indexed = FALSE;
 
-      get_color_func = (GetColorFunc) gimp_image_get_color_at;
+      get_color_func = (GetColorFunc) gimp_image_projection_get_color_at;
       get_color_obj = GIMP_OBJECT (gimage);
     }
 

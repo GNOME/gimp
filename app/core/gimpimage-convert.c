@@ -112,6 +112,7 @@
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
 #include "gimpimage-convert-fsdither.h"
+#include "gimpimage-projection.h"
 #include "gimplist.h"
 #include "gimplayer.h"
 #include "gimppalette.h"
@@ -927,7 +928,7 @@ gimp_image_convert (GimpImage          *gimage,
     quantobj->delete_func (quantobj);
 
   /*  Make sure the projection is up to date  */
-  gimp_image_projection_realloc (gimage);
+  gimp_image_projection_allocate (gimage);
 
   /*  Rigor the floating selection  */
   if (floating_layer)

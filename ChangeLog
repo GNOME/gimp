@@ -1,5 +1,27 @@
 2001-11-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpimage-projection.[ch]: new files. Changed function
+	names to be consistent.
+
+	* app/core/gimpimage.[ch]: removed the projection stuff
+	here. Removed the gimp_image_composite_blah() functions becauee
+	they were just calling the resp. gimp_image_projection ones.
+
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimppalette-import.c
+	* app/undo.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/info-window.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+2001-11-28  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-wilber-16x16.png
 	* themes/Default/images/stock-wilber-32x32.png

@@ -27,6 +27,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-projection.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"

@@ -244,9 +244,6 @@ void            gimp_image_get_foreground     (const GimpImage      *gimage,
 void            gimp_image_get_background     (const GimpImage      *gimage,
 					       const GimpDrawable   *drawable,
 					       guchar               *bg);
-guchar        * gimp_image_get_color_at       (GimpImage            *gimage,
-					       gint                  x,
-					       gint                  y);
 void            gimp_image_get_color          (const GimpImage      *gimage,
 					       GimpImageType         d_type,
 					       guchar               *rgb,
@@ -350,6 +347,9 @@ void            gimp_image_set_component_active  (GimpImage         *gimage,
 						  gboolean           active);
 gboolean        gimp_image_get_component_active  (const GimpImage   *gimage,
 						  ChannelType        type);
+void            gimp_image_get_active_components (GimpImage         *gimage,
+                                                  GimpDrawable      *drawable,
+                                                  gint              *active);
 
 void            gimp_image_set_component_visible (GimpImage         *gimage,
 						  ChannelType        type,
@@ -408,31 +408,8 @@ gboolean        gimp_image_add_channel           (GimpImage         *gimage,
 void            gimp_image_remove_channel        (GimpImage         *gimage,
 						  GimpChannel       *channel);
 
-
-void        gimp_image_invalidate_without_render (GimpImage       *gimage,
-						  gint             x,
-						  gint             y,
-						  gint             w,
-						  gint             h,
-						  gint             x1,
-						  gint             y1,
-						  gint             x2,
-						  gint             y2);
-void            gimp_image_invalidate            (GimpImage       *gimage,
-						  gint             x,
-						  gint             y,
-						  gint             w,
-						  gint             h,
-						  gint             x1,
-						  gint             y1,
-						  gint             x2,
-						  gint             y2);
-void            gimp_image_validate              (TileManager     *tm,
-						  Tile            *tile);
-
 void        gimp_image_invalidate_layer_previews (GimpImage       *gimage);
 void      gimp_image_invalidate_channel_previews (GimpImage       *gimage);
-
 
 
 /*  Access functions  */
@@ -456,21 +433,6 @@ gint               gimp_image_clean                (GimpImage       *gimage);
 void               gimp_image_clean_all            (GimpImage       *gimage);
 GimpLayer        * gimp_image_floating_sel         (const GimpImage *gimage);
 guchar           * gimp_image_cmap                 (const GimpImage *gimage);
-
-/*  projection access functions  */
-
-TileManager   * gimp_image_projection              (GimpImage       *gimage);
-GimpImageType	gimp_image_projection_type         (const GimpImage *gimage);
-gint            gimp_image_projection_bytes        (const GimpImage *gimage);
-gint            gimp_image_projection_opacity      (const GimpImage *gimage);
-void            gimp_image_projection_realloc      (GimpImage       *gimage);
-
-
-/*  composite access functions  */
-
-TileManager   * gimp_image_composite               (GimpImage       *gimage);
-GimpImageType	gimp_image_composite_type          (const GimpImage *gimage);
-gint            gimp_image_composite_bytes         (const GimpImage *gimage);
 
 gboolean        gimp_image_preview_valid           (const GimpImage *gimage);
 

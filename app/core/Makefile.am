@@ -91,6 +91,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-mask-select.h		\
 	gimpimage-new.c			\
 	gimpimage-new.h			\
+	gimpimage-projection.c		\
+	gimpimage-projection.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimpimagefile.c			\

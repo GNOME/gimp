@@ -36,10 +36,11 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
-#include "core/gimpimage.h"
+#include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
@@ -387,9 +388,9 @@ by_color_select_button_release (GimpTool        *tool,
 	  /*  Get the start color  */
 	  if (sel_options->sample_merged)
 	    {
-	      if (!(col = gimp_image_get_color_at (gdisp->gimage,
-                                                   by_color_sel->x,
-                                                   by_color_sel->y)))
+	      if (!(col = gimp_image_projection_get_color_at (gdisp->gimage,
+                                                              by_color_sel->x,
+                                                              by_color_sel->y)))
 		return;
 	    }
 	  else
@@ -908,7 +909,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
 
-      col = gimp_image_get_color_at (bcd->gimage, x, y);
+      col = gimp_image_projection_get_color_at (bcd->gimage, x, y);
     }
   else
     {
