@@ -1,8 +1,12 @@
 [Desktop Entry]
+Encoding=UTF-8
 _Name=The GIMP (unstable)
 _Comment=Create and edit images or photographs
 Exec=gimp-1.3
 Icon=@gimpdatadir@/images/wilber-icon.png
-Terminal=0
+Terminal=false
 Type=Application
 Categories=Application;Graphics;RasterGraphics;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=GIMP
+StartupNotify=true

@@ -1,5 +1,10 @@
 2003-06-22  Sven Neumann  <sven@gimp.org>
 
+	* data/misc/gimp.desktop.in.in: added Encoding, StartupNotify and
+	Bugzilla entries.
+
+2003-06-22  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: an updated version of PotatoShop keybindings
 	contributed by Eric Pierce <epierce@sdf.lonestar.org>.
 
