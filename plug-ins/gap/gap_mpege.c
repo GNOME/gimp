@@ -781,7 +781,7 @@ int p_mpeg_encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
   fprintf(l_fp, "# later, will add more flexible GOP signalling\n");
   fprintf(l_fp, "#\n");
 
-  fprintf(l_fp, "GOP_SIZE	%d\n", strlen(mp_ptr->pattern));
+  fprintf(l_fp, "GOP_SIZE	%d\n", (int) strlen(mp_ptr->pattern));
 
   fprintf(l_fp, "# number of slices in a frame\n");
   fprintf(l_fp, "#\n");

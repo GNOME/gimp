@@ -765,16 +765,16 @@ dialog_show (void)
   frame = gimp_radio_group_new2 (TRUE, _("Outside Type"),
 				 dialog_outside_type_callback,
 				 &parameters.outside_type,
-				 (gpointer) parameters.outside_type,
+				 GINT_TO_POINTER (parameters.outside_type),
 
 				 _("Warp"),
-				 (gpointer) OUTSIDE_TYPE_WRAP, NULL,
+				 GINT_TO_POINTER (OUTSIDE_TYPE_WRAP), NULL,
 				 _("Transparent"),
-				 (gpointer) OUTSIDE_TYPE_TRANSPARENT, NULL,
+				 GINT_TO_POINTER (OUTSIDE_TYPE_TRANSPARENT), NULL,
 				 _("Black"),
-				 (gpointer) OUTSIDE_TYPE_BLACK, NULL,
+				 GINT_TO_POINTER (OUTSIDE_TYPE_BLACK), NULL,
 				 _("White"),
-				 (gpointer) OUTSIDE_TYPE_WHITE, NULL,
+				 GINT_TO_POINTER (OUTSIDE_TYPE_WHITE), NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);

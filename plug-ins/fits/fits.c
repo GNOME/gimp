@@ -1003,10 +1003,10 @@ load_dialog (void)
 
   frame = gimp_radio_group_new2 (TRUE, _("BLANK/NaN Pixel Replacement"),
 				 gimp_radio_button_update,
-				 &plvals.replace, (gpointer) plvals.replace,
+				 &plvals.replace, GINT_TO_POINTER (plvals.replace),
 
-				 _("Black"), (gpointer) 0, NULL,
-				 _("White"), (gpointer) 255, NULL,
+				 _("Black"), GINT_TO_POINTER (0), NULL,
+				 _("White"), GINT_TO_POINTER (255), NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1015,10 +1015,10 @@ load_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Pixel Value Scaling"),
 			   gimp_radio_button_update,
-			   &plvals.use_datamin, (gpointer) plvals.use_datamin,
+			   &plvals.use_datamin, GINT_TO_POINTER (plvals.use_datamin),
 
-			   _("Automatic"),          (gpointer) FALSE, NULL,
-			   _("By DATAMIN/DATAMAX"), (gpointer) TRUE, NULL,
+			   _("Automatic"),          GINT_TO_POINTER (FALSE), NULL,
+			   _("By DATAMIN/DATAMAX"), GINT_TO_POINTER (TRUE), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1027,10 +1027,10 @@ load_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Image Composing"),
 			   gimp_radio_button_update,
-			   &plvals.compose, (gpointer) plvals.compose,
+			   &plvals.compose, GINT_TO_POINTER (plvals.compose),
 
-			   _("None"),                 (gpointer) FALSE, NULL,
-			   "NAXIS=3, NAXIS3=2,...,4", (gpointer) TRUE, NULL,
+			   _("None"),                 GINT_TO_POINTER (FALSE), NULL,
+			   "NAXIS=3, NAXIS3=2,...,4", GINT_TO_POINTER (TRUE), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

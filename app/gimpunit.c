@@ -188,8 +188,8 @@ gimp_unit_get_digits (GimpUnit unit)
 gchar * 
 gimp_unit_get_identifier (GimpUnit unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) && 
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) && 
+			 (unit < (GIMP_UNIT_END + number_of_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].identifier);
 
@@ -206,8 +206,8 @@ gimp_unit_get_identifier (GimpUnit unit)
 gchar *
 gimp_unit_get_symbol (GimpUnit unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + number_of_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].symbol);
 
@@ -224,8 +224,8 @@ gimp_unit_get_symbol (GimpUnit unit)
 gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + number_of_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].abbreviation);
 
@@ -242,8 +242,8 @@ gimp_unit_get_abbreviation (GimpUnit unit)
 gchar *
 gimp_unit_get_singular (GimpUnit unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + number_of_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].singular));
 
@@ -260,8 +260,8 @@ gimp_unit_get_singular (GimpUnit unit)
 gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + number_of_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + number_of_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].plural));
 

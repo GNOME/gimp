@@ -963,7 +963,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 						gettext (modes[index].name));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (toggle_vbox), button, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) index);
+      gtk_object_set_user_data (GTK_OBJECT (button), GINT_TO_POINTER (index));
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_radio_button_update),
 			  &vpvals.propagate_mode);

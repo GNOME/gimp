@@ -163,7 +163,7 @@ error_console_file_ok_callback (GtkWidget *widget,
   filesel = (GtkWidget *) data;
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (filesel));
   
-  textscope = (gint) gtk_object_get_user_data (GTK_OBJECT (filesel));
+  textscope = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (filesel)));
 
   if (!error_console_write_file (filename, textscope))
     {
@@ -202,7 +202,7 @@ error_console_menu_callback (gint textscope)
 			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (filesel));
 
-  gtk_object_set_user_data (GTK_OBJECT (filesel), (gpointer) textscope);
+  gtk_object_set_user_data (GTK_OBJECT (filesel), GINT_TO_POINTER (textscope));
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
   		      "clicked", (GtkSignalFunc) error_console_file_ok_callback,
 		      filesel);

@@ -985,7 +985,7 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
 
   gmsed = (GimpMemSizeEntryData *)data;
 
-  new_unit = (guint) gtk_object_get_user_data (GTK_OBJECT (widget));
+  new_unit = GPOINTER_TO_UINT (gtk_object_get_user_data (GTK_OBJECT (widget)));
 
   if (new_unit && new_unit != gmsed->mem_size_unit)
     {
@@ -1039,11 +1039,11 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_mem_size_unit_callback,
-			   gmsed, (gpointer) mem_size_unit,
+			   gmsed, GUINT_TO_POINTER (mem_size_unit),
 
-			   _("Bytes"),     (gpointer) 1, NULL,
-			   _("KiloBytes"), (gpointer) 1024, NULL,
-			   _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
+			   _("Bytes"),     GINT_TO_POINTER (1), NULL,
+			   _("KiloBytes"), GINT_TO_POINTER (1024), NULL,
+			   _("MegaBytes"), GINT_TO_POINTER (1024 * 1024), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);

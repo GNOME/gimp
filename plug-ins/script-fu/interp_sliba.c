@@ -2302,7 +2302,7 @@ fast_save (LISP fname, LISP forms, LISP nohash, LISP comment)
   sprintf (msgbuff, "# Siod Binary Object Save File\n");
   fput_st (f, msgbuff);
   sprintf (msgbuff, "# sizeof(long) = %d\n# sizeof(double) = %d\n",
-	   sizeof (long), sizeof (double));
+	   (int) sizeof (long), (int) sizeof (double));
   fput_st (f, msgbuff);
   shexstr (databuff, &l_one, sizeof (l_one));
   sprintf (msgbuff, "# 1 = %s\n", databuff);

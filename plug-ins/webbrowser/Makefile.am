@@ -4,7 +4,7 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
-LDFLAGS = $(mwindows)
+LDFLAGS = @LDFLAGS@ $(mwindows)
 
 scriptdatadir = $(gimpdatadir)/scripts
 

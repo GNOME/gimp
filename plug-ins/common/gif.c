@@ -1360,14 +1360,14 @@ save_dialog (gint32 image_ID)
   disposal_option_menu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
 			   &gsvals.default_dispose,
-			   (gpointer) gsvals.default_dispose,
+			   GINT_TO_POINTER (gsvals.default_dispose),
 
 			   _("I don't Care"),
-			   (gpointer) DISPOSE_UNSPECIFIED, NULL,
+			   GINT_TO_POINTER (DISPOSE_UNSPECIFIED), NULL,
 			   _("Cumulative Layers (Combine)"),
-			   (gpointer) DISPOSE_COMBINE, NULL,
+			   GINT_TO_POINTER (DISPOSE_COMBINE), NULL,
 			   _("One Frame per Layer (Replace)"),
-			   (gpointer) DISPOSE_REPLACE, NULL,
+			   GINT_TO_POINTER (DISPOSE_REPLACE), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), disposal_option_menu, FALSE, FALSE, 0);

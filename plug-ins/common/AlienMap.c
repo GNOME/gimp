@@ -1465,11 +1465,11 @@ alienmap_dialog (void)
   /*  Redmode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Red"),
 				 alienmap_toggle_update,
-				 &wvals.redmode, (gpointer) wvals.redmode,
+				 &wvals.redmode, GINT_TO_POINTER (wvals.redmode),
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("Sine"),   GINT_TO_POINTER (SINUS), &toggle1,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS), &toggle2,
+				 _("None"),   GINT_TO_POINTER (NONE), &toggle3,
 
 				 NULL);
 
@@ -1488,11 +1488,11 @@ alienmap_dialog (void)
   /*  Greenmode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Green"),
 				 alienmap_toggle_update,
-				 &wvals.greenmode, (gpointer) wvals.greenmode,
+				 &wvals.greenmode, GINT_TO_POINTER (wvals.greenmode),
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("Sine"),   GINT_TO_POINTER (SINUS), &toggle1,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS), &toggle2,
+				 _("None"),   GINT_TO_POINTER (NONE), &toggle3,
 
 				 NULL);
 
@@ -1511,11 +1511,11 @@ alienmap_dialog (void)
   /*  Bluemode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Blue"),
 				 alienmap_toggle_update,
-				 &wvals.bluemode, (gpointer) wvals.bluemode,
+				 &wvals.bluemode, GINT_TO_POINTER (wvals.bluemode),
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("Sine"),   GINT_TO_POINTER (SINUS), &toggle1,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS), &toggle2,
+				 _("None"),   GINT_TO_POINTER (NONE), &toggle3,
 
 				 NULL);
 

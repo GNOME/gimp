@@ -2226,7 +2226,7 @@ video_dialog (void)
                                                 gettext(pattern_name[y]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) y);
+      gtk_object_set_user_data (GTK_OBJECT (toggle), GINT_TO_POINTER (y));
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  (GtkSignalFunc) video_radio_update,
 			  &vvals.pattern_number);

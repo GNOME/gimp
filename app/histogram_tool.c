@@ -316,7 +316,7 @@ histogram_tool_dialog_new (void)
 
   option_menu = gimp_option_menu_new2
     (FALSE, histogram_tool_channel_callback,
-     htd, (gpointer) htd->channel,
+     htd, GINT_TO_POINTER (htd->channel),
 
      _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), NULL,
      _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   NULL,

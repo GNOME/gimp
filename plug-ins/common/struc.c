@@ -1303,12 +1303,12 @@ struc_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Direction"),
 			   gimp_radio_button_update,
-			   &svals.direction, (gpointer) svals.direction,
+			   &svals.direction, GINT_TO_POINTER (svals.direction),
 
-			   _("Top-Right"),    (gpointer) TOP_RIGHT, NULL,
-			   _("Top-Left"),     (gpointer) TOP_LEFT, NULL,
-			   _("Bottom-Left"),  (gpointer) BOTTOM_LEFT, NULL,
-			   _("Bottom-Right"), (gpointer) BOTTOM_RIGHT, NULL,
+			   _("Top-Right"),    GINT_TO_POINTER (TOP_RIGHT), NULL,
+			   _("Top-Left"),     GINT_TO_POINTER (TOP_LEFT), NULL,
+			   _("Bottom-Left"),  GINT_TO_POINTER (BOTTOM_LEFT), NULL,
+			   _("Bottom-Right"), GINT_TO_POINTER (BOTTOM_RIGHT), NULL,
 
 			   NULL);
 

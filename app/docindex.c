@@ -261,7 +261,7 @@ save_to_ideas (gpointer data,
 
   title = GTK_LABEL (GTK_BIN (data)->child)->label;
 
-  fprintf ((FILE *) user_data, "%d %s\n", strlen (title), title);
+  fprintf ((FILE *) user_data, "%d %s\n", (int) strlen (title), title);
 }
 
 static void
@@ -272,7 +272,7 @@ save_list_to_ideas (gpointer data,
 
   title = (gchar *) data;
 
-  fprintf ((FILE *) user_data, "%d %s\n", strlen (title), title);
+  fprintf ((FILE *) user_data, "%d %s\n", (int) strlen (title), title);
 }
 
 static void

@@ -1434,19 +1434,19 @@ mov_imglayer_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
 static void
 mov_paintmode_menu_callback (GtkWidget *w,  gpointer   client_data)
 {
-  pvals->src_paintmode = (gint)client_data;
+  pvals->src_paintmode = GPOINTER_TO_INT (client_data);
 }
 
 static void
 mov_handmode_menu_callback (GtkWidget *w,  gpointer   client_data)
 {
-  pvals->src_handle = (gint)client_data;
+  pvals->src_handle = GPOINTER_TO_INT (client_data);
 }
 
 static void
 mov_stepmode_menu_callback (GtkWidget *w, gpointer   client_data)
 {
-  pvals->src_stepmode = (gint)client_data;
+  pvals->src_stepmode = GPOINTER_TO_INT (client_data);
 }
 
 static void
@@ -1520,8 +1520,8 @@ p_points_from_tab(t_mov_path_preview *path_ptr)
     }
     if(gap_debug)
     {
-      printf("p_points_from_tab: scale %x spinbutton %x\n",
-              (int)scale, (int)spinbutton);
+      printf("p_points_from_tab: scale %p spinbutton %p\n",
+              scale, spinbutton);
     }
     if((pvals->point_idx == 0) || (pvals->point_idx == pvals->point_idx_max))
     {

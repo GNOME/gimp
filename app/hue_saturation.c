@@ -424,7 +424,7 @@ hue_saturation_dialog_new (void)
       radio_button = gtk_radio_button_new_with_label (group, gettext (hue_partition_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_object_set_data (GTK_OBJECT (radio_button), "hue_partition",
-			   (gpointer) i);
+			   GINT_TO_POINTER (i));
 
       if (!i)
 	{

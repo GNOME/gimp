@@ -504,7 +504,7 @@ p_smp_toggle_callback (GtkWidget *widget,
 void
 p_gradient_callback(GtkWidget *w, gint32 id)
 {
-   if(g_Sdebug)  printf("GRADIENT_MENU_CB: wiget %x,  id: %d\n", (int)w, (int)id);
+   if(g_Sdebug)  printf("GRADIENT_MENU_CB: widget %p,  id: %d\n", w, (int)id);
 
    if((id == SMP_GRADIENT) || (id == SMP_INV_GRADIENT))
    {
@@ -524,7 +524,7 @@ p_smp_menu_callback(gint32 id, gpointer data)
 {
    gint32 *id_ptr;
 
-   if(g_Sdebug)  printf("MENU_CB: data %x,  dst: %x, samp %x\n", (int)data, (int)&g_values.sample_id,  (int)&g_values.dst_id);
+   if(g_Sdebug)  printf("MENU_CB: data %p,  dst: %p, samp %p\n", data, &g_values.sample_id,  &g_values.dst_id);
 
    if((id_ptr = (gint32 *)data) != NULL)
    {
@@ -2577,7 +2577,7 @@ p_end_gdrw(t_GDRW *gdrw)
 {
   t_GDRW  *l_sel_gdrw;
 
-  if(g_Sdebug)  printf("\np_end_gdrw: drawable %x  ID: %d\n", (int)gdrw->drawable, (int)gdrw->drawable->id);
+  if(g_Sdebug)  printf("\np_end_gdrw: drawable %p  ID: %d\n", gdrw->drawable, (int)gdrw->drawable->id);
 
   if(gdrw->tile)
   {
@@ -2615,7 +2615,7 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   t_GDRW  *l_sel_gdrw;
   gint32   non_empty;
 
-  if(g_Sdebug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->id);
+  if(g_Sdebug)  printf("\np_init_gdrw: drawable %p  ID: %d\n", drawable, (int)drawable->id);
 
   gdrw->drawable = drawable;
   gdrw->tile = NULL;

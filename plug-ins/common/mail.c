@@ -585,12 +585,12 @@ save_dialog (void)
   vbox = gimp_radio_group_new2 (FALSE, NULL,
 				gimp_radio_button_update,
 				&mail_info.encapsulation,
-				(gpointer) mail_info.encapsulation,
+				GINT_TO_POINTER (mail_info.encapsulation),
 
 				_("Uuencode"),
-				(gpointer) ENCAPSULATION_UUENCODE, NULL,
+				GINT_TO_POINTER (ENCAPSULATION_UUENCODE), NULL,
 				_("MIME"),
-				(gpointer) ENCAPSULATION_MIME, NULL,
+				GINT_TO_POINTER (ENCAPSULATION_MIME), NULL,
 
 				NULL);
   gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 6, 8,

@@ -1236,17 +1236,17 @@ device_status_context_connect  (GimpContext *context,
 {
   gtk_signal_connect (GTK_OBJECT (context), "foreground_changed",
 		      GTK_SIGNAL_FUNC (device_status_color_changed),
-		      (gpointer) deviceid);
+		      GUINT_TO_POINTER (deviceid));
   gtk_signal_connect (GTK_OBJECT (context), "tool_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      (gpointer) deviceid);
+		      GUINT_TO_POINTER (deviceid));
   gtk_signal_connect (GTK_OBJECT (context), "brush_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      (gpointer) deviceid);
+		      GUINT_TO_POINTER (deviceid));
   gtk_signal_connect (GTK_OBJECT (context), "pattern_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      (gpointer) deviceid);
+		      GUINT_TO_POINTER (deviceid));
   gtk_signal_connect (GTK_OBJECT (context), "gradient_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      (gpointer) deviceid);
+		      GUINT_TO_POINTER (deviceid));
 }

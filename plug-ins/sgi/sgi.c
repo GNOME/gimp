@@ -650,14 +650,14 @@ save_dialog (void)
 
   frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
 				 gimp_radio_button_update,
-				 &compression, (gpointer) compression,
+				 &compression, GINT_TO_POINTER (compression),
 
 				 _("No Compression"),
-				 (gpointer) SGI_COMP_NONE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_NONE), NULL,
 				 _("RLE Compression"),
-				 (gpointer) SGI_COMP_RLE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_RLE), NULL,
 				 _("Aggressive RLE\n(Not Supported by SGI)"),
-				 (gpointer) SGI_COMP_ARLE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_ARLE), NULL,
 
 				 NULL);
 

@@ -312,12 +312,12 @@ paintbrush_options_new (void)
 
   options->gradient_type_w = gimp_option_menu_new2
     (FALSE, gimp_menu_item_update,
-     &options->gradient_type, (gpointer) options->gradient_type_d,
+     &options->gradient_type, GINT_TO_POINTER (options->gradient_type_d),
 
-     _("Once Forward"),  (gpointer) ONCE_FORWARD, NULL,
-     _("Once Backward"), (gpointer) ONCE_BACKWARDS, NULL,
-     _("Loop Sawtooth"), (gpointer) LOOP_SAWTOOTH, NULL,
-     _("Loop Triangle"), (gpointer) LOOP_TRIANGLE, NULL,
+     _("Once Forward"),  GINT_TO_POINTER (ONCE_FORWARD), NULL,
+     _("Once Backward"), GINT_TO_POINTER (ONCE_BACKWARDS), NULL,
+     _("Loop Sawtooth"), GINT_TO_POINTER (LOOP_SAWTOOTH), NULL,
+     _("Loop Triangle"), GINT_TO_POINTER (LOOP_TRIANGLE), NULL,
 
      NULL);
   gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);

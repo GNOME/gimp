@@ -971,14 +971,14 @@ prefs_toggle_callback (GtkWidget *widget,
 	   data == &cursor_mode        ||
 	   data == &default_type)
     {
-      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
     }
 
   /*  values which need some magic  */
   else if ((data == &transparency_type) ||
 	   (data == &transparency_size))
     {
-      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
 
       render_setup (transparency_type, transparency_size);
       gimage_foreach ((GFunc) layer_invalidate_previews, NULL);
@@ -1015,7 +1015,7 @@ static void
 prefs_nav_preview_size_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
+  nav_preview_size = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
   gdisplays_nav_preview_resized ();
 }
 
@@ -1271,7 +1271,7 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
 				     titles, 0,
 				     NULL, NULL, NULL, NULL,
 				     FALSE, TRUE);
-  gtk_ctree_node_set_row_data (ctree, *new_node, (gpointer) page_index);
+  gtk_ctree_node_set_row_data (ctree, *new_node, GINT_TO_POINTER (page_index));
   gtk_notebook_append_page (notebook, event_box, NULL);
 
   return vbox;
@@ -1289,7 +1289,7 @@ prefs_tree_select_callback (GtkWidget    *widget,
     return;
 
   notebook = (GtkNotebook*) gtk_object_get_user_data (GTK_OBJECT (widget));
-  page = (gint) gtk_ctree_node_get_row_data (GTK_CTREE (widget), node);
+  page = GPOINTER_TO_INT (gtk_ctree_node_get_row_data (GTK_CTREE (widget), node));
 
   gtk_notebook_set_page (notebook, page);
 }
@@ -1334,7 +1334,7 @@ prefs_help_func (const gchar *help_data)
  */
 void
 prefs_cmd_callback (GtkWidget *widget,
-			 gpointer   client_data)
+		    gpointer   client_data)
 {
   GtkWidget    *ctree;
   gchar        *titles[1];
@@ -1648,10 +1648,10 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &default_type, (gpointer) default_type,
+			   &default_type, GINT_TO_POINTER (default_type),
 
-			   _("RGB"),       (gpointer) RGB, NULL,
-			   _("Grayscale"), (gpointer) GRAY, NULL,
+			   _("RGB"),       GINT_TO_POINTER (RGB), NULL,
+			   _("Grayscale"), GINT_TO_POINTER (GRAY), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -1729,14 +1729,14 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &transparency_type, (gpointer) transparency_type,
+			   &transparency_type, GINT_TO_POINTER (transparency_type),
 
-			   _("Light Checks"),    (gpointer) LIGHT_CHECKS, NULL,
-			   _("Mid-Tone Checks"), (gpointer) GRAY_CHECKS, NULL,
-			   _("Dark Checks"),     (gpointer) DARK_CHECKS, NULL,
-			   _("White Only"),      (gpointer) WHITE_ONLY, NULL,
-			   _("Gray Only"),       (gpointer) GRAY_ONLY, NULL,
-			   _("Black Only"),      (gpointer) BLACK_ONLY, NULL,
+			   _("Light Checks"),    GINT_TO_POINTER (LIGHT_CHECKS), NULL,
+			   _("Mid-Tone Checks"), GINT_TO_POINTER (GRAY_CHECKS), NULL,
+			   _("Dark Checks"),     GINT_TO_POINTER (DARK_CHECKS), NULL,
+			   _("White Only"),      GINT_TO_POINTER (WHITE_ONLY), NULL,
+			   _("Gray Only"),       GINT_TO_POINTER (GRAY_ONLY), NULL,
+			   _("Black Only"),      GINT_TO_POINTER (BLACK_ONLY), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -1745,11 +1745,11 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &transparency_size, (gpointer) transparency_size,
+			   &transparency_size, GINT_TO_POINTER (transparency_size),
 
-			   _("Small"),  (gpointer) SMALL_CHECKS, NULL,
-			   _("Medium"), (gpointer) MEDIUM_CHECKS, NULL,
-			   _("Large"),  (gpointer) LARGE_CHECKS, NULL,
+			   _("Small"),  GINT_TO_POINTER (SMALL_CHECKS), NULL,
+			   _("Medium"), GINT_TO_POINTER (MEDIUM_CHECKS), NULL,
+			   _("Large"),  GINT_TO_POINTER (LARGE_CHECKS), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -1835,14 +1835,14 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_preview_size_callback,
-			   &preview_size, (gpointer) preview_size,
+			   &preview_size, GINT_TO_POINTER (preview_size),
 
-			   _("None"),   (gpointer)   0, NULL,
-			   _("Tiny"),   (gpointer)  24, NULL,
-			   _("Small"),  (gpointer)  32, NULL,
-			   _("Medium"), (gpointer)  48, NULL,
-			   _("Large"),  (gpointer)  64, NULL,
-			   _("Huge"),   (gpointer) 128, NULL,
+			   _("None"),   GINT_TO_POINTER (  0), NULL,
+			   _("Tiny"),   GINT_TO_POINTER ( 24), NULL,
+			   _("Small"),  GINT_TO_POINTER ( 32), NULL,
+			   _("Medium"), GINT_TO_POINTER ( 48), NULL,
+			   _("Large"),  GINT_TO_POINTER ( 64), NULL,
+			   _("Huge"),   GINT_TO_POINTER (128), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -1851,11 +1851,11 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_nav_preview_size_callback,
-			   &nav_preview_size, (gpointer) nav_preview_size,
+			   &nav_preview_size, GINT_TO_POINTER (nav_preview_size),
 
-			   _("Small"),  (gpointer)  48, NULL,
-			   _("Medium"), (gpointer)  80, NULL,
-			   _("Large"),  (gpointer) 112, NULL,
+			   _("Small"),  GINT_TO_POINTER ( 48), NULL,
+			   _("Medium"), GINT_TO_POINTER ( 80), NULL,
+			   _("Large"),  GINT_TO_POINTER (112), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -1948,10 +1948,10 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &help_browser, (gpointer) help_browser,
+			   &help_browser, GINT_TO_POINTER (help_browser),
 
-			   _("Internal"), (gpointer) HELP_BROWSER_GIMP, NULL,
-			   _("Netscape"), (gpointer) HELP_BROWSER_NETSCAPE, NULL,
+			   _("Internal"), GINT_TO_POINTER (HELP_BROWSER_GIMP), NULL,
+			   _("Netscape"), GINT_TO_POINTER (HELP_BROWSER_NETSCAPE), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -2096,14 +2096,14 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &cursor_mode, (gpointer) cursor_mode,
+			   &cursor_mode, GINT_TO_POINTER (cursor_mode),
 
 			   _("Tool Icon"),
-			   (gpointer) CURSOR_MODE_TOOL_ICON, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_TOOL_ICON), NULL,
 			   _("Tool Icon with Crosshair"),
-			   (gpointer) CURSOR_MODE_TOOL_CROSSHAIR, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_TOOL_CROSSHAIR), NULL,
 			   _("Crosshair only"),
-			   (gpointer) CURSOR_MODE_CROSSHAIR, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_CROSSHAIR), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -2246,14 +2246,14 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &interpolation_type, (gpointer) interpolation_type,
+			   &interpolation_type, GINT_TO_POINTER (interpolation_type),
 
 			   _("Nearest Neighbor (Fast)"),
-			   (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (NEAREST_NEIGHBOR_INTERPOLATION), NULL,
 			   _("Linear"),
-			   (gpointer) LINEAR_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (LINEAR_INTERPOLATION), NULL,
 			   _("Cubic (Slow)"),
-			   (gpointer) CUBIC_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (CUBIC_INTERPOLATION), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -2275,10 +2275,10 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &thumbnail_mode, (gpointer) thumbnail_mode,
+			   &thumbnail_mode, GINT_TO_POINTER (thumbnail_mode),
 
-			   _("Always"), (gpointer) 1, NULL,
-			   _("Never"),  (gpointer) 0, NULL,
+			   _("Always"), GINT_TO_POINTER (1), NULL,
+			   _("Never"),  GINT_TO_POINTER (0), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -2287,10 +2287,10 @@ prefs_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &trust_dirty_flag, (gpointer) trust_dirty_flag,
+			   &trust_dirty_flag, GINT_TO_POINTER (trust_dirty_flag),
 
-			   _("Only when Modified"), (gpointer) 1, NULL,
-			   _("Always"),             (gpointer) 0, NULL,
+			   _("Only when Modified"), GINT_TO_POINTER (1), NULL,
+			   _("Always"),             GINT_TO_POINTER (0), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,

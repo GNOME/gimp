@@ -521,11 +521,11 @@ sparkle_dialog (void)
   vbox =
     gimp_radio_group_new2 (FALSE, NULL,
 			   gimp_radio_button_update,
-			   &svals.colortype, (gpointer) svals.colortype,
+			   &svals.colortype, GINT_TO_POINTER (svals.colortype),
 
-			   _("Natural Color"),    (gpointer) NATURAL, &r1,
-			   _("Foreground Color"), (gpointer) FOREGROUND, &r2,
-			   _("Background Color"), (gpointer) BACKGROUND, &r3,
+			   _("Natural Color"),    GINT_TO_POINTER (NATURAL), &r1,
+			   _("Foreground Color"), GINT_TO_POINTER (FOREGROUND), &r2,
+			   _("Background Color"), GINT_TO_POINTER (BACKGROUND), &r3,
 
 			   NULL);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);

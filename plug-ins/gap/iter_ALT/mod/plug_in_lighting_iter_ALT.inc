@@ -57,7 +57,7 @@ gint p_plug_in_lighting_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, g
     if(len_struct != sizeof(t_plug_in_lighting_Vals)) 
     {
       fprintf(stderr, "ERROR: p_plug_in_lighting_iter  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_plug_in_lighting_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_plug_in_lighting_Vals) ); 
       return -1;  /* ERROR */ 
     }
 

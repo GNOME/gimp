@@ -411,8 +411,8 @@ gimp_dnd_data_source_set (GimpDndDataType  data_type,
   gboolean drag_connected;
 
   drag_connected =
-    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
-				    "gimp_dnd_drag_connected");
+    GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
+					  "gimp_dnd_drag_connected"));
 
   if (! drag_connected)
     {
@@ -427,11 +427,11 @@ gimp_dnd_data_source_set (GimpDndDataType  data_type,
 			  NULL);
 
       gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drag_connected",
-			   (gpointer) TRUE);
+			   GINT_TO_POINTER (TRUE));
     }
 
   gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_type",
-		       (gpointer) data_type);
+		       GINT_TO_POINTER (data_type));
   gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_func",
 		       get_data_func);
   gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_data",
@@ -447,8 +447,8 @@ gimp_dnd_data_dest_set (GimpDndDataType  data_type,
   gboolean drop_connected;
 
   drop_connected =
-    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
-				    "gimp_dnd_drop_connected");
+    GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
+					  "gimp_dnd_drop_connected"));
 
   if (! drop_connected)
     {
@@ -1185,8 +1185,8 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   gtk_widget_show (preview);
 
   drag_connected =
-    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
-				    "gimp_dnd_drag_connected");
+    GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
+					  "gimp_dnd_drag_connected"));
 
   if (! drag_connected)
     {
@@ -1195,7 +1195,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 			  NULL);
 
       gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drag_connected",
-			   (gpointer) TRUE);
+			   GINT_TO_POINTER (TRUE));
     }
 
   gtk_object_set_data_full (GTK_OBJECT (widget),

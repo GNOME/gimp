@@ -719,13 +719,13 @@ load_rgba (TIFF *tif, channel_data *channel)
 {
   uint32 imageWidth, imageLength;
   uint32 row;
-  gulong *buffer;
+  uint32 *buffer;
 
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imageLength);
   gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
                           0, 0, imageWidth, imageLength, TRUE, FALSE);
-  buffer = g_new(gulong, imageWidth * imageLength);
+  buffer = g_new(uint32, imageWidth * imageLength);
   channel[0].pixels = (guchar*) buffer;
   if (buffer == NULL) {
     g_message("TIFF Unable to allocate temporary buffer\n");
@@ -1632,13 +1632,13 @@ save_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Compression"),
 			   gimp_radio_button_update,
-			   &tsvals.compression, (gpointer) tsvals.compression,
+			   &tsvals.compression, GINT_TO_POINTER (tsvals.compression),
 
-			   _("None"),      (gpointer) COMPRESSION_NONE, NULL,
-			   _("LZW"),       (gpointer) COMPRESSION_LZW, NULL,
-			   _("Pack Bits"), (gpointer) COMPRESSION_PACKBITS, NULL,
-			   _("Deflate"),   (gpointer) COMPRESSION_DEFLATE, NULL,
-			   _("JPEG"),      (gpointer) COMPRESSION_JPEG, NULL,
+			   _("None"),      GINT_TO_POINTER (COMPRESSION_NONE), NULL,
+			   _("LZW"),       GINT_TO_POINTER (COMPRESSION_LZW), NULL,
+			   _("Pack Bits"), GINT_TO_POINTER (COMPRESSION_PACKBITS), NULL,
+			   _("Deflate"),   GINT_TO_POINTER (COMPRESSION_DEFLATE), NULL,
+			   _("JPEG"),      GINT_TO_POINTER (COMPRESSION_JPEG), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

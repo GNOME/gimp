@@ -394,14 +394,14 @@ pluginCoreIA (struct piArgs *argp)
 
   frame = gimp_radio_group_new2 (TRUE, _("Filter"),
 				 nlfilt_radio_button_update,
-				 &argp->filter, (gpointer) argp->filter,
+				 &argp->filter, GINT_TO_POINTER (argp->filter),
 
 				 _("Alpha Trimmed Mean"),
-				 (gpointer) filter_alpha_trim, NULL,
+				 GINT_TO_POINTER (filter_alpha_trim), NULL,
 				 _("Optimal Estimation"),
-				 (gpointer) filter_opt_est, NULL,
+				 GINT_TO_POINTER (filter_opt_est), NULL,
 				 _("Edge Enhancement"),
-				 (gpointer) filter_edge_enhance, NULL,
+				 GINT_TO_POINTER (filter_edge_enhance), NULL,
 
 				 NULL);
 

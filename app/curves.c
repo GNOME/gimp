@@ -607,13 +607,13 @@ curves_dialog_new (void)
 
   cd->channel_menu = gimp_option_menu_new2
     (FALSE, curves_channel_callback,
-     cd, (gpointer) cd->channel,
+     cd, GINT_TO_POINTER (cd->channel),
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &channel_items[0],
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &channel_items[1],
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &channel_items[2],
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &channel_items[3],
-     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &channel_items[4],
+     _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), &channel_items[0],
+     _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   &channel_items[1],
+     _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN), &channel_items[2],
+     _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),  &channel_items[3],
+     _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA), &channel_items[4],
 
      NULL);
 

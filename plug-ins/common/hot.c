@@ -616,10 +616,10 @@ pluginCoreIA (struct piArgs *argp)
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
 				 gimp_radio_button_update,
-				 &argp->mode, (gpointer) argp->mode,
+				 &argp->mode, GINT_TO_POINTER (argp->mode),
 
-				 "NTSC", (gpointer) mode_ntsc, NULL,
-				 "PAL",  (gpointer) mode_pal, NULL,
+				 "NTSC", GINT_TO_POINTER (mode_ntsc), NULL,
+				 "PAL",  GINT_TO_POINTER (mode_pal), NULL,
 
 				 NULL);
 
@@ -629,11 +629,11 @@ pluginCoreIA (struct piArgs *argp)
   frame =
     gimp_radio_group_new2 (TRUE, _("Action"),
 			   gimp_radio_button_update,
-			   &argp->action, (gpointer) argp->action,
+			   &argp->action, GINT_TO_POINTER (argp->action),
 
-			   _("Reduce Luminance"),  (gpointer) act_lredux, NULL,
-			   _("Reduce Saturation"), (gpointer) act_sredux, NULL,
-			   _("Blacken"),           (gpointer) act_flag, NULL,
+			   _("Reduce Luminance"),  GINT_TO_POINTER (act_lredux), NULL,
+			   _("Reduce Saturation"), GINT_TO_POINTER (act_sredux), NULL,
+			   _("Blacken"),           GINT_TO_POINTER (act_flag), NULL,
 
 			   NULL);
 

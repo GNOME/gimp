@@ -633,10 +633,10 @@ ripple_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Orientation"),
 			   gimp_radio_button_update,
-			   &rvals.orientation, (gpointer) rvals.orientation,
+			   &rvals.orientation, GINT_TO_POINTER (rvals.orientation),
 
-			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
-			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+			   _("Horizontal"), GINT_TO_POINTER (HORIZONTAL), NULL,
+			   _("Vertical"),   GINT_TO_POINTER (VERTICAL), NULL,
 
 			   NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
@@ -646,11 +646,11 @@ ripple_dialog (void)
   /*  Edges toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Edges"),
 				 gimp_radio_button_update,
-				 &rvals.edges, (gpointer) rvals.edges,
+				 &rvals.edges, GINT_TO_POINTER (rvals.edges),
 
-				 _("Wrap"),  (gpointer) WRAP, NULL,
-				 _("Smear"), (gpointer) SMEAR, NULL,
-				 _("Black"), (gpointer) BLACK, NULL,
+				 _("Wrap"),  GINT_TO_POINTER (WRAP), NULL,
+				 _("Smear"), GINT_TO_POINTER (SMEAR), NULL,
+				 _("Black"), GINT_TO_POINTER (BLACK), NULL,
 
 				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
@@ -660,10 +660,10 @@ ripple_dialog (void)
   /*  Wave toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Wave Type"),
 				 gimp_radio_button_update,
-				 &rvals.waveform, (gpointer) rvals.waveform,
+				 &rvals.waveform, GINT_TO_POINTER (rvals.waveform),
 
-				 _("Sawtooth"), (gpointer) SAWTOOTH, NULL,
-				 _("Sine"),     (gpointer) SINE, NULL,
+				 _("Sawtooth"), GINT_TO_POINTER (SAWTOOTH), NULL,
+				 _("Sine"),     GINT_TO_POINTER (SINE), NULL,
 
 				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,

@@ -567,16 +567,16 @@ create_light_page (void)
 
   optionmenu = gimp_option_menu_new2 (FALSE, lightmenu_callback,
 				      &mapvals.lightsource.type,
-				      (gpointer) mapvals.lightsource.type,
+				      GINT_TO_POINTER (mapvals.lightsource.type),
 
 				      _("None"),
-				      (gpointer) NO_LIGHT, NULL,
+				      GINT_TO_POINTER (NO_LIGHT), NULL,
 				      _("Directional"),
-				      (gpointer) DIRECTIONAL_LIGHT, NULL,
+				      GINT_TO_POINTER (DIRECTIONAL_LIGHT), NULL,
 				      _("Point"),
-				      (gpointer) POINT_LIGHT, NULL,
+				      GINT_TO_POINTER (POINT_LIGHT), NULL,
 				      _("Spot"),
-				      (gpointer) SPOT_LIGHT, NULL,
+				      GINT_TO_POINTER (SPOT_LIGHT), NULL,
 
 				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -937,12 +937,12 @@ create_bump_page (void)
   optionmenu =
     gimp_option_menu_new2 (FALSE, mapmenu2_callback,
 			   &mapvals.bumpmaptype,
-			   (gpointer) mapvals.bumpmaptype,
+			   GINT_TO_POINTER (mapvals.bumpmaptype),
 
-			   _("Linear"),      (gpointer) LINEAR_MAP, NULL,
-			   _("Logarithmic"), (gpointer) LOGARITHMIC_MAP, NULL,
-			   _("Sinusoidal"),  (gpointer) SINUSOIDAL_MAP, NULL,
-			   _("Spherical"),   (gpointer) SPHERICAL_MAP, NULL,
+			   _("Linear"),      GINT_TO_POINTER (LINEAR_MAP), NULL,
+			   _("Logarithmic"), GINT_TO_POINTER (LOGARITHMIC_MAP), NULL,
+			   _("Sinusoidal"),  GINT_TO_POINTER (SINUSOIDAL_MAP), NULL,
+			   _("Spherical"),   GINT_TO_POINTER (SPHERICAL_MAP), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,

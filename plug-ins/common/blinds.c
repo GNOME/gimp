@@ -368,10 +368,10 @@ blinds_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Orientation"),
 			   blinds_radio_update,
-			   &bvals.orientation, (gpointer) bvals.orientation,
+			   &bvals.orientation, GINT_TO_POINTER (bvals.orientation),
 
-			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
-			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+			   _("Horizontal"), GINT_TO_POINTER (HORIZONTAL), NULL,
+			   _("Vertical"),   GINT_TO_POINTER (VERTICAL), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);

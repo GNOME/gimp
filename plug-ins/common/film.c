@@ -1055,11 +1055,11 @@ add_list_item_callback (GtkWidget *widget,
     {
       if ((label = (GtkWidget *) tmp_list->data) != NULL)
 	{
-	  image_ID = (gint32)gtk_object_get_user_data (GTK_OBJECT (label));
+	  image_ID = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (label)));
 	  list_item =
 	    gtk_list_item_new_with_label (compose_image_name (image_ID));
 
-	  gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer)image_ID);
+	  gtk_object_set_user_data (GTK_OBJECT (list_item), GINT_TO_POINTER (image_ID));
 	  gtk_container_add (GTK_CONTAINER (filmint.image_list_film), list_item);
 	  gtk_widget_show (list_item);
 	}
@@ -1134,7 +1134,7 @@ add_image_list (gint       add_box_flag,
       list_item =
 	gtk_list_item_new_with_label (compose_image_name (image_id[i]));
 
-      gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer) image_id[i]);
+      gtk_object_set_user_data (GTK_OBJECT (list_item), GINT_TO_POINTER (image_id[i]));
       gtk_container_add (GTK_CONTAINER (list), list_item);
       gtk_widget_show (list_item);
     }
@@ -1519,7 +1519,7 @@ film_ok_callback (GtkWidget *widget,
 	{
 	  if ((label = (GtkWidget *) tmp_list->data) != NULL)
 	    {
-	      image_ID = (gint32) gtk_object_get_user_data (GTK_OBJECT (label));
+	      image_ID = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (label)));
 	      if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
 		filmvals.image[num_images++] = image_ID;
 	    }

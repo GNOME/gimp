@@ -941,11 +941,11 @@ bumpmap_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Map Type"),
 			   dialog_map_type_callback,
-			   &bmvals.type, (gpointer) bmvals.type,
+			   &bmvals.type, GINT_TO_POINTER (bmvals.type),
 
-			   _("Linear Map"),     (gpointer) LINEAR, NULL,
-			   _("Spherical Map"),  (gpointer) SPHERICAL, NULL,
-			   _("Sinuosidal Map"), (gpointer) SINUOSIDAL, NULL,
+			   _("Linear Map"),     GINT_TO_POINTER (LINEAR), NULL,
+			   _("Spherical Map"),  GINT_TO_POINTER (SPHERICAL), NULL,
+			   _("Sinuosidal Map"), GINT_TO_POINTER (SINUOSIDAL), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);

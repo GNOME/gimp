@@ -1053,11 +1053,11 @@ create_main_dialog (void)
   frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
 				 gimp_radio_button_update,
 				 &licvals.effect_channel,
-				 (gpointer) licvals.effect_channel,
+				 GINT_TO_POINTER (licvals.effect_channel),
 
-				 _("Hue"),        (gpointer) 0, NULL,
-				 _("Saturation"), (gpointer) 1, NULL,
-				 _("Brightness"), (gpointer) 2, NULL,
+				 _("Hue"),        GINT_TO_POINTER (0), NULL,
+				 _("Saturation"), GINT_TO_POINTER (1), NULL,
+				 _("Brightness"), GINT_TO_POINTER (2), NULL,
 
 				 NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
@@ -1066,10 +1066,10 @@ create_main_dialog (void)
   frame = gimp_radio_group_new2 (TRUE, _("Effect Operator"),
 				 gimp_radio_button_update,
 				 &licvals.effect_operator,
-				 (gpointer) licvals.effect_operator,
+				 GINT_TO_POINTER (licvals.effect_operator),
 
-				 _("Derivative"), (gpointer) 0, NULL,
-				 _("Gradient"),   (gpointer) 1, NULL,
+				 _("Derivative"), GINT_TO_POINTER (0), NULL,
+				 _("Gradient"),   GINT_TO_POINTER (1), NULL,
 
 				 NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
@@ -1078,10 +1078,10 @@ create_main_dialog (void)
   frame = gimp_radio_group_new2 (TRUE, _("Convolve"),
 				 gimp_radio_button_update,
 				 &licvals.effect_convolve,
-				 (gpointer) licvals.effect_convolve,
+				 GINT_TO_POINTER (licvals.effect_convolve),
 
-				 _("With White Noise"),  (gpointer) 0, NULL,
-				 _("With Source Image"), (gpointer) 1, NULL,
+				 _("With White Noise"),  GINT_TO_POINTER (0), NULL,
+				 _("With Source Image"), GINT_TO_POINTER (1), NULL,
 
 				 NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);

@@ -15,7 +15,7 @@ gint p_plug_in_spread_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdo
     if(len_struct != sizeof(t_plug_in_spread_Vals)) 
     {
       fprintf(stderr, "ERROR: p_plug_in_spread_iter_ALT  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_plug_in_spread_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_plug_in_spread_Vals) ); 
       return -1;  /* ERROR */ 
     }
 

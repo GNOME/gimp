@@ -14,7 +14,7 @@ gint p_Colorify_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble c
     if(len_struct != sizeof(t_Colorify_Vals)) 
     {
       fprintf(stderr, "ERROR: p_Colorify_iter_ALT  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_Colorify_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_Colorify_Vals) ); 
       return -1;  /* ERROR */ 
     }
 

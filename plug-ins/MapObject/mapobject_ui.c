@@ -379,7 +379,7 @@ box_drawable_callback (gint32   id,
 {
   gint i;
   
-  i = (gint) gtk_object_get_data (GTK_OBJECT (data), "_mapwid_id");
+  i = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (data), "_mapwid_id"));
 
   mapvals.boxmap_id[i] = id;
 }
@@ -402,7 +402,7 @@ cylinder_drawable_callback (gint32   id,
 {
   gint i;
   
-  i = (gint) gtk_object_get_data (GTK_OBJECT (data), "_mapwid_id");
+  i = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (data), "_mapwid_id"));
 
   mapvals.cylindermap_id[i] = id;
 }
@@ -549,12 +549,12 @@ create_options_page (void)
   optionmenu =
     gimp_option_menu_new2 (FALSE, mapmenu_callback,
 			   &mapvals.maptype,
-			   (gpointer) mapvals.maptype,
+			   GINT_TO_POINTER (mapvals.maptype),
 
-			   _("Plane"),    (gpointer) MAP_PLANE, NULL,
-			   _("Sphere"),   (gpointer) MAP_SPHERE, NULL,
-			   _("Box"),      (gpointer) MAP_BOX, NULL,
-			   _("Cylinder"), (gpointer) MAP_CYLINDER, NULL,
+			   _("Plane"),    GINT_TO_POINTER (MAP_PLANE), NULL,
+			   _("Sphere"),   GINT_TO_POINTER (MAP_SPHERE), NULL,
+			   _("Box"),      GINT_TO_POINTER (MAP_BOX), NULL,
+			   _("Cylinder"), GINT_TO_POINTER (MAP_CYLINDER), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
@@ -701,14 +701,14 @@ create_light_page (void)
 
   optionmenu = gimp_option_menu_new2 (FALSE, lightmenu_callback,
 				      &mapvals.lightsource.type,
-				      (gpointer) mapvals.lightsource.type,
+				      GINT_TO_POINTER (mapvals.lightsource.type),
 
 				      _("Point Light"),
-				      (gpointer) POINT_LIGHT, NULL,
+				      GINT_TO_POINTER (POINT_LIGHT), NULL,
 				      _("Directional Light"),
-				      (gpointer) DIRECTIONAL_LIGHT, NULL,
+				      GINT_TO_POINTER (DIRECTIONAL_LIGHT), NULL,
 				      _("No Light"),
-				      (gpointer) NO_LIGHT, NULL,
+				      GINT_TO_POINTER (NO_LIGHT), NULL,
 
 				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -1155,7 +1155,7 @@ create_box_page (void)
     {
       optionmenu = gtk_option_menu_new ();
       gtk_object_set_data (GTK_OBJECT (optionmenu), "_mapwid_id",
-			   (gpointer) i);
+			   GINT_TO_POINTER (i));
       menu = gimp_drawable_menu_new (box_constrain, box_drawable_callback,
 				     (gpointer) optionmenu,
 				     mapvals.boxmap_id[i]);
@@ -1245,7 +1245,7 @@ create_cylinder_page (void)
     {
       optionmenu = gtk_option_menu_new ();
       gtk_object_set_data (GTK_OBJECT (optionmenu), "_mapwid_id",
-			   (gpointer) i);
+			   GINT_TO_POINTER (i));
       menu = gimp_drawable_menu_new (cylinder_constrain,
 				     cylinder_drawable_callback,
 				     (gpointer) optionmenu,

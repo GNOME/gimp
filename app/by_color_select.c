@@ -786,13 +786,13 @@ by_color_select_dialog_new (void)
     gimp_radio_group_new2 (TRUE, _("Selection Mode"),
 			   gimp_radio_button_update,
 			   &bcd->operation,
-			   (gpointer) bcd->operation,
+			   GINT_TO_POINTER (bcd->operation),
 
-			   _("Replace"),   (gpointer) SELECTION_REPLACE,
+			   _("Replace"),   GINT_TO_POINTER (SELECTION_REPLACE),
 			   &bcd->replace_button,
-			   _("Add"),       (gpointer) SELECTION_ADD, NULL,
-			   _("Subtract"),  (gpointer) SELECTION_SUB, NULL,
-			   _("Intersect"), (gpointer) SELECTION_INTERSECT, NULL,
+			   _("Add"),       GINT_TO_POINTER (SELECTION_ADD), NULL,
+			   _("Subtract"),  GINT_TO_POINTER (SELECTION_SUB), NULL,
+			   _("Intersect"), GINT_TO_POINTER (SELECTION_INTERSECT), NULL,
 
 			   NULL);
 

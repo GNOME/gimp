@@ -287,10 +287,10 @@ deinterlace_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Mode"),
 			   gimp_radio_button_update,
-			   &DeinterlaceValue, (gpointer) DeinterlaceValue,
+			   &DeinterlaceValue, GINT_TO_POINTER (DeinterlaceValue),
 
-			   _("Keep Odd Fields"), (gpointer) ODD_FIELDS, NULL,
-			   _("Keep Even Fields"), (gpointer) EVEN_FIELDS, NULL,
+			   _("Keep Odd Fields"), GINT_TO_POINTER (ODD_FIELDS), NULL,
+			   _("Keep Even Fields"), GINT_TO_POINTER (EVEN_FIELDS), NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

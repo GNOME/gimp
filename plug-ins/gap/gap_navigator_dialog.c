@@ -2809,7 +2809,7 @@ frame_widget_create (gint32 image_id, gint32 frame_nr)
   /* gtk_widget_show (frame_widget->clip_widget); */
 
 
-  gtk_object_set_data (GTK_OBJECT (list_item), "gap_framenumber", (gpointer)frame_nr );
+  gtk_object_set_data (GTK_OBJECT (list_item), "gap_framenumber", GINT_TO_POINTER (frame_nr) );
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);

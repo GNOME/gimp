@@ -20,7 +20,7 @@ gint p_plug_in_ripple_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdo
     if(len_struct != sizeof(t_plug_in_ripple_Vals)) 
     {
       fprintf(stderr, "ERROR: p_plug_in_ripple_iter_ALT  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_plug_in_ripple_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_plug_in_ripple_Vals) ); 
       return -1;  /* ERROR */ 
     }
 

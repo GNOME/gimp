@@ -433,7 +433,8 @@ create_main_window (GdtMainWindow **main_window,
       gtk_widget_show(item);
       gtk_menu_append(GTK_MENU(menu), item);
       gtk_signal_connect(GTK_OBJECT(item), "activate",
-			 GTK_SIGNAL_FUNC(on_layer_align_change), (void *)(i >> 1));
+			 GTK_SIGNAL_FUNC(on_layer_align_change),
+			 GINT_TO_POINTER (i >> 1));
       if ((i >> 1) == data->layer_alignment)
 	mw->layer_alignment = data->layer_alignment;
       
@@ -944,7 +945,7 @@ static void
 on_layer_align_change (GtkWidget *widget, 
 		       gpointer   data)
 {
-  main_window->layer_alignment = (gint)data;
+  main_window->layer_alignment = GPOINTER_TO_INT (data);
 }
 
 static void 

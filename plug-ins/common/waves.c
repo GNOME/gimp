@@ -373,10 +373,10 @@ pluginCoreIA (struct piArgs *argp,
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
 				 waves_radio_button_update,
-				 &argp->type, (gpointer) argp->type,
+				 &argp->type, GINT_TO_POINTER (argp->type),
 
-				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,
-				 _("Blacken"), (gpointer) MODE_BLACKEN, NULL,
+				 _("Smear"),   GINT_TO_POINTER (MODE_SMEAR), NULL,
+				 _("Blacken"), GINT_TO_POINTER (MODE_BLACKEN), NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);

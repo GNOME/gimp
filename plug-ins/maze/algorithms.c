@@ -475,19 +475,19 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 
      maz[up]=maz[down]=maz[left]=maz[right]=FRONTIER;
 
-     front_cells=g_slist_append(front_cells,(gpointer)up);
-     front_cells=g_slist_append(front_cells,(gpointer)down);
-     front_cells=g_slist_append(front_cells,(gpointer)left);
-     front_cells=g_slist_append(front_cells,(gpointer)right);
+     front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (up));
+     front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (down));
+     front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (left));
+     front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (right));
  
      /* While frontier is not empty do the following... */
      while(g_slist_length(front_cells) > 0) {
 
 	  /* Remove one cell at random from frontier and place it in IN. */
 	  current = rand() % g_slist_length(front_cells);
-	  pos = (guint)g_slist_nth(front_cells,current)->data;
+	  pos = GPOINTER_TO_UINT (g_slist_nth(front_cells,current)->data);
 
-	  front_cells=g_slist_remove(front_cells,(gpointer)pos);
+	  front_cells=g_slist_remove(front_cells,GUINT_TO_POINTER (pos));
 	  maz[pos]=IN;
 
 	  /* If the cell has any neighbors in OUT, remove them from
@@ -502,7 +502,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 	  switch (maz[up]) {
 	  case OUT:
 	       maz[up]=FRONTIER;
-	       front_cells=g_slist_append(front_cells,(gpointer)up); 
+	       front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (up)); 
 	       break;
 	  case IN:
 	       d=1;
@@ -513,7 +513,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 	  switch (maz[down]) {
 	  case OUT:
 	       maz[down]=FRONTIER;
-	       front_cells=g_slist_append(front_cells,(gpointer)down); 
+	       front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (down)); 
 	       break;
 	  case IN:
 	       d=d|2;
@@ -524,7 +524,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 	  switch (maz[left]) {
 	  case OUT:
 	       maz[left]=FRONTIER;
-	       front_cells=g_slist_append(front_cells,(gpointer)left); 
+	       front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (left)); 
 	       break;
 	  case IN:
 	       d=d|4;
@@ -535,7 +535,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 	  switch (maz[right]) {
 	  case OUT:
 	       maz[right]=FRONTIER;
-	       front_cells=g_slist_append(front_cells,(gpointer)right); 
+	       front_cells=g_slist_append(front_cells,GUINT_TO_POINTER (right)); 
 	       break;
 	  case IN:
 	       d=d|8;

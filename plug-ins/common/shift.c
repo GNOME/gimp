@@ -388,10 +388,10 @@ shift_dialog (void)
   frame = 
     gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 			   gimp_radio_button_update,
-			   &shvals.orientation, (gpointer) shvals.orientation,
+			   &shvals.orientation, GINT_TO_POINTER (shvals.orientation),
 
-			   _("Shift Horizontally"), (gpointer) HORIZONTAL, NULL,
-			   _("Shift Vertically"),   (gpointer) VERTICAL, NULL,
+			   _("Shift Horizontally"), GINT_TO_POINTER (HORIZONTAL), NULL,
+			   _("Shift Vertically"),   GINT_TO_POINTER (VERTICAL), NULL,
 
 			   NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);

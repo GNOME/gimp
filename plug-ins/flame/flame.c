@@ -587,7 +587,7 @@ static void
 preview_clicked (GtkWidget *widget, 
 		 gpointer   data) 
 {
-  gint mut = (gint) data;
+  gint mut = GPOINTER_TO_INT (data);
 
   if (mut == 4)
     {
@@ -668,7 +668,7 @@ edit_callback (GtkWidget *widget,
 	    gtk_container_add (GTK_CONTAINER(button), edit_previews[mut]);
 	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
 				GTK_SIGNAL_FUNC (preview_clicked),
-				(gpointer) mut);
+				GINT_TO_POINTER (mut));
 	    gtk_table_attach (GTK_TABLE (table), button, i, i+1, j, j+1,
 			      GTK_EXPAND, GTK_EXPAND, 0, 0);
 	    gtk_widget_show (edit_previews[mut]);
@@ -717,17 +717,17 @@ edit_callback (GtkWidget *widget,
       optionmenu =
 	gimp_option_menu_new2 (FALSE, menu_cb,
 			       &config.variation,
-			       (gpointer) VARIATION_SAME,
+			       GINT_TO_POINTER (VARIATION_SAME),
 
-			       _("Same"),     (gpointer) VARIATION_SAME, NULL,
-			       _("Random"),   (gpointer) variation_random, NULL,
-			       _("Linear"),     (gpointer) 0, NULL,
-			       _("Sinusoidal"), (gpointer) 1, NULL,
-			       _("Spherical"),  (gpointer) 2, NULL,
-			       _("Swirl"),      (gpointer) 3, NULL,
-			       _("Horseshoe"),  (gpointer) 4, NULL,
-			       _("Polar"),      (gpointer) 5, NULL,
-			       _("Bent"),       (gpointer) 6, NULL,
+			       _("Same"),     GINT_TO_POINTER (VARIATION_SAME), NULL,
+			       _("Random"),   GINT_TO_POINTER (variation_random), NULL,
+			       _("Linear"),     GINT_TO_POINTER (0), NULL,
+			       _("Sinusoidal"), GINT_TO_POINTER (1), NULL,
+			       _("Spherical"),  GINT_TO_POINTER (2), NULL,
+			       _("Swirl"),      GINT_TO_POINTER (3), NULL,
+			       _("Horseshoe"),  GINT_TO_POINTER (4), NULL,
+			       _("Polar"),      GINT_TO_POINTER (5), NULL,
+			       _("Bent"),       GINT_TO_POINTER (6), NULL,
 
 			       NULL);
       gtk_box_pack_end (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
@@ -876,7 +876,7 @@ static void
 gradient_cb (GtkWidget *widget, 
 	     gpointer   data) 
 {
-  config.cmap_drawable = (gint) data;
+  config.cmap_drawable = GPOINTER_TO_INT (data);
   set_cmap_preview();
   set_flame_preview();
   /* set_edit_preview(); */
@@ -1110,7 +1110,7 @@ dialog (void)
     menuitem = gtk_menu_item_new_with_label (_("Black"));
     gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			GTK_SIGNAL_FUNC (gradient_cb),
-			(gpointer) BLACK_DRAWABLE);
+			GINT_TO_POINTER (BLACK_DRAWABLE));
     gtk_menu_prepend (GTK_MENU (menu), menuitem);
     if (BLACK_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);
@@ -1136,7 +1136,7 @@ dialog (void)
 	  menuitem = gtk_menu_item_new_with_label (names[i]);
 	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			      GTK_SIGNAL_FUNC (gradient_cb),
-			      (gpointer) d);
+			      GINT_TO_POINTER (d));
 	  gtk_menu_prepend (GTK_MENU (menu), menuitem);
 	  if (d == save_drawable)
 	    gtk_menu_set_active (GTK_MENU (menu), 0);
@@ -1147,7 +1147,7 @@ dialog (void)
     menuitem = gtk_menu_item_new_with_label (_("Custom Gradient"));
     gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			GTK_SIGNAL_FUNC (gradient_cb),
-			(gpointer) GRADIENT_DRAWABLE);
+			GINT_TO_POINTER (GRADIENT_DRAWABLE));
     gtk_menu_prepend (GTK_MENU (menu), menuitem);
     if (GRADIENT_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);

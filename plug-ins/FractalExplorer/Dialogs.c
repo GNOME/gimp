@@ -554,25 +554,25 @@ explorer_dialog (void)
     gimp_radio_group_new2 (FALSE, NULL,
 			   explorer_radio_update,
 			   &wvals.fractaltype,
-			   (gpointer) &wvals.fractaltype,
+			   GINT_TO_POINTER (wvals.fractaltype),
 
-			   _("Mandelbrot"), (gpointer) TYPE_MANDELBROT,
+			   _("Mandelbrot"), GINT_TO_POINTER (TYPE_MANDELBROT),
 			   &(elements->type[TYPE_MANDELBROT]),
-			   _("Julia"), (gpointer) TYPE_JULIA,
+			   _("Julia"), GINT_TO_POINTER (TYPE_JULIA),
 			   &(elements->type[TYPE_JULIA]),
-			   _("Barnsley 1"), (gpointer) TYPE_BARNSLEY_1,
+			   _("Barnsley 1"), GINT_TO_POINTER (TYPE_BARNSLEY_1),
 			   &(elements->type[TYPE_BARNSLEY_1]),
-			   _("Barnsley 2"), (gpointer) TYPE_BARNSLEY_2,
+			   _("Barnsley 2"), GINT_TO_POINTER (TYPE_BARNSLEY_2),
 			   &(elements->type[TYPE_BARNSLEY_2]),
-			   _("Barnsley 3"), (gpointer) TYPE_BARNSLEY_3,
+			   _("Barnsley 3"), GINT_TO_POINTER (TYPE_BARNSLEY_3),
 			   &(elements->type[TYPE_BARNSLEY_3]),
-			   _("Spider"), (gpointer) TYPE_SPIDER,
+			   _("Spider"), GINT_TO_POINTER (TYPE_SPIDER),
 			   &(elements->type[TYPE_SPIDER]),
-			   _("Man'o'war"), (gpointer) TYPE_MAN_O_WAR,
+			   _("Man'o'war"), GINT_TO_POINTER (TYPE_MAN_O_WAR),
 			   &(elements->type[TYPE_MAN_O_WAR]),
-			   _("Lambda"), (gpointer) TYPE_LAMBDA,
+			   _("Lambda"), GINT_TO_POINTER (TYPE_LAMBDA),
 			   &(elements->type[TYPE_LAMBDA]),
-			   _("Sierpinski"), (gpointer) TYPE_SIERPINSKI,
+			   _("Sierpinski"), GINT_TO_POINTER (TYPE_SIERPINSKI),
 			   &(elements->type[TYPE_SIERPINSKI]),
 
 			   NULL);
@@ -712,13 +712,13 @@ explorer_dialog (void)
   /*  Redmode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Red"),
 				 explorer_radio_update,
-				 &wvals.redmode, (gpointer) wvals.redmode,
+				 &wvals.redmode, GINT_TO_POINTER (wvals.redmode),
 
-				 _("Sine"), (gpointer) SINUS,
+				 _("Sine"), GINT_TO_POINTER (SINUS),
 				 &elements->redmode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS),
 				 &elements->redmode[COSINUS],
-				 _("None"), (gpointer) NONE,
+				 _("None"), GINT_TO_POINTER (NONE),
 				 &elements->redmode[NONE],
 
 				 NULL);
@@ -753,13 +753,13 @@ explorer_dialog (void)
   /*  Greenmode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Green"),
 				 explorer_radio_update,
-				 &wvals.greenmode, (gpointer) wvals.greenmode,
+				 &wvals.greenmode, GINT_TO_POINTER (wvals.greenmode),
 
-				 _("Sine"), (gpointer) SINUS,
+				 _("Sine"), GINT_TO_POINTER (SINUS),
 				 &elements->greenmode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS),
 				 &elements->greenmode[COSINUS],
-				 _("None"), (gpointer) NONE,
+				 _("None"), GINT_TO_POINTER (NONE),
 				 &elements->greenmode[NONE],
 
 				 NULL);
@@ -794,13 +794,13 @@ explorer_dialog (void)
   /*  Bluemode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Blue"),
 				 explorer_radio_update,
-				 &wvals.bluemode, (gpointer) wvals.bluemode,
+				 &wvals.bluemode, GINT_TO_POINTER (wvals.bluemode),
 
-				 _("Sine"), (gpointer) SINUS,
+				 _("Sine"), GINT_TO_POINTER (SINUS),
 				 &elements->bluemode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
+				 _("Cosine"), GINT_TO_POINTER (COSINUS),
 				 &elements->bluemode[COSINUS],
-				 _("None"), (gpointer) NONE,
+				 _("None"), GINT_TO_POINTER (NONE),
 				 &elements->bluemode[NONE],
 
 				 NULL);
@@ -847,7 +847,7 @@ explorer_dialog (void)
     gtk_radio_button_new_with_label (group, _("As Specified above"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) 0);
+  gtk_object_set_user_data (GTK_OBJECT (toggle), GINT_TO_POINTER (0));
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (explorer_radio_update),
 		      &wvals.colormode);
@@ -868,7 +868,7 @@ explorer_dialog (void)
 				     _("Apply Active Gradient to Final Image"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) 1);
+  gtk_object_set_user_data (GTK_OBJECT (toggle), GINT_TO_POINTER (1));
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (explorer_radio_update),
 		      &wvals.colormode);

@@ -1492,10 +1492,10 @@ alienmap2_dialog (void)
   frame =
     gimp_radio_group_new2 (TRUE, _("Mode"),
 			   alienmap2_radio_update,
-			   &wvals.colormodel, (gpointer) wvals.colormodel,
+			   &wvals.colormodel, GINT_TO_POINTER (wvals.colormodel),
 
-			   _("RGB Color Model"), (gpointer) RGB_MODEL, NULL,
-			   _("HSL Color Model"), (gpointer) HSL_MODEL, NULL,
+			   _("RGB Color Model"), GINT_TO_POINTER (RGB_MODEL), NULL,
+			   _("HSL Color Model"), GINT_TO_POINTER (HSL_MODEL), NULL,
 
 			   NULL);
   gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,

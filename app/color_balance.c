@@ -437,7 +437,7 @@ color_balance_dialog_new (void)
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (hbox), radio_button, TRUE, FALSE, 0);
 
-      gtk_object_set_user_data (GTK_OBJECT (radio_button), (gpointer) i);
+      gtk_object_set_user_data (GTK_OBJECT (radio_button), GINT_TO_POINTER (i));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  GTK_SIGNAL_FUNC (color_balance_range_callback),
 			  cbd);

@@ -614,7 +614,7 @@ do_dialog (void)
 
 	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			     GTK_SIGNAL_FUNC (dialog_toggle_update),
-			     (gpointer) i);
+			     GINT_TO_POINTER (i));
 
 	 gtk_table_attach (GTK_TABLE (table), button,
 			   (i % 2) ? 2 : 0, (i % 2) ? 3 : 1,
@@ -657,7 +657,7 @@ do_dialog (void)
 
 	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			     GTK_SIGNAL_FUNC (dialog_toggle_update),
-			     (gpointer) (i + 5));
+			     GINT_TO_POINTER (i + 5));
 
 	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);

@@ -25,7 +25,7 @@ gint p_plug_in_universal_filter_iter_ALT(GimpRunModeType run_mode, gint32 total_
     if(len_struct != sizeof(t_plug_in_universal_filter_Vals)) 
     {
       fprintf(stderr, "ERROR: p_plug_in_universal_filter_iter_ALT  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_plug_in_universal_filter_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_plug_in_universal_filter_Vals) ); 
       return -1;  /* ERROR */ 
     }
 

@@ -398,13 +398,13 @@ levels_dialog_new (void)
 
   ld->channel_menu = gimp_option_menu_new2
     (FALSE, levels_channel_callback,
-     ld, (gpointer) ld->channel,
+     ld, GINT_TO_POINTER (ld->channel),
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &color_option_items[0],
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &color_option_items[1],
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &color_option_items[2],
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &color_option_items[3],
-     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &color_option_items[4],
+     _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), &color_option_items[0],
+     _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   &color_option_items[1],
+     _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN), &color_option_items[2],
+     _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),  &color_option_items[3],
+     _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA), &color_option_items[4],
 
      NULL);
   gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);

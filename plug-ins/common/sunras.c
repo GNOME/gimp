@@ -1601,10 +1601,10 @@ save_dialog (void)
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Formatting"),
 				 gimp_radio_button_update,
-				 &psvals.rle, (gpointer) psvals.rle,
+				 &psvals.rle, GINT_TO_POINTER (psvals.rle),
 
-				 _("RunLength Encoded"), (gpointer) TRUE, NULL,
-				 _("Standard"),          (gpointer) FALSE, NULL,
+				 _("RunLength Encoded"), GINT_TO_POINTER (TRUE), NULL,
+				 _("Standard"),          GINT_TO_POINTER (FALSE), NULL,
 
 				 NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);

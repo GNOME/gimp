@@ -2779,7 +2779,7 @@ palette_import_store_colors (GHashTable *h_array,
     }
   else
     {
-      found_color = g_hash_table_lookup (h_array, (gpointer) key_colors);
+      found_color = g_hash_table_lookup (h_array, GUINT_TO_POINTER (key_colors));
     }
 
   if (found_color == NULL)
@@ -2802,7 +2802,7 @@ palette_import_store_colors (GHashTable *h_array,
       new_color->g = colors[1];
       new_color->b = colors[2];
 
-      g_hash_table_insert (h_array, (gpointer) key_colors, new_color);
+      g_hash_table_insert (h_array, GUINT_TO_POINTER (key_colors), new_color);
     }
   else
     {

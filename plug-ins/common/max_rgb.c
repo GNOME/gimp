@@ -380,12 +380,12 @@ dialog (GimpDrawable *drawable)
   
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 				 radio_callback,
-				 &pvals.max_p, (gpointer) pvals.max_p,
+				 &pvals.max_p, GINT_TO_POINTER (pvals.max_p),
 
 				 _("Hold the Maximal Channels"),
-				 (gpointer) MAX_CHANNELS, &max,
+				 GINT_TO_POINTER (MAX_CHANNELS), &max,
 				 _("Hold the Minimal Channels"),
-				 (gpointer) MIN_CHANNELS, &min,
+				 GINT_TO_POINTER (MIN_CHANNELS), &min,
 
 				 NULL);
   gtk_object_set_data (GTK_OBJECT (max), "drawable", drawable);

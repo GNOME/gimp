@@ -546,10 +546,10 @@ pluginCoreIA (struct piArgs *argp)
 
   frame = gimp_radio_group_new2 (TRUE, _("Function"),
 				 emboss_radio_button_callback,
-				 &argp->embossp, (gpointer) argp->embossp,
+				 &argp->embossp, GINT_TO_POINTER (argp->embossp),
 
-				 _("Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,
-				 _("Emboss"), (gpointer) FUNCTION_EMBOSS, NULL,
+				 _("Bumpmap"), GINT_TO_POINTER (FUNCTION_BUMPMAP), NULL,
+				 _("Emboss"), GINT_TO_POINTER (FUNCTION_EMBOSS), NULL,
 
 				 NULL);
 

@@ -1323,7 +1323,7 @@ update_options (GFigObj *old_obj)
 	(gtk_menu_get_active
 	 (GTK_MENU (gtk_option_menu_get_menu
 		    (GTK_OPTION_MENU (gfig_opt_widget.gridtypemenu)))),
-	 (gpointer) GRID_TYPE_MENU);
+	 GINT_TO_POINTER (GRID_TYPE_MENU));
 #ifdef DEBUG
       printf ("Gridtype set in options to ");
       if (current_obj->opts.gridtype == RECT_GRID)
@@ -1713,7 +1713,7 @@ refill_cache (void)
     (gtk_widget_get_toplevel (GTK_WIDGET (gfig_preview))->window,
      preview_cursor2);
 
-  toggle_obj_type (NULL, (gpointer) selvals.otype);
+  toggle_obj_type (NULL, GINT_TO_POINTER (selvals.otype));
 }
 
 static GtkWidget *
@@ -1765,7 +1765,7 @@ select_button_press (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     gpointer        data)
 {
-  gint type = (gint) data;
+  gint type = GPOINTER_TO_INT (data);
   gint count = 0;
   DAllObjs * objs;
 
@@ -1821,21 +1821,21 @@ obj_select_buttons (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      GTK_SIGNAL_FUNC (select_button_press),
-		      (gpointer) OBJ_SELECT_LT);
+		      GINT_TO_POINTER (OBJ_SELECT_LT));
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (">");
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      GTK_SIGNAL_FUNC (select_button_press),
-		      (gpointer) OBJ_SELECT_GT);
+		      GINT_TO_POINTER (OBJ_SELECT_GT));
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label ("==");
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      GTK_SIGNAL_FUNC (select_button_press),
-		      (gpointer) OBJ_SELECT_EQ);
+		      GINT_TO_POINTER (OBJ_SELECT_EQ));
   gtk_widget_show (button);
 
   return vbox;
@@ -1854,7 +1854,7 @@ but_with_pix (gchar  **pixdata,
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE); 
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (toggle_obj_type),
-		      (gpointer) baction);
+		      GINT_TO_POINTER (baction));
   gtk_widget_show (button);
 
   *group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -1977,10 +1977,10 @@ num_sides_dialog (gchar *d_title,
 
       option_menu =
 	gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
-			       which_way, (gpointer) *which_way,
+			       which_way, GINT_TO_POINTER (*which_way),
 
-			       _("Clockwise"),      (gpointer) 0, NULL,
-			       _("Anti-Clockwise"), (gpointer) 1, NULL,
+			       _("Clockwise"),      GINT_TO_POINTER (0), NULL,
+			       _("Anti-Clockwise"), GINT_TO_POINTER (1), NULL,
 
 			       NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -2349,12 +2349,12 @@ gfig_brush_preview (GtkWidget **pv)
 
   option_menu =
     gimp_option_menu_new2 (FALSE, gfig_brush_menu_callback,
-			   *pv, (gpointer) selvals.brshtype,
+			   *pv, GINT_TO_POINTER (selvals.brshtype),
 
-			   _("Brush"),    (gpointer) BRUSH_BRUSH_TYPE, NULL,
-			   _("Airbrush"), (gpointer) BRUSH_AIRBRUSH_TYPE, NULL,
-			   _("Pencil"),   (gpointer) BRUSH_PENCIL_TYPE, NULL,
-			   _("Pattern"),  (gpointer) BRUSH_PATTERN_TYPE, NULL,
+			   _("Brush"),    GINT_TO_POINTER (BRUSH_BRUSH_TYPE), NULL,
+			   _("Airbrush"), GINT_TO_POINTER (BRUSH_AIRBRUSH_TYPE), NULL,
+			   _("Pencil"),   GINT_TO_POINTER (BRUSH_PENCIL_TYPE), NULL,
+			   _("Pattern"),  GINT_TO_POINTER (BRUSH_PATTERN_TYPE), NULL,
 
 			   NULL);
   gtk_widget_show (option_menu);
@@ -2643,7 +2643,7 @@ static void
 gfig_brush_pane_activate (GtkWidget *widget,
 			  gpointer   data)
 {
-  gint flag = (gint) data;
+  gint flag = GPOINTER_TO_INT (data);
 
   if (flag)
     {
@@ -2661,7 +2661,7 @@ static void
 gfig_select_pane_activate (GtkWidget *widget,
 			   gpointer   data)
 {
-  gint flag = (gint) data;
+  gint flag = GPOINTER_TO_INT (data);
 
   if (flag)
     {
@@ -2680,7 +2680,7 @@ static void
 paint_menu_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  gint mtype = (gint)data;
+  gint mtype = GPOINTER_TO_INT (data);
 
   if (mtype == PAINT_LAYERS_MENU)
     {
@@ -2765,11 +2765,11 @@ paint_page (void)
 
   page_menu_layers =
     gimp_option_menu_new2 (FALSE, paint_menu_callback,
-			   (gpointer) PAINT_LAYERS_MENU, 0,
+			   GINT_TO_POINTER (PAINT_LAYERS_MENU), GINT_TO_POINTER (0),
 
-			   _("Original"), (gpointer) ORIGINAL_LAYER, NULL,
-			   _("New"),      (gpointer) SINGLE_LAYER, NULL,
-			   _("Multiple"), (gpointer) MULTI_LAYER, NULL,
+			   _("Original"), GINT_TO_POINTER (ORIGINAL_LAYER), NULL,
+			   _("New"),      GINT_TO_POINTER (SINGLE_LAYER), NULL,
+			   _("Multiple"), GINT_TO_POINTER (MULTI_LAYER), NULL,
 
 			   NULL);
 
@@ -2784,37 +2784,37 @@ paint_page (void)
 
   page_menu_type =
     gimp_option_menu_new2 (FALSE, paint_menu_callback,
-			   (gpointer) PAINT_TYPE_MENU, 0,
+			   GINT_TO_POINTER (PAINT_TYPE_MENU), GINT_TO_POINTER (0),
 
 			   _("Brush"),
-			   (gpointer) PAINT_BRUSH_TYPE, &item1,
+			   GINT_TO_POINTER (PAINT_BRUSH_TYPE), &item1,
 			   _("Selection"),
-			   (gpointer) PAINT_SELECTION_TYPE, &item2,
+			   GINT_TO_POINTER (PAINT_SELECTION_TYPE), &item2,
 			   _("Selection+Fill"),
-			   (gpointer) PAINT_SELECTION_FILL_TYPE, &item3,
+			   GINT_TO_POINTER (PAINT_SELECTION_FILL_TYPE), &item3,
 
 			   NULL);
 
   gtk_signal_connect (GTK_OBJECT (item1), "activate",
 		      GTK_SIGNAL_FUNC (gfig_brush_pane_activate),
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
   gtk_signal_connect (GTK_OBJECT (item1), "activate",
 		      GTK_SIGNAL_FUNC (gfig_select_pane_activate),
-		      (gpointer) 0);
+		      GINT_TO_POINTER (0));
 
   gtk_signal_connect (GTK_OBJECT (item2), "activate",
 		      GTK_SIGNAL_FUNC (gfig_brush_pane_activate),
-		      (gpointer) 0);
+		      GINT_TO_POINTER (0));
   gtk_signal_connect (GTK_OBJECT (item2), "activate",
 		      GTK_SIGNAL_FUNC (gfig_select_pane_activate),
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
 
   gtk_signal_connect (GTK_OBJECT (item3), "activate",
 		      GTK_SIGNAL_FUNC (gfig_brush_pane_activate),
-		      (gpointer) 0);
+		      GINT_TO_POINTER (0));
   gtk_signal_connect (GTK_OBJECT (item3), "activate",
 		      GTK_SIGNAL_FUNC (gfig_select_pane_activate),
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
 
   gimp_help_set_help_data (page_menu_type,
 			_("Draw type. Either a brush or a selection. "
@@ -2826,13 +2826,13 @@ paint_page (void)
 
   page_menu_bg =
     gimp_option_menu_new2 (FALSE, paint_menu_callback,
-			   (gpointer) PAINT_BGS_MENU, 0,
+			   GINT_TO_POINTER (PAINT_BGS_MENU), GINT_TO_POINTER (0),
 
-			   _("Transparent"), (gpointer) LAYER_TRANS_BG, NULL,
-			   _("Background"),  (gpointer) LAYER_BG_BG, NULL,
-			   _("Foreground"),  (gpointer) LAYER_FG_BG, NULL,
-			   _("White"),       (gpointer) LAYER_WHITE_BG, NULL,
-			   _("Copy"),        (gpointer) LAYER_COPY_BG, NULL,
+			   _("Transparent"), GINT_TO_POINTER (LAYER_TRANS_BG), NULL,
+			   _("Background"),  GINT_TO_POINTER (LAYER_BG_BG), NULL,
+			   _("Foreground"),  GINT_TO_POINTER (LAYER_FG_BG), NULL,
+			   _("White"),       GINT_TO_POINTER (LAYER_WHITE_BG), NULL,
+			   _("Copy"),        GINT_TO_POINTER (LAYER_COPY_BG), NULL,
 
 			   NULL);
   gimp_help_set_help_data (page_menu_bg,
@@ -3069,7 +3069,7 @@ static void
 select_menu_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  gint mtype = (gint) data;
+  gint mtype = GPOINTER_TO_INT (data);
 
   if (mtype == SELECT_TYPE_MENU)
     {
@@ -3132,12 +3132,12 @@ select_page (void)
 
   /* 1 */
   menu = gimp_option_menu_new2 (FALSE, select_menu_callback,
-				(gpointer) SELECT_TYPE_MENU, 0,
+				GINT_TO_POINTER (SELECT_TYPE_MENU), GINT_TO_POINTER (0),
 
-				_("Add"),       (gpointer) ADD, NULL,
-				_("Subtract"),  (gpointer) SUBTRACT, NULL,
-				_("Replace"),   (gpointer) REPLACE, NULL,
-				_("Intersect"), (gpointer) INTERSECT, NULL,
+				_("Add"),       GINT_TO_POINTER (ADD), NULL,
+				_("Subtract"),  GINT_TO_POINTER (SUBTRACT), NULL,
+				_("Replace"),   GINT_TO_POINTER (REPLACE), NULL,
+				_("Intersect"), GINT_TO_POINTER (INTERSECT), NULL,
 
 				NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -3178,11 +3178,11 @@ select_page (void)
   /* 5 */
   menu =
     gimp_option_menu_new2 (FALSE, select_menu_callback,
-			   (gpointer) SELECT_TYPE_MENU_FILL, 0,
+			   GINT_TO_POINTER (SELECT_TYPE_MENU_FILL), GINT_TO_POINTER (0),
 
-			   _("Pattern"),    (gpointer) FILL_PATTERN, NULL,
-			   _("Foreground"), (gpointer) FILL_FOREGROUND, NULL,
-			   _("Background"), (gpointer) FILL_BACKGROUND, NULL,
+			   _("Pattern"),    GINT_TO_POINTER (FILL_PATTERN), NULL,
+			   _("Foreground"), GINT_TO_POINTER (FILL_FOREGROUND), NULL,
+			   _("Background"), GINT_TO_POINTER (FILL_BACKGROUND), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -3205,10 +3205,10 @@ select_page (void)
   /* 7 */
   menu =
     gimp_option_menu_new2 (FALSE, select_menu_callback,
-			   (gpointer) SELECT_TYPE_MENU_WHEN, 0,
+			   GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN), GINT_TO_POINTER (0),
 
-			   _("Each Selection"), (gpointer) FILL_EACH, NULL,
-			   _("All Selections"), (gpointer) FILL_AFTER, NULL,
+			   _("Each Selection"), GINT_TO_POINTER (FILL_EACH), NULL,
+			   _("All Selections"), GINT_TO_POINTER (FILL_AFTER), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -3217,10 +3217,10 @@ select_page (void)
 
   /* 8 */
   menu = gimp_option_menu_new2 (FALSE, select_menu_callback,
-				(gpointer) SELECT_ARCTYPE_MENU, 0,
+				GINT_TO_POINTER (SELECT_ARCTYPE_MENU), GINT_TO_POINTER (0),
 
-				_("Segment"), (gpointer) ARC_SEGMENT, NULL,
-				_("Sector"),  (gpointer) ARC_SECTOR, NULL,
+				_("Segment"), GINT_TO_POINTER (ARC_SEGMENT), NULL,
+				_("Sector"),  GINT_TO_POINTER (ARC_SECTOR), NULL,
 
 				NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
@@ -3234,7 +3234,7 @@ static void
 gridtype_menu_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gint mtype = (gint)data;
+  gint mtype = GPOINTER_TO_INT (data);
 
   if (mtype == GRID_TYPE_MENU)
     {
@@ -3252,7 +3252,7 @@ gridtype_menu_callback (GtkWidget *widget,
     }
   else
     {
-      grid_gc_type = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      grid_gc_type = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
     }
 
   draw_grid_clear (widget, 0);
@@ -3286,7 +3286,7 @@ options_page (void)
 		      &selvals.showimage);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) toggle_show_image,
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
   gtk_widget_show (toggle);
 
   button = gtk_button_new_with_label (_("Reload Image"));
@@ -3299,11 +3299,11 @@ options_page (void)
 			     button, 1, TRUE);
 
   menu = gimp_option_menu_new2 (FALSE, gridtype_menu_callback,
-				(gpointer) GRID_TYPE_MENU, 0,
+				GINT_TO_POINTER (GRID_TYPE_MENU), GINT_TO_POINTER (0),
 
-				_("Rectangle"), (gpointer) RECT_GRID, NULL,
-				_("Polar"),     (gpointer) POLAR_GRID, NULL,
-				_("Isometric"), (gpointer) ISO_GRID, NULL,
+				_("Rectangle"), GINT_TO_POINTER (RECT_GRID), NULL,
+				_("Polar"),     GINT_TO_POINTER (POLAR_GRID), NULL,
+				_("Isometric"), GINT_TO_POINTER (ISO_GRID), NULL,
 
 				NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -3314,15 +3314,15 @@ options_page (void)
 
   menu =
     gimp_option_menu_new2 (FALSE, gridtype_menu_callback,
-			   (gpointer) GRID_RENDER_MENU, 0,
+			   GINT_TO_POINTER (GRID_RENDER_MENU), GINT_TO_POINTER (0),
 
-			   _("Normal"),     (gpointer) GTK_STATE_NORMAL, NULL,
-			   _("Black"),      (gpointer) GFIG_BLACK_GC, NULL,
-			   _("White"),      (gpointer) GFIG_WHITE_GC, NULL,
-			   _("Grey"),       (gpointer) GFIG_GREY_GC, NULL,
-			   _("Darker"),     (gpointer) GTK_STATE_ACTIVE, NULL,
-			   _("Lighter"),    (gpointer) GTK_STATE_PRELIGHT, NULL,
-			   _("Very Dark"),  (gpointer) GTK_STATE_SELECTED, NULL,
+			   _("Normal"),     GINT_TO_POINTER (GTK_STATE_NORMAL), NULL,
+			   _("Black"),      GINT_TO_POINTER (GFIG_BLACK_GC), NULL,
+			   _("White"),      GINT_TO_POINTER (GFIG_WHITE_GC), NULL,
+			   _("Grey"),       GINT_TO_POINTER (GFIG_GREY_GC), NULL,
+			   _("Darker"),     GINT_TO_POINTER (GTK_STATE_ACTIVE), NULL,
+			   _("Lighter"),    GINT_TO_POINTER (GTK_STATE_PRELIGHT), NULL,
+			   _("Very Dark"),  GINT_TO_POINTER (GTK_STATE_SELECTED), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -3346,7 +3346,7 @@ options_page (void)
 		      &selvals.showpos);
   gtk_signal_connect_after (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_pos_enable,
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
   gtk_widget_show (toggle); 
 
   toggle = gtk_check_button_new_with_label (_("Hide Control Points"));
@@ -3357,7 +3357,7 @@ options_page (void)
 		      &selvals.opts.showcontrol);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (toggle_show_image),
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
   gtk_widget_show (toggle); 
   gfig_opt_widget.showcontrol = toggle;
 
@@ -3419,7 +3419,7 @@ grid_frame (void)
 		      &selvals.opts.drawgrid);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (draw_grid_clear),
-		      (gpointer) 1);
+		      GINT_TO_POINTER (1));
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
 
@@ -3448,7 +3448,7 @@ grid_frame (void)
 		      &selvals.opts.gridspacing);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      GTK_SIGNAL_FUNC (draw_grid_clear),
-		      (gpointer) 0);
+		      GINT_TO_POINTER (0));
   gfig_opt_widget.gridspacing = size_data;
 
   gtk_widget_show (frame);
@@ -7204,7 +7204,7 @@ d_paint_circle (Dobject *obj)
 
   if (selvals.approxcircles)
     {
-      obj->type_data = (gpointer) 600;
+      obj->type_data = GINT_TO_POINTER (600);
 #ifdef DEBUG
       printf ("Painting circle as polygon\n");
 #endif /* DEBUG */
@@ -7917,7 +7917,7 @@ d_save_poly (Dobject * obj, FILE *to)
     }
   
   fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", (gint)obj->type_data);
+  fprintf (to, "%d\n</EXTRA>\n", GPOINTER_TO_INT (obj->type_data));
   fprintf (to, "</POLY>\n");
 
 }
@@ -7958,7 +7958,7 @@ d_load_poly (FILE *from)
 			    line_no);
 		  return (NULL);
 		}
-	      new_obj->type_data = (gpointer)nsides;
+	      new_obj->type_data = GINT_TO_POINTER (nsides);
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
 	      if (strcmp ("</EXTRA>", buf))
 		{
@@ -8034,10 +8034,10 @@ d_draw_poly (Dobject *obj)
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble) (gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble) GPOINTER_TO_INT (obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
-  for (loop = 0 ; loop < (gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -8134,7 +8134,7 @@ d_paint_poly (Dobject *obj)
   g_assert (obj != NULL);
 
   /* count - add one to close polygon */
-  seg_count = (gint)obj->type_data + 1;
+  seg_count = GPOINTER_TO_INT (obj->type_data) + 1;
 
   center_pnt = obj->points;
 
@@ -8154,10 +8154,10 @@ d_paint_poly (Dobject *obj)
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble) (gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble) GPOINTER_TO_INT (obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
-  for (loop = 0 ; loop < (gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -8248,7 +8248,7 @@ d_poly2lines (Dobject *obj)
 #endif /* DEBUG */
 
   /* count - add one to close polygon */
-  seg_count = (gint)obj->type_data + 1;
+  seg_count = GPOINTER_TO_INT (obj->type_data) + 1;
 
   center_pnt = obj->points;
 
@@ -8272,10 +8272,10 @@ d_poly2lines (Dobject *obj)
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble) (gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble) GPOINTER_TO_INT (obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
-  for (loop = 0 ; loop < (gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -8352,7 +8352,7 @@ d_star2lines (Dobject *obj)
 #endif /* DEBUG */
 
   /* count - add one to close polygon */
-  seg_count = 2*(gint)obj->type_data + 1;
+  seg_count = 2*GPOINTER_TO_INT (obj->type_data) + 1;
 
   center_pnt = obj->points;
 
@@ -8393,7 +8393,7 @@ d_star2lines (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) (gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble) GPOINTER_TO_INT (obj->type_data));
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -8401,7 +8401,7 @@ d_star2lines (Dobject *obj)
 
   inner_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
-  for (loop = 0 ; loop < 2*(gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < 2*GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -8504,7 +8504,7 @@ d_new_poly (gint x, gint y)
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = POLY;
-  nobj->type_data = (gpointer)3; /* Default to three sides */
+  nobj->type_data = GINT_TO_POINTER (3); /* Default to three sides */
   nobj->points = npnt;
   nobj->drawfunc  = d_draw_poly;
   nobj->loadfunc  = d_load_poly;
@@ -8576,7 +8576,7 @@ d_poly_start (GdkPoint *pnt,
   gint16 x, y;
   /* First is center point */
   obj_creating = d_new_poly (x = pnt->x, y = pnt->y);
-  obj_creating->type_data = (gpointer)poly_num_sides;
+  obj_creating->type_data = GINT_TO_POINTER (poly_num_sides);
 }
 
 static void
@@ -9339,7 +9339,7 @@ d_save_star (Dobject *obj,
     }
   
   fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", (gint)obj->type_data);
+  fprintf (to, "%d\n</EXTRA>\n", GPOINTER_TO_INT (obj->type_data));
   fprintf (to, "</STAR>\n");
 }
 
@@ -9379,7 +9379,7 @@ d_load_star (FILE *from)
 			    line_no);
 		  return (NULL);
 		}
-	      new_obj->type_data = (gpointer)nsides;
+	      new_obj->type_data = GINT_TO_POINTER (nsides);
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
 	      if (strcmp ("</EXTRA>", buf))
 		{
@@ -9468,7 +9468,7 @@ d_draw_star (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) (gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble) GPOINTER_TO_INT (obj->type_data));
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -9476,7 +9476,7 @@ d_draw_star (Dobject *obj)
 
   inner_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
-  for (loop = 0 ; loop < 2*(gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < 2*GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -9584,7 +9584,7 @@ d_paint_star (Dobject *obj)
   g_assert (obj != NULL);
 
   /* count - add one to close polygon */
-  seg_count = 2*(gint)obj->type_data + 1;
+  seg_count = 2*GPOINTER_TO_INT (obj->type_data) + 1;
 
   center_pnt = obj->points;
 
@@ -9621,7 +9621,7 @@ d_paint_star (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) (gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble) GPOINTER_TO_INT (obj->type_data));
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -9629,7 +9629,7 @@ d_paint_star (Dobject *obj)
 
   inner_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
-  for (loop = 0 ; loop < 2*(gint)obj->type_data ; loop++)
+  for (loop = 0 ; loop < 2*GPOINTER_TO_INT (obj->type_data) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -9749,7 +9749,7 @@ d_new_star (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = STAR;
-  nobj->type_data = (gpointer)3; /* Default to three sides 6 points*/
+  nobj->type_data = GINT_TO_POINTER (3); /* Default to three sides 6 points*/
   nobj->points = npnt;
   nobj->drawfunc  = d_draw_star;
   nobj->loadfunc  = d_load_star;
@@ -9831,7 +9831,7 @@ d_star_start (GdkPoint *pnt,
   gint16 x, y;
   /* First is center point */
   obj_creating = d_new_star (x = pnt->x, y = pnt->y);
-  obj_creating->type_data = (gpointer)star_num_sides;
+  obj_creating->type_data = GINT_TO_POINTER (star_num_sides);
 }
 
 static void
@@ -9868,7 +9868,7 @@ d_save_spiral (Dobject *obj,
     }
   
   fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", (gint)obj->type_data);
+  fprintf (to, "%d\n</EXTRA>\n", GPOINTER_TO_INT (obj->type_data));
   fprintf (to, "</SPIRAL>\n");
 
 }
@@ -9909,7 +9909,7 @@ d_load_spiral (FILE *from)
 			    line_no);
 		  return (NULL);
 		}
-	      new_obj->type_data = (gpointer)nsides;
+	      new_obj->type_data = GINT_TO_POINTER (nsides);
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
 	      if (strcmp ("</EXTRA>", buf))
 		{
@@ -9988,17 +9988,17 @@ d_draw_spiral (Dobject *obj)
 
   offset_angle = atan2 (shift_y, shift_x);
 
-  clock_wise = ((gint)obj->type_data)/(abs ((gint) (obj->type_data)));
+  clock_wise = (GPOINTER_TO_INT (obj->type_data))/(abs (GPOINTER_TO_INT (obj->type_data)));
 
   if (offset_angle < 0)
     offset_angle += 2*G_PI;
 
-  sp_cons = radius/((gint)obj->type_data * 2 * G_PI + offset_angle);
+  sp_cons = radius/(GPOINTER_TO_INT (obj->type_data) * 2 * G_PI + offset_angle);
   /* Lines */
   ang_grid = 2.0*G_PI/(gdouble)180;
 
 
-  for (loop = 0 ; loop <= abs ((gint) (obj->type_data)*180) + clock_wise*(gint)RINT (offset_angle/ang_grid) ; loop++)
+  for (loop = 0 ; loop <= abs (GPOINTER_TO_INT (obj->type_data)*180) + clock_wise*(gint)RINT (offset_angle/ang_grid) ; loop++)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
@@ -10090,20 +10090,20 @@ d_paint_spiral (Dobject *obj)
 
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
-  clock_wise = ((gint)obj->type_data)/(abs ((gint) (obj->type_data)));
+  clock_wise = (GPOINTER_TO_INT (obj->type_data))/(abs (GPOINTER_TO_INT (obj->type_data)));
 
   offset_angle = atan2 (shift_y, shift_x);
 
   if (offset_angle < 0)
     offset_angle += 2*G_PI;
 
-  sp_cons = radius/((gint)obj->type_data * 2 * G_PI + offset_angle);
+  sp_cons = radius/(GPOINTER_TO_INT (obj->type_data) * 2 * G_PI + offset_angle);
   /* Lines */
   ang_grid = 2.0*G_PI/(gdouble)180;
 
 
   /* count - */
-  seg_count = abs ((gint) (obj->type_data)*180) + clock_wise*(gint)RINT (offset_angle/ang_grid);
+  seg_count = abs (GPOINTER_TO_INT (obj->type_data)*180) + clock_wise*(gint)RINT (offset_angle/ang_grid);
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
@@ -10209,7 +10209,7 @@ d_new_spiral (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = SPIRAL;
-  nobj->type_data = (gpointer)4; /* Default to four turns */
+  nobj->type_data = GINT_TO_POINTER (4); /* Default to four turns */
   nobj->points = npnt;
   nobj->drawfunc  = d_draw_spiral;
   nobj->loadfunc  = d_load_spiral;
@@ -10281,7 +10281,7 @@ d_spiral_start (GdkPoint *pnt,
   /* First is center point */
   obj_creating = d_new_spiral (x = pnt->x, y = pnt->y);
   obj_creating->type_data =
-    (gpointer) (spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1));
+    GINT_TO_POINTER ((spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1)));
 }
 
 static void
@@ -10317,7 +10317,7 @@ d_save_bezier (Dobject *obj,
     }
   
   fprintf (to, "<EXTRA>\n");
-  fprintf (to, "%d\n</EXTRA>\n", (gint) obj->type_data);
+  fprintf (to, "%d\n</EXTRA>\n", GPOINTER_TO_INT (obj->type_data));
   fprintf (to, "</BEZIER>\n");
 }
 
@@ -10357,7 +10357,7 @@ d_load_bezier (FILE *from)
 			     "(extra area scanf)", line_no);
 		  return NULL;
 		}
-	      new_obj->type_data = (gpointer) nsides;
+	      new_obj->type_data = GINT_TO_POINTER (nsides);
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
 	      if (strcmp ("</EXTRA>", buf))
 		{
@@ -10704,7 +10704,7 @@ d_new_bezier (gint x, gint y)
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = BEZIER;
-  nobj->type_data = (gpointer)4; /* Default to four turns */
+  nobj->type_data = GINT_TO_POINTER (4); /* Default to four turns */
   nobj->points = npnt;
   nobj->drawfunc  = d_draw_bezier;
   nobj->loadfunc  = d_load_bezier;

@@ -399,7 +399,8 @@ create_tools (GtkWidget *parent)
 			       tool_target_table, tool_n_targets,
 			       GDK_ACTION_COPY);
 	  gimp_dnd_tool_source_set (tool_info[j].tool_widget,
-				    toolbox_drag_tool, (gpointer) j);
+				    toolbox_drag_tool,
+				    GINT_TO_POINTER (j));
 
 	  gimp_help_set_help_data (button,
 				   gettext(tool_info[j].tool_desc),

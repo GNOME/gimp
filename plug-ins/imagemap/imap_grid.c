@@ -86,7 +86,7 @@ static void
 type_toggled_cb(GtkWidget *widget, gpointer data)
 {
    if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED) {
-      grid_type = (gint) data;
+      grid_type = GPOINTER_TO_INT (data);
       redraw_preview();
    }
 }
@@ -170,7 +170,7 @@ create_grid_settings_dialog()
 
    data->hidden = button = gtk_radio_button_new_with_label(NULL, _("Hidden"));
    gtk_signal_connect(GTK_OBJECT(button), "toggled", 
-		      (GtkSignalFunc) type_toggled_cb, (gpointer) GRID_HIDDEN);
+		      (GtkSignalFunc) type_toggled_cb, GINT_TO_POINTER (GRID_HIDDEN));
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
 

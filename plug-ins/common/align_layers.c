@@ -447,18 +447,18 @@ align_layers_dialog (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
-			   &VALS.h_style, (gpointer) VALS.h_style,
+			   &VALS.h_style, GINT_TO_POINTER (VALS.h_style),
 
 			   _("None"),
-			   (gpointer) H_NONE, NULL,
+			   GINT_TO_POINTER (H_NONE), NULL,
 			   _("Collect"),
-			   (gpointer) H_COLLECT, NULL,
+			   GINT_TO_POINTER (H_COLLECT), NULL,
 			   _("Fill (left to right)"),
-			   (gpointer) LEFT2RIGHT, NULL,
+			   GINT_TO_POINTER (LEFT2RIGHT), NULL,
 			   _("Fill (right to left)"),
-			   (gpointer) RIGHT2LEFT, NULL,
+			   GINT_TO_POINTER (RIGHT2LEFT), NULL,
 			   _("Snap to Grid"),
-			   (gpointer) SNAP2HGRID, NULL,
+			   GINT_TO_POINTER (SNAP2HGRID), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -467,11 +467,11 @@ align_layers_dialog (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
-			   &VALS.h_base, (gpointer) VALS.h_base,
+			   &VALS.h_base, GINT_TO_POINTER (VALS.h_base),
 
-			   _("Left Edge"),  (gpointer) H_BASE_LEFT, NULL,
-			   _("Center"),     (gpointer) H_BASE_CENTER, NULL,
-			   _("Right Edge"), (gpointer) H_BASE_RIGHT, NULL,
+			   _("Left Edge"),  GINT_TO_POINTER (H_BASE_LEFT), NULL,
+			   _("Center"),     GINT_TO_POINTER (H_BASE_CENTER), NULL,
+			   _("Right Edge"), GINT_TO_POINTER (H_BASE_RIGHT), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -480,18 +480,18 @@ align_layers_dialog (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
-			   &VALS.v_style, (gpointer) VALS.v_style,
+			   &VALS.v_style, GINT_TO_POINTER (VALS.v_style),
 
 			   _("None"),
-			   (gpointer) V_NONE, NULL,
+			   GINT_TO_POINTER (V_NONE), NULL,
 			   _("Collect"),
-			   (gpointer) V_COLLECT, NULL,
+			   GINT_TO_POINTER (V_COLLECT), NULL,
 			   _("Fill (top to bottom)"),
-			   (gpointer) TOP2BOTTOM, NULL,
+			   GINT_TO_POINTER (TOP2BOTTOM), NULL,
 			   _("Fill (bottom to top)"),
-			   (gpointer) BOTTOM2TOP, NULL,
+			   GINT_TO_POINTER (BOTTOM2TOP), NULL,
 			   _("Snap to Grid"),
-			   (gpointer) SNAP2VGRID, NULL,
+			   GINT_TO_POINTER (SNAP2VGRID), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -500,11 +500,11 @@ align_layers_dialog (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
-			   &VALS.v_base, (gpointer) VALS.v_base,
+			   &VALS.v_base, GINT_TO_POINTER (VALS.v_base),
 
-			   _("Top Edge"),    (gpointer) V_BASE_TOP, NULL,
-			   _("Center"),      (gpointer) V_BASE_CENTER, NULL,
-			   _("Bottom Edge"), (gpointer) V_BASE_BOTTOM, NULL,
+			   _("Top Edge"),    GINT_TO_POINTER (V_BASE_TOP), NULL,
+			   _("Center"),      GINT_TO_POINTER (V_BASE_CENTER), NULL,
+			   _("Bottom Edge"), GINT_TO_POINTER (V_BASE_BOTTOM), NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,

@@ -155,8 +155,8 @@ gimp_unit_menu_new (const gchar *format,
   GtkWidget    *menuitem;
   GimpUnit      u;
 
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < gimp_unit_get_number_of_units ()) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < gimp_unit_get_number_of_units ())) ||
 			(unit == GIMP_UNIT_PERCENT), NULL);
 
   if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
@@ -461,7 +461,7 @@ gimp_unit_menu_selection_ok_callback (GtkWidget *widget,
     {
       unit = (GimpUnit)
 	gtk_clist_get_row_data (GTK_CLIST (gum->clist),
-				(gint) (GTK_CLIST (gum->clist)->selection->data));
+				GPOINTER_TO_INT ((GTK_CLIST (gum->clist)->selection->data)));
       gimp_unit_menu_set_unit (gum, unit);
       gtk_signal_emit (GTK_OBJECT (gum),
 		       gimp_unit_menu_signals[UNIT_CHANGED]);
@@ -592,8 +592,8 @@ gimp_unit_menu_callback (GtkWidget *widget,
   GimpUnit      new_unit;
 
   gum = data;
-  new_unit = (guint) gtk_object_get_data (GTK_OBJECT (widget),
-					  "gimp_unit_menu"); 
+  new_unit = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (widget),
+						    "gimp_unit_menu"));
   
   if (gum->unit == new_unit)
     return;

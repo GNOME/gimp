@@ -1,4 +1,15 @@
 2003-01-14  Manish Singh  <yosh@gimp.org>
+
+	* many files in app, libgimp, and plug-ins: added GINT_TO_POINTER and
+	friends, fixed format strings, for 64-bitness.
+
+	* many Makefile.am's in plug-ins: use LDFLAGS = @LDFLAGS@ $(mwindows)
+	so any user set flags get passed on
+
+	* app/plug_in.h: removed unused structure members housed in #ifdef
+	G_OS_WIN32.
+
+2003-01-14  Manish Singh  <yosh@gimp.org>
  
 	* configure.in: Oops, the configure.in change below didn't actually
 	work. Refactored so it does.

@@ -445,17 +445,17 @@ borderaverage_dialog (void)
 
   menu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
 				&borderaverage_bucket_exponent,
-				(gpointer) borderaverage_bucket_exponent,
+				GINT_TO_POINTER (borderaverage_bucket_exponent),
 
-				_("1 (nonsense?)"),   (gpointer) 0, NULL,
-				"2",                  (gpointer) 1, NULL,
-				"4",                  (gpointer) 2, NULL,
-				"8",                  (gpointer) 3, NULL,
-				"16",                 (gpointer) 4, NULL,
-				"32",                 (gpointer) 5, NULL,
-				"64",                 (gpointer) 6, NULL,
-				"128",                (gpointer) 7, NULL,
-				_("256 (nonsense?)"), (gpointer) 8, NULL,
+				_("1 (nonsense?)"),   GINT_TO_POINTER (0), NULL,
+				"2",                  GINT_TO_POINTER (1), NULL,
+				"4",                  GINT_TO_POINTER (2), NULL,
+				"8",                  GINT_TO_POINTER (3), NULL,
+				"16",                 GINT_TO_POINTER (4), NULL,
+				"32",                 GINT_TO_POINTER (5), NULL,
+				"64",                 GINT_TO_POINTER (6), NULL,
+				"128",                GINT_TO_POINTER (7), NULL,
+				_("256 (nonsense?)"), GINT_TO_POINTER (8), NULL,
 
 				NULL);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);

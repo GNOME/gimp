@@ -48,7 +48,7 @@ gint p_plug_in_map_object_iter_ALT(GimpRunModeType run_mode, gint32 total_steps,
     if(len_struct != sizeof(t_plug_in_map_object_Vals)) 
     {
       fprintf(stderr, "ERROR: p_plug_in_map_object_iter  stored Data missmatch in size %d != %d\n",   
-                       (int)len_struct, sizeof(t_plug_in_map_object_Vals) ); 
+                       (int)len_struct, (int)sizeof(t_plug_in_map_object_Vals) ); 
       return -1;  /* ERROR */ 
     }
 
