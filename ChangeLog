@@ -1,6 +1,6 @@
 Wed Jun 24 00:45:01 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* gimprc
+	* gimprc.in
 	* app/gimprc.c
 	* app/preferences_dialog.c
 	* app/session.c

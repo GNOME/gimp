@@ -166,6 +166,11 @@
 #  Just uncomment the next line
 # (dont-confirm-on-close)
 
+# By default GIMP remembers the positions and sizes of the main dialogs and
+#  advices your window-manager to place them there again the next time you
+#  use the GIMP. To disable this behaviour, uncomment the line below...
+# (dont-save-window-positions-on-exit)
+
 # Setting the level of interpolation
 #  Uncommenting this line will enable cubic interpolation.
 #  By default, GIMP uses linear interpolation, which is faster, but has poorer quality
