@@ -84,6 +84,7 @@ plug-ins/script-fu/scripts/sota-chrome-logo.scm
 plug-ins/script-fu/scripts/speed-text.scm
 plug-ins/script-fu/scripts/sphere.scm
 plug-ins/script-fu/scripts/spinning-globe.scm
+plug-ins/script-fu/scripts/spyrogimp.scm
 plug-ins/script-fu/scripts/starburst-logo.scm
 plug-ins/script-fu/scripts/starscape-logo.scm
 plug-ins/script-fu/scripts/swirltile.scm
@@ -94,7 +95,6 @@ plug-ins/script-fu/scripts/text-circle.scm
 plug-ins/script-fu/scripts/textured-logo.scm
 plug-ins/script-fu/scripts/tileblur.scm
 plug-ins/script-fu/scripts/title-header.scm
-plug-ins/script-fu/scripts/trochoid.scm
 plug-ins/script-fu/scripts/truchet.scm
 plug-ins/script-fu/scripts/unsharp-mask.scm
 plug-ins/script-fu/scripts/waves-anim.scm

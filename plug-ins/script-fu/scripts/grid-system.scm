@@ -72,7 +72,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-grid-system"
-		    _"<Image>/Script-Fu/Render/Make Grid System..."
+		    _"<Image>/Script-Fu/Render/Grid..."
 		    "Draw grid as specified by X-DIVIDES (list of propotions relative to the drawable) and Y-DIVIDES. The color and width of grid is detemined by the current settings of brush."
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"
@@ -80,8 +80,8 @@
 		    "RGB*, INDEXED*, GRAY*"
 		    SF-IMAGE "Image to use" 0
 		    SF-DRAWABLE "Drawable to draw grid" 0
-		    SF-VALUE _"Grids X" script-fu-grid-system-x-divides
-		    SF-VALUE _"Grids Y" script-fu-grid-system-y-divides
+		    SF-VALUE _"X Divisions" script-fu-grid-system-x-divides
+		    SF-VALUE _"Y Divisions" script-fu-grid-system-y-divides
 )
   
 ;;; grid-system.scm ends here

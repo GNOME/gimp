@@ -1,3 +1,8 @@
+2003-06-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in
+	* de.po: updated.
+
 2003-06-16  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation
@@ -9,7 +14,7 @@
 
 2003-06-08  Abel Cheung  <maddog@linux.org.hk>
 
-	* POTFILES.in: Add plug-ins/script-fu/script-fu-text-console.c.
+	* POTFILES.in: Addde plug-ins/script-fu/script-fu-text-console.c.
 
 2003-06-04  Abel Cheung  <maddog@linux.org.hk>
 

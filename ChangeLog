@@ -1,5 +1,14 @@
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/spyrogimp.scm
+	* plug-ins/script-fu/scripts/trochoid.scm: replaced Trochoid
+	script with the more advanced Spyrogimp (bug #115290).
+
+	* plug-ins/script-fu/scripts/grid-system.scm: renamed menu entry.
+
+2003-06-24  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: changed the maximum preview
 	dimensions in gimp_image_get_thumbnail() to the limit implied by
 	the core preview system (GIMP_VIEWABLE_MAX_PREVIEW_SIZE). Fixes

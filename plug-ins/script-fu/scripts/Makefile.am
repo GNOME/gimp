@@ -82,6 +82,7 @@ scriptdata_DATA = \
 	speed-text.scm				\
 	sphere.scm				\
 	spinning-globe.scm			\
+	spyrogimp.scm				\
 	starburst-logo.scm			\
 	starscape-logo.scm			\
 	swirltile.scm				\
@@ -95,7 +96,6 @@ scriptdata_DATA = \
 	textured-logo.scm			\
 	title-header.scm			\
 	tileblur.scm				\
-	trochoid.scm				\
 	truchet.scm				\
 	unsharp-mask.scm			\
 	waves-anim.scm				\
