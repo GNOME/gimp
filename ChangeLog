@@ -1,3 +1,9 @@
+2004-10-30  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-style.c: fixed some annoying popup messages at
+	the price of a smallish mem-leak that I will fix later.
+
 2004-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-generic.c

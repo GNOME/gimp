@@ -51,19 +51,20 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static Dobject  *operation_obj;
+static Dobject  *operation_obj = NULL;
 static GdkPoint *move_all_pnt; /* Point moving all from */
 
-static void     draw_one_obj         (Dobject    *obj);
-static void     do_move_obj          (Dobject    *obj,
-                                      GdkPoint   *to_pnt);
-static void     do_move_all_obj      (GdkPoint   *to_pnt);
-static void     do_move_obj_pnt      (Dobject    *obj,
-                                      GdkPoint   *to_pnt);
-static void     remove_obj_from_list (GFigObj    *obj,
-                                      Dobject    *del_obj);
-static gint     scan_obj_points      (DobjPoints *opnt,
-                                      GdkPoint   *pnt);
+
+static void draw_one_obj         (Dobject    *obj);
+static void do_move_obj          (Dobject    *obj,
+                                  GdkPoint   *to_pnt);
+static void do_move_all_obj      (GdkPoint   *to_pnt);
+static void do_move_obj_pnt      (Dobject    *obj,
+                                  GdkPoint   *to_pnt);
+static void remove_obj_from_list (GFigObj    *obj,
+                                  Dobject    *del_obj);
+static gint scan_obj_points      (DobjPoints *opnt,
+                                  GdkPoint   *pnt);
 
 void
 d_save_object (Dobject *obj,

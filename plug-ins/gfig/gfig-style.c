@@ -210,7 +210,7 @@ gfig_load_style (Style *style,
       if (!strcmp (load_buf2, "</Style>") || feof (fp))
         break;
 
-      style_text[nitems] = (gchar *) g_malloc (MAX_LOAD_LINE);
+      style_text[nitems] = g_new (gchar, MAX_LOAD_LINE);
       strcpy (style_text[nitems], load_buf2);
       nitems++;
     }
@@ -452,11 +452,11 @@ gfig_brush_changed_callback (const gchar *brush_name,
   if (!brush_name)
     g_message ("Error: setting brush name to NULL in color selector callback.");
 
-  gfig_context->current_style->brush_name = (gchar *) brush_name;
-  gfig_context->default_style.brush_name = (gchar *) brush_name;
+  gfig_context->current_style->brush_name = g_strdup (brush_name); /* DDX */
+  gfig_context->default_style.brush_name  = g_strdup (brush_name); /* DDX */
 
   /* this will soon be unneeded */
-  gfig_context->bdesc.name = (gchar *) brush_name;
+  gfig_context->bdesc.name = g_strdup (brush_name); /* DDX */
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
   gimp_context_set_brush (brush_name);
