@@ -1,3 +1,10 @@
+2003-05-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/Makefile.am: changed link order as suggested in
+	bug #111351.
+
 2003-05-22  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb: convert filename to a uri for

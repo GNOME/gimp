@@ -85,11 +85,10 @@ foreach (sort keys %plugins) {
 
     $libgimp .= "\$(top_builddir)/libgimp/libgimp-\$(LT_RELEASE).la";
     if (exists $plugins{$_}->{ui}) {
-	$libgimp .= "\t\t\\\n\t$libgimp";
-	$libgimp =~ s/gimp-/gimpui-/;
-
+        $libgimp =~ s/gimp-/gimpui-/;
         $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(LT_RELEASE).la";
-        $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
+	$libgimp .= "\t\\\n\t\$(top_builddir)/libgimp/libgimp-\$(LT_RELEASE).la";
+        $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
         $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpbase/libgimpbase-\$(LT_RELEASE).la";
     } else {
         $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
