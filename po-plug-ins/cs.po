@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.13\n"
-"POT-Creation-Date: 1999-11-26 11:06+0100\n"
-"PO-Revision-Date: 1999-11-26 11:32+01:00\n"
+"POT-Creation-Date: 1999-11-30 16:09+0100\n"
+"PO-Revision-Date: 1999-11-30 17:18+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,15 +15,15 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
-msgstr ""
+msgstr "Modul barevných transformací \"Vetøelá mapa\""
 
 #: plug-ins/AlienMap/AlienMap.c:190 plug-ins/AlienMap2/AlienMap2.c:213
 msgid "No help yet. Just try it and you'll see!"
-msgstr ""
+msgstr "Zatím není nápovìda. Zkuste a uvidíte!"
 
 #: plug-ins/AlienMap/AlienMap.c:193
 msgid "1th May 1997"
-msgstr ""
+msgstr "1. kvìtna 1997"
 
 #: plug-ins/AlienMap/AlienMap.c:194
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
@@ -31,23 +31,23 @@ msgstr "<Image>/Filtry/Barvy/Mapování/Vetøelá mapa..."
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
-msgstr ""
+msgstr "Vetøelá mapa: Transformuje se..."
 
 #: plug-ins/AlienMap/AlienMap.c:666
 msgid "AlienMap"
-msgstr ""
+msgstr "Vetøelá mapa"
 
 #: plug-ins/AlienMap/AlienMap.c:710
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "Zmìna intenzity èerveného kanálu"
 
 #: plug-ins/AlienMap/AlienMap.c:718
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "Zmìna intenzity zeleného kanálu"
 
 #: plug-ins/AlienMap/AlienMap.c:726
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "Zmìna intenzity modrého kanálu"
 
 #. Redmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:729 plug-ins/common/compose.c:125
@@ -62,7 +62,7 @@ msgstr "Sinus"
 
 #: plug-ins/AlienMap/AlienMap.c:745
 msgid "Use sine-function for red component"
-msgstr ""
+msgstr "Pou¾ít funkci sinus na èervenou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:747 plug-ins/AlienMap/AlienMap.c:789
 #: plug-ins/AlienMap/AlienMap.c:831
@@ -71,7 +71,7 @@ msgstr "Kosinus"
 
 #: plug-ins/AlienMap/AlienMap.c:755
 msgid "Use cosine-function for red component"
-msgstr ""
+msgstr "Pou¾ít funkci kosinus na èervenou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:757 plug-ins/AlienMap/AlienMap.c:799
 #: plug-ins/AlienMap/AlienMap.c:841 plug-ins/common/CML_explorer.c:250
@@ -81,7 +81,7 @@ msgstr "Není"
 
 #: plug-ins/AlienMap/AlienMap.c:765
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Èervený kanál: pou¾ít lineární mapování namísto trigonometrické funkce"
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:772 plug-ins/common/compose.c:125
@@ -91,16 +91,16 @@ msgstr "Zelená:"
 
 #: plug-ins/AlienMap/AlienMap.c:787
 msgid "Use sine-function for green component"
-msgstr ""
+msgstr "Pou¾ít funkci sinus na zelenou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:797
 msgid "Use cosine-function for green component"
-msgstr ""
+msgstr "Pou¾ít funkci kosinus na zelenou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:807
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Zelený kanál: pou¾ít lineární mapování namísto trigonometrické funkce"
 
 #. Bluemode toggle box
 #: plug-ins/AlienMap/AlienMap.c:814 plug-ins/common/compose.c:125
@@ -110,16 +110,16 @@ msgstr "Modrá:"
 
 #: plug-ins/AlienMap/AlienMap.c:829
 msgid "Use sine-function for blue component"
-msgstr ""
+msgstr "Pou¾ít funkci sinus na modrou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:839
 msgid "Use cosine-function for blue component"
-msgstr ""
+msgstr "Pou¾ít funkci kosinus na modrou komponentu"
 
 #: plug-ins/AlienMap/AlienMap.c:849
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Modrý kanál: pou¾ít lineární mapování namísto trigonometrické funkce"
 
 #. Action area
 #: plug-ins/AlienMap/AlienMap.c:861 plug-ins/AlienMap/AlienMap.c:1163
@@ -132,18 +132,19 @@ msgstr ""
 #: plug-ins/common/compose.c:827 plug-ins/common/convmatrix.c:722
 #: plug-ins/common/cubism.c:337 plug-ins/common/decompose.c:993
 #: plug-ins/common/depthmerge.c:752 plug-ins/common/destripe.c:696
-#: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1293
+#: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1296
 #: plug-ins/common/grid.c:461 plug-ins/common/jpeg.c:1569
 #: plug-ins/common/lic.c:1251 plug-ins/common/mail.c:502
 #: plug-ins/common/mapcolor.c:340 plug-ins/common/nova.c:410
-#: plug-ins/common/oilify.c:468 plug-ins/common/png.c:978
-#: plug-ins/common/ps.c:2123 plug-ins/common/ps.c:2387
-#: plug-ins/common/psp.c:476 plug-ins/common/threshold_alpha.c:474
-#: plug-ins/common/threshold_alpha.c:506 plug-ins/common/warp.c:516
-#: plug-ins/common/xbm.c:995 plug-ins/common/xpm.c:797
-#: plug-ins/gap/gap_arr_dialog.c:947 plug-ins/gap/gap_arr_dialog.c:1171
-#: plug-ins/gap/gap_mod_layer.c:149 plug-ins/gap/gap_mov_dialog.c:461
-#: plug-ins/gap/gap_mpege.c:190 plug-ins/gap/gap_resi_dialog.c:136
+#: plug-ins/common/oilify.c:468 plug-ins/common/papertile.c:517
+#: plug-ins/common/png.c:978 plug-ins/common/ps.c:2123
+#: plug-ins/common/ps.c:2387 plug-ins/common/psp.c:476
+#: plug-ins/common/threshold_alpha.c:474 plug-ins/common/threshold_alpha.c:506
+#: plug-ins/common/warp.c:516 plug-ins/common/xbm.c:995
+#: plug-ins/common/xpm.c:797 plug-ins/gap/gap_arr_dialog.c:970
+#: plug-ins/gap/gap_arr_dialog.c:1194 plug-ins/gap/gap_mod_layer.c:149
+#: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:191
+#: plug-ins/gap/gap_resi_dialog.c:136
 #: plug-ins/gimpressionist/gimpressionist.c:368
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
@@ -157,7 +158,7 @@ msgstr "OK"
 
 #: plug-ins/AlienMap/AlienMap.c:869 plug-ins/AlienMap2/AlienMap2.c:792
 msgid "Accept settings and apply filter on image"
-msgstr ""
+msgstr "Pøijmout nastavení a pou¾ít filtr na obrázek"
 
 #. the 3 Action Buttons
 #: libgimp/gimpexport.c:307 plug-ins/AlienMap/AlienMap.c:871
@@ -169,8 +170,8 @@ msgstr ""
 #: plug-ins/common/compose.c:836 plug-ins/common/convmatrix.c:731
 #: plug-ins/common/cubism.c:346 plug-ins/common/decompose.c:1002
 #: plug-ins/common/depthmerge.c:761 plug-ins/common/destripe.c:705
-#: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1194
-#: plug-ins/common/gif.c:1302 plug-ins/common/grid.c:470
+#: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1202
+#: plug-ins/common/gif.c:1305 plug-ins/common/grid.c:470
 #: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1260
 #: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:349
 #: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
@@ -179,11 +180,11 @@ msgstr ""
 #: plug-ins/common/psp.c:485 plug-ins/common/screenshot.c:422
 #: plug-ins/common/threshold_alpha.c:483 plug-ins/common/warp.c:525
 #: plug-ins/common/xbm.c:736 plug-ins/common/xbm.c:1004
-#: plug-ins/common/xpm.c:806 plug-ins/gap/gap_arr_dialog.c:1173
+#: plug-ins/common/xpm.c:806 plug-ins/gap/gap_arr_dialog.c:1196
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:151
 #: plug-ins/gap/gap_mod_layer.c:265 plug-ins/gap/gap_mov_dialog.c:470
-#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_resi_dialog.c:145
+#: plug-ins/gap/gap_mpege.c:241 plug-ins/gap/gap_resi_dialog.c:145
 #: plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
@@ -197,7 +198,7 @@ msgstr "Zru¹it"
 
 #: plug-ins/AlienMap/AlienMap.c:878 plug-ins/AlienMap2/AlienMap2.c:801
 msgid "Reject any changes and close plug-in"
-msgstr ""
+msgstr "Zahodí zmìny a zavøe modul"
 
 #: plug-ins/AlienMap/AlienMap.c:880 plug-ins/AlienMap2/AlienMap2.c:803
 #: plug-ins/gimpressionist/gimpressionist.c:506
@@ -206,7 +207,7 @@ msgstr "O programu..."
 
 #: plug-ins/AlienMap/AlienMap.c:888 plug-ins/AlienMap2/AlienMap2.c:811
 msgid "Show information about this plug-in and the author"
-msgstr ""
+msgstr "Zobrazí informace o modulu a autorovi"
 
 #: plug-ins/AlienMap/AlienMap.c:1151
 msgid "About Alien Map"
@@ -229,14 +230,24 @@ msgid ""
 "AlienMap Plug-In for the GIMP\n"
 "Version 1.01\n"
 msgstr ""
+"\n"
+"Cotting Software Productions\n"
+"Bahnhofstrasse 31\n"
+"CH-3066 Stettlen (Switzerland)\n"
+"\n"
+"cotting@mygale.org\n"
+"http://www.mygale.org/~cotting\n"
+"\n"
+"Modul Vetøelá mapa (AlienMap) pro GIMP\n"
+"Verze 1.01\n"
 
 #: plug-ins/AlienMap2/AlienMap2.c:212
 msgid "AlienMap2 Color Transformation Plug-In"
-msgstr ""
+msgstr "Modul barevných transformací \\\"Vetøelá mapa 2\\\""
 
 #: plug-ins/AlienMap2/AlienMap2.c:216
 msgid "24th April 1998"
-msgstr ""
+msgstr "24. dubna 1998"
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
@@ -244,11 +255,11 @@ msgstr "<Image>/Filtry/Barvy/Mapování/Vetøelá mapa 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
-msgstr ""
+msgstr "Vetøelá mapa 2: Transformuje se..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:658
 msgid "AlienMap2"
-msgstr ""
+msgstr "Vetøelá mapa 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:703
 msgid "R/H-Frequency:"
@@ -256,7 +267,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:703
 msgid "Change frequency of the red/hue channel"
-msgstr "Zmìna frekvence kanálu èervená/odstín"
+msgstr "Zmìna frekvence kanálu èervená / odstín"
 
 #: plug-ins/AlienMap2/AlienMap2.c:706
 msgid "R/H-Phaseshift:"
@@ -264,7 +275,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:706
 msgid "Change angle of the red/hue channel"
-msgstr "Zmìna úhlu kanálu èervená/odstín"
+msgstr "Zmìna úhlu kanálu èervená / odstín"
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "G/S-Frequency:"
@@ -272,7 +283,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "Change frequeny of the green/saturation channel"
-msgstr "Zmìna frekvence kanálu zelená/sytost"
+msgstr "Zmìna frekvence kanálu zelená / sytost"
 
 #: plug-ins/AlienMap2/AlienMap2.c:710
 msgid "G/S-Phaseshift:"
@@ -288,7 +299,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "Change frequency of the blue/luminance channel"
-msgstr "Zmìna frekvence kanálu modrá/jas"
+msgstr "Zmìna frekvence kanálu modrá / jas"
 
 #: plug-ins/AlienMap2/AlienMap2.c:713
 msgid "B/L-Phaseshift:"
@@ -296,7 +307,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:713
 msgid "Change angle of the blue/luminance channel"
-msgstr "Zmìna úhlu kanálu modrá/jas"
+msgstr "Zmìna úhlu kanálu modrá / jas"
 
 #. Mode toggle box
 #: plug-ins/AlienMap2/AlienMap2.c:717 plug-ins/gap/gap_mov_dialog.c:1297
@@ -613,43 +624,36 @@ msgid "Bumpmap image:"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:913
-#, fuzzy
 msgid "Minimum height:"
-msgstr "Nová vý¹ka:"
+msgstr "Nejmen¹í vý¹ka:"
 
 #: plug-ins/Lighting/lighting_ui.c:915
-#, fuzzy
 msgid "Maximum height:"
-msgstr "Nejvìt¹í velikost obrázku:"
+msgstr "Nejvìt¹í vý¹ka:"
 
 #: plug-ins/Lighting/lighting_ui.c:923
 msgid "Autostretch to fit value range"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:946
-#, fuzzy
 msgid "Environment settings"
 msgstr "Nastavení prostøedí"
 
 #: plug-ins/Lighting/lighting_ui.c:953
-#, fuzzy
 msgid "Environment image:"
-msgstr "Prostøedí"
+msgstr "Obrázek prostøedí:"
 
 #: plug-ins/Lighting/lighting_ui.c:987 plug-ins/common/lic.c:1002
-#, fuzzy
 msgid "Options"
-msgstr "Operace"
+msgstr "Volby"
 
 #: plug-ins/Lighting/lighting_ui.c:993
-#, fuzzy
 msgid "Light"
-msgstr "Vý¹ka"
+msgstr "Svìtlo"
 
 #: plug-ins/Lighting/lighting_ui.c:999
-#, fuzzy
 msgid "Material"
-msgstr "Spoleèná"
+msgstr "Materiál"
 
 #: plug-ins/Lighting/lighting_ui.c:1007
 msgid "Bump"
@@ -660,9 +664,8 @@ msgid "Env"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1037
-#, fuzzy
 msgid "Lighting effects"
-msgstr "Svìtlá ¹achovnice"
+msgstr "Svìtelné efekty"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
@@ -674,7 +677,7 @@ msgstr "Pou¾ít"
 
 #: plug-ins/Lighting/lighting_ui.c:1063
 msgid "Help"
-msgstr ""
+msgstr "Nápovìda"
 
 #: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Apply filter with current settings"
@@ -685,22 +688,20 @@ msgid "Close filter without doing anything"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1093
-#, fuzzy
 msgid "  Preview!  "
-msgstr "Náhled"
+msgstr "  Náhled!  "
 
 #: plug-ins/Lighting/lighting_ui.c:1094
-#, fuzzy
 msgid "Recompute preview image"
-msgstr "curves_preview(): ®ádná mapa obrázku"
+msgstr "Pøepoèítat náhled"
 
 #: plug-ins/Lighting/lighting_ui.c:1097
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "Pøiblí¾ít (obrázek bude vìt¹í)"
 
 #: plug-ins/Lighting/lighting_ui.c:1099
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "Vzdálit (obrázek bude men¹í)"
 
 #: plug-ins/bmp/bmp.c:114 plug-ins/bmp/bmp.c:115
 msgid "Loads files of Windows BMP file format"
@@ -714,19 +715,19 @@ msgstr ""
 #: plug-ins/common/jpeg.c:729 plug-ins/common/png.c:391
 #: plug-ins/common/png.c:393 plug-ins/common/xbm.c:545
 #: plug-ins/common/xpm.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "Loading %s:"
-msgstr "ète se %s\n"
+msgstr "Ète se %s:"
 
 #: plug-ins/bmp/bmpread.c:39
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't open \"%s\"\n"
-msgstr "Nelze otevøít %s; %s"
+msgstr "%s: nelze otevøít \"%s\"\n"
 
 #: plug-ins/bmp/bmpread.c:47
 #, c-format
 msgid "%s: not a valid BMP file %s\n"
-msgstr ""
+msgstr "%s: není platný BMP soubor %s\n"
 
 #: plug-ins/bmp/bmpread.c:55 plug-ins/bmp/bmpread.c:73
 #: plug-ins/bmp/bmpread.c:95
@@ -764,17 +765,17 @@ msgid "bmp: cannot operate on unknown image types or alpha images"
 msgstr ""
 
 #: plug-ins/bmp/bmpwrite.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "can't open %s\n"
-msgstr "Nelze otevøít %s; %s"
+msgstr "nelze otevøít %s\n"
 
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1164
 #: plug-ins/common/png.c:697 plug-ins/common/png.c:699
 #: plug-ins/common/ps.c:748 plug-ins/common/xbm.c:803
 #: plug-ins/common/xpm.c:635 plug-ins/common/xwd.c:550
-#, fuzzy, c-format
+#, c-format
 msgid "Saving %s:"
-msgstr "Skok:"
+msgstr "Zapisuje se %s:"
 
 #: plug-ins/bmp/bmpwrite.c:442
 #, fuzzy
@@ -787,33 +788,29 @@ msgid "Save Options"
 msgstr "Volby zápisu"
 
 #: plug-ins/bmp/bmpwrite.c:475
-#, fuzzy
 msgid "RLE encoded"
-msgstr "Roz¹íøené"
+msgstr "RLE kódované"
 
 #: plug-ins/borderaverage/borderaverage.c:93
 #: plug-ins/borderaverage/borderaverage.c:343
-#, fuzzy
 msgid "Borderaverage"
-msgstr "Obvod:"
+msgstr "Prùmìr okraje"
 
 #: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average..."
 msgstr "<Image>/Filtry/Barvy/Prùmìr okraje..."
 
 #: plug-ins/borderaverage/borderaverage.c:350
-#, fuzzy
 msgid "Border Size"
-msgstr "Vybrat obvod"
+msgstr "Velikost okraje"
 
 #: plug-ins/borderaverage/borderaverage.c:350
 msgid "Thickness"
-msgstr ""
+msgstr "Tlou¹»ka"
 
 #: plug-ins/borderaverage/borderaverage.c:353
-#, fuzzy
 msgid "Number of colors"
-msgstr "poèet barev: "
+msgstr "Poèet barev"
 
 #: plug-ins/borderaverage/borderaverage.c:356
 #, fuzzy
@@ -822,7 +819,7 @@ msgstr "Velikost polí ¹achovnice:"
 
 #: plug-ins/common/CML_explorer.c:220
 msgid "Keep image's values"
-msgstr "Zachovat hodnotu z obrázku"
+msgstr "Zachovat hodnoty z obrázku"
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "Keep the first value"
@@ -1191,7 +1188,7 @@ msgstr "Zdroj zm. v souboru"
 
 #: plug-ins/common/CML_explorer.c:1603
 msgid "Misc ops."
-msgstr "Rùzné práce"
+msgstr "Rùzné operace"
 
 #: plug-ins/common/CML_explorer.c:1639
 msgid "Function type"
@@ -1326,11 +1323,11 @@ msgstr ""
 
 #: plug-ins/common/animationplay.c:252
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/Filtry/Animace/Pøehrát animaci..."
+msgstr "<Image>/Filtry/Animace/Pøehrátí animace..."
 
 #: plug-ins/common/animationplay.c:664
 msgid "Animation Playback: "
-msgstr ""
+msgstr "Pøehrátí animace: "
 
 #. Action area
 #: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:517
@@ -1345,24 +1342,23 @@ msgstr "Zavøít"
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:694 plug-ins/common/animationplay.c:697
 msgid "Playback: "
-msgstr ""
+msgstr "Pøehrávání: "
 
 #: plug-ins/common/animationplay.c:727
 msgid "Play/Stop"
-msgstr ""
+msgstr "Pøehrát/Zastavit"
 
 #: plug-ins/common/animationplay.c:733
-#, fuzzy
 msgid "Rewind"
-msgstr "Èervená"
+msgstr "Pøevinout"
 
 #: plug-ins/common/animationplay.c:739
 msgid "Step"
-msgstr ""
+msgstr "Krok"
 
 #: plug-ins/common/animationplay.c:797
 msgid "Frame %v of %u"
-msgstr ""
+msgstr "Políèko %v z %u"
 
 #: plug-ins/common/animationplay.c:975
 #, c-format
@@ -1376,7 +1372,7 @@ msgstr ""
 
 #: plug-ins/common/animoptimize.c:136
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filtry/Animace/Optimalizovat animace"
+msgstr "<Image>/Filtry/Animace/Optimalizace animace"
 
 #: plug-ins/common/animoptimize.c:143
 msgid ""
@@ -1495,7 +1491,7 @@ msgstr "Automaticky roztahuje HSV..."
 
 #: plug-ins/common/blur.c:194
 msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
-msgstr ""
+msgstr "Rozostøuje v urèené obrazovce s pou¾itím konvoluèní matice 3×3."
 
 #: plug-ins/common/blur.c:195
 msgid ""
@@ -1521,7 +1517,7 @@ msgstr ""
 #.
 #: plug-ins/common/blur.c:633
 msgid "Randomization Seed:"
-msgstr ""
+msgstr "Hnízdo náhodných èísel:"
 
 #.
 #. *  Time button
@@ -1574,7 +1570,7 @@ msgstr "Opakování:"
 
 #: plug-ins/common/blur.c:684
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "Poèet pou¾ití filtru"
 
 #: plug-ins/common/bumpmap.c:292
 msgid "Linear map"
@@ -1616,7 +1612,7 @@ msgstr ""
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:883
 msgid "Compensate for darkening"
-msgstr ""
+msgstr "Kompenzovat tmavnutí"
 
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:894
@@ -1626,31 +1622,28 @@ msgstr ""
 #. Controls
 #: plug-ins/common/bumpmap.c:957
 msgid "Azimuth"
-msgstr ""
+msgstr "Azimut"
 
 #: plug-ins/common/bumpmap.c:958
-#, fuzzy
 msgid "Elevation"
-msgstr "Operace"
+msgstr "Zdvih"
 
 #. Horizontal scale
 #: plug-ins/common/bumpmap.c:959 plug-ins/struc/struc.c:315
 msgid "Depth"
-msgstr ""
+msgstr "Hloubka"
 
 #: plug-ins/common/bumpmap.c:960
-#, fuzzy
 msgid "X offset"
-msgstr "Posun:"
+msgstr "X posun"
 
 #: plug-ins/common/bumpmap.c:961
-#, fuzzy
 msgid "Y offset"
-msgstr "Posun:"
+msgstr "Y posun"
 
 #: plug-ins/common/bumpmap.c:962
 msgid "Waterlevel"
-msgstr ""
+msgstr "Vý¹ka hladiny"
 
 #: plug-ins/common/bumpmap.c:963
 #, fuzzy
@@ -2022,8 +2015,7 @@ msgstr "Roz¹íøené"
 msgid "Wrap"
 msgstr ""
 
-#. Action area
-#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1185
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1193
 msgid "Crop"
 msgstr "Oøez"
 
@@ -2497,7 +2489,7 @@ msgid ""
 "transparency."
 msgstr ""
 
-#: plug-ins/common/gif.c:1218
+#: plug-ins/common/gif.c:1221
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -2508,66 +2500,66 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 
-#: plug-ins/common/gif.c:1275
+#: plug-ins/common/gif.c:1278
 #, fuzzy
 msgid "Save as GIF"
 msgstr "Zapsat jako POV-Ray"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1311
+#: plug-ins/common/gif.c:1314
 #, fuzzy
 msgid "GIF Options"
 msgstr "Volby pera"
 
-#: plug-ins/common/gif.c:1319
+#: plug-ins/common/gif.c:1322
 #, fuzzy
 msgid "Interlace"
 msgstr "Rozhraní"
 
-#: plug-ins/common/gif.c:1331
+#: plug-ins/common/gif.c:1334
 msgid "GIF Comment: "
 msgstr ""
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1392
+#: plug-ins/common/gif.c:1395
 #, fuzzy
 msgid "Animated GIF Options"
 msgstr "Volby rozptylu"
 
-#: plug-ins/common/gif.c:1400
+#: plug-ins/common/gif.c:1403
 msgid "Loop forever"
 msgstr ""
 
-#: plug-ins/common/gif.c:1413
+#: plug-ins/common/gif.c:1416
 msgid "Delay between frames where unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1427
+#: plug-ins/common/gif.c:1430
 msgid " milliseconds"
 msgstr ""
 
-#: plug-ins/common/gif.c:1438
+#: plug-ins/common/gif.c:1441
 msgid "Frame disposal where unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1448
+#: plug-ins/common/gif.c:1451
 msgid "I don't care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1454
+#: plug-ins/common/gif.c:1457
 msgid "Cumulative layers (combine)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1460
+#: plug-ins/common/gif.c:1463
 msgid "One frame per layer (replace)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1518
+#: plug-ins/common/gif.c:1521
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:1534
+#: plug-ins/common/gif.c:1537
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
 msgstr ""
@@ -3053,28 +3045,28 @@ msgstr "<Image>/Soubor/Poslat obrázek..."
 msgid "Send to mail"
 msgstr ""
 
-#. filename label
-#: plug-ins/common/mail.c:629 plug-ins/imagemap/imap_settings.c:78
+#. Filename label
+#: plug-ins/common/mail.c:630 plug-ins/imagemap/imap_settings.c:78
 #, fuzzy
 msgid "Filename:"
 msgstr "/Soubor/Zapsat"
 
 #. Encapsulation label
-#: plug-ins/common/mail.c:683
+#: plug-ins/common/mail.c:685
 #, fuzzy
 msgid "Encapsulation:"
 msgstr "Zvìt¹ení:"
 
 #. Encapsulation radiobutton
-#: plug-ins/common/mail.c:692
+#: plug-ins/common/mail.c:695
 msgid "Uuencode"
 msgstr ""
 
-#: plug-ins/common/mail.c:694
+#: plug-ins/common/mail.c:697
 msgid "MIME"
 msgstr ""
 
-#: plug-ins/common/mail.c:808
+#: plug-ins/common/mail.c:810
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 
@@ -3343,11 +3335,6 @@ msgstr "Pozadí"
 #, fuzzy
 msgid "Custom Color"
 msgstr "Vlastní z editoru"
-
-#. ACTION AREA
-#: plug-ins/common/papertile.c:517
-msgid "Ok"
-msgstr ""
 
 #: plug-ins/common/papertile.c:937
 msgid "Cuts an image into paper tiles, and slides each paper tile."
@@ -4116,53 +4103,53 @@ msgid "ZealousCrop(tm): Nothing to be done.\n"
 msgstr ""
 
 #. Button  to invoke filebrowser
-#: plug-ins/gap/gap_arr_dialog.c:278
+#: plug-ins/gap/gap_arr_dialog.c:283
 #, fuzzy
 msgid "File-Browser"
 msgstr "/Soubor/Zavøít"
 
-#: plug-ins/gap/gap_arr_dialog.c:666
+#: plug-ins/gap/gap_arr_dialog.c:672
 #, c-format
 msgid "pair_flt_create_value: Bad FloatFormat ignored %s\n"
 msgstr ""
 
-#: plug-ins/gap/gap_arr_dialog.c:810
+#: plug-ins/gap/gap_arr_dialog.c:825
 #, c-format
 msgid "pair_int_create_value: Bad IntFormat ignored %s\n"
 msgstr ""
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/gap/gap_arr_dialog.c:962
+#: plug-ins/gap/gap_arr_dialog.c:985
 msgid "CLOSE"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/gap/gap_arr_dialog.c:973
+#: plug-ins/gap/gap_arr_dialog.c:996
 msgid "Enter Values"
 msgstr ""
 
-#: plug-ins/gap/gap_arr_dialog.c:990 plug-ins/gap/gap_arr_dialog.c:1050
+#: plug-ins/gap/gap_arr_dialog.c:1013 plug-ins/gap/gap_arr_dialog.c:1073
 #, fuzzy
 msgid "Value: "
 msgstr "Jas"
 
-#: plug-ins/gap/gap_arr_dialog.c:1026
+#: plug-ins/gap/gap_arr_dialog.c:1049
 msgid "WGT_ACT_BUTTON not implemented yet, widget type ignored\n"
 msgstr ""
 
 #. undefined widget type
-#: plug-ins/gap/gap_arr_dialog.c:1029
+#: plug-ins/gap/gap_arr_dialog.c:1052
 #, c-format
 msgid "Unknown widget type %d ignored\n"
 msgstr ""
 
-#: plug-ins/gap/gap_arr_dialog.c:1202
+#: plug-ins/gap/gap_arr_dialog.c:1225
 #, fuzzy
 msgid "Press Button"
 msgstr "Tlak"
 
 #: libgimp/gimpfileselection.c:355 libgimp/gimpunitmenu.c:509
-#: plug-ins/gap/gap_arr_dialog.c:1203 plug-ins/imagemap/imap_cmd_select.c:49
+#: plug-ins/gap/gap_arr_dialog.c:1226 plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr "Výbìr"
 
@@ -4344,18 +4331,18 @@ msgstr ""
 #. no defined value found (this is the 1.st call for this image_id)
 #. * ask what to do with a 3 Button dialog
 #.
-#: plug-ins/gap/gap_lib.c:880 plug-ins/gap/gap_mpege.c:188
+#: plug-ins/gap/gap_lib.c:880 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_range_ops.c:1172
 msgid "CANCEL"
-msgstr ""
+msgstr "ZRU©IT"
 
 #: plug-ins/gap/gap_lib.c:882
 msgid "SAVE Flattened"
-msgstr ""
+msgstr "ZAPSAT slouèené"
 
 #: plug-ins/gap/gap_lib.c:884
 msgid "SAVE As Is"
-msgstr ""
+msgstr "ZAPSAT tak, jak je"
 
 #: plug-ins/gap/gap_lib.c:888 plug-ins/gap/gap_range_ops.c:1175
 #, fuzzy
@@ -4365,11 +4352,11 @@ msgstr "GIMP verze"
 #: plug-ins/gap/gap_lib.c:1455
 #, fuzzy
 msgid "Duplicating frames .."
-msgstr "Duplikovat vrstvu"
+msgstr "Duplikuje se políèko..."
 
 #: plug-ins/gap/gap_lib.c:1623
 msgid "Renumber Framesequence .."
-msgstr ""
+msgstr "Pøeèíslovat sled políèek..."
 
 #: plug-ins/gap/gap_lib.c:1807
 #, c-format
@@ -4472,205 +4459,183 @@ msgstr ""
 msgid "Framesequence shift"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:345
+#: plug-ins/gap/gap_main.c:337
 msgid ""
 "This plugin exchanges current image with (next nubered) image from disk."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:350
+#: plug-ins/gap/gap_main.c:342
 msgid "<Image>/Video/Goto Next"
 msgstr "<Image>/Video/Jít na dal¹í"
 
-#: plug-ins/gap/gap_main.c:357
+#: plug-ins/gap/gap_main.c:349
 msgid ""
 "This plugin exchanges current image with (previous nubered) image from disk."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:362
+#: plug-ins/gap/gap_main.c:354
 msgid "<Image>/Video/Goto Prev"
 msgstr "<Image>/Video/Jít na pøedchozí"
 
-#: plug-ins/gap/gap_main.c:369
+#: plug-ins/gap/gap_main.c:361
 msgid ""
 "This plugin exchanges current image with (lowest nubered) image from disk."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:374
+#: plug-ins/gap/gap_main.c:366
 msgid "<Image>/Video/Goto First"
 msgstr "<Image>/Video/Jít na první"
 
-#: plug-ins/gap/gap_main.c:381
+#: plug-ins/gap/gap_main.c:373
 msgid ""
 "This plugin exchanges current image with (highest nubered) image from disk."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:386
+#: plug-ins/gap/gap_main.c:378
 msgid "<Image>/Video/Goto Last"
 msgstr "<Image>/Video/Jít na poslední"
 
-#: plug-ins/gap/gap_main.c:393
+#: plug-ins/gap/gap_main.c:385
 msgid ""
 "This plugin exchanges current image with requested image (nr) from disk."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:398
+#: plug-ins/gap/gap_main.c:390
 msgid "<Image>/Video/Goto Any"
 msgstr "<Image>/Video/Jít na urèité"
 
-#: plug-ins/gap/gap_main.c:405
+#: plug-ins/gap/gap_main.c:397
 msgid ""
 "This plugin deletes the given number of frames from disk including the "
 "current frame."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:410
+#: plug-ins/gap/gap_main.c:402
 msgid "<Image>/Video/Delete Frames"
 msgstr "<Image>/Video/Smazat políèka"
 
-#: plug-ins/gap/gap_main.c:417
+#: plug-ins/gap/gap_main.c:409
 msgid "This plugin duplicates the current frames on disk n-times."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:422
+#: plug-ins/gap/gap_main.c:414
 msgid "<Image>/Video/Duplicate Frames..."
 msgstr "<Image>/Video/Duplikovat políèka..."
 
-#: plug-ins/gap/gap_main.c:429
+#: plug-ins/gap/gap_main.c:421
 msgid "This plugin exchanges content of the current with destination frame."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:434
+#: plug-ins/gap/gap_main.c:426
 msgid "<Image>/Video/Exchange Frame..."
 msgstr "<Image>/Video/Vymìnit políèka..."
 
-#: plug-ins/gap/gap_main.c:441
+#: plug-ins/gap/gap_main.c:433
 msgid ""
 "This plugin copies layer(s) from one sourceimage to multiple frames on disk, "
 "varying position, size and opacity."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:446
+#: plug-ins/gap/gap_main.c:438
 msgid "<Image>/Video/Move Path..."
 msgstr "<Image>/Video/Posunout cestu..."
 
-#: plug-ins/gap/gap_main.c:453
+#: plug-ins/gap/gap_main.c:445
 msgid ""
 "This plugin creates a new image from the given range of frame-images. Each "
 "frame is converted to one layer in the new image, according to flatten_mode. "
 "(the frames on disk are not changed)."
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:458
+#: plug-ins/gap/gap_main.c:450
 msgid "<Image>/Video/Frames to Image..."
 msgstr "<Image>/Video/Políèka do obrázku..."
 
-#: plug-ins/gap/gap_main.c:465
+#: plug-ins/gap/gap_main.c:457
 msgid "This plugin flattens the given range of frame-images (on disk)"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:470
+#: plug-ins/gap/gap_main.c:462
 msgid "<Image>/Video/Frames Flatten..."
 msgstr "<Image>/Video/Slouèit políèka..."
 
-#: plug-ins/gap/gap_main.c:477
+#: plug-ins/gap/gap_main.c:469
 msgid ""
 "This plugin deletes one layer in the given range of frame-images (on disk). "
 "exception: the last remaining layer of a frame is not deleted"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:482
+#: plug-ins/gap/gap_main.c:474
 msgid "<Image>/Video/Frames LayerDel..."
 msgstr "<Image>/Video/Smazat vrstvu políèek..."
 
-#: plug-ins/gap/gap_main.c:489 plug-ins/gap/gap_main.c:501
+#: plug-ins/gap/gap_main.c:481 plug-ins/gap/gap_main.c:493
 msgid ""
 "This plugin converts the given range of frame-images to other fileformats "
 "(on disk) depending on extension"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:506
+#: plug-ins/gap/gap_main.c:498
 msgid "<Image>/Video/Frames Convert..."
 msgstr "<Image>/Video/Pøevést políèka..."
 
-#: plug-ins/gap/gap_main.c:513
+#: plug-ins/gap/gap_main.c:505
 msgid ""
 "This plugin resizes all anim_frames (images on disk) to the given "
 "new_width/new_height"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:518
+#: plug-ins/gap/gap_main.c:510
 msgid "<Image>/Video/Frames Resize..."
 msgstr "<Image>/Video/Zmìna plátna políèek..."
 
-#: plug-ins/gap/gap_main.c:525
+#: plug-ins/gap/gap_main.c:517
 msgid ""
 "This plugin crops all anim_frames (images on disk) to the given "
 "new_width/new_height"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:530
+#: plug-ins/gap/gap_main.c:522
 msgid "<Image>/Video/Frames Crop..."
 msgstr "<Image>/Video/Oøiznout políèka..."
 
-#: plug-ins/gap/gap_main.c:537
+#: plug-ins/gap/gap_main.c:529
 msgid ""
 "This plugin scales all anim_frames (images on disk) to the given "
 "new_width/new_height"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:542
+#: plug-ins/gap/gap_main.c:534
 msgid "<Image>/Video/Frames Scale..."
 msgstr "<Image>/Video/Zmìna velikosti políèek..."
 
-#: plug-ins/gap/gap_main.c:549
+#: plug-ins/gap/gap_main.c:541
 msgid ""
 "This plugin splits the current image to anim frames (images on disk). Each "
 "layer is saved as one frame"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:554
+#: plug-ins/gap/gap_main.c:546
 msgid "<Image>/Video/Split Img to Frames..."
 msgstr "<Image>/Video/Rozdìlit obrázek do políèek..."
 
-#: plug-ins/gap/gap_main.c:561
-msgid ""
-"This plugin calls mpeg_encode to convert anim frames to MPEG1, or just "
-"generates a param file for mpeg_encode. (mpeg_encode must be installed on "
-"your system)"
-msgstr ""
-
-#: plug-ins/gap/gap_main.c:566
-msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/Video/Kódování/MPEG1..."
-
-#: plug-ins/gap/gap_main.c:574
-msgid ""
-"This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or "
-"just generates a param file for mpeg2encode. (mpeg2encode must be installed "
-"on your system)"
-msgstr ""
-
-#: plug-ins/gap/gap_main.c:579
-msgid "<Image>/Video/Encode/MPEG2 mpeg2encode...)"
-msgstr "<Image>/Video/Kódování/MPEG2 mpeg2encode...)"
-
-#: plug-ins/gap/gap_main.c:587
+#: plug-ins/gap/gap_main.c:554
 msgid ""
 "This plugin exchanges frame numbers in the given range. (discfile "
 "frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:592
+#: plug-ins/gap/gap_main.c:559
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/Video/Posun sekvence políèek..."
+msgstr "<Image>/Video/Posun sledu políèek..."
 
-#: plug-ins/gap/gap_main.c:599
+#: plug-ins/gap/gap_main.c:566
 msgid ""
 "This plugin performs a modifying action on each selected layer in each "
 "selected framerange"
 msgstr ""
 
-#: plug-ins/gap/gap_main.c:604
+#: plug-ins/gap/gap_main.c:571
 msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Video/Zmìna políèek..."
 
@@ -4804,24 +4769,24 @@ msgid ""
 "in all frames of the selected framerange\n"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:159 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_mod_layer.c:159 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:421
 msgid "From Frame:"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:160 plug-ins/gap/gap_mov_dialog.c:594
-#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:422
+#: plug-ins/gap/gap_mpege.c:260 plug-ins/gap/gap_range_ops.c:422
 #: plug-ins/gap/gap_range_ops.c:581
 msgid "first handled frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:167 plug-ins/gap/gap_mpege.c:266
+#: plug-ins/gap/gap_mod_layer.c:167 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:429
 msgid "To   Frame:"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:168 plug-ins/gap/gap_mov_dialog.c:598
-#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:430
+#: plug-ins/gap/gap_mpege.c:268 plug-ins/gap/gap_range_ops.c:430
 #: plug-ins/gap/gap_range_ops.c:589
 msgid "last handled frame"
 msgstr ""
@@ -5256,280 +5221,280 @@ msgstr ""
 msgid "Copying Layers into Frames .."
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:110
+#: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:113
+#: plug-ins/gap/gap_mpege.c:114
 msgid "Conditions to run mpeg2encode 1.2:"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:123
+#: plug-ins/gap/gap_mpege.c:124
 msgid "1.) mpeg_encode 1.5 must be installed"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:126
+#: plug-ins/gap/gap_mpege.c:127
 msgid "1.) mpeg2encode 1.2 must be installed"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:131
+#: plug-ins/gap/gap_mpege.c:132
 msgid "    you can get mpeg_encode at"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:134
+#: plug-ins/gap/gap_mpege.c:135
 msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:139
+#: plug-ins/gap/gap_mpege.c:140
 msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:142
+#: plug-ins/gap/gap_mpege.c:143
 msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:147
+#: plug-ins/gap/gap_mpege.c:148
 msgid "2.) You need a series of single Images on disk (AnimFrames)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:151
+#: plug-ins/gap/gap_mpege.c:152
 msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:154
+#: plug-ins/gap/gap_mpege.c:155
 msgid "   all with fileformat PPM (or YUV)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:159
-msgid "    (use 'Frames Convert' from the AnimFrames Menu"
+#: plug-ins/gap/gap_mpege.c:160
+msgid "    (use 'Frames Convert' from the Video Menu"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:163
-msgid "    or 'Split Img to Frames' from the AnimFrames Menu)"
+#: plug-ins/gap/gap_mpege.c:164
+msgid "    or 'Split Img to Frames' from the Video Menu)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:167
+#: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:174
+#: plug-ins/gap/gap_mpege.c:175
 #, fuzzy
 msgid "    width and height must be a multiple of 16"
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: plug-ins/gap/gap_mpege.c:178
-msgid "    (use Scale or Crop from the AnimFrames Menu)"
+#: plug-ins/gap/gap_mpege.c:179
+msgid "    (use Scale or Crop from the Video Menu)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:193
+#: plug-ins/gap/gap_mpege.c:194
 #, fuzzy
 msgid "MPEG_ENCODE Information"
 msgstr "Informace o monitoru"
 
-#: plug-ins/gap/gap_mpege.c:231
+#: plug-ins/gap/gap_mpege.c:232
 msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:232
+#: plug-ins/gap/gap_mpege.c:233
 msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:242
+#: plug-ins/gap/gap_mpege.c:243
 #, fuzzy
 msgid "GenParams"
 msgstr "V¹eobecné"
 
-#: plug-ins/gap/gap_mpege.c:273
+#: plug-ins/gap/gap_mpege.c:274
 msgid "Framerate :"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:274
+#: plug-ins/gap/gap_mpege.c:275
 msgid "framerate in frames/second"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:281
+#: plug-ins/gap/gap_mpege.c:282
 #, fuzzy
 msgid "Bitrate:"
 msgstr "Stav: "
 
-#: plug-ins/gap/gap_mpege.c:282
+#: plug-ins/gap/gap_mpege.c:283
 msgid ""
 "used for constant bitrates (bit/sec)                  \n"
 "(low rate gives good compression + bad quality)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:293
+#: plug-ins/gap/gap_mpege.c:294
 #, fuzzy
 msgid "Outputfile:"
 msgstr "Výstupní úrovnì: "
 
 #. pixel
-#: plug-ins/gap/gap_mpege.c:295
+#: plug-ins/gap/gap_mpege.c:296
 msgid "Name of the resulting MPEG outputfile"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:301
+#: plug-ins/gap/gap_mpege.c:302
 #, fuzzy
 msgid "Paramfile:"
 msgstr "Cizopasníci"
 
 #. pixel
-#: plug-ins/gap/gap_mpege.c:303
+#: plug-ins/gap/gap_mpege.c:304
 msgid ""
 "Name of the Encoder-Parameterfile\n"
 "(is generated)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:309
+#: plug-ins/gap/gap_mpege.c:310
 #, fuzzy
 msgid "Startscript:"
 msgstr "scripts\n"
 
 #. pixel
-#: plug-ins/gap/gap_mpege.c:311
+#: plug-ins/gap/gap_mpege.c:312
 msgid ""
 "Name of the Startscript           \n"
 "(is generated/executed)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:318
+#: plug-ins/gap/gap_mpege.c:319
 msgid ""
 "Generate parameterfile for mpeg_encode 1.5\n"
 "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:322
+#: plug-ins/gap/gap_mpege.c:323
 #, fuzzy
 msgid "Constant Bitrate :"
 msgstr "Rychlá aktualizace"
 
-#: plug-ins/gap/gap_mpege.c:323
+#: plug-ins/gap/gap_mpege.c:324
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:328
+#: plug-ins/gap/gap_mpege.c:329
 #, fuzzy
 msgid "Pattern:"
 msgstr "Vzorky"
 
 #. pixel
-#: plug-ins/gap/gap_mpege.c:330
+#: plug-ins/gap/gap_mpege.c:331
 msgid "How to encode MPEG framesequence (I/P/B frames)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:336
+#: plug-ins/gap/gap_mpege.c:337
 msgid "IQSCALE:"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:337
+#: plug-ins/gap/gap_mpege.c:338
 msgid ""
 "Quality scale for I-Frames                       \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:344
+#: plug-ins/gap/gap_mpege.c:345
 msgid "PQSCALE:"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:345
+#: plug-ins/gap/gap_mpege.c:346
 msgid ""
 "Quality scale for P-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:352
+#: plug-ins/gap/gap_mpege.c:353
 msgid "BQSCALE:"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:353
+#: plug-ins/gap/gap_mpege.c:354
 msgid ""
 "Quality scale for B-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:360
+#: plug-ins/gap/gap_mpege.c:361
 msgid "P-Search :"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:361
+#: plug-ins/gap/gap_mpege.c:362
 msgid "Search Algorithmus used for P-frames"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:367
+#: plug-ins/gap/gap_mpege.c:368
 msgid "B-Search :"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:368
+#: plug-ins/gap/gap_mpege.c:369
 msgid "Search Algorithmus used for B-frames"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:373
+#: plug-ins/gap/gap_mpege.c:374
 msgid "Gen MPEG_ENCODE Parameters"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:374 plug-ins/gap/gap_mpege.c:413
+#: plug-ins/gap/gap_mpege.c:375 plug-ins/gap/gap_mpege.c:414
 msgid "Encode Values"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:391
+#: plug-ins/gap/gap_mpege.c:392
 msgid ""
 "Generate parameterfile for mpeg2encode 1.2\n"
 "(MPEG-2 Video  Encoder.)\n"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:394
+#: plug-ins/gap/gap_mpege.c:395
 msgid "MPEG-type :"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:403
+#: plug-ins/gap/gap_mpege.c:404
 msgid "Videoformat :"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:404
+#: plug-ins/gap/gap_mpege.c:405
 msgid "Videoformat"
 msgstr ""
 
 #. framerates above 30 ar not allowed in mpeg2encode
-#: plug-ins/gap/gap_mpege.c:412
+#: plug-ins/gap/gap_mpege.c:413
 msgid "Gen MPEG2ENCODE Parameters"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:517
+#: plug-ins/gap/gap_mpege.c:518
 #, c-format
 msgid "cant open MPEG Paramfile %s for write\n"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:976
+#: plug-ins/gap/gap_mpege.c:977
 msgid ""
 "\n"
 "WARNING: mpeg_encode does not support Fileformat "
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:979
+#: plug-ins/gap/gap_mpege.c:980
 msgid ""
 "\n"
 "ERROR: width not a multiple of 16"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:980
+#: plug-ins/gap/gap_mpege.c:981
 msgid ""
 "\n"
 "ERROR: height not a multiple of 16"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:986
+#: plug-ins/gap/gap_mpege.c:987
 msgid ""
 "\n"
 "WARNING: mpeg2encode does not support Fileformat "
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:991
+#: plug-ins/gap/gap_mpege.c:992
 msgid ""
 "\n"
 "ERROR: invoked from a single image, animframe required"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:1009
+#: plug-ins/gap/gap_mpege.c:1010
 msgid "sorry folks, NON_INTERACTIVE call .. not implemented yet\n"
 msgstr ""
 
@@ -8101,9 +8066,8 @@ msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:193
-#, fuzzy
 msgid "Script-Fu Console"
-msgstr "/Script-Fu"
+msgstr "/Konzole skript-fu"
 
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:213
@@ -8424,9 +8388,8 @@ msgstr "Volby rozptylu"
 
 #. Radio buttons
 #: plug-ins/struc/struc.c:280
-#, fuzzy
 msgid "Direction"
-msgstr "Adresáøe"
+msgstr "Smìr"
 
 #: plug-ins/struc/struc.c:291
 #, fuzzy
@@ -8446,108 +8409,103 @@ msgid "Bottom-right"
 msgstr ""
 
 #: libgimp/gimpcolorbutton.c:104
-#, fuzzy
 msgid "/Use Foreground Color"
-msgstr "Pozadí"
+msgstr "/Pou¾ít barvu pozadí"
 
 #: libgimp/gimpcolorbutton.c:105
-#, fuzzy
 msgid "/Use Background Color"
-msgstr "Pozadí"
+msgstr "/Pou¾ít barvu pozadí"
 
 #: libgimp/gimpexport.c:122
 msgid "can't handle layers"
-msgstr ""
+msgstr "nemù¾e zpracovat vrstvy"
 
 #: libgimp/gimpexport.c:123 libgimp/gimpexport.c:132
-#, fuzzy
 msgid "Merge visible layers"
-msgstr "/Slouèit viditelné vrstvy"
+msgstr "Slouèit viditelné vrstvy"
 
 #: libgimp/gimpexport.c:131
-#, fuzzy
 msgid "can only handle layers as animation frames"
-msgstr "Informace o zvìt¹ování"
+msgstr "mù¾e zpracovat vrstvy pouze jako políèka animace"
 
 #: libgimp/gimpexport.c:132
-#, fuzzy
 msgid "Save as animation"
-msgstr "Zapsat jako POV-Ray"
+msgstr "Zapsat jako animaci"
 
 #: libgimp/gimpexport.c:140
 msgid "can't handle transparency"
-msgstr ""
+msgstr "nemù¾e zpracovat prùhlednost"
 
 #: libgimp/gimpexport.c:141
-#, fuzzy
 msgid "Flatten Image"
-msgstr "/Slouèit obraz"
+msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:149
 msgid "can only handle RGB images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze RGB obrázky"
 
 #: libgimp/gimpexport.c:150 libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
-#, fuzzy
 msgid "Convert to RGB"
-msgstr "Nastavení prostøedí"
+msgstr "Pøevést do RGB"
 
 #: libgimp/gimpexport.c:158
 msgid "can only handle grayscale images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze obrázky v ¹edích"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:177 libgimp/gimpexport.c:196
 msgid "Convert to grayscale"
-msgstr ""
+msgstr "Pøevést do ¹edí"
 
 #: libgimp/gimpexport.c:167
 msgid "can only handle indexed images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze indexované obrázky"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Konverze do indexovaného pou¾ije implicitní nastavení\n"
+"(Ruèním provedením lze doladit výsledek)"
 
 #: libgimp/gimpexport.c:176
 msgid "can only handle RGB or grayscale images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
 
 #: libgimp/gimpexport.c:185
 msgid "can only handle RGB or indexed images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze RGB nebo indexované obrázky"
 
 #: libgimp/gimpexport.c:194
 msgid "can only handle grayscale or indexed images"
-msgstr ""
+msgstr "mù¾e zpracovat pouze obrázky v ¹edích nebo indexované"
 
 #: libgimp/gimpexport.c:204
 msgid "needs an alpha channel"
-msgstr ""
+msgstr "vy¾aduje alfa kanál"
 
 #: libgimp/gimpexport.c:205
 msgid "Add alpha channel"
-msgstr ""
+msgstr "Pøidat alfa kanál"
 
 #: libgimp/gimpexport.c:276
 msgid "Export File"
-msgstr "Export souboru"
+msgstr "Exportovat soubor"
 
 #: libgimp/gimpexport.c:292
 msgid "Export"
-msgstr "Export"
+msgstr "Exportovat"
 
 #: libgimp/gimpexport.c:320
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
+msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 
 #. the footline
 #: libgimp/gimpexport.c:379
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
 #: libgimp/gimpfileselection.c:352
 msgid "Select File"
@@ -8577,9 +8535,8 @@ msgstr "milimetrù"
 
 #. professional units
 #: libgimp/gimpunit.c:51
-#, fuzzy
 msgid "point"
-msgstr "Tisková velikost"
+msgstr "bod"
 
 #: libgimp/gimpunit.c:52
 msgid "pica"
@@ -8608,3 +8565,9 @@ msgstr "Jednotka "
 #: libgimp/gimpunitmenu.c:480
 msgid "Factor"
 msgstr "Faktor"
+
+#~ msgid "<Image>/Video/Encode/MPEG1..."
+#~ msgstr "<Image>/Video/Kódování/MPEG1..."
+
+#~ msgid "<Image>/Video/Encode/MPEG2 mpeg2encode...)"
+#~ msgstr "<Image>/Video/Kódování/MPEG2 mpeg2encode...)"
