@@ -1,3 +1,8 @@
+2004-11-20  Sven Neumann  <sven@gimp.org>
+
+	* zh_CN.po: fixed error (number of format specifications didn't
+	match in 'msgid' and 'msgstr').
+
 2004-11-19  Cai Qian  <caiqian@gnome.org>
 
 	* zh_CN.po: updated Simplified Chinese translation.
