@@ -320,8 +320,10 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
 
   if (!image_map ||
       (!gimp_drawable_gimage(_image_map->drawable) && 
-       gimp_drawable_indexed(_image_map->drawable)) 
-      || x < 0 || y < 0 )
+       gimp_drawable_indexed(_image_map->drawable)) ||
+      x < 0 || y < 0 ||
+      x >= _image_map->undo_tiles->width ||
+      y >= _image_map->undo_tiles->height)
   {
     return NULL;
   }
