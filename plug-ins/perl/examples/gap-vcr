@@ -1,0 +1,70 @@
+#!/usr/bin/perl
+
+use Gimp::Feature qw(perl-5.005 gtk-1.2);
+use Gimp ('__','N_');
+use Gimp::Fu;
+use Gtk;
+
+$VERSION=0.0;
+
+my $image;
+
+sub drawable {
+   ($image->get_layers)[0];
+}
+
+sub create_main {
+   my $w = new Gtk::Window;
+
+   $w->set_title("VCR Console -- ". $image->get_filename);
+   $w->signal_connect("destroy",sub {main_quit Gtk});
+
+   my $h = new Gtk::HBox (1,5);
+   $w->add ($h);
+
+   $h->add(Gtk::Object::new Gtk::Button 
+           label => '<<',
+           signal::clicked => sub {
+              drawable->gap_first;
+           });
+   $h->add(Gtk::Object::new Gtk::Button 
+           label => '<',
+           signal::clicked => sub {
+              drawable->gap_prev;
+           });
+   $h->add(Gtk::Object::new Gtk::Button 
+           label => '>',
+           signal::clicked => sub {
+              drawable->gap_next;
+           });
+   $h->add(Gtk::Object::new Gtk::Button 
+           label => '>>',
+           signal::clicked => sub {
+              drawable->gap_last;
+           });
+   show_all $w;
+}
+
+register "plug_in_gap_vcr_console",
+         "Gap VCR Console",
+         "This plug-in provides a basic vcr-type gap control panel for the image",
+         "Marc Lehmann",
+         "Marc Lehmann",
+         $VERSION,
+         N_"<Image>/Video/VCR Console...",
+         "*",
+         [],
+         [],
+         ['gimp-1.1'],
+         sub {
+   $image = $_[0];
+            
+   Gimp::gtk_init;
+   create_main;
+   main Gtk;
+
+   ();
+};
+
+exit main;
+
