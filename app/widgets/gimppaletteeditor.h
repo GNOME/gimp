@@ -56,8 +56,8 @@ struct _GimpPaletteEditor
   GtkWidget        *new_button;
   GtkWidget        *edit_button;
   GtkWidget        *delete_button;
-  GtkWidget        *zoom_in_button;
   GtkWidget        *zoom_out_button;
+  GtkWidget        *zoom_in_button;
   GtkWidget        *zoom_all_button;
 
   ColorNotebook    *color_notebook;

@@ -311,14 +311,14 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/View/Zoom  */
 
-  { { N_("/View/Zoom/Zoom In"), "plus",
-      view_zoom_in_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
   { { N_("/View/Zoom/Zoom Out"), "minus",
       view_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
+    NULL,
+    "view/zoom.html", NULL },
+  { { N_("/View/Zoom/Zoom In"), "plus",
+      view_zoom_in_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/Zoom to Fit Window"), "<control><shift>E",
@@ -1299,8 +1299,8 @@ image_menu_update (GtkItemFactory *item_factory,
 
   SET_SENSITIVE ("/View/New View",   gdisp);
 
-  SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
   SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
+  SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
   SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
 
   SET_SENSITIVE ("/View/Zoom/16:1", gdisp);

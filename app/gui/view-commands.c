@@ -57,16 +57,6 @@
 
 
 void
-view_zoom_in_cmd_callback (GtkWidget *widget,
-                           gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_IN);
-}
-
-void
 view_zoom_out_cmd_callback (GtkWidget *widget,
                             gpointer   data)
 {
@@ -74,6 +64,16 @@ view_zoom_out_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_OUT);
+}
+
+void
+view_zoom_in_cmd_callback (GtkWidget *widget,
+                           gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_IN);
 }
 
 void

@@ -99,9 +99,9 @@ static void   palette_editor_edit_clicked          (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
 static void   palette_editor_delete_clicked        (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
-static void   palette_editor_zoom_in_clicked       (GtkWidget         *widget,
-                                                    GimpPaletteEditor *editor);
 static void   palette_editor_zoom_out_clicked      (GtkWidget         *widget,
+                                                    GimpPaletteEditor *editor);
+static void   palette_editor_zoom_in_clicked       (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
 static void   palette_editor_zoom_all_clicked      (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
@@ -298,19 +298,19 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                             NULL,
                             editor);
 
-  editor->zoom_in_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ZOOM_IN,
-                            _("Zoom In"), NULL,
-                            G_CALLBACK (palette_editor_zoom_in_clicked),
-                            NULL,
-                            editor);
-
   editor->zoom_out_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_ZOOM_OUT,
                             _("Zoom Out"), NULL,
                             G_CALLBACK (palette_editor_zoom_out_clicked),
+                            NULL,
+                            editor);
+
+  editor->zoom_in_button =
+    gimp_editor_add_button (GIMP_EDITOR (editor),
+                            GTK_STOCK_ZOOM_IN,
+                            _("Zoom In"), NULL,
+                            G_CALLBACK (palette_editor_zoom_in_clicked),
                             NULL,
                             editor);
 
@@ -413,9 +413,9 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
   gtk_widget_set_sensitive (palette_editor->edit_button,   FALSE);
   gtk_widget_set_sensitive (palette_editor->delete_button, FALSE);
 
-  gtk_widget_set_sensitive (palette_editor->zoom_in_button,
-                            editor->data != NULL);
   gtk_widget_set_sensitive (palette_editor->zoom_out_button,
+                            editor->data != NULL);
+  gtk_widget_set_sensitive (palette_editor->zoom_in_button,
                             editor->data != NULL);
   gtk_widget_set_sensitive (palette_editor->zoom_all_button,
                             editor->data != NULL);
@@ -1057,19 +1057,19 @@ palette_editor_delete_clicked (GtkWidget         *widget,
 }
 
 static void
-palette_editor_zoom_in_clicked (GtkWidget         *widget,
-                                GimpPaletteEditor *editor)
+palette_editor_zoom_out_clicked (GtkWidget         *widget,
+                                 GimpPaletteEditor *editor)
 {
-  editor->zoom_factor += 0.1;
+  editor->zoom_factor -= 0.1;
 
   palette_editor_redraw_zoom (editor);
 }
 
 static void
-palette_editor_zoom_out_clicked (GtkWidget         *widget,
-                                 GimpPaletteEditor *editor)
+palette_editor_zoom_in_clicked (GtkWidget         *widget,
+                                GimpPaletteEditor *editor)
 {
-  editor->zoom_factor -= 0.1;
+  editor->zoom_factor += 0.1;
 
   palette_editor_redraw_zoom (editor);
 }

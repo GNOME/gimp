@@ -119,11 +119,11 @@ static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
                                                      gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
                                                      GimpGradientEditor *editor);
-static void   gradient_editor_zoom_all_callback     (GtkWidget          *widget,
-                                                     GimpGradientEditor *editor);
 static void   gradient_editor_zoom_out_callback     (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
 static void   gradient_editor_zoom_in_callback      (GtkWidget          *widget,
+                                                     GimpGradientEditor *editor);
+static void   gradient_editor_zoom_all_callback     (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
 static void   gradient_editor_instant_update_update (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
@@ -365,23 +365,21 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 
   /*  +, - and Zoom Fit buttons  */
   gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_FIT,
-                          _("Zoom All"), NULL,
-                          G_CALLBACK (gradient_editor_zoom_all_callback),
+                          GTK_STOCK_ZOOM_OUT,
+                          _("Zoom Out"), NULL,
+                          G_CALLBACK (gradient_editor_zoom_out_callback),
                           NULL,
                           editor);
-
   gimp_editor_add_button (GIMP_EDITOR (editor),
                           GTK_STOCK_ZOOM_IN,
                           _("Zoom In"), NULL,
                           G_CALLBACK (gradient_editor_zoom_in_callback),
                           NULL,
                           editor);
-
   gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_OUT,
-                          _("Zoom Out"), NULL,
-                          G_CALLBACK (gradient_editor_zoom_out_callback),
+                          GTK_STOCK_ZOOM_FIT,
+                          _("Zoom All"), NULL,
+                          G_CALLBACK (gradient_editor_zoom_all_callback),
                           NULL,
                           editor);
 
@@ -539,24 +537,6 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
 }
 
 static void
-gradient_editor_zoom_all_callback (GtkWidget          *widget,
-                                   GimpGradientEditor *editor)
-{
-  GtkAdjustment *adjustment;
-
-  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-
-  editor->zoom_factor = 1;
-
-  adjustment->value          = 0.0;
-  adjustment->page_size      = 1.0;
-  adjustment->step_increment = GRAD_SCROLLBAR_STEP_SIZE;
-  adjustment->page_increment = GRAD_SCROLLBAR_PAGE_SIZE;
-
-  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
-}
-
-static void
 gradient_editor_zoom_out_callback (GtkWidget          *widget,
                                    GimpGradientEditor *editor)
 {
@@ -614,6 +594,24 @@ gradient_editor_zoom_in_callback (GtkWidget          *widget,
   adjustment->page_size      = page_size;
   adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
   adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
+
+  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
+}
+
+static void
+gradient_editor_zoom_all_callback (GtkWidget          *widget,
+                                   GimpGradientEditor *editor)
+{
+  GtkAdjustment *adjustment;
+
+  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
+
+  editor->zoom_factor = 1;
+
+  adjustment->value          = 0.0;
+  adjustment->page_size      = 1.0;
+  adjustment->step_increment = GRAD_SCROLLBAR_STEP_SIZE;
+  adjustment->page_increment = GRAD_SCROLLBAR_PAGE_SIZE;
 
   gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
 }

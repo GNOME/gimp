@@ -1,8 +1,18 @@
 2003-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c
+	* app/gui/palette-editor-menu.c
+	* app/gui/view-commands.[ch]
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.[ch]: changed all places to show
+	zoom menu items and icons in ZOOM_OUT, ZOOM_IN order. In an attack
+	of consistency, also reordered all callbacks accordingly.
+
+2003-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpnavigationview.c: don't let the navigation
 	_popup_ auto-resize itself and don't allocate a minimum size
-	bacause that makes sense for the navigation _tab_ only. Fixes
+	because that makes sense for the navigation _tab_ only. Fixes
 	popup size and positioning.
 
 2003-05-28  Sven Neumann  <sven@gimp.org>

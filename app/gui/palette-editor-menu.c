@@ -50,13 +50,13 @@ GimpItemFactoryEntry palette_editor_menu_entries[] =
 
   { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
 
-  { { N_("/Zoom In"), "",
-      palette_editor_zoom_in_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL, NULL, NULL },
   { { N_("/Zoom Out"), "",
       palette_editor_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
+    NULL, NULL, NULL },
+  { { N_("/Zoom In"), "",
+      palette_editor_zoom_in_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL, NULL, NULL },
   { { N_("/Zoom All"), "",
       palette_editor_zoom_all_cmd_callback, 0,
@@ -88,8 +88,8 @@ palette_editor_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Edit Color...", editable && editor->color);
   SET_SENSITIVE ("/Delete Color",  editable && editor->color);
 
-  SET_SENSITIVE ("/Zoom In",  data_editor->data);
   SET_SENSITIVE ("/Zoom Out", data_editor->data);
+  SET_SENSITIVE ("/Zoom In",  data_editor->data);
   SET_SENSITIVE ("/Zoom All", data_editor->data);
 
 #undef SET_SENSITIVE
