@@ -45,6 +45,8 @@ libappgui_la_SOURCES = \
 	info-window.h		\
 	layer-select.c		\
 	layer-select.h		\
+	layers-commands.c	\
+	layers-commands.h	\
 	layers-dialog.c		\
 	layers-dialog.h		\
 	menus.c			\

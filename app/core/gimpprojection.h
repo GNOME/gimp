@@ -94,13 +94,14 @@ struct _GDisplay
 {
   gint ID;                        /*  unique identifier for this gdisplay     */
 
+  GtkItemFactory *ifactory;       /*  factory for popup menu                  */
+
   GtkWidget *shell;               /*  shell widget for this gdisplay          */
   GtkWidget *canvas;              /*  canvas widget for this gdisplay         */
   GtkWidget *hsb, *vsb;           /*  widgets for scroll bars                 */
   GtkWidget *qmaskoff, *qmaskon;  /*  widgets for qmask buttons               */
   GtkWidget *hrule, *vrule;       /*  widgets for rulers                      */
   GtkWidget *origin;              /*  widgets for rulers                      */
-  GtkWidget *popup;               /*  widget for popup menu                   */
   GtkWidget *statusarea;          /*  hbox holding the statusbar and stuff    */
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */

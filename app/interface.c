@@ -86,9 +86,6 @@ create_display_shell (GDisplay *gdisp,
 		      gchar    *title,
 		      gint      type)
 {
-  static GtkWidget     *image_popup_menu  = NULL;
-  static GtkAccelGroup *image_accel_group = NULL;
-
   static GdkPixmap *qmasksel_pixmap   = NULL;
   static GdkBitmap *qmasksel_mask     = NULL;
   static GdkPixmap *qmasknosel_pixmap = NULL;
@@ -184,21 +181,12 @@ create_display_shell (GDisplay *gdisp,
 			      GIMP_TYPE_PATTERN,
 			      gdisplay_drop_viewable, gdisp);
 
-  if (! image_popup_menu)
-    {
-      GtkItemFactory *image_factory;
-
-      image_factory = menus_get_image_factory ();
-
-      image_popup_menu  = image_factory->widget;
-      image_accel_group = image_factory->accel_group;
-    }
-
   /*  the popup menu  */
-  gdisp->popup = image_popup_menu;
+  gdisp->ifactory = menus_get_image_factory ();
 
   /*  The accelerator table for images  */
-  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
+  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell),
+			      gdisp->ifactory->accel_group);
 
   /*  connect the "F1" help key  */
   gimp_help_connect_help_accel (gdisp->shell,

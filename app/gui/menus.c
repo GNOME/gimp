@@ -37,7 +37,7 @@
 #include "dialog_handler.h"
 #include "dialogs-commands.h"
 #include "gdisplay.h"
-#include "layers-dialog.h"
+#include "layers-commands.h"
 #include "menus.h"
 #include "paths-dialog.h"
 #include "test-commands.h"
@@ -509,9 +509,9 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Layers/Anchor Layer"), "<control>H", layers_anchor_cmd_callback, 0 },
     "layers/anchor_layer.html", NULL },
-  { { N_("/Layers/Merge Visible Layers..."), "<control>M", layers_merge_cmd_callback, 0 },
+  { { N_("/Layers/Merge Visible Layers..."), "<control>M", layers_merge_layers_cmd_callback, 0 },
     "layers/dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Layers/Flatten Image"), NULL, layers_flatten_cmd_callback, 0 },
+  { { N_("/Layers/Flatten Image"), NULL, layers_flatten_image_cmd_callback, 0 },
     "layers/flatten_image.html", NULL },
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
@@ -676,66 +676,87 @@ static GtkItemFactory *save_factory = NULL;
 
 static GimpItemFactoryEntry layers_entries[] =
 {
-  { { N_("/New Layer..."), "<control>N", layers_dialog_new_layer_callback, 0 },
+  { { N_("/New Layer..."), "<control>N",
+      layers_new_cmd_callback, 0 },
     "dialogs/new_layer.html", NULL },
 
   /*  <Layers>/Stack  */
 
-  { { N_("/Stack/Raise Layer"), "<control>F", layers_dialog_raise_layer_callback, 0 },
+  { { N_("/Stack/Raise Layer"), "<control>F",
+      layers_raise_cmd_callback, 0 },
     "stack/stack.html#raise_layer", NULL },
-  { { N_("/Stack/Lower Layer"), "<control>B", layers_dialog_lower_layer_callback, 0 },
+  { { N_("/Stack/Lower Layer"), "<control>B",
+      layers_lower_cmd_callback, 0 },
     "stack/stack.html#lower_layer", NULL },
-  { { N_("/Stack/Layer to Top"), "<shift><control>F", layers_dialog_raise_layer_to_top_callback, 0 },
+  { { N_("/Stack/Layer to Top"), "<shift><control>F",
+      layers_raise_to_top_cmd_callback, 0 },
     "stack/stack.html#later_to_top", NULL },
-  { { N_("/Stack/Layer to Bottom"), "<shift><control>B", layers_dialog_lower_layer_to_bottom_callback, 0 },
+  { { N_("/Stack/Layer to Bottom"), "<shift><control>B",
+      layers_lower_to_bottom_cmd_callback, 0 },
     "stack/stack.html#layer_to_bottom", NULL },
 
-  { { N_("/Duplicate Layer"), "<control>C", layers_dialog_duplicate_layer_callback, 0 },
+  { { N_("/Duplicate Layer"), "<control>C",
+      layers_duplicate_cmd_callback, 0 },
     "duplicate_layer.html", NULL },
-  { { N_("/Anchor Layer"), "<control>H", layers_dialog_anchor_layer_callback, 0 },
+  { { N_("/Anchor Layer"), "<control>H",
+      layers_anchor_cmd_callback, 0 },
     "anchor_layer.html", NULL },
-  { { N_("/Delete Layer"), "<control>X", layers_dialog_delete_layer_callback, 0 },
+  { { N_("/Delete Layer"), "<control>X",
+      layers_delete_cmd_callback, 0 },
     "delete_layer.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Layer Boundary Size..."), "<control>R", layers_dialog_resize_layer_callback, 0 },
+  { { N_("/Layer Boundary Size..."), "<control>R",
+      layers_resize_cmd_callback, 0 },
     "dialogs/layer_boundary_size.html", NULL },
-  { { N_("/Layer to Imagesize"), NULL, layers_dialog_resize_to_image_callback, 0 },
+  { { N_("/Layer to Imagesize"), NULL,
+      layers_resize_to_image_cmd_callback, 0 },
     "layer_to_image_size.html", NULL },
-  { { N_("/Scale Layer..."), "<control>S", layers_dialog_scale_layer_callback, 0 },
+  { { N_("/Scale Layer..."), "<control>S",
+      layers_scale_cmd_callback, 0 },
     "dialogs/scale_layer.html", NULL },
       
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Merge Visible Layers..."), "<control>M", layers_dialog_merge_layers_callback, 0 },
+  { { N_("/Merge Visible Layers..."), "<control>M",
+      layers_merge_layers_cmd_callback, 0 },
     "dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Merge Down"), "<control><shift>M", layers_dialog_merge_down_callback, 0 },
+  { { N_("/Merge Down"), "<control><shift>M",
+      layers_merge_down_cmd_callback, 0 },
     "merge_down.html", NULL },
-  { { N_("/Flatten Image"), NULL, layers_dialog_flatten_image_callback, 0 },
+  { { N_("/Flatten Image"), NULL,
+      layers_flatten_image_cmd_callback, 0 },
     "flatten_image.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Add Layer Mask..."), NULL, layers_dialog_add_layer_mask_callback, 0 },
+  { { N_("/Add Layer Mask..."), NULL,
+      layers_add_layer_mask_cmd_callback, 0 },
     "dialogs/add_layer_mask.html", NULL },
-  { { N_("/Apply Layer Mask"), NULL, layers_dialog_apply_layer_mask_callback, 0 },
+  { { N_("/Apply Layer Mask"), NULL,
+      layers_apply_layer_mask_cmd_callback, 0 },
     "apply_mask.html", NULL },
-  { { N_("/Delete Layer Mask"), NULL, layers_dialog_delete_layer_mask_callback, 0 },
+  { { N_("/Delete Layer Mask"), NULL,
+      layers_delete_layer_mask_cmd_callback, 0 },
     "delete_mask.html", NULL },
-  { { N_("/Mask to Selection"), NULL, layers_dialog_mask_select_callback, 0 },
+  { { N_("/Mask to Selection"), NULL,
+      layers_mask_select_cmd_callback, 0 },
     "mask_to_selection.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Add Alpha Channel"), NULL, layers_dialog_add_alpha_channel_callback, 0 },
+  { { N_("/Add Alpha Channel"), NULL,
+      layers_add_alpha_channel_cmd_callback, 0 },
     "add_alpha_channel.html", NULL },
-  { { N_("/Alpha to Selection"), NULL, layers_dialog_alpha_select_callback, 0 },
+  { { N_("/Alpha to Selection"), NULL,
+      layers_alpha_select_cmd_callback, 0 },
     "alpha_to_selection.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Edit Layer Attributes..."), NULL, layers_dialog_edit_layer_attributes_callback, 0 },
+  { { N_("/Edit Layer Attributes..."), NULL,
+      layers_edit_attributes_cmd_callback, 0 },
     "dialogs/edit_layer_attributes.html", NULL }
 };
 static guint n_layers_entries = (sizeof (layers_entries) /

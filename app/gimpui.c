@@ -196,5 +196,27 @@ gimp_dialog_hide (GtkWidget *dialog)
   gdk_window_withdraw (dialog->window);
 }
 
+void
+gimp_menu_position (GtkMenu *menu,
+		    gint    *x,
+		    gint    *y)
+{
+  GtkRequisition requisition;
+  gint           pointer_x;
+  gint           pointer_y;
+  gint           screen_width;
+  gint           screen_height;
 
-    
+  gdk_window_get_pointer (NULL, &pointer_x, &pointer_y, NULL);
+
+  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+  screen_width  = gdk_screen_width ();
+  screen_height = gdk_screen_height ();
+
+  *x = CLAMP (pointer_x - 2, 0, MAX (0, screen_width  - requisition.width));
+  *y = CLAMP (pointer_y - 2, 0, MAX (0, screen_height - requisition.height));
+
+  *x = MAX (*x, 0);
+  *y = MAX (*y, 0);
+}

@@ -90,20 +90,6 @@ void image_resize_cmd_callback             (GtkWidget *, gpointer);
 void image_scale_cmd_callback              (GtkWidget *, gpointer);
 void image_duplicate_cmd_callback          (GtkWidget *, gpointer);
 
-void layers_previous_cmd_callback          (GtkWidget *, gpointer);
-void layers_next_cmd_callback              (GtkWidget *, gpointer);
-void layers_raise_cmd_callback             (GtkWidget *, gpointer);
-void layers_lower_cmd_callback             (GtkWidget *, gpointer);
-void layers_raise_to_top_cmd_callback      (GtkWidget *, gpointer);
-void layers_lower_to_bottom_cmd_callback   (GtkWidget *, gpointer);
-void layers_anchor_cmd_callback            (GtkWidget *, gpointer);
-void layers_merge_cmd_callback             (GtkWidget *, gpointer);
-void layers_flatten_cmd_callback           (GtkWidget *, gpointer);
-void layers_mask_select_cmd_callback       (GtkWidget *, gpointer);
-void layers_add_alpha_channel_cmd_callback (GtkWidget *, gpointer);
-void layers_alpha_select_cmd_callback      (GtkWidget *, gpointer);
-void layers_resize_to_image_cmd_callback   (GtkWidget *, gpointer);
-
 void tools_default_colors_cmd_callback     (GtkWidget *, gpointer);
 void tools_swap_colors_cmd_callback        (GtkWidget *, gpointer);
 void tools_swap_contexts_cmd_callback      (GtkWidget *, gpointer);

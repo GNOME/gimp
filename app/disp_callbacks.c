@@ -50,6 +50,7 @@
 #include "gimplayer.h"
 #include "gimppattern.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "pixel_region.h"
 #include "scale.h"
 #include "scroll.h"
@@ -149,10 +150,15 @@ gdisplay_shell_events (GtkWidget *widget,
 {
   switch (event->type)
     {
-    case GDK_BUTTON_PRESS:
     case GDK_KEY_PRESS:
+      gtk_object_set_data (GTK_OBJECT (gdisp->ifactory), "gimp-accel-context",
+			   gdisp->gimage);
+      /* fallthrough */
+
+    case GDK_BUTTON_PRESS:
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_context_get_user (), gdisp);
+
       break;
     default:
       break;
@@ -332,8 +338,16 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	case 3:
 	  state |= GDK_BUTTON3_MASK;
-	  gtk_menu_popup (GTK_MENU (gdisp->popup),
-			  NULL, NULL, NULL, NULL, 3, bevent->time);
+	  {
+	    gint x, y;
+
+	    gimp_menu_position (GTK_MENU (gdisp->ifactory->widget), &x, &y);
+
+	    gtk_item_factory_popup_with_data (gdisp->ifactory,
+					      gdisp->gimage, NULL,
+					      x, y,
+					      3, bevent->time);
+	  }
 	  return_val = TRUE;
 	  break;
 
@@ -733,14 +747,19 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
+  gdisp = (GDisplay *) data;
+
   if (!gimp_busy && event->button == 1)
     {
-      gdisp = data;
+      gint x, y;
 
-      gtk_menu_popup (GTK_MENU (gdisp->popup),
-		      NULL, NULL,
-		      gdisplay_origin_menu_position, widget,
-		      1, event->time);
+      gdisplay_origin_menu_position (GTK_MENU (gdisp->ifactory->widget),
+				     &x, &y, widget);
+
+      gtk_item_factory_popup_with_data (gdisp->ifactory,
+					gdisp->gimage, NULL,
+					x, y,
+					1, event->time);
     }
 
   /*  Stop the signal emission so the button doesn't grab the

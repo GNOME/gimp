@@ -43,7 +43,6 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimpui.c		\
 	gimpui.h		\
-	layers_dialogP.h	\
 	lc_dialog.c		\
 	lc_dialog.h		\
 	lc_dialogP.h		\

@@ -1,5 +1,35 @@
 2001-04-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/layers_dialogP.h: removed.
+
+	* app/gimpui.[ch]: new function gimp_menu_position().
+
+	* app/disp_callbacks.c
+	* app/interface.c
+	* app/gui/layers-dialog.c: popup the image and layers menu with
+	gtk_item_factory_popup_with_data() instead of gtk_menu_popup()
+	and pass the GimpImage we're operating on as data.
+
+	For accelerators, which are invoked without context, we catch key
+	press events and attach the context to the GtkItemFactory.
+
+	* app/gui/Makefile.am
+	* app/gui/layers-commands.[ch]: common layer callbacks (instead of
+	separate ones in commands.c and layers-dialog.c
+
+	* app/gui/commands.[ch]
+	* app/gui/layers-dialog.[ch]: removed the menu callbacks here.
+
+	* app/gdisplay.h
+	* app/lc_dialog.c
+	* app/gui/channels-dialog.c
+	* app/gui/layer-select.c
+	* app/gui/menus.c
+	* po/POTFILES.in: changed accordingly.
+
+2001-04-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/main.c: set the message handler for all app log domains, not
 	only for "Gimp".
 

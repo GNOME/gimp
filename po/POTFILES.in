@@ -57,6 +57,7 @@ app/gui/indicator-area.c
 app/gui/info-dialog.c
 app/gui/info-window.c
 app/gui/layer-select.c
+app/gui/layers-commands.c
 app/gui/layers-dialog.c
 app/gui/menus.c
 app/gui/offset-dialog.h

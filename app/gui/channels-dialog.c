@@ -35,7 +35,7 @@
 #include "gdisplay.h"
 #include "gimpdnd.h"
 #include "gimpui.h"
-#include "layers_dialogP.h"
+#include "layers-dialog.h"
 #include "lc_dialogP.h"
 #include "ops_buttons.h"
 #include "menus.h"

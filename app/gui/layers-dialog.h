@@ -20,52 +20,14 @@
 #define __LAYERS_DIALOG_H__
 
 
-void   layers_dialog_previous_layer_callback        (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_next_layer_callback            (GtkWidget *widet,
-						    gpointer   data);
-void   layers_dialog_raise_layer_callback           (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_lower_layer_callback           (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_raise_layer_to_top_callback    (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_lower_layer_to_bottom_callback (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_new_layer_callback             (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_duplicate_layer_callback       (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_delete_layer_callback          (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_scale_layer_callback           (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_resize_layer_callback          (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_resize_to_image_callback       (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_add_layer_mask_callback        (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_apply_layer_mask_callback      (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_delete_layer_mask_callback     (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_anchor_layer_callback          (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_merge_layers_callback          (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_merge_down_callback            (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_flatten_image_callback         (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_alpha_select_callback          (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_mask_select_callback           (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_add_alpha_channel_callback     (GtkWidget *widet,
-						     gpointer   data);
-void   layers_dialog_edit_layer_attributes_callback (GtkWidget *widet,
-						     gpointer   data);
+void   render_fs_preview                 (GtkWidget *widget,
+					  GdkPixmap *pixmap);
+void   render_preview                    (TempBuf   *preview_buf,
+					  GtkWidget *preview_widget,
+					  gint       width,
+					  gint       height,
+					  gint       channel);
+void   layers_dialog_invalidate_previews (GimpImage *gimage);
 
 
 #endif /* __LAYERS_DIALOG_H__ */

@@ -24,13 +24,13 @@
 #include "apptypes.h"
 
 #include "layer-select.h"
-
 #include "gdisplay.h"
+#include "layers-dialog.h"
+
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimprc.h"
-#include "layers_dialogP.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

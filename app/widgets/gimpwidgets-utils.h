@@ -31,5 +31,9 @@ void gimp_message_box   (gchar        *message,
 
 void gimp_dialog_hide   (GtkWidget    *dialog);
 
+void gimp_menu_position (GtkMenu      *menu,
+			 gint         *x,
+			 gint         *y);
+
 
 #endif /* __GIMP_UI_H__ */
