@@ -1405,7 +1405,6 @@ prefs_notebook_append_page (Gimp          *gimp,
   GtkWidget   *vbox;
   GdkPixbuf   *pixbuf       = NULL;
   GdkPixbuf   *small_pixbuf = NULL;
-  gchar       *markup;
 
   event_box = gtk_event_box_new ();
   gtk_notebook_append_page (notebook, event_box, NULL);
@@ -1417,9 +1416,6 @@ prefs_notebook_append_page (Gimp          *gimp,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
-
-  markup = g_strdup_printf ("<b><span size=\"x-large\">%s</span></b>",
-                            notebook_label);
 
   if (notebook_icon)
     {
@@ -1448,11 +1444,9 @@ prefs_notebook_append_page (Gimp          *gimp,
                       0, small_pixbuf,
                       1, tree_label,
                       2, page_index,
-                      3, markup,
+                      3, notebook_label,
                       4, pixbuf,
                       -1);
-
-  g_free (markup);
 
   if (pixbuf)
     g_object_unref (pixbuf);
@@ -1482,8 +1476,8 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
 
   gtk_tree_model_get_value (model, &iter, 3, &val);
 
-  gtk_label_set_markup (GTK_LABEL (label),
-                        g_value_get_string (&val));
+  gtk_label_set_text (GTK_LABEL (label),
+                      g_value_get_string (&val));
 
   g_value_unset (&val);
 
@@ -1638,6 +1632,8 @@ preferences_dialog_create (Gimp *gimp)
   GtkWidget        *scrolled_window;
   GtkWidget        *text_view;
   GtkTextBuffer    *text_buffer;
+  PangoAttrList    *attrs;
+  PangoAttribute   *attr;
   GSList           *group;
 
   gint   i;
@@ -1827,10 +1823,17 @@ preferences_dialog_create (Gimp *gimp)
   gtk_widget_show (hbox);
 
   label = gtk_label_new (NULL);
-  gtk_widget_set_size_request (label, -1, 48);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  attrs = pango_attr_list_new ();
+  attr = pango_attr_scale_new (PANGO_SCALE_X_LARGE);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  pango_attr_list_unref (attrs);
 
   image = gtk_image_new ();
   gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
