@@ -22,11 +22,7 @@
 
 #include "config.h"
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <string.h>
-#include "sys/types.h"
 
 #include <gtk/gtk.h>
 
@@ -98,7 +94,7 @@ gimp_help (Gimp        *gimp,
       if (help_domain && strlen (help_domain))
 	idle_help->help_domain = g_strdup (help_domain);
 
-      if (config->help_locales)
+      if (config->help_locales && strlen (config->help_locales))
         idle_help->help_locales = g_strdup (config->help_locales);
       else
         idle_help->help_locales = gimp_get_default_language ();

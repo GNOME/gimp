@@ -221,7 +221,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_HELP_LOCALES,
                                    "help-locales", HELP_LOCALES_BLURB,
-                                   NULL,
+                                   "",
                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser", HELP_BROWSER_BLURB,

@@ -524,12 +524,12 @@
 # 
 # (use-help yes)
 
-# Specifies the language preferences used by the help system. This is
-# acolon-separated list of language identifiers with decreasing priority. If
+# Specifies the language preferences used by the help system. This is a
+# colon-separated list of language identifiers with decreasing priority. If
 # empty, the language is taken from the user's locale setting.  This is a
 # string value.
 # 
-# 
+# (help-locales "")
 
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.
