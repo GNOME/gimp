@@ -37,7 +37,7 @@
 #include "tile.h"
 #endif
 
-static gint  num_threads = 0;
+static gint  max_threads = 0;
 
 
 typedef void (* p1_func) (gpointer     data,
@@ -66,7 +66,7 @@ struct _PixelProcessor
 
 #ifdef ENABLE_MP
   GMutex              *mutex;
-  gint                 num_threads;
+  gint                 threads;
 #endif
 
   gint                 num_regions;
@@ -84,7 +84,8 @@ do_parallel_regions (PixelProcessor *processor)
 
   g_mutex_lock (processor->mutex);
 
-  if (processor->num_threads != 0 && processor->PRI)
+  /*  the first thread getting here must not call pixel_regions_process()  */
+  if (processor->threads && processor->PRI)
     processor->PRI = pixel_regions_process (processor->PRI);
 
   if (processor->PRI == NULL)
@@ -93,7 +94,7 @@ do_parallel_regions (PixelProcessor *processor)
       return;
     }
 
-  processor->num_threads++;
+  processor->threads++;
 
   do
     {
@@ -155,8 +156,6 @@ do_parallel_regions (PixelProcessor *processor)
   while (processor->PRI &&
 	 (processor->PRI = pixel_regions_process (processor->PRI)));
 
-  processor->num_threads--;
-
   g_mutex_unlock (processor->mutex);
 }
 #endif
@@ -214,23 +213,25 @@ do_parallel_regions_single (PixelProcessor *processor)
   return NULL;
 }
 
-#define MAX_THREADS 16
+#define MAX_THREADS      16
+#define TILES_PER_THREAD  8
 
 static void
 pixel_regions_do_parallel (PixelProcessor *processor)
 {
 #ifdef ENABLE_MP
-  gint  nthreads = MIN (num_threads, MAX_THREADS);
+  glong tiles = (processor->PRI->region_width *
+                 processor->PRI->region_height) / (TILE_WIDTH * TILE_HEIGHT);
 
-  /* make sure we have at least one tile per thread */
-  nthreads = MIN (nthreads,
-		  (processor->PRI->region_width *
-                   processor->PRI->region_height) / (TILE_WIDTH * TILE_HEIGHT));
-
-  if (nthreads > 1)
+  if (max_threads > 1 && tiles > TILES_PER_THREAD)
     {
       GThread *threads[MAX_THREADS];
+      gint     nthreads = MIN (max_threads, tiles / TILES_PER_THREAD);
       gint     i;
+
+      /* g_printerr ("starting %d threads to process >= %ld tiles\n",
+       *              nthreads, tiles);
+       */
 
       for (i = 0; i < nthreads; i++)
         {
@@ -250,9 +251,6 @@ pixel_regions_do_parallel (PixelProcessor *processor)
 	{
           g_thread_join (threads[i]);
 	}
-
-      if (processor->num_threads != 0)
-	g_printerr ("pixel_regions_do_prarallel: we lost a thread\n");
     }
   else
 #endif
@@ -317,7 +315,7 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
 
 #ifdef ENABLE_MP
   processor.mutex       = g_mutex_new ();
-  processor.num_threads = 0;
+  processor.threads     = 0;
 #endif
 
   pixel_regions_do_parallel (&processor);
@@ -330,19 +328,21 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
 void
 pixel_processor_init (gint num_threads)
 {
-  num_threads = MAX (num_threads, MAX_THREADS);
+  pixel_processor_set_num_threads (num_threads);
 }
 
 void
 pixel_processor_set_num_threads (gint num_threads)
 {
-  num_threads = MAX (num_threads, MAX_THREADS);
+  g_return_if_fail (num_threads > 0);
+
+  max_threads = CLAMP (num_threads, 1, MAX_THREADS);
 }
 
 void
 pixel_processor_exit (void)
 {
-  num_threads = 0;
+  max_threads = 0;
 }
 
 void

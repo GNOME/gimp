@@ -1,5 +1,10 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-processor.c: some more cleanup; introduced a
+	#define to control the number of tiles per thread.
+
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c: fixed typo.
 
 	* app/config/gimpbaseconfig.c: reverted last change,
