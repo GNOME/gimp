@@ -1389,9 +1389,7 @@ control_motion (GimpGradientEditor *editor,
       pos = control_calc_g_pos (editor, x);
 
       if (! editor->control_compress)
-	seg->prev->right = seg->left = CLAMP (pos,
-					      seg->prev->middle + EPSILON,
-					      seg->middle - EPSILON);
+        gimp_gradient_segment_set_left_pos (gradient, seg, pos);
       else
 	control_compress_left (gradient,
                                editor->control_sel_l,
@@ -1404,7 +1402,8 @@ control_motion (GimpGradientEditor *editor,
 
     case GRAD_DRAG_MIDDLE:
       pos = control_calc_g_pos (editor, x);
-      seg->middle = CLAMP (pos, seg->left + EPSILON, seg->right - EPSILON);
+
+      gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->middle);
       gradient_editor_set_hint (editor, str, "", "");

@@ -1,3 +1,10 @@
+2004-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpgradienteditor.c (control_motion): use the newly
+	added GimpGradient API to set the segment's handles instead of
+	setting the values directly. Dirties the gradient correctly and
+	makes the preview update instantly again. Fixes bug #143605.
+
 2004-06-03  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-location-dialog.c
