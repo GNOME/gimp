@@ -193,7 +193,7 @@ install :: install-po
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 install-po:
-	cd po && \$(MAKE) install
+	cd po && \$(MAKE) install-po
         
 ".$install;
 }

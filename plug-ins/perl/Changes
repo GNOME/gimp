@@ -13,6 +13,7 @@ Revision history for Gimp-Perl extension.
           <michael@shoebox.net>.
         - removed gimp_proc_db_proc_info from xs code in favour
           of the PDB call.
+        - fix the parasite-editor as much as possible.
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

@@ -322,7 +322,7 @@ sub undirty {
 }
 
 sub GTK_OBJECT_INIT {
-   shift unless ref $self; # care for "old" Gtk modules
+   shift unless ref $_[0]; # care for "old" Gtk modules
    my $self = shift;
    @{$self}{qw(find_func attach_func detach_func current parasite)}=@$init;
    @{$self}{qw(name  flags  data)}=
