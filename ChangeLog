@@ -1,5 +1,21 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/brushes-menu.c
+	* app/gui/channels-menu.c
+	* app/gui/colormap-editor-menu.c
+	* app/gui/dialogs-menu.c
+	* app/gui/documents-menu.c
+	* app/gui/image-menu.c
+	* app/gui/palettes-menu.c
+	* app/gui/templates-menu.c
+	* app/gui/toolbox-menu.c
+	* app/gui/vectors-menu.c
+	* plug-ins/common/uniteditor.c	
+	* plug-ins/dbbrowser/dbbrowser.c: followed the HIG advisory on
+	labelling menus with a trailing ellipsis and removed some.
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]: renamed
 	gimp_prop_size_entry_connect() to gimp_prop_coordinates_connect().
 	Added a new property widget that is a single GimpSizeEntry and is

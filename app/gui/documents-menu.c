@@ -50,7 +50,7 @@ GimpItemFactoryEntry documents_menu_entries[] =
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
     GIMP_HELP_DOCUMENT_OPEN, NULL },
-  { { N_("/File Open _Dialog..."), "",
+  { { N_("/File Open _Dialog"), "",
       documents_file_open_dialog_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
@@ -99,7 +99,7 @@ documents_menu_update (GtkItemFactory *factory,
 
   SET_SENSITIVE ("/Open Image",              imagefile);
   SET_SENSITIVE ("/Raise or Open Image",     imagefile);
-  SET_SENSITIVE ("/File Open Dialog...",     TRUE);
+  SET_SENSITIVE ("/File Open Dialog",        TRUE);
   SET_SENSITIVE ("/Remove Entry",            imagefile);
   SET_SENSITIVE ("/Recreate Preview",        imagefile);
   SET_SENSITIVE ("/Reload all Previews",     imagefile);

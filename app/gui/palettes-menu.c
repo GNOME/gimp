@@ -70,7 +70,7 @@ GimpItemFactoryEntry palettes_menu_entries[] =
       palettes_merge_palettes_cmd_callback, 0 },
     NULL,
     GIMP_HELP_PALETTE_MERGE, NULL },
-  { { N_("/_Delete Palette..."), "",
+  { { N_("/_Delete Palette"), "",
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
@@ -112,7 +112,7 @@ palettes_menu_update (GtkItemFactory *factory,
 		 palette && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
-  SET_SENSITIVE ("/Delete Palette...",
+  SET_SENSITIVE ("/Delete Palette",
 		 palette && data->writeable && !data->internal);
 
 #undef SET_SENSITIVE

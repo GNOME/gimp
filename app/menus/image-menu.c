@@ -105,7 +105,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/File/Open Recent/---"),
 
-  { { N_("/File/Open Recent/Document _History..."), "foo",
+  { { N_("/File/Open Recent/Document _History"), "foo",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-list|gimp-document-grid",
@@ -131,7 +131,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       file_save_template_cmd_callback, 0 },
     NULL,
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE, NULL },
-  { { N_("/File/Re_vert..."), NULL,
+  { { N_("/File/Re_vert"), NULL,
       file_revert_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REVERT_TO_SAVED },
     NULL,
@@ -166,7 +166,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_REDO },
     NULL,
     GIMP_HELP_EDIT_REDO, NULL },
-  { { N_("/Edit/Undo _History..."), NULL,
+  { { N_("/Edit/Undo _History"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
@@ -409,17 +409,17 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/View/---"),
 
-  { { N_("/View/_Info Window..."), "<control><shift>I",
+  { { N_("/View/_Info Window"), "<control><shift>I",
       view_info_window_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_INFO },
     NULL,
     GIMP_HELP_INFO_DIALOG, NULL },
-  { { N_("/View/Na_vigation Window..."), "<control><shift>N",
+  { { N_("/View/Na_vigation Window"), "<control><shift>N",
       view_navigation_window_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     NULL,
     GIMP_HELP_NAVIGATION_DIALOG, NULL },
-  { { N_("/View/Display _Filters..."), NULL,
+  { { N_("/View/Display _Filters"), NULL,
       view_display_filters_cmd_callback, 0 },
     NULL,
     GIMP_HELP_DISPLAY_FILTER_DIALOG, NULL },
@@ -578,7 +578,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Image/---"),
 
-  { { N_("/Image/Configure G_rid..."), NULL,
+  { { N_("/Image/Configure G_rid"), NULL,
       image_configure_grid_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_GRID },
     NULL,
@@ -729,7 +729,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Layer/Colors/---"),
 
-  { { N_("/Layer/Colors/_Histogram..."), NULL,
+  { { N_("/Layer/Colors/_Histogram"), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_HISTOGRAM },
     "gimp-histogram-tool",
@@ -913,25 +913,25 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/Dialogs/Create New Doc_k")),
 
-  { { N_("/Dialogs/Create New Dock/_Layers, Channels & Paths..."), NULL,
+  { { N_("/Dialogs/Create New Dock/_Layers, Channels & Paths"), NULL,
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
     NULL, NULL },
-  { { N_("/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."), NULL,
+  { { N_("/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"), NULL,
       dialogs_create_data_cmd_callback, 0 },
     NULL,
     NULL, NULL },
-  { { N_("/Dialogs/Create New Dock/_Misc. Stuff..."), NULL,
+  { { N_("/Dialogs/Create New Dock/_Misc. Stuff"), NULL,
       dialogs_create_stuff_cmd_callback, 0 },
     NULL,
     NULL, NULL },
 
-  { { N_("/Dialogs/Tool _Options..."), NULL,
+  { { N_("/Dialogs/Tool _Options"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_OPTIONS },
     "gimp-tool-options",
     GIMP_HELP_TOOL_OPTIONS_DIALOG, NULL },
-  { { N_("/Dialogs/_Device Status..."), NULL,
+  { { N_("/Dialogs/_Device Status"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DEVICE_STATUS },
     "gimp-device-status",
@@ -939,37 +939,37 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Dialogs/---"),
 
-  { { N_("/Dialogs/_Layers..."), "<control>L",
+  { { N_("/Dialogs/_Layers"), "<control>L",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LAYERS },
     "gimp-layer-list",
     GIMP_HELP_LAYER_DIALOG, NULL },
-  { { N_("/Dialogs/_Channels..."), NULL,
+  { { N_("/Dialogs/_Channels"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_CHANNELS },
     "gimp-channel-list",
     GIMP_HELP_CHANNEL_DIALOG, NULL },
-  { { N_("/Dialogs/_Paths..."), NULL,
+  { { N_("/Dialogs/_Paths"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PATHS },
     "gimp-vectors-list",
     GIMP_HELP_PATH_DIALOG, NULL },
-  { { N_("/Dialogs/_Indexed Palette..."), NULL,
+  { { N_("/Dialogs/_Indexed Palette"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
     "gimp-indexed-palette",
     GIMP_HELP_INDEXED_PALETTE_DIALOG, NULL },
-  { { N_("/Dialogs/_Selection Editor..."), NULL,
+  { { N_("/Dialogs/_Selection Editor"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_RECT_SELECT },
     "gimp-selection-editor",
     GIMP_HELP_SELECTION_DIALOG, NULL },
-  { { N_("/Dialogs/Na_vigation..."), NULL,
+  { { N_("/Dialogs/Na_vigation"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     "gimp-navigation-view",
     GIMP_HELP_NAVIGATION_DIALOG, NULL },
-  { { N_("/Dialogs/_Undo History..."), NULL,
+  { { N_("/Dialogs/_Undo History"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
@@ -977,37 +977,37 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Dialogs/---"),
 
-  { { N_("/Dialogs/Colo_rs..."), NULL,
+  { { N_("/Dialogs/Colo_rs"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DEFAULT_COLORS },
     "gimp-color-editor",
     GIMP_HELP_COLOR_DIALOG, NULL },
-  { { N_("/Dialogs/Brus_hes..."), "<control><shift>B",
+  { { N_("/Dialogs/Brus_hes"), "<control><shift>B",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_PAINTBRUSH },
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG, NULL },
-  { { N_("/Dialogs/P_atterns..."), "<control><shift>P",
+  { { N_("/Dialogs/P_atterns"), "<control><shift>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
     "gimp-pattern-grid|gimp-pattern-list",
     GIMP_HELP_PATTERN_DIALOG, NULL },
-  { { N_("/Dialogs/_Gradients..."), "<control>G",
+  { { N_("/Dialogs/_Gradients"), "<control>G",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_BLEND },
     "gimp-gradient-list|gimp-gradient-grid",
     GIMP_HELP_GRADIENT_DIALOG, NULL },
-  { { N_("/Dialogs/Pal_ettes..."), "<control>P",
+  { { N_("/Dialogs/Pal_ettes"), "<control>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
     "gimp-palette-list|gimp-palette-grid",
     GIMP_HELP_PALETTE_DIALOG, NULL },
-  { { N_("/Dialogs/_Fonts..."), NULL,
+  { { N_("/Dialogs/_Fonts"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_FONT },
     "gimp-font-list|gimp-font-grid",
     GIMP_HELP_FONT_DIALOG, NULL },
-  { { N_("/Dialogs/_Buffers..."), "foo",
+  { { N_("/Dialogs/_Buffers"), "foo",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PASTE },
     "gimp-buffer-list|gimp-buffer-grid",
@@ -1015,22 +1015,22 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Dialogs/---"),
 
-  { { N_("/Dialogs/I_mages..."), NULL,
+  { { N_("/Dialogs/I_mages"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_IMAGES },
     "gimp-image-list|gimp-image-grid",
     GIMP_HELP_IMAGE_DIALOG, NULL },
-  { { N_("/Dialogs/Document Histor_y..."), "",
+  { { N_("/Dialogs/Document Histor_y"), "",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-list|gimp-document-grid",
     GIMP_HELP_DOCUMENT_DIALOG, NULL },
-  { { N_("/Dialogs/_Templates..."), NULL,
+  { { N_("/Dialogs/_Templates"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TEMPLATE },
     "gimp-template-list|gimp-template-grid",
     GIMP_HELP_TEMPLATE_DIALOG, NULL },
-  { { N_("/Dialogs/Error Co_nsole..."), NULL,
+  { { N_("/Dialogs/Error Co_nsole"), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_WARNING },
     "gimp-error-console",
@@ -1389,7 +1389,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/File/Save as...",          gdisp && drawable);
   SET_SENSITIVE ("/File/Save a Copy...",      gdisp && drawable);
   SET_SENSITIVE ("/File/Save as Template...", gdisp);
-  SET_SENSITIVE ("/File/Revert...",           gdisp && GIMP_OBJECT (gimage)->name);
+  SET_SENSITIVE ("/File/Revert",              gdisp && GIMP_OBJECT (gimage)->name);
   SET_SENSITIVE ("/File/Close",               gdisp);
 
   /*  Edit  */
@@ -1487,9 +1487,9 @@ image_menu_update (GtkItemFactory *item_factory,
   if (gdisp)
     image_menu_set_zoom (item_factory, shell);
 
-  SET_SENSITIVE ("/View/Info Window...",       gdisp);
-  SET_SENSITIVE ("/View/Navigation Window...", gdisp);
-  SET_SENSITIVE ("/View/Display Filters...",   gdisp);
+  SET_SENSITIVE ("/View/Info Window",       gdisp);
+  SET_SENSITIVE ("/View/Navigation Window", gdisp);
+  SET_SENSITIVE ("/View/Display Filters",   gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
   SET_ACTIVE    ("/View/Show Selection",      gdisp && appearance->selection);
@@ -1536,7 +1536,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Duplicate",               gdisp);
   SET_SENSITIVE ("/Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("/Image/Flatten Image",           gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Image/Configure Grid...",       gdisp);
+  SET_SENSITIVE ("/Image/Configure Grid",          gdisp);
 
   /*  Layer  */
 
@@ -1580,7 +1580,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Colors/Desaturate",             lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Invert",                 lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Histogram...",           lp);
+  SET_SENSITIVE ("/Layer/Colors/Histogram",              lp);
 
   SET_SENSITIVE ("/Layer/Mask/Add Layer Mask...",        lp && !fs && !aux && !lm && alpha);
   SET_SENSITIVE ("/Layer/Mask/Apply Layer Mask",         lm && !fs && !aux);

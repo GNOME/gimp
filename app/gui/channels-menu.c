@@ -41,7 +41,7 @@
 
 GimpItemFactoryEntry channels_menu_entries[] =
 {
-  { { N_("/_Edit Channel Attributes..."), NULL,
+  { { N_("/_Edit Channel Attributes"), NULL,
       channels_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
@@ -153,18 +153,18 @@ channels_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Edit Channel Attributes...", !fs && channel);
+  SET_SENSITIVE ("/Edit Channel Attributes",  !fs && channel);
 
-  SET_SENSITIVE ("/New Channel...",             !fs && gimage);
-  SET_SENSITIVE ("/Raise Channel",              !fs && channel && prev);
-  SET_SENSITIVE ("/Lower Channel",              !fs && channel && next);
-  SET_SENSITIVE ("/Duplicate Channel",          !fs && (channel || component));
-  SET_SENSITIVE ("/Delete Channel",             !fs && channel);
+  SET_SENSITIVE ("/New Channel...",           !fs && gimage);
+  SET_SENSITIVE ("/Raise Channel",            !fs && channel && prev);
+  SET_SENSITIVE ("/Lower Channel",            !fs && channel && next);
+  SET_SENSITIVE ("/Duplicate Channel",        !fs && (channel || component));
+  SET_SENSITIVE ("/Delete Channel",           !fs && channel);
 
-  SET_SENSITIVE ("/Channel to Selection",       !fs && (channel || component));
-  SET_SENSITIVE ("/Add to Selection",           !fs && (channel || component));
-  SET_SENSITIVE ("/Subtract from Selection",    !fs && (channel || component));
-  SET_SENSITIVE ("/Intersect with Selection",   !fs && (channel || component));
+  SET_SENSITIVE ("/Channel to Selection",     !fs && (channel || component));
+  SET_SENSITIVE ("/Add to Selection",         !fs && (channel || component));
+  SET_SENSITIVE ("/Subtract from Selection",  !fs && (channel || component));
+  SET_SENSITIVE ("/Intersect with Selection", !fs && (channel || component));
 
 #undef SET_SENSITIVE
 }
