@@ -507,9 +507,7 @@ gimp_template_editor_constructor (GType                  type,
 static void
 gimp_template_editor_finalize (GObject *object)
 {
-  GimpTemplateEditor *editor;
-
-  editor = GIMP_TEMPLATE_EDITOR (object);
+  GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (object);
 
   if (editor->template)
     {
