@@ -1,7 +1,7 @@
 # gimp po-plug-ins/fr.po
 # Copyright (C) 1998 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
-# David Monniaux <monniaux@ens.fr>, 1999.
+# David Monniaux <monniaux@ens.fr>, 1999, 2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 #
 msgid ""
@@ -5167,7 +5167,7 @@ msgstr "Sortie"
 
 #: plug-ins/common/ps.c:2581 plug-ins/print/print.c:189
 msgid "PostScript Level 2"
-msgstr "Niveau PostScript 2"
+msgstr "PostScript niveau 2"
 
 #: plug-ins/common/ps.c:2589
 msgid "Encapsulated PostScript"
@@ -8034,7 +8034,7 @@ msgstr "Sélectionner le filtre à appliquer sur l'animation"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame\n"
-msgstr ""
+msgstr "Modifier trames : pas de calque sélectionné dans la dernière trame modifiée\n"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s) .."
@@ -8042,7 +8042,7 @@ msgstr "Modifier trames & calques..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
 msgid "No selected Layer in start frame\n"
-msgstr ""
+msgstr "Pas de calque sélectionné dans la trame de départ.\n"
 
 #: plug-ins/gap/gap_mov_dialog.c:249 plug-ins/gflare/gflare.c:587
 #: plug-ins/gimpressionist/orientmap.c:590
@@ -8120,7 +8120,7 @@ msgstr "Aller / retour"
 
 #: plug-ins/gap/gap_mov_dialog.c:446
 msgid "Move Path"
-msgstr "Chemin de déplacement"
+msgstr "Déplacer selon chemin"
 
 #: plug-ins/gap/gap_mov_dialog.c:478
 msgid "UpdPreview"
@@ -8140,77 +8140,83 @@ msgstr ""
 #. Point Buttons
 #: plug-ins/gap/gap_mov_dialog.c:513
 msgid "Load Points"
-msgstr ""
+msgstr "Charger points"
 
 #: plug-ins/gap/gap_mov_dialog.c:521
 msgid "Load Controlpoints from file"
-msgstr ""
+msgstr "Charger des points de contrôle depuis un fichier"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Save Points"
-msgstr ""
+msgstr "Enregistrer points"
 
 #: plug-ins/gap/gap_mov_dialog.c:533
 msgid "Save Controlpoints to file"
-msgstr ""
+msgstr "Enregistrer des points de contrôles dans un fichier"
 
 #: plug-ins/gap/gap_mov_dialog.c:537
 msgid "Reset Points"
-msgstr ""
+msgstr "R.-à-z. points"
 
 #: plug-ins/gap/gap_mov_dialog.c:545
 msgid ""
 "Reset Controlpoints  \n"
 "to one Defaultpoint"
 msgstr ""
+"Remet à zéro les points de contrôle :\n"
+"met un unique point de contrôle."
 
 #: plug-ins/gap/gap_mov_dialog.c:549
 msgid "Add Point"
-msgstr ""
+msgstr "Ajouter point"
 
 #: plug-ins/gap/gap_mov_dialog.c:557
 msgid ""
 "Add Controlpoint at end        \n"
 "(the last Point is duplicated)"
 msgstr ""
+"Ajout un point de contrôle à la fin\n"
+"(le dernier point est dupliqué)."
 
 #: plug-ins/gap/gap_mov_dialog.c:561
 msgid "Prev Point"
-msgstr ""
+msgstr "Point précédent"
 
 #: plug-ins/gap/gap_mov_dialog.c:569
 msgid "Show Previous Controlpoint"
-msgstr ""
+msgstr "Montrer le point de contrôle précédent"
 
 #: plug-ins/gap/gap_mov_dialog.c:573
 msgid "Next Point"
-msgstr ""
+msgstr "Point suivant"
 
 #: plug-ins/gap/gap_mov_dialog.c:581
 msgid "Show Next Controlpoint"
-msgstr ""
+msgstr "Montrer le point de contrôle suivant"
 
 #: plug-ins/gap/gap_mov_dialog.c:591
 msgid "Start Frame:"
-msgstr ""
+msgstr "Première trame :"
 
 #: plug-ins/gap/gap_mov_dialog.c:595
 msgid "End Frame:"
-msgstr ""
+msgstr "Dernière trame :"
 
 #: plug-ins/gap/gap_mov_dialog.c:599
 msgid "Preview Frame:"
-msgstr ""
+msgstr "Aperçu de la trame :"
 
 #: plug-ins/gap/gap_mov_dialog.c:601
 msgid ""
 "frame to show when UpdPreview\n"
 "button is pressed"
 msgstr ""
+"Trame à montrer lorsque le bouton\n"
+"« M.à j. de l'aperçu » est pressé"
 
 #: plug-ins/gap/gap_mov_dialog.c:603
 msgid "Layerstack:"
-msgstr ""
+msgstr "Pile de calques :"
 
 #: plug-ins/gap/gap_mov_dialog.c:605
 msgid ""
@@ -8218,76 +8224,84 @@ msgid ""
 "Dst.Frame's Layerstack\n"
 "0 means on top i.e in front"
 msgstr ""
+"Où insérer le calque source dans la pile\n"
+"de calques de la trame destination.\n"
+"0 désigne la trame du dessus."
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:608
 msgid "Clip To Frame"
-msgstr ""
+msgstr "Rogner selon la trame"
 
 #: plug-ins/gap/gap_mov_dialog.c:615
 msgid ""
 "Clip all copied Src-Layers\n"
 "at Frame Boundaries"
 msgstr ""
+"Rogner tous les calques sources copiés\n"
+"aux dimensions de la trame destination"
 
 #: plug-ins/gap/gap_mov_dialog.c:659
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)\n"
 msgstr ""
+"Vous n'avez pas sélectionné d'image source.\n"
+"Veuillez ouvrir une deuxième image du même type\n"
+"avant d'utiliser « Déplacer selon chemin ».\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:823
 msgid "Load Path Points from file"
-msgstr ""
+msgstr "Charger des points de chemin depuis un fichier"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:859
 msgid "Save Path Points to file"
-msgstr ""
+msgstr "Sauver des points de chemin depuis un fichier"
 
 #: plug-ins/gap/gap_mov_dialog.c:1070
 #, c-format
 msgid "X [%d]: "
-msgstr ""
+msgstr "X [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1072
 #, c-format
 msgid "Y [%d]: "
-msgstr ""
+msgstr "Y [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1074
 #, c-format
 msgid "Opacity [%d]: "
-msgstr ""
+msgstr "Opacité [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1076
 #, c-format
 msgid "Width [%d]: "
-msgstr ""
+msgstr "Largeur [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1078
 #, c-format
 msgid "Height [%d]: "
-msgstr ""
+msgstr "Hauteur [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1080
 #, c-format
 msgid "Rotate deg[%d]: "
-msgstr ""
+msgstr "Tourner (degrés) [%d] : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1259
 msgid "Source Select"
-msgstr ""
+msgstr "Sélection de la source"
 
 #. Source Layer menu
 #: plug-ins/gap/gap_mov_dialog.c:1276
 msgid "SourceImage/Layer:"
-msgstr ""
+msgstr "Image / calque source :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1286
 msgid "Source Object to insert into Framerange"
-msgstr ""
+msgstr "Objet source à insérer dans l'intervalle de trames"
 
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1301
@@ -8296,7 +8310,7 @@ msgstr "Mode :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1310
 msgid "Paintmode"
-msgstr ""
+msgstr "Mode de dessin"
 
 #. Loop Stepmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1325
@@ -8308,74 +8322,87 @@ msgid ""
 "How to fetch the next SrcLayer   \n"
 "at the next handled frame"
 msgstr ""
+"Comment trouver le calque source\n"
+"pour la prochaine trame à manipuler."
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:1349
 msgid "Handle:"
-msgstr ""
+msgstr "Placement :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1367
 msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Koordinates"
 msgstr ""
+"Comment place le calque source aux\n"
+"coordonnées du point de contrôle."
 
 #. to avoid side effects while initialization
 #: plug-ins/gap/gap_mov_dialog.c:1413
 msgid "Move Path Preview"
-msgstr ""
+msgstr "Aperçu du déplacement"
 
 #: plug-ins/gap/gap_mov_dialog.c:1463
 msgid ""
 "Scale SrcLayer's Width\n"
 "in percent"
 msgstr ""
+"Rapport d'agrandissement (%)\n"
+"en largeur du calque source"
 
 #: plug-ins/gap/gap_mov_dialog.c:1469
 msgid ""
 "Scale SrcLayer's Height\n"
 "in percent"
 msgstr ""
+"Rapport d'agrandissement (%)\n"
+"en largeur du calque source"
 
 #: plug-ins/gap/gap_mov_dialog.c:1475
 msgid ""
 "SrcLayer's Opacity\n"
 "in percent"
-msgstr ""
+msgstr "Opacité du calque source (%)"
 
 #: plug-ins/gap/gap_mov_dialog.c:1484
 msgid "Rotate SrcLayer (in degree)"
 msgstr ""
+"Tourner le calque source\n"
+"de cet angle (en degrés)"
 
 #: plug-ins/gap/gap_mov_exec.c:220
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
+"Vous n'avez pas sélectionné d'image source.\n"
+"Veuillez ouvrir une deuxième image du même type\n"
+"avant d'utiliser « Déplacer selon chemin »."
 
 #: plug-ins/gap/gap_mov_exec.c:228
 msgid "Copying Layers into Frames .."
-msgstr ""
+msgstr "Copier calques dans trames..."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
-msgstr ""
+msgstr "Conditions pour lancer mpeg_encore 1.5 :"
 
 #: plug-ins/gap/gap_mpege.c:114
 msgid "Conditions to run mpeg2encode 1.2:"
-msgstr ""
+msgstr "Conditions pour lancer mpeg2encode 1.2 :"
 
 #: plug-ins/gap/gap_mpege.c:124
 msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr ""
+msgstr "1.) mpeg_encode 1.5 doit être installé"
 
 #: plug-ins/gap/gap_mpege.c:127
 msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr ""
+msgstr "1.) mpeg2encode doit être installé"
 
 #: plug-ins/gap/gap_mpege.c:132
 msgid "    you can get mpeg_encode at"
-msgstr ""
+msgstr "    vous pouvez obtenir mpeg_encode sur"
 
 #: plug-ins/gap/gap_mpege.c:135
 msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
@@ -11391,7 +11418,7 @@ msgstr "Coin de Page..."
 
 #: plug-ins/print/print.c:187
 msgid "PostScript Level 1"
-msgstr "PostScript Level 1"
+msgstr "PostScript niveau 1"
 
 #: plug-ins/print/print.c:191
 msgid "HP DeskJet 500, 520"
@@ -11559,7 +11586,7 @@ msgstr "Échelle normale"
 
 #: plug-ins/print/print.c:982
 msgid "Experimental linear scale"
-msgstr ""
+msgstr "Échelle linéaire (expérimentale)"
 
 #.
 #. * Scaling...
@@ -11718,7 +11745,7 @@ msgstr "Rotation de la Carte des Couleurs"
 
 #: plug-ins/rcm/rcm_dialog.c:792
 msgid "Main"
-msgstr ""
+msgstr "Principale"
 
 #: plug-ins/rcm/rcm_dialog.c:795
 msgid "Misc"
@@ -11844,7 +11871,7 @@ msgstr "<Boîte à Outils>/Extensions/Script-Fu/Serveur..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Relire tous les scripts disponibles"
 
 #: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
@@ -12080,22 +12107,22 @@ msgstr "Aucune donnée capturée"
 #: plug-ins/xjt/xjt.c:651
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr ""
+msgstr "Le fichier XJT contient le code de calque inconnu %d."
 
 #: plug-ins/xjt/xjt.c:681
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr ""
+msgstr "Avertissement : mode de calque %d non supporté lors de l'enregistrement au format XJT."
 
 #: plug-ins/xjt/xjt.c:697
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr ""
+msgstr "Le fichier XJT contient le type de chemin inconnu %d."
 
 #: plug-ins/xjt/xjt.c:713
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr ""
+msgstr "Avertissement : type de chemin %d non supporté lors de l'enregistrement au format XJT."
 
 #: plug-ins/xjt/xjt.c:742
 msgid "Save as XJT"
@@ -12138,12 +12165,12 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/xjt/xjt.c:3042
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
-msgstr ""
+msgstr "Erreur : impossible de lire le fichier de propriétés XJT %s."
 
 #: plug-ins/xjt/xjt.c:3047
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
-msgstr ""
+msgstr "Erreur, le fichier de propriétés XJT %s est vide."
 
 #~ msgid "Film color Color Picker"
 #~ msgstr "Choix de la couleur de fond du film"
