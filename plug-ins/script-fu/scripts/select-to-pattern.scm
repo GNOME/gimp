@@ -24,65 +24,53 @@
 
 
 (define (script-fu-selection-to-pattern image drawable desc filename)
-  (let* (
-	 (type (car (gimp-drawable-type drawable)))
-	 (old-bg (car (gimp-palette-get-background))))
-  
-    (set! selection-bounds (gimp-selection-bounds image))
-    (set! select-offset-x (cadr selection-bounds))
-    (set! select-offset-y (caddr selection-bounds))
-    (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
-    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
-    (gimp-image-undo-disable image)
-    
-    (if (= (car (gimp-selection-is-empty image)) TRUE)
-	(begin
-	  (gimp-selection-layer-alpha drawable)
-	  (set! active-selection (car (gimp-selection-save image)))
-	  (set! from-selection FALSE))
-	(begin
-	  (set! from-selection TRUE)
-	  (set! active-selection (car (gimp-selection-save image)))))
+  (if (= (car (gimp-selection-is-empty image)) TRUE)
+      (begin
+	(set! selection-width (car (gimp-drawable-width drawable)))
+	(set! selection-height (car (gimp-drawable-height drawable))))
+      (begin
+	(set! selection-bounds (gimp-drawable-mask-bounds drawable))
+	(set! select-offset-x (cadr selection-bounds))
+	(set! select-offset-y (caddr selection-bounds))
+	(set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
+	(set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))))
 
-    (gimp-edit-copy drawable)
+  (if (= (car (gimp-drawable-has-alpha drawable)) TRUE)
+      (set! pattern-draw-type RGBA-IMAGE)
+      (set! pattern-draw-type RGB-IMAGE))
 
-    (set! pattern_draw_type RGB-IMAGE)
+  (set! pattern-image-type RGB)
 
-    (set! pattern_image_type RGB)
+  (set! pattern-image (car (gimp-image-new selection-width selection-height
+					   pattern-image-type)))
 
-    (set! pattern-image (car (gimp-image-new selection-width selection-height pattern_image_type)))
+  (set! pattern-draw
+	(car (gimp-layer-new pattern-image selection-width selection-height
+			     pattern-draw-type "Pattern" 100 NORMAL-MODE)))
 
-    (set! pattern-draw
-          (car (gimp-layer-new pattern-image
-                               selection-width
-                               selection-height pattern_draw_type "Pattern" 100 NORMAL-MODE)))
+  (gimp-drawable-fill pattern-draw TRANSPARENT-FILL)
 
-    (gimp-image-add-layer pattern-image pattern-draw 0)
+  (gimp-image-add-layer pattern-image pattern-draw 0)
 
-    (gimp-selection-none pattern-image)
+  (gimp-edit-copy drawable)
 
-    (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
-      (gimp-floating-sel-anchor floating-sel))
+  (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
+    (gimp-floating-sel-anchor floating-sel))
 
-    
-    (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
-    (set! filename2 (string-append data-dir
-					 "/patterns/"
-					 filename
-					 (number->string image)
-					 ".pat"))
+  (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
+  (set! filename2 (string-append data-dir
+				 "/patterns/"
+				 filename
+				 (number->string image)
+				 ".pat"))
 
-    (file-pat-save 1 pattern-image pattern-draw filename2 "" desc)
-    (gimp-patterns-refresh)
-    (gimp-patterns-set-pattern desc)
+  (file-pat-save 1 pattern-image pattern-draw filename2 "" desc)
+  (gimp-patterns-refresh)
+  (gimp-patterns-set-pattern desc)
 
-    (gimp-palette-set-background old-bg)
-
-    (gimp-image-undo-enable image)
-    (gimp-image-set-active-layer image drawable)
-    (gimp-image-delete pattern-image)
-    (gimp-displays-flush)))
+  (gimp-image-delete pattern-image)
+  (gimp-displays-flush))
 
 (script-fu-register "script-fu-selection-to-pattern"
 		    _"<Image>/Script-Fu/Selection/To _Pattern..."
@@ -91,7 +79,7 @@
 		    "Cameron Gregory"
 		    "09/02/2003"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-STRING _"Pattern Name" "My Pattern"
-		    SF-STRING _"Filename" "mypattern")
+		    SF-IMAGE    "Image"         0
+		    SF-DRAWABLE "Drawable"      0
+		    SF-STRING   _"Pattern Name" "My Pattern"
+		    SF-STRING   _"Filename"     "mypattern")

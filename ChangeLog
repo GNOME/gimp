@@ -1,3 +1,10 @@
+2004-01-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/select-to-pattern.scm: changed
+	(mostly rewritten) to correctly create patterns from drawables
+	with or without alpha. Also work correctly with or without a
+	currently active selection. Fixes bug #131088.
+
 2004-01-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tips-dialog.c (tips_dialog_create): don't free the
