@@ -22,7 +22,7 @@
 #define __GIMP_DRAWABLE_HISTOGRAM_H__
 
 
-void   gimp_drawable_calculate_histogram (GimpDrawable  *drawable, 
+void   gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
 					  GimpHistogram *histogram);
 
 

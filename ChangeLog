@@ -1,3 +1,12 @@
+2004-12-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimphistogrameditor.c: make histogram editor,
+	and therefore histogram dialog, use the selection.  Should
+	resolve bug #72959.
+
+	* app/core/gimpdrawable-histogram.h: remove trailing 
+	whitespace.
+	
 2004-12-10  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimpdatafactoryview.c

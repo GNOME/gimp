@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 
 #include "gimpdocked.h"
@@ -304,6 +305,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect_object (gimage, "active_layer_changed",
                                G_CALLBACK (gimp_histogram_editor_layer_changed),
                                editor, 0);
+      g_signal_connect_object (gimage, "mask_changed",
+                               G_CALLBACK (gimp_histogram_editor_update),
+                               editor, G_CONNECT_SWAPPED);
     }
 
   gimp_histogram_editor_layer_changed (gimage, editor);
@@ -384,15 +388,7 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 
   if (editor->drawable && editor->histogram)
     {
-      PixelRegion region;
-
-      pixel_region_init (&region, gimp_drawable_data (editor->drawable),
-                         0, 0,
-                         gimp_item_width  (GIMP_ITEM (editor->drawable)),
-                         gimp_item_height (GIMP_ITEM (editor->drawable)),
-                         FALSE);
-
-      gimp_histogram_calculate (editor->histogram, &region, NULL);
+      gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
       gtk_widget_queue_draw GTK_WIDGET (editor->box);
       gimp_histogram_editor_info_update (editor);
     }
