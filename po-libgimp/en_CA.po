@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-06 18:26-0500\n"
-"PO-Revision-Date: 2005-02-06 20:02-0400\n"
+"POT-Creation-Date: 2005-02-09 21:14-0500\n"
+"PO-Revision-Date: 2005-02-09 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -556,6 +556,76 @@ msgstr "%d GB"
 msgid "(invalid UTF-8 string)"
 msgstr "(invalid UTF-8 string)"
 
+#: libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "Mode of operation for colour management."
+
+#: libgimpconfig/gimpcolorconfig.c:42
+msgid "Sets the color profile for the display."
+msgstr "Sets the colour profile for the display."
+
+#: libgimpconfig/gimpcolorconfig.c:44
+msgid "Sets default RGB workspace color profile."
+msgstr "Sets default RGB workspace colour profile."
+
+#: libgimpconfig/gimpcolorconfig.c:46
+msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
+msgstr "Sets the CMYK colour profile used to convert between RGB and CMYK."
+
+#: libgimpconfig/gimpcolorconfig.c:48
+msgid "Sets the color profile used when printing."
+msgstr "Sets the colour profile used when printing."
+
+#: libgimpconfig/gimpcolorconfig.c:50
+msgid "Sets how colors are mapped for your display."
+msgstr "Sets how colours are mapped for your display."
+
+#: libgimpconfig/gimpcolorconfig.c:52
+msgid "Sets how colors are converted from workspace to simulation device."
+msgstr "Sets how colours are converted from workspace to simulation device."
+
+#: libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "No colour management"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "Colour managed display"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "Print simulation"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:56 modules/cdisplay_proof.c:57
+msgid "Perceptual"
+msgstr "Perceptual"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:57 modules/cdisplay_proof.c:58
+msgid "Relative Colorimetric"
+msgstr "Relative Colourimetric"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:58
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:350
+#: modules/cdisplay_proof.c:59
+msgid "Saturation"
+msgstr "Saturation"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:59 modules/cdisplay_proof.c:60
+msgid "Absolute Colorimetric"
+msgstr "Absolute Colourimetric"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:88
+msgid "Ask"
+msgstr "Ask"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:89
+msgid "Use embedded profile"
+msgstr "Use embedded profile"
+
+#: libgimpconfig/gimpcolorconfig-enums.c:90
+msgid "Convert to RGB workspace"
+msgstr "Convert to RGB workspace"
+
 #: libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
@@ -583,7 +653,7 @@ msgid "while parsing token '%s': %s"
 msgstr "while parsing token '%s': %s"
 
 #: libgimpconfig/gimpconfig-iface.c:454 libgimpconfig/gimpconfig-iface.c:467
-#: libgimpconfig/gimpscanner.c:513 libgimpconfig/gimpscanner.c:594
+#: libgimpconfig/gimpscanner.c:515 libgimpconfig/gimpscanner.c:596
 msgid "fatal parse error"
 msgstr "fatal parse error"
 
@@ -592,17 +662,17 @@ msgstr "fatal parse error"
 msgid "Cannot expand ${%s}"
 msgstr "Cannot expand ${%s}"
 
-#: libgimpconfig/gimpconfigwriter.c:134
+#: libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Could not create temporary file for '%s': %s"
 
-#: libgimpconfig/gimpconfigwriter.c:147
+#: libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Could not open '%s' for writing: %s"
 
-#: libgimpconfig/gimpconfigwriter.c:666
+#: libgimpconfig/gimpconfigwriter.c:667
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -611,7 +681,7 @@ msgstr ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 
-#: libgimpconfig/gimpconfigwriter.c:674
+#: libgimpconfig/gimpconfigwriter.c:675
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -620,26 +690,26 @@ msgstr ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 
-#: libgimpconfig/gimpconfigwriter.c:685
+#: libgimpconfig/gimpconfigwriter.c:686
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Error writing to '%s': %s"
 
-#: libgimpconfig/gimpconfigwriter.c:703
+#: libgimpconfig/gimpconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Could not create '%s': %s"
 
-#: libgimpconfig/gimpscanner.c:100
+#: libgimpconfig/gimpscanner.c:102
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Could not open '%s' for reading: %s"
 
-#: libgimpconfig/gimpscanner.c:270
+#: libgimpconfig/gimpscanner.c:272
 msgid "invalid UTF-8 string"
 msgstr "Invalid UTF-8 string"
 
-#: libgimpconfig/gimpscanner.c:621
+#: libgimpconfig/gimpscanner.c:623
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Error while parsing '%s' in line %d: %s"
@@ -677,7 +747,7 @@ msgstr "Load failed"
 msgid "Not loaded"
 msgstr "Not loaded"
 
-#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
+#: libgimpthumb/gimpthumb-utils.c:228 libgimpthumb/gimpthumb-utils.c:296
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Failed to create thumbnail folder '%s'."
@@ -738,11 +808,6 @@ msgstr "_A"
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:349
 msgid "Hue"
 msgstr "Hue"
-
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:350
-#: modules/cdisplay_proof.c:59
-msgid "Saturation"
-msgstr "Saturation"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:351
 msgid "Value"
@@ -973,18 +1038,6 @@ msgstr "Contrast"
 #: modules/cdisplay_highcontrast.c:251
 msgid "Contrast C_ycles:"
 msgstr "Contrast C_ycles:"
-
-#: modules/cdisplay_proof.c:57
-msgid "Perceptual"
-msgstr "Perceptual"
-
-#: modules/cdisplay_proof.c:58
-msgid "Relative Colorimetric"
-msgstr "Relative Colourimetric"
-
-#: modules/cdisplay_proof.c:60
-msgid "Absolute Colorimetric"
-msgstr "Absolute Colourimetric"
 
 #: modules/cdisplay_proof.c:129
 msgid "Color proof filter using ICC color profile"
