@@ -55,41 +55,41 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_item_class_init     (GimpItemClass *klass);
-static void       gimp_item_init           (GimpItem      *item);
+static void       gimp_item_class_init        (GimpItemClass *klass);
+static void       gimp_item_init              (GimpItem      *item);
 
-static void       gimp_item_finalize       (GObject       *object);
+static void       gimp_item_finalize          (GObject       *object);
 
-static gint64     gimp_item_get_memsize    (GimpObject    *object,
-                                            gint64        *gui_size);
+static gint64     gimp_item_get_memsize       (GimpObject    *object,
+                                               gint64        *gui_size);
 
-static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
-                                            GType          new_type,
-                                            gboolean       add_alpha);
-static GimpItem * gimp_item_real_convert   (GimpItem      *item,
-                                            GimpImage     *dest_image,
-                                            GType          new_type,
-                                            gboolean       add_alpha);
-static gboolean   gimp_item_real_rename    (GimpItem      *item,
-                                            const gchar   *new_name,
-                                            const gchar   *undo_desc);
-static void       gimp_item_real_translate (GimpItem      *item,
-                                            gint           offset_x,
-                                            gint           offset_y,
-                                            gboolean       push_undo);
-static void       gimp_item_real_scale     (GimpItem      *item,
-                                            gint           new_width,
-                                            gint           new_height,
-                                            gint           new_offset_x,
-                                            gint           new_offset_y,
-                                            GimpInterpolationType  interpolation,
-                                            GimpProgress  *progress);
-static void       gimp_item_real_resize    (GimpItem      *item,
-                                            GimpContext   *context,
-                                            gint           new_width,
-                                            gint           new_height,
-                                            gint           offset_x,
-                                            gint           offset_y);
+static GimpItem * gimp_item_real_duplicate    (GimpItem      *item,
+                                               GType          new_type,
+                                               gboolean       add_alpha);
+static GimpItem * gimp_item_real_convert_from (GimpItem      *item,
+                                               GimpImage     *dest_image,
+                                               GType          new_type,
+                                               gboolean       add_alpha);
+static gboolean   gimp_item_real_rename       (GimpItem      *item,
+                                               const gchar   *new_name,
+                                               const gchar   *undo_desc);
+static void       gimp_item_real_translate    (GimpItem      *item,
+                                               gint           offset_x,
+                                               gint           offset_y,
+                                               gboolean       push_undo);
+static void       gimp_item_real_scale        (GimpItem      *item,
+                                               gint           new_width,
+                                               gint           new_height,
+                                               gint           new_offset_x,
+                                               gint           new_offset_y,
+                                               GimpInterpolationType  interpolation,
+                                               GimpProgress  *progress);
+static void       gimp_item_real_resize       (GimpItem      *item,
+                                               GimpContext   *context,
+                                               gint           new_width,
+                                               gint           new_height,
+                                               gint           offset_x,
+                                               gint           offset_y);
 
 
 /*  private variables  */
@@ -176,7 +176,8 @@ gimp_item_class_init (GimpItemClass *klass)
 
   klass->is_attached               = NULL;
   klass->duplicate                 = gimp_item_real_duplicate;
-  klass->convert                   = gimp_item_real_convert;
+  klass->convert_from              = gimp_item_real_convert_from;
+  klass->convert_to                = NULL;
   klass->rename                    = gimp_item_real_rename;
   klass->translate                 = gimp_item_real_translate;
   klass->scale                     = gimp_item_real_scale;
@@ -306,10 +307,10 @@ gimp_item_real_duplicate (GimpItem *item,
 }
 
 static GimpItem *
-gimp_item_real_convert (GimpItem  *item,
-                        GimpImage *dest_image,
-                        GType      new_type,
-                        gboolean   add_alpha)
+gimp_item_real_convert_from (GimpItem  *item,
+                             GimpImage *dest_image,
+                             GType      new_type,
+                             gboolean   add_alpha)
 {
   return gimp_item_duplicate (item, new_type, add_alpha);
 }
@@ -535,11 +536,17 @@ gimp_item_convert (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
-  new_item = GIMP_ITEM_GET_CLASS (item)->convert (item, dest_image,
-                                                  new_type, add_alpha);
+  new_item = GIMP_ITEM_GET_CLASS (item)->convert_from (item, dest_image,
+                                                       new_type, add_alpha);
 
-  if (dest_image != item->gimage)
-    gimp_item_set_image (new_item, dest_image);
+  if (new_item)
+    {
+      if (dest_image != item->gimage)
+        gimp_item_set_image (new_item, dest_image);
+
+      if (GIMP_ITEM_GET_CLASS (new_item)->convert_to)
+        GIMP_ITEM_GET_CLASS (new_item)->convert_to (new_item, item);
+    }
 
   return new_item;
 }

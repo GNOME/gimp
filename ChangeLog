@@ -1,3 +1,25 @@
+2004-12-23  Michael Natterer  <mitch@gimp.org>
+
+	Item conversion depends on the old *and* the new item type, so
+	it can't live in the old item's vtable only:
+
+	* app/core/gimpitem.[ch]: split GimpItem::convert() into
+	GimpItem::convert_from() (which is called on the old item and
+	creates the new item) and GimpItem::convert_to() (which is called
+	on the new item). This way functions from the old *and* new items'
+	vtables are called and it's possible to convert between item types
+	which live on different branches of the class hierarchy or to item
+	types which live further down the class tree than the old item.
+
+	(gimp_item_convert): call ::convert_to() on the new item created
+	by ::convert_from().
+
+	* app/vectors/gimpvectors.c: changed ::convert() implementation
+	to ::convert_from().
+
+	* app/core/gimplayer.c: changed ::convert() to ::convert_to().
+	Fixes bug #161877.
+
 2004-12-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/Makefile.am
