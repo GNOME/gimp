@@ -1,5 +1,12 @@
 2004-04-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpmeasuretool.c: don't use gtk_window_present() to
+	raise the tool dialog since it also moves the focus away from the
+	image window. Fixes the problem described in bug #139349.
+
+2004-04-16  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcroptool.c: some code cleanup that I forgot to do
 	when applying the patch.
 
