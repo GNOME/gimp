@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-07 20:23+0200\n"
-"PO-Revision-Date: 2003-07-08 01:11+0200\n"
+"POT-Creation-Date: 2003-07-09 12:20+0200\n"
+"PO-Revision-Date: 2003-07-09 19:18+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1088,6 +1088,7 @@ msgid "Copy"
 msgstr "Kopírovat"
 
 #: app/core/core-enums.c:496 app/tools/gimptexttool.c:115
+#: app/widgets/widgets-enums.c:72
 msgid "Text"
 msgstr "Text"
 
@@ -1266,36 +1267,36 @@ msgid "Parasites"
 msgstr "Parazity"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:348
-#: app/gui/dialogs-constructors.c:512 app/gui/preferences-dialog.c:1870
+#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:340
+#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1870
 #: app/pdb/internal_procs.c:83
 msgid "Brushes"
 msgstr "Stopy"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:369
-#: app/gui/dialogs-constructors.c:533 app/gui/preferences-dialog.c:1874
+#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:361
+#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1874
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
 msgstr "Vzorky"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:411
-#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1878
+#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:403
+#: app/gui/dialogs-constructors.c:617 app/gui/preferences-dialog.c:1878
 #: app/pdb/internal_procs.c:152
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:390
-#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1882
+#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:382
+#: app/gui/dialogs-constructors.c:596 app/gui/preferences-dialog.c:1882
 #: app/pdb/internal_procs.c:119
 msgid "Gradients"
 msgstr "Přechody"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:430
-#: app/gui/dialogs-constructors.c:594
+#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:422
+#: app/gui/dialogs-constructors.c:636
 msgid "Fonts"
 msgstr "Písem"
 
@@ -1305,7 +1306,7 @@ msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the template list
-#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:911
+#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:509
 msgid "Templates"
 msgstr "Šablony"
 
@@ -2396,11 +2397,11 @@ msgstr "indexovaný"
 msgid "(none)"
 msgstr "(žádný)"
 
-#: app/display/gimpnavigationview.c:379 app/widgets/widgets-enums.c:91
+#: app/display/gimpnavigationview.c:379 app/widgets/widgets-enums.c:112
 msgid "Zoom out"
 msgstr "Vzdálit"
 
-#: app/display/gimpnavigationview.c:387 app/widgets/widgets-enums.c:90
+#: app/display/gimpnavigationview.c:387 app/widgets/widgets-enums.c:111
 msgid "Zoom in"
 msgstr "Přiblížit"
 
@@ -2696,340 +2697,349 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Zvolte vlastní paletu"
 
-#: app/gui/dialogs-constructors.c:264 app/gui/preferences-dialog.c:1304
+#: app/gui/dialogs-constructors.c:253 app/gui/preferences-dialog.c:1304
 #: app/gui/preferences-dialog.c:1307
 msgid "Tool Options"
 msgstr "Volby nástrojů"
 
-#: app/gui/dialogs-constructors.c:284
-msgid "Device Status"
-msgstr "Stav zařízení"
-
-#: app/gui/dialogs-constructors.c:284
+#: app/gui/dialogs-constructors.c:274
 msgid "Devices"
 msgstr "Zařízení"
 
-#: app/gui/dialogs-constructors.c:304
-msgid "Error Console"
-msgstr "Chybová konzola"
+#: app/gui/dialogs-constructors.c:274
+msgid "Device Status"
+msgstr "Stav zařízení"
 
-#: app/gui/dialogs-constructors.c:304
+#: app/gui/dialogs-constructors.c:295
 msgid "Errors"
 msgstr "Chyby"
 
-#: app/gui/dialogs-constructors.c:327
-msgid "Image List"
-msgstr "Seznam obrázků"
+#: app/gui/dialogs-constructors.c:295
+msgid "Error Console"
+msgstr "Chybová konzola"
 
-#: app/gui/dialogs-constructors.c:327 app/gui/dialogs-constructors.c:491
+#: app/gui/dialogs-constructors.c:318 app/gui/dialogs-constructors.c:532
 msgid "Images"
 msgstr "Obrázky"
 
-#: app/gui/dialogs-constructors.c:348
+#: app/gui/dialogs-constructors.c:318
+msgid "Image List"
+msgstr "Seznam obrázků"
+
+#: app/gui/dialogs-constructors.c:340
 msgid "Brush List"
 msgstr "Seznam stop"
 
-#: app/gui/dialogs-constructors.c:369
+#: app/gui/dialogs-constructors.c:361
 msgid "Pattern List"
 msgstr "Seznam vzorků"
 
-#: app/gui/dialogs-constructors.c:390
+#: app/gui/dialogs-constructors.c:382
 msgid "Gradient List"
 msgstr "Seznam přechodů"
 
-#: app/gui/dialogs-constructors.c:411
+#: app/gui/dialogs-constructors.c:403
 msgid "Palette List"
 msgstr "Seznam palet"
 
-#: app/gui/dialogs-constructors.c:430
+#: app/gui/dialogs-constructors.c:422
 msgid "Font List"
 msgstr "Seznam písem"
 
-#: app/gui/dialogs-constructors.c:449
-msgid "Tool List"
-msgstr "Seznam nástrojů"
-
-#: app/gui/dialogs-constructors.c:449 app/gui/dialogs-constructors.c:613
+#: app/gui/dialogs-constructors.c:441 app/gui/dialogs-constructors.c:655
 msgid "Tools"
 msgstr "Nástroje"
 
-#: app/gui/dialogs-constructors.c:468
-msgid "Buffer List"
-msgstr "Seznam bufferů"
+#: app/gui/dialogs-constructors.c:441
+msgid "Tool List"
+msgstr "Seznam nástrojů"
 
-#: app/gui/dialogs-constructors.c:468 app/gui/dialogs-constructors.c:632
+#: app/gui/dialogs-constructors.c:461 app/gui/dialogs-constructors.c:675
 msgid "Buffers"
 msgstr "Buffery"
 
-#: app/gui/dialogs-constructors.c:491
+#: app/gui/dialogs-constructors.c:461
+msgid "Buffer List"
+msgstr "Seznam bufferů"
+
+#: app/gui/dialogs-constructors.c:482 app/gui/dialogs-constructors.c:696
+msgid "History"
+msgstr "Historie"
+
+#: app/gui/dialogs-constructors.c:482
+msgid "Document History List"
+msgstr "Seznam historie dokumentu"
+
+#: app/gui/dialogs-constructors.c:509
+msgid "List of Templates"
+msgstr "Seznam šablon"
+
+#: app/gui/dialogs-constructors.c:532
 msgid "Image Grid"
 msgstr "Mřížka obrázků"
 
-#: app/gui/dialogs-constructors.c:512
+#: app/gui/dialogs-constructors.c:554
 msgid "Brush Grid"
 msgstr "Mřížka stop"
 
-#: app/gui/dialogs-constructors.c:533
+#: app/gui/dialogs-constructors.c:575
 msgid "Pattern Grid"
 msgstr "Mřížka vzorků"
 
-#: app/gui/dialogs-constructors.c:554
+#: app/gui/dialogs-constructors.c:596
 msgid "Gradient Grid"
 msgstr "Mřížka přechodů"
 
-#: app/gui/dialogs-constructors.c:575
+#: app/gui/dialogs-constructors.c:617
 msgid "Palette Grid"
 msgstr "Mřížka palet"
 
-#: app/gui/dialogs-constructors.c:594
+#: app/gui/dialogs-constructors.c:636
 msgid "Font Grid"
 msgstr "Mřížka písem"
 
-#: app/gui/dialogs-constructors.c:613
+#: app/gui/dialogs-constructors.c:655
 msgid "Tool Grid"
 msgstr "Mřížka nástrojů"
 
-#: app/gui/dialogs-constructors.c:632
+#: app/gui/dialogs-constructors.c:675
 msgid "Buffer Grid"
 msgstr "Mřížka bufferů"
 
-#: app/gui/dialogs-constructors.c:666
-msgid "Layer List"
-msgstr "Seznam vrstev"
+#: app/gui/dialogs-constructors.c:696
+msgid "Document History Grid"
+msgstr "Mřížka historie dokumentu"
 
-#: app/gui/dialogs-constructors.c:666
+#: app/gui/dialogs-constructors.c:730
 msgid "Layers"
 msgstr "Vrstvy"
 
-#: app/gui/dialogs-constructors.c:700
-msgid "Channel List"
-msgstr "Seznam kanálů"
+#: app/gui/dialogs-constructors.c:730
+msgid "Layer List"
+msgstr "Seznam vrstev"
 
-#: app/gui/dialogs-constructors.c:700
+#: app/gui/dialogs-constructors.c:765
 msgid "Channels"
 msgstr "Kanály"
 
-#: app/gui/dialogs-constructors.c:740
-msgid "Paths List"
-msgstr "Seznam cest"
+#: app/gui/dialogs-constructors.c:765
+msgid "Channel List"
+msgstr "Seznam kanálů"
 
-#: app/gui/dialogs-constructors.c:740 app/pdb/internal_procs.c:158
+#: app/gui/dialogs-constructors.c:806 app/pdb/internal_procs.c:158
 msgid "Paths"
 msgstr "Cesty"
 
-#: app/gui/dialogs-constructors.c:763
-msgid "Indexed Palette"
-msgstr "Indexovaná paleta"
+#: app/gui/dialogs-constructors.c:806
+msgid "Path List"
+msgstr "Seznam cest"
 
-#: app/gui/dialogs-constructors.c:763
+#: app/gui/dialogs-constructors.c:830
 msgid "Colormap"
 msgstr "Mapa barev"
 
-#: app/gui/dialogs-constructors.c:795
-msgid "Selection Editor"
-msgstr "Editor výběru"
+#: app/gui/dialogs-constructors.c:830
+msgid "Indexed Palette"
+msgstr "Indexovaná paleta"
 
-#: app/gui/dialogs-constructors.c:795
+#: app/gui/dialogs-constructors.c:863
 msgid "Selection"
 msgstr "Výběr"
 
-#: app/gui/dialogs-constructors.c:819
-msgid "Undo History"
-msgstr "Historie vracení"
+#: app/gui/dialogs-constructors.c:863
+msgid "Selection Editor"
+msgstr "Editor výběru"
 
-#: app/gui/dialogs-constructors.c:819 app/gui/image-menu.c:1357
+#: app/gui/dialogs-constructors.c:887 app/gui/image-menu.c:1357
 #: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Vrátit"
 
-#: app/gui/dialogs-constructors.c:842
-msgid "Color Editor"
-msgstr "Editor barev"
+#: app/gui/dialogs-constructors.c:887
+msgid "Undo History"
+msgstr "Historie vracení"
 
-#: app/gui/dialogs-constructors.c:842 app/pdb/internal_procs.c:89
-#: app/tools/gimppaintoptions-gui.c:317
-#: app/widgets/gimpwidgets-constructors.c:70
-#: app/widgets/gimpwidgets-constructors.c:103
-msgid "Color"
-msgstr "Barva"
-
-#: app/gui/dialogs-constructors.c:863
-msgid "Document History List"
-msgstr "Seznam historie dokumentu"
-
-#: app/gui/dialogs-constructors.c:863 app/gui/dialogs-constructors.c:884
-msgid "History"
-msgstr "Historie"
-
-#: app/gui/dialogs-constructors.c:884
-msgid "Document History Grid"
-msgstr "Mřížka historie dokumentu"
-
-#: app/gui/dialogs-constructors.c:911
-msgid "List of Templates"
-msgstr "Seznam šablon"
-
-#: app/gui/dialogs-constructors.c:932
-msgid "Brush Editor"
-msgstr "Editor stop"
-
-#: app/gui/dialogs-constructors.c:961
-msgid "Gradient Editor"
-msgstr "Editor přechodů"
-
-#: app/gui/dialogs-constructors.c:990
-msgid "Palette Editor"
-msgstr "Editor palety"
-
-#: app/gui/dialogs-constructors.c:1026
-msgid "Display Navigation"
-msgstr "Navigace zobrazení"
-
-#: app/gui/dialogs-constructors.c:1026
+#: app/gui/dialogs-constructors.c:918
 msgid "Navigation"
 msgstr "Navigace"
 
-#: app/gui/dialogs-menu.c:53
+#: app/gui/dialogs-constructors.c:918
+msgid "Display Navigation"
+msgstr "Navigace zobrazení"
+
+#: app/gui/dialogs-constructors.c:937
+msgid "FG/BG"
+msgstr "Popředí/pozadí"
+
+#: app/gui/dialogs-constructors.c:937
+msgid "FG/BG Color"
+msgstr "Barva popředí/pozadí"
+
+#: app/gui/dialogs-constructors.c:958
+msgid "Brush Editor"
+msgstr "Editor stop"
+
+#: app/gui/dialogs-constructors.c:988
+msgid "Gradient Editor"
+msgstr "Editor přechodů"
+
+#: app/gui/dialogs-constructors.c:1018
+msgid "Palette Editor"
+msgstr "Editor palety"
+
+#: app/gui/dialogs-menu.c:57
 msgid "/Select Tab"
 msgstr "/Výběr odrážky"
 
-#: app/gui/dialogs-menu.c:56
+#: app/gui/dialogs-menu.c:60
 msgid "/Add Tab/Tool Options..."
 msgstr "/Přidat odrážku/Volby nástrojů..."
 
-#: app/gui/dialogs-menu.c:58
+#: app/gui/dialogs-menu.c:62
 msgid "/Add Tab/Device Status..."
 msgstr "/Přidat odrážku/Stav zařízení..."
 
-#: app/gui/dialogs-menu.c:63
+#: app/gui/dialogs-menu.c:67
 msgid "/Add Tab/Layers..."
 msgstr "/Přidat odrážku/Vrstvy..."
 
-#: app/gui/dialogs-menu.c:65
+#: app/gui/dialogs-menu.c:69
 msgid "/Add Tab/Channels..."
 msgstr "/Přidat odrážku/Kanály..."
 
-#: app/gui/dialogs-menu.c:67
+#: app/gui/dialogs-menu.c:71
 msgid "/Add Tab/Paths..."
 msgstr "/Přidat odrážku/Cesty..."
 
-#: app/gui/dialogs-menu.c:69
+#: app/gui/dialogs-menu.c:73
 msgid "/Add Tab/Indexed Palette..."
 msgstr "/Přidat odrážku/Indexovaná paleta..."
 
-#: app/gui/dialogs-menu.c:71
+#: app/gui/dialogs-menu.c:75
 msgid "/Add Tab/Selection Editor..."
 msgstr "/Přidat odrážku/Editor výběru..."
 
-#: app/gui/dialogs-menu.c:73
+#: app/gui/dialogs-menu.c:77
 msgid "/Add Tab/Navigation..."
 msgstr "/Přidat odrážku/Navigace..."
 
-#: app/gui/dialogs-menu.c:75
+#: app/gui/dialogs-menu.c:79
 msgid "/Add Tab/Undo History..."
 msgstr "/Přidat odrážku/Historie vracení..."
 
-#: app/gui/dialogs-menu.c:80
+#: app/gui/dialogs-menu.c:84
 msgid "/Add Tab/Colors..."
 msgstr "/Přidat odrážku/Barvy..."
 
-#: app/gui/dialogs-menu.c:82
+#: app/gui/dialogs-menu.c:86
 msgid "/Add Tab/Brushes..."
 msgstr "/Přidat odrážku/Stopy..."
 
-#: app/gui/dialogs-menu.c:84
+#: app/gui/dialogs-menu.c:88
 msgid "/Add Tab/Patterns..."
 msgstr "/Přidat odrážku/Vzorky..."
 
-#: app/gui/dialogs-menu.c:86
+#: app/gui/dialogs-menu.c:90
 msgid "/Add Tab/Gradients..."
 msgstr "/Přidat odrážku/Přechody..."
 
-#: app/gui/dialogs-menu.c:88
+#: app/gui/dialogs-menu.c:92
 msgid "/Add Tab/Palettes..."
 msgstr "/Přidat odrážku/Palety..."
 
-#: app/gui/dialogs-menu.c:90
+#: app/gui/dialogs-menu.c:94
 msgid "/Add Tab/Fonts..."
 msgstr "/Přidat odrážku/Písma..."
 
-#: app/gui/dialogs-menu.c:92
+#: app/gui/dialogs-menu.c:96
 msgid "/Add Tab/Buffers..."
 msgstr "/Přidat odrážku/Buffery..."
 
-#: app/gui/dialogs-menu.c:97
+#: app/gui/dialogs-menu.c:101
 msgid "/Add Tab/Images..."
 msgstr "/Přidat odrážku/Obrázky..."
 
-#: app/gui/dialogs-menu.c:99
+#: app/gui/dialogs-menu.c:103
 msgid "/Add Tab/Document History..."
 msgstr "/Přidat odrážku/Historie dokumentu..."
 
-#: app/gui/dialogs-menu.c:101
+#: app/gui/dialogs-menu.c:105
 msgid "/Add Tab/Templates..."
 msgstr "/Přidat odrážku/Šablony..."
 
-#: app/gui/dialogs-menu.c:103
+#: app/gui/dialogs-menu.c:107
 msgid "/Add Tab/Error Console..."
 msgstr "/Přidat odrážku/Chybová konzola..."
 
-#: app/gui/dialogs-menu.c:108
+#: app/gui/dialogs-menu.c:112
 msgid "/Add Tab/Tools..."
 msgstr "/Přidat odrážku/Nástroje..."
 
-#: app/gui/dialogs-menu.c:110
+#: app/gui/dialogs-menu.c:114
 msgid "/Remove Tab"
 msgstr "/Odstranit odrážku"
 
-#: app/gui/dialogs-menu.c:119
+#: app/gui/dialogs-menu.c:123
 msgid "/Preview Size/Tiny"
 msgstr "/Velikost náhledu/Drobná"
 
-#: app/gui/dialogs-menu.c:124
+#: app/gui/dialogs-menu.c:128
 msgid "/Preview Size/Extra Small"
 msgstr "/Velikost náhledu/Velmi malá"
 
-#: app/gui/dialogs-menu.c:125
+#: app/gui/dialogs-menu.c:129
 msgid "/Preview Size/Small"
 msgstr "/Velikost náhledu/Malá"
 
-#: app/gui/dialogs-menu.c:126
+#: app/gui/dialogs-menu.c:130
 msgid "/Preview Size/Medium"
 msgstr "/Velikost náhledu/Střední"
 
-#: app/gui/dialogs-menu.c:127
+#: app/gui/dialogs-menu.c:131
 msgid "/Preview Size/Large"
 msgstr "/Velikost náhledu/Velká"
 
-#: app/gui/dialogs-menu.c:128
+#: app/gui/dialogs-menu.c:132
 msgid "/Preview Size/Extra Large"
 msgstr "/Velikost náhledu/Velmi velká"
 
-#: app/gui/dialogs-menu.c:129
+#: app/gui/dialogs-menu.c:133
 msgid "/Preview Size/Huge"
 msgstr "/Velikost náhledu/Obrovská"
 
-#: app/gui/dialogs-menu.c:130
+#: app/gui/dialogs-menu.c:134
 msgid "/Preview Size/Enormous"
 msgstr "/Velikost náhledu/Enormní"
 
-#: app/gui/dialogs-menu.c:131
+#: app/gui/dialogs-menu.c:135
 msgid "/Preview Size/Gigantic"
 msgstr "/Velikost náhledu/Gigantická"
 
-#: app/gui/dialogs-menu.c:133
+#: app/gui/dialogs-menu.c:139
+msgid "/Tab Style/Icon"
+msgstr "/Styl odrážky/Ikona"
+
+#: app/gui/dialogs-menu.c:144
+msgid "/Tab Style/Text"
+msgstr "/Styl odrážky/Text"
+
+#: app/gui/dialogs-menu.c:145
+msgid "/Tab Style/Icon & Text"
+msgstr "/Styl odrážky/Ikona a text"
+
+#: app/gui/dialogs-menu.c:147
 msgid "/View as List"
 msgstr "/Zobrazit jako seznam"
 
-#: app/gui/dialogs-menu.c:136
+#: app/gui/dialogs-menu.c:150
 msgid "/View as Grid"
 msgstr "/Zobrazit jako mřížku"
 
-#: app/gui/dialogs-menu.c:142
+#: app/gui/dialogs-menu.c:156
 msgid "/Show Image Menu"
 msgstr "/Ukázat menu obrázku"
 
-#: app/gui/dialogs-menu.c:145
+#: app/gui/dialogs-menu.c:159
 msgid "/Auto Follow Active Image"
 msgstr "/Automaticky následovat aktivní obrázek"
 
@@ -3113,7 +3123,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:249 app/gui/file-save-dialog.c:372
+#: app/gui/file-commands.c:248 app/gui/file-save-dialog.c:372
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3124,15 +3134,15 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:290
+#: app/gui/file-commands.c:289
 msgid "Create New Template"
 msgstr "Vytvořit novou šablonu"
 
-#: app/gui/file-commands.c:293
+#: app/gui/file-commands.c:292
 msgid "Enter a name for this template"
 msgstr "Zadejte jméno této šablony"
 
-#: app/gui/file-commands.c:316
+#: app/gui/file-commands.c:315
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -3140,7 +3150,7 @@ msgstr ""
 "Navrácení selhalo.\n"
 "S tímto obrázkem není spojen žádný název souboru."
 
-#: app/gui/file-commands.c:330
+#: app/gui/file-commands.c:329
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3153,15 +3163,15 @@ msgstr ""
 "\n"
 "Ztratíte všechny své změny, včetně informací o zpětných úpravách."
 
-#: app/gui/file-commands.c:338
+#: app/gui/file-commands.c:337
 msgid "Revert Image"
 msgstr "Navrátit obrázek"
 
-#: app/gui/file-commands.c:404
+#: app/gui/file-commands.c:403
 msgid "(Unnamed Template)"
 msgstr "(Nepojmenovaná šablona)"
 
-#: app/gui/file-commands.c:478
+#: app/gui/file-commands.c:477
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4598,8 +4608,8 @@ msgstr "Y:"
 #: app/gui/info-window.c:282 app/gui/info-window.c:300
 #: app/gui/info-window.c:480 app/gui/info-window.c:527
 #: app/gui/info-window.c:528 app/gui/info-window.c:531
-#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:362
-#: app/tools/gimpcolorpickertool.c:368
+#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:363
+#: app/tools/gimpcolorpickertool.c:369
 msgid "N/A"
 msgstr "Není"
 
@@ -5495,7 +5505,7 @@ msgid "_Manually"
 msgstr "_Ručně"
 
 #: app/gui/preferences-dialog.c:1760 app/gui/preferences-dialog.c:1763
-#: app/gui/preferences-dialog.c:1894
+#: app/gui/preferences-dialog.c:1898
 msgid "Environment"
 msgstr "Prostředí"
 
@@ -5610,34 +5620,46 @@ msgid "Select Plug-In Folders"
 msgstr "Zvolte adresář zásuvných modulů"
 
 #: app/gui/preferences-dialog.c:1890
+msgid "Scripts"
+msgstr "Skripty"
+
+#: app/gui/preferences-dialog.c:1890
+msgid "Script-Fu Folders"
+msgstr "Adresáře Script-Fu"
+
+#: app/gui/preferences-dialog.c:1892
+msgid "Select Script-Fu Folders"
+msgstr "Zvolte adresáře Script-Fu"
+
+#: app/gui/preferences-dialog.c:1894
 msgid "Modules"
 msgstr "Moduly"
 
-#: app/gui/preferences-dialog.c:1890
+#: app/gui/preferences-dialog.c:1894
 msgid "Module Folders"
 msgstr "Adresáře s moduly"
 
-#: app/gui/preferences-dialog.c:1892
+#: app/gui/preferences-dialog.c:1896
 msgid "Select Module Folders"
 msgstr "Zvolte adresář modulů"
 
-#: app/gui/preferences-dialog.c:1894
+#: app/gui/preferences-dialog.c:1898
 msgid "Environment Folders"
 msgstr "Adresáře s prostředím"
 
-#: app/gui/preferences-dialog.c:1896
+#: app/gui/preferences-dialog.c:1900
 msgid "Select Environment Folders"
 msgstr "Zvolte adresáře prostředí"
 
-#: app/gui/preferences-dialog.c:1898
+#: app/gui/preferences-dialog.c:1902
 msgid "Themes"
 msgstr "Témata"
 
-#: app/gui/preferences-dialog.c:1898
+#: app/gui/preferences-dialog.c:1902
 msgid "Theme Folders"
 msgstr "Adresáře s tématy"
 
-#: app/gui/preferences-dialog.c:1900
+#: app/gui/preferences-dialog.c:1904
 msgid "Select Theme Folders"
 msgstr "Zvolte adresář témat"
 
@@ -5783,11 +5805,11 @@ msgstr "Zvětšit výběr o:"
 msgid "Border Selection by:"
 msgstr "Vybrat obvod:"
 
-#: app/gui/splash.c:56
+#: app/gui/splash.c:58
 msgid "GIMP Startup"
 msgstr "Spouští se program GIMP"
 
-#: app/gui/splash.c:109 app/widgets/gimptoolbox.c:166
+#: app/gui/splash.c:111 app/widgets/gimptoolbox.c:166
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -6733,6 +6755,12 @@ msgstr "Vnitřní procedury"
 msgid "Brush UI"
 msgstr "Rozhraní stop"
 
+#: app/pdb/internal_procs.c:89 app/tools/gimppaintoptions-gui.c:317
+#: app/widgets/gimpwidgets-constructors.c:70
+#: app/widgets/gimpwidgets-constructors.c:103
+msgid "Color"
+msgstr "Barva"
+
 #: app/pdb/internal_procs.c:92
 msgid "Convert"
 msgstr "Převod"
@@ -6997,11 +7025,11 @@ msgstr "O kolik pixelů má být první řádek kratší"
 msgid "Additional line spacing (in pixels)"
 msgstr "Přídavný rozestup mezi řádky (v pixelech)"
 
-#: app/text/gimptextlayer.c:125
+#: app/text/gimptextlayer.c:126
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
-#: app/text/gimptextlayer.c:410
+#: app/text/gimptextlayer.c:416
 msgid "Empty Text Layer"
 msgstr "Prázdná textová vrstva"
 
@@ -8354,10 +8382,22 @@ msgid "Logarithmic"
 msgstr "Logaritmický"
 
 #: app/widgets/widgets-enums.c:71
+msgid "Icon"
+msgstr "Ikona"
+
+#: app/widgets/widgets-enums.c:73
+msgid "Icon & Text"
+msgstr "Ikona a text"
+
+#: app/widgets/widgets-enums.c:74
+msgid "Icon & Desc"
+msgstr "Ikona a popis"
+
+#: app/widgets/widgets-enums.c:92
 msgid "View as List"
 msgstr "Zobrazit jako seznam"
 
-#: app/widgets/widgets-enums.c:72
+#: app/widgets/widgets-enums.c:93
 msgid "View as Grid"
 msgstr "Zobrazit jako mřížku"
 
@@ -9127,6 +9167,9 @@ msgstr "Vytváření a úpravy obrázků a fotografií"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
+
+#~ msgid "Color Editor"
+#~ msgstr "Editor barev"
 
 #~ msgid ""
 #~ "Unsupported pattern depth %d\n"
