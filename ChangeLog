@@ -1,5 +1,10 @@
 2002-02-11  Michael Natterer  <mitch@gimp.org>
 
+	* etc/gimprc.in
+	* etc/gimprc.win32: document the new %m image-title-format expansion.
+
+2002-02-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in.c: small hack that strips the ellipses
 	from the "Repeat" and "Re-Show" menu entries.
 

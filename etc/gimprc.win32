@@ -290,6 +290,7 @@
 #   %s  source scale factor
 #   %d  destination scale factor
 #   %Dx expands to x if the image is dirty
+#   %m  memory used by the image
 # See gimprc(5) for further details.
 (image-title-format "%D*%f-%p.%i (%t) %z%%")
 
