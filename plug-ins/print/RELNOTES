@@ -13,10 +13,13 @@ Gimp-Print 4.0.2 contains the following fixes over Gimp-Print 4.0.1:
    prints multi-page documents correctly.  4.0.0, 4.0.1, and some
    earlier versions printed each page progressively paler.
 
-2) The CUPS driver now prints with proper density on all printers.  In
-   4.0.0 and 4.0.1 it printed too pale with all non-Epson printers,
-   and the Epson Stylus Photo 870 and 1270 printed with a slight
-   magenta cast.
+2) The CUPS driver should now print with proper density on all
+   printers.  In 4.0.0 and 4.0.1 it printed too pale with most
+   printers.
+
+3) The Canon driver failed (in GhostScript and CUPS) if no InkType was
+   specified.  It now defaults to a reasonable choice based on the
+   printer model.
 
 
 Gimp-Print 4.0.1 contains the following fixes over Gimp-Print 4.0.0:
