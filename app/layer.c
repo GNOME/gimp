@@ -953,6 +953,9 @@ layer_invalidate_boundary (layer)
   /*  Turn the current selection off  */
   gdisplays_selection_visibility (gimage, SelectionOff);
 
+  /*  clear the affected region surrounding the layer  */
+  gdisplays_selection_visibility (gimage, SelectionLayerOff); 
+
   mask = gimage_get_mask (gimage);
 
   /*  Only bother with the bounds if there is a selection  */
@@ -964,10 +967,6 @@ layer_invalidate_boundary (layer)
 
   if (layer_is_floating_sel(layer))
       floating_sel_invalidate(layer);
-
-  /*  clear the affected region surrounding the layer  */
-  /* gdisplays_selection_visibility (GIMP_DRAWABLE(layer)->gimage,
-     SelectionLayerOff); */
 }
 
 

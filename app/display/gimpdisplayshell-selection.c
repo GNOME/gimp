@@ -654,9 +654,13 @@ selection_invis (Selection *select)
 
   /*  Find the bounds of the selection  */
   if (gdisplay_mask_bounds (gdisp, &x1, &y1, &x2, &y2))
-    gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+    {
+      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+    }
   else
-    selection_start (select, TRUE);
+    {
+      selection_start (select, TRUE);
+    }
 }
 
 

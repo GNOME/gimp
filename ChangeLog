@@ -1,3 +1,9 @@
+Mon Feb  8 19:17:58 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/layer.c
+	* app/selection.c: Turn off a layer's bounding box when
+	it is deselected.
+
 Mon Feb  8 12:12:18 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/bezier_select.c: applied patch from Shuji Narazaki 
