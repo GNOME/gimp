@@ -1,3 +1,8 @@
+Sun Oct  4 21:07:07 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/ink.c app/paint_core.c: The paint and ink tools
+	are synchronous.
+
 Sat Oct  3 21:01:34 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/channel.c app/channel_ops.c app/disp_callbacks.c

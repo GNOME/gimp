@@ -475,7 +475,7 @@ ink_button_press (Tool           *tool,
   ink_paste (ink_tool, drawable, b);
   ink_tool->last_blob = b;
 
-  gdisplay_flush (gdisp);
+  gdisplay_flush_now (gdisp);
 }
 
 static void
@@ -531,7 +531,7 @@ ink_motion (Tool           *tool,
   ink_paste (ink_tool, drawable, blob_union);  
   g_free (blob_union);
   
-  gdisplay_flush (gdisp);
+  gdisplay_flush_now (gdisp);
 }
 
 static void

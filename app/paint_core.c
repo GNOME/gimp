@@ -209,7 +209,7 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   else
     (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
 
-  gdisplay_flush (gdisp);
+  gdisplay_flush_now (gdisp);
 }
 
 void
@@ -263,7 +263,7 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 
   paint_core_interpolate (paint_core, gimage_active_drawable (gdisp->gimage));
 
-  gdisplay_flush (gdisp);
+  gdisplay_flush_now (gdisp);
 
   paint_core->lastx = paint_core->curx;
   paint_core->lasty = paint_core->cury;
