@@ -1,3 +1,10 @@
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_reconnect):
+	emit "reconnect" *before* emitting scale and scroll events so
+	listeners (the navigation view) can switch to the new image at the
+	right time.
+
 2004-07-28  Sven Neumann  <sven@gimp.org>
 
 	Applied a patch from Brion Vibber that makes the TWAIN plug-in

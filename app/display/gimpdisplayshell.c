@@ -981,11 +981,11 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_display_shell_connect (shell);
 
+  g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
+
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_scaled (shell);
-
-  g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
 }
 
 void
