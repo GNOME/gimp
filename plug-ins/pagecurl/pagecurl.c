@@ -30,9 +30,6 @@
 
 /*
  * Ported to the 0.99.x architecture by Simon Budig, Simon.Budig@unix-ag.org
- *  *** Why does gimp_drawable_add_alpha cause the plugin to produce an
- *      ** WARNING **: received tile info did not match computed tile info
- *      ** WARNING **: expected tile ack and received: 0
  */
 
 /*
@@ -214,7 +211,7 @@ query (void)
 			  "Federico Mena Quintero and Simon Budig",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Distorts/Pagecurl..."),
-			  "RGBA, GRAYA",
+			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  nargs,
 			  nreturn_vals,
@@ -252,9 +249,8 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_id = param[1].data.d_image;
 
-  if ((gimp_drawable_is_rgb (drawable->id)
-       || gimp_drawable_is_gray (drawable->id))
-      && gimp_drawable_has_alpha (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id)
+      || gimp_drawable_is_gray (drawable->id))
     {
       switch (run_mode)
 	{
@@ -734,6 +730,7 @@ init_calculation (void)
   gint32      *image_layers, nlayers;
 
   gimp_layer_add_alpha (drawable->id);
+  drawable = gimp_drawable_get (drawable->id);
 
   /* Image parameters */
 
