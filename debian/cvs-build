@@ -6,6 +6,8 @@
 
 use POSIX qw(strftime);
 
+my $version = '1.2';
+
 $ENV{'DEBCVS'} = 1;
 
 unless (-d 'debian') {
@@ -48,7 +50,7 @@ close CHANGELOG;
 
 open NEWCHANGE, ">debian/changelog" or die "Couldn't open changelog for writing: $!\n";
 
-print NEWCHANGE "gimp1.1 ($new_version) unstable; urgency=low
+print NEWCHANGE "gimp$version ($new_version) unstable; urgency=low
 
   * CVS build.
 
@@ -57,5 +59,7 @@ print NEWCHANGE "gimp1.1 ($new_version) unstable; urgency=low
 print NEWCHANGE @changelog;
 
 close NEWCHANGE;
+
+system("./autogen.sh") and die "autogen.sh failed: $@\n";
 
 system("dpkg-buildpackage -rfakeroot") and die "dpkg-buildpackage -rfakeroot failed: $@\n";
