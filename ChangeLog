@@ -1,3 +1,10 @@
+2001-01-14  Sven Neumann  <sven@gimp.org>
+
+	* app/menus.c
+	* app/plug-in.c: added some sanity checks for passed string pointers
+	to various public functions in an attempt to fix bug #37622. I'm not
+	sure if this fixes the bug since I can not reproduce it.
+
 2001-01-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sharpen.c: applied a patch from Jerome Zago 
