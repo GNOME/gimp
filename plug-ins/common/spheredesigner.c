@@ -296,24 +296,24 @@ struct
 settings = { 1, 1, 1 };
 
 
-static inline void vset      (GimpVector4  *v,
-                              gdouble       a,
-                              gdouble       b,
-                              gdouble       c);
+static inline void vset      (GimpVector4          *v,
+                              gdouble               a,
+                              gdouble               b,
+                              gdouble               c);
 static void    restartrender (void);
-static void    drawcolor1    (GtkWidget    *widget);
-static void    drawcolor2    (GtkWidget    *widget);
+static void    drawcolor1    (GtkWidget            *widget);
+static void    drawcolor2    (GtkWidget            *widget);
 static void    render        (void);
-static void    realrender    (GimpDrawable *drawable);
-static void    fileselect    (gint          action,
-                              GtkWidget    *parent);
-static gint    traceray      (ray          *r,
-                              GimpVector4  *col,
-                              gint          level,
-			      gdouble       imp);
-static gdouble turbulence    (gdouble      *point,
-                              gdouble       lofreq,
-                              gdouble       hifreq);
+static void    realrender    (GimpDrawable         *drawable);
+static void    fileselect    (GtkFileChooserAction  action,
+                              GtkWidget            *parent);
+static gint    traceray      (ray                  *r,
+                              GimpVector4          *col,
+                              gint                  level,
+			      gdouble               imp);
+static gdouble turbulence    (gdouble              *point,
+                              gdouble               lofreq,
+                              gdouble               hifreq);
 
 
 #define COLORBUTTONWIDTH  30
@@ -2051,21 +2051,27 @@ loadit (const gchar * fn)
 }
 
 static void
-loadpreset_response (GtkFileSelection *fs,
-                     gint              response_id,
-                     gpointer          data)
+loadpreset_response (GtkWidget *dialog,
+                     gint       response_id,
+                     gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *fn = gtk_file_selection_get_filename (fs);
+      GtkTreeModel *model = gtk_tree_view_get_model (texturelist);
+      gchar        *name;
 
-      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
-      loadit (fn);
+      name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      gtk_list_store_clear (GTK_LIST_STORE (model));
+
+      loadit (name);
+      g_free (name);
+
       rebuildlist ();
       restartrender ();
     }
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_hide (dialog);
 }
 
 static void
@@ -2119,37 +2125,38 @@ saveit (const gchar *fn)
 }
 
 static void
-savepreset_response (GtkFileSelection *fs,
-                     gint              response_id,
-                     gpointer          data)
+savepreset_response (GtkWidget *dialog,
+                     gint       response_id,
+                     gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const char *fn = gtk_file_selection_get_filename (fs);
+      gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      saveit (fn);
+      saveit (name);
+      g_free (name);
     }
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_hide (dialog);
 }
 
 static void
 loadpreset (GtkWidget *widget,
             GtkWidget *parent)
 {
-  fileselect (0, parent);
+  fileselect (GTK_FILE_CHOOSER_ACTION_OPEN, parent);
 }
 
 static void
 savepreset (GtkWidget *widget,
             GtkWidget *parent)
 {
-  fileselect (1, parent);
+  fileselect (GTK_FILE_CHOOSER_ACTION_SAVE, parent);
 }
 
 static void
-fileselect (gint       action,
-            GtkWidget *parent)
+fileselect (GtkFileChooserAction  action,
+            GtkWidget            *parent)
 {
   static GtkWidget *windows[2] = { NULL, NULL };
 
@@ -2158,10 +2165,18 @@ fileselect (gint       action,
 
   if (!windows[action])
     {
-      windows[action] = gtk_file_selection_new (gettext (titles[action]));
+      windows[action] =
+        gtk_file_chooser_dialog_new (gettext (titles[action]),
+                                     GTK_WINDOW (parent),
+                                     action,
 
-      gtk_window_set_transient_for (GTK_WINDOW (windows[action]),
-                                    GTK_WINDOW (parent));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+
+                                     action == GTK_FILE_CHOOSER_ACTION_OPEN ?
+                                     GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                     GTK_RESPONSE_OK,
+
+                                     NULL);
 
       gimp_help_connect (windows[action], gimp_standard_help_func,
 			 "plug-in-spheredesigner", NULL);
@@ -2487,13 +2502,13 @@ makewindow (void)
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (frame);
@@ -2506,7 +2521,7 @@ makewindow (void)
   g_signal_connect (drawarea, "expose_event",
 		    G_CALLBACK (expose_event), NULL);
 
-  button = gtk_button_new_with_label (_("Update"));
+  button = gtk_button_new_with_mnemonic (_("Update _Preview"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (button);
@@ -2588,7 +2603,7 @@ makewindow (void)
                     G_CALLBACK (savepreset),
                     window);
 
-  frame = gtk_frame_new (_("Texture Properties"));
+  frame = gimp_frame_new (_("Texture Properties"));
   gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
@@ -2596,27 +2611,26 @@ makewindow (void)
   table = gtk_table_new (6, 4, FALSE);
   gtk_widget_show (table);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
   label = gtk_label_new (_("Type:"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Texture:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   label = gtk_label_new (_("Colors:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
@@ -2649,7 +2663,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2667,7 +2681,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _turbulencescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2685,7 +2699,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2703,7 +2717,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2721,7 +2735,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2740,7 +2754,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2757,7 +2771,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 4, 5,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2774,7 +2788,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 5, 6,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2791,7 +2805,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2808,7 +2822,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2825,7 +2839,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2874,7 +2888,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _amountscale =
     gtk_hscale_new (GTK_ADJUSTMENT
@@ -2892,7 +2906,7 @@ makewindow (void)
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _expscale =
     gtk_hscale_new (GTK_ADJUSTMENT

@@ -129,13 +129,13 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static gint dialog_create          (void);
-static void dialog_new_variations  (GtkWidget *widget,
-				    gpointer   data);
-static void dialog_update_previews (GtkWidget *widget,
-				    gpointer   data);
-static void dialog_select_preview  (GtkWidget *widget,
-				    ExpInfo  *n_info);
+static gboolean  dialog_run             (void);
+static void      dialog_new_variations  (GtkWidget *widget,
+                                         gpointer   data);
+static void      dialog_update_previews (GtkWidget *widget,
+                                         gpointer   data);
+static void      dialog_select_preview  (GtkWidget *widget,
+                                         ExpInfo   *n_info);
 
 static QbistInfo qbist_info;
 
@@ -500,7 +500,7 @@ run (const gchar      *name,
 	  gimp_get_data (PLUG_IN_NAME, &qbist_info);
 
 	  /* Get information from the dialog */
-	  if (dialog_create ())
+	  if (dialog_run ())
 	    {
 	      status = GIMP_PDB_SUCCESS;
 	      gimp_set_data (PLUG_IN_NAME, &qbist_info, sizeof (QbistInfo));
@@ -707,81 +707,102 @@ save_data (gchar *name)
 }
 
 static void
-file_selection_save_response (GtkFileSelection *fs,
-                              gint              response_id,
-                              gpointer          data)
+file_chooser_save_response (GtkWidget *dialog,
+                            gint       response_id,
+                            gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      strcpy (qbist_info.path, gtk_file_selection_get_filename (fs));
+      gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      strcpy (qbist_info.path, name);
       save_data (qbist_info.path);
+
+      g_free (name);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (dialog);
 }
 
 static void
-file_selection_load_response (GtkFileSelection *fs,
-                              gint              response_id,
-                              gpointer          data)
+file_chooser_load_response (GtkWidget *dialog,
+                            gint       response_id,
+                            gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      strcpy (qbist_info.path, gtk_file_selection_get_filename (fs));
+      gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      strcpy (qbist_info.path, name);
       load_data (qbist_info.path);
+
+      g_free (name);
 
       dialog_new_variations (NULL, NULL);
       dialog_update_previews (NULL, NULL);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (dialog);
 }
 
 static void
 dialog_load (GtkWidget *widget,
 	     gpointer   data)
 {
-  GtkWidget *file_select;
+  GtkWidget *parent;
+  GtkWidget *dialog;
 
-  file_select = gtk_file_selection_new (_("Load QBE file..."));
+  parent = gtk_widget_get_toplevel (widget);
 
-  gtk_window_set_transient_for (GTK_WINDOW (file_select),
-                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+  dialog = gtk_file_chooser_dialog_new (_("Load QBE file"),
+                                        GTK_WINDOW (parent),
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_STOCK_OK,
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
-                                   qbist_info.path);
+                                        NULL);
 
-  g_signal_connect (file_select, "response",
-                    G_CALLBACK (file_selection_load_response),
+  gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                 qbist_info.path);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (file_chooser_load_response),
                     NULL);
 
-  gtk_widget_show (file_select);
+  gtk_widget_show (dialog);
 }
 
 static void
 dialog_save (GtkWidget *widget,
 	     gpointer   data)
 {
-  GtkWidget *file_select;
+  GtkWidget *parent;
+  GtkWidget *dialog;
 
-  file_select =
-    gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
+  parent = gtk_widget_get_toplevel (widget);
 
-  gtk_window_set_transient_for (GTK_WINDOW (file_select),
-                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+  dialog = gtk_file_chooser_dialog_new (_("Save (middle transform) as QBE file"),
+                                        GTK_WINDOW (parent),
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
 
-  gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_SAVE,   GTK_STOCK_OK,
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
-				   qbist_info.path);
+                                        NULL);
 
-  g_signal_connect (file_select, "response",
-                    G_CALLBACK (file_selection_save_response),
+  gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                 qbist_info.path);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (file_chooser_save_response),
                     NULL);
 
-  gtk_widget_show (file_select);
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -792,8 +813,8 @@ dialog_toggle_antialaising (GtkWidget *widget,
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ? 4 : 1;
 }
 
-static gint
-dialog_create (void)
+static gboolean
+dialog_run (void)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -814,15 +835,15 @@ dialog_create (void)
 
 			    NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 

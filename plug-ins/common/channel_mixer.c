@@ -138,12 +138,12 @@ static void cm_preserve_luminosity_callback (GtkWidget        *widget,
                                              CmParamsType     *mix);
 static void cm_load_file_callback           (GtkWidget        *widget,
                                              CmParamsType     *mix);
-static void cm_load_file_response_callback  (GtkFileSelection *filesel,
+static void cm_load_file_response_callback  (GtkWidget        *dialog,
                                              gint              response_id,
                                              CmParamsType     *mix);
 static void cm_save_file_callback           (GtkWidget        *widget,
                                              CmParamsType     *mix);
-static void cm_save_file_response_callback  (GtkFileSelection *filesel,
+static void cm_save_file_response_callback  (GtkWidget        *dialog,
                                              gint              response_id,
                                              CmParamsType     *mix);
 static void cm_combo_callback               (GtkWidget        *widget,
@@ -477,7 +477,7 @@ channel_mixer (GimpDrawable *drawable)
 /*----------------------------------------------------------------------
  *
  *--------------------------------------------------------------------*/
-static gint
+static gboolean
 cm_dialog (void)
 {
   GtkWidget *dialog;
@@ -486,7 +486,6 @@ cm_dialog (void)
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *label;
-  GtkWidget *xframe;
   GtkWidget *table;
   gdouble    red_value, green_value, blue_value;
   gboolean   run;
@@ -539,30 +538,26 @@ cm_dialog (void)
 
                             NULL);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   /*........................................................... */
   /* preview */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Preview"));
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  xframe = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (xframe), 4);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), xframe);
-  gtk_widget_show (xframe);
-
   mix.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (mix.preview), preview->width, preview->height);
-  gtk_container_add (GTK_CONTAINER (xframe), mix.preview);
+  gtk_preview_size (GTK_PREVIEW (mix.preview),
+                    preview->width, preview->height);
+  gtk_container_add (GTK_CONTAINER (frame), mix.preview);
   gtk_widget_show (mix.preview);
 
   /*  The preview toggle  */
@@ -578,16 +573,16 @@ cm_dialog (void)
 
   /*........................................................... */
   /* controls */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /*........................................................... */
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -617,9 +612,8 @@ cm_dialog (void)
   /*........................................................... */
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -687,7 +681,7 @@ cm_dialog (void)
 
   /*........................................................... */
   /*  Horizontal box for file i/o  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1031,40 +1025,48 @@ static void
 cm_load_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
-  static GtkWidget *filesel = NULL;
-  gchar            *fname;
+  static GtkWidget *dialog = NULL;
 
-  if (!filesel)
+  gchar *name;
+
+  if (! dialog)
     {
-      filesel = gtk_file_selection_new (_("Load Channel Mixer Settings"));
+      GtkWidget *parent = gtk_widget_get_toplevel (widget);
 
-      gtk_window_set_transient_for (GTK_WINDOW (filesel),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+      dialog =
+        gtk_file_chooser_dialog_new (_("Load Channel Mixer Settings"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-      g_signal_connect (filesel, "response",
+                                     NULL);
+
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_load_file_response_callback),
                         mix);
-      g_signal_connect (filesel, "delete_event",
+      g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
-  fname = cm_settings_filename (mix);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
-  g_free (fname);
+  name = cm_settings_filename (mix);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), name);
+  g_free (name);
 
-  gtk_window_present (GTK_WINDOW (filesel));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 /*----------------------------------------------------------------------
  *
  *--------------------------------------------------------------------*/
 static void
-cm_load_file_response_callback (GtkFileSelection *fs,
-                                gint              response_id,
-                                CmParamsType     *mix)
+cm_load_file_response_callback (GtkWidget    *dialog,
+                                gint          response_id,
+                                CmParamsType *mix)
 {
   FILE *fp;
 
@@ -1072,7 +1074,8 @@ cm_load_file_response_callback (GtkFileSelection *fs,
     {
       g_free (mix->filename);
 
-      mix->filename = g_strdup (gtk_file_selection_get_filename (fs));
+      mix->filename =
+        gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       fp = fopen (mix->filename, "r");
 
@@ -1158,7 +1161,7 @@ cm_load_file_response_callback (GtkFileSelection *fs,
         }
     }
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_hide (dialog);
 }
 
 /*----------------------------------------------------------------------
@@ -1168,69 +1171,67 @@ static void
 cm_save_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
-  static GtkWidget *filesel = NULL;
-  gchar            *fname;
+  static GtkWidget *dialog = NULL;
 
-  if (!filesel)
+  gchar *name;
+
+  if (! dialog)
     {
-      filesel = gtk_file_selection_new (_("Save Channel Mixer Settings"));
+      GtkWidget *parent = gtk_widget_get_toplevel (widget);
 
-      gtk_window_set_transient_for (GTK_WINDOW (filesel),
-                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save Channel Mixer Settings"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-      g_signal_connect (filesel, "response",
+                                     NULL);
+
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_save_file_response_callback),
                         mix);
-      g_signal_connect (filesel, "delete_event",
+      g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
 
-  fname = cm_settings_filename (mix);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
-  g_free (fname);
+  name = cm_settings_filename (mix);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), name);
+  g_free (name);
 
-  gtk_window_present (GTK_WINDOW (filesel));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 /*----------------------------------------------------------------------
  *
  *--------------------------------------------------------------------*/
 static void
-cm_save_file_response_callback (GtkFileSelection *fs,
-                                gint              response_id,
-                                CmParamsType     *mix)
+cm_save_file_response_callback (GtkWidget    *dialog,
+                                gint          response_id,
+                                CmParamsType *mix)
 {
-  const gchar *filename;
-  FILE        *file = NULL;
+  gchar *filename;
+  FILE  *file = NULL;
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      gtk_widget_hide (GTK_WIDGET (fs));
+      gtk_widget_hide (dialog);
       return;
     }
 
-  filename = gtk_file_selection_get_filename (fs);
+  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   if (! filename)
     return;
 
-  if (g_file_test (filename, G_FILE_TEST_EXISTS))
+  if (g_file_test (filename, G_FILE_TEST_EXISTS) &&
+      ! cm_force_overwrite (filename, dialog))
     {
-      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
-        {
-          gchar *path = g_build_filename (filename, G_DIR_SEPARATOR_S, NULL);
-
-          gtk_file_selection_set_filename (fs, path);
-
-          g_free (path);
-
-          return;
-        }
-
-      if (! cm_force_overwrite (filename, GTK_WIDGET (fs)))
-        return;
+      g_free (filename);
+      return;
     }
 
   file = fopen (filename, "w");
@@ -1239,18 +1240,19 @@ cm_save_file_response_callback (GtkFileSelection *fs,
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_free (filename);
       return;
     }
 
   g_free (mix->filename);
-  mix->filename = g_strdup (filename);
+  mix->filename = filename;
 
   cm_save_file (mix, file);
 
   g_message (_("Parameters were Saved to '%s'"),
              gimp_filename_to_utf8 (filename));
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_hide (dialog);
 }
 
 /*----------------------------------------------------------------------
@@ -1277,7 +1279,8 @@ cm_force_overwrite (const gchar *filename,
                          NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   buffer = g_strdup_printf (_("File '%s' exists.\n"
@@ -1286,7 +1289,7 @@ cm_force_overwrite (const gchar *filename,
   g_free (buffer);
 
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dlg);
