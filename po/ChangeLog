@@ -1,3 +1,8 @@
+2001-08-21  Pablo Saratxaga <pablo@mandrakesoft.com>
+
+	* ca.po: Updated Catalan file
+	* nl.po,zh_TW.Big5.po: fixed headers
+
 2001-07-22  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
