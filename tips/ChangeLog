@@ -1,3 +1,7 @@
+2003-09-04  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
+
+	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added more missing files.
