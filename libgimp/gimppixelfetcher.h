@@ -66,8 +66,13 @@ void		   gimp_get_bg_guchar              (GimpDrawable *drawable,
 						    guchar       *bg);
 
 
-typedef void (* GimpRgnFunc1) (guchar *src, gint bpp, gpointer);
-typedef void (* GimpRgnFunc2) (guchar *src, guchar *dest, gint bpp, gpointer);
+typedef void (* GimpRgnFunc1) (const guchar *src,
+                               gint          bpp,
+                               gpointer      data);
+typedef void (* GimpRgnFunc2) (const guchar *src,
+                               guchar       *dest,
+                               gint          bpp,
+                               gpointer      data);
 
 void gimp_rgn_iterate1 (GimpDrawable *drawable, 
 			GimpRunMode   run_mode,

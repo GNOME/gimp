@@ -27,16 +27,16 @@
  * Declare some local functions.
  */
 static void     query      (void);
-static void     run        (gchar      *name, 
-                            gint        nparams, 
-                            GimpParam  *param, 
-                            gint       *nreturn_vals, 
-                            GimpParam **return_vals);
-static gboolean save_aa    (gint32      drawable_ID,
-                            gchar      *filename, 
-                            gint        output_type);
-static void     gimp2aa    (gint32      drawable_ID, 
-                            aa_context *context);
+static void     run        (const gchar      *name, 
+                            gint              nparams, 
+                            const GimpParam  *param, 
+                            gint             *nreturn_vals, 
+                            GimpParam       **return_vals);
+static gboolean save_aa    (gint32            drawable_ID,
+                            gchar            *filename, 
+                            gint              output_type);
+static void     gimp2aa    (gint32            drawable_ID, 
+                            aa_context       *context);
 
 static gint     type_dialog                 (gint       selected);
 static void     type_dialog_toggle_update   (GtkWidget *widget, 
@@ -119,11 +119,11 @@ get_type_from_string (const gchar *string)
 }
 
 static void 
-run (gchar       *name, 
-     gint         nparams, 
-     GimpParam   *param, 
-     gint        *nreturn_vals,
-     GimpParam  **return_vals)
+run (const gchar      *name, 
+     gint              nparams, 
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[2];
   GimpRunMode           run_mode;

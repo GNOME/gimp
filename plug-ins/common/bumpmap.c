@@ -206,18 +206,18 @@ typedef struct
 
   bumpmap_params_t params;
 
-  gint         run;
+  gboolean         run;
 } bumpmap_interface_t;
 
 
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GimpParam  *param,
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void bumpmap             (void);
 static void bumpmap_init_params (bumpmap_params_t *params);
@@ -399,11 +399,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
 

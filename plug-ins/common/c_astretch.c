@@ -40,14 +40,14 @@
 /* Declare local functions.
  */
 static void   query              (void);
-static void   run                (gchar        *name,
-                                  gint          nparams,
-                                  GimpParam    *param,
-                                  gint         *nreturn_vals,
-                                  GimpParam   **return_vals);
+static void   run                (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static void   c_astretch         (GimpDrawable *drawable);
-static void   indexed_c_astretch (gint32        image_ID);
+static void   c_astretch         (GimpDrawable     *drawable);
+static void   indexed_c_astretch (gint32            image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -93,11 +93,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -193,7 +193,9 @@ typedef struct {
 } AutoStretchParam_t;
 
 static void 
-find_min_max (guchar *src, gint bpp, gpointer data)
+find_min_max (const guchar *src,
+              gint         bpp,
+              gpointer     data)
 {
   AutoStretchParam_t *param = (AutoStretchParam_t*) data;
   gint b;
@@ -211,7 +213,10 @@ find_min_max (guchar *src, gint bpp, gpointer data)
 }
 
 static void
-c_astretch_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+c_astretch_func (const guchar *src,
+                 guchar       *dest,
+                 gint          bpp,
+                 gpointer      data)
 {
   AutoStretchParam_t *param = (AutoStretchParam_t*) data;
   gint b;

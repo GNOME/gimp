@@ -860,11 +860,11 @@ typedef struct
 /* Declare local functions. */
 
 static void      query  (void);
-static void      run    (char         *name,
-        		 int           nparams,
-        		 GimpParam    *param,
-        		 int          *nreturn_vals,
-        		 GimpParam   **return_vals);
+static void      run    (const gchar      *name,
+        		 gint              nparams,
+        		 const GimpParam  *param,
+        		 gint             *nreturn_vals,
+        		 GimpParam       **return_vals);
 
 static void      alienmap2 	       (GimpDrawable  *drawable);
 static void    	 transform             (guchar*, guchar*, guchar*);
@@ -1001,11 +1001,11 @@ transform (guchar *r,
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
@@ -1099,7 +1099,10 @@ run (gchar      *name,
 }
 
 static void 
-alienmap2_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+alienmap2_func (const guchar *src,
+                guchar       *dest,
+                gint          bpp,
+                gpointer      data)
 {
   guchar v1, v2, v3;
 

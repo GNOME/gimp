@@ -44,11 +44,11 @@ static GimpRunMode    run_mode;
 /* Declare local functions.
  */
 static void   query                 (void);
-static void   run                   (gchar        *name,
-                                     gint          nparams,
-                                     GimpParam    *param,
-                                     gint         *nreturn_vals,
-                                     GimpParam   **return_vals);
+static void   run                   (const gchar      *name,
+                                     gint              nparams,
+                                     const GimpParam  *param,
+                                     gint             *nreturn_vals,
+                                     GimpParam       **return_vals);
 
 static void   Color_Enhance         (GimpDrawable *drawable);
 static void   indexed_Color_Enhance (gint32        image_ID);
@@ -97,11 +97,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -255,7 +255,9 @@ typedef struct {
 } ColorEnhanceParam_t;
 
 static void 
-find_vhi_vlo (guchar *src, gint bpp, gpointer data)
+find_vhi_vlo (const guchar *src,
+              gint          bpp,
+              gpointer      data)
 {
   ColorEnhanceParam_t *param = (ColorEnhanceParam_t*) data;
 
@@ -269,7 +271,10 @@ find_vhi_vlo (guchar *src, gint bpp, gpointer data)
 }
 
 static void 
-color_enhance_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+color_enhance_func (const guchar *src,
+                    guchar       *dest,
+                    gint          bpp,
+                    gpointer      data)
 {
   ColorEnhanceParam_t *param = (ColorEnhanceParam_t*) data;
 

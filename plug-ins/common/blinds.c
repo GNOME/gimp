@@ -91,7 +91,7 @@ typedef struct
 {
   GtkWidget *preview;
   guchar     preview_row[PREVIEW_SIZE * 4];
-  gint       run;
+  gboolean   run;
   guchar    *pv_cache;
   gint       img_bpp;
 } BlindsInterface;
@@ -114,11 +114,11 @@ gint fanwidths[MAX_FANS];
 GimpDrawable *blindsdrawable;
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 static gint      blinds_dialog       (void);
 
@@ -190,11 +190,11 @@ query (void)
 }
 
 static void
-run (gchar       *name,
-     gint         nparams,
-     GimpParam   *param,
-     gint        *nreturn_vals,
-     GimpParam  **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
   GimpDrawable *drawable;

@@ -42,11 +42,11 @@
 /* Declare local functions.
  */
 static void   query                   (void);
-static void   run                     (gchar         *name,
-                                       gint           nparams,
-                                       GimpParam     *param,
-                                       gint          *nreturn_vals,
-                                       GimpParam    **return_vals);
+static void   run                     (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
 static void   autostretch_hsv         (GimpDrawable  *drawable);
 static void   indexed_autostretch_hsv (gint32         image_ID);
@@ -97,11 +97,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;

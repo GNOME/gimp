@@ -305,11 +305,11 @@ static gchar *channel_names[] =
 };
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static GimpPDBStatusType CML_main_function     (gint       preview_p);
 static void              CML_compute_next_step (gint       size,
@@ -403,7 +403,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } Interface;
 
 static Interface INTERFACE =
@@ -480,11 +480,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;

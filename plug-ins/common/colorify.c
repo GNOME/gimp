@@ -45,11 +45,11 @@
 #define COLOR_SIZE 30
 
 static void      query (void);
-static void      run   (gchar      *name,
-			gint        nparams,
-			GimpParam  *param,
-			gint       *nreturn_vals,
-			GimpParam **return_vals);
+static void      run   (const gchar      *name,
+			gint              nparams,
+			const GimpParam  *param,
+			gint             *nreturn_vals,
+			GimpParam       **return_vals);
 
 static void      colorify                  (GimpDrawable *drawable);
 static gboolean  colorify_dialog           (GimpRGB      *color);
@@ -137,11 +137,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpPDBStatusType  status;
   static GimpParam   values[1];
@@ -206,12 +206,17 @@ run (gchar      *name,
 }
 
 static void 
-colorify_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+colorify_func (const guchar *src,
+               guchar       *dest,
+               gint          bpp,
+               gpointer      data)
 {
-  gint lum = lum_red_lookup[src[0]] +
-    lum_green_lookup[src[1]] +
-    lum_blue_lookup[src[2]]; /* luminosity */
-  
+  gint lum;
+
+  lum = (lum_red_lookup[src[0]]   +
+         lum_green_lookup[src[1]] +
+         lum_blue_lookup[src[2]]);
+
   dest[0] = final_red_lookup[lum];
   dest[1] = final_green_lookup[lum];
   dest[2] = final_blue_lookup[lum];

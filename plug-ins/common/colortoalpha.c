@@ -48,11 +48,11 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar       *name,
-			 gint         nparams,
-			 GimpParam   *param,
-			 gint        *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (const gchar       *name,
+			 gint               nparams,
+			 const GimpParam   *param,
+			 gint              *nreturn_vals,
+			 GimpParam        **return_vals);
 
 static void inline colortoalpha             (GimpRGB       *src,
                                              const GimpRGB *color);
@@ -113,11 +113,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -287,7 +287,10 @@ colortoalpha (GimpRGB       *src,
 */
 
 static void 
-toalpha_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+toalpha_func (const guchar *src,
+              guchar       *dest,
+              gint          bpp,
+              gpointer      data)
 {
   GimpRGB color;
 

@@ -99,9 +99,9 @@ all other GIMP Library headers.
 </para>
 
 @name: 
-@nparams: 
+@n_params: 
 @param: 
-@nreturn_vals: 
+@n_return_vals: 
 @return_vals: 
 
 

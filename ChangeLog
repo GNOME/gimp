@@ -1,5 +1,10 @@
 2003-07-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common: first set of plug-ins adapted to the constified
+	libgimp API.
+
+2003-07-01  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.[ch]
 	* libgimp/gimpchannel.[ch]
 	* libgimp/gimpdrawable.[ch]
