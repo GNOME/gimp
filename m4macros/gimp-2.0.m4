@@ -1,75 +1,76 @@
 # Configure paths for GIMP-2.0
-# Manish Singh    98-6-11
-# Shamelessly stolen from Owen Taylor
+# Manish Singh, Sven Neumann
+# Large parts shamelessly stolen from Owen Taylor
 
 dnl AM_PATH_GIMP_2_0([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
 AC_DEFUN(AM_PATH_GIMP_2_0,
 [dnl 
-dnl Get the cflags and libraries from the gimptool-1.3 script
+dnl Get the cflags and libraries from pkg-config
 dnl
-AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX  Prefix where GIMP is installed (optional)],
-            gimptool_prefix="$withval", gimptool_prefix="")
-AC_ARG_WITH(gimp-exec-prefix,[  --with-gimp-exec-prefix=PFX Exec prefix where GIMP is installed (optional)],
-            gimptool_exec_prefix="$withval", gimptool_exec_prefix="")
-AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run a test GIMP program],
-		    , enable_gimptest=yes)
 
-  if test x$gimptool_exec_prefix != x ; then
-     gimptool_args="$gimptool_args --exec-prefix=$gimptool_exec_prefix"
-     if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_exec_prefix/bin/gimptool-1.3
-     fi
-  fi
-  if test x$gimptool_prefix != x ; then
-     gimptool_args="$gimptool_args --prefix=$gimptool_prefix"
-     if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_prefix/bin/gimptool-1.3
-     fi
-  fi
+AC_ARG_ENABLE(gimptest, [  --disable-gimptest      do not try to compile and run a test GIMP program],, enable_gimptest=yes)
 
-  AC_PATH_PROG(GIMPTOOL, gimptool-1.3, no)
-  min_gimp_version=ifelse([$1], ,1.3.18,$1)
-  AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
+  pkg_name=gimp-1.3
+  pkg_config_args="$pkg_name gimpui-1.3"
+
   no_gimp=""
-  if test "$GIMPTOOL" = "no" ; then
-    no_gimp=yes
-  else
-    GIMP_CFLAGS=`$GIMPTOOL $gimptool_args --cflags`
-    GIMP_LIBS=`$GIMPTOOL $gimptool_args --libs`
 
-    GIMP_CFLAGS_NOUI=`$GIMPTOOL $gimptool_args --cflags-noui`
-    noui_test=`echo $GIMP_CFLAGS_NOUI | sed 's/^\(Usage\).*/\1/'`
-    if test "$noui_test" = "Usage" ; then
-       GIMP_CFLAGS_NOUI=$GIMP_CFLAGS
-       GIMP_LIBS_NOUI=$GIMP_LIBS
+  AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+
+  if test x$PKG_CONFIG != xno ; then
+    if pkg-config --atleast-pkgconfig-version 0.7 ; then
+      :
     else
-       GIMP_LIBS_NOUI=`$GIMPTOOL $gimptool_args --libs-noui`
+      echo *** pkg-config too old; version 0.7 or better required.
+      no_gimp=yes
+      PKG_CONFIG=no
+    fi
+  else
+    no_gimp=yes
+  fi
+
+  min_gimp_version=ifelse([$1], ,1.3.22,$1)
+  AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
+
+  if test x$PKG_CONFIG != xno ; then
+    ## don't try to run the test against uninstalled libtool libs
+    if $PKG_CONFIG --uninstalled $pkg_config_args; then
+	  echo "Will use uninstalled version of GIMP found in PKG_CONFIG_PATH"
+	  enable_gimptest=no
     fi
 
-    GIMP_DATA_DIR=`$GIMPTOOL $gimptool_args --gimpdatadir`
-    GIMP_PLUGIN_DIR=`$GIMPTOOL $gimptool_args --gimpplugindir`
-    nodatadir_test=`echo $GIMP_DATA_DIR | sed 's/^\(Usage\).*/\1/'`
-    if test "$nodatadir_test" = "Usage" ; then
-       GIMP_DATA_DIR=""
-       GIMP_PLUGIN_DIR=""
+    if $PKG_CONFIG --atleast-version $min_gimp_version $pkg_config_args; then
+	  :
+    else
+	  no_gimp=yes
     fi
+  fi
 
-    gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
+  if test x"$no_gimp" = x ; then
+    GIMP_CFLAGS=`$PKG_CONFIG $pkg_config_args --cflags`
+    GIMP_LIBS=`$PKG_CONFIG $pkg_config_args --libs`
+    GIMP_CFLAGS_NOUI=`$PKG_CONFIG $pkg_name --cflags`
+    GIMP_LIBS_NOUI=`$PKG_CONFIG $pkg_name --libs`
+    GIMP_DATA_DIR=`$PKG_CONFIG $pkg_name --variable=gimpdatadir`
+    GIMP_PLUGIN_DIR=`$PKG_CONFIG $pkg_name --variable=gimplibdir`
+
+    gimp_pkg_major_version=`$PKG_CONFIG --modversion $pkg_name | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
-    gimptool_minor_version=`$GIMPTOOL $gimptool_args --version | \
+    gimp_pkg_minor_version=`$PKG_CONFIG --modversion $pkg_name | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
-    gimptool_micro_version=`$GIMPTOOL $gimptool_args --version | \
+    gimp_pkg_micro_version=`$PKG_CONFIG --modversion $pkg_name | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
     if test "x$enable_gimptest" = "xyes" ; then
       ac_save_CFLAGS="$CFLAGS"
       ac_save_LIBS="$LIBS"
       CFLAGS="$CFLAGS $GIMP_CFLAGS"
-      LIBS="$LIBS $GIMP_LIBS"
+      LIBS="$GIMP_LIBS $LIBS"
+
 dnl
 dnl Now check if the installed GIMP is sufficiently new. (Also sanity
-dnl checks the results of gimptool-1.3 to some extent
+dnl checks the results of pkg-config to some extent
 dnl
       rm -f conf.gimptest
       AC_TRY_RUN([
@@ -100,20 +101,19 @@ int main ()
      exit(1);
    }
 
-    if (($gimptool_major_version > major) ||
-        (($gimptool_major_version == major) && ($gimptool_minor_version > minor)) ||
-        (($gimptool_major_version == major) && ($gimptool_minor_version == minor) && ($gimptool_micro_version >= micro)))
+    if (($gimp_pkg_major_version > major) ||
+        (($gimp_pkg_major_version == major) && ($gimp_pkg_minor_version > minor)) ||
+        (($gimp_pkg_major_version == major) && ($gimp_pkg_minor_version == minor) && ($gimp_pkg_micro_version >= micro)))
     {
       return 0;
     }
   else
     {
-      printf("\n*** 'gimptool-1.3 --version' returned %d.%d.%d, but the minimum version\n", $gimptool_major_version, $gimptool_minor_version, $gimptool_micro_version);
-      printf("*** of GIMP required is %d.%d.%d. If gimptool-1.3 is correct, then it is\n", major, minor, micro);
+      printf("\n*** 'pkg-config --modversion %s' returned %d.%d.%d, but the minimum version\n", "$pkg_name", $gimp_pkg_major_version, $gimp_pkg_minor_version, $gimp_pkg_micro_version);
+      printf("*** of GIMP required is %d.%d.%d. If pkg-config is correct, then it is\n", major, minor, micro);
       printf("*** best to upgrade to the required version.\n");
-      printf("*** If gimptool-1.3 was wrong, set the environment variable GIMPTOOL\n");
-      printf("*** to point to the correct copy of gimptool-1.3, and remove the file\n");
-      printf("*** config.cache before re-running configure\n");
+      printf("*** If pkg-config was wrong, set the environment variable PKG_CONFIG_PATH\n");
+      printf("*** to point to the correct the correct configuration files\n");
       return 1;
     }
 }
@@ -124,15 +124,12 @@ int main ()
      fi
   fi
   if test "x$no_gimp" = x ; then
-     AC_MSG_RESULT(yes)
+     AC_MSG_RESULT(yes (version $gimp_pkg_major_version.$gimp_pkg_minor_version.$gimp_pkg_micro_version))
      ifelse([$2], , :, [$2])     
   else
-     AC_MSG_RESULT(no)
-     if test "$GIMPTOOL" = "no" ; then
-       echo "*** The gimptool-1.3 script installed by GIMP could not be found"
-       echo "*** If GIMP was installed in PREFIX, make sure PREFIX/bin is in"
-       echo "*** your path, or set the GIMPTOOL environment variable to the"
-       echo "*** full path to gimptool-1.3."
+     if test "$PKG_CONFIG" = "no" ; then
+       echo "*** A new enough version of pkg-config was not found."
+       echo "*** See http://www.freedesktop.org/software/pkgconfig/"
      else
        if test -f conf.gimptest ; then
         :
@@ -162,9 +159,7 @@ GimpPlugInInfo PLUG_IN_INFO =
           echo "*** If you have an old version installed, it is best to remove it, although"
           echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"],
         [ echo "*** The test program failed to compile or link. See the file config.log for the"
-          echo "*** exact error that occured. This usually means GIMP was incorrectly installed"
-          echo "*** or that you have moved GIMP since it was installed. In the latter case, you"
-          echo "*** may want to edit the gimptool-1.3 script: $GIMPTOOL" ])
+          echo "*** exact error that occured. This usually means GIMP is incorrectly installed."])
           CFLAGS="$ac_save_CFLAGS"
           LIBS="$ac_save_LIBS"
        fi
