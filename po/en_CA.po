@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-11 15:43-0500\n"
-"PO-Revision-Date: 2005-03-11 14:29-0400\n"
+"POT-Creation-Date: 2005-03-15 19:24-0500\n"
+"PO-Revision-Date: 2005-03-15 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7679,7 +7679,7 @@ msgstr "Colour Balance"
 msgid "Colorize"
 msgstr "Colourize"
 
-#: ../app/pdb/color_cmds.c:1385 ../app/tools/gimphuesaturationtool.c:110
+#: ../app/pdb/color_cmds.c:1385 ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
@@ -8355,17 +8355,17 @@ msgid "Select Color"
 msgstr "Select Colour"
 
 #: ../app/tools/gimpcolorizetool.c:253
-#: ../app/tools/gimphuesaturationtool.c:361
+#: ../app/tools/gimphuesaturationtool.c:402
 msgid "_Hue:"
 msgstr "_Hue:"
 
 #: ../app/tools/gimpcolorizetool.c:267
-#: ../app/tools/gimphuesaturationtool.c:389
+#: ../app/tools/gimphuesaturationtool.c:438
 msgid "_Saturation:"
 msgstr "_Saturation:"
 
 #: ../app/tools/gimpcolorizetool.c:281
-#: ../app/tools/gimphuesaturationtool.c:375
+#: ../app/tools/gimphuesaturationtool.c:420
 msgid "_Lightness:"
 msgstr "_Lightness:"
 
@@ -8628,63 +8628,67 @@ msgstr "Fu_zzy Select"
 msgid "Histogram Scale"
 msgstr "Histogram Scale"
 
-#: ../app/tools/gimphuesaturationtool.c:111
+#: ../app/tools/gimphuesaturationtool.c:116
 msgid "Adjust hue and saturation"
 msgstr "Adjust hue and saturation"
 
-#: ../app/tools/gimphuesaturationtool.c:112
+#: ../app/tools/gimphuesaturationtool.c:117
 msgid "Hue-_Saturation..."
 msgstr "Hue-_Saturation..."
 
-#: ../app/tools/gimphuesaturationtool.c:166
+#: ../app/tools/gimphuesaturationtool.c:171
 msgid "Adjust hue / lightness / saturation"
 msgstr "Adjust hue / lightness / saturation"
 
-#: ../app/tools/gimphuesaturationtool.c:210
+#: ../app/tools/gimphuesaturationtool.c:215
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Hue-Saturation operates only on RGB colour layers."
 
-#: ../app/tools/gimphuesaturationtool.c:263
+#: ../app/tools/gimphuesaturationtool.c:270
 msgid "M_aster"
 msgstr "M_aster"
 
-#: ../app/tools/gimphuesaturationtool.c:264
+#: ../app/tools/gimphuesaturationtool.c:271
 msgid "_R"
 msgstr "_R"
 
-#: ../app/tools/gimphuesaturationtool.c:265
+#: ../app/tools/gimphuesaturationtool.c:272
 msgid "_Y"
 msgstr "_Y"
 
-#: ../app/tools/gimphuesaturationtool.c:266
+#: ../app/tools/gimphuesaturationtool.c:273
 msgid "_G"
 msgstr "_G"
 
-#: ../app/tools/gimphuesaturationtool.c:267
+#: ../app/tools/gimphuesaturationtool.c:274
 msgid "_C"
 msgstr "_C"
 
-#: ../app/tools/gimphuesaturationtool.c:268
+#: ../app/tools/gimphuesaturationtool.c:275
 msgid "_B"
 msgstr "_B"
 
-#: ../app/tools/gimphuesaturationtool.c:269
+#: ../app/tools/gimphuesaturationtool.c:276
 msgid "_M"
 msgstr "_M"
 
-#: ../app/tools/gimphuesaturationtool.c:272
+#: ../app/tools/gimphuesaturationtool.c:279
 msgid "Select Primary Color to Modify"
 msgstr "Select Primary Colour to Modify"
 
-#: ../app/tools/gimphuesaturationtool.c:300
+#: ../app/tools/gimphuesaturationtool.c:312
 msgid "Modify all colors"
 msgstr "Modify all colours"
 
-#: ../app/tools/gimphuesaturationtool.c:343
+#: ../app/tools/gimphuesaturationtool.c:366
+msgid "_Overlap:"
+msgstr "_Overlap:"
+
+#: ../app/tools/gimphuesaturationtool.c:384
 msgid "Modify Selected Color"
 msgstr "Modify Selected Colour"
 
-#: ../app/tools/gimphuesaturationtool.c:405
+#: ../app/tools/gimphuesaturationtool.c:458
 msgid "R_eset color"
 msgstr "R_eset colour"
 
