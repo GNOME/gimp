@@ -1,3 +1,14 @@
+2004-01-18  Simon Budig  <simon@gimp.org>
+
+	* app/gui/about-dialog.c: make sure we always properly use
+	the size of the logo image. Place the text at the bottom
+	of the image when the size changes (position of the version
+	string needs to be adjusted manually still...).
+
+	* data/images/gimp_logo.png: slightly tweaked.
+
+	* data/images/gimp1_0_logo.png: added for historical reasons.
+
 2004-01-18  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-dialog.c (file_open_create_thumbnail): redone
