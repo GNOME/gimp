@@ -313,7 +313,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_THUMBNAIL_FILESIZE_LIMIT,
                                     "thumbnail-filesize-limit",
                                     THUMBNAIL_FILESIZE_LIMIT_BLURB,
-                                    1, GIMP_MAX_MEMSIZE, 1 << 22,
+                                    0, GIMP_MAX_MEMSIZE, 1 << 22,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                                     "install-colormap", INSTALL_COLORMAP_BLURB,
