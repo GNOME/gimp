@@ -1,3 +1,7 @@
+2003-11-25  Pablo G. del Campo  <pablodc@bigfoot.com>
+
+	* es.po: Updated Spanish translation.
+
 2003-11-24  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added app/widgets/gimpcolordisplayeditor.c
