@@ -63,12 +63,6 @@ AC_PROG_MAKE_SET
 AC_PROG_CPP
 AC_GIMP_CHECK
 
-gimp_save_CFLAGS="$CFLAGS"
-gimp_save_LIBS="$LIBS"
-
-CFLAGS="$GTK_CFLAGS $CFLAGS"
-LIBS="$LIBS $GTK_LIBS"
-
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
     CFLAGS="$CFLAGS"
@@ -91,10 +85,10 @@ if eval "test x$GCC = xyes"; then
   fi
 fi
 
-gimp_save_CFLAGS="$CFLAGS"
+gimp_save_CPPFLAGS="$CPPFLAGS"
 gimp_save_LIBS="$LIBS"
 
-CFLAGS="$GTK_CFLAGS $CFLAGS"
+CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
 LIBS="$LIBS $GTK_LIBS"
 
 dnl Test for Xmu
@@ -277,7 +271,7 @@ AC_CHECK_FUNC(random,
 dnl check for difftime
 AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
-CFLAGS="$gimp_save_CFLAGS"
+CPPFLAGS="$gimp_save_CPPFLAGS"
 LIBS="$gimp_save_LIBS"
 
 gimpdatadir=$datadir/gimp

@@ -1,3 +1,9 @@
+Sat Mar 28 22:42:49 1998  Owen Taylor  <owt1@cornell.edu>
+
+	* configure.in (gimpdir): Removed duplicate saving of
+	cflags. Add GTK_CFLAGS to CPPFLAGS for library tests,
+	instead of to CFLAGS.
+
 Fri Mar 27 13:41:55 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/floating_sel.c: Always update the drawable when converting
