@@ -1,3 +1,9 @@
+2000-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/cursorutil.c (gtkutil_compress_motion): as Mitch pointed out we
+	used to leak GList memory here. The new implementation should be 
+	faster too, since it prepends to the list instead of appending.
+
 2000-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/Makefile.am: added $GTK_CFLAGS and $GTK_LIBS.

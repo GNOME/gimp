@@ -511,8 +511,9 @@ gtkutil_compress_motion (GtkWidget *widget,
 			 gdouble   *lastmotion_y)
 {
   GdkEvent *event;
-  GList *requeued_events = NULL;
-  gboolean success = FALSE;
+  GList    *requeued_events = NULL;
+  GList    *list;
+  gboolean  success = FALSE;
 
   /* Move the entire GDK event queue to a private list, filtering
      out any motion events for the desired widget. */
@@ -535,20 +536,22 @@ gtkutil_compress_motion (GtkWidget *widget,
 	}
       else
 	{
-	  requeued_events = g_list_append (requeued_events, event);
+	  requeued_events = g_list_prepend (requeued_events, event);
 	}
     }
   
   /* Replay the remains of our private event list back into the
      event queue in order. */
-  while (requeued_events)
-    {
-      gdk_event_put ((GdkEvent*) requeued_events->data);
 
-      gdk_event_free ((GdkEvent*) requeued_events->data);      
-      requeued_events =
-	g_list_remove_link (requeued_events, requeued_events);
+  requeued_events = g_list_reverse (requeued_events);
+
+  for (list = requeued_events; list; list = g_list_next (list))
+    {
+      gdk_event_put ((GdkEvent*) list->data);
+      gdk_event_free ((GdkEvent*) list->data);
     }
   
+  g_list_free (requeued_events);
+
   return success;
 }
