@@ -1,3 +1,8 @@
+2004-04-06  Henrik Brix Andersen  <brix@gimp.org>
+
+	* pt_BR.po: changed Mape to Mapa on line 2391 on request from Joao
+	S. O. Bueno <gwidion@mpc.com.br>
+
 2004-04-03  Funda Wang  <fundawang@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation.

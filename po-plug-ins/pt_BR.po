@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-23 16:11+0100\n"
-"PO-Revision-Date: 2004-03-23 02:38-0300\n"
+"PO-Revision-Date: 2004-04-06 17:37+0200\n"
 "Last-Translator: Joao S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Postuguês Brasileiro <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -2388,7 +2388,7 @@ msgstr "Ladrilhar Mapeamento de Relevo"
 
 #: plug-ins/common/bumpmap.c:1033
 msgid "_Bump Map:"
-msgstr "Mape de _Relevo:"
+msgstr "Mapa de _Relevo:"
 
 #: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:536
 msgid "_Azimuth:"
