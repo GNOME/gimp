@@ -203,6 +203,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint               x, y, w, h;
 
   run_mode = param[0].data.d_int32;
 
@@ -216,6 +217,12 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y, &w, &h))
+    {
+      g_message (_("Region selected for filter is empty"));
+      return;
+    }
+
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   switch (run_mode)

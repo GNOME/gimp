@@ -1,5 +1,16 @@
 2005-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c: handle situation where intersection
+	of selection and drawable is empty; progress on bug #155733.
+
+2005-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimptransformtool.c
 	* app/tools/gimpfliptool.c
 	* app/core/gimpdrawabletransform.c: avoid messages and critical

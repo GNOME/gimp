@@ -190,8 +190,12 @@ run (const gchar      *name,
   img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1, &sel_x2, &sel_y2))
+    {
+      g_message (_("Region affected by plug-in is empty"));
+      return;
+    }
 
       /* Set the tile cache size */
   gimp_tile_cache_ntiles (2 * drawable->ntile_cols);

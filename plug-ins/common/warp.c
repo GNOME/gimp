@@ -352,12 +352,15 @@ run (const gchar      *name,
 
   values[0].data.d_status = status;
 
-  image_ID = gimp_drawable_get_image (map_x->drawable_id);
+  if (map_x)
+    {
+      image_ID = gimp_drawable_get_image (map_x->drawable_id);
 
-  gimp_drawable_detach (map_x);
-  gimp_drawable_detach (map_y);
+      gimp_drawable_detach (map_x);
+      gimp_drawable_detach (map_y);
 
-  gimp_image_delete (image_ID);
+      gimp_image_delete (image_ID);
+    }
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -754,7 +757,9 @@ blur16 (GimpDrawable *drawable)
 
   /* --------------------------------------- */
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &x2, &y2))
+    return;
 
   width = drawable->width;     /* size of input drawable*/
   height = drawable->height;
@@ -925,7 +930,9 @@ diff (GimpDrawable *drawable,
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &x2, &y2))
+    return;
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -1227,7 +1234,9 @@ warp (GimpDrawable  *orig_draw,
   diff (disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
 
   /* Get selection area */
-  gimp_drawable_mask_bounds (orig_draw->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (orig_draw->drawable_id,
+                                      &x1, &y1, &x2, &y2))
+    return;
 
   width  = orig_draw->width;
   height = orig_draw->height;
@@ -1342,7 +1351,10 @@ warp_one (GimpDrawable *draw,
 
   /* Get selection area */
 
-   gimp_drawable_mask_bounds (draw->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_bounds (draw->drawable_id,
+                                   &x1, &y1, &x2, &y2))
+    return;
+
    width  = draw->width;
    height = draw->height;
    dest_bytes  = draw->bpp;

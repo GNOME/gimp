@@ -310,14 +310,19 @@ render_blast (GimpDrawable *drawable,
     }
   else
     {
-      gimp_progress_init (_("Rendering Blast..."));
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                        &x1, &y1, &x2, &y2))
+        {
+          gimp_progress_init (_("Rendering Blast..."));
 
-      width = x2 - x1;
-      height = y2 - y1;
+          width = x2 - x1;
+          height = y2 - y1;
 
-      gimp_pixel_rgn_init (&dest_region, drawable,
-                           x1, y1, width, height, TRUE, TRUE);
+          gimp_pixel_rgn_init (&dest_region, drawable,
+                               x1, y1, width, height, TRUE, TRUE);
+        }
+      else
+        return;
     }
 
   gimp_pixel_rgn_init (&src_region,  drawable,
@@ -433,14 +438,18 @@ render_wind (GimpDrawable *drawable,
     }
   else
     {
-      gimp_progress_init (_("Rendering Wind..."));
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      if (gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &x2, &y2))
+        {
+          gimp_progress_init (_("Rendering Wind..."));
 
-      width = x2 - x1;
-      height = y2 - y1;
+          width = x2 - x1;
+          height = y2 - y1;
 
-      gimp_pixel_rgn_init (&dest_region, drawable,
-                           x1, y1, width, height, TRUE, TRUE);
+          gimp_pixel_rgn_init (&dest_region, drawable,
+                               x1, y1, width, height, TRUE, TRUE);
+        }
+      else
+        return;
     }
 
   gimp_pixel_rgn_init (&src_region, drawable,

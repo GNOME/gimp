@@ -1370,7 +1370,9 @@ strucpi (GimpDrawable *drawable,
        *  need to be done for correct operation. (It simply makes it go
        *  faster, since fewer pixels need to be operated on).
        */
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &x2, &y2))
+        return;
 
       /* Get the size of the input image. (This will/must be the same
        *  as the size of the output image.
