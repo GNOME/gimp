@@ -1,13 +1,12 @@
 For more information about the port or GLib, GTk+ and the GIMP to
 native Windows, and pre-built binary packages, see
-http://www.iki.fi/tml/gimp/win32/ or
-http://www.gimp.org/~tml/gimp/win32/
+http://www.gimp.org/win32/ or http://www.iki.fi/tml/gimp/win32/ .
 
 To build the GIMP on Win32, you can use either gcc or Microsoft Visual
 C++. The gcc to use should be for a mingw configuration (producing
-executables that don't depend on the cygwin dll). For more information
-about the preparation necessary for building with gcc, what version
-you want and where to get it, etc, read README.win32 in GLib 1.3 (or
+executables that don't use the cygwin dll). For more information about
+the preparation necessary for building with gcc, what version you want
+and where to get it, etc, read README.win32 in GLib 1.3 (or
 later). (GLib 1.3 is the developer version and thus isn't distributed
 per se, but available from CVS, and especially for Windows in zipfiles
 from the web pages mentioned above.)

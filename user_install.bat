@@ -3,7 +3,6 @@
 mkdir %2
 copy %3\gimprc_user %2\gimprc
 copy %3\unitrc %2\unitrc
-copy %3\gtkrc_user %2\gtkrc
 mkdir %2\brushes
 mkdir %2\generated_brushes
 mkdir %2\gradients
