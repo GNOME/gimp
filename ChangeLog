@@ -1,5 +1,10 @@
 2004-01-20  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: when starting a new gimp, pass it the
+	display gimp-remote is running on.
+
+2004-01-20  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: always open a new GIMP instance when being
 	called without any filenames/URLs. This makes it behave better when
 	being used from application launchers such as the GNOME panel.

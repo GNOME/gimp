@@ -167,18 +167,25 @@ usage (const gchar *name)
 }
 
 static void
-start_new_gimp (gchar   *argv0,
-                GString *file_list)
+start_new_gimp (GdkScreen *screen,
+                gchar     *argv0,
+                GString   *file_list)
 {
-  gint    i;
-  gchar **argv;
-  gchar  *gimp, *path, *name, *pwd;
-  const gchar *spath;
+  gchar        *display_name;
+  gchar       **argv;
+  gchar        *gimp, *path, *name, *pwd;
+  const gchar  *spath;
+  gint          i;
 
   if (file_list->len > 0)
     file_list = g_string_prepend (file_list, "\n");
 
-  file_list = g_string_prepend (file_list, "gimp");
+  display_name = gdk_screen_make_display_name (screen);
+  file_list = g_string_prepend (file_list, display_name);
+  file_list = g_string_prepend (file_list, "--display\n");
+  g_free (display_name);
+
+  file_list = g_string_prepend (file_list, "gimp\n");
 
   argv = g_strsplit (file_list->str, "\n", 0);
 
@@ -280,6 +287,7 @@ main (gint    argc,
       gchar **argv)
 {
   GdkDisplay *display;
+  GdkScreen  *screen;
   GdkWindow  *gimp_window;
   GString    *file_list = g_string_new (NULL);
   gchar      *cwd       = g_get_current_dir ();
@@ -341,22 +349,18 @@ main (gint    argc,
       g_free (file_uri);
     }
 
+  display = gdk_display_get_default ();
+  screen  = gdk_screen_get_default ();
+
   /*  if called without any filenames, always start a new GIMP  */
   if (file_list->len == 0)
     {
-      start_new_gimp (argv[0], file_list);
+      start_new_gimp (screen, argv[0], file_list);
     }
 
-  /*  locate Gimp window */
-  display = gdk_display_get_default ();
-  gimp_window = gimp_remote_find_window (display, gdk_screen_get_default ());
+  gimp_window = gimp_remote_find_window (display, screen);
 
-  if (! gimp_window)
-    {
-      start_new_gimp (argv[0], file_list);
-    }
-
-  if (file_list->len > 0)
+  if (gimp_window)
     {
       GdkDragContext  *context;
       GdkDragProtocol  protocol;
@@ -416,6 +420,10 @@ main (gint    argc,
       gtk_main ();
 
       g_source_remove (timeout);
+    }
+  else
+    {
+      start_new_gimp (screen, argv[0], file_list);
     }
 
   g_string_free (file_list, TRUE);
