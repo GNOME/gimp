@@ -40,9 +40,13 @@ ops_button_box_new (GtkWidget     *parent,
   GtkWidget *pixmapwid;
   GdkPixmap *pixmap;
   GdkBitmap *mask;
-  GtkStyle *style;
-  GSList *group = NULL;
-
+  GtkStyle  *style;
+  GSList    *group = NULL;
+  GSList    *box_list = NULL;
+  gint       max_width = 0;
+  gint       width;
+  gint       height;
+  
   gtk_widget_realize (parent);
   style = gtk_widget_get_style (parent);
 
@@ -57,13 +61,15 @@ ops_button_box_new (GtkWidget     *parent,
 					     &mask,
 					     &style->bg[GTK_STATE_NORMAL],
 					     ops_button->xpm_data);
-      
+      gdk_window_get_size (pixmap, &width, &height);
+      max_width = MAX (max_width, width);
+
       pixmapwid = gtk_pixmap_new (pixmap, mask);
-      gtk_box_pack_start (GTK_BOX (box), pixmapwid, TRUE, TRUE, 3);
+      gtk_box_pack_start (GTK_BOX (box), pixmapwid, TRUE, TRUE, 1);
       gtk_widget_show (pixmapwid);
-      gtk_widget_show (box);
-      
-      switch(ops_type)
+      box_list = g_slist_prepend (box_list, box);
+
+      switch (ops_type)
 	{
 	case OPS_BUTTON_NORMAL :
 	  button = gtk_button_new ();
@@ -76,7 +82,7 @@ ops_button_box_new (GtkWidget     *parent,
 	  break;
 	default :
 	  button = NULL; /*stop compiler complaints */
-	  g_error("ops_button_box_new:: unknown type %d\n",ops_type);
+	  g_error("ops_button_box_new: unknown type %d\n",ops_type);
 	  break;
 	}
 
@@ -108,6 +114,14 @@ ops_button_box_new (GtkWidget     *parent,
 
       ops_button++;
     }
+
+  for (; box_list; box_list = box_list->next)
+    {
+      gtk_widget_set_usize (GTK_WIDGET (box_list->data), max_width, -1);
+      gtk_widget_show (GTK_WIDGET (box_list->data));
+    }
+  g_slist_free (box_list);
+  
   return (button_box);
 }
 

@@ -277,6 +277,8 @@ channels_dialog_create ()
 
   /*  The channels listbox  */
   listbox = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox), 
+				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
   gtk_widget_set_usize (listbox, CHANNEL_LIST_WIDTH, CHANNEL_LIST_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 2);
 

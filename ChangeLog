@@ -1,3 +1,16 @@
+Sat Oct 23 22:26:59 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c
+	* app/gimpui.c
+	* app/layers_dialog.c
+	* app/ops_buttons.c
+	* app/paths_dialog.c: first approach at making the L&C-dialog smaller,
+	nicer and more usable.
+
+	* pixmaps/anchor.xpm: changed the anchor back to the old 1.0 one. This
+	change is done only to test the new padding and to reflect the fact
+	that we need to overwork the icons. I don't want this icon to stay!!
+
 Fri Oct 22 18:29:14 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/procedural_db.c: db_lookup seems to be used pretty often as a

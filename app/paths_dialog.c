@@ -291,11 +291,11 @@ GtkWidget * paths_dialog_create()
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
       
       scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-      gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 0); 
-
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				      GTK_POLICY_AUTOMATIC,
 				      GTK_POLICY_ALWAYS);
+      gtk_widget_set_usize (scrolled_win, PATHS_LIST_WIDTH, PATHS_LIST_HEIGHT);
+      gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 2);
 
       paths_dialog->paths_list = paths_list = gtk_clist_new (2);
 
