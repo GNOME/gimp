@@ -1766,6 +1766,7 @@ static VideoValues vvals =
   FALSE,
 };
 
+static  GimpRunMode run_mode;
 
 /* Declare local functions.
  */
@@ -1785,16 +1786,7 @@ static void      video_toggle_update   (GtkWidget *widget,
 static void      video_radio_update    (GtkWidget *widget,
 					gpointer   data);
 
-static void      video_render_preview  (gint raw);
-
-static void      video_render_row      (const guchar *src_row,
-					guchar       *dest_row,
-					gint          row,
-					gint          rotated,
-					gint          additive,
-					gint          pattern_number,
-					gint          row_width,
-					gint          bytes);
+static void      video_render_preview  (gboolean raw);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1847,7 +1839,6 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -1925,89 +1916,44 @@ run (const gchar      *name,
 }
 
 static void
-video_render_row (const guchar *src_row,
-		  guchar       *dest_row,
-		  gint          row,
-		  gint          rotated,
-		  gint          additive,
-		  gint          pattern_number,
-		  gint          row_width,
-		  gint          bytes)
+video_func (gint x,
+	    gint y,
+	    const guchar *src,
+	    guchar *dest,
+	    gint bpp,
+	    gpointer data)
 {
-  gint col, bytenum;
+  gint b, sel_b;
 
-  for (col = 0; col < row_width ; col++)
+  if (vvals.rotated)
     {
-      for (bytenum = 0; bytenum<bytes; bytenum++)
-	{
-	  if (rotated)
-	    {
-	      if (bytenum<3)
-		{
-		  if (pattern[pattern_number]
-		      [pattern_width[pattern_number]*
-		      (col%pattern_height[pattern_number]) +
-		      row%pattern_width[pattern_number] ] == bytenum)
-		    {
-		      dest_row[col*bytes+bytenum] =
-			src_row[col*bytes+bytenum];
-		    }
-		  else
-		    {
-		      dest_row[col*bytes+bytenum] = 0;
-		    }
-		}
-	      else
-		{
-		  dest_row[col*bytes + bytenum] =
-		    src_row[col*bytes + bytenum];
-		}
-	    }
-	  else
-	    {
-	      if (bytenum<3)
-		{
-		  if (pattern[vvals.pattern_number]
-		      [pattern_width[vvals.pattern_number]*
-		      (row%pattern_height[vvals.pattern_number]) +
-		      col%pattern_width[vvals.pattern_number] ] == bytenum)
-		    {
-		      dest_row[col*bytes+bytenum] =
-			src_row[col*bytes+bytenum];
-		    }
-		  else
-		    {
-		      dest_row[col*bytes+bytenum] = 0;
-		    }
-		}
-	      else
-		{
-		  dest_row[col*bytes + bytenum] =
-		    src_row[col*bytes + bytenum];
-		}
-	    }
-	}
+      sel_b = pattern[vvals.pattern_number]
+	[pattern_width[vvals.pattern_number]*
+	 (x % pattern_height[vvals.pattern_number]) +
+	 y % pattern_width[vvals.pattern_number] ];
+    }
+  else
+    {
+      sel_b = pattern[vvals.pattern_number]
+	[pattern_width[vvals.pattern_number]*
+	 (y % pattern_height[vvals.pattern_number]) +
+	 x % pattern_width[vvals.pattern_number] ];
     }
 
-  if (additive)
+  for (b = 0; b < bpp; b++)
     {
-      for (col = 0; col < row_width ; col++)
+      if (b < 3 )
 	{
-	  for (bytenum = 0; bytenum<bytes; bytenum++)
+	  dest [b] = (sel_b == b) ? src[b] : 0;
+	  if (vvals.additive)
 	    {
-	      if (bytenum<3)
-		{
-		  dest_row[col*bytes + bytenum] =
-		    (
-		     (gint)((gint) dest_row[col*bytes + bytenum] +
-			    (gint) src_row[col*bytes + bytenum])
-		     ) < 255 ?
-		    (
-		     (gint)((gint) dest_row[col*bytes + bytenum] +
-			    (gint) src_row[col*bytes + bytenum])
-		     ) : 255;
-		}
+	      gint temp = (gint) dest[b] + src[b];
+	      dest[b] = MIN (temp, 255);
 	    }
+	}
+      else
+	{
+	  dest[b] = src[b];
 	}
     }
 }
@@ -2015,116 +1961,46 @@ video_render_row (const guchar *src_row,
 static void
 video (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *src_row;
-  guchar *dest_row;
-  gint row;
-  gint x1, y1, x2, y2;
+  GimpRgnIterator *iter;
 
-
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = drawable->width;
-  height = drawable->height;
-  bytes = drawable->bpp;
-
-  /*  allocate row buffers  */
-  src_row = (guchar *) g_malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) g_malloc ((x2 - x1) * bytes);
-
-
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-
-  for (row = y1; row < y2; row++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
-
-      video_render_row (src_row,
-			dest_row,
-			row,
-			vvals.rotated,
-			vvals.additive,
-			vvals.pattern_number,
-			(x2 - x1),
-			bytes
-			);
-
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
-
-      if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
-    }
-
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-
-  g_free (src_row);
-  g_free (dest_row);
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_src_dest (iter, video_func, NULL);
+  gimp_rgn_iterator_free (iter);
 }
 
 static void
-video_render_preview (gint raw)
+video_render_preview (gboolean raw)
 {
-  gint x,y;
-  guchar preview_row[PREVIEW_WIDTH*3];
+  gint x, y;
+  guchar preview_row[PREVIEW_WIDTH * 3];
 
-  if (vvals.pattern_number==-1)
+  if (vvals.pattern_number == -1)
     {
-      vvals.pattern_number=0;
+      vvals.pattern_number = 0;
       return;
     }
 
-  if (raw)
+  for (y = 0; y < PREVIEW_HEIGHT; y++)
     {
-      for (y = 0; y < PREVIEW_HEIGHT; y++)
+      for (x = 0; x < PREVIEW_WIDTH; x++)
 	{
-	  for (x = 0; x < PREVIEW_WIDTH; x++)
+	  if (raw)
 	    {
-	      preview_row[x*3] = preview_raw[x*3 + y*PREVIEW_WIDTH*3];
+	      preview_row[x*3+0] = preview_raw[x*3+0 + y*PREVIEW_WIDTH*3];
 	      preview_row[x*3+1] = preview_raw[x*3+1 + y*PREVIEW_WIDTH*3];
 	      preview_row[x*3+2] = preview_raw[x*3+2 + y*PREVIEW_WIDTH*3];
 	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (preview),
-				preview_row,
-				0, y, PREVIEW_WIDTH);
+	  else
+	    {
+	      video_func (x, y, &preview_raw[y * PREVIEW_WIDTH * 3 + x * 3], 
+			  preview_row + x * 3, 3, NULL);
+	    }
 	}
-    }
-  else
-    {
-      for (y = 0; y < PREVIEW_HEIGHT; y++)
-	{
-	  video_render_row(&preview_raw[y*PREVIEW_WIDTH*3],
-			   preview_row,
-			   y,
-			   vvals.rotated,
-			   vvals.additive,
-			   vvals.pattern_number,
-			   PREVIEW_WIDTH,
-			   3);
-	  gtk_preview_draw_row (GTK_PREVIEW (preview),
-				preview_row,
-				0, y, PREVIEW_WIDTH);
-	}
+      gtk_preview_draw_row (GTK_PREVIEW (preview),
+			    preview_row,
+			    0, y, PREVIEW_WIDTH);
     }
 
-  /* redraw preview widget */
   gtk_widget_queue_draw (preview);
 }
 

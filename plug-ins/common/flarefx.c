@@ -336,7 +336,6 @@ FlareFX (GimpDrawable *drawable,
   gint x1, y1, x2, y2;
   gint matt;
   gfloat hyp;
-GTimer *timer = g_timer_new();
 
   if (preview_mode)
     {
@@ -458,9 +457,7 @@ GTimer *timer = g_timer_new();
       /*  update the textured region  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-printf("%lf\n", g_timer_elapsed(timer, NULL));
-    }
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));    }
 
   g_free (cur_row);
   g_free (dest);
