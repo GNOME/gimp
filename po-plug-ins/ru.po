@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.19\n"
-"POT-Creation-Date: 2000-05-01 13:26-0700\n"
-"PO-Revision-Date: 2000-04-21 14:07+04:00\n"
+"POT-Creation-Date: 2000-05-02 07:06+0000\n"
+"PO-Revision-Date: 2000-05-02 10:49+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:180
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Фильтры/Цвета/Карта/Чужая карта..."
+msgstr "<Image>/Фильтры/Цвета/Отображение/Чужая карта..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
 msgid "AlienMap: Transforming..."
@@ -22,7 +22,7 @@ msgstr "Чужая карта: Преобразование..."
 
 #: plug-ins/AlienMap/AlienMap.c:610
 msgid "AlienMap"
-msgstr "Чужая Карта"
+msgstr "Чужое отображение"
 
 #: plug-ins/AlienMap/AlienMap.c:615 plug-ins/AlienMap2/AlienMap2.c:607
 #: plug-ins/FractalExplorer/Dialogs.c:281
@@ -339,15 +339,15 @@ msgstr "О \"ЧужойКарте\""
 
 #: plug-ins/AlienMap2/AlienMap2.c:205
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Фильтры/Цвета/Карта/Чужая карта 2..."
+msgstr "<Image>/Фильтры/Цвета/Отображение/Чужая карта 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
 msgid "AlienMap2: Transforming..."
-msgstr "Чужая Карта 2: Преобразование..."
+msgstr "Чужое отображение 2: Преобразование..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:602
 msgid "AlienMap2"
-msgstr "Чужая Карта 2"
+msgstr "Чужая отображение 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:651
 msgid "R/H-Frequency:"
@@ -1318,11 +1318,11 @@ msgstr "Сделать изображение прозрачным вне объекта"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr ""
+msgstr "Разрезать исходное изображение"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
-msgstr ""
+msgstr "Разрезать исходное изображение: полезно для бесконечных плоскостей"
 
 #: plug-ins/MapObject/mapobject_ui.c:1043
 msgid "Object X position in XYZ space"
@@ -2321,13 +2321,13 @@ msgstr "Жалюзи"
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
-msgstr "Горизонтальная"
+msgstr "Горизонтальное"
 
 #: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:621
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
-msgstr "Вертикальная"
+msgstr "Вертикальное"
 
 #: plug-ins/common/blinds.c:387 plug-ins/common/fractaltrace.c:772
 #: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2866
@@ -2403,7 +2403,7 @@ msgstr "256 (бессмыслица?)"
 
 #: plug-ins/common/bumpmap.c:366
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Фильтры/Карта/Рельеф..."
+msgstr "<Image>/Фильтры/Отображение/Рельеф..."
 
 #: plug-ins/common/bumpmap.c:521
 msgid "Bump-mapping..."
@@ -3072,7 +3072,7 @@ msgstr "Источник 1:"
 
 #: plug-ins/common/depthmerge.c:705 plug-ins/common/depthmerge.c:739
 msgid "Depth Map:"
-msgstr "Карта глубины:"
+msgstr "Карта глубин:"
 
 #: plug-ins/common/depthmerge.c:722
 msgid "Source 2:"
@@ -3220,7 +3220,7 @@ msgstr "Другие параметры"
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
-msgstr "<Image>/Фильтры/Карта/Замещение..."
+msgstr "<Image>/Фильтры/Отображение/Замещение..."
 
 #: plug-ins/common/displace.c:254
 msgid "Displacing..."
@@ -3332,7 +3332,7 @@ msgstr "Высота:"
 
 #: plug-ins/common/exchange.c:125
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
-msgstr "<Image>/Фильтры/Цвета/Карта/Замена цвета..."
+msgstr "<Image>/Фильтры/Цвета/Отображение/Замена цвета..."
 
 #: plug-ins/common/exchange.c:222
 msgid "Color Exchange..."
@@ -3515,7 +3515,7 @@ msgstr "Центр отблеска"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr "<Image>/Фильтры/Карта/Фрактальный след..."
+msgstr "<Image>/Фильтры/Отображение/Фрактальный след..."
 
 #: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:720
 msgid "Fractal Trace"
@@ -3640,6 +3640,8 @@ msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
 msgstr ""
+"GIF: Невозможно дальнеешее уменьшение цветов.\n"
+"Сохранение как непрозрачного.\n"
 
 #: plug-ins/common/gif.c:928
 msgid ""
@@ -3853,7 +3855,7 @@ msgstr "G-Q-бист 1.10"
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr "<Image>/Фильтры/Цвета/Карта/Градиентная карта"
+msgstr "<Image>/Фильтры/Цвета/Отображение/Градиентное"
 
 #: plug-ins/common/gradmap.c:154
 msgid "Gradient Map..."
@@ -4077,7 +4079,7 @@ msgstr "Черный"
 
 #: plug-ins/common/illusion.c:111
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Image>/Фильтры/Карта/Иллюзия..."
+msgstr "<Image>/Фильтры/Отображение/Иллюзия..."
 
 #: plug-ins/common/illusion.c:300
 msgid "Illusion"
@@ -4478,11 +4480,11 @@ msgstr "Второй целевой цвет"
 
 #: plug-ins/common/mapcolor.c:342
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr "<Image>/Фильтры/Цвета/Карта/Подбор переднего плана-фона"
+msgstr "<Image>/Фильтры/Цвета/Отображение/Подбор переднего плана-фона"
 
 #: plug-ins/common/mapcolor.c:357
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Фильтры/Цвета/Карта/Отображение цветового диапазона..."
+msgstr "<Image>/Фильтры/Цвета/Отображение/Отображение цветового диапазона..."
 
 #: plug-ins/common/mapcolor.c:402 plug-ins/common/mapcolor.c:742
 msgid ""
@@ -4771,7 +4773,7 @@ msgstr "Размер маски:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
-msgstr ""
+msgstr "Разрез бумаги"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
@@ -4837,7 +4839,7 @@ msgstr "Сентябрь 31, 1999"
 
 #: plug-ins/common/papertile.c:839
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Фильтры/Карта/Paper Tile..."
+msgstr "<Image>/Фильтры/Отображение/Разрезы бумаги..."
 
 #: plug-ins/common/pat.c:407
 msgid "Save as Pattern"
@@ -5007,18 +5009,22 @@ msgstr ""
 "PNG: неизвестная цветовая модель"
 
 #: plug-ins/common/png.c:730
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "PNG error. Couldn't save image"
-msgstr "Не удалось сохранить файл: "
+msgstr ""
+"%s\n"
+"Ошибка PNG. Не удалось сохранить изображение"
 
 #: plug-ins/common/png.c:740
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Couldn't create file"
-msgstr "Не удалось прочитать файл:"
+msgstr ""
+"%s\n"
+"Не удалось создать файл"
 
 #: plug-ins/common/png.c:1007
 msgid "Save as PNG"
@@ -5404,7 +5410,7 @@ msgstr "Вращение..."
 
 #: plug-ins/common/sample_colorize.c:305
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr "<Image>/Фильтры/Цвета/Карта/Окраска по образцу..."
+msgstr "<Image>/Фильтры/Цвета/Отображение/Окраска по образцу..."
 
 #: plug-ins/common/sample_colorize.c:1362
 msgid "Sample Colorize"
@@ -5489,7 +5495,7 @@ msgstr "Анализ образца..."
 
 #: plug-ins/common/sample_colorize.c:3127
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Переотображение окрашенного..."
 
 #: plug-ins/common/scatter_hsv.c:143
 msgid "<Image>/Filters/Noise/Scatter HSV..."
@@ -5509,7 +5515,7 @@ msgstr "Просмотр (1:4) - щелчок правой кнопкой для перехода"
 
 #: plug-ins/common/scatter_hsv.c:439
 msgid "Holdness:"
-msgstr ""
+msgstr "Фиксация:"
 
 #: plug-ins/common/screenshot.c:150 plug-ins/winsnap/winsnap.c:1075
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5666,7 +5672,7 @@ msgstr "Размер по Y:"
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
-msgstr "<Image>/Фильтры/Выделение края/Sobel..."
+msgstr "<Image>/Фильтры/Выделение края/Собел..."
 
 #: plug-ins/common/sobel.c:246
 msgid "Sobel Edge Detection"
@@ -6097,7 +6103,7 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:126
 msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Image>/Фильтры/Карта/Tile..."
+msgstr "<Image>/Фильтры/Отображение/Tile..."
 
 #: plug-ins/common/tile.c:203 plug-ins/common/tileit.c:333
 msgid "Tiling..."
@@ -6105,35 +6111,35 @@ msgstr "Рассечение..."
 
 #: plug-ins/common/tile.c:393
 msgid "Tile"
-msgstr "Рассечь"
+msgstr "Обрезать"
 
 #. parameter settings
 #: plug-ins/common/tile.c:410
 msgid "Tile to New Size"
-msgstr ""
+msgstr "Обрезка до нового размера"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Image>/Фильтры/Карта/Маленькие кусочки..."
+msgstr "<Image>/Фильтры/Отображение/Маленькие кусочки..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
 #: plug-ins/common/tileit.c:381
 msgid "TileIt"
-msgstr ""
+msgstr "Нарезать"
 
 #. Area for buttons etc
 #: plug-ins/common/tileit.c:437
 msgid "Flipping"
-msgstr ""
+msgstr "Отражение"
 
 #: plug-ins/common/tileit.c:474
 msgid "Applied to Tile"
-msgstr ""
+msgstr "Применить к кусочку"
 
 #: plug-ins/common/tileit.c:487
 msgid "All Tiles"
-msgstr "Все блоки"
+msgstr "Все кусочки"
 
 #: plug-ins/common/tileit.c:498
 msgid "Alternate Tiles"
@@ -6158,7 +6164,7 @@ msgstr "Настройки сегмента"
 
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Фильтры/Карта/Без швов..."
+msgstr "<Image>/Фильтры/Отображение/Без швов..."
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
@@ -6240,7 +6246,7 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
+msgstr "Это поле - подсказка для поля числового вода. Оно указывает как много десятичных знаков в поле ввода будут давать примерно такую же точность как поле ввода \"дюймов\" с двумя десятичными знаками."
 
 #: plug-ins/common/uniteditor.c:547
 msgid ""
@@ -6352,7 +6358,7 @@ msgstr "С широкими полосами"
 
 #: plug-ins/common/video.c:48
 msgid "Long-staggered"
-msgstr ""
+msgstr "Длинное шахматное"
 
 #: plug-ins/common/video.c:49
 msgid "3x3"
@@ -6486,7 +6492,7 @@ msgstr "Распространение канала яркости"
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Фильтры/Карта/Деформация..."
+msgstr "<Image>/Фильтры/Отображение/Деформация..."
 
 #: plug-ins/common/warp.c:455
 msgid "Main Options"
@@ -6552,7 +6558,7 @@ msgstr "Меню выбора градиентной карты"
 
 #: plug-ins/common/warp.c:676
 msgid "Vector Mag:"
-msgstr ""
+msgstr "Длина вектора:"
 
 #: plug-ins/common/warp.c:702
 msgid "Fixed-direction-vector map selection menu"
@@ -6757,18 +6763,18 @@ msgstr "Печать..."
 
 #: plug-ins/common/winprint.c:423
 msgid "CreateDIBSection failed"
-msgstr ""
+msgstr "Сбой CreateDIBSection"
 
 #: plug-ins/common/winprint.c:457
 msgid "SetStretchBltMode failed (warning only)"
-msgstr ""
+msgstr "Сбой SetStretchBltMode (только предупреждение)"
 
 #: plug-ins/common/winprint.c:520
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
-msgstr ""
+msgstr "Сбой StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY), ошибка = %d, y = %d"
 
 #: plug-ins/common/winprint.c:549
 msgid "EndPage failed"
@@ -6927,7 +6933,7 @@ msgstr "невозможно открыть файл для записи"
 
 #: plug-ins/common/xwd.c:1167
 msgid "EOF encountered on "
-msgstr ""
+msgstr "Обнаружен конец файла в "
 
 #: plug-ins/common/xwd.c:1313
 msgid "No memory for mapping colors"
@@ -7008,7 +7014,7 @@ msgstr "Просмотр базы данных"
 
 #: plug-ins/faxg3/faxg3.c:96
 msgid "<Load>/Fax G3"
-msgstr ""
+msgstr "<Load>/Факс G3"
 
 #: plug-ins/fits/fits.c:362
 msgid "Error during open of FITS file"
@@ -9267,19 +9273,23 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:568
 msgid "Resulting Layer Size is the frame size"
-msgstr ""
+msgstr "Итоговый размер слоя равен размеру кадра"
 
 #: plug-ins/gap/gap_range_ops.c:569
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
 msgstr ""
+"Итоговый размер слоя равен размеру нижнего слоя\n"
+"(может отличаться от кадра к кадру)"
 
 #: plug-ins/gap/gap_range_ops.c:570
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
 msgstr ""
+"Итоговый размер слоя равен размеру кадра    \n"
+"прозрачные части заполняются цветом фона"
 
 #: plug-ins/gap/gap_range_ops.c:580
 msgid "select all Layers where Layername is equal to Pattern"
@@ -9584,10 +9594,6 @@ msgstr ""
 msgid "Upgrading old GDynText layer to "
 msgstr "Обновление старого слоя GDynText до "
 
-#: plug-ins/gdyntext/gdyntext.c:354
-msgid ".\n"
-msgstr ""
-
 #: plug-ins/gdyntext/gdyntext.c:357
 msgid ""
 "WARNING: GDynText is too old!\n"
@@ -9599,10 +9605,6 @@ msgstr ""
 "  Вы можете потерять некоторые данные изменяя этот текст.\n"
 "  Для обработки этого слоя необходима более новая версия.\n"
 "  Получите ее с "
-
-#: plug-ins/gdyntext/gdyntext.c:360
-msgid "\n"
-msgstr ""
 
 #. remove old layer name
 #: plug-ins/gdyntext/gdyntext.c:396
@@ -9628,20 +9630,6 @@ msgstr "О динамическом тексте"
 #: plug-ins/gdyntext/gdyntext_ui.c:185
 msgid "GIMP Dynamic Text "
 msgstr "Динамический текст в Gimp"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:185
-msgid ""
-"\n"
-"Copyright (C) 1998,1999 Marco Lamberto\n"
-"E-mail: lm@geocities.com\n"
-"Web page: "
-msgstr ""
-
-#: plug-ins/gdyntext/gdyntext_ui.c:188
-msgid ""
-"\n"
-"\n"
-msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:219
 msgid "GDynText: Select Color"
@@ -9812,11 +9800,11 @@ msgstr "Закрывать"
 
 #: plug-ins/gfig/gfig.c:2066
 msgid "Close curve on completion"
-msgstr ""
+msgstr "Закрывать кривую при завершении"
 
 #: plug-ins/gfig/gfig.c:2071
 msgid "Show Line Frame"
-msgstr ""
+msgstr "Показать кадр линии"
 
 #: plug-ins/gfig/gfig.c:2076
 msgid "Draws lines between the control points. Only during curve creation"
@@ -9930,7 +9918,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2817
 msgid "Draw on:"
-msgstr ""
+msgstr "Рисовать на:"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2826 plug-ins/imagemap/imap_selection.c:358
@@ -9946,21 +9934,21 @@ msgstr "Выделение+Заполнение"
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr ""
+msgstr "Тип выделения. Либо кисть, либо выделение. Дополнительные параметры на страницах кисти и выделения"
 
 #: plug-ins/gfig/gfig.c:2859
 msgid "Using:"
-msgstr ""
+msgstr "Использование:"
 
 #: plug-ins/gfig/gfig.c:2873
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr ""
+msgstr "Тип фона слоя. \"Копия\" будет вызывать копирование предыдущего слоя перед выполнением рисования"
 
 #: plug-ins/gfig/gfig.c:2878
 msgid "With BG of:"
-msgstr ""
+msgstr "С фоном из:"
 
 #: plug-ins/gfig/gfig.c:2881
 msgid "Reverse Line"
@@ -9986,11 +9974,11 @@ msgstr "Приблиз. круги/эллипсы"
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr ""
+msgstr "Приблизительные круги и эллипсы с использованием линий. Позволяет использовать увод кисти с этими типами объектов."
 
 #: plug-ins/gfig/gfig.c:3008
 msgid "Fade out:"
-msgstr ""
+msgstr "Увод:"
 
 #: plug-ins/gfig/gfig.c:3028
 msgid "Pressure:"
@@ -10051,7 +10039,7 @@ msgstr "Сектор"
 
 #: plug-ins/gfig/gfig.c:3237
 msgid "Arc as:"
-msgstr ""
+msgstr "Дуга как:"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3291
@@ -10296,7 +10284,7 @@ msgstr "Градиентная вспышка..."
 
 #: plug-ins/gflare/gflare.c:954
 msgid "GFlare: cannot operate on indexed color images"
-msgstr "GFlare: Невозможно использовать на индексированных изображениях"
+msgstr "Град.вспышка: Невозможно использовать на индексированных изображениях"
 
 #: plug-ins/gflare/gflare.c:998
 #, c-format
@@ -10306,6 +10294,10 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Нет пути \"отблеска\" в gimprc:\n"
+"Вам надо добавить строку наподобие\n"
+"(gflare-path \"%s\") к вашему\n"
+"файлу %s."
 
 #: plug-ins/gflare/gflare.c:1017
 msgid "gflare-path misconfigured - the following directories were not found"
@@ -10330,6 +10322,11 @@ msgid ""
 "and make a directory %s,\n"
 "then you can save your own GFlare's into that directory."
 msgstr ""
+"Отблеск '%s' не сохранен.\n"
+"Если вы добавить новую строку в %s, наподобие:\n"
+"(gflare-path \"%s\")\n"
+"и создадите каталог %s,\n"
+"то вы сможете сохранить ваши собственные град.вспышки в этом каталоге."
 
 #: plug-ins/gflare/gflare.c:1570
 #, c-format
@@ -10424,7 +10421,7 @@ msgstr "Удалить Град.вспышку"
 #: plug-ins/gflare/gflare.c:3428
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr ""
+msgstr "не найдено %s в списке град.вспышек gflares_list"
 
 #: plug-ins/gflare/gflare.c:3468
 msgid "GFlare Editor"
@@ -10674,7 +10671,7 @@ msgstr "Использовать прозрачный фон; Только нанесенные мазки будут видны"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Рисовать края"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
@@ -10721,7 +10718,7 @@ msgstr "Предел отклонения:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Доверительное значение для адаптивного выделения"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
@@ -10739,6 +10736,10 @@ msgid ""
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
 msgstr ""
+"*** Внимание ***\n"
+"Рекомендуем добавить\n"
+"  (gimpressionist-path \"%s\")\n"
+"(или похожее) к вашему файлу gimprc.\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:356
 #: plug-ins/gimpressionist/gimpressionist.c:452
@@ -10927,12 +10928,12 @@ msgstr "Отменить все изменения и выйти"
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr ""
+msgstr "Экспонента силы:"
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "Изменить экспоненту силы:"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
@@ -11264,7 +11265,7 @@ msgstr "Отражение"
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:627
 msgid "Simple"
-msgstr ""
+msgstr "Простое"
 
 #: plug-ins/ifscompose/ifscompose.c:639
 msgid "IfsCompose: Target"
@@ -11426,6 +11427,10 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
+"Направляющие - это предопределенные прямоугольники покрывающие\n"
+"изображение. Вы определяете их ширину, высоту и отступы между ними.\n"
+"Это позволяет вам быстро создавать большинство карт изображения\n"
+"обычного типа - коллекции \"миниатюр\", подходящих для навигации."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
@@ -11579,7 +11584,7 @@ msgstr "Относительная ссылка"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:241
 msgid "Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
+msgstr "Название/ID целевого кадра: (необязательно - используется только для кадров)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:245
 msgid "Comment about this area: (optional)"
@@ -11660,7 +11665,7 @@ msgstr "Пересечения"
 
 #: plug-ins/imagemap/imap_grid.c:190
 msgid "Grid Granularity"
-msgstr ""
+msgstr "Зернистость сетки"
 
 #: plug-ins/imagemap/imap_grid.c:213
 msgid "Grid Offset"
@@ -11708,6 +11713,8 @@ msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
+"Размер изображения изменен.\n"
+"Изменить области?"
 
 #: plug-ins/imagemap/imap_main.c:937
 msgid "Couldn't read file:"
@@ -11854,7 +11861,7 @@ msgstr "Тип карты по умолчанию"
 
 #: plug-ins/imagemap/imap_preferences.c:453
 msgid "Prompt for area info"
-msgstr ""
+msgstr "Приглашение для инфо об области"
 
 #: plug-ins/imagemap/imap_preferences.c:455
 msgid "Require default URL"
@@ -11862,7 +11869,7 @@ msgstr "Требуется URL по умолчанию"
 
 #: plug-ins/imagemap/imap_preferences.c:457
 msgid "Show area handles"
-msgstr ""
+msgstr "Показывать обработчик области"
 
 #: plug-ins/imagemap/imap_preferences.c:459
 msgid "Keep NCSA circles true"
@@ -11870,11 +11877,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:461
 msgid "Show area URL tip"
-msgstr ""
+msgstr "Показывать подсказку с URL области"
 
 #: plug-ins/imagemap/imap_preferences.c:464
 msgid "Use double-sized grab handles"
-msgstr ""
+msgstr "Использовать обработчики удвоенного размера"
 
 #: plug-ins/imagemap/imap_preferences.c:488
 msgid "Number of Undo levels (1 - 99):"
@@ -11882,7 +11889,7 @@ msgstr "Число уровней отката (1-99):"
 
 #: plug-ins/imagemap/imap_preferences.c:491
 msgid "Number of MRU entries (1 - 16):"
-msgstr ""
+msgstr "Число строк MRU (1-16):"
 
 #: plug-ins/imagemap/imap_preferences.c:494
 msgid "Menu"
