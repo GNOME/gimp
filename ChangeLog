@@ -1,5 +1,10 @@
 2004-07-30  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/channel_mixer.c: GtkPreview->GtkDrawingArea, plus
+	some minor code cleanups.
+
+2004-07-30  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/CML_explorer.c: Transformed one GtkPreview to a
 	GimpPreviewArea and the other to a simple GtkDrawingArea, since this
 	makes the code simpler.

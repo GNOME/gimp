@@ -32,11 +32,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
@@ -413,24 +408,24 @@ channel_mixer (GimpDrawable *drawable)
             {
               guchar r, g, b;
 
-              r = *(src + offset);
-              g = *(src + offset + 1);
-              b = *(src + offset + 2);
+              r = src[offset + 0];
+              g = src[offset + 1];
+              b = src[offset + 2];
 
               if (mix.monochrome_flag == TRUE)
                 {
-                  *(dest + offset) =
-                    *(dest + offset + 1) =
-                    *(dest + offset + 2) =
+                  dest[offset + 0] =
+                  dest[offset + 1] =
+                  dest[offset + 2] =
                     cm_mix_pixel (&mix.black, r, g, b, black_norm);
                 }
               else
                 {
-                  *(dest + offset) =
+                  dest[offset + 0] =
                     cm_mix_pixel (&mix.red, r, g, b, red_norm);
-                  *(dest + offset + 1) =
+                  dest[offset + 1] =
                     cm_mix_pixel (&mix.green, r, g, b, green_norm);
-                  *(dest + offset + 2) =
+                  dest[offset + 2] =
                     cm_mix_pixel (&mix.blue, r, g, b, blue_norm);
                 }
 
@@ -438,7 +433,7 @@ channel_mixer (GimpDrawable *drawable)
 
               if (has_alpha)
                 {
-                  *(dest + offset) = *(src + offset);
+                  dest[offset] = src[offset];
                   offset++;
                 }
 
@@ -535,9 +530,9 @@ cm_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  mix.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (mix.preview),
-                    preview->width, preview->height);
+  mix.preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (mix.preview,
+                               preview->width, preview->height);
   gtk_container_add (GTK_CONTAINER (frame), mix.preview);
   gtk_widget_show (mix.preview);
 
@@ -715,10 +710,10 @@ cm_dialog (void)
                     G_CALLBACK (cm_save_file_callback),
                     &mix);
 
+  gtk_widget_show (dialog);
+
   if (mix.preview_flag)
     cm_preview (&mix);
-
-  gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -802,7 +797,7 @@ cm_blue_scale_callback (GtkAdjustment *adjustment,
 static void
 cm_preview (CmParamsType *mix)
 {
-  guchar  *dst, *src, *srcp, *dstp;
+  guchar  *dst, *src;
   gint     x, y;
   gint     offset, rowsize;
   gdouble  red_norm, green_norm, blue_norm, black_norm;
@@ -814,47 +809,45 @@ cm_preview (CmParamsType *mix)
 
   rowsize = preview->width * preview->bpp;
   src = preview->bits;
-  dst = g_malloc (rowsize);
+  dst = g_new (guchar, rowsize * preview->height);
 
+  offset = 0;
   for (y = 0; y < preview->height; y++)
     {
-      srcp = src + y * rowsize;
-      offset = 0;
-
       for (x = 0; x < preview->width; x++)
         {
           guchar r, g, b;
 
-          dstp = dst;
-          r = *(srcp + offset);
-          g = *(srcp + offset + 1);
-          b = *(srcp + offset + 2);
+          r = src[offset + 0];
+          g = src[offset + 1];
+          b = src[offset + 2];
 
           if (mix->monochrome_flag == TRUE)
             {
-              *(dstp + offset) =
-                *(dstp + offset + 1) =
-                *(dstp + offset + 2) =
+              dst[offset + 0] =
+              dst[offset + 1] =
+              dst[offset + 2] =
                 cm_mix_pixel (&mix->black, r, g, b, black_norm);
             }
           else
             {
-              *(dstp + offset) =
+              dst[offset + 0] =
                 cm_mix_pixel (&mix->red, r, g, b, red_norm);
-              *(dstp + offset + 1) =
+              dst[offset + 1] =
                 cm_mix_pixel (&mix->green, r, g, b, green_norm);
-              *(dstp + offset + 2) =
+              dst[offset + 2] =
                 cm_mix_pixel (&mix->blue, r, g, b, blue_norm);
             }
 
           offset += preview->bpp;
         }
-
-      gtk_preview_draw_row (GTK_PREVIEW (mix->preview),
-                            dst, 0, y, preview->width);
     }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (mix->preview),
+                          0, 0, preview->width, preview->height,
+                          GIMP_RGB_IMAGE,
+                          dst,
+                          3 * preview->width);
 
-  gtk_widget_queue_draw (mix->preview);
   g_free (dst);
 }
 
