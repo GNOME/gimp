@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-21 11:07+0100\n"
-"PO-Revision-Date: 2004-11-21 21:30+0100\n"
+"POT-Creation-Date: 2004-12-05 11:48+0100\n"
+"PO-Revision-Date: 2004-12-05 22:21+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,12 +42,12 @@ msgstr "Script-Fu-evaluatiemodus staat alleen een nietinteractieve aanroep toe"
 
 #: plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr ""
+msgstr "Script-Fu kan niet twee processen tegelijkertijd uitvoeren."
 
 #: plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr ""
+msgstr "U voert het script \"%s\" al uit."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-interface.c:202
@@ -132,7 +132,7 @@ msgstr "Datum:"
 msgid "Image Types:"
 msgstr "Afbeeldingstypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:601
+#: plug-ins/script-fu/script-fu-scripts.c:611
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -222,7 +222,7 @@ msgstr "Parameters"
 
 #: plug-ins/dbbrowser/gimpprocview.c:146
 msgid "Return Values"
-msgstr ""
+msgstr "Teruggeefwaardes"
 
 #: plug-ins/dbbrowser/gimpprocview.c:159
 msgid "Additional Information"
@@ -305,13 +305,11 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos"
 msgstr "<Toolbox>/Xtra/Script-Fu/Logo's"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#, fuzzy
 msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Bumpmap (alphalaag) vervagingsradius"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/glossy.scm.h:7
-#, fuzzy
 msgid "Default bumpmap settings"
 msgstr "Standaard bumpprojectieinstellingen"
 
@@ -397,7 +395,6 @@ msgid "Font size (pixels)"
 msgstr "Fontgrootte (pixels)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#, fuzzy
 msgid "Outline blur radius"
 msgstr "Vervagingsradius v. omtrek"
 
@@ -415,19 +412,16 @@ msgstr "Patroon"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
-#, fuzzy
 msgid "Shadow X offset"
-msgstr "X-verspringing schaduw"
+msgstr "Schaduw X-verschuiving"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
-#, fuzzy
 msgid "Shadow Y offset"
-msgstr "Y-verspringing schaduw"
+msgstr "Schaduw Y-verschuiving"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
-#, fuzzy
 msgid "Shadow blur radius"
 msgstr "Schaduwvaagheidsomtrek"
 
@@ -471,6 +465,7 @@ msgstr "Schaduwvaagheidsomtrek"
 msgid "Text"
 msgstr "Tekst"
 
+# windingen/cirkels
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
 msgstr ""
@@ -483,9 +478,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
-msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Land..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -568,13 +562,12 @@ msgstr "<Image>/Script-Fu/Decor"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add B_evel..."
-msgstr ""
+msgstr "_Afschuining toevoegen..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: plug-ins/script-fu/scripts/chip-away.scm.h:12
-#, fuzzy
 msgid "Keep bump layer"
-msgstr "Bewaar bumplaag"
+msgstr "Bumplaag bewaren"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -582,30 +575,27 @@ msgstr "Bewaar bumplaag"
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-#, fuzzy
 msgid "Work on copy"
-msgstr "Werk op kopie"
+msgstr "Op kopie werken"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add _Border..."
 msgstr "_Rand _toevoegen..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
 msgid "Border X size"
 msgstr "Rand X-grootte"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
-#, fuzzy
 msgid "Border Y size"
 msgstr "Rand Y-grootte"
 
+# los van elkaar
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
-msgstr "Randkleur"
+msgstr "Rand kleur"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:6
-#, fuzzy
 msgid "Delta value on color"
 msgstr "Deltawaarde op kleur"
 
@@ -613,9 +603,8 @@ msgstr "Deltawaarde op kleur"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed/HR..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -682,11 +671,11 @@ msgstr "Balkhoogte"
 msgid "Bar length"
 msgstr "Balklengte"
 
+# html-term
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
-#, fuzzy
 msgid "_Hrule..."
-msgstr "Bladeren..."
+msgstr "_Hrule..."
 
 # straal
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
@@ -695,12 +684,10 @@ msgstr "Bladeren..."
 msgid "Radius"
 msgstr "Radius"
 
-# kogel
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
-#, fuzzy
 msgid "_Bullet..."
-msgstr "Bladeren..."
+msgstr "_Kogel..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
@@ -708,7 +695,6 @@ msgid "B_utton..."
 msgstr "K_nop..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#, fuzzy
 msgid "Glow radius"
 msgstr "Gloeiradius"
 
@@ -735,21 +721,19 @@ msgstr "Tekstkleur"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Alien _Glow..."
-msgstr ""
+msgstr "Alien _gloed..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
-#, fuzzy
 msgid "Glow size (pixels * 4)"
-msgstr "Gloeigrootte (pixels x 4)"
+msgstr "Gloeigrootte (pixels * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 msgid "Alien _Neon..."
-msgstr ""
+msgstr "Alien _Neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-#, fuzzy
 msgid "Fade away"
-msgstr "Uitfaden"
+msgstr "Vervagen"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Number of bands"
@@ -821,12 +805,10 @@ msgstr "<Toolbox>/Xtra/Script-Fu/Knoppen"
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
-#, fuzzy
 msgid "Bevel width"
 msgstr "Afschuiningsbreedte"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
-#, fuzzy
 msgid "Lower-right color"
 msgstr "Kleur rechtsonder"
 
@@ -837,12 +819,10 @@ msgid "Pressed"
 msgstr "Ingedrukt"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
-#, fuzzy
 msgid "Simple _Beveled Button..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Knoppen/Simpele afgeschuinde knop..."
+msgstr "Simpele _afgeschuinde knop..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:11
-#, fuzzy
 msgid "Upper-left color"
 msgstr "Kleur linksboven"
 
@@ -851,9 +831,8 @@ msgstr "Kleur linksboven"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Pijl..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -883,12 +862,10 @@ msgstr "Breedte"
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators"
-msgstr "<Image>/Script-Fu/Animators/Overgang..."
+msgstr "<Image>/Script-Fu/Animators"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-#, fuzzy
 msgid "Intermediate frames"
 msgstr "Tussenliggende frames"
 
@@ -898,10 +875,10 @@ msgid "Looped"
 msgstr "Gelust"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
-#, fuzzy
 msgid "Max. blur radius"
 msgstr "Max. vervagingsradius"
 
+# vloeien/samenvloeien
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:5
 #, fuzzy
 msgid "_Blend..."
@@ -948,7 +925,6 @@ msgstr "Verloop"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient reverse"
 msgstr "Omgekeerd verloop"
 
@@ -991,7 +967,6 @@ msgstr "Inbranden: heb in totaal twee lagen nodig!"
 
 # corona/kroon/krans
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-#, fuzzy
 msgid "Corona width"
 msgstr "Kransbreedte"
 
@@ -1050,15 +1025,13 @@ msgstr "<Image>/Script-Fu/Stenciloperaties"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "C_arve-It..."
-msgstr ""
+msgstr "_Kerfen..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
-#, fuzzy
 msgid "Carve white areas"
 msgstr "Kerf witte gebieden"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:4
-#, fuzzy
 msgid "Image to carve"
 msgstr "Afbeelding naar kerving"
 
@@ -1067,7 +1040,6 @@ msgid "Background Image"
 msgstr "Achtergrondafbeelding"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
 msgid "Carve raised text"
 msgstr "Kerf verhoogde tekst"
 
@@ -1090,16 +1062,14 @@ msgid "_Chalk..."
 msgstr "_Krijt..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
-#, fuzzy
 msgid "Blur amount"
 msgstr "Hoeveelheid vervaging"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip Awa_y..."
-msgstr ""
+msgstr "_Uitgehakt..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
-#, fuzzy
 msgid "Chip amount"
 msgstr "Te hakken"
 
@@ -1108,7 +1078,6 @@ msgid "Drop shadow"
 msgstr "Valschaduw"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
-#, fuzzy
 msgid "Fill BG with pattern"
 msgstr "Vul AG met patroon"
 
@@ -1121,57 +1090,48 @@ msgid "Keep background"
 msgstr "Achtergrond behouden"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
-#, fuzzy
 msgid "C_hrome-It..."
-msgstr "Bladeren..."
+msgstr "Verc_hromen..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-#, fuzzy
 msgid "Chrome balance"
 msgstr "Chroombalans"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-#, fuzzy
 msgid "Chrome factor"
 msgstr "Chroomfactor"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-#, fuzzy
 msgid "Chrome lightness"
 msgstr "Chroomlichtheid"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-#, fuzzy
 msgid "Chrome saturation"
 msgstr "Chroomverzadiging"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
-#, fuzzy
 msgid "Chrome white areas"
 msgstr "Chroom witte gebieden"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#, fuzzy
 msgid "Environment map"
 msgstr "Omgevingsprojectie"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:9
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
 msgstr "Hoge-lichtenbalans"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
-#, fuzzy
 msgid "C_hrome..."
-msgstr "Bladeren..."
+msgstr "C_hroom..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1182,9 +1142,8 @@ msgstr "Verspringingen (pixels x 2"
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render"
-msgstr "<Image>/Script-Fu/Renderen/Lava..."
+msgstr "<Image>/Script-Fu/Renderen"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 #, fuzzy
@@ -1195,24 +1154,21 @@ msgstr "Startwaarde"
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
-#, fuzzy
 msgid "Keep selection"
 msgstr "Bewaar selectie"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
-#, fuzzy
 msgid "No background (only for separate layer)"
 msgstr "Geen achtergrond (enkel voor aparte laag)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
-#, fuzzy
 msgid "Oilify mask size"
 msgstr "Maskergrootte voor olieverf"
 
+# afzonderlijke laag
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
-#, fuzzy
 msgid "Separate layer"
 msgstr "Aparte laag"
 
@@ -1226,9 +1182,8 @@ msgstr "Startwaarde"
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy"
-msgstr "<Image>/Script-Fu/Alchemie/Weven..."
+msgstr "<Image>/Script-Fu/Alchemie"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1255,10 +1210,9 @@ msgstr "Verhoging"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr ""
+msgstr "_Textieldruk..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
-#, fuzzy
 msgid ""
 "Darken only\n"
 "(Better, but only for images with alot of white)"
@@ -1293,13 +1247,12 @@ msgstr "Koud _metaal..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels)"
 msgstr "Effectgrootte (pixels)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "Copy _Visible"
-msgstr ""
+msgstr "_Zichbare kopiëren"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -1314,9 +1267,8 @@ msgstr "K_ristal..."
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection"
-msgstr "<Image>/Script-Fu/Selectie/Naar afbeelding"
+msgstr "<Image>/Script-Fu/Selectie"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1339,9 +1291,8 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Drempel (groter 1<-->255 kleiner)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:8
-#, fuzzy
 msgid "_Distress Selection..."
-msgstr "<Image>/Script-Fu/Selectie/Selectie verruwen..."
+msgstr "Selectie ver_ruwen..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
@@ -1359,7 +1310,6 @@ msgstr "Herschalen toestaan"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
-#, fuzzy
 msgid "Blur radius"
 msgstr "Vervagingsradius"
 
@@ -1426,14 +1376,12 @@ msgid "Rows/cols"
 msgstr "Rijen/Kol."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:11
-#, fuzzy
 msgid "_Erase every other Row..."
-msgstr "<Image>/Script-Fu/Alchemie/Wis elke andere rij..."
+msgstr "_Elke andere rij wissen..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#, fuzzy
 msgid "Apply generated layermask"
-msgstr "Pas gegenereerd laagmasker toe"
+msgstr "Gegenereerd laagmasker toepassen"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
@@ -1442,50 +1390,44 @@ msgid "Border size"
 msgstr "Randgrootte"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
-#, fuzzy
 msgid "Clear unselected maskarea"
-msgstr "Wis niet geselecteerd maskergebied"
+msgstr "Niet geselecteerd maskergebied wissen"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fade from %"
-msgstr "Faden vanaf %"
+msgstr "Vervagen vanaf %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fade to   %"
-msgstr "Faden naar  %"
+msgstr "Vervagen naar  %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
-#, fuzzy
 msgid "Use growing selection"
 msgstr "Gebruik uitdijende selectie"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:10
 msgid "_Fade Outline..."
-msgstr ""
+msgstr "_Omtrek vervagen..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
-#, fuzzy
 msgid "Detail level"
 msgstr "Detailniveau"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
-#, fuzzy
 msgid "Image height"
 msgstr "Afbeeldingshoogte"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
-#, fuzzy
 msgid "Image width"
 msgstr "Afbeeldingsbreedte"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
-#, fuzzy
 msgid "Random seed"
 msgstr "Startwaarde"
 
@@ -1512,14 +1454,12 @@ msgid "Black on white"
 msgstr "Zwart op wit"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _size (pixels)"
-msgstr "Fontgrootte (pixel)"
+msgstr "Lettertype_grootte (pixels)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-#, fuzzy
 msgid "Use font _name as text"
-msgstr "Gebruik fontnaam als tekst"
+msgstr "Gebruik font_naam als tekst"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
@@ -1532,11 +1472,11 @@ msgstr "_Kleurschema"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr "Filter (regexp)"
+msgstr "_Filter (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Font Map..."
-msgstr ""
+msgstr "_Lettertypes..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
@@ -1556,7 +1496,6 @@ msgid "Add shadow"
 msgstr "Schaduw toevoegen"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-#, fuzzy
 msgid "Blur border"
 msgstr "Vervagingsrand"
 
@@ -1571,7 +1510,7 @@ msgstr "Schaduwgewicht (%)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr ""
+msgstr "_Vage rand..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
@@ -1579,7 +1518,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
 msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "Autocrop"
 msgstr "Autosnijden"
 
@@ -1609,7 +1547,6 @@ msgstr "Achtergrond verwijderen"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
-#, fuzzy
 msgid "Select-by-color threshold"
 msgstr "Drempel selecteer-op-kleur"
 
@@ -1620,27 +1557,28 @@ msgstr "Schaduwkleur"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 msgid "_Big Header..."
-msgstr ""
+msgstr "_Grote kop..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:15
 msgid "_Small Header..."
-msgstr ""
+msgstr "_Kleine kop..."
 
+# buis
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "B_uis, sub-knop label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "Buis _sub-sub-knop label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 msgid "_General Tube Labels..."
-msgstr ""
+msgstr "_Algemene buislabels..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 msgid "_Tube Button Label..."
-msgstr ""
+msgstr "_Buisknop label..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
@@ -1687,22 +1625,18 @@ msgid "Text gradient reverse"
 msgstr "Tekstverloop omgekeerd"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
-#, fuzzy
 msgid "Use pattern for outline instead of gradient"
 msgstr "Gebruik patroon voor omtrek in plaats van verloop"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:22
-#, fuzzy
 msgid "Use pattern for text instead of gradient"
 msgstr "Gebruik patroon voor tekst in plaats van verloop"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:23
-#, fuzzy
 msgid "Use pattern overlay"
 msgstr "Gebruik patroondeklaag"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels * 3)"
 msgstr "Effectgrootte (pixels * 3)"
 
@@ -1711,12 +1645,10 @@ msgid "Glo_wing Hot..."
 msgstr "G_loeiend heet..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#, fuzzy
 msgid "Bevel height (Sharpness)"
 msgstr "Afschuiningshoogte (scherpte)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#, fuzzy
 msgid "Bevel height (sharpness)"
 msgstr "Afschuiningshoogte (scherpte)"
 
@@ -1732,9 +1664,8 @@ msgid "Gradient Beve_l..."
 msgstr "Omgekeerd verloop"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#, fuzzy
 msgid "Custom _Gradient..."
-msgstr "Eigen verloop"
+msgstr "_Eigen verloop..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1750,11 +1681,11 @@ msgstr "_Raster..."
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr ""
+msgstr "Maakt vier hulplijnen rond de omhullende van de huidige selectie."
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Nieuwe hulplijnen vanaf _selectie"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
@@ -1768,7 +1699,7 @@ msgstr "Horizontaal"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Nieuwe hulplijn (per _percentage)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
@@ -1782,20 +1713,19 @@ msgstr "Verticaal"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
-msgstr ""
+msgstr "Nieuwe _hulplijn..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "Alle hulplijnen _verwijderen"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG opacity"
 msgstr "AG-ondoorzichtigheid"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-#, fuzzy
 msgid "Draw _HSV Graph..."
-msgstr "<Image>/Script-Fu/Hulpprogramma's/KVW-grafiek tekenen..."
+msgstr "KVW-grafiek tekenen..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End X"
@@ -1810,7 +1740,6 @@ msgid "From top-left to bottom-right"
 msgstr "Van linksboven naar rechtsonder"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-#, fuzzy
 msgid "Graph scale"
 msgstr "Grafiekschaal"
 
@@ -1823,7 +1752,6 @@ msgid "Start Y"
 msgstr "Begin Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-#, fuzzy
 msgid "Use selection bounds instead of belows"
 msgstr "Gebruik selectiegrenzen in plaats van onderstaande"
 
@@ -1840,7 +1768,6 @@ msgid "Imigre-26..."
 msgstr "Imigre-26..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
-#, fuzzy
 msgid "Apply layer mask (or discard)"
 msgstr "Pas laagmasker toe (of gooi weg)"
 
@@ -1857,47 +1784,38 @@ msgid "Make new background"
 msgstr "Nieuwe achtergrond maken"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
-#, fuzzy
 msgid "Outer border"
 msgstr "Buitenste grens"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-#, fuzzy
 msgid "Pad color"
 msgstr "Opvulkleur"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
-#, fuzzy
 msgid "Pad opacity"
 msgstr "Opvulondoorzichtigheid"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
-#, fuzzy
 msgid "Padding for transparent regions"
 msgstr "Opvulling voor transparante gebieden"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
-#, fuzzy
 msgid "Shear length"
 msgstr "Hellingslengte"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
-#, fuzzy
 msgid "Show Image _Structure..."
-msgstr "<Image>/Script-Fu/Hulpprogramma's/Afbeeldingsstructuur tonen..."
+msgstr "Afbeeldings_structuur tonen..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:13
-#, fuzzy
 msgid "Space between layers"
 msgstr "Ruimte tussen lagen"
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
-#, fuzzy
 msgid "Land height"
 msgstr "Landhoogte"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
-#, fuzzy
 msgid "Sea depth"
 msgstr "Zeediepte"
 
@@ -1916,7 +1834,6 @@ msgid "Seed"
 msgstr "Startwaarde"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
-#, fuzzy
 msgid "Use current gradient"
 msgstr "Gebruik huidig verloop"
 
@@ -1924,9 +1841,10 @@ msgstr "Gebruik huidig verloop"
 msgid "_Lava..."
 msgstr "_Lava..."
 
+# nova met lijnen
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr ""
+msgstr "Nova _lijnen..."
 
 # regels/lijnen
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
@@ -1934,9 +1852,8 @@ msgid "Number of lines"
 msgstr "Aantal lijnen"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
-#, fuzzy
 msgid "Offset radius"
-msgstr "Verspringingsradius"
+msgstr "Verschuivingsradius"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
@@ -1947,13 +1864,12 @@ msgid "Sharpness (degrees)"
 msgstr "Scherpte (graden)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
-msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken/Elliptisch en hard..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "Elli_ptisch, vervaagd..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Feathering"
@@ -1965,7 +1881,7 @@ msgstr "Naam"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "Re_chthoekig, vervaagd..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
@@ -2097,7 +2013,6 @@ msgid "Padding Y"
 msgstr "Opvulling Y"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#, fuzzy
 msgid "Round ratio"
 msgstr "Rondheid"
 
@@ -2115,7 +2030,7 @@ msgstr "Hogere kleur (actief)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
-msgstr ""
+msgstr "_Ronde knop..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -2171,55 +2086,47 @@ msgid "Add drop-shadow"
 msgstr "Valshadow toevoegen"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
-#, fuzzy
 msgid "Edge radius"
 msgstr "Randradius"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr ""
+msgstr "_Ronde hoeken..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#, fuzzy
 msgid "Brush name"
 msgstr "Penseelnaam"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-#, fuzzy
 msgid "To _Brush..."
-msgstr "Bladeren..."
+msgstr "Naar _penseel..."
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
-msgstr ""
+msgstr "Naar _afbeelding"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
-#, fuzzy
 msgid "Pattern name"
 msgstr "Patroonnaam"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "To _Pattern..."
-msgstr "Patroon"
+msgstr "Naar pa_troon..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "Concave"
-msgstr "Annuleren"
+msgstr "Concaaf"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Radius (%)"
-msgstr "Radius"
+msgstr "Radius (%)"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:4
-#, fuzzy
 msgid "Rounded R_ectangle..."
-msgstr "<Image>/Script-Fu/Selectie/Rond..."
+msgstr "A_fgeronde rechthoek..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font color"
 msgstr "Fontkleur"
 
@@ -2229,7 +2136,7 @@ msgstr "Getal"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
-msgstr ""
+msgstr "_Dia..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
@@ -2237,12 +2144,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr ""
+msgstr "Snelle tekst..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc"
-msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Neon..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Overig"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2253,26 +2159,22 @@ msgid "Radius (pixels)"
 msgstr "Radius (pixels)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
-#, fuzzy
 msgid "Sphere color"
 msgstr "Bolkleur"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:7
-#, fuzzy
 msgid "_Sphere..."
-msgstr "Bladeren..."
+msgstr "_Bol..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "Frames"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
-#, fuzzy
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexeren naar n kleuren (0 = behoud RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
-#, fuzzy
 msgid "Turn from left to right"
 msgstr "Draai van links naar rechts"
 
@@ -2293,7 +2195,6 @@ msgid "Circle"
 msgstr "Cirkel"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-#, fuzzy
 msgid "Color method"
 msgstr "Kleurmethode"
 
@@ -2326,12 +2227,10 @@ msgid "Hexagon"
 msgstr "Zeshoek"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-#, fuzzy
 msgid "Hole ratio"
 msgstr "Gatverhouding"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-#, fuzzy
 msgid "Inner teeth"
 msgstr "Binnenste tanden"
 
@@ -2344,7 +2243,6 @@ msgid "Margin (pixels)"
 msgstr "Marge (pixels)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Outer teeth"
 msgstr "Buitenste tanden"
 
@@ -2390,7 +2288,6 @@ msgstr "Vierkant"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
-#, fuzzy
 msgid "Start angle"
 msgstr "Beginhoek"
 
@@ -2407,9 +2304,8 @@ msgid "Type"
 msgstr "Type"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
-#, fuzzy
 msgid "_Spyrogimp..."
-msgstr "Spyrograaf"
+msgstr "_Spyrograaf..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 #, fuzzy
@@ -2417,7 +2313,6 @@ msgid "Burst color"
 msgstr "Tekstkleur"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 30)"
 msgstr "Effectgrootte (pixels * 30)"
 
@@ -2426,36 +2321,30 @@ msgid "Starb_urst..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid "Effect size (pixels * 4)"
 msgstr "Effectgrootte (pixels * 4)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
-#, fuzzy
 msgid "Sta_rscape..."
-msgstr "Bladeren..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
-#, fuzzy
 msgid "Whirl amount"
 msgstr "Wervelhoeveelheid"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-#, fuzzy
 msgid "Number of times to whirl"
 msgstr "Aantal keren te draaien"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-#, fuzzy
 msgid "Quarter size"
 msgstr "Kwartgrootte"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-#, fuzzy
 msgid "Whirl angle"
 msgstr "Wervelhoek"
 
@@ -2464,22 +2353,18 @@ msgid "_Swirly..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#, fuzzy
 msgid "Base color"
 msgstr "Basiskleur"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-#, fuzzy
 msgid "Edge only"
 msgstr "Alleen rand"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-#, fuzzy
 msgid "Edge width"
 msgstr "Randbreedte"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-#, fuzzy
 msgid "Hit rate"
 msgstr "Hoeveelheid inslagen"
 
@@ -2492,14 +2377,13 @@ msgid "Antialias"
 msgstr "Anti-alias"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
-#, fuzzy
 msgid "Fill angle"
 msgstr "Vulhoek"
 
+# cirkeltekst
 #: plug-ins/script-fu/scripts/text-circle.scm.h:9
-#, fuzzy
 msgid "Text Circle..."
-msgstr "Cirkel"
+msgstr "Tekstcirkel..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 #, fuzzy
@@ -2511,7 +2395,6 @@ msgid "Hexagons"
 msgstr "Zeshoeken"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
-#, fuzzy
 msgid "Mosaic tile type"
 msgstr "Tegeltype v. mozaiek"
 
@@ -2529,28 +2412,24 @@ msgid "Starting blend"
 msgstr "Begin verloop"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
-#, fuzzy
 msgid "Text pattern"
 msgstr "Tekstpatroon"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
-msgstr ""
+msgstr "_Textuur..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "Blur horizontally"
-msgstr "Vervaag horizontaal"
+msgstr "Horizontaal vervagen"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
-#, fuzzy
 msgid "Blur type"
 msgstr "Vervagingstype"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
-#, fuzzy
 msgid "Blur vertically"
-msgstr "Vervaag verticaal"
+msgstr "Verticaal vervagen"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "IIR"
@@ -2562,16 +2441,14 @@ msgstr "RLE"
 
 # What is the correct translation of the verb 'tile'?
 #: plug-ins/script-fu/scripts/tileblur.scm.h:7
-#, fuzzy
 msgid "_Tileable Blur..."
-msgstr "<Image>/Filters/Vervagen/Naadloos vervagen..."
+msgstr "_Naadloos vervagen..."
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
-msgstr ""
+msgstr "Webtitel kop..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
 msgstr "Voorgrondkleur"
 
@@ -2580,18 +2457,16 @@ msgid "T_ruchet..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-#, fuzzy
 msgid "Mask opacity"
 msgstr "Maskerondoorzichtigheid"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-#, fuzzy
 msgid "Mask size"
 msgstr "Maskergrootte"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
 msgid "_Unsharp Mask..."
-msgstr ""
+msgstr "_Onscherp masker..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
@@ -2607,102 +2482,86 @@ msgstr "Golflengte"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "_Golven..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
-#, fuzzy
 msgid "Ribbon spacing"
 msgstr "Tussenruimte van lint"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
-#, fuzzy
 msgid "Ribbon width"
 msgstr "Lintbreedte"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
-#, fuzzy
 msgid "Shadow darkness"
 msgstr "Schaduwdonkerte"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
-#, fuzzy
 msgid "Shadow depth"
 msgstr "Schaduwdiepte"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
-#, fuzzy
 msgid "Thread density"
 msgstr "Draaddichtheid"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
-#, fuzzy
 msgid "Thread intensity"
 msgstr "Draadintensiteit"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
-#, fuzzy
 msgid "Thread length"
 msgstr "Draadlengte"
 
+# geweefte/weefgetouw/weven/geweefsel
 #: plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr ""
+msgstr "_Weven..."
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online"
-msgstr "<Toolbox>/Help/De GIMP Online/Hoofdwebsite (Engels)"
+msgstr "<Toolbox>/Hulp/De GIMP Online (Engels)"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Plug-in _Registry"
-msgstr ""
+msgstr "Plug-in _register"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "_Developer Web Site"
-msgstr ""
+msgstr "_Ontwikkelaarswebsite"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "_Main Web Site"
-msgstr ""
+msgstr "_Hoofdwebsite"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
-#, fuzzy
 msgid "Drop shadow X offset"
-msgstr "X-verspringing van valschaduw"
+msgstr "X-verschuiving van valschaduw"
 
-# valschaduw
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
-#, fuzzy
 msgid "Drop shadow Y offset"
-msgstr "Y-verspringing van dropshadow"
+msgstr "Y-verschuiving van dropshadow"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
-#, fuzzy
 msgid "Drop shadow blur radius"
-msgstr "Vervagingsradius van dropshadow"
+msgstr "Vervagingsradius van valschaduw"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
-#, fuzzy
 msgid "Drop shadow color"
-msgstr "Kleur van dropshadow"
+msgstr "Kleur van valschaduw"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
-#, fuzzy
 msgid "Drop shadow opacity"
-msgstr "Ondoorzichtigheid van dropshadow"
+msgstr "Ondoorzichtigheid van valschaduw"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight X offset"
-msgstr "X-verspringing hoge lichten"
+msgstr "X-verschuiving hoge lichten"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
-#, fuzzy
 msgid "Highlight Y offset"
-msgstr "Y-verspringing hoge lichten"
+msgstr "Y-verschuiving hoge lichten"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
-#, fuzzy
 msgid "Highlight opacity"
 msgstr "Ondoorzichtheid hoge lichten"
 
@@ -2850,11 +2709,6 @@ msgstr "_Xach-effect..."
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Cool metaal..."
 
-# What does this function do?
-#, fuzzy
-#~ msgid "<Image>/Edit/Copy/Copy _Visible"
-#~ msgstr "<Image>/Bewerken/Zichtbare kopiëren"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Kristal"
 
@@ -2913,10 +2767,6 @@ msgstr "_Xach-effect..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Glossy..."
-
-#, fuzzy
-#~ msgid "Use tattern for outline instead of gradient"
-#~ msgstr "Gebruik patroon voor omtrek in plaats van verloop"
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 #~ msgstr "<Image>/Script-Fu/Alpha naar logo/Gloeiend heet..."
