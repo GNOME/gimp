@@ -26,6 +26,10 @@
 #include <gtk/gtkvbox.h>
 
 
+typedef GtkWidget * (* GimpDockableGetTabFunc) (GimpDockable *dockable,
+						gint          size);
+
+
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
 #define GIMP_DOCKABLE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DOCKABLE, GimpDockable))
 #define GIMP_DOCKABLE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKABLE, GimpDockableClass))
@@ -38,10 +42,14 @@ typedef struct _GimpDockableClass   GimpDockableClass;
 
 struct _GimpDockable
 {
-  GtkVBox   parent_instance;
+  GtkVBox       parent_instance;
 
-  gchar    *name;
-  GimpDock *dock;
+  gchar        *name;
+  gchar        *short_name;
+
+  GimpDockbook *dockbook;
+
+  GimpDockableGetTabFunc  get_tab_func;
 };
 
 struct _GimpDockableClass
@@ -50,8 +58,13 @@ struct _GimpDockableClass
 };
 
 
-GtkType     gimp_dockable_get_type (void);
-GtkWidget * gimp_dockable_new      (const gchar *name);
+GtkType     gimp_dockable_get_type       (void);
+GtkWidget * gimp_dockable_new            (const gchar            *name,
+					  const gchar            *short_name,
+					  GimpDockableGetTabFunc  get_tab_func);
+
+GtkWidget * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
+					  gint                    size);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */

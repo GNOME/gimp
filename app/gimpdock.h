@@ -41,7 +41,8 @@ struct _GimpDock
   GtkWindow  parent_instance;
 
   GtkWidget *vbox;
-  GtkWidget *notebook;
+
+  GList     *dockbooks;
 };
 
 struct _GimpDockClass
@@ -50,11 +51,21 @@ struct _GimpDockClass
 };
 
 
-GtkType     gimp_dock_get_type (void);
-GtkWidget * gimp_dock_new      (void);
+GtkType     gimp_dock_get_type    (void);
+GtkWidget * gimp_dock_new         (void);
 
-void        gimp_dock_add      (GimpDock     *dock,
-				GimpDockable *dockable);
+void        gimp_dock_add         (GimpDock     *dock,
+				   GimpDockable *dockable,
+				   gint          book,
+				   gint          index);
+void        gimp_dock_remove      (GimpDock     *dock,
+				   GimpDockable *dockable);
+
+void        gimp_dock_add_book    (GimpDock     *dock,
+				   GimpDockbook *dockbook,
+				   gint          index);
+void        gimp_dock_remove_book (GimpDock     *dock,
+				   GimpDockbook *dockbook);
 
 
 #endif /* __GIMP_DOCK_H__ */

@@ -36,7 +36,8 @@ enum
   GIMP_DND_TYPE_PATTERN,
   GIMP_DND_TYPE_GRADIENT,
   GIMP_DND_TYPE_PALETTE,
-  GIMP_DND_TYPE_TOOL
+  GIMP_DND_TYPE_TOOL,
+  GIMP_DND_TYPE_DIALOG
 };
 
 typedef enum
@@ -91,6 +92,9 @@ typedef enum
 
 #define GIMP_TARGET_TOOL \
         { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
+
+#define GIMP_TARGET_DIALOG \
+        { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
 
 
 /*  color dnd functions  */

@@ -1,3 +1,18 @@
+2001-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpdockbook.[ch]: new object (the notebook separated out
+	of gimpdock.[ch]).
+
+	* app/gimpdnd.h: new DND type "DIALOG".
+
+	* app/gimpdock.[ch]
+	* app/gimpdockable.[ch]: DND mostly works now.
+
+	* app/menus.c
+	* app/test_commands.[ch]: updated.
+
 2001-04-08  Sven Neumann  <sven@gimp.org>
 
         * plug-ins/bmp/bmp.c

@@ -77,8 +77,10 @@ gimp_dockable_class_init (GimpDockableClass *klass)
 static void
 gimp_dockable_init (GimpDockable *dockable)
 {
-  dockable->name = NULL;
-  dockable->dock = NULL;
+  dockable->name         = NULL;
+  dockable->short_name   = NULL;
+  dockable->dockbook     = NULL;
+  dockable->get_tab_func = NULL;
 }
 
 static void
@@ -89,15 +91,45 @@ gimp_dockable_destroy (GtkObject *object)
   dockable = GIMP_DOCKABLE (object);
 
   g_free (dockable->name);
+  g_free (dockable->short_name);
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
-gimp_dockable_new (const gchar *name)
+gimp_dockable_new (const gchar            *name,
+		   const gchar            *short_name,
+		   GimpDockableGetTabFunc  get_tab_func)
 {
-  g_return_val_if_fail (name != NULL, NULL);
+  GimpDockable *dockable;
 
-  return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCKABLE));
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (short_name != NULL, NULL);
+
+  dockable = gtk_type_new (GIMP_TYPE_DOCKABLE);
+
+  dockable->name        = g_strdup (name);
+  dockable->short_name  = g_strdup (short_name);
+
+  dockable->get_tab_func = get_tab_func;
+
+  return GTK_WIDGET (dockable);
+}
+
+GtkWidget *
+gimp_dockable_get_tab_widget (GimpDockable *dockable,
+			      gint          size)
+{
+  g_return_val_if_fail (dockable != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+
+  g_return_val_if_fail (size >= -1 && size < 64, NULL);
+
+  if (dockable->get_tab_func)
+    {
+      return dockable->get_tab_func (dockable, size);
+    }
+
+  return gtk_label_new (dockable->short_name);
 }

@@ -115,6 +115,7 @@ typedef struct _GimpLayerListItem     GimpLayerListItem;
 
 typedef struct _GimpDock              GimpDock;
 typedef struct _GimpDockable          GimpDockable;
+typedef struct _GimpDockbook          GimpDockbook;
 
 typedef struct _HistogramWidget       HistogramWidget;
 

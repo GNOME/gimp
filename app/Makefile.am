@@ -319,6 +319,8 @@ gimp_SOURCES = \
 	gimpdock.h			\
 	gimpdockable.c			\
 	gimpdockable.h			\
+	gimpdockbook.c			\
+	gimpdockbook.h			\
 	gimpdrawablelistitem.c		\
 	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\
