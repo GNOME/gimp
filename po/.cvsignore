@@ -8,3 +8,4 @@ cat-id-tbl.c
 *.pot
 stamp-cat-id
 messages
+po2tbl.sed

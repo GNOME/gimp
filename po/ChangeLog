@@ -1,3 +1,12 @@
+2001-09-27  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in: different version for AM_GLIB_GNU_GETTEXT.
+
+	* POTFILES.in: resync with new file locations.
+	
+	* update.pl
+	* update.sh: changed package name to gimp14.
+
 2001-09-17  Sven Neumann  <sven@gimp.org>
 
 	* fr.po: changed gimp_conseils.fr.txt to gimp_tips.fr.txt.

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKAGE="gimp-libgimp"
+PACKAGE="gimp14-libgimp"
 
 if [ "x$1" = "x--help" ]; then
 

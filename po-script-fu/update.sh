@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKAGE="gimp-script-fu"
+PACKAGE="gimp14-script-fu"
 
 if [ "x$1" = "x--help" ]; then
 

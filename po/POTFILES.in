@@ -3,18 +3,14 @@
 
 app/app_procs.c
 app/devices.c
-app/disp_callbacks.c
 app/docindex.c
 app/file-open.c
 app/file-save.c
 app/floating_sel.c
-app/gdisplay.c
 app/gdisplay_color_ui.c
-app/gdisplay_ops.c
 app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
-app/interface.c
 app/main.c
 app/module_db.c
 app/nav_window.c
@@ -40,6 +36,11 @@ app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
 app/core/gimpunit.c
+
+app/display/gimpdisplay-callbacks.c
+app/display/gimpdisplay-ops.c
+app/display/gimpdisplay.c
+app/display/gimpdisplayshell.c
 
 app/gui/about-dialog.c
 app/gui/brush-editor.c

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VERSION="1.2.5"
-PACKAGE="gimp"
+PACKAGE="gimp14"
 
 if [ "x$1" = "x--help" ]; then
 
