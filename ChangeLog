@@ -1,5 +1,9 @@
 2000-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: no need to mark this string for translation
+
+2000-07-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/decompose.c: 
 	applied gimp-kirchgessner-000728-0, a patch by Peter Kirchgessner
 	that resolves request #16795 and changes the generated filenames
