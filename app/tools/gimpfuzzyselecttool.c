@@ -339,6 +339,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 			GimpDisplay         *gdisp,
 			gint                *nsegs)
 {
+  GimpTool         *tool;
   SelectionOptions *sel_options;
   PixelRegion       maskPR;
   GimpChannel      *new;
@@ -348,12 +349,14 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
   gint              i;
   gint              x, y;
 
-  sel_options = (SelectionOptions *) GIMP_TOOL (fuzzy_sel)->tool_info->tool_options;
+  tool = GIMP_TOOL (fuzzy_sel);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_display_shell_install_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                              GDK_WATCH);
+  gimp_display_shell_set_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                          GDK_WATCH);
 
   x = fuzzy_sel->x;
   y = fuzzy_sel->y;
@@ -412,10 +415,9 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
       segs[i].y2 = y;
     }
 
-  /*  free boundary segments  */
   g_free (bsegs);
 
-  gimp_display_shell_remove_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell));
+  gimp_display_shell_unset_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell));
 
   return segs;
 }

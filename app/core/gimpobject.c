@@ -251,56 +251,62 @@ gimp_object_name_changed (GimpObject *object)
   g_signal_emit (G_OBJECT (object), object_signals[NAME_CHANGED], 0);
 }
 
+
+#define DEBUG_MEMSIZE 1
+
+#ifdef DEBUG_MEMSIZE
+gboolean gimp_debug_memsize = FALSE;
+#endif
+
 gsize
 gimp_object_get_memsize (GimpObject *object)
 {
   g_return_val_if_fail (GIMP_IS_OBJECT (object), 0);
 
-#define DEBUG_MEMSIZE 1
-
 #ifdef DEBUG_MEMSIZE
-  {
-    static gint   indent_level     = 0;
-    static GList *aggregation_tree = NULL;
-    static gchar  indent_buf[256];
+  if (gimp_debug_memsize)
+    {
+      static gint   indent_level     = 0;
+      static GList *aggregation_tree = NULL;
+      static gchar  indent_buf[256];
 
-    gsize  memsize;
-    gint   i;
-    gint   my_indent_level;
-    gchar *object_size;
+      gsize  memsize;
+      gint   i;
+      gint   my_indent_level;
+      gchar *object_size;
 
-    indent_level++;
+      indent_level++;
 
-    my_indent_level = indent_level;
+      my_indent_level = indent_level;
 
-    memsize = GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);
+      memsize = GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);
 
-    indent_level--;
+      indent_level--;
 
-    for (i = 0; i < MIN (my_indent_level * 2, sizeof (indent_buf) - 1); i++)
-      indent_buf[i] = ' ';
+      for (i = 0; i < MIN (my_indent_level * 2, sizeof (indent_buf) - 1); i++)
+        indent_buf[i] = ' ';
 
-    indent_buf[i] = '\0';
+      indent_buf[i] = '\0';
 
-    object_size = g_strdup_printf ("%s%s \"%s\": %d\n",
-                                   indent_buf,
-                                   g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                                   object->name,
-                                   memsize);
+      object_size = g_strdup_printf ("%s%s \"%s\": %d\n",
+                                     indent_buf,
+                                     g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                                     object->name,
+                                     memsize);
 
-    aggregation_tree = g_list_prepend (aggregation_tree, object_size);
+      aggregation_tree = g_list_prepend (aggregation_tree, object_size);
 
-    if (indent_level == 0)
-      {
-        g_list_foreach (aggregation_tree, g_print, NULL);
-        g_list_foreach (aggregation_tree, g_free, NULL);
-        g_list_free (aggregation_tree);
+      if (indent_level == 0)
+        {
+          g_list_foreach (aggregation_tree, (GFunc) g_print, NULL);
+          g_list_foreach (aggregation_tree, (GFunc) g_free, NULL);
+          g_list_free (aggregation_tree);
 
-        aggregation_tree = NULL;
-      }
+          aggregation_tree = NULL;
+        }
 
-    return memsize;
-  }
+      return memsize;
+    }
 #endif /* DEBUG_MEMSIZE */
 
   return GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);

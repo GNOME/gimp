@@ -338,6 +338,13 @@ gimp_preview_expose_event (GtkWidget      *widget,
   return FALSE;
 }
 
+
+#define DEBUG_MEMSIZE 1
+
+#ifdef DEBUG_MEMSIZE
+extern gboolean gimp_debug_memsize;
+#endif
+
 static gint
 gimp_preview_button_press_event (GtkWidget      *widget,
 				 GdkEventButton *bevent)
@@ -346,12 +353,14 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
-#define DEBUG_MEMSIZE 1
-
 #ifdef DEBUG_MEMSIZE
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
     {
+      gimp_debug_memsize = TRUE;
+
       gimp_object_get_memsize (GIMP_OBJECT (preview->viewable));
+
+      gimp_debug_memsize = FALSE;
     }
 #endif /* DEBUG_MEMSIZE */
 

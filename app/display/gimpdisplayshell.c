@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppattern.h"
@@ -93,6 +94,11 @@ static void       gimp_display_shell_display_area      (GimpDisplayShell *shell,
                                                         gint              y,
                                                         gint              w,
                                                         gint              h);
+static void       gimp_display_shell_real_set_cursor   (GimpDisplayShell *shell,
+                                                        GdkCursorType     cursor_type,
+                                                        GimpToolCursorType  tool_cursor,
+                                                        GimpCursorModifier  modifier,
+                                                        gboolean          always_install);
 static void	  gimp_display_shell_draw_cursor       (GimpDisplayShell *shell);
 
 static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
@@ -207,6 +213,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
                                            3);
   shell->render_gc             = NULL;
+
+  shell->title_dirty           = FALSE;
 
   shell->icon_size             = 32;
   shell->icon_idle_id          = 0;
@@ -1287,6 +1295,13 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  if (shell->title_dirty)
+    {
+      gimp_display_shell_update_title (shell);
+
+      shell->title_dirty = FALSE;
+    }
+
   if (shell->display_areas)
     {
       GSList   *list;
@@ -1315,7 +1330,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
       /* draw the guides */
       gimp_display_shell_draw_guides (shell);
 
-      /* and the cursor (if we have a software cursor */
+      /* and the cursor (if we have a software cursor) */
       if (shell->have_cursor)
 	gimp_display_shell_draw_cursor (shell);
 
@@ -1325,85 +1340,30 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
       /* start the currently active tool */
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
                                    shell->gdisp);
-    }  
-}
-
-void
-gimp_display_shell_real_install_tool_cursor (GimpDisplayShell   *shell,
-                                             GdkCursorType       cursor_type,
-                                             GimpToolCursorType  tool_cursor,
-                                             GimpCursorModifier  modifier,
-                                             gboolean            always_install)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (cursor_type != GIMP_BAD_CURSOR)
-    {
-      switch (gimprc.cursor_mode)
-	{
-	case GIMP_CURSOR_MODE_TOOL_ICON:
-	  break;
-
-	case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
-	  break;
-
-	case GIMP_CURSOR_MODE_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_CURSOR;
-	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
-	  modifier    = GIMP_CURSOR_MODIFIER_NONE;
-	  break;
-	}
-    }
-
-  if (shell->current_cursor  != cursor_type ||
-      shell->tool_cursor     != tool_cursor ||
-      shell->cursor_modifier != modifier    ||
-      always_install)
-    {
-      GdkCursor *cursor;
-
-      shell->current_cursor  = cursor_type;
-      shell->tool_cursor     = tool_cursor;
-      shell->cursor_modifier = modifier;
-
-      cursor = gimp_cursor_new (cursor_type,
-				tool_cursor,
-				modifier);
-      gdk_window_set_cursor (shell->canvas->window, cursor);
-      gdk_cursor_unref (cursor);
     }
 }
 
 void
-gimp_display_shell_install_tool_cursor (GimpDisplayShell   *shell,
-                                        GdkCursorType       cursor_type,
-                                        GimpToolCursorType  tool_cursor,
-                                        GimpCursorModifier  modifier)
+gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
+                               GdkCursorType       cursor_type,
+                               GimpToolCursorType  tool_cursor,
+                               GimpCursorModifier  modifier)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->using_override_cursor)
     {
-      gimp_display_shell_real_install_tool_cursor (shell,
-                                                   cursor_type,
-                                                   tool_cursor,
-                                                   modifier,
-                                                   FALSE);
+      gimp_display_shell_real_set_cursor (shell,
+                                          cursor_type,
+                                          tool_cursor,
+                                          modifier,
+                                          FALSE);
     }
 }
 
 void
-gimp_display_shell_remove_tool_cursor (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gdk_window_set_cursor (shell->canvas->window, NULL);
-}
-
-void
-gimp_display_shell_install_override_cursor (GimpDisplayShell *shell,
-                                            GdkCursorType     cursor_type)
+gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
+                                        GdkCursorType     cursor_type)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1425,7 +1385,7 @@ gimp_display_shell_install_override_cursor (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_remove_override_cursor (GimpDisplayShell *shell)
+gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1433,11 +1393,11 @@ gimp_display_shell_remove_override_cursor (GimpDisplayShell *shell)
     {
       shell->using_override_cursor = FALSE;
 
-      gimp_display_shell_real_install_tool_cursor (shell,
-                                                   shell->current_cursor,
-                                                   shell->tool_cursor,
-                                                   shell->cursor_modifier,
-                                                   TRUE);
+      gimp_display_shell_real_set_cursor (shell,
+                                          shell->current_cursor,
+                                          shell->tool_cursor,
+                                          shell->cursor_modifier,
+                                          TRUE);
     }
 }
 
@@ -1954,6 +1914,53 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
 }
 
 static void
+gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
+                                    GdkCursorType       cursor_type,
+                                    GimpToolCursorType  tool_cursor,
+                                    GimpCursorModifier  modifier,
+                                    gboolean            always_install)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (cursor_type != GIMP_BAD_CURSOR)
+    {
+      switch (gimprc.cursor_mode)
+	{
+	case GIMP_CURSOR_MODE_TOOL_ICON:
+	  break;
+
+	case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
+	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
+	  break;
+
+	case GIMP_CURSOR_MODE_CROSSHAIR:
+	  cursor_type = GIMP_CROSSHAIR_CURSOR;
+	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
+	  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+	  break;
+	}
+    }
+
+  if (shell->current_cursor  != cursor_type ||
+      shell->tool_cursor     != tool_cursor ||
+      shell->cursor_modifier != modifier    ||
+      always_install)
+    {
+      GdkCursor *cursor;
+
+      shell->current_cursor  = cursor_type;
+      shell->tool_cursor     = tool_cursor;
+      shell->cursor_modifier = modifier;
+
+      cursor = gimp_cursor_new (cursor_type,
+				tool_cursor,
+				modifier);
+      gdk_window_set_cursor (shell->canvas->window, cursor);
+      gdk_cursor_unref (cursor);
+    }
+}
+
+static void
 gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 {
   gint x, y;
@@ -2052,13 +2059,21 @@ gimp_display_shell_update_icon_scheduler (GimpImage *gimage,
                                          NULL);
 }
 
-static int print (char *, int, int, const char *, ...) G_GNUC_PRINTF (4, 5);
+static gint print (gchar       *buf,
+                   gint         len,
+                   gint         start,
+                   const gchar *fmt,
+                   ...) G_GNUC_PRINTF (4, 5);
 
-static int
-print (char *buf, int len, int start, const char *fmt, ...)
+static gint
+print (gchar       *buf,
+       gint         len,
+       gint         start,
+       const gchar *fmt,
+       ...)
 {
   va_list args;
-  int printed;
+  gint    printed;
 
   va_start (args, fmt);
 
@@ -2077,7 +2092,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gint              title_len)
 {
   GimpImage *gimage;
-  gchar     *image_type_str;
+  gchar     *image_type_str = NULL;
   gboolean   empty;
   gint       i;
   gchar     *format;
@@ -2100,7 +2115,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       image_type_str = empty ? _("indexed-empty") : _("indexed");
       break;
     default:
-      image_type_str = NULL;
+      g_assert_not_reached ();
       break;
     }
 
@@ -2168,7 +2183,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 'D': /* dirty flag */
 	      if (format[1] == 0)
 		{
-		  g_warning("image-title-format string ended within %%D-sequence");
+		  g_warning ("image-title-format string ended within "
+                             "%%D-sequence");
 		  break;
 		}
 	      if (gimage->dirty)
@@ -2176,14 +2192,29 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      format++;
 	      break;
 
+            case 'm': /* memory used by image */
+              {
+                gsize  memsize;
+                gchar *size_str;
+
+                memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage));
+
+                size_str = gimp_image_new_get_size_string (memsize);
+
+                i += print (title, title_len, i, "%s", size_str);
+
+                g_free (size_str);
+              }
+              break;
+
 	      /* Other cool things to be added:
-	       * %m = memory used by picture
 	       * some kind of resolution / image size thing
 	       * people seem to want to know the active layer name
 	       */
 
 	    default:
-	      g_warning ("image-title-format contains unknown format sequence '%%%c'", *format);
+	      g_warning ("image-title-format contains unknown "
+                         "format sequence '%%%c'", *format);
 	      break;
 	    }
 	  break;
@@ -2196,7 +2227,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       format++;
     }
 
-  title[MIN(i, title_len-1)] = 0;
+  title[MIN (i, title_len - 1)] = '\0';
 }
 
 static void

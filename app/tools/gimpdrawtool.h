@@ -53,17 +53,19 @@ struct _GimpDrawTool
 {
   GimpTool           parent_instance;
 
-  GdkGC             *gc;           /*  Graphics context for draw functions    */
+  GimpDisplay       *gdisp;        /*  The display we are drawing to (may be
+                                    *  a different one than tool->gdisp)
+                                    */
   GdkWindow         *win;          /*  Window to draw draw operation to       */
+  GdkGC             *gc;           /*  Graphics context for draw functions    */
 
   GimpDrawToolState  draw_state;   /*  Current state in the draw process      */
+  gint               paused_count; /*  count to keep track of multiple pauses */
 
   gint               line_width;   /*  line attributes                        */
   gint               line_style;   /**/
   gint               cap_style;    /**/
   gint               join_style;   /**/
-
-  gint               paused_count; /*  count to keep track of multiple pauses */
 };
 
 struct _GimpDrawToolClass

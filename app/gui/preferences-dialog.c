@@ -2257,7 +2257,8 @@ preferences_dialog_create (Gimp *gimp)
       "%f-%p.%i (%t)",
       "%f-%p.%i (%t) %z%%",
       "%f-%p.%i (%t) %d:%s",
-      "%f-%p.%i (%t) %s:%d"
+      "%f-%p.%i (%t) %s:%d",
+      "%f-%p.%i (%t) %m"
     };
 
     const gchar *combo_strings[] =
@@ -2266,7 +2267,8 @@ preferences_dialog_create (Gimp *gimp)
       N_("Standard"),
       N_("Show zoom percentage"),
       N_("Show zoom ratio"),
-      N_("Show reversed zoom ratio")
+      N_("Show reversed zoom ratio"),
+      N_("Show memory usage")
     };
 
     g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (combo_strings));

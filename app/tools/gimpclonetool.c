@@ -127,17 +127,14 @@ static void              clone_options_reset   (GimpToolOptions *options);
 
 
 /*  local variables  */
-static gint          src_x         = 0;        /*                         */
-static gint          src_y         = 0;        /*  position of clone src  */
-static gint          dest_x        = 0;        /*                         */
-static gint          dest_y        = 0;        /*  position of clone src  */
-static gint          offset_x      = 0;        /*                         */
-static gint          offset_y      = 0;        /*  offset for cloning     */
-static gint          first         = TRUE;
-static gint          trans_tx      = 0;        /*  transformed target     */
-static gint          trans_ty      = 0;        /*  transformed target     */
-static GimpDisplay  *the_src_gdisp = NULL;     /*  ID of source gdisplay  */
-static GimpDrawable *src_drawable_ = NULL;     /*  source drawable        */
+static gint          src_x            = 0;     /*                         */
+static gint          src_y            = 0;     /*  position of clone src  */
+static gint          dest_x           = 0;     /*                         */
+static gint          dest_y           = 0;     /*  position of clone src  */
+static gint          offset_x         = 0;     /*                         */
+static gint          offset_y         = 0;     /*  offset for cloning     */
+static gint          first            = TRUE;
+static GimpDrawable *the_src_drawable = NULL;  /*  source drawable        */
 
 static GimpDrawable *non_gui_src_drawable;
 static gint          non_gui_offset_x;
@@ -237,27 +234,27 @@ clone_src_drawable_disconnect_cb (GimpDrawable  *drawable,
   if (drawable == *src_drawable)
     {
       *src_drawable = NULL;
-      the_src_gdisp = NULL;
     }
 }
 
 static void
 clone_set_src_drawable (GimpDrawable *drawable)
 {
-  if (src_drawable_ == drawable)
+  if (the_src_drawable == drawable)
     return;
 
-  if (src_drawable_)
-    g_signal_handlers_disconnect_by_func (G_OBJECT (src_drawable_),
+  if (the_src_drawable)
+    g_signal_handlers_disconnect_by_func (G_OBJECT (the_src_drawable),
                                           G_CALLBACK (clone_src_drawable_disconnect_cb), 
-                                          &src_drawable_);
+                                          &the_src_drawable);
 
-  src_drawable_ = drawable;
-  if (drawable)
+  the_src_drawable = drawable;
+
+  if (the_src_drawable)
     {
-      g_signal_connect (G_OBJECT (drawable), "disconnect",
+      g_signal_connect (G_OBJECT (the_src_drawable), "disconnect",
                         G_CALLBACK (clone_src_drawable_disconnect_cb),
-                        &src_drawable_);
+                        &the_src_drawable);
     }
 }
 
@@ -269,20 +266,17 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
   GimpTool     *tool;
   GimpDrawTool *draw_tool;
   CloneOptions *options;
-  GimpDisplay  *gdisp;
-  GimpDisplay  *src_gdisp;
-  gint          x1, y1, x2, y2;
-  static gint   orig_src_x, orig_src_y;
   GimpContext  *context;
+
+  static gint   orig_src_x = 0;
+  static gint   orig_src_y = 0;
 
   tool      = GIMP_TOOL (paint_tool);
   draw_tool = GIMP_DRAW_TOOL (paint_tool);
 
   options = (CloneOptions *) tool->tool_info->tool_options;
 
-  gdisp = tool->gdisp;
-
-  context = gimp_get_current_context (gdisp->gimage->gimp);
+  context = gimp_get_current_context (tool->gdisp->gimage->gimp);
 
   switch (state)
     {
@@ -290,24 +284,25 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
       gimp_draw_tool_pause (draw_tool);
       break;
 
-    case MOTION_PAINT:
-      x1 = paint_tool->cur_coords.x;
-      y1 = paint_tool->cur_coords.y;
-      x2 = paint_tool->last_coords.x;
-      y2 = paint_tool->last_coords.y;
+    case POSTTRACE_PAINT:
+      gimp_draw_tool_resume (draw_tool);
+      break;
 
-      /*  If the control key is down, move the src target and return */
+    case MOTION_PAINT:
       if (paint_tool->state & GDK_CONTROL_MASK)
 	{
-	  src_x = x1;
-	  src_y = y1;
+          /*  If the control key is down, move the src target and return */
+
+	  src_x = paint_tool->cur_coords.x;
+	  src_y = paint_tool->cur_coords.y;
 	  first = TRUE;
 	}
-      /*  otherwise, update the target  */
       else
 	{
-	  dest_x = x1;
-	  dest_y = y1;
+          /*  otherwise, update the target  */
+
+	  dest_x = paint_tool->cur_coords.x;
+	  dest_y = paint_tool->cur_coords.y;
 
           if (options->aligned == ALIGN_REGISTERED)
             {
@@ -324,19 +319,17 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	  src_x = dest_x + offset_x;
 	  src_y = dest_y + offset_y;
 
-	  gimp_clone_tool_motion (paint_tool, drawable, src_drawable_, 
+	  gimp_clone_tool_motion (paint_tool, drawable, the_src_drawable, 
 				  options->paint_options.pressure_options, 
 				  options->type,
                                   offset_x, offset_y);
 	}
-
       break;
 
     case INIT_PAINT:
       if (paint_tool->state & GDK_CONTROL_MASK)
 	{
-	  the_src_gdisp = gdisp;
-	  clone_set_src_drawable(drawable);
+	  clone_set_src_drawable (drawable);
 	  src_x = paint_tool->cur_coords.x;
 	  src_y = paint_tool->cur_coords.y;
 	  first = TRUE;
@@ -348,6 +341,8 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	  orig_src_y = src_y;
 	}
 
+      gimp_draw_tool_start (draw_tool, tool->gdisp);
+
       if (options->type == PATTERN_CLONE)
 	if (! gimp_context_get_pattern (context))
 	  g_message (_("No patterns available for this operation."));
@@ -355,38 +350,16 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 
     case FINISH_PAINT:
       gimp_draw_tool_stop (draw_tool);
+
       if (options->aligned == ALIGN_NO && !first)
 	{
 	  src_x = orig_src_x;
 	  src_y = orig_src_y;
 	}
-      return;
       break;
 
     default:
       break;
-    }
-
-  /*  Calculate the coordinates of the target  */
-  src_gdisp = the_src_gdisp;
-  if (! src_gdisp)
-    {
-      the_src_gdisp = gdisp;
-      src_gdisp = the_src_gdisp;
-    }
-
-  if (state == INIT_PAINT)
-    {
-      gimp_draw_tool_start (draw_tool, src_gdisp);
-    }
-  else if (state == POSTTRACE_PAINT)
-    {
-      /*  Find the target cursor's location onscreen  */
-      gdisplay_transform_coords (src_gdisp,
-                                 src_x, src_y,
-				 &trans_tx, &trans_ty,
-                                 TRUE);
-      gimp_draw_tool_resume (draw_tool);
     }
 }
 
@@ -422,12 +395,12 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
-  
+
   if (options->type == IMAGE_CLONE)
     {
       if (state & GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
-      else if (! src_drawable_)
+      else if (! the_src_drawable)
 	ctype = GIMP_BAD_CURSOR;
     }
 
@@ -439,18 +412,29 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 {
-  CloneOptions *options;
+  GimpTool *tool;
 
-  options = (CloneOptions *) GIMP_TOOL (draw_tool)->tool_info->tool_options;
+  tool = GIMP_TOOL (draw_tool);
 
-  if (draw_tool->gc != NULL && options->type == IMAGE_CLONE)
+  if (tool->state == ACTIVE)
     {
-      gdk_draw_line (draw_tool->win, draw_tool->gc,
-		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,
-		     trans_tx + (TARGET_WIDTH >> 1), trans_ty);
-      gdk_draw_line (draw_tool->win, draw_tool->gc,
-		     trans_tx, trans_ty - (TARGET_HEIGHT >> 1),
-		     trans_tx, trans_ty + (TARGET_HEIGHT >> 1));
+      CloneOptions *options;
+
+      options = (CloneOptions *) tool->tool_info->tool_options;
+
+      if (draw_tool->gdisp && options->type == IMAGE_CLONE)
+        {
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_CROSS,
+                                      src_x, src_y,
+                                      TARGET_WIDTH, TARGET_WIDTH,
+                                      GTK_ANCHOR_CENTER,
+                                      TRUE);
+        }
+    }
+  else
+    {
+      GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
     }
 }
 
@@ -731,10 +715,10 @@ gimp_clone_tool_non_gui_default (GimpDrawable *drawable,
 
   if (options)
     {
-      clone_type = options->type;
-      src_drawable = src_drawable_;
-      local_src_x = src_x;
-      local_src_y = src_y;
+      clone_type   = options->type;
+      src_drawable = the_src_drawable;
+      local_src_x  = src_x;
+      local_src_y  = src_y;
     }
   
   return gimp_clone_tool_non_gui (drawable,

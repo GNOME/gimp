@@ -1,3 +1,60 @@
+2002-02-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpobject.c: made the gimp_object_get_memsize()
+	debugging output configurable by a global "gimp_debug_memsize"
+	boolean.
+
+	* app/display/gimpdisplay.c: removed duplicated prototype.
+
+	* app/display/gimpdisplayshell.[ch]: renamed the various cursor
+	functions to be more consistent and shorter. Compress window title
+	updates by adding a "gboolean title_dirty" and updating the title
+	in gimp_display_shell_flush().  Added "%m" (memory size) to the
+	possible title string substitutions.
+
+	* app/display/gimpdisplay-foreach.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimptool.c: changed accordingly.
+
+	* app/display/gimpdisplayshell-callbacks.c: forgot to grab the
+	pointer when dragging guides from the rulers. Coincidentially,
+	this also fixes the buggy offset between guide and mouse
+	pointer...
+	Cleaned up the main tool event callback a but more.
+
+	* app/widgets/gimppreview.c
+	* app/gui/commands.c: set the new global "gimp_debug_memsize"
+	toggle to TRUE while calling gimp_object_get_memsize().
+
+	* app/gui/preferences-dialog.c: added a image title example
+	containing the new "%m" feature.
+
+	* docs/gimprc-1.3.5.in: document "%m" in the manpage.
+
+	* app/tools/gimpbezierselecttool.c: reordered some statements.
+
+	* app/tools/gimpdrawtool.[ch]: store the GimpDisplay passed to
+	gimp_draw_tool_start() in draw_tool->gdisp and use it for
+	coordinate transfomration. This way we can paint on a display
+	which is not tool->gdisp.
+
+	* app/tools/gimppainttool.c: changed the gimp_draw_tool_foo()
+	calls needed to make the straight_line preview work in a way
+	that does not interfere with paint_tool subclasses which want
+	to do their own drawing (like the clone tool).
+
+	Also changed the paint_tools PRETRACE_PAINT and POSTTRACE_PAINT
+	flags usage in a way that subclasses can use them without major
+	hackery: don't simply wrap gimp_display_flush_now() with
+	PRETRACE/POSTTRACE calls, but wrap the actual painting calls, so
+	subclasses are able to do useful things with paint_tool->*_coords.
+
+	* app/tools/gimpclonetool.c: removed poking around in draw_tool
+	internals and simply suspend()/resume() it in
+	PRETRACE_PAINT/POSTTRACE_PAINT to get the clone_src indicator
+	drawn correctly.
+
 2002-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c

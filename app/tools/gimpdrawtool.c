@@ -109,10 +109,13 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 static void
 gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
-  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
+  draw_tool->gdisp        = NULL;
   draw_tool->win          = NULL;
   draw_tool->gc           = NULL;
+
+  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
   draw_tool->paused_count = 0;
+
   draw_tool->line_width   = 0;
   draw_tool->line_style   = GDK_LINE_SOLID;
   draw_tool->cap_style    = GDK_CAP_NOT_LAST;
@@ -177,15 +180,11 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (draw_tool->draw_state != GIMP_DRAW_TOOL_STATE_INVISIBLE)
-    gimp_draw_tool_stop (draw_tool);  /* this seems backwards ;) */
+  gimp_draw_tool_stop (draw_tool);
 
+  draw_tool->gdisp        = gdisp;
   draw_tool->win          = shell->canvas->window;
-  draw_tool->paused_count = 0;  /*  reset pause counter to 0  */
-
-  /*  create a new graphics context  */
-  if (! draw_tool->gc)
-    draw_tool->gc = gdk_gc_new (draw_tool->win);
+  draw_tool->gc           = gdk_gc_new (draw_tool->win);
 
   gdk_gc_set_function (draw_tool->gc, GDK_INVERT);
   fg.pixel = 0xFFFFFFFF;
@@ -208,12 +207,22 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_INVISIBLE)
-    return;
+  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_VISIBLE)
+    {
+      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+    }
 
-  GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
+  draw_tool->paused_count = 0;
 
-  draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
+  draw_tool->gdisp = NULL;
+  draw_tool->win   = NULL;
+
+  if (draw_tool->gc)
+    {
+      g_object_unref (G_OBJECT (draw_tool->gc));
+      draw_tool->gc = NULL;
+    }
 }
 
 void
@@ -237,13 +246,19 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   if (draw_tool->paused_count > 0)
-    draw_tool->paused_count--;
-
-  if (draw_tool->paused_count == 0)
     {
-      draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
+      draw_tool->paused_count--;
 
-      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+      if (draw_tool->paused_count == 0)
+        {
+          draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
+
+          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+        }
+    }
+  else
+    {
+      g_warning ("called with draw_tool->paused_count == 0");
     }
 }
 
@@ -296,19 +311,22 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
                           gdouble       y2,
                           gboolean      use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
   gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-
-  gdisplay_transform_coords_f (tool->gdisp, x1, y1, &tx1, &ty1, use_offsets);
-  gdisplay_transform_coords_f (tool->gdisp, x2, y2, &tx2, &ty2, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               x1, y1,
+                               &tx1, &ty1,
+                               use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               x2, y2,
+                               &tx2, &ty2,
+                               use_offsets);
 
   gdk_draw_line (draw_tool->win,
                  draw_tool->gc,
@@ -325,24 +343,27 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                gdouble       height,
                                gboolean      use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
   gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
-
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
   tx1 = MIN (x, x + width);
   ty1 = MIN (y, y + height);
   tx2 = MAX (x, x + width);
   ty2 = MAX (y, y + height);
 
-  gdisplay_transform_coords_f (tool->gdisp, tx1, ty1, &tx1, &ty1, use_offsets);
-  gdisplay_transform_coords_f (tool->gdisp, tx2, ty2, &tx2, &ty2, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               tx1, ty1,
+                               &tx1, &ty1,
+                               use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               tx2, ty2,
+                               &tx2, &ty2,
+                               use_offsets);
 
   gdk_draw_rectangle (draw_tool->win,
                       draw_tool->gc,
@@ -362,24 +383,27 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gint          angle2,
                          gboolean      use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
   gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
-
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
   tx1 = MIN (x, x + width);
   ty1 = MIN (y, y + height);
   tx2 = MAX (x, x + width);
   ty2 = MAX (y, y + height);
 
-  gdisplay_transform_coords_f (tool->gdisp, tx1, ty1, &tx1, &ty1, use_offsets);
-  gdisplay_transform_coords_f (tool->gdisp, tx2, ty2, &tx2, &ty2, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               tx1, ty1,
+                               &tx1, &ty1,
+                               use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               tx2, ty2,
+                               &tx2, &ty2,
+                               use_offsets);
 
   gdk_draw_arc (draw_tool->win,
                 draw_tool->gc,
@@ -399,17 +423,17 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
                                          GtkAnchorType   anchor,
                                          gboolean        use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx, ty;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-
-  gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               x, y,
+                               &tx, &ty,
+                               use_offsets);
 
   gimp_draw_tool_shift_to_north_west (tx, ty,
                                       width, height,
@@ -441,17 +465,17 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                    GtkAnchorType  anchor,
                                    gboolean       use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx, ty;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-
-  gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               x, y,
+                               &tx, &ty,
+                               use_offsets);
 
   /* well... */
   radius_x *= 2;
@@ -485,17 +509,17 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
                                      GtkAnchorType  anchor,
                                      gboolean       use_offsets)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   gdouble           tx, ty;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  tool = GIMP_TOOL (draw_tool);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-
-  gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
+  gdisplay_transform_coords_f (draw_tool->gdisp,
+                               x, y,
+                               &tx, &ty,
+                               use_offsets);
 
   gimp_draw_tool_shift_to_center (tx, ty,
                                   width, height,
@@ -650,35 +674,34 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 			   gint          npoints,
 			   gint          filled)
 {
-  GimpTool         *tool;
   GimpDisplayShell *shell;
   GdkPoint         *coords;
   gint              i;
   gdouble           sx, sy;
 
-  tool = GIMP_TOOL (draw_tool);
-
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
   coords = g_new (GdkPoint, npoints);
 
   for (i = 0; i < npoints ; i++)
     {
-      gdisplay_transform_coords_f (tool->gdisp, points[i*2], points[i*2+1],
-                                   &sx, &sy, TRUE);
+      gdisplay_transform_coords_f (draw_tool->gdisp,
+                                   points[i*2], points[i*2+1],
+                                   &sx, &sy,
+                                   TRUE);
       coords[i].x = ROUND (sx);
       coords[i].y = ROUND (sy);
     }
 
   if (filled)
     {
-      gdk_draw_polygon (shell->canvas->window,
+      gdk_draw_polygon (draw_tool->win,
                         draw_tool->gc, TRUE,
                         coords, npoints);
     }
   else
     {
-      gdk_draw_lines (shell->canvas->window,
+      gdk_draw_lines (draw_tool->win,
                       draw_tool->gc,
                       coords, npoints);
     }

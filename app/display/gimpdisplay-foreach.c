@@ -202,7 +202,7 @@ gdisplays_set_busy (void)
     {
       shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
 
-      gimp_display_shell_install_override_cursor (shell, GDK_WATCH);
+      gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
     }
 }
 
@@ -216,6 +216,6 @@ gdisplays_unset_busy (void)
     {
       shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
       
-      gimp_display_shell_remove_override_cursor (shell);
+      gimp_display_shell_unset_override_cursor (shell);
     }
 }

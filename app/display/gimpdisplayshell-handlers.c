@@ -141,7 +141,7 @@ static void
 gimp_display_shell_update_title_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
-  gimp_display_shell_update_title (shell);
+  shell->title_dirty = TRUE;
 }
 
 static void

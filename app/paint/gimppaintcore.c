@@ -307,6 +307,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
+  GimpDrawTool  *draw_tool;
   GimpPaintTool *paint_tool;
   GimpBrush     *current_brush;
   gboolean       draw_line;
@@ -314,6 +315,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gdouble        x, y;
   gint           off_x, off_y;
 
+  draw_tool  = GIMP_DRAW_TOOL (tool);
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -322,6 +324,9 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   x = coords->x - off_x;
   y = coords->y - off_y;
+
+  if (draw_tool->gdisp)
+    gimp_draw_tool_stop (draw_tool);
 
   if (! gimp_paint_tool_start (paint_tool, drawable, x, y))
     return;
@@ -415,11 +420,12 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   /*  store the current brush pointer  */
   current_brush = paint_tool->brush;
 
+  if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
+    gimp_paint_tool_paint (paint_tool, drawable, PRETRACE_PAINT);
+
   /*  Paint to the image  */
   if (draw_line)
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL(paint_tool));
-
       gimp_paint_tool_interpolate (paint_tool, drawable);
 
       paint_tool->last_coords = paint_tool->cur_coords;
@@ -449,9 +455,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 	}
     }
 
-  if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    gimp_paint_tool_paint (paint_tool, drawable, PRETRACE_PAINT);
-
   gimp_display_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
@@ -480,8 +483,6 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   /*  Let the specific painting function finish up  */
   gimp_paint_tool_paint (paint_tool, drawable, FINISH_PAINT);
-
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (paint_tool));
 
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;
@@ -525,10 +526,10 @@ gimp_paint_tool_motion (GimpTool        *tool,
       return;
     }
 
-  gimp_paint_tool_interpolate (paint_tool, drawable);
-
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
     gimp_paint_tool_paint (paint_tool, drawable, PRETRACE_PAINT);
+
+  gimp_paint_tool_interpolate (paint_tool, drawable);
 
   gimp_display_flush_now (gdisp);
 
@@ -556,8 +557,9 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  undraw the current tool  */
-  gimp_draw_tool_pause (draw_tool);
+  /*  undraw the old line (if any)  */
+  if (draw_tool->gdisp)
+    gimp_draw_tool_stop (draw_tool);
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
                       g_type_name (G_TYPE_FROM_INSTANCE (tool)));
@@ -637,16 +639,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
                                g_type_name (G_TYPE_FROM_INSTANCE (tool)),
                                status_str);
 
-	  if (draw_tool->gc == NULL)
-	    {
-	      gimp_draw_tool_start (draw_tool, gdisp);
-	    }
-	  else
-	    {
-	      /* is this a bad hack ? */
-	      draw_tool->paused_count = 0;
-	      gimp_draw_tool_resume (draw_tool);
-	    }
+          gimp_draw_tool_start (draw_tool, gdisp);
 	}
       /* If Ctrl or Mod1 is pressed, pick colors */
       else if (paint_tool->pick_colors &&
@@ -676,43 +669,40 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpPaintTool *paint_tool;
+  if (draw_tool->gdisp)
+    {
+      GimpPaintTool *paint_tool;
 
-  /* if shift was never used, draw_tool->gc is NULL
-   * and we don't care about a redraw
-   */
-  if (! draw_tool->gc)
-    return;
+      paint_tool = GIMP_PAINT_TOOL (draw_tool);
 
-  paint_tool = GIMP_PAINT_TOOL (draw_tool);
+      /*  Draw start target  */
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CROSS,
+                                  floor (paint_tool->last_coords.x) + 0.5,
+                                  floor (paint_tool->last_coords.y) + 0.5,
+                                  TARGET_SIZE,
+                                  TARGET_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  TRUE);
 
-  /*  Draw start target  */
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_CROSS,
-                              floor (paint_tool->last_coords.x) + 0.5,
-                              floor (paint_tool->last_coords.y) + 0.5,
-                              TARGET_SIZE,
-                              TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              TRUE);
+      /*  Draw end target  */
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CROSS,
+                                  floor (paint_tool->cur_coords.x) + 0.5,
+                                  floor (paint_tool->cur_coords.y) + 0.5,
+                                  TARGET_SIZE,
+                                  TARGET_SIZE,
+                                  GTK_ANCHOR_CENTER,
+                                  TRUE);
 
-  /*  Draw end target  */
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_CROSS,
-                              floor (paint_tool->cur_coords.x) + 0.5,
-                              floor (paint_tool->cur_coords.y) + 0.5,
-                              TARGET_SIZE,
-                              TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              TRUE);
-
-  /*  Draw the line between the start and end coords  */
-  gimp_draw_tool_draw_line (draw_tool,
-                            floor (paint_tool->last_coords.x) + 0.5,
-                            floor (paint_tool->last_coords.y) + 0.5,
-                            floor (paint_tool->cur_coords.x) + 0.5,
-                            floor (paint_tool->cur_coords.y) + 0.5,
-                            TRUE);
+      /*  Draw the line between the start and end coords  */
+      gimp_draw_tool_draw_line (draw_tool,
+                                floor (paint_tool->last_coords.x) + 0.5,
+                                floor (paint_tool->last_coords.y) + 0.5,
+                                floor (paint_tool->cur_coords.x) + 0.5,
+                                floor (paint_tool->cur_coords.y) + 0.5,
+                                TRUE);
+    }
 }
 
 /***********************************************************************/
@@ -810,22 +800,22 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
                     G_CALLBACK (gimp_paint_tool_invalidate_cache),
                     NULL);
 
-  paint_tool->spacing = (double) gimp_brush_get_spacing (brush) / 100.0;
+  paint_tool->spacing = (gdouble) gimp_brush_get_spacing (brush) / 100.0;
 
   paint_tool->brush = brush;
 
-  /*  free the block structures  */
+  /*  Allocate the undo structure  */
   if (undo_tiles)
     tile_manager_destroy (undo_tiles);
-  if (canvas_tiles)
-    tile_manager_destroy (canvas_tiles);
 
-  /*  Allocate the undo structure  */
   undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
 				 gimp_drawable_height (drawable),
 				 gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
+  if (canvas_tiles)
+    tile_manager_destroy (canvas_tiles);
+
   canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
 				   gimp_drawable_height (drawable), 1);
 

@@ -2814,15 +2814,14 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  tool->paused_count = 0;
+  tool->state        = ACTIVE;
   tool->gdisp        = gdisp;
   tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
+  tool->paused_count = 0;
 
   bezier_select_reset (curSel);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
-
-  tool->state = ACTIVE;
 
   pts = (GimpBezierSelectPoint *) bsel->points;
 

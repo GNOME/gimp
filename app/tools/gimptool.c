@@ -335,10 +335,10 @@ gimp_tool_set_cursor (GimpTool           *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  gimp_display_shell_install_tool_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                          cursor,
-                                          tool_cursor,
-                                          modifier);
+  gimp_display_shell_set_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                 cursor,
+                                 tool_cursor,
+                                 modifier);
 }
 
 

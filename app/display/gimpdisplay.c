@@ -58,8 +58,6 @@ static void       gimp_display_finalize              (GObject          *object);
 
 static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
                                                       gboolean          now);
-static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
-                                                      gboolean          now);
 static void       gimp_display_idlerender_init       (GimpDisplay      *gdisp);
 static gboolean   gimp_display_idlerender_callback   (gpointer          data);
 static gboolean   gimp_display_idle_render_next_area (GimpDisplay      *gdisp);

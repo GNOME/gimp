@@ -191,10 +191,10 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gimp_display_shell_scale_setup (shell);
 
   /*  set the initial cursor  */
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GDK_TOP_LEFT_ARROW,
-                                          GIMP_TOOL_CURSOR_NONE,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  gimp_display_shell_set_cursor (shell,
+                                 GDK_TOP_LEFT_ARROW,
+                                 GIMP_TOOL_CURSOR_NONE,
+                                 GIMP_CURSOR_MODIFIER_NONE);
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
@@ -499,7 +499,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             gtk_grab_add (canvas);
 
-            gimp_display_shell_install_override_cursor (shell, GDK_FLEUR);
+            gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
             break;
 
           case 3:
@@ -609,7 +609,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             gtk_grab_remove (canvas);
 
-            gimp_display_shell_remove_override_cursor (shell);
+            gimp_display_shell_unset_override_cursor (shell);
             break;
 
           case 3:
@@ -695,11 +695,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimage->gimp);
 
-        if ((state & GDK_BUTTON1_MASK) &&
-            active_tool && (! gimp_image_is_empty (gimage) ||
-                            active_tool->handle_empty_image))
+        if (state & GDK_BUTTON1_MASK)
           {
-            if (active_tool->state == ACTIVE)
+            if (active_tool                  &&
+                active_tool->state == ACTIVE &&
+                (! gimp_image_is_empty (gimage) ||
+                 active_tool->handle_empty_image))
               {
                 /*  if the first mouse button is down, check for automatic
                  *  scrolling...
@@ -764,13 +765,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                             gdisp);
               }
           }
-        else if ((state & GDK_BUTTON2_MASK) && scrolling)
+        else if (state & GDK_BUTTON2_MASK)
           {
-            gimp_display_shell_scroll (shell,
-                                       (scroll_start_x - mevent->x -
-                                        shell->offset_x),
-                                       (scroll_start_y - mevent->y -
-                                        shell->offset_y));
+            if (scrolling)
+              {
+                gimp_display_shell_scroll (shell,
+                                           (scroll_start_x - mevent->x -
+                                            shell->offset_x),
+                                           (scroll_start_y - mevent->y -
+                                            shell->offset_y));
+              }
           }
 
         if (! (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
@@ -943,18 +947,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             }
           else if (gimp_image_is_empty (gimage))
             {
-              gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_BAD_CURSOR,
-                                                      active_tool->tool_cursor,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
+              gimp_display_shell_set_cursor (shell,
+                                             GIMP_BAD_CURSOR,
+                                             active_tool->tool_cursor,
+                                             GIMP_CURSOR_MODIFIER_NONE);
             }
         }
       else
         {
-          gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_BAD_CURSOR,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
+          gimp_display_shell_set_cursor (shell,
+                                         GIMP_BAD_CURSOR,
+                                         GIMP_TOOL_CURSOR_NONE,
+                                         GIMP_CURSOR_MODIFIER_NONE);
         }
     }
 
@@ -998,8 +1002,13 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
 
 	  if (active_tool)
 	    {
+              gdk_pointer_grab (shell->canvas->window, FALSE,
+                                GDK_POINTER_MOTION_HINT_MASK |
+                                GDK_BUTTON1_MOTION_MASK |
+                                GDK_BUTTON_RELEASE_MASK,
+                                NULL, NULL, event->time);
+
 	      gimp_move_tool_start_hguide (active_tool, gdisp);
-	      gtk_grab_add (shell->canvas);
 	    }
 	}
     }
@@ -1037,8 +1046,13 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
 
 	  if (active_tool)
 	    {
+              gdk_pointer_grab (shell->canvas->window, FALSE,
+                                GDK_POINTER_MOTION_HINT_MASK |
+                                GDK_BUTTON1_MOTION_MASK |
+                                GDK_BUTTON_RELEASE_MASK,
+                                NULL, NULL, event->time);
+
 	      gimp_move_tool_start_vguide (active_tool, gdisp);
-	      gtk_grab_add (shell->canvas);
 	    }
 	}
     }

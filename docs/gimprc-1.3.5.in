@@ -414,6 +414,8 @@ sequences are recognised and expanded as follows:
 .br
 %Dx expands to x if the image is dirty, the empty string
 otherwise.  The x can be any character, eg %D*.
+.br
+%m  memory used by image
 
 The default format string is "%f-%p.%i (%t)".
 

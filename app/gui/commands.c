@@ -63,5 +63,11 @@ void
 debug_mem_profile_cmd_callback (GtkWidget *widget,
                                 gpointer   data)
 {
+  extern gboolean gimp_debug_memsize;
+
+  gimp_debug_memsize = TRUE;
+
   gimp_object_get_memsize (GIMP_OBJECT (data));
+
+  gimp_debug_memsize = FALSE;
 }
