@@ -1,3 +1,7 @@
+2003-10-08  Sven Neumann  <sven@gimp.org>
+
+	* data/images/gimp_splash.png: flatten the splash (bug #124062).
+
 2003-10-07  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
