@@ -29,9 +29,11 @@ EXPORTS
 	gimp_rgb_composite
 	gimp_rgb_distance
 	gimp_rgb_gamma
+	gimp_rgb_get_type
 	gimp_rgb_get_uchar
 	gimp_rgb_intensity
 	gimp_rgb_intensity_uchar
+	gimp_rgb_list_names
 	gimp_rgb_max
 	gimp_rgb_min
 	gimp_rgb_multiply

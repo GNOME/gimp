@@ -1,5 +1,10 @@
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpcolor.def
+	* libgimpwidgets/gimpwidgets.def: added new symbols.
+
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb.[ch]: register GimpRGB as a boxed type.
 
 	* libgimpcolor/gimpadaptivesupersample.c

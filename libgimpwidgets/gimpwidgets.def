@@ -41,6 +41,9 @@ EXPORTS
 	gimp_color_display_stack_remove
 	gimp_color_display_stack_reorder_down
 	gimp_color_display_stack_reorder_up
+	gimp_color_hex_entry_get_type
+	gimp_color_hex_entry_get_color
+	gimp_color_hex_entry_set_color
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
 	gimp_color_scale_entry_new
