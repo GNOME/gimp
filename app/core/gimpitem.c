@@ -110,14 +110,14 @@ gimp_item_get_type (void)
       static const GTypeInfo item_info =
       {
         sizeof (GimpItemClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_item_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpItem),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_item_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_item_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpItem),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_item_init,
       };
 
       item_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
@@ -131,24 +131,20 @@ gimp_item_get_type (void)
 static void
 gimp_item_class_init (GimpItemClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_item_signals[REMOVED] =
     g_signal_new ("removed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpItemClass, removed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_item_signals[VISIBILITY_CHANGED] =
     g_signal_new ("visibility_changed",
@@ -161,12 +157,12 @@ gimp_item_class_init (GimpItemClass *klass)
 
   gimp_item_signals[LINKED_CHANGED] =
     g_signal_new ("linked_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpItemClass, linked_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, linked_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize           = gimp_item_finalize;
 
@@ -226,7 +222,7 @@ gimp_item_finalize (GObject *object)
   if (item->gimage && item->gimage->gimp)
     {
       g_hash_table_remove (item->gimage->gimp->item_table,
-			   GINT_TO_POINTER (item->ID));
+                           GINT_TO_POINTER (item->ID));
       item->gimage = NULL;
     }
 
@@ -449,7 +445,7 @@ gimp_item_is_removed (const GimpItem *item)
  * @height: The height to assign the item.
  * @name: The name to assign the item.
  *
- * This function is used to configure a new item.  First, if the item 
+ * This function is used to configure a new item.  First, if the item
  * does not already have an ID, it is assigned the next available
  * one, and then inserted into the Item Hash Table.  Next, it is
  * given basic item properties as specified by the arguments.
@@ -489,8 +485,7 @@ gimp_item_configure (GimpItem    *item,
  * gimp_item_is_attached:
  * @item: The #GimpItem to check.
  *
- * Calls the type-specific 'is_attached' function for the item,
- * the returns the value that this yields.
+ * Returns: %TRUE if the item is attached to an image, %FALSE otherwise.
  */
 gboolean
 gimp_item_is_attached (GimpItem *item)
@@ -505,9 +500,6 @@ gimp_item_is_attached (GimpItem *item)
  * @item: The #GimpItem to duplicate.
  * @new_type: The type to make the new item.
  * @add_alpha: #TRUE if an alpha channel should be added to the new item.
- *
- * Calls the type-specific 'duplicate' function for the item, with the specified
- * arguments passed on unchanged.
  *
  * Returns: the newly created item.
  */
@@ -530,9 +522,6 @@ gimp_item_duplicate (GimpItem *item,
  * @new_type: The type to convert the item to.
  * @add_alpha: #TRUE if an alpha channel should be added to the converted item.
  *
- * Calls the type-specific 'convert' function for the item, with the specified
- * arguments passed on unchanged.
- *
  * Returns: the new item that results from the conversion.
  */
 GimpItem *
@@ -548,8 +537,8 @@ gimp_item_convert (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
-  new_item =  GIMP_ITEM_GET_CLASS (item)->convert (item, dest_image,
-                                                   new_type, add_alpha);
+  new_item = GIMP_ITEM_GET_CLASS (item)->convert (item, dest_image,
+                                                  new_type, add_alpha);
 
   if (dest_image != item->gimage)
     gimp_item_set_image (new_item, dest_image);
@@ -568,10 +557,7 @@ gimp_item_convert (GimpItem  *item,
  * default name for the item's class is used.  If the name is changed,
  * the "name_changed" signal is emitted for the item.
  *
- * The contents of @new_name are copied, so it is okay to free them
- * afterward.
- *
- * Returns: #TRUE if @item is a valid #GimpItem.
+ * Returns: %TRUE if the @item could be renamed, %FALSE otherwise.
  */
 gboolean
 gimp_item_rename (GimpItem    *item,
@@ -596,7 +582,7 @@ gimp_item_rename (GimpItem    *item,
  * gimp_item_width:
  * @item: The #GimpItem to check.
  *
- * Returns: The width of the item, as recorded in its #GimpItem struct. 
+ * Returns: The width of the item.
  */
 gint
 gimp_item_width (const GimpItem *item)
@@ -610,7 +596,7 @@ gimp_item_width (const GimpItem *item)
  * gimp_item_height:
  * @item: The #GimpItem to check.
  *
- * Returns: The height of the item, as recorded in its #GimpItem struct. 
+ * Returns: The height of the item.
  */
 gint
 gimp_item_height (const GimpItem *item)
@@ -623,10 +609,10 @@ gimp_item_height (const GimpItem *item)
 /**
  * gimp_item_offsets:
  * @item: The #GimpItem to check.
- * @off_x: Pointer to a location in which to return the X offset of the item.
- * @off_y: Pointer to a location in which to return the Y offset of the item.
+ * @off_x: Return location for the item's X offset.
+ * @off_y: Return location for the item's Y offset.
  *
- * Reveals the X and Y offsets of the item, as recorded in its #GimpItem struct. 
+ * Reveals the X and Y offsets of the item.
  */
 void
 gimp_item_offsets (const GimpItem *item,
@@ -639,16 +625,15 @@ gimp_item_offsets (const GimpItem *item,
   if (off_y) *off_y = item->offset_y;
 }
 
-
 /**
  * gimp_item_translate:
  * @item: The #GimpItem to move.
  * @off_x: Increment to the X offset of the item.
  * @off_y: Increment to the Y offset of the item.
- * @push_undo: If #TRUE, create an entry in the image's undo stack for this action.
+ * @push_undo: If #TRUE, create an entry in the image's undo stack
+ *             for this action.
  *
- * Adds the specified increments to the X and Y offsets for the item, as stored
- * in its #GimpItem struct.
+ * Adds the specified increments to the X and Y offsets for the item.
  */
 void
 gimp_item_translate (GimpItem *item,
@@ -1102,9 +1087,9 @@ gimp_item_parasite_attach (GimpItem     *item,
       gimp_image_undo_push_item_parasite (item->gimage, NULL, item, parasite);
     }
   else if (gimp_parasite_is_persistent (parasite) &&
-	   ! gimp_parasite_compare (parasite,
-				    gimp_item_parasite_find
-				    (item, gimp_parasite_name (parasite))))
+           ! gimp_parasite_compare (parasite,
+                                    gimp_item_parasite_find
+                                    (item, gimp_parasite_name (parasite))))
     {
       gimp_image_undo_push_cantundo (item->gimage,
                                      _("Attach Parasite to Item"));
@@ -1191,8 +1176,8 @@ gimp_item_parasite_list (const GimpItem *item,
   cur = list = g_new (gchar *, *count);
 
   gimp_parasite_list_foreach (item->parasites,
-			      (GHFunc) gimp_item_parasite_list_foreach_func,
-			      &cur);
+                              (GHFunc) gimp_item_parasite_list_foreach_func,
+                              &cur);
 
   return list;
 }
