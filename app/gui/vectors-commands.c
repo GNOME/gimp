@@ -277,17 +277,9 @@ vectors_stroke_vectors (GimpItem *item)
       return;
     }
 
-  dialog = stroke_dialog_new (active_drawable, item, NULL,
-                              GIMP_STOCK_PATH_STROKE, GIMP_HELP_PATH_STROKE);
+  dialog = stroke_dialog_new (item, GIMP_STOCK_PATH_STROKE,
+                              GIMP_HELP_PATH_STROKE);
   gtk_widget_show (dialog);
-
-  /*
-  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
-
-  gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
-                    GIMP_OBJECT (tool_info->paint_info));
-  gimp_image_flush (gimage);
-  */
 }
 
 void

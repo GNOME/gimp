@@ -1,5 +1,18 @@
 2003-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/stroke-dialog.[ch]: made it a view on the GimpItem to
+	stroke, not on the image, so the dialog goes away automatically if
+	the item is removed from the image. Don't pass a GimpStrokeOptions
+	to stroke_dialog_new() until we figured how to handle a list of
+	presets or at least the last used options object. Also don't pass
+	a GimpDrawable, get the active_drawable in the "ok" callback
+	instead. Attach less pointers to the dialog and simplified stuff.
+
+	* app/gui/vectors-commands.c (vectors_stroke_vectors): changed
+	accordingly, removed commented out cruft.
+
+2003-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimppaintinfo.[ch]: derive it from GimpViewable.
 
 	* app/core/gimptoolinfo.c (gimp_tool_info_new): set the
