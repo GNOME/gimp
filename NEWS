@@ -19,10 +19,10 @@ Bugs fixed in GIMP 2.2.4
 - show clone source when cloning from a different image (bug #167002)
 - corrected coordinate limits in New Guide script (bug #167529)
 - fixed crash in gradient editor (bug #167604)
-- don't allow the combo boxes at the bottom of the image window to
-  grab the keyboard focus (bug #167809)
-- fixed saving of MNG files that include layers with negative offsets
-  (bug #166059)
+- don't give keyboard focus to combo boxes in image window (bug #167809)
+- fixed saving of MNG files with negative layer offsets (bug #166059)
+- fixed use of the text tool on floating selections (bug #166829)
+- don't create duplicate templates when migrating user settings (bug #167893)
 
 
 Bugs fixed in GIMP 2.2.3
