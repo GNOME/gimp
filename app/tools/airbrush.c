@@ -152,6 +152,12 @@ airbrush_paint_func (PaintCore *paint_core,
   switch (state)
     {
     case INIT_PAINT :
+      //      timer_state = OFF;
+      if (timer_state == ON)
+	{
+	  g_warning ("killing stray timer, please report to lewing@gimp.org");
+	  gtk_timeout_remove (timer);
+	}
       timer_state = OFF;
       break;
 
@@ -207,11 +213,11 @@ tools_new_airbrush ()
 void
 tools_free_airbrush (Tool *tool)
 {
-  paint_core_free (tool);
-
   if (timer_state == ON)
     gtk_timeout_remove (timer);
   timer_state = OFF;
+
+  paint_core_free (tool);
 }
 
 
