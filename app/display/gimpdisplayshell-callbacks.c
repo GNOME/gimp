@@ -446,9 +446,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
-        gimp_display_shell_update_cursor (shell, -1, -1);
-
         shell->proximity = FALSE;
+        gimp_display_shell_update_cursor (shell, -1, -1);
       }
       break;
 
@@ -457,6 +456,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_PROXIMITY_OUT:
       shell->proximity = FALSE;
+      gimp_display_shell_update_cursor (shell, -1, -1);
       break;
 
     case GDK_FOCUS_CHANGE:
