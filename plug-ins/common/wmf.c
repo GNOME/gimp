@@ -189,9 +189,7 @@ load_dialog (const gchar *filename)
   GtkWidget *dialog;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *label;
   GtkWidget *table;
-  GtkWidget *slider;
   GtkObject *scale;
   gboolean   run = FALSE;
 
@@ -212,35 +210,27 @@ load_dialog (const gchar *filename)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   /* Scale label */
-  table = gtk_table_new (1, 2, FALSE);
+  table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Scale (log 2):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   /* Scale slider */
-  scale = gtk_adjustment_new (0.0, -2.0, 2.0, 0.2, 0.2, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (scale));
-  gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_widget_show (slider);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
+  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                _("Scale (log 2):"), -1, -1,
+                                0.0, -2.0, 2.0,
+                                0.1, 0.5, 1,
+                                TRUE, 0.0, 0.0,
+                                NULL, NULL);
 
   gtk_widget_show (dialog);
 
@@ -446,4 +436,3 @@ load_image (const gchar *filename,
 
   return image;
 }
-

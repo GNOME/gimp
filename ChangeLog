@@ -1,3 +1,8 @@
+2003-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/wmf.c (load_dialog): use a scale_entry instead
+	of adding a GtkHScale manually.
+
 2003-11-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for libwmf >= 0.2.8 and build the WMF
