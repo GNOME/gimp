@@ -39,6 +39,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
@@ -52,6 +53,7 @@
 #include "gimpdrawablepreview.h"
 #include "gimpgradientpreview.h"
 #include "gimpimagepreview.h"
+#include "gimpimagefilepreview.h"
 #include "gimppalettepreview.h"
 #include "gimppatternpreview.h"
 #include "gimppreview.h"
@@ -303,6 +305,10 @@ gimp_preview_new_by_type (GimpViewable *viewable)
   else if (GIMP_IS_TOOL_INFO (viewable))
     {
       preview = g_object_new (GIMP_TYPE_TOOL_INFO_PREVIEW, NULL);
+    }
+  else if (GIMP_IS_IMAGEFILE (viewable))
+    {
+      preview = g_object_new (GIMP_TYPE_IMAGEFILE_PREVIEW, NULL);
     }
   else
     {
@@ -902,14 +908,7 @@ gimp_preview_calc_size (GimpPreview *preview,
 
   if (! preview->dot_for_dot && xresolution != yresolution)
     {
-      if (xresolution < yresolution)
-	{
-	  yratio *= xresolution / yresolution;
-	}
-      else
-	{
-	  yratio *= yresolution / xresolution;
-	}
+      yratio *= xresolution / yresolution;
     }
 
   width  = RINT (xratio * (gdouble) aspect_width);
@@ -920,7 +919,9 @@ gimp_preview_calc_size (GimpPreview *preview,
 
   *return_width  = width;
   *return_height = height;
-  *scaling_up    = (xratio > 1.0) || (yratio > 1.0);
+
+  if (scaling_up)
+    *scaling_up = (xratio > 1.0) || (yratio > 1.0);
 }
 
 void

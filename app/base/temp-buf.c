@@ -129,6 +129,8 @@ temp_buf_new (gint    width,
   guchar  *data;
   TempBuf *temp;
 
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
   temp = g_new (TempBuf, 1);
 
   temp->width    = width;
@@ -200,17 +202,14 @@ temp_buf_new_check (gint width,
 		    GimpCheckType check_type,
 	            GimpCheckSize check_size)
 {
-  TempBuf *newbuf = NULL;
-  guchar *data = 0;
-  guchar check_shift = 0;
-  guchar fg_color = 0;
-  guchar bg_color = 0;
-  gint j, i = 0;
+  TempBuf *newbuf;
+  guchar  *data;
+  guchar   check_shift = 0;
+  guchar   fg_color = 0;
+  guchar   bg_color = 0;
+  gint     i, j;
 
-  if (check_type < LIGHT_CHECKS || check_type > BLACK_ONLY)
-    g_error ("invalid check_type argument to temp_buf_check: %d", check_type);
-  if (check_size < SMALL_CHECKS || check_size > LARGE_CHECKS)
-    g_error ("invalid check_size argument to temp_buf_check: %d", check_size);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
 
   switch (check_size)
     {
@@ -222,6 +221,7 @@ temp_buf_new_check (gint width,
       break;
     case LARGE_CHECKS:
       check_shift = 6;
+      break;
     }
  
   switch (check_type)
@@ -254,7 +254,7 @@ temp_buf_new_check (gint width,
   newbuf = temp_buf_new (width, height, 3, 0, 0, NULL);
   data = temp_buf_data (newbuf);
   
-  for (j = 1; i <= height; j++)
+  for (i = 0, j = 1; i <= height; j++)
     {
       for (i = 1; i <= width; i++)
 	{
@@ -273,11 +273,7 @@ temp_buf_copy (TempBuf *src,
   TempBuf *new;
   glong    length;
 
-  if (!src)
-    {
-      g_message ("trying to copy a temp buf which is NULL.");
-      return dest;
-    }
+  g_return_val_if_fail (src != NULL, NULL);
 
   if (!dest)
     {
@@ -319,6 +315,9 @@ temp_buf_resize (TempBuf *buf,
 		 gint     height)
 {
   gint size;
+
+  g_return_val_if_fail (buf != NULL, NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
 
   /*  calculate the requested size  */
   size = width * height * bytes;
@@ -362,6 +361,9 @@ temp_buf_scale (TempBuf *src,
   guchar  *src_data;
   guchar  *dest_data;
   TempBuf *dest;
+
+  g_return_val_if_fail (src != NULL, NULL);
+  g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
 
   dest = temp_buf_new (new_width,
 		       new_height,
@@ -469,6 +471,8 @@ temp_buf_copy_area (TempBuf *src,
 void
 temp_buf_free (TempBuf *temp_buf)
 {  
+  g_return_if_fail (temp_buf != NULL);
+
   if (temp_buf->data)
     g_free (temp_buf->data);
 

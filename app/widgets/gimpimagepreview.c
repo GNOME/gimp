@@ -184,13 +184,7 @@ gimp_image_preview_render (GimpPreview *preview)
 
       temp_buf_free (render_buf);
 
-      gimp_preview_render_and_flush (preview,
-				     temp_buf,
-				     GIMP_IMAGE_PREVIEW (preview)->channel);
-
-      temp_buf_free (temp_buf);
-
-      return;
+      render_buf = temp_buf;
     }
 
   gimp_preview_render_and_flush (preview,

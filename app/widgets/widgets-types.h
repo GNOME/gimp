@@ -115,6 +115,7 @@ typedef struct _GimpDialogFactory       GimpDialogFactory;
 typedef struct _GimpPreview             GimpPreview;
 typedef struct _GimpImagePreview        GimpImagePreview;
 typedef struct _GimpDrawablePreview     GimpDrawablePreview;
+typedef struct _GimpImagefilePreview    GimpImagefilePreview;
 typedef struct _GimpBrushPreview        GimpBrushPreview;
 typedef struct _GimpNavigationPreview   GimpNavigationPreview;
 typedef struct _GimpPatternPreview      GimpPatternPreview;

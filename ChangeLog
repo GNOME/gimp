@@ -1,3 +1,22 @@
+2001-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/base/temp-buf.c: added some safety checks. 
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimagefilepreview.[ch]: a new class implementing
+	special	GimpPreview methods for GimpImagefile.
+
+	* app/core/gimpimagefile.c: added code to load thumbnails according
+	to the proposed Thumbnail Managing Standard 
+	(see http://triq.net/~pearl/thumbnail-spec/). Pretty much untested.
+
+	* app/widgets/gimpcontainerview-utils.c: plugged a memleak.
+
+	* app/widgets/gimpimagepreview.c: simplified.
+
+	* app/widgets/gimppreview.c: tell it about GimpImagefilePreview.
+
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am: need to spell EXTRA_DIST correctly now

@@ -66,6 +66,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimphistogramview.h		\
 	gimpimagedock.c			\
 	gimpimagedock.h			\
+	gimpimagefilepreview.c		\
+	gimpimagefilepreview.h		\
 	gimpimagepreview.c		\
 	gimpimagepreview.h		\
 	gimplayerlistitem.c		\

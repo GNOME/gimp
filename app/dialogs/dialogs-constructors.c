@@ -747,7 +747,7 @@ dialogs_document_history_new (GimpDialogFactory *factory,
   view = gimp_document_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->documents,
                                  context,
-                                 32,
+                                 48,
                                  5, 3,
                                  documents_show_context_menu);
 

@@ -337,26 +337,25 @@ gimp_container_view_imagefile_name_func (GtkWidget  *widget,
 
       if (imagefile)
 	{
-	  gchar *basename;
+	  gchar *name;
 
-	  basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
+	  name = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
 
 	  if (tooltip)
 	    *tooltip = g_strdup (GIMP_OBJECT (imagefile)->name);
 
 	  if (imagefile->width > 0 && imagefile->height > 0)
 	    {
-	      return g_strdup_printf ("%s (%d x %d)",
-				      basename,
-				      imagefile->width,
-				      imagefile->height);
-	    }
-	  else
-	    {
-	      return g_strdup (basename);
-	    }
+              gchar *tmp = name;
 
-	  g_free (basename);
+              name = g_strdup_printf ("%s (%d x %d)",
+                                      tmp,
+                                      imagefile->width,
+                                      imagefile->height);
+              g_free (tmp);
+	    }
+          
+          return name;
 	}
     }
 
