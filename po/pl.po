@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-06-01 00:49+0200\n"
-"PO-Revision-Date: 2002-06-01 00:53+0200\n"
+"POT-Creation-Date: 2002-06-14 23:20+0200\n"
+"PO-Revision-Date: 2002-06-14 23:25+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -411,10 +411,6 @@ msgstr "Usztywnienie oderwanego zaznaczenia"
 msgid "FS Relax"
 msgstr "Uwolnienie oderwanego zaznaczenia"
 
-#: app/undo.c:1
-msgid "EEK: can't undo"
-msgstr "EEK: Nie można cofnąć"
-
 #: app/undo_history.c:1 app/undo_history.c:1
 #, c-format
 msgid "Undo History: %s"
@@ -504,6 +500,7 @@ msgstr "Niebieski"
 msgid "Alpha"
 msgstr "Alfa"
 
+#. please don't translate 'yes' and 'no'
 #: app/config/gimpconfig-deserialize.c:1
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
@@ -549,12 +546,15 @@ msgid "Failed to create file '%s': %s"
 msgstr "Nie można utworzyć pliku \"%s\": %s"
 
 #: app/config/gimpconfig.c:1 app/config/gimpconfig.c:1
-#: app/config/gimpscanner.c:1 app/core/gimpunits.c:1
-#: app/plug-in/plug-in-rc.c:1
+#: app/config/gimpscanner.c:1 app/config/gimpscanner.c:1
+#: app/core/gimpunits.c:1 app/gui/session.c:1 app/plug-in/plug-in-rc.c:1
 msgid "fatal parse error"
 msgstr "poważny błąd przy analizie składniowej"
 
-#: app/config/gimpscanner.c:1
+#: app/config/gimpscanner.c:1 app/core/gimpbrushpipe.c:1
+#: app/gui/paths-dialog.c:1 app/gui/paths-dialog.c:1
+#: app/tools/gimpcurvestool.c:1 app/tools/gimpcurvestool.c:1
+#: app/tools/gimplevelstool.c:1 app/tools/gimplevelstool.c:1
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Nie można otworzyć pliku \"%s\": %s"
@@ -845,11 +845,6 @@ msgstr "Niepoprawny napis UTF-8 w pliku z pędzlami \"%s\"."
 msgid "Unnamed"
 msgstr "NezNazwy"
 
-#: app/core/gimpbrushpipe.c:1
-#, c-format
-msgid "Could not open file '%s'"
-msgstr "Nie można otworzyć pliku \"%s\""
-
 #: app/core/gimpbrushpipe.c:1 app/core/gimpbrushpipe.c:1
 #: app/core/gimpbrushpipe.c:1
 #, c-format
@@ -859,21 +854,6 @@ msgid ""
 msgstr ""
 "Poważny błąd przy analizie składniowej:\n"
 "Plik \"%s\" z potokiem pędzli jest uszkodzony."
-
-#: app/core/gimpcontainer.c:1
-#, c-format
-msgid "unable to determine type of '%s'"
-msgstr "nie można określić typu identyfikatora \"%s\""
-
-#: app/core/gimpcontainer.c:1
-#, c-format
-msgid "'%s' is not a subclass of '%s'"
-msgstr "\"%s\" nie jest podklasą \"%s\""
-
-#: app/core/gimpcontainer.c:1
-#, c-format
-msgid "'%s' does not implement GimpConfigInterface"
-msgstr "\"%s\" nie implementuje interfejsu GimpConfigInterface"
 
 #: app/core/gimpdatafactory.c:1
 #, c-format
@@ -1071,31 +1051,21 @@ msgstr "Nie można bardziej obniżyć ścieżki."
 
 #: app/core/gimpimagefile.c:1 app/core/gimpimagefile.c:1
 #, c-format
-msgid ""
-"Couldn't write thumbnail for '%s'\n"
-"as '%s'.\n"
-"%s"
-msgstr ""
-"Nie można zapisać miniaturki obrazu \"%s\"\n"
-"jako \"%s\":\n"
-"%s"
+msgid "Failed to write thumbnail for '%s' as '%s': %s"
+msgstr "Nie można zapisać miniaturki obrazu \"%s\" pod nazwą \"%s\": %s"
 
 #: app/core/gimpimagefile.c:1 app/core/gimpimagefile.c:1
 #, c-format
-msgid ""
-"Couldn't set permissions of thumbnail '%s'.\n"
-"%s"
-msgstr ""
-"Nie można ustawić uprawnień pliku miniaturki \"%s\".\n"
-"%s"
+msgid "Failed to set permissions of thumbnail '%s': %s"
+msgstr "Nie można ustawić uprawnień pliku miniaturki \"%s\": %s"
 
 #: app/core/gimpimagefile.c:1
 msgid "Remote image"
 msgstr "Obraz zdalny"
 
 #: app/core/gimpimagefile.c:1
-msgid "Could not open image"
-msgstr "Nie można otworzyć obrazu"
+msgid "Failed to open"
+msgstr "Nie można otworzyć pliku"
 
 #: app/core/gimpimagefile.c:1
 msgid "No preview available"
@@ -1129,19 +1099,13 @@ msgstr "%d warstw"
 
 #: app/core/gimpimagefile.c:1
 #, c-format
-msgid ""
-"Could not open thumbnail\n"
-"file '%s':\n"
-"%s"
-msgstr ""
-"Nie można otworzyć pliku miniaturki\n"
-"\"%s\":\n"
-"%s"
+msgid "Failed to open thumbnail file '%s': %s"
+msgstr "Nie można otworzyć pliku miniaturki \"%s\": %s"
 
 #: app/core/gimpimagefile.c:1
 #, c-format
-msgid "Couldn't create thumbnail directory '%s'"
-msgstr "Nie można stworzyć katalogu miniaturek \"%s\"."
+msgid "Failed to create thumbnail directory '%s'."
+msgstr "Nie można utworzyć katalogu miniaturek \"%s\"."
 
 #: app/core/gimpitem.c:1
 msgid "parasite attached to item"
@@ -4091,41 +4055,23 @@ msgstr "Wprowadź nową nazwę ścieżki"
 
 #: app/gui/paths-dialog.c:1
 #, c-format
-msgid ""
-"Unable to open file '%s'\n"
-"Error: %s."
-msgstr ""
-"Nie można otworzyć pliku \"%s\"\n"
-"Błąd: %s."
+msgid "Failed to read from '%s'."
+msgstr "Nie można odczytać pliku \"%s\"."
 
 #: app/gui/paths-dialog.c:1
 #, c-format
-msgid "Failed to read from '%s'"
-msgstr "Nie można odczytać pliku \"%s\""
+msgid "Failed to read path from '%s'."
+msgstr "Nie można odczytać ścieżki z pliku \"%s\"."
 
 #: app/gui/paths-dialog.c:1
 #, c-format
-msgid "Failed to read path from '%s'"
-msgstr "Nie można odczytać ścieżki z pliku \"%s\""
+msgid "No points specified in path file '%s'."
+msgstr "Brak zdefiniowanych punktów w pliku ze ścieżką \"%s\"."
 
 #: app/gui/paths-dialog.c:1
 #, c-format
-msgid "No points specified in path file '%s'"
-msgstr "Brak zdefiniowanych punktów w pliku ze ścieżką \"%s\""
-
-#: app/gui/paths-dialog.c:1
-#, c-format
-msgid "Failed to read path points from %s"
-msgstr "Wczytanie punktów ścieżki z %s nie powiodło się"
-
-#: app/gui/paths-dialog.c:1
-#, c-format
-msgid ""
-"Opening '%s' failed:\n"
-"%s"
-msgstr ""
-"Otwarcie pliku \"%s\" nie powiodło się:\n"
-"%s"
+msgid "Failed to read path points from '%s'."
+msgstr "Wczytanie punktów ścieżki z pliku \"%s\" nie powiodło się."
 
 #: app/gui/paths-dialog.c:1
 msgid "Load and Save Bezier Curves"
@@ -5673,12 +5619,12 @@ msgid "Offset:"
 msgstr "Przesunięcie:"
 
 #: app/tools/gimpblendtool.c:1
-msgid "Blend:"
+msgid "Gradient:"
 msgstr "Gradient:"
 
 #: app/tools/gimpblendtool.c:1
-msgid "Gradient:"
-msgstr "Gradient:"
+msgid "Shape:"
+msgstr "Kształt:"
 
 #: app/tools/gimpblendtool.c:1
 msgid "Repeat:"
@@ -6032,12 +5978,6 @@ msgstr "Zapisz krzywe"
 #: app/tools/gimpcurvestool.c:1
 msgid "Load/Save Curves"
 msgstr "Odczyt/Zapis krzywych"
-
-#: app/tools/gimpcurvestool.c:1 app/tools/gimpcurvestool.c:1
-#: app/tools/gimplevelstool.c:1 app/tools/gimplevelstool.c:1
-#, c-format
-msgid "Unable to open file %s"
-msgstr "Nie można otworzyć pliku %s"
 
 #: app/tools/gimpdodgeburntool.c:1
 msgid "Dodge/Burn"
@@ -6882,10 +6822,6 @@ msgstr "Indeks koloru:"
 msgid "Gray"
 msgstr "Szary"
 
-#: app/widgets/gimpcomponentlistitem.c:1
-msgid "EEEEK"
-msgstr "EEEEK"
-
 #: app/widgets/gimpcontainergridview.c:1
 #: app/widgets/gimpcontainergridview.c:1
 msgid "(None)"
@@ -7005,14 +6941,14 @@ msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, c-format
-msgid "(%0.3f, %0.3f, %0.3f)"
-msgstr "(%0.3f, %0.3f, %0.3f)"
-
 #: app/widgets/gimpgradienteditor.c:1
 msgid "Foreground color set to:"
 msgstr "Kolor pierwszoplanowy ustawiony na:"
+
+#: app/widgets/gimpgradienteditor.c:1
+#, c-format
+msgid "(%0.3f, %0.3f, %0.3f)"
+msgstr "(%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:1
 msgid "Background color set to:"
@@ -7156,11 +7092,11 @@ msgstr ""
 #: app/widgets/gimptoolbox.c:1
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
-"The arrows swap colors. Double click to select a color from a colorrequester."
+"The arrows swap colors. Double click to open the color selection dialog."
 msgstr ""
-"Kolor narzędzia i tła. Czarny i biały kwadrat przywraca pierwotne kolory. "
-"Strzałki zamieniają kolory. Dwukrotne kliknięcie koloru otwiera okno wyboru "
-"koloru."
+"Kolor pierwszoplanowy i kolor tła. Czarny lub biały kwadrat przywraca "
+"pierwotne kolory. Strzałki zamieniają kolory. Dwukrotne kliknięcie koloru "
+"otwiera okno wyboru koloru."
 
 #: app/widgets/gimpvectorslistview.c:1
 msgid ""
