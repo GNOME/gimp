@@ -1,20 +1,23 @@
-%define ver      1.0.0
+%define ver      1.0.3
 %define rel      SNAP
 
 Summary: The GNU Image Manipulation Program
 Name: gimp
 Version: %ver
 Release: %rel
-Copyright: GPL, LGPL
-Group: X11/Applications/Graphics
+Copyright: GPL
+Group: Applications/Multimedia
 URL: http://www.gimp.org/
 Source: ftp://ftp.gimp.org/pub/gimp/v0.99/v%{PACKAGE_VERSION}/gimp-%{PACKAGE_VERSION}.tar.gz
 BuildRoot: /tmp/gimp-root
 Obsoletes: gimp-data-min
 Requires: gtk+ >= 1.0.1
 
-
 %changelog
+* Sun Mar 14 1999 Matt Wilson <msw@redhat.com>
+- updated for 1.0.3 release
+- updated group
+
 * Mon Apr 20 1998 Marc Ewing <marc@redhat.com>
 - include *.xpm and .wmconfig in CVS source
 - removed explicit glibc require
@@ -81,7 +84,7 @@ running the scripts.
 
 %package devel
 Summary: GIMP plugin and extension development kit
-Group: X11/Applications/Graphics
+Group: Development/Libraries
 Requires: gtk+-devel
 Prereq: /sbin/install-info
 %description devel
@@ -89,7 +92,7 @@ Static libraries and header files for writing GIMP plugins and extensions.
 
 %package libgimp
 Summary: GIMP libraries
-Group: X11/Applications/Graphics
+Group: System Environment/Libraries
 Copyright: LGPL
 %description libgimp
 Libraries used to communicate between The GIMP and other programs which
@@ -145,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %post libgimp -p /sbin/ldconfig
 %postun libgimp -p /sbin/ldconfig
 
-%files 
+%files
 %attr(644, root, root) %config /etc/X11/wmconfig/gimp
 %attr(-, root, root) %doc AUTHORS COPYING ChangeLog INSTALL NEWS NOTES README TODO
 %attr(-, root, root) %doc docs/*.txt docs/*.eps
