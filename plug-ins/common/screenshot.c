@@ -624,6 +624,7 @@ shoot_dialog (void)
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *spinner;
+  GdkPixbuf *pixbuf;
   GSList    *radio_group = NULL;
   GtkObject *adj;
   gboolean   run;
@@ -645,11 +646,30 @@ shoot_dialog (void)
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  pixbuf = gdk_pixbuf_new_from_inline (-1, screenshot_icon, FALSE, NULL);
+  if (pixbuf)
+    {
+      GtkWidget *image = gtk_image_new_from_pixbuf (pixbuf);
+
+      g_object_unref (pixbuf);
+
+      vbox = gtk_vbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+      gtk_widget_show (vbox);
+
+      gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+    }
+
   /*  single window  */
   frame = gimp_frame_new (_("Grab"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   button = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -667,7 +687,7 @@ shoot_dialog (void)
                     &shootvals.root);
 
   /*  select window delay  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic (_("S_elect Window After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -707,7 +727,7 @@ shoot_dialog (void)
   gtk_widget_show (frame);
 
   /*  grab delay  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic (_("Grab _After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

@@ -1,5 +1,7 @@
 2004-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: added the camera icon to the dialog.
+
 	* plug-ins/common/film.c
 	* plug-ins/common/fractaltrace.c: HIG-ified.
 
