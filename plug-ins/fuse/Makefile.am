@@ -16,12 +16,14 @@ LDADD = \
 	$(top_builddir)/plug-ins/megawidget/megawidget.o	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/plug-ins/libgck/gck/libgck.la	\
 	$(X_LIBS)				\
 	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/plug-ins/libgck/gck/libgck.la
 
 fuse_DEPENDENCIES = $(DEPS)
 
