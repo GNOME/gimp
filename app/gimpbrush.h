@@ -51,5 +51,7 @@ GimpBrush * gimp_brush_new      (char *filename);
 void        gimp_brush_load     (GimpBrush *brush, char *filename);
 GtkType     gimp_brush_get_type (void);
 TempBuf   * gimp_brush_get_mask (GimpBrush *brush);
+char      * gimp_brush_get_name (GimpBrush *brush);
+void        gimp_brush_set_name (GimpBrush *brush, char *name);
 
 #endif /* __GIMPBRUSH_H__ */

@@ -22,6 +22,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <math.h>
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "brush_header.h"
@@ -63,7 +64,6 @@ static void   create_default_brush   (void);
 static gint   brush_compare_func     (gconstpointer, gconstpointer);
 
 static void gimp_brush_list_recalc_indexes(GimpBrushList *brush_list);
-static void gimp_brush_list_uniquefy_names(GimpBrushList *brush_list);
 static void brush_load                    (char *filename);
 
 /* class functions */
@@ -128,46 +128,6 @@ gimp_brush_list_new ()
   return list;
 }
 
-void gimp_brush_list_uniquefy_names(GimpBrushList *blist)
-{
-  GSList *list = GIMP_LIST(blist)->list;
-  GimpBrush * gb_start = NULL;
-  gint gb_count = 0;
-
-  while (list)
-  {
-    GimpBrush * gb = (GimpBrush *)list->data;
-    list = g_slist_next(list);
-    if(list) {
-      GimpBrush * gb2 = (GimpBrush *)list->data;
-      
-      if(gb_start == NULL) {
-        gb_start = gb;
-      }
-      
-      if(gb_start->name
-	 && gb2->name
-	 && (strcmp(gb_start->name,gb2->name) == 0)) {
-	
-        gint b_digits = 2;
-        gint gb_tmp_cnt = gb_count++;
-	
-        /* Alter gb2... */
-        g_free(gb2->name);
-        while((gb_tmp_cnt /= 10) > 0)
-          b_digits++;
-        /* name str + " #" + digits + null */
-        gb2->name = g_malloc(strlen(gb_start->name)+3+b_digits);
-        sprintf(gb2->name,"%s #%d",gb_start->name,gb_count);
-      }
-      else
-      {
-        gb_start = gb2;
-        gb_count = 0;
-      }
-    }  
-  }
-}
 
 /*  function declarations  */
 void
@@ -187,7 +147,6 @@ brushes_init (int no_data)
     datafiles_read_directories (brush_path,(datafile_loader_t)brush_load, 0);
 
   gimp_brush_list_recalc_indexes(brush_list);
-  gimp_brush_list_uniquefy_names(brush_list);
 }
 
 static void
@@ -303,17 +262,72 @@ gimp_brush_list_recalc_indexes(GimpBrushList *brush_list)
 		     &index);
 }
 
+static void
+gimp_brush_list_uniquefy_brush_name(GimpBrushList *brush_list,
+				    GimpBrush *brush)
+{
+  GSList *list;
+  GimpBrush *brushb;
+  int number = 1;
+  char *newname;
+  char *oldname;
+  char *ext;
+  g_return_if_fail(GIMP_IS_BRUSH_LIST(brush_list));
+  g_return_if_fail(GIMP_IS_BRUSH(brush));
+  list = GIMP_LIST(brush_list)->list;
+  while (list)
+  {
+    brushb = GIMP_BRUSH(list->data);
+    if (brush != brushb &&
+	strcmp(gimp_brush_get_name(brush), gimp_brush_get_name(brushb)) == 0)
+    { /* names conflict */
+      oldname = gimp_brush_get_name(brush);
+      newname = g_malloc(strlen(oldname)+10); /* if this aint enough 
+						 yer screwed */
+      strcpy (newname, oldname);
+      if ((ext = strrchr(newname, '#')))
+      {
+	number = atoi(ext+1);
+	if (&ext[(int)(log10(number) + 1)] != &newname[strlen(newname) - 1])
+	{
+	  number = 1;
+	  ext = &newname[strlen(newname)];
+	}
+      }
+      else
+      {
+	number = 1;
+	ext = &newname[strlen(newname)];
+      }
+      sprintf(ext, "#%d", number+1);
+      gimp_brush_set_name(brush, newname);
+      g_free(newname);
+      return;
+    }
+    list = list->next;
+  }
+}
+
+static void brush_renamed(GimpBrush *brush, GimpBrushList *brush_list)
+{
+  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
+}
+
 void
 gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
 {
   gimp_list_add(GIMP_LIST(brush_list), brush);
   gtk_object_sink(GTK_OBJECT(brush));
-  gimp_brush_list_recalc_indexes(brush_list);
+  gtk_signal_connect(GTK_OBJECT(brush), "rename",
+		     (GtkSignalFunc)brush_renamed, brush_list);
+  gimp_brush_list_recalc_indexes(brush_list); /* ugh */
+  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
 }
 
 void
 gimp_brush_list_remove (GimpBrushList *brush_list, GimpBrush * brush)
 {
+  gtk_signal_disconnect_by_data(GTK_OBJECT(brush), brush_list);
   gimp_list_remove(GIMP_LIST(brush_list), brush);
   gimp_brush_list_recalc_indexes(brush_list);
 }

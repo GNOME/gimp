@@ -412,6 +412,7 @@ brush_added_callback(GimpBrushList *list, GimpBrushP brush,
 		     BrushSelectP bsp)
 {
   connect_signals_to_brush(brush, bsp);
+  preview_calc_scrollbar(bsp);
   brush_select_brush_changed(bsp, brush);
 }
 
@@ -420,7 +421,7 @@ brush_removed_callback(GimpBrushList *list, GimpBrushP brush,
 		       BrushSelectP bsp)
 {
   disconnect_signals_from_brush(brush, bsp);
-/*  brush_select_brush_changed(bsp, brush); */
+  preview_calc_scrollbar(bsp);
 }
 
 

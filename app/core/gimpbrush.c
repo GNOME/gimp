@@ -113,6 +113,23 @@ gimp_brush_get_mask (GimpBrush *brush)
   return brush->mask;
 }
 
+char *
+gimp_brush_get_name (GimpBrush *brush)
+{
+  g_return_val_if_fail(GIMP_IS_BRUSH(brush), NULL);
+  return brush->name;
+}
+
+void
+gimp_brush_set_name (GimpBrush *brush, char *name)
+{
+  g_return_val_if_fail(GIMP_IS_BRUSH(brush), NULL);
+  if (brush->name)
+    g_free(brush->name);
+  brush->name = g_strdup(name);
+  gtk_signal_emit(GTK_OBJECT(brush), gimp_brush_signals[RENAME]);
+}
+
 void
 gimp_brush_load(GimpBrush *brush, char *filename)
 {
