@@ -41,7 +41,8 @@ void   channels_intersect_channel_with_sel_cmd_callback (GtkWidget   *widget,
 void   channels_edit_channel_attributes_cmd_callback    (GtkWidget   *widget,
 							 gpointer     data);
 
-void   channels_new_channel_query                       (GimpImage   *gimage);
+void   channels_new_channel_query                       (GimpImage   *gimage,
+                                                         GimpChannel *tamplate);
 void   channels_edit_channel_query                      (GimpChannel *channel);
 
 void   channels_menu_update                             (GtkItemFactory *factory,

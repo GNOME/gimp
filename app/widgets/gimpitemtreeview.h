@@ -45,7 +45,8 @@ typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
 typedef GimpDrawable  * (* GimpConvertDrawableFunc) (GimpImage       *dest_gimage,
 						     GimpDrawable    *drawable);
 
-typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage);
+typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage,
+                                                     GimpDrawable    *template);
 typedef void            (* GimpEditDrawableFunc)    (GimpDrawable    *drawable);
 
 

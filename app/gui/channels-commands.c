@@ -39,6 +39,8 @@
 
 #include "channels-commands.h"
 
+#include "undo.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -55,7 +57,7 @@ channels_new_channel_cmd_callback (GtkWidget *widget,
   if (! gimage)
     return;
 
-  channels_new_channel_query (gimage);
+  channels_new_channel_query (gimage, NULL);
 }
 
 void
@@ -333,7 +335,8 @@ new_channel_query_ok_callback (GtkWidget *widget,
 }
 
 void
-channels_new_channel_query (GimpImage *gimage)
+channels_new_channel_query (GimpImage   *gimage,
+                            GimpChannel *template)
 {
   NewChannelOptions *options;
   GtkWidget         *hbox;
@@ -342,6 +345,38 @@ channels_new_channel_query (GimpImage *gimage)
   GtkWidget         *label;
   GtkWidget         *opacity_scale;
   GtkObject         *opacity_scale_data;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! template || GIMP_IS_CHANNEL (template));
+
+  if (template)
+    {
+      GimpChannel *new_channel;
+      gint         width, height;
+      gint         off_x, off_y;
+
+      width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
+      height = gimp_drawable_height (GIMP_DRAWABLE (template));
+      gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+
+      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+
+      new_channel = gimp_channel_new (gimage,
+                                      width, height,
+                                      _("Empty Channel Copy"),
+                                      &template->color);
+
+      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                                  gimp_get_user_context (gimage->gimp),
+                                  TRANSPARENT_FILL);
+      gimp_channel_translate (new_channel, off_x, off_y);
+      gimp_image_add_channel (gimage, new_channel, -1);
+
+      undo_push_group_end (gimage);
+
+      gdisplays_flush ();
+      return;
+    }
 
   /*  the new options structure  */
   options = g_new (NewChannelOptions, 1);

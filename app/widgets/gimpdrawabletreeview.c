@@ -72,8 +72,6 @@ static void   gimp_drawable_list_view_context_item      (GimpContainerView    *v
 							 GimpViewable         *item,
 							 gpointer              insert_data);
 
-static void   gimp_drawable_list_view_new_drawable      (GimpDrawableListView *view,
-							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_new_clicked       (GtkWidget            *widget,
 							 GimpDrawableListView *view);
 static void   gimp_drawable_list_view_new_dropped       (GtkWidget            *widget,
@@ -527,24 +525,10 @@ gimp_drawable_list_view_context_item (GimpContainerView *view,
 /*  "New" functions  */
 
 static void
-gimp_drawable_list_view_new_drawable (GimpDrawableListView *view,
-				      GimpDrawable         *drawable)
-{
-  if (drawable)
-    {
-      g_print ("new with \"%s\"'s properties\n", GIMP_OBJECT (drawable)->name);
-    }
-  else
-    {
-      view->new_drawable_func (view->gimage);
-    }
-}
-
-static void
 gimp_drawable_list_view_new_clicked (GtkWidget            *widget,
 				     GimpDrawableListView *view)
 {
-  gimp_drawable_list_view_new_drawable (view, NULL);
+  view->new_drawable_func (view->gimage, NULL);
 }
 
 static void
@@ -559,7 +543,7 @@ gimp_drawable_list_view_new_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
 				       GIMP_OBJECT (viewable)))
     {
-      gimp_drawable_list_view_new_drawable (view, GIMP_DRAWABLE (viewable));
+      view->new_drawable_func (view->gimage, GIMP_DRAWABLE (viewable));
     }
 }
 

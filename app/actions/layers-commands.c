@@ -175,7 +175,7 @@ layers_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage);
 
-  layers_new_layer_query (gimage);
+  layers_new_layer_query (gimage, NULL);
 }
 
 void
@@ -562,7 +562,8 @@ new_layer_query_ok_callback (GtkWidget *widget,
 }
 
 void
-layers_new_layer_query (GimpImage *gimage)
+layers_new_layer_query (GimpImage *gimage,
+                        GimpLayer *template)
 {
   NewLayerOptions *options;
   GimpLayer       *floating_sel;
@@ -574,6 +575,7 @@ layers_new_layer_query (GimpImage *gimage)
   GtkWidget       *frame;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! template || GIMP_IS_LAYER (template));
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
@@ -581,6 +583,36 @@ layers_new_layer_query (GimpImage *gimage)
   if ((floating_sel = gimp_image_floating_sel (gimage)))
     {
       floating_sel_to_layer (floating_sel);
+
+      gdisplays_flush ();
+      return;
+    }
+
+  if (template)
+    {
+      GimpLayer *new_layer;
+      gint       width, height;
+      gint       off_x, off_y;
+
+      width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
+      height = gimp_drawable_height (GIMP_DRAWABLE (template));
+      gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+
+      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+
+      new_layer = gimp_layer_new (gimage, width, height,
+                                  gimp_image_base_type_with_alpha (gimage),
+                                  _("Empty Layer Copy"),
+                                  template->opacity,
+                                  template->mode);
+
+      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
+                                  gimp_get_user_context (gimage->gimp),
+                                  TRANSPARENT_FILL);
+      gimp_layer_translate (new_layer, off_x, off_y);
+      gimp_image_add_layer (gimage, new_layer, -1);
+
+      undo_push_group_end (gimage);
 
       gdisplays_flush ();
       return;

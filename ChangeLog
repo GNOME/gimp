@@ -1,5 +1,20 @@
 2001-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdrawablelistview.[ch]: changed
+	the GimpNewDrawableFunc typedef to take an additional 
+	"GimpDrawable *template" paramater, added the "Drop to New"
+	feature again by passing the dropped drawable to
+	view->new_drawable_func().
+
+	* app/gui/channels-commands.[ch]: channels_new_channel_query:
+	* app/gui/layers-commands.[ch]: layers_new_layer_query:
+
+	Added the "template" parameter because they are used as the
+	views' new_drawable_func(), create layers/channels with
+	the template's properties if a template is passed.
+
+2001-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask.c: oops, GIMP_IS_DRAWABLE(gimage) will
 	always fail :-) fixed.
 
