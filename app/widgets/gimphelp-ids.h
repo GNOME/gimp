@@ -289,6 +289,12 @@
 #define GIMP_HELP_PALETTE_MERGE                   "dialogs/palette_selection.html"
 
 #define GIMP_HELP_PALETTE_EDITOR_DIALOG           "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_NEW              "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_EDIT             "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_DELETE           "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT         "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_ZOOM_IN          "dialogs/palette_selection.html"
+#define GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL         "dialogs/palette_selection.html"
 
 #define GIMP_HELP_FONT_DIALOG                     "dialogs/font_selection.html"
 

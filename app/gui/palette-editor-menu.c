@@ -24,6 +24,7 @@
 
 #include "gui-types.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimppaletteeditor.h"
 
@@ -38,30 +39,36 @@ GimpItemFactoryEntry palette_editor_menu_entries[] =
   { { N_("/_New Color"), "",
       palette_editor_new_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
   { { N_("/_Edit Color..."), "",
       palette_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_EDIT, NULL },
   { { N_("/_Delete Color"), "",
       palette_editor_delete_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_DELETE, NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
 
   { { N_("/Zoom _Out"), "",
       palette_editor_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT, NULL },
   { { N_("/Zoom _In"), "",
       palette_editor_zoom_in_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_ZOOM_IN, NULL },
   { { N_("/Zoom _All"), "",
       palette_editor_zoom_all_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_FIT },
-    NULL, NULL, NULL }
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL, NULL }
 };
 
 gint n_palette_editor_menu_entries = G_N_ELEMENTS (palette_editor_menu_entries);

@@ -39,6 +39,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
@@ -276,48 +277,48 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 
   editor->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_NEW,
-                            _("New Color"), NULL,
+                            GTK_STOCK_NEW, _("New Color"),
+                            GIMP_HELP_PALETTE_EDITOR_NEW,
                             G_CALLBACK (palette_editor_new_clicked),
                             NULL,
                             editor);
 
   editor->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GIMP_STOCK_EDIT,
-                            _("Edit Color"), NULL,
+                            GIMP_STOCK_EDIT, _("Edit Color"),
+                            GIMP_HELP_PALETTE_EDITOR_EDIT,
                             G_CALLBACK (palette_editor_edit_clicked),
                             NULL,
                             editor);
 
   editor->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_DELETE,
-                            _("Delete Color"), NULL,
+                            GTK_STOCK_DELETE, _("Delete Color"),
+                            GIMP_HELP_PALETTE_EDITOR_DELETE,
                             G_CALLBACK (palette_editor_delete_clicked),
                             NULL,
                             editor);
 
   editor->zoom_out_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ZOOM_OUT,
-                            _("Zoom Out"), NULL,
+                            GTK_STOCK_ZOOM_OUT, _("Zoom Out"),
+                            GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT,
                             G_CALLBACK (palette_editor_zoom_out_clicked),
                             NULL,
                             editor);
 
   editor->zoom_in_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ZOOM_IN,
-                            _("Zoom In"), NULL,
+                            GTK_STOCK_ZOOM_IN, _("Zoom In"),
+                            GIMP_HELP_PALETTE_EDITOR_ZOOM_IN,
                             G_CALLBACK (palette_editor_zoom_in_clicked),
                             NULL,
                             editor);
 
   editor->zoom_all_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GTK_STOCK_ZOOM_FIT,
-                            _("Zoom All"), NULL,
+                            GTK_STOCK_ZOOM_FIT, _("Zoom All"),
+                            GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL,
                             G_CALLBACK (palette_editor_zoom_all_clicked),
                             NULL,
                             editor);

@@ -1,5 +1,13 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp-ids.h
+	* app/widgets/gimppaletteeditor.c
+	* app/gui/palette-editor-menu.c: help IDs for the palette editor.
+
+	* app/gui/toolbox-menu.c: forgot some dialog help IDs.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-ins.[ch] (plug_ins_temp_proc_def_add): removed
 	the "locale_domain" and "help_path" parameters since the function
 	can figure them by itself.
