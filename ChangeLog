@@ -1,8 +1,20 @@
+Mon Mar 15 11:30:04 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/layers_dialog.c (lc_dialog_create): Show dialog
+	after updating the lists. This looks better and
+	works around an obscure bug with size requests
+	that was being triggered.
+
+Sun Mar 14 23:33:14 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/app_procs.c (app_exit_finish): Call plug_in_kill()
+	before procedural_db_free().
+
 Sun Mar 14 23:27:38 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* app/channels_dialog.c app/global_edit.c app/gradient.c
 	  app/layers_dialog.c app/text_tool.c:
-	Use gtk_scrolled_window_add_with_viewport()
+	 Use gtk_scrolled_window_add_with_viewport()
 
 Sun Mar 14 15:27:15 EST 1999 Matt Wilson <msw@gimp.org>
 

@@ -369,14 +369,15 @@ lc_dialog_create (int gimage_id)
 
       gtk_widget_show (GTK_DIALOG(lc_shell)->action_area);
 
-      gtk_widget_show (lc_shell);
-
       /*  Make sure the channels page is realized  */
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
       layers_dialog_update (gimage_id);
       channels_dialog_update (gimage_id);
+
+      gtk_widget_show (lc_shell);
+
       gdisplays_flush ();
     }
   else

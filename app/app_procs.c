@@ -565,8 +565,8 @@ app_exit_finish (void)
   pattern_select_dialog_free ();
   palette_free ();
   paint_funcs_free ();
-  procedural_db_free ();
   plug_in_kill ();
+  procedural_db_free ();
   menus_quit ();
   tile_swap_exit ();
 
