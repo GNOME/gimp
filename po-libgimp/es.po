@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-02-25 10:04-0300\n"
+"POT-Creation-Date: 2004-03-16 19:46+0100\n"
+"PO-Revision-Date: 2004-03-16 17:17-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -103,8 +103,7 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -415,6 +414,14 @@ msgstr "MegaBytes"
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Editable"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Carpeta"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -522,8 +529,8 @@ msgstr ""
 "generado"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
-msgstr "Aleatorizar"
+msgid "_Randomize"
+msgstr "A_leatorizar"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -674,3 +681,4 @@ msgstr "Acuarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Presión"
+
