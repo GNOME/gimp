@@ -15,11 +15,14 @@
       <menu action="file-acquire-menu" name="Acquire">
       </menu>
       <separator />
-      <menuitem action="file-save" />
-      <menuitem action="file-save-as" />
-      <menuitem action="file-save-a-copy" />
-      <menuitem action="file-save-as-template" />
-      <menuitem action="file-revert" />
+      <placeholder name="Save">
+	<menuitem action="file-save" />
+	<menuitem action="file-save-as" />
+	<menuitem action="file-save-a-copy" />
+	<menuitem action="file-save-as-template" />
+	<menuitem action="file-revert" />
+	<separator />
+      </placeholder>
       <separator />
       <menuitem action="file-close" />
       <menuitem action="file-quit" />
@@ -30,11 +33,17 @@
       <menuitem action="edit-redo" />
       <menuitem action="dialogs-undo-history" />
       <separator />
-      <menuitem action="edit-cut" />
-      <menuitem action="edit-copy" />
-      <menuitem action="edit-paste" />
-      <menuitem action="edit-paste-into" />
-      <menuitem action="edit-paste-as-new" />
+      <placeholder name="Cut">
+	<menuitem action="edit-cut" />
+      </placeholder>
+      <placeholder name="Copy">
+	<menuitem action="edit-copy" />
+      </placeholder>
+      <placeholder name="Paste">
+	<menuitem action="edit-paste" />
+	<menuitem action="edit-paste-into" />
+	<menuitem action="edit-paste-as-new" />
+      </placeholder>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
 	<menuitem action="edit-named-copy" />

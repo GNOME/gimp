@@ -40,7 +40,6 @@ struct _GimpActionGroup
   GtkActionGroup  parent_instance;
 
   Gimp           *gimp;
-  gchar          *translation_domain;
 
   GimpActionGroupUpdateFunc  update_func;
 };

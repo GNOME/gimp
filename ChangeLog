@@ -1,5 +1,24 @@
 2004-04-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactiongroup.[ch]: removed "translation-domain"
+	property and simply use gettext(). Plug-In domains are handled
+	by plug-in-actions.c
+
+	The following change finally starts breaking the old menu system
+	while the new one is not fully in place yet. Have fun:
+
+	* menus/image-menu.xml: added several <placeholder>s for plug-ins
+	to register their menu entries in the middle of already existing
+	menus.
+
+	* app/gui/menus.c
+	* plug-ins/common/mail.c
+	* plug-ins/print/print.c
+	* plug-ins/script-fu/scripts/copy-visible.scm: use the new
+	placeholders to register menu entries.
+
+2004-04-27  Michael Natterer  <mitch@gimp.org>
+
 	Correctly translated & sorted plug-in actions & menu entries:
 
 	* app/widgets/gimpuimanager.[ch]: added a "gchar *name" property

@@ -41,8 +41,7 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
-  PROP_TRANSLATION_DOMAIN
+  PROP_GIMP
 };
 
 
@@ -53,7 +52,6 @@ static GObject * gimp_action_group_constructor (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
 static void   gimp_action_group_dispose        (GObject               *object);
-static void   gimp_action_group_finalize       (GObject               *object);
 static void   gimp_action_group_set_property   (GObject               *object,
                                                 guint                  prop_id,
                                                 const GValue          *value,
@@ -104,7 +102,6 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
 
   object_class->constructor  = gimp_action_group_constructor;
   object_class->dispose      = gimp_action_group_dispose;
-  object_class->finalize     = gimp_action_group_finalize;
   object_class->set_property = gimp_action_group_set_property;
   object_class->get_property = gimp_action_group_get_property;
 
@@ -115,13 +112,6 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_TRANSLATION_DOMAIN,
-                                   g_param_spec_string ("translation-domain",
-                                                        NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-
-
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal,
                                          g_free, NULL);
 }
@@ -129,7 +119,7 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
 static void
 gimp_action_group_init (GimpActionGroup *group)
 {
-  group->translation_domain = NULL;
+  group->gimp = NULL;
 }
 
 static GObject *
@@ -160,20 +150,6 @@ gimp_action_group_constructor (GType                  type,
     }
 
   return object;
-}
-
-static void
-gimp_action_group_finalize (GObject *object)
-{
-  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
-
-  if (group->translation_domain)
-    {
-      g_free (group->translation_domain);
-      group->translation_domain = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -220,10 +196,6 @@ gimp_action_group_set_property (GObject      *object,
     case PROP_GIMP:
       group->gimp = g_value_get_object (value);
       break;
-    case PROP_TRANSLATION_DOMAIN:
-      g_free (group->translation_domain);
-      group->translation_domain = g_value_dup_string (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -242,9 +214,6 @@ gimp_action_group_get_property (GObject    *object,
     {
     case PROP_GIMP:
       g_value_set_object (value, group->gimp);
-      break;
-    case PROP_TRANSLATION_DOMAIN:
-      g_value_set_string (value, group->translation_domain);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -326,8 +295,8 @@ gimp_action_group_add_actions (GimpActionGroup *group,
       const gchar *label;
       const gchar *tooltip;
 
-      label   = dgettext (group->translation_domain, entries[i].label);
-      tooltip = dgettext (group->translation_domain, entries[i].tooltip);
+      label   = gettext (entries[i].label);
+      tooltip = gettext (entries[i].tooltip);
 
       action = gtk_action_new (entries[i].name, label, tooltip,
 			       entries[i].stock_id);
@@ -360,8 +329,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
       const gchar     *label;
       const gchar     *tooltip;
 
-      label   = dgettext (group->translation_domain, entries[i].label);
-      tooltip = dgettext (group->translation_domain, entries[i].tooltip);
+      label   = gettext (entries[i].label);
+      tooltip = gettext (entries[i].tooltip);
 
       action = gtk_toggle_action_new (entries[i].name, label, tooltip,
 				      entries[i].stock_id);
@@ -400,8 +369,8 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
       const gchar    *label;
       const gchar    *tooltip;
 
-      label   = dgettext (group->translation_domain, entries[i].label);
-      tooltip = dgettext (group->translation_domain, entries[i].tooltip);
+      label   = gettext (entries[i].label);
+      tooltip = gettext (entries[i].tooltip);
 
       action = gtk_radio_action_new (entries[i].name, label, tooltip,
 				     entries[i].stock_id,
@@ -445,8 +414,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
       const gchar    *label;
       const gchar    *tooltip;
 
-      label   = dgettext (group->translation_domain, entries[i].label);
-      tooltip = dgettext (group->translation_domain, entries[i].tooltip);
+      label   = gettext (entries[i].label);
+      tooltip = gettext (entries[i].tooltip);
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
 				     entries[i].stock_id,
@@ -481,8 +450,8 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
       const gchar      *label;
       const gchar      *tooltip;
 
-      label   = dgettext (group->translation_domain, entries[i].label);
-      tooltip = dgettext (group->translation_domain, entries[i].tooltip);
+      label   = gettext (entries[i].label);
+      tooltip = gettext (entries[i].tooltip);
 
       action = gimp_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].stock_id,

@@ -479,7 +479,7 @@ menus_open_recent_add (GimpUIManager *manager,
       gchar *action_path;
 
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
-      action_path = g_strdup_printf ("%s/file-menu/file-open-recent-menu/file-open-recent-placeholder",
+      action_path = g_strdup_printf ("%s/File/Open Recent/file-open-recent-placeholder",
                                      ui_path);
 
       gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
