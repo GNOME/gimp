@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-15 02:24+0100\n"
-"PO-Revision-Date: 2000-03-12 23:56+01:00\n"
+"POT-Creation-Date: 2000-03-17 11:44+0100\n"
+"PO-Revision-Date: 2000-03-17 11:51+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -119,12 +119,12 @@ msgstr "Konec"
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
 #: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:532
-#: app/interface.c:984 app/layers_dialog.c:3326 app/layers_dialog.c:3517
-#: app/layers_dialog.c:3617 app/layers_dialog.c:3889 app/levels.c:341
-#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1434
-#: app/qmask.c:281 app/resize.c:195 app/resize.c:1345 app/threshold.c:275
-#: modules/cdisplay_gamma.c:358
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
+#: app/install.c:1167 app/interface.c:984 app/layers_dialog.c:3326
+#: app/layers_dialog.c:3517 app/layers_dialog.c:3617 app/layers_dialog.c:3889
+#: app/levels.c:341 app/palette.c:1826 app/posterize.c:201
+#: app/preferences_dialog.c:1434 app/qmask.c:281 app/resize.c:195
+#: app/resize.c:1345 app/threshold.c:275 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -277,10 +277,10 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
-#: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
-#: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
-#: app/resize.c:193 app/resize.c:1345 app/threshold.c:271
+#: app/install.c:1165 app/layers_dialog.c:3324 app/layers_dialog.c:3515
+#: app/layers_dialog.c:3615 app/layers_dialog.c:3887 app/levels.c:337
+#: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1430
+#: app/qmask.c:279 app/resize.c:193 app/resize.c:1345 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
@@ -484,7 +484,7 @@ msgid "Offset X:"
 msgstr "Posun X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/install.c:1130 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/install.c:1368 app/resize.c:332 app/resize.c:417 app/resize.c:575
 #: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
@@ -1182,7 +1182,7 @@ msgstr "Velikost obrázku: %s"
 msgid "New Image"
 msgstr "Nový obrázek"
 
-#: app/file_new_dialog.c:453 app/install.c:1115 app/preferences_dialog.c:1505
+#: app/file_new_dialog.c:453 app/install.c:1355 app/preferences_dialog.c:1505
 #: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr "pixelù"
@@ -2383,26 +2383,25 @@ msgstr "Nastavení:"
 msgid "Shape"
 msgstr "Tvar"
 
-#: app/install.c:97
+#: app/install.c:100
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "GIMP není pro aktuálního u¾ivatele øádnì nainstalován\n"
 
-#: app/install.c:98
+#: app/install.c:101
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
 "U¾ivatelská instalace byla pøeskoèena, proto¾e bylo pou¾ito '--nointerface'\n"
 
-#: app/install.c:99
+#: app/install.c:102
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Abyste provedli u¾ivatelskou instalaci, spus»te GIMP bez volby "
 "'--nointerface'\n"
 
-#: app/install.c:144
-#, fuzzy
+#: app/install.c:151
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2412,17 +2411,18 @@ msgid ""
 msgstr ""
 "gimprc uchovává u¾ivatelské pøedvolby, které ovlivòují\n"
 "implicitní chování programu GIMP.\n"
-"Lze zde té¾ nakonfigurovat cesty pro hledání stop, palety,\n"
-"pøechody, vzorky, zásuvné moduly a moduly.\n"
+"Lze zde té¾ nakonfigurovat cesty pro hledání stop,\n"
+"palety, pøechody, vzorky, zásuvné moduly a moduly."
 
-#: app/install.c:152
+#: app/install.c:159
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP pou¾ívá doplòujícího souboru gtkrc, kde lze\n"
+"nakonfigurovat vzhled odli¹ný od ostatních GTK aplikací."
 
-#: app/install.c:157
-#, fuzzy
+#: app/install.c:164
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2436,10 +2436,9 @@ msgstr ""
 "Tyto programy jsou vyhledávány za bìhu a informace\n"
 "o jejich funkci a èasech zmìn jsou ulo¾eny do tohoto\n"
 "souboru. Tento soubor je navr¾en pro ètení\n"
-"pouze programem GIMP a nemìl by být editován.\n"
+"pouze programem GIMP a nemìl by být editován."
 
-#: app/install.c:166
-#, fuzzy
+#: app/install.c:173
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -2452,10 +2451,9 @@ msgstr ""
 "GIMP. Soubor menurc je výpisem va¹í konfigurace, tak¾e je\n"
 "ulo¾ena pro pøí¹tí sezení. Chcete-li, mù¾ete jej editovat,\n"
 "ale je mnohem jednodu¹¹í definovat klávesy za bìhu programu\n"
-"GIMP. Smazání souboru navrátí implicitní zkratky.\n"
+"GIMP. Smazání souboru navrátí implicitní zkratky."
 
-#: app/install.c:175
-#, fuzzy
+#: app/install.c:182
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -2463,10 +2461,9 @@ msgid ""
 msgstr ""
 "Záznam GIMP sezení pøechovává informace o oknech, která byla\n"
 "otevøena pøi posledním ukonèení programu GIMP. Programu GIMP\n"
-"lze nastavit polohu dialogových oken pøi otvírání.\n"
+"lze nastavit polohu dialogových oken pøi otvírání."
 
-#: app/install.c:181
-#, fuzzy
+#: app/install.c:188
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -2476,12 +2473,11 @@ msgid ""
 msgstr ""
 "unitrc uchovává databázi u¾ivatelských jednotek.\n"
 "Mù¾ete definovat vlastní jednotky a pou¾ívat je\n"
-"stejnì jako vestavìné palce, milimetry,\n"
-"body a piky. Tento soubor je pøepsán poka¾dé,\n"
-"kdy¾ opou¹títe GIMP.\n"
+"stejnì jako vestavìné palce, milimetry, body\n"
+"a piky. Tento soubor je pøepsán poka¾dé, kdy¾\n"
+"opou¹títe GIMP."
 
-#: app/install.c:189
-#, fuzzy
+#: app/install.c:196
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -2493,10 +2489,9 @@ msgstr ""
 "u¾ivatelem definované stopy.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "stop kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gimp stop.\n"
+"se systémovou instalací GIMP stop."
 
-#: app/install.c:197
-#, fuzzy
+#: app/install.c:204
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -2506,11 +2501,9 @@ msgstr ""
 "Toto je podadresáø, kam je mo¾né ukládat\n"
 "stopy vytvoøené editorem stop.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
-"generovaných stop kontroluje tento\n"
-"podadresáø.\n"
+"generovaných stop kontroluje tento podadresáø."
 
-#: app/install.c:204
-#, fuzzy
+#: app/install.c:211
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -2522,10 +2515,9 @@ msgstr ""
 "u¾ivatelem definované pøechody.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "pøechodù kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gimp pøechodù.\n"
+"se systémovou instalací GIMP pøechodù."
 
-#: app/install.c:212
-#, fuzzy
+#: app/install.c:219
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -2543,10 +2535,9 @@ msgstr ""
 "(nikoli systémová instalace). Bìhem instalace\n"
 "sem budou systémové palety zkopírovány. Je to proto,\n"
 "aby bylo mo¾né bìhem práce programu GIMP zmìnìné\n"
-"palety uchovat mezi sezeními.\n"
+"palety uchovat mezi sezeními."
 
-#: app/install.c:223
-#, fuzzy
+#: app/install.c:230
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -2558,10 +2549,9 @@ msgstr ""
 "u¾ivatelem definované vzorky.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "vzorkù kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gimp vzorkù.\n"
+"se systémovou instalací GIMP vzorkù."
 
-#: app/install.c:231
-#, fuzzy
+#: app/install.c:238
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -2574,10 +2564,9 @@ msgstr ""
 "neobsa¾ené zásuvné moduly.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "zásuvných modulù kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gimp zásuvných modulù.\n"
+"se systémovou instalací gimp zásuvných modulù."
 
-#: app/install.c:239
-#, fuzzy
+#: app/install.c:246
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -2585,14 +2574,14 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
-"Tento podadresáø mù¾e být pou¾it k uchování u¾ivatelem vytvoøených,\n"
-"pomocných nebo jiných v systému neobsa¾ených DLL modulù.\n"
+"Tento podadresáø mù¾e být pou¾it k uchování u¾ivatelem\n"
+"vytvoøených, pomocných nebo jiných v systému neobsa¾ených\n"
+"DLL modulù.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "modulù kontroluje tento podadresáø spolu se systémovou\n"
-"instalací modulù bìhem inicializace.\n"
+"instalací GIMP modulù bìhem inicializace."
 
-#: app/install.c:247
-#, fuzzy
+#: app/install.c:254
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -2602,10 +2591,9 @@ msgstr ""
 "Tento podadresáø je pou¾íván programem GIMP k uchování\n"
 "u¾ivatelem vytvoøených a instalovaných skriptù. Dle\n"
 "implicitního gimprc souboru se pøi hledání skriptù kontroluje\n"
-"tento podadresáø spolu se systémovou instalací gimp skriptù.\n"
+"tento podadresáø spolu se systémovou instalací gimp skriptù."
 
-#: app/install.c:254
-#, fuzzy
+#: app/install.c:261
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2617,22 +2605,25 @@ msgstr ""
 "uchování bufferù pro vracení, èím¾ se u¹etøí pamì».\n"
 "Pokud je program GIMP bez ceremonie zabit, mohou zde zbýt\n"
 "soubory ve formì: gimp<#>.<#>. Ty jsou mezi GIMP sezeními\n"
-"zbyteèné a mohou být odstranìny jako smetí.\n"
+"zbyteèné a mohou být odstranìny jako smetí."
 
-#: app/install.c:262
+#: app/install.c:269
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Tento podadresáø je pou¾íván pro ukládání parametrických\n"
+"souborù pro nástroj Køivky."
 
-#: app/install.c:267
+#: app/install.c:274
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Tento podadresáø je pou¾íván pro ukládání parametrických\n"
+"souborù pro nástroj Úrovnì."
 
-#: app/install.c:272
-#, fuzzy
+#: app/install.c:279
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -2640,14 +2631,14 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
-"Toto je podadresáø, kam je mo¾né ukládat\n"
-"u¾ivatelem definované fraktály u¾ívané zásuvným modulem FractalExplorer.\n"
+"Toto je podadresáø, kam je mo¾né ukládat u¾ivatelem\n"
+"definované fraktály u¾ívané zásuvným modulem\n"
+"Badatel fraktálù.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "fraktálù kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gimp fraktálù.\n"
+"se systémovou instalací GIMP Badatele fraktálù."
 
-#: app/install.c:280
-#, fuzzy
+#: app/install.c:287
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -2655,14 +2646,13 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
-"Toto je podadresáø, kam je mo¾né ukládat\n"
-"u¾ivatelem definované kresby u¾ívané zásuvným modulem gfig.\n"
+"Toto je podadresáø, kam je mo¾né ukládat u¾ivatelem\n"
+"definované kresby u¾ívané zásuvným modulem GFig.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
-"kreseb kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gfig kreseb.\n"
+"gfig kreseb kontroluje tento podadresáø spolu\n"
+"se systémovou instalací GIMP GFig kreseb."
 
-#: app/install.c:288
-#, fuzzy
+#: app/install.c:295
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -2670,14 +2660,13 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
-"Toto je podadresáø, kam je mo¾né ukládat\n"
-"u¾ivatelem definované P-záøe u¾ívané zásuvným modulem gflare.\n"
+"Toto je podadresáø, kam je mo¾né ukládat u¾ivatelem\n"
+"definované p-záøe u¾ívané zásuvným modulem P-záøe.\n"
 "Dle implicitního gimprc souboru se pøi hledání\n"
-"P-záøí kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gflare P-záøí.\n"
+"p-záøí kontroluje tento podadresáø spolu\n"
+"se systémovou instalací GIMP P-záøí."
 
-#: app/install.c:296
-#, fuzzy
+#: app/install.c:303
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -2685,56 +2674,62 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"Toto je podadresáø, kam je mo¾né ukládat\n"
-"u¾ivatelem definované P-záøe u¾ívané zásuvným modulem gflare.\n"
-"Dle implicitního gimprc souboru se pøi hledání\n"
-"P-záøí kontroluje tento podadresáø spolu\n"
-"se systémovou instalací gflare P-záøí.\n"
+"Toto je podadresáø, kam je mo¾né ukládat u¾ivatelem\n"
+"definovaná data u¾ívané zásuvným modulem Gimpresionista.\n"
+"Dle implicitního gimprc souboru se pøi hledání dat\n"
+"kontroluje tento podadresáø spolu se systémovou\n"
+"instalací GIMP Gimpresionisty."
 
-#: app/install.c:525
-#, fuzzy
+#: app/install.c:526
 msgid "GIMP User Installation"
-msgstr "Instalace programu GIMP"
+msgstr "U¾ivatelská instalace programu GIMP"
 
-#: app/install.c:530
+#: app/install.c:531
 msgid "Continue"
 msgstr "Pokraèovat"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:562
-#, fuzzy
+#: app/install.c:571
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
-#: app/install.c:580
-#, fuzzy
+#: app/install.c:663
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "Instalace programu GIMP"
+msgstr ""
+"Vítejte\n"
+"v u¾ivatelské instalaci programu GIMP"
 
-#: app/install.c:584
+#: app/install.c:665
+msgid "Click \"Continue\" to enter the GIMP user installation."
+msgstr ""
+"Klepnutím na \"Pokraèovat\" zapoène u¾ivatelská instalace programu GIMP."
+
+#: app/install.c:668
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"GIMP - GNU program pro práci s obrázky\n"
+"(GNU Image Manipulation Program)\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis a vývojový tým GIMP."
 
-#: app/install.c:593
-#, fuzzy
+#: app/install.c:677
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
-"Tento program je volnì ¹iøitelný; mù¾ete jej redistribuovat a mìnit\n"
-"v souladu s Obecnou veøejnou licencí GNU publikovanou\n"
+"Tento program je volnì ¹iøitelný; mù¾ete jej redistribuovat\n"
+"a mìnit v souladu s Obecnou veøejnou licencí GNU publikovanou\n"
 "Free Software Foundation; buï licencí verze 2 nebo\n"
-"(dle va¹i volby) jakoukoliv novìj¹í.\n"
+"(dle va¹i volby) jakoukoliv novìj¹í."
 
-#: app/install.c:598
-#, fuzzy
+#: app/install.c:682
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2744,10 +2739,9 @@ msgstr ""
 "Tento program je ¹íøen v nadìji, ¾e bude u¾iteèný, av¹ak\n"
 "BEZ JAKÉKOLI ZÁRUKY; neposkytují se ani odvozené záruky\n"
 "PRODEJNOSTI anebo VHODNOSTI PRO URÈITÝ ÚÈEL.\n"
-"Dal¹í podrobnosti hledejte v Obecné veøejné licenci GNU.\n"
+"Dal¹í podrobnosti hledejte v Obecné veøejné licenci GNU."
 
-#: app/install.c:603
-#, fuzzy
+#: app/install.c:687
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2757,170 +2751,194 @@ msgstr ""
 "S tímto programem byste mìli získat kopii Obecné veøejné\n"
 "licenci GNU; pokud tomu tak není, pi¹te na Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, USA."
 
-#: app/install.c:609
-msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
-
-#: app/install.c:636
-#, fuzzy
+#: app/install.c:713
 msgid "Personal GIMP Directory"
-msgstr ""
-"U¾ivatelská instalace programu GIMP\n"
-"\n"
+msgstr "U¾ivatelský GIMP adresáø"
 
-#: app/install.c:652
-#, fuzzy, c-format
+#: app/install.c:714
+msgid "Click \"Continue\" to create your personal GIMP directory."
+msgstr "Klepnutím na \"Pokraèovat\" vytvoøíte u¾ivatelský adresáø."
+
+#: app/install.c:731
+#, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Pøi øádné instalaci programu GIMP bude vytvoøen podadresáø\n"
+msgstr ""
+"Pøi øádné instalaci programu GIMP je tøeba vytvoøit\n"
+"podadresáø se jménem %s."
 
-#: app/install.c:658
+#: app/install.c:737
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Tento podadresáø bude obsahovat mno¾ství dùle¾itých souborù.\n"
+"Klepnutím na jeden ze souborù nebo podadresáøù ve stromu\n"
+"získáte více informací o zvolené polo¾ce."
 
-#: app/install.c:662
-msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
-
-#: app/install.c:742
-#, fuzzy
+#: app/install.c:821
 msgid "User Installation Log"
-msgstr ""
-"Protokol o u¾ivatelské instalaci\n"
-"\n"
+msgstr "Protokol o u¾ivatelské instalaci"
 
-#: app/install.c:747
+#: app/install.c:827
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "GIMP: vyladìní výkonu"
 
-#: app/install.c:750
-msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
-
-#: app/install.c:757
+#: app/install.c:828
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Klepnutím na \"Pokraèovat\" pøijmete vý¹e uvedená nastavení."
 
-#: app/install.c:766
-#, fuzzy
+#: app/install.c:831
+msgid "For optimal GIMP performance, some settings may have to be adjusted."
+msgstr "K optimálnímu výkonu programu GIMP je nutné provést nìkterá nastavení."
+
+#: app/install.c:840
 msgid "Monitor Resolution"
-msgstr "Rozli¹ení monitoru získat"
+msgstr "Rozli¹ení monitoru"
 
-#: app/install.c:769
+#: app/install.c:841
+msgid "Click \"Continue\" to start The GIMP."
+msgstr "Klepnutím na \"Pokraèovat\" spustíte program GIMP."
+
+#: app/install.c:844
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"Aby byly obrázky zobrazeny ve své skuteèné velikosti, je nutné, aby GIMP "
+"znal rozli¹ení monitoru."
 
-#: app/install.c:777
-msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
-
-#: app/install.c:785
-#, fuzzy
+#: app/install.c:853
 msgid "Aborting Installation..."
-msgstr ""
-"Protokol o u¾ivatelské instalaci\n"
-"\n"
+msgstr "Instalace se ru¹í..."
 
-#: app/install.c:859
-#, fuzzy
+#: app/install.c:923
 msgid "does not exist.  Cannot install."
-msgstr " neexistuje. Nelze instalovat.\n"
+msgstr "neexistuje. Nelze instalovat."
 
-#: app/install.c:871
-#, fuzzy
+#: app/install.c:935
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-" má neplatná práva.\n"
-"Nelze instalovat."
+msgstr "má neplatná práva. Nelze instalovat."
 
-#: app/install.c:909
-#, fuzzy
+#: app/install.c:973
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Zaznamenali jste nejaká chybová hlá¹ení\n"
-"na chybové konzoli? Pokud ne, instalace byla\n"
-"úspì¹ná! Jinak skonèete a odhalte mo¾ný dùvod...\n"
+"Zaznamenali jste nìjaká chybová hlá¹ení na chybové konzoli?\n"
+"Pokud ne, instalace byla úspì¹ná!\n"
+"Jinak skonèete a odhalte mo¾ný dùvod..."
 
-#: app/install.c:969
-#, fuzzy
+#: app/install.c:1029
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Zaznamenali jste nejaká chybová hlá¹ení\n"
-"na chybové konzoli? Pokud ne, instalace byla\n"
-"úspì¹ná! Jinak skonèete a odhalte mo¾ný dùvod...\n"
+"Zaznamenali jste nìjaká chybová hlá¹ení na øádcích vý¹e?\n"
+"Pokud ne, instalace byla úspì¹ná!\n"
+"Jinak skonèete a odhalte mo¾ný dùvod..."
 
-#: app/install.c:983
+#: app/install.c:1041
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Klepnutím na \"Pokraèovat\" dokonèíte instalaci programu GIMP."
 
-#: app/install.c:992
-#, fuzzy
+#: app/install.c:1046
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
-"\n"
-"Instalace selhala. Spojte se se systémovým administrátorem.\n"
+msgstr "Instalace selhala. Spojte se se systémovým administrátorem."
 
-#: app/install.c:1017
+#: app/install.c:1067
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"GIMP pou¾ívá k ukládání obrázkových dat omezeného mno¾ství pamìti, tak "
+"zvanou\n"
+"\"vyrovnávací pamì» dla¾dic\". Je vhodné ji nastavit tak, aby se ve¹la do "
+"pamìti.\n"
+"Je tøeba té¾ poèítat s pamìtí pro ostatní bì¾ící procesy."
 
-#: app/install.c:1033 app/preferences_dialog.c:2102
+#: app/install.c:1081 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
 msgstr "Velikost vyrovnávací pamìti dla¾dic:"
 
-#: app/install.c:1043
+#: app/install.c:1092
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"V¹echna data, která se nevejdou do vyrovnávací pamìti dla¾dic budou "
+"zapisována\n"
+"do odkládacího souboru. Tento soubor by se mìl nacházet na místním systému "
+"souborù\n"
+"s dostateèným volným prostorem (nìkolik set MB). Na systémech UNIX bývá "
+"bì¾né\n"
+"pou¾ívat systémového doèasného adresáøe (\"/tmp\" nebo \"/var/tmp\")."
 
-#: app/install.c:1053 app/preferences_dialog.c:2361
+#: app/install.c:1101 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
 msgstr "Zvolte odkládací adresáø"
 
-#: app/install.c:1059
-#, fuzzy
+#: app/install.c:1106
 msgid "Swap Directory:"
 msgstr "Odkládací adresáø:"
 
-#: app/install.c:1085
+#: app/install.c:1159
+msgid "Calibrate Monitor Resolution"
+msgstr "Kalibrovace rozli¹ení monitoru"
+
+#: app/install.c:1267
+msgid "Measure the rulers and enter their lengths below."
+msgstr "Zmìøte èáry a ní¾e zadejte jejich délky."
+
+#: app/install.c:1282
+msgid "Horizontal:"
+msgstr "Vodorovnì:"
+
+#: app/install.c:1287
+msgid "Vertical:"
+msgstr "Svisle:"
+
+#: app/install.c:1328
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
+"GIMP mù¾e získat tyto informace z X serveru.\n"
+"Ov¹em vìt¹ina X serverù nevrací pou¾itelné hodnoty."
 
-#: app/install.c:1092
-#, fuzzy, c-format
+#: app/install.c:1335
+#, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "(nyní %d × %d dpi)"
+msgstr "Získat rozli¹ení monitoru z X serveru (nyní %d × %d dpi)"
 
-#: app/install.c:1109
+#: app/install.c:1349
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Alternativnì lze nastavit rozli¹ení monitoru ruènì."
 
-#: app/install.c:1124
-#, fuzzy
+#: app/install.c:1362
 msgid "Monitor Resolution X:"
-msgstr "Rozli¹ení monitoru získat"
+msgstr "Rozli¹ení X monitoru:"
+
+#: app/install.c:1398
+msgid ""
+"You can also press the \"Calibrate\" button to open a window\n"
+"which lets you determine your monitor resolution interactively."
+msgstr ""
+"Klepnutím na \"Kalibrovat\" lze té¾ otevøít okno,\n"
+"které umo¾ní interaktivnì urèit rozli¹ení monitoru."
+
+#: app/install.c:1405
+msgid "Calibrate"
+msgstr "Kalibrovat"
 
 #: app/interface.c:312
 msgid ""
@@ -5520,7 +5538,7 @@ msgstr "Rozmazávání"
 
 #: app/tool_options.c:582
 msgid "Incremental"
-msgstr "Postupná"
+msgstr "Postupný"
 
 #: app/tool_options.c:688
 msgid "Pressure Sensitivity"
@@ -6200,54 +6218,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#, fuzzy
-#~ msgid ""
-#~ "For a proper GIMP installation, a subdirectory needs to be created.\n"
-#~ "This subdirectory will contain a number of important files."
-#~ msgstr ""
-#~ " je tøeba vytvoøit. Tento\n"
-#~ "podadresáø bude obsahovat mno¾ství dùle¾itých souborù:\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "The GIMP - GNU Image Manipulation Program\n"
-#~ "\n"
-#~ msgstr ""
-#~ "GIMP - GNU program pro práci s obrázky\n"
-#~ "(GNU Image Manipulation Program)\n"
-#~ "\n"
-
-#~ msgid "Install"
-#~ msgstr "Instalovat"
-
-#~ msgid "Ignore"
-#~ msgstr "Ignorovat"
-
-#~ msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-#~ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-
-#~ msgid "Installation Log"
-#~ msgstr "Protokol o instalaci"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-
-#~ msgid ""
-#~ "\n"
-#~ "Installation successful!\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Instalace probìhla úspì¹nì!\n"
-
-#~ msgid "Bytes"
-#~ msgstr "bajtù"
-
-#~ msgid "KiloBytes"
-#~ msgstr "kilobajtù"
-
-#~ msgid "MegaBytes"
-#~ msgstr "megabajtù"
