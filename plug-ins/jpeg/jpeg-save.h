@@ -434,9 +434,6 @@ run (gchar      *name,
 	  gimp_parasite_free (parasite);
 	}
 
-      if (!image_comment)
-        image_comment = gimp_get_default_comment ();
-
       jsvals.quality     = DEFAULT_QUALITY;
       jsvals.smoothing   = DEFAULT_SMOOTHING;
       jsvals.optimize    = DEFAULT_OPTIMIZE;

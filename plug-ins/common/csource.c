@@ -164,9 +164,6 @@ run (gchar      *name,
 	}
       x = config.comment;
 
-      if (!config.comment)
-	config.comment = gimp_get_default_comment ();   
-
       gimp_ui_init ("csource", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
 				  (GIMP_EXPORT_CAN_HANDLE_RGB |

@@ -309,9 +309,6 @@ run (gchar      *name,
         image_comment = g_strdup (parasite->data);
       gimp_parasite_free (parasite);
 
-      if (!image_comment)
-        image_comment = gimp_get_default_comment ();
-
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:

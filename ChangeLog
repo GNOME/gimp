@@ -1,3 +1,12 @@
+2003-05-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/csource.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/tiff.c: If no comment is set on a
+	GimpImage when it arrives to be saved, don't attach one.
+	Fixes bug #98490 - and removes code which does what is
+	suggested in bug #98485 as correct behaviour.
+
 2003-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c (xcf_load_channel_props)
