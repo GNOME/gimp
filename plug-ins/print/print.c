@@ -768,11 +768,11 @@ do_print_dialog (void)
 		     FALSE, TRUE, FALSE,
 
 		     _("Print And\nSave Settings"), printandsave_callback,
-		     NULL, NULL, &printandsave_button, TRUE, FALSE,
+		     NULL, NULL, &printandsave_button, FALSE, FALSE,
 		     _("Save\nSettings"), save_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Print"), print_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
@@ -1008,6 +1008,8 @@ do_print_dialog (void)
   table = gtk_table_new (11, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 8, 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
@@ -1943,16 +1945,19 @@ linear_callback(GtkWidget *widget,	/* I - Output type button */
  */
 
 static void
-print_callback(void)
+print_callback (void)
 {
   if (plist_current > 0)
-  {
-    runme = TRUE;
+    {
+      runme = TRUE;
 
-    gtk_widget_destroy(print_dialog);
-  }
+      gtk_widget_destroy (print_dialog);
+    }
   else
-    gtk_widget_show(file_browser);
+    {
+      gtk_widget_set_sensitive (print_dialog, FALSE);
+      gtk_widget_show (file_browser);
+    }
 }
 
 static void
@@ -2081,11 +2086,11 @@ file_ok_callback(void)
 
 
 static void
-file_cancel_callback(void)
+file_cancel_callback (void)
 {
-  gtk_widget_hide(file_browser);
+  gtk_widget_hide (file_browser);
 
-  gtk_widget_destroy(print_dialog);
+  gtk_widget_set_sensitive (print_dialog, TRUE);
 }
 
 
