@@ -52,6 +52,11 @@
 
 /*  local function prototypes  */
 
+static void   edit_paste                 (GimpDisplay *gdisp,
+                                          gboolean     paste_into);
+static void   edit_undo_clear_callback   (GtkWidget   *widget,
+                                          gboolean     clear,
+                                          gpointer     data);
 static void   cut_named_buffer_callback  (GtkWidget   *widget,
                                           const gchar *name,
                                           gpointer     data);
@@ -82,21 +87,6 @@ edit_redo_cmd_callback (GtkAction *action,
 
   if (gimp_image_redo (gimage))
     gimp_image_flush (gimage);
-}
-
-static void
-edit_undo_clear_callback (GtkWidget *widget,
-                          gboolean   clear,
-                          gpointer   data)
-{
-  if (clear)
-    {
-      GimpImage *gimage = data;
-
-      gimp_image_undo_disable (gimage);
-      gimp_image_undo_enable (gimage);
-      gimp_image_flush (gimage);
-    }
 }
 
 void
@@ -144,31 +134,6 @@ edit_copy_cmd_callback (GtkAction *action,
 
   if (gimp_edit_copy (gimage, drawable, action_data_get_context (data)))
     gimp_image_flush (gimage);
-}
-
-static void
-edit_paste (GimpDisplay *gdisp,
-            gboolean     paste_into)
-{
-  GimpBuffer *buffer = clipboard_get_buffer (gdisp->gimage->gimp);
-
-  if (buffer)
-    {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-      gint              x, y;
-      gint              width, height;
-
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      if (gimp_edit_paste (gdisp->gimage,
-                           gimp_image_active_drawable (gdisp->gimage),
-                           buffer, paste_into, x, y, width, height))
-	{
-          gimp_image_flush (gdisp->gimage);
-	}
-
-      g_object_unref (buffer);
-    }
 }
 
 void
@@ -292,6 +257,46 @@ edit_fill_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static void
+edit_paste (GimpDisplay *gdisp,
+            gboolean     paste_into)
+{
+  GimpBuffer *buffer = clipboard_get_buffer (gdisp->gimage->gimp);
+
+  if (buffer)
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+      gint              x, y;
+      gint              width, height;
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
+      if (gimp_edit_paste (gdisp->gimage,
+                           gimp_image_active_drawable (gdisp->gimage),
+                           buffer, paste_into, x, y, width, height))
+	{
+          gimp_image_flush (gdisp->gimage);
+	}
+
+      g_object_unref (buffer);
+    }
+}
+
+static void
+edit_undo_clear_callback (GtkWidget *widget,
+                          gboolean   clear,
+                          gpointer   data)
+{
+  if (clear)
+    {
+      GimpImage *gimage = data;
+
+      gimp_image_undo_disable (gimage);
+      gimp_image_undo_enable (gimage);
+      gimp_image_flush (gimage);
+    }
+}
 
 static void
 cut_named_buffer_callback (GtkWidget   *widget,

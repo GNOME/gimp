@@ -1,3 +1,11 @@
+2004-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/edit-actions.c (edit_actions): added "..." to "Clear
+	undo history" because it has a confirmation dialog.
+
+	* app/actions/edit-commands.c: cleanup: moved static functions to
+	the end of the file and prototyped them.
+
 2004-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose):
