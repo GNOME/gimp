@@ -1,3 +1,10 @@
+Sat Nov 20 03:15:42 CET 1999  Marc Lehmann <pcg@goof.com>
+
+        * plug-ins/common/gif.c: Removed rather superflous "comment block
+        not written" message that most people wouldn't see. Left in the
+        "comment block too long" message in, though. Corrected some
+        typoes.
+
 Sat Nov 20 02:46:12 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* common/colortoalpha.c
@@ -32,7 +39,6 @@ Sat Nov 20 00:27:26 GMT 1999 Andy Thomas <alt@gimp.org>
 	between this behaviour and the "original" way of having
 	one nav dialog per display.
 
->>>>>>> 1.1829
 Sat Nov 20 01:27:12 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* convolve.c

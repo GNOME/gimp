@@ -24,7 +24,7 @@
  * REVISION HISTORY
  *
  * 99/04/25
- * 3.00.02 - Save the comment back onto the image as a persistant
+ * 3.00.02 - Save the comment back onto the image as a persistent
  *           parasite if the comment was edited.
  *
  * 99/03/30
@@ -46,7 +46,7 @@
  *           permitted.
  *
  * 98/10/09
- * 2.01.00 - Added support for persistant GIF Comments through
+ * 2.01.00 - Added support for persistent GIF Comments through
  *           the GIMP 1.1 Parasite mechanism where available.
  *           Did some user-interface tweaks.
  *           Fixed a bug when trying to save a GIF smaller
@@ -558,8 +558,8 @@ gint globalusecomment = TRUE;
 
 /* ppmtogif.c - read a portable pixmap and produce a GIF file
 **
-** Based on GIFENCOD by David Rowley <mgardi@watdscu.waterloo.edu>.A
-** Lempel-Zim compression based on "compress".
+** Based on GIFENCOD by David Rowley <mgardi@watdscu.waterloo.edu>. A
+** Lempel-Ziv compression based on "compress".
 **
 ** Modified by Marcel Wijkstra <wijkstra@fwi.uva.nl>
 **
@@ -2046,11 +2046,8 @@ GIFEncodeLoopExt (FILE    *fp,
 
 static void GIFEncodeCommentExt (FILE *fp, char *comment)
 {
-  if (comment==NULL||strlen(comment)<1)
-    {
-      g_print ("GIF: warning: no comment given - comment block not written.\n");
-      return;
-    }
+  if (!comment || !*comment)
+    return;
 
   if (strlen(comment)>240)
     {
