@@ -1,3 +1,12 @@
+2003-09-02  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite.c (gimp_composite_init): Turn on
+	  SSE, SSE2, and 3dnow instruction sets.
+
+	* app/paint-funcs/paint-funcs.c (initial_sub_region): Fixed
+	  uninitialised data in the special case for dissolve.
+	  This is the cause of Bug #121213.
+
 2003-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.[ch]: made all functions which push an

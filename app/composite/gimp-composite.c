@@ -331,7 +331,7 @@ gimp_composite_init (void)
           g_printerr (" +mmx");
           gimp_composite_mmx_install ();
         }
-#if 0
+#if 1
       if (cpu & CPU_ACCEL_X86_SSE || cpu_accel() & CPU_ACCEL_X86_MMXEXT)
         {
           extern void gimp_composite_sse_install (void);
