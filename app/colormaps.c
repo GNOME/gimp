@@ -196,11 +196,11 @@ get_standard_colormaps ()
   gtk_preview_set_install_cmap (install_cmap);
   gtk_preview_set_reserved (reserved_entries);
 
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
   /* so we can reinit the colormaps */
   gtk_preview_reset ();
+
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   info = gtk_preview_get_info ();
   g_visual = info->visual;
