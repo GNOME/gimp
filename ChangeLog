@@ -1,3 +1,15 @@
+2003-10-16  Dave Neary  <bolsh@gimp.org>
+
+	* app/base/color-balance.c
+	* app/base/hue-saturation.c
+	* app/composite/gimp-composite-generic.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/tools/gimphuesaturationtool.c
+	* libgimpcolor/gimpcolorspace.[ch]: Changed all occurrences of
+	gimp_rgb_to_hls_int and gimp_hls_to_rgb_int to
+	gimp_rgb_to_hsl_int and gimp_hsl_to_rgb_int respectively. This 
+	closes bug #124661.
+
 2003-10-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbase.def: added gimp_any_to_utf8.

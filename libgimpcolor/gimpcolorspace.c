@@ -670,7 +670,7 @@ gimp_hsv_to_rgb_int (gint *hue,
 }
 
 /**
- * gimp_rgb_to_hls_int:
+ * gimp_rgb_to_hsl_int:
  * @red: Red channel, returns Hue channel 
  * @green: Green channel, returns Lightness channel
  * @blue: Blue channel, returns Saturation channel
@@ -683,12 +683,12 @@ gimp_hsv_to_rgb_int (gint *hue,
  * L [0, 255], S [0, 255].
  **/
 void
-gimp_rgb_to_hls_int (gint *red,
+gimp_rgb_to_hsl_int (gint *red,
 		     gint *green,
 		     gint *blue)
 {
   gint    r, g, b;
-  gdouble h, l, s;
+  gdouble h, s, l;
   gint    min, max;
   gint    delta;
 
@@ -739,8 +739,8 @@ gimp_rgb_to_hls_int (gint *red,
     }
 
   *red   = ROUND (h);
-  *green = ROUND (l);
-  *blue  = ROUND (s);
+  *green = ROUND (s);
+  *blue  = ROUND (l);
 }
 
 /**
@@ -749,7 +749,7 @@ gimp_rgb_to_hls_int (gint *red,
  * @green: Green channel
  * @blue: Blue channel
  * 
- * Calculates the luminance value of an RGB triplet with the formula 
+ * Calculates the lightness value of an RGB triplet with the formula 
  * L = (max(R, G, B) + min (R, G, B)) / 2
  * 
  * Return value: Luminance vaue corresponding to the input RGB value
@@ -776,7 +776,7 @@ gimp_rgb_to_l_int (gint red,
 }
 
 static gint
-gimp_hls_value (gdouble n1,
+gimp_hsl_value (gdouble n1,
 		gdouble n2,
 		gdouble hue)
 {
@@ -800,10 +800,10 @@ gimp_hls_value (gdouble n1,
 }
 
 /**
- * gimp_hls_to_rgb_int:
+ * gimp_hsl_to_rgb_int:
  * @hue: Hue channel, returns Red channel
- * @lightness: Lightness channel, returns Green channel
- * @saturation: Saturation channel, returns Blue channel
+ * @saturation: Saturation channel, returns Green channel
+ * @lightness: Lightness channel, returns Blue channel
  * 
  * The arguments are pointers to int, with the values pointed to in the 
  * following ranges:  H [0, 360], L [0, 255], S [0, 255].
@@ -812,15 +812,15 @@ gimp_hls_value (gdouble n1,
  * corresponding, with the returned values all in the range [0, 255].
  **/
 void
-gimp_hls_to_rgb_int (gint *hue,
-		     gint *lightness,
-		     gint *saturation)
+gimp_hsl_to_rgb_int (gint *hue,
+		     gint *saturation,
+		     gint *lightness)
 {
-  gdouble h, l, s;
+  gdouble h, s, l;
 
   h = *hue;
-  l = *lightness;
   s = *saturation;
+  l = *lightness;
 
   if (s == 0)
     {
@@ -841,9 +841,9 @@ gimp_hls_to_rgb_int (gint *hue,
       m1 = (l / 127.5) - m2;
 
       /*  chromatic case  */
-      *hue        = gimp_hls_value (m1, m2, h + 85);
-      *lightness  = gimp_hls_value (m1, m2, h);
-      *saturation = gimp_hls_value (m1, m2, h - 85);
+      *hue        = gimp_hsl_value (m1, m2, h + 85);
+      *saturation  = gimp_hsl_value (m1, m2, h);
+      *lightness = gimp_hsl_value (m1, m2, h - 85);
     }
 }
 

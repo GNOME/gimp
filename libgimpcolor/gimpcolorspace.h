@@ -73,15 +73,15 @@ void    gimp_cmyk_to_rgb_int    (gint    *cyan        /* returns red        */,
                                  gint    *yellow      /* returns blue       */,
                                  gint    *black       /* not changed        */);
 
-void    gimp_rgb_to_hls_int	(gint    *red         /* returns hue        */,
-				 gint    *green       /* returns lightness  */,
-				 gint    *blue        /* returns saturation */);
+void    gimp_rgb_to_hsl_int	(gint    *red         /* returns hue        */,
+				 gint    *green       /* returns saturation */,
+				 gint    *blue        /* returns lightness  */);
 gint    gimp_rgb_to_l_int	(gint     red,
 				 gint     green,
 				 gint     blue);
-void    gimp_hls_to_rgb_int	(gint    *hue         /* returns red        */,
-				 gint    *lightness   /* returns green      */,
-				 gint    *saturation  /* returns blue       */);
+void    gimp_hsl_to_rgb_int	(gint    *hue         /* returns red        */,
+				 gint    *saturation  /* returns green      */,
+				 gint    *lightness   /* returns blue       */);
 
 
 /*  gdouble functions  */

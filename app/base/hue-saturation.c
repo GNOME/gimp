@@ -127,7 +127,7 @@ hue_saturation (PixelRegion   *srcPR,
 	  g = s[GREEN_PIX];
 	  b = s[BLUE_PIX];
 
-	  gimp_rgb_to_hls_int (&r, &g, &b);
+	  gimp_rgb_to_hsl_int (&r, &g, &b);
 
           hue = (r + (128 / 6)) / 6;
 
@@ -147,10 +147,10 @@ hue_saturation (PixelRegion   *srcPR,
             hue = 0;
 
 	  r = hs->hue_transfer[hue][r];
-	  g = hs->lightness_transfer[hue][g];
-	  b = hs->saturation_transfer[hue][b];
+	  g = hs->saturation_transfer[hue][g];
+	  b = hs->lightness_transfer[hue][b];
 
-	  gimp_hls_to_rgb_int (&r, &g, &b);
+	  gimp_hsl_to_rgb_int (&r, &g, &b);
 
 	  d[RED_PIX]   = r;
 	  d[GREEN_PIX] = g;

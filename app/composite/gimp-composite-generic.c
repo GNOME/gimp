@@ -551,15 +551,15 @@ gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
       r2 = src2[0];
       g2 = src2[1];
       b2 = src2[2];
-      gimp_rgb_to_hls_int(&r1, &g1, &b1);
-      gimp_rgb_to_hls_int(&r2, &g2, &b2);
+      gimp_rgb_to_hsl_int(&r1, &g1, &b1);
+      gimp_rgb_to_hsl_int(&r2, &g2, &b2);
 
       /*  transfer hue and saturation to the source pixel  */
       r1 = r2;
-      b1 = b2;
+      g1 = g2;
 
       /*  set the destination  */
-      gimp_hls_to_rgb_int(&r1, &g1, &b1);
+      gimp_hsl_to_rgb_int(&r1, &g1, &b1);
 
       dest[0] = r1;
       dest[1] = g1;

@@ -184,9 +184,9 @@ color_balance (PixelRegion *srcPR,
 
 	  if (cb->preserve_luminosity)
 	    {
-	      gimp_rgb_to_hls_int (&r_n, &g_n, &b_n);
-	      g_n = gimp_rgb_to_l_int (r, g, b);
-	      gimp_hls_to_rgb_int (&r_n, &g_n, &b_n);
+	      gimp_rgb_to_hsl_int (&r_n, &g_n, &b_n);
+	      b_n = gimp_rgb_to_l_int (r, g, b);
+	      gimp_hsl_to_rgb_int (&r_n, &g_n, &b_n);
 	    }
 
 	  d[RED_PIX]   = r_n;

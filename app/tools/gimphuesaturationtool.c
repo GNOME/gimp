@@ -458,13 +458,13 @@ hue_saturation_update (GimpHueSaturationTool *hs_tool,
           rgb[GREEN_PIX] = default_colors[i][GREEN_PIX];
           rgb[BLUE_PIX]  = default_colors[i][BLUE_PIX];
 
-          gimp_rgb_to_hls_int (rgb, rgb + 1, rgb + 2);
+          gimp_rgb_to_hsl_int (rgb, rgb + 1, rgb + 2);
 
           rgb[RED_PIX]   = hs_tool->hue_saturation->hue_transfer[i][rgb[RED_PIX]];
-          rgb[GREEN_PIX] = hs_tool->hue_saturation->lightness_transfer[i][rgb[GREEN_PIX]];
-          rgb[BLUE_PIX]  = hs_tool->hue_saturation->saturation_transfer[i][rgb[BLUE_PIX]];
+          rgb[GREEN_PIX] = hs_tool->hue_saturation->saturation_transfer[i][rgb[GREEN_PIX]];
+          rgb[BLUE_PIX]  = hs_tool->hue_saturation->lightness_transfer[i][rgb[BLUE_PIX]];
 
-          gimp_hls_to_rgb_int (rgb, rgb + 1, rgb + 2);
+          gimp_hsl_to_rgb_int (rgb, rgb + 1, rgb + 2);
 
           gimp_rgb_set_uchar (&color,
                               (guchar) rgb[0], (guchar) rgb[1], (guchar) rgb[2]);
