@@ -167,7 +167,7 @@ tools_new_histogram_tool (void)
     }
 
   tool = tools_new_tool (HISTOGRAM);
-  private = g_new (HistogramTool, 1);
+  private = g_new0 (HistogramTool, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

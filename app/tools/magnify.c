@@ -425,7 +425,7 @@ tools_new_magnify (void)
     }
 
   tool = tools_new_tool (MAGNIFY);
-  private = g_new (Magnify, 1);
+  private = g_new0 (Magnify, 1);
 
   private->core = draw_core_new (magnify_draw);
   private->x = private->y = 0;

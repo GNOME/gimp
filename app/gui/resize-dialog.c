@@ -110,7 +110,7 @@ resize_widget_new (ResizeType    type,
   abox = NULL;
   frame = NULL;
 
-  private = g_new (ResizePrivate, 1);
+  private = g_new0 (ResizePrivate, 1);
   private->old_width  = width;
   private->old_height = height;
   private->old_res_x  = resolution_x;

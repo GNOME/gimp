@@ -206,7 +206,7 @@ tools_new_bezier_select ()
 
 
   tool = tools_new_tool (BEZIER_SELECT);
-  private = g_new (BezierSelect, 1);
+  private = g_new0 (BezierSelect, 1);
 
   private->num_points = 0;
   private->mask = NULL;

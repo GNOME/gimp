@@ -764,7 +764,7 @@ tools_new_measure_tool (void)
     }
 
   tool = tools_new_tool (MEASURE);
-  private = g_new (MeasureTool, 1);
+  private = g_new0 (MeasureTool, 1);
 
   private->core       = draw_core_new (measure_tool_draw);
   private->num_points = 0;

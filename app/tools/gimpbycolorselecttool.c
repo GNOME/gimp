@@ -626,7 +626,7 @@ tools_new_by_color_select (void)
     }
 
   tool = tools_new_tool (BY_COLOR_SELECT);
-  private = g_new (ByColorSelect, 1);
+  private = g_new0 (ByColorSelect, 1);
 
   private->operation = SELECTION_REPLACE;
 

@@ -726,7 +726,7 @@ tools_new_color_picker ()
     }
 
   tool = tools_new_tool (COLOR_PICKER);
-  private = g_new (ColorPickerTool, 1);
+  private = g_new0 (ColorPickerTool, 1);
 
   private->core = draw_core_new (colorpicker_draw);
 

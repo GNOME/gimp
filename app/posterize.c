@@ -114,7 +114,7 @@ tools_new_posterize (void)
     }
 
   tool = tools_new_tool (POSTERIZE);
-  private = g_new (Posterize, 1);
+  private = g_new0 (Posterize, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

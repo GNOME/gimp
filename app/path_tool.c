@@ -1413,7 +1413,7 @@ tools_new_path_tool (void)
       }
 
    tool = tools_new_tool (PATH_TOOL);
-   private = g_new (PathTool, 1);
+   private = g_new0 (PathTool, 1);
 
    private->click_type       = ON_CANVAS;
    private->click_x         = 0;

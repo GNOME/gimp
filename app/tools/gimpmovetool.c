@@ -496,7 +496,7 @@ tools_new_move_tool (void)
     }
 
   tool = tools_new_tool (MOVE);
-  private = g_new (MoveTool, 1);
+  private = g_new0 (MoveTool, 1);
 
   private->layer = NULL;
   private->guide = NULL;

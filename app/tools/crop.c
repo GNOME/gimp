@@ -775,7 +775,7 @@ tools_new_crop (void)
     }
 
   tool = tools_new_tool (CROP);
-  private = g_new (Crop, 1);
+  private = g_new0 (Crop, 1);
 
   private->core = draw_core_new (crop_draw);
   private->startx = private->starty = 0;

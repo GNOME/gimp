@@ -349,7 +349,7 @@ tools_new_iscissors (void)
     }
 
   tool = tools_new_tool (ISCISSORS);
-  private = g_new (Iscissors, 1);
+  private = g_new0 (Iscissors, 1);
 
   private->core = draw_core_new (iscissors_draw);
   private->op           = -1;

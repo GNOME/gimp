@@ -1539,7 +1539,7 @@ tools_new_ink (void)
     }
 
   tool = tools_new_tool (INK);
-  private = g_new (InkTool, 1);
+  private = g_new0 (InkTool, 1);
 
   private->core = draw_core_new (ink_no_draw);
   private->last_blob = NULL;

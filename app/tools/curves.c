@@ -395,7 +395,7 @@ tools_new_curves (void)
     }
 
   tool = tools_new_tool (CURVES);
-  private = g_new (Curves, 1);
+  private = g_new0 (Curves, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

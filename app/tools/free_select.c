@@ -318,7 +318,7 @@ tools_new_free_select (void)
     }
 
   tool = tools_new_tool (FREE_SELECT);
-  private = g_new (FreeSelect, 1);
+  private = g_new0 (FreeSelect, 1);
 
   private->core    = draw_core_new (free_select_draw);
   private->num_pts = 0;

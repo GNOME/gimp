@@ -23,6 +23,11 @@
 #include "gdisplay_color.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "config.h"
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 
 typedef enum
 {

@@ -124,7 +124,7 @@ tools_new_ellipse_select  (void)
     }
 
   tool = tools_new_tool (ELLIPSE_SELECT);
-  private = g_new (EllipseSelect, 1);
+  private = g_new0 (EllipseSelect, 1);
 
   private->core = draw_core_new (ellipse_select_draw);
   /*  Make the selection static, not blinking  */

@@ -1,3 +1,45 @@
+2000-06-22  Matt Wilson  <msw@redhat.com>
+
+	* app/paint_core.c (paint_core_new): allocate the tool's
+	paint_core with g_new0.  This prevents us from having cruft in
+	unused tools.  Systems with sensitive FPUs (Alpha) will raise
+	exception in the paint_core_cursor_update if paint_core->last[xy]
+	are messy.
+
+	* app/bezier_select.c (tools_new_bezier_select)
+	* app/blend.c (blend_options_new)
+	* app/brightness_contrast.c (tools_new_brightness_contrast)
+	* app/bucket_fill.c (tools_new_bucket_fill)
+	* app/by_color_select.c (tools_new_by_color_select)
+	* app/color_balance.c (tools_new_color_balance)
+	* app/color_panel.c (color_panel_new)
+	* app/color_picker.c (tools_new_color_picker)	
+	* app/crop.c (tools_new_crop)
+	* app/curves.c (tools_new_curves)
+	* app/ellipse_select.c (tools_new_ellipse_select)
+	* app/free_select.c (tools_new_free_select)
+	* app/fuzzy_select.c (tools_new_fuzzy_select)	
+	* app/histogram_tool.c (tools_new_histogram_tool)
+	* app/hue_saturation.c (tools_new_hue_saturation)
+	* app/ink.c (tools_new_ink)
+	* app/iscissors.c (tools_new_iscissors)
+	* app/levels.c (tools_new_levels)
+	* app/magnify.c (tools_new_magnify)
+	* app/measure.c (tools_new_measure_tool)
+	* app/move.c (tools_new_move_tool)
+	* app/path_tool.c (tools_new_path_tool)
+	* app/posterize.c (tools_new_posterize)
+	* app/rect_select.c (tools_new_rect_select)
+	* app/resize.c (resize_widget_new)
+	* app/threshold.c (tools_new_threshold)
+	* app/transform_core.c (transform_core_new)
+	* app/xinput_airbrush.c (tools_new_xinput_airbrush): likewise (it
+	can only help and it really isn't slow.)
+
+	* app/color_area.c: #include <string.h> for memcpy declaration
+
+	* app/gimphelp.c: #include <string.h> for strlen declaration
+
 Thu Jun 22 15:53:52 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.24 release (1.2pre)

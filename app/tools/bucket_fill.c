@@ -594,7 +594,7 @@ tools_new_bucket_fill (void)
     }
 
   tool = tools_new_tool (BUCKET_FILL);
-  private = g_new (BucketTool, 1);
+  private = g_new0 (BucketTool, 1);
 
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 

@@ -686,7 +686,7 @@ tools_new_rect_select (void)
     }
 
   tool = tools_new_tool (RECT_SELECT);
-  private = g_new (RectSelect, 1);
+  private = g_new0 (RectSelect, 1);
 
   private->core = draw_core_new (rect_select_draw);
   private->x = private->y = 0;

@@ -835,7 +835,7 @@ transform_core_new (ToolType type,
   gint           i;
 
   tool = tools_new_tool (type);
-  private = g_new (TransformCore, 1);
+  private = g_new0 (TransformCore, 1);
 
   private->interactive = interactive;
 

@@ -129,7 +129,7 @@ tools_new_brightness_contrast (void)
    }
 
   tool = tools_new_tool (BRIGHTNESS_CONTRAST);
-  private = g_new (BrightnessContrast, 1);
+  private = g_new0 (BrightnessContrast, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

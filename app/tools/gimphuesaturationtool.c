@@ -247,7 +247,7 @@ tools_new_hue_saturation (void)
     }
 
   tool = tools_new_tool (HUE_SATURATION);
-  private = g_new (HueSaturation, 1);
+  private = g_new0 (HueSaturation, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

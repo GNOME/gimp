@@ -634,7 +634,7 @@ tools_new_fuzzy_select (void)
     }
 
   tool = tools_new_tool (FUZZY_SELECT);
-  private = g_new (FuzzySelect, 1);
+  private = g_new0 (FuzzySelect, 1);
 
   private->core = draw_core_new (fuzzy_select_draw);
 

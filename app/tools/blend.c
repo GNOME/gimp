@@ -1595,7 +1595,7 @@ tools_new_blend ()
     }
 
   tool = tools_new_tool (BLEND);
-  private = g_new (BlendTool, 1);
+  private = g_new0 (BlendTool, 1);
 
   private->core = draw_core_new (blend_draw);
 

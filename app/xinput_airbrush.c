@@ -3228,7 +3228,7 @@ tools_new_xinput_airbrush (void)
     }
 
   tool = tools_new_tool (XINPUT_AIRBRUSH);
-  private = g_new (XinputAirbrushTool, 1);
+  private = g_new0 (XinputAirbrushTool, 1);
 
   private->core = draw_core_new (xinput_airbrush_no_draw);
   private->last_airbrush_blob = NULL;

@@ -716,7 +716,7 @@ paint_core_new (ToolType type)
   PaintCore *private;
 
   tool = tools_new_tool (type);
-  private = g_new (PaintCore, 1);
+  private = g_new0 (PaintCore, 1);
 
   private->core = draw_core_new (paint_core_draw);
 

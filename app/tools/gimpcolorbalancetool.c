@@ -170,7 +170,7 @@ tools_new_color_balance (void)
     }
 
   tool = tools_new_tool (COLOR_BALANCE);
-  private = g_new (ColorBalance, 1);
+  private = g_new0 (ColorBalance, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

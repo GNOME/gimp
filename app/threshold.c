@@ -173,7 +173,7 @@ tools_new_threshold (void)
     }
 
   tool = tools_new_tool (THRESHOLD);
-  private = g_new (Threshold, 1);
+  private = g_new0 (Threshold, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

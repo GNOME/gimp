@@ -199,7 +199,7 @@ tools_new_levels (void)
     }
 
   tool = tools_new_tool (LEVELS);
-  private = g_new (Levels, 1);
+  private = g_new0 (Levels, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

@@ -81,7 +81,7 @@ color_panel_new (guchar *initial,
   ColorPanelPrivate *private;
   gint i;
 
-  private = g_new (ColorPanelPrivate, 1);
+  private = g_new0 (ColorPanelPrivate, 1);
   private->color_notebook        = NULL;
   private->color_notebook_active = FALSE;
   private->gc                    = NULL;
