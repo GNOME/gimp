@@ -3557,10 +3557,8 @@ LISP
 help (void)
 {
   (*siod_output_routine) (siod_output,
-       "HELP for SIOD, Version %s\n",
-       siod_version ());
-  put_st ("For the latest Script-Fu tips, tutorials, & info:\n");
-  put_st ("\thttp://www.gimp.org/scripts.html\n\n");
+                          "SIOD, Scheme In One Defun, Version %s\n",
+                          siod_version ());
 
   return NIL;
 }
