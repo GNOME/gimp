@@ -31,11 +31,6 @@
 #include "gimphistogramview.h"
 
 
-#define WAITING 0
-#define WORKING 1
-
-#define WORK_DELAY 1
-
 #define HISTOGRAM_MASK GDK_EXPOSURE_MASK | \
                        GDK_BUTTON_PRESS_MASK | \
                        GDK_BUTTON_RELEASE_MASK | \

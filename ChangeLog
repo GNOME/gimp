@@ -1,5 +1,9 @@
 2002-08-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.c: removed unused #define cruft.
+
+2002-08-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.[ch]: added a tool icon and
 	descriptive string to the dialog's title box. Create the
 	drawable preview with is_popup == TRUE so it doesn't show
