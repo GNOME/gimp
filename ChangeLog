@@ -1,3 +1,23 @@
+2004-07-29  Michael Natterer  <mitch@gimp.org>
+
+	Added support for motion event history as provided by some input
+	device drivers. If you have a tablet driver supporting this,
+	please try and report back.
+
+	* app/display/gimpdisplayshell.h (struct GimpDisplayShell): added
+	member "guint32 last_motion_time".
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_tool_events): remember the last_motion_time on
+	button_press() and after motion() and ask the current device for
+	its motion history; in motion(), if the active_tool asks for exact
+	motions, check if the input device recorded a motion history and
+	process the history instead of the motion event.
+
+	(gimp_display_shell_get_time_coords): new utility function which
+	gets GimpCoords from a GdkTimeCoord struct as used by the motion
+	history.
+
 2004-07-29  Shlomi Fish <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/repaint.c: converted a multiple if into

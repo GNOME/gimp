@@ -93,6 +93,10 @@ static gboolean gimp_display_shell_get_event_coords  (GimpDisplayShell *shell,
 static void     gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
                                                       GdkDevice        *device,
                                                       GimpCoords       *coords);
+static void     gimp_display_shell_get_time_coords   (GimpDisplayShell *shell,
+                                                      GdkDevice        *device,
+                                                      GdkTimeCoord     *event,
+                                                      GimpCoords       *coords);
 static gboolean gimp_display_shell_get_event_state   (GimpDisplayShell *shell,
                                                       GdkEvent         *event,
                                                       GdkDevice        *device,
@@ -754,9 +758,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
 
                 if (initialized)
-                  tool_manager_button_press_active (gimp,
-                                                    &image_coords, time, state,
-                                                    gdisp);
+                  {
+                    tool_manager_button_press_active (gimp,
+                                                      &image_coords, time, state,
+                                                      gdisp);
+
+                    shell->last_motion_time = bevent->time;
+                  }
               }
             break;
 
@@ -941,7 +949,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gtk_adjustment_set_value (adj, value);
           }
 
-       /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
+        /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
         gimp_display_shell_untransform_coords (shell,
                                                &display_coords,
                                                &image_coords);
@@ -1045,7 +1053,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 (! gimp_image_is_empty (gimage) ||
                  gimp_tool_control_handles_empty_image (active_tool->control)))
               {
-                /*  if the first mouse button is down, check for automatic
+                GdkTimeCoord **history_events;
+                gint           n_history_events;
+
+               /*  if the first mouse button is down, check for automatic
                  *  scrolling...
                  */
                 if ((mevent->x < 0                 ||
@@ -1087,9 +1098,60 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                       }
                   }
 
-                tool_manager_motion_active (gimp,
-                                            &image_coords, time, state,
-                                            gdisp);
+                if (gimp_tool_control_motion_mode (active_tool->control) ==
+                    GIMP_MOTION_MODE_EXACT &&
+                    gdk_device_get_history (mevent->device, mevent->window,
+                                            shell->last_motion_time,
+                                            mevent->time,
+                                            &history_events,
+                                            &n_history_events))
+                  {
+                    gint i;
+
+                    for (i = 0; i < n_history_events; i++)
+                      {
+                        gimp_display_shell_get_time_coords (shell,
+                                                            mevent->device,
+                                                            history_events[i],
+                                                            &display_coords);
+
+                        /*  GimpCoords passed to tools are ALWAYS in
+                         *  image coordinates
+                         */
+                        gimp_display_shell_untransform_coords (shell,
+                                                               &display_coords,
+                                                               &image_coords);
+
+                        if (gimp_tool_control_auto_snap_to (active_tool->control))
+                          {
+                            gint x, y, width, height;
+
+                            gimp_tool_control_snap_offsets (active_tool->control,
+                                                            &x, &y, &width, &height);
+
+                            gimp_display_shell_snap_coords (shell,
+                                                            &image_coords,
+                                                            &image_coords,
+                                                            x, y, width, height);
+                          }
+
+                        tool_manager_motion_active (gimp,
+                                                    &image_coords,
+                                                    history_events[i]->time,
+                                                    state,
+                                                    gdisp);
+                      }
+
+                    gdk_device_free_history (history_events, n_history_events);
+                  }
+                else
+                  {
+                    tool_manager_motion_active (gimp,
+                                                &image_coords, time, state,
+                                                gdisp);
+                  }
+
+                shell->last_motion_time = mevent->time;
               }
           }
         else if (state & GDK_BUTTON2_MASK)
@@ -1599,6 +1661,45 @@ gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
     coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL, &coords->wheel))
+    coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
+                           GIMP_COORDS_MAX_WHEEL);
+  else
+    coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
+}
+
+static void
+gimp_display_shell_get_time_coords (GimpDisplayShell *shell,
+                                    GdkDevice        *device,
+                                    GdkTimeCoord     *event,
+                                    GimpCoords       *coords)
+{
+  gdk_device_get_axis (device, event->axes, GDK_AXIS_X, &coords->x);
+  gdk_device_get_axis (device, event->axes, GDK_AXIS_Y, &coords->y);
+
+  /*  CLAMP() the return value of each *_get_axis() call to be safe
+   *  against buggy XInput drivers. Provide default values if the
+   *  requested axis does not exist.
+   */
+
+  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_PRESSURE, &coords->pressure))
+    coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
+                              GIMP_COORDS_MAX_PRESSURE);
+  else
+    coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+
+  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_XTILT, &coords->xtilt))
+    coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
+                           GIMP_COORDS_MAX_TILT);
+  else
+    coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
+
+  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_YTILT, &coords->ytilt))
+    coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
+                           GIMP_COORDS_MAX_TILT);
+  else
+    coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
+
+  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_WHEEL, &coords->wheel))
     coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
                            GIMP_COORDS_MAX_WHEEL);
   else

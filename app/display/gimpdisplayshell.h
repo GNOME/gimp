@@ -165,6 +165,7 @@ struct _GimpDisplayShell
   gint              scroll_start_x;
   gint              scroll_start_y;
   gboolean          button_press_before_focus;
+  guint32           last_motion_time;
 };
 
 struct _GimpDisplayShellClass
