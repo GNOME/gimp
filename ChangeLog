@@ -1,5 +1,10 @@
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-undo-push.c (undo_pop_text_layer): fixed a
+	bug that Mitch spotted.
+
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-undo-push.c (undo_pop_text_layer): don't
 	exchange the text_layer's text object but sync it with the text
 	object from the undo step.
