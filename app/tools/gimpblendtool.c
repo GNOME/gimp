@@ -755,8 +755,13 @@ blend (GImage       *gimage,
                         x1, y1, (x2 - x1), (y2 - y1),
                         blend_mode, gradient_type, offset, repeat,
                         supersample, max_depth, threshold,
-                        (startx - x1), (starty - y1),
-                        (endx - x1), (endy - y1), opacity/100.0, paint_mode);
+                        /*
+                          (startx - x1), (starty - y1),
+                          (endx - x1), (endy - y1),
+                        */
+                        startx, starty,
+                        endx, endy,
+                        opacity/100.0, paint_mode);
   
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
@@ -1483,48 +1488,75 @@ gradient_fill_region (GImage       *gimage,
       applytag = tag_set_alpha (applytag, ALPHA_YES);
 
       /* alloc canvases */
-      render = canvas_new (rendertag, width, FOO, STORAGE_TILED);
-      apply = canvas_new (applytag, width, FOO, STORAGE_TILED);
+      render = canvas_new (rendertag,
+                           width, FOO,
+                           STORAGE_TILED);
+
+      apply = canvas_new (applytag,
+                          width, FOO,
+                          STORAGE_TILED);
 
       {
+        PixelArea PRrender;
+        PixelArea PRapply;
+        void * pr;
         int yy;
-        for (yy = 0; yy < height; yy+=FOO)
+
+        /* render the blend in 64 pixel tall strips */
+        for (yy = 0;
+             yy < height;
+             yy += FOO)
           {
-            PixelArea PRrender;
-            PixelArea PRapply;
-            void * pr;
-            
-            pixelarea_init (&PRrender, render, 0, 0, 0, FOO, TRUE);
-        
+            /* init the rendering area */
+            pixelarea_init (&PRrender, render,
+                            0, 0,
+                            0, 0,
+                            TRUE);
+
+            /* render the width x 64 strip */
             for (pr = pixelarea_register(1, &PRrender);
                  pr != NULL;
                  pr = pixelarea_process(pr))
               {
-                gint y = pixelarea_y (&PRrender);
-                gint h = pixelarea_height (&PRrender);
+                gint y_s = pixelarea_y (&PRrender);
+                gint h_s = pixelarea_height (&PRrender);
 
-                for (; h--; y++)
+                for (;
+                     h_s--;
+                     y_s++)
                   {
-                    gint x = pixelarea_x (&PRrender);
-                    gint w = pixelarea_width (&PRrender);
-                    for (; w--; x++)
+                    gint x_s = pixelarea_x (&PRrender);
+                    gint w_s = pixelarea_width (&PRrender);
+
+                    for (;
+                         w_s--;
+                         x_s++)
                       {
-                        gradient_render_pixel (x, y + yy,
-                                               (gfloat*) canvas_portion_data (render, x, y),
+                        gradient_render_pixel (x + x_s, y + yy + y_s,
+                                               (gfloat*) canvas_portion_data (render, x_s, y_s),
                                                &rbd);
                       }
                   }
               }
-        
-            pixelarea_init (&PRrender, render, 0, 0, 0, FOO, TRUE);
-            pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
+
+            /* convert the strip to image format */
+            pixelarea_init (&PRrender, render,
+                            0, 0,
+                            0, 0,
+                            TRUE);
+            pixelarea_init (&PRapply, apply,
+                            0, 0,
+                            0, 0,
+                            TRUE);
             copy_area (&PRrender, &PRapply);
+
             
+            /* apply the strip to the image */
             gimage_apply_painthit (gimage, drawable,
                                    NULL, apply,
                                    0, 0,
                                    0, 0,
-                                   TRUE, opacity, mode, x, yy);
+                                   TRUE, opacity, mode, x, y + yy);
           }
       }
     }

@@ -868,7 +868,11 @@ transform_core_recalc (tool, gdisp_ptr)
 #define REF_TILE(i,x,y,type) \
      tilex[i] = x; tiley[i] = y; \
      canvas_portion_refro (float_tiles, x, y); \
-     src[i] = (type *) canvas_portion_data (float_tiles, x, y);
+     src[i] = (type *) canvas_portion_data (float_tiles, x, y)
+
+#define UNREF_TILE(i) \
+     canvas_portion_unref (float_tiles, tilex[i], tiley[i])
+
 
 static Canvas * 
 transform_core_do_u8  (
@@ -1130,7 +1134,7 @@ transform_core_do_u8  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 16; b++)
-			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+			UNREF_TILE (b);
 		    }
 		  else  /*  linear  */
 		    {
@@ -1187,7 +1191,7 @@ transform_core_do_u8  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 4; b++)
-			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+			UNREF_TILE (b);
 		    }
 		}
 	      else  /*  no interpolation  */
@@ -1197,7 +1201,7 @@ transform_core_do_u8  (
 		  for (b = 0; b < bytes; b++)
 		    *d++ = src[0][b];
 
-                  canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+                  UNREF_TILE (0);;
 		}
 	    }
 	  else
@@ -1483,7 +1487,7 @@ transform_core_do_u16  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 16; b++)
-			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+                        UNREF_TILE (b);
 		    }
 		  else  /*  linear  */
 		    {
@@ -1540,7 +1544,7 @@ transform_core_do_u16  (
 		      *d++ = a_val;
 
 		      for (b = 0; b < 4; b++)
-			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+                        UNREF_TILE (b);
 		    }
 		}
 	      else  /*  no interpolation  */
@@ -1550,7 +1554,7 @@ transform_core_do_u16  (
 		  for (b = 0; b < chans; b++)
 		    *d++ = src[0][b];
 
-                  canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+                  UNREF_TILE (0);
 		}
 	    }
 	  else
