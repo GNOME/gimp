@@ -28,8 +28,6 @@ script_fu_SOURCES = \
 	script-fu-interface.h		\
 	script-fu-text-console.h	\
 	script-fu-text-console.c	\
-	script-fu-constants.c		\
-	script-fu-constants.h		\
 	script-fu-intl.h		\
 	script-fu-scripts.c		\
 	script-fu-scripts.h		\

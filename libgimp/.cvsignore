@@ -7,3 +7,4 @@ _libs
 .deps
 *.la
 gimpenums.c
+gimpenums.c.tail

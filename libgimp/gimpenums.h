@@ -427,6 +427,11 @@ typedef enum
 } GimpTransferMode;
 
 
+void           _gimp_enums_init          (void);
+
+const gchar ** gimp_enums_get_type_names (gint *n_type_names);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_ENUMS_H__ */

@@ -28,7 +28,6 @@
 
 #include "script-fu-types.h"
 
-#include "script-fu-constants.h"
 #include "script-fu-console.h"
 #include "script-fu-interface.h"
 #include "script-fu-scripts.h"
@@ -281,6 +280,11 @@ init_procedures (void)
 static void
 init_constants (void)
 {
+  const gchar **enum_type_names;
+  gint          n_enum_type_names;
+  gint          i;
+  GimpUnit      unit;
+
   setvar (cintern ("gimp-directory"),
           strcons (-1, (gchar *) gimp_directory ()), NIL);
 
@@ -296,8 +300,63 @@ init_constants (void)
   setvar (cintern ("gimp-sysconf-directory"),
           strcons (-1, (gchar *) gimp_sysconf_directory ()), NIL);
 
-  /* Generated constants */
-  init_generated_constants ();
+  enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
+
+  for (i = 0; i < n_enum_type_names; i++)
+    {
+      const gchar *enum_name  = enum_type_names[i];
+      GType        enum_type  = g_type_from_name (enum_name);
+      GEnumClass  *enum_class = g_type_class_ref (enum_type);
+      GEnumValue  *value;
+
+      for (value = enum_class->values; value->value_name; value++)
+        {
+          if (! strncmp ("GIMP_", value->value_name, 5))
+            {
+              gchar *scheme_name;
+              gchar *s;
+
+              scheme_name = g_strdup (value->value_name + 5);
+
+              for (s = scheme_name; *s; s++)
+                if (*s == '_')
+                  *s = '-';
+
+              g_print ("registering %s  \"%s\" = %d\n",
+                       enum_name, scheme_name, value->value);
+
+              setvar (rintern (scheme_name), flocons (value->value), NIL);
+
+              g_free (scheme_name);
+            }
+          else
+            {
+              g_print ("EEK: enum %s has evil value \"%s\"\n",
+                       enum_name, value->value_name);
+            }
+        }
+
+      g_type_class_unref (enum_class);
+    }
+
+  for (unit = GIMP_UNIT_PIXEL;
+       unit < gimp_unit_get_number_of_built_in_units ();
+       unit++)
+    {
+      gchar *tmp;
+      gchar *scheme_name;
+
+      tmp = g_ascii_strup (gimp_unit_get_singular (unit), -1);
+      scheme_name = g_strconcat ("UNIT-", tmp, NULL);
+      g_free (tmp);
+
+      g_print ("registering GimpUnit  \"%s\" = %d\n",
+               scheme_name, unit);
+
+      setvar (rintern (scheme_name), flocons (unit), NIL);
+
+      g_free (scheme_name);
+    }
 
   /* These are for backwards compatibility; they should be removed sometime */
   setvar (cintern ("gimp-dir"),
@@ -328,13 +387,6 @@ init_constants (void)
 
   setvar (cintern ("BLUR"),           flocons (GIMP_BLUR_CONVOLVE),     NIL);
   setvar (cintern ("SHARPEN"),        flocons (GIMP_SHARPEN_CONVOLVE),  NIL);
-
-  setvar (cintern ("RGB-IMAGE"),      flocons (GIMP_RGB_IMAGE),         NIL);
-  setvar (cintern ("RGBA-IMAGE"),     flocons (GIMP_RGBA_IMAGE),        NIL);
-  setvar (cintern ("GRAY-IMAGE"),     flocons (GIMP_GRAY_IMAGE),        NIL);
-  setvar (cintern ("GRAYA-IMAGE"),    flocons (GIMP_GRAYA_IMAGE),       NIL);
-  setvar (cintern ("INDEXED-IMAGE"),  flocons (GIMP_INDEXED_IMAGE),     NIL);
-  setvar (cintern ("INDEXEDA-IMAGE"), flocons (GIMP_INDEXEDA_IMAGE),    NIL);
 
   setvar (cintern ("WHITE-MASK"),     flocons (GIMP_ADD_WHITE_MASK),    NIL);
   setvar (cintern ("BLACK-MASK"),     flocons (GIMP_ADD_BLACK_MASK),    NIL);

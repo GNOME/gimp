@@ -26,10 +26,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-/*
- * these enums that are registered with the type system
- */
-
 #define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
 
 GType gimp_check_size_get_type (void) G_GNUC_CONST;
@@ -84,11 +80,7 @@ typedef enum
 } GimpImageType;
 
 
-/*
- * non-registered enums
- */
-
-typedef enum  /*< skip >*/
+typedef enum /*< skip >*/
 {
   GIMP_UNIT_PIXEL   = 0,
 
@@ -102,7 +94,12 @@ typedef enum  /*< skip >*/
   GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
 } GimpUnit;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_PDB_ARG_TYPE (gimp_pdb_arg_type_get_type ())
+
+GType gimp_pdb_arg_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_PDB_INT32,
   GIMP_PDB_INT16,
@@ -129,7 +126,12 @@ typedef enum  /*< skip >*/
   GIMP_PDB_END
 } GimpPDBArgType;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_PDB_PROC_TYPE (gimp_pdb_proc_type_get_type ())
+
+GType gimp_pdb_proc_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_INTERNAL,
   GIMP_PLUGIN,
@@ -137,7 +139,12 @@ typedef enum  /*< skip >*/
   GIMP_TEMPORARY
 } GimpPDBProcType;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_PDB_STATUS_TYPE (gimp_pdb_status_type_get_type ())
+
+GType gimp_pdb_status_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_PDB_EXECUTION_ERROR,
   GIMP_PDB_CALLING_ERROR,
@@ -146,21 +153,36 @@ typedef enum  /*< skip >*/
   GIMP_PDB_CANCEL
 } GimpPDBStatusType;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_MESSAGE_HANDLER_TYPE (gimp_message_handler_type_get_type ())
+
+GType gimp_message_handler_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_MESSAGE_BOX,
   GIMP_CONSOLE,
   GIMP_ERROR_CONSOLE
 } GimpMessageHandlerType;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_STACK_TRACE_MODE (gimp_stack_trace_mode_get_type ())
+
+GType gimp_stack_trace_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_STACK_TRACE_NEVER,
   GIMP_STACK_TRACE_QUERY,
   GIMP_STACK_TRACE_ALWAYS
 } GimpStackTraceMode;
 
-typedef enum  /*< skip >*/
+
+#define GIMP_TYPE_PROGRESS_COMMAND (gimp_progress_command_get_type ())
+
+GType gimp_progress_command_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_PROGRESS_COMMAND_START,
   GIMP_PROGRESS_COMMAND_END,

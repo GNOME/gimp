@@ -32,7 +32,6 @@
 
 #include "siod-wrapper.h"
 #include "script-fu-console.h"
-#include "script-fu-constants.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 #include "script-fu-text-console.h"

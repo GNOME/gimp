@@ -1,5 +1,32 @@
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpbaseenums.[ch]: register some missing enums.
+
+	* tools/pdbgen/enumcode.pl: removed code to generate 
+	plug-ins/script-fu/script-fu-constants.c, generate code to
+	explicitely initialize and query all of libgimp*'s enums
+	and write it to libgimp/gimpenums.c.tail
+
+	* libgimp/gimpenums.h: regenerated.
+
+	* libgimp/Makefile.am: append gimpenums.c.tail to gimpenums.c
+
+	* libgimp/gimp.c (gimp_main): call g_type_init() and
+	_gimp_enums_init().
+
+	* libgimp/gimp.def: added gimp_enums_get_type_names().
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-constants.[ch]: removed these files.
+
+	* plug-ins/script-fu/siod-wrapper.c: dynamically register all
+	constants using gimp_enums_get_type_names() and introspection.
+	Also register the built-in unit types.
+
+	* plug-ins/script-fu/script-fu.c: changed accordingly.
+
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
 	Don't store human readable and translatable enum/flag strings in
 	GEnumValue's and GTypeValue's fields but attach them to their
 	GType using separate structs and utility functions:
