@@ -178,7 +178,7 @@ gimp_color_button_init (GimpColorButton *gcb)
 GtkType
 gimp_color_button_get_type (void)
 {
-  static guint gcb_type = 0;
+  static GtkType gcb_type = 0;
 
   if (!gcb_type)
     {

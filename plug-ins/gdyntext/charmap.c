@@ -44,9 +44,9 @@ enum {
 static gint charmap_signals[LAST_SIGNAL] = { 0 };
 
 
-guint charmap_get_type(void)
+GtkType charmap_get_type(void)
 {
-	static guint cm_type = 0;
+	static GtkType cm_type = 0;
 
 	if (!cm_type) {
 		GtkTypeInfo cm_info = {

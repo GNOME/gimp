@@ -58,7 +58,7 @@ static GimpColorButtonClass *parent_class = NULL;
 GtkType
 gimp_color_panel_get_type (void)
 {
-  static guint panel_type = 0;
+  static GtkType panel_type = 0;
 
   if (!panel_type)
     {

@@ -67,7 +67,7 @@ static GimpContainerEditorClass *parent_class = NULL;
 GtkType
 gimp_buffer_view_get_type (void)
 {
-  static guint view_type = 0;
+  static GtkType view_type = 0;
 
   if (! view_type)
     {

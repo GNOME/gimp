@@ -89,7 +89,7 @@ static GimpDrawableListViewClass *parent_class = NULL;
 GtkType
 gimp_channel_list_view_get_type (void)
 {
-  static guint view_type = 0;
+  static GtkType view_type = 0;
 
   if (! view_type)
     {

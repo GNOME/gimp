@@ -39,9 +39,9 @@ void on_charmap_char_selected(GtkWidget *widget, gpointer data);
 static GtkWindowClass *charmap_window_parent_class = NULL;
 
 
-guint charmap_window_get_type(void)
+GtkType charmap_window_get_type(void)
 {
-	static guint cmw_type = 0;
+	static GtkType cmw_type = 0;
 
 	if (!cmw_type) {
 		GtkTypeInfo cmw_info = {

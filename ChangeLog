@@ -1,3 +1,20 @@
+2001-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* plug-ins/gdyntext/charmap.c
+	* plug-ins/gdyntext/charmap_window.c
+	* plug-ins/gdyntext/font_selection.c
+	* plug-ins/gdyntext/message_window.c: 
+	use GtkType instead of guint to store result of gtk_type_unique(). 
+	Patch courtesy of Alex Larsson <alexl@redhat.com>.
+
 2001-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/jpeg.c: JPEG is back!

@@ -54,9 +54,9 @@ enum {
 static gint font_selection_signals[LAST_SIGNAL] = { 0 };
 
 
-guint font_selection_get_type(void)
+GtkType font_selection_get_type(void)
 {
-	static guint fs_type = 0;
+	static GtkType fs_type = 0;
 
 	if (!fs_type) {
 		GtkTypeInfo fs_info = {

@@ -39,10 +39,10 @@ static void message_window_init       (MessageWindow      *mw);
 static GtkWindowClass *message_window_parent_class = NULL;
 
 
-guint 
+GtkType
 message_window_get_type (void)
 {
-  static guint mw_type = 0;
+  static GtkType mw_type = 0;
   
   if (!mw_type) 
     {

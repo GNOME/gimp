@@ -80,7 +80,7 @@ static GimpRGB  black_color;
 GtkType
 gimp_container_grid_view_get_type (void)
 {
-  static guint grid_view_type = 0;
+  static GtkType grid_view_type = 0;
 
   if (! grid_view_type)
     {

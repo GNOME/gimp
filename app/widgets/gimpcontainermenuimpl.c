@@ -68,7 +68,7 @@ static GimpContainerMenuClass *parent_class = NULL;
 GtkType
 gimp_container_menu_impl_get_type (void)
 {
-  static guint menu_impl_type = 0;
+  static GtkType menu_impl_type = 0;
 
   if (! menu_impl_type)
     {

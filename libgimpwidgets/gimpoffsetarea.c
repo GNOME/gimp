@@ -108,7 +108,7 @@ gimp_offset_area_init (GimpOffsetArea *offset_area)
 GtkType
 gimp_offset_area_get_type (void)
 {
-  static guint offset_area_type = 0;
+  static GtkType offset_area_type = 0;
 
   if (!offset_area_type)
     {
