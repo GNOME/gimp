@@ -1,0 +1,57 @@
+<!-- ##### SECTION Title ##### -->
+GimpPreviewArea
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpPreviewArea ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_preview_area_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_preview_area_draw ##### -->
+<para>
+
+</para>
+
+@area: 
+@x: 
+@y: 
+@width: 
+@height: 
+@type: 
+@buf: 
+@rowstride: 
+<!-- # Unused Parameters # -->
+@image_type: 
+
+
+<!-- ##### FUNCTION gimp_preview_area_set_cmap ##### -->
+<para>
+
+</para>
+
+@area: 
+@cmap: 
+@num_colors: 
+
+

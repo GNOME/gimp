@@ -770,6 +770,24 @@ GIMP_PICK_BUTTON_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppreviewarea</FILE>
+<TITLE>GimpPreviewArea</TITLE>
+GimpPreviewArea
+gimp_preview_area_new
+gimp_preview_area_draw
+gimp_preview_area_set_cmap
+<SUBSECTION Standard>
+GimpPreviewAreaClass
+GIMP_PREVIEW_AREA
+GIMP_IS_PREVIEW_AREA
+GIMP_TYPE_PREVIEW_AREA
+gimp_preview_area_get_type
+GIMP_PREVIEW_AREA_CLASS
+GIMP_IS_PREVIEW_AREA_CLASS
+GIMP_PREVIEW_AREA_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpoldwidgets</FILE>
 gimp_int_option_menu_new
 gimp_int_option_menu_set_history

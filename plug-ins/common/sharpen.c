@@ -23,14 +23,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -101,6 +94,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static GtkWidget *preview;		/* Preview widget */
 static gint       preview_width;	/* Width of preview widget */
 static gint       preview_height;	/* Height of preview widget */
+static gint       preview_rowstride;	/* Pitch of preview widget */
 static gint       preview_x1;		/* Upper-left X of preview */
 static gint       preview_y1;		/* Upper-left Y of preview */
 static gint       preview_x2;		/* Lower-right X of preview */
@@ -108,7 +102,6 @@ static gint       preview_y2;		/* Lower-right Y of preview */
 static guchar    *preview_src;		/* Source pixel image */
 static intneg    *preview_neg;		/* Negative coefficient pixels */
 static guchar    *preview_dst;		/* Destination pixel image */
-static guchar    *preview_image;	/* Preview RGB image */
 static GtkObject *hscroll_data;		/* Horizontal scrollbar data */
 static GtkObject *vscroll_data;		/* Vertical scrollbar data */
 
@@ -533,8 +526,8 @@ sharpen_dialog (void)
   preview_width  = MIN (sel_width, PREVIEW_SIZE);
   preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -600,20 +593,17 @@ sharpen_dialog (void)
 static void
 preview_init (void)
 {
-  gint width;  /* Byte width of the image */
-
   /*
    * Setup for preview filter...
    */
 
   compute_luts();
 
-  width = preview_width * img_bpp;
+  preview_rowstride = preview_width * img_bpp;
 
-  preview_src   = g_new (guchar, width * preview_height);
-  preview_neg   = g_new (intneg, width * preview_height);
-  preview_dst   = g_new (guchar, width * preview_height);
-  preview_image = g_new (guchar, preview_width * preview_height * 3);
+  preview_src = g_new (guchar, preview_rowstride * preview_height);
+  preview_neg = g_new (intneg, preview_rowstride * preview_height);
+  preview_dst = g_new (guchar, preview_rowstride * preview_height);
 
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
@@ -637,12 +627,10 @@ preview_update (void)
 {
   GimpPixelRgn	src_rgn;	/* Source image region */
   guchar	*src_ptr,	/* Current source pixel */
-		*dst_ptr,	/* Current destination pixel */
-  		*image_ptr;	/* Current image pixel */
+                *dst_ptr;	/* Current destination pixel */
   intneg	*neg_ptr;	/* Current negative pixel */
-  guchar	check;		/* Current check mark pixel */
   gint		i,	  	/* Looping var */
-		x, y,		/* Current location in image */
+                y,              /* Current location in image */
 		width;		/* Byte width of the image */
   void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
@@ -707,96 +695,11 @@ preview_update (void)
     (*filter)(preview_width, src_ptr, dst_ptr, neg_ptr - width,
               neg_ptr, neg_ptr + width);
 
-  /*
-   * Fill the preview image buffer...
-   */
-
-  switch (img_bpp)
-    {
-    case 1:
-      for (x = preview_width * preview_height, dst_ptr = preview_dst,
-	     image_ptr = preview_image;
-	   x > 0;
-	   x --, dst_ptr ++, image_ptr += 3)
-	image_ptr[0] = image_ptr[1] = image_ptr[2] = *dst_ptr;
-      break;
-
-    case 2:
-      for (y = preview_height, dst_ptr = preview_dst,
-	     image_ptr = preview_image;
-	   y > 0;
-	   y --)
-	for (x = preview_width;
-	     x > 0;
-	     x --, dst_ptr += 2, image_ptr += 3)
-	  if (dst_ptr[1] == 255)
-	    image_ptr[0] = image_ptr[1] = image_ptr[2] = *dst_ptr;
-	  else
-	    {
-              if ((y & GIMP_CHECK_SIZE) ^ (x & GIMP_CHECK_SIZE))
-                check = GIMP_CHECK_LIGHT * 255;
-              else
-                check = GIMP_CHECK_DARK * 255;
-
-              if (dst_ptr[1] == 0)
-                image_ptr[0] = image_ptr[1] = image_ptr[2] = check;
-              else
-                image_ptr[0] = image_ptr[1] = image_ptr[2] =
-		  check + ((dst_ptr[0] - check) * dst_ptr[1]) / 255;
-	    };
-      break;
-
-    case 3:
-      memcpy (preview_image, preview_dst, preview_width * preview_height * 3);
-      break;
-
-    case 4:
-      for (y = preview_height, dst_ptr = preview_dst,
-	     image_ptr = preview_image;
-	   y > 0;
-	   y --)
-	for (x = preview_width;
-	     x > 0;
-	     x --, dst_ptr += 4, image_ptr += 3)
-	  if (dst_ptr[3] == 255)
-	    {
-	      image_ptr[0] = dst_ptr[0];
-	      image_ptr[1] = dst_ptr[1];
-	      image_ptr[2] = dst_ptr[2];
-	    }
-	  else
-	    {
-              if ((y & GIMP_CHECK_SIZE) ^ (x & GIMP_CHECK_SIZE))
-                check = GIMP_CHECK_LIGHT * 255;
-              else
-                check = GIMP_CHECK_DARK * 255;
-
-              if (dst_ptr[3] == 0)
-                image_ptr[0] = image_ptr[1] = image_ptr[2] = check;
-              else
-		{
-		  image_ptr[0] =
-		    check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
-		  image_ptr[1] =
-		    check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
-		  image_ptr[2] =
-		    check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
-		};
-	    };
-      break;
-    };
-
-  /*
-   * Draw the preview image on the screen...
-   */
-
-  for (y = 0, image_ptr = preview_image;
-       y < preview_height;
-       y ++, image_ptr += preview_width * 3)
-    gtk_preview_draw_row (GTK_PREVIEW (preview), image_ptr, 0, y,
-			  preview_width);
-
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          preview_dst,
+                          preview_rowstride);
 }
 
 static void
@@ -805,7 +708,6 @@ preview_exit (void)
   g_free (preview_src);
   g_free (preview_neg);
   g_free (preview_dst);
-  g_free (preview_image);
 }
 
 /*  dialog callbacks  */

@@ -1,3 +1,16 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimppreviewarea.[ch]: added GimpPreviewArea, a
+	replacement for GtkPreview, loosely based on patches from Geert
+	Jordaens and David Odin. Fixes bug #144759.
+
+	* plug-ins/common/sharpen.c: use the new widget instead of a
+	GtkPreview; saves about 100 lines of rather complex code :)
+
 2004-07-29  Michael Natterer  <mitch@gimp.org>
 
 	* etc/controllerrc: changed default configuration of the keyboard

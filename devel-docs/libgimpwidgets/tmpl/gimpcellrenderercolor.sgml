@@ -25,12 +25,12 @@ GimpCellRendererColor
 
 </para>
 
-<!-- ##### ARG GimpCellRendererColor:opaque ##### -->
+<!-- ##### ARG GimpCellRendererColor:icon-size ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG GimpCellRendererColor:stock-size ##### -->
+<!-- ##### ARG GimpCellRendererColor:opaque ##### -->
 <para>
 
 </para>

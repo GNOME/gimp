@@ -80,6 +80,7 @@ typedef struct _GimpMemsizeEntry       GimpMemsizeEntry;
 typedef struct _GimpOffsetArea         GimpOffsetArea;
 typedef struct _GimpPathEditor         GimpPathEditor;
 typedef struct _GimpPickButton         GimpPickButton;
+typedef struct _GimpPreviewArea        GimpPreviewArea;
 typedef struct _GimpPixmap             GimpPixmap;
 typedef struct _GimpSizeEntry          GimpSizeEntry;
 typedef struct _GimpUnitMenu           GimpUnitMenu;

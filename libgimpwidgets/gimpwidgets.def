@@ -149,6 +149,10 @@ EXPORTS
 	gimp_pixmap_get_type
 	gimp_pixmap_new
 	gimp_pixmap_set
+	gimp_preview_area_draw
+	gimp_preview_area_get_type
+	gimp_preview_area_new
+	gimp_preview_area_set_cmap
 	gimp_query_boolean_box
 	gimp_query_double_box
 	gimp_query_int_box
