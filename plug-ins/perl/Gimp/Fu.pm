@@ -1098,7 +1098,7 @@ sub print_switches {
    for(@{$this->[8]}) {
       my $type=$pf_type2string{$_->[0]};
       my $key=mangle_key($_->[1]);
-      printf "           -%-25s %s\n","$key $type",$_->[2];
+      printf "           -%-25s %s%s\n","$key $type",$_->[2],defined $_->[3] ? " [$_->[3]]" : "";
    }
 }
 
@@ -1108,13 +1108,14 @@ sub main {
       my $this=this_script;
       print <<EOF;
        interface-arguments are
-           -o | --output <filespec>   write image to disk, then delete
+           -o | --output <filespec>   write image to disk, don't display
            -i | --interact            let the user edit the values first
        script-arguments are
 EOF
       print_switches ($this);
+   } else {
+      Gimp::main;
    }
-   Gimp::main;
 };
 
 sub logo {

@@ -266,6 +266,14 @@ sub canonicalize_colour {
 
 *canonicalize_color = \&canonicalize_colour;
 
+($basename = $0) =~ s/^.*[\\\/]//;
+
+# extra check for Gimp::Feature::import
+$in_query=0 unless defined $in_query;	# perl -w is SOOO braindamaged
+$in_quit=$in_run=$in_net=$in_init=0;	# perl -w is braindamaged
+
+$verbose=0;
+
 $interface_type = "net";
 if (@ARGV) {
    if ($ARGV[0] eq "-gimp") {
@@ -438,13 +446,6 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace initialized)) {
 *end   = \&{"$interface_pkg\::gimp_end" };
 *lock  = \&{"$interface_pkg\::lock" };
 *unlock= \&{"$interface_pkg\::unlock" };
-
-($basename = $0) =~ s/^.*[\\\/]//;
-
-# extra check for Gimp::Feature::import
-$in_query=0 unless defined $in_query;	# perl -w is SOOO braindamaged
-$verbose=
-$in_quit=$in_run=$in_net=$in_init;	# perl -w is braindamaged
 
 my %ignore_function = ();
 

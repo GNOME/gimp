@@ -1,0 +1,91 @@
+#!/usr/bin/perl
+
+use Gimp;
+use Gimp::Fu;
+
+# Definiere die Konstante "pi mal zwei"
+use constant PIx2 => 8 * atan2 1,1;
+
+register "random_art_1",			# Funktionsname
+         "Create a Random Tile",		# Kurzhilfe
+         "Create a tileable image by repeatedly drawing colourful polygons",
+         					# Hilfetext
+         "Marc Lehmann",			# Autor
+         "Marc Lehmann <pcg\@goof.com",		# Copyright
+         "0.3",					# Version/Datum
+         "<Toolbox>/Xtns/Render/Random Art #1",	# Menüpfad
+         "",					# Bildtypen
+         # Eingabeparameter
+         # Typ		Name		Beschreibung		Wert
+         [
+          [PF_INT32,	'width',	'Image Width',	 	300],
+          [PF_INT32,	'height',	'Image Height',	 	300],
+          [PF_SLIDER,	'num_poly',	'Number of Polygons', 	20, [5,100,1]],
+          [PF_SLIDER,	'edges',	'Number of Edges',      10, [3, 30, 1]],
+          [PF_SLIDER,	'revolutions',	'Number of Revolutions',1, [1, 3, 1]],
+          [PF_SLIDER,	'feather',	'Feather Radius',	30, [1, 100]],
+          [PF_BOOL,	'supersample',	'Adaptive Supersampling?', 0],
+         ],
+         [
+          [PF_IMAGE,	'image',	'the resulting image'],
+         ],
+         sub {					# Perl-Code
+   # Die Parameter werden ganz "normal" übergeben:
+   my ($w,$h,$num_poly,$edges,$revolutions,$feather,$super)=@_;
+
+   # Erzeuge ein neues Bild
+   my $image = new Image($w,$h,RGB);
+   $image->disable_undo;
+
+   # Erzeuge die erste Ebene für das Bild
+   my $layer = $image->layer_new($w,$h,RGB_IMAGE,
+                   "Random Art #1",100,NORMAL_MODE);
+
+   # Füge sie in das Bild ein
+   $image->add_layer($layer,0);
+
+   # Setze die Hintergrundfarben
+   Palette->set_background('white');
+
+   # ...und lösche die Ebene damit
+   $layer->fill(BG_IMAGE_FILL);
+
+   # Jetzt wurde ein neues, leeres Bild erzeugt, und
+   # das Zeichnen kann beginnen.
+
+   # Erzeuge zufällige Polygone, fülle sie mit einem
+   # zufälligen Farbgradienten und verschiebe das Bild
+   # wiederholt.
+   for (1..$num_poly) {
+      my @ecken;
+      for (1..$edges*$revolutions) {
+         my $r = rand(0.4)+0.1;
+         push(@ecken, $w/2+sin($_*PIx2/$edges)*$r*$w,
+                      $h/2+cos($_*PIx2/$edges)*$r*$h);
+      }
+
+      # Selektiere die Region
+      $image->free_select (\@ecken, SELECTION_REPLACE, 1, 1, $feather);
+
+      # Wähle zufällig zwei Farben aus
+      Palette->set_foreground([rand(256),rand(256),rand(256)]);
+      Palette->set_background([rand(256),rand(256),rand(256)]);
+      
+      # Un erzeuge einen Farbverlauf über das Bild
+      $layer->blend (FG_BG_HSV, DIFFERENCE_MODE, LINEAR, 100,
+                     0, REPEAT_TRIANGULAR, $super, 2, 3,
+                     $w/2, $h/2,
+                     rand($w), rand($h));
+      
+      # Und dann verschiebe das Bild etwas
+      $layer->channel_ops_offset (1,0,(rand(0.8)+0.1)*$w,(rand(0.8)+0.1)*$h);
+   }
+
+   $image->enable_undo;
+
+   # Gib das neu erzeugte Bild zurück, damit es angezeigt wird.
+   $image;
+};
+
+exit main;
+

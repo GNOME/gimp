@@ -1253,7 +1253,7 @@ gimp_call_procedure (proc_name, ...)
 		    g_free (proc_date);
 		    
 		    if (nparams)
-		      args = (GParam *) g_new (GParam, nparams);
+		      args = (GParam *) g_new0 (GParam, nparams);
 		    
 		    for(;items;)
 		      {
@@ -1293,7 +1293,7 @@ gimp_call_procedure (proc_name, ...)
 		        /* very costly, do better! */
 		        no_runmode = 2;
 		        destroy_params (args, nparams);
-		        args = (GParam *) g_new (GParam, nparams);
+		        args = (GParam *) g_new0 (GParam, nparams);
 		      }
 		    
 		    if (trace & TRACE_CALL)

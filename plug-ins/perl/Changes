@@ -8,6 +8,10 @@ Revision history for Gimp-Perl extension.
         - gimp_text_fontname etc.. are now available in gimp-1.0 as well,
           re-enabled the scripts using it (and depending on 1.1 before).
         - allow negative "INT32's".
+        - added examples/randomart1, the plug-in used in my iX article.
+        - commandline switch printing improved a bit.
+        - removed IO::Socket::* dependency from Perl-Server. Was tooo slow.
+        - fixed uninitialized memory error.
 
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".

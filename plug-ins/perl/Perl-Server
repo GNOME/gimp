@@ -9,8 +9,7 @@
 $use_unix	= 1;
 $use_tcp	= 1;	# tcp is enabled only when authorization is available
 
-use IO::Handle;
-use IO::Socket;
+use Socket;
 
 use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
@@ -104,12 +103,19 @@ sub handle_request($) {
    my($fh)=@_;
    my($length,$req,$data,@args,$trace_level);
    
-   $fh->timeout(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
-   $fh->read($length,4) == 4 or return 0;
-   $length=unpack("N",$length);
-   $length>0 && $length<$max_pkt or return 0;
-   $fh->read($req,4) == 4 or return 0;
-   $fh->read($data,$length-4) == $length-4 or return 0;
+   eval {
+      local $SIG{ALRM}=sub { die "\n" };
+      #alarm(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
+      read($fh,$length,4) == 4 or die "\n";
+      $length=unpack("N",$length);
+      $length>0 && $length<$max_pkt or die "\n";
+      #alarm(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
+      read($fh,$req,4) == 4 or die "\n";
+      #alarm(20) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
+      read($fh,$data,$length-4) == $length-4 or die "\n";
+      #alarm(0);
+   };
+   return 0 if $@;
    
    if(!$auth or $authorized[fileno($fh)]) {
       if($req eq "EXEC") {
@@ -191,9 +197,9 @@ sub extension_perl_server {
   
   if ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
      if ($ps_flags & &Gimp::_PS_FLAG_BATCH) {
-        my($fh)=new_from_fd IO::Handle $extra,"r+";
-        $fh or die "unable to open Gimp::Net communications socket\n";
-        $fh->autoflush(1); # compatibility for old perls
+        my($fh) = local *FH;
+        open $fh,"+<&$extra" or die "unable to open Gimp::Net communications socket\n";
+        select $fh; $|=1; select STDOUT;
         reply $fh,"PERL-SERVER",$Gimp::_PROT_VERSION;
         while(!$server_quit and !eof($fh)) {
            last unless handle_request($fh);
@@ -222,31 +228,48 @@ sub extension_perl_server {
      if ($host=~s{^spawn/}{}) {
         die "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server";
      } elsif ($host=~s{^unix/}{/}) {
-        $unix = new IO::Socket::UNIX (Local => $host, Listen => 5) or die "$!";
+        $unix = local *FH;
+        socket($unix,AF_UNIX,SOCK_STREAM,PF_UNSPEC)
+          && bind($unix,sockaddr_un $host)
+          && listen($unix,5)
+            or die "unable to create listening unix socket: $!\n";
         slog "accepting connections in $host";
-        vec($rm,$unix->fileno,1)=1;
+        vec($rm,fileno($unix),1)=1;
      } else {
         $host=~s{^tcp/}{};
         my($host,$port)=split /:/,$host;
         $port=$Gimp::Net::default_tcp_port unless $port;
-        $tcp = new IO::Socket::INET (LocalPort => $port, Listen => 5, Reuse => 1) or die "$!";
+        $tcp = local *FH;
+        socket($tcp,PF_INET,SOCK_STREAM,scalar getprotobyname('tcp') || 6)
+           && bind($tcp,sockaddr_in $port,INADDR_ANY)
+           && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
+           && listen($tcp,5)
+             or die "unable to create listening tcp socket: $!\n";
         slog "accepting connections on port $port";
-        vec($rm,$tcp->fileno,1)=1;
-     };
+        vec($rm,fileno($tcp),1)=1;
+     }
   } else {
      if ($use_unix) {
         unlink $unix_path;
         rmdir $Gimp::Net::default_unix_dir;
         mkdir $Gimp::Net::default_unix_dir,0700 or die "$!";
-        $unix = new IO::Socket::UNIX (Local => $unix_path, Listen => 5) or die "$!";
+        $unix = local *FH;
+        socket($unix,AF_UNIX,SOCK_STREAM,PF_UNSPEC)
+           && bind($unix,sockaddr_un $unix_path)
+           && listen($unix,5)
+             or die "unable to create listening unix socket: $!\n";
         slog "accepting connections on $unix_path";
-        vec($rm,$unix->fileno,1)=1;
+        vec($rm,fileno($unix),1)=1;
      }
      if ($use_tcp && $auth) {
-        $tcp = new IO::Socket::INET (LocalPort => $Gimp::Net::default_tcp_port, Listen => 5,
-                                     Reuse => 1) or die "$!";
+        $tcp = local *FH;
+        socket($tcp,PF_INET,SOCK_STREAM,scalar getprotobyname('tcp') || 6)
+           && bind($tcp,sockaddr_in $Gimp::Net::default_tcp_port,INADDR_ANY)
+           && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
+           && listen($tcp,5)
+             or die "unable to create listening tcp socket: $!\n";
         slog "accepting connections on port $Gimp::Net::default_tcp_port";
-        vec($rm,$tcp->fileno,1)=1;
+        vec($rm,fileno($tcp),1)=1;
     }
   }
   
@@ -254,23 +277,26 @@ sub extension_perl_server {
   
   sub new_connection {
      my $fh = shift;
-     $fh->autoflush (1); # for compatibility with old perls..
+     select $fh; $|=1; select STDOUT;
      $handles{fileno($fh)}=$fh;
      my @r = ("PERL-SERVER",$Gimp::_PROT_VERSION);
      push(@r,"AUTH") if $auth;
      reply $fh,@r;
-     vec($rm,$fh->fileno,1)=1;
+     vec($rm,fileno($fh),1)=1;
   }
 
   while(!$server_quit) {
     if(select($r=$rm,undef,undef,undef)>0) {
-      if ($tcp && vec($r,$tcp->fileno,1)) {
-        my $h=$tcp->accept;
+      if ($tcp && vec($r,fileno($tcp),1)) {
+        my $h = local *FH;
+        my ($port,$host) = sockaddr_in (accept ($h,$tcp)) or die "unable to accept tcp connection: $!\n";
         new_connection($h);
-        slog("accepted tcp connection from ",$h->peerhost);
+        slog "accepted tcp connection from ",inet_ntoa($host),":$port";
       }
-      if ($unix && vec($r,$unix->fileno,1)) {
-        new_connection($unix->accept);
+      if ($unix && vec($r,fileno($unix),1)) {
+        my $h = local *FH;
+        accept ($h,$unix) or die "unable to accept unix connection: $!\n";
+        new_connection($h);
         slog("accepted unix connection");
       }
       for $f (keys(%handles)) {
