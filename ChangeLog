@@ -1,5 +1,17 @@
 2005-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-progress.[ch]
+	* tools/pdbgen/pdb/progress.pdb: added new PDB function
+	gimp_progress_set_text().
+
+	* app/pdb/internal_procs.c
+	* app/pdb/progress_cmds.c
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-progress.c (plug_in_progress_start): only
 	set progress value to 0.0 if it isn't 0.0 already. Allows to use
 	gimp_progress_init() to change the progress message w/o causing
