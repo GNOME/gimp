@@ -1,5 +1,10 @@
 2004-09-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcropoptions.c (gimp_crop_options_gui): plugged a
+	tiny memleak spotted by Olivier.
+
+2004-09-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.[ch]
 	* libgimpwidgets/gimpwidgets.def: added gimp_preview_draw_buffer().
 
