@@ -21,9 +21,6 @@
 
 #define  SQR(x)          ((x) * (x))
 
-#define  TRUE            1
-#define  FALSE           0
-
 typedef struct {
   gdouble a11,a12,a21,a22,b1,b2;
 } Aff2;
