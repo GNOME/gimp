@@ -36,7 +36,7 @@ install : all
 	for m in $(MODULES); do $(INSTALL) $$m $(BIN); done
 
 ../config.h : ../config.h.win32
-	cp $@ $<
+	cp $< $@
 
 colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.o module.def
 	$(GLIB)/build-dll colorsel_gtk $(GIMP_VER) module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp $(GTK_LIBS) $(GLIB_LIBS)

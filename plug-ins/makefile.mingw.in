@@ -214,7 +214,7 @@ UNOFFICIAL = 			\
 all : ../config.h libs-all common-plugins-all separate-plugins-all
 
 ../config.h : ../config.h.win32
-	cp ../config.h.win32 ../config.h
+	cp $< $@
 
 install : libs-install common-plugins-install separate-plugins-install data-install
 

@@ -26,7 +26,7 @@ all :						\
 	gimpui-$(GIMP_VER).dll
 
 ../config.h : ../config.h.win32
-	cp $@ $<
+	cp $< $@
 
 PDB_WRAPPERS_O =				\
 	gimpbrushes_pdb.o			\

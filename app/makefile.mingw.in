@@ -30,7 +30,7 @@ install : gimp.exe
 	$(INSTALL) gimp.exe $(BIN)
 
 ../config.h : ../config.h.win32
-	cp $@ $<
+	cp $< $@
 
 gimpim_OBJECTS =				\
 	gimpdrawable.o				\
