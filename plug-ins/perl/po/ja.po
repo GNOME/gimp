@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.14\n"
-"POT-Creation-Date: Mon Oct 30 21:57:54 2000\n"
-"PO-Revision-Date: 2000-03-28 16:40+09:00\n"
+"POT-Creation-Date: Sat Nov 25 21:02:10 2000\n"
+"PO-Revision-Date: 2000-11-25 21:45+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -15,15 +15,15 @@ msgstr ""
 
 #: examples/PDB:0
 msgid " (press Tab to complete)"
-msgstr ""
+msgstr " (Tab キーで補完します)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
-msgstr ""
+msgstr " = [引数エラー]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr ""
+msgstr " 適合機能"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -32,6 +32,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
+"       インターフェイス引数は\n"
+"           -o | --output <filespec>   画像を表示せずに書き込む\n"
+"           -i | --interact            始めにユーザーに値を編集させる\n"
+"       スクリプト引数は\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
@@ -44,84 +48,93 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
+"使い方: $0 [gimp-引数..] [インタフェース-引数..] [スクリプト-引数..]\n"
+"       gimp-引数 は\n"
+"           -gimp <色々>              内部利用のみ\n"
+"           -h | -help | --help | -?  ヘルプ表示\n"
+"           -v | --verbose            詳細表示\n"
+"           --host|--tcp HOST[:PORT]  HOST (PORT) へ接続する\n"
+"                                     (詳しくは Gimp::Net(3) 参照)\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr ""
+msgstr "$_ はパッケージ $pkg のインポートタグとして不正です"
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_: 不正なスイッチです, $0 --help を見て下さい\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_: 不明/不正なファイル保存オプションです"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
 msgstr ""
+"$function: 引数名 '$p->[1]' は不正な文字を含んでいます, 0-9, a-z と _ "
+"だけが認められています"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
+msgstr "$function: 引数/返り値 '$p->[1]' は不正な型 '$p->[0]' です"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
-msgstr ""
+msgstr "$function: :auto インポートタグを指定せずに $AUTOLOAD を呼出すのは古い方法です!\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr ""
+msgstr "$function: ファンクション名が異常な文字を含んでいます, 正しい形式は 0-9, a-z と _ だけを使用します"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s: 整数ではありません\n"
 
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
-msgstr ""
+msgstr "%s ファンクション '%s' のための引数です"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
+msgstr "%s: プロシージャデータベースの実行は不正な入力引数により失敗しました"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
-msgstr ""
+msgstr "%s: プロシージャデータベースの実行に失敗しました"
 
 #: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
-msgstr ""
+msgstr "(未初期化)"
 
 #: UI/UI.pm:0
 msgid "(none)"
-msgstr ""
+msgstr "(なし)"
 
 #: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
-msgstr ""
+msgstr ", %d バイトデータ]"
 
 #: Perl-Server:0
 msgid ", authorization required"
-msgstr ""
+msgstr ", 認証が必要です"
 
 #: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr ""
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
 #: UI/UI.pm:0
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 
 #: examples/logulator:0
 msgid "/Filters/Logulator"
-msgstr ""
+msgstr "/フィルタ/Logulator"
 
 #: Perl-Server:0
 msgid "/Xtns/Perl"
@@ -130,7 +143,7 @@ msgstr "/拡張/Perl"
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
-msgstr ""
+msgstr "/拡張/下塗り"
 
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0
@@ -139,30 +152,27 @@ msgstr "/拡張/下塗り/ロゴ"
 
 #: examples/povray:0
 msgid "/Xtns/Render/Povray"
-msgstr ""
+msgstr "/拡張/下塗り/Povray"
 
 #: UI/UI.pm:0
 msgid "9x15bold"
-msgstr ""
+msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
+msgstr "<Image> プラグインが画像と描画可能な引数の両方を持たずに呼び出されました!\n"
 
 #: examples/repdup:0
-#, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/フィルタ/下塗り/破裂..."
+msgstr "<Image>/編集/繰り返し & 複製..."
 
 #: examples/animate_cells:0
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/フィルタ/動画/動画セル"
+msgstr "<Image>/フィルタ/動画/動画セル..."
 
 #: examples/blowinout:0
-#, fuzzy
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/フィルタ/動画/動画セル"
+msgstr "<Image>/フィルタ/動画/出し入れ..."
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
@@ -173,33 +183,28 @@ msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/フィルタ/ぼかし/2x2 ぼかし"
 
 #: examples/colourtoalpha:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/色/色をアルファに..."
 
 #: examples/fire:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/色/炎..."
 
 #: examples/map_to_gradient:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/色/マップをグラデーションに..."
 
 #: examples/mirrorsplit:0
-#, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/歪み/鏡面分割..."
 
 #: examples/scratches:0
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/歪み/スクラッチ..."
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr ""
+msgstr "<Image>/フィルタ/歪み/たなびかせ..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
@@ -207,107 +212,95 @@ msgstr "<Image>/フィルタ/輪郭抽出/2x2 輪郭抽出"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr ""
+msgstr "<Image>/フィルタ/強調/2x2 コントラスト強調"
 
 #: examples/warp-sharp:0
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/フィルタ/マップ/Xach 影つけ..."
+msgstr "<Image>/フィルタ/強調/歪みシャープ化..."
 
 #: examples/blended2:0
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/フィルタ/下塗り/破裂..."
+msgstr "<Image>/フィルタ/Logulator/ブレンド II..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/彫刻"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/クリスタル"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/ぐにゃぐにゃ"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/新聞印刷"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/SOAT クローム"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/スピード文字"
 
 #: examples/translogo:0
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/フィルタ/色/火"
+msgstr "<Image>/フィルタ/Logulator/透明ロゴ..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr ""
+msgstr "<Image>/フィルタ/Logulator/Web タイトル見出し"
 
 #: examples/image_tile:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
+msgstr "<Image>/フィルタ/マップ/画像タイル..."
 
 #: examples/pixelmap:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
+msgstr "<Image>/フィルタ/マップ/ピクセルマップ..."
 
 #: examples/xachlego:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/フィルタ/マップ/Xach ブロック"
+msgstr "<Image>/フィルタ/マップ/Xach ブロック..."
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/フィルタ/マップ/Xach 影つけ..."
 
 #: examples/border:0
-#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/フィルタ/下塗り/ぴったり文字..."
+msgstr "<Image>/フィルタ/その他/枠平均..."
 
 #: examples/gimpmagick:0
-#, fuzzy
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/フィルタ/ノイズ/フィードバック"
+msgstr "<Image>/フィルタ/その他/Magick..."
 
 #: examples/ditherize:0
-#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/フィルタ/ノイズ/フィードバック"
+msgstr "<Image>/フィルタ/ノイズ/ディザ化..."
 
 #: examples/feedback:0
-#, fuzzy
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/フィルタ/ノイズ/フィードバック"
+msgstr "<Image>/フィルタ/ノイズ/フィードバック..."
 
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr ""
+msgstr "<Image>/フィルタ/ノイズ/Xach 幻影..."
 
 #: examples/dust:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/フィルタ/下塗り/破裂..."
+msgstr "<Image>/フィルタ/下塗り/ゴミ追加..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr ""
+msgstr "<Image>/フィルタ/下塗り/枠追加"
 
 #: examples/glowing_steel:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/フィルタ/下塗り/破裂..."
+msgstr "<Image>/フィルタ/下塗り/金属描画..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
@@ -318,69 +311,60 @@ msgid "<Image>/Filters/Render/Fit Text..."
 msgstr "<Image>/フィルタ/下塗り/ぴったり文字..."
 
 #: examples/glowing_steel:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/フィルタ/下塗り/輪郭ハイライト"
+msgstr "<Image>/フィルタ/下塗り/輪郭ハイライト..."
 
 #: examples/randomblends:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/フィルタ/下塗り/破裂..."
+msgstr "<Image>/フィルタ/下塗り/ランダム混合..."
 
 #: examples/stampify:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/フィルタ/下塗り/スタンプ"
+msgstr "<Image>/フィルタ/下塗り/スタンプ..."
 
 #: examples/tex-to-float:0
-#, fuzzy
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/フィルタ/下塗り/TeX 文字"
+msgstr "<Image>/フィルタ/下塗り/TeX 文字..."
 
 #: examples/terral_text:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/フィルタ/下塗り/ぴったり文字..."
+msgstr "<Image>/フィルタ/下塗り/Terral 文字..."
 
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr ""
+msgstr "<Image>/フィルタ/Web/Perl 分割..."
 
 #: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr ""
+msgstr "<Image>/フィルタ/Web/GIF の用意..."
 
 #: examples/webify:0
-#, fuzzy
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/フィルタ/下塗り/スタンプ"
+msgstr "<Image>/フィルタ/Web/Web 画像化..."
 
 #: examples/centerguide:0
-#, fuzzy
 msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/ガイド/ガイド格子"
+msgstr "<Image>/ガイド/中央寄せ..."
 
 #: examples/guidegrid:0
-#, fuzzy
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/ガイド/ガイド格子"
+msgstr "<Image>/ガイド/ガイド格子..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/ガイド/取り除く"
 
 #: examples/guides_to_selection:0
-#, fuzzy
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/ガイド/選択領域へ"
+msgstr "<Image>/ガイド/選択領域へ..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr ""
+msgstr "<Image>/画像/アルファ/アルファを色に..."
 
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/画像/アルファ/アルファの消去..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
@@ -388,158 +372,139 @@ msgstr "<Image>/レイヤー/中心寄せ"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr ""
+msgstr "<Image>/レイヤー/重なり/レイヤー再配置..."
 
 #: examples/roundrectsel:0
-#, fuzzy
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/選択/面取り矩形"
+msgstr "<Image>/選択/面取り矩形..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr ""
+msgstr "<Image>/選択/面取り..."
 
 #: examples/triangle:0
-#, fuzzy
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/選択/三角形"
+msgstr "<Image>/選択/三角形..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr ""
+msgstr "<Image>/動画/VCR コンソール..."
 
 #: examples/view3d:0
-#, fuzzy
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/表示/3D 表面"
+msgstr "<Image>/表示/3D 表面..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "<Load> プラフインが 3 つの標準引数無しで呼び出されました!\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "<Save> プラフインは 5 つの標準引数無しで呼び出されました!\n"
 
 #: examples/billboard:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/拡張/動画/広告"
+msgstr "<Toolbox>/拡張/動画/広告..."
 
 #: examples/sethspin:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/拡張/動画/広告"
+msgstr "<Toolbox>/拡張/動画/Seth 回転..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/拡張/画像作成"
 
 #: examples/example-fu:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/拡張/Gimp::Fu 使用例"
+msgstr "<Toolbox>/拡張/Gimp::Fu 使用例..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
 msgstr "<Toolbox>/拡張/ホームページロゴ"
 
 #: examples/PDB:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/拡張/PDB エクスプローラ"
+msgstr "<Toolbox>/拡張/PDB エクスプローラ..."
 
 #: examples/parasite-editor:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/拡張/PDB エクスプローラ"
+msgstr "<Toolbox>/拡張/パラサイトエディタ..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/拡張/Perl プラグイン例"
 
 #: examples/perlcc:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/拡張/Perl/コントロールセンタ"
+msgstr "<Toolbox>/拡張/Perl/コントロールセンタ..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/拡張/Perl/サーバ"
 
 #: examples/bricks:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/れんが..."
 
 #: examples/font_table:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/拡張/下塗り/フォント表"
+msgstr "<Toolbox>/拡張/下塗り/フォント表..."
 
 #: examples/goldenmean:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/中庸..."
 
 #: examples/fire:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/ロゴ/炎文字..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/拡張/下塗り/ロゴ/鋳鉄"
 
 #: examples/innerbevel:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/ロゴ/内向きベベル..."
 
 #: examples/pixelmap:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/ピクセル生成..."
 
 #: examples/povray:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/Povray/環境設定..."
 
 #: examples/povray:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/Povray/テクスチャ..."
 
 #: examples/randomart1:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/ランダムアート #1..."
 
 #: examples/stamps:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/拡張/下塗り/スタンプ"
+msgstr "<Toolbox>/拡張/下塗り/スタンプ..."
 
 #: examples/yinyang:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/拡張/下塗り/れんが"
+msgstr "<Toolbox>/拡張/下塗り/陰陽..."
 
 #: examples/visual:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/拡張/ビジュアルスクリプタ"
+msgstr "<Toolbox>/拡張/ビジュアルスクリプタ..."
 
 #: examples/PDB:0
 msgid "Accelerator"
-msgstr ""
+msgstr "アクセラレータ"
 
 #: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
+"偶数のフレームがバックの回転に必要です.\n"
+"$flames までフレームを調整して下さい"
 
 #: examples/PDB:0
 msgid "Author"
@@ -559,18 +524,25 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
+"紹介:\n"
+"\n"
+"$blurb\n"
+"\n"
+"ヘルプ:\n"
+"\n"
+"$help"
 
 #: examples/example-fu:0
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: UI/UI.pm:0
 msgid "Browse"
-msgstr ""
+msgstr "ブラウズ"
 
 #: UI/UI.pm:0
 msgid "Brush Selection Dialog"
-msgstr ""
+msgstr "ブラシ選択ダイアログ"
 
 #: examples/translogo:0
 msgid "Bumpmap"
@@ -582,15 +554,15 @@ msgstr "取消"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr ""
+msgstr "今回は '$AUTOLOAD' を呼び出せませんでした"
 
 #: examples/PDB:0
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: UI/UI.pm:0
 msgid "Color"
-msgstr ""
+msgstr "色"
 
 #: examples/PDB:0
 msgid "Command"
@@ -598,7 +570,7 @@ msgstr "コマンド"
 
 #: examples/PDB:0
 msgid "Copyright"
-msgstr ""
+msgstr "著作権"
 
 #: examples/PDB:0
 msgid "DESCRIPTION"
@@ -610,7 +582,7 @@ msgstr "日付/バージョン"
 
 #: UI/UI.pm:0
 msgid "Defaults"
-msgstr ""
+msgstr "標準"
 
 #: examples/PDB:0
 msgid "Description"
@@ -618,27 +590,31 @@ msgstr "説明"
 
 #: UI/UI.pm:0
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
+"INT32 が期待されますが '%s' を受け取りました. "
+"もし本当に文字列に渡すつもりならば'*1' を追加しなさい"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
 msgstr ""
+"INT32 が期待されますが '%s' を受け取りました. '%s' の代わりの意味か 'use "
+"strict' を忘れたのかもしれません"
 
 #: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr ""
+msgstr "致命: canonicalize_colour が値を返しませんでした!"
 
 #: UI/UI.pm:0
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr ""
+msgstr "致命: $tmp を作ることができません: $!\n"
 
 #: UI/UI.pm:0
 msgid "FG"
@@ -646,23 +622,23 @@ msgstr "前景"
 
 #: UI/UI.pm:0
 msgid "Fileselector for $name"
-msgstr ""
+msgstr "$name のファイル選択"
 
 #: UI/UI.pm:0
 msgid "Font Selection Dialog ($desc)"
-msgstr ""
+msgstr "フォント選択ダイアログ ($desc)"
 
 #: examples/PDB:0
 msgid "Function Info"
-msgstr ""
+msgstr "機能情報"
 
 #: UI/UI.pm:0
 msgid "Gradient Selection Dialog"
-msgstr ""
+msgstr "グラデーション選択ダイアログ"
 
 #: UI/UI.pm:0
 msgid "Help for "
-msgstr ""
+msgstr "ヘルプ "
 
 #: UI/UI.pm:0
 msgid "Help"
@@ -670,19 +646,19 @@ msgstr "ヘルプ"
 
 #: UI/UI.pm:0
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
+msgstr "$function の標準フォントの記述は不正です: $val\n"
 
 #: examples/PDB:0
 msgid "Image Types"
-msgstr ""
+msgstr "画像タイプ"
 
 #: examples/PDB:0
 msgid "Last Modified"
-msgstr ""
+msgstr "最終更新"
 
 #: UI/UI.pm:0
 msgid "Load $name"
-msgstr ""
+msgstr "$name を読み込む"
 
 #: UI/UI.pm:0
 msgid "Load"
@@ -690,19 +666,19 @@ msgstr "読み込み"
 
 #: examples/PDB:0
 msgid "Menu Path"
-msgstr ""
+msgstr "メニューパス"
 
 #: examples/PDB:0
 msgid "More..."
-msgstr ""
+msgstr "詳しく..."
 
 #: examples/PDB:0
 msgid "NAME"
-msgstr ""
+msgstr "名前"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
+msgstr "水平か垂直のガイドがありません. 中断しました"
 
 #: UI/UI.pm:0
 msgid "OK"
@@ -710,11 +686,11 @@ msgstr "了解"
 
 #: examples/PDB:0
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr ""
+msgstr "PDB エクスプローラ - olof 版 (まだアルファバージョン)"
 
 #: UI/UI.pm:0
 msgid "Pattern Selection Dialog"
-msgstr ""
+msgstr "パターン選択ダイアログ"
 
 #: examples/PDB:0
 msgid "Plug-In Path"
@@ -722,19 +698,19 @@ msgstr "プラグインパス"
 
 #: UI/UI.pm:0
 msgid "Previous"
-msgstr ""
+msgstr "戻す"
 
 #: UI/UI.pm:0
 msgid "Reset all values to their default"
-msgstr ""
+msgstr "全ての値を初期値にリセットする"
 
 #: UI/UI.pm:0
 msgid "Restore values to the previous ones"
-msgstr ""
+msgstr "前回の値を復元する"
 
 #: UI/UI.pm:0
 msgid "Save $name"
-msgstr ""
+msgstr "$name を保存"
 
 #: UI/UI.pm:0
 msgid "Save"
@@ -742,15 +718,15 @@ msgstr "保存"
 
 #: examples/colorhtml:0
 msgid "Saving '$filename' as COLORHTML..."
-msgstr ""
+msgstr "'$filename' を COLORHTML として保存..."
 
 #: examples/dataurl:0
 msgid "Saving '$filename' as DATAURL..."
-msgstr ""
+msgstr "'$filename' を DATAURL として保存..."
 
 #: examples/sethspin:0
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Seth 回転..."
 
 #: examples/PDB:0
 msgid "Shortcuts"
@@ -758,51 +734,51 @@ msgstr "ショートカット"
 
 #: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
-msgstr ""
+msgstr "レイヤー DEST の回転 (250ms)"
 
 #: examples/sethspin:0
 msgid "Spin Layer SRC (250ms)"
-msgstr ""
+msgstr "レイヤー SRC の回転 (250ms)"
 
 #: examples/PDB:0
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 #: examples/PDB:0
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: examples/PDB:0
 msgid "TYPE"
-msgstr ""
+msgstr "タイプ"
 
 #: examples/translogo:0
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: Gimp/Lib.xs:0
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "このモジュールは PDL に対応せずに作られました"
 
 #: Gimp/Lib.xs:0
 msgid "Unable to convert a reference to type '%s'"
-msgstr ""
+msgstr "'%s' の型のリファレンスとして変換できません"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
+msgstr "'%s' を特定の色として理解できません"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr ""
+msgstr "'$filename' を書き込むために開けません: $!\n"
 
 #: examples/dataurl:0
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr ""
+msgstr "一時的な画像タイル $tmp を読み込めません: $!"
 
 #: UI/UI.pm:0
 msgid "Unsupported argumenttype $type"
-msgstr ""
+msgstr "未対応の引数型 $type"
 
 #: examples/visual:0
 msgid "Visual Scriptor"
@@ -810,43 +786,43 @@ msgstr "ビジュアルスクリプタ"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "WARNING"
-msgstr ""
+msgstr "警告"
 
 #: Gimp/Fu.pm:0
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr ""
+msgstr "警告: $function は画像ではないものを返しました: \"$img\"\n"
 
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr ""
+msgstr "警告: クライアントはアクティブなロックを持たずに切断しました\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "警告: クライアントはロックせずにロック解除をしようとしました"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "警告: シェアドロッキングが必要ですが実装されていません"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
+msgstr "インデックス画像でこのスクリプトは実行できません!!"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
+msgstr "アルファチャンネルが無いのでこのスクリプトは実行できません!!"
 
 #: examples/prep4gif:0
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
+msgstr "prep4gif を実行するために少なくとも 2 枚のレイヤーが必要です"
 
 #: Gimp/Lib.xs:0
 msgid "[undefined]"
-msgstr ""
+msgstr "[未定義]"
 
 #: Gimp/Lib.xs:0
 msgid "[unfinished]\n"
-msgstr ""
+msgstr "[未完成]\n"
 
 #: UI/UI.pm:0
 msgid ""
@@ -855,376 +831,393 @@ msgid ""
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"埋め込まれたポッドドキュメンテーション:\n"
+"\n"
 
 #: Gimp/Lib.xs:0
 msgid "a color must have three components (array elements)"
-msgstr ""
+msgstr "色は三つの成分 (配列要素) である必要があります"
 
 #: Perl-Server:0
 msgid "accepted tcp connection from "
-msgstr ""
+msgstr "tcp 接続から受け入れられています"
 
 #: Perl-Server:0
 msgid "accepted unix connection"
-msgstr ""
+msgstr "unix 接続は受け入れられています"
 
 #: Perl-Server:0
 msgid "accepting connections in $host"
-msgstr ""
+msgstr "$host の接続は受け入れられています"
 
 #: Perl-Server:0
 msgid "accepting connections on $unix_path"
-msgstr ""
+msgstr "$unix_path の接続は受け入れられています"
 
 #: Perl-Server:0
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr ""
+msgstr "ポート $Gimp::Net::default_tcp_port の接続は受け入れられています"
 
 #: Perl-Server:0
 msgid "accepting connections on port $port"
-msgstr ""
+msgstr "接続はポート $port に受け入れられています"
 
 #: Gimp/Lib.xs:0
 msgid "argument incompatible with type IMAGE"
-msgstr ""
+msgstr "引数は IMAGE 型とは非互換です"
 
 #: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
-msgstr ""
+msgstr "引数は %s の型ではありません"
 
 #: Gimp/Lib.xs:0
 msgid "argument type %s expected (not %s)"
-msgstr ""
+msgstr "引数型 %s が望ましい (%s ではない)"
 
 #: Gimp/Lib.xs:0
 msgid "arguments to main not yet supported!"
-msgstr ""
+msgstr "メインへの引数はまだサポートされていません!"
 
 #: Net/Net.pm:0
 msgid "authorization failed: $r[1]\n"
-msgstr ""
+msgstr "許可は失敗しました: $r[1]\n"
 
 #: Net/Net.pm:0
 msgid "authorization ok, but: $r[1]\n"
-msgstr ""
+msgstr "許可は成功しましたが, : $r[1]\n"
 
 #: Perl-Server:0
 msgid "authorization required for tcp connections"
-msgstr ""
+msgstr "tcp 接続には許可が必要です"
 
 #: Perl-Server:0
 msgid "authorization unnecessary"
-msgstr ""
+msgstr "許可は必要ありません"
 
 #: Gimp/Lib.xs:0
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr ""
+msgstr "'%s' として呼び出されましたが, '%s' は pdb に登録されていません"
 
 #: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr ""
+msgstr "%d の接続を閉じます (%d は %g 秒を必要とします)"
 
 #: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr ""
+msgstr "$pf_type2string{$type} 型への変換はまだ実装されていません\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
+msgstr "gimp サーバに接続できません (Perl-Server 動いている事を確認して下さい)"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr ""
+msgstr "次元が合いません, pdl は %d 次元ですが最低 %d 次元が認められています"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr ""
+msgstr "次元が合いません, pdl は %d 次元ですが最大 %d 次元が認められています"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "パス引数型 %d を返す方法を dunno"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "パラメータ型 %d を返す方法を dunno"
 
 #: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
+msgstr "perl-server は socket の終端を期待しましたが, @r を得ました\n"
 
 #: Net/Net.pm:0
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
+"期待されるプロトコルバージョンは $Gimp::_PROT_VERSION ですが, サーバは $r[0] "
+"を使用しています\n"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
-msgstr ""
+msgstr "書き出しが失敗しました"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr ""
+msgstr "機能 '$exe' はこのスクリプトから見付かりません (一つは必要"
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "機能名はダッシュではなくアンダースコアを含んでいます"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "function/macro \"$name\" は $class には見付かりません"
 
 #: UI/UI.pm:0
 msgid "get current background colour from the gimp"
-msgstr ""
+msgstr "現在の背景色を gimp から取得します"
 
 #: UI/UI.pm:0
 msgid "get current foreground colour from the gimp"
-msgstr ""
+msgstr "現在の前景色を gimp から取得します"
 
 #: Gimp/Lib.xs:0
 msgid "gimp procedure '%s' not found"
-msgstr ""
+msgstr "gimp procedure '%s' が見付かりません"
 
 #: Net/Net.xs:0
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr ""
+msgstr "gimp-perl-pixel 機能は PDL:Core module が必要です"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
 msgstr ""
+"gimp_pixel_rgns_register は 1, 2 または 3 つの引数しか対応していません, "
+"gimp-1.1 にアップグレードしてからこのエラーを報告して下さい"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_get_data はもはや実装されていません\n"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_set_data はもはや実装されていません\n"
 
 #: Perl-Server:0
 msgid "illegal command received, aborting connection"
-msgstr ""
+msgstr "不正なコマンドを受け取りました, 接続を切ります"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
-msgstr ""
+msgstr "不正なパラサイト指定です, arrayref が期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
-msgstr ""
+msgstr "不正なパラサイト指定です, 3 配列のメンバーが期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
-msgstr ""
+msgstr "不正なパラサイト指定です, リファレンスが期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
-msgstr ""
+msgstr "色指定は不正な型です"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
-msgstr ""
+msgstr "インターフェイス '$interface_type' はサポートされていません"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "interface=... タグはもはやサポートされていません\n"
 
 #: Perl-Server:0
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
+msgstr "無効な GIMP_HOST: 'spawn' はサーバへの有効な接続方法ではありません"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
+"gimp_pattern_select_widget の最後の引数は scalar ref でなくてはいけません"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
+"不適切なパラメータ定義です, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] "
+"またはPARAM_TYPE が期待されます"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
+"<Image>, <Toolbox>, <Load>, <Save> または <None> の menupath _must_ start !"
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
-msgstr ""
+msgstr "利用可能な追加情報はありません, --help を使って下さい\n"
 
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
-msgstr ""
+msgstr "フォントは指定されていません, デフォルトを使用します"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"
-msgstr ""
+msgstr "不充分です"
 
 #: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
-msgstr ""
+msgstr "望ましいスカラーのみここで受け入れます"
 
 #: Gimp/Fu.pm:0
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "パラメータ '$entry->[1]' はオプションではありません\n"
 
 #: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
+"パラメータと返り値は (たとえ空であっても) array refs でなければいけません!"
 
 #: Gimp/Lib.xs:0
 msgid "pdl height != region height"
-msgstr ""
+msgstr "pdl の高さ != region の高さ"
 
 #: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr ""
+msgstr "perl-arrayref は gimp-array のために datatype として必要です"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
+"ピクセルサイズが合いません, pdl は %d チャンネルピクセルを持っていますが %d "
+"チャンネルが必要です"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
-msgstr ""
+msgstr "プラグインは期待されているよりも %d 多くの値を返しました"
 
 #: Perl-Server:0
 msgid "received QUIT request"
-msgstr ""
+msgstr "終了の要求を受け取りました"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
-msgstr ""
+msgstr "register は多すぎるか間違った引数で呼び出されました\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
-msgstr ""
+msgstr "'net' のコールバックが必要ですが見付かりません\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
-msgstr ""
+msgstr "'query' のコールバックが必要ですが見付かりません\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
-msgstr ""
+msgstr "'run' のコールバックが必要ですが見付かりません\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
+"run_mode はインタラクティブか, "
+"ノンインタラクティブか最終値で実行している必要があります\n"
 
 #: Perl-Server:0
 msgid "server going down..."
-msgstr ""
+msgstr "サーバは落ちていきます..."
 
 #: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
-msgstr ""
+msgstr "サーバは許可が必要としますが, 利用可能な許可がありません\n"
 
 #: Perl-Server:0
 msgid "server version $Gimp::VERSION started"
-msgstr ""
+msgstr "サーババージョン $Gimp::VERSION スタート"
 
 #: Gimp/Util.pm:0
 msgid "text string is empty"
-msgstr ""
+msgstr "文字列は空です"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
+"gtk perl モジュールは標準の値で実行した, \n"
+"ダイアログウィンドウが必要になります"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
+"このインタラクティブモジュールのプラグインを\n"
+"実行するには gtk perl モジュールが必要です\n"
 
 #: examples/PDB:0
 msgid "too many arguments"
-msgstr ""
+msgstr "引数が多すぎます"
 
 #: Gimp/Lib.xs:0
 msgid "too many"
-msgstr ""
+msgstr "多すぎます"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr " \"$opt\" オプションを使用して gimp を起動して下さい\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
-msgstr ""
+msgstr "tcp 接続は受け入れられませんでした: $!\n"
 
 #: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
-msgstr ""
+msgstr "unix 接続は受け入れられませんでした: $!\n"
 
 #: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr ""
+msgstr "Gimp::Drawable を Gimp::GimpDrawable に変換できません (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
-msgstr ""
+msgstr "'$fn' を作ることができません: $!"
 
 #: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
-msgstr ""
+msgstr "受信 tcp ソケットを作ることができません: $!\n"
 
 #: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
-msgstr ""
+msgstr "受信 unix ソケットを作ることができません: $!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "gimp 通信ソケットペアを作ることができません: $!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
-msgstr ""
+msgstr "分岐できません: $!"
 
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
-msgstr ""
+msgstr "特定の色を理解できません"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"
-msgstr ""
+msgstr "$rgb_db_path を開けません"
 
 #: Perl-Server:0
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr ""
+msgstr "Gimp::Net 通信ソケットを開けません: $!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr ""
+msgstr "読み込めません '$fn': $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr ""
+msgstr "一時的なファイル $tmp を読み込めません: $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "権限外のコマンドを受け取りました, 接続を切ります"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr ""
+msgstr "url サイズが大き過ぎます ($max > 1024)\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr ""
+msgstr "権限がありません, 接続を切ります"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr ""
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Logulator/3D Outline..."
-#~ msgstr "<Image>/フィルタ/色/火"
+msgstr "xlfd_unpack: XLFD に適合しません　'$fontname'\n"
