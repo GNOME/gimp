@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
 "POT-Creation-Date: 2000-04-02 11:42+0400\n"
-"PO-Revision-Date: 2000-03-29 18:53+04:00\n"
+"PO-Revision-Date: 2000-04-06 19:03+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -784,15 +784,15 @@ msgstr "Размер блока"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:11
 msgid "Blue Color Mode (sin:0/cos:1/none:2)"
-msgstr ""
+msgstr "Режим синего цвета (sin:0/cos:1/нет:2)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:29
 msgid "Blue Inversion after Transformation"
-msgstr ""
+msgstr "Инверсия синего после преобразования"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:14
 msgid "Blue Inversion before Transformation"
-msgstr ""
+msgstr "Инверсия синего до преобразования"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:6
 msgid "Blur Amount"
@@ -952,6 +952,8 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Замена темным\n"
+"(Лучше, но только для изображений с большим количеством белого)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:9
 #: plug-ins/script-fu/scripts/glossy.scm:15
@@ -1040,12 +1042,12 @@ msgstr "Ширина края"
 #: plug-ins/script-fu/scripts/clothify.scm:5
 #: plug-ins/script-fu/scripts/swirltile.scm:4
 msgid "Elevation"
-msgstr ""
+msgstr "Возвышение"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:6
 #: plug-ins/script-fu/scripts/blended-logo.scm:9
 msgid "End Blend"
-msgstr ""
+msgstr "Конец затемнения"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:8
 msgid "End X"
@@ -1057,39 +1059,39 @@ msgstr "Конец Y"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:26
 msgid "End: Blue Frequency (> 0)"
-msgstr ""
+msgstr "Конец: Частота синего (>0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:8
 msgid "End: Blue Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Конец: Фактор интенсивности синего (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:20
 msgid "End: Blue Phase Displacement (RAD)"
-msgstr ""
+msgstr "Конец: Смещение фазы синего (рад)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:25
 msgid "End: Green Frequency (> 0)"
-msgstr ""
+msgstr "Конец: Частота зеленого (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:7
 msgid "End: Green Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Конец: Фактор интенсивности зеленого (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:19
 msgid "End: Green Phase Displacement (RAD)"
-msgstr ""
+msgstr "Конец: Смещение фазы зеленого (рад)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:24
 msgid "End: Red Frequency (> 0)"
-msgstr ""
+msgstr "Конец: Частота красного (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:6
 msgid "End: Red Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Конец: Фактор интенсивности красного (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:18
 msgid "End: Red Phase Displacement (RAD)"
-msgstr ""
+msgstr "Конец: Смещение фазы красного (рад)"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:9
 msgid "Ending Blend"
@@ -1107,7 +1109,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:3
 msgid "Even/Odd"
-msgstr ""
+msgstr "Четные/Нечетные"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:10
 msgid "Fade Away"
@@ -1129,7 +1131,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/asc2img.scm:2
 #: plug-ins/script-fu/scripts/asc2img.scm:10
 msgid "File Name"
-msgstr ""
+msgstr "Имя файла"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:3
 msgid "Filename"
@@ -1137,15 +1139,15 @@ msgstr "Имя файла"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:5
 msgid "Fill Angle"
-msgstr ""
+msgstr "Заполнить угол"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:10
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Заболнить фон шаблоном"
 
 #: plug-ins/gap/sel-to-anim-img.scm:3
 msgid "Fill with BG Color"
-msgstr ""
+msgstr "Заполнить фон цветом"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:6
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:6
@@ -1312,23 +1314,23 @@ msgstr "Масштаб графика"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:10
 msgid "Green Color Mode (sin:0/cos:1/none:2)"
-msgstr ""
+msgstr "Режим зеленого цвета (sin:0/cos:1/нет:2)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:28
 msgid "Green Inversion after Transformation"
-msgstr ""
+msgstr "Инверсия зеленого после преобразования"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:13
 msgid "Green Inversion before Transformation"
-msgstr ""
+msgstr "Инверсия зеленого до преобразования"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:2
 msgid "Grids X"
-msgstr ""
+msgstr "Сетка X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:3
 msgid "Grids Y"
-msgstr ""
+msgstr "Сетка Y"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:3
 #: plug-ins/script-fu/scripts/gimp-labels.scm:26
@@ -1388,7 +1390,7 @@ msgstr "Щирина изображения"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:2
 msgid "Image to Carve"
-msgstr ""
+msgstr "Изображение -> гравюра"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:2
 msgid "Image"
@@ -1401,7 +1403,7 @@ msgstr "Изображение"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm:21
 msgid "Index Image"
-msgstr "Индекное изображение"
+msgstr "Индекcное изображение"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:5
 msgid "Index to n Colors (0 = Remain RGB):"
@@ -1425,7 +1427,7 @@ msgstr "Обратное направление"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:7
 msgid "Invert"
-msgstr ""
+msgstr "Инвертировать"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:11
 msgid "Keep Background"
@@ -1491,11 +1493,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/old_photo.scm:5
 msgid "Mottle"
-msgstr ""
+msgstr "Крап"
 
 #: plug-ins/script-fu/scripts/circuit.scm:4
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Без фона (только для отдельного слоя)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:15
 msgid "Not-Pressed         "
@@ -1580,64 +1582,64 @@ msgstr "Ориентация"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:5
 msgid "Outer Border (>= 0)"
-msgstr ""
+msgstr "Внешняя рамка (>= 0)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:6
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Радиус размывания контура"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:7
 msgid "Outline Color"
-msgstr ""
+msgstr "Цвет контура"
 
 #: plug-ins/script-fu/scripts/glossy.scm:7
 msgid "Outline Size"
-msgstr ""
+msgstr "Размер контура"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:6
 msgid "Outline Width"
-msgstr ""
+msgstr "Ширина контура"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:9
 msgid "Pad Color"
-msgstr ""
+msgstr "Цвет заполнения"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:10
 msgid "Pad Opacity [0:100]"
-msgstr ""
+msgstr "Непрозрачность заполнения [0:100]"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:7
 msgid "Padding Around Text"
-msgstr ""
+msgstr "Заполнение вокруг текста"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:11
 msgid "Padding X"
-msgstr ""
+msgstr "Заполнение X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:12
 msgid "Padding Y"
-msgstr ""
+msgstr "Заполнение Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:8
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "Заполнение для прозрачных участков"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:7
 #: plug-ins/script-fu/scripts/beveled-button.scm:8
 msgid "Padding"
-msgstr ""
+msgstr "Заполнение"
 
 #: plug-ins/script-fu/scripts/glossy.scm:12
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "Шаблон (Контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:14
 msgid "Pattern (Overlay)"
-msgstr ""
+msgstr "Шаблон (Перекрывание)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:10
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "Шаблон (Текст)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:2
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:4
@@ -1651,11 +1653,11 @@ msgstr "Шаблон"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:4
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "Радиус карандаша/радиус колеса [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:4
 msgid "Pixel Amount"
-msgstr ""
+msgstr "Количество точек растра"
 
 #: plug-ins/script-fu/scripts/predator.scm:3
 msgid "Pixelize"
@@ -1695,15 +1697,15 @@ msgstr "Случайность"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:9
 msgid "Red Color Mode (sin:0/cos:1/none:2)"
-msgstr ""
+msgstr "Режим красного цвета (sin:0/cos:1/нет:2)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:27
 msgid "Red Inversion after Transformation"
-msgstr ""
+msgstr "Инверсия красного после преобразования"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:12
 msgid "Red Inversion before Transformation"
-msgstr ""
+msgstr "Инверсия красного до преобразования"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:3
 msgid "Relative Distance of Horizon"
@@ -1728,20 +1730,20 @@ msgstr "Удалить фон"
 
 #: plug-ins/script-fu/scripts/weave.scm:3
 msgid "Ribbon Spacing"
-msgstr ""
+msgstr "Интервал ленты"
 
 #: plug-ins/script-fu/scripts/weave.scm:2
 msgid "Ribbon Width"
-msgstr ""
+msgstr "Ширина ленты"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:2
 msgid "Rippling Strength"
-msgstr ""
+msgstr "Сила ряби"
 
 #: plug-ins/script-fu/scripts/lava.scm:4
 #: plug-ins/script-fu/scripts/swirltile.scm:9
 msgid "Roughness"
-msgstr ""
+msgstr "Шероховатость"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:14
 msgid "Round Ratio"
@@ -1828,7 +1830,7 @@ msgstr "Тень"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:3
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "Резкость (градусы)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:4
 msgid "Shear Length (> 0)"
@@ -1875,7 +1877,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/coffee.scm:2
 msgid "Stains"
-msgstr ""
+msgstr "Пятна"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:4
 msgid "Start Angle"
@@ -1896,39 +1898,39 @@ msgstr "Начало по Y"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:23
 msgid "Start: Blue Frequency (> 0)"
-msgstr ""
+msgstr "Начало: Частота синего (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:5
 msgid "Start: Blue Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Начало: Фактор интенсивности синего (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:17
 msgid "Start: Blue Phase Displacement (RAD)"
-msgstr ""
+msgstr "Начало: Сдвиг фазы синего (рад)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:22
 msgid "Start: Green Frequency (> 0)"
-msgstr ""
+msgstr "Начало: Частота зеленого (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:4
 msgid "Start: Green Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Начало: Фактор интенсивности зеленого (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:16
 msgid "Start: Green Phase Displacement (RAD)"
-msgstr ""
+msgstr "Начало: Сдвиг фазы зеленого (рад)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:21
 msgid "Start: Red Frequency (> 0)"
-msgstr ""
+msgstr "Начало: Частота красного (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:3
 msgid "Start: Red Intensity Factor (max. 128)"
-msgstr ""
+msgstr "Начало: Фактор интенсивности красного (макс. 128)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:15
 msgid "Start: Red Phase Displacement (RAD)"
-msgstr ""
+msgstr "Начало: Сдвиг фазы красного (рад)"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:8
 msgid "Starting Blend"
@@ -1936,7 +1938,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:7
 msgid "Supersample"
-msgstr ""
+msgstr "Интерполировать"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:5
 msgid "TRUE = Detail in middle, FALSE = tile"
@@ -2032,7 +2034,7 @@ msgstr "Длина нити"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:2
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr ""
+msgstr "Порог (Больше 1<-->255 Меньше)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:6
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:4
@@ -2075,11 +2077,11 @@ msgstr "Использовать перекрывание шаблонов"
 
 #: plug-ins/script-fu/scripts/glossy.scm:11
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "Использовать для контура шабловн вместо градиента"
 
 #: plug-ins/script-fu/scripts/glossy.scm:9
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Использовать шаблон для текста вместо градиента"
+msgstr "Использовать для текста шаблон вместо градиента"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:4
 msgid "Use Selection Bounds Instead of Belows"
