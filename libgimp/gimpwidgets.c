@@ -1020,7 +1020,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   hbox = gtk_hbox_new (FALSE, 2);
   spinbutton =
     gimp_spin_button_new (&divided_adj, divided_mem_size,
-			  0.0, (4069.0 * 1024 * 1024 - 1), 1.0, 16.0, 0.0,
+			  0.0, (4096.0 * 1024 * 1024 - 1), 1.0, 16.0, 0.0,
 			  1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (divided_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_mem_size_entry_callback),

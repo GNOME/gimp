@@ -1,3 +1,8 @@
+2000-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.c: gimp_mem_size_entry_new(): fixed typo:
+	s/4069/4096/ (reported by David Odin <David.Odin@bigfoot.com>)
+
 2000-10-14  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
