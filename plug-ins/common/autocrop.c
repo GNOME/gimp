@@ -77,12 +77,12 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_autocrop",
-                          "Automagically crops a picture.",
+                          "Automagically crops an image.",
                           "",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
-                          N_("_Autocrop"),
+                          N_("_Autocrop Image"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -97,7 +97,7 @@ query (void)
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
-                          N_("_Autocrop"),
+                          N_("_Autocrop Layer"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

@@ -1,5 +1,10 @@
 2004-06-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/autocrop.c (query): register as "Autocrop Image"
+	and "Autocrop Layer".
+
+2004-06-01  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-commands.c (image_new_cmd_callback):
 	initialize the dialog by calling file_new_dialog_set(). Fixes bug
 	#143477.
