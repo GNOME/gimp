@@ -44,6 +44,7 @@ scriptdata_DATA = \
 	drop-shadow.scm				\
 	egg.scm					\
 	erase-rows.scm				\
+	fade-outline.scm			\
 	flatland.scm				\
 	font-map.scm				\
 	frosty-logo.scm				\
