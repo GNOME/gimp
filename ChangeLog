@@ -1,5 +1,10 @@
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* modules/cdisplay_proof.c: GimpFileSelection -> GimpFileEntry,
+	cleanup.
+
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpfileselection.[ch]: removed...
 
 	* libgimpwidgets/gimpfileentry.[ch]: ...and added under a new name.

@@ -126,21 +126,20 @@ cdisplay_proof_get_type (GTypeModule *module)
   if (! cdisplay_proof_type)
     {
       static const GTypeInfo display_info =
-        {
-          sizeof (CdisplayProofClass),
-          (GBaseInitFunc)     NULL,
-          (GBaseFinalizeFunc) NULL,
-          (GClassInitFunc) cdisplay_proof_class_init,
-          NULL,			/* class_finalize */
-          NULL,			/* class_data     */
-          sizeof (CdisplayProof),
-          0,			/* n_preallocs    */
-          (GInstanceInitFunc) cdisplay_proof_init,
+      {
+        sizeof (CdisplayProofClass),
+        (GBaseInitFunc)     NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) cdisplay_proof_class_init,
+        NULL,			/* class_finalize */
+        NULL,			/* class_data     */
+        sizeof (CdisplayProof),
+        0,			/* n_preallocs    */
+        (GInstanceInitFunc) cdisplay_proof_init,
       };
 
       cdisplay_proof_type =
-	g_type_module_register_type (module,
-				     GIMP_TYPE_COLOR_DISPLAY,
+	g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
 				     "CdisplayProof", &display_info, 0);
     }
 
@@ -208,7 +207,6 @@ cdisplay_proof_finalize (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
-
 
 static GimpColorDisplay *
 cdisplay_proof_clone (GimpColorDisplay *display)
@@ -296,25 +294,24 @@ cdisplay_proof_save_state (GimpColorDisplay *display)
 static GtkWidget *
 cdisplay_proof_configure (GimpColorDisplay *display)
 {
-  CdisplayProof *proof;
+  CdisplayProof *proof = CDISPLAY_PROOF (display);
   GtkWidget     *label;
   GtkWidget     *hbox;
   GtkWidget     *fileopen;
 
-  proof = CDISPLAY_PROOF (display);
-
   if (proof->vbox)
     gtk_widget_destroy (proof->vbox);
 
-  proof->vbox = gtk_vbox_new (FALSE, 2);
-  g_object_add_weak_pointer (G_OBJECT (proof->vbox),
-                             (gpointer *) &proof->vbox);
+  proof->vbox = gtk_vbox_new (FALSE, 4);
+  g_signal_connect (proof->vbox, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &proof->vbox);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (proof->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Intent:"));
+  label = gtk_label_new_with_mnemonic (_("_Intent:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -322,6 +319,7 @@ cdisplay_proof_configure (GimpColorDisplay *display)
     gimp_int_option_menu_new (FALSE,
 			      G_CALLBACK (proof_intent_callback),
 			      proof, proof->intent,
+
 			      _("Perceptual"),
 			      INTENT_PERCEPTUAL, NULL,
 			      _("Relative Colorimetric"),
@@ -329,20 +327,26 @@ cdisplay_proof_configure (GimpColorDisplay *display)
 			      _("Saturation"),
 			      INTENT_SATURATION, NULL,
 			      _("Absolute Colorimetric"),
-			      INTENT_ABSOLUTE_COLORIMETRIC, NULL, NULL);
+			      INTENT_ABSOLUTE_COLORIMETRIC, NULL,
+
+                              NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), proof->optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (proof->optionmenu);
 
-  proof->toggle = gtk_check_button_new_with_label ("Black Point Compensation");
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), proof->optionmenu);
+
+  proof->toggle =
+    gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (proof->toggle), proof->bpc);
   gtk_box_pack_start (GTK_BOX (hbox), proof->toggle, FALSE, FALSE, 0);
   gtk_widget_show (proof->toggle);
 
   g_signal_connect (proof->toggle, "clicked",
-		    G_CALLBACK (proof_bpc_callback), proof);
+		    G_CALLBACK (proof_bpc_callback),
+                    proof);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (proof->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -350,13 +354,14 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  fileopen = gimp_file_selection_new (_("Choose an ICC Color Profile"),
-                                      proof->filename, FALSE, FALSE);
+  fileopen = gimp_file_entry_new (_("Choose an ICC Color Profile"),
+                                  proof->filename, FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), fileopen, FALSE, TRUE, 0);
   gtk_widget_show (fileopen);
 
   g_signal_connect (fileopen, "filename-changed",
-                    G_CALLBACK (proof_file_callback), proof);
+                    G_CALLBACK (proof_file_callback),
+                    proof);
 
   return proof->vbox;
 }
@@ -383,17 +388,18 @@ cdisplay_proof_configure_reset (GimpColorDisplay * display)
 static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
-  CdisplayProof   *proof;
-  cmsHPROFILE      rgbProfile;
-  cmsHPROFILE      proofProfile;
-
-  proof = CDISPLAY_PROOF (display);
+  CdisplayProof *proof = CDISPLAY_PROOF (display);
+  cmsHPROFILE    rgbProfile;
+  cmsHPROFILE    proofProfile;
 
   if (proof->transform)
     {
       cmsDeleteTransform (proof->transform);
       proof->transform = NULL;
     }
+
+  if (! proof->filename)
+    return;
 
   /*  This should be read from the global parasite pool.
    *  For now, just use the built-in sRGB profile.
@@ -443,7 +449,7 @@ proof_file_callback (GtkWidget     *widget,
                      CdisplayProof *proof)
 {
   g_free (proof->filename);
-  proof->filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
+  proof->filename = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (widget));
 
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (proof));
 }
