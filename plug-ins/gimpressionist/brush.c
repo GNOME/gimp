@@ -1,13 +1,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -24,6 +18,7 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "brush.h"
 
 #include <libgimp/stdplugins-intl.h>
 
@@ -38,6 +33,8 @@ static GtkObject *brushreliefadjust    = NULL;
 static GtkObject *brushaspectadjust    = NULL;
 static GtkObject *brushgammaadjust     = NULL;
 
+static gchar *last_selected_brush = NULL;
+
 void brush_restore(void)
 {
   reselect (brushlist, pcvals.selectedbrush);
@@ -49,6 +46,11 @@ void brush_restore(void)
 void brush_store(void)
 {
   pcvals.brushgamma = GTK_ADJUSTMENT(brushgammaadjust)->value;
+}
+
+void brush_free(void)
+{
+  g_free (last_selected_brush);
 }
 
 static void  updatebrushprev (const char *fn);
@@ -339,21 +341,40 @@ selectbrush (GtkTreeSelection *selection, gpointer data)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
+  gchar        *fname = NULL;
+  gchar        *brush = NULL;
 
   if (brushdontupdate)
-    return;
+    goto cleanup;
 
   if (brushfile == 0)
     {
       updatebrushprev (NULL);
-      return;
+      goto cleanup;
     }
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      gchar *brush;
-
       gtk_tree_model_get (model, &iter, 0, &brush, -1);
+
+      /* Check if the same brush was selected twice, and if so
+       * break. Otherwise, the brush gamma and stuff would have been
+       * reset.
+       * */
+      if (last_selected_brush == NULL)
+        {
+          last_selected_brush = g_strdup(brush);
+        }
+      else
+        {
+          if (!strcmp (last_selected_brush, brush))
+            goto cleanup;
+          else
+            {
+              g_free (last_selected_brush);
+              last_selected_brush = g_strdup(brush);
+            }
+        }
 
       brushdontupdate = TRUE;
       gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), 1.0);
@@ -362,17 +383,20 @@ selectbrush (GtkTreeSelection *selection, gpointer data)
 
       if (brush)
         {
-          gchar *fname = g_build_filename ("Brushes", brush, NULL);
+          fname = g_build_filename ("Brushes", brush, NULL);
 
           g_strlcpy (pcvals.selectedbrush,
                      fname, sizeof (pcvals.selectedbrush));
 
           updatebrushprev (fname);
 
-          g_free (fname);
-          g_free (brush);
         }
     }
+cleanup:
+  g_free (fname);
+  g_free (brush);
+
+  return;
 }
 
 static void
@@ -516,6 +540,12 @@ create_brushpage(GtkNotebook *notebook)
 
   selectbrush(selection, NULL);
   readdirintolist("Brushes", view, pcvals.selectedbrush);
+
+  /* 
+   * This is so the "changed signal won't get sent to the brushes' list
+   * and reset the gamma and stuff.
+   * */
+  gtk_widget_grab_focus (brushlist);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

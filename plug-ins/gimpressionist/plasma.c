@@ -1,11 +1,10 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <time.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 
+#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
 
 #include "gimpressionist.h"

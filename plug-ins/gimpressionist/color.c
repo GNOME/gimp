@@ -1,9 +1,5 @@
 #include "config.h"
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -22,10 +18,8 @@ static GtkWidget *colorradio[NUMCOLORRADIO];
 
 void color_type_restore(void)
 {
-  gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON(colorradio[pcvals.colortype]), 
-    TRUE
-    );
+  gtk_toggle_button_set_active
+    (GTK_TOGGLE_BUTTON(colorradio[pcvals.colortype]), TRUE);
 }
 
 void create_colorpage(GtkNotebook *notebook)

@@ -1,20 +1,13 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
 /*
- * The Page Specific Imports 
+ * The Page Specific Imports
  * */
+#include "brush.h"
 #include "color.h"
 #include "general.h"
 #include "placement.h"
@@ -52,7 +45,7 @@ void restorevals(void)
 
   place_restore();
   general_restore();
-  
+
   gtk_adjustment_set_value(GTK_ADJUSTMENT(devthreshadjust), pcvals.devthresh);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
   color_type_restore();
@@ -241,6 +234,12 @@ create_dialog (void)
   create_generalpage (GTK_NOTEBOOK (notebook));
 
   updatepreview (NULL, 0);
+
+  /*
+   * This is to make sure the values from the pcvals will be reflected
+   * in the GUI here. Otherwise they will be set to the defaults.
+   * */
+  restorevals ();
 
   gtk_widget_show (dlg);
 

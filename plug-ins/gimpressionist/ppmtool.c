@@ -3,14 +3,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <math.h>
 #include <errno.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
+#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
 
 #include "ppmtool.h"
@@ -20,7 +17,7 @@
 
 int readline(FILE *f, char *buffer, int len)
 {
-  do 
+  do
   {
     if(!fgets(buffer, len, f))
       return -1;
@@ -73,24 +70,24 @@ void getrgb(ppm_t *s, float xo, float yo, guchar *d)
   int bail = 0;
   int rowstride = s->width * 3;
 
-  if (xo < 0.0) 
+  if (xo < 0.0)
       bail=1;
-  else if (xo >= s->width-1) 
-    { 
-      xo = s->width-1; 
+  else if (xo >= s->width-1)
+    {
+      xo = s->width-1;
 #if 0
       bail=1;
 #endif
-    } 
-  
-  if(yo < 0.0) 
+    }
+
+  if(yo < 0.0)
       bail=1;
-  else if (yo >= s->height-1) 
-  { 
-      yo= s->height-1; 
+  else if (yo >= s->height-1)
+  {
+      yo= s->height-1;
 #if 0
       bail=1;
-#endif 
+#endif
   }
 
   if(bail) {
@@ -533,7 +530,7 @@ void saveppm(ppm_t *p, const char *fn)
 
   if (!f)
     {
-      /* 
+      /*
        * gimp_filename_to_utf8() and g_strerror() return temporary strings
        * that need not and should not be freed. So this call is OK.
        * */

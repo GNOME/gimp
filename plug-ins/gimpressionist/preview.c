@@ -1,9 +1,6 @@
 #include "config.h"
 
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED

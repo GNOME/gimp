@@ -1,13 +1,5 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -31,19 +23,19 @@ static void orientation_store(GtkWidget *wg, void *d)
 void orientation_restore(void)
 {
   gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON(orientradio[pcvals.orienttype]), 
+      GTK_TOGGLE_BUTTON(orientradio[pcvals.orienttype]),
       TRUE
       );
   gtk_adjustment_set_value (
-      GTK_ADJUSTMENT(orientnumadjust), 
+      GTK_ADJUSTMENT(orientnumadjust),
       pcvals.orientnum
       );
   gtk_adjustment_set_value(
-      GTK_ADJUSTMENT(orientfirstadjust), 
+      GTK_ADJUSTMENT(orientfirstadjust),
       pcvals.orientfirst
       );
   gtk_adjustment_set_value(
-      GTK_ADJUSTMENT(orientlastadjust), 
+      GTK_ADJUSTMENT(orientlastadjust),
       pcvals.orientlast
       );
 }
@@ -56,12 +48,12 @@ static void create_orientmap_dialog_helper(void)
 }
 
 
-static void create_orientradio_button (GtkWidget *box, int orienttype, 
+static void create_orientradio_button (GtkWidget *box, int orienttype,
                                        gchar *label, gchar *help_string,
                                        GSList **radio_group
                                        )
 {
-  create_radio_button (box, orienttype, orientation_store, label, 
+  create_radio_button (box, orienttype, orientation_store, label,
                        help_string, radio_group, orientradio);
   return;
 }
@@ -141,22 +133,22 @@ create_orientationpage (GtkNotebook *notebook)
           _("Let the value (brightness) of the region determine the direction of the stroke"),
           &radio_group
           );
-  
+
   create_orientradio_button(box3, ORIENTATION_RADIUS, _("Radius"),
           _("The distance from the center of the image determines the direction of the stroke"),
           &radio_group
           );
-  
+
   create_orientradio_button(box3, ORIENTATION_RANDOM, _("Random"),
           _("Selects a random direction of each stroke"),
           &radio_group
           );
-    
+
   create_orientradio_button(box3, ORIENTATION_RADIAL, _("Radial"),
           _("Let the direction from the center determine the direction of the stroke"),
           &radio_group
           );
-  
+
   box3 = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
@@ -175,7 +167,7 @@ create_orientationpage (GtkNotebook *notebook)
           _("The direction that matches the original image the closest is selected"),
           &radio_group
           );
-  
+
   box4 = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
   gtk_widget_show (box4);

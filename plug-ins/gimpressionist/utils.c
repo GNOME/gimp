@@ -2,26 +2,19 @@
  * utils.c - various utility routines that don't fit anywhere else. Usually
  * these routines don't affect the state of the program.
  * */
-#include <math.h>
+#include "config.h"
+
 #include <string.h>
 
+#include <glib.h>
+
+#include <libgimpmath/gimpmath.h>
+
 #include "gimpressionist.h"
-#include "config.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Mathematical Utilities */
-
-double degtorad(double d)
-{
-  return d/180.0*G_PI;
-}
-
-double radtodeg(double d)
-{
-  double v = d/G_PI*180.0;
-  if(v < 0.0) v += 360;
-  return v;
-}
 
 double dist(double x, double y, double end_x, double end_y)
 {
@@ -37,7 +30,8 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
   double sum, ssum, dst;
   int first = 0, last;
 
-  if((x < 0.0) || (x > 1.0)) printf("HUH? x = %f\n",x);
+  if ((x < 0.0) || (x > 1.0))
+    g_warning ("HUH? x = %f\n",x);
 
 #if 0
   if (from == 0)
@@ -101,7 +95,7 @@ void remove_trailing_whitespace(char *buffer)
 {
   char * ptr;
   /*
-   * Note: there is some reliance on the ASCII character code 
+   * Note: there is some reliance on the ASCII character code
    * characteristics here.
    * */
   ptr = buffer + strlen(buffer)-1;
@@ -113,13 +107,13 @@ void remove_trailing_whitespace(char *buffer)
 static GList *parsepath_cached_path = NULL;
 
 /* This function is memoized. Once it finds the value it permanently
- * caches it 
+ * caches it
  * */
 GList * parsepath (void)
 {
   gchar *gimpdatasubdir, *defaultpath, *tmps;
 
-  
+
   if (parsepath_cached_path)
     return parsepath_cached_path;
 
@@ -327,7 +321,7 @@ void readdirintolist(char *subdir, GtkWidget *view, char *selected)
  * box - the containing box.
  * orienttype - The orientation ID
  * label, help_string - self-describing
- * radio_group - 
+ * radio_group -
  *      A pointer to a radio group. The function assigns its value
  *      as the radio group of the radio button. Afterwards, it assigns it
  *      a new value of the new radio group of the button.
@@ -342,7 +336,7 @@ GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
                                )
 {
   GtkWidget *tmpw;
-  buttons_array[orienttype] = tmpw = 
+  buttons_array[orienttype] = tmpw =
       gtk_radio_button_new_with_label ((*radio_group), label);
   gtk_box_pack_start (GTK_BOX (box), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);

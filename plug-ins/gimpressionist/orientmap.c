@@ -1,10 +1,5 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
@@ -125,7 +120,7 @@ double getdir(double x, double y, int from)
   }
   dx = dx / sum;
   dy = dy / sum;
-  return 90-(radtodeg(atan2(dy,dx))+angoff);
+  return 90-(gimp_rad_to_deg(atan2(dy,dx))+angoff);
 }
 
 static void updateompreviewprev(void)
@@ -143,7 +138,7 @@ static void updateompreviewprev(void)
 
   for(y = 6; y < OMHEIGHT-4; y += 10)
     for(x = 6; x < OMWIDTH-4; x += 10) {
-      double dir = degtorad(getdir(x/(double)OMWIDTH,y/(double)OMHEIGHT,0));
+      double dir = gimp_deg_to_rad(getdir(x/(double)OMWIDTH,y/(double)OMHEIGHT,0));
       double xo = sin(dir)*4.0;
       double yo = cos(dir)*4.0;
       drawline(&nbuffer, x-xo, y-yo, x+xo, y+yo, gray);
@@ -193,8 +188,8 @@ static void updatevectorprev(void)
     double s;
     x = vector[i].x * OMWIDTH;
     y = vector[i].y * OMHEIGHT;
-    dir = degtorad(vector[i].dir);
-    s = degtorad(vector[i].str);
+    dir = gimp_deg_to_rad(vector[i].dir);
+    s = gimp_deg_to_rad(vector[i].str);
     xo = sin(dir)*(6.0+100*s);
     yo = cos(dir)*(6.0+100*s);
     if(i == selectedvector)
@@ -246,8 +241,8 @@ static void add_new_vector (gdouble x, gdouble y)
   vector[numvect].x = x;
   vector[numvect].y = y;
   vector[numvect].dir = 0.0;
-  vector[numvect].dx = sin(degtorad(0.0));
-  vector[numvect].dy = cos(degtorad(0.0));
+  vector[numvect].dx = sin(gimp_deg_to_rad(0.0));
+  vector[numvect].dy = cos(gimp_deg_to_rad(0.0));
   vector[numvect].str = 1.0;
   vector[numvect].type = 0;
   selectedvector = numvect;
@@ -292,7 +287,7 @@ static void mapclick(GtkWidget *w, GdkEventButton *event)
     double d;
     d = atan2(OMWIDTH * vector[selectedvector].x - event->x,
 	      OMHEIGHT * vector[selectedvector].y - event->y);
-    vector[selectedvector].dir = radtodeg(d);
+    vector[selectedvector].dir = gimp_rad_to_deg(d);
     vector[selectedvector].dx = sin(d);
     vector[selectedvector].dy = cos(d);
     updatesliders();
@@ -305,8 +300,8 @@ static void angadjmove(GtkWidget *w, gpointer data)
 {
   if (adjignore) return;
   vector[selectedvector].dir = GTK_ADJUSTMENT(angadjust)->value;
-  vector[selectedvector].dx = sin(degtorad(vector[selectedvector].dir));
-  vector[selectedvector].dy = cos(degtorad(vector[selectedvector].dir));
+  vector[selectedvector].dx = sin(gimp_deg_to_rad(vector[selectedvector].dir));
+  vector[selectedvector].dy = cos(gimp_deg_to_rad(vector[selectedvector].dir));
   updatevectorprev();
   updateompreviewprev();
 }

@@ -1,16 +1,7 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
@@ -27,7 +18,7 @@ static gimpressionist_vals_t runningvals;
 
 static double get_siz_from_pcvals(double x, double y)
 {
-    return getsiz_proto(x,y, pcvals.numsizevector, pcvals.sizevector, 
+    return getsiz_proto(x,y, pcvals.numsizevector, pcvals.sizevector,
             pcvals.sizestrexp, pcvals.sizevoronoi);
 }
 
@@ -71,7 +62,7 @@ static double sumbrush(ppm_t *p)
 static int gethue(guchar *rgb)
 {
   double h, v, temp, diff;
-  /* TODO : There seems to be some typoes in the comments here. 
+  /* TODO : There seems to be some typoes in the comments here.
    * Ask vidar what he meant.
    * */
   if((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])) /* Gray */
@@ -155,7 +146,7 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
         g_list_free(brlist);
       brlist = NULL;
     }
-    
+
     if(dev <= bestdev || best < 0) {
       best = i;
       bestdev = dev;
@@ -165,7 +156,7 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
   }
 
   if(!brlist) {
-    fprintf(stderr, "What!? No brushes?!\n");
+    g_printerr("What!? No brushes?!\n");
     return 0;
   }
 
@@ -299,7 +290,7 @@ void repaint(ppm_t *p, ppm_t *a)
   /* Shouldn't be necessary, but... */
   if(img_has_alpha)
     if((p->width != a->width) || (p->height != a->height)) {
-      fprintf(stderr, "Huh? Image size != alpha size?\n");
+      g_printerr("Huh? Image size != alpha size?\n");
       return;
     }
 
@@ -309,7 +300,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
   density = runningvals.brushdensity;
 
-  if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) 
+  if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST)
       density /= 3.0;
 
   bgamma = runningvals.brushgamma;
@@ -333,13 +324,13 @@ void repaint(ppm_t *p, ppm_t *a)
 
   if(bgamma != 1.0)
     ppmgamma(&brushes[0], 1.0/bgamma, 1,1,1);
-  
+
   resize(&brushes[0], brushes[0].width * scale, brushes[0].height * scale);
   i = 1 + sqrt(brushes[0].width * brushes[0].width +
                brushes[0].height * brushes[0].height);
   ppm_pad(&brushes[0], i-brushes[0].width, i-brushes[0].width,
       i-brushes[0].height, i-brushes[0].height, back);
-  
+
   for(i = 1; i < numbrush; i++) {
     brushes[i].col = NULL;
     copyppm(&brushes[0], &brushes[i]);
@@ -356,14 +347,14 @@ void repaint(ppm_t *p, ppm_t *a)
                  startangle + j * anglespan / runningvals.orientnum);
       rescale(&brushes[h], (sv * runningvals.sizefirst + (1.0-sv) * runningvals.sizelast) / runningvals.sizelast);
       autocrop(&brushes[h],1);
-    } 
+    }
   }
 
   /* Brush-debugging */
 #if 0
   for(i = 0; i < numbrush; i++) {
     char tmp[1000];
-    sprintf(tmp, "/tmp/_brush%03d.ppm", i);
+    g_snprintf (tmp, sizeof (tmp), "/tmp/_brush%03d.ppm", i);
     saveppm(&brushes[i], tmp);
   }
 #endif
@@ -382,7 +373,7 @@ void repaint(ppm_t *p, ppm_t *a)
     if(brushes[i].width > maxbrushwidth) maxbrushwidth = brushes[i].width;
     if(brushes[i].height > maxbrushheight) maxbrushheight = brushes[i].height;
   }
-  
+
   for(i = 0; i < numbrush; i++) {
     int xp, yp;
     guchar blk[3] = {0,0,0};
@@ -398,7 +389,7 @@ void repaint(ppm_t *p, ppm_t *a)
       shadows[i].col = NULL;
       copyppm(&brushes[i], &shadows[i]);
       ppmgamma(&shadows[i], 0, 1,1,0);
-      ppm_pad(&shadows[i], shadowblur*2, shadowblur*2, 
+      ppm_pad(&shadows[i], shadowblur*2, shadowblur*2,
           shadowblur*2, shadowblur*2, back);
       for(j = 0; j < shadowblur; j++)
         blur(&shadows[i], 2, 2);
@@ -411,7 +402,7 @@ void repaint(ppm_t *p, ppm_t *a)
     maxbrushheight += shadowdepth*3;
 #endif
   }
-  
+
   /* For extra annoying debugging :-) */
 #if 0
   saveppm(brushes, "/tmp/__brush.ppm");
@@ -465,7 +456,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
   switch(runningvals.orienttype)
   {
-    case ORIENTATION_VALUE:  
+    case ORIENTATION_VALUE:
     newppm(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
@@ -534,7 +525,7 @@ void repaint(ppm_t *p, ppm_t *a)
     break;
   }
 
-  if(runningvals.sizetype == SIZE_TYPE_VALUE) 
+  if(runningvals.sizetype == SIZE_TYPE_VALUE)
   {
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -545,7 +536,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_RADIUS) 
+  else if(runningvals.sizetype == SIZE_TYPE_RADIUS)
   {
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -556,7 +547,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_RADIAL) 
+  else if(runningvals.sizetype == SIZE_TYPE_RADIAL)
   {
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -566,7 +557,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_FLOWING) 
+  else if(runningvals.sizetype == SIZE_TYPE_FLOWING)
   {
     newppm(&sizmap, p->width / 6 + 5, p->height / 6 + 5);
     mkgrayplasma(&sizmap, 15);
@@ -577,7 +568,7 @@ void repaint(ppm_t *p, ppm_t *a)
     if(runningvals.generalpaintedges)
       edgepad(&sizmap, maxbrushwidth, maxbrushheight,maxbrushwidth, maxbrushheight);
   }
-  else if(runningvals.sizetype == SIZE_TYPE_HUE) 
+  else if(runningvals.sizetype == SIZE_TYPE_HUE)
   {
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -594,8 +585,8 @@ void repaint(ppm_t *p, ppm_t *a)
     newppm(&sizmap, p->width, p->height);
     fill(&sizmap, tmpcol);
 
-  } 
-  else if(runningvals.sizetype == SIZE_TYPE_MANUAL) 
+  }
+  else if(runningvals.sizetype == SIZE_TYPE_MANUAL)
   {
     newppm(&sizmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < sizmap.height; y++) {
@@ -618,7 +609,7 @@ void repaint(ppm_t *p, ppm_t *a)
       (int)(tmp.height * density / maxbrushheight);
     step = i;
 #if 0
-    fprintf(stderr, "step=%d i=%d\n", step, i);
+    g_printerr("step=%d i=%d\n", step, i);
 #endif
   }
   if(i < 1) i = 1;
@@ -651,7 +642,8 @@ void repaint(ppm_t *p, ppm_t *a)
         gimp_progress_update(0.8 - 0.8*((double)i / max_progress));
       } else {
         char tmps[40];
-        sprintf(tmps, "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
+        g_snprintf (tmps, sizeof (tmps),
+                    "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
         gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), tmps);
         while(gtk_events_pending())
           gtk_main_iteration();
@@ -659,9 +651,9 @@ void repaint(ppm_t *p, ppm_t *a)
     }
 
     if(runningvals.placetype == PLACEMENT_TYPE_RANDOM) {
-      tx = g_rand_int_range (gr, maxbrushwidth/2, 
+      tx = g_rand_int_range (gr, maxbrushwidth/2,
                              tmp.width - maxbrushwidth/2);
-      ty = g_rand_int_range (gr, maxbrushheight/2, 
+      ty = g_rand_int_range (gr, maxbrushheight/2,
                              tmp.height - maxbrushheight/2);
     } else if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) {
       tx = xpos[i-1];
@@ -677,7 +669,7 @@ void repaint(ppm_t *p, ppm_t *a)
        (tx + maxbrushwidth/2 >= p->width) ||
        (ty + maxbrushheight/2 >= p->height)) {
 #if 0
-      fprintf(stderr, "Internal Error; invalid coords: (%d,%d) i=%d\n", tx, ty, i);
+      g_printerr("Internal Error; invalid coords: (%d,%d) i=%d\n", tx, ty, i);
 #endif
       continue;
     }
@@ -690,7 +682,7 @@ void repaint(ppm_t *p, ppm_t *a)
     n = sn = on = 0;
 
     switch(runningvals.orienttype) {
-    case ORIENTATION_RANDOM: 
+    case ORIENTATION_RANDOM:
       on = g_rand_int_range (gr, 0, runningvals.orientnum);
       break;
     case ORIENTATION_VALUE:
@@ -704,7 +696,7 @@ void repaint(ppm_t *p, ppm_t *a)
     case ORIENTATION_ADAPTIVE:
       break; /* Handled below */
     default:
-      fprintf(stderr, "Internal error; Unknown orientationtype\n");
+      g_printerr("Internal error; Unknown orientationtype\n");
       on = 0;
       break;
     }
@@ -724,15 +716,15 @@ void repaint(ppm_t *p, ppm_t *a)
     case SIZE_TYPE_ADAPTIVE:
       break; /* Handled below */
     default:
-      fprintf(stderr, "Internal error; Unknown sizetype\n");
+      g_printerr("Internal error; Unknown sizetype\n");
       sn = 0;
       break;
     }
 
     /* Handle Adaptive selections */
     /* TODO : Nest the ifs here. */
-    if((runningvals.orienttype == ORIENTATION_ADAPTIVE) && 
-       (runningvals.sizetype == SIZE_TYPE_ADAPTIVE)) 
+    if((runningvals.orienttype == ORIENTATION_ADAPTIVE) &&
+       (runningvals.sizetype == SIZE_TYPE_ADAPTIVE))
     {
       n = bestbrush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
                     brushes, numbrush, brushsum, 0, 1);

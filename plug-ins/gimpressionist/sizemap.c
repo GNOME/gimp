@@ -1,10 +1,5 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif

@@ -1,3 +1,12 @@
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist: applied patch from Shlomi Fish that
+	fixes a number of bugs in the gimpressionst plug-in (bug #145309).
+
+	Also added some const qualifiers, cleaned up includes and removed
+	degtorad() and radtodeg() functions that used to duplicate
+	functionality from libgimpmath.
+
 2004-07-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptemplateview.c

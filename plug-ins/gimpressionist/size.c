@@ -1,12 +1,5 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -31,16 +24,16 @@ static void size_store(GtkWidget *wg, void *d)
 static void size_type_restore(void)
 {
   gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON(sizeradio[pcvals.sizetype]), 
+    GTK_TOGGLE_BUTTON(sizeradio[pcvals.sizetype]),
     TRUE
-    );    
+    );
 }
 void size_restore(void)
 {
   size_type_restore();
   gtk_adjustment_set_value(GTK_ADJUSTMENT(sizenumadjust), pcvals.sizenum);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(sizefirstadjust), pcvals.sizefirst);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.sizelast);  
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.sizelast);
 }
 
 static void create_sizemap_dialog_helper(void)
@@ -49,12 +42,12 @@ static void create_sizemap_dialog_helper(void)
     create_sizemap_dialog();
 }
 
-static void create_size_radio_button (GtkWidget *box, int orienttype, 
+static void create_size_radio_button (GtkWidget *box, int orienttype,
                                       gchar *label, gchar *help_string,
                                       GSList **radio_group
                                      )
 {
-  create_radio_button (box, orienttype, size_store, label, 
+  create_radio_button (box, orienttype, size_store, label,
                        help_string, radio_group, sizeradio);
 }
 
@@ -129,16 +122,16 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), box3, FALSE, FALSE, 0);
   gtk_widget_show(box3);
 
-  create_size_radio_button (box3, SIZE_TYPE_VALUE, _("Value"), 
+  create_size_radio_button (box3, SIZE_TYPE_VALUE, _("Value"),
     _("Let the value (brightness) of the region determine the size of the stroke"),
     &radio_group
     );
-  
+
   create_size_radio_button (box3, SIZE_TYPE_RADIUS, _("Radius"),
      _("The distance from the center of the image determines the size of the stroke"),
     &radio_group
     );
-  
+
   create_size_radio_button (box3, SIZE_TYPE_RANDOM, _("Random"),
      _("Selects a random size for each stroke"),
     &radio_group
@@ -148,7 +141,7 @@ void create_sizepage(GtkNotebook *notebook)
     _("Let the direction from the center determine the size of the stroke"),
     &radio_group
     );
-  
+
   box3 = gtk_vbox_new(FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 0);
   gtk_widget_show(box3);
@@ -157,7 +150,7 @@ void create_sizepage(GtkNotebook *notebook)
     _("The strokes follow a \"flowing\" pattern"),
     &radio_group
     );
-  
+
   create_size_radio_button (box3, SIZE_TYPE_HUE, _("Hue"),
     _("The hue of the region determines the size of the stroke"),
     &radio_group
@@ -177,7 +170,7 @@ void create_sizepage(GtkNotebook *notebook)
     _("Manually specify the stroke size"),
     &radio_group
     );
-  
+
   size_type_restore();
 
   tmpw = gtk_button_new_from_stock (GIMP_STOCK_EDIT);

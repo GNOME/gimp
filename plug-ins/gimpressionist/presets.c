@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -16,16 +18,25 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget *presetnameentry = NULL;
-static GtkWidget *presetlist = NULL;
-static GtkWidget *presetdesclabel = NULL;
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
+
+static GtkWidget    *presetnameentry = NULL;
+static GtkWidget    *presetlist      = NULL;
+static GtkWidget    *presetdesclabel = NULL;
 static GtkListStore *store;
+
+static void set_preset_description_text (const gchar *text)
+{
+  gtk_label_set_text (GTK_LABEL (presetdesclabel), text);
+}
 
 static char presetdesc[4096] = "";
 
 static char *factory_defaults = "<Factory defaults>";
 
-static void addfactorydefaults(void)
+static void addfactorydefaults (void)
 {
   GtkTreeIter iter;
 
@@ -42,7 +53,7 @@ static void presetsrefresh(void)
 
 #define PRESETMAGIC "Preset"
 
-static int loadoldpreset(char *fname)
+static int loadoldpreset (const gchar *fname)
 {
   FILE *f;
   int len;
@@ -58,7 +69,7 @@ static int loadoldpreset(char *fname)
   return 0;
 }
 
-static unsigned int hexval(char c)
+static unsigned int hexval (char c)
 {
   c = g_ascii_tolower (c);
   if((c >= 'a') && (c <= 'f')) return c - 'a' + 10;
@@ -66,7 +77,7 @@ static unsigned int hexval(char c)
   return 0;
 }
 
-static char *parsergbstring(char *s)
+static char *parsergbstring (const gchar *s)
 {
   static char col[3];
   col[0] = (hexval(s[0]) << 4) | hexval(s[1]);
@@ -75,9 +86,9 @@ static char *parsergbstring(char *s)
   return col;
 }
 
-static void setorientvector(char *str)
+static void setorientvector (const gchar *str)
 {
-  char *tmps = str;
+  const gchar *tmps = str;
   int n;
 
   n = atoi(tmps);
@@ -105,9 +116,9 @@ static void setorientvector(char *str)
 
 }
 
-static void setsizevector(char *str)
+static void setsizevector (const gchar *str)
 {
-  char *tmps = str;
+  const gchar *tmps = str;
   int n;
 
   n = atoi(tmps);
@@ -126,7 +137,7 @@ static void setsizevector(char *str)
 
 }
 
-static void parsedesc(char *str, char *d, gssize d_len)
+static void parsedesc (const gchar *str, gchar *d, gssize d_len)
 {
   gchar *dest = g_strcompress (str);
 
@@ -135,7 +146,7 @@ static void parsedesc(char *str, char *d, gssize d_len)
   g_free (dest);
 }
 
-static void setval(char *key, char *val)
+static void setval (const gchar *key, const gchar *val)
 {
   if(!strcmp(key, "desc"))
     parsedesc(val, presetdesc, sizeof (presetdesc));
@@ -240,7 +251,7 @@ static void setval(char *key, char *val)
     pcvals.colornoise = g_ascii_strtod (val, NULL);
 }
 
-static int loadpreset(char *fn)
+static int loadpreset(const gchar *fn)
 {
   char line[1024] = "";
   FILE *f;
@@ -258,11 +269,11 @@ static int loadpreset(char *fn)
   restore_default_values();
   while(!feof(f)) {
     char *tmps;
-    if(!fgets(line,1024,f)) 
+    if(!fgets(line,1024,f))
       break;
     remove_trailing_whitespace(line);
     tmps = strchr(line, '=');
-    if(!tmps) 
+    if(!tmps)
       continue;
     *tmps = '\0';
     tmps++;
@@ -272,7 +283,7 @@ static int loadpreset(char *fn)
   return 0;
 }
 
-int select_preset(char * preset)
+int select_preset(const gchar *preset)
 {
     int ret = SELECT_PRESET_OK;
     /* I'm copying this behavior as is. As it seems applying the
@@ -307,6 +318,7 @@ int select_preset(char * preset)
          * */
         set_colorbrushes (pcvals.selectedbrush);
       }
+
     return ret;
 }
 
@@ -364,14 +376,12 @@ static void savepreset(void);
 
 static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
 {
-  char *dest, *str;
+  char *str;
   GtkTextIter start, end;
 
   gtk_text_buffer_get_bounds (buffer, &start, &end);
   str = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
-  dest = g_strescape (str, NULL);
-  g_strlcpy (presetdesc, dest, sizeof (presetdesc));
-  g_free (dest);
+  g_strlcpy (presetdesc, str, sizeof (presetdesc));
   g_free (str);
 }
 
@@ -451,13 +461,14 @@ create_savepreset (void)
 static void savepreset(void)
 {
   const gchar *l;
-  gchar *fname;
+  gchar *fname, *presets_dir_path;
   FILE  *f;
   GList *thispath;
   gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  vbuf[6][G_ASCII_DTOSTR_BUF_SIZE];
   guchar color[3];
   gint   i;
+  gchar *desc_escaped;
 
   l = gtk_entry_get_text (GTK_ENTRY (presetnameentry));
   thispath = parsepath ();
@@ -469,17 +480,39 @@ static void savepreset(void)
       return;
     }
 
-  fname = g_build_filename ((char *)thispath->data, "Presets", l, NULL);
+  /* Create the ~/.gimp-$VER/gimpressionist/Presets directory if
+   * it doesn't already exists.
+   * */
+  presets_dir_path = g_build_filename ((char *)thispath->data, "Presets", NULL);
+
+  if (!g_file_test (presets_dir_path, G_FILE_TEST_IS_DIR))
+    {
+      if (mkdir (presets_dir_path,
+                 S_IRUSR | S_IWUSR | S_IXUSR |
+                 S_IRGRP | S_IXGRP |
+                 S_IROTH | S_IXOTH) == -1)
+        {
+          g_printerr ("Error creating folder \"%s\"!\n", presets_dir_path);
+          g_free (presets_dir_path);
+          return;
+        }
+    }
+
+  fname = g_build_filename (presets_dir_path, l, NULL);
+  g_free (presets_dir_path);
 
   f = fopen (fname, "wt");
   if (!f)
     {
       g_printerr ("Error opening file \"%s\" for writing!%c\n", fname, 7);
+      g_free (fname);
       return;
     }
 
   fprintf(f, "%s\n", PRESETMAGIC);
-  fprintf(f, "desc=%s\n", presetdesc);
+  desc_escaped = g_strescape (presetdesc, NULL);
+  fprintf(f, "desc=%s\n", desc_escaped);
+  g_free (desc_escaped);
   fprintf(f, "orientnum=%d\n", pcvals.orientnum);
   fprintf(f, "orientfirst=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientfirst));
@@ -590,7 +623,7 @@ static void readdesc(const char *fn)
 
   if (!fname)
     {
-      gtk_label_set_text (GTK_LABEL (presetdesclabel), "");
+      set_preset_description_text("");
       return;
     }
 
@@ -606,7 +639,7 @@ static void readdesc(const char *fn)
           if (!strncmp (line, "desc=", 5))
             {
               parsedesc (line + 5, tmplabel, sizeof (tmplabel));
-              gtk_label_set_text (GTK_LABEL (presetdesclabel), tmplabel);
+              set_preset_description_text (tmplabel);
               fclose (f);
               return;
             }
@@ -614,7 +647,7 @@ static void readdesc(const char *fn)
       fclose (f);
     }
 
-  gtk_label_set_text (GTK_LABEL (presetdesclabel), "");
+  set_preset_description_text ("");
 }
 
 static void selectpreset(GtkTreeSelection *selection, gpointer data)
@@ -705,6 +738,13 @@ void create_presetpage(GtkNotebook *notebook)
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new (NULL);
+  gtk_label_set_line_wrap (GTK_LABEL (tmpw), TRUE);
+  /*
+   * Make sure the label's width is reasonable and it won't stretch
+   * the dialog more than its width.
+   * */
+  gtk_widget_set_size_request (tmpw, 200, -1);
+
   gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.0);
   gtk_box_pack_start(GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);

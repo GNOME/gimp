@@ -28,10 +28,11 @@ libexec_PROGRAMS = gimpressionist
 
 gimpressionist_sources = \
 	brush.c			\
-	color.h			\
+	brush.h			\
 	color.c			\
-	general.h		\
+	color.h			\
 	general.c		\
+	general.h		\
 	gimp.c			\
 	gimpressionist.c	\
 	gimpressionist.h	\
@@ -39,8 +40,8 @@ gimpressionist_sources = \
 	orientation.c		\
 	orientmap.c		\
 	paper.c			\
-	placement.h		\
 	placement.c		\
+	placement.h		\
 	plasma.c		\
 	ppmtool.c		\
 	ppmtool.h		\

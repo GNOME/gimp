@@ -1,9 +1,6 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 
@@ -12,6 +9,7 @@
 #include "ppmtool.h"
 #include "gimpressionist.h"
 #include "preview.h"
+#include "brush.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -80,7 +78,7 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
   gboolean           with_specified_preset;
-  gchar             *preset_name;
+  gchar             *preset_name = NULL;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -119,7 +117,7 @@ run (const gchar      *name,
          * */
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_NONINTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:        
+    case GIMP_RUN_WITH_LAST_VALS:
       gimpressionist_get_data();
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -178,6 +176,7 @@ run (const gchar      *name,
   free_parsepath_cache();
   reloadbrush(NULL, NULL);
   preview_free_resources();
+  brush_free();
 
   values[0].data.d_status = status;
 
@@ -201,7 +200,7 @@ void grabarea(void)
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
-  
+
   newppm(&infile, x2-x1, y2-y1);
   p = &infile;
   if(has_alpha) {

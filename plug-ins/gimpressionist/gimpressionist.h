@@ -160,8 +160,6 @@ void readdirintolist(char *subdir, GtkWidget *view, char *selected);
 void orientation_restore(void);
 void paper_store(void);
 void paper_restore(void);
-void brush_store(void);
-void brush_restore(void);
 
 GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
@@ -184,12 +182,10 @@ enum SELECT_PRESET_RETURN_VALUES
     SELECT_PRESET_LOAD_FAILED = -2,
 };
 
-int select_preset(char * preset);
+int select_preset(const gchar *preset);
 void set_colorbrushes (const gchar *fn);
 int  create_gimpressionist (void);
 
-double degtorad(double d);
-double radtodeg(double d);
 double dist(double x, double y, double dx, double dy);
 
 void restore_default_values(void);
