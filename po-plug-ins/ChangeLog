@@ -1,3 +1,7 @@
+Mon May  1 20:05:07 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: borderaverage.c is now in plug-ins/common.
