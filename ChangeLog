@@ -1,3 +1,17 @@
+2000-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpquerybox.[ch]: as all boolean query boxes are
+	confirmations for deleting/closing something, I added the "eek"
+	wilber (you can still disable the pixmap by passing FALSE to the
+	constructor's "eek" parameter).
+
+	* app/app_procs.c
+	* app/gdisplay_ops.c
+	* app/gradient.c
+	* app/palette.c
+	* plug-ins/gflare/gflare.c: pass eek==TRUE to the boolean query
+	box constructor.
+
 Thu Feb 10 19:00:24 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/pnm.c: Removed pbm from the list of extensions

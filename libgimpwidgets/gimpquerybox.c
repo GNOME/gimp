@@ -25,6 +25,8 @@
 
 #include "libgimp-intl.h"
 
+#include "pixmaps/eek.xpm"
+
 /*
  *  String, integer, double and size query boxes
  */
@@ -90,7 +92,7 @@ create_query_box (gchar         *title,
 {
   QueryBox  *query_box;
   GtkWidget *qbox;
-  GtkWidget *vbox;
+  GtkWidget *vbox = NULL;
   GtkWidget *label;
 
   query_box = g_new (QueryBox, 1);
@@ -115,14 +117,17 @@ create_query_box (gchar         *title,
   else
     object = NULL;
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
-  gtk_widget_show (vbox);
+  if (message)
+    {
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
+      gtk_widget_show (vbox);
 
-  label = gtk_label_new (message);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+      label = gtk_label_new (message);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+    }
 
   query_box->qbox     = qbox;
   query_box->vbox     = vbox;
@@ -295,6 +300,7 @@ GtkWidget *
 gimp_query_boolean_box (gchar                    *title,
 			GimpHelpFunc              help_func,
 			gchar                    *help_data,
+			gboolean                  eek,
 			gchar                    *message,
 			gchar                    *true_button,
 			gchar                    *false_button,
@@ -304,14 +310,49 @@ gimp_query_boolean_box (gchar                    *title,
 			gpointer                  data)
 {
   QueryBox  *query_box;
+  GtkWidget *hbox;
+  GtkWidget *pixmap_widget;
+  GtkWidget *label;
+
+  static GdkPixmap *eek_pixmap = NULL;
+  static GdkBitmap *eek_mask   = NULL;
 
   query_box = create_query_box (title, help_func, help_data,
 				boolean_query_box_true_callback,
 				boolean_query_box_false_callback,
-				message,
+				eek ? NULL : message,
 				true_button, false_button,
 				object, signal,
 				callback, data);
+
+  if (!eek)
+    return query_box->qbox;
+
+  hbox = gtk_hbox_new (FALSE, 10);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox), hbox);
+  gtk_widget_show (hbox);
+
+  if (!eek_pixmap)
+    {
+      GtkStyle  *style;
+
+      gtk_widget_realize (query_box->qbox);
+      style = gtk_widget_get_style (query_box->qbox);
+
+      eek_pixmap = gdk_pixmap_create_from_xpm_d (query_box->qbox->window,
+						 &eek_mask,
+						 &style->bg[GTK_STATE_NORMAL],
+						 eek_xpm);
+    }
+
+  pixmap_widget = gtk_pixmap_new (eek_pixmap, eek_mask);
+  gtk_box_pack_start (GTK_BOX (hbox), pixmap_widget, FALSE, FALSE, 0);
+  gtk_widget_show (pixmap_widget);
+
+  label = gtk_label_new (message);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   return query_box->qbox;
 }

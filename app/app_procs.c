@@ -97,8 +97,6 @@
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/eek.xpm"
-
 #define LOGO_WIDTH_MIN  300
 #define LOGO_HEIGHT_MIN 110
 #define AUTHORS "Spencer Kimball & Peter Mattis"
@@ -120,7 +118,7 @@ static void      toast_old_temp_files                 (void);
 
 
 static gint is_app_exit_finish_done = FALSE;
-int we_are_exiting                  = FALSE;
+gint        we_are_exiting          = FALSE;
 
 static GtkWidget *logo_area   = NULL;
 static GdkPixmap *logo_pixmap = NULL;
@@ -708,70 +706,37 @@ app_exit (gboolean kill_it)
 
 static void
 really_quit_callback (GtkButton *button,
-		      GtkWidget *dialog)
+		      gboolean   quit,
+		      gpointer   data)
 {
-  gtk_widget_destroy (dialog);
-  app_exit_finish ();
-}
-
-static void
-really_quit_cancel_callback (GtkWidget *widget,
-			     GtkWidget *dialog)
-{
-  menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
-  menus_set_sensitive ("<Image>/File/Quit", TRUE);
-  gtk_widget_destroy (dialog);
+  if (quit)
+    {
+      app_exit_finish ();
+    }
+  else
+    {
+      menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
+      menus_set_sensitive ("<Image>/File/Quit", TRUE);
+    }
 }
 
 static void
 really_quit_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *pixmap_widget;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
-  GtkWidget *label;
 
   menus_set_sensitive ("<Toolbox>/File/Quit", FALSE);
   menus_set_sensitive ("<Image>/File/Quit", FALSE);
 
-  dialog = gimp_dialog_new (_("Really Quit?"), "really_quit",
-			    gimp_standard_help_func,
-			    "dialogs/really_quit.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
-
-			    _("Quit"), really_quit_callback,
-			    NULL, NULL, NULL, FALSE, FALSE,
-			    _("Cancel"), really_quit_cancel_callback,
-			    NULL, NULL, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
-
-  gtk_widget_realize (dialog);
-  style = gtk_widget_get_style (dialog);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
-					 &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 eek_xpm);
-  pixmap_widget = gtk_pixmap_new (pixmap, mask);
-  gtk_box_pack_start (GTK_BOX (hbox), pixmap_widget, FALSE, FALSE, 10);
-  gtk_widget_show (pixmap_widget);
-
-  gdk_pixmap_unref (pixmap);
-
-  label = gtk_label_new (_("Some files unsaved.\n\nQuit the GIMP?"));
-  gtk_misc_set_padding (GTK_MISC (label), 10, 10);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  dialog = gimp_query_boolean_box (_("Really Quit?"),
+				   gimp_standard_help_func,
+				   "dialogs/really_quit.html",
+				   TRUE,
+				   _("Some files unsaved.\n\nQuit the GIMP?"),
+				   _("Quit"), _("Cancel"),
+				   NULL, NULL,
+				   really_quit_callback,
+				   NULL);
 
   gtk_widget_show (dialog);
 }
