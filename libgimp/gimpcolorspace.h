@@ -29,22 +29,28 @@ extern "C" {
 
 /*  Color conversion routines  */
 
-void    gimp_rgb_to_hsv		(gint    *red         /* returns hue        */,
+
+/*  gint functions  */
+
+void    gimp_rgb_to_hsv_int	(gint    *red         /* returns hue        */,
 				 gint    *green       /* returns saturation */,
 				 gint    *blue        /* returns value      */);
-void    gimp_hsv_to_rgb		(gint    *hue         /* returns red        */,
+void    gimp_hsv_to_rgb_int	(gint    *hue         /* returns red        */,
 				 gint    *saturation  /* returns green      */,
 				 gint    *value       /* returns blue       */);
 
-void    gimp_rgb_to_hls		(gint    *red         /* returns hue        */,
+void    gimp_rgb_to_hls_int	(gint    *red         /* returns hue        */,
 				 gint    *green       /* returns lightness  */,
 				 gint    *blue        /* returns saturation */);
-gint    gimp_rgb_to_l		(gint     red,
+gint    gimp_rgb_to_l_int	(gint     red,
 				 gint     green,
 				 gint     blue);
-void    gimp_hls_to_rgb		(gint    *hue         /* returns red        */,
+void    gimp_hls_to_rgb_int	(gint    *hue         /* returns red        */,
 				 gint    *lightness   /* returns green      */,
 				 gint    *saturation  /* returns blue       */);
+
+
+/*  gdouble functions  */
 
 void    gimp_rgb_to_hsv_double	(gdouble *red         /* returns hue        */,
 				 gdouble *green       /* returns saturation */,

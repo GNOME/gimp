@@ -190,9 +190,9 @@ vinvert_render_row (const guchar *src_data,
       v2 = src_data[col*bytes +1];
       v3 = src_data[col*bytes +2];
 
-      gimp_rgb_to_hsv (&v1, &v2, &v3);
+      gimp_rgb_to_hsv_int (&v1, &v2, &v3);
       v3 = 255-v3;
-      gimp_hsv_to_rgb (&v1, &v2, &v3);
+      gimp_hsv_to_rgb_int (&v1, &v2, &v3);
 
       dest_data[col*bytes   ] = v1;
       dest_data[col*bytes +1] = v2;

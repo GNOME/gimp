@@ -1949,9 +1949,9 @@ calc_sample_one_gradient ()
 		      g = gradient[j*4+1];
 		      b = gradient[j*4+2];
 
-		      gimp_rgb_to_hsv (&r, &g, &b);
+		      gimp_rgb_to_hsv_int (&r, &g, &b);
 		      r = (r + hue) % 256;
-		      gimp_hsv_to_rgb (&r, &g, &b);
+		      gimp_hsv_to_rgb_int (&r, &g, &b);
 
 		      gradient[j*4] = r;
 		      gradient[j*4+1] = g;
@@ -4555,7 +4555,10 @@ preview_handle_idle (Preview *preview)
  */
 
 void
-preview_rgba_to_rgb (guchar *dest, gint x, gint y, guchar *src)
+preview_rgba_to_rgb (guchar *dest,
+		     gint    x,
+		     gint    y,
+		     guchar *src)
 {
   gint src_a;
   gint check;

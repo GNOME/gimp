@@ -26,9 +26,9 @@
  *********************************/
 
 void
-gimp_rgb_to_hsv (gint *red,
-		 gint *green,
-		 gint *blue)
+gimp_rgb_to_hsv_int (gint *red,
+		     gint *green,
+		     gint *blue)
 {
   gint    r, g, b;
   gdouble h, s, v;
@@ -84,9 +84,9 @@ gimp_rgb_to_hsv (gint *red,
 }
 
 void
-gimp_hsv_to_rgb (gint *hue,
-		 gint *saturation,
-		 gint *value)
+gimp_hsv_to_rgb_int (gint *hue,
+		     gint *saturation,
+		     gint *value)
 {
   gdouble h, s, v;
   gdouble f, p, q, t;
@@ -150,9 +150,9 @@ gimp_hsv_to_rgb (gint *hue,
 }
 
 void
-gimp_rgb_to_hls (gint *red,
-		 gint *green,
-		 gint *blue)
+gimp_rgb_to_hls_int (gint *red,
+		     gint *green,
+		     gint *blue)
 {
   gint    r, g, b;
   gdouble h, l, s;
@@ -211,9 +211,9 @@ gimp_rgb_to_hls (gint *red,
 }
 
 gint
-gimp_rgb_to_l (gint red,
-	       gint green,
-	       gint blue)
+gimp_rgb_to_l_int (gint red,
+		   gint green,
+		   gint blue)
 {
   gint min, max;
 
@@ -255,9 +255,9 @@ gimp_hls_value (gdouble n1,
 }
 
 void
-gimp_hls_to_rgb (gint *hue,
-		 gint *lightness,
-		 gint *saturation)
+gimp_hls_to_rgb_int (gint *hue,
+		     gint *lightness,
+		     gint *saturation)
 {
   gdouble h, l, s;
   gdouble m1, m2;

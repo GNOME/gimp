@@ -284,9 +284,9 @@ color_select_update_rgb_values (ColorSelect *csp)
   csp->values[GREEN] = RINT (((gdouble) csp->values[SATURATION]) / 100.0 * 255);
   csp->values[BLUE] = RINT (((gdouble) csp->values[VALUE]) / 100.0 * 255);
 
-  gimp_hsv_to_rgb (&(csp->values[RED]),
-		   &(csp->values[GREEN]),
-		   &(csp->values[BLUE]));
+  gimp_hsv_to_rgb_int (&(csp->values[RED]),
+		       &(csp->values[GREEN]),
+		       &(csp->values[BLUE]));
 }
 
 static void

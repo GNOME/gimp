@@ -326,7 +326,7 @@ void scatter_hsv_scatter (guchar *r,
   
   h = *r; s = *g; v = *b;
   
-  gimp_rgb_to_hsv (&h, &s, &v);
+  gimp_rgb_to_hsv_int (&h, &s, &v);
 
   if (0 < VALS.hue_distance)
     h = randomize_value (h, 0, 255, 1, VALS.hue_distance);
@@ -337,11 +337,11 @@ void scatter_hsv_scatter (guchar *r,
 
   h1 = h; s1 = s; v1 = v;
 	      
-  gimp_hsv_to_rgb (&h, &s, &v); /* don't believe ! */
+  gimp_hsv_to_rgb_int (&h, &s, &v); /* don't believe ! */
 
   h2 = h; s2 = s; v2 = v;
 
-  gimp_rgb_to_hsv (&h2, &s2, &v2); /* h2 should be h1. But... */
+  gimp_rgb_to_hsv_int (&h2, &s2, &v2); /* h2 should be h1. But... */
   
   if ((abs (h1 - h2) <= VALS.hue_distance)
       && (abs (s1 - s2) <= VALS.saturation_distance)

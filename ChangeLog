@@ -1,3 +1,21 @@
+2000-12-31  Michael Natterer  <mitch@gimp.org>
+
+	More preparation for LibGCK removal:
+
+	* libgimp/gimpcolorspace.[ch]: added a "_int" suffix to all functions
+	operating on 3 gint pointers, just like the gdouble functions have
+	a "_double" suffix.
+
+	* app/color_balance.c
+	* app/hue_saturation.c
+	* app/paint_funcs.c
+	* modules/colorsel_triangle.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/gflare/gflare.c: changed accordingly.
+
 2000-12-31  Sven Neumann  <sven@gimp.org>
             Simon Budig <simon@gimp.org>
 	

@@ -77,10 +77,10 @@ typedef enum
 typedef struct _LayerMode LayerMode;
 struct _LayerMode
 {
-  int affect_alpha;     /*  does the layer mode affect the alpha channel  */
-  int increase_opacity; /*  layer mode can increase opacity */
-  int decrease_opacity; /*  layer mode can decrease opacity */
-  char *name;           /*  layer mode specification  */
+  gint   affect_alpha;     /*  does the layer mode affect the alpha channel  */
+  gint   increase_opacity; /*  layer mode can increase opacity */
+  gint   decrease_opacity; /*  layer mode can decrease opacity */
+  gchar *name;             /*  layer mode specification  */
 };
 
 LayerMode layer_modes[] =	/* This must obviously be in the same
@@ -249,13 +249,13 @@ update_tile_rowhints (Tile *tile,
   if (bpp == 2)
     {
 #ifdef HINTS_SANITY
-      g_assert(tile!=NULL);
+      g_assert (tile != NULL);
 #endif
 
       ptr = tile_data_pointer (tile, 0, ymin);
 
 #ifdef HINTS_SANITY
-      g_assert(ptr!=NULL);
+      g_assert (ptr != NULL);
 #endif
 
       for (y = ymin; y <= ymax; y++)
@@ -424,7 +424,6 @@ cubic (gdouble dx,
        gint    jp1,
        gint    jp2)
 {
-
   /* Catmull-Rom - not bad */
   return (gdouble) ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
 		       ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
@@ -792,8 +791,8 @@ hsv_only_pixels (const guchar *src1,
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      gimp_rgb_to_hsv (&r1, &g1, &b1);
-      gimp_rgb_to_hsv (&r2, &g2, &b2);
+      gimp_rgb_to_hsv_int (&r1, &g1, &b1);
+      gimp_rgb_to_hsv_int (&r2, &g2, &b2);
 
       switch (mode)
 	{
@@ -809,7 +808,7 @@ hsv_only_pixels (const guchar *src1,
 	}
 
       /*  set the destination  */
-      gimp_hsv_to_rgb (&r1, &g1, &b1);
+      gimp_hsv_to_rgb_int (&r1, &g1, &b1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
@@ -844,15 +843,15 @@ color_only_pixels (const guchar *src1,
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      gimp_rgb_to_hls (&r1, &g1, &b1);
-      gimp_rgb_to_hls (&r2, &g2, &b2);
+      gimp_rgb_to_hls_int (&r1, &g1, &b1);
+      gimp_rgb_to_hls_int (&r2, &g2, &b2);
 
       /*  transfer hue and saturation to the source pixel  */
       r1 = r2;
       b1 = b2;
 
       /*  set the destination  */
-      gimp_hls_to_rgb (&r1, &g1, &b1);
+      gimp_hls_to_rgb_int (&r1, &g1, &b1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
@@ -1474,12 +1473,12 @@ copy_gray_to_inten_a_pixels (const guchar *src,
 
 
 void
-initial_channel_pixels (const unsigned char *src,
-			unsigned char *dest,
-			int            length,
-			int            bytes)
+initial_channel_pixels (const guchar *src,
+			guchar       *dest,
+			gint          length,
+			gint          bytes)
 {
-  int alpha, b;
+  gint alpha, b;
 
   alpha = bytes - 1;
   while (length --)
@@ -1496,12 +1495,12 @@ initial_channel_pixels (const unsigned char *src,
 
 
 void
-initial_indexed_pixels (const unsigned char *src,
-			unsigned char *dest,
-			const unsigned char *cmap,
-			int            length)
+initial_indexed_pixels (const guchar *src,
+			guchar       *dest,
+			const guchar *cmap,
+			gint          length)
 {
-  int col_index;
+  gint col_index;
 
   /*  This function assumes always that we're mapping from
    *  an RGB colormap to an RGBA image...
@@ -1518,17 +1517,18 @@ initial_indexed_pixels (const unsigned char *src,
 
 
 void
-initial_indexed_a_pixels (const unsigned char *src,
-			  unsigned char *dest,
-			  const unsigned char *mask,
-			  const unsigned char *cmap,
-			  int            opacity,
-			  int            length)
+initial_indexed_a_pixels (const guchar *src,
+			  guchar       *dest,
+			  const guchar *mask,
+			  const guchar *cmap,
+			  gint          opacity,
+			  gint          length)
 {
-  int col_index;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  long tmp;
+  gint          col_index;
+  guchar        new_alpha;
+  const guchar *m;
+  glong         tmp;
+
   if (mask)
     m = mask;
   else
@@ -1552,21 +1552,21 @@ initial_indexed_a_pixels (const unsigned char *src,
 
 
 void
-initial_inten_pixels (const unsigned char *src,
-		      unsigned char *dest,
-		      const unsigned char *mask,
-		      int            opacity,
-		      const int     *affect,
-		      int            length,
-		      int            bytes)
+initial_inten_pixels (const guchar *src,
+		      guchar       *dest,
+		      const guchar *mask,
+		      gint          opacity,
+		      const gint   *affect,
+		      gint          length,
+		      gint          bytes)
 {
-  int b;
-  const unsigned char * m;
-  int tmp;
-  int l;
-  unsigned char *destp;
-  const unsigned char *srcp;
-  const int dest_bytes = bytes + 1;
+  gint b;
+  const guchar * m;
+  gint tmp;
+  gint l;
+  guchar *destp;
+  const guchar *srcp;
+  const gint dest_bytes = bytes + 1;
 
   if (mask)
   {
@@ -1703,17 +1703,17 @@ initial_inten_pixels (const unsigned char *src,
 
 
 void
-initial_inten_a_pixels (const unsigned char *src,
-			unsigned char       *dest,
-			const unsigned char *mask,
-			int                  opacity,
-			const int           *affect,
-			int                  length,
-			int                  bytes)
+initial_inten_a_pixels (const guchar *src,
+			guchar       *dest,
+			const guchar *mask,
+			gint          opacity,
+			const gint   *affect,
+			gint          length,
+			gint          bytes)
 {
-  int alpha, b;
-  const unsigned char * m;
-  long tmp;
+  gint          alpha, b;
+  const guchar *m;
+  glong         tmp;
 
   alpha = bytes - 1;
   if (mask)
@@ -1752,19 +1752,20 @@ initial_inten_a_pixels (const unsigned char *src,
 
 
 void
-combine_indexed_and_indexed_pixels (const unsigned char *src1,
-				    const unsigned char *src2,
-				    unsigned char       *dest,
-				    const unsigned char *mask,
-				    int                  opacity,
-				    const int           *affect,
-				    int                  length,
-				    int                  bytes)
+combine_indexed_and_indexed_pixels (const guchar *src1,
+				    const guchar *src2,
+				    guchar       *dest,
+				    const guchar *mask,
+				    gint          opacity,
+				    const gint   *affect,
+				    gint          length,
+				    gint          bytes)
 {
-  int b;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  int tmp;
+  gint          b;
+  guchar        new_alpha;
+  const guchar *m;
+  gint          tmp;
+
   if (mask)
     {
       m = mask;
@@ -1800,20 +1801,21 @@ combine_indexed_and_indexed_pixels (const unsigned char *src1,
 
 
 void
-combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
-				      const unsigned char *src2,
-				      unsigned char       *dest,
-				      const unsigned char *mask,
-				      int                  opacity,
-				      const int           *affect,
-				      int                  length,
-				      int                  bytes)
+combine_indexed_and_indexed_a_pixels (const guchar *src1,
+				      const guchar *src2,
+				      guchar       *dest,
+				      const guchar *mask,
+				      gint          opacity,
+				      const gint   *affect,
+				      gint          length,
+				      gint          bytes)
 {
-  int b, alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  int src2_bytes;
+  gint b, alpha;
+  guchar new_alpha;
+  const guchar * m;
+  gint src2_bytes;
   long tmp;
+
   alpha = 1;
   src2_bytes = 2;
 
@@ -1852,18 +1854,18 @@ combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
 
 
 void
-combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
-					const unsigned char *src2,
-					unsigned char       *dest,
-					const unsigned char *mask,
-					int                  opacity,
-					const int           *affect,
-					int                  length,
-					int                  bytes)
+combine_indexed_a_and_indexed_a_pixels (const guchar *src1,
+					const guchar *src2,
+					guchar       *dest,
+					const guchar *mask,
+					gint          opacity,
+					const gint   *affect,
+					gint          length,
+					gint          bytes)
 {
-  int b, alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
+  gint b, alpha;
+  guchar new_alpha;
+  const guchar * m;
   long tmp;
 
   alpha = 1;
@@ -1907,19 +1909,19 @@ combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
 
 
 void
-combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
-				      const unsigned char *src2,
-				      unsigned char       *dest,
-				      const unsigned char *mask,
-				      const unsigned char *cmap,
-				      int                  opacity,
-				      int                  length,
-				      int                  bytes)
+combine_inten_a_and_indexed_a_pixels (const guchar *src1,
+				      const guchar *src2,
+				      guchar       *dest,
+				      const guchar *mask,
+				      const guchar *cmap,
+				      gint          opacity,
+				      gint          length,
+				      gint          bytes)
 {
-  int b, alpha;
-  unsigned char new_alpha;
-  int src2_bytes;
-  int index;
+  gint b, alpha;
+  guchar new_alpha;
+  gint src2_bytes;
+  gint index;
   long tmp;
 
   alpha = 1;
@@ -1927,7 +1929,7 @@ combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
 
   if (mask)
     {
-      const unsigned char *m = mask;
+      const guchar *m = mask;
       while (length --)
 	{
 	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
@@ -1970,19 +1972,20 @@ combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
 
 
 void
-combine_inten_and_inten_pixels (const unsigned char *src1,
-				const unsigned char *src2,
-				unsigned char       *dest,
-				const unsigned char *mask,
-				int                  opacity,
-				const int           *affect,
-				int                  length,
-				int                  bytes)
+combine_inten_and_inten_pixels (const guchar *src1,
+				const guchar *src2,
+				guchar       *dest,
+				const guchar *mask,
+				gint          opacity,
+				const gint   *affect,
+				gint          length,
+				gint          bytes)
 {
-  int b;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  int tmp;
+  gint b;
+  guchar new_alpha;
+  const guchar * m;
+  gint tmp;
+
   if (mask)
     {
       m = mask;
@@ -2021,20 +2024,21 @@ combine_inten_and_inten_pixels (const unsigned char *src1,
 
 
 void
-combine_inten_and_inten_a_pixels (const unsigned char *src1,
-				  const unsigned char *src2,
-				  unsigned char       *dest,
-				  const unsigned char *mask,
-				  int                  opacity,
-				  const int           *affect,
-				  int                  length,
-				  int                  bytes)
+combine_inten_and_inten_a_pixels (const guchar *src1,
+				  const guchar *src2,
+				  guchar       *dest,
+				  const guchar *mask,
+				  gint          opacity,
+				  const gint   *affect,
+				  gint          length,
+				  gint          bytes)
 {
-  int alpha, b;
-  int src2_bytes;
-  unsigned char new_alpha;
-  const unsigned char * m;
+  gint alpha, b;
+  gint src2_bytes;
+  guchar new_alpha;
+  const guchar * m;
   register long t1;
+
   alpha = bytes;
   src2_bytes = bytes + 1;
 
@@ -2100,7 +2104,7 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
 	  											\
 	  for (b = 0; b < alpha; b++)								\
 	    dest[b] = affect[b] ?								\
-	      (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];	\
+	      (guchar) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];	\
 	}*/
 
 /*shortened #define alphify(src2_alpha,new_alpha) \
@@ -2115,7 +2119,7 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
 	  											\
 	      for (b = 0; b < alpha; b++)							\
 	        dest[b] = affect[b] ?								\
-	          (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
+	          (guchar) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
 	    }                                                                                   \
 	  }*/
 
@@ -2132,7 +2136,7 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
 	  											\
               do { b--; \
 	        dest[b] = affect[b] ?								\
-	          (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
+	          (guchar) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
          	  } while (b); \
 	    }    \
 	  }
@@ -2149,32 +2153,32 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
 	      compl_ratio = 1.0 - ratio;							\
 	  											\
 	      dest[0] = affect[0] ?								\
-	        (unsigned char) (src2[0] * ratio + src1[0] * compl_ratio + EPSILON) : src1[0];  \
+	        (guchar) (src2[0] * ratio + src1[0] * compl_ratio + EPSILON) : src1[0];  \
 	      dest[1] = affect[1] ?								\
-	        (unsigned char) (src2[1] * ratio + src1[1] * compl_ratio + EPSILON) : src1[1];  \
+	        (guchar) (src2[1] * ratio + src1[1] * compl_ratio + EPSILON) : src1[1];  \
 	      dest[2] = affect[2] ?								\
-	        (unsigned char) (src2[2] * ratio + src1[2] * compl_ratio + EPSILON) : src1[2];  \
+	        (guchar) (src2[2] * ratio + src1[2] * compl_ratio + EPSILON) : src1[2];  \
 	    }                                                                                   \
 	  }*/
 	
 void
-combine_inten_a_and_inten_pixels (const unsigned char *src1,
-				  const unsigned char *src2,
-				  unsigned char       *dest,
-				  const unsigned char *mask,
-				  int                  opacity,
-				  const int           *affect,
-				  int                  mode_affect,  /*  how does the combination mode affect alpha?  */
-				  int                  length,
-				  int                  bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
+combine_inten_a_and_inten_pixels (const guchar *src1,
+				  const guchar *src2,
+				  guchar       *dest,
+				  const guchar *mask,
+				  gint          opacity,
+				  const gint   *affect,
+				  gint          mode_affect,  /*  how does the combination mode affect alpha?  */
+				  gint          length,
+				  gint          bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
-  int alpha, b;
-  int src2_bytes;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  float ratio, compl_ratio;
-  long tmp;
+  gint          alpha, b;
+  gint          src2_bytes;
+  guchar        src2_alpha;
+  guchar        new_alpha;
+  const guchar *m;
+  gfloat        ratio, compl_ratio;
+  glong         tmp;
 
   src2_bytes = bytes - 1;
   alpha = bytes - 1;
@@ -2256,23 +2260,23 @@ combine_inten_a_and_inten_pixels (const unsigned char *src1,
 
 
 void
-combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
-				    const unsigned char *src2,
-				    unsigned char       *dest,
-				    const unsigned char *mask,
-				    int                 opacity,
-				    const int          *affect,
-				    int                 mode_affect,  /*  how does the combination mode affect alpha?  */
-				    int                 length,
-				    int                 bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
+combine_inten_a_and_inten_a_pixels (const guchar *src1,
+				    const guchar *src2,
+				    guchar       *dest,
+				    const guchar *mask,
+				    gint          opacity,
+				    const gint  *affect,
+				    gint         mode_affect,  /*  how does the combination mode affect alpha?  */
+				    gint         length,
+				    gint         bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
-  int b;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
+  gint b;
+  guchar src2_alpha;
+  guchar new_alpha;
+  const guchar * m;
   float ratio, compl_ratio;
   long tmp;
-  const int alpha = bytes - 1;
+  const gint alpha = bytes - 1;
 
   if (mask)
     {
@@ -2280,8 +2284,8 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 
       if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
 	{
-	  const int* mask_ip;
-	  int i,j;
+	  const gint* mask_ip;
+	  gint i,j;
 
 	  if (length >= sizeof(int))
 	    {
@@ -2326,7 +2330,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		{
 		  if (*mask_ip)
 		    {
-		      m = (const unsigned char*)mask_ip;
+		      m = (const guchar*)mask_ip;
 		      j = sizeof(int);
 		      while (j--)
 			{
@@ -2346,11 +2350,11 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 			      dest[alpha] = (src1[alpha]) ? src1[alpha] :
 				(affect[alpha] ? new_alpha : src1[alpha]);      
 			    }
-		  
+
 			  m++;
 			  src1 += bytes;
 			  src2 += bytes;
-			  dest += bytes;	
+			  dest += bytes;
 			  /* GUTS END */
 			}
 		    }
@@ -2366,7 +2370,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		  mask_ip++;
 		}
 
-	      m = (const unsigned char*)mask_ip;
+	      m = (const guchar*)mask_ip;
 	    }
 
 	  /* TAIL */
@@ -2398,8 +2402,8 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	}
       else /* HAS MASK, SEMI-OPACITY */
 	{
-	  const int* mask_ip;
-	  int i,j;
+	  const gint* mask_ip;
+	  gint i,j;
 
 	  if (length >= sizeof(int))
 	    {
@@ -2444,7 +2448,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		{
 		  if (*mask_ip)
 		    {
-		      m = (const unsigned char*)mask_ip;
+		      m = (const guchar*)mask_ip;
 		      j = sizeof(int);
 		      while (j--)
 			{
@@ -2484,7 +2488,7 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 		  mask_ip++;
 		}
 
-	      m = (const unsigned char*)mask_ip;
+	      m = (const guchar*)mask_ip;
 	    }
 	
 	  /* TAIL */
@@ -2572,19 +2576,19 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 #undef alphify
 
 void
-combine_inten_a_and_channel_mask_pixels (const unsigned char *src,
-					 const unsigned char *channel,
-					 unsigned char       *dest,
-					 const unsigned char *col,
-					 int                  opacity,
-					 int                  length,
-					 int                  bytes)
+combine_inten_a_and_channel_mask_pixels (const guchar *src,
+					 const guchar *channel,
+					 guchar       *dest,
+					 const guchar *col,
+					 gint          opacity,
+					 gint          length,
+					 gint          bytes)
 {
-  int alpha, b;
-  unsigned char channel_alpha;
-  unsigned char new_alpha;
-  unsigned char compl_alpha;
-  int t, s;
+  gint   alpha, b;
+  guchar channel_alpha;
+  guchar new_alpha;
+  guchar compl_alpha;
+  gint   t, s;
 
   alpha = bytes - 1;
   while (length --)
@@ -2615,19 +2619,19 @@ combine_inten_a_and_channel_mask_pixels (const unsigned char *src,
 
 
 void
-combine_inten_a_and_channel_selection_pixels (const unsigned char *src,
-					      const unsigned char *channel,
-					      unsigned char       *dest,
-					      const unsigned char *col,
-					      int                  opacity,
-					      int                  length,
-					      int                  bytes)
+combine_inten_a_and_channel_selection_pixels (const guchar *src,
+					      const guchar *channel,
+					      guchar       *dest,
+					      const guchar *col,
+					      gint          opacity,
+					      gint          length,
+					      gint          bytes)
 {
-  int alpha, b;
-  unsigned char channel_alpha;
-  unsigned char new_alpha;
-  unsigned char compl_alpha;
-  int t, s;
+  gint   alpha, b;
+  guchar channel_alpha;
+  guchar new_alpha;
+  guchar compl_alpha;
+  gint   t, s;
 
   alpha = bytes - 1;
   while (length --)
@@ -2658,25 +2662,26 @@ combine_inten_a_and_channel_selection_pixels (const unsigned char *src,
 
 
 void
-behind_inten_pixels (const unsigned char *src1,
-		     const unsigned char *src2,
-		     unsigned char       *dest,
-		     const unsigned char *mask,
-		     int                  opacity,
-		     const int           *affect,
-		     int                  length,
-		     int                  bytes1,
-		     int                  bytes2,
-		     int                  has_alpha1,
-		     int                  has_alpha2)
+behind_inten_pixels (const guchar *src1,
+		     const guchar *src2,
+		     guchar       *dest,
+		     const guchar *mask,
+		     gint          opacity,
+		     const gint   *affect,
+		     gint          length,
+		     gint          bytes1,
+		     gint          bytes2,
+		     gint          has_alpha1,
+		     gint          has_alpha2)
 {
-  int alpha, b;
-  unsigned char src1_alpha;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  float ratio, compl_ratio;
-  long tmp;
+  gint          alpha, b;
+  guchar        src1_alpha;
+  guchar        src2_alpha;
+  guchar        new_alpha;
+  const guchar *m;
+  gfloat        ratio, compl_ratio;
+  glong         tmp;
+
   if (mask)
     m = mask;
   else
@@ -2699,7 +2704,7 @@ behind_inten_pixels (const unsigned char *src1,
 
       for (b = 0; b < alpha; b++)
 	dest[b] = (affect[b]) ?
-	  (unsigned char) (src1[b] * ratio + src2[b] * compl_ratio + EPSILON) :
+	  (guchar) (src1[b] * ratio + src2[b] * compl_ratio + EPSILON) :
 	src1[b];
 
       dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
@@ -2715,24 +2720,24 @@ behind_inten_pixels (const unsigned char *src1,
 
 
 void
-behind_indexed_pixels (const unsigned char *src1,
-		       const unsigned char *src2,
-		       unsigned char       *dest,
-		       const unsigned char *mask,
-		       int                  opacity,
-		       const int           *affect,
-		       int                  length,
-		       int                  bytes1,
-		       int                  bytes2,
-		       int                  has_alpha1,
-		       int                  has_alpha2)
+behind_indexed_pixels (const guchar *src1,
+		       const guchar *src2,
+		       guchar       *dest,
+		       const guchar *mask,
+		       gint          opacity,
+		       const gint   *affect,
+		       gint          length,
+		       gint          bytes1,
+		       gint          bytes2,
+		       gint          has_alpha1,
+		       gint          has_alpha2)
 {
-  int alpha, b;
-  unsigned char src1_alpha;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  const unsigned char * m;
-  long tmp;
+  gint          alpha, b;
+  guchar        src1_alpha;
+  guchar        src2_alpha;
+  guchar        new_alpha;
+  const guchar *m;
+  glong         tmp;
 
   if (mask)
     m = mask;
@@ -2763,26 +2768,27 @@ behind_indexed_pixels (const unsigned char *src1,
 
 
 void
-replace_inten_pixels (const unsigned char *src1,
-		      const unsigned char *src2,
-		      unsigned char       *dest,
-		      const unsigned char *mask,
-		      int                  opacity,
-		      const int           *affect,
-		      int                  length,
-		      int                  bytes1,
-		      int                  bytes2,
-		      int                  has_alpha1,
-		      int                  has_alpha2)
+replace_inten_pixels (const guchar *src1,
+		      const guchar *src2,
+		      guchar       *dest,
+		      const guchar *mask,
+		      gint          opacity,
+		      const gint   *affect,
+		      gint          length,
+		      gint          bytes1,
+		      gint          bytes2,
+		      gint          has_alpha1,
+		      gint          has_alpha2)
 {
-  int b;
-  int tmp;
-  const int bytes = MIN (bytes1, bytes2);
+  gint  b;
+  gint  tmp;
+  const gint bytes = MIN (bytes1, bytes2);
 
   if (mask)
     {
-      unsigned char mask_alpha;
-      const unsigned char *m = mask;
+      guchar        mask_alpha;
+      const guchar *m = mask;
+
       while (length --)
         {
 	  mask_alpha = INT_MULT(*m, opacity, tmp);
@@ -2804,7 +2810,7 @@ replace_inten_pixels (const unsigned char *src1,
     }
   else
     {
-      static const unsigned char mask_alpha = OPAQUE_OPACITY ;
+      static const guchar mask_alpha = OPAQUE_OPACITY ;
 
       while (length --)
         {
@@ -2825,22 +2831,23 @@ replace_inten_pixels (const unsigned char *src1,
 
 
 void
-replace_indexed_pixels (const unsigned char *src1,
-			const unsigned char *src2,
-			unsigned char       *dest,
-			const unsigned char *mask,
-			int                  opacity,
-			const int           *affect,
-			int                  length,
-			int                  bytes1,
-			int                  bytes2,
-			int                  has_alpha1,
-			int                  has_alpha2)
+replace_indexed_pixels (const guchar *src1,
+			const guchar *src2,
+			guchar       *dest,
+			const guchar *mask,
+			gint          opacity,
+			const gint   *affect,
+			gint          length,
+			gint          bytes1,
+			gint          bytes2,
+			gint          has_alpha1,
+			gint          has_alpha2)
 {
-  int bytes, b;
-  unsigned char mask_alpha;
-  const unsigned char * m;
-  int tmp;
+  gint          bytes, b;
+  guchar        mask_alpha;
+  const guchar *m;
+  gint          tmp;
+
   if (mask)
     m = mask;
   else
@@ -2852,8 +2859,7 @@ replace_indexed_pixels (const unsigned char *src1,
       mask_alpha = INT_MULT(*m, opacity, tmp);
 
       for (b = 0; b < bytes; b++)
-	dest[b] = (affect[b] && mask_alpha) ?
-	  src2[b] : src1[b];
+	dest[b] = (affect[b] && mask_alpha) ? src2[b] : src1[b];
 
       if (has_alpha1 && !has_alpha2)
 	dest[b] = src1[b];
@@ -2869,23 +2875,23 @@ replace_indexed_pixels (const unsigned char *src1,
 
 
 void
-erase_inten_pixels (const unsigned char *src1,
-		    const unsigned char *src2,
-		    unsigned char       *dest,
-		    const unsigned char *mask,
-		    int                  opacity,
-		    const int           *affect,
-		    int                  length,
-		    int                  bytes)
+erase_inten_pixels (const guchar *src1,
+		    const guchar *src2,
+		    guchar       *dest,
+		    const guchar *mask,
+		    gint          opacity,
+		    const gint   *affect,
+		    gint          length,
+		    gint          bytes)
 {
-  int b;
-  unsigned char src2_alpha;
-  long tmp;
-  const int alpha = bytes - 1;
+  gint       b;
+  guchar     src2_alpha;
+  long       tmp;
+  const gint alpha = bytes - 1;
 
   if (mask)
     {
-      const unsigned char *m = mask;
+      const guchar *m = mask;
  
       while (length --)
         {
@@ -2904,7 +2910,7 @@ erase_inten_pixels (const unsigned char *src1,
     }
   else
     {
-      unsigned char *m = &no_mask;
+      guchar *m = &no_mask;
 
       while (length --)
         {
@@ -2923,19 +2929,20 @@ erase_inten_pixels (const unsigned char *src1,
 
 
 void
-erase_indexed_pixels (const unsigned char *src1,
-		      const unsigned char *src2,
-		      unsigned char       *dest,
-		      const unsigned char *mask,
-		      int                  opacity,
-		      const int           *affect,
-		      int                  length,
-		      int                  bytes)
+erase_indexed_pixels (const guchar *src1,
+		      const guchar *src2,
+		      guchar       *dest,
+		      const guchar *mask,
+		      gint          opacity,
+		      const gint   *affect,
+		      gint          length,
+		      gint          bytes)
 {
-  int alpha, b;
-  unsigned char src2_alpha;
-  const unsigned char * m;
-  long tmp;
+  gint          alpha, b;
+  guchar        src2_alpha;
+  const guchar *m;
+  long          tmp;
+
   if (mask)
     m = mask;
   else
@@ -2960,19 +2967,19 @@ erase_indexed_pixels (const unsigned char *src1,
 }
 
 void
-anti_erase_inten_pixels (const unsigned char *src1,
-			 const unsigned char *src2,
-			 unsigned char       *dest,
-			 const unsigned char *mask,
-			 int                  opacity,
-			 const int           *affect,
-			 int                  length,
-			 int                  bytes)
+anti_erase_inten_pixels (const guchar *src1,
+			 const guchar *src2,
+			 guchar       *dest,
+			 const guchar *mask,
+			 gint          opacity,
+			 const gint   *affect,
+			 gint          length,
+			 gint          bytes)
 {
-  int alpha, b;
-  unsigned char src2_alpha;
-  const unsigned char * m;
-  long tmp;
+  gint          alpha, b;
+  guchar        src2_alpha;
+  const guchar *m;
+  glong         tmp;
 
   if (mask)
     m = mask;
@@ -2998,19 +3005,20 @@ anti_erase_inten_pixels (const unsigned char *src1,
 }
 
 void
-anti_erase_indexed_pixels (const unsigned char *src1,
-			   const unsigned char *src2,
-			   unsigned char       *dest,
-			   const unsigned char *mask,
-			   int                  opacity,
-			   const int           *affect,
-			   int                  length,
-			   int                  bytes)
+anti_erase_indexed_pixels (const guchar *src1,
+			   const guchar *src2,
+			   guchar       *dest,
+			   const guchar *mask,
+			   gint          opacity,
+			   const gint   *affect,
+			   gint          length,
+			   gint          bytes)
 {
-  int alpha, b;
-  unsigned char src2_alpha;
-  const unsigned char * m;
-  long tmp;
+  gint          alpha, b;
+  guchar        src2_alpha;
+  const guchar *m;
+  glong         tmp;
+
   if (mask)
     m = mask;
   else
@@ -3036,19 +3044,20 @@ anti_erase_indexed_pixels (const unsigned char *src1,
 
 
 void
-extract_from_inten_pixels (unsigned char *src,
-			   unsigned char       *dest,
-			   const unsigned char *mask,
-			   const unsigned char *bg,
-			   int                  cut,
-			   int                  length,
-			   int                  bytes,
-			   int                  has_alpha)
+extract_from_inten_pixels (guchar       *src,
+			   guchar       *dest,
+			   const guchar *mask,
+			   const guchar *bg,
+			   gint          cut,
+			   gint          length,
+			   gint          bytes,
+			   gint          has_alpha)
 {
-  int b, alpha;
-  int dest_bytes;
-  const unsigned char * m;
-  int tmp;
+  gint          b, alpha;
+  gint          dest_bytes;
+  const guchar *m;
+  gint          tmp;
+
   if (mask)
     m = mask;
   else
@@ -3085,20 +3094,20 @@ extract_from_inten_pixels (unsigned char *src,
 
 
 void
-extract_from_indexed_pixels (unsigned char       *src,
-			     unsigned char       *dest,
-			     const unsigned char *mask,
-			     const unsigned char *cmap,
-			     const unsigned char *bg,
-			     int                  cut,
-			     int                  length,
-			     int                  bytes,
-			     int                  has_alpha)
+extract_from_indexed_pixels (guchar       *src,
+			     guchar       *dest,
+			     const guchar *mask,
+			     const guchar *cmap,
+			     const guchar *bg,
+			     gint          cut,
+			     gint          length,
+			     gint          bytes,
+			     gint          has_alpha)
 {
-  int b;
-  int index;
-  const unsigned char * m;
-  int t;
+  gint          b;
+  gint          index;
+  const guchar *m;
+  gint          t;
 
   if (mask)
     m = mask;
@@ -3134,10 +3143,10 @@ extract_from_indexed_pixels (unsigned char       *src,
 
 
 void
-map_to_color (int                  src_type,
-	      const unsigned char *cmap,
-	      const unsigned char *src,
-	      unsigned char       *rgb)
+map_to_color (gint          src_type,
+	      const guchar *cmap,
+	      const guchar *src,
+	      guchar       *rgb)
 {
   switch (src_type)
     {
@@ -3154,7 +3163,7 @@ map_to_color (int                  src_type,
       break;
     case 2:  /*  INDEXED  */
       {
-	int index = *src * 3;
+	gint index = *src * 3;
 	*rgb++ = cmap [index++];
 	*rgb++ = cmap [index++];
 	*rgb   = cmap [index++];
@@ -3423,8 +3432,8 @@ extract_alpha_region (PixelRegion *src,
 		      PixelRegion *mask,
 		      PixelRegion *dest)
 {
-  int h;
-  unsigned char * s, * m, * d;
+  gint h;
+  guchar * s, * m, * d;
   void * pr;
 
   for (pr = pixel_regions_register (3, src, mask, dest); pr != NULL; pr = pixel_regions_process (pr))
@@ -3450,20 +3459,22 @@ extract_alpha_region (PixelRegion *src,
 
 
 void
-extract_from_region (PixelRegion   *src,
-		     PixelRegion   *dest,
-		     PixelRegion   *mask,
-		     unsigned char *cmap,
-		     unsigned char *bg,
-		     int            type,
-		     int            has_alpha,
-		     int            cut)
+extract_from_region (PixelRegion *src,
+		     PixelRegion *dest,
+		     PixelRegion *mask,
+		     guchar      *cmap,
+		     guchar      *bg,
+		     gint         type,
+		     gint         has_alpha,
+		     gint         cut)
 {
-  int h;
-  unsigned char * s, * d, * m;
-  void * pr;
+  gint    h;
+  guchar *s, *d, *m;
+  void   *pr;
 
-  for (pr = pixel_regions_register (3, src, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (3, src, dest, mask);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = src->data;
       d = dest->data;
@@ -3497,24 +3508,24 @@ extract_from_region (PixelRegion   *src,
 void
 convolve_region (PixelRegion	*srcR,
 		 PixelRegion	*destR,
-		 int		*matrix,
-		 int		 size,
-		 int		 divisor,
+		 gint		*matrix,
+		 gint		 size,
+		 gint		 divisor,
 		 ConvolutionType mode)
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
-  unsigned char *src, *s_row, * s;
-  unsigned char *dest, * d;
-  int * m;
-  int total [4];
-  int b, bytes;
-  int length;
-  int wraparound;
-  int margin;      /*  margin imposed by size of conv. matrix  */
-  int i, j;
-  int x, y;
-  int offset;
+  guchar *src, *s_row, *s;
+  guchar *dest, *d;
+  gint   *m;
+  gint    total [4];
+  gint    b, bytes;
+  gint    length;
+  gint    wraparound;
+  gint    margin;      /*  margin imposed by size of conv. matrix  */
+  gint    i, j;
+  gint    x, y;
+  gint    offset;
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == NEGATIVE_CONVOL)
@@ -3592,7 +3603,7 @@ convolve_region (PixelRegion	*srcR,
 	      if (total [b] < 0)
 		*d++ = 0;
 	      else
-		*d++ = (total [b] > 255) ? 255 : (unsigned char) total [b];
+		*d++ = (total [b] > 255) ? 255 : (guchar) total [b];
 	    }
 
 	  s_row += bytes;
@@ -3626,11 +3637,11 @@ convolve_region (PixelRegion	*srcR,
 void
 multiply_alpha_region (PixelRegion *srcR)
 {
-  unsigned char *src, *s;
-  int x, y;
-  int width, height;
-  int b, bytes;
-  double alpha_val;
+  guchar  *src, *s;
+  gint     x, y;
+  gint     width, height;
+  gint     b, bytes;
+  gdouble  alpha_val;
 
   width = srcR->w;
   height = srcR->h;
@@ -3657,12 +3668,12 @@ multiply_alpha_region (PixelRegion *srcR)
 void
 separate_alpha_region (PixelRegion *srcR)
 {
-  unsigned char *src, *s;
-  int x, y;
-  int width, height;
-  int b, bytes;
-  double alpha_recip;
-  int new_val;
+  guchar  *src, *s;
+  gint     x, y;
+  gint     width, height;
+  gint     b, bytes;
+  gdouble  alpha_recip;
+  gint     new_val;
 
   width = srcR->w;
   height = srcR->h;
@@ -3696,26 +3707,26 @@ separate_alpha_region (PixelRegion *srcR)
 
 void
 gaussian_blur_region (PixelRegion *srcR,
-		      double       radius_x,
-		      double       radius_y)
+		      gdouble      radius_x,
+		      gdouble      radius_y)
 {
-  double std_dev;
-  long width, height;
-  int bytes;
-  unsigned char *src, *sp;
-  unsigned char *dest, *dp;
-  unsigned char *data;
-  int *buf, *b;
-  int pixels;
-  int total;
-  int i, row, col;
-  int start, end;
-  int *curve;
-  int *sum;
-  int val;
-  int length;
-  int alpha;
-  int initial_p, initial_m;
+  gdouble std_dev;
+  glong   width, height;
+  gint    bytes;
+  guchar *src, *sp;
+  guchar *dest, *dp;
+  guchar *data;
+  gint   *buf, *b;
+  gint    pixels;
+  gint    total;
+  gint    i, row, col;
+  gint    start, end;
+  gint   *curve;
+  gint   *sum;
+  gint    val;
+  gint    length;
+  gint    alpha;
+  gint    initial_p, initial_m;
 
   if (radius_x == 0.0 && radius_y == 0.0) return;    /* zero blur is a no-op */
 
@@ -3865,15 +3876,15 @@ void
 scale_region_no_resample (PixelRegion *srcPR,
 			  PixelRegion *destPR)
 {
-  int * x_src_offsets;
-  int * y_src_offsets;
-  unsigned char * src;
-  unsigned char * dest;
-  int width, height, orig_width, orig_height;
-  int last_src_y;
-  int row_bytes;
-  int x,y,b;
-  char bytes;
+  gint   *x_src_offsets;
+  gint   *y_src_offsets;
+  guchar *src;
+  guchar *dest;
+  gint    width, height, orig_width, orig_height;
+  gint    last_src_y;
+  gint    row_bytes;
+  gint    x, y, b;
+  gchar   bytes;
 
   orig_width = srcPR->w;
   orig_height = srcPR->h;
@@ -3886,8 +3897,8 @@ scale_region_no_resample (PixelRegion *srcPR,
   /*  the data pointers...  */
   x_src_offsets = (int *) g_malloc (width * bytes * sizeof(int));
   y_src_offsets = (int *) g_malloc (height * sizeof(int));
-  src  = (unsigned char *) g_malloc (orig_width * bytes);
-  dest = (unsigned char *) g_malloc (width * bytes);
+  src  = (guchar *) g_malloc (orig_width * bytes);
+  dest = (guchar *) g_malloc (width * bytes);
   
   /*  pre-calc the scale tables  */
   for (b = 0; b < bytes; b++)
@@ -3931,32 +3942,41 @@ scale_region_no_resample (PixelRegion *srcPR,
 
 
 static void
-get_premultiplied_double_row(PixelRegion *srcPR, int x, int y,
-			     int w, double *row, guchar *tmp_src, int n)
+get_premultiplied_double_row (PixelRegion *srcPR,
+			      gint         x,
+			      gint         y,
+			      gint         w,
+			      gdouble     *row,
+			      guchar      *tmp_src,
+			      gint         n)
 {
-  int b;
-  int bytes = srcPR->bytes;
+  gint b;
+  gint bytes = srcPR->bytes;
+
   pixel_region_get_row (srcPR, x, y, w, tmp_src, n);
-  if (pixel_region_has_alpha(srcPR))
-  { /* premultiply the alpha into the double array */
-    double *irow = row;
-    int alpha = bytes - 1;
-    double mod_alpha;
-    for (x = 0; x < w; x++)
+
+  if (pixel_region_has_alpha (srcPR))
     {
-      mod_alpha = tmp_src[alpha] / 255.0;
-      for (b = 0; b < alpha; b++)
-	irow[b] = mod_alpha * tmp_src[b];
-      irow[b] = tmp_src[alpha];
-      irow += bytes;
-      tmp_src += bytes;
+      /* premultiply the alpha into the double array */
+      gdouble *irow  = row;
+      gint     alpha = bytes - 1;
+      gdouble  mod_alpha;
+
+      for (x = 0; x < w; x++)
+	{
+	  mod_alpha = tmp_src[alpha] / 255.0;
+	  for (b = 0; b < alpha; b++)
+	    irow[b] = mod_alpha * tmp_src[b];
+	  irow[b] = tmp_src[alpha];
+	  irow += bytes;
+	  tmp_src += bytes;
+	}
     }
-  }
   else /* no alpha */
-  {
-    for (x = 0; x <  w*bytes; x++)
-      row[x] = tmp_src[x];
-  }
+    {
+      for (x = 0; x <  w*bytes; x++)
+	row[x] = tmp_src[x];
+    }
 
   /* set the off edge pixels to their nearest neighbor */
   for (b = 0; b < 2 * bytes; b++)
@@ -3966,16 +3986,21 @@ get_premultiplied_double_row(PixelRegion *srcPR, int x, int y,
 }
 
 
-static
-void expand_line(double *dest, double *src, int bytes,
-		 int old_width, int width, InterpolationType interp)
+static void
+expand_line (gdouble           *dest,
+	     gdouble           *src,
+	     gint               bytes,
+	     gint               old_width,
+	     gint               width,
+	     InterpolationType  interp)
 {
-  double ratio;
-  int x,b;
-  int src_col;
-  double frac;
-  double *s;
-  ratio = old_width/(double)width;
+  gdouble  ratio;
+  gint     x,b;
+  gint     src_col;
+  gdouble  frac;
+  gdouble *s;
+
+  ratio = old_width / (gdouble) width;
 
 /* this could be opimized much more by precalculating the coeficients for
    each x */
@@ -4014,17 +4039,23 @@ void expand_line(double *dest, double *src, int bytes,
 }
 
 
-static void shrink_line(double *dest, double *src, int bytes,
-			int old_width, int width, InterpolationType interp)
+static void
+shrink_line (gdouble           *dest,
+	     gdouble           *src,
+	     gint               bytes,
+	     gint               old_width,
+	     gint               width,
+	     InterpolationType  interp)
 {
-  int x, b;
-  double *source, *destp;
-  register double accum;
-  register unsigned int max;
-  register double mant, tmp;
-  register const double step = old_width/(double)width;
-  register const double inv_step = 1.0/step;
-  double position;
+  gint x, b;
+  gdouble *source, *destp;
+  register gdouble accum;
+  register guint max;
+  register gdouble mant, tmp;
+  register const gdouble step = old_width / (gdouble) width;
+  register const gdouble inv_step = 1.0 / step;
+  gdouble position;
+
   for (b = 0; b < bytes; b++)
   {
     
@@ -4061,8 +4092,12 @@ static void shrink_line(double *dest, double *src, int bytes,
 }
 
 static void
-get_scaled_row(void **src, int y, int new_width, PixelRegion *srcPR, double *row,
-	       guchar *src_tmp)
+get_scaled_row (void        **src,
+		gint          y,
+		gint          new_width,
+		PixelRegion  *srcPR,
+		gdouble      *row,
+		guchar       *src_tmp)
 {
 /* get the necesary lines from the source image, scale them,
    and put them into src[] */
@@ -4089,17 +4124,17 @@ void
 scale_region (PixelRegion *srcPR,
 	      PixelRegion *destPR)
 {
-  double  *src[4];
-  guchar * src_tmp;
-  guchar * dest;
-  double * row, *accum;
-  int bytes, b;
-  int width, height;
-  int orig_width, orig_height;
-  double y_rat;
-  int i;
-  int old_y = -4, new_y;
-  int x, y;
+  gdouble *src[4];
+  guchar  *src_tmp;
+  guchar  *dest;
+  double  *row, *accum;
+  gint     bytes, b;
+  gint     width, height;
+  gint     orig_width, orig_height;
+  gdouble  y_rat;
+  gint     i;
+  gint     old_y = -4, new_y;
+  gint     x, y;
 
   if (interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
   {
@@ -4138,7 +4173,7 @@ scale_region (PixelRegion *srcPR,
   {
     if (height < orig_height)
     {
-      int max;
+      gint max;
       double frac;
       const double inv_ratio = 1.0 / y_rat;
       if (y == 0) /* load the first row if this it the first time through  */
@@ -4218,8 +4253,8 @@ scale_region (PixelRegion *srcPR,
     { /* unmultiply the alpha */
       double inv_alpha;
       double *p = accum;
-      int alpha = bytes - 1;
-      int result;
+      gint alpha = bytes - 1;
+      gint result;
       guchar *d = dest;
       for (x = 0; x < width; x++)
       {
@@ -4252,7 +4287,7 @@ scale_region (PixelRegion *srcPR,
     }
     else
     {
-      int w = width * bytes;
+      gint w = width * bytes;
       for (x = 0; x < w; x++)
       {
 	if (accum[x] < 0.0)
@@ -4279,23 +4314,23 @@ scale_region (PixelRegion *srcPR,
 void
 subsample_region (PixelRegion *srcPR,
 		  PixelRegion *destPR,
-		  int          subsample)
+		  gint         subsample)
 {
-  unsigned char * src, * s;
-  unsigned char * dest, * d;
+  guchar * src, * s;
+  guchar * dest, * d;
   double * row, * r;
-  int destwidth;
-  int src_row, src_col;
-  int bytes, b;
-  int width, height;
-  int orig_width, orig_height;
+  gint destwidth;
+  gint src_row, src_col;
+  gint bytes, b;
+  gint width, height;
+  gint orig_width, orig_height;
   double x_rat, y_rat;
   double x_cum, y_cum;
   double x_last, y_last;
   double * x_frac, y_frac, tot_frac;
-  int i, j;
-  int frac;
-  int advance_dest;
+  gint i, j;
+  gint frac;
+  gint advance_dest;
 
   orig_width = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;
@@ -4307,7 +4342,7 @@ subsample_region (PixelRegion *srcPR,
   destwidth = destPR->rowstride;
 
   /*  the data pointers...  */
-  src = (unsigned char *) g_malloc (orig_width * bytes);
+  src = (guchar *) g_malloc (orig_width * bytes);
   dest = destPR->data;
 
   /*  find the ratios of old x to new x and old y to new y  */
@@ -4412,7 +4447,7 @@ subsample_region (PixelRegion *srcPR,
 	    {
 	      b = bytes;
 	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac + 0.5);
+		*d++ = (guchar) (*r++ * tot_frac + 0.5);
 	    }
 
 	  dest += destwidth;
@@ -4438,24 +4473,24 @@ shapeburst_region (PixelRegion *srcPR,
 		   PixelRegion *distPR)
 {
   Tile *tile;
-  unsigned char *tile_data;
+  guchar *tile_data;
   float max_iterations;
   float *distp_cur;
   float *distp_prev;
   float *tmp;
   float min_prev;
   float float_tmp;
-  int min;
-  int min_left;
-  int length;
-  int i, j, k;
-  int src;
-  int fraction;
-  int prev_frac;
-  int x, y;
-  int end;
-  int boundary;
-  int inc;
+  gint min;
+  gint min_left;
+  gint length;
+  gint i, j, k;
+  gint src;
+  gint fraction;
+  gint prev_frac;
+  gint x, y;
+  gint end;
+  gint boundary;
+  gint inc;
 
   src = 0;
 
@@ -4540,7 +4575,7 @@ shapeburst_region (PixelRegion *srcPR,
 	}
 
       /*  set the dist row  */
-      pixel_region_set_row (distPR, distPR->x, distPR->y + i, distPR->w, (unsigned char *) distp_cur);
+      pixel_region_set_row (distPR, distPR->x, distPR->y + i, distPR->w, (guchar *) distp_cur);
 
       /*  swap pointers around  */
       tmp = distp_prev;
@@ -4584,20 +4619,23 @@ compute_border(gint16 *circ, guint16 xradius, guint16 yradius)
 }
 
 void
-fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
+fatten_region (PixelRegion *src,
+	       gint16       xradius,
+	       gint16       yradius)
 {
 /*
   Any bugs in this fuction are probably also in thin_region  
   Blame all bugs in this function on jaycox@gimp.org
 */
   register gint32 i, j, x, y;
-  guchar **buf; /* caches the region's pixel data */
-  guchar *out;  /* holds the new scan line we are computing */
-  guchar **max; /* caches the largest values for each column */
-  gint16 *circ; /* holds the y coords of the filter's mask */
-  gint16 last_max, last_index;
 
-  guchar *buffer;
+  guchar  **buf; /* caches the region's pixel data */
+  guchar   *out;  /* holds the new scan line we are computing */
+  guchar  **max; /* caches the largest values for each column */
+  gint16   *circ; /* holds the y coords of the filter's mask */
+  gint16    last_max, last_index;
+
+  guchar   *buffer;
 
   if (xradius <= 0 || yradius <= 0)
     return;
@@ -4713,7 +4751,10 @@ fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 }
 
 void
-thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
+thin_region (PixelRegion *src,
+	     gint16       xradius,
+	     gint16       yradius,
+	     gint         edge_lock)
 {
 /*
   pretty much the same as fatten_region only different
@@ -4724,13 +4765,13 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
      If edge_lock is false, we assume that pixels outside the region are 0
   */
   register gint32 i, j, x, y;
-  guchar **buf; /* caches the the region's pixels */
-  guchar *out;  /* holds the new scan line we are computing */
-  guchar **max; /* caches the smallest values for each column */
-  gint16 *circ; /* holds the y coords of the filter's mask */
-  gint16 last_max, last_index;
+  guchar  **buf; /* caches the the region's pixels */
+  guchar   *out;  /* holds the new scan line we are computing */
+  guchar  **max; /* caches the smallest values for each column */
+  gint16   *circ; /* holds the y coords of the filter's mask */
+  gint16    last_max, last_index;
 
-  guchar *buffer;
+  guchar   *buffer;
 
   if (xradius <= 0 || yradius <= 0)
     return;
@@ -4861,9 +4902,12 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
 }
 
 static void
-compute_transition(guchar *transition, guchar **buf, gint32 width)
+compute_transition (guchar  *transition,
+		    guchar **buf,
+		    gint32   width)
 {
   register gint32 x = 0;
+
   if (width == 1)
   {
     if (buf[1][x] > 127 && (buf[0][x] < 128 || buf[2][x] < 128))
@@ -4911,7 +4955,9 @@ compute_transition(guchar *transition, guchar **buf, gint32 width)
 }
 
 void
-border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
+border_region (PixelRegion *src,
+	       gint16       xradius,
+	       gint16       yradius)
 {
 /*
   This function has no bugs, but if you imagine some you can
@@ -4932,7 +4978,7 @@ border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
   }
   if (xradius == 0 || yradius == 0)
   {
-    unsigned char color[] = "\0\0\0\0";
+    guchar color[] = "\0\0\0\0";
     color_region(src, color);
     return;
   }
@@ -5145,17 +5191,17 @@ border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
   g_free (max);
 
   for (i = 0; i < yradius +1; i++)
-  {
-    transition[i] -= xradius;
-    g_free (transition[i]);
-  }
+    {
+      transition[i] -= xradius;
+      g_free (transition[i]);
+    }
   g_free (transition);
 
   for (i = 0; i < xradius +1 ; i++)
-  {
-    density[i]-= yradius;
-    g_free(density[i]);
-  }
+    {
+      density[i]-= yradius;
+      g_free(density[i]);
+    }
   density -= xradius;
   g_free(density);
 }
@@ -5164,12 +5210,14 @@ void
 swap_region (PixelRegion *src,
 	     PixelRegion *dest)
 {
-  int h;
-  int length;
-  unsigned char * s, * d;
+  gint h;
+  gint length;
+  guchar * s, * d;
   void * pr;
 
-  for (pr = pixel_regions_register (2, src, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = src->data;
       h = src->h;
@@ -5187,30 +5235,31 @@ swap_region (PixelRegion *src,
 
 
 static void
-apply_mask_to_sub_region (int *opacityp,
+apply_mask_to_sub_region (gint        *opacityp,
 			  PixelRegion *src,
 			  PixelRegion *mask)
 {
-  int h;
-  unsigned char * s, * m;
-  int opacity = *opacityp;
+  gint    h;
+  guchar *s;
+  guchar *m;
+  gint    opacity = *opacityp;
   
   s = src->data;
   m = mask->data;
   h = src->h;
 
   while (h --)
-  {
-    apply_mask_to_alpha_channel (s, m, opacity, src->w, src->bytes);
-    s += src->rowstride;
-    m += mask->rowstride;
-  }
+    {
+      apply_mask_to_alpha_channel (s, m, opacity, src->w, src->bytes);
+      s += src->rowstride;
+      m += mask->rowstride;
+    }
 }
 
 void
 apply_mask_to_region (PixelRegion *src,
 		      PixelRegion *mask,
-		      int          opacity)
+		      gint         opacity)
 {
   pixel_regions_process_parallel ((p_func)apply_mask_to_sub_region,
 				  &opacity, 2, src, mask);
@@ -5218,13 +5267,14 @@ apply_mask_to_region (PixelRegion *src,
 
 
 static void
-combine_mask_and_sub_region (int *opacityp,
+combine_mask_and_sub_region (gint        *opacityp,
 			     PixelRegion *src,
 			     PixelRegion *mask)
 {
-  int h;
-  unsigned char * s, * m;
-  int opacity = *opacityp;
+  gint    h;
+  guchar *s;
+  guchar *m;
+  gint    opacity = *opacityp;
   
   s = src->data;
   m = mask->data;
@@ -5241,7 +5291,7 @@ combine_mask_and_sub_region (int *opacityp,
 void
 combine_mask_and_region (PixelRegion *src,
 			 PixelRegion *mask,
-			 int          opacity)
+			 gint         opacity)
 {
 
   pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region,
@@ -5253,11 +5303,14 @@ void
 copy_gray_to_region (PixelRegion *src,
 		     PixelRegion *dest)
 {
-  int h;
-  unsigned char * s, * d;
-  void * pr;
+  gint    h;
+  guchar *s;
+  guchar *d;
+  void   *pr;
 
-  for (pr = pixel_regions_register (2, src, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = src->data;
       d = dest->data;
@@ -5275,11 +5328,11 @@ copy_gray_to_region (PixelRegion *src,
 
 struct initial_regions_struct
 {
-  int opacity;
-  LayerModeEffects mode;
-  int *affect;
-  int type;
-  unsigned char *data;
+  gint              opacity;
+  LayerModeEffects  mode;
+  gint             *affect;
+  gint              type;
+  guchar           *data;
 };
 
 void
@@ -5288,14 +5341,14 @@ initial_sub_region(struct initial_regions_struct *st,
 		   PixelRegion   *dest,
 		   PixelRegion   *mask)
 {
-  int h;
-  unsigned char * s, * d, * m;
-  unsigned char    buf[512];
-  unsigned char   *data;
-  int              opacity;
-  LayerModeEffects mode;
-  int             *affect;
-  int              type;
+  gint              h;
+  guchar           *s, *d, *m;
+  guchar            buf[512];
+  guchar           *data;
+  gint              opacity;
+  LayerModeEffects  mode;
+  gint             *affect;
+  gint              type;
 
   data = st->data;
   opacity = st->opacity;
@@ -5361,14 +5414,14 @@ initial_sub_region(struct initial_regions_struct *st,
 }
 
 void
-initial_region (PixelRegion	*src,
-		PixelRegion	*dest,
-		PixelRegion	*mask,
-		unsigned char	*data,
-		int		 opacity,
-		LayerModeEffects mode,
-		int		*affect,
-		int		 type)
+initial_region (PixelRegion	 *src,
+		PixelRegion	 *dest,
+		PixelRegion	 *mask,
+		guchar	         *data,
+		gint		  opacity,
+		LayerModeEffects  mode,
+		gint		 *affect,
+		gint		  type)
 {
   struct initial_regions_struct st;
 
@@ -5384,38 +5437,40 @@ initial_region (PixelRegion	*src,
 
 struct combine_regions_struct
 {
-  int opacity;
-  LayerModeEffects mode;
-  int *affect;
-  int type;
-  unsigned char *data;
-  int has_alpha1, has_alpha2;
-  gboolean opacity_quickskip_possible;
-  gboolean transparency_quickskip_possible;
+  gint              opacity;
+  LayerModeEffects  mode;
+  gint             *affect;
+  gint              type;
+  guchar           *data;
+  gint              has_alpha1, has_alpha2;
+  gboolean          opacity_quickskip_possible;
+  gboolean          transparency_quickskip_possible;
 };
 
 
 
 void
-combine_sub_region(struct combine_regions_struct *st,
-		   PixelRegion *src1, PixelRegion *src2,
-		   PixelRegion *dest, PixelRegion *mask)
+combine_sub_region (struct combine_regions_struct *st,
+		    PixelRegion                   *src1,
+		    PixelRegion                   *src2,
+		    PixelRegion                   *dest,
+		    PixelRegion                   *mask)
 {
-  unsigned char   *data;
-  int              opacity;
-  LayerModeEffects mode;
-  int             *affect;
-  int              type;
-  int h;
-  int has_alpha1, has_alpha2;
-  int combine = 0;
-  int mode_affect;
-  unsigned char * s, * s1, * s2;
-  unsigned char * d, * m;
-  unsigned char buf[512];
-  gboolean opacity_quickskip_possible;
-  gboolean transparency_quickskip_possible;
-  TileRowHint hint;
+  guchar           *data;
+  gint              opacity;
+  LayerModeEffects  mode;
+  gint             *affect;
+  gint              type;
+  gint              h;
+  gint              has_alpha1, has_alpha2;
+  gint              combine = 0;
+  gint              mode_affect;
+  guchar           *s, *s1, *s2;
+  guchar           *d, *m;
+  guchar            buf[512];
+  gboolean          opacity_quickskip_possible;
+  gboolean          transparency_quickskip_possible;
+  TileRowHint       hint;
 
   opacity = st->opacity;
   mode = st->mode;
@@ -5649,18 +5704,18 @@ combine_sub_region(struct combine_regions_struct *st,
 
 
 void
-combine_regions (PixelRegion	 *src1,
-		 PixelRegion	 *src2,
-		 PixelRegion   	 *dest,
-		 PixelRegion  	 *mask,
-		 unsigned char	 *data,
-		 int		  opacity,
-		 LayerModeEffects mode,
-		 int		 *affect,
-		 int		  type)
+combine_regions (PixelRegion	  *src1,
+		 PixelRegion	  *src2,
+		 PixelRegion   	  *dest,
+		 PixelRegion  	  *mask,
+		 guchar	          *data,
+		 gint		   opacity,
+		 LayerModeEffects  mode,
+		 gint		  *affect,
+		 gint		   type)
 {
-  int has_alpha1, has_alpha2;
-  int i;
+  gint has_alpha1, has_alpha2;
+  gint i;
   struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */
@@ -5738,21 +5793,23 @@ combine_regions (PixelRegion	 *src1,
 }
 
 void
-combine_regions_replace (PixelRegion   *src1,
-			 PixelRegion   *src2,
-			 PixelRegion   *dest,
-			 PixelRegion   *mask,
-			 unsigned char *data,
-			 int            opacity,
-			 int           *affect,
-			 int            type)
+combine_regions_replace (PixelRegion *src1,
+			 PixelRegion *src2,
+			 PixelRegion *dest,
+			 PixelRegion *mask,
+			 guchar      *data,
+			 gint         opacity,
+			 gint        *affect,
+			 gint         type)
 {
-  int h;
-  unsigned char * s1, * s2;
-  unsigned char * d, * m;
+  gint h;
+  guchar * s1, * s2;
+  guchar * d, * m;
   void * pr;
 
-  for (pr = pixel_regions_register (4, src1, src2, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (4, src1, src2, dest, mask);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s1 = src1->data;
       s2 = src2->data;
@@ -5763,8 +5820,9 @@ combine_regions_replace (PixelRegion   *src1,
 	{
 
 	  /*  Now, apply the paint mode  */
-	  apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h, opacity, src1->w,
-					      src1->bytes, src2->bytes, affect);
+	  apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h,
+				    opacity, src1->w,
+				    src1->bytes, src2->bytes, affect);
 
 	  s1 += src1->rowstride;
 	  s2 += src2->rowstride;
@@ -5778,22 +5836,22 @@ combine_regions_replace (PixelRegion   *src1,
 /*       apply layer modes          */
 /************************************/
 
-int
-apply_layer_mode (unsigned char   *src1,
-		  unsigned char   *src2,
-		  unsigned char  **dest,
-		  int              x,
-		  int              y,
-		  int              opacity,
-		  int              length,
-		  LayerModeEffects mode,
-		  int              bytes1,   /* bytes */
-		  int              bytes2,   /* bytes */
-		  int              has_alpha1,  /* has alpha */
-		  int              has_alpha2,  /* has alpha */
-		  int             *mode_affect)
+gint
+apply_layer_mode (guchar            *src1,
+		  guchar            *src2,
+		  guchar           **dest,
+		  gint               x,
+		  gint               y,
+		  gint               opacity,
+		  gint               length,
+		  LayerModeEffects   mode,
+		  gint               bytes1,   /* bytes */
+		  gint               bytes2,   /* bytes */
+		  gint               has_alpha1,  /* has alpha */
+		  gint               has_alpha2,  /* has alpha */
+		  gint              *mode_affect)
 {
-  int combine;
+  gint combine;
 
   if (!has_alpha1 && !has_alpha2)
     combine = COMBINE_INTEN_INTEN;
@@ -5913,14 +5971,14 @@ apply_layer_mode (unsigned char   *src1,
 
 
 int
-apply_indexed_layer_mode (unsigned char   *src1,
-			  unsigned char   *src2,
-			  unsigned char  **dest,
-			  LayerModeEffects mode,
-			  int              has_alpha1, /* has alpha */
-			  int              has_alpha2) /* has alpha */
+apply_indexed_layer_mode (guchar            *src1,
+			  guchar            *src2,
+			  guchar           **dest,
+			  LayerModeEffects   mode,
+			  gint               has_alpha1, /* has alpha */
+			  gint               has_alpha2) /* has alpha */
 {
-  int combine;
+  gint combine;
 
   if (!has_alpha1 && !has_alpha2)
     combine = COMBINE_INDEXED_INDEXED;
@@ -5963,17 +6021,17 @@ apply_indexed_layer_mode (unsigned char   *src1,
 }
 
 static void
-apply_layer_mode_replace (unsigned char  *src1,
-			  unsigned char  *src2,
-			  unsigned char  *dest,
-			  unsigned char  *mask,
-			  int             x,
-			  int             y,
-			  int             opacity,
-			  int             length,
-			  int             bytes1,   /* bytes */
-			  int             bytes2,   /* bytes */
-			  int            *affect)
+apply_layer_mode_replace (guchar  *src1,
+			  guchar  *src2,
+			  guchar  *dest,
+			  guchar  *mask,
+			  gint     x,
+			  gint     y,
+			  gint     opacity,
+			  gint     length,
+			  gint     bytes1,   /* bytes */
+			  gint     bytes2,   /* bytes */
+			  gint    *affect)
 {
   replace_pixels (src1, src2, dest, mask, length, opacity, affect, bytes1, bytes2);
 }

@@ -192,7 +192,7 @@ hue_saturation (PixelRegion *srcPR,
 	  g = s[GREEN_PIX];
 	  b = s[BLUE_PIX];
 
-	  gimp_rgb_to_hls (&r, &g, &b);
+	  gimp_rgb_to_hls_int (&r, &g, &b);
 
 	  if (r < 43)
 	    hue = 0;
@@ -211,7 +211,7 @@ hue_saturation (PixelRegion *srcPR,
 	  g = lightness_transfer[hue][g];
 	  b = saturation_transfer[hue][b];
 
-	  gimp_hls_to_rgb (&r, &g, &b);
+	  gimp_hls_to_rgb_int (&r, &g, &b);
 
 	  d[RED_PIX] = r;
 	  d[GREEN_PIX] = g;
@@ -636,13 +636,13 @@ hue_saturation_update (HueSaturationDialog *hsd,
       rgb[GREEN_PIX] = default_colors[i][GREEN_PIX];
       rgb[BLUE_PIX]  = default_colors[i][BLUE_PIX];
 
-      gimp_rgb_to_hls (rgb, rgb + 1, rgb + 2);
+      gimp_rgb_to_hls_int (rgb, rgb + 1, rgb + 2);
 
       rgb[RED_PIX]   = hue_transfer[i][rgb[RED_PIX]];
       rgb[GREEN_PIX] = lightness_transfer[i][rgb[GREEN_PIX]];
       rgb[BLUE_PIX]  = saturation_transfer[i][rgb[BLUE_PIX]];
 
-      gimp_hls_to_rgb (rgb, rgb + 1, rgb + 2);
+      gimp_hls_to_rgb_int (rgb, rgb + 1, rgb + 2);
 
       for (j = 0; j < DA_WIDTH; j++)
 	for (b = 0; b < 3; b++)

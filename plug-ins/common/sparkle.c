@@ -1,4 +1,3 @@
-
 /* Sparkle --- image filter plug-in for The Gimp image manipulation program
  * Copyright (C) 1996 by John Beale;  ported to Gimp by Michael J. Hammel;
  * It has been optimized a little, bugfixed and modified by Martin Weber
@@ -928,7 +927,7 @@ fspike (GimpPixelRgn *src_rgn,
 	  r = 255 - color[0];
 	  g = 255 - color[1];
 	  b = 255 - color[2];             
-	  gimp_rgb_to_hsv (&r, &g, &b);  
+	  gimp_rgb_to_hsv_int (&r, &g, &b);  
 	  r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
 	  if (r >= 255)
 	    r -= 255;
@@ -937,7 +936,7 @@ fspike (GimpPixelRgn *src_rgn,
 	  b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
 					  (gdouble) RAND_MAX - 1.0))*255;
 	  if (b > 255) b = 255;
-	  gimp_hsv_to_rgb (&r, &g, &b);
+	  gimp_hsv_to_rgb_int (&r, &g, &b);
 	  color[0] = 255 - r;
 	  color[1] = 255 - g;
 	  color[2] = 255 - b;
