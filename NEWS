@@ -28,6 +28,10 @@ Overview of Changes in GIMP 2.2.0 (since 2.2-pre2 was released)
 
 - Let the histogram respect the selection.
 
+- Added gimp_edit_copy_visible as a replacement for the "Copy Visible" script.
+
+- Improved color dithering routines.
+
 - Lots of bug fixes and some optimizations.
 
 
@@ -35,7 +39,7 @@ Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
    Joao S. O. Bueno, Karine Proot, Tim Mooney, Wolfgang Hofer, Simon Budig,
-   Bill Skaggs, Øyvind Kolås
+   Bill Skaggs, Øyvind Kolås, Adam D. Moss, Brion Vibber
 
 
 Overview of Changes in GIMP 2.2-pre2
