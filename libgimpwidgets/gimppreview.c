@@ -124,12 +124,12 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   preview_signals[INVALIDATED] =
     g_signal_new ("invalidated",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, invalidated),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPreviewClass, invalidated),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->dispose      = gimp_preview_dispose;
   object_class->get_property = gimp_preview_get_property;
@@ -203,7 +203,7 @@ gimp_preview_init (GimpPreview *preview)
   /* the area itself */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (table, frame, 0,1, 0,1, GTK_FILL, GTK_FILL, 0,0);
+  gtk_table_attach (table, frame, 0,1, 0,1, 0, 0, 0,0);
   gtk_widget_show (frame);
 
   preview->area = gimp_preview_area_new ();

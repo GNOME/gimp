@@ -1,5 +1,11 @@
 2004-09-04  DindinX  <david@dindinx.org>
 
+	* libgimpwidgets/gimppreview.c: Changed the way we attach the preview
+	area frame to the table so very small drawables don't cause a
+	malicious bug.
+
+2004-09-04  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/sel_gauss.c: ported to GimpDrawablePreview.
 
 2004-09-04  DindinX  <david@dindinx.org>
