@@ -209,7 +209,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
 
-GType gimp_cap_style_type_get_type (void) G_GNUC_CONST;
+GType gimp_cap_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {

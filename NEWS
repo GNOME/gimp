@@ -8,6 +8,31 @@ development takes place on the road to the next stable release
 GIMP version 2.0.
 
 
+Overview of Changes in GIMP 1.3.21
+==================================
+- Better looking and more accessible dockables [Mitch]
+- Fixes for right-to-left rendering [Sven, Mitch]
+- Rewritten webbroswer plug-in [Brix]
+- Much improved path tool [Simon, Mitch]
+- Export GIMP paths to SVG [Sven, Simon]
+- Import SVG paths as GIMP paths [Sven, Simon]
+- Added SVG file plug-in from librsvg and improved it [Sven]
+- Store new vectors in XCF [Simon, Mitch]
+- Allow to toggle visibility of paths in path list [Mitch]
+- Stroke paths using libart (work in progress...) [Simon, Bolsh]
+- Move tool now also moves paths [Mitch]
+- Some progress towards gimp-console, a gtk-less GIMP for batch mode [Mitch]
+- Improved Decompose/Compose plug-ins [Alexey Dyachenko, Sven]
+- More SIMD compositing code [Helvetix]
+- Right mouse buttons now also cancels paint operations [Mitch]
+- More internal code cleanup and documentation [Mitch, Sven]
+- Lots of bug fixes
+
+Other contributors: 
+  Adam D. Moss, Dom Lachowicz, Manish Singh, Jakub Steiner,
+  Christian Neumair, Seth Burgess, Maurits Rijk
+
+
 Overview of Changes in GIMP 1.3.20
 ==================================
 - Improved documentation of the app directory [Mitch, Sven]
