@@ -21,7 +21,7 @@ msgstr "Selezione pennelli"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Naviga..."
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -215,7 +215,7 @@ msgstr "percento"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(stringa UTF-8 non valida)"
 
 #: libgimpbase/gimputils.c:189
 #, c-format
@@ -392,7 +392,7 @@ msgstr "GigaByte"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
+msgstr "Fare clic sul contagocce, poi fare clic su un colore qualsiasi sullo schermo per selezionare quel colore."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -444,7 +444,7 @@ msgstr "_Scala"
 
 #: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
-msgstr ""
+msgstr "Ritaglia"
 
 #: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
@@ -456,7 +456,7 @@ msgstr "_Ruota"
 
 #: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
-msgstr ""
+msgstr "_Cesoie"
 
 #: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
@@ -585,11 +585,11 @@ msgstr "Nero"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Estrazione nero (%)"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Selettore colori a triangolo stile pittore"
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
