@@ -1,3 +1,8 @@
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/gdisplay_ops.c (gdisplay_shrink_wrap): avoid to move the
+	image window offscreen (#79486).
+
 2002-12-06  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/winclipboard.c : need to adjust the data 
