@@ -1,3 +1,8 @@
+Tue Sep 21 21:31:23 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gflare/gflare.c: gtk_timeout and gtk_idle are gunit, so
+	make them guints; fixed a warning while I was on it
+
 1999-09-21  Zach Beane <xach@mint.net>
 
 	* app/color_cmds.c:

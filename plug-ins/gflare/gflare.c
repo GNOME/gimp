@@ -333,8 +333,8 @@ struct _Preview
   gpointer		render_data;
   PreviewDeinitFunc	deinit_func;
   gpointer		deinit_data;
-  gint			timeout_tag;
-  gint			idle_tag;
+  guint			timeout_tag;
+  guint			idle_tag;
   gint			init_done;
   gint			current_y;
   gint			drawn_y;
@@ -2319,6 +2319,8 @@ rgb_to_hsv (int *r,
   float h, s, v;
   int min, max;
   int delta;
+
+  h = 0.0;
 
   red = *r;
   green = *g;
@@ -4397,7 +4399,7 @@ preview_new (gint		   width,
   preview->render_data	   = render_data;
   preview->deinit_func	   = deinit_func;
   preview->deinit_data	   = deinit_data;
-  preview->idle_tag	   = -1;
+  preview->idle_tag	   = 0;
   preview->buffer	   = g_new (guchar, width * 3);
 
   return preview;
@@ -4433,7 +4435,7 @@ preview_render_start (Preview *preview)
 static gint
 preview_render_start_2 (Preview *preview)
 {
-  preview->timeout_tag = -1;
+  preview->timeout_tag = 0;
   preview->idle_tag = gtk_idle_add ((GtkFunction) preview_handle_idle, preview);
   return FALSE;
 }
@@ -4442,18 +4444,18 @@ preview_render_start_2 (Preview *preview)
 void
 preview_render_end (Preview *preview)
 {
-  if (preview->timeout_tag >= 0)
+  if (preview->timeout_tag > 0)
     {
       gtk_timeout_remove (preview->timeout_tag);
-      preview->timeout_tag = -1;
+      preview->timeout_tag = 0;
     }
-  if (preview->idle_tag >= 0)
+  if (preview->idle_tag > 0)
     {
       if (preview->deinit_func)
 	(*preview->deinit_func) (preview, preview->deinit_data);
 
       gtk_idle_remove (preview->idle_tag);
-      preview->idle_tag = -1;
+      preview->idle_tag = 0;
       DEBUG_PRINT(("preview_render_end\n\n"));
     }
 }
