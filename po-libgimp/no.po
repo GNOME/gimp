@@ -1,13 +1,13 @@
 # Norwegian translation of gimp-modules.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@online.no>, 1999.
+# Copyright (C) 1999,2000 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999,2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-08-22 11:56+0200\n"
-"PO-Revision-Date: 2000-07-16 01:44+02:00\n"
-"Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
+"Project-Id-Version: GIMP 1.1.25\n"
+"POT-Creation-Date: 2000-09-04 22:34+0200\n"
+"PO-Revision-Date: 2000-09-04 22:34+0200\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
