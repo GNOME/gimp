@@ -47,6 +47,9 @@
 #include "text/gimptextlayer.h"
 #include "text/gimptext-parasite.h"
 
+#include "vectors/gimpanchor.h"
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-compat.h"
 
@@ -56,6 +59,9 @@
 #include "xcf-write.h"
 
 #include "gimp-intl.h"
+
+/* define that to enable the new code for vectors saving */
+#undef NEW_SAVE_CODE
 
 
 static gboolean xcf_save_image_props   (XcfInfo     *info,
@@ -99,6 +105,9 @@ static void     xcf_save_parasite      (gchar        *key,
                                         GimpParasite *parasite, 
                                         XcfInfo      *info);
 static gboolean xcf_save_old_paths     (XcfInfo      *info,
+                                        GimpImage    *gimage,
+                                        GError      **error);
+static gboolean xcf_save_vectors       (XcfInfo      *info,
                                         GimpImage    *gimage,
                                         GError      **error);
 
@@ -422,8 +431,24 @@ xcf_save_image_props (XcfInfo   *info,
     xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT, 
                                     error, gimage->unit));
 
+#ifdef NEW_SAVE_CODE
+  if (gimp_container_num_children (gimage->vectors) > 0)
+    {
+      if (gimp_vectors_compat_is_compatible (gimage))
+        {
+          g_printerr ("entering PATHS compatibility mode\n");
+          xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
+        }
+      else
+        {
+          g_printerr ("using new VECTORS mode for saving the path\n");
+          xcf_check_error (xcf_save_prop (info, gimage, PROP_VECTORS, error));
+        }
+    }
+#else
   if (gimp_container_num_children (gimage->vectors) > 0)
     xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
+#endif
 
   if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT, 
@@ -962,6 +987,38 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_string_check_error (info->fp, (gchar **) unit_strings, 5);
       }
       break;
+    case PROP_VECTORS:
+      {
+	guint32 base, length;
+	glong   pos;
+
+        xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
+
+        /* because we don't know how much room the paths list will take
+           we save the file position and write the length later 
+        */
+        pos = info->cp;
+        xcf_write_int32_check_error (info->fp, &length, 1);
+
+        base = info->cp;
+
+        xcf_check_error (xcf_save_vectors (info, gimage, error));
+
+        length = info->cp - base;
+
+        /* go back to the saved position and write the length */
+        xcf_check_error (xcf_seek_pos (info, pos, error));
+        xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
+        if (tmp_error) 
+          {
+            g_propagate_error (error, tmp_error);
+            return FALSE;
+          }
+
+        g_printerr ("PROP_VECTORS: saved %d bytes\n", length);
+        xcf_check_error (xcf_seek_end (info, error));
+      }
+      break;
     }
 
   va_end (args);
@@ -1485,6 +1542,11 @@ xcf_save_old_paths (XcfInfo    *info,
 
       points = gimp_vectors_compat_get_points (vectors, &num_points, &closed);
 
+      /* if no points are generated because of a faulty path we should
+       * skip saving the path - this is unfortunately impossible, because
+       * we already saved the number of paths and I wont start seeking
+       * around to fix that cruft  */
+
       name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
       locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
@@ -1525,3 +1587,152 @@ xcf_save_old_paths (XcfInfo    *info,
 
   return TRUE;
 }
+
+static gboolean
+xcf_save_vectors (XcfInfo    *info,
+                  GimpImage  *gimage,
+                  GError    **error)
+{
+  GimpVectors *active_vectors;
+  guint32      num_paths;
+  guint32      active_index = 0;
+  guint32      version = 1;
+  GList       *list;
+  GList       *stroke_list;
+  GError      *tmp_error = NULL;
+
+  /* Write out the following:-
+   *
+   * last_selected_row (gint)
+   * number_of_paths (gint)
+   *
+   * then each path:-
+   */
+
+  num_paths = gimp_container_num_children (gimage->vectors);
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    active_index = gimp_container_get_child_index (gimage->vectors,
+                                                   GIMP_OBJECT (active_vectors));
+
+  xcf_write_int32_check_error (info->fp, &version,      1);
+  xcf_write_int32_check_error (info->fp, &active_index, 1);
+  xcf_write_int32_check_error (info->fp, &num_paths,    1);
+
+  g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
+
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpVectors *vectors = list->data;
+      gchar       *name;
+      guint32      locked;
+      guint32      num_strokes;
+      guint32      tattoo;
+
+      /*
+       * name (string)
+       * locked (gint)
+       * tattoo (gint)
+       * number strokes (gint)
+       *
+       * then each stroke.
+       */
+
+      name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
+      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+      num_strokes = g_list_length (vectors->strokes);
+ 
+      xcf_write_string_check_error (info->fp, &name,        1);
+      xcf_write_int32_check_error  (info->fp, &locked,      1);
+      xcf_write_int32_check_error  (info->fp, &tattoo,      1);
+      xcf_write_int32_check_error  (info->fp, &num_strokes, 1);
+
+      g_printerr ("name: %s, version: %d, locked: %d, tattoo: %d, num_strokes %d\n", name, version, locked, tattoo, num_strokes);
+
+      for (stroke_list = g_list_first (vectors->strokes);
+           stroke_list;
+           stroke_list = g_list_next (stroke_list))
+        {
+          GimpStroke *stroke;
+          gint stroke_type, closed, num_axes;
+          GArray *control_points;
+          gint i;
+
+          gint   type;
+          gfloat coords[6];
+
+          /*
+           * stroke_type (gint)
+           * closed (gint)
+           * num_axes (gint)
+           * num_control_points (gint)
+           *
+           * then each control point.
+           */
+
+          stroke = GIMP_STROKE (stroke_list->data);
+
+          if (GIMP_IS_BEZIER_STROKE (stroke))
+            {
+              stroke_type = XCF_STROKETYPE_BEZIER_STROKE;
+              num_axes = 2;   /* hardcoded, might be increased later */
+            }
+          else
+            {
+              g_printerr ("Skipping unknown stroke type!\n");
+              continue;
+            }
+
+          control_points = gimp_stroke_control_points_get (stroke, &closed);
+
+          xcf_write_int32_check_error  (info->fp, &stroke_type,           1);
+          xcf_write_int32_check_error  (info->fp, &closed,                1);
+          xcf_write_int32_check_error  (info->fp, &num_axes,              1);
+          xcf_write_int32_check_error  (info->fp, &(control_points->len), 1);
+
+          g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
+                      stroke_type, closed, num_axes, control_points->len);
+
+          for (i = 0; i < control_points->len; i++)
+            {
+              GimpAnchor *anchor;
+
+              anchor = & (g_array_index (control_points, GimpAnchor, i));
+
+              type = anchor->type;
+              coords[0] = anchor->position.x;
+              coords[1] = anchor->position.y;
+              coords[2] = anchor->position.pressure;
+              coords[3] = anchor->position.xtilt;
+              coords[4] = anchor->position.ytilt;
+              coords[5] = anchor->position.wheel;
+
+              /*
+               * type (gint)
+               * x (gfloat)
+               * y (gfloat)
+               * ....
+               * wheel (gfloat)
+               * (but only the first num_axis elements)
+               */
+
+              xcf_write_int32_check_error (info->fp, &type, 1);
+              xcf_write_float_check_error (info->fp, coords, num_axes);
+
+              g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
+                          coords[0], coords[1], coords[2], coords[3],
+                          coords[4], coords[5]);
+            }
+
+          g_array_free (control_points, TRUE);
+        }
+    }
+
+  return TRUE;
+}
+

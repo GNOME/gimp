@@ -46,7 +46,8 @@ typedef enum
   PROP_PARASITES             = 21,
   PROP_UNIT                  = 22,
   PROP_PATHS                 = 23,
-  PROP_USER_UNIT             = 24
+  PROP_USER_UNIT             = 24,
+  PROP_VECTORS               = 25
 } PropType;
 
 typedef enum
@@ -63,6 +64,11 @@ typedef enum
   XCF_ORIENTATION_VERTICAL   = 2
 } XcfOrientationType;
 
+typedef enum
+{
+  XCF_STROKETYPE_STROKE        = 0,
+  XCF_STROKETYPE_BEZIER_STROKE = 1
+} XcfStrokeType;
 
 typedef struct _XcfInfo  XcfInfo;
 

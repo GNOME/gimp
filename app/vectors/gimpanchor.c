@@ -28,6 +28,20 @@
 #include "gimpanchor.h"
 
 
+GType
+gimp_anchor_get_type (void)
+{
+  static GType anchor_type = 0;
+
+  if (!anchor_type)
+    anchor_type = g_boxed_type_register_static ("GimpAnchor",
+                                         (GBoxedCopyFunc) gimp_anchor_duplicate,
+                                         (GBoxedFreeFunc) gimp_anchor_free);
+
+  return anchor_type;
+}
+
+
 GimpAnchor *
 gimp_anchor_new (GimpAnchorType    type,
                  const GimpCoords *position)

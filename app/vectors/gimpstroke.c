@@ -32,11 +32,25 @@
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 
+enum
+{
+  PROP_0,
+  PROP_CONTROL_POINTS,
+  PROP_CLOSED
+};
 
 /* Prototypes */
 
 static void    gimp_stroke_class_init                (GimpStrokeClass  *klass);
 static void    gimp_stroke_init                      (GimpStroke       *stroke);
+static void    gimp_stroke_set_property              (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void    gimp_stroke_get_property              (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
 static void    gimp_stroke_finalize                  (GObject          *object);
 
 static gsize   gimp_stroke_get_memsize               (GimpObject       *object,
@@ -147,6 +161,8 @@ static void gimp_stroke_real_transform (GimpStroke *stroke,
 static GList    * gimp_stroke_real_get_draw_anchors  (const GimpStroke *stroke);
 static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
 static GArray   * gimp_stroke_real_get_draw_lines    (const GimpStroke *stroke);
+static GArray *  gimp_stroke_real_control_points_get (const GimpStroke *stroke,
+                                                      gboolean         *ret_closed);
 
 static void gimp_stroke_art_stroke  (const GimpStroke *stroke);
 
@@ -188,6 +204,9 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 {
   GObjectClass    *object_class;
   GimpObjectClass *gimp_object_class;
+  GParamSpec      *anchor_param_spec;
+  GParamSpec      *control_points_param_spec;
+  GParamSpec      *close_param_spec;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
@@ -195,6 +214,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize         = gimp_stroke_finalize;
+  object_class->get_property     = gimp_stroke_get_property;
+  object_class->set_property     = gimp_stroke_set_property;
 
   gimp_object_class->get_memsize = gimp_stroke_get_memsize;
 
@@ -240,8 +261,41 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_draw_anchors        = gimp_stroke_real_get_draw_anchors;
   klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
   klass->get_draw_lines          = gimp_stroke_real_get_draw_lines;
+  klass->control_points_get      = gimp_stroke_real_control_points_get;
 
   klass->art_stroke              = gimp_stroke_art_stroke;
+
+  anchor_param_spec = g_param_spec_boxed ("gimp-anchor",
+                                          "Gimp Anchor",
+                                          "The control points of a Stroke",
+                                          gimp_anchor_get_type (),
+                                          G_PARAM_WRITABLE |
+                                          G_PARAM_CONSTRUCT_ONLY);
+
+  control_points_param_spec = g_param_spec_value_array ("control-points",
+                                                        "Control Points",
+                                                        "This is an ValueArray "
+                                                        "with the initial "
+                                                        "control points of "
+                                                        "the new Stroke",
+                                                        anchor_param_spec,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY);
+
+  close_param_spec = g_param_spec_boolean ("closed",
+                                           "Close Flag",
+                                           "this flag indicates, if the "
+                                           "stroke is closed or not",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+
+  g_object_class_install_property (object_class,
+                                   PROP_CONTROL_POINTS,
+                                   control_points_param_spec);
+  
+  g_object_class_install_property (object_class,
+                                   PROP_CLOSED,
+                                   close_param_spec);
 }
 
 static void
@@ -249,6 +303,70 @@ gimp_stroke_init (GimpStroke *stroke)
 {
   stroke->anchors     = NULL;
   stroke->closed      = FALSE;
+}
+
+static void
+gimp_stroke_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpStroke  *stroke;
+  GValueArray *val_array;
+  GValue      *item;
+  gint         i;
+
+  stroke = GIMP_STROKE (object);
+
+  switch (property_id)
+    {
+    case PROP_CLOSED:
+      stroke->closed = g_value_get_boolean (value);
+      break;
+    case PROP_CONTROL_POINTS:
+      g_return_if_fail (stroke->anchors == NULL);
+      g_return_if_fail (value != NULL);
+
+      val_array = g_value_get_boxed (value);
+
+      if (val_array == NULL)
+        return;
+
+      for (i=0; i < val_array->n_values; i++)
+        {
+          item = g_value_array_get_nth (val_array, i);
+
+          g_return_if_fail (G_VALUE_HOLDS (item, gimp_anchor_get_type ()));
+          stroke->anchors = g_list_append (stroke->anchors,
+                                           g_value_dup_boxed (item));
+        }
+
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_stroke_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpStroke *stroke;
+
+  stroke = GIMP_STROKE (object);
+
+  switch (property_id)
+    {
+    case PROP_CLOSED:
+      g_value_set_boolean (value, stroke->closed);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -281,7 +399,6 @@ gimp_stroke_get_memsize (GimpObject *object,
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
-
 
 GimpAnchor *
 gimp_stroke_anchor_get (const GimpStroke *stroke,
@@ -1209,6 +1326,41 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
     }
 
   return ret_lines;
+}
+
+GArray *
+gimp_stroke_control_points_get (const GimpStroke *stroke,
+                                gboolean         *ret_closed)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->control_points_get (stroke,
+                                                             ret_closed);
+}
+
+static GArray *
+gimp_stroke_real_control_points_get (const GimpStroke *stroke,
+                                     gboolean         *ret_closed)
+{
+  guint num_anchors;
+  GArray *ret_array;
+  GList *list;
+
+  num_anchors = g_list_length (stroke->anchors);
+  list = g_list_first (stroke->anchors);
+
+  ret_array = g_array_sized_new (FALSE, FALSE,
+                                 sizeof (GimpAnchor), num_anchors);
+
+  for (list = g_list_first (stroke->anchors); list; list = g_list_next (list))
+    {
+      g_array_append_vals (ret_array, list->data, 1);
+    }
+
+  if (ret_closed)
+    *ret_closed = stroke->closed;
+
+  return ret_array;
 }
 
 

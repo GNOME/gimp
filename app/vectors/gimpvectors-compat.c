@@ -26,6 +26,7 @@
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
@@ -124,6 +125,38 @@ gimp_vectors_compat_new (GimpImage              *gimage,
   return vectors;
 }
 
+gboolean
+gimp_vectors_compat_is_compatible (GimpImage *gimage)
+{
+  GList *list, *strokes;
+  GimpVectors *vectors;
+  GimpStroke *stroke;
+  gint open_count;
+
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      open_count = 0;
+
+      vectors = GIMP_VECTORS (list->data);
+
+      for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
+        {
+          stroke = GIMP_STROKE (strokes->data);
+          if (! GIMP_IS_BEZIER_STROKE (stroke))
+            return FALSE;
+
+          if (!stroke->closed)
+            open_count++;
+        }
+
+      if (open_count >= 2)
+        return FALSE;
+    }
+  return TRUE;
+}
+
 GimpVectorsCompatPoint *
 gimp_vectors_compat_get_points (GimpVectors *vectors,
                                 guint32     *n_points,
@@ -132,26 +165,36 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
   GimpVectorsCompatPoint *points;
   GList                  *strokes;
   gint                    i;
+  GList                  *postponed = NULL;  /* for the one open stroke... */
+  gint                    open_count;
+  gboolean                first_stroke = TRUE;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (n_points != NULL, NULL);
   g_return_val_if_fail (closed != NULL, NULL);
 
   *n_points = 0;
-  *closed   = FALSE;
+  *closed   = TRUE;
+
+  open_count = 0;
 
   for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
     {
       GimpStroke *stroke = strokes->data;
       gint        n_anchors;
 
-      if (! stroke->closed && strokes->next)
+      if (! stroke->closed)
         {
-          g_warning ("gimp_vectors_compat_get_points(): convert failed");
+          open_count++;
+          postponed = strokes;
+          *closed = FALSE;
 
-          *n_points = 0;
-
-          return NULL;
+          if (open_count >= 2)
+            {
+              g_warning ("gimp_vectors_compat_get_points(): convert failed");
+              *n_points = 0;
+              return NULL;
+            }
         }
 
       n_anchors = g_list_length (stroke->anchors);
@@ -160,9 +203,6 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
         n_anchors--;
 
       *n_points += n_anchors;
-
-      if (! strokes->next)
-        *closed = stroke->closed;
     }
 
   points = g_new0 (GimpVectorsCompatPoint, *n_points);
@@ -170,11 +210,25 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
   i = 0;
 
   for (strokes = vectors->strokes;
-       strokes;
+       strokes || postponed;
        strokes = g_list_next (strokes))
     {
-      GimpStroke *stroke = strokes->data;
+      GimpStroke *stroke;
       GList      *anchors;
+
+      if (strokes)
+        {
+          if (postponed && strokes == postponed)
+            /* we need to visit the open stroke last... */
+            continue;
+          else
+            stroke = GIMP_STROKE (strokes->data);
+        }
+      else
+        {
+          stroke = GIMP_STROKE (postponed->data);
+          postponed = NULL;
+        }
 
       for (anchors = stroke->anchors;
            anchors;
@@ -189,7 +243,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
           switch (anchor->type)
             {
             case GIMP_ANCHOR_ANCHOR:
-              if (strokes->prev && anchors->prev == stroke->anchors)
+              if (anchors->prev == stroke->anchors && ! first_stroke)
                 points[i].type = GIMP_VECTORS_COMPAT_NEW_STROKE;
               else
                 points[i].type = GIMP_VECTORS_COMPAT_ANCHOR;
@@ -217,6 +271,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
               i++;
             }
         }
+      first_stroke = FALSE;
     }
 
   return points;

@@ -1,3 +1,29 @@
+2003-09-09  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors-compat.[ch]: Made
+	gimp_vectors_compat_get_points accept more paths gracefully. It
+	now is sufficient if there is up to one open stroke in the
+	vectors object - it does not have to be the last one.
+
+	Added function to determine if all vectors can be saved in
+	compatibility mode.
+
+	* app/vectors/gimpanchor.[ch]: Made GimpAnchor a boxed type.
+	* app/vectors/gimpstroke.[ch]: Add two properties to gimpstroke:
+	"closed" and "control-points" (the latter is
+	G_PARAM_CONSTRUCT_ONLY). Added functions to get the points that
+	determine the shape of the stroke - necessary for proper saving.
+
+	* app/xcf/xcf-private.h: added new PROP_VECTORS and XcfStrokeType.
+
+	* app/xcf/xcf-load.c: Be able to load PROP_VECTORS, make loading
+	of PROP_PATHS ignore empty paths.
+
+	* app/xcf/xcf-save.c: Added code for saving PROP_VECTORS,
+	disabled by default. Define NEW_SAVE_CODE if you want to test
+	it. No guarantees are made about the forward compatibility of
+	the format used.
+
 2003-09-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c (create_image): need to detach from

@@ -163,6 +163,8 @@ struct _GimpStrokeClass
   GList       * (* get_draw_anchors)     (const GimpStroke      *stroke);
   GList       * (* get_draw_controls)    (const GimpStroke      *stroke);
   GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
+  GArray      * (* control_points_get)   (const GimpStroke      *stroke,
+                                          gboolean              *ret_closed);
 
   void          (* art_stroke)           (const GimpStroke      *stroke);
 };
@@ -172,6 +174,9 @@ GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
 
 
 /* accessing / modifying the anchors */
+
+GArray     * gimp_stroke_control_points_get   (const GimpStroke      *stroke,
+                                               gboolean              *closed);
 
 GimpAnchor * gimp_stroke_anchor_get           (const GimpStroke      *stroke,
                                                const GimpCoords      *coord);
