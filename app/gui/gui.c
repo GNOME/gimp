@@ -311,11 +311,13 @@ gui_exit (Gimp *gimp)
 }
 
 void
-gui_get_screen_resolution (gdouble   *xres,
-                           gdouble   *yres)
+gui_get_screen_resolution (gdouble *xres,
+                           gdouble *yres)
 {
-  gint width, height;
-  gint widthMM, heightMM;
+  gint    width, height;
+  gint    width_mm, height_mm;
+  gdouble x = 0.0;
+  gdouble y = 0.0;
 
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
@@ -323,8 +325,8 @@ gui_get_screen_resolution (gdouble   *xres,
   width  = gdk_screen_width ();
   height = gdk_screen_height ();
 
-  widthMM  = gdk_screen_width_mm ();
-  heightMM = gdk_screen_height_mm ();
+  width_mm  = gdk_screen_width_mm ();
+  height_mm = gdk_screen_height_mm ();
 
   /*
    * From xdpyinfo.c:
@@ -336,8 +338,24 @@ gui_get_screen_resolution (gdouble   *xres,
    *         = N * 25.4 pixels / M inch
    */
 
-  *xres = (width  * 25.4) / ((gdouble) widthMM);
-  *yres = (height * 25.4) / ((gdouble) heightMM);
+  if (width_mm > 0 && height_mm > 0)
+    {
+      x = (width  * 25.4) / (gdouble) width_mm;
+      y = (height * 25.4) / (gdouble) height_mm;
+    }
+
+  if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
+      y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
+    {
+      g_warning ("GDK returned bogus values for the screen resolution, "
+                 "using 75 dpi instead.");
+
+      x = 75.0;
+      y = 75.0;
+    }
+
+  *xres = x;
+  *yres = y;
 }
 
 void

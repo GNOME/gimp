@@ -1,5 +1,10 @@
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui.c (gui_get_screen_resolution): do some sanity checks
+	on the values returned by GDK.
+
+2002-05-30  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped the version to 1.3.7.
 
 	* tools/Makefile.am (EXTRA_DIST): include gimp-mkproxy. Should fix
