@@ -1,3 +1,8 @@
+2004-02-04  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Resurrected several autoconf substitutions relating
+	to versions, so the .spec file can use them.
+
 2004-02-05  Raphaël Quinet  <quinet@gamers.org>
 
 	* configure.in: Added a conditional definition of the preprocessor
