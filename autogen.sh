@@ -79,21 +79,25 @@ echo "Running gettextize...  Ignore non-fatal messages."
 # while making dist.
 echo "no" | gettextize --copy --force
 
-aclocal $ACLOCAL_FLAGS
-
-# optionally feature autoheader
-(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
-
-automake $am_opt
-autoconf
-cd $ORIGDIR
-
+autogen_dirs="."
 if test -z "$NO_GCG"; then
-  echo "Running autogen.sh under tools/gcg..."
-  cd tools/gcg
-  ./autogen.sh
-  cd $ORIGDIR
+	autogen_dirs="$autogen_dirs tools/gcg"
 fi
+
+for i in $autogen_dirs; do
+	echo "Processing $i..."
+
+	cd $i
+	aclocal $ACLOCAL_FLAGS
+
+	# optionally feature autoheader
+	(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
+
+	automake --add-missing $am_opt
+	autoconf
+done
+
+cd $ORIGDIR
 
 $srcdir/configure --enable-maintainer-mode "$@"
 

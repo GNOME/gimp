@@ -11,6 +11,10 @@
 #define CPP_PROGRAM "cpp"
 #endif
 
+#ifndef CPP_SEARCH
+#define CPP_SEARCH
+#endif
+
 Id header_root = NULL;
 Id source_name = NULL;
 
@@ -93,7 +97,7 @@ int main(int argc, char* argv[]){
 	FILE* f;
 	
 	init_db();
-	cpp_cmd = g_string_new(CPP_PROGRAM);
+	cpp_cmd = g_string_new(CPP_PROGRAM CPP_SEARCH);
 	yydebug=0;
 	get_options(argc, argv);
 	g_string_append(cpp_cmd, " ");

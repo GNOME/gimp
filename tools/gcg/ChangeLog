@@ -1,3 +1,10 @@
+Sat Jan  9 22:44:03 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* autogen.sh: call configure again
+
+	* gcg.c
+	* Makefile.am: use CPP_SEARCH for finding stuff
+
 Sat Jan  9 16:00:22 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: pass -x c to gcc so it doesn't try to
