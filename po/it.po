@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:52+0200\n"
-"PO-Revision-Date: 2003-09-09 20:39+0200\n"
+"PO-Revision-Date: 2003-09-15 18:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2081,6 +2081,9 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
+"Profondità di pattern %d non supportata\n"
+"nel file '%s'.\n"
+"I pattern GIMP possono essere Grigi o RGB."
 
 #: app/core/gimppattern.c:398
 #, c-format
@@ -2179,25 +2182,24 @@ msgstr "Colore personalizzato"
 #: app/display/gimpdisplayshell.c:776
 #, fuzzy
 msgid "Set Canvas Padding Color"
-msgstr "Configura dimensione della superficie"
+msgstr "Imposta il colore delle padding canvas"
 
 #: app/display/gimpdisplayshell.c:785
+#, fuzzy
 msgid "Set canvas padding color"
-msgstr ""
+msgstr "Imposta il colore delle padding canvas"
 
 #: app/display/gimpdisplayshell.c:797
 msgid "/From Theme"
 msgstr "/Dal tema"
 
 #: app/display/gimpdisplayshell.c:800
-#, fuzzy
 msgid "/Light Check Color"
-msgstr "Scacchi piccoli"
+msgstr "/Colore a scacchi chiaro"
 
 #: app/display/gimpdisplayshell.c:803
-#, fuzzy
 msgid "/Dark Check Color"
-msgstr "Scacchi scuri"
+msgstr "/Colore a scacchi scuro"
 
 #: app/display/gimpdisplayshell.c:809
 msgid "/Select Custom Color..."
@@ -2243,11 +2245,11 @@ msgstr "Filtri disponibili"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:191
 msgid "Add the selected filter to the list of active filters."
-msgstr ""
+msgstr "Aggiungi il filtro selezionato all'elenco dei filtri attivi."
 
 #: app/display/gimpdisplayshell-filter-dialog.c:208
 msgid "Remove the selected filter from the list of active filters."
-msgstr ""
+msgstr "Elimina il filtro selezionato dall'elenco dei filtri attivi."
 
 #: app/display/gimpdisplayshell-filter-dialog.c:222
 msgid "Move the selected filter up"
@@ -2389,14 +2391,13 @@ msgid "Version %s brought to you by"
 msgstr "Versione %s realizzata da"
 
 #: app/gui/about-dialog.c:356
-#, fuzzy
 msgid "Visit http://www.gimp.org/ for more information"
-msgstr "Visitate http://www.gimp.org/ per informazioni"
+msgstr "Per ulterriori informazioni visitate http://www.gimp.org/"
 
 #: app/gui/brush-select.c:183 app/tools/gimppaintoptions-gui.c:117
 #: app/widgets/gimplayertreeview.c:297
 msgid "Opacity:"
-msgstr "Opacità"
+msgstr "Opacità:"
 
 #: app/gui/brush-select.c:200 app/tools/gimppaintoptions-gui.c:122
 #: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:290
@@ -2410,49 +2411,40 @@ msgid ""
 msgstr ""
 
 #: app/gui/brushes-menu.c:45
-#, fuzzy
 msgid "/_New Brush"
-msgstr "Nuovo pennello"
+msgstr "/_Nuovo pennello"
 
 #: app/gui/brushes-menu.c:50
-#, fuzzy
 msgid "/D_uplicate Brush"
-msgstr "/Duplica tracciato"
+msgstr "/D_uplica pennello"
 
 #: app/gui/brushes-menu.c:55
-#, fuzzy
 msgid "/_Edit Brush..."
-msgstr "Modifica pennelli"
+msgstr "/Modifica p_ennello..."
 
 #: app/gui/brushes-menu.c:60
-#, fuzzy
 msgid "/_Delete Brush..."
-msgstr "/Cancella tracciato"
+msgstr "/_Cancella pennello"
 
 #: app/gui/brushes-menu.c:68
-#, fuzzy
 msgid "/_Refresh Brushes"
-msgstr "Pennelli creati"
+msgstr "/Aggio_rna pennelli"
 
 #: app/gui/buffers-menu.c:42
-#, fuzzy
 msgid "/_Paste Buffer"
-msgstr "Incolla buffer con nome"
+msgstr "/_Incolla buffer"
 
 #: app/gui/buffers-menu.c:47
-#, fuzzy
 msgid "/Paste Buffer _Into"
-msgstr "Incolla dentro"
+msgstr "/Incolla buffer _dentro"
 
 #: app/gui/buffers-menu.c:52
-#, fuzzy
 msgid "/Paste Buffer as _New"
-msgstr "Incolla come nuovo"
+msgstr "/Incolla buffer come _nuovo"
 
 #: app/gui/buffers-menu.c:57
-#, fuzzy
 msgid "/_Delete Buffer"
-msgstr "/Elimina livello"
+msgstr "/_Elimina buffer"
 
 #: app/gui/channels-commands.c:141
 #, fuzzy, c-format
@@ -3013,18 +3005,16 @@ msgid "/View as _Grid"
 msgstr "/Vissta come _griglia"
 
 #: app/gui/dialogs-menu.c:170
-#, fuzzy
 msgid "/Show Image _Menu"
-msgstr "/Immagine/Modalità/---"
+msgstr "/Mostra _menu immagine"
 
 #: app/gui/dialogs-menu.c:174
 msgid "/Auto Follow Active _Image"
 msgstr ""
 
 #: app/gui/documents-menu.c:43
-#, fuzzy
 msgid "/_Open Image"
-msgstr "/Immagine appiattita"
+msgstr "/_Apri immagine"
 
 #: app/gui/documents-menu.c:48
 #, fuzzy
@@ -3037,21 +3027,16 @@ msgid "/File Open _Dialog..."
 msgstr "/File/Apri..."
 
 #: app/gui/documents-menu.c:58
-#, fuzzy
 msgid "/Remove _Entry"
-msgstr "Rimuovi"
+msgstr "/Rimuovi _voce"
 
 #: app/gui/documents-menu.c:66
-#, fuzzy
 msgid "/Recreate _Preview"
-msgstr ""
-"Genera\n"
-"anteprima"
+msgstr "/Rigenera _anteprima"
 
 #: app/gui/documents-menu.c:71
-#, fuzzy
 msgid "/Reload _all Previews"
-msgstr "Anteprima"
+msgstr "/Ricarica _tutte le anteprime"
 
 #: app/gui/documents-menu.c:76
 #, fuzzy
@@ -3088,44 +3073,42 @@ msgid "There is no active layer or channel to stroke to."
 msgstr ""
 
 #: app/gui/edit-commands.c:304 app/gui/edit-commands.c:333
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "Incolla buffer con nome"
+msgstr "(buffer senza nome)"
 
 #: app/gui/error-console-menu.c:39
-#, fuzzy
 msgid "/_Clear Errors"
-msgstr "Misurino"
+msgstr "/_Azzera gli errori"
 
 #: app/gui/error-console-menu.c:47
-#, fuzzy
 msgid "/Save _All Errors to File..."
-msgstr "Scrivere tutti gli errori in un file..."
+msgstr "/Salva _tutti gli errori in un file..."
 
 #: app/gui/error-console-menu.c:52
-#, fuzzy
 msgid "/Save _Selection to File..."
-msgstr "Scrivere la selezione in un file..."
+msgstr "/Salva la selezione in un file..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
 #: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Apertura fallita.\n"
+"Apertura di '%s' fallita:\n"
+"\n"
 "%s"
 
 #: app/gui/file-commands.c:249 app/gui/file-save-dialog.c:375
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Saving '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Salvataggio fallito.\n"
+"Salvataggio di '%s' fallito:\n"
+"\n"
 "%s"
 
 #: app/gui/file-commands.c:290
