@@ -1,3 +1,7 @@
+Sat Feb 12 16:02:12 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: ooops, must have been late
+
 2000-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c: fix a warning.
@@ -44,7 +48,7 @@ Sat Feb 12 12:24:57 CET 2000  Sven Neumann <sven@gimp.org>
 
 Sat Feb 12 03:14:02 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* libgimp/gimpchainbutton.c: documenation and code cleanup
+	* libgimp/gimpchainbutton.c: documentation and code cleanup
 
 	* app/gimpparasite.h
 	* libgimp/parasite.[ch]: use g* types
