@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.1\n"
-"POT-Creation-Date: 2001-04-26 13:26+0200\n"
-"PO-Revision-Date: 2001-04-26 13:27+0200\n"
+"POT-Creation-Date: 2001-04-27 11:21+0200\n"
+"PO-Revision-Date: 2001-04-27 11:16+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1131,7 +1131,7 @@ msgstr "Matériau"
 
 #: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:851
 msgid "Bump Map"
-msgstr "Carte en relief"
+msgstr "Bosselage d'aprés une carte"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
 msgid "Environment Map"
@@ -2490,7 +2490,7 @@ msgstr "256 (non sens ?)"
 
 #: plug-ins/common/bumpmap.c:367
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filtres/Carte/Carte en relief..."
+msgstr "<Image>/Filtres/Carte/Bosselage d'aprés une carte..."
 
 #: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
@@ -2529,7 +2529,7 @@ msgstr "Carte en relief en mosaique"
 
 #: plug-ins/common/bumpmap.c:1012
 msgid "Bump Map:"
-msgstr "Carte en relief :"
+msgstr "Bosselage d'aprés une carte :"
 
 #: plug-ins/common/bumpmap.c:1031 plug-ins/common/emboss.c:571
 msgid "Azimuth:"
@@ -4325,7 +4325,7 @@ msgstr "Déplacer"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
-msgstr "Grossir"
+msgstr "Agrandir"
 
 # CCW ?
 #: plug-ins/common/iwarp.c:1036
@@ -4334,7 +4334,7 @@ msgstr "Tourbillon CCW"
 
 #: plug-ins/common/iwarp.c:1038
 msgid "Shrink"
-msgstr "Rapetisser"
+msgstr "Réduire"
 
 # CW ?
 #: plug-ins/common/iwarp.c:1039
@@ -15541,7 +15541,7 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "Profondeur"
 
 #~ msgid "Bump map"
-#~ msgstr "Relief"
+#~ msgstr "Bosselage d'aprés une carte"
 
 #~ msgid "X offset"
 #~ msgstr "Décalage X"

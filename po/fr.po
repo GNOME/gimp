@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-04-26 13:18+0200\n"
-"PO-Revision-Date: 2001-04-26 13:21+0200\n"
+"POT-Creation-Date: 2001-04-27 11:15+0200\n"
+"PO-Revision-Date: 2001-04-27 11:15+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -798,15 +798,15 @@ msgstr "Largeur de la zone adoucie :"
 
 #: app/commands.c:376
 msgid "Shrink Selection"
-msgstr "Rapetisser"
+msgstr "Réduire"
 
 #: app/commands.c:379
 msgid "Shrink Selection by:"
-msgstr "Rapetisser la sélection de :"
+msgstr "Réduire la sélection de :"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
-msgstr "Rétrécir depuis le bord de l'image"
+msgstr "Réduire depuis le bord de l'image"
 
 #: app/commands.c:410
 msgid "Grow Selection"
@@ -3212,7 +3212,7 @@ msgstr "/Sélection/Affiner"
 
 #: app/menus.c:292
 msgid "/Select/Shrink..."
-msgstr "/Sélection/Rapetisser..."
+msgstr "/Sélection/Réduire..."
 
 #: app/menus.c:294
 msgid "/Select/Grow..."
