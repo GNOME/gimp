@@ -463,13 +463,12 @@ libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build
 plug-ins/gbr/Makefile
-plug-ins/pat/Makefile
-plug-ins/sgi/Makefile
-plug-ins/rll/Makefile
 plug-ins/tiff/Makefile
-plug-ins/lic/Makefile
+plug-ins/sgi/Makefile
+plug-ins/pat/Makefile
 plug-ins/script-fu/Makefile
-plug-ins/psd/Makefile
+plug-ins/script-fu/scripts/Makefile
+plug-ins/dbbrowser/Makefile
 app/Makefile
 docs/Makefile,
 chmod +x gimptool
