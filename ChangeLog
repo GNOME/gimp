@@ -1,3 +1,8 @@
+2001-11-19  Sven Neumann  <sven@gimp.org>
+
+	* RELEASE-TO-CVS.patch: changes to the text tool to make it compile 
+	with the new PangoFT2 API. 
+
 2001-11-19  Daniel Egger  <degger@fhm.edu>
 
 	* app/paint-funcs/paint-funcs.c

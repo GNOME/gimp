@@ -23,3 +23,62 @@ diff -u -p -r1.242 menus.c
    g_free (filename);
  
    if (toolbox_factory)
+Index: app/tools/gimptexttool.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/tools/gimptexttool.c,v
+retrieving revision 1.132
+diff -u -p -r1.132 gimptexttool.c
+--- app/tools/gimptexttool.c	2001/11/08 19:13:52	1.132
++++ app/tools/gimptexttool.c	2001/11/19 10:55:24
+@@ -56,6 +56,8 @@
+ #include "undo_types.h"
+ #include "undo.h"
+ 
++#include "gimprc.h"
++
+ #include "libgimp/gimpintl.h"
+ 
+ 
+@@ -193,7 +195,8 @@ gimp_text_tool_init (GimpTextTool *text_
+ 
+   tool = GIMP_TOOL (text_tool);
+  
+-  text_tool->pango_context = pango_ft2_get_context ();
++  text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
++                                                    gimprc.monitor_yres);
+ 
+   /*  The tool options  */
+   if (! text_tool_options)
+@@ -493,6 +496,8 @@ text_render (GimpImage    *gimage,
+   PangoRectangle        logical;
+   GimpImageType         layer_type;
+   GimpLayer            *layer = NULL;
++  gdouble               xres;
++  gdouble               yres;
+ 
+   g_return_val_if_fail (fontname != NULL, FALSE);
+   g_return_val_if_fail (text != NULL, FALSE);
+@@ -511,7 +516,9 @@ text_render (GimpImage    *gimage,
+   if (!font_desc)
+     return NULL;
+   
+-  context = pango_ft2_get_context ();
++  gimp_image_get_resolution (gimage, &xres, &yres);
++  context = pango_ft2_get_context (xres, yres);
++
+   layout = pango_layout_new (context);
+   pango_layout_set_font_description (layout, font_desc);
+   pango_font_description_free (font_desc);
+@@ -644,8 +651,10 @@ text_get_extents (const gchar *fontname,
+   font_desc = pango_font_description_from_string (fontname);
+   if (!font_desc)
+     return FALSE;
+-  
+-  context = pango_ft2_get_context ();
++
++  /* FIXME: resolution */
++  context = pango_ft2_get_context (72.0, 72.0);
++
+   layout = pango_layout_new (context);
+   pango_layout_set_font_description (layout, font_desc);
+   pango_font_description_free (font_desc);
