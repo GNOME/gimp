@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
 "POT-Creation-Date: 1999-09-09 21:28-0700\n"
-"PO-Revision-Date: 1999-10-13 05:30:34+0900\n"
-"Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
+"PO-Revision-Date: 1999-10-19 09:15:33+0900\n"
+"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-kr\n"
@@ -1302,7 +1302,7 @@ msgstr "파일에 셀렉션 쓰기..."
 #: app/errors.c:79
 #, c-format
 msgid "%s: fatal error: %s\n"
-msgstr "%s: 치명적인 애러: %s\n
+msgstr "%s: 치명적인 애러: %s\n"
 
 #: app/file_new_dialog.c:218
 msgid "Confirm Image Size"
