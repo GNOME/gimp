@@ -1,3 +1,8 @@
+2003-11-06  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/session.png: use somthing
+	  nice
+	
 2003-11-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: fixed/added API docs.
