@@ -1,3 +1,10 @@
+2002-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* modules/cdisplay_colorblind.c (cdisplay_colorblind_get_type)
+	* modules/cdisplay_gamma.c (cdisplay_gamma_get_type)
+	* modules/cdisplay_highcontrast.c (cdisplay_contrast_get_type):
+	s/select_info/display_info/
+
 2002-12-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpgradientmenu.c (gimp_gradient_select_widget): match

@@ -116,7 +116,7 @@ cdisplay_gamma_get_type (GTypeModule *module)
 {
   if (! cdisplay_gamma_type)
     {
-      static const GTypeInfo select_info =
+      static const GTypeInfo display_info =
       {
         sizeof (CdisplayGammaClass),
 	(GBaseInitFunc) NULL,
@@ -133,7 +133,7 @@ cdisplay_gamma_get_type (GTypeModule *module)
         g_type_module_register_type (module,
                                      GIMP_TYPE_COLOR_DISPLAY,
                                      "CdisplayGamma",
-                                     &select_info, 0);
+                                     &display_info, 0);
     }
 
   return cdisplay_gamma_type;

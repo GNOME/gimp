@@ -127,7 +127,7 @@ cdisplay_colorblind_get_type (GTypeModule *module)
 {
   if (! cdisplay_colorblind_type)
     {
-      static const GTypeInfo select_info =
+      static const GTypeInfo display_info =
       {
         sizeof (CdisplayColorblindClass),
 	(GBaseInitFunc) NULL,
@@ -144,7 +144,7 @@ cdisplay_colorblind_get_type (GTypeModule *module)
         g_type_module_register_type (module,
                                      GIMP_TYPE_COLOR_DISPLAY,
                                      "CdisplayColorblind",
-                                     &select_info, 0);
+                                     &display_info, 0);
     }
 
   return cdisplay_colorblind_type;

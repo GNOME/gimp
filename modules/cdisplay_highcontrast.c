@@ -116,7 +116,7 @@ cdisplay_contrast_get_type (GTypeModule *module)
 {
   if (! cdisplay_contrast_type)
     {
-      static const GTypeInfo select_info =
+      static const GTypeInfo display_info =
       {
         sizeof (CdisplayContrastClass),
 	(GBaseInitFunc) NULL,
@@ -133,7 +133,7 @@ cdisplay_contrast_get_type (GTypeModule *module)
         g_type_module_register_type (module,
                                      GIMP_TYPE_COLOR_DISPLAY,
                                      "CdisplayContrast",
-                                     &select_info, 0);
+                                     &display_info, 0);
     }
 
   return cdisplay_contrast_type;
