@@ -137,7 +137,7 @@ HELP
     $inargs[0]->{desc} .= ' to which to add the channel';
 
     @outargs = (
-	{ name => 'channel', type => 'channel',
+	{ name => 'channel', type => 'channel', wrap => 1,
 	  desc => 'The newly created channel', init => 1 }
     );
 

@@ -568,7 +568,7 @@ HELP
     }
 
     @outargs = (
-	{ name => 'mean',
+	{ name => 'mean', void_ret => 1,
 	  desc => 'Mean itensity value' },
 	{ name => 'std_dev',
 	  desc => 'Standard deviation of intensity values' },

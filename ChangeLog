@@ -1,3 +1,22 @@
+Wed Jun 21 20:18:16 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/gimprc.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/parasite.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/unit.pdb: initial pass of getting all the libgimp
+	wrappers autogenned.
+
 2000-06-19  Simon Budig  <simon@gimp.org>
 
 	* app/layers_dialog.c: Layers can be renamed by pressing

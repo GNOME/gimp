@@ -50,7 +50,7 @@ HELP
 	{ name => 'gdisplay', type => 'int32',
 	  desc => 'GDisplay to update progressbar in, or -1 for a seperate
 		   window',
-	  implicit_fill => '_gdisp_ID', no_id_lookup => 1 }
+	  implicit_fill => 'gimp_default_display ()', no_id_lookup => 1 }
     );
 
     %invoke = (

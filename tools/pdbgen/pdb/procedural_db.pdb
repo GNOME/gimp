@@ -69,7 +69,7 @@ HELP
 
     @outargs = (
 	{ name => "${type}_type", type => 'enum PDBArgType (no PDB_END)',
-	  desc => "The type of $long_type { %%desc%% }",
+	  desc => "The type of $long_type { %%desc%% }", wrap => 1,
 	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type",
@@ -170,7 +170,7 @@ HELP
 		   'GIMP Extension' }>;
 
     @outargs = (
-	{ name  => 'procedure_names', type  => 'stringarray',
+	{ name  => 'procedure_names', type  => 'stringarray', void_ret => 1,
 	  desc  => 'The list of procedure names',
 	  alias => 'pdb_query.list_of_procs', no_declare => 1,
 	  array => { name  => 'num_matches',
@@ -216,7 +216,7 @@ HELP
     @inargs = ( &proc_name_arg );
 
     @outargs = (
-	{ name => 'blurb', type => 'string', void_ret => 1,
+	{ name => 'blurb', type => 'string', void_ret => 1, wrap => 1,
 	  desc => 'A short blurb' },
 	{ name => 'help', type => 'string',
 	  desc => 'Detailed procedure help' },
@@ -275,6 +275,7 @@ HELP
     @outargs = ( &data_arg );
     $outargs[0]->{alias} = 'data_copy';
     $outargs[0]->{init} = 1;
+    $outargs[0]->{wrap} = 1;
 
     %invoke = (
 	vars => [ 'PDBData *data = NULL', 'GList *list' ],
@@ -356,6 +357,7 @@ HELP
 
     @inargs = ( &data_ident_arg, &data_arg );
     $inargs[1]->{alias} = 'data_src';
+    $inargs[1]->{wrap} = 1;
     delete @{$inargs[1]->{array}}{qw(alias no_declare)};
 
     %invoke = (

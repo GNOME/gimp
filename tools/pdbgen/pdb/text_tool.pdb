@@ -167,6 +167,7 @@ HELP
     );
 
     &extents_outargs;
+    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	vars => [ 'gchar *real_fontname' ],
@@ -243,6 +244,7 @@ HELP
     );
 
     &extents_outargs;
+    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	pass_through => 'text_get_extents_fontname',

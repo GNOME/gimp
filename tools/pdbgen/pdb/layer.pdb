@@ -229,7 +229,7 @@ HELP
     $inargs[0]->{desc} .= ' to which to add the layer';
 
     @outargs = (
-	{ name => 'layer', type => 'layer',
+	{ name => 'layer', type => 'layer', wrap => 1,
 	  desc => 'The newly created layer', init => 1 }
     );
 
@@ -266,7 +266,7 @@ HELP
     $inargs[0]->{desc} .= ' to copy';
 
     @outargs = (
-	{ name => 'layer_copy', type => 'layer', init => 1,
+	{ name => 'layer_copy', type => 'layer', init => 1, wrap => 1,
 	  desc => 'The newly copied layer', alias => 'copy' }
     );
 
@@ -517,7 +517,7 @@ CODE2
 
 &layer_accessors('mode', 'enum LayerModeEffects', 'combination mode', 0, 0);
 
-&layer_accessors('linked', 'int32', 'linked state', 0, 0,
+&layer_accessors('linked', 'boolean', 'linked state', 0, 0,
 		 <<'CODE');
     $author = $copyright = 'Wolfgang Hofer';
     $date = '1998';

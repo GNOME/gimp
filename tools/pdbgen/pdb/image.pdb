@@ -760,7 +760,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'cmap', type => 'int8array', init => 1,
+	{ name => 'cmap', type => 'int8array', init => 1, wrap => 1,
 	  desc => "The image's colormap",
 	  array => { name => 'num_bytes', init => 1,
 		     desc => 'Number of bytes in the colormap array:
@@ -792,7 +792,7 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'cmap', type => 'int8array',
+	{ name => 'cmap', type => 'int8array', wrap => 1,
 	  desc => "The new colormap values",
 	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
 		     desc => 'Number of bytes in the colormap array:
@@ -1182,6 +1182,7 @@ HELP
     $date = '1998';
 
     push @outargs, { %{$outargs[0]} };
+    $outargs[0]->{void_ret} = 1;
 
     my $count = 0;
     foreach $coord (qw(x y)) {
@@ -1318,12 +1319,13 @@ HELP
 
     @outargs = (
 	&preview_dim_args,
-        { name => 'thumbnail_data', type => 'int8array',
+        { name => 'thumbnail_data', type => 'int8array', wrap => 1,
 	  desc => 'The thumbnail data', init => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data',
 		     alias => 'num_bytes', init => 1 } }
     );
+    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	headers => [ qw(<string.h>) ],

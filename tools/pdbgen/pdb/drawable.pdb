@@ -456,11 +456,12 @@ HELP
     @outargs = (
 	&dim_args,
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', init => 1, retval => 1,
+	  desc => 'The thumbnail data', init => 1, wrap => 1,
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of pixels in thumbnail data',
 		     alias => 'num_pixels', init => 1 } }
     );
+    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	headers => [ qw(<string.h> "channel.h" "layer.h") ],

@@ -58,7 +58,7 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
-	my $funcname = "gimp_$name";
+	my $funcname = "gimp_$name"; my $wrapped = "";
 
 	# The 'color' argument is special cased to accept and return the
 	# individual color components. This is to maintain backwards
@@ -107,6 +107,8 @@ sub generate {
 	    my $arg = $arg_types{$type};
 	    my $id = exists $arg->{id_func} || $_->{type} =~ /guide/;
 
+	    $wrapped = "_" if exists $_->{wrap};
+
 	    if (exists $_->{implicit_fill}) {
 		$privatevars++;
 	    }
@@ -153,7 +155,7 @@ CODE
 	if ($rettype ne 'void' || $retcol || $retvoid) {
 	    my $once = 0;
 	    my $firstvar;
-	    my @arraynums;
+	    my @initnums;
 
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
@@ -163,10 +165,12 @@ CODE
 
 		$return_marshal = "" unless $once++;
 
+		$wrapped = "_" if exists $_->{wrap};
+
 	        if (exists $_->{num}) {
 		    if (!exists $_->{no_lib}) {
 			$arglist .= "gint \*$_->{name}, ";
-			push @arraynums, $_;
+			push @initnums, $_;
 		    }
 		}
 		elsif (exists $_->{retval} && $type ne 'color') {
@@ -193,7 +197,7 @@ CODE
 			$return_args .= " = NULL";
 		    }
 		    elsif ($arg->{type} =~ /boolean/) {
-			$return_args .= " = TRUE";
+			$return_args .= " = FALSE";
 		    }
 		    else {
 			# Default to 0
@@ -206,10 +210,25 @@ CODE
 			$return_args .= "\n" . ' ' x 2 . "gint num_$var;";
 		    }
 		}
+		elsif ($retvoid) {
+		    push @initnums, $_;
+		}
 	    }
 
-	    foreach (@arraynums) { $return_marshal .= "\*$_->{name} = 0;\n  " }
-	    $return_marshal =~ s/\n  $/\n\n  /s if scalar(@arraynums);
+	    if (scalar(@initnums)) {
+		foreach (@initnums) {
+		    $return_marshal .= "\*$_->{name} = ";
+		    my ($type) = &arg_parse($_->{type});
+		    for ($arg_types{$type}->{type}) {
+			/\*$/     && do { $return_marshal .= "NULL";  last };
+			/boolean/ && do { $return_marshal .= "FALSE"; last };
+			/double/  && do { $return_marshal .= "0.0";   last };
+					  $return_marshal .= "0";
+		    }
+		    $return_marshal .= ";\n  ";
+		}
+		$return_marshal =~ s/\n  $/\n\n  /s;
+	    }
 
 	    $return_marshal .= <<CODE;
 if (return_vals[0].data.d_status == STATUS_SUCCESS)
@@ -353,12 +372,12 @@ CODE
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
-	my $proto = "$hrettype $funcname ($arglist);\n";
+	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
         push @{$out->{protos}}, $proto;
 
 	my $clist = $arglist;
-	my $padlen = length($funcname) + 2;
+	my $padlen = length($wrapped) + length($funcname) + 2;
 	my $padtab = $padlen / 8; my $padspace = $padlen % 8;
 	my $padding = "\t" x $padtab . ' ' x $padspace;
 	$clist =~ s/\t/$padding/eg;
@@ -366,7 +385,7 @@ CODE
 	$out->{code} .= <<CODE;
 
 $rettype
-$funcname ($clist)
+$wrapped$funcname ($clist)
 {
   GParam *return_vals;
   gint nreturn_vals;$return_args$color

@@ -129,7 +129,7 @@ sub parasite_list {
     $date = '1999';
 
     @outargs = (
-	{ name => 'parasites', type => 'stringarray',
+	{ name => 'parasites', type => 'stringarray', void_ret => 1,
 	  desc => 'The names of currently attached parasites',
 	  array => { desc => 'The number of attached parasites' } }
     );
@@ -139,13 +139,6 @@ sub parasite_list {
 
 @headers = qw("gimpparasite.h" "gimpdrawable.h"
 	      "gimpimage.h");
-
-$extra{lib}->{protos} = <<'CODE';
-void gimp_parasite_attach_new (gchar    *name,
-			       gint      flags,
-			       gint      size,
-			       gpointer  data);
-CODE
 
 $extra{lib}->{code} = <<'CODE';
 void
@@ -168,8 +161,6 @@ CODE
     ['drawable', '&drawable_arg' , 'drawable'],
     ['image'   , '&std_image_arg', 'gimage' ]
 );
-
-my %code;
 
 foreach $type (@types) {
     foreach (@procs[0..3]) {
@@ -196,24 +187,7 @@ SUB
 
 	push @procs, "$type->[0]_$_";
     }
-
-    foreach (qw(protos code)) {
-	my $code = $extra{lib}->{$_};
-	$code =~ s/\t/' ' x 8/eg;
-	$code =~ s/gimp/gimp_$type->[0]/g;
-	$code =~ s/^ {8}/' ' x (length($type->[0]) + 9)/meg;
-	while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
-
-	$code{$_} .= $code;
-    }
 }
-
-
-foreach (qw(protos code)) {
-    $extra{lib}->{$_} .= $code{$_};
-}
-
-chop $extra{lib}->{code};
 
 %exports = (app => [@procs], lib => [@procs]);
 

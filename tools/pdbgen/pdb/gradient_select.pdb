@@ -177,7 +177,7 @@ HELP
 	  desc => 'The gradient name',
 	  alias => 'g_strdup (gradient->name)', no_declare => 1 },
 	{ name => 'grad_data', type => 'floatarray', alias => 'values',
-	  desc => 'The gradient sample data', init => 1,
+	  desc => 'The gradient sample data', init => 1, wrap => 1,
 	  array => { name => 'width',
 		     desc => 'The gradient sample width (r,g,b,a)',
 		     alias => 'sample_size * 4', no_declare => 1 } }

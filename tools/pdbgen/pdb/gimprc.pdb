@@ -107,7 +107,7 @@ HELP
     @inargs = ( );
 
     @outargs = (
-	{  name => 'xres', type => 'float',
+	{  name => 'xres', type => 'float', void_ret => 1,
 	   desc => 'X resolution', alias => 'xres' },
 	{  name => 'yres', type => 'float',
 	   desc => 'Y resolution', alias => 'yres' },	   

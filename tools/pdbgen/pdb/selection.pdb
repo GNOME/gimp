@@ -69,7 +69,7 @@ HELP
     @inargs = ( &std_image_arg );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean',
+	{ name => 'non_empty', type => 'boolean', void_ret => 1,
 	  desc => 'True if there is a selection', init => 1 }
     );
 
@@ -165,7 +165,7 @@ HELP
     &coord_args('off$_', '$_ offset for translation', \@inargs);
 
     @outargs = (
-	{ name => 'layer', type => 'layer',
+	{ name => 'layer', type => 'layer', wrap => 1,
 	  desc => 'The floated layer', init => 1 }
     );
 
