@@ -1,5 +1,16 @@
 2005-02-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-convert.[ch]: new files holding 
+	gimp_drawable_convert_rgb() and gimp_drawable_convert_grayscale()
+	moved out of gimpimage-convert.[ch].
+
+	* app/core/gimpchannel.c
+	* app/core/gimpimage-convert.[ch]
+	* app/core/gimplayer.c: changed accordingly.
+
+2005-02-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c: some simple loop unrolling,
 	converted tabs to spaces and sprinkled the code with const
 	qualifiers.

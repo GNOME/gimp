@@ -6192,6 +6192,13 @@ gimp_drawable_real_replace_region
 </SECTION>
 
 <SECTION>
+<FILE>gimpdrawable-convert</FILE>
+<TITLE>GimpDrawable-convert</TITLE>
+gimp_drawable_convert_rgb
+gimp_drawable_convert_grayscale
+</SECTION>
+
+<SECTION>
 <FILE>gimpdrawable-desaturate</FILE>
 <TITLE>GimpDrawable-desaturate</TITLE>
 gimp_drawable_desaturate
@@ -6282,8 +6289,6 @@ gimp_image_contiguous_region_by_color
 <TITLE>GimpImage-convert</TITLE>
 MAXNUMCOLORS
 gimp_image_convert
-gimp_drawable_convert_rgb
-gimp_drawable_convert_grayscale
 </SECTION>
 
 <SECTION>

@@ -201,6 +201,7 @@
       <xi:include href="xml/gimpdrawable-blend.xml" />
       <xi:include href="xml/gimpdrawable-bucket-fill.xml" />
       <xi:include href="xml/gimpdrawable-combine.xml" />
+      <xi:include href="xml/gimpdrawable-convert.xml" />
       <xi:include href="xml/gimpdrawable-desaturate.xml" />
       <xi:include href="xml/gimpdrawable-equalize.xml" />
       <xi:include href="xml/gimpdrawable-histogram.xml" />

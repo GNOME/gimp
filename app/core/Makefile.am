@@ -80,6 +80,8 @@ libappcore_a_sources = \
 	gimpdrawable-bucket-fill.h	\
 	gimpdrawable-combine.c		\
 	gimpdrawable-combine.h		\
+	gimpdrawable-convert.c		\
+	gimpdrawable-convert.h		\
 	gimpdrawable-desaturate.c	\
 	gimpdrawable-desaturate.h	\
 	gimpdrawable-equalize.c		\

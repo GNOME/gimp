@@ -141,6 +141,7 @@
 
 #include "gimp.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-convert.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo.h"
@@ -752,7 +753,7 @@ remap_indexed_layer (GimpLayer    *layer,
     }
 }
 
-int
+static int
 color_quicksort (const void *c1,
                  const void *c2)
 {
@@ -1093,211 +1094,6 @@ gimp_image_convert (GimpImage              *gimage,
   g_object_thaw_notify (G_OBJECT (gimage));
 
   gimp_unset_busy (gimage->gimp);
-}
-
-
-void
-gimp_drawable_convert_rgb (GimpDrawable      *drawable,
-                           TileManager       *new_tiles,
-                           GimpImageBaseType  old_base_type)
-{
-  PixelRegion   srcPR, destPR;
-  gint          row, col;
-  gint          offset;
-  gint          has_alpha;
-  const guchar *src, *s;
-  guchar       *dest, *d;
-  const guchar *cmap;
-  gpointer      pr;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (new_tiles != NULL);
-
-  has_alpha = gimp_drawable_has_alpha (drawable);
-
-  g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
-
-  cmap = gimp_drawable_cmap (drawable);
-
-  pixel_region_init (&srcPR, drawable->tiles,
-                     0, 0,
-                     GIMP_ITEM (drawable)->width,
-                     GIMP_ITEM (drawable)->height,
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     GIMP_ITEM (drawable)->width,
-                     GIMP_ITEM (drawable)->height,
-                     TRUE);
-
-
-  switch (old_base_type)
-    {
-    case GIMP_GRAY:
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
-        {
-          src  = srcPR.data;
-          dest = destPR.data;
-
-          for (row = 0; row < srcPR.h; row++)
-            {
-              s = src;
-              d = dest;
-
-              for (col = 0; col < srcPR.w; col++)
-                {
-                  d[RED_PIX] = *s;
-                  d[GREEN_PIX] = *s;
-                  d[BLUE_PIX] = *s;
-
-                  d += 3;
-                  s++;
-                  if (has_alpha)
-                    *d++ = *s++;
-                }
-
-              src += srcPR.rowstride;
-              dest += destPR.rowstride;
-            }
-        }
-      break;
-
-    case GIMP_INDEXED:
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
-        {
-          src  = srcPR.data;
-          dest = destPR.data;
-
-          for (row = 0; row < srcPR.h; row++)
-            {
-              s = src;
-              d = dest;
-
-              for (col = 0; col < srcPR.w; col++)
-                {
-                  offset = *s++ * 3;
-                  d[RED_PIX] = cmap[offset + 0];
-                  d[GREEN_PIX] = cmap[offset + 1];
-                  d[BLUE_PIX] = cmap[offset + 2];
-
-                  d += 3;
-                  if (has_alpha)
-                    *d++ = *s++;
-                }
-
-              src += srcPR.rowstride;
-              dest += destPR.rowstride;
-            }
-        }
-      break;
-
-    default:
-      break;
-    }
-}
-
-void
-gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
-                                 TileManager       *new_tiles,
-                                 GimpImageBaseType  old_base_type)
-{
-  PixelRegion   srcPR, destPR;
-  gint          row, col;
-  gint          offset, val;
-  gboolean      has_alpha;
-  const guchar *src, *s;
-  guchar       *dest, *d;
-  const guchar *cmap;
-  gpointer      pr;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (new_tiles != NULL);
-
-  has_alpha = gimp_drawable_has_alpha (drawable);
-
-  g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
-
-  cmap = gimp_drawable_cmap (drawable);
-
-  pixel_region_init (&srcPR, drawable->tiles,
-                     0, 0,
-                     GIMP_ITEM (drawable)->width,
-                     GIMP_ITEM (drawable)->height,
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     GIMP_ITEM (drawable)->width,
-                     GIMP_ITEM (drawable)->height,
-                     TRUE);
-
-  switch (old_base_type)
-    {
-    case GIMP_RGB:
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
-        {
-          src = srcPR.data;
-          dest = destPR.data;
-
-          for (row = 0; row < srcPR.h; row++)
-            {
-              s = src;
-              d = dest;
-              for (col = 0; col < srcPR.w; col++)
-                {
-                  val = GIMP_RGB_INTENSITY (s[RED_PIX],
-                                            s[GREEN_PIX],
-                                            s[BLUE_PIX]) + 0.5;
-                  *d++ = (guchar) val;
-                  s += 3;
-                  if (has_alpha)
-                    *d++ = *s++;
-                }
-
-              src += srcPR.rowstride;
-              dest += destPR.rowstride;
-            }
-        }
-      break;
-
-    case GIMP_INDEXED:
-      for (pr = pixel_regions_register (2, &srcPR, &destPR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
-        {
-          src = srcPR.data;
-          dest = destPR.data;
-
-          for (row = 0; row < srcPR.h; row++)
-            {
-              s = src;
-              d = dest;
-
-              for (col = 0; col < srcPR.w; col++)
-                {
-                  offset = *s++ * 3;
-                  val = GIMP_RGB_INTENSITY (cmap[offset+0],
-                                            cmap[offset+1],
-                                            cmap[offset+2]) + 0.5;
-                  *d++ = (guchar) val;
-                  if (has_alpha)
-                    *d++ = *s++;
-                }
-
-              src += srcPR.rowstride;
-              dest += destPR.rowstride;
-            }
-        }
-      break;
-
-    default:
-      break;
-    }
 }
 
 

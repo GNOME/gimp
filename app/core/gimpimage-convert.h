@@ -36,12 +36,5 @@ void   gimp_image_convert          (GimpImage              *gimage,
                                     GimpPalette            *custom_palette,
                                     GimpProgress           *progress);
 
-void   gimp_drawable_convert_rgb       (GimpDrawable       *drawable,
-                                        TileManager        *new_tiles,
-                                        GimpImageBaseType   old_base_type);
-void   gimp_drawable_convert_grayscale (GimpDrawable       *drawable,
-                                        TileManager        *new_tiles,
-                                        GimpImageBaseType   old_base_type);
-
 
 #endif  /*  __GIMP_IMAGE_CONVERT_H__  */
