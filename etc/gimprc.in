@@ -292,6 +292,16 @@
 #  Just uncomment the following line if you trust the dirty flag.
 # (trust-dirty-flag)
 
+# Perfect mouse tracking
+#  GIMP attempts to keep up with the motion of the pointer when
+#  painting, but when a painting operation is particularly CPU
+#  intensive the GIMP will miss the subtlety of your painting
+#  motion and render overly-angular strokes.  Enabling 'perfect
+#  mouse tracking' allows GIMP to track your painting motion
+#  more evenly, at the expense of lagging behind your brush at
+#  times of CPU stress.
+(perfect-mouse yes)
+
 # Help browser
 #  Determines which program to use as browser for the GIMP help pages.
 #  Possible values are "gimp" which means the built-in help browser
