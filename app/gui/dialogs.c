@@ -49,7 +49,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp-brightness-contrast-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-color-picker-tool-dialog",
-    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+    NULL, 0, TRUE,  TRUE,  TRUE, FALSE },
   { "gimp-colorize-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-crop-tool-dialog",
