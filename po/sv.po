@@ -5170,7 +5170,7 @@ msgstr "Smetaverktyget"
 
 #: app/tool_options.c:609
 msgid "Incremental"
-msgstr "Inkrementiell"
+msgstr "Inkrementell"
 
 #: app/tool_options.c:715
 msgid "Pressure Sensitivity"
