@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
-"POT-Creation-Date: 2004-04-15 16:34-0400\n"
-"PO-Revision-Date: 2004-04-15 20:03-0400\n"
+"POT-Creation-Date: 2004-04-16 11:28-0400\n"
+"PO-Revision-Date: 2004-04-16 20:03-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,7 @@ msgstr ""
 "to your %s file."
 
 #: plug-ins/FractalExplorer/Dialogs.c:553
-#: plug-ins/FractalExplorer/Dialogs.c:1637 plug-ins/common/AlienMap.c:1149
-#: plug-ins/common/AlienMap2.c:1152 plug-ins/gfig/gfig.c:2608
+#: plug-ins/FractalExplorer/Dialogs.c:1637 plug-ins/gfig/gfig.c:2608
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:368
 msgid "About"
 msgstr "About"
@@ -283,8 +282,8 @@ msgid "Color Function"
 msgstr "Colour Function"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
+#: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/channel_mixer.c:599
+#: plug-ins/common/decompose.c:130
 msgid "Red"
 msgstr "Red"
 
@@ -349,14 +348,14 @@ msgstr ""
 "ones and vice versa"
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
-#: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
+#: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/channel_mixer.c:600
+#: plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Green"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
-#: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
+#: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/channel_mixer.c:601
+#: plug-ins/common/decompose.c:136
 msgid "Blue"
 msgstr "Blue"
 
@@ -1231,213 +1230,114 @@ msgstr "Save Options"
 msgid "_RLE encoded"
 msgstr "_RLE encoded"
 
-#: plug-ins/common/AlienMap.c:946
-msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-msgstr "<Image>/Filters/Colours/Map/_Alien Map..."
-
-#: plug-ins/common/AlienMap.c:1076
-msgid "AlienMap: Transforming..."
-msgstr "AlienMap: Transforming..."
-
-#: plug-ins/common/AlienMap.c:1145
-msgid "AlienMap"
-msgstr "AlienMap"
-
-#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:624
-#: plug-ins/common/diffraction.c:505 plug-ins/common/diffraction.c:543
-#: plug-ins/common/diffraction.c:581 plug-ins/common/exchange.c:409
-#: plug-ins/common/noisify.c:366 plug-ins/common/noisify.c:373
-msgid "_Red:"
-msgstr "_Red:"
-
-#: plug-ins/common/AlienMap.c:1193
-msgid "Change intensity of the red channel"
-msgstr "Change intensity of the red channel"
-
-#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:636
-#: plug-ins/common/diffraction.c:514 plug-ins/common/diffraction.c:552
-#: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
-#: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
-msgid "_Green:"
-msgstr "_Green:"
-
-#: plug-ins/common/AlienMap.c:1203
-msgid "Change intensity of the green channel"
-msgstr "Change intensity of the green channel"
-
-#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:649
-#: plug-ins/common/diffraction.c:523 plug-ins/common/diffraction.c:561
-#: plug-ins/common/diffraction.c:599 plug-ins/common/exchange.c:497
-#: plug-ins/common/noisify.c:368 plug-ins/common/noisify.c:375
-msgid "_Blue:"
-msgstr "_Blue:"
-
-#: plug-ins/common/AlienMap.c:1212
-msgid "Change intensity of the blue channel"
-msgstr "Change intensity of the blue channel"
-
-#: plug-ins/common/AlienMap.c:1222 plug-ins/common/AlienMap.c:1245
-#: plug-ins/common/AlienMap.c:1268
-msgid "_Sine"
-msgstr "_Sine"
-
-#: plug-ins/common/AlienMap.c:1223 plug-ins/common/AlienMap.c:1246
-#: plug-ins/common/AlienMap.c:1269
-msgid "Cos_ine"
-msgstr "Cos_ine"
-
-#: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
-msgid "_None"
-msgstr "_None"
-
-#: plug-ins/common/AlienMap.c:1229
-msgid "Use sine-function for red component."
-msgstr "Use sine-function for red component."
-
-#: plug-ins/common/AlienMap.c:1231
-msgid "Use cosine-function for red component."
-msgstr "Use cosine-function for red component."
-
-#: plug-ins/common/AlienMap.c:1233
-msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Red channel: use linear mapping instead of any trigonometrical function"
-
-#: plug-ins/common/AlienMap.c:1252
-msgid "Use sine-function for green component."
-msgstr "Use sine-function for green component."
-
-#: plug-ins/common/AlienMap.c:1254
-msgid "Use cosine-function for green component."
-msgstr "Use cosine-function for green component."
-
-#: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-
-#: plug-ins/common/AlienMap.c:1275
-msgid "Use sine-function for blue component."
-msgstr "Use sine-function for blue component."
-
-#: plug-ins/common/AlienMap.c:1277
-msgid "Use cosine-function for blue component."
-msgstr "Use cosine-function for blue component."
-
-#: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-
-#: plug-ins/common/AlienMap.c:1360
-msgid "About AlienMap"
-msgstr "About AlienMap"
-
-#: plug-ins/common/AlienMap2.c:954
+#: plug-ins/common/AlienMap2.c:176
 msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
 msgstr "<Image>/Filters/Colours/Map/Alien Map _2..."
 
-#: plug-ins/common/AlienMap2.c:1079
+#: plug-ins/common/AlienMap2.c:301
 msgid "AlienMap2: Transforming..."
 msgstr "AlienMap2: Transforming..."
 
-#: plug-ins/common/AlienMap2.c:1148
+#: plug-ins/common/AlienMap2.c:373
 msgid "AlienMap2"
 msgstr "AlienMap2"
 
-#: plug-ins/common/AlienMap2.c:1194
-msgid "R/H-_Frequency:"
-msgstr "R/H-_Frequency:"
+#: plug-ins/common/AlienMap2.c:418 plug-ins/common/AlienMap2.c:622
+msgid "Red _Frequency:"
+msgstr "Red _Frequency:"
 
-#: plug-ins/common/AlienMap2.c:1197
-msgid "Change frequency of the red/hue channel"
-msgstr "Change frequency of the red/hue channel"
+#: plug-ins/common/AlienMap2.c:421 plug-ins/common/AlienMap2.c:443
+#: plug-ins/common/AlienMap2.c:465
+msgid "Number of cycles covering full value range"
+msgstr "Number of cycles covering full value range"
 
-#: plug-ins/common/AlienMap2.c:1204
-msgid "R/H-_Phaseshift:"
-msgstr "R/H-_Phaseshift:"
+#: plug-ins/common/AlienMap2.c:429 plug-ins/common/AlienMap2.c:628
+msgid "Red _Phaseshift:"
+msgstr "Red _Phaseshift:"
 
-#: plug-ins/common/AlienMap2.c:1207
-msgid "Change angle of the red/hue channel"
-msgstr "Change angle of the red/hue channel"
+#: plug-ins/common/AlienMap2.c:432 plug-ins/common/AlienMap2.c:454
+#: plug-ins/common/AlienMap2.c:476
+msgid "Phase angle, range 0-360"
+msgstr "Phase angle, range 0-360"
 
-#: plug-ins/common/AlienMap2.c:1214
-msgid "G/S-Fr_equency:"
-msgstr "G/S-Fr_equency:"
+#: plug-ins/common/AlienMap2.c:440 plug-ins/common/AlienMap2.c:624
+msgid "Green Fr_equency:"
+msgstr "Green Fr_equency:"
 
-#: plug-ins/common/AlienMap2.c:1217
-msgid "Change frequency of the green/saturation channel"
-msgstr "Change frequency of the green/saturation channel"
+#: plug-ins/common/AlienMap2.c:451 plug-ins/common/AlienMap2.c:630
+msgid "Green Ph_aseshift:"
+msgstr "Green Ph_aseshift:"
 
-#: plug-ins/common/AlienMap2.c:1224
-msgid "G/S-Ph_aseshift:"
-msgstr "G/S-Ph_aseshift:"
+#: plug-ins/common/AlienMap2.c:462 plug-ins/common/AlienMap2.c:626
+msgid "Blue Freq_uency:"
+msgstr "Blue Freq_uency:"
 
-#: plug-ins/common/AlienMap2.c:1227
-msgid "Change angle of the green/saturation channel"
-msgstr "Change angle of the green/saturation channel"
-
-#: plug-ins/common/AlienMap2.c:1234
-msgid "B/L-Freq_uency:"
-msgstr "B/L-Freq_uency:"
-
-#: plug-ins/common/AlienMap2.c:1237
-msgid "Change frequency of the blue/luminance channel"
-msgstr "Change frequency of the blue/luminance channel"
-
-#: plug-ins/common/AlienMap2.c:1244
-msgid "B/L-Pha_seshift:"
-msgstr "B/L-Pha_seshift:"
-
-#: plug-ins/common/AlienMap2.c:1247
-msgid "Change angle of the blue/luminance channel"
-msgstr "Change angle of the blue/luminance channel"
+#: plug-ins/common/AlienMap2.c:473 plug-ins/common/AlienMap2.c:632
+msgid "Blue Pha_seshift:"
+msgstr "Blue Pha_seshift:"
 
 #. * Gray: Operation-Mode *
-#: plug-ins/common/AlienMap2.c:1255 plug-ins/common/deinterlace.c:298
+#: plug-ins/common/AlienMap2.c:485 plug-ins/common/deinterlace.c:298
 #: plug-ins/common/hot.c:595 plug-ins/common/waves.c:317
 #: plug-ins/rcm/rcm_dialog.c:492
 msgid "Mode"
 msgstr "Mode"
 
-#: plug-ins/common/AlienMap2.c:1259
+#: plug-ins/common/AlienMap2.c:489
 msgid "_RGB Color Model"
 msgstr "_RGB Colour Model"
 
-#: plug-ins/common/AlienMap2.c:1260
+#: plug-ins/common/AlienMap2.c:490
 msgid "_HSL Color Model"
 msgstr "_HSL Colour Model"
 
-#: plug-ins/common/AlienMap2.c:1272
-msgid "_Modify Red/Hue Channel"
-msgstr "_Modify Red/Hue Channel"
+#: plug-ins/common/AlienMap2.c:515 plug-ins/common/AlienMap2.c:634
+msgid "_Modify Red Channel"
+msgstr "_Modify Red Channel"
 
-#: plug-ins/common/AlienMap2.c:1277
-msgid "Use function for red/hue component"
-msgstr "Use function for red/hue component"
+#: plug-ins/common/AlienMap2.c:534 plug-ins/common/AlienMap2.c:636
+msgid "Mo_dify Green Channel"
+msgstr "Mo_dify Green Channel"
 
-#: plug-ins/common/AlienMap2.c:1284
-msgid "Mo_dify Green/Saturation Channel"
-msgstr "Mo_dify Green/Saturation Channel"
+#: plug-ins/common/AlienMap2.c:553 plug-ins/common/AlienMap2.c:638
+msgid "Mod_ify Blue Channel"
+msgstr "Mod_ify Blue Channel"
 
-#: plug-ins/common/AlienMap2.c:1290
-msgid "Use function for green/saturation component"
-msgstr "Use function for green/saturation component"
+#: plug-ins/common/AlienMap2.c:643
+msgid "Hue _Frequency:"
+msgstr "Hue _Frequency:"
 
-#: plug-ins/common/AlienMap2.c:1297
-msgid "Mod_ify Blue/Luminance Channel"
-msgstr "Mod_ify Blue/Luminance Channel"
+#: plug-ins/common/AlienMap2.c:645
+msgid "Saturation Fr_equency:"
+msgstr "Saturation Fr_equency:"
 
-#: plug-ins/common/AlienMap2.c:1303
-msgid "Use function for blue/luminance component"
-msgstr "Use function for blue/luminance component"
+#: plug-ins/common/AlienMap2.c:647
+msgid "Luminosity Freq_uency:"
+msgstr "Luminosity Freq_uency:"
 
-#: plug-ins/common/AlienMap2.c:1395
-msgid "About AlienMap2"
-msgstr "About AlienMap2"
+#: plug-ins/common/AlienMap2.c:649
+msgid "Hue _Phaseshift:"
+msgstr "Hue _Phaseshift:"
+
+#: plug-ins/common/AlienMap2.c:651
+msgid "Saturation Ph_aseshift:"
+msgstr "Saturation Ph_aseshift:"
+
+#: plug-ins/common/AlienMap2.c:653
+msgid "Luminosity Pha_seshift:"
+msgstr "Luminosity Pha_seshift:"
+
+#: plug-ins/common/AlienMap2.c:655
+msgid "_Modify Hue Channel"
+msgstr "_Modify Hue Channel"
+
+#: plug-ins/common/AlienMap2.c:657
+msgid "Mo_dify Saturation Channel"
+msgstr "Mo_dify Saturation Channel"
+
+#: plug-ins/common/AlienMap2.c:659
+msgid "Mod_ify Luminosity Channel"
+msgstr "Mod_ify Luminosity Channel"
 
 #: plug-ins/common/CEL.c:191
 msgid "Load KISS Palette"
@@ -2411,6 +2311,27 @@ msgstr "_Preview"
 #: plug-ins/common/channel_mixer.c:591
 msgid "O_utput Channel:"
 msgstr "O_utput Channel:"
+
+#: plug-ins/common/channel_mixer.c:624 plug-ins/common/diffraction.c:505
+#: plug-ins/common/diffraction.c:543 plug-ins/common/diffraction.c:581
+#: plug-ins/common/exchange.c:409 plug-ins/common/noisify.c:366
+#: plug-ins/common/noisify.c:373
+msgid "_Red:"
+msgstr "_Red:"
+
+#: plug-ins/common/channel_mixer.c:636 plug-ins/common/diffraction.c:514
+#: plug-ins/common/diffraction.c:552 plug-ins/common/diffraction.c:590
+#: plug-ins/common/exchange.c:453 plug-ins/common/noisify.c:367
+#: plug-ins/common/noisify.c:374
+msgid "_Green:"
+msgstr "_Green:"
+
+#: plug-ins/common/channel_mixer.c:649 plug-ins/common/diffraction.c:523
+#: plug-ins/common/diffraction.c:561 plug-ins/common/diffraction.c:599
+#: plug-ins/common/exchange.c:497 plug-ins/common/noisify.c:368
+#: plug-ins/common/noisify.c:375
+msgid "_Blue:"
+msgstr "_Blue:"
 
 #. The monochrome toggle
 #: plug-ins/common/channel_mixer.c:660
@@ -3506,6 +3427,7 @@ msgid "Composing Images..."
 msgstr "Composing Images..."
 
 #: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:185
+#: plug-ins/helpbrowser/dialog.c:464
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -6856,6 +6778,10 @@ msgstr "Save as TIFF"
 msgid "Compression"
 msgstr "Compression"
 
+#: plug-ins/common/tiff.c:2097
+msgid "_None"
+msgstr "_None"
+
 #: plug-ins/common/tiff.c:2098
 msgid "_LZW"
 msgstr "_LZW"
@@ -9719,20 +9645,15 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr "GIMP Help Browser"
 
-#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
-#: plug-ins/imagemap/imap_settings.c:167
-msgid "<Untitled>"
-msgstr "<Untitled>"
-
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:521
 msgid "Document Not Found"
 msgstr "Document Not Found"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:523
 msgid "Could not locate help document"
 msgstr "Could not locate help document"
 
-#: plug-ins/helpbrowser/dialog.c:537
+#: plug-ins/helpbrowser/dialog.c:525
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -10317,6 +10238,10 @@ msgstr "pixels from _top"
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
 msgstr "<Image>/Filters/Web/_ImageMap..."
+
+#: plug-ins/imagemap/imap_main.c:586 plug-ins/imagemap/imap_settings.c:167
+msgid "<Untitled>"
+msgstr "<Untitled>"
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
@@ -11694,14 +11619,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
 
-#~ msgid "Save: No filename given"
-#~ msgstr "Save: No filename given"
-
-#~ msgid "Cannot save to a folder."
-#~ msgstr "Cannot save to a folder."
-
-#~ msgid "Save as GIcon"
-#~ msgstr "Save as GIcon"
-
-#~ msgid "Icon Name:"
-#~ msgstr "Icon Name:"
