@@ -1,3 +1,40 @@
+2002-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo.c: removed #if 0'ed old display update hackery. Don't
+	flush the displays here at all and include nothing from
+	"display/".
+
+	* app/undo_history.c
+	* app/gui/edit-commands.c: call gdisplays_flush() if undo_pop() or
+	undo_redo() return TRUE.
+
+	* app/core/gimpimage-contiguous-region.[ch]: allow a contiguous
+	transparent region to be selected/filled (#71058).
+
+	* app/core/gimpdrawable-bucket-fill.[ch]
+	* app/core/gimpimage-mask-select.[ch]: take a boolean
+	fill_transparent/select_transparent parameter and pass it to the
+	contiguous region funcion.
+
+	* app/display/gimpdisplayshell-dnd.c: pass
+	fill_transparent == FALSE to bucket_fill_full because we fill the
+	whole drawable anyway here.
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/selection_options.[ch]: added toggle buttons to the
+	tool options and pass the value to the fill and select core
+	functions.
+
+	* tools/pdbgen/pdb/misc_tools.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: hardcode
+	"select_transparent" to FALSE to get the old behaviour. Should
+	export the new feature to plug-ins however.
+
+	* app/pdb/misc_tools_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
 2002-02-09  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptoolmodule.[ch]

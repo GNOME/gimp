@@ -53,7 +53,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "display/display-types.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -63,6 +63,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimprc.h"
 #include "undo.h"
@@ -517,7 +519,10 @@ undo_history_undo_callback (GtkWidget *widget,
 {
   undo_history_st *st = data;
 
-  undo_pop (st->gimage);
+  if (undo_pop (st->gimage))
+    {
+      gdisplays_flush ();
+    }
 }
 
 /* redo button clicked */
@@ -527,7 +532,10 @@ undo_history_redo_callback (GtkWidget *widget,
 {
   undo_history_st *st = data;
 
-  undo_redo (st->gimage);
+  if (undo_redo (st->gimage))
+    {
+      gdisplays_flush ();
+    }
 }
 
 
@@ -693,6 +701,8 @@ undo_history_select_row_callback (GtkWidget *widget,
       undo_redo (st->gimage);
       st->old_selection++;
     }
+
+  gdisplays_flush ();
 
   undo_history_set_pixmap (GTK_CLIST (widget), cur_selection, st->preview_size, st->gimage);
 

@@ -282,6 +282,7 @@ bucket_fill_invoker (Gimp     *gimp,
 	{
 	  gimp_drawable_bucket_fill (drawable, fill_mode,
 				     paint_mode, opacity / 100.0,
+				     FALSE /* don't fill transparent */,
 				     threshold, sample_merged, x, y);
 	}
     }

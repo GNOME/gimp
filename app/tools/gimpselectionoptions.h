@@ -47,6 +47,10 @@ struct _SelectionOptions
   GtkObject   *feather_radius_w;
 
   /*  used by fuzzy, by-color selection  */
+  gboolean     select_transparent;
+  gboolean     select_transparent_d;
+  GtkWidget   *select_transparent_w;
+
   gboolean     sample_merged;
   gboolean     sample_merged_d;
   GtkWidget   *sample_merged_w;

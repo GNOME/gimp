@@ -78,7 +78,10 @@ edit_undo_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  undo_pop (gimage);
+  if (undo_pop (gimage))
+    {
+      gdisplays_flush ();
+    }
 }
 
 void
@@ -88,7 +91,10 @@ edit_redo_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  undo_redo (gimage);
+  if (undo_redo (gimage))
+    {
+      gdisplays_flush ();
+    }
 }
 
 void

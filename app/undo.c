@@ -47,8 +47,6 @@
 #include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
@@ -453,53 +451,6 @@ pop_stack (GimpImage  *gimage,
 
       if (status && ! in_group)
 	{
-#ifdef __GNUC__
-#warning FIXME: investigate why display update was done here
-#endif
-#if 0
-          GimpDisplay *gdisp;
-          gint         x, y;
-
-	  /*  Flush any image updates and displays  */
-	  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
-
-	  if (gdisp)
-	    {
-              GimpDisplayShell *shell;
-
-              shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-	      if (shell->gdisp->disp_xoffset || shell->gdisp->disp_yoffset)
-		{
-		  gdk_drawable_get_size (shell->canvas->window, &x, &y);
-
-		  if (shell->gdisp->disp_yoffset)
-		    {
-		      gimp_display_shell_add_expose_area (shell,
-                                                          0, 0,
-                                                          shell->gdisp->disp_width,
-                                                          shell->gdisp->disp_yoffset);
-		      gimp_display_shell_add_expose_area (shell,
-                                                          0, shell->gdisp->disp_yoffset + y,
-                                                          shell->gdisp->disp_width,
-                                                          shell->gdisp->disp_height);
-		    }
-
-		  if (shell->gdisp->disp_xoffset)
-		    {
-		      gimp_display_shell_add_expose_area (shell,
-                                                          0, 0,
-                                                          shell->gdisp->disp_xoffset,
-                                                          shell->gdisp->disp_height);
-		      gimp_display_shell_add_expose_area (shell,
-                                                          shell->gdisp->disp_xoffset + x, 0,
-                                                          shell->gdisp->disp_width,
-                                                          shell->gdisp->disp_height);
-		    }
-		}
-	    }
-#endif
-
 	  /*  If the mode_changed flag was set  */
 	  if (mode_changed)
 	    {
@@ -535,8 +486,6 @@ pop_stack (GimpImage  *gimage,
 	  /* let others know that we just popped an action */
 	  gimp_image_undo_event (gimage,
 				 (state == UNDO)? UNDO_POPPED : UNDO_REDO);
-
-	  gdisplays_flush ();
 
 	  return TRUE;
 	}

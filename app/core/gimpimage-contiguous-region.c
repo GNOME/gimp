@@ -43,7 +43,8 @@ static gint   is_pixel_sufficiently_different (guchar       *col1,
                                                gboolean      antialias, 
                                                gint          threshold, 
                                                gint          bytes,
-                                               gboolean      has_alpha);
+                                               gboolean      has_alpha,
+                                               gboolean      select_transparent);
 static void   ref_tiles                       (TileManager  *src, 
                                                TileManager  *mask, 
                                                Tile        **s_tile, 
@@ -57,8 +58,9 @@ static gint   find_contiguous_segment         (guchar       *col,
                                                PixelRegion  *mask, 
                                                gint          width, 
                                                gint          bytes,
-                                               gboolean      has_alpha, 
-                                               gboolean      antialias, 
+                                               gboolean      has_alpha,
+                                               gboolean      select_transparent,
+                                               gboolean      antialias,
                                                gint          threshold,
                                                gint          initial, 
                                                gint         *start, 
@@ -66,6 +68,7 @@ static gint   find_contiguous_segment         (guchar       *col,
 static void   find_contiguous_region_helper   (PixelRegion  *mask, 
                                                PixelRegion  *src,
                                                gboolean      has_alpha, 
+                                               gboolean      select_transparent,
                                                gboolean      antialias, 
                                                gint          threshold, 
                                                gboolean      indexed,
@@ -78,10 +81,11 @@ static void   find_contiguous_region_helper   (PixelRegion  *mask,
 
 GimpChannel *
 gimp_image_contiguous_region_by_seed (GimpImage    *gimage, 
-                                      GimpDrawable *drawable, 
+                                      GimpDrawable *drawable,
                                       gboolean      sample_merged,
                                       gboolean      antialias,
                                       gint          threshold,
+                                      gboolean      select_transparent,
                                       gint          x,
                                       gint          y)
 {
@@ -116,11 +120,12 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
     }
   indexed = gimp_drawable_is_indexed (drawable);
   bytes   = gimp_drawable_bytes (drawable);
-  
+
   if (indexed)
     {
       bytes = has_alpha ? 4 : 3;
     }
+
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 		     0, 0, 
@@ -131,10 +136,27 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
   if (tile)
     {
-      start = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
+      start = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, 
-				     threshold, bytes, x, y, start);
+      if (has_alpha)
+        {
+          if (select_transparent)
+            {
+              /*  don't select transparent regions if the start pixel isn't
+               *  fully transparent
+               */
+              if (start[bytes - 1] > 0)
+                select_transparent = FALSE;
+            }
+        }
+      else
+        {
+          select_transparent = FALSE;
+        }
+
+      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha,
+                                     select_transparent, antialias, threshold,
+                                     bytes, x, y, start);
 
       tile_release (tile, FALSE);
     }
@@ -148,6 +170,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
                                        gboolean       sample_merged,
                                        gboolean       antialias,
                                        gint           threshold,
+                                       gboolean       select_transparent,
                                        const GimpRGB *color)
 {
   /*  Scan over the gimage's active layer, finding pixels within the specified
@@ -205,6 +228,21 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
                          FALSE);
     }
 
+  if (has_alpha)
+    {
+      if (select_transparent)
+        {
+          /*  don't select transparancy if "color" isn't fully transparent
+           */
+          if (col[3] > 0)
+            select_transparent = FALSE;
+        }
+    }
+  else
+    {
+      select_transparent = FALSE;
+    }
+
   if (indexed)
     {
       /* indexed colors are always RGB or RGBA */
@@ -251,7 +289,8 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 							  antialias,
 							  threshold,
 							  color_bytes,
-							  has_alpha);
+							  has_alpha,
+                                                          select_transparent);
 
 	      idata += bytes;
 	    }
@@ -273,7 +312,8 @@ is_pixel_sufficiently_different (guchar   *col1,
 				 gboolean  antialias, 
 				 gint      threshold, 
 				 gint      bytes,
-				 gboolean  has_alpha)
+				 gboolean  has_alpha,
+                                 gboolean  select_transparent)
 {
   gint diff;
   gint max;
@@ -284,18 +324,26 @@ is_pixel_sufficiently_different (guchar   *col1,
   alpha = (has_alpha) ? bytes - 1 : bytes;
 
   /*  if there is an alpha channel, never select transparent regions  */
-  if (has_alpha && col2[alpha] == 0)
+  if (! select_transparent && has_alpha && col2[alpha] == 0)
     return 0;
 
-  /*  fuzzy_select had a "for (b = 0; b < _bytes_; b++)" loop. however
-   *  i'm quite sure "b < alpha" is correct for both tools  --Mitch
-   */
-  for (b = 0; b < alpha; b++)
+  if (select_transparent && has_alpha)
     {
-      diff = col1[b] - col2[b];
-      diff = abs (diff);
-      if (diff > max)
-	max = diff;
+      max = col1[alpha] - col2[alpha];
+      max = abs (max);
+    }
+  else
+    {
+      /*  fuzzy_select had a "for (b = 0; b < _bytes_; b++)" loop. however
+       *  i'm quite sure "b < alpha" is correct for both tools  --Mitch
+       */
+      for (b = 0; b < alpha; b++)
+        {
+          diff = col1[b] - col2[b];
+          diff = abs (diff);
+          if (diff > max)
+            max = diff;
+        }
     }
 
   if (antialias && threshold > 0)
@@ -348,8 +396,9 @@ find_contiguous_segment (guchar      *col,
 			 PixelRegion *mask, 
 			 gint         width, 
 			 gint         bytes,
-			 gboolean     has_alpha, 
-			 gboolean     antialias, 
+			 gboolean     has_alpha,
+                         gboolean     select_transparent,
+			 gboolean     antialias,
 			 gint         threshold,
 			 gint         initial, 
 			 gint        *start, 
@@ -365,7 +414,8 @@ find_contiguous_segment (guchar      *col,
 
   /* check the starting pixel */
   if (! (diff = is_pixel_sufficiently_different (col, s, antialias,
-						 threshold, bytes, has_alpha)))
+						 threshold, bytes, has_alpha,
+                                                 select_transparent)))
     {
       tile_release (s_tile, FALSE);
       tile_release (m_tile, TRUE);
@@ -382,7 +432,8 @@ find_contiguous_segment (guchar      *col,
 	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *start, src->y, &s, &m);
 
       diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
+					      threshold, bytes, has_alpha,
+                                              select_transparent);
       if ((*m-- = diff))
 	{
 	  s -= bytes;
@@ -401,7 +452,8 @@ find_contiguous_segment (guchar      *col,
 	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
 
       diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
+					      threshold, bytes, has_alpha,
+                                              select_transparent);
       if ((*m++ = diff))
 	{
 	  s += bytes;
@@ -419,6 +471,7 @@ static void
 find_contiguous_region_helper (PixelRegion *mask, 
 			       PixelRegion *src,
 			       gboolean     has_alpha, 
+                               gboolean     select_transparent,
 			       gboolean     antialias, 
 			       gint         threshold, 
 			       gboolean     indexed,
@@ -432,9 +485,11 @@ find_contiguous_region_helper (PixelRegion *mask,
 
   Tile *tile;
 
-  if (threshold == 0) threshold = 1;
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
+
+  if (threshold == 0)
+    threshold = 1;
 
   tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
   val = *(guchar *)(tile_data_pointer (tile, 
@@ -454,14 +509,17 @@ find_contiguous_region_helper (PixelRegion *mask,
 
   if (! find_contiguous_segment (col, src, mask, src->w,
 				 src->bytes, has_alpha,
-				 antialias, threshold, x, &start, &end))
+                                 select_transparent, antialias, threshold,
+                                 x, &start, &end))
     return;
 
   for (i = start + 1; i < end; i++)
     {
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, 
-				     threshold, indexed, i, y - 1, col);
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, 
-				     threshold, indexed, i, y + 1, col);
+      find_contiguous_region_helper (mask, src, has_alpha, select_transparent,
+                                     antialias, threshold, indexed,
+                                     i, y - 1, col);
+      find_contiguous_region_helper (mask, src, has_alpha, select_transparent,
+                                     antialias, threshold, indexed,
+                                     i, y + 1, col);
     }
 }

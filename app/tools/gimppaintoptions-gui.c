@@ -198,8 +198,7 @@ paint_options_init (PaintOptions *options,
   gtk_widget_show (table);
 
   /*  a separator after the common paint options which can be global  */
-  if (tool_info->tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       GtkWidget *separator;
 

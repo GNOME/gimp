@@ -58,37 +58,39 @@ selection_options_init (SelectionOptions *options,
   vbox = options->tool_options.main_vbox;
 
   /*  initialize the selection options structure  */
-  options->op             = options->op_d             = SELECTION_REPLACE;
-  options->feather        = options->feather_d        = FALSE;
-  options->feather_radius = options->feather_radius_d = 10.0;
+  options->op                 = options->op_d                 = SELECTION_REPLACE;
+  options->feather            = options->feather_d            = FALSE;
+  options->feather_radius     = options->feather_radius_d     = 10.0;
 
   if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
-    options->antialias    = options->antialias_d      = FALSE;
+    options->antialias        = options->antialias_d          = FALSE;
   else
-    options->antialias    = options->antialias_d      = TRUE;
+    options->antialias        = options->antialias_d          = TRUE;
 
-  options->sample_merged  = options->sample_merged_d  = FALSE;
-  options->threshold                                  = gimprc.default_threshold;
-  options->auto_shrink    = options->auto_shrink_d    = FALSE;
-  options->shrink_merged  = options->shrink_merged_d  = FALSE;
-  options->fixed_size     = options->fixed_size_d     = FALSE;
-  options->fixed_height   = options->fixed_height_d   = 1;
-  options->fixed_width    = options->fixed_width_d    = 1;
-  options->fixed_unit     = options->fixed_unit_d     = GIMP_UNIT_PIXEL;
-  options->interactive    = options->interactive_d    = FALSE;
+  options->select_transparent = options->select_transparent_d = TRUE;
+  options->sample_merged      = options->sample_merged_d      = FALSE;
+  options->threshold          = gimprc.default_threshold;
+  options->auto_shrink        = options->auto_shrink_d        = FALSE;
+  options->shrink_merged      = options->shrink_merged_d      = FALSE;
+  options->fixed_size         = options->fixed_size_d         = FALSE;
+  options->fixed_height       = options->fixed_height_d       = 1;
+  options->fixed_width        = options->fixed_width_d        = 1;
+  options->fixed_unit         = options->fixed_unit_d         = GIMP_UNIT_PIXEL;
+  options->interactive        = options->interactive_d        = FALSE;
 
-  options->feather_w        = NULL;
-  options->feather_radius_w = NULL;
-  options->antialias_w      = NULL;
-  options->sample_merged_w  = NULL;
-  options->threshold_w      = NULL;
-  options->auto_shrink_w    = NULL;
-  options->shrink_merged_w  = NULL;
-  options->fixed_size_w     = NULL;
-  options->fixed_height_w   = NULL;
-  options->fixed_width_w    = NULL;
-  options->fixed_unit_w     = NULL;
-  options->interactive_w    = NULL;
+  options->feather_w            = NULL;
+  options->feather_radius_w     = NULL;
+  options->antialias_w          = NULL;
+  options->select_transparent_w = NULL;
+  options->sample_merged_w      = NULL;
+  options->threshold_w          = NULL;
+  options->auto_shrink_w        = NULL;
+  options->shrink_merged_w      = NULL;
+  options->fixed_size_w         = NULL;
+  options->fixed_height_w       = NULL;
+  options->fixed_width_w        = NULL;
+  options->fixed_unit_w         = NULL;
+  options->interactive_w        = NULL;
 
   /*  the selection operation radio buttons  */
   {
@@ -275,6 +277,23 @@ selection_options_init (SelectionOptions *options,
       gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
+
+      /*  the select transparent areas toggle  */
+      options->select_transparent_w =
+	gtk_check_button_new_with_label (_("Select Transparent Areas"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->select_transparent_w),
+				    options->select_transparent_d);
+      gtk_box_pack_start (GTK_BOX (vbox2), options->select_transparent_w,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (options->select_transparent_w);
+
+      gimp_help_set_help_data (options->select_transparent_w,
+                               _("Allow completely transparent regions "
+                                 "to be selected"), NULL);
+
+      g_signal_connect (G_OBJECT (options->select_transparent_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->select_transparent);
 
       /*  the sample merged toggle  */
       options->sample_merged_w =

@@ -25,6 +25,7 @@ GimpChannel * gimp_image_contiguous_region_by_seed  (GimpImage     *gimage,
                                                      gboolean       sample_merged,
                                                      gboolean       antialias,
                                                      gint           threshold,
+                                                     gboolean       select_transparent,
                                                      gint           x,
                                                      gint           y);
 
@@ -33,6 +34,7 @@ GimpChannel * gimp_image_contiguous_region_by_color (GimpImage     *gimage,
                                                      gboolean       sample_merged,
                                                      gboolean       antialias,
                                                      gint           threshold,
+                                                     gboolean       select_transparent,
                                                      const GimpRGB *color);
 
 

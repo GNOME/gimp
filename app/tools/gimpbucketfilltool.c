@@ -33,8 +33,6 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
-#include "pdb/procedural_db.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -52,6 +50,10 @@ typedef struct _BucketOptions BucketOptions;
 struct _BucketOptions
 {
   PaintOptions    paint_options;
+
+  gboolean        fill_transparent;
+  gboolean        fill_transparent_d;
+  GtkWidget      *fill_transparent_w;
 
   gboolean        sample_merged;
   gboolean        sample_merged_d;
@@ -215,8 +217,6 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
 {
   GimpBucketFillTool *bucket_tool;
   BucketOptions      *options;
-  Argument           *return_vals;
-  gint                nreturn_vals;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
@@ -229,26 +229,17 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
 
       context = gimp_get_current_context (gdisp->gimage->gimp);
 
-      return_vals =
-	procedural_db_run_proc (gdisp->gimage->gimp,
-				"gimp_bucket_fill",
-				&nreturn_vals,
-				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
-				GIMP_PDB_INT32, (gint32) options->fill_mode,
-				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (context),
-				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (context) * 100,
-				GIMP_PDB_FLOAT, (gdouble) options->threshold,
-				GIMP_PDB_INT32, (gint32) options->sample_merged,
-				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
-				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_y,
-				GIMP_PDB_END);
+      gimp_drawable_bucket_fill (gimp_image_active_drawable (gdisp->gimage),
+                                 options->fill_mode,
+                                 gimp_context_get_paint_mode (context),
+                                 gimp_context_get_opacity (context),
+                                 options->fill_transparent,
+                                 options->threshold,
+                                 options->sample_merged,
+                                 bucket_tool->target_x,
+                                 bucket_tool->target_y);
 
-      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
-	gdisplays_flush ();
-      else
-	g_message (_("Bucket Fill operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
+      gdisplays_flush ();
     }
 
   tool->state = INACTIVE;
@@ -340,6 +331,7 @@ bucket_options_new (GimpToolInfo *tool_info)
   BucketOptions *options;
 
   GtkWidget *vbox;
+  GtkWidget *vbox2;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *scale;
@@ -351,12 +343,39 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   ((GimpToolOptions *) options)->reset_func = bucket_options_reset;
 
-  options->sample_merged = options->sample_merged_d = FALSE;
-  options->threshold                                = gimprc.default_threshold;
-  options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
+  options->sample_merged    = options->sample_merged_d    = FALSE;
+  options->fill_transparent = options->fill_transparent_d = TRUE;
+  options->threshold        = gimprc.default_threshold;
+  options->fill_mode        = options->fill_mode_d        = FG_BUCKET_FILL;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
+
+  frame = gtk_frame_new (_("Finding Similar Colors"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  /*  the fill transparent areas toggle  */
+  options->fill_transparent_w =
+    gtk_check_button_new_with_label (_("Fill Transparent Areas"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_transparent_w),
+                                options->fill_transparent_d);
+  gtk_box_pack_start (GTK_BOX (vbox2), options->fill_transparent_w,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (options->fill_transparent_w);
+
+  gimp_help_set_help_data (options->fill_transparent_w,
+                           _("Allow completely transparent regions "
+                             "to be filled"), NULL);
+
+  g_signal_connect (G_OBJECT (options->fill_transparent_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->fill_transparent);
 
   /*  the sample merged toggle  */
   options->sample_merged_w =
@@ -364,12 +383,13 @@ bucket_options_new (GimpToolInfo *tool_info)
   g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_merged);
-  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
+                      FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
   /*  the threshold scale  */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Threshold:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
@@ -390,23 +410,24 @@ bucket_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (hbox);
 
   /*  fill type  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &options->fill_mode,
-			   GINT_TO_POINTER (options->fill_mode),
+  frame = gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->fill_mode,
+                                 GINT_TO_POINTER (options->fill_mode),
 
-			   _("FG Color Fill"),
-			   GINT_TO_POINTER (FG_BUCKET_FILL),
-			   &options->fill_mode_w[0],
-			   _("BG Color Fill"),
-			   GINT_TO_POINTER (BG_BUCKET_FILL),
-			   &options->fill_mode_w[1],
-			   _("Pattern Fill"),
-			   GINT_TO_POINTER (PATTERN_BUCKET_FILL),
-			   &options->fill_mode_w[2],
+                                 _("FG Color Fill"),
+                                 GINT_TO_POINTER (FG_BUCKET_FILL),
+                                 &options->fill_mode_w[0],
 
-			   NULL);
+                                 _("BG Color Fill"),
+                                 GINT_TO_POINTER (BG_BUCKET_FILL),
+                                 &options->fill_mode_w[1],
+
+                                 _("Pattern Fill"),
+                                 GINT_TO_POINTER (PATTERN_BUCKET_FILL),
+                                 &options->fill_mode_w[2],
+
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

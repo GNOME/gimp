@@ -375,6 +375,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
                                               sel_options->sample_merged,
                                               sel_options->antialias,
                                               sel_options->threshold,
+                                              sel_options->select_transparent,
                                               x, y);
 
   if (fuzzy_sel->fuzzy_mask)

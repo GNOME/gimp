@@ -106,7 +106,9 @@ HELP
                                    sample_merged,
                                    &color,
                                    threshold,
-                                   operation, antialias, 
+                                   FALSE /* don't select transparent */,
+                                   operation,
+                                   antialias,
                                    feather,
                                    feather_radius,
                                    feather_radius);
@@ -256,6 +258,7 @@ HELP
                                 sample_merged,
                                 x, y, 
                                 threshold,
+                                FALSE /* don't select transparent */,
                                 operation,
                                 antialias,
                                 feather,
