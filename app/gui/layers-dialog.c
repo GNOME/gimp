@@ -1732,12 +1732,15 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
 				    layer, APPLY);
 
       if (flush)
-	gdisplays_flush ();
+	{
+	  gdisplays_flush ();
+	}
       else
 	{
 	  LayerWidget *layer_widget = layer_widget_get_ID (layer);
 
 	  layer_widget_layer_flush (layer_widget->list_item, NULL);
+	  layers_dialog_set_menu_sensitivity ();
 	}
     }
 }
@@ -1762,12 +1765,15 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
 				    layer, DISCARD);
 
       if (flush)
-	gdisplays_flush ();
+	{
+	  gdisplays_flush ();
+	}
       else
 	{
 	  LayerWidget *layer_widget = layer_widget_get_ID (layer);
 
 	  layer_widget_layer_flush (layer_widget->list_item, NULL);
+	  layers_dialog_set_menu_sensitivity ();
 	}
     }
 }

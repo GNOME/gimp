@@ -1,9 +1,16 @@
 2000-12-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/layers_dialog.c: when applying or deleting the layer mask,
+	we have to call layers_dialog_set_menu_sensitivity() ourselves
+	whenever calling layer_widget_layer_flush() instead of
+	gdisplays_flush().
+
+2000-12-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/gflare/gflare.c
 	* libgimp/gimpunitmenu.c
 	* libgimp/gimpwidgets.c: set separators of option menus insensitive.
-	(see Sven's fix below below).
+	(see Sven's fix below).
 
 	* app/layers_dialog.c: set "Merge Down" insensitive for
 	the bottom layer.
