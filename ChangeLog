@@ -1,5 +1,12 @@
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/xcf/xcf-save.c: changed the various xcf_write_*_error()
+	macros to take an XcfInfo pointer as first parameter, not
+	info->fp. Simplifies all callers a bit since they don't have to
+	dereference it themselves.
+
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-save.c: enabled error checking for GimpParasite
 	saving and factored GimpParasiteList saving out to a new
 	function. Cleaned up the (still disabled) PROP_VECTORS saving
