@@ -1,3 +1,9 @@
+2000-12-16  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c: fixed a warning
+	* app/menus.c: since gee is no longer hidden, I put the old code
+	back in that keeps its entry at the bottom of the menu.
+	
 Fri Dec 15 19:16:31 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/gee.c, plug-ins/common/Makefile.am,

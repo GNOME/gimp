@@ -800,12 +800,12 @@ file_open_image (gchar       *filename,
 
   if (*status == PDB_SUCCESS && gimage_id != -1)
     {
-      GimpDrawable *drawable = gimage_get_ID (gimage_id);
+      GimpImage *gimage = gimage_get_ID (gimage_id);
 
-      if (drawable)
+      if (gimage)
 	{
-	  layer_invalidate_previews (drawable);
-	  channel_invalidate_previews (drawable);
+	  layer_invalidate_previews (gimage);
+	  channel_invalidate_previews (gimage);
 	}
 
       return pdb_id_to_image (gimage_id);
@@ -1796,7 +1796,7 @@ file_save_ok_callback (GtkWidget *widget,
 	  if (!the_drawable)
 	    return;
 
-	  proc_rec = procedural_db_lookup ("plug_in_the_egg");
+	  proc_rec = procedural_db_lookup ("plug_in_the_slimy_egg");
 	  if (!proc_rec)
 	    break;
 

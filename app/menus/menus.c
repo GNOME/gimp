@@ -562,6 +562,11 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Filters/Combine"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
+
+  { { "/Filters/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Filters/Toys"), NULL, NULL, 0, "<Branch>" },
+    NULL, NULL },
 };
 static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
@@ -1123,7 +1128,7 @@ menus_reorder_plugins (void)
 	}
     }
 
-  /*  Move all submenus which registered after "<Image>/Filters/Combine"
+  /*  Move all submenus which registered after "<Image>/Filters/Toys"
    *  before the separator after "<Image>/Filters/Web"
    */
   menu_item = gtk_item_factory_get_widget (image_factory,
@@ -1135,7 +1140,7 @@ menus_reorder_plugins (void)
       pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
 
       menu_item = gtk_item_factory_get_widget (image_factory,
-					       "/Filters/Combine");
+					       "/Filters/Toys");
 
       if (menu_item && GTK_IS_MENU (menu_item))
 	{
