@@ -633,6 +633,27 @@ blend_motion (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
 
+  /* restrict to horizontal/vertical blend, if modifiers are pressed */
+  if (mevent->state & GDK_MOD1_MASK)
+    {
+      if (mevent->state & GDK_CONTROL_MASK)
+	{
+	  double dx, dy;
+	  
+	  dx = blend_tool->endx - blend_tool->startx;
+	  dy = blend_tool->endy - blend_tool->starty;
+	  
+	  blend_tool->endx = blend_tool->endx + 
+	    ((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	  blend_tool->endy = blend_tool->endy + 
+	    ((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	}
+      else
+	blend_tool->endx = blend_tool->startx;
+    }
+  else if (mevent->state & GDK_CONTROL_MASK)
+    blend_tool->endy = blend_tool->starty;
+
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
   if (gdisp->dot_for_dot)
     {

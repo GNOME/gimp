@@ -1,3 +1,8 @@
+Mon Jul 26 20:11:01 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c: Restrict to horizontal/vertical blend when modifiers
+	are pressed. 
+
 1999-07-26  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/topath.xpm 
