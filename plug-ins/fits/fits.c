@@ -48,6 +48,7 @@ static char ident[] = "@(#) GIMP FITS file-plugin v1.06  21-Nov-99";
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Load info */
 typedef struct
 {
@@ -102,8 +103,6 @@ static gint32 load_fits (gchar     *filename,
                          guint      picnum,
 			 guint      ncompose);
 
-
-static void   init_gtk                 (void);
 
 static gint   load_dialog              (void);
 static void   load_ok_callback         (GtkWidget *widget,
@@ -287,7 +286,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("fits", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FITS",
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -761,9 +760,9 @@ create_fits_header (FITS_FILE *ofp,
 
 /* Save direct colours (GRAY, GRAYA, RGB, RGBA) */
 static gint
-save_direct  (FITS_FILE *ofp,
-              gint32     image_ID,
-              gint32     drawable_ID)
+save_direct (FITS_FILE *ofp,
+	     gint32     image_ID,
+	     gint32     drawable_ID)
 {
   int height, width, i, j, channel;
   int tile_height, bpp, bpsl;
@@ -969,21 +968,6 @@ save_index (FITS_FILE *ofp,
 #undef GET_INDEXED_TILE
 }
 
-static void
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("fits");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-}
-
-
 /*  Load interface functions  */
 
 static gint
@@ -993,7 +977,7 @@ load_dialog (void)
   GtkWidget *vbox;
   GtkWidget *frame;
 
-  init_gtk ();
+  gimp_ui_init ("fits", FALSE);
 
   dialog = gimp_dialog_new (_("Load FITS File"), "fits",
 			    gimp_plugin_help_func, "filters/fits.html",

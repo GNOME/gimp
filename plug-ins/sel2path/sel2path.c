@@ -317,15 +317,8 @@ sel2path_dialog (SELVALS *sels)
   GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *table;
-  gchar **argv;
-  gint argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("sel2path");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("sel2path", FALSE);
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Sel2path");

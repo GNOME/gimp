@@ -108,6 +108,7 @@ static gdouble  _gamma_val;
 static gboolean _install_cmap;
 static gboolean _use_xshm;
 static guchar   _color_cube[4];
+static gint     _min_colors;
 static gint     _gdisp_ID = -1;
 
 static gchar   *progname = NULL;
@@ -197,14 +198,14 @@ gimp_main (int   argc,
    * about the program error, and offer debugging if the plug-in
    * has been built with MSVC, and the user has MSVC installed.
    */
-  gimp_signal_syscallrestart (SIGHUP,  gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGINT,  gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGQUIT, gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGBUS,  gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGSEGV, gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGPIPE, gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGTERM, gimp_plugin_signalhandler);
-  gimp_signal_syscallrestart (SIGFPE,  gimp_plugin_signalhandler);
+  signal (SIGHUP,  gimp_plugin_signalhandler);
+  signal (SIGINT,  gimp_plugin_signalhandler);
+  signal (SIGQUIT, gimp_plugin_signalhandler);
+  signal (SIGBUS,  gimp_plugin_signalhandler);
+  signal (SIGSEGV, gimp_plugin_signalhandler);
+  signal (SIGPIPE, gimp_plugin_signalhandler);
+  signal (SIGTERM, gimp_plugin_signalhandler);
+  signal (SIGFPE,  gimp_plugin_signalhandler);
 #endif
 
 #ifndef G_OS_WIN32
@@ -1012,10 +1013,16 @@ gimp_use_xshm (void)
   return _use_xshm;
 }
 
-guchar*
+guchar *
 gimp_color_cube (void)
 {
   return _color_cube;
+}
+
+gint
+gimp_min_colors (void)
+{
+  return _min_colors;
 }
 
 static void
@@ -1300,17 +1307,18 @@ gimp_config (GPConfig *config)
       gimp_quit ();
     }
 
-  _gimp_tile_width = config->tile_width;
+  _gimp_tile_width  = config->tile_width;
   _gimp_tile_height = config->tile_height;
-  _shm_ID = config->shm_ID;
-  _gamma_val = config->gamma;
-  _install_cmap = config->install_cmap;
-  _use_xshm = config->use_xshm;
-  _color_cube[0] = config->color_cube[0];
-  _color_cube[1] = config->color_cube[1];
-  _color_cube[2] = config->color_cube[2];
-  _color_cube[3] = config->color_cube[3];
-  _gdisp_ID = config->gdisp_ID;
+  _shm_ID           = config->shm_ID;
+  _gamma_val        = config->gamma;
+  _install_cmap     = config->install_cmap;
+  _color_cube[0]    = 6;  /*  These are the former default values  */
+  _color_cube[1]    = 6;  /*  (for backward compatibility only)    */
+  _color_cube[2]    = 4;
+  _color_cube[3]    = 24;
+  _use_xshm         = config->use_xshm;
+  _min_colors       = config->min_colors;
+  _gdisp_ID         = config->gdisp_ID;
 
   if (_shm_ID != -1)
     {
@@ -1439,4 +1447,3 @@ gimp_plugin_domain_add_with_path (gchar *domain_name,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
-

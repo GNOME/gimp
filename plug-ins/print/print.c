@@ -74,7 +74,6 @@ static void	get_system_printers  (void);
 
 static void	query                 (void);
 static void	run                   (char *, int, GParam *, int *, GParam **);
-static void     init_gtk              (void);
 static int	do_print_dialog       (void);
 
 extern void     gimp_create_main_window (void);
@@ -280,7 +279,7 @@ run(char   *name,		/* I - Name of print program. */
     {
     case RUN_INTERACTIVE:
     case RUN_WITH_LAST_VALS:
-      init_gtk ();
+      gimp_ui_init ("print", TRUE);
       export = gimp_export_image (&image_ID, &drawable_ID, "Print", 
 				  (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED |
 				   CAN_HANDLE_ALPHA));
@@ -526,20 +525,6 @@ run(char   *name,		/* I - Name of print program. */
     gimp_image_delete (image_ID);
 }
 
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("print");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-}
-
 /*
  * 'do_print_dialog()' - Pop up the print dialog...
  */
@@ -550,8 +535,7 @@ do_print_dialog (void)
   /*
    * Initialize the program's display...
    */
-  init_gtk ();
-  gdk_set_use_xshm (gimp_use_xshm ());
+  gimp_ui_init ("print", TRUE);
 
 #ifdef SIGBUS
   signal (SIGBUS, SIG_DFL);

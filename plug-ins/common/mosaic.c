@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /*  The mosaic logo  */
 #include "mosaic_logo.h"
 
@@ -518,27 +519,9 @@ mosaic_dialog (void)
   GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
-  guchar *color_cube;
-  gchar **argv;
-  gint    argc;
-  gint    y;
+  gint y;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("mosaic");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("mosaic", TRUE);
 
   dlg = gimp_dialog_new (_("Mosaic"), "mosaic",
 			 gimp_plugin_help_func, "filters/mosaic.html",

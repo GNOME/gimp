@@ -178,17 +178,9 @@ maze_dialog (void)
   GtkWidget *div_x_entry, *div_y_entry;
 
   gint    trow = 0;
-  gchar **argv;
-  gint    argc;
   gchar  *message;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("maze");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm(gimp_use_xshm());
+  gimp_ui_init ("maze", FALSE);
   gimp_help_init();
 
   dlg = gimp_dialog_new (MAZE_TITLE, "maze", 

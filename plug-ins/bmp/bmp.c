@@ -77,7 +77,6 @@ static void   run        (gchar   *name,
                           GParam  *param,
                           gint    *nreturn_vals,
                           GParam **return_vals);
-static void   init_gtk   (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -221,7 +220,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("bmp", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -301,18 +300,4 @@ FromS (gint16  wert,
 {
   bopuffer[0] = (wert & 0x00ff)>>0x00;
   bopuffer[1] = (wert & 0xff00)>>0x08;
-}
-
-static void
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("bmp");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }

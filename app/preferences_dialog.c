@@ -100,6 +100,7 @@ static gchar *            old_default_comment;
 static gint               old_default_dot_for_dot;
 static gint               old_stingy_memory_use;
 static gint               old_tile_cache_size;
+static gint               old_min_colors;
 static gint               old_install_cmap;
 static gint               old_cycled_marching_ants;
 static gint               old_last_opened_size;
@@ -130,6 +131,7 @@ static gint               old_default_threshold;
 
 /*  variables which can't be changed on the fly  */
 static gint               edit_stingy_memory_use;
+static gint               edit_min_colors;
 static gint               edit_install_cmap;
 static gint               edit_cycled_marching_ants;
 static gint               edit_last_opened_size;
@@ -161,6 +163,7 @@ static GtkWidget *        prefs_dlg = NULL;
    so they're set on the fly is not hard).
 
    stingy-memory-use
+   min-colors
    install-cmap
    cycled-marching-ants
    last-opened-size
@@ -306,6 +309,7 @@ file_prefs_check_settings (void)
 
   /*  ...then check if we need a restart notification  */
   if (edit_stingy_memory_use         != old_stingy_memory_use         ||
+      edit_min_colors                != old_min_colors                ||
       edit_install_cmap              != old_install_cmap              ||
       edit_cycled_marching_ants      != old_cycled_marching_ants      ||
       edit_last_opened_size          != old_last_opened_size          ||
@@ -437,6 +441,7 @@ file_prefs_save_callback (GtkWidget *widget,
   PrefsState state;
 
   gint   save_stingy_memory_use;
+  gint   save_min_colors;
   gint   save_install_cmap;
   gint   save_cycled_marching_ants;
   gint   save_last_opened_size;
@@ -486,6 +491,7 @@ file_prefs_save_callback (GtkWidget *widget,
 
   /*  Save variables so that we can restore them later  */
   save_stingy_memory_use         = stingy_memory_use;
+  save_min_colors                = min_colors;
   save_install_cmap              = install_cmap;
   save_cycled_marching_ants      = cycled_marching_ants;
   save_last_opened_size          = last_opened_size;
@@ -678,6 +684,11 @@ file_prefs_save_callback (GtkWidget *widget,
       stingy_memory_use = edit_stingy_memory_use;
       update = g_list_append (update, "stingy-memory-use");
     }
+  if (edit_min_colors != old_min_colors)
+    {
+      min_colors = edit_min_colors;
+      update = g_list_append (update, "min-colors");
+    }
   if (edit_install_cmap != old_install_cmap)
     {
       install_cmap = edit_install_cmap;
@@ -779,6 +790,7 @@ file_prefs_save_callback (GtkWidget *widget,
 
   /*  restore variables which must not change  */
   stingy_memory_use         = save_stingy_memory_use;
+  min_colors                = save_min_colors;
   install_cmap              = save_install_cmap;
   cycled_marching_ants      = save_cycled_marching_ants;
   last_opened_size          = save_last_opened_size;
@@ -873,6 +885,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
 
   /*  restore values which need a restart  */
   edit_stingy_memory_use         = old_stingy_memory_use;
+  edit_min_colors                = old_min_colors;
   edit_install_cmap              = old_install_cmap;
   edit_cycled_marching_ants      = old_cycled_marching_ants;
   edit_last_opened_size          = old_last_opened_size;
@@ -1337,6 +1350,7 @@ file_pref_cmd_callback (GtkWidget *widget,
        *  copy config vals to edit variables.
        */
       edit_stingy_memory_use         = stingy_memory_use;
+      edit_min_colors                = min_colors;
       edit_install_cmap              = install_cmap;
       edit_cycled_marching_ants      = cycled_marching_ants;
       edit_last_opened_size          = last_opened_size;
@@ -1404,6 +1418,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
+  old_min_colors                = edit_min_colors;
   old_install_cmap              = edit_install_cmap;
   old_cycled_marching_ants      = edit_cycled_marching_ants;
   old_last_opened_size          = edit_last_opened_size;
@@ -1714,6 +1729,25 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   if (g_visual->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  spinbutton =
+    gimp_spin_button_new (&adjustment, edit_min_colors,
+			  27.0,
+			  gtk_check_version (1, 2, 8) ? 216.0 : 256.0,
+			  1.0, 8.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &edit_min_colors);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Minimum Number of Colors:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
 
   button = gtk_check_button_new_with_label(_("Install Colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),

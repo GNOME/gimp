@@ -877,31 +877,13 @@ fp_dialog (void)
   GtkWidget *pixelsBy;
   GtkWidget *satur;
   GtkWidget *control;
-
   GtkWidget *table;
-
-  guchar *color_cube;
-  gchar **argv;
-  gint    argc;
 
   reduced = Reduce_The_Image (drawable,mask,
 			      Current.PreviewSize,
 			      Current.SlctnOnly);
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("fp");
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());  
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("fp", TRUE);
 
   /********************************************************************/
   /************************* All the Standard Stuff *******************/

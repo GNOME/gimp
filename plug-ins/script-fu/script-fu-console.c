@@ -178,17 +178,10 @@ script_fu_console_interface (void)
   GtkWidget *vsb;
   GtkWidget *table;
   GtkWidget *hbox;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("script-fu");
 
   INIT_I18N_UI();
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("script-fu", FALSE);
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));

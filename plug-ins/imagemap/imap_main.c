@@ -20,17 +20,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  */
+#include "config.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "config.h"
-#include "gdk/gdkkeysyms.h" /* for keyboard values */
-#include "gtk/gtk.h"
 
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h> /* for keyboard values */
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "imap_about.h"
 #include "imap_circle.h"
@@ -73,6 +74,9 @@
 #include "imap_string.h"
 #include "imap_toolbar.h"
 #include "imap_tools.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 #define MAX_ZOOM_FACTOR 8
 #define ZOOMED(x) (_zoom_factor * (x))
@@ -1317,22 +1321,10 @@ dialog(GDrawable *drawable)
    GtkWidget 	*hbox;
    GtkWidget 	*main_vbox;
    Tools_t	*tools;
-   gchar 	**argv;
-   gint 	argc = 1;
    Menu_t	*menu;
    PopupMenu_t  *popup;
 
-   argv = g_new(gchar *, 1);
-   argv[0] = g_strdup("imagemap");
-   
-   gtk_init(&argc, &argv);
-   gtk_rc_parse(gimp_gtkrc());
-
-   gdk_set_use_xshm(gimp_use_xshm());
-   gtk_preview_set_gamma(gimp_gamma());
-   
-   gtk_widget_set_default_visual(gtk_preview_get_visual());
-   gtk_widget_set_default_colormap(gdk_rgb_get_cmap());
+   gimp_ui_init ("imagemap", TRUE);
 
    _shapes = make_object_list();
 

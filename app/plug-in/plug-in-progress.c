@@ -1253,22 +1253,23 @@ plug_in_run (ProcRecord *proc_rec,
 
 	  plug_in_push (plug_in);
 
-	  config.version = GP_VERSION;
-	  config.tile_width = TILE_WIDTH;
-	  config.tile_height = TILE_HEIGHT;
-	  config.shm_ID = shm_ID;
-	  config.gamma = gamma_val;
+	  config.version      = GP_VERSION;
+	  config.tile_width   = TILE_WIDTH;
+	  config.tile_height  = TILE_HEIGHT;
+	  config.shm_ID       = shm_ID;
+	  config.gamma        = gamma_val;
 	  config.install_cmap = install_cmap;
-	  config.use_xshm = gdk_get_use_xshm ();
-	  config.color_cube[0] = color_cube_shades[0];
-	  config.color_cube[1] = color_cube_shades[1];
-	  config.color_cube[2] = color_cube_shades[2];
-	  config.color_cube[3] = color_cube_shades[3];
-	  config.gdisp_ID = gdisp_ID;
+	  config.use_xshm     = gdk_get_use_xshm ();
+	  config.gdisp_ID     = gdisp_ID;
 
-	  proc_run.name = proc_rec->name;
+	  if (gtk_check_version (1, 2, 8))
+	    config.min_colors = CLAMP (min_colors, 27, 216);
+	  else
+	    config.min_colors = CLAMP (min_colors, 27, 256);
+
+	  proc_run.name    = proc_rec->name;
 	  proc_run.nparams = argc;
-	  proc_run.params = plug_in_args_to_params (args, argc, FALSE);
+	  proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
 	  if (!gp_config_write (current_writechannel, &config) ||
 	      !gp_proc_run_write (current_writechannel, &proc_run) ||

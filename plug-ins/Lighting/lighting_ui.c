@@ -1062,7 +1062,8 @@ main_dialog (GDrawable *drawable)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  gdk_set_use_xshm (gimp_use_xshm ());
+  if (! gimp_use_xshm ())
+    gdk_set_use_xshm (FALSE);
 
   visinfo = gck_visualinfo_new ();
 

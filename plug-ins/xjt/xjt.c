@@ -782,15 +782,8 @@ save_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *scale_data;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("xjt");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("xjt", FALSE);
 
   dlg = gimp_dialog_new (_("Save as XJT"), "xjt",
 			 gimp_plugin_help_func, "filters/xjt.html",

@@ -60,9 +60,11 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/stdplugins-intl.h>
 
 #include "fli.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 static void query (void);
 static void run   (gchar   *name,
@@ -70,8 +72,6 @@ static void run   (gchar   *name,
 		   GParam  *param,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
-
-static void   init_gtk        (void);
 
 /* return the image-ID of the new image, or -1 in case of an error */
 static gint32 load_image      (gchar  *filename,
@@ -347,7 +347,7 @@ run (gchar   *name,
 
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("gfli", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI", 
 				      (CAN_HANDLE_INDEXED |
 				       CAN_HANDLE_GRAY | 
@@ -809,30 +809,6 @@ cb_ok (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-void
-init_gtk (void)
-{
-  guchar *color_cube;
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gfli");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-}
-
 gint
 load_dialog (gchar *name)
 {
@@ -847,7 +823,7 @@ load_dialog (gchar *name)
   from_frame = 1;
   to_frame   = nframes;
 
-  init_gtk ();
+  gimp_ui_init ("gfli", FALSE);
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), "gfli",
 			    gimp_plugin_help_func, "filters/gfli.html",

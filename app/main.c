@@ -334,15 +334,15 @@ main (int    argc,
 
   /* Handle some signals */
 
-  gimp_signal_syscallrestart (SIGHUP,  on_signal);
-  gimp_signal_syscallrestart (SIGINT,  on_signal);
-  gimp_signal_syscallrestart (SIGQUIT, on_signal);
-  gimp_signal_syscallrestart (SIGABRT, on_signal);
-  gimp_signal_syscallrestart (SIGBUS,  on_signal);
-  gimp_signal_syscallrestart (SIGSEGV, on_signal);
-  gimp_signal_syscallrestart (SIGPIPE, on_signal);
-  gimp_signal_syscallrestart (SIGTERM, on_signal);
-  gimp_signal_syscallrestart (SIGFPE,  on_signal);
+  signal (SIGHUP,  on_signal);
+  signal (SIGINT,  on_signal);
+  signal (SIGQUIT, on_signal);
+  signal (SIGABRT, on_signal);
+  signal (SIGBUS,  on_signal);
+  signal (SIGSEGV, on_signal);
+  signal (SIGPIPE, on_signal);
+  signal (SIGTERM, on_signal);
+  signal (SIGFPE,  on_signal);
 
 #ifndef __EMX__ /* OS/2 may not support SA_NOCLDSTOP -GRO */
 
@@ -415,11 +415,11 @@ on_error (const gchar    *domain,
 
 /* gimp core signal handler for fatal signals */
 
-static gboolean caught_fatal_sig = FALSE;
-
 static void
 on_signal (gint sig_num)
 {
+  static gboolean caught_fatal_sig = FALSE;
+
   if (caught_fatal_sig)
     kill (getpid (), sig_num);
   caught_fatal_sig = TRUE;

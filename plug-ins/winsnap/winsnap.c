@@ -879,12 +879,7 @@ snap_dialog(void)
   GSList		*radio_group = NULL;
   gint			 radio_pressed[2];
   gint			 decorations;
-  gint			 argc = 1;
-  gchar		       **argv = g_new (gchar *, 1);
   guint                  delay;
-
-  /* Set the name */
-  argv[0] = g_strdup("winsnap");
 
   /* Set defaults */
   radio_pressed[0] = (winsnapvals.root == FALSE);
@@ -893,10 +888,7 @@ snap_dialog(void)
   delay = winsnapvals.delay;
 
   /* Init GTK  */
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-
-  gdk_set_use_xshm(gimp_use_xshm());
+  gimp_ui_init ("winsnap", FALSE);
 
   /* Main Dialog */
   dialog = gtk_dialog_new ();

@@ -17,7 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -383,15 +382,8 @@ borderaverage_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *menu;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("borderaverage");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("borderaverage", FALSE);
 
   dlg = gimp_dialog_new (_("Borderaverage"), "borderaverage",
 			 gimp_plugin_help_func, "filters/borderaverage.html",
@@ -411,7 +403,7 @@ borderaverage_dialog (void)
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (_("Border Size"));

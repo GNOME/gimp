@@ -19,8 +19,11 @@
 #define __GIMPRC_H__
 
 #include <glib.h>
-#include "libgimp/gimpunit.h"
+
 #include "apptypes.h"
+
+#include "libgimp/gimpunit.h"
+
 
 /*  global gimprc variables  */
 extern gchar             *plug_in_path;
@@ -45,7 +48,7 @@ extern gint               transparency_type;
 extern gboolean           perfectmouse;
 extern gint               transparency_size;
 extern gint               levels_of_undo;
-extern gint               color_cube_shades[];
+extern gint               min_colors;
 extern gboolean           install_cmap;
 extern gboolean           cycled_marching_ants;
 extern gint               default_threshold;

@@ -3909,30 +3909,13 @@ gfig_dialog (void)
   GtkWidget *notebook;
   GtkWidget *page;
   GtkWidget *top_level_dlg;
-  guchar *color_cube;
-  gint    argc;
-  gchar **argv;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gfig");
+  gimp_ui_init ("gfig", TRUE);
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  yyy = gdk_rgb_get_visual ();
+  xxx = gdk_rgb_get_cmap ();
 
-  /*kill (getpid (), 19);*/
-  /* And my bit */
   plug_in_parse_gfig_path ();
-
-  /* Get the stuff for the preview window...*/
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (yyy = gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (xxx = gtk_preview_get_cmap ());
 
   /*cache_preview (); Get the preview image and store it also set has_alpha */
 

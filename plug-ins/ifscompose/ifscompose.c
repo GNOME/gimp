@@ -734,9 +734,6 @@ ifs_compose_dialog (GDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
 
   gint design_width;
   gint design_height;
@@ -773,21 +770,7 @@ ifs_compose_dialog (GDrawable *drawable)
 
   ifsD->in_update = 0;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("ifscompose");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("ifscompose", TRUE);
 
   dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
 			 gimp_plugin_help_func, "filters/ifscompose.html",

@@ -70,7 +70,6 @@ typedef enum
   TT_MEMSIZE,
   TT_IMAGETYPE,
   TT_INTERP,
-  TT_XCOLORCUBE,
   TT_XPREVSIZE,
   TT_XUNIT,
   TT_XPLUGIN,
@@ -127,7 +126,7 @@ gboolean           perfectmouse = FALSE;   /* off (fast and sloppy) */
 gint               transparency_size = 1;  /* Medium sized */
 gint               levels_of_undo = 2;     /* 2 levels of undo default */
 gint               last_opened_size = 4;   /* 4 documents in the MRU list */
-gint               color_cube_shades[4] = { 6, 7, 4, 24 };
+gint               min_colors = 144;       /* 6*6*4 */
 gboolean           install_cmap = FALSE;
 gint               cycled_marching_ants = 0;
 gint               default_threshold = 15;
@@ -188,7 +187,6 @@ static gint parse_position           (gpointer val1p, gpointer val2p);
 static gint parse_mem_size           (gpointer val1p, gpointer val2p);
 static gint parse_image_type         (gpointer val1p, gpointer val2p);
 static gint parse_interpolation_type (gpointer val1p, gpointer val2p);
-static gint parse_color_cube         (gpointer val1p, gpointer val2p);
 static gint parse_preview_size       (gpointer val1p, gpointer val2p);
 static gint parse_nav_preview_size   (gpointer val1p, gpointer val2p);
 static gint parse_units              (gpointer val1p, gpointer val2p);
@@ -219,7 +217,6 @@ static inline gchar * position_to_str           (gpointer val1p, gpointer val2p)
 static inline gchar * mem_size_to_str           (gpointer val1p, gpointer val2p);
 static inline gchar * image_type_to_str         (gpointer val1p, gpointer val2p);
 static inline gchar * interpolation_type_to_str (gpointer val1p, gpointer val2p);
-static inline gchar * color_cube_to_str         (gpointer val1p, gpointer val2p);
 static inline gchar * preview_size_to_str       (gpointer val1p, gpointer val2p);
 static inline gchar * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
 static inline gchar * units_to_str              (gpointer val1p, gpointer val2p);
@@ -263,7 +260,6 @@ static ParseFunc funcs[] =
   { "default-palette",           TT_STRING,     &default_palette, NULL },
   { "default-gradient",          TT_STRING,     &default_gradient, NULL },
   { "gamma-correction",          TT_DOUBLE,     &gamma_val, NULL },
-  { "color-cube",                TT_XCOLORCUBE, NULL, NULL },
   { "tile-cache-size",           TT_MEMSIZE,    &tile_cache_size, NULL },
   { "marching-ants-speed",       TT_INT,        &marching_speed, NULL },
   { "last-opened-size",          TT_INT,        &last_opened_size, NULL },
@@ -271,6 +267,7 @@ static ParseFunc funcs[] =
   { "transparency-type",         TT_INT,        &transparency_type, NULL },
   { "perfect-mouse",             TT_BOOLEAN,    &perfectmouse, NULL },
   { "transparency-size",         TT_INT,        &transparency_size, NULL },
+  { "min-colors",                TT_INT,        &min_colors, NULL },
   { "install-colormap",          TT_BOOLEAN,    &install_cmap, NULL },
   { "colormap-cycling",          TT_BOOLEAN,    &cycled_marching_ants, NULL },
   { "default-threshold",         TT_INT,        &default_threshold, NULL },
@@ -413,7 +410,6 @@ parse_gimprc (void)
   else
     libfilename = g_strdup (gimp_system_rc_file ());
     
-  app_init_update_status(_("Resource configuration"), libfilename, -1);
   parse_gimprc_file (libfilename);
 
   if (alternate_gimprc != NULL) 
@@ -422,10 +418,7 @@ parse_gimprc (void)
     filename = gimp_personal_rc_file ("gimprc");
 
   if (g_strcasecmp (filename, libfilename) != 0)
-    {
-      app_init_update_status(NULL, filename, -1);
-      parse_gimprc_file (filename);
-    }
+    parse_gimprc_file (filename);
 
   g_free (filename);
   g_free (libfilename);
@@ -852,8 +845,6 @@ parse_statement (void)
 	  return parse_image_type (funcs[i].val1p, funcs[i].val2p);
 	case TT_INTERP:
 	  return parse_interpolation_type (funcs[i].val1p, funcs[i].val2p);
-	case TT_XCOLORCUBE:
-	  return parse_color_cube (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return parse_preview_size (funcs[i].val1p, funcs[i].val2p);
 	case TT_XNAVPREVSIZE:
@@ -1218,48 +1209,6 @@ parse_interpolation_type (gpointer val1p,
     *typep = CUBIC_INTERPOLATION;
   else
     return ERROR;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  return OK;
-}
-
-static int
-parse_color_cube (gpointer val1p,
-		  gpointer val2p)
-{
-  int token;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    return ERROR;
-  token = get_next_token ();
-
-  color_cube_shades[0] = token_num;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    return ERROR;
-  token = get_next_token ();
-
-  color_cube_shades[1] = token_num;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    return ERROR;
-  token = get_next_token ();
-
-  color_cube_shades[2] = token_num;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    return ERROR;
-  token = get_next_token ();
-
-  color_cube_shades[3] = token_num;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2571,8 +2520,6 @@ value_to_str (char *name)
 	  return image_type_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_INTERP:
 	  return interpolation_type_to_str (funcs[i].val1p, funcs[i].val2p);
-	case TT_XCOLORCUBE:
-	  return color_cube_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XNAVPREVSIZE:
@@ -2705,15 +2652,6 @@ interpolation_type_to_str (gpointer val1p,
    default:
      return g_strdup ("bad interpolation type");
   }
-}
-
-static inline char *
-color_cube_to_str (gpointer val1p,
-		   gpointer val2p)
-{
-  return g_strdup_printf ("%d %d %d  %d",
-			   color_cube_shades[0], color_cube_shades[1],
-			   color_cube_shades[2], color_cube_shades[3]);
 }
 
 static inline char *

@@ -279,7 +279,6 @@ parse_unitrc (void)
   gchar *filename;
 
   filename = gimp_personal_rc_file ("unitrc");
-  app_init_update_status (NULL, filename, -1);
   parse_gimprc_file (filename);
   g_free (filename);
 }

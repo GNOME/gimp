@@ -53,6 +53,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 static void   query (void);
 static void   run   (gchar   *name,
 		     gint     nparams,
@@ -114,16 +115,9 @@ run (gchar   *name,
     {
     case RUN_INTERACTIVE: 
       {
-	gchar **argv;
-	gint  argc;  
-
 	INIT_I18N_UI(); 
 
-	argc = 1;
-	argv = g_new (gchar *, 1);
-	argv[0] = g_strdup ("dbbrowser");
-	gtk_init (&argc, &argv);
-	gtk_rc_parse (gimp_gtkrc ());
+	gimp_ui_init ("dbbrowser", FALSE);
 
 	gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));
 

@@ -41,22 +41,15 @@ gimp_ui_init (gchar    *prog_name,
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  /*  FIXME: check if gimp could allocate and attach smh and don't blindly
-   *  use the commandline option
-   */
-  gdk_set_use_xshm (gimp_use_xshm ());
+  /*  It's only safe to switch Gdk SHM usage off  */
+  if (! gimp_use_xshm ())
+    gdk_set_use_xshm (FALSE);
 
-  /*  FIXME: check if gimp's GdkRGB subsystem actually installed a cmap
-   *  and don't blindly use the gimprc option
-   */
-  if (gimp_install_cmap ())
-    {
-      gdk_rgb_set_install (TRUE);
+  gdk_rgb_set_min_colors (gimp_min_colors ());
+  gdk_rgb_set_install (gimp_install_cmap ());
 
-      /*  or is this needed in all cases?  */
-      gtk_widget_set_default_visual (gdk_rgb_get_visual ());
-      gtk_widget_set_default_colormap (gdk_rgb_get_cmap ());
-    }
+  gtk_widget_set_default_visual (gdk_rgb_get_visual ());
+  gtk_widget_set_default_colormap (gdk_rgb_get_cmap ());
 
   /*  Set the gamma after installing the colormap because
    *  gtk_preview_set_gamma() initializes GdkRGB if not already done

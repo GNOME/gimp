@@ -1,5 +1,4 @@
-/*
- * This is a plugin for the GIMP.
+/* This is a plugin for the GIMP.
  *
  * Copyright (C) 1997 Jochen Friedrich
  * Parts Copyright (C) 1995 Gert Doering
@@ -18,11 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
  */
-
-#define VERSION "0.6"
-
 #include "config.h"
 
 #include <glib.h>		/* For G_OS_WIN32 */
@@ -44,33 +39,40 @@
 #define _O_BINARY 0
 #endif
 
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/gimp.h>
 
 #include "g3.h"
 
+#include "libgimp/stdplugins-intl.h"
+
+
+#define VERSION "0.6"
+
 /* Declare local functions.
  */
-gint32        emitgimp   (int, int, char *, int, char *);
-void   query      (void);
-static void   run        (char    *name,
-			  int      nparams,
+
+static void   query      (void);
+static void   run        (gchar   *name,
+			  gint     nparams,
 			  GParam  *param,
-			  int     *nreturn_vals,
+			  gint    *nreturn_vals,
 			  GParam **return_vals);
-static gint32 load_image (char *);
+
+static gint32 load_image (gchar *);
+
+gint32        emitgimp   (gint, gint, gchar *, gint, gchar *);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
-void query ()
+void query (void)
 {
   static GParamDef load_args[] =
   {
@@ -85,27 +87,29 @@ void query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("file_faxg3_load",
                           "loads g3 fax files",
 			  "This plug-in loads Fax G3 Image files.",
                           "Jochen Friedrich",
                           "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
                           VERSION,
-			  "<Load>/Fax G3",
+			  N_("<Load>/Fax G3"),
 			  NULL,
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_faxg3_load", "g3", "", "0,short,0x0001,0,short,0x0014");
+  gimp_register_magic_load_handler ("file_faxg3_load",
+				    "g3",
+				    "",
+				    "0,short,0x0001,0,short,0x0014");
 }
 
-static void run (char    *name,
-     int      nparams,
+static void
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];
@@ -118,6 +122,7 @@ static void run (char    *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
   if (strcmp (name, "file_faxg3_load") == 0)
     {
       INIT_I18N();
@@ -126,7 +131,7 @@ static void run (char    *name,
       image_ID = load_image (param[1].data.d_string);
       values[1].type = PARAM_IMAGE;
       values[1].data.d_image = image_ID;
-      
+
       if (image_ID != -1)
 	{
 	  values[0].data.d_status = STATUS_SUCCESS;
@@ -169,7 +174,7 @@ static	int  rs;		/* read buffer size */
 #define MAX_COLS 1728		/* !! FIXME - command line parameter */
 
 static gint32
-load_image (char *filename)
+load_image (gchar *filename)
 {
   int data;
   int hibit;

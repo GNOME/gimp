@@ -2433,45 +2433,19 @@ dlg_run (void)
   GtkWidget *frame;
   GtkWidget *abox;
   GtkWidget *notebook;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gflare");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  /* gdk_set_show_events (TRUE);
-     gdk_set_debug_level (3); */
+  gimp_ui_init ("gflare", TRUE);
 
   /*
    *	Init Main Dialog
    */
-
-#if 0		/* @@@ debug stuff */
-  printf("Waiting... (pid %d)\n", getpid());
-  kill(getpid(), 19); /* SIGSTOP */
-#endif
 
   pint.run = FALSE;
   dlg = g_new (GFlareDialog, 1);
   dlg->init = TRUE;
   dlg->update_preview = TRUE;
 
-  gradient_menu_init(); /* FIXME: this should go elsewhere  */
+  gradient_menu_init (); /* FIXME: this should go elsewhere  */
   dlg_setup_gflare ();
 
   g_assert (gflares_list != NULL);

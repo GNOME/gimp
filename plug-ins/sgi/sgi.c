@@ -71,7 +71,6 @@ static gint	save_image  (gchar   *filename,
 			     gint32   image_ID,
 			     gint32   drawable_ID);
 
-static void     init_gtk    (void);
 static gint	save_dialog (void);
 
 /*
@@ -207,7 +206,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("sgi", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -625,20 +624,6 @@ save_ok_callback (GtkWidget *widget,
   runme = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("sgi");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint

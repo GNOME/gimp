@@ -16,20 +16,20 @@
 (gimp_plugin_dir "@gimpplugindir@")
 
 # Set the temporary storage directory...files will appear here
-# during the course of running the gimp.  Most files will disappear
-# when the gimp exits, but some files are likely to remain,
-# such as working palette files, so it is best if this directory
-# not be one that is shared by other users or is cleared on machine
-# reboot such as /tmp.
+#  during the course of running the gimp.  Most files will disappear
+#  when the gimp exits, but some files are likely to remain,
+#  such as working palette files, so it is best if this directory
+#  not be one that is shared by other users or is cleared on machine
+#  reboot such as /tmp.
 (temp-path "${gimp_dir}/tmp")
 
 # Set the swap file location. The gimp uses a tile based memory
-# allocation scheme. The swap file is used to quickly and easily
-# swap files out to disk and back in. Be aware that the swap file
-# can easily get very large if the gimp is used with large images.
-# Also, things can get horribly slow if the swap file is created on 
-# a directory that is mounted over NFS.  For these reasons, it may 
-# be desirable to put your swap file in "/tmp".
+#  allocation scheme. The swap file is used to quickly and easily
+#  swap files out to disk and back in. Be aware that the swap file
+#  can easily get very large if the gimp is used with large images.
+#  Also, things can get horribly slow if the swap file is created on 
+#  a directory that is mounted over NFS.  For these reasons, it may 
+#  be desirable to put your swap file in "/tmp".
 (swap-path "${gimp_dir}")
 
 # Set the brush search path...this path will be searched for valid
@@ -81,16 +81,16 @@
 (module-path "${gimp_dir}/modules:${gimp_plugin_dir}/modules")
 
 # The tile cache is used to make sure the gimp doesn't thrash
-# tiles between memory and disk. Setting this value higher will
-# cause the gimp to use less swap space, but will also cause
-# the gimp to use more memory. Conversely, a smaller cache size
-# causes the gimp to use more swap space and less memory.
-# Note: the gimp will still run even if `tile-cache-size' is
-# set to 0. The actual size can contain a suffix of 'm', 'M',
-# 'k', 'K', 'b' or 'B', which makes the gimp interpret the
-# size as being specified in megabytes, kilobytes and bytes
-# respectively. If no suffix is specified the size defaults to
-# being specified in kilobytes.
+#  tiles between memory and disk. Setting this value higher will
+#  cause the gimp to use less swap space, but will also cause
+#  the gimp to use more memory. Conversely, a smaller cache size
+#  causes the gimp to use more swap space and less memory.
+#  Note: the gimp will still run even if `tile-cache-size' is
+#  set to 0. The actual size can contain a suffix of 'm', 'M',
+#  'k', 'K', 'b' or 'B', which makes the gimp interpret the
+#  size as being specified in megabytes, kilobytes and bytes
+#  respectively. If no suffix is specified the size defaults to
+#  being specified in kilobytes.
 (tile-cache-size 32m)
 
 # Speed of marching ants in the selection outline
@@ -101,17 +101,22 @@
 # Set the number of operations kept on the undo stack
 (undo-levels 5)
 
-# Set the color-cube resource for dithering on 8-bit displays
-#  The 4 values stand for Shades of red, green, blue and grays
+# Set the minimal number of colors for dithering on 8-bit displays.
+#  If the GIMP cannot allocate at least this number of colors, a
+#  private colormap will be allocated, resulting in colormap "flashing".
+#  The default value of 144 corresponds to a "color cube" of 6*6*4 colors
+#  where the 3 values stand for shades of red, green and blue.
 #  Multiplying the # of shades of each primary color yields
-#  the total number of colors that will be allocated from the
-#  gimp colormap.  This number should not exceed 256.  Most of the
-#  colors remaining after the allocation of the colorcube
-#  will be left to the system palette in an effort to reduce
-#  colormap "flashing".
-(color-cube 6 6 4 24)
+#  the total number of colors that will be allocated for the
+#  GIMP colormap.
+#  This number must not exceed 256.  Most of the colors remaining after
+#  the allocation of the colorcube will be left to the system palette
+#  in an effort to reduce colormap "flashing".
+#  Note that setting this value to something higher than 216 (6*6*6)
+#  will not work with Gtk versions lower than 1.2.8.
+(min-colors 144)
 
-# Install a GIMP colormap by default -- only for 8-bit displays
+# Install a private GIMP colormap by default -- only for 8-bit displays
 # (install-colormap)
 
 # Specify that marching ants for selected regions will be drawn

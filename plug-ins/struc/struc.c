@@ -41,9 +41,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "struc.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-#include "struc.h"
 
 /* --- Typedefs --- */
 enum
@@ -243,15 +244,8 @@ struc_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
-  gchar	**argv;	
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("struc");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("struc", FALSE);
 
   dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
 			 gimp_plugin_help_func, "filters/struc.html",

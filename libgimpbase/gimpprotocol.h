@@ -65,7 +65,7 @@ struct _GPConfig
   gdouble gamma;
   gint8   install_cmap;
   gint8   use_xshm;
-  guint8  color_cube[4];
+  gint32  min_colors;
   gint32  gdisp_ID;
 };
 

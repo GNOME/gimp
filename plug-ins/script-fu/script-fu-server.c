@@ -527,28 +527,20 @@ server_quit (void)
 }
 
 static gint
-server_interface ()
+server_interface (void)
 {
   GtkWidget *dlg;
   GtkWidget *table;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-
-  argv[0] = g_strdup ("script-fu");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   INIT_I18N_UI();
 
-  dlg = gimp_dialog_new (_("Script-Fu Server Options"), argv[0],
+  gimp_ui_init ("script-fu", FALSE);
+
+  dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
 			 gimp_plugin_help_func, "filters/script-fu.html", 
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
-			 
+
 			 _("OK"), ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), gtk_widget_destroy,
@@ -584,7 +576,6 @@ server_interface ()
   gtk_widget_show (dlg);
 
   gtk_main ();
-
   gdk_flush ();
 
   return sint.run;

@@ -267,17 +267,9 @@ open_url_dialog (void)
   GtkWidget *entry;
   GtkWidget *table;
   GSList    *group;
+  gchar      buffer[256];
 
-  gint    argc;
-  gchar **argv;
-  gchar   buffer[256];
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("webbrowser");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("webbrowser", FALSE);
 
   dlg = gimp_dialog_new (_("Open URL"), "webbbrowser",
 			 gimp_plugin_help_func, "filters/webbrowser.html",

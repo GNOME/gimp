@@ -58,6 +58,14 @@ get_color (int red,
 void
 get_standard_colormaps (void)
 {
+  if (gtk_check_version (1, 2, 8))
+    min_colors = CLAMP (min_colors, 27, 216);
+  else
+    min_colors = CLAMP (min_colors, 27, 256);
+
+  gdk_rgb_set_min_colors (min_colors);
+  gdk_rgb_set_install (install_cmap);
+
   g_visual = gdk_rgb_get_visual ();
   g_cmap   = gdk_rgb_get_cmap ();
 

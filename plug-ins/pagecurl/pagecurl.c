@@ -508,16 +508,7 @@ do_dialog (void)
   GtkObject *adjustment;
   gint pixmapindex;
 
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("pagecurl");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
+  gimp_ui_init ("pagecurl", FALSE);
 
   dialog = gimp_dialog_new ( _("Pagecurl Effect"), "pagecurl",
 			    gimp_plugin_help_func, "filters/pagecurl.html",

@@ -424,6 +424,7 @@ gdouble  gimp_gamma           (void);
 gboolean gimp_install_cmap    (void);
 gboolean gimp_use_xshm        (void);
 guchar*  gimp_color_cube      (void);
+gint     gimp_min_colors      (void);
 void     gimp_request_wakeups (void);
 
 

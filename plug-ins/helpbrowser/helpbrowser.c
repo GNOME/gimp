@@ -21,23 +21,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
 
 #include <string.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
 #include <gtk/gtk.h>
-#include <gtk-xmhtml/gtk-xmhtml.h>
 #include <gdk/gdkkeysyms.h>
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
-#include "libgimp/stdplugins-intl.h"
+#include <gtk-xmhtml/gtk-xmhtml.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "queue.h"
 
-/*  pixmaps  */
+#include "libgimp/stdplugins-intl.h"
+
 #include "forward.xpm"
 #include "back.xpm"
+
 
 /*  defines  */
 
@@ -87,39 +91,39 @@ typedef struct
 
 /*  constant strings  */
 
-static char *doc_not_found_format_string =
-_("<html><head><title>Document not found</title></head>"
-  "<body bgcolor=\"#ffffff\">"
-  "<center>"
-  "<p>"
-  "%s"
-  "<h3>Couldn't find document</h3>"
-  "<tt>%s</tt>"
-  "</center>"
-  "<p>"
-  "<small>This either means that the help for this topic has not been written "
-  "yet or that something is wrong with your installation. "
-  "Please check carefully before you report this as a bug.</small>" 
-  "</body>"
-  "</html>");
+static gchar *doc_not_found_format_string =
+N_("<html><head><title>Document not found</title></head>"
+   "<body bgcolor=\"#ffffff\">"
+   "<center>"
+   "<p>"
+   "%s"
+   "<h3>Couldn't find document</h3>"
+   "<tt>%s</tt>"
+   "</center>"
+   "<p>"
+   "<small>This either means that the help for this topic has not been written "
+   "yet or that something is wrong with your installation. "
+   "Please check carefully before you report this as a bug.</small>" 
+   "</body>"
+   "</html>");
 
-static char *dir_not_found_format_string =
-_("<html><head><title>Directory not found</title></head>"
-  "<body bgcolor=\"#ffffff\">"
-  "<center>"
-  "<p>"
-  "%s"
-  "<h3>Couldn't change to directory</h3>"
-  "<tt>%s</tt>"
-  "<h3>while trying to access</h3>"
-  "<tt>%s</tt>"
-  "</center>"
-  "<p>"
-  "<small>This either means that the help for this topic has not been written "
-  "yet or that something is wrong with your installation. "
-  "Please check carefully before you report this as a bug.</small>" 
-  "</body>"
-  "</html>");
+static gchar *dir_not_found_format_string =
+N_("<html><head><title>Directory not found</title></head>"
+   "<body bgcolor=\"#ffffff\">"
+   "<center>"
+   "<p>"
+   "%s"
+   "<h3>Couldn't change to directory</h3>"
+   "<tt>%s</tt>"
+   "<h3>while trying to access</h3>"
+   "<tt>%s</tt>"
+   "</center>"
+   "<p>"
+   "<small>This either means that the help for this topic has not been written "
+   "yet or that something is wrong with your installation. "
+   "Please check carefully before you report this as a bug.</small>" 
+   "</body>"
+   "</html>");
 
 static gchar *eek_png_tag = "<h1>Eeek!</h1>";
 
@@ -443,7 +447,7 @@ load_page (HelpPage *source_page,
       else
 	new_ref = g_strconcat (old_dir, G_DIR_SEPARATOR_S, ref, NULL);
 
-      g_string_sprintf (file_contents, dir_not_found_format_string,
+      g_string_sprintf (file_contents, gettext (dir_not_found_format_string),
 			eek_png_tag, new_dir, new_ref);
       html_source (dest_page, new_ref, 0, file_contents->str, add_to_queue, FALSE);
 
@@ -482,7 +486,7 @@ load_page (HelpPage *source_page,
   if (strlen (file_contents->str) <= 0)
     {
       chdir (old_dir);
-      g_string_sprintf (file_contents, doc_not_found_format_string,
+      g_string_sprintf (file_contents, gettext (doc_not_found_format_string),
 			eek_png_tag, ref);
     }
   else
@@ -711,25 +715,8 @@ open_browser_dialog (gchar *locale,
   gchar   *eek_png_path;
   gint     success;
   guint    i;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("webbrowser");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("webbrowser", TRUE);
 
   root_dir = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
 			  GIMP_HELP_PREFIX, NULL);

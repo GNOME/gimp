@@ -1361,10 +1361,11 @@ main_dialog (GDrawable *drawable)
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("MapObject");
 
-  gdk_set_use_xshm (gimp_use_xshm ());
-
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
+
+  if (! gimp_use_xshm ())
+    gdk_set_use_xshm (FALSE);
 
   /* Set up ArcBall stuff */
   /* ==================== */

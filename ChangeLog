@@ -1,4 +1,85 @@
+2000-04-30  Michael Natterer  <mitch@gimp.org>
+
+	* gimprc.in
+	* app/gimprc.[ch]: replaced "color-cube" by "min-colors".
+
+	* app/app_procs.c: read unitrc/gimprc before displaying the splash.
+
+	* app/colormaps.c: set min_colors and install_cmap before
+	initializing GdkRGB.
+
+	* app/gimprc.[ch]
+	* app/gimpunit.c: don't call the splash's progress_update function.
+
+	* app/plug_in.c: pass min_colors instead of color_cube to plugins.
+
+	* app/preferences_dialog.c: widget for min_colors.
+
+	* libgimp/gimp.[ch]: s/color_cube/min_colors/ but left
+	gimp_color_cube() there for source level compatibility.
+
+	* libgimp/gimpprotocol.[ch]: changed the GPConfig message
+	accordinly and increased the gimp protocol version number because
+	the change breaks binary compatibility. Also actually pass the
+	use_xshm variable over the wire (was only in the GPConfig struct
+	before).
+
+	Was it the right thing to do to increase the version number??
+
+	* libgimp/gimpui.c (gimp_ui_init): use the same code as the app
+	for initializing GdkRGB. Never explicitly activate Gdk's SHM
+	usage (only switch it off).
+
+	* app/main.c
+	* libgimp/gimp.c: reverted the handling of all signals except
+	SIGCHLD back to plain old signal() because those signals are
+	fatal anyway and sigaction() as used by gimp_signal_*() made
+	debugging (stacktrace) impossible.
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/bmp/bmp.c
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/sel2path/Makefile.am
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/sinus/sinus.c
+	* plug-ins/struc/struc.c
+	* plug-ins/webbrowser/webbrowser.c
+	* plug-ins/winsnap/winsnap.c
+	* plug-ins/xjt/xjt.c: use gimp_ui_init().
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: only switch Gdk SHM usage off,
+	never on. Don't use gimp_ui_init() here because of libgck.
+
 2000-04-30 Garry R. Osgood <gosgood@idt.net>
+
 	* app/main.c
 	* libgimp/gimpsignal.c [Documentation only]
 

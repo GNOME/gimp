@@ -30,9 +30,10 @@
 
 #include <libgimp/gimp.h>
 
+#include "fp.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-#include "fp.h"
 
 FP_Params Current =
 {
@@ -83,7 +84,6 @@ query (void)
   };
   gint nargs = sizeof (args) / sizeof (args[0]);
   
-  INIT_I18N();
   gimp_install_procedure ("plug_in_filter_pack",
 			  "Allows the user to change H, S, or C with many previews",
 			  "No help available",
