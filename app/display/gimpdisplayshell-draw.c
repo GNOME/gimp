@@ -1461,9 +1461,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                   gimp_display_shell_transform_xy (shell, x, y, &x_real, &y_real, FALSE);
                   if (x_real >= x1 && x_real < x2 && y_real >= y1 && y_real < y2)
                     {
-                      gdk_draw_line (shell->canvas->window, gc,
-                                     x_real, y_real,
-                                     x_real, y_real);
+                      gdk_draw_point (shell->canvas->window, gc,
+                                      x_real, y_real);
                     }
                 }
             }

@@ -13,6 +13,7 @@ config.sub
 ltmain.sh
 gimp.spec
 gimptool-1.3
+gimptool-win32.c
 gimp-1.3.pc
 gimpui-1.3.pc
 intltool-extract

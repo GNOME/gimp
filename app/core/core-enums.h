@@ -176,11 +176,11 @@ GType gimp_grid_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_GRID_TYPE_DOTS,           /*< desc="Dots"               >*/
-  GIMP_GRID_TYPE_INTERSECTIONS,  /*< desc="Intersections Only" >*/
-  GIMP_GRID_TYPE_ON_OFF_DASH,    /*< desc="Dashed"             >*/
-  GIMP_GRID_TYPE_DOUBLE_DASH,    /*< desc="Double Dashed"      >*/
-  GIMP_GRID_TYPE_SOLID           /*< desc="Solid"              >*/
+  GIMP_GRID_TYPE_DOTS,           /*< desc="Intersections (dots)"       >*/
+  GIMP_GRID_TYPE_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
+  GIMP_GRID_TYPE_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
+  GIMP_GRID_TYPE_DOUBLE_DASH,    /*< desc="Double Dashed"              >*/
+  GIMP_GRID_TYPE_SOLID           /*< desc="Solid"                      >*/
 } GimpGridType;
 
 

@@ -215,8 +215,8 @@ gimp_gradient_type_get_type (void)
 
 static const GEnumValue gimp_grid_type_enum_values[] =
 {
-  { GIMP_GRID_TYPE_DOTS, N_("Dots"), "dots" },
-  { GIMP_GRID_TYPE_INTERSECTIONS, N_("Intersections Only"), "intersections" },
+  { GIMP_GRID_TYPE_DOTS, N_("Intersections (dots)"), "dots" },
+  { GIMP_GRID_TYPE_INTERSECTIONS, N_("Intersections (crosshairs)"), "intersections" },
   { GIMP_GRID_TYPE_ON_OFF_DASH, N_("Dashed"), "on-off-dash" },
   { GIMP_GRID_TYPE_DOUBLE_DASH, N_("Double Dashed"), "double-dash" },
   { GIMP_GRID_TYPE_SOLID, N_("Solid"), "solid" },
