@@ -115,6 +115,10 @@ gimp_progress_dialog_init (GimpProgressDialog *dialog)
                      dialog->box);
   gtk_widget_show (dialog->box);
 
+  g_signal_connect (dialog->box, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &dialog->box);
+
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
@@ -148,6 +152,9 @@ gimp_progress_dialog_progress_start (GimpProgress *progress,
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
+  if (! dialog->box)
+    return NULL;
+
   if (gimp_progress_start (GIMP_PROGRESS (dialog->box), message, cancelable))
     {
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
@@ -166,6 +173,9 @@ gimp_progress_dialog_progress_end (GimpProgress *progress)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
+  if (! dialog->box)
+    return;
+
   if (GIMP_PROGRESS_BOX (dialog->box)->active)
     {
       gimp_progress_end (GIMP_PROGRESS (dialog->box));
@@ -182,6 +192,9 @@ gimp_progress_dialog_progress_is_active (GimpProgress *progress)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
+  if (! dialog->box)
+    return FALSE;
+
   return gimp_progress_is_active (GIMP_PROGRESS (dialog->box));
 }
 
@@ -190,6 +203,9 @@ gimp_progress_dialog_progress_set_text (GimpProgress *progress,
                                         const gchar  *message)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
+
+  if (! dialog->box)
+    return;
 
   gimp_progress_set_text (GIMP_PROGRESS (dialog->box), message);
 }
@@ -200,6 +216,9 @@ gimp_progress_dialog_progress_set_value (GimpProgress *progress,
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
+  if (! dialog->box)
+    return;
+
   gimp_progress_set_value (GIMP_PROGRESS (dialog->box), percentage);
 }
 
@@ -207,6 +226,9 @@ static gdouble
 gimp_progress_dialog_progress_get_value (GimpProgress *progress)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
+
+  if (! dialog->box)
+    return 0.0;
 
   return gimp_progress_get_value (GIMP_PROGRESS (dialog->box));
 }

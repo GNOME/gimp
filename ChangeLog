@@ -1,3 +1,9 @@
+2004-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.c
+	* app/widgets/gimpprogressdialog.c: gracefully handle progress
+	calls after the widget is destroyed. Re-fixes bug #150194.
+
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablepreview.[ch]
@@ -17,7 +23,7 @@
 
 2004-09-01  Michael Natterer  <mitch@gimp.org>
 
-	* plug-ins/script-fu/script-fu-types.h (struct SFOptions): changed
+	* plug-ins/script-fu/script-fu-types.h (struct SFOption): changed
 	"guint history" to "gint history".
 
 	* plug-ins/script-fu/script-fu-interface.c: added callbacks for
@@ -44,7 +50,7 @@
 	it exists.
 
 	* plug-ins/script-fu/script-fu-interface.c: removed all progress
-	callback and simply use a GimpProgressBar.
+	callbacks and simply use a GimpProgressBar.
 
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
