@@ -48,6 +48,7 @@ typedef struct _MessageBox MessageBox;
 struct _MessageBox
 {
   GtkWidget   *mbox;
+  GtkWidget   *vbox;
   GtkWidget   *repeat_label;
   gchar       *message;
   gint         repeat_count;
@@ -55,8 +56,8 @@ struct _MessageBox
   gpointer     data;
 };
 
-/*  the maximum number of concucrrent dialog boxes */
-#define MESSAGE_BOX_MAXIMUM  4 
+/*  the maximum number of concurrent dialog boxes */
+#define MESSAGE_BOX_MAXIMUM  4
 
 static GList *message_boxes = NULL;
 
@@ -68,6 +69,7 @@ gimp_message_box (const gchar *message,
   MessageBox  *msg_box;
   GtkWidget   *mbox;
   GtkWidget   *hbox;
+  GtkWidget   *vbox;
   GtkWidget   *image;
   GtkWidget   *label;
   GList       *list;
@@ -90,7 +92,7 @@ gimp_message_box (const gchar *message,
 	  msg_box->repeat_count++;
 	  if (msg_box->repeat_count > 1)
 	    {
-	      gchar *text = g_strdup_printf (_("Message repeated %d times"), 
+	      gchar *text = g_strdup_printf (_("Message repeated %d times."), 
 					     msg_box->repeat_count);
 	      gtk_label_set_text (GTK_LABEL (msg_box->repeat_label), text);
 	      g_free (text);
@@ -98,18 +100,18 @@ gimp_message_box (const gchar *message,
 	    }
 	  else
 	    {
-	      GtkWidget *hbox;
+              GtkWidget *label;
 
-	      hbox = gtk_hbox_new (FALSE, 0);
-	      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (msg_box->mbox)->action_area), 
-				  hbox, TRUE, FALSE, 4);
-	      msg_box->repeat_label = gtk_label_new (_("Message repeated once"));
-	      gtk_container_add (GTK_CONTAINER (hbox), msg_box->repeat_label);
+              label = gtk_label_new (_("Message repeated once."));
+              gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	      gtk_box_pack_end (GTK_BOX (msg_box->vbox), label,
+                                FALSE, FALSE, 0);
+	      gtk_widget_show (label);
 
-	      gtk_widget_show (msg_box->repeat_label);
-	      gtk_widget_show (hbox);
+	      msg_box->repeat_label = label;
 	      gdk_window_raise (msg_box->mbox->window);
 	    }
+
 	  return;
 	}
     }
@@ -135,8 +137,8 @@ gimp_message_box (const gchar *message,
 
 			  NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 10);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), hbox);
   gtk_widget_show (hbox);
 
@@ -144,14 +146,19 @@ gimp_message_box (const gchar *message,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);  
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);  
+
   label = gtk_label_new (message);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  msg_box->mbox = mbox;
-  msg_box->message = g_strdup (message);
+  msg_box->mbox     = mbox;
+  msg_box->vbox     = vbox;
+  msg_box->message  = g_strdup (message);
   msg_box->callback = callback;
-  msg_box->data = data;
+  msg_box->data     = data;
 
   message_boxes = g_list_append (message_boxes, msg_box);
 

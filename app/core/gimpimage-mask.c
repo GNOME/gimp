@@ -370,7 +370,8 @@ gimp_image_mask_float (GimpImage    *gimage,
   non_empty = gimp_drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
-      g_message (_("Cannot float selection: No selection made."));
+      g_message (_("Cannot float selection because the\n"
+		   "selected region is empty."));
       return NULL;
     }
 

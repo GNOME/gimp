@@ -1,3 +1,11 @@
+2002-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-mask.c (gimp_image_mask_extract): changed an
+	error message.
+
+	* app/widgets/gimpmessagebox.c: tweaked so it looks more like the
+	query box.
+	
 2002-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/dialogs-constructors.c
