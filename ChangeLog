@@ -1,6 +1,7 @@
 2000-12-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_cmds.c
+	* app/threshold.c
 	* tools/pdbgen/pdb/color.pdb: my last s/rangechanged/range_changed/
 	somehow was not really "g" ;)
 

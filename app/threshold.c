@@ -341,7 +341,7 @@ threshold_dialog_new (void)
 
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (td->histogram));
 
-  gtk_signal_connect (GTK_OBJECT (td->histogram), "rangechanged",
+  gtk_signal_connect (GTK_OBJECT (td->histogram), "range_changed",
 		      GTK_SIGNAL_FUNC (threshold_histogram_range),
 		      td);
 
