@@ -1426,6 +1426,9 @@ prefs_dialog_new (Gimp    *gimp,
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add (config, "show-brush-outline",
+                          _("Show _Brush Outline"),
+                          GTK_BOX (vbox2));
   prefs_check_button_add (config, "perfect-mouse",
                           _("Perfect-but-Slow _Pointer Tracking"),
                           GTK_BOX (vbox2));

@@ -49,6 +49,7 @@ struct _GimpDisplayConfig
   gboolean                perfect_mouse;
   GimpCursorMode          cursor_mode;
   gboolean                cursor_updating;
+  gboolean                show_brush_outline;
   gchar                  *image_title_format;
   gchar                  *image_status_format;
   gboolean                confirm_on_close;

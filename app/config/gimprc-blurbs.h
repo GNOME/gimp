@@ -246,6 +246,10 @@ N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 #define SCRIPT_FU_PATH_BLURB \
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 
+#define SHOW_BRUSH_OUTLINE_BLURB \
+N_("When enabled, all paint tools will show a preview of the current " \
+   "brush's outline.")
+
 #define SHOW_MENUBAR_BLURB \
 N_("When enabled, the menubar is visible by default. This can also be " \
    "toggled with the \"View->Show Menubar\" command.")

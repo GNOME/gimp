@@ -29,6 +29,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -111,6 +113,10 @@ static void   gimp_paint_tool_color_picked   (GimpColorTool       *color_tool,
                                               GimpRGB             *color,
                                               gint                 color_index);
 
+static void   gimp_paint_tool_notify_brush   (GimpDisplayConfig   *config,
+                                              GParamSpec          *pspec,
+                                              GimpPaintTool       *paint_tool);
+
 
 static GimpColorToolClass *parent_class = NULL;
 
@@ -181,14 +187,16 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
 
-  paint_tool->pick_colors = FALSE;
-  paint_tool->draw_line   = FALSE;
-  paint_tool->draw_brush  = TRUE;
+  paint_tool->pick_colors      = FALSE;
+  paint_tool->draw_line        = FALSE;
 
-  paint_tool->brush_x     = 0.0;
-  paint_tool->brush_y     = 0.0;
+  paint_tool->notify_connected = FALSE;
+  paint_tool->draw_brush       = TRUE;
 
-  paint_tool->core        = NULL;
+  paint_tool->brush_x          = 0.0;
+  paint_tool->brush_y          = 0.0;
+
+  paint_tool->core             = NULL;
 }
 
 static void
@@ -564,6 +572,19 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       return;
     }
 
+  if (! paint_tool->notify_connected)
+    {
+      paint_tool->draw_brush =
+        GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_brush_outline;
+
+      g_signal_connect_object (tool->tool_info->gimp->config,
+                               "notify::show-brush-outline",
+                               G_CALLBACK (gimp_paint_tool_notify_brush),
+                               paint_tool, 0);
+
+      paint_tool->notify_connected = TRUE;
+    }
+
   core = paint_tool->core;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
@@ -811,4 +832,16 @@ gimp_paint_tool_color_picked (GimpColorTool *color_tool,
       context = gimp_get_user_context (tool->gdisp->gimage->gimp);
       gimp_context_set_foreground (context, color);
     }
+}
+
+static void
+gimp_paint_tool_notify_brush (GimpDisplayConfig *config,
+                              GParamSpec        *pspec,
+                              GimpPaintTool     *paint_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
+
+  paint_tool->draw_brush = config->show_brush_outline;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }

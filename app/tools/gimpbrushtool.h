@@ -39,6 +39,8 @@ struct _GimpPaintTool
 
   gboolean         pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean         draw_line;
+
+  gboolean         notify_connected;
   gboolean         draw_brush;
 
   gdouble          brush_x;

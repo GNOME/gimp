@@ -65,6 +65,7 @@ enum
   PROP_PERFECT_MOUSE,
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
+  PROP_SHOW_BRUSH_OUTLINE,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
   PROP_CONFIRM_ON_CLOSE,
@@ -175,6 +176,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
                                     "cursor-updating", CURSOR_UPDATING_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
+                                    "show-brush-outline", SHOW_BRUSH_OUTLINE_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
@@ -326,6 +331,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_CURSOR_UPDATING:
       display_config->cursor_updating = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_BRUSH_OUTLINE:
+      display_config->show_brush_outline = g_value_get_boolean (value);
+      break;
     case PROP_IMAGE_TITLE_FORMAT:
       g_free (display_config->image_title_format);
       display_config->image_title_format = g_value_dup_string (value);
@@ -432,6 +440,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_UPDATING:
       g_value_set_boolean (value, display_config->cursor_updating);
+      break;
+    case PROP_SHOW_BRUSH_OUTLINE:
+      g_value_set_boolean (value, display_config->show_brush_outline);
       break;
     case PROP_IMAGE_TITLE_FORMAT:
       g_value_set_string (value, display_config->image_title_format);
