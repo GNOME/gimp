@@ -722,7 +722,7 @@ gimp_brush_load_brush (gint          fd,
                    _("Fatal parse error in brush file '%s': "
                      "Unsupported brush depth %d\n"
                      "GIMP brushes must be GRAY or RGBA."),
-                   header.bytes, filename);
+                   filename, header.bytes);
       g_free (name);
       return NULL;
     }
