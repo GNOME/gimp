@@ -840,7 +840,7 @@ pattern_select_refresh_callback (GtkWidget *widget,
   /*  update the active selection  */
   active = get_active_pattern ();
   if (active)
-    pattern_select_select (psp, active->index);
+    select_pattern (active);
 
   /*  update the display  */
   draw_preview (psp);
