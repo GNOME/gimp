@@ -826,9 +826,13 @@ color_select_update_colors (ColorSelectP csp,
 	  blue = csp->values[BLUE];
 	}
 
-      gdk_window_get_size (window, &width, &height);
+      /* if we haven't yet been realised, there's no need to redraw
+       * anything. */
+      if (!window) return;
 
       store_color (&color.pixel, red, green, blue);
+
+      gdk_window_get_size (window, &width, &height);
 
       if (csp->gc)
 	{

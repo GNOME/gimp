@@ -5,10 +5,16 @@
 #include "gimpsetF.h"
 
 
-/* GimpSet - a typed set of objects with signals for adding and
-   removing of stuff. If it is weak, destroyed objects get removed
+/* GimpSet - a (usually) typed set of objects with signals for adding
+   and removing of stuff. If it is weak, destroyed objects get removed
    automatically. If it is not, it refs them so they won't be freed
-   till they are removed. (Though they can be destroyed, of course) */
+   till they are removed. (Though they can be destroyed, of course).
+
+   If GTK_TYPE_NONE is specified at gimpset creation time, no type
+   checking is performed by gimp_set_add() and the
+   gimp_set_{add,remove}_handler() functions should not be used.  It
+   is also illegal to ask for a weak untyped gimpset.
+*/
 
 #define GIMP_TYPE_SET gimp_set_get_type()
 
@@ -21,6 +27,7 @@
 /* Signals:
    add
    remove
+   member_modified
 */
 
 typedef guint GimpSetHandlerId;
@@ -42,5 +49,7 @@ GimpSetHandlerId gimp_set_add_handler (GimpSet* set,
 				       gpointer user_data);
 void		gimp_set_remove_handler (GimpSet* set,
 					 GimpSetHandlerId id);
+
+void		gimp_set_member_modified (GimpSet* set, gpointer ob);
 
 #endif

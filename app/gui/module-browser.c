@@ -20,12 +20,15 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "appenv.h"
 #include "module_db.h"
 #include "gimprc.h"
 #include "datafiles.h"
 #include "actionarea.h"
+#include "gimpset.h"
 #include "libgimp/gimpintl.h"
 
 #include "libgimp/gimpmodule.h"
@@ -52,6 +55,7 @@ static const char * const statename[] = {
 typedef struct {
   gchar          *fullpath;   /* path to the module */
   module_state    state;      /* what's happened to the module */
+  gboolean        ondisk;     /* TRUE if file still exists */
   /* stuff from now on may be NULL depending on the state the module is in */
   GimpModuleInfo *info;       /* returned values from module_init */
   GModule        *module;     /* handle on the module */
@@ -60,7 +64,7 @@ typedef struct {
   GimpModuleUnloadFunc *unload;
 } module_info;
 
-#define NUM_INFO_LINES 6
+#define NUM_INFO_LINES 7
 
 typedef struct {
   GtkWidget *table;
@@ -68,10 +72,11 @@ typedef struct {
   GtkWidget *button_label;
   module_info *last_update;
   GtkWidget *button;
+  GtkWidget *list;
 } browser_st;
 
-/* global list of module_info */
-static GSList *modules = NULL;
+/* global set of module_info pointers */
+static GimpSet *modules;
 
 
 /*#define DUMP_DB*/
@@ -81,15 +86,21 @@ static GSList *modules = NULL;
 static void module_initialize (char *filename);
 static void mod_load (module_info *mod, gboolean verbose);
 static void mod_unload (module_info *mod, gboolean verbose);
+static module_info *module_find_by_path (const char *fullpath);
 #ifdef DUMP_DB
 static void print_module_info (gpointer data, gpointer user_data);
 #endif
 
 static void browser_popdown_callback (GtkWidget *w, gpointer client_data);
-static void browser_info_update (browser_st *st, module_info *mod);
-static void browser_info_init (GtkWidget *table);
+static void browser_destroy_callback (GtkWidget *w, gpointer client_data);
+static void browser_info_update (GimpSet *, module_info *, browser_st *);
+static void browser_info_add (GimpSet *, module_info *, browser_st *);
+static void browser_info_remove (GimpSet *, module_info *, browser_st *);
+static void browser_info_init (browser_st *st, GtkWidget *table);
 static void browser_select_callback (GtkWidget *widget, GtkWidget *child);
 static void browser_load_unload_callback (GtkWidget *widget, gpointer data);
+static void browser_refresh_callback (GtkWidget *widget, gpointer data);
+static void make_list_item (gpointer data, gpointer user_data);
 
 
 /**************************************************************/
@@ -100,14 +111,16 @@ module_db_init (void)
 {
   /* Load and initialize gimp modules */
 
+  modules = gimp_set_new (GTK_TYPE_NONE, FALSE);
+
   if (g_module_supported ())
     datafiles_read_directories (module_path,
 				module_initialize, 0 /* no flags */);
-
 #ifdef DUMP_DB
-  g_slist_foreach (modules, print_module_info, NULL);
+  gimp_set_foreach (modules, print_module_info, NULL);
 #endif
 }
+
 
 
 GtkWidget *
@@ -117,10 +130,7 @@ module_db_browser_new (void)
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *listbox;
-  GtkWidget *list;
-  GtkWidget *list_item;
-  GSList *here;
-  module_info *info;
+  GtkWidget *button;
   browser_st *st;
   ActionAreaItem action_items[] =
   {
@@ -133,7 +143,7 @@ module_db_browser_new (void)
   gtk_window_set_title (GTK_WINDOW (shell), _("Module DB"));
 
   hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -145,50 +155,61 @@ module_db_browser_new (void)
   gtk_widget_set_usize (listbox, 125, 100);
   gtk_widget_show (listbox);
 
-  list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox), list);
-
   st = g_new0 (browser_st, 1);
 
-  here = modules;
-  while (here)
-  {
-    info = here->data;
-    here = g_slist_next (here);
+  st->list = gtk_list_new ();
+  gtk_list_set_selection_mode (GTK_LIST (st->list), GTK_SELECTION_BROWSE);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
+					 st->list);
 
-    if (!st->last_update)
-      st->last_update = info;
+  gimp_set_foreach (modules, make_list_item, st);
 
-    list_item = gtk_list_item_new_with_label (info->fullpath);
-    gtk_container_add (GTK_CONTAINER (list), list_item);
-    gtk_widget_show (list_item);
-    gtk_object_set_user_data (GTK_OBJECT (list_item), info);
-  }
+  gtk_widget_show (st->list);
 
-  gtk_widget_show (list);
-
-  vbox = gtk_vbox_new (FALSE, 5);
+  vbox = gtk_vbox_new (FALSE, 10);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  st->table = gtk_table_new (2, NUM_INFO_LINES, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), st->table, TRUE, TRUE, 0);
+  st->table = gtk_table_new (5, NUM_INFO_LINES, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), st->table, FALSE, FALSE, 0);
   gtk_widget_show (st->table);
 
-  st->button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), st->button, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 10);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 5);
+
+  button = gtk_button_new_with_label (_("Refresh"));
+  gtk_widget_show (button);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      browser_refresh_callback, st);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+
+  st->button = gtk_button_new_with_label ("");
+  st->button_label = GTK_BIN (st->button)->child;
+  gtk_box_pack_start (GTK_BOX (hbox), st->button, TRUE, TRUE, 0);
   gtk_widget_show (st->button);
   gtk_signal_connect (GTK_OBJECT (st->button), "clicked",
 		      browser_load_unload_callback, st);
 
-  browser_info_init (st->table);
-  browser_info_update (st, modules->data);
+  browser_info_init (st, st->table);
+  browser_info_update (modules, st->last_update, st);
 
-  gtk_object_set_user_data (GTK_OBJECT (list), st);
+  gtk_object_set_user_data (GTK_OBJECT (st->list), st);
 
-  gtk_signal_connect (GTK_OBJECT (list), "select_child",
+  gtk_signal_connect (GTK_OBJECT (st->list), "select_child",
 		      browser_select_callback, NULL);
+
+  /* hook the gimpset signals so we can refresh the display
+   * appropriately. */
+  gtk_signal_connect (GTK_OBJECT (modules), "member_modified",
+		      browser_info_update, st);
+  gtk_signal_connect (GTK_OBJECT (modules), "add", 
+		      browser_info_add, st);
+  gtk_signal_connect (GTK_OBJECT (modules), "remove", 
+		      browser_info_remove, st);
+
+  gtk_signal_connect (GTK_OBJECT (shell), "destroy",
+		      browser_destroy_callback, st);
 
   action_items[0].user_data = shell;
   build_action_area (GTK_DIALOG (shell), 
@@ -243,15 +264,21 @@ module_initialize (char *filename)
   if (!valid_module_name (filename))
     return;
 
+  /* don't load if we already know about it */
+  if (module_find_by_path (filename))
+    return;
+
   mod = g_new0 (module_info, 1);
-  modules = g_slist_append (modules, mod);
 
   mod->fullpath = g_strdup (filename);
+  mod->ondisk = TRUE;
 
   if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print (_("load module: \"%s\"\n"), filename);
 
   mod_load (mod, TRUE);
+
+  gimp_set_add (modules, mod);
 }
 
 static void
@@ -314,6 +341,7 @@ mod_load (module_info *mod, gboolean verbose)
     mod->unload = symbol;
   else
     mod->unload = NULL;
+
 }
 
 
@@ -329,6 +357,8 @@ mod_unload_completed_callback (void *data)
   mod->info = NULL;
 
   mod->state = ST_UNLOADED_OK;
+
+  gimp_set_member_modified (modules, mod);
 }
 
 static void
@@ -385,12 +415,33 @@ browser_popdown_callback (GtkWidget *w, gpointer client_data)
   gtk_widget_destroy (GTK_WIDGET (client_data));
 }
 
+static void
+browser_destroy_callback (GtkWidget *w, gpointer client_data)
+{
+  gtk_signal_disconnect_by_data (GTK_OBJECT (modules), client_data);
+  g_free (client_data);
+}
+
 
 static void
-browser_info_update (browser_st *st, module_info *mod)
+browser_info_update (GimpSet *set, module_info *mod, browser_st *st)
 {
   int i;
-  const char *text[NUM_INFO_LINES];
+  const char *text[NUM_INFO_LINES - 1];
+  char *status;
+
+  /* only update the info if we're actually showing it */
+  if (mod != st->last_update)
+    return;
+
+  if (!mod)
+  {
+    for (i=0; i < NUM_INFO_LINES; i++)
+      gtk_label_set_text (GTK_LABEL (st->label[i]), "");
+    gtk_label_set_text (GTK_LABEL(st->button_label), _("<No modules>"));
+    gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
+    return;
+  }
 
   if (mod->info)
   {
@@ -399,6 +450,7 @@ browser_info_update (browser_st *st, module_info *mod)
     text[2] = mod->info->version;
     text[3] = mod->info->copyright;
     text[4] = mod->info->date;
+    text[5] = mod->ondisk? _("on disk") : _("only in memory");
   }
   else
   {
@@ -407,43 +459,37 @@ browser_info_update (browser_st *st, module_info *mod)
     text[2] = "--";
     text[3] = "--";
     text[4] = "--";
+    text[5] = mod->ondisk? _("on disk") : _("nowhere (click 'refresh')");
   }
+
 
   if (mod->state == ST_MODULE_ERROR && mod->last_module_error)
   {
-    text[5] = g_malloc (strlen (statename[mod->state]) + 2 +
+    status = g_malloc (strlen (statename[mod->state]) + 2 +
 			strlen (mod->last_module_error) + 2);
-    sprintf(text[5], "%s (%s)", statename[mod->state], mod->last_module_error);
+    sprintf(status, "%s (%s)", statename[mod->state], mod->last_module_error);
   }
   else
   {
-    text[5] = g_strdup (statename[mod->state]);
+    status = g_strdup (statename[mod->state]);
   }
 
-  for (i=0; i < NUM_INFO_LINES; i++)
+  for (i=0; i < NUM_INFO_LINES - 1; i++)
   {
-    if (st->label[i])
-      gtk_container_remove (GTK_CONTAINER (st->table), st->label[i]);
-    st->label[i] = gtk_label_new (text[i]);
-    gtk_misc_set_alignment (GTK_MISC (st->label[i]), 0.0, 0.5);
-    gtk_table_attach (GTK_TABLE (st->table), st->label[i], 1, 2, i, i+1,
-		      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-    gtk_widget_show (st->label[i]);
+    gtk_label_set_text (GTK_LABEL (st->label[i]), text[i]);
   }
 
-  g_free (text[5]);
+  gtk_label_set_text (GTK_LABEL (st->label[NUM_INFO_LINES-1]), status);
+
+  g_free (status);
 
   /* work out what the button should do (if anything) */
   switch (mod->state) {
   case ST_MODULE_ERROR:
   case ST_LOAD_FAILED:
   case ST_UNLOADED_OK:
-    if (st->button_label)
-      gtk_container_remove (GTK_CONTAINER (st->button), st->button_label);
-    st->button_label = gtk_label_new (_("Load"));
-    gtk_widget_show (st->button_label);
-    gtk_container_add (GTK_CONTAINER (st->button), st->button_label);
-    gtk_widget_set_sensitive (GTK_WIDGET (st->button), TRUE);
+    gtk_label_set_text (GTK_LABEL(st->button_label), _("Load"));
+    gtk_widget_set_sensitive (GTK_WIDGET (st->button), mod->ondisk);
     break;
 
   case ST_UNLOAD_REQUESTED:
@@ -451,11 +497,7 @@ browser_info_update (browser_st *st, module_info *mod)
     break;
 
   case ST_LOADED_OK:
-    if (st->button_label)
-      gtk_container_remove (GTK_CONTAINER (st->button), st->button_label);
-    st->button_label = gtk_label_new (_("Unload"));
-    gtk_widget_show (st->button_label);
-    gtk_container_add (GTK_CONTAINER (st->button), st->button_label);
+    gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
     gtk_widget_set_sensitive (GTK_WIDGET (st->button),
 			      mod->unload? TRUE : FALSE);
     break;    
@@ -463,16 +505,17 @@ browser_info_update (browser_st *st, module_info *mod)
 }
 
 static void
-browser_info_init (GtkWidget *table)
+browser_info_init (browser_st *st, GtkWidget *table)
 {
   GtkWidget *label;
   int i;
   char *text[] = {
     N_("Purpose: "),
     N_("Author: "),
-    N_("Verson: "),
+    N_("Version: "),
     N_("Copyright: "),
     N_("Date: "),
+    N_("Location: "),
     N_("State: ")
   };
 
@@ -483,6 +526,12 @@ browser_info_init (GtkWidget *table)
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
 		      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
     gtk_widget_show (label);
+
+    st->label[i] = gtk_label_new ("");
+    gtk_misc_set_alignment (GTK_MISC (st->label[i]), 0.0, 0.5);
+    gtk_table_attach (GTK_TABLE (st->table), st->label[i], 1, 2, i, i+1,
+		      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+    gtk_widget_show (st->label[i]);
   }
 }
 
@@ -500,7 +549,7 @@ browser_select_callback (GtkWidget *widget, GtkWidget *child)
 
   st->last_update = i;
 
-  browser_info_update (st, i);
+  browser_info_update (modules, st->last_update, st);
 }
 
 
@@ -514,5 +563,154 @@ browser_load_unload_callback (GtkWidget *widget, gpointer data)
   else
     mod_load (st->last_update, FALSE);
 
-  browser_info_update (st, st->last_update);
+  gimp_set_member_modified (modules, st->last_update);
+}
+
+
+static void
+make_list_item (gpointer data, gpointer user_data)
+{
+  module_info *info = data;
+  browser_st *st = user_data;
+  GtkWidget *list_item;
+
+  if (!st->last_update)
+    st->last_update = info;
+
+  list_item = gtk_list_item_new_with_label (info->fullpath);
+
+  gtk_widget_show (list_item);
+  gtk_object_set_user_data (GTK_OBJECT (list_item), info);
+
+  gtk_container_add (GTK_CONTAINER (st->list), list_item);
+}
+
+
+static void
+browser_info_add (GimpSet *set, module_info *mod, browser_st *st)
+{
+  make_list_item (mod, st);
+}
+
+
+static void
+browser_info_remove (GimpSet *set, module_info *mod, browser_st *st)
+{
+  GList *dlist, *free_list;
+  GtkWidget *list_item;
+  module_info *i;
+
+  dlist = gtk_container_children (GTK_CONTAINER (st->list));
+  free_list = dlist;
+
+  while (dlist)
+  {
+    list_item = dlist->data;
+
+    i = gtk_object_get_user_data (GTK_OBJECT (list_item));
+    g_return_if_fail (i != NULL);
+
+    if (i == mod)
+    {
+      gtk_container_remove (GTK_CONTAINER (st->list), list_item);
+      g_list_free(free_list);
+      return;
+    }
+
+    dlist = dlist->next;
+  }
+
+  g_warning ("tried to remove module that wasn't in brower's list");
+  g_list_free(free_list);
+}
+
+
+
+static void
+module_db_module_ondisk (gpointer data, gpointer user_data)
+{
+  module_info *mod = data;
+  struct stat statbuf;
+  int ret;
+  int old_ondisk = mod->ondisk;
+  GSList **kill_list = user_data;
+
+  ret = stat (mod->fullpath, &statbuf);
+  if (ret != 0)
+    mod->ondisk = FALSE;
+  else
+    mod->ondisk = TRUE;
+
+  /* if it's not on the disk, and it isn't in memory, mark it to be
+   * removed later. */
+  if (!mod->ondisk && !mod->module)
+  {
+    *kill_list = g_slist_append (*kill_list, mod);
+    mod = NULL;
+  }
+
+  if (mod && mod->ondisk != old_ondisk)
+    gimp_set_member_modified (modules, mod);
+}
+
+
+static void
+module_db_module_remove (gpointer data, gpointer user_data)
+{
+  module_info *mod = data;
+
+  gimp_set_remove (modules, mod);
+
+  if (mod->last_module_error)
+      g_free (mod->last_module_error);
+  g_free (mod->fullpath);
+  g_free (mod);    
+}
+
+
+
+typedef struct {
+  const char *search_key;
+  module_info *found;
+} find_by_path_closure;
+
+static void
+module_db_path_cmp (gpointer data, gpointer user_data)
+{
+  module_info *mod = data;
+  find_by_path_closure *cl = user_data;
+
+  if (!strcmp (mod->fullpath, cl->search_key))
+    cl->found = mod;
+}
+
+static module_info *
+module_find_by_path (const char *fullpath)
+{
+  find_by_path_closure cl;
+
+  cl.found = NULL;
+  cl.search_key = fullpath;
+
+  gimp_set_foreach (modules, module_db_path_cmp, &cl);
+
+  return cl.found;
+}
+
+
+
+static void
+browser_refresh_callback (GtkWidget *widget, gpointer data)
+{
+  GSList *kill_list = NULL;
+
+  /* remove modules we don't have on disk anymore */
+  gimp_set_foreach (modules, module_db_module_ondisk, &kill_list);
+  g_slist_foreach (kill_list, module_db_module_remove, NULL);
+  g_slist_free (kill_list);
+  kill_list = NULL;
+
+  /* walk filesystem and add new things we find */
+  datafiles_read_directories (module_path,
+			      module_initialize, 0 /* no flags */);
 }

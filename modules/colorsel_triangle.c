@@ -49,7 +49,7 @@ static GimpColorSelectorMethods methods =
 
 
 static GimpModuleInfo info = {
-    NULL /* no shutdown data needed */,
+    NULL,
     "Painter-style colour selector as a pluggable colour selector",
     "Simon Budig <Simon.Budig@unix-ag.org>",
     "v0.01",
@@ -111,8 +111,13 @@ static void color_select_update_hsv_values (ColorSelectP);
 G_MODULE_EXPORT GimpModuleStatus
 module_init (GimpModuleInfo **inforet)
 {
-  if (gimp_color_selector_register ("Triangle", &methods))
+  GimpColorSelectorID id;
+
+  id = gimp_color_selector_register ("Triangle", &methods);
+
+  if (id)
   {
+    info.shutdown_data = id;
     *inforet = &info;
     return GIMP_MODULE_OK;
   }
@@ -121,6 +126,16 @@ module_init (GimpModuleInfo **inforet)
     return GIMP_MODULE_UNLOAD;
   }
 }
+
+
+G_MODULE_EXPORT void
+module_unload (void *shutdown_data,
+	       void (*completed_cb)(void *),
+	       void *completed_data)
+{
+  gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
+}
+
 
 
 /*************************************************************/

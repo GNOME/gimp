@@ -1,3 +1,26 @@
+Sat Jan 23 20:36:06 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/color_select.c: don't try and gdk_window_get_size() when we
+	    haven't been realised yet.
+
+	* app/gimpset.[ch]: allow the use of GTK_TYPE_NONE for storing
+	    sets of things that aren't GTK_OBJECTs.  Set can also emit new
+	    signal "member_modified" when gimp_set_member_modified (set,
+	    ob) is called.
+
+	* app/layers_dialog.c: show main dialog shell last, to avoid ugly
+ 	    window manager interaction.
+
+	* app/module_db.c: can now handle not having any modules at all
+	    without segfaulting, plus proper updates on changes.  Also now
+	    has refresh button to re-scan the filesystem for modules.
+
+	* modules/colorsel_triangle.c: added module_unload() function.
+  	    Still needs someone to spruce up the UI.  Volunteers?
+
+	* plug-ins/script-fu/scripts/select_to_image.scm: create display
+ 	    for newly duplicated image, otherwise you don't see anything.
+
 Sat Jan 23 18:43:23 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/gif/gif.c: Multi-line comments, a little more

@@ -373,9 +373,6 @@ lc_dialog_create (GimpImage* gimage)
 
       gtk_widget_show (notebook);
 
-      gtk_widget_show (lc_shell);
-      gtk_widget_show (lc_subshell);
-
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
       /*  The close button  */
       button = gtk_button_new_with_label (_("Close"));
@@ -407,6 +404,10 @@ lc_dialog_create (GimpImage* gimage)
       
       layers_dialog_update (gimage);
       channels_dialog_update (gimage);
+
+      gtk_widget_show (lc_subshell);
+      gtk_widget_show (lc_shell);
+
       gdisplays_flush ();
     }
   else
@@ -894,7 +895,7 @@ layers_dialog_update (GimpImage* gimage)
   if (item_list)
     gtk_list_insert_items (GTK_LIST (layersD->layer_list), item_list, 0);
 
-  gtk_signal_connect (GIMP_OBJECT (gimage),
+  gtk_signal_connect (GTK_OBJECT (gimage),
 		      "destroy",
 		      GTK_SIGNAL_FUNC (lc_dialog_update_cb),
 		      NULL);

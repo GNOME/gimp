@@ -60,8 +60,8 @@
     (gimp-palette-set-background old-bg)
     (gimp-image-enable-undo image)
     (gimp-image-set-active-layer image drawable)
-;    (gimp-display-new brush-image)
-;    (gimp-displays-flush)
+    (gimp-display-new brush-image)
+    (gimp-displays-flush)
     (script-fu-export-file 1 img drawable RGB 255 FALSE 2 "-export" "png")
 
 ))

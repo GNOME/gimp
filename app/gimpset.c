@@ -11,7 +11,7 @@ typedef struct _GimpSetHandler {
 } GimpSetHandler;
 
 typedef struct {
-	GimpObject* object;
+	gpointer object;
 	GArray* handlers;
 	guint destroy_handler;
 } Node;
@@ -20,10 +20,11 @@ enum
 {
   ADD,
   REMOVE,
+  MEMBER_MODIFIED,
   LAST_SIGNAL
 };
 
-static Node* gimp_set_find_node (GimpSet* set, GimpObject* ob);
+static Node* gimp_set_find_node (GimpSet* set, gpointer ob);
 static Node* gimp_set_node_new (GimpSet* set, gpointer ob);
 static void gimp_set_node_free (GimpSet* set, Node* n);
 
@@ -69,6 +70,8 @@ gimp_set_class_init (GimpSetClass* klass)
 		gimp_signal_new ("add", 0, type, 0, gimp_sigtype_pointer);
 	gimp_set_signals[REMOVE]=
 		gimp_signal_new ("remove", 0, type, 0, gimp_sigtype_pointer);
+	gimp_set_signals[MEMBER_MODIFIED]=
+		gimp_signal_new ("member_modified", 0, type, 0, gimp_sigtype_pointer);
 	gtk_object_class_add_signals (object_class,
 				      gimp_set_signals,
 				      LAST_SIGNAL);
@@ -89,7 +92,13 @@ GtkType gimp_set_get_type (void)
 
 GimpSet*
 gimp_set_new (GtkType type, gboolean weak){
-	GimpSet* set=gtk_type_new (gimp_set_get_type ());
+	GimpSet* set;
+
+	/* untyped sets must not be weak, since we can't attach a
+         * destroy handler */
+	g_assert(!(type == GTK_TYPE_NONE && weak == TRUE));
+
+	set=gtk_type_new (gimp_set_get_type ());
 	set->type=type;
 	set->weak=weak;
 	return set;
@@ -102,7 +111,7 @@ gimp_set_destroy_cb (GtkObject* ob, gpointer data){
 }
 
 static Node*
-gimp_set_find_node (GimpSet* set, GimpObject* ob)
+gimp_set_find_node (GimpSet* set, gpointer ob)
 {
 	GSList* l = set->list;
 	for(l = set->list; l; l = l->next){
@@ -166,7 +175,9 @@ gboolean
 gimp_set_add (GimpSet* set, gpointer val)
 {
 	g_return_val_if_fail(set, FALSE);
-	g_return_val_if_fail(GTK_CHECK_TYPE(val, set->type), FALSE);
+
+	if (set->type != GTK_TYPE_NONE)
+		g_return_val_if_fail(GTK_CHECK_TYPE(val, set->type), FALSE);
 	
 	if(gimp_set_find_node(set, val))
 		return FALSE;
@@ -222,6 +233,10 @@ gimp_set_add_handler(GimpSet* set, const gchar* signame,
 	guint a;
 
 	g_assert(signame);
+
+	/* you can't set a handler on something that's not a GTK
+         * object */
+	g_assert(set->type != GTK_TYPE_NONE);
 	
 	h.signame = signame;
 	h.func = handler;
@@ -258,6 +273,11 @@ void
 gimp_set_remove_handler(GimpSet* set, GimpSetHandlerId id)
 {
 	GSList* l;
+
+	/* you can't remove a signal handler on something that's not a
+         * GTK object */
+	g_return_if_fail(set->type != GTK_TYPE_NONE);
+
 	for(l=set->list;l;l=l->next){
 		Node* n = l->data;
 		gtk_signal_disconnect(GTK_OBJECT(n->object),
@@ -267,4 +287,10 @@ gimp_set_remove_handler(GimpSet* set, GimpSetHandlerId id)
 }
 
 	
-	
+void
+gimp_set_member_modified(GimpSet* set, gpointer ob)
+{
+    g_return_if_fail (gimp_set_find_node (set, ob) != NULL);
+
+    gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[MEMBER_MODIFIED], ob);
+}
