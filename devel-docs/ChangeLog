@@ -1,3 +1,9 @@
+Fri Feb 25 19:47:35 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp-docs.sgml: cleaned up the Makefile, got rid of the
+	sed < book1.html > index.html  hack
+
 2000-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt

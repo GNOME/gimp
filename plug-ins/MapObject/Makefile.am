@@ -21,7 +21,6 @@ MapObject_SOURCES = \
 	mapobject_image.h	\
 	mapobject_main.c	\
 	mapobject_main.h	\
-	mapobject_pixmaps.h	\
 	mapobject_preview.c	\
 	mapobject_preview.h	\
 	mapobject_shade.c	\

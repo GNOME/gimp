@@ -1,3 +1,9 @@
+Fri Feb 25 19:50:35 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am: remove header files that were
+	removed from the tree
+
 2000-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/print.c: use the ui constructors from libgimp,

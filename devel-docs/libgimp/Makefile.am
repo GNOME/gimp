@@ -14,66 +14,23 @@ LDFLAGS=`gimptool --libs`
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)
 
-tmpl_sources = 				\
-	tmpl/color_display.sgml		\
-	tmpl/color_selector.sgml	\
-	tmpl/gimp.sgml			\
-	tmpl/gimpchainbutton.sgml	\
-	tmpl/gimpcolorbutton.sgml	\
-	tmpl/gimpcolorspace.sgml	\
-	tmpl/gimpcompat.sgml		\
-	tmpl/gimpdialog.sgml		\
-	tmpl/gimpenums.sgml		\
-	tmpl/gimpenv.sgml		\
-	tmpl/gimpexport.sgml		\
-	tmpl/gimpfeatures.sgml		\
-	tmpl/gimpfileselection.sgml	\
-	tmpl/gimphelpui.sgml		\
-	tmpl/gimplimits.sgml		\
-	tmpl/gimpmath.sgml		\
-	tmpl/gimpmatrix.sgml		\
-	tmpl/gimpmenu.sgml		\
-	tmpl/gimpmodule.sgml		\
-	tmpl/gimppatheditor.sgml	\
-	tmpl/gimppixmap.sgml		\
-	tmpl/gimpprotocol.sgml		\
-	tmpl/gimpquerybox.sgml		\
-	tmpl/gimpsizeentry.sgml		\
-	tmpl/gimpui.sgml		\
-	tmpl/gimpunit.sgml		\
-	tmpl/gimpunitmenu.sgml		\
-	tmpl/gimpvector.sgml		\
-	tmpl/gimpwidgets.sgml		\
-	tmpl/gimpwire.sgml		\
-	tmpl/libgimp-unused.sgml	\
-	tmpl/parasite.sgml		\
-	tmpl/parasiteF.sgml		\
-	tmpl/parasiteP.sgml		\
-	tmpl/parasiteio.sgml
-
 libgimp_docdir = $(HTML_DIR)
 
-libgimp_doc_DATA = libgimp.html
-
 EXTRA_DIST =				\
-	$(libgimp_doc_DATA)		\
-	libgimp.hierarchy		\
-	libgimp.signals			\
-	libgimp.types			\
-	libgimp-include.c		\
-	libgimp-decl.txt		\
-	libgimp-sections.txt
+	$(DOC_MAIN_SGML_FILE) 		\
+	$(DOC_MODULE).hierarchy		\
+	$(DOC_MODULE).signals		\
+	$(DOC_MODULE).types		\
+	$(DOC_MODULE)-include.c		\
+	$(DOC_MODULE)-decl.txt		\
+	$(DOC_MODULE)-sections.txt
 
 if ENABLE_GTK_DOC
-libgimp.html: html/book1.html
-	-cd $(srcdir) &&	\
-	sed -e 's/HREF=\"/HREF=\"libgimp\//' html/book1.html > libgimp.html
-else
-libgimp.html:
-endif
-
-html/book1.html: sgml/libgimp-doc.bottom
+html/index.html: sgml/libgimp-doc.bottom
 	$(MAKE) html
+else
+html/index.html:
+endif
 
 sgml/libgimp-doc.bottom: $(tmpl_sources)
 	$(MAKE) sgml
@@ -98,7 +55,7 @@ html:
 	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
 
 clean-local:
-	rm -f *~ *.bak *-unused.txt libgimp.html
+	rm -f *~ *.bak *-unused.txt
 
 maintainer-clean-local: clean
 	cd $(srcdir) && rm -rf sgml html $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt 

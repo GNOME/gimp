@@ -33,7 +33,7 @@
 <!entity libgimp-gimpvector SYSTEM "sgml/gimpvector.sgml">
 <!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
 ]>
-<book>
+<book id="index">
   <bookinfo>
     <title>GIMP Library Reference Manual</title>
   </bookinfo>

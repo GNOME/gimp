@@ -19,7 +19,6 @@ Lighting_SOURCES = \
 	lighting_image.h	\
 	lighting_main.c		\
 	lighting_main.h		\
-	lighting_pixmaps.h	\
 	lighting_preview.c	\
 	lighting_preview.h	\
 	lighting_shade.c	\
