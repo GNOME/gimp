@@ -2,7 +2,6 @@ EXPORTS
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
-	gimp_blend
 	gimp_brightness_contrast
 	gimp_brush_select_destroy
 	gimp_brush_select_new
@@ -20,7 +19,6 @@ EXPORTS
 	gimp_brushes_set_paint_mode
 	gimp_brushes_set_popup
 	gimp_brushes_set_spacing
-	gimp_bucket_fill
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy
@@ -34,7 +32,6 @@ EXPORTS
 	gimp_clone
 	gimp_clone_default
 	gimp_color_balance
-	gimp_color_picker
 	gimp_convolve
 	gimp_convolve_default
 	gimp_curves_explicit
@@ -90,6 +87,8 @@ EXPORTS
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
 	gimp_drawable_width
+	gimp_edit_blend
+	gimp_edit_bucket_fill
 	gimp_edit_clear
 	gimp_edit_copy
 	gimp_edit_cut
@@ -199,6 +198,7 @@ EXPORTS
 	gimp_image_parasite_detach
 	gimp_image_parasite_find
 	gimp_image_parasite_list
+	gimp_image_pick_color
 	gimp_image_pick_correlate_layer
 	gimp_image_raise_channel
 	gimp_image_raise_layer
@@ -377,8 +377,8 @@ EXPORTS
 	gimp_selection_translate
 	gimp_selection_value
 	gimp_shear
-	gimp_shm_addr
 	gimp_shm_ID
+	gimp_shm_addr
 	gimp_show_tool_tips
 	gimp_smudge
 	gimp_smudge_default

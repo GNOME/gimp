@@ -1,5 +1,10 @@
 2004-01-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.def
+	* libgimpthumb/gimpthumb.def: updated. Patch from Michael Schumacher.
+
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-scale.c (gimp_image_scale_check): fixed inline
 	docs.
 
