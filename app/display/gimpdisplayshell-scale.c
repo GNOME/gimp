@@ -105,66 +105,62 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
                                         gint    *scalesrc,
                                         gint    *scaledest)
 {
-  gdouble zoom_delta;
-  gdouble min_zoom_delta = G_MAXFLOAT;
-  gint    best_i         = 0xFF;
-  gint    i;
+  gint    p0, p1, p2;
+  gint    q0, q1, q2;
+  gdouble remainder, next_cf;
 
   g_return_if_fail (scalesrc != NULL);
   g_return_if_fail (scaledest != NULL);
 
-  if (zoom_factor < 1.0)
+  /* calculate the continued fraction for the desired zoom factor */
+
+  p0 = 1;
+  q0 = 0;
+  p1 = floor (zoom_factor);
+  q1 = 1;
+
+  remainder = zoom_factor - p1;
+
+  while (fabs (remainder) >= 0.0001 &&
+         fabs (((gdouble) p1 / q1) - zoom_factor) > 0.0001)
     {
-      for (i = 0xFF; i > 0; i--)
-        {
-          *scalesrc  = i;
-          *scaledest = floor ((gdouble) *scalesrc * zoom_factor);
+      remainder = 1.0 / remainder;
 
-          if (*scaledest < 0x1)
-            *scaledest = 0x1;
+      next_cf = floor (remainder);
 
-          zoom_delta = ABS ((gdouble) *scaledest / (gdouble) *scalesrc -
-                            zoom_factor);
+      p2 = next_cf * p1 + p0;
+      q2 = next_cf * q1 + q0;
 
-          if (zoom_delta <= min_zoom_delta)
-            {
-              min_zoom_delta = zoom_delta;
-              best_i = i;
-            }
-        }
+      /* Numerator and Denominator are limited by 255 */
+      if (p2 > 255 || q2 > 255)
+        break;
 
-      *scalesrc  = best_i;
-      *scaledest = floor ((gdouble) *scalesrc * zoom_factor);
+      /* remember the last two fractions */
+      p0 = p1;
+      p1 = p2;
+      q0 = q1;
+      q1 = q2;
 
-      if (*scaledest < 0x1)
-        *scaledest = 0x1;
+      remainder = remainder - next_cf;
     }
-  else
+
+  zoom_factor = (gdouble) p1 / q1;
+
+  /* hard upper and lower bounds for zoom ratio */
+
+  if (zoom_factor > 255.0)
     {
-      for (i = 0xFF; i > 0; i--)
-        {
-          *scaledest = i;
-          *scalesrc  = ceil ((gdouble) *scaledest / zoom_factor);
-
-          if (*scalesrc < 0x1)
-            *scalesrc = 0x1;
-
-          zoom_delta = ABS ((gdouble) *scaledest / (gdouble) *scalesrc -
-                            zoom_factor);
-
-          if (zoom_delta <= min_zoom_delta)
-            {
-              min_zoom_delta = zoom_delta;
-              best_i = i;
-            }
-        }
-
-      *scaledest = best_i;
-      *scalesrc  = ceil ((gdouble) *scaledest / zoom_factor);
-
-      if (*scalesrc < 0x1)
-        *scalesrc = 0x1;
+      p1 = 255;
+      q1 = 1;
     }
+  else if (zoom_factor < 1.0 / 255.0)
+    {
+      p1 = 1;
+      q1 = 255;
+    }
+
+  *scalesrc = q1;
+  *scaledest = p1;
 }
 
 void

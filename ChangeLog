@@ -1,3 +1,13 @@
+2004-01-11  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c: calculate the
+	fraction from the zoom ratio using continued fractions.
+	This prefers smaller numbers in numerator/denominator.
+
+	Adresses bug #124073, but does not completely fix it,
+	since scaling up/down does not always result in the same
+	ratios.
+
 2004-01-10  Ville Pätsi  <drc@gimp.org>
 
 	* gimp.spec.in: Changed epoch to 2.
