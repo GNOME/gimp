@@ -20,11 +20,6 @@
 #define __GIMP_TOOL_MODULE_H__
 
 #include <gmodule.h>
-#include <glib-object.h>
-#include <gtk/gtk.h> /* for tools-types.h.  This is truly sick */
-#include "config.h"
-#include "tools-types.h"
-#include "core/gimp.h"
 
 #define GIMP_TYPE_TOOL_MODULE            (gimp_tool_module_get_type ())
 #define GIMP_TOOL_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_MODULE, GimpToolModule))
@@ -35,7 +30,6 @@
 
 
 typedef struct _GimpToolModuleClass GimpToolModuleClass;
-typedef struct _GimpToolModule      GimpToolModule;
 
 
 struct _GimpToolModule
@@ -48,7 +42,7 @@ struct _GimpToolModule
   void       (* register_tool) (Gimp                     *gimp,
                                 GimpToolRegisterCallback  callback);
                           
-  gboolean   (* register_type) (GTypeModule              *module);
+  gboolean   (* register_type) (GimpToolModule           *module);
 
 };
 
@@ -59,9 +53,10 @@ struct _GimpToolModuleClass
 };
 
 
-GType           gimp_tool_module_get_type  (void) G_GNUC_CONST;
-GimpToolModule *gimp_tool_module_new       (gchar                    *filename, 
-                                            Gimp                     *gimp, 
-                                            GimpToolRegisterCallback  callback);  
+GType           gimp_tool_module_get_type (void) G_GNUC_CONST;
+GimpToolModule *gimp_tool_module_new      (const gchar              *filename, 
+                                           Gimp                     *gimp, 
+                                           GimpToolRegisterCallback  callback);
+
 
 #endif  /*  __GIMP_TOOL_MODULE_H__  */

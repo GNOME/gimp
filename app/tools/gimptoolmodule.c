@@ -16,52 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "tools-types.h"
+#include "core/gimp.h"
+
 #include "gimptoolmodule.h"
 
 
-static void   gimp_tool_module_class_init   (GimpToolModuleClass   *klass);
-static void   gimp_tool_module_init         (GimpToolModule        *tool);
+static void     gimp_tool_module_class_init (GimpToolModuleClass *klass);
+static void     gimp_tool_module_init       (GimpToolModule      *tool);
+static gboolean gimp_tool_module_load       (GTypeModule         *gmodule);
+static void     gimp_tool_module_unload     (GTypeModule         *gmodule);
 
 
 static GTypeModuleClass *parent_class = NULL;
 
-
-static gboolean
-gimp_tool_module_load (GTypeModule *gmodule) {
-  GimpToolModule *module = GIMP_TOOL_MODULE(gmodule);
-
-  g_return_val_if_fail(module, FALSE);
-  g_return_val_if_fail(module->filename, FALSE);
-  g_return_val_if_fail(g_module_supported(), FALSE);
-
-  module->module = g_module_open(module->filename, G_MODULE_BIND_LAZY);
-
-  if (!module)
-  	return FALSE;
-
-  if (!g_module_symbol (module->module, "gimp_tool_module_register_tool", (gpointer *) &module->register_tool) ||
-      !g_module_symbol (module->module, "gimp_tool_module_register_type", (gpointer *) &module->register_type))
-    {
-      g_warning (g_module_error());
-      g_module_close (module->module);
-
-      return FALSE;
-    }
-                                                                                                                  
-  return module->register_type(module);
-}
-
-static void
-gimp_tool_module_unload (GTypeModule *gmodule) {
-  GimpToolModule *module = GIMP_TOOL_MODULE(gmodule);
-
-  g_return_if_fail(module);
-  g_return_if_fail(module->module);
-  g_return_if_fail(g_module_supported());
-
-  g_module_close(module->module); /* FIXME: error handling */
-  module->module=NULL;
-}
 
 GType
 gimp_tool_module_get_type (void)
@@ -94,11 +66,12 @@ gimp_tool_module_get_type (void)
 static void
 gimp_tool_module_class_init (GimpToolModuleClass *klass)
 {
-  GTypeModuleClass *g_type_module_class = G_TYPE_MODULE_CLASS(klass);
+  GTypeModuleClass *module_class = G_TYPE_MODULE_CLASS (klass);
+  
   parent_class = g_type_class_peek_parent (klass);
 
-  g_type_module_class->load = gimp_tool_module_load;
-  g_type_module_class->unload = gimp_tool_module_unload;
+  module_class->load   = gimp_tool_module_load;
+  module_class->unload = gimp_tool_module_unload;
 }
 
 static void
@@ -109,20 +82,72 @@ gimp_tool_module_init (GimpToolModule *module)
   module->register_tool = NULL;
 }
 
+static gboolean
+gimp_tool_module_load (GTypeModule *gmodule)
+{
+  GimpToolModule *module;
+
+  g_return_val_if_fail (G_IS_TYPE_MODULE (gmodule), FALSE);
+  g_return_val_if_fail (g_module_supported (), FALSE);
+
+  module = GIMP_TOOL_MODULE (gmodule);
+
+  g_return_val_if_fail (module->filename != NULL, FALSE);
+
+  module->module = g_module_open (module->filename, G_MODULE_BIND_LAZY);
+
+  if (!module)
+  	return FALSE;
+
+  if (!g_module_symbol (module->module, "gimp_tool_module_register_tool", 
+                        (gpointer *) &module->register_tool) ||
+      !g_module_symbol (module->module, "gimp_tool_module_register_type", 
+                        (gpointer *) &module->register_type))
+    {
+      g_warning (g_module_error());
+      g_module_close (module->module);
+
+      return FALSE;
+    }
+
+  return module->register_type (module);
+}
+
+static void
+gimp_tool_module_unload (GTypeModule *gmodule) 
+{
+  GimpToolModule *module;
+
+  g_return_if_fail (G_IS_TYPE_MODULE (gmodule));
+  g_return_if_fail (g_module_supported ());
+
+  module = GIMP_TOOL_MODULE (gmodule);
+
+  g_return_if_fail (module->module != NULL);
+
+  g_module_close (module->module); /* FIXME: error handling */
+
+  module->module = NULL;
+}
 
 GimpToolModule *
-gimp_tool_module_new (gchar *filename, Gimp *gimp, GimpToolRegisterCallback callback)
+gimp_tool_module_new (const gchar              *filename, 
+                      Gimp                     *gimp, 
+                      GimpToolRegisterCallback  callback)
 {
-  GimpToolModule *module = GIMP_TOOL_MODULE(g_object_new(GIMP_TYPE_TOOL_MODULE, NULL));
+  GimpToolModule *module;
 
-  g_return_val_if_fail (filename, NULL);
-  g_return_val_if_fail (gimp, NULL);
-  g_return_val_if_fail (callback, NULL);
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
-  module->filename = g_strdup(filename);
-  gimp_tool_module_load(G_TYPE_MODULE(module)); /* FIXME: check for errors! */
+  module = GIMP_TOOL_MODULE (g_object_new (GIMP_TYPE_TOOL_MODULE, NULL));
+
+  module->filename = g_strdup (filename); 
+  /* FIXME: check for errors! */
+  gimp_tool_module_load (G_TYPE_MODULE (module));
   module->register_tool (gimp, callback);
-  gimp_tool_module_unload(G_TYPE_MODULE(module));
+  gimp_tool_module_unload (G_TYPE_MODULE (module));
 
   return module;
 }

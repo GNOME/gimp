@@ -71,10 +71,15 @@
 #include "gimptexttool.h"
 #include "gimptoolmodule.h"
 
-Gimp *thatgimp;
+void 
+cheesey_module_loading_hack (const gchar *filename,
+                             gpointer     loader_data) 
+{
+  Gimp *gimp = GIMP (loader_data);
 
-void cheesey_module_loading_hack(gchar *filename) {
-      GimpToolModule *m = gimp_tool_module_new(filename, thatgimp, tool_manager_register_tool);
+  gimp_tool_module_new (filename, 
+                        gimp, 
+                        tool_manager_register_tool);
 }
 
 void
@@ -144,8 +149,6 @@ tools_init (Gimp *gimp)
       register_funcs[i] (gimp, tool_manager_register_tool);
     }
 
-  thatgimp=gimp;
-  
   if (g_module_supported ())
     gimp_datafiles_read_directories (gimp->config->tool_plug_in_path,
                                      0 /* no flags */,

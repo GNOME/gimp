@@ -26,6 +26,7 @@
 /*  tools  */
 
 typedef struct _GimpTool            GimpTool;
+typedef struct _GimpToolModule      GimpToolModule;
 typedef struct _GimpPaintTool       GimpPaintTool;
 typedef struct _GimpDrawTool        GimpDrawTool;
 typedef struct _GimpPathTool        GimpPathTool;
