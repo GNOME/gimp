@@ -1,14 +1,9 @@
 ;;; unsharp-mask.scm
-;;; Time-stamp: <1997/10/30 23:27:20 narazaki@InetQ.or.jp>
-;;; Author: Narazaki Shuji <narazaki@inetq.or.jp>
-;;; Version 0.7
+;;; Time-stamp: <1998/11/17 13:18:39 narazaki@gimp.org>
+;;; Author: Narazaki Shuji <narazaki@gimp.org>
+;;; Version 0.8
 
-;;; Code:
-
-(if (not (symbol-bound? 'script-fu-unsharp-mask-mask-size (the-environment)))
-    (define script-fu-unsharp-mask-mask-size 5))
-
-(define (script-fu-unsharp-mask img drw mask-size)
+(define (script-fu-unsharp-mask img drw mask-size mask-opacity)
   (let* ((drawable-width (car (gimp-drawable-width drw)))
 	 (drawable-height (car (gimp-drawable-height drw)))
 	 (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
@@ -54,26 +49,26 @@
     ;; combine them
     (gimp-layer-set-visible original-layer TRUE)
     (gimp-layer-set-mode darker-layer SUBTRACT)
-    (gimp-layer-set-opacity darker-layer 50.0)
+    (gimp-layer-set-opacity darker-layer mask-opacity)
     (gimp-layer-set-visible darker-layer TRUE)
     (gimp-layer-set-mode lighter-layer ADDITION)
-    (gimp-layer-set-opacity lighter-layer 50.0)
+    (gimp-layer-set-opacity lighter-layer mask-opacity)
     (gimp-layer-set-visible lighter-layer TRUE)
     (gimp-image-enable-undo new-image)
-    (set! script-fu-unsharp-mask-mask-size mask-size)
     (gimp-displays-flush)))
 
 (script-fu-register
  "script-fu-unsharp-mask"
  "<Image>/Script-Fu/Alchemy/Unsharp Mask"
  "Make a sharp image of IMAGE's DRAWABLE by applying unsharp mask method"
- "Shuji Narazaki <narazaki@InetQ.or.jp>"
+ "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"
- "1997"
- "RGB*, GRAY*"
+ "1997,1998"
+ ""
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Drawable to apply" 0
- SF-VALUE "Mask size" (number->string script-fu-unsharp-mask-mask-size )
+ SF-ADJUSTMENT "Mask size" '(5 1 100 1 1 0 1)
+ SF-ADJUSTMENT "Mask opacity" '(50 0 100 1 1 0 1)
 )
 
 ;;; unsharp-mask.scm ends here

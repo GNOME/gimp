@@ -1,3 +1,10 @@
+Wed Nov 25 22:12:50 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/script-fu/scripts/line-nova.scm,
+	plug-ins/script-fu/scripts/text-circle.scm,
+	plug-ins/script-fu/scripts/unsharp-mask.scm: applied update by Shuji
+	Narazaki <narazaki@gimp.org>.
+
 Wed Nov 25 09:52:23 1998  Raph Levien  <raph@gimp.org>
 
 	* app/ink.c (ink_pen_ellipse, create_ink_options): Added tilt
