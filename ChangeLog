@@ -1,3 +1,8 @@
+2004-10-14  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/bmpread.c: Make sure we have a bpp value we can
+	handle, and fail gracefully if not. Fixes bug #155401.
+
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c

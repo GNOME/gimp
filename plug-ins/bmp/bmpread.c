@@ -413,18 +413,20 @@ ReadImage (FILE     *fd,
 	   gboolean  grey,
 	   const Bitmap_Channel *masks)
 {
-  guchar        v, n;
-  GimpPixelRgn  pixel_rgn;
-  gint          xpos = 0;
-  gint          ypos = 0;
-  gint32        image;
-  gint32        layer;
-  GimpDrawable *drawable;
-  guchar       *dest, *temp, *buffer;
-  guchar        gimp_cmap[768];
-  gushort       rgb;
-  glong         rowstride, channels;
-  gint          i, j, cur_progress, max_progress;
+  guchar             v, n;
+  GimpPixelRgn       pixel_rgn;
+  gint               xpos = 0;
+  gint               ypos = 0;
+  gint32             image;
+  gint32             layer;
+  GimpDrawable      *drawable;
+  guchar            *dest, *temp, *buffer;
+  guchar             gimp_cmap[768];
+  gushort            rgb;
+  glong              rowstride, channels;
+  gint               i, j, cur_progress, max_progress;
+  GimpImageBaseType  base_type;
+  GimpImageType      image_type;
 
   if (! (compression == BI_RGB ||
       (bpp == 8 && compression == BI_RLE8) ||
@@ -438,30 +440,43 @@ ReadImage (FILE     *fd,
 
   /* Make a new image in the gimp */
 
-  if (bpp >= 16)
+  switch (bpp)
     {
-      image = gimp_image_new (width, height, GIMP_RGB);
-      layer = gimp_layer_new (image, _("Background"),
-                              width, height,
-                              GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
+    case 32:
+    case 24:
+    case 16:
+      base_type = GIMP_RGB;
+      image_type = GIMP_RGB_IMAGE;
+
       channels = 3;
-    }
-  else if (grey)
-    {
-      image = gimp_image_new (width, height, GIMP_GRAY);
-      layer = gimp_layer_new (image, _("Background"),
-			      width, height,
-                              GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
+      break;
+
+    case 8:
+    case 4:
+    case 1:
+      if (grey)
+        {
+          base_type = GIMP_GRAY;
+          image_type = GIMP_RGB_IMAGE;
+        }
+      else
+        {
+          base_type = GIMP_INDEXED;
+          image_type = GIMP_INDEXED_IMAGE;
+        }
+
       channels = 1;
+      break;
+
+    default:
+      g_message (_("Unrecognized or invalid BMP compression format."));
+      return -1;
     }
-  else
-    {
-      image = gimp_image_new (width, height, GIMP_INDEXED);
-      layer = gimp_layer_new (image, _("Background"),
-                              width, height,
-                              GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
-      channels = 1;
-    }
+
+  image = gimp_image_new (width, height, base_type);
+  layer = gimp_layer_new (image, _("Background"),
+                          width, height,
+                          image_type, 100, GIMP_NORMAL_MODE);
 
   gimp_image_set_filename (image, filename);
 
