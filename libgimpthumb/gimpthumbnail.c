@@ -428,6 +428,42 @@ gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
 }
 
 /**
+ * gimp_thumbnail_set_from_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @filename: filename of a local thumbnail file
+ * @error: return location for possible errors
+ *
+ * This function tries to load the thumbnail file pointed to by
+ * @filename and retrieves the URI of the original image file from
+ * it. This allows you to find the image file associated with a
+ * thumbnail file.
+ *
+ * Return value: %TRUE if the pixbuf could be loaded, %FALSE otherwise
+ **/
+gboolean
+gimp_thumbnail_set_from_thumb (GimpThumbnail  *thumbnail,
+                               const gchar    *filename,
+                               GError        **error)
+{
+  GdkPixbuf *pixbuf;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  pixbuf = gdk_pixbuf_new_from_file (filename, error);
+  if (! pixbuf)
+    return FALSE;
+
+  gimp_thumbnail_set_uri (thumbnail,
+                          gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI));
+
+  g_object_unref (pixbuf);
+
+  return TRUE;
+}
+
+/**
  * gimp_thumbnail_peek_image:
  * @thumbnail: a #GimpThumbnail object
  *

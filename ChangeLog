@@ -1,5 +1,11 @@
 2004-01-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpthumb/gimpthumbnail.[ch]: added new function
+	gimp_thumbnail_set_from_thumb() which will be useful when writing
+	a thumbnail manager based on libgimpthumb.
+
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c: invalidate the description string
 	before emitting "info_changed".
 	(gimp_imagefile_save_thumb): use the enum value's name. not it's
