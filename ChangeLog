@@ -1,3 +1,10 @@
+2001-06-29  Adam D. Moss <adam@gimp.org>
+
+	* app/convert.c: Make it even harder to trigger those
+	impossible-to-reach assertions, and handle things more gracefully
+	when we do reach them.  :P  Also removed some redundant calculations
+	and crufty structure elements.  Fixes bug #52264.
+
 2001-06-27  Daniel Egger <egger@suse.de>
 
 	* README.i18n: Corrected some typos and revised a sentence.

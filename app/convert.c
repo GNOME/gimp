@@ -25,6 +25,11 @@
    */
 
 /*
+ * 2001-06-29 - GIMP 1.2 branch only: Make it even harder to
+ *  trigger those impossible-to-reach assertions, and handle things
+ *  more gracefully when we do reach them.  :P  Also removed some
+ *  redundant calculations and crufty structure elements.  [Adam]
+ *
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
  *  palette. Use libgimp callback functions.  [Sven]
  * 
@@ -369,11 +374,6 @@ typedef struct
   /*  The volume (actually 2-norm) of the box  */
   int   volume;
 
-  /*  The number of nonzero histogram cells within this box  */
-  long  colorcount;
-
-  /* The sum of the weighted error within this box */
-  guint64 error;
   /* The sum of the unweighted error within this box */
   guint64 rerror;
   guint64 gerror;
@@ -1907,7 +1907,6 @@ update_box_gray (CFHistogram histogram,
 /* and recompute its volume and population */
 {
   int i, min, max, dist;
-  long ccount;
 
   min = boxp->Rmin;
   max = boxp->Rmax;
@@ -1942,14 +1941,6 @@ update_box_gray (CFHistogram histogram,
    */
   dist = max - min;
   boxp->volume = dist * dist;
-
-  /* Now scan remaining volume of box and compute population */
-  ccount = 0;
-  for (i = min; i <= max; i++)
-    if (histogram[i] != 0)
-      ccount++;
-
-  boxp->colorcount = ccount;
 }
 
 static void
@@ -1962,7 +1953,6 @@ update_box_rgb (CFHistogram histogram,
   int R,G,B;
   int Rmin,Rmax,Gmin,Gmax,Bmin,Bmax;
   int dist0,dist1,dist2;
-  long ccount;
   guint64 tempRerror;
   guint64 tempGerror;
   guint64 tempBerror;
@@ -2071,8 +2061,6 @@ update_box_rgb (CFHistogram histogram,
     fflush(stdout);*/
 
   /* Now scan remaining volume of box and compute population */
-  ccount = 0;
-  boxp->error = 0;
   boxp->rerror = 0;
   boxp->gerror = 0;
   boxp->berror = 0;
@@ -2097,13 +2085,6 @@ update_box_rgb (CFHistogram histogram,
 	      boxp->rerror += (*histp) * re*re;
 	      boxp->gerror += (*histp) * ge*ge;
 	      boxp->berror += (*histp) * be*be;
-
-	      boxp->error += (*histp) *
-		(
-		 re*re*R_SCALE + ge*ge*G_SCALE + be*be*B_SCALE
-		 );
-
-	      ccount += *histp;
 	    }
       }
 
@@ -2198,26 +2179,7 @@ update_box_rgb (CFHistogram histogram,
 	}
     }
  finished_axesscan:
-
-  /*
-      boxp->Rhalferror = (Rmin+Rmax)/2;
-      boxp->Ghalferror = (Gmin+Gmax)/2;
-      boxp->Bhalferror = (Bmin+Bmax)/2;
-  */
-
-  /*boxp->error = (sqrt((double)(boxp->error/ccount)));*/
-  /*  boxp->rerror = (sqrt((double)((boxp->rerror)/ccount)));
-  boxp->gerror = (sqrt((double)((boxp->gerror)/ccount)));
-  boxp->berror = (sqrt((double)((boxp->berror)/ccount)));*/
-  /*printf(":%lld / %ld: ", boxp->error, ccount);
-  printf("(%d-%d-%d)(%d-%d-%d)(%d-%d-%d)\n",
-	 Rmin, boxp->Rhalferror, Rmax,
-	 Gmin, boxp->Ghalferror, Gmax,
-	 Bmin, boxp->Bhalferror, Bmax
-	 );
-	 fflush(stdout);*/
-
-  boxp->colorcount = ccount;
+  ;
 }
 
 
@@ -2311,14 +2273,9 @@ median_cut_rgb (CFHistogram histogram,
     /* Choose which axis to split the box on.
      * See notes in update_box about scaling distances.
      */
-    /*
-            R = ((b1->Rmax - b1->Rmin) << R_SHIFT) * R_SCALE;
-	        G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
-        B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
-    */
-    R = R_SCALE*b1->rerror;/* * (((b1->Rmax - b1->Rmin) << R_SHIFT)) * R_SCALE; */
-    G = G_SCALE*b1->gerror;/* * (((b1->Gmax - b1->Gmin) << G_SHIFT)) * G_SCALE; */
-    B = B_SCALE*b1->berror;/* * (((b1->Bmax - b1->Bmin) << B_SHIFT)) * B_SCALE; */
+    R = R_SCALE*b1->rerror;
+    G = G_SCALE*b1->gerror;
+    B = B_SCALE*b1->berror;
     /* We want to break any ties in favor of green, then red, blue last.
      */
     cmax = G; n = 1;
@@ -2331,25 +2288,49 @@ median_cut_rgb (CFHistogram histogram,
     switch (n)
       {
       case 0:
-	lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
+	lb = b1->Rhalferror;
+	if (lb < b1->Rmin)
+	  {
+	    g_warning ("nope: b1->Rmax >= b1->Rmin");
+	    goto cut_rtn;
+	  }
+	if (b2->Rmax < lb+1)
+	  {
+	    g_warning ("nope: b2->Rmax >= b2->Rmin");
+	    goto cut_rtn;
+	  }
 	b1->Rmax = lb;
 	b2->Rmin = lb+1;
-	g_assert(b1->Rmax >= b1->Rmin);
-	g_assert(b2->Rmax >= b2->Rmin);
 	break;
       case 1:
-	lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
+	lb = b1->Ghalferror;
+	if (lb < b1->Gmin)
+	  {
+	    g_warning ("nope: b1->Gmax >= b1->Gmin");
+	    goto cut_rtn;
+	  }
+	if (b2->Gmax < lb+1)
+	  {
+	    g_warning ("nope: b2->Gmax >= b2->Gmin");
+	    goto cut_rtn;
+	  }
 	b1->Gmax = lb;
 	b2->Gmin = lb+1;
-	g_assert(b1->Gmax >= b1->Gmin);
-	g_assert(b2->Gmax >= b2->Gmin);
 	break;
       case 2:
-	lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
+	lb = b1->Bhalferror;
+	if (lb < b1->Bmin)
+	  {
+	    g_warning ("nope: b1->Bmax >= b1->Bmin");
+	    goto cut_rtn;
+	  }
+	if (b2->Bmax < lb+1)
+	  {
+	    g_warning ("nope: b2->Bmax >= b2->Bmin");
+	    goto cut_rtn;
+	  }
 	b1->Bmax = lb;
 	b2->Bmin = lb+1;
-	g_assert(b1->Bmax >= b1->Bmin);
-	g_assert(b2->Bmax >= b2->Bmin);
 	break;
       }
     /* Update stats for boxes */
@@ -2357,6 +2338,8 @@ median_cut_rgb (CFHistogram histogram,
     update_box_rgb (histogram, b2);
     numboxes++;
   }
+ cut_rtn:
+  ;
   return numboxes;
 }
 
