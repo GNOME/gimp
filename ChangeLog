@@ -1,3 +1,25 @@
+2004-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added "gboolean use_default_values"
+	to GimpItem::stroke().
+
+	* app/core/gimpselection.c: changed accordingly.
+
+	* app/core/gimpchannel.c
+	* app/vectors/gimpvectors.c: if use_default_values is TRUE, don't
+	use the GimpPaintOptions passed in the GimpPaintInfo, but create a
+	new one.
+
+	* app/gui/stroke-dialog.c: pass FALSE so the values as set in the
+	tool options are used.
+
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: pass TRUE so tool options settings
+	don't affect PDB stroke calls. Fixes part 2 of bug #132145.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
 2004-01-22  Simon Budig  <simon@gimp.org>
 
 	* app/gui/dialogs-commands.c: replaced the indexed palette in

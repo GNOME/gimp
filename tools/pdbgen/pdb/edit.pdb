@@ -339,7 +339,8 @@ HELP
 
   success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
                               drawable,
-                              GIMP_OBJECT (tool_info->paint_info));
+                              GIMP_OBJECT (tool_info->paint_info),
+                              TRUE /* use defaults, not tool option values */);
 }
 CODE
     );

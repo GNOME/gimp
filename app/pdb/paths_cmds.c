@@ -602,7 +602,8 @@ path_stroke_current_invoker (Gimp     *gimp,
 	  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
     
 	  success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
-				      GIMP_OBJECT (tool_info->paint_info));
+				      GIMP_OBJECT (tool_info->paint_info),
+				      TRUE /* use defaults, not tool option values */);
 	}
       else
 	success = FALSE;

@@ -331,7 +331,7 @@ stroke_dialog_response (GtkWidget  *widget,
             options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
           }
 
-        gimp_item_stroke (item, drawable, options);
+        gimp_item_stroke (item, drawable, options, FALSE);
         gimp_image_flush (image);
       }
       /* fallthrough */

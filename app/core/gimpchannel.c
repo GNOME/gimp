@@ -37,13 +37,16 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppaintoptions.h"
 
+#include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
 #include "gimplayer.h"
 #include "gimppaintinfo.h"
@@ -96,7 +99,8 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               gpointer          progress_data);
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
-                                              GimpObject       *stroke_desc);
+                                              GimpObject       *stroke_desc,
+                                              gboolean          use_default_values);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -593,23 +597,17 @@ gimp_channel_transform (GimpItem               *item,
 static gboolean
 gimp_channel_stroke (GimpItem     *item,
                      GimpDrawable *drawable,
-                     GimpObject   *stroke_desc)
+                     GimpObject   *stroke_desc,
+                     gboolean      use_default_values)
 
 {
-  GimpChannel    *channel;
-  GimpImage      *gimage;
+  GimpChannel    *channel = GIMP_CHANNEL (item);
   const BoundSeg *segs_in;
   const BoundSeg *segs_out;
   gint            n_segs_in;
   gint            n_segs_out;
   gboolean        retval = FALSE;
   gint            offset_x, offset_y;
-
-  channel = GIMP_CHANNEL (item);
-
-  gimage = gimp_item_get_image (GIMP_ITEM (channel));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
                                &n_segs_in, &n_segs_out,
@@ -631,18 +629,41 @@ gimp_channel_stroke (GimpItem     *item,
     }
   else if (GIMP_IS_PAINT_INFO (stroke_desc))
     {
-      GimpPaintInfo *paint_info;
-      GimpPaintCore *core;
+      GimpImage        *gimage     = gimp_item_get_image (item);
+      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);;
+      GimpPaintOptions *paint_options;
+      GimpPaintCore    *core;
 
-      paint_info = GIMP_PAINT_INFO (stroke_desc);
+      if (use_default_values)
+        {
+          paint_options =
+            gimp_paint_options_new (gimage->gimp,
+                                    paint_info->paint_options_type);
+
+          /*  undefine the paint-relevant context properties and get them
+           *  from the current context
+           */
+          gimp_context_define_properties (GIMP_CONTEXT (paint_options),
+                                          GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                          FALSE);
+          gimp_context_set_parent (GIMP_CONTEXT (paint_options),
+                                   gimp_get_current_context (gimage->gimp));
+        }
+      else
+        {
+          paint_options = paint_info->paint_options;
+        }
 
       core = g_object_new (paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                                paint_info->paint_options,
+                                                paint_options,
                                                 segs_in, n_segs_in,
                                                 offset_x, offset_y);
       g_object_unref (core);
+
+      if (use_default_values)
+        g_object_unref (paint_options);
     }
 
   return retval;

@@ -799,7 +799,8 @@ gimp_item_transform (GimpItem               *item,
 gboolean
 gimp_item_stroke (GimpItem      *item,
                   GimpDrawable  *drawable,
-                  GimpObject    *stroke_desc)
+                  GimpObject    *stroke_desc,
+                  gboolean       use_default_values)
 {
   GimpItemClass *item_class;
 
@@ -811,7 +812,7 @@ gimp_item_stroke (GimpItem      *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   if (item_class->stroke)
-    return item_class->stroke (item, drawable, stroke_desc);
+    return item_class->stroke (item, drawable, stroke_desc, use_default_values);
 
   return FALSE;
 }

@@ -70,7 +70,8 @@ static void       gimp_selection_rotate        (GimpItem        *item,
                                                 gboolean         clip_result);
 static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpDrawable    *drawable,
-                                                GimpObject      *stroke_desc);
+                                                GimpObject      *stroke_desc,
+                                                gboolean         use_default_values);
 
 static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
 
@@ -272,19 +273,18 @@ gimp_selection_rotate (GimpItem        *item,
 }
 
 static gboolean
-gimp_selection_stroke (GimpItem         *item,
-                       GimpDrawable     *drawable,
-                       GimpObject       *stroke_desc)
+gimp_selection_stroke (GimpItem     *item,
+                       GimpDrawable *drawable,
+                       GimpObject   *stroke_desc,
+                       gboolean      use_default_values)
 {
-  GimpSelection  *selection;
+  GimpSelection  *selection = GIMP_SELECTION (item);
   GimpImage      *gimage;
   const BoundSeg *dummy_in;
   const BoundSeg *dummy_out;
   gint            num_dummy_in;
   gint            num_dummy_out;
   gboolean        retval;
-
-  selection = GIMP_SELECTION (item);
 
   if (! gimp_channel_boundary (GIMP_CHANNEL (selection),
                                &dummy_in, &dummy_out,
@@ -302,7 +302,8 @@ gimp_selection_stroke (GimpItem         *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                _("Stroke Selection"));
 
-  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc);
+  retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc,
+                                                   use_default_values);
 
   gimp_image_undo_group_end (gimage);
 

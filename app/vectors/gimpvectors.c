@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "vectors-types.h"
 
 #include "core/gimp.h"
@@ -35,8 +37,8 @@
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
 
-#include "libgimpcolor/gimpcolor.h"
 #include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppaintoptions.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -102,7 +104,8 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              gpointer          progress_data);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
-                                             GimpObject       *stroke_desc);
+                                             GimpObject       *stroke_desc,
+                                             gboolean          use_default_values);
 
 
 #
@@ -340,10 +343,8 @@ gimp_vectors_translate (GimpItem *item,
                         gint      offset_y,
                         gboolean  push_undo)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -370,10 +371,8 @@ gimp_vectors_scale (GimpItem              *item,
                     gint                   new_offset_y,
                     GimpInterpolationType  interpolation_type)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -404,10 +403,8 @@ gimp_vectors_resize (GimpItem *item,
                      gint      offset_x,
                      gint      offset_y)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -434,13 +431,11 @@ gimp_vectors_flip (GimpItem            *item,
                    gdouble              axis,
                    gboolean             clip_result)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
   GimpMatrix3  matrix;
 
   gimp_transform_matrix_flip (flip_type, axis, &matrix);
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -465,7 +460,7 @@ gimp_vectors_rotate (GimpItem         *item,
                      gdouble           center_y,
                      gboolean          clip_result)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GList       *list;
   GimpMatrix3  matrix;
   gdouble      angle = 0.0;
@@ -484,8 +479,6 @@ gimp_vectors_rotate (GimpItem         *item,
     }
 
   gimp_transform_matrix_rotate_center (center_x, center_y, angle, &matrix);
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -512,11 +505,9 @@ gimp_vectors_transform (GimpItem               *item,
                         GimpProgressFunc        progress_callback,
                         gpointer                progress_data)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (item);
   GimpMatrix3  local_matrix;
   GList       *list;
-
-  vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
@@ -542,15 +533,11 @@ gimp_vectors_transform (GimpItem               *item,
 static gboolean
 gimp_vectors_stroke (GimpItem     *item,
                      GimpDrawable *drawable,
-                     GimpObject   *stroke_desc)
+                     GimpObject   *stroke_desc,
+                     gboolean      use_default_values)
 {
-  GimpVectors *vectors;
-  gboolean     retval = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
-                        GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
-
-  vectors = GIMP_VECTORS (item);
+  GimpVectors *vectors = GIMP_VECTORS (item);;
+  gboolean     retval  = FALSE;
 
   if (! vectors->strokes)
     {
@@ -567,18 +554,41 @@ gimp_vectors_stroke (GimpItem     *item,
     }
   else if (GIMP_IS_PAINT_INFO (stroke_desc))
     {
-      GimpPaintInfo *paint_info;
-      GimpPaintCore *core;
+      GimpImage        *gimage     = gimp_item_get_image (item);
+      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);;
+      GimpPaintOptions *paint_options;
+      GimpPaintCore    *core;
 
-      paint_info = GIMP_PAINT_INFO (stroke_desc);
+      if (use_default_values)
+        {
+          paint_options =
+            gimp_paint_options_new (gimage->gimp,
+                                    paint_info->paint_options_type);
+
+          /*  undefine the paint-relevant context properties and get them
+           *  from the current context
+           */
+          gimp_context_define_properties (GIMP_CONTEXT (paint_options),
+                                          GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                          FALSE);
+          gimp_context_set_parent (GIMP_CONTEXT (paint_options),
+                                   gimp_get_current_context (gimage->gimp));
+        }
+      else
+        {
+          paint_options = paint_info->paint_options;
+        }
 
       core = g_object_new (paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                               paint_info->paint_options,
+                                               paint_options,
                                                vectors);
 
       g_object_unref (core);
+
+      if (use_default_values)
+        g_object_unref (paint_options);
     }
 
   return retval;
