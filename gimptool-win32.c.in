@@ -370,7 +370,7 @@ get_libs (void)
 {
   gchar *gtk_libs = gtk_config ("--libs");
 
-  return g_strdup_printf ("-L %s/lib -lgimpui -lgimp %s", get_prefix ('/'), gtk_libs);
+  return g_strdup_printf ("-L%s/lib -lgimpui -lgimp %s", get_prefix ('/'), gtk_libs);
 }
 
 static void
@@ -384,7 +384,7 @@ get_libs_noui (void)
 {
   gchar *glib_libs = glib_config ("--libs");
 
-  return g_strdup_printf ("-L %s/lib -lgimp %s", get_prefix ('/'), glib_libs);
+  return g_strdup_printf ("-L%s/lib -lgimp %s", get_prefix ('/'), glib_libs);
 }
 
 static void

@@ -1,6 +1,7 @@
 2001-11-16  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in: Implement the --prefix and --*dir options.
+	Don't output a space after -L.
 
 2001-11-15  Abel Cheung  <maddog@linux.org.hk>
 
