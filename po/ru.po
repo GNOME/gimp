@@ -3,30 +3,30 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-1.1.21\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-08-08 12:19+00:00\n"
+"Project-Id-Version: Gimp-1.1.25\n"
+"POT-Creation-Date: 2000-08-25 21:42+0400\n"
+"PO-Revision-Date: 2000-08-25 22:03+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "О программе GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Версия %s создана для Вас"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr " Посетите http://www.gimp.org/ "
 
@@ -326,7 +326,7 @@ msgstr "Редактор кистей"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Закрыть"
 
@@ -1379,20 +1379,20 @@ msgstr ""
 "Не удалось открыть.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s существует, переписать?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "Файл существует!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Да"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Нет"
 
@@ -1616,39 +1616,31 @@ msgstr ""
 "Возможно она не была скомпилирована потому что\n"
 "у вас не была установлена GtkXmHTML."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "прицепить паразита к изображению"
-
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "отцепить паразита от изображения"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
 msgstr "Слой невозможно поднять выше"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
 msgstr "Слой невозможно опустить ниже"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "Слой уже на самом верху"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
 msgstr "Невозможно поднять слой, у которого нет альфа-канала"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "Слой уже в самом низу"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "Фон не имеет альфа-канала, слой будет размещен выше"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1656,11 +1648,11 @@ msgstr ""
 "Нет видимых слоев для объединения.\n"
 "Должно быть хотя бы два."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr "Нет видимых слоев для объединения с предыдущим."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1668,7 +1660,7 @@ msgstr ""
 "Не удалось добавить маску слоя, так как\n"
 "у слоя уже есть маска."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1676,7 +1668,7 @@ msgstr ""
 "Не удалось добавить маску слоя\n"
 "к слою в индексированном изображении."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1684,20 +1676,20 @@ msgstr ""
 "Невозможно добавить маску слоя\n"
 "к слою не имеющему альфа-канала."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя отличающуюся размерами от указанного слоя."
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
 msgstr "Канал не может быть поднят еще выше"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
 msgstr "Канал не может быть опущен еще ниже"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Безымянное"
@@ -2600,7 +2592,7 @@ msgstr "Текстовые процедуры"
 msgid "Tool procedures"
 msgstr "Процедуры инструментов"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "Откат"
 
@@ -2862,109 +2854,115 @@ msgstr "Увеличение масштаба"
 msgid "Zoom out"
 msgstr "Уменьшение масштаба"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr "\nНедопустимый параметр.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "Версия GIMP"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Используйте: %s [Параметры ...] [Файлы ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Допустимые параметры:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Вывести эту подсказку.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Вывести информацию о версии.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <Befehle>     Запустить в командном режиме.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Использовать альтернативный файл gimprc.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr "\nИспользуйте: %s [Параметры ...] [Файлы ...]\n\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Запустить без интерфейса пользователя.\n"
+msgid "Options:\n"
+msgstr "Параметры:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr ""
-"  -r --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b --batch <команды>     Запустить в командном режиме.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
-msgstr ""
-" --no-data                Не загружать шаблоны, градиенты, палитры и кисти.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
+msgstr "  -c, --console-messages       Показывать предупреждения на консоли вместо диалоговых окон.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr "  -d, --no-data                Не загружать шаблоны, градиенты, палитры и кисти.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i, --no-interface        Запустить без интерфейса пользователя.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>     Использовать альтернативный файл gimprc.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help                Вывести эту подсказку.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash              Не показывать окно запуска.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version             Вывести информацию о версии.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Показывать сообщения при старте.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Не показывать окно запуска.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Не добавлять изображение к окну запуска.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Не использовать разделяемую память между GIMP и "
 "его дополнениями.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Не использовать расширение X Shared Memory.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Показывать предупреждения на консоли вместо "
-"диалоговых окон.\n"
-
-#: app/main.c:315
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
 
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr "                          Режим отладки для фатальных сигналов.\n"
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr ""
 "  --display <дисплей>      Использовать указанный X-дисплей.\n"
 "\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Использовать альтернативный системный файл "
 "gimprc.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr "                          Режим отладки для фатальных сигналов.\n\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Это консольное окно закроется в течение десяти секунд)\n"
 
@@ -5770,7 +5768,7 @@ msgstr "изменить размер изображения"
 msgid "misc"
 msgstr "разное"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "%s: история отката"
@@ -5779,7 +5777,7 @@ msgstr "%s: история отката"
 msgid "[ base image ]"
 msgstr "[основное изображение]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Возврат"
 
@@ -6401,6 +6399,12 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Цветовая история"
+
+#~ msgid "attach parasite to image"
+#~ msgstr "прицепить паразита к изображению"
+
+#~ msgid "detach parasite from image"
+#~ msgstr "отцепить паразита от изображения"
 
 #~ msgid "  --enable-stack-trace {never|query|always}\n"
 #~ msgstr "  --enable-stack-trace {never|query|always}\n"
