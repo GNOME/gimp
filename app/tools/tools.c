@@ -71,6 +71,7 @@ register_tools (void)
   /* gimp_eraser_tool_register (); */
   /* gimp_pencil_tool_register (); */
   gimp_paintbrush_tool_register ();
+  gimp_pencil_tool_register ();
   gimp_blend_tool_register ();
   gimp_bucket_fill_tool_register ();
   gimp_text_tool_register ();

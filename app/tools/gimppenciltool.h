@@ -16,16 +16,50 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PENCIL_H__
-#define __PENCIL_H__
+#ifndef __GIMP_PENCIL_TOOL_H__
+#define __GIMP_PENCIL_TOOL_H__
 
+/* FIXME: This whole tool should probably just be a paintbrush tool that
+ *        has an option of hard edge.  It'll give the "pencil tool" all the
+ *        flashy stuff the paintbrush tool has, and not duplicate code.
+ */
+
+#include "gimppainttool.h"
+
+
+#define GIMP_TYPE_PENCIL_TOOL            (gimp_pencil_tool_get_type ())
+#define GIMP_PENCIL_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PENCIL_TOOL, GimpPencilTool))
+#define GIMP_IS_PENCIL_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PENCIL_TOOL))
+#define GIMP_PENCIL_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PENCIL_TOOL, GimpPencilToolClass))
+#define GIMP_IS_PENCIL_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL_TOOL))
+
+typedef struct _GimpPencilTool      GimpPencilTool;
+typedef struct _GimpPencilToolClass GimpPencilToolClass;
+
+struct _GimpPencilTool
+{
+  GimpPaintTool parent_instance;
+};
+
+struct _GimpPencilToolClass
+{
+  GimpPaintToolClass parent_class;
+};
+
+
+void       gimp_pencil_tool_register (void);
+
+GtkType    gimp_pencil_tool_get_type (void);
+GimpTool * gimp_pencil_tool_new      (void);
+
+/* FIXME: Get rid of this non_gui stuff someday.  Preferably make
+ *        everything use it interally for ease of macro recording.
+ */
 
 gboolean   pencil_non_gui    (GimpDrawable *drawable,
 			      gint          num_strokes,
 			      gdouble      *stroke_array);
 
-Tool     * tools_new_pencil  (void);
-void       tools_free_pencil (Tool         *tool);
 
 
 #endif  /*  __PENCIL_H__  */

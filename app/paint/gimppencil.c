@@ -34,13 +34,14 @@
 #include "selection.h"
 #include "temp_buf.h"
 
-#include "paint_core.h"
+#include "gimppenciltool.h"
+#include "gimppainttool.h"
 #include "paint_options.h"
-#include "paintbrush.h"
-#include "pencil.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool_manager.h"
 
+#include "pixmaps2.h"
+#include "libgimp/gimpintl.h"
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE
 
@@ -54,37 +55,68 @@ struct _PencilOptions
 
 
 /*  forward function declarations  */
-static void       pencil_motion     (PaintCore            *paint_core,
-				     GimpDrawable         *drawable,
-				     PaintPressureOptions *pressure_options,
-				     gboolean              );
-static gpointer   pencil_paint_func (PaintCore            *paint_core,
-				     GimpDrawable         *drawable,
-				     PaintState            state);
+static void  gimp_pencil_tool_motion  (
+				GimpPaintTool        *paint_tool,
+			 GimpDrawable         *drawable,
+			 PaintPressureOptions *pressure_options,
+				gboolean              increment );
 
+static void  gimp_pencil_tool_paint  ( GimpPaintTool       *paint_tool,
+				                                   GimpDrawable         *drawable,
+				                                   PaintState            state);
 
+static void gimp_pencil_tool_class_init  (GimpPencilToolClass *klass);
+static void gimp_pencil_tool_init        (GimpPencilTool      *tool);
+
+static void gimp_pencil_tool_options_reset (void);
+
+/* module level globals */
 static PencilOptions *pencil_options = NULL; 
-
+static GimpPaintToolClass *parent_class = NULL;
+static GimpPencilTool *non_gui_pencil = NULL;
 static gboolean  non_gui_incremental = FALSE;
-static void      pencil_options_reset (void);
 
 
 /*  functions  */
 
-gpointer
-pencil_paint_func (PaintCore    *paint_core,
+void
+gimp_pencil_tool_paint (GimpPaintTool    *paint_tool,
 		   GimpDrawable *drawable,
 		   PaintState    state)
 {
+		GimpImage            *gimage;
+		PaintPressureOptions *pressure_options;
+		gboolean              incremental;
+		
+		gimage = gimp_drawable_gimage(drawable);
+		
+  if (! gimage)
+				return;
+		
+		/* In keeping parallel with paintbrush... */
+		if (pencil_options)
+				{
+	     pressure_options = pencil_options->paint_options.pressure_options;
+/*				gradient_options = pencil_options->paint_options.gradient_options; */
+						incremental      = pencil_options->paint_options.incremental;
+				}
+		else
+				{
+						pressure_options = &non_gui_pressure_options;
+/*				gradient_options = &non_gui_gradient_options; */
+						incremental      = non_gui_incremental;
+			 }
+		
+						
+		
   switch (state)
     {
     case INIT_PAINT:
       break;
 
     case MOTION_PAINT:
-      pencil_motion (paint_core, drawable, 
-		     pencil_options->paint_options.pressure_options, 
-		     pencil_options->paint_options.incremental);
+      gimp_pencil_tool_motion (paint_tool,       drawable, 
+		                             pressure_options, incremental);
       break;
 
     case FINISH_PAINT:
@@ -93,66 +125,34 @@ pencil_paint_func (PaintCore    *paint_core,
     default:
       break;
     }
-
-  return NULL;
 }
 
 static PencilOptions *
-pencil_options_new (void)
+gimp_pencil_tool_options_new (void)
 {
   PencilOptions *options;
 
   options = g_new (PencilOptions, 1);
   paint_options_init ((PaintOptions *) options,
-		      PENCIL,
-		      pencil_options_reset);
+		      GIMP_TYPE_PENCIL_TOOL,
+		      gimp_pencil_tool_options_reset);
 
   return options;
 }
 
 static void
-pencil_options_reset (void)
+gimp_pencil_tool_options_reset (void)
 {
   paint_options_reset ((PaintOptions *) pencil_options);
 }
 
-Tool *
-tools_new_pencil (void)
-{
-  Tool * tool;
-  PaintCore * private;
-
-  /*  The tool options  */
-  if (!pencil_options)
-    {
-      pencil_options = pencil_options_new ();
-      tools_register (PENCIL, (ToolOptions *) pencil_options);
-      pencil_options_reset();
-    }
-
-  tool = paint_core_new (PENCIL);
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = pencil_paint_func;
-  private->pick_colors = TRUE;
-  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-
-  return tool;
-}
-
-void
-tools_free_pencil (Tool *tool)
-{
-  paint_core_free (tool);
-}
-
 static void
-pencil_motion (PaintCore            *paint_core,
-	       GimpDrawable         *drawable,
-	       PaintPressureOptions *pressure_options,
-	       gboolean	             increment)
+gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
+                         GimpDrawable         *drawable,
+                         PaintPressureOptions *pressure_options,
+                         gboolean	       increment)
 {
-  GImage               *gimage;
+  GimpImage            *gimage;
   TempBuf              *area;
   guchar                col[MAX_CHANNELS];
   gint                  opacity;
@@ -163,12 +163,12 @@ pencil_motion (PaintCore            *paint_core,
     return;
 
   if (pressure_options->size)
-    scale = paint_core->curpressure;
+    scale = paint_tool->curpressure;
   else
     scale = 1.0;
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
+  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
   /*  color the pixels  */
@@ -177,7 +177,7 @@ pencil_motion (PaintCore            *paint_core,
       GimpRGB color;
 
       gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
-				  paint_core->curpressure, &color);
+				  paint_tool->curpressure, &color);
 
       gimp_rgba_get_uchar (&color,
 			   &col[RED_PIX],
@@ -189,11 +189,11 @@ pencil_motion (PaintCore            *paint_core,
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
-  else if (paint_core->brush && paint_core->brush->pixmap)
+  else if (paint_tool->brush && paint_tool->brush->pixmap)
     {
       /* if its a pixmap, do pixmap stuff */      
-      paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
-					 scale, HARD);
+      gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage, drawable, 
+										                                    area, scale, HARD);
       paint_appl_mode = INCREMENTAL;
     }
   else
@@ -206,64 +206,134 @@ pencil_motion (PaintCore            *paint_core,
 
   opacity = 255 * gimp_context_get_opacity (NULL);
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->curpressure;
+    opacity = opacity * 2.0 * paint_tool->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, 
+  gimp_paint_tool_paste_canvas (paint_tool, drawable, 
 			   MIN (opacity, 255),
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
 			   HARD, scale, paint_appl_mode);
 }
 
-static gpointer
-pencil_non_gui_paint_func (PaintCore    *paint_core,
-			   GimpDrawable *drawable,
-			   PaintState    state)
-{
-  pencil_motion (paint_core, drawable, &non_gui_pressure_options, 
-		 non_gui_incremental);
-
-  return NULL;
-}
-
-
 gboolean
 pencil_non_gui (GimpDrawable *drawable,
 		int           num_strokes,
 		double       *stroke_array)
 {
-  int i;
+  GimpPaintTool *paint_tool;
+  gint i;
+  
 
-  if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
+  if (! non_gui_pencil)
+     {
+	non_gui_pencil = gtk_type_new (GIMP_TYPE_PENCIL_TOOL);
+     }
+
+  paint_tool = GIMP_PAINT_TOOL(non_gui_pencil);
+		
+  if (gimp_paint_tool_start(paint_tool, drawable,
+                            stroke_array[0],
+                            stroke_array[1]))
     {
-      /* Set the paint core's paint func */
-      non_gui_paint_core.paint_func = pencil_non_gui_paint_func;
+      paint_tool->startx = paint_tool->lastx = stroke_array[0];
+      paint_tool->starty = paint_tool->lasty = stroke_array[1];
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      pencil_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+      gimp_pencil_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
        {
-         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+         paint_tool->curx = stroke_array[i * 2 + 0];
+         paint_tool->cury = stroke_array[i * 2 + 1];
 
-         paint_core_interpolate (&non_gui_paint_core, drawable);
+         gimp_paint_tool_interpolate (paint_tool, drawable);
 
-         non_gui_paint_core.lastx = non_gui_paint_core.curx;
-         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+         paint_tool->lastx = paint_tool->curx;
+         paint_tool->lasty = paint_tool->cury;
        }
 
       /* Finish the painting */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      gimp_paint_tool_finish (paint_tool, drawable);
 
-      /* Cleanup */
-      paint_core_cleanup ();
       return TRUE;
     }
   else
     return FALSE;
 }
+
+void
+gimp_pencil_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_PENCIL_TOOL,
+                              TRUE,
+                              "gimp:pencil_tool",
+                              _("Pencil"),
+                              _("Paint hard edged pixels"),
+                              N_("/Tools/Paint Tools/Pencil"), "P",
+                              NULL, "tools/pencil.html",
+                              (const gchar **) pencil_bits);
+}
+
+GtkType
+gimp_pencil_tool_get_type (void)
+{
+ static GtkType tool_type = 0;
+
+ if (! tool_type)
+   {
+     GtkTypeInfo tool_info =
+       {
+         "GimpPencilTool",
+          sizeof (GimpPencilTool),
+          sizeof (GimpPencilToolClass),
+          (GtkClassInitFunc) gimp_pencil_tool_class_init,
+          (GtkObjectInitFunc) gimp_pencil_tool_init,
+           /* reserved_1 */ NULL,
+           /* reserved_2 */ NULL,
+           NULL
+        };
+     tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+   }
+ return tool_type;
+}
+
+GimpTool *
+gimp_pencil_tool_new (void)
+{
+      return gtk_type_new (GIMP_TYPE_PENCIL_TOOL);
+}
+
+static void
+gimp_pencil_tool_init (GimpPencilTool *pencil)
+{
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
+
+  tool       = GIMP_TOOL (pencil);
+  paint_tool = GIMP_PAINT_TOOL (pencil);
+
+  if (! pencil_options)
+    {
+      pencil_options = gimp_pencil_tool_options_new ();
+      tool_manager_register_tool_options (GIMP_TYPE_PENCIL_TOOL,
+      (ToolOptions *) pencil_options);
+     }
+   tool->tool_cursor = GIMP_PENCIL_TOOL_CURSOR;
+
+   paint_tool->pick_colors =  TRUE;
+   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+
+}
+             
+static void 
+gimp_pencil_tool_class_init (GimpPencilToolClass *klass)
+{  
+  GimpPaintToolClass *paint_tool_class;
+  
+  
+  paint_tool_class = (GimpPaintToolClass *) klass;
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+  paint_tool_class->paint = gimp_pencil_tool_paint;
+}
+
+

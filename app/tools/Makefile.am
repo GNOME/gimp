@@ -52,8 +52,8 @@ libapptools_la_SOURCES = \
 	gimppainttool.c		\
 	gimppainttool.h		\
 	gimppainttool_kernels.h	\
-##	gimppenciltool.c	\
-##	gimppenciltool.h	\
+	gimppenciltool.c	\
+	gimppenciltool.h	\
 ##	gimpperspectivetool.c	\
 ##	gimpperspectivetool.h	\
 	gimprectselecttool.c	\

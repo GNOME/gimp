@@ -544,7 +544,6 @@ STUB(eraser_non_gui_default)
 STUB(transform_core_cut)
 STUB(flip_tool_flip)
 STUB(transform_core_paste)
-STUB(pencil_non_gui)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
 STUB(rotate_tool_rotate)
@@ -783,6 +782,34 @@ ToolInfo tool_info[] =
     {
       bucket_fill_small_bits, bucket_fill_small_mask_bits,
       bucket_fill_small_width, bucket_fill_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
+  },
+
+  {
+    NULL,
+    N_("Blend"),
+    N_("/Tools/Paint Tools/Blend"),
+    "L",
+    (char **) gradient_bits,
+    NULL,
+    NULL,
+    N_("Fill with a color gradient"),
+    "tools/blend.html",
+    BLEND,
+    tools_new_blend,
+    tools_free_blend,
+    NULL,
+    NULL,
+    NULL,
+    {
+      blend_small_bits, blend_small_mask_bits,
+      blend_small_width, blend_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
