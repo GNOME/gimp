@@ -1,5 +1,13 @@
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c (check_combos): light and
+	dark check color were swapped for GIMP_CHECK_TYPE_GRAY_CHECKS.
+
+	* libgimpwidgets/gimppreviewarea.[ch]: added "check-size" and
+	"check-type" properties and draw the checkerboard accordingly.
+
+2004-09-02  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-enums.[ch]
 	* libgimpbase/gimpbaseenums.[ch]: moved GimpCheckSize and
 	GimpCheckType enums to libgimpbase. Correctly prefix the enum

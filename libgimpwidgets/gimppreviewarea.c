@@ -29,18 +29,30 @@
 
 #include "gimppreviewarea.h"
 
+enum
+{
+  PROP_0,
+  PROP_CHECK_SIZE,
+  PROP_CHECK_TYPE
+};
 
-#define CHECK_COLOR(area, row, col)                     \
-  (((((area)->offset_y + (row)) & GIMP_CHECK_SIZE) ^    \
-    (((area)->offset_x + (col)) & GIMP_CHECK_SIZE)) ?   \
-   (GIMP_CHECK_LIGHT * 255) :                           \
-   (GIMP_CHECK_DARK  * 255))
+
+#define DEFAULT_CHECK_SIZE  GIMP_CHECK_SIZE_MEDIUM_CHECKS
+#define DEFAULT_CHECK_TYPE  GIMP_CHECK_TYPE_GRAY_CHECKS
 
 
 static void      gimp_preview_area_class_init    (GimpPreviewAreaClass *klass);
 static void      gimp_preview_area_init          (GimpPreviewArea *area);
 
 static void      gimp_preview_area_finalize      (GObject         *object);
+static void      gimp_preview_area_set_property  (GObject         *object,
+                                                  guint            property_id,
+                                                  const GValue    *value,
+                                                  GParamSpec      *pspec);
+static void      gimp_preview_area_get_property  (GObject         *object,
+                                                  guint            property_id,
+                                                  GValue          *value,
+                                                  GParamSpec      *pspec);
 
 static void      gimp_preview_area_size_allocate (GtkWidget       *widget,
                                                   GtkAllocation   *allocation);
@@ -88,21 +100,37 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize      = gimp_preview_area_finalize;
+  object_class->set_property  = gimp_preview_area_set_property;
+  object_class->get_property  = gimp_preview_area_get_property;
 
   widget_class->size_allocate = gimp_preview_area_size_allocate;
   widget_class->expose_event  = gimp_preview_area_expose;
+
+  g_object_class_install_property (object_class, PROP_CHECK_SIZE,
+                                   g_param_spec_enum ("check-size", NULL, NULL,
+                                                      GIMP_TYPE_CHECK_SIZE,
+                                                      DEFAULT_CHECK_SIZE,
+                                                      G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_CHECK_TYPE,
+                                   g_param_spec_enum ("check-type", NULL, NULL,
+                                                      GIMP_TYPE_CHECK_TYPE,
+                                                      DEFAULT_CHECK_TYPE,
+                                                      G_PARAM_READWRITE));
 }
 
 static void
 gimp_preview_area_init (GimpPreviewArea *area)
 {
-  area->buf       = NULL;
-  area->cmap      = NULL;
-  area->offset_x  = 0;
-  area->offset_y  = 0;
-  area->width     = 0;
-  area->height    = 0;
-  area->rowstride = 0;
+  area->check_size = DEFAULT_CHECK_SIZE;
+  area->check_type = DEFAULT_CHECK_TYPE;
+  area->buf        = NULL;
+  area->cmap       = NULL;
+  area->offset_x   = 0;
+  area->offset_y   = 0;
+  area->width      = 0;
+  area->height     = 0;
+  area->rowstride  = 0;
 }
 
 static void
@@ -122,6 +150,54 @@ gimp_preview_area_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_preview_area_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+
+  switch (property_id)
+    {
+    case PROP_CHECK_SIZE:
+      area->check_size = g_value_get_enum (value);
+      gtk_widget_queue_draw (GTK_WIDGET (area));
+      break;
+    case PROP_CHECK_TYPE:
+      area->check_type = g_value_get_enum (value);
+      gtk_widget_queue_draw (GTK_WIDGET (area));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_preview_area_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+
+  switch (property_id)
+    {
+    case PROP_CHECK_SIZE:
+      g_value_set_enum (value, area->check_size);
+      break;
+    case PROP_CHECK_TYPE:
+      g_value_set_enum (value, area->check_type);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -180,6 +256,33 @@ gimp_preview_area_expose (GtkWidget      *widget,
   return FALSE;
 }
 
+static guint
+gimp_preview_area_get_check_size (GimpPreviewArea *area)
+{
+  return (1 << (2 + area->check_size));
+}
+
+static void
+gimp_preview_area_get_check_colors (GimpPreviewArea *area,
+                                    guchar          *light,
+                                    guchar          *dark)
+{
+  GimpCheckType  type = CLAMP (area->check_type, 0, 5);
+
+  const guchar   check_colors[6][2] =
+    {
+      { 204, 255 },  /*  LIGHT_CHECKS  */
+      { 153, 102 },  /*  GRAY_CHECKS   */
+      {   0,  51 },  /*  DARK_CHECKS   */
+      { 255, 255 },  /*  WHITE_ONLY    */
+      { 127, 127 },  /*  GRAY_ONLY     */
+      {   0,   0 }   /*  BLACK_ONLY    */
+    };
+
+  *light = check_colors[type][0];
+  *dark  = check_colors[type][1];
+}
+
 
 /**
  * gimp_preview_area_new:
@@ -222,6 +325,9 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 {
   const guchar    *src;
   guchar          *dest;
+  guint            size;
+  guchar           light;
+  guchar           dark;
   gint             row;
   gint             col;
 
@@ -284,6 +390,13 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       area->rowstride = ((area->width * 3) + 3) & ~3;
       area->buf = g_new (guchar, area->rowstride * area->height);
     }
+
+  size = gimp_preview_area_get_check_size (area);
+  gimp_preview_area_get_check_colors (area, &light, &dark);
+
+#define CHECK_COLOR(area, row, col)        \
+  (((((area)->offset_y + (row)) & size) ^  \
+    (((area)->offset_x + (col)) & size)) ? light : dark)
 
   src  = buf;
   dest = area->buf + x * 3 + y * area->rowstride;

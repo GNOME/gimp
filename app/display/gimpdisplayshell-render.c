@@ -88,14 +88,14 @@ static guint   tile_shift         = 0;
 static guint   check_mod          = 0;
 static guint   check_shift        = 0;
 
-static guchar  check_combos[6][2] =
+static const guchar  check_combos[6][2] =
 {
   { 204, 255 },  /*  LIGHT_CHECKS  */
-  { 102, 153 },  /*  GRAY_CHECKS   */
+  { 153, 102 },  /*  GRAY_CHECKS   */
   {   0,  51 },  /*  DARK_CHECKS   */
   { 255, 255 },  /*  WHITE_ONLY    */
   { 127, 127 },  /*  GRAY_ONLY     */
-  {   0,   0 }   /*  BACK_ONLY     */
+  {   0,   0 }   /*  BLACK_ONLY    */
 };
 
 

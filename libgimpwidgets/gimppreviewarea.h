@@ -37,6 +37,8 @@ struct _GimpPreviewArea
 {
   GtkDrawingArea   parent_instance;
 
+  GimpCheckSize    check_size;
+  GimpCheckType    check_type;
   gint             width;
   gint             height;
   gint             rowstride;
