@@ -133,19 +133,19 @@ typedef struct {
 } FP_Params;
 
 static void  fp_show_hide_frame(GtkWidget *button,
-				GtkWidget *frame);
+                                GtkWidget *frame);
 
 static ReducedImage  *Reduce_The_Image   (GimpDrawable *,
-					  GimpDrawable *,
-					  gint,
-					  gint);
+                                          GimpDrawable *,
+                                          gint,
+                                          gint);
 
 static void      fp_render_preview  (GtkWidget *,
-				     gint,
-				     gint);
+                                     gint,
+                                     gint);
 
 static void      Update_Current_FP  (gint,
-				     gint);
+                                     gint);
 
 static void      fp_Create_Nudge    (gint*);
 
@@ -153,61 +153,59 @@ static gboolean  fp_dialog          (void);
 static void      fp_advanced_dialog (void);
 
 static void      selectionMade                  (GtkWidget *,
-						 gpointer     );
+                                                 gpointer     );
 static void      fp_scale_update                (GtkAdjustment *,
-						 float*       );
+                                                 float*       );
 static void      resetFilterPacks               (void);
 
 static void      fp_create_smoothness_graph     (GtkWidget*    );
 
 static void      fp_range_preview_spill         (GtkWidget*,
-						 gint           );
-static gint	fp_fake_transparency (gint i, gint j);
-
+                                                 gint           );
 static void      Adjust_Preview_Sizes     (gint width,
-					   gint height   );
-static void	fp_redraw_all_windows (void);
+                                           gint height   );
+static void     fp_redraw_all_windows (void);
 static void      refreshPreviews          (int);
 static void      initializeFilterPacks    (void);
 
 static void     As_You_Drag               (GtkWidget *button);
 static void     preview_size_scale_update (GtkAdjustment *adjustment,
-					   float         *scale_val);
+                                           float         *scale_val);
 
-static void      	fp                      (GimpDrawable  *drawable);
-static GtkWidget       *fp_create_bna		(void);
-static GtkWidget       *fp_create_rough		(void);
-static GtkWidget       *fp_create_range		(void);
+static void             fp                      (GimpDrawable  *drawable);
+static GtkWidget       *fp_create_bna           (void);
+static GtkWidget       *fp_create_rough         (void);
+static GtkWidget       *fp_create_range         (void);
 static GtkWidget       *fp_create_circle_palette(void);
-static GtkWidget       *fp_create_lnd		(void);
-static GtkWidget       *fp_create_show		(void);
-static GtkWidget       *fp_create_msnls		(void);
+static GtkWidget       *fp_create_lnd           (void);
+static GtkWidget       *fp_create_show          (void);
+static GtkWidget       *fp_create_msnls         (void);
 static GtkWidget       *fp_create_pixels_select_by(void);
-static void 		update_range_labels    (void);
-static gboolean		FP_Range_Change_Events (GtkWidget *widget,
-						GdkEvent  *event,
-						FP_Params *current);
+static void             update_range_labels    (void);
+static gboolean         FP_Range_Change_Events (GtkWidget *widget,
+                                                GdkEvent  *event,
+                                                FP_Params *current);
 
 static void      Create_A_Preview        (GtkWidget  **,
-				   GtkWidget  **,
-				   int,
-				   int           );
+                                   GtkWidget  **,
+                                   int,
+                                   int           );
 
 static void      Create_A_Table_Entry    (GtkWidget  **,
-				   GtkWidget  *,
-				   const gchar *);
+                                   GtkWidget  *,
+                                   const gchar *);
 
 static void Check_Button_In_A_Box       (GtkWidget     *,
-				  const gchar   *label,
-				  GtkSignalFunc  func,
-				  gpointer       data,
-				  int            clicked);
+                                  const gchar   *label,
+                                  GtkSignalFunc  func,
+                                  gpointer       data,
+                                  int            clicked);
 
 static void Frames_Check_Button_In_A_Box (GtkWidget     *,
-				   const gchar   *label,
-				   GtkSignalFunc  func,
-				   GtkWidget     *frame,
-				   int            clicked);
+                                   const gchar   *label,
+                                   GtkSignalFunc  func,
+                                   GtkWidget     *frame,
+                                   int            clicked);
 
 
 #define RESPONSE_RESET 1
@@ -290,10 +288,10 @@ static GimpRunMode run_mode;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -316,16 +314,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_filter_pack",
-			  "Allows the user to change H, S, or C with many previews",
-			  "No help available",
-			  "Pavel Grinfeld (pavel@ml.com)",
-			  "Pavel Grinfeld (pavel@ml.com)",
-			  "27th March 1997",
-			  N_("_Filter Pack..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Allows the user to change H, S, or C with many previews",
+                          "No help available",
+                          "Pavel Grinfeld (pavel@ml.com)",
+                          "Pavel Grinfeld (pavel@ml.com)",
+                          "27th March 1997",
+                          N_("_Filter Pack..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_filter_pack",
                              N_("<Image>/Filters/Colors"));
@@ -381,9 +379,9 @@ run (const gchar      *name,
 
 static void
 fp_func (const guchar *src,
-	 guchar       *dest,
-	 gint          bpp,
-	 gpointer      data)
+         guchar       *dest,
+         gint          bpp,
+         gpointer      data)
 {
   gint    bytenum, k;
   gint    JudgeBy, Intensity = 0, P[3];
@@ -401,22 +399,22 @@ fp_func (const guchar *src,
   for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
     {
       if (!Current.Touched[JudgeBy])
-	continue;
+        continue;
 
       switch (JudgeBy)
-	{
-	case BY_HUE:
-	  Intensity = 255 * hsv.h;
-	  break;
+        {
+        case BY_HUE:
+          Intensity = 255 * hsv.h;
+          break;
 
-	case BY_SAT:
-	  Intensity = 255 * hsv.s;
-	  break;
+        case BY_SAT:
+          Intensity = 255 * hsv.s;
+          break;
 
-	case BY_VAL:
-	  Intensity = 255 * hsv.v;
-	  break;
-	}
+        case BY_VAL:
+          Intensity = 255 * hsv.v;
+          break;
+        }
 
 
       /* It's important to take care of Saturation first!!! */
@@ -426,17 +424,17 @@ fp_func (const guchar *src,
       middle = (M + m) / 2;
 
       for (k = 0; k < 3; k++)
-	if (P[k] != m && P[k] != M)
-	  middle = P[k];
+        if (P[k] != m && P[k] != M)
+          middle = P[k];
 
       for (k = 0; k < 3; k++)
-	if (M != m)
-	  {
-	    if (P[k] == M)
-	      P[k] = MAX (P[k] + Current.satAdj[JudgeBy][Intensity], middle);
-	    else if (P[k] == m)
-	      P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle);
-	  }
+        if (M != m)
+          {
+            if (P[k] == M)
+              P[k] = MAX (P[k] + Current.satAdj[JudgeBy][Intensity], middle);
+            else if (P[k] == m)
+              P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle);
+          }
 
       P[0] += Current.redAdj[JudgeBy][Intensity];
       P[1] += Current.greenAdj[JudgeBy][Intensity];
@@ -491,16 +489,16 @@ fp_create_bna (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   gtk_table_attach (GTK_TABLE (table), blabel, 0, 1, 0, 1,
-		    0, GTK_EXPAND | GTK_FILL, 0, 0);
+                    0, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), alabel, 1, 2, 0, 1,
-		    0, GTK_EXPAND | GTK_FILL, 0, 0);
+                    0, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), bframe, 0, 1, 1, 2,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), aframe, 1, 2, 1, 2,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -511,8 +509,8 @@ fp_create_bna (void)
 /* close a sub dialog (from window manager) by simulating toggle click */
 static gboolean
 sub_dialog_destroy (GtkWidget *dialog,
-		    GdkEvent  *ev,
-		    gpointer   dummy)
+                    GdkEvent  *ev,
+                    gpointer   dummy)
 {
   GtkWidget *button =
     GTK_WIDGET (g_object_get_data (G_OBJECT (dialog), "ctrlButton"));
@@ -559,7 +557,7 @@ fp_create_circle_palette (void)
   Create_A_Preview (&yPreview, &yFrame, reduced->width, reduced->height);
   Create_A_Preview (&mPreview, &mFrame, reduced->width, reduced->height);
   Create_A_Preview (&centerPreview, &centerFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
 
   Create_A_Table_Entry (&rVbox, rFrame, hue_red);
   Create_A_Table_Entry (&gVbox, gFrame, hue_green);
@@ -570,19 +568,19 @@ fp_create_circle_palette (void)
   Create_A_Table_Entry (&centerVbox, centerFrame, current_val);
 
   gtk_table_attach (GTK_TABLE (table), rVbox, 8, 11 ,4 , 7,
-		    GTK_EXPAND , GTK_EXPAND, 0 ,0);
+                    GTK_EXPAND , GTK_EXPAND, 0 ,0);
   gtk_table_attach (GTK_TABLE (table), gVbox, 2, 5, 0, 3,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), bVbox, 2, 5, 8, 11,
-		    GTK_EXPAND, GTK_EXPAND,0,0);
+                    GTK_EXPAND, GTK_EXPAND,0,0);
   gtk_table_attach (GTK_TABLE (table), cVbox, 0, 3, 4, 7,
-		    GTK_EXPAND, GTK_EXPAND, 0 ,0);
+                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
   gtk_table_attach (GTK_TABLE (table), yVbox, 6, 9, 0, 3,
-		    GTK_EXPAND, GTK_EXPAND, 0 ,0);
+                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
   gtk_table_attach (GTK_TABLE (table), mVbox, 6, 9, 8, 11,
-		    GTK_EXPAND, GTK_EXPAND, 0 ,0);
+                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
   gtk_table_attach (GTK_TABLE (table), centerVbox, 4, 7, 4, 7,
-		    GTK_EXPAND, GTK_EXPAND, 0 ,0);
+                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
 
   return win;
 }
@@ -619,7 +617,7 @@ fp_create_rough (void)
 
 static void
 fp_change_current_range (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -627,7 +625,7 @@ fp_change_current_range (GtkWidget *widget,
     {
       refreshPreviews (Current.VisibleFrames);
       if (AW.window && GTK_WIDGET_VISIBLE (AW.window))
-	fp_create_smoothness_graph (AW.aliasingPreview);
+        fp_create_smoothness_graph (AW.aliasingPreview);
     }
 }
 
@@ -642,7 +640,7 @@ fp_create_range (void)
 
                                     _("Sha_dows"),  SHADOWS, NULL,
                                     _("_Midtones"), MIDTONES, NULL,
-				    _("H_ighlights"), HIGHLIGHTS, NULL,
+                                    _("H_ighlights"), HIGHLIGHTS, NULL,
 
                                     NULL);
 
@@ -663,21 +661,21 @@ fp_create_control (void)
   gtk_widget_show (box);
 
   Frames_Check_Button_In_A_Box (box, _("_Hue"),
-				GTK_SIGNAL_FUNC (fp_show_hide_frame),
-				fpFrames.palette,
-				Current.VisibleFrames & HUE);
+                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                fpFrames.palette,
+                                Current.VisibleFrames & HUE);
   Frames_Check_Button_In_A_Box (box, _("_Saturation"),
-				GTK_SIGNAL_FUNC (fp_show_hide_frame),
-				fpFrames.satur,
-				Current.VisibleFrames & SATURATION);
+                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                fpFrames.satur,
+                                Current.VisibleFrames & SATURATION);
   Frames_Check_Button_In_A_Box (box, _("_Value"),
-				GTK_SIGNAL_FUNC (fp_show_hide_frame),
-				fpFrames.lnd,
-				Current.VisibleFrames & VALUE);
+                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                fpFrames.lnd,
+                                Current.VisibleFrames & VALUE);
   Frames_Check_Button_In_A_Box (box, _("A_dvanced"),
-				GTK_SIGNAL_FUNC (fp_show_hide_frame),
-				AW.window,
-				FALSE);
+                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                AW.window,
+                                FALSE);
   gtk_widget_show (frame);
 
   return frame;
@@ -701,11 +699,11 @@ fp_create_lnd (void)
                     NULL);
 
   Create_A_Preview (&lighterPreview, &lighterFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
   Create_A_Preview (&middlePreview, &middleFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
   Create_A_Preview (&darkerPreview, &darkerFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
 
   Create_A_Table_Entry (&lighterVbox, lighterFrame, val_lighter);
   Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
@@ -718,11 +716,11 @@ fp_create_lnd (void)
   gtk_widget_show (table);
 
   gtk_table_attach (GTK_TABLE (table), lighterVbox, 0, 3, 0, 1,
-		    GTK_EXPAND , GTK_EXPAND, 0, 0);
+                    GTK_EXPAND , GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), middleVbox, 4, 7, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), darkerVbox, 8, 11, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
   return win;
 }
@@ -745,11 +743,11 @@ fp_create_msnls (void)
                     NULL);
 
   Create_A_Preview (&minusSatPreview, &lessFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
   Create_A_Preview (&SatPreview, &middleFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
   Create_A_Preview (&plusSatPreview, &moreFrame,
-		    reduced->width, reduced->height);
+                    reduced->width, reduced->height);
 
   Create_A_Table_Entry (&moreVbox, moreFrame, sat_more);
   Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
@@ -762,18 +760,18 @@ fp_create_msnls (void)
   gtk_widget_show (table);
 
   gtk_table_attach (GTK_TABLE (table), moreVbox, 0, 3, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), middleVbox, 4, 7, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), lessVbox, 8, 11, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
   return win;
 }
 
 static void
 fp_change_current_pixels_by (GtkWidget *widget,
-			     gpointer   data)
+                             gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -781,7 +779,7 @@ fp_change_current_pixels_by (GtkWidget *widget,
     {
       refreshPreviews (Current.VisibleFrames);
       if (AW.window && GTK_WIDGET_VISIBLE (AW.window) && AW.rangePreview)
-	fp_range_preview_spill (AW.rangePreview,Current.ValueBy);
+        fp_range_preview_spill (AW.rangePreview,Current.ValueBy);
     }
 }
 
@@ -793,11 +791,11 @@ fp_create_pixels_select_by (void)
   frame = gimp_int_radio_group_new (TRUE, _("Select Pixels by"),
                                     G_CALLBACK (fp_change_current_pixels_by),
                                     &Current.ValueBy,
-				    Current.ValueBy,
+                                    Current.ValueBy,
 
                                     _("H_ue"),  0, NULL,
                                     _("Satu_ration"), 1, NULL,
-				    _("V_alue"), 2, NULL,
+                                    _("V_alue"), 2, NULL,
 
                                     NULL);
 
@@ -808,7 +806,7 @@ fp_create_pixels_select_by (void)
 
 static void
 fp_change_selection (GtkWidget *widget,
-		     gpointer   data)
+                     gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -826,11 +824,11 @@ fp_create_show (void)
   frame = gimp_int_radio_group_new (TRUE, _("Show"),
                                     G_CALLBACK (fp_change_selection),
                                     &Current.SlctnOnly,
-				    Current.SlctnOnly,
+                                    Current.SlctnOnly,
 
                                     _("_Entire Image"),  0, NULL,
                                     _("Se_lection Only"), 1, NULL,
-				    _("Selec_tion In Context"), 2, NULL,
+                                    _("Selec_tion In Context"), 2, NULL,
 
                                     NULL);
 
@@ -841,27 +839,26 @@ fp_create_show (void)
 
 static void
 Create_A_Preview (GtkWidget **preview,
-		  GtkWidget **frame,
-		  gint        previewWidth,
-		  gint        previewHeight)
+                  GtkWidget **frame,
+                  gint        previewWidth,
+                  gint        previewHeight)
 {
   *frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
   gtk_widget_show (*frame);
 
-  *preview = gtk_preview_new (Current.Color ?
-			      GTK_PREVIEW_COLOR : GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (*preview), previewWidth, previewHeight);
+  *preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (*preview, previewWidth, previewHeight);
   gtk_widget_show (*preview);
   gtk_container_add (GTK_CONTAINER (*frame), *preview);
 }
 
 static void
 Check_Button_In_A_Box (GtkWidget     *vbox,
-		       const gchar   *label,
-		       GtkSignalFunc  function,
-		       gpointer       data,
-		       gboolean       clicked)
+                       const gchar   *label,
+                       GtkSignalFunc  function,
+                       gpointer       data,
+                       gboolean       clicked)
 {
   GtkWidget *button;
 
@@ -878,10 +875,10 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
 
 static void
 Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
-			      const gchar   *label,
-			      GtkSignalFunc  function,
-			      GtkWidget     *frame,
-			      gboolean       clicked)
+                              const gchar   *label,
+                              GtkSignalFunc  function,
+                              GtkWidget     *frame,
+                              gboolean       clicked)
 {
   GtkWidget *button;
 
@@ -899,8 +896,8 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
 
 static void
 Create_A_Table_Entry (GtkWidget   **box,
-		      GtkWidget    *SmallerFrame,
-		      const gchar  *description)
+                      GtkWidget    *SmallerFrame,
+                      const gchar  *description)
 {
   GtkWidget *label, *button, *table;
 
@@ -920,13 +917,13 @@ Create_A_Table_Entry (GtkWidget   **box,
   gtk_box_pack_start (GTK_BOX (*box), table, TRUE, TRUE, 0);
 
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    0, 0, 0, 0);
+                    0, 0, 0, 0);
 
   if (description != current_val)
     {
       button = gtk_button_new ();
       gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-			0, 0, 0, 4);
+                        0, 0, 0, 4);
       gtk_widget_show (button);
 
       gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
@@ -938,7 +935,7 @@ Create_A_Table_Entry (GtkWidget   **box,
   else
     {
       gtk_table_attach (GTK_TABLE (table), SmallerFrame, 0, 1, 1, 2,
-			0, 0, 0, 4);
+                        0, 0, 0, 4);
     }
 }
 
@@ -946,8 +943,8 @@ static void
 fp_redraw_all_windows (void)
 {
   reduced = Reduce_The_Image (drawable,mask,
-			      Current.PreviewSize,
-			      Current.SlctnOnly);
+                              Current.PreviewSize,
+                              Current.SlctnOnly);
   Adjust_Preview_Sizes (reduced->width, reduced->height);
 
   gtk_widget_queue_draw (fpFrames.palette);
@@ -960,7 +957,7 @@ fp_redraw_all_windows (void)
 
 static void
 fp_show_hide_frame (GtkWidget *button,
-		    GtkWidget *frame)
+                    GtkWidget *frame)
 {
   gint prev = Current.VisibleFrames;
 
@@ -970,59 +967,61 @@ fp_show_hide_frame (GtkWidget *button,
   if (GTK_TOGGLE_BUTTON (button)->active)
     {
       if (!GTK_WIDGET_VISIBLE (frame))
-	{
-	  gtk_widget_show (frame);
+        {
+          gtk_widget_show (frame);
 
-	  if (frame==fpFrames.palette)
-	    Current.VisibleFrames |= HUE;
-	  else if (frame==fpFrames.satur)
-	    Current.VisibleFrames |= SATURATION;
-	  else if (frame==fpFrames.lnd)
-	    Current.VisibleFrames |= VALUE;
+          if (frame==fpFrames.palette)
+            Current.VisibleFrames |= HUE;
+          else if (frame==fpFrames.satur)
+            Current.VisibleFrames |= SATURATION;
+          else if (frame==fpFrames.lnd)
+            Current.VisibleFrames |= VALUE;
 
-	  refreshPreviews (Current.VisibleFrames & ~prev);
-	}
+          refreshPreviews (Current.VisibleFrames & ~prev);
+          fp_create_smoothness_graph (AW.aliasingPreview);
+          fp_range_preview_spill (AW.rangePreview,Current.ValueBy);
+        }
     }
   else
     {
       if (GTK_WIDGET_VISIBLE (frame))
-	{
-	  gtk_widget_hide (frame);
+        {
+          gtk_widget_hide (frame);
 
-	  if (frame==fpFrames.palette)
-	    Current.VisibleFrames &= ~HUE;
-	  else if (frame==fpFrames.satur)
-	    Current.VisibleFrames &= ~SATURATION;
-	  else if (frame==fpFrames.lnd)
-	    Current.VisibleFrames &= ~VALUE;
-	}
+          if (frame==fpFrames.palette)
+            Current.VisibleFrames &= ~HUE;
+          else if (frame==fpFrames.satur)
+            Current.VisibleFrames &= ~SATURATION;
+          else if (frame==fpFrames.lnd)
+            Current.VisibleFrames &= ~VALUE;
+        }
     }
 }
 
 static void
 Adjust_Preview_Sizes (gint width,
-		      gint height)
+                      gint height)
 {
-  gtk_preview_size (GTK_PREVIEW (origPreview),     width, height);
-  gtk_preview_size (GTK_PREVIEW (curPreview),      width, height);
-  gtk_preview_size (GTK_PREVIEW (rPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (gPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (bPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (cPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (yPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (mPreview),        width, height);
-  gtk_preview_size (GTK_PREVIEW (centerPreview),   width, height);
-  gtk_preview_size (GTK_PREVIEW (lighterPreview),  width, height);
-  gtk_preview_size (GTK_PREVIEW (darkerPreview),   width, height);
-  gtk_preview_size (GTK_PREVIEW (middlePreview),   width, height);
-  gtk_preview_size (GTK_PREVIEW (minusSatPreview), width, height);
-  gtk_preview_size (GTK_PREVIEW (SatPreview),      width, height);
-  gtk_preview_size (GTK_PREVIEW (plusSatPreview),  width, height);
+  gtk_widget_set_size_request (origPreview,     width, height);
+  gtk_widget_set_size_request (curPreview,      width, height);
+  gtk_widget_set_size_request (rPreview,        width, height);
+  gtk_widget_set_size_request (gPreview,        width, height);
+  gtk_widget_set_size_request (bPreview,        width, height);
+  gtk_widget_set_size_request (cPreview,        width, height);
+  gtk_widget_set_size_request (yPreview,        width, height);
+  gtk_widget_set_size_request (mPreview,        width, height);
+  gtk_widget_set_size_request (centerPreview,   width, height);
+  gtk_widget_set_size_request (lighterPreview,  width, height);
+  gtk_widget_set_size_request (darkerPreview,   width, height);
+  gtk_widget_set_size_request (middlePreview,   width, height);
+  gtk_widget_set_size_request (minusSatPreview, width, height);
+  gtk_widget_set_size_request (SatPreview,      width, height);
+  gtk_widget_set_size_request (plusSatPreview,  width, height);
 }
 
 static void
 selectionMade (GtkWidget *widget,
-	       gpointer   data)
+               gpointer   data)
 {
   Current.Touched[Current.ValueBy] = 1;
 
@@ -1105,7 +1104,7 @@ fp_response (GtkWidget *widget,
 
 static void
 fp_scale_update (GtkAdjustment *adjustment,
-		 float         *scale_val)
+                 float         *scale_val)
 {
   static gfloat prevValue = 0.25;
 
@@ -1116,7 +1115,7 @@ fp_scale_update (GtkAdjustment *adjustment,
       fp_Create_Nudge (nudgeArray);
       refreshPreviews (Current.VisibleFrames);
       if (AW.window != NULL && GTK_WIDGET_VISIBLE (AW.window))
-	fp_create_smoothness_graph (AW.aliasingPreview);
+        fp_create_smoothness_graph (AW.aliasingPreview);
       prevValue = adjustment->value;
     }
 }
@@ -1136,18 +1135,18 @@ fp_dialog (void)
   GtkWidget *table;
 
   reduced = Reduce_The_Image (drawable,mask,
-			      Current.PreviewSize,
-			      Current.SlctnOnly);
+                              Current.PreviewSize,
+                              Current.SlctnOnly);
 
   gimp_ui_init ("fp", TRUE);
 
   dlg = gimp_dialog_new (_("Filter Pack Simulation"), "fp",
                          NULL, 0,
-			 gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, HELP_ID,
 
-			 GIMP_STOCK_RESET, RESPONSE_RESET,
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GIMP_STOCK_RESET, RESPONSE_RESET,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
 
@@ -1181,22 +1180,22 @@ fp_dialog (void)
   gtk_widget_show (table);
 
   gtk_table_attach (GTK_TABLE (table), bna, 0, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), control, 1, 2, 1, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), rough, 1, 2, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), show, 0, 1, 1, 2,
-		    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), range, 0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), pixelsBy, 0, 1, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_widget_show (dlg);
 
@@ -1232,17 +1231,17 @@ As_You_Drag (GtkWidget *button)
     {
       Current.RealTime=FALSE;
       gtk_range_set_update_policy (GTK_RANGE (Current.roughnessScale),
-				   GTK_UPDATE_DELAYED);
+                                   GTK_UPDATE_DELAYED);
       gtk_range_set_update_policy (GTK_RANGE (Current.aliasingScale),
-				   GTK_UPDATE_DELAYED);
+                                   GTK_UPDATE_DELAYED);
       gtk_range_set_update_policy (GTK_RANGE (Current.previewSizeScale),
-				   GTK_UPDATE_DELAYED);
+                                   GTK_UPDATE_DELAYED);
     }
 }
 
 static void
 preview_size_scale_update (GtkAdjustment *adjustment,
-			   float         *scale_val)
+                           float         *scale_val)
 {
   Current.PreviewSize = adjustment->value;
   fp_redraw_all_windows();
@@ -1257,7 +1256,7 @@ fp_advanced_dialog (void)
   GtkWidget *frame, *mainvbox;
   GtkObject *smoothnessData;
   GtkWidget *graphFrame, *table, *scale;
-  GtkWidget *vbox, *label, *labelTable;
+  GtkWidget *vbox, *label, *labelTable, *alignment, *inner_vbox;
   gint i;
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -1265,7 +1264,7 @@ fp_advanced_dialog (void)
   gimp_help_connect (AW.window, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
-			_("Advanced Filter Pack Options"));
+                        _("Advanced Filter Pack Options"));
 
   g_signal_connect (AW.window, "delete_event",
                     G_CALLBACK (sub_dialog_destroy),
@@ -1285,27 +1284,35 @@ fp_advanced_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  graphFrame = gtk_frame_new (NULL);
+  graphFrame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (graphFrame), GTK_SHADOW_IN);
   gtk_container_set_border_width (GTK_CONTAINER (graphFrame),0);
   gtk_widget_show (graphFrame);
   gtk_table_attach (GTK_TABLE (table), graphFrame, 0, 1, 0, 1,
-		    GTK_EXPAND, 0, 0, 0);
+                    GTK_EXPAND, 0, 0, 0);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (graphFrame), vbox);
   gtk_widget_show (vbox);
 
-  AW.aliasingPreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (AW.aliasingPreview), 256, MAX_ROUGHNESS);
-  gtk_box_pack_start (GTK_BOX (vbox), AW.aliasingPreview, TRUE, TRUE, 0);
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), alignment);
+  gtk_widget_show (alignment);
+
+  inner_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (alignment), inner_vbox);
+  gtk_widget_show (inner_vbox);
+
+  AW.aliasingPreview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (AW.aliasingPreview, 256, MAX_ROUGHNESS);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), AW.aliasingPreview, TRUE, TRUE, 0);
   gtk_widget_show (AW.aliasingPreview);
 
   fp_create_smoothness_graph (AW.aliasingPreview);
 
-  AW.rangePreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (AW.rangePreview), 256, RANGE_HEIGHT);
-  gtk_box_pack_start(GTK_BOX(vbox),AW.rangePreview, TRUE, TRUE, 0);
+  AW.rangePreview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (AW.rangePreview, 256, RANGE_HEIGHT);
+  gtk_box_pack_start(GTK_BOX (inner_vbox), AW.rangePreview, TRUE, TRUE, 0);
   gtk_widget_show (AW.rangePreview);
 
   fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
@@ -1315,19 +1322,19 @@ fp_advanced_dialog (void)
   gtk_table_set_row_spacings (GTK_TABLE (labelTable), 6);
   gtk_widget_show (labelTable);
   gtk_table_attach (GTK_TABLE (table), labelTable, 0, 1, 1, 2,
-		    GTK_EXPAND, 0, 0, 0);
+                    GTK_EXPAND, 0, 0, 0);
 
   for (i = 0; i < 12; i++)
     {
       label = Current.rangeLabels[i] = gtk_label_new ("-");
       if (!(i % 4))
-	{
-	  gtk_label_set_text (GTK_LABEL(label), gettext (rangeNames[i/4]));
-	  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-	}
+        {
+          gtk_label_set_text (GTK_LABEL(label), gettext (rangeNames[i/4]));
+          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+        }
       gtk_widget_show (label);
       gtk_table_attach (GTK_TABLE (labelTable), label, i%4, i%4+1, i/4, i/4+1,
-			GTK_EXPAND | GTK_FILL, 0, 0, 0);
+                        GTK_EXPAND | GTK_FILL, 0, 0, 0);
     }
 
   /************************************************************/
@@ -1355,7 +1362,7 @@ fp_advanced_dialog (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
   gtk_table_attach (GTK_TABLE (table), scale, 0, 1, 2, 3,
-		    0, 0, 0, 0);
+                    0, 0, 0, 0);
   gtk_widget_show (scale);
 
   g_signal_connect (smoothnessData, "value_changed",
@@ -1369,15 +1376,15 @@ fp_advanced_dialog (void)
   gtk_widget_show (vbox);
 
   Check_Button_In_A_Box (vbox, _("Preview as You Drag"),
-			 GTK_SIGNAL_FUNC (As_You_Drag),
-			 NULL, TRUE);
+                         GTK_SIGNAL_FUNC (As_You_Drag),
+                         NULL, TRUE);
 
   frame = gimp_frame_new (_("Preview Size"));
   gtk_widget_show (frame);
 
   smoothnessData = gtk_adjustment_new (Current.PreviewSize,
-				       50, MAX_PREVIEW_SIZE,
-				       5, 5, 0.0);
+                                       50, MAX_PREVIEW_SIZE,
+                                       5, 5, 0.0);
 
   Current.previewSizeScale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
@@ -1397,17 +1404,17 @@ fp_advanced_dialog (void)
 
 static void
 slider_erase (GdkWindow *window,
-	      int        xpos)
+              int        xpos)
 {
   gdk_window_clear_area (window, MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, 0,
-			 RANGE_HEIGHT, RANGE_HEIGHT);
+                         RANGE_HEIGHT, RANGE_HEIGHT);
 }
 
 static void
 draw_slider (GdkWindow *window,
-	     GdkGC     *border_gc,
-	     GdkGC     *fill_gc,
-	     gint       xpos)
+             GdkGC     *border_gc,
+             GdkGC     *fill_gc,
+             gint       xpos)
 {
   gint i;
 
@@ -1415,39 +1422,39 @@ draw_slider (GdkWindow *window,
     gdk_draw_line (window, fill_gc, MARGIN + xpos-i/2, i, MARGIN + xpos+i/2,i);
 
   gdk_draw_line (window, border_gc, MARGIN + xpos, 0,
-		 MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
+                 MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
 
   gdk_draw_line (window, border_gc, MARGIN + xpos, 0,
-		 MARGIN + xpos + (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
+                 MARGIN + xpos + (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
 
   gdk_draw_line (window, border_gc, MARGIN + xpos- (RANGE_HEIGHT - 1)/2,
-		 RANGE_HEIGHT-1, MARGIN + xpos + (RANGE_HEIGHT-1)/2,
-		 RANGE_HEIGHT - 1);
+                 RANGE_HEIGHT-1, MARGIN + xpos + (RANGE_HEIGHT-1)/2,
+                 RANGE_HEIGHT - 1);
 }
 
 static void
 draw_it (GtkWidget *widget)
 {
   draw_slider (AW.aliasingGraph->window,
-	       AW.aliasingGraph->style->black_gc,
-	       AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
-	       Current.Cutoffs[SHADOWS]);
+               AW.aliasingGraph->style->black_gc,
+               AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
+               Current.Cutoffs[SHADOWS]);
 
   draw_slider (AW.aliasingGraph->window,
-	       AW.aliasingGraph->style->black_gc,
-	       AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
-	       Current.Cutoffs[MIDTONES]);
+               AW.aliasingGraph->style->black_gc,
+               AW.aliasingGraph->style->dark_gc[GTK_STATE_NORMAL],
+               Current.Cutoffs[MIDTONES]);
 
   draw_slider (AW.aliasingGraph->window,
-	       AW.aliasingGraph->style->black_gc,
-	       AW.aliasingGraph->style->dark_gc[GTK_STATE_SELECTED],
-	       Current.Offset);
+               AW.aliasingGraph->style->black_gc,
+               AW.aliasingGraph->style->dark_gc[GTK_STATE_SELECTED],
+               Current.Offset);
 }
 
 static gboolean
 FP_Range_Change_Events (GtkWidget *widget,
-			GdkEvent  *event,
-			FP_Params *current)
+                        GdkEvent  *event,
+                        FP_Params *current)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -1471,37 +1478,37 @@ FP_Range_Change_Events (GtkWidget *widget,
       min = MIN (MIN (shad, mid), offset);
 
       if (bevent->x >0 && bevent->x<256)
-	{
-	  if (min == shad)
-	    new = &Current.Cutoffs[SHADOWS];
-	  else if (min == mid)
-	    new = &Current.Cutoffs[MIDTONES];
-	  else
-	    new = &Current.Offset;
+        {
+          if (min == shad)
+            new = &Current.Cutoffs[SHADOWS];
+          else if (min == mid)
+            new = &Current.Cutoffs[MIDTONES];
+          else
+            new = &Current.Offset;
 
-	  slider_erase (AW.aliasingGraph->window, *new);
-	  *new = bevent->x;
-	}
+          slider_erase (AW.aliasingGraph->window, *new);
+          *new = bevent->x;
+        }
 
       draw_it (NULL);
 
       if (Current.RealTime)
-	{
-	  fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
-	  update_range_labels ();
-	  fp_create_smoothness_graph (AW.aliasingPreview);
-	  refreshPreviews (Current.VisibleFrames);
-	}
+        {
+          fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+          update_range_labels ();
+          fp_create_smoothness_graph (AW.aliasingPreview);
+          refreshPreviews (Current.VisibleFrames);
+        }
       break;
 
     case GDK_BUTTON_RELEASE:
       if (!Current.RealTime)
-	{
-	  fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
-	  update_range_labels ();
-	  fp_create_smoothness_graph (AW.aliasingPreview);
-	  refreshPreviews (Current.VisibleFrames);
-	}
+        {
+          fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+          update_range_labels ();
+          fp_create_smoothness_graph (AW.aliasingPreview);
+          refreshPreviews (Current.VisibleFrames);
+        }
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -1509,18 +1516,18 @@ FP_Range_Change_Events (GtkWidget *widget,
       gdk_window_get_pointer (widget->window, &x, NULL, NULL);
 
       if (x >= 0 && x < 256)
-	{
-	  slider_erase (AW.aliasingGraph->window, *new);
-	  *new = x;
-	  draw_it (NULL);
-	  if (Current.RealTime)
-	    {
-	      fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
-	      update_range_labels ();
-	      fp_create_smoothness_graph (AW.aliasingPreview);
-	      refreshPreviews (Current.VisibleFrames);
-	    }
-	}
+        {
+          slider_erase (AW.aliasingGraph->window, *new);
+          *new = x;
+          draw_it (NULL);
+          if (Current.RealTime)
+            {
+              fp_range_preview_spill (AW.rangePreview, Current.ValueBy);
+              update_range_labels ();
+              fp_create_smoothness_graph (AW.aliasingPreview);
+              refreshPreviews (Current.VisibleFrames);
+            }
+        }
       break;
 
     default:
@@ -1555,10 +1562,10 @@ initializeFilterPacks (void)
   for (i = 0; i < 256; i++)
     for (j = BY_HUE; j < JUDGE_BY; j++)
       {
-	Current.redAdj   [j][i] = 0;
-	Current.greenAdj [j][i] = 0;
-	Current.blueAdj  [j][i] = 0;
-	Current.satAdj   [j][i] = 0;
+        Current.redAdj   [j][i] = 0;
+        Current.greenAdj [j][i] = 0;
+        Current.blueAdj  [j][i] = 0;
+        Current.satAdj   [j][i] = 0;
       }
 }
 
@@ -1571,9 +1578,9 @@ resetFilterPacks (void)
 
 static ReducedImage *
 Reduce_The_Image (GimpDrawable *drawable,
-		  GimpDrawable *mask,
-		  gint LongerSize,
-		  gint Slctn)
+                  GimpDrawable *mask,
+                  gint LongerSize,
+                  gint Slctn)
 {
   gint          RH, RW, width, height, bytes=drawable->bpp;
   ReducedImage *temp = (ReducedImage *) malloc (sizeof (ReducedImage));
@@ -1679,8 +1686,8 @@ Reduce_The_Image (GimpDrawable *drawable,
 
 static void
 fp_render_preview(GtkWidget *preview,
-		  gint       changewhat,
-		  gint       changewhich)
+                  gint       changewhat,
+                  gint       changewhich)
 {
   guchar *a;
   gint Inten, bytes = drawable->bpp;
@@ -1690,13 +1697,13 @@ fp_render_preview(GtkWidget *preview,
   gint RH = reduced->height;
   gint backupP[3], P[3], tempSat[JUDGE_BY][256];
 
-  a =(guchar *) malloc(bytes*RW);
+  a = g_new(guchar, 4*RW*RH);
 
   if (changewhat==SATURATION)
     for (k=0; k<256; k++) {
       for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-	tempSat[JudgeBy][k]=0;
-	tempSat[Current.ValueBy][k] += changewhich*nudgeArray[(k+Current.Offset)%256];
+        tempSat[JudgeBy][k]=0;
+        tempSat[Current.ValueBy][k] += changewhich*nudgeArray[(k+Current.Offset)%256];
     }
 
   for (i=0; i<RH; i++) {
@@ -1710,28 +1717,28 @@ fp_render_preview(GtkWidget *preview,
       M = MAX(MAX(P[0],P[1]),P[2]);
       middle=(M+m)/2;
       for (k=0; k<3; k++)
-	if (P[k]!=m && P[k]!=M) middle=P[k];
+        if (P[k]!=m && P[k]!=M) middle=P[k];
 
       partial = reduced->mask[i*RW+j]/255.0;
 
       for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++) {
-	if (!Current.Touched[JudgeBy]) continue;
+        if (!Current.Touched[JudgeBy]) continue;
 
-	Inten   = reduced->hsv[i*RW*bytes + j*bytes + JudgeBy]*255.0;
+        Inten   = reduced->hsv[i*RW*bytes + j*bytes + JudgeBy]*255.0;
 
-	/*DO SATURATION FIRST*/
-	if (changewhat != NONEATALL) {
-	  if (M!=m) {
-	    for (k=0; k<3; k++)
-	      if (backupP[k] == M)
-		P[k] = MAX(P[k]+partial*Current.satAdj[JudgeBy][Inten],middle);
-	      else if (backupP[k] == m)
-		P[k] = MIN(P[k]-partial*Current.satAdj[JudgeBy][Inten],middle);
-	  }
-	  P[0]  += partial*Current.redAdj[JudgeBy][Inten];
-	  P[1]  += partial*Current.greenAdj[JudgeBy][Inten];
-	  P[2]  += partial*Current.blueAdj[JudgeBy][Inten];
-	}
+        /*DO SATURATION FIRST*/
+        if (changewhat != NONEATALL) {
+          if (M!=m) {
+            for (k=0; k<3; k++)
+              if (backupP[k] == M)
+                P[k] = MAX(P[k]+partial*Current.satAdj[JudgeBy][Inten],middle);
+              else if (backupP[k] == m)
+                P[k] = MIN(P[k]-partial*Current.satAdj[JudgeBy][Inten],middle);
+          }
+          P[0]  += partial*Current.redAdj[JudgeBy][Inten];
+          P[1]  += partial*Current.greenAdj[JudgeBy][Inten];
+          P[2]  += partial*Current.blueAdj[JudgeBy][Inten];
+        }
       }
 
       Inten   = reduced->hsv[i*RW*bytes + j*bytes + Current.ValueBy]*255.0;
@@ -1739,54 +1746,55 @@ fp_render_preview(GtkWidget *preview,
 
       switch (changewhat) {
       case HUE:
-	P[0]  += colorSign[RED][changewhich]   * nudge;
-	P[1]  += colorSign[GREEN][changewhich] * nudge;
-	P[2]  += colorSign[BLUE][changewhich]  * nudge;
-	break;
+        P[0]  += colorSign[RED][changewhich]   * nudge;
+        P[1]  += colorSign[GREEN][changewhich] * nudge;
+        P[2]  += colorSign[BLUE][changewhich]  * nudge;
+        break;
 
       case SATURATION:
-	for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
-	  for (k=0; k<3; k++)
-	    if (M!=m) {
-	      if (backupP[k] == M)
-		P[k] = MAX(P[k]+
-			   partial*tempSat[JudgeBy][Inten],middle);
-	      else if (backupP[k] == m)
-		P[k] = MIN(P[k]-
-			   partial*tempSat[JudgeBy][Inten],middle);
-	    }
-	break;
+        for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
+          for (k=0; k<3; k++)
+            if (M!=m) {
+              if (backupP[k] == M)
+                P[k] = MAX(P[k]+
+                           partial*tempSat[JudgeBy][Inten],middle);
+              else if (backupP[k] == m)
+                P[k] = MIN(P[k]-
+                           partial*tempSat[JudgeBy][Inten],middle);
+            }
+        break;
 
       case VALUE:
-	P[0]  += changewhich * nudge;
-	P[1]  += changewhich * nudge;
-	P[2]  += changewhich * nudge;
-	break;
+        P[0]  += changewhich * nudge;
+        P[1]  += changewhich * nudge;
+        P[2]  += changewhich * nudge;
+        break;
 
       default:
-	break;
+        break;
       }
 
-      a[j * 3 + 0] = CLAMP0255(P[0]);
-      a[j * 3 + 1] = CLAMP0255(P[1]);
-      a[j * 3 + 2] = CLAMP0255(P[2]);
+      a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
+      a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
+      a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
 
       if (bytes == 4)
-	for (k = 0; k < 3; k++) {
-	  float transp = reduced->rgb[i*RW*bytes+j*bytes+3]/255.0;
-	  a[3*j+k]=transp*a[3*j+k]+(1-transp)*fp_fake_transparency(i,j);
-	}
+        a[(i * RW + j) * 4 + 3] = reduced->rgb[i*RW*bytes+j*bytes+3];
+      else
+        a[(i * RW + j) * 4 + 3] = 255;
     }
-    gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, i, RW);
   }
-
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, RW, RH,
+                          GIMP_RGBA_IMAGE,
+                          a,
+                          RW * 4);
   free (a);
-  gtk_widget_queue_draw (preview);
 }
 
 static void
 Update_Current_FP (gint changewhat,
-		   gint changewhich)
+                   gint changewhich)
 {
   gint i;
 
@@ -1799,28 +1807,28 @@ Update_Current_FP (gint changewhat,
 
       switch (changewhat) {
       case HUE:
-	Current.redAdj[Current.ValueBy][i] +=
-	  colorSign[RED][changewhich] * nudge;
+        Current.redAdj[Current.ValueBy][i] +=
+          colorSign[RED][changewhich] * nudge;
 
-	Current.greenAdj[Current.ValueBy][i] +=
-	  colorSign[GREEN][changewhich] * nudge;
+        Current.greenAdj[Current.ValueBy][i] +=
+          colorSign[GREEN][changewhich] * nudge;
 
-	Current.blueAdj[Current.ValueBy][i] +=
-	  colorSign[BLUE][changewhich]  * nudge;
-	break;
+        Current.blueAdj[Current.ValueBy][i] +=
+          colorSign[BLUE][changewhich]  * nudge;
+        break;
 
       case SATURATION:
-	Current.satAdj[Current.ValueBy][i] += changewhich * nudge;
-	break;
+        Current.satAdj[Current.ValueBy][i] += changewhich * nudge;
+        break;
 
       case VALUE:
-	Current.redAdj[Current.ValueBy][i]   += changewhich * nudge;
-	Current.greenAdj[Current.ValueBy][i] += changewhich * nudge;
-	Current.blueAdj[Current.ValueBy][i]  += changewhich * nudge;
-	break;
+        Current.redAdj[Current.ValueBy][i]   += changewhich * nudge;
+        Current.greenAdj[Current.ValueBy][i] += changewhich * nudge;
+        Current.blueAdj[Current.ValueBy][i]  += changewhich * nudge;
+        break;
 
       default:
-	break;
+        break;
       }
     }
 }
@@ -1828,7 +1836,7 @@ Update_Current_FP (gint changewhat,
 static void
 fp_create_smoothness_graph (GtkWidget *preview)
 {
-  guchar data[256 * 3];
+  guchar data[256 * MAX_ROUGHNESS * 3];
   gint nArray[256];
   gint i, j;
   gboolean toBeBlack;
@@ -1839,70 +1847,72 @@ fp_create_smoothness_graph (GtkWidget *preview)
     {
       gint coor = MAX_ROUGHNESS - i;
       for (j = 0; j < 256; j++) {
-	data[3 * j + 0] = 255;
-	data[3 * j + 1] = 255;
-	data[3 * j + 2] = 255;
-	if (!(i % (MAX_ROUGHNESS / 4))) {
-	  data[3 * j + 0] = 255;
-	  data[3 * j + 1] = 128;
-	  data[3 * j + 2] = 128;
-	}
-	if (!((j + 1) % 32)) {
-	  data[3 * j + 0] = 255;
-	  data[3 * j + 1] = 128;
-	  data[3 * j + 2] = 128;
-	}
-	toBeBlack = FALSE;
-	if (nArray[j] == coor)
-	  toBeBlack = TRUE;
+        data[3 * (i * 256 + j) + 0] = 255;
+        data[3 * (i * 256 + j) + 1] = 255;
+        data[3 * (i * 256 + j) + 2] = 255;
+        if (!(i % (MAX_ROUGHNESS / 4))) {
+          data[3 * (i * 256 + j) + 0] = 255;
+          data[3 * (i * 256 + j) + 1] = 128;
+          data[3 * (i * 256 + j) + 2] = 128;
+        }
+        if (!((j + 1) % 32)) {
+          data[3 * (i * 256 + j) + 0] = 255;
+          data[3 * (i * 256 + j) + 1] = 128;
+          data[3 * (i * 256 + j) + 2] = 128;
+        }
+        toBeBlack = FALSE;
+        if (nArray[j] == coor)
+          toBeBlack = TRUE;
 
-	if (j < 255) {
-	  gint jump = abs (nArray[j] - nArray[j+1]);
-	  if (abs (coor - nArray[j]) < jump  &&
-	      abs (coor - nArray[j + 1]) < jump)
-	    toBeBlack = TRUE;
-	}
-	if (toBeBlack) {
-	  data[3 * j + 0] = 0;
-	  data[3 * j + 1] = 0;
-	  data[3 * j + 2] = 0;
-	}
+        if (j < 255) {
+          gint jump = abs (nArray[j] - nArray[j+1]);
+          if (abs (coor - nArray[j]) < jump  &&
+              abs (coor - nArray[j + 1]) < jump)
+            toBeBlack = TRUE;
+        }
+        if (toBeBlack) {
+          data[3 * (i * 256 + j) + 0] = 0;
+          data[3 * (i * 256 + j) + 1] = 0;
+          data[3 * (i * 256 + j) + 2] = 0;
+        }
       }
-      gtk_preview_draw_row (GTK_PREVIEW (preview), data, 0, i, 256);
     }
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, 256, MAX_ROUGHNESS,
+                          GIMP_RGB_IMAGE,
+                          data,
+                          256 * 3);
 }
 
 static void
 fp_range_preview_spill (GtkWidget *preview,
                         gint       type)
 {
-  gint i;
+  gint   i, j;
+  guchar data[256 * RANGE_HEIGHT * 3];
+  
 
   for (i = 0; i < RANGE_HEIGHT; i++)
     {
-      gint j;
-
       for (j = 0; j < 256; j++)
         {
-	  guchar data[256 * 3];
-	  GimpRGB rgb;
-	  GimpHSV hsv;
+          GimpRGB rgb;
+          GimpHSV hsv;
 
           if (! ((j + 1) % 32))
             {
-              data[3 * j + 0] = 255;
-              data[3 * j + 1] = 128;
-              data[3 * j + 2] = 128;
+              data[3 * (i * 256 + j) + 0] = 255;
+              data[3 * (i * 256 + j) + 1] = 128;
+              data[3 * (i * 256 + j) + 2] = 128;
             }
           else
             {
               switch (type)
                 {
                 case BY_VAL:
-                  data[3 * j + 0] = j - Current.Offset;
-                  data[3 * j + 1] = j - Current.Offset;
-                  data[3 * j + 2] = j - Current.Offset;
+                  data[3 * (i * 256 + j) + 0] = j - Current.Offset;
+                  data[3 * (i * 256 + j) + 1] = j - Current.Offset;
+                  data[3 * (i * 256 + j) + 2] = j - Current.Offset;
                   break;
 
                 case BY_HUE:
@@ -1912,9 +1922,9 @@ fp_range_preview_spill (GtkWidget *preview,
                                 0.5);
                   gimp_hsv_to_rgb (&hsv, &rgb);
                   gimp_rgb_get_uchar (&rgb,
-                                      &data[3 * j + 0],
-                                      &data[3 * j + 1],
-                                      &data[3 * j + 2]);
+                                      &data[3 * (i * 256 + j) + 0],
+                                      &data[3 * (i * 256 + j) + 1],
+                                      &data[3 * (i * 256 + j) + 2]);
                   break;
 
                 case BY_SAT:
@@ -1924,17 +1934,19 @@ fp_range_preview_spill (GtkWidget *preview,
                                 0.5);
                   gimp_hsv_to_rgb (&hsv, &rgb);
                   gimp_rgb_get_uchar (&rgb,
-                                      &data[3 * j + 0],
-                                      &data[3 * j + 1],
-                                      &data[3 * j + 2]);
+                                      &data[3 * (i * 256 + j) + 0],
+                                      &data[3 * (i * 256 + j) + 1],
+                                      &data[3 * (i * 256 + j) + 2]);
                   break;
                 }
-
-              gtk_preview_draw_row (GTK_PREVIEW (preview), data, 0, i, 256);
             }
         }
     }
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, 256, RANGE_HEIGHT,
+                          GIMP_RGB_IMAGE,
+                          data,
+                          256 * 3);
 }
 
 static void
@@ -1951,19 +1963,14 @@ fp_Create_Nudge(gint *adjArray)
   if (Current.Alias)
     for (i = 0; i < 256; i++)
       if (i <= middle)
-	adjArray[i] = MAX_ROUGHNESS *
-	  Current.Rough * (1 + tanh (Steepness * (i - left))) / 2;
+        adjArray[i] = MAX_ROUGHNESS *
+          Current.Rough * (1 + tanh (Steepness * (i - left))) / 2;
       else
-	adjArray[i] = MAX_ROUGHNESS *
-	  Current.Rough * (1 + tanh (Steepness * (right - i))) / 2;
+        adjArray[i] = MAX_ROUGHNESS *
+          Current.Rough * (1 + tanh (Steepness * (right - i))) / 2;
   else
     for (i = 0; i < 256; i++)
       adjArray[i] = (left <= i && i <= right)
-	? MAX_ROUGHNESS * Current.Rough : 0;
+        ? MAX_ROUGHNESS * Current.Rough : 0;
 }
 
-static gint
-fp_fake_transparency (gint i, gint j)
-{
-  return (((i % 20) - 10) * ((j % 20) - 10) > 0) ? 64 : 196;
-}
