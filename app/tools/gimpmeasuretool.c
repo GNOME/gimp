@@ -164,6 +164,7 @@ measure_tool_motion (Tool           *tool,
   GDisplay * gdisp;
   MeasureTool * measure_tool;
   int x, y;
+  int dx, dy;
   gchar distance_str[STATUSBAR_SIZE];
   gdouble distance;
 
@@ -182,17 +183,18 @@ measure_tool_motion (Tool           *tool,
     case MOVING_END:
       measure_tool->endx = x;
       measure_tool->endy = y;
+
       /*  restrict to horizontal/vertical movements, if modifiers are pressed */
       if (mevent->state & GDK_MOD1_MASK)
 	{
 	  if (mevent->state & GDK_CONTROL_MASK)
 	    {
-	      int dx, dy, d;
+	      int d;
 	      
 	      dx = measure_tool->endx - measure_tool->startx;
 	      dy = measure_tool->endy - measure_tool->starty;
 	      d  = (abs(dx) + abs(dy)) >> 1;
-	      
+      
 	      measure_tool->endx = measure_tool->startx + ((dx < 0) ? -d : d);
 	      measure_tool->endy = measure_tool->starty + ((dy < 0) ? -d : d);
 	    }
@@ -206,13 +208,14 @@ measure_tool_motion (Tool           *tool,
     case MOVING_START:
       measure_tool->startx = x;
       measure_tool->starty = y;
-       /*  restrict to horizontal/vertical movements, if modifiers are pressed */
+
+      /*  restrict to horizontal/vertical movements, if modifiers are pressed */
       if (mevent->state & GDK_MOD1_MASK)
 	{
 	  if (mevent->state & GDK_CONTROL_MASK)
 	    {
-	      int dx, dy, d;
-	      
+	      int d;
+
 	      dx = measure_tool->endx - measure_tool->startx;
 	      dy = measure_tool->endy - measure_tool->starty;
 	      d  = (abs(dx) + abs(dy)) >> 1;
@@ -231,18 +234,23 @@ measure_tool_motion (Tool           *tool,
       break;
     }
 
-  /*  show info in statusbar  */
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
+  dx = measure_tool->endx - measure_tool->startx;
+  dy = measure_tool->endy - measure_tool->starty;
 
+  /*  show info in statusbar  */
   if (gdisp->dot_for_dot)
     {
-      distance = sqrt (SQR (measure_tool->endx - measure_tool->startx) + 
-		       SQR (measure_tool->endy - measure_tool->starty));
-      measure_tool->angle = 180.0 / G_PI * 
-	atan ((double)(measure_tool->endy - measure_tool->starty) / 
-	      (double)(measure_tool->endx - measure_tool->startx)); 
+      distance = sqrt (SQR (dx) + SQR (dy));
+      if (dx)
+	measure_tool->angle = 180.0 / G_PI * atan ((double)(dy) / (double)(dx));
+      else if (dy)
+	measure_tool->angle = 90.0;
+      else
+	measure_tool->angle = 0.0;
+
       g_snprintf (distance_str, sizeof (distance_str), "%s %.1f %s, %s %.2f %s",
-		  _("Distance:"), distance, _("pixels"), _("Angle:"), fabs(measure_tool->angle), _("degrees"));
+		  _("Distance:"), distance, _("pixels"), _("Angle:"), 
+		  fabs(measure_tool->angle), _("degrees"));
     }
   else /* show real world units */
     {
@@ -251,19 +259,24 @@ measure_tool_motion (Tool           *tool,
 					   gimp_unit_get_digits (gdisp->gimage->unit),
 					   gimp_unit_get_symbol (gdisp->gimage->unit),
 					   _("Angle:"), _("degrees"));
-
-      distance = 
-	sqrt (SQR ((measure_tool->endx - measure_tool->startx) / gdisp->gimage->xresolution) +
-	      SQR ((measure_tool->endy - measure_tool->starty) / gdisp->gimage->yresolution));
-      measure_tool->angle = 180.0 / G_PI * 
-	atan (((double)(measure_tool->endy - measure_tool->starty) / gdisp->gimage->xresolution) /
-	      ((double)(measure_tool->endx - measure_tool->startx) / gdisp->gimage->yresolution)); 
       
+      distance = sqrt (SQR ((double)dx / gdisp->gimage->xresolution) +
+		       SQR ((double)dy / gdisp->gimage->yresolution));
+      if (dx)
+	 measure_tool->angle = 180.0 / G_PI * 
+	   atan (((double)(dy) / gdisp->gimage->xresolution) /
+		 ((double)(dx) / gdisp->gimage->yresolution)); 
+      else if (dy)
+	measure_tool->angle = 90.0;
+      else
+	measure_tool->angle = 0.0;
+
       g_snprintf (distance_str, sizeof (distance_str), format_str,
 		  distance * gimp_unit_get_factor (gdisp->gimage->unit), fabs (measure_tool->angle));
       g_free (format_str);
     }
-
+  
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id,
 		      distance_str);
 
@@ -335,7 +348,32 @@ measure_tool_draw (Tool *tool)
   /*  Draw an arc to indicate where the angle is measured  */
   if (measure_tool->angle != 0.0)
     {
-      if (x2 >= x1)
+      if (x2 == x1)
+	{
+	  if (y2 > y1)
+	    {
+	      gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+			    x1 - ARC_RADIUS, y1 - ARC_RADIUS,
+			    2 * ARC_RADIUS, 2 * ARC_RADIUS, 
+			    0, -5760);
+	      anglex = x2;
+	      angley = y1 + ARC_RADIUS + 4;
+	    }
+	  else
+	    {
+	      gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+			    x1 - ARC_RADIUS, y1 - ARC_RADIUS,
+			    2 * ARC_RADIUS, 2 * ARC_RADIUS, 
+			    0, 5760);
+	      
+	      anglex = x2;
+	      angley = y1 - ARC_RADIUS - 4;
+	    }
+	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			 x1, y1,
+			 x1 + ARC_RADIUS + 4, y1);
+	}
+      else if (x2 > x1)
 	{
 	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
 			x1 - ARC_RADIUS, y1 - ARC_RADIUS,
@@ -362,8 +400,8 @@ measure_tool_draw (Tool *tool)
     }
   else
     {
-      anglex = x1;
-      angley = y1;
+      anglex = x2;
+      angley = y2;
     }
 
   /*  Draw the line between the start and end coords  */
