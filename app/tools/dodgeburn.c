@@ -255,27 +255,27 @@ dodgeburn_make_luts ( PaintCore *paint_core,
 		     
 static void
 dodgeburn_modifier_key_func (Tool        *tool,
-			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+			     GdkEventKey *kevent,
+			     gpointer     gdisp_ptr)
 {
   switch (kevent->keyval)
     {
     case GDK_Alt_L: case GDK_Alt_R:
       break;
     case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
       switch (dodgeburn_options->type)
 	{
 	case BURN:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
 	  break;
 	case DODGE:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
 	  break;
 	default:
 	  break;
 	}
-      break;
-    case GDK_Control_L: case GDK_Control_R:
       break; 
     }
 }
@@ -297,10 +297,11 @@ tools_new_dodgeburn ()
     }
 
   tool = paint_core_new (DODGEBURN);
-  tool->modifier_key_func = dodgeburn_modifier_key_func;
-
   private = (PaintCore *) tool->private;
+
   private->paint_func = dodgeburn_paint_func;
+
+  tool->modifier_key_func = dodgeburn_modifier_key_func;
 
   return tool;
 }

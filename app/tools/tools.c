@@ -782,7 +782,7 @@ standard_button_release_func (Tool           *tool,
 
 static void
 standard_motion_func (Tool           *tool,
-		      GdkEventMotion *bevent,
+		      GdkEventMotion *mevent,
 		      gpointer        gdisp_ptr)
 {
 }

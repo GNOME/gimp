@@ -1,5 +1,10 @@
 1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/dodgeburn.c: changed the tool toggle key to <Ctrl>.
+	* app/tools.c: typo.
+
+1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/[all tools]: the Tool structure is now allocated by a common
 	constructor which sets default values and provides default tool
 	action functions. To get rid of much code duplication there should
