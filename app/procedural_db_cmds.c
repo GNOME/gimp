@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "regex.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpregex.h"
 
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;

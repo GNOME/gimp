@@ -1,3 +1,11 @@
+Mon Jan 24 17:12:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/regex.[ch]: removed 
+	
+	* app/Makefile.am
+	* app/plug_in_cmds.c
+	* app/procedural_db_cmds.c: cleaning up behind Daniel ...
+
 Thu Jan 17 12:13:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 
 	(applied by pcg@goof.com)
