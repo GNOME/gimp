@@ -180,11 +180,7 @@ gimp_parasite_list_init (GimpParasiteList *list)
 static void
 gimp_parasite_list_finalize (GObject *object)
 {
-  GimpParasiteList *list;
-
-  g_return_if_fail (GIMP_IS_PARASITE_LIST (object));
-
-  list = GIMP_PARASITE_LIST (object);
+  GimpParasiteList *list = GIMP_PARASITE_LIST (object);
 
   if (list->table)
     {

@@ -135,7 +135,7 @@ gimp_drawable_get_type (void)
       };
 
       drawable_type = g_type_register_static (GIMP_TYPE_ITEM,
-					      "GimpDrawable", 
+					      "GimpDrawable",
 					      &drawable_info, 0);
     }
 
@@ -210,11 +210,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 static void
 gimp_drawable_finalize (GObject *object)
 {
-  GimpDrawable *drawable;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (object));
-
-  drawable = GIMP_DRAWABLE (object);
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
 
   if (drawable->tiles)
     {
@@ -308,13 +304,13 @@ gimp_drawable_duplicate (GimpItem *item,
 
   new_drawable->visible = drawable->visible;
 
-  pixel_region_init (&srcPR, drawable->tiles, 
-                     0, 0, 
+  pixel_region_init (&srcPR, drawable->tiles,
+                     0, 0,
                      item->width,
                      item->height,
                      FALSE);
   pixel_region_init (&destPR, new_drawable->tiles,
-                     0, 0, 
+                     0, 0,
                      new_item->width,
                      new_item->height,
                      TRUE);
@@ -569,7 +565,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
                          gint           offset_x,
                          gint           offset_y,
 			 gint           width,
-			 gint           height, 
+			 gint           height,
 			 GimpImageType  type,
 			 const gchar   *name)
 {
@@ -629,7 +625,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
                          gint          x1,
                          gint          y1,
                          gint          x2,
-                         gint          y2, 
+                         gint          y2,
                          TileManager  *tiles,
                          gboolean      sparse)
 {
@@ -638,12 +634,12 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
   if (! tiles)
     gimp_image_undo_push_image (gimp_item_get_image (GIMP_ITEM (drawable)),
                                 undo_desc,
-                                drawable, 
+                                drawable,
                                 x1, y1, x2, y2);
   else
     gimp_image_undo_push_image_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
                                     undo_desc,
-                                    drawable, 
+                                    drawable,
                                     x1, y1, x2, y2,
                                     tiles, sparse);
 }
@@ -732,7 +728,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
       break;
 
     default:
-      g_warning ("%s: Cannot fill unknown image type.", 
+      g_warning ("%s: Cannot fill unknown image type.",
                  G_GNUC_PRETTY_FUNCTION);
       break;
     }
@@ -792,7 +788,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 }
 
 gboolean
-gimp_drawable_mask_bounds (GimpDrawable *drawable, 
+gimp_drawable_mask_bounds (GimpDrawable *drawable,
 			   gint         *x1,
 			   gint         *y1,
 			   gint         *x2,

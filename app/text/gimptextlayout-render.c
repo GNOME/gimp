@@ -101,6 +101,8 @@ gimp_text_layout_render (GimpTextLayout     *layout,
 				    render_data);
     }
   while (pango_layout_iter_next_line (iter));
+
+  pango_layout_iter_free (iter);
 }
 
 static void

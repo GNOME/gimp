@@ -1,3 +1,20 @@
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render)
+	* app/widgets/gimpfontselection.c (gimp_font_selection_set_fontname)
+	* app/widgets/gimptexteditor.c (gimp_text_editor_new)
+	* app/gui/file-save-dialog.c (file_save_ok_callback): plugged
+	some memleaks found using memprof.
+
+	* app/vectors/gimpvectors.c: implemented the finalize method.
+
+	* app/vectors/gimpstroke.c: minor code cleanup.
+
+	* app/core/gimpdrawable.c (gimp_drawable_finalize)
+	* app/core/gimplayer.c (gimp_layer_finalize)
+	* app/core/gimpparasitelist.c (gimp_parasite_list_finalize):
+	removed useless assertions.
+
 2003-09-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpmodules.c (gimp_modules_load): silently ignore a

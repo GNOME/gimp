@@ -33,20 +33,19 @@
 
 /* Prototypes */
 
-static void         gimp_stroke_class_init           (GimpStrokeClass  *klass);
-static void         gimp_stroke_init                 (GimpStroke       *stroke);
+static void    gimp_stroke_class_init                (GimpStrokeClass  *klass);
+static void    gimp_stroke_init                      (GimpStroke       *stroke);
+static void    gimp_stroke_finalize                  (GObject          *object);
 
-static void         gimp_stroke_finalize             (GObject          *object);
-
-static gsize        gimp_stroke_get_memsize          (GimpObject       *object,
+static gsize   gimp_stroke_get_memsize               (GimpObject       *object,
                                                       gsize            *gui_size);
 
-gdouble gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
-                                            const GimpCoords *coord,
-                                            const gdouble     precision,
-                                            GimpCoords       *ret_point,
-                                            GimpAnchor      **ret_segment_start,
-                                            gdouble          *ret_pos);
+static gdouble gimp_stroke_real_nearest_point_get    (const GimpStroke *stroke,
+                                                      const GimpCoords *coord,
+                                                      const gdouble     precision,
+                                                      GimpCoords       *ret_point,
+                                                      GimpAnchor      **ret_segment_start,
+                                                      gdouble          *ret_pos);
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
 static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
@@ -250,16 +249,14 @@ gimp_stroke_init (GimpStroke *stroke)
 static void
 gimp_stroke_finalize (GObject *object)
 {
-  GimpStroke *stroke;
-  GList      *list;
+  GimpStroke *stroke = GIMP_STROKE (object);
 
-  stroke = GIMP_STROKE (object);
-
-  for (list = stroke->anchors; list; list = list->next)
-    gimp_anchor_free (GIMP_ANCHOR (list->data));
-
-  g_list_free (stroke->anchors);
-  stroke->anchors = NULL;
+  if (stroke->anchors)
+    {
+      g_list_foreach (stroke->anchors, (GFunc) gimp_anchor_free, NULL);
+      g_list_free (stroke->anchors);
+      stroke->anchors = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -310,7 +307,7 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
                                                             ret_pos);
 }
 
-gdouble
+static gdouble
 gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
                                     const GimpCoords *coord,
                                     const gdouble     precision,

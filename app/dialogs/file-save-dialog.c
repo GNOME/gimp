@@ -261,6 +261,8 @@ file_save_ok_callback (GtkWidget *widget,
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
+
+  g_free (uri);
 }
 
 typedef struct _OverwriteData OverwriteData;

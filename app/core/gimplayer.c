@@ -249,11 +249,7 @@ gimp_layer_init (GimpLayer *layer)
 static void
 gimp_layer_finalize (GObject *object)
 {
-  GimpLayer *layer;
-
-  g_return_if_fail (GIMP_IS_LAYER (object));
-
-  layer = GIMP_LAYER (object);
+  GimpLayer *layer = GIMP_LAYER (object);
 
   if (layer->mask)
     {

@@ -244,13 +244,14 @@ gimp_vectors_init (GimpVectors *vectors)
 static void
 gimp_vectors_finalize (GObject *object)
 {
-  GimpVectors *vectors;
+  GimpVectors *vectors = GIMP_VECTORS (object);
 
-  vectors = GIMP_VECTORS (object);
-
-#ifdef __GNUC__
-#warning FIXME: implement gimp_vectors_finalize()
-#endif
+  if (vectors->strokes)
+    {
+      g_list_foreach (vectors->strokes, (GFunc) g_object_unref, NULL);
+      g_list_free (vectors->strokes);
+      vectors->strokes = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

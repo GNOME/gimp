@@ -276,7 +276,10 @@ gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
   if (fontsel->font_desc)
     {
       if (pango_font_description_equal (fontsel->font_desc, new_desc))
-        return;
+        {
+          pango_font_description_free (new_desc);
+          return;
+        }
 
       pango_font_description_free (fontsel->font_desc);
     }

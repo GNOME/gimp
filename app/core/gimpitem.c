@@ -120,7 +120,7 @@ gimp_item_get_type (void)
       };
 
       item_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                          "GimpItem", 
+                                          "GimpItem",
                                           &item_info, 0);
     }
 
@@ -276,7 +276,7 @@ gimp_item_real_duplicate (GimpItem *item,
 
     if ((strlen (name) >= len &&
          strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
-        (ext && (number = atoi (ext + 1)) > 0 && 
+        (ext && (number = atoi (ext + 1)) > 0 &&
          ((int)(log10 (number) + 1)) == strlen (ext + 1)))
       {
         /* don't have redundant "copy"s */
@@ -507,7 +507,7 @@ gimp_item_translate (GimpItem *item,
  *
  * Scales item dimensions, then snaps them to pixel centers
  *
- * Returns: #FALSE if any dimension reduces to zero as a result 
+ * Returns: #FALSE if any dimension reduces to zero as a result
  *          of this; otherwise, returns #TRUE.
  **/
 gboolean
@@ -530,7 +530,7 @@ gimp_item_check_scaling (const GimpItem *item,
   new_item_width  = ROUND (img_scale_w * (gdouble) item->width);
   new_item_height = ROUND (img_scale_h * (gdouble) item->height);
 
-  return (new_item_width > 0 && new_item_height > 0);  
+  return (new_item_width > 0 && new_item_height > 0);
 }
 
 void
@@ -559,8 +559,8 @@ gimp_item_scale (GimpItem              *item,
  * @item:     Item to be transformed by explicit width and height factors.
  * @w_factor: scale factor to apply to width and horizontal offset
  * @h_factor: scale factor to apply to height and vertical offset
- * @interpolation: 
- * 
+ * @interpolation:
+ *
  * Scales item dimensions and offsets by uniform width and
  * height factors.
  *
@@ -577,8 +577,8 @@ gimp_item_scale (GimpItem              *item,
  * Use gimp_item_scale() in circumstances where new item width
  * and height dimensions are predetermined instead.
  *
- * Side effects: Undo set created for item. Old item imagery 
- *               scaled & painted to new item tiles. 
+ * Side effects: Undo set created for item. Old item imagery
+ *               scaled & painted to new item tiles.
  *
  * Returns: #TRUE, if the scaled item has positive dimensions
  *          #FALSE if the scaled item has at least one zero dimension
@@ -636,13 +636,13 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * current item dimensions, these factors will vary from
  * item to item because of aliasing artifacts; factor
  * variations among items can be quite large where item
- * dimensions approach pixel dimensions. Use 
+ * dimensions approach pixel dimensions. Use
  * gimp_item_scale_by_factors() where constant scales are to
  * be uniformly applied to a number of items.
  *
  * Side effects: undo set created for item.
- *               Old item imagery scaled 
- *               & painted to new item tiles 
+ *               Old item imagery scaled
+ *               & painted to new item tiles
  **/
 void
 gimp_item_scale_by_origin (GimpItem              *item,
@@ -668,12 +668,12 @@ gimp_item_scale_by_origin (GimpItem              *item,
     }
   else
     {
-      new_offset_x = (gint) (((gdouble) new_width * 
-                              (gdouble) item->offset_x / 
+      new_offset_x = (gint) (((gdouble) new_width *
+                              (gdouble) item->offset_x /
                               (gdouble) item->width));
 
-      new_offset_y = (gint) (((gdouble) new_height * 
-                              (gdouble) item->offset_y / 
+      new_offset_y = (gint) (((gdouble) new_height *
+                              (gdouble) item->offset_y /
                               (gdouble) item->height));
     }
 
@@ -789,14 +789,14 @@ gimp_item_get_by_ID (Gimp *gimp,
   if (gimp->item_table == NULL)
     return NULL;
 
-  return (GimpItem *) g_hash_table_lookup (gimp->item_table, 
+  return (GimpItem *) g_hash_table_lookup (gimp->item_table,
                                            GINT_TO_POINTER (item_id));
 }
 
 GimpTattoo
 gimp_item_get_tattoo (const GimpItem *item)
 {
-  g_return_val_if_fail (GIMP_IS_ITEM (item), 0); 
+  g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
 
   return item->tattoo;
 }

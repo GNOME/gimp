@@ -182,12 +182,12 @@ gimp_text_editor_new (const gchar   *title,
                                   NULL);
 
   gtk_dialog_set_has_separator (GTK_DIALOG (editor), FALSE);
-  
+
   toolbar = GTK_TOOLBAR (gtk_toolbar_new ());
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
 		      GTK_WIDGET (toolbar), FALSE, FALSE, 0);
   gtk_widget_show (GTK_WIDGET (toolbar));
- 
+
   gtk_toolbar_insert_stock (toolbar, GTK_STOCK_OPEN,
                             _("Load Text from File"), NULL,
                             G_CALLBACK (gimp_text_editor_load), editor,
@@ -210,21 +210,22 @@ gimp_text_editor_new (const gchar   *title,
                                GINT_TO_POINTER (editor->base_dir));
 
   children = gtk_container_get_children (GTK_CONTAINER (box));
-  
+
   for (list = children; list; list = g_list_next (list))
     {
       button = GTK_WIDGET (list->data);
-                                      
+
       g_object_ref (button);
 
       gtk_container_remove (GTK_CONTAINER (box), button);
 
       gtk_toolbar_append_widget (toolbar, button, NULL, NULL);
-    }  
+
+      g_object_unref (button);
+    }
 
   g_list_free (children);
-  gtk_widget_destroy (box);
-
+  gtk_object_sink (GTK_OBJECT (box));
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -268,14 +269,14 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
 
   g_signal_handlers_block_by_func (editor->group,
                                    G_CALLBACK (gimp_text_editor_dir_changed),
-                                   editor); 
+                                   editor);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->group),
                                GINT_TO_POINTER (base_dir));
 
   g_signal_handlers_unblock_by_func (editor->group,
                                      G_CALLBACK (gimp_text_editor_dir_changed),
-                                     editor); 
+                                     editor);
 
   switch (editor->base_dir)
     {
@@ -295,7 +296,7 @@ gimp_text_editor_dir_changed (GtkWidget      *widget,
                               GimpTextEditor *editor)
 {
   GimpTextDirection  dir;
-  
+
   dir = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                             "gimp-item-data"));
 
@@ -346,7 +347,7 @@ gimp_text_editor_load_ok (GimpTextEditor *editor)
 
   filename =
     gtk_file_selection_get_filename (GTK_FILE_SELECTION (editor->filesel));
-  
+
   if (gimp_text_editor_load_file (editor->buffer, filename))
     gtk_widget_destroy (editor->filesel);
 }
@@ -361,7 +362,7 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
   GtkTextIter  iter;
 
   file = fopen (filename, "r");
-  
+
   if (!file)
     {
       g_message (_("Error opening file '%s': %s"),
