@@ -47,6 +47,14 @@ const guchar  * gimp_selection_data_get_stream    (GtkSelectionData *selection,
                                                    gsize            *stream_length);
 
 
+/*  pixbuf  */
+
+void            gimp_selection_data_set_pixbuf    (GtkSelectionData *selection,
+                                                   GdkAtom           atom,
+                                                   GdkPixbuf        *pixbuf);
+GdkPixbuf     * gimp_selection_data_get_pixbuf    (GtkSelectionData *selection);
+
+
 /*  image  */
 
 void            gimp_selection_data_set_image     (GtkSelectionData *selection,

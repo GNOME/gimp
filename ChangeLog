@@ -1,3 +1,8 @@
+2004-07-01  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpselectiondata.[ch]: added (yet unused) functions
+	gimp_selection_data_[get|set]_pixbuf().
+
 2004-07-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfgbgarea.[ch]: implement GtkWidget::drag_motion()

@@ -409,6 +409,65 @@ gimp_selection_data_get_stream (GtkSelectionData *selection,
 }
 
 void
+gimp_selection_data_set_pixbuf (GtkSelectionData *selection,
+                                GdkAtom           atom,
+                                GdkPixbuf        *pixbuf)
+{
+  gchar  *buffer;
+  gsize   buffer_size;
+  GError *error = NULL;
+
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (atom != GDK_NONE);
+  g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
+
+  if (gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size, "png", &error))
+    {
+      gtk_selection_data_set (selection, atom,
+                              8, (guchar *) buffer, buffer_size);
+      g_free (buffer);
+    }
+  else
+    {
+      g_warning ("%s: %s", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+}
+
+GdkPixbuf *
+gimp_selection_data_get_pixbuf (GtkSelectionData *selection)
+{
+  GdkPixbufLoader *loader;
+  GdkPixbuf       *pixbuf = NULL;
+  GError          *error  = NULL;
+
+  g_return_val_if_fail (selection != NULL, NULL);
+
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid image data!");
+      return NULL;
+    }
+
+  loader = gdk_pixbuf_loader_new ();
+
+  if (gdk_pixbuf_loader_write (loader,
+                               selection->data, selection->length, &error))
+    {
+      pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+    }
+  else
+    {
+      g_warning ("%s: %s", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+
+  g_object_unref (loader);
+
+  return pixbuf;
+}
+
+void
 gimp_selection_data_set_image (GtkSelectionData *selection,
                                GdkAtom           atom,
                                GimpImage        *gimage)
