@@ -2598,7 +2598,7 @@ control_update(int recalculate)
 
 	if (!g_editor->control_pixmap || (cwidth != pwidth) || (cheight != pheight)) {
 		if (g_editor->control_pixmap)
-			gdk_pixmap_destroy(g_editor->control_pixmap);
+			gdk_pixmap_unref(g_editor->control_pixmap);
 
 		g_editor->control_pixmap = gdk_pixmap_new(g_editor->control->window, cwidth, cheight, -1);
 

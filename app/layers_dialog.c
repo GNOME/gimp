@@ -1986,9 +1986,9 @@ static void
 layer_widget_delete (LayerWidget *layer_widget)
 {
   if (layer_widget->layer_pixmap)
-    gdk_pixmap_destroy (layer_widget->layer_pixmap);
+    gdk_pixmap_unref (layer_widget->layer_pixmap);
   if (layer_widget->mask_pixmap)
-    gdk_pixmap_destroy (layer_widget->mask_pixmap);
+    gdk_pixmap_unref (layer_widget->mask_pixmap);
 
   /*  Remove the layer widget from the list  */
   layersD->layer_widgets = remove_from_list (layersD->layer_widgets, layer_widget);

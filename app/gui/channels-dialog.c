@@ -1048,7 +1048,7 @@ static void
 channel_widget_delete (ChannelWidget *channel_widget)
 {
   if (channel_widget->channel_pixmap)
-    gdk_pixmap_destroy (channel_widget->channel_pixmap);
+    gdk_pixmap_unref (channel_widget->channel_pixmap);
 
   /*  Remove the channel widget from the list  */
   channelsD->channel_widgets = remove_from_list (channelsD->channel_widgets, channel_widget);

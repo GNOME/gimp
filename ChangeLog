@@ -1,3 +1,24 @@
+Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+	
+	* All these changes are from Owen Taylor to make GIMP work
+          with reference changes make in GTK.  This mainly affects
+          functions gtk_pixmap_destroy, gdk_colormap_destroy, 
+          gdk_font(set)_free; they have disappeared and where 
+          changed to *_unref. These simple changes affected:
+          app/about_dialog.c, app/channels_dialog.c,
+          app/curves.c, app/gradient.c, app/layer_select.c,
+          app/text_tool.c, plug-ins/gfig/gfig.c,
+          plug-ins/ifscompose/ifscompose.c,
+          plug-ins/libgck/gck/gckcolor.c,
+          plug-ins/libgck/gck/gcknotebook.c
+
+        * app/color_area.c: check for initial expose before drawing
+        * app/disp_callbacks.c: gc for scrolling
+        * app/gdisplay.c: destroy gc, event now pointer
+        * app/scroll.c: use scroll_gc, make sure graphics expose events 
+          are processed before scrolling again
+        * gimp/app/gdisplay.h: add scroll_gc to struct
+
 Wed Dec 17 23:23:05 1997  Ray Lehtiniemi  <rayl@netrover.com>
 
 	* app/brush_select.c (brush_popup_open): fix memory leak

@@ -97,6 +97,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
       gdisp->disp_width = gdisp->canvas->allocation.width;
       gdisp->disp_height = gdisp->canvas->allocation.height;
 
+      /*  create GC for scrolling */
+ 
+      gdisp->scroll_gc = gdk_gc_new (gdisp->canvas->window);
+      gdk_gc_set_exposures (gdisp->scroll_gc, TRUE);
+
       /*  set up the scrollbar observers  */
       gtk_signal_connect (GTK_OBJECT (gdisp->hsbdata), "value_changed",
 			  (GtkSignalFunc) scrollbar_horz_update,
@@ -256,24 +261,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  int flush;
 
 	  grab_and_scroll (gdisp, mevent);
-
-	  flush = FALSE;
-	  while (gdk_event_get (&tmp_event, expose_predicate, canvas->window))
-	    {
-	      flush = TRUE;
-
-	      x1 = tmp_event.expose.area.x;
-	      y1 = tmp_event.expose.area.y;
-	      x2 = (x1 + tmp_event.expose.area.width);
-	      y2 = (y1 + tmp_event.expose.area.height);
-
-	      x1 = BOUNDS (x1, 0, gdisp->disp_width);
-	      y1 = BOUNDS (y1, 0, gdisp->disp_height);
-	      x2 = BOUNDS (x2, 0, gdisp->disp_width);
-	      y2 = BOUNDS (y2, 0, gdisp->disp_height);
-
-	      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-	    }
 
 	  if (flush)
 	    gdisplays_flush ();

@@ -284,7 +284,7 @@ layer_select_set_gimage (LayerSelect *layer_select,
 
       if (layer_select->layer_pixmap)
 	{
-	  gdk_pixmap_destroy (layer_select->layer_pixmap);
+	  gdk_pixmap_unref (layer_select->layer_pixmap);
 	  layer_select->layer_pixmap = NULL;
 	}
     }

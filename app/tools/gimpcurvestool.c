@@ -404,7 +404,7 @@ curves_free ()
 	  curves_dialog->image_map = NULL;
 	}
       if (curves_dialog->pixmap)
-	gdk_pixmap_destroy (curves_dialog->pixmap);
+	gdk_pixmap_unref (curves_dialog->pixmap);
       gtk_widget_destroy (curves_dialog->shell);
     }
 }

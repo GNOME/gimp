@@ -136,6 +136,7 @@ scroll_display (GDisplay *gdisp,
   int old_x, old_y;
   int src_x, src_y;
   int dest_x, dest_y;
+  GdkEvent *event;
 
   old_x = gdisp->offset_x;
   old_y = gdisp->offset_y;
@@ -170,7 +171,7 @@ scroll_display (GDisplay *gdisp,
       gdisp->offset_y += y_offset;
 
       gdk_draw_pixmap (gdisp->canvas->window,
-		       gdisp->select->gc_in,
+		       gdisp->scroll_gc,
 		       gdisp->canvas->window,
 		       src_x, src_y,
 		       dest_x, dest_y,
@@ -200,6 +201,22 @@ scroll_display (GDisplay *gdisp,
 
       if (x_offset || y_offset)
 	gdisplays_flush ();
+
+
+      /* Make sure graphics expose events are processed before scrolling
+       * again */
+      
+      while ((event = gdk_event_get_graphics_expose (gdisp->canvas->window)) 
+           != NULL)
+      {
+        gtk_widget_event (gdisp->canvas, event);
+        if (event->expose.count == 0)
+          {
+            gdk_event_free (event);
+            break;
+          }
+        gdk_event_free (event);
+      }
 
       return 1;
     }

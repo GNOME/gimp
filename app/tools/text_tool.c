@@ -342,7 +342,7 @@ text_resize_text_widget (TextTool *text_tool)
   GtkStyle *style;
 
   style = gtk_style_new ();
-  gdk_font_free (style->font);
+  gdk_font_unref (style->font);
   style->font = text_tool->font;
   gdk_font_ref (style->font);
 
@@ -1381,7 +1381,7 @@ text_load_font (TextTool *text_tool)
       if (font)
 	{
 	  if (text_tool->font)
-	    gdk_font_free (text_tool->font);
+	    gdk_font_unref (text_tool->font);
 	  text_tool->font = font;
 	  text_resize_text_widget (text_tool);
 
@@ -1681,13 +1681,13 @@ text_render (GImage *gimage,
     }
 
   /* free the pixmap */
-  gdk_pixmap_destroy (pixmap);
+  gdk_pixmap_unref (pixmap);
 
   /* free the gc */
   gdk_gc_destroy (gc);
 
   /* free the font */
-  gdk_font_free (font);
+  gdk_font_unref (font);
 
   return layer;
 }

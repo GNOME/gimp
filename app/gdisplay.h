@@ -84,6 +84,8 @@ struct _GDisplay
 
   Selection *select;              /*  Selection object                        */
 
+  GdkGC *scroll_gc;               /*  GC for scrolling */
+
   link_ptr update_areas;          /*  Update areas list                       */
   link_ptr display_areas;         /*  Display areas list                      */
 

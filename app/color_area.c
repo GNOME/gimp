@@ -83,6 +83,10 @@ color_area_draw (void)
   int def_width, def_height;
   int swap_width, swap_height;
 
+  if (!color_area_pixmap)     /* we haven't gotten initial expose yet,
+                               * no point in drawing anything */
+    return;
+
   gdk_window_get_size (color_area_pixmap, &width, &height);
 
   win_bg = &(color_area->style->bg[GTK_STATE_NORMAL]);
