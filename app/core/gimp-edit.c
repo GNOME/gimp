@@ -399,7 +399,7 @@ edit_clear (GImage *gimage,
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
-    return FALSE;
+    return TRUE;  /*  nothing to do, but the clear succeded  */
 
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
@@ -437,8 +437,8 @@ edit_fill (GImage *gimage,
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
-    return FALSE;
-
+    return TRUE;  /*  nothing to do, but the fill succeded  */
+ 
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_region (&bufPR, col);

@@ -1,3 +1,9 @@
+Sat Jan 22 18:50:18 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/global_edit.c: in edit_clear and edit_fill return TRUE if the
+	selection is empty, since the operation succeded by doing nothing.
+	Returning FALSE here crashed lots of script-fus.
+
 Sat Jan 22 16:00:52 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/commands.c
