@@ -1,3 +1,8 @@
+Wed Apr 01 03:40:15 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/disp_callbacks.c:  If the current gdisp->ID does not match
+	the ID of the gdisp_ptr in the active_tool, restart it.
+	
 Tue Mar 31 03:10:12 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/iscissors.c: Set tool->preserve to TRUE in tools_new_iscissors.

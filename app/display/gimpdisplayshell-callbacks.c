@@ -66,7 +66,7 @@ gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
 {
-  GDisplay *gdisp;
+  GDisplay *gdisp, *tool_gdisp;
   GdkEventExpose *eevent;
   GdkEventMotion *mevent;
   GdkEventButton *bevent;
@@ -147,6 +147,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    bevent->x = tx;
 		    bevent->y = ty;
 		  }
+		/* Reset the current tool if we're changing displays... */
+		tool_gdisp = active_tool->gdisp_ptr;
+		if (tool_gdisp)
+		  if (tool_gdisp->ID != gdisp->ID)
+		    tools_select(active_tool->type);
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;
