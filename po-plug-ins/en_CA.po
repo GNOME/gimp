@@ -1,15 +1,15 @@
 # Canadian English translations for gimp plug-ins
-# Copyright (C) Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the gimp plug-ins package.
-# Maintainer: Adam Weinberger <adamw@FreeBSD.org>
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-18 00:54-0500\n"
-"PO-Revision-Date: 2005-01-18 14:31-0400\n"
+"POT-Creation-Date: 2005-01-26 01:00-0500\n"
+"PO-Revision-Date: 2005-01-26 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -388,7 +388,7 @@ msgstr "_Fractals"
 #: plug-ins/common/xbm.c:996 plug-ins/common/xwd.c:577
 #: plug-ins/fits/fits.c:450 plug-ins/flame/flame.c:443
 #: plug-ins/gfig/gfig.c:781 plug-ins/gfli/gfli.c:715
-#: plug-ins/ifscompose/ifscompose.c:2394 plug-ins/jpeg/jpeg-save.c:268
+#: plug-ins/ifscompose/ifscompose.c:2394 plug-ins/jpeg/jpeg-save.c:260
 #: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
 #, c-format
@@ -763,7 +763,7 @@ msgid "Bumpm_ap image:"
 msgstr "Bumpm_ap image:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:787 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:787 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Linear"
@@ -772,12 +772,12 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarithmic"
 
-#: plug-ins/Lighting/lighting_ui.c:789 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:789 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:790 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:790 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "Spherical"
@@ -946,7 +946,7 @@ msgstr "Enable _antialiasing"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Enable/disable jagged edges removal (antialiasing)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1257,7 +1257,7 @@ msgstr "Cannot operate on unknown image types."
 #: plug-ins/common/tga.c:1035 plug-ins/common/tiff.c:1924
 #: plug-ins/common/xbm.c:1001 plug-ins/common/xpm.c:628
 #: plug-ins/common/xwd.c:582 plug-ins/fits/fits.c:455 plug-ins/gfli/gfli.c:682
-#: plug-ins/jpeg/jpeg-save.c:223 plug-ins/sgi/sgi.c:545
+#: plug-ins/jpeg/jpeg-save.c:215 plug-ins/sgi/sgi.c:545
 #: plug-ins/winicon/icosave.c:954 plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
@@ -2132,54 +2132,54 @@ msgstr "_Thickness:"
 msgid "_Bucket size:"
 msgstr "_Bucket size:"
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 msgid "_Bump Map..."
 msgstr "_Bump Map..."
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "Bump-mapping..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 msgid "Bump Map"
 msgstr "Bump Map"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 msgid "_Bump map:"
 msgstr "_Bump map:"
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 msgid "_Map type:"
 msgstr "_Map type:"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 msgid "Co_mpensate for darkening"
 msgstr "Co_mpensate for darkening"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 msgid "I_nvert bumpmap"
 msgstr "I_nvert bumpmap"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 msgid "_Tile bumpmap"
 msgstr "_Tile bumpmap"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "_Azimuth:"
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 msgid "_Elevation:"
 msgstr "_Elevation:"
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 msgid "_X offset:"
 msgstr "_X offset:"
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
@@ -2187,15 +2187,15 @@ msgstr ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 msgid "_Y offset:"
 msgstr "_Y offset:"
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 msgid "_Waterlevel:"
 msgstr "_Waterlevel:"
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 msgid "A_mbient:"
 msgstr "A_mbient:"
 
@@ -3480,7 +3480,7 @@ msgid "On Film:"
 msgstr "On Film:"
 
 #. Create selection
-#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:400
+#: plug-ins/common/film.c:1166 plug-ins/imagemap/imap_selection.c:361
 #: plug-ins/rcm/rcm_dialog.c:158
 msgid "Selection"
 msgstr "Selection"
@@ -7300,7 +7300,7 @@ msgstr "Merging..."
 msgid "Unsharp Mask"
 msgstr "Unsharp Mask"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:421
+#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:382
 msgid "URL"
 msgstr "URL"
 
@@ -9795,8 +9795,8 @@ msgid "Center _x:"
 msgstr "Centre _x:"
 
 #: plug-ins/imagemap/imap_circle.c:269 plug-ins/imagemap/imap_circle.c:276
-#: plug-ins/imagemap/imap_circle.c:282 plug-ins/imagemap/imap_grid.c:251
-#: plug-ins/imagemap/imap_grid.c:257 plug-ins/imagemap/imap_polygon.c:504
+#: plug-ins/imagemap/imap_circle.c:282 plug-ins/imagemap/imap_grid.c:250
+#: plug-ins/imagemap/imap_grid.c:256 plug-ins/imagemap/imap_polygon.c:504
 #: plug-ins/imagemap/imap_polygon.c:512 plug-ins/imagemap/imap_rectangle.c:394
 #: plug-ins/imagemap/imap_rectangle.c:401
 #: plug-ins/imagemap/imap_rectangle.c:408
@@ -9823,7 +9823,6 @@ msgid "Cut"
 msgstr "Cut"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:172
 msgid "Delete"
 msgstr "Delete"
 
@@ -9940,7 +9939,6 @@ msgstr "Insert Point"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
-#: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Down"
 msgstr "Move Down"
 
@@ -9958,7 +9956,6 @@ msgstr "Move To Front"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
-#: plug-ins/imagemap/imap_selection.c:159
 msgid "Move Up"
 msgstr "Move Up"
 
@@ -10079,126 +10076,126 @@ msgstr "Area Settings"
 msgid "Area #%d Settings"
 msgstr "Area #%d Settings"
 
-#: plug-ins/imagemap/imap_file.c:49 plug-ins/imagemap/imap_menu.c:79
+#: plug-ins/imagemap/imap_file.c:48 plug-ins/imagemap/imap_menu.c:81
 msgid "Error opening file"
 msgstr "Error opening file"
 
-#: plug-ins/imagemap/imap_file.c:69
+#: plug-ins/imagemap/imap_file.c:68
 msgid "Load Imagemap"
 msgstr "Load Imagemap"
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:116
 msgid "File already exists"
 msgstr "File already exists"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:117
 msgid "Do you really want to overwrite?"
 msgstr "Do you really want to overwrite?"
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr "Save Imagemap"
 
-#: plug-ins/imagemap/imap_grid.c:198
+#: plug-ins/imagemap/imap_grid.c:197
 msgid "Grid Settings"
 msgstr "Grid Settings"
 
-#: plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_grid.c:201
 msgid "_Snap-To Grid Enabled"
 msgstr "_Snap-To Grid Enabled"
 
-#: plug-ins/imagemap/imap_grid.c:208
+#: plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Visibility and Type"
 msgstr "Grid Visibility and Type"
 
-#: plug-ins/imagemap/imap_grid.c:215
+#: plug-ins/imagemap/imap_grid.c:214
 msgid "_Hidden"
 msgstr "_Hidden"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:222
 msgid "_Lines"
 msgstr "_Lines"
 
-#: plug-ins/imagemap/imap_grid.c:232
+#: plug-ins/imagemap/imap_grid.c:231
 msgid "C_rosses"
 msgstr "C_rosses"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:239
 msgid "Grid Granularity"
 msgstr "Grid Granularity"
 
-#: plug-ins/imagemap/imap_grid.c:247
+#: plug-ins/imagemap/imap_grid.c:246
 msgid "_Width"
 msgstr "_Width"
 
-#: plug-ins/imagemap/imap_grid.c:253
+#: plug-ins/imagemap/imap_grid.c:252
 msgid "_Height"
 msgstr "_Height"
 
-#: plug-ins/imagemap/imap_grid.c:267
+#: plug-ins/imagemap/imap_grid.c:266
 msgid "Grid Offset"
 msgstr "Grid Offset"
 
-#: plug-ins/imagemap/imap_grid.c:274
+#: plug-ins/imagemap/imap_grid.c:273
 msgid "pixels from l_eft"
 msgstr "pixels from l_eft"
 
-#: plug-ins/imagemap/imap_grid.c:279
+#: plug-ins/imagemap/imap_grid.c:278
 msgid "pixels from _top"
 msgstr "pixels from _top"
 
-#: plug-ins/imagemap/imap_grid.c:290
+#: plug-ins/imagemap/imap_grid.c:289
 msgid "_Preview"
 msgstr "_Preview"
 
-#: plug-ins/imagemap/imap_main.c:127
+#: plug-ins/imagemap/imap_main.c:124
 msgid "_ImageMap..."
 msgstr "_ImageMap..."
 
-#: plug-ins/imagemap/imap_main.c:590 plug-ins/imagemap/imap_settings.c:171
+#: plug-ins/imagemap/imap_main.c:601 plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
 msgstr "<Untitled>"
 
-#: plug-ins/imagemap/imap_main.c:732
+#: plug-ins/imagemap/imap_main.c:747
 msgid "Some data has been changed!"
 msgstr "Some data has been changed!"
 
-#: plug-ins/imagemap/imap_main.c:733
+#: plug-ins/imagemap/imap_main.c:748
 msgid "Do you really want to discard your changes?"
 msgstr "Do you really want to discard your changes?"
 
-#: plug-ins/imagemap/imap_main.c:941
+#: plug-ins/imagemap/imap_main.c:959
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" saved."
 
-#: plug-ins/imagemap/imap_main.c:945
+#: plug-ins/imagemap/imap_main.c:963
 msgid "Couldn't save file:"
 msgstr "Couldn't save file:"
 
-#: plug-ins/imagemap/imap_main.c:971
+#: plug-ins/imagemap/imap_main.c:978
 msgid "Image size has changed."
 msgstr "Image size has changed."
 
-#: plug-ins/imagemap/imap_main.c:972
+#: plug-ins/imagemap/imap_main.c:979
 msgid "Resize area's?"
 msgstr "Resize area's?"
 
-#: plug-ins/imagemap/imap_main.c:1000
+#: plug-ins/imagemap/imap_main.c:1014
 msgid "Couldn't read file:"
 msgstr "Couldn't read file:"
 
-#: plug-ins/imagemap/imap_main.c:1047
+#: plug-ins/imagemap/imap_main.c:1061
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:113
+#: plug-ins/imagemap/imap_menu.c:115
 #, c-format
 msgid "_Undo %s"
 msgstr "_Undo %s"
 
-#: plug-ins/imagemap/imap_menu.c:129
+#: plug-ins/imagemap/imap_menu.c:131
 #, c-format
 msgid "_Redo %s"
 msgstr "_Redo %s"
@@ -10311,19 +10308,15 @@ msgstr "Upper left _x:"
 msgid "Upper left _y:"
 msgstr "Upper left _y:"
 
-#: plug-ins/imagemap/imap_selection.c:168
-msgid "Edit"
-msgstr "Edit"
-
-#: plug-ins/imagemap/imap_selection.c:410
+#: plug-ins/imagemap/imap_selection.c:371
 msgid "#"
 msgstr "#"
 
-#: plug-ins/imagemap/imap_selection.c:439
+#: plug-ins/imagemap/imap_selection.c:400
 msgid "ALT Text"
 msgstr "ALT Text"
 
-#: plug-ins/imagemap/imap_selection.c:449
+#: plug-ins/imagemap/imap_selection.c:410
 msgid "Target"
 msgstr "Target"
 
@@ -10379,9 +10372,17 @@ msgstr "JPEG image"
 msgid "Export Preview"
 msgstr "Export Preview"
 
-#: plug-ins/jpeg/jpeg.c:570
+#: plug-ins/jpeg/jpeg.c:563
 msgid "EXIF data will be ignored."
 msgstr "EXIF data will be ignored."
+
+#: plug-ins/jpeg/jpeg-exif.c:79
+msgid ""
+"According to the EXIF data, this image is rotated. Would you like GIMP to "
+"rotate it into the standard orientation?"
+msgstr ""
+"According to the EXIF data, this image is rotated. Would you like GIMP to "
+"rotate it into the standard orientation?"
 
 #: plug-ins/jpeg/jpeg-load.c:292
 msgid "JPEG preview"
@@ -10392,90 +10393,90 @@ msgstr "JPEG preview"
 msgid "Opening thumbnail for '%s'..."
 msgstr "Opening thumbnail for '%s'..."
 
-#: plug-ins/jpeg/jpeg-save.c:128
+#: plug-ins/jpeg/jpeg-save.c:130
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "File size: %02.01f kB"
 
-#: plug-ins/jpeg/jpeg-save.c:581 plug-ins/jpeg/jpeg-save.c:681
+#: plug-ins/jpeg/jpeg-save.c:622 plug-ins/jpeg/jpeg-save.c:710
 msgid "File size: unknown"
 msgstr "File size: unknown"
 
-#: plug-ins/jpeg/jpeg-save.c:646
+#: plug-ins/jpeg/jpeg-save.c:675
 msgid "Save as JPEG"
 msgstr "Save as JPEG"
 
-#: plug-ins/jpeg/jpeg-save.c:667
+#: plug-ins/jpeg/jpeg-save.c:696
 msgid "_Quality:"
 msgstr "_Quality:"
 
-#: plug-ins/jpeg/jpeg-save.c:671
+#: plug-ins/jpeg/jpeg-save.c:700
 msgid "JPEG quality parameter"
 msgstr "JPEG quality parameter"
 
-#: plug-ins/jpeg/jpeg-save.c:690
+#: plug-ins/jpeg/jpeg-save.c:719
 msgid "Show _Preview in image window"
 msgstr "Show _Preview in image window"
 
-#: plug-ins/jpeg/jpeg-save.c:703
+#: plug-ins/jpeg/jpeg-save.c:731
 msgid "_Advanced Options"
 msgstr "_Advanced Options"
 
-#: plug-ins/jpeg/jpeg-save.c:731
+#: plug-ins/jpeg/jpeg-save.c:759
 msgid "_Smoothing:"
 msgstr "_Smoothing:"
 
-#: plug-ins/jpeg/jpeg-save.c:744
+#: plug-ins/jpeg/jpeg-save.c:772
 msgid "Frequency (rows):"
 msgstr "Frequency (rows):"
 
-#: plug-ins/jpeg/jpeg-save.c:758
+#: plug-ins/jpeg/jpeg-save.c:786
 msgid "Use restart markers"
 msgstr "Use restart markers"
 
-#: plug-ins/jpeg/jpeg-save.c:773 plug-ins/xjt/xjt.c:860
+#: plug-ins/jpeg/jpeg-save.c:800 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "Optimize"
 
-#: plug-ins/jpeg/jpeg-save.c:787
+#: plug-ins/jpeg/jpeg-save.c:813
 msgid "Progressive"
 msgstr "Progressive"
 
-#: plug-ins/jpeg/jpeg-save.c:806
+#: plug-ins/jpeg/jpeg-save.c:831
 msgid "Force baseline JPEG"
 msgstr "Force baseline JPEG"
 
-#: plug-ins/jpeg/jpeg-save.c:822
+#: plug-ins/jpeg/jpeg-save.c:846
 msgid "Save EXIF data"
 msgstr "Save EXIF data"
 
-#: plug-ins/jpeg/jpeg-save.c:836
+#: plug-ins/jpeg/jpeg-save.c:862
 msgid "Save thumbnail"
 msgstr "Save thumbnail"
 
 #. Subsampling
-#: plug-ins/jpeg/jpeg-save.c:850
+#: plug-ins/jpeg/jpeg-save.c:878
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: plug-ins/jpeg/jpeg-save.c:877
+#: plug-ins/jpeg/jpeg-save.c:905
 msgid "DCT method:"
 msgstr "DCT method:"
 
-#: plug-ins/jpeg/jpeg-save.c:883
+#: plug-ins/jpeg/jpeg-save.c:911
 msgid "Fast Integer"
 msgstr "Fast Integer"
 
-#: plug-ins/jpeg/jpeg-save.c:884
+#: plug-ins/jpeg/jpeg-save.c:912
 msgid "Integer"
 msgstr "Integer"
 
-#: plug-ins/jpeg/jpeg-save.c:885
+#: plug-ins/jpeg/jpeg-save.c:913
 msgid "Floating-Point"
 msgstr "Floating-Point"
 
-#: plug-ins/jpeg/jpeg-save.c:899
+#: plug-ins/jpeg/jpeg-save.c:927
 msgid "Comment"
 msgstr "Comment"
 
