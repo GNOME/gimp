@@ -1,3 +1,13 @@
+2005-01-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt: removed references to
+	gimp_path functions that moved to libgimpconfig.
+
+	* libgimpbase/tmpl/gimppath.sgml: removed.
+
+	* libgimpbase/tmpl/gimpbasetypes.sgml: regenerated.
+
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* Makefile.am: add libgimpconfig to subdirs
@@ -24,8 +34,8 @@
 
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	libgimpconfig/version:
-	libgimpconfig/version.in: added
+	* libgimpconfig/version:
+	* libgimpconfig/version.in: added
 	
 2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
@@ -38,7 +48,6 @@
 	* libgimpconfig/tmpl/gimpconfig-utils.sgml:
 	* libgimpconfig/tmpl/gimpconfigwriter.sgml: gtkdoc templates
 	for libgimpconfig.
-	
 
 2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
@@ -49,7 +58,6 @@
 	* libgimpconfig/libgimpconfig.types
 	* libgimpconfig/tmpl/gimpconfig-error.sgml: created, setting
 	up migration from app/config to libgimpconfig.
-	
 
 2005-01-23  Sven Neumann  <sven@gimp.org>
 

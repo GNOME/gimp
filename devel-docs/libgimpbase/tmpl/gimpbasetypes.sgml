@@ -86,18 +86,3 @@ Translation between gettext translation domain identifier and GType.
 @descriptions: 
 
 
-<!-- ##### MACRO GIMP_TYPE_PATH ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_VALUE_HOLDS_PATH ##### -->
-<para>
-
-</para>
-
-@value: 
-
-
