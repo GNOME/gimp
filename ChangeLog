@@ -1,3 +1,7 @@
+2004-11-10  Sven Neumann  <sven@gimp.org>
+
+	* HACKING: some updates.
+
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: use a UI manager created
