@@ -1,3 +1,12 @@
+2002-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/tmpl/gimpmoduletypes.sgml: removed because we
+	don't document the *types.h files separately.
+
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/tmpl/gimpmodule.sgml: updated.
+
 2002-10-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

@@ -17,15 +17,11 @@ Common definitions for creating a pluggable GIMP module.
 #GTypeModule
 </para>
 
-<!-- ##### ENUM GimpModuleState ##### -->
+<!-- ##### STRUCT GimpModule ##### -->
 <para>
 
 </para>
 
-@GIMP_MODULE_STATE_ERROR: 
-@GIMP_MODULE_STATE_LOADED_OK: 
-@GIMP_MODULE_STATE_LOAD_FAILED: 
-@GIMP_MODULE_STATE_UNLOADED_OK: 
 
 <!-- ##### STRUCT GimpModuleInfo ##### -->
 <para>
@@ -37,6 +33,16 @@ Common definitions for creating a pluggable GIMP module.
 @version: 
 @copyright: 
 @date: 
+
+<!-- ##### ENUM GimpModuleState ##### -->
+<para>
+
+</para>
+
+@GIMP_MODULE_STATE_ERROR: 
+@GIMP_MODULE_STATE_LOADED_OK: 
+@GIMP_MODULE_STATE_LOAD_FAILED: 
+@GIMP_MODULE_STATE_UNLOADED_OK: 
 
 <!-- ##### USER_FUNCTION GimpModuleQueryFunc ##### -->
 <para>

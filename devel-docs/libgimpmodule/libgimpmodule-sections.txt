@@ -1,7 +1,8 @@
 <SECTION>
 <FILE>gimpmodule</FILE>
-GimpModuleState
+GimpModule
 GimpModuleInfo
+GimpModuleState
 GimpModuleQueryFunc
 GimpModuleRegisterFunc
 <TITLE>GimpModule</TITLE>
@@ -19,10 +20,4 @@ gimp_module_get_type
 GIMP_MODULE_CLASS
 GIMP_IS_MODULE_CLASS
 GIMP_MODULE_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpmoduletypes</FILE>
-GimpModule
-GimpModuleInfo
 </SECTION>
