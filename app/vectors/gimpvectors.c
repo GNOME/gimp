@@ -26,10 +26,12 @@
 
 #include "vectors-types.h"
 
+#include "core/gimpimage.h"
+
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 #include "gimpvectors.h"
-
+#include "gimpvectors-preview.h"
 
 
 /*  private variables  */
@@ -38,55 +40,10 @@
 static GimpViewableClass *parent_class = NULL;
 
 
-static void     gimp_vectors_init     (GimpVectors  *vectors);
+static void     gimp_vectors_class_init (GimpVectorsClass *klass);
+static void     gimp_vectors_init       (GimpVectors      *vectors);
 
-static void
-gimp_vectors_finalize (GObject *object)
-{
-  /* blablabla */
-}
-
-
-static void
-gimp_vectors_class_init (GimpVectorsClass *klass)
-{
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize             = gimp_vectors_finalize;
-
-  /* gimp_object_class->name_changed    = gimp_vectors_name_changed; */
-
-  klass->changed                     = NULL;
-  klass->removed                     = NULL;
-
-  klass->stroke_add                  = NULL;
-  klass->stroke_get		     = NULL;
-  klass->stroke_get_next	     = NULL;
-  klass->stroke_get_length	     = NULL;
-
-  klass->anchor_get		     = NULL;
-  klass->anchor_move_relative	     = NULL;
-  klass->anchor_move_absolute	     = NULL;
-  klass->anchor_delete		     = NULL;
-
-  klass->get_length		     = NULL;
-  klass->get_distance		     = NULL;
-  klass->interpolate		     = NULL;
-
-  klass->temp_anchor_get	     = NULL;
-  klass->temp_anchor_set	     = NULL;
-  klass->temp_anchor_fix	     = NULL;
-
-  klass->make_bezier		     = NULL;
-}
+static void     gimp_vectors_finalize   (GObject          *object);
 
 
 GType
@@ -118,11 +75,78 @@ gimp_vectors_get_type (void)
 }
 
 static void
-gimp_vectors_init                (GimpVectors        *vectors)
+gimp_vectors_class_init (GimpVectorsClass *klass)
 {
-    vectors->strokes = NULL;
+  GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
+
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize             = gimp_vectors_finalize;
+
+  /* gimp_object_class->name_changed    = gimp_vectors_name_changed; */
+
+  viewable_class->get_new_preview    = gimp_vectors_get_new_preview;
+
+  klass->changed                     = NULL;
+  klass->removed                     = NULL;
+
+  klass->stroke_add                  = NULL;
+  klass->stroke_get		     = NULL;
+  klass->stroke_get_next	     = NULL;
+  klass->stroke_get_length	     = NULL;
+
+  klass->anchor_get		     = NULL;
+  klass->anchor_move_relative	     = NULL;
+  klass->anchor_move_absolute	     = NULL;
+  klass->anchor_delete		     = NULL;
+
+  klass->get_length		     = NULL;
+  klass->get_distance		     = NULL;
+  klass->interpolate		     = NULL;
+
+  klass->temp_anchor_get	     = NULL;
+  klass->temp_anchor_set	     = NULL;
+  klass->temp_anchor_fix	     = NULL;
+
+  klass->make_bezier		     = NULL;
+}
+
+static void
+gimp_vectors_init (GimpVectors *vectors)
+{
+  vectors->gimage  = NULL;
+  vectors->strokes = NULL;
 };
 
+static void
+gimp_vectors_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+void
+gimp_vectors_set_image (GimpVectors *vectors,
+                        GimpImage   *gimage)
+{
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+
+  vectors->gimage = gimage;
+}
+
+GimpImage *
+gimp_vectors_get_image (const GimpVectors *vectors)
+{
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+
+  return vectors->gimage;
+}
 
 /* Calling the virtual functions */
 
@@ -145,9 +169,8 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
       GimpAnchor *anchor = NULL, *minanchor = NULL;
 
       mindist = -1;
-      list = vectors->strokes;
 
-      while (list)
+      for (list = vectors->strokes; list; list = g_list_next (list))
         {
           anchor = gimp_stroke_anchor_get (GIMP_STROKE (list->data), coord);
           if (anchor)
@@ -160,7 +183,6 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
                   minanchor = anchor;
                 }
             }
-          list = list->next;
         }
       return minanchor;
     }

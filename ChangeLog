@@ -1,3 +1,14 @@
+2002-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpvectors-preview.[ch]: new files creating dummy
+	vectors previews.
+
+	* app/vectors/gimpvectors.[ch]: added a "gimage" pointer.
+
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c: some object stuff fixes.
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* po-libgimp/Makefile.in.in

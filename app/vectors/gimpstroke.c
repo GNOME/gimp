@@ -38,7 +38,10 @@ static GObjectClass *parent_class = NULL;
 
 /* Prototypes */
 
+static void         gimp_stroke_class_init           (GimpStrokeClass  *klass);
 static void         gimp_stroke_init                 (GimpStroke       *stroke);
+
+static void         gimp_stroke_finalize             (GObject          *object);
 
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
@@ -54,12 +57,33 @@ static void gimp_stroke_real_anchor_move_absolute (GimpStroke       *stroke,
                                                    const gint        type);
 
 
-static void
-gimp_stroke_finalize (GObject *object)
+GType
+gimp_stroke_get_type (void)
 {
-  /* blablabla */
-}
+  static GType stroke_type = 0;
 
+  if (! stroke_type)
+    {
+      static const GTypeInfo stroke_info =
+      {
+        sizeof (GimpStrokeClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_stroke_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpStroke),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_stroke_init,
+      };
+
+      stroke_type = g_type_register_static (G_TYPE_OBJECT,
+                                            "GimpStroke", 
+                                            &stroke_info, 0);
+    }
+
+  return stroke_type;
+}
 
 static void
 gimp_stroke_class_init (GimpStrokeClass *klass)
@@ -92,42 +116,17 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->make_bezier		     = NULL;
 }
 
-
-GType
-gimp_stroke_get_type (void)
-{
-  static GType stroke_type = 0;
-
-  if (! stroke_type)
-    {
-      static const GTypeInfo stroke_info =
-      {
-        sizeof (GimpStrokeClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_stroke_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpStroke),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_stroke_init,
-      };
-
-      stroke_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpStroke", 
-                                            &stroke_info, 0);
-    }
-
-  return stroke_type;
-}
-
-
 static void
 gimp_stroke_init (GimpStroke *stroke)
 {
-    stroke->anchors = NULL;
+  stroke->anchors = NULL;
 };
 
+static void
+gimp_stroke_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 
 /* Calling the virtual functions */
 

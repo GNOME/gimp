@@ -23,6 +23,8 @@ libappvectors_a_sources = @STRIP_BEGIN@ \
 	gimpstroke.c			\
 	gimpvectors.c			\
 	gimpvectors.h			\
+	gimpvectors-preview.c		\
+	gimpvectors-preview.h		\
 @STRIP_END@
 
 libappvectors_a_SOURCES = $(libappvectors_a_sources)

@@ -34,30 +34,13 @@
 /*  private variables  */
 
 
-static GObjectClass *parent_class = NULL;
+static GimpStrokeClass *parent_class = NULL;
 
 
-static void    gimp_bezier_stroke_init  (GimpBezierStroke *bezier_stroke);
+static void    gimp_bezier_stroke_class_init (GimpStrokeClass *klass);
+static void    gimp_bezier_stroke_init       (GimpBezierStroke *bezier_stroke);
 
-
-static void
-gimp_bezier_stroke_finalize (GObject *object)
-{
-  /* blablabla */
-}
-
-
-static void
-gimp_bezier_stroke_class_init (GimpStrokeClass *klass)
-{
-  GObjectClass      *object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize             = gimp_bezier_stroke_finalize;
-}
+static void    gimp_bezier_stroke_finalize (GObject *object);
 
 
 GType
@@ -88,12 +71,29 @@ gimp_bezier_stroke_get_type (void)
   return bezier_stroke_type;
 }
 
+static void
+gimp_bezier_stroke_class_init (GimpStrokeClass *klass)
+{
+  GObjectClass      *object_class;
+
+  object_class      = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize             = gimp_bezier_stroke_finalize;
+}
 
 static void
 gimp_bezier_stroke_init (GimpBezierStroke *bezier_stroke)
 {
   /* pass */
 };
+
+static void
+gimp_bezier_stroke_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 
 
 /* Bezier specific functions */
@@ -108,7 +108,6 @@ gimp_bezier_stroke_new (const GimpCoords *start)
   bezier_stroke = g_object_new (GIMP_TYPE_BEZIER_STROKE, NULL);
 
   stroke = GIMP_STROKE (bezier_stroke);
-  stroke->anchors = NULL;
 
   anchor = g_new0 (GimpAnchor, 1);
   anchor->position.x = start->x;

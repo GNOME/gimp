@@ -37,6 +37,8 @@ struct _GimpVectors
 {
   GimpViewable      parent_instance;
 
+  GimpImage       * gimage;
+
   gboolean          visible;            /* controls visibility            */
   gboolean          locked;             /* transformation locking         */
 
@@ -111,6 +113,10 @@ struct _GimpVectorsClass
 /*  vectors utility functions  */
 
 GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
+
+void            gimp_vectors_set_image          (GimpVectors        *vectors,
+                                                 GimpImage          *gimage);
+GimpImage     * gimp_vectors_get_image          (const GimpVectors  *vectors);
 
 
 /* accessing / modifying the anchors */
