@@ -768,7 +768,7 @@ gimp_composite_screen_any_any_any_generic (GimpCompositeContext * ctx)
  * Perform an RGB[A] overlay operation between the pixel sources
  * ctx->A and ctx->B, using the generalised algorithm:
  *
- * D =  A * (B + (2 * B) * (255 - A))
+ * D =  A * (A + (2 * B) * (255 - A))
  *
  **/
 void
