@@ -54,6 +54,7 @@ gimage_mask_boundary (gimage, segs_in, segs_out, num_segs_in, num_segs_out)
      int *num_segs_in;
      int *num_segs_out;
 {
+  GimpDrawable *d;
   Layer *layer;
   int x1, y1, x2, y2;
 
@@ -80,7 +81,8 @@ gimage_mask_boundary (gimage, segs_in, segs_out, num_segs_in, num_segs_out)
       return TRUE;
     }
   /*  Otherwise, return the boundary...if a channel is active  */
-  else if (drawable_channel (gimage_active_drawable (gimage)))
+  else if ((d = gimage_active_drawable (gimage)) &&
+	   drawable_channel (d))
     {
       return channel_boundary (gimage_get_mask (gimage),
 			       segs_in, segs_out,

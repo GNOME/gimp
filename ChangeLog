@@ -1,3 +1,8 @@
+Mon Jul  6 20:38:36 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/gimage_mask.c (gimage_mask_boundary): fixed crash when you
+	delete the last layer of an image.
+
 Mon Jul  6 5:12:00 CST	1998 Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/gbr/gbr.c: added gbr version 1 support
