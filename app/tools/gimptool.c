@@ -475,8 +475,6 @@ gimp_tool_help_func (const gchar *help_data)
 
 #define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
 
-STUB(by_color_select_initialize_by_image)
-STUB(by_color_select)
 STUB(clone_non_gui)
 STUB(clone_non_gui_default)
 STUB(convolve_non_gui)

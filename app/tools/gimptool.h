@@ -23,8 +23,6 @@
 #include "core/gimpobject.h"
 
 
-#define GIMP_TYPE_BY_COLOR_SELECT_TOOL GTK_TYPE_NONE
-
 /*  The possibilities for where the cursor lies  */
 #define  ACTIVE_LAYER      (1 << 0)
 #define  SELECTION         (1 << 1)

@@ -12,8 +12,8 @@ libapptools_la_SOURCES = \
 	gimpblendtool.h		\
 	gimpbucketfilltool.c	\
 	gimpbucketfilltool.h	\
-##	gimpbycolorselecttool.c	\
-##	gimpbycolorselecttool.h	\
+	gimpbycolorselecttool.c	\
+	gimpbycolorselecttool.h	\
 	gimpclonetool.c		\
 	gimpclonetool.h		\
 	gimpcolorpickertool.c	\

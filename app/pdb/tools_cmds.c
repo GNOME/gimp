@@ -576,8 +576,10 @@ by_color_select_invoker (Argument *args)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       gimp_rgb_get_uchar (&color, fixme, fixme + 1, fixme + 2);
-      by_color_select (gimage, drawable, fixme, threshold, operation,
-		       antialias, feather, feather_radius, sample_merged);
+      gimp_by_color_select_tool_select (gimage, drawable, fixme, 
+					threshold, operation, antialias, 
+					feather, feather_radius, 
+					sample_merged);
     }
 
   return procedural_db_return_args (&by_color_select_proc, success);

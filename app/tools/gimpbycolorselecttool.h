@@ -16,25 +16,58 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BY_COLOR_SELECT_H__
-#define __BY_COLOR_SELECT_H__
+#ifndef __GIMP_BY_COLOR_SELECT_TOOL_H__
+#define __GIMP_BY_COLOR_SELECT_TOOL_H__
 
 
-Tool * tools_new_by_color_select           (void);
-void   tools_free_by_color_select          (Tool         *tool);
-
-void   by_color_select_initialize          (GDisplay     *gdisp);
-void   by_color_select_initialize_by_image (GimpImage    *gimage);
-
-void   by_color_select                     (GimpImage    *gimage,
-					    GimpDrawable *drawable,
-					    guchar       *color,
-					    gint          threshold,
-					    SelectOps     op,
-					    gboolean      antialias,
-					    gboolean      feather,
-					    gdouble       feather_radius,
-					    gboolean      sample_merged);
+#include "gimpselectiontool.h"
 
 
-#endif  /*  __BY_COLOR_SELECT_H__  */
+#define GIMP_TYPE_BY_COLOR_SELECT_TOOL            (gimp_by_color_select_tool_get_type ())
+#define GIMP_BY_COLOR_SELECT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BY_COLOR_SELECT_TOOL, GimpByColorSelectTool))
+#define GIMP_IS_BY_COLOR_SELECT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BY_COLOR_SELECT_TOOL))
+#define GIMP_BY_COLOR_SELECT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BY_COLOR_SELECT_TOOL, GimpByColorSelectToolClass))
+#define GIMP_IS_BY_COLOR_SELECT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BY_COLOR_SELECT_TOOL))
+
+
+/*  the by color selection structures  */
+
+typedef struct _GimpByColorSelectTool GimpByColorSelectTool;
+typedef struct _GimpByColorSelectToolClass GimpByColorSelectToolClass;
+
+struct _GimpByColorSelectTool
+{
+  GimpSelectionTool parent_instance;
+
+  gint       x, y;       /*  Point from which to execute seed fill  */
+  SelectOps  operation;  /*  add, subtract, normal color selection  */
+};
+
+
+struct _GimpByColorSelectToolClass
+{
+  GimpSelectionToolClass klass;
+};
+
+
+
+void    gimp_by_color_select_tool_register            (void);
+
+GtkType gimp_by_color_select_tool_get_type            (void);
+
+/*
+ * void    gimp_by_color_select_tool_initialize          (GDisplay     *gdisp);
+ * void    gimp_by_color_select_tool_initialize_by_image (GimpImage    *gimage);
+ */
+void    gimp_by_color_select_tool_select              (GimpImage    *gimage,
+						       GimpDrawable *drawable,
+						       guchar       *color,
+						       gint          threshold,
+						       SelectOps     op,
+						       gboolean      antialias,
+						       gboolean      feather,
+						       gdouble       feather_radius,
+						       gboolean      sample_merged);
+
+
+#endif  /*  __GIMP_BY_COLOR_SELECT_TOOL_H__  */
