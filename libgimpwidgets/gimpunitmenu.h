@@ -23,6 +23,14 @@
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
+#ifdef GTK_DISABLE_DEPRECATED
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkoptionmenu.h>
+#define GTK_DISABLE_DEPRECATED
+#else
+#include <gtk/gtkoptionmenu.h>
+#endif
+
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
