@@ -1,3 +1,8 @@
+Mon Aug 23 22:41:52 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/paint_funcs.c: fixed bug in scale_region that caused what
+	looks like scan line swapping.
+
 1999-08-24  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gpb.c: Added saving of .gih files.

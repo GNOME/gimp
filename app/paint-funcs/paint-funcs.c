@@ -4092,8 +4092,8 @@ scale_region (PixelRegion *srcPR,
        } break;
        case LINEAR_INTERPOLATION:
        {
-	 double dy = ((y - 0.5) * y_rat) - new_y;
-	 double idy = 1.0 - dy;
+	 double idy = ((y - 0.5) * y_rat) - new_y;
+	 double dy = 1.0 - idy;
 	 for (x = 0; x < width * bytes; x++)
 	   accum[x] = dy * src[1][x] + idy * src[2][x];
        } break;
