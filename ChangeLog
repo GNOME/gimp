@@ -1,5 +1,12 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-run.c (plug_in_temp_run)
+	* libgimp/gimp.c (gimp_temp_proc_run): removed ENABLE_TEMP_RETURN
+	#define and all code which was in #ifndef ENABLE_TEMP_RETURN.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-gui.[ch]: added "display_ID" to gimp_new_progress().
 
 	* app/gui/gui-vtable.c: changed accordingly.

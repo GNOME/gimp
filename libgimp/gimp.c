@@ -1725,9 +1725,6 @@ gimp_proc_run (GPProcRun *proc_run)
 }
 
 
-#define ENABLE_TEMP_RETURN 1
-
-
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {
@@ -1738,9 +1735,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 
   if (run_proc)
     {
-#ifdef ENABLE_TEMP_RETURN
       GPProcReturn  proc_return;
-#endif
       GimpParam    *return_vals;
       gint          n_return_vals;
 
@@ -1750,14 +1745,12 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 		    &n_return_vals,
 		    &return_vals);
 
-#ifdef ENABLE_TEMP_RETURN
       proc_return.name    = proc_run->name;
       proc_return.nparams = n_return_vals;
       proc_return.params  = (GPParam *) return_vals;
 
       if (! gp_temp_proc_return_write (_writechannel, &proc_return, NULL))
         gimp_quit ();
-#endif
     }
 }
 

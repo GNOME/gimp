@@ -42,9 +42,6 @@
 #include "plug-in-shm.h"
 
 
-#define ENABLE_TEMP_RETURN 1
-
-
 typedef struct _PlugInBlocked PlugInBlocked;
 
 struct _PlugInBlocked
@@ -65,10 +62,8 @@ static void plug_in_handle_proc_return_priv (PlugIn          *plug_in,
                                              GPProcReturn    *proc_return);
 static void plug_in_handle_proc_return      (PlugIn          *plug_in,
                                              GPProcReturn    *proc_return);
-#ifdef ENABLE_TEMP_RETURN
 static void plug_in_handle_temp_proc_return (PlugIn          *plug_in,
                                              GPProcReturn    *proc_return);
-#endif
 static void plug_in_handle_proc_install     (PlugIn          *plug_in,
                                              GPProcInstall   *proc_install);
 static void plug_in_handle_proc_uninstall   (PlugIn          *plug_in,
@@ -139,15 +134,7 @@ plug_in_handle_message (PlugIn      *plug_in,
       break;
 
     case GP_TEMP_PROC_RETURN:
-#ifdef ENABLE_TEMP_RETURN
       plug_in_handle_temp_proc_return (plug_in, msg->data);
-#else
-      g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TEMP_PROC_RETURN message (should not happen)",
-                 gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
-#endif
       break;
 
     case GP_PROC_INSTALL:
@@ -505,7 +492,6 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
   plug_in_close (plug_in, FALSE);
 }
 
-#ifdef ENABLE_TEMP_RETURN
 static void
 plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                                  GPProcReturn *proc_return)
@@ -526,7 +512,6 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
       plug_in_close (plug_in, TRUE);
     }
 }
-#endif
 
 static void
 plug_in_handle_proc_install (PlugIn        *plug_in,

@@ -225,8 +225,6 @@ plug_in_repeat (Gimp         *gimp,
 
 /*  private functions  */
 
-#define ENABLE_TEMP_RETURN 1
-
 static Argument *
 plug_in_temp_run (ProcRecord   *proc_rec,
                   GimpProgress *progress,
@@ -264,13 +262,9 @@ plug_in_temp_run (ProcRecord   *proc_rec,
 
       plug_in_ref (plug_in);
 
-#ifdef ENABLE_TEMP_RETURN
       plug_in_main_loop (plug_in);
 
       return_vals = plug_in_get_return_vals (plug_in, proc_rec);
-#else
-      return_vals = procedural_db_return_args (proc_rec, TRUE);
-#endif
 
       plug_in->temp_proc_recs = g_list_remove (plug_in->temp_proc_recs,
                                                proc_rec);
