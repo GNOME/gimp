@@ -117,13 +117,13 @@ static GtkActionEntry actions[] =
   },
 
   { "unit-editor-new", GTK_STOCK_NEW,
-    N_("New"), NULL,
+    NULL, NULL,
     N_("Create a new unit from scratch."),
     G_CALLBACK (new_callback)
   },
 
   { "unit-editor-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("Duplicate"), NULL,
+    NULL, NULL,
     N_("Create a new unit with the currently "
        "selected unit as template."),
     G_CALLBACK (duplicate_callback)
@@ -423,6 +423,7 @@ unit_editor_dialog (void)
   ui_manager = gtk_ui_manager_new ();
 
   group = gtk_action_group_new ("unit-editor");
+  gtk_action_group_set_translation_domain (group, NULL);
   gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), tv);
 
   gtk_ui_manager_insert_action_group (ui_manager, group, -1);
