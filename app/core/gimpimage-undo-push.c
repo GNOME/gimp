@@ -433,6 +433,11 @@ undo_push_image (GImage *gimage,
   gimage_dirty (gimage);
   drawable_dirty (drawable_ID);
 
+  x1 = BOUNDS (x1, 0, drawable_width (drawable_ID));
+  y1 = BOUNDS (y1, 0, drawable_height (drawable_ID));
+  x2 = BOUNDS (x2, 0, drawable_width (drawable_ID));
+  y2 = BOUNDS (y2, 0, drawable_height (drawable_ID));
+
   size = (x2 - x1) * (y2 - y1) * drawable_bytes (drawable_ID) + sizeof (void *) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_UNDO)))
@@ -488,6 +493,11 @@ undo_push_image_mod (GImage *gimage,
 
   if (! tiles_ptr)
     return FALSE;
+
+  x1 = BOUNDS (x1, 0, drawable_width (drawable_ID));
+  y1 = BOUNDS (y1, 0, drawable_height (drawable_ID));
+  x2 = BOUNDS (x2, 0, drawable_width (drawable_ID));
+  y2 = BOUNDS (y2, 0, drawable_height (drawable_ID));
 
   tiles = (TileManager *) tiles_ptr;
   size = tiles->levels[0].width * tiles->levels[0].height *

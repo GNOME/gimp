@@ -330,6 +330,11 @@ gdisplay_flush (GDisplay *gdisp)
       /* start the currently active tool */
       active_tool_control (RESUME, (void *) gdisp);
     }
+
+  /*  update the gdisplay's info dialog  */
+  if (gdisp->window_info_dialog)
+    info_window_update (gdisp->window_info_dialog,
+			(void *) gdisp);
 }
 
 

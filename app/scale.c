@@ -153,10 +153,6 @@ change_scale (GDisplay *gdisp,
       /*  resize the image  */
       resize_display (gdisp, allow_resize_windows, TRUE);
 
-      /*  update the gdisplay's info dialog  */
-      if (gdisp->window_info_dialog)
-	info_window_update (gdisp->window_info_dialog,
-			    (void *) gdisp);
     }
 }
 

@@ -1136,7 +1136,7 @@ layers_dialog_set_menu_sensitivity ()
   /* resize layer */
   gtk_widget_set_sensitive (layers_ops[6].widget, ac && gimage && lp);
   /* add layer mask */
-  gtk_widget_set_sensitive (layers_ops[7].widget, fs && ac && gimage && !lm && lp);
+  gtk_widget_set_sensitive (layers_ops[7].widget, fs && ac && gimage && !lm && lp && alpha);
   /* apply layer mask */
   gtk_widget_set_sensitive (layers_ops[8].widget, fs && ac && gimage && lm && lp);
   /* anchor layer */

@@ -334,8 +334,10 @@ channels_dialog_update (int gimage_id)
 
   channelsD->gimage_id = gimage_id;
 
+  suspend_gimage_notify++;
   /*  Free all elements in the channels listbox  */
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
+  suspend_gimage_notify--;
 
   list = channelsD->channel_widgets;
   while (list)
@@ -419,7 +421,9 @@ channels_dialog_update (int gimage_id)
 void
 channels_dialog_clear ()
 {
+  suspend_gimage_notify++;
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
+  suspend_gimage_notify--;
 }
 
 void
@@ -431,8 +435,10 @@ channels_dialog_free ()
   if (channelsD == NULL)
     return;
 
+  suspend_gimage_notify++;
   /*  Free all elements in the channels listbox  */
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
+  suspend_gimage_notify--;
 
   list = channelsD->channel_widgets;
   while (list)

@@ -254,10 +254,6 @@ magnify_button_release (Tool           *tool,
       /*  resize the image  */
       resize_display (gdisp, allow_resize_windows, TRUE);
 
-      /*  update the window info */
-      if (gdisp->window_info_dialog)
-        info_window_update (gdisp->window_info_dialog,
-                            (void *) gdisp);
     }
 }
 
