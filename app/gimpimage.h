@@ -48,7 +48,6 @@ struct _GimpImage
 {
   GimpObject         parent_instance;
 
-  gboolean           has_filename;          /*  has a valid filename         */
   PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
 
   gint               width, height;         /*  width and height attributes  */

@@ -1,3 +1,20 @@
+2001-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/docindex.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gimpimage.[ch]:
+
+	Removed the "has_filename" boolean from GimpImage:
+
+	- to get the filename, ask for GimpObjects's name.
+	- gimp_image_filename() returns the *display* filename (and will be
+	  renamed to gimp_image_display_name() soon), i.e. returns
+	  "Unnamed" if object->name == NULL.
+	- no need any more to check if the filename is the "" string because
+	  GimpImage overrides GimpObject's "name_changed" method and
+	  sets the name to NULL if it was "".
+
 2001-01-14  Sven Neumann  <sven@gimp.org>
 
 	Merged fixes from gimp-1-2:

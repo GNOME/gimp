@@ -1779,7 +1779,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   SET_SENSITIVE ("File/Save", gdisp && drawable);
   SET_SENSITIVE ("File/Save as...", gdisp && drawable);
   SET_SENSITIVE ("File/Save a Copy as...", gdisp && drawable);
-  SET_SENSITIVE ("File/Revert...", gdisp && gdisp->gimage->has_filename);
+  SET_SENSITIVE ("File/Revert...", gdisp && GIMP_OBJECT (gdisp->gimage)->name);
   SET_SENSITIVE ("File/Close", gdisp);
 
   SET_SENSITIVE ("Edit", gdisp);

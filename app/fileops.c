@@ -518,17 +518,20 @@ file_save_callback (GtkWidget *widget,
   /*  Only save if the gimage has been modified  */
   if (!trust_dirty_flag || gdisplay->gimage->dirty != 0)
     {
-      if (gdisplay->gimage->has_filename == FALSE)
+      gchar *filename;
+
+      filename =
+	g_strdup (gimp_object_get_name (GIMP_OBJECT (gdisplay->gimage)));
+
+      if (! filename)
 	{
 	  file_save_as_callback (widget, data);
 	}
       else
 	{
-	  gchar *filename;
 	  gchar *raw_filename;
 	  gint   status;
 
-	  filename     = g_strdup (gimp_image_filename (gdisplay->gimage));
 	  raw_filename = g_basename (filename);
 	  
 	  status = file_save (gdisplay->gimage,
@@ -543,8 +546,9 @@ file_save_callback (GtkWidget *widget,
 	      g_message (_("Save failed.\n%s"), filename);
 	    }
 
-	  g_free (filename);
 	}
+
+      g_free (filename);
     }
 }
 
@@ -552,7 +556,8 @@ void
 file_save_as_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  GDisplay *gdisplay;
+  GDisplay    *gdisplay;
+  const gchar *filename;
 
   gdisplay = gdisplay_active ();
   if (! gdisplay)
@@ -565,7 +570,9 @@ file_save_as_callback (GtkWidget *widget,
 
   set_filename = TRUE;
 
-  if (!filesave)
+  filename = gimp_object_get_name (GIMP_OBJECT (the_gimage));
+
+  if (! filesave)
     file_save_dialog_create ();
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
@@ -575,8 +582,8 @@ file_save_as_callback (GtkWidget *widget,
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesave),
-                                   gdisplay->gimage->has_filename ?
-                                   gimp_image_filename (gdisplay->gimage) :
+                                   filename ?
+				   filename :
                                    "." G_DIR_SEPARATOR_S);
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisplay->gimage)))
@@ -608,7 +615,8 @@ void
 file_save_a_copy_as_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GDisplay *gdisplay;
+  GDisplay    *gdisplay;
+  const gchar *filename;
 
   gdisplay = gdisplay_active ();
   if (! gdisplay)
@@ -621,6 +629,8 @@ file_save_a_copy_as_callback (GtkWidget *widget,
 
   set_filename = FALSE;
 
+  filename = gimp_object_get_name (GIMP_OBJECT (the_gimage));
+
   if (!filesave)
     file_save_dialog_create ();
 
@@ -631,8 +641,8 @@ file_save_a_copy_as_callback (GtkWidget *widget,
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save a Copy of the Image"));
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesave),
-                                   gdisplay->gimage->has_filename ?
-                                   gimp_image_filename (gdisplay->gimage) :
+                                   filename ?
+                                   filename :
                                    "." G_DIR_SEPARATOR_S);
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisplay->gimage)))
@@ -664,9 +674,10 @@ void
 file_revert_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  GDisplay  *gdisplay;
-  GimpImage *gimage;
-  GtkWidget *query_box;
+  GDisplay    *gdisplay;
+  GimpImage   *gimage;
+  GtkWidget   *query_box;
+  const gchar *filename;
 
   gdisplay = gdisplay_active ();
   if (!gdisplay || !gdisplay->gimage)
@@ -674,9 +685,11 @@ file_revert_callback (GtkWidget *widget,
 
   gimage = gdisplay->gimage;
 
+  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
+
   query_box = gtk_object_get_data (GTK_OBJECT (gimage), REVERT_DATA_KEY);
 
-  if (gimage->has_filename == FALSE)
+  if (! filename)
     {
       g_message (_("Revert failed.\n"
 		   "No filename associated with this image."));
@@ -693,8 +706,8 @@ file_revert_callback (GtkWidget *widget,
 				"%s\n\n"
 				"(You will loose all your changes\n"
 				"including all undo information)"),
-			      g_basename (gimp_image_filename (gimage)),
-			      gimp_image_filename (gimage));
+			      g_basename (filename),
+			      filename);
 
       query_box = gimp_query_boolean_box (_("Revert Image?"),
 					  gimp_standard_help_func,
@@ -2032,7 +2045,7 @@ file_revert_confirm_callback (GtkWidget *widget,
       const gchar *filename;
       gint         status;
 
-      filename = gimp_image_filename (old_gimage);
+      filename = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
       new_gimage = file_open_image (filename, filename, _("Revert"),
 				    RUN_INTERACTIVE, &status);

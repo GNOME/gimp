@@ -259,7 +259,6 @@ gimp_image_class_init (GimpImageClass *klass)
 static void 
 gimp_image_init (GimpImage *gimage)
 {
-  gimage->has_filename          = FALSE;
   gimage->num_cols              = 0;
   gimage->cmap                  = NULL;
   gimage->disp_count            = 0;
@@ -435,20 +434,17 @@ gimp_image_name_changed (GimpObject *object)
   GimpImage   *gimage;
   const gchar *name;
 
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
   gimage = GIMP_IMAGE (object);
   name   = gimp_object_get_name (object);
 
-  if (name && name[0])
+  if (! (name && strlen (name)))
     {
-      gimage->has_filename = TRUE;
+      g_free (object->name);
+      object->name = NULL;
     }
-  else
-    {
-      gimage->has_filename = FALSE;
-    }
-
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 }
 
 void
@@ -3607,13 +3603,14 @@ gimp_image_base_type_with_alpha (const GimpImage *gimage)
 const gchar *
 gimp_image_filename (const GimpImage *gimage)
 {
+  const gchar *filename;
+
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  if (gimage->has_filename)
-    return gimp_object_get_name (GIMP_OBJECT (gimage));
-  else
-    return _("Untitled");
+  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
+
+  return filename ? filename : _("Untitled");
 }
 
 gboolean

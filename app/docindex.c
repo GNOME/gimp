@@ -481,13 +481,15 @@ raise_if_match (gpointer data,
 {
   GDisplay     *gdisp;
   BoolCharPair *pair;
+  const gchar  *filename;
 
   gdisp = (GDisplay *) data;
   pair  = (BoolCharPair *) user_data;
 
-  if (gdisp->gimage->has_filename &&
-      strcmp (pair->string,
-	      gimp_object_get_name (GIMP_OBJECT (gdisp->gimage))) == 0)
+  filename = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+
+  if (filename &&
+      strcmp (pair->string, filename) == 0)
     {
       pair->boole = TRUE;
       gdk_window_raise (gdisp->shell->window);
