@@ -3347,7 +3347,7 @@ msgstr "Рель╓ф"
 #: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:595
 #: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
 msgid "Do Preview"
-msgstr ""
+msgstr "Робити перегляд"
 
 #: plug-ins/common/engrave.c:119
 msgid "<Image>/Filters/Distorts/Engrave..."
@@ -3979,7 +3979,7 @@ msgstr "╫енерувати повний документ HTML"
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr ""
+msgstr "Додати в документ етикетки <HTML>, <BODY> та ╕нш╕, а не лише т╕, що стосуються таблиц╕."
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:447
@@ -3995,6 +3995,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
+"Зам╕няти будь-як╕ прямокутн╕ секц╕╖ однакового кольору на одну б╕льшу ком╕рку "
+"╕з значеннями ROWSPAN ╕ COLSPAN."
 
 #: plug-ins/common/gtm.c:470
 msgid "Compress TD tags"
@@ -4006,6 +4008,8 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
+"Не лишати пропуски м╕ж етикатеами <TD> ╕ вм╕стом ком╕рки. "
+"Це необх╕дно лише для ре╜улювання положення на р╕вн╕ п╕ксел╕в."
 
 #: plug-ins/common/gtm.c:484
 msgid "Caption"
@@ -4013,11 +4017,11 @@ msgstr "П╕дпис"
 
 #: plug-ins/common/gtm.c:492
 msgid "Check if you would like to have the table captioned."
-msgstr ""
+msgstr "Таблиця ма╓ п╕дпис"
 
 #: plug-ins/common/gtm.c:505
 msgid "The text for the table caption."
-msgstr ""
+msgstr "Текст п╕дпису таблиц╕."
 
 #: plug-ins/common/gtm.c:513
 msgid "Cell Content:"
@@ -4025,7 +4029,7 @@ msgstr "Вм╕ст ком╕рки:"
 
 #: plug-ins/common/gtm.c:520
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "Текст, що пишеться у кожну ком╕рку."
 
 #. HTML Table Options
 #: plug-ins/common/gtm.c:526
@@ -4054,7 +4058,7 @@ msgstr "Заповнення ком╕рки:"
 
 #: plug-ins/common/gtm.c:585
 msgid "The amount of cellpadding."
-msgstr ""
+msgstr "Розм╕р заповнення ком╕рок."
 
 #: plug-ins/common/gtm.c:590
 msgid "Cell-Spacing:"
@@ -4062,7 +4066,7 @@ msgstr "╤нтервал м╕ж ком╕рками:"
 
 #: plug-ins/common/gtm.c:596
 msgid "The amount of cellspacing."
-msgstr ""
+msgstr "Розм╕р ╕нтервалу м╕ж ком╕рками."
 
 #: plug-ins/common/guillotine.c:78
 msgid "<Image>/Image/Transforms/Guillotine"
@@ -4074,7 +4078,7 @@ msgstr "Г╕льйотина..."
 
 #: plug-ins/common/gz.c:322
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
-msgstr ""
+msgstr "gz: нема╓ потр╕бного розширення, збер╕га╓ться як xcf стиснутий за допомогою gzip\n"
 
 #: plug-ins/common/gz.c:445
 msgid "gz: no sensible extension, attempting to load with file magic\n"
@@ -4094,19 +4098,19 @@ msgstr "Створити новий шар"
 
 #: plug-ins/common/hot.c:630
 msgid "Action"
-msgstr ""
+msgstr "Д╕я"
 
 #: plug-ins/common/hot.c:634
 msgid "Reduce Luminance"
-msgstr ""
+msgstr "Зменшити яскрав╕сть"
 
 #: plug-ins/common/hot.c:635
 msgid "Reduce Saturation"
-msgstr ""
+msgstr "Зменшити насичен╕сть"
 
 #: plug-ins/common/hot.c:636 plug-ins/common/waves.c:379
 msgid "Blacken"
-msgstr ""
+msgstr "Чорний"
 
 #: plug-ins/common/illusion.c:116
 msgid "<Image>/Filters/Map/Illusion..."
@@ -4135,31 +4139,31 @@ msgstr "Спотворення..."
 #: plug-ins/common/iwarp.c:746 plug-ins/common/iwarp.c:757
 #, c-format
 msgid "Warping Frame Nr %d ..."
-msgstr ""
+msgstr "Спотворення кадру # %d..."
 
 #: plug-ins/common/iwarp.c:758 plug-ins/common/iwarp.c:961
 msgid "Ping Pong"
-msgstr ""
+msgstr "П╕н╜-пон╜"
 
 #: plug-ins/common/iwarp.c:921 plug-ins/common/iwarp.c:973
 msgid "Animate"
-msgstr ""
+msgstr "Ан╕мувати"
 
 #: plug-ins/common/iwarp.c:944
 msgid "Number of Frames:"
-msgstr ""
+msgstr "К╕льк╕сть кадр╕в:"
 
 #: plug-ins/common/iwarp.c:953
 msgid "Reverse"
-msgstr ""
+msgstr "Обернути"
 
 #: plug-ins/common/iwarp.c:1001
 msgid "Deform Radius:"
-msgstr ""
+msgstr "Рад╕ус деформац╕╖:"
 
 #: plug-ins/common/iwarp.c:1011
 msgid "Deform Amount:"
-msgstr ""
+msgstr "Степ╕нь деформац╕╖:"
 
 #: plug-ins/common/iwarp.c:1020
 msgid "Deform Mode"
@@ -4169,7 +4173,7 @@ msgstr "Режим деформац╕╖"
 #: plug-ins/ifscompose/ifscompose.c:1123 plug-ins/imagemap/imap_cmd_move.c:80
 #: plug-ins/imagemap/imap_cmd_object_move.c:53
 msgid "Move"
-msgstr ""
+msgstr "Перем╕стити"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
@@ -12250,11 +12254,11 @@ msgstr "Моза╕ка"
 
 #: plug-ins/mosaic/mosaic.c:593
 msgid "Color Averaging"
-msgstr ""
+msgstr "Усереднення кольору"
 
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Pitted Surfaces"
-msgstr ""
+msgstr "Нер╕вн╕ поверхн╕"
 
 #: plug-ins/mosaic/mosaic.c:611
 msgid "FG/BG Lighting"

@@ -1045,29 +1045,31 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Зам╕на темним\n"
+"(Краще, але т╕льки для зображень з великою к╕льк╕стю б╕лого)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "Типов╕ установки рель╓фу"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
-msgstr ""
+msgstr "Зняти фокус"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Delta Value on Color"
-msgstr ""
+msgstr "Дельта значенння кольору"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Density (%)"
-msgstr ""
+msgstr "Щ╕льг╕сть (%)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Depth"
-msgstr ""
+msgstr "Глибина"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1077,11 +1079,11 @@ msgstr "Опис"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
-msgstr ""
+msgstr "Р╕вень деталей"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
-msgstr ""
+msgstr "Детал╕ в середин╕"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1090,7 +1092,7 @@ msgstr "Д╕аметер"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Down"
-msgstr ""
+msgstr "Вниз"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
@@ -1355,7 +1357,7 @@ msgstr "Кадри"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "З верхнього л╕вого до нижнього правого"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
