@@ -1,0 +1,48 @@
+			  On making Gimp OO
+
+This document outlines the ideas of the conversion to using the GTK
+object system in gimp core.
+
+The basic problem with gimp's internals is that it is _old_. Some of
+the stuff dates from the 0.54 era, before layers, before GTK. This has 
+caused the current source to be what some people call a "mess". You
+don't want to hear what the other people call it.
+
+Some of the main problems are that there are far, far too many headers 
+included everywhere. That is, encapsulation doesn't work. This causes
+nasty dependencies, and doesn't exactly do good for compile times,
+either. In addition, there are too much integer ids on objects. These
+should only be used for pdb, and even there there'd probably be better 
+ways of passing them. The gtk object system will better facilitate
+data hiding and encapsulation.
+
+Then there are the tools. The tools have a primitive object hierarchy, 
+but it is a mess when compared to gtk's system. Restructuring the
+tools will make the world a better place, and new tools easier to
+implement.
+
+GTK's object system has many other features that will make gimp
+programming easier, the chief one being signals. When gimp's images
+and displays have signals that you can connect callbacks to, different 
+components of the program will be better able to keep up with the
+state of things.
+
+Also, having all types in the gimp core use a standard object system
+will make it easier to export these types as CORBA objects when the
+time comes for that.
+
+
+Some guidelines:
+
+Everything should be as modular and independent as possible. Core
+image manipulation classes should have no hard-coded relations with an 
+"UI". There should be no global variables in the classes.
+
+All gimp classes should derive from GimpObject. This is just in case
+we need some common debugging functionality or something.
+
+For a future locking system, and just for code clarity, things should
+be made const correct. That is, if a function doesn't modify an
+object, it should take a pointer to a const object. 
+
+

@@ -139,8 +139,14 @@ gimp_SOURCES = \
 	gimage_mask.h		\
 	gimage_mask_cmds.c	\
 	gimage_mask_cmds.h	\
+	gimpimage.c		\
+	gimpimage.h		\
+	gimpobject.c		\
+	gimpobject.h		\
 	gimprc.c		\
 	gimprc.h		\
+	gimpsignal.c		\
+	gimpsignal.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\

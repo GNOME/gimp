@@ -1,3 +1,22 @@
+Sun Jun 28 13:30:20 EEST 1998  Lauri Alanko  <nether@gimp.org>
+
+	* app/gimage.c
+	* app/gimage.h
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpimageF.h
+	* app/gimpimageP.h
+	* app/gimpobject.c
+	* app/gimpobject.h
+	* app/gimpobjectF.h
+	* app/gimpobjectP.h
+	* app/gimpsignal.c
+	* app/gimpsignal.h
+	* docs/OO.txt
+
+	Started doing a GtkObjectifying framework, and started cleaning
+	images from all sorts of ugly dependencies.
+	
 Sun Jun 28 08:32:20 1998  Tim Janik  <timj@gtk.org>
 
 	* app/layer.c (gimp_layer_mask_get_type): 
