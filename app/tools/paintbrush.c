@@ -23,6 +23,7 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "palette.h"
@@ -33,11 +34,12 @@
 #include "libgimp/gimpintl.h"
 
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, gboolean);
+static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean);
 static Argument *   paintbrush_invoker     (Argument *);
 static Argument *   paintbrush_extended_invoker     (Argument *);
+static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
 
-static double non_gui_fade_out, non_gui_incremental;
+static double non_gui_fade_out,non_gui_gradient_length, non_gui_incremental;
 
 
 /*  defines  */
@@ -47,6 +49,7 @@ typedef struct _PaintOptions PaintOptions;
 struct _PaintOptions
 {
   double fade_out;
+  double gradient_length;
   gboolean incremental;
 };
 
@@ -84,13 +87,16 @@ create_paint_options (void)
   GtkWidget *label;
   GtkWidget *fade_out_scale;
   GtkObject *fade_out_scale_data;
+  GtkWidget *gradient_length_scale;
+  GtkObject *gradient_length_scale_data;
   GtkWidget *incremental_toggle;
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
   options->fade_out = 0.0;
   options->incremental = FALSE;
-
+  options->gradient_length = 0.0;
+  
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
@@ -118,6 +124,28 @@ create_paint_options (void)
   gtk_widget_show (fade_out_scale);
   gtk_widget_show (hbox);
 
+  /*              gradient thingamajig */
+  /* this is a little unintuitive, probabaly put the slider */
+  /* in a frame later with a checkbutton for "use gradients" */
+  /* and default the gradient length to 10 or something */
+
+  hbox = gtk_hbox_new (FALSE, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Gradient Length"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gradient_length_scale_data = gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0);
+  gradient_length_scale = gtk_hscale_new (GTK_ADJUSTMENT (gradient_length_scale_data));
+  gtk_box_pack_start (GTK_BOX (hbox), gradient_length_scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (gradient_length_scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (gradient_length_scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (gradient_length_scale_data), "value_changed",
+		      (GtkSignalFunc) paintbrush_scale_update,
+		      &options->gradient_length);
+  gtk_widget_show (gradient_length_scale);
+  gtk_widget_show (hbox);
 
   /* the incremental toggle */
   incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
@@ -162,7 +190,10 @@ paintbrush_paint_func (PaintCore *paint_core,
       break;
 
     case MOTION_PAINT :
-      paintbrush_motion (paint_core, drawable, paint_options->fade_out, paint_options->incremental);
+      paintbrush_motion (paint_core, drawable, 
+			 paint_options->fade_out, 
+			 paint_options->gradient_length,
+			 paint_options->incremental);
       break;
 
     case FINISH_PAINT :
@@ -213,14 +244,20 @@ static void
 paintbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable,
 		   double     fade_out,
+		   double     gradient_length,
 		   gboolean   incremental)
 {
   GImage *gimage;
   TempBuf * area;
   double x, paint_left;
+  double y, position;
   unsigned char blend = OPAQUE_OPACITY;
+  unsigned char temp_blend = OPAQUE_OPACITY;
   unsigned char col[MAX_CHANNELS];
+  double r,g,b,a;
+  double distance;
 
+  position = 0.0;
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
@@ -240,17 +277,53 @@ paintbrush_motion (PaintCore *paint_core,
       blend = (int) (255 * paint_left);
     }
 
+  if (gradient_length)
+    {
+      distance = paint_core->distance;
+      y = ((double) distance / gradient_length);
+      /* not sure if this makes sense for grads, but it seems to work */
+      /* if anyone has a good suggest on how to make the grad repeat */
+      /* let me know  */
+      position = exp (- y * y * 0.5);
+    
+    }
+
   if (blend)
     {
       /*  set the alpha channel  */
       col[area->bytes - 1] = OPAQUE_OPACITY;
+      
+      temp_blend = blend;
+      /* keep going unless we hit the end, or the end is near 0 */
+      if (gradient_length)
+	{
+	  
+	  grad_get_color_at(position,&r,&g,&b,&a); 
+	  r = r * 255.0;
+	  g = g * 255.0;
+	  b = b * 255.0;
+	  a = a * 255.0;
 
+	  col[0] = (gint)r;
+	  col[1] = (gint)g;
+	  col[2] = (gint)b;
+	  temp_blend =  (gint)((a * blend)/255);
+	  /* if you remove this, it will keep painting with the end color */
+	  /* perhaps something to make optional later */
+	  if(position < 0.001)
+	    temp_blend = (int) 0 ;
+	    
+	}
+
+      /* just leave this because I know as soon as i delete it i'll find a bug */
+      /*     printf("position: %f  y: %f  temp_blend: %u grad_len: %f distance: %f \n", position, y, temp_blend, gradient_length, distance); */
+	
       /*  color the pixels  */
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
 
       /*  paste the newly painted canvas to the gimage which is being worked on  */
-      paint_core_paste_canvas (paint_core, drawable, blend,
+      paint_core_paste_canvas (paint_core, drawable, temp_blend,
 			       (int) (gimp_brush_get_opacity () * 255),
 			       gimp_brush_get_paint_mode (), PRESSURE, 
 			       incremental ? INCREMENTAL : CONSTANT);
@@ -263,7 +336,7 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out, non_gui_incremental);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental);
 
   return NULL;
 }
@@ -299,6 +372,34 @@ ProcArg paintbrush_extended_args[] =
   { PDB_FLOAT,
     "fade_out",
     "fade out parameter: fade_out > 0"
+  },
+  { PDB_INT32,
+    "num_strokes",
+    "number of stroke control points (count each coordinate as 2 points)"
+  },
+  { PDB_FLOATARRAY,
+    "strokes",
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+  },
+  { PDB_INT32,
+    "method",
+    "CONTINUOUS(0) or INCREMENTAL(1)"
+  }
+};
+
+ProcArg paintbrush_extended_gradient_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable"
+  },
+  { PDB_FLOAT,
+    "fade_out",
+    "fade out parameter: fade_out > 0"
+  },
+  { PDB_FLOAT,
+    "gradient_length",
+    "Length of gradient to draw: gradient_lengtth >0"
   },
   { PDB_INT32,
     "num_strokes",
@@ -359,6 +460,28 @@ ProcRecord paintbrush_extended_proc =
   { { paintbrush_extended_invoker } },
 };
 
+ProcRecord paintbrush_extended_gradient_proc =
+{
+  "gimp_paintbrush_extended_gradient",
+  "Paint in the current brush with optional fade out parameter and a pull colors from a gradient",
+  "This tool is the gradient paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable with colors drawn from the current active gradient with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length is the distance to spread the gradient over. It is measured in pixels.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  6,
+  paintbrush_extended_gradient_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { paintbrush_extended_gradient_invoker } },
+};
+
 static Argument *
 paintbrush_invoker (Argument *args)
 {
@@ -392,6 +515,13 @@ paintbrush_invoker (Argument *args)
 	non_gui_fade_out = fp_value;
       else
 	success = FALSE;
+    }
+  /* FIXME FIXME FIXME */
+  /* but we need to change the pdb call to gimp_paintbrush...ouch!! */
+  /* should this be enough to do this without breaking PDB? */
+  if (success)
+    {
+      non_gui_gradient_length = 0.0;
     }
   /*  num strokes  */
   if (success)
@@ -444,6 +574,8 @@ paintbrush_invoker (Argument *args)
 
   return procedural_db_return_args (&paintbrush_proc, success);
 }
+
+
 static Argument *
 paintbrush_extended_invoker (Argument *args)
 {
@@ -477,6 +609,13 @@ paintbrush_extended_invoker (Argument *args)
 	non_gui_fade_out = fp_value;
       else
 	success = FALSE;
+    }
+  /* FIXME FIXME FIXME */
+  /* but we need to change the pdb call to gimp_paintbrush...ouch!! */
+  /* should this be enough to do this without breaking PDB? */
+  if (success)
+    {
+      non_gui_gradient_length = 0.0;
     }
   /*  num strokes  */
   if (success)
@@ -527,5 +666,107 @@ paintbrush_extended_invoker (Argument *args)
       paint_core_cleanup ();
     }
 
-  return procedural_db_return_args (&paintbrush_proc, success);
+  return procedural_db_return_args (&paintbrush_extended_proc, success);
+}
+
+
+
+
+
+
+
+
+static Argument *
+paintbrush_extended_gradient_invoker (Argument *args)
+{
+  int success = TRUE;
+  GImage *gimage;
+  GimpDrawable *drawable;
+  int num_strokes;
+  double *stroke_array;
+  int int_value;
+  double fp_value;
+  int i;
+
+  drawable = NULL;
+  num_strokes = 0;
+
+  /*  the drawable  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
+    }
+  /*  fade out  */
+  if (success)
+    {
+      fp_value = args[1].value.pdb_float;
+      if (fp_value >= 0.0)
+	non_gui_fade_out = fp_value;
+      else
+	success = FALSE;
+    }
+  /* gradient length */
+  if(success)
+    {
+      fp_value = args[2].value.pdb_float;
+      if(fp_value >= 0.0)
+	 non_gui_gradient_length = fp_value;
+      else
+	success = FALSE;
+    }
+  /*  num strokes  */
+  if (success)
+    {
+      int_value = args[3].value.pdb_int;
+      if (int_value > 0)
+	num_strokes = int_value / 2;
+      else
+	success = FALSE;
+    }
+
+  /*  point array  */
+  if (success)
+    stroke_array = (double *) args[4].value.pdb_pointer;
+
+  if (success)
+    /*  init the paint core  */
+    success = paint_core_init (&non_gui_paint_core, drawable,
+			       stroke_array[0], stroke_array[1]);
+
+  if (success)
+    {
+      non_gui_incremental = args[5].value.pdb_int;
+      /*  set the paint core's paint func  */
+      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+
+      if (num_strokes == 1)
+	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+
+      for (i = 1; i < num_strokes; i++)
+	{
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
+
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	}
+
+      /*  finish the painting  */
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
+
+      /*  cleanup  */
+      paint_core_cleanup ();
+    }
+
+  return procedural_db_return_args (&paintbrush_extended_gradient_proc, success);
 }

@@ -1,3 +1,13 @@
+Tue Mar 16 23:39:26 EST 1999 Adrian Likins <adrian@gimp.org>
+
+	* app/paintbrush.c: paintbrush_motion, added the ability
+	to paint with the colors from a gradient. In 
+	create_paint_options, added a scale for the length
+	of the gradient to paint. Also added a PDB call.
+
+	*  app/paintbrush.h, internal_procs.c: exported
+	 gimp_paintbrush_extended_gradient to the PDB
+
 Tue Mar 16 19:12:08 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * app/batch.c: make the perl-server independent of script-fu. This

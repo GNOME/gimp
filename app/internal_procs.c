@@ -104,6 +104,7 @@ internal_procs_init ()
   procedural_db_register (&fuzzy_select_proc); pcount++;
   procedural_db_register (&paintbrush_proc); pcount++;
   procedural_db_register (&paintbrush_extended_proc); pcount++;
+  procedural_db_register (&paintbrush_extended_gradient_proc); pcount++;
   procedural_db_register (&pencil_proc); pcount++;
   procedural_db_register (&perspective_proc); pcount++;
   procedural_db_register (&rect_select_proc); pcount++;
