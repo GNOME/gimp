@@ -31,6 +31,7 @@
 
 #include "widgets-types.h"
 
+#include "gimpmessagebox.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -45,7 +46,7 @@ typedef struct _MessageBox MessageBox;
 struct _MessageBox
 {
   GtkWidget   *dialog;
-  GtkWidget   *vbox;
+  GtkWidget   *box;
   GtkWidget   *repeat_label;
   gchar       *domain;
   gchar       *message;
@@ -77,12 +78,9 @@ gimp_message_box (const gchar *stock_id,
 {
   MessageBox *msg_box;
   GtkWidget  *dialog;
-  GtkWidget  *hbox;
-  GtkWidget  *vbox;
-  GtkWidget  *image;
-  GtkWidget  *label;
+  GtkWidget  *box;
   GList      *list;
-  gchar      *str;
+  gchar      *title;
 
   g_return_if_fail (stock_id != NULL);
   g_return_if_fail (message != NULL);
@@ -121,8 +119,7 @@ gimp_message_box (const gchar *stock_id,
               gimp_label_set_attributes (GTK_LABEL (label),
                                          PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
                                          -1);
-	      gtk_box_pack_end (GTK_BOX (msg_box->vbox), label,
-                                FALSE, FALSE, 0);
+	      gtk_box_pack_end (GTK_BOX (msg_box->box), label, FALSE, FALSE, 0);
 	      gtk_widget_show (label);
 
 	      msg_box->repeat_label = label;
@@ -159,41 +156,18 @@ gimp_message_box (const gchar *stock_id,
                     G_CALLBACK (gimp_message_box_response),
                     msg_box);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
+  title = g_strdup_printf (_("%s Message"), domain);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  box = gimp_message_box_new (title, message, stock_id);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  g_free (title);
 
-  str = g_strdup_printf (_("%s Message"), domain);
-  label = gtk_label_new (str);
-  g_free (str);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (message);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
 
   msg_box->dialog   = dialog;
-  msg_box->vbox     = vbox;
+  msg_box->box      = box;
   msg_box->domain   = g_strdup (domain);
   msg_box->message  = g_strdup (message);
   msg_box->callback = callback;

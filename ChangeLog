@@ -1,3 +1,11 @@
+2004-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpmessagebox.[ch]: added new widget GimpMessageBox.
+
+	* app/widgets/gimpwidgets-utils.c: use it for message dialogs.
+
 2004-08-23  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): unset
