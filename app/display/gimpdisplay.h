@@ -243,7 +243,7 @@ void       gdisplay_expose_area              (GDisplay           *gdisp,
 					      gint                w,
 					      gint                h);
 void       gdisplay_expose_guide             (GDisplay           *gdisp,
-					      Guide              *guide);
+					      GimpGuide          *guide);
 void       gdisplay_expose_full              (GDisplay           *gdisp);
 void       gdisplay_flush                    (GDisplay           *gdisp);
 void       gdisplay_flush_now                (GDisplay           *gdisp);
@@ -254,9 +254,9 @@ void       gdisplay_update_icon_scheduler    (GimpImage          *gimage,
 					      gpointer            data);
 void       gdisplay_draw_guides              (GDisplay           *gdisp);
 void       gdisplay_draw_guide               (GDisplay           *gdisp,
-					      Guide              *guide,
+					      GimpGuide          *guide,
 					      gboolean            active);
-Guide    * gdisplay_find_guide               (GDisplay           *gdisp,
+GimpGuide *gdisplay_find_guide               (GDisplay           *gdisp,
 					      gdouble             x,
 					      double              y);
 gboolean   gdisplay_snap_point               (GDisplay           *gdisp,
@@ -300,7 +300,7 @@ void       gdisplays_update_area             (GimpImage          *gimage,
 					      gint                h);
 void       gdisplays_expose_guides           (GimpImage          *gimage);
 void       gdisplays_expose_guide            (GimpImage          *gimage,
-					      Guide              *guide);
+					      GimpGuide          *guide);
 void       gdisplays_update_full             (GimpImage          *gimage);
 void       gdisplays_shrink_wrap             (GimpImage          *gimage);
 void       gdisplays_expose_full             (void);

@@ -25,7 +25,4 @@ GimpImage * gimage_new (gint               width,
                         GimpImageBaseType  base_type);
 
 
-extern guint32 next_guide_id;
-
-
 #endif /* __GIMAGE_H__ */

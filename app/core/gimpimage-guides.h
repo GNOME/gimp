@@ -23,9 +23,12 @@
 #include "gimpviewable.h"
 
 
-#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
+#define COLORMAP_SIZE 768
 
-#define COLORMAP_SIZE    768
+#define GIMP_IMAGE_TYPE_HAS_ALPHA(t) ((t) == RGBA_GIMAGE  || \
+				      (t) == GRAYA_GIMAGE || \
+				      (t) == INDEXEDA_GIMAGE)
+
 
 typedef enum
 {
@@ -34,6 +37,15 @@ typedef enum
   CLIP_TO_BOTTOM_LAYER,
   FLATTEN_IMAGE
 } MergeType;
+
+
+struct _GimpGuide
+{
+  gint                     ref_count;
+  gint                     position;
+  InternalOrientationType  orientation;
+  guint32                  guide_ID;
+};
 
 
 #define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
@@ -154,17 +166,6 @@ struct _GimpImageClass
 };
 
 
-/* Ugly! Move this someplace else! Prolly to gdisplay.. */
-
-struct _Guide
-{
-  gint                     ref_count;
-  gint                     position;
-  InternalOrientationType  orientation;
-  guint32                  guide_ID;
-};
-
-
 /* function declarations */
 
 GtkType         gimp_image_get_type          (void);
@@ -240,14 +241,14 @@ void            gimp_image_transform_color   (const GimpImage    *gimage,
 					      guchar             *src,
 					      guchar             *dest,
 					      GimpImageBaseType   type);
-Guide         * gimp_image_add_hguide        (GimpImage          *gimage);
-Guide         * gimp_image_add_vguide        (GimpImage          *gimage);
+GimpGuide     * gimp_image_add_hguide        (GimpImage          *gimage);
+GimpGuide     * gimp_image_add_vguide        (GimpImage          *gimage);
 void            gimp_image_add_guide         (GimpImage          *gimage,
-					      Guide              *guide);
+					      GimpGuide          *guide);
 void            gimp_image_remove_guide      (GimpImage          *gimage,
-					      Guide              *guide);
+					      GimpGuide          *guide);
 void            gimp_image_delete_guide      (GimpImage          *gimage,
-					      Guide              *guide);
+					      GimpGuide          *guide);
 
 GimpParasite  * gimp_image_parasite_find     (const GimpImage    *gimage,
 					      const gchar        *name);

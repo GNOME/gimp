@@ -153,8 +153,6 @@ gint valid_combinations[][MAX_CHANNELS + 1] =
   { -1, -1, COMBINE_INDEXED_A_INDEXED_A, -1, -1 },
 };
 
-guint32 next_guide_id = 1;  /* For generating guide_ID handles for PDB stuff */
-
 
 /*
  *  Static variables
@@ -185,6 +183,8 @@ static GimpViewableClass *parent_class = NULL;
 
 static gint        global_image_ID  = 1;
 static GHashTable *gimp_image_table = NULL;
+
+static guint32     next_guide_id    = 1;
 
 
 GtkType 
@@ -488,6 +488,9 @@ gimp_image_destroy (GtkObject *object)
   if (gimage->parasites)
     gtk_object_unref (GTK_OBJECT (gimage->parasites));
 
+  g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
+  g_list_free (gimage->guides);
+
   gtk_object_unref (GTK_OBJECT (gimage->new_undo_stack));
   gtk_object_unref (GTK_OBJECT (gimage->new_redo_stack));
 }
@@ -781,9 +784,9 @@ gimp_image_resize (GimpImage *gimage,
   guide_list = gimage->guides;
   while (guide_list)
     {
-      Guide *guide;
+      GimpGuide *guide;
 
-      guide = (Guide*) guide_list->data;
+      guide = (GimpGuide *) guide_list->data;
       guide_list = g_list_next (guide_list);
 
       switch (guide->orientation)
@@ -847,7 +850,7 @@ gimp_image_scale (GimpImage *gimage,
   GList       *list;
   GSList      *remove = NULL;
   GSList      *slist;
-  Guide       *guide;
+  GimpGuide   *guide;
   gint         old_width;
   gint         old_height;
   gdouble      img_scale_w = 1.0;
@@ -934,7 +937,7 @@ gimp_image_scale (GimpImage *gimage,
   /*  Scale any Guides  */
   for (list = gimage->guides; list; list = g_list_next (list))
     {
-      guide = (Guide*) list->data;
+      guide = (GimpGuide *) list->data;
 
       switch (guide->orientation)
 	{
@@ -1380,14 +1383,15 @@ gimp_image_transform_color (const GimpImage    *gimage,
     }
 }
 
-Guide *
+GimpGuide *
 gimp_image_add_hguide (GimpImage *gimage)
 {
-  Guide *guide;
+  GimpGuide *guide;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  guide = g_new (Guide, 1);
+  guide = g_new (GimpGuide, 1);
+
   guide->ref_count   = 0;
   guide->position    = -1;
   guide->guide_ID    = next_guide_id++;
@@ -1398,14 +1402,15 @@ gimp_image_add_hguide (GimpImage *gimage)
   return guide;
 }
 
-Guide *
+GimpGuide *
 gimp_image_add_vguide (GimpImage *gimage)
 {
-  Guide *guide;
+  GimpGuide *guide;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  guide = g_new (Guide, 1);
+  guide = g_new (GimpGuide, 1);
+
   guide->ref_count   = 0;
   guide->position    = -1;
   guide->guide_ID    = next_guide_id++;
@@ -1418,7 +1423,7 @@ gimp_image_add_vguide (GimpImage *gimage)
 
 void
 gimp_image_add_guide (GimpImage *gimage,
-		      Guide     *guide)
+		      GimpGuide *guide)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1427,7 +1432,7 @@ gimp_image_add_guide (GimpImage *gimage,
 
 void
 gimp_image_remove_guide (GimpImage *gimage,
-			 Guide     *guide)
+			 GimpGuide *guide)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1436,7 +1441,7 @@ gimp_image_remove_guide (GimpImage *gimage,
 
 void
 gimp_image_delete_guide (GimpImage *gimage,
-			 Guide     *guide) 
+			 GimpGuide *guide) 
 {
   guide->position = -1;
 

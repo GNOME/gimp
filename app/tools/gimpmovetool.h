@@ -38,7 +38,7 @@ struct _GimpMoveTool
   GimpTool   parent_instance;
 
   GimpLayer *layer;
-  Guide     *guide;
+  GimpGuide *guide;
   GDisplay  *disp;
 };
 

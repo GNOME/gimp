@@ -994,31 +994,30 @@ gdisplay_update_icon_invoker (gpointer data)
 void
 gdisplay_draw_guides (GDisplay *gdisp)
 {
-  GList *tmp_list;
-  Guide *guide;
+  GList     *list;
+  GimpGuide *guide;
 
   if (gdisp->draw_guides)
     {
-      tmp_list = gdisp->gimage->guides;
-      while (tmp_list)
+      for (list = gdisp->gimage->guides; list; list = g_list_next (list))
 	{
-	  guide = tmp_list->data;
-	  tmp_list = tmp_list->next;
+	  guide = (GimpGuide *) list->data;
+
 	  gdisplay_draw_guide (gdisp, guide, FALSE);
 	}
     }
 }
 
 void
-gdisplay_draw_guide (GDisplay *gdisp,
-		     Guide    *guide,
-		     gboolean  active)
+gdisplay_draw_guide (GDisplay  *gdisp,
+		     GimpGuide *guide,
+		     gboolean   active)
 {
-  static GdkGC *normal_hgc = NULL;
-  static GdkGC *active_hgc = NULL;
-  static GdkGC *normal_vgc = NULL;
-  static GdkGC *active_vgc = NULL;
-  static int initialize = TRUE;
+  static GdkGC    *normal_hgc = NULL;
+  static GdkGC    *active_hgc = NULL;
+  static GdkGC    *normal_vgc = NULL;
+  static GdkGC    *active_vgc = NULL;
+  static gboolean  initialize = TRUE;
   gint x1, x2;
   gint y1, y2;
   gint w, h;
@@ -1112,29 +1111,27 @@ gdisplay_draw_guide (GDisplay *gdisp,
     }
 }
 
-Guide *
+GimpGuide *
 gdisplay_find_guide (GDisplay *gdisp,
 		     gdouble   x,
 		     gdouble   y)
 {
-  GList *tmp_list;
-  Guide *guide;
-  gint offset_x, offset_y;
-  gdouble scalex, scaley;
-  gdouble pos;
+  GList     *list;
+  GimpGuide *guide;
+  gint       offset_x, offset_y;
+  gdouble    scalex, scaley;
+  gdouble    pos;
 
   if (gdisp->draw_guides)
     {
       offset_x = gdisp->offset_x - gdisp->disp_xoffset;
       offset_y = gdisp->offset_y - gdisp->disp_yoffset;
-      scalex = SCALEFACTOR_X (gdisp);
-      scaley = SCALEFACTOR_Y (gdisp);
+      scalex   = SCALEFACTOR_X (gdisp);
+      scaley   = SCALEFACTOR_Y (gdisp);
 
-      tmp_list = gdisp->gimage->guides;
-      while (tmp_list)
+      for (list = gdisp->gimage->guides; list; list = g_list_next (list))
 	{
-	  guide = tmp_list->data;
-	  tmp_list = tmp_list->next;
+	  guide = (GimpGuide *) list->data;
 
 	  switch (guide->orientation)
 	    {
@@ -1170,14 +1167,14 @@ gdisplay_snap_point (GDisplay *gdisp,
 		     gdouble  *tx,
 		     gdouble  *ty)
 {
-  GList *tmp_list;
-  Guide *guide;
-  gdouble scalex, scaley;
-  gdouble pos;
-  gint offset_x, offset_y;
-  gint minhdist, minvdist;
-  gint dist;
-  gboolean snapped = FALSE;
+  GList     *list;
+  GimpGuide *guide;
+  gdouble    scalex, scaley;
+  gdouble    pos;
+  gint       offset_x, offset_y;
+  gint       minhdist, minvdist;
+  gint       dist;
+  gboolean   snapped = FALSE;
 
   *tx = x;
   *ty = y;
@@ -1188,17 +1185,15 @@ gdisplay_snap_point (GDisplay *gdisp,
     {
       offset_x = gdisp->offset_x - gdisp->disp_xoffset;
       offset_y = gdisp->offset_y - gdisp->disp_yoffset;
-      scalex = SCALEFACTOR_X (gdisp);
-      scaley = SCALEFACTOR_Y (gdisp);
+      scalex   = SCALEFACTOR_X (gdisp);
+      scaley   = SCALEFACTOR_Y (gdisp);
 
       minhdist = G_MAXINT;
       minvdist = G_MAXINT;
 
-      tmp_list = gdisp->gimage->guides;
-      while (tmp_list)
+      for (list = gdisp->gimage->guides; list; list = g_list_next (list))
 	{
-	  guide = tmp_list->data;
-	  tmp_list = tmp_list->next;
+	  guide = (GimpGuide *) list->data;
 
 	  switch (guide->orientation)
 	    {
@@ -2121,8 +2116,8 @@ gdisplay_expose_area (GDisplay *gdisp,
 }
 
 void
-gdisplay_expose_guide (GDisplay *gdisp,
-		       Guide    *guide)
+gdisplay_expose_guide (GDisplay  *gdisp,
+		       GimpGuide *guide)
 {
   gint x;
   gint y;
@@ -2338,7 +2333,7 @@ gdisplays_expose_guides (GimpImage *gimage)
 
 void
 gdisplays_expose_guide (GimpImage *gimage,
-			Guide     *guide)
+			GimpGuide *guide)
 {
   GDisplay *gdisp;
   GSList   *list;
@@ -2354,7 +2349,7 @@ gdisplays_expose_guide (GimpImage *gimage,
 }
 
 void
-gdisplays_update_full (GimpImage* gimage)
+gdisplays_update_full (GimpImage *gimage)
 {
   GDisplay *gdisp;
   GSList   *list;

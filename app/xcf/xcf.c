@@ -1155,30 +1155,29 @@ xcf_save_prop (XcfInfo  *info,
       break;
     case PROP_GUIDES:
       {
-	GList *guides;
-	Guide *guide;
-	gint32 position;
-	gint8 orientation;
-	int nguides;
+	GList     *guides;
+	GimpGuide *guide;
+	gint32     position;
+	gint8      orientation;
+	gint       nguides;
 
-	guides = va_arg (args, GList*);
+	guides = va_arg (args, GList *);
 	nguides = g_list_length (guides);
 
 	size = nguides * (4 + 1);
 
-	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	info->cp += xcf_write_int32 (info->fp, (guint32 *) &prop_type, 1);
 	info->cp += xcf_write_int32 (info->fp, &size, 1);
 
-	while (guides)
+	for (; guides; guides = g_list_next (guides))
 	  {
-	    guide = guides->data;
-	    guides = guides->next;
+	    guide = (GimpGuide *) guides->data;
 
-	    position = guide->position;
+	    position    = guide->position;
 	    orientation = guide->orientation;
 
-	    info->cp += xcf_write_int32 (info->fp, (guint32*) &position, 1);
-	    info->cp += xcf_write_int8 (info->fp, (guint8*) &orientation, 1);
+	    info->cp += xcf_write_int32 (info->fp, (guint32 *) &position, 1);
+	    info->cp += xcf_write_int8 (info->fp, (guint8 *) &orientation, 1);
 	  }
       }
       break;
@@ -1900,26 +1899,39 @@ xcf_load_image_props (XcfInfo   *info,
 
 	case PROP_GUIDES:
 	  {
-	    Guide *guide;
-	    gint32 position;
-	    gint8 orientation;
-	    gint i, nguides;
+	    GimpGuide *guide;
+	    gint32     position;
+	    gint8      orientation;
+	    gint       i, nguides;
 
 	    nguides = prop_size / (4 + 1);
 	    for (i = 0; i < nguides; i++)
 	      {
-		info->cp += xcf_read_int32 (info->fp, (guint32*) &position, 1);
-		info->cp += xcf_read_int8 (info->fp, (guint8*) &orientation, 1);
+		info->cp += xcf_read_int32 (info->fp, (guint32 *) &position, 1);
+		info->cp += xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
 
-		guide = g_new (Guide, 1);
-		guide->ref_count = 0;
+		switch (orientation)
+		  {
+		  case ORIENTATION_HORIZONTAL:
+		    guide = gimp_image_add_hguide (gimage);
+		    break;
+
+		  case ORIENTATION_VERTICAL:
+		    guide = gimp_image_add_vguide (gimage);
+		    break;
+
+		  default:
+		    g_message ("guide orientation out of range in XCF file");
+		    continue;
+		  }
+
 		guide->position = position;
-		guide->orientation = orientation;
-		guide->guide_ID = next_guide_id++;
-
-		gimage->guides = g_list_prepend (gimage->guides, guide);
 	      }
 
+	    /*  this is silly as the order of guides doesn't really matter,
+	     *  but it restores the list to it's original order, which
+	     *  cannot be wrong  --Mitch
+	     */
 	    gimage->guides = g_list_reverse (gimage->guides);
 	  }
 	  break;

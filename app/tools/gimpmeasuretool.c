@@ -277,8 +277,8 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 	    {
 	      if (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
-		  gboolean  undo_group;
-		  Guide    *guide;
+		  gboolean   undo_group;
+		  GimpGuide *guide;
 
 		  undo_group = (bevent->state & GDK_CONTROL_MASK &&
 				bevent->state & GDK_MOD1_MASK &&

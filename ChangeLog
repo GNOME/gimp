@@ -1,5 +1,30 @@
 2001-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontextpreview.[ch]: removed (was not used).
+
+	* app/apptypes.h: removed the Guide typedef.
+
+	* app/core/core-types.h: added it here as GimpGuide (everything in
+	core/ must be "Gimp"-prefixed).
+
+	* app/gimage.[ch]: removed the global "next_guide_id" variable,
+	don't destroy the guides in the "destroy" handler.
+
+	* app/core/gimpimage.[ch]: destroy them in destroy().
+
+	* app/xcf.c: use GimpImage accessors to add the guides, so we
+	don't need "next_guide_id".
+
+	* app/gdisplay.[ch]
+	* app/undo.c
+	* app/core/gimpimage-duplicate.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.[ch]
+	* tools/pdbgen/pdb/guides.pdb: s/Guide/GimpGuide/, cleanup.
+
+2001-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/fsdither.h: removed...
 

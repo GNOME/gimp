@@ -2370,8 +2370,8 @@ typedef struct _GuideUndo GuideUndo;
 struct _GuideUndo
 {
   GimpImage *gimage;
-  Guide     *guide;
-  Guide      orig;
+  GimpGuide *guide;
+  GimpGuide  orig;
 };
 
 gboolean
@@ -2384,7 +2384,7 @@ undo_push_guide (GimpImage *gimage,
   if ((new = undo_push (gimage, 
 			sizeof (GuideUndo), GUIDE_UNDO, TRUE)))
     {
-      ((Guide *)(guide))->ref_count++;
+      ((GimpGuide *) (guide))->ref_count++;
       
       data           = g_new (GuideUndo, 1);
       new->data      = data;
@@ -2409,7 +2409,7 @@ undo_pop_guide (GimpImage *gimage,
 		gpointer   data_ptr)
 {
   GuideUndo *data;
-  Guide      tmp;
+  GimpGuide  tmp;
   gint       tmp_ref;
 
   data = data_ptr;

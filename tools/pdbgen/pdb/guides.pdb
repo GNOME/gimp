@@ -49,7 +49,7 @@ HELP
 
     my $func = substr($desc, 0, 1);
     %invoke = (
-	vars => [ 'Guide *guide' ],
+	vars => [ 'GimpGuide *guide' ],
 	code => <<CODE
 {
   if (offset < gimage->$max)
@@ -103,8 +103,8 @@ HELP
 
   while (guides)
     {
-      if ((((Guide *) guides->data)->guide_ID == guide) &&
-	  (((Guide *) guides->data)->position >= 0))
+      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	  (((GimpGuide *) guides->data)->position >= 0))
 	{
 	  GList *tmp_next;
 
@@ -112,8 +112,8 @@ HELP
 
 	  tmp_next = guides->next;
 
-	  undo_push_guide (gimage, ((Guide *) guides->data));
-          gimp_image_delete_guide (gimage, (Guide *) guides->data);
+	  undo_push_guide (gimage, ((GimpGuide *) guides->data));
+          gimp_image_delete_guide (gimage, (GimpGuide *) guides->data);
 	  guides = tmp_next;
 	}
       else
@@ -157,11 +157,11 @@ HELP
     {
       if (guide == 0) /* init - Return first guide ID in list */
 	{
-	  while (guides && (((Guide *) guides->data)->position < 0))
+	  while (guides && (((GimpGuide *) guides->data)->position < 0))
 	    guides = guides->next;
 
 	  if (guides) /* didn't just come to end of list */
-	    next_guide = ((Guide *) guides->data)->guide_ID;
+	    next_guide = ((GimpGuide *) guides->data)->guide_ID;
 	}
       else
 	{
@@ -169,8 +169,8 @@ HELP
               
 	  while (guides)
 	    {
-	      if ((((Guide *) guides->data)->guide_ID == guide) &&
-		  (((Guide *) guides->data)->position >= 0))
+	      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+		  (((GimpGuide *) guides->data)->position >= 0))
 		{
 		  GList* tmplist;
 
@@ -178,11 +178,11 @@ HELP
 
 		  tmplist = guides->next;
                       
-		  while (tmplist && (((Guide *) tmplist->data)->position < 0))
+		  while (tmplist && (((GimpGuide *) tmplist->data)->position < 0))
 		    tmplist = tmplist->next;
 
 		  if (tmplist)
-		    next_guide = ((Guide *) tmplist->data)->guide_ID;
+		    next_guide = ((GimpGuide *) tmplist->data)->guide_ID;
 		  else
 		    next_guide = 0;
 
@@ -231,10 +231,10 @@ HELP
 
   while (guides)
     {
-      if ((((Guide *) guides->data)->guide_ID == guide) &&
-	  (((Guide *) guides->data)->position >= 0))
+      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	  (((GimpGuide *) guides->data)->position >= 0))
 	{
-	  orientation = ((Guide *) guides->data)->orientation - 1;
+	  orientation = ((GimpGuide *) guides->data)->orientation - 1;
 	  success = TRUE;
 	  break;
 	}
@@ -277,10 +277,10 @@ HELP
 
   while (guides)
     {
-      if ((((Guide *) guides->data)->guide_ID == guide) &&
-	  (((Guide *) guides->data)->position >= 0))
+      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	  (((GimpGuide *) guides->data)->position >= 0))
 	{
-	  position = ((Guide *) guides->data)->position;
+	  position = ((GimpGuide *) guides->data)->position;
 	  success = TRUE;
 	  break;
 	}
@@ -291,8 +291,6 @@ HELP
 CODE
     );
 }
-
-@headers = qw("gimage.h");
 
 @procs = qw(image_add_hguide image_add_vguide image_delete_guide
 	    image_find_next_guide image_get_guide_orientation

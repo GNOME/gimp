@@ -396,13 +396,13 @@ crop_adjust_guides (GimpImage *gimage,
 		    gint       y2)
 
 {
-  GList    *glist;
-  Guide    *guide;
-  gboolean  remove_guide;
+  GList     *glist;
+  GimpGuide *guide;
+  gboolean   remove_guide;
 
   for (glist = gimage->guides; glist; glist = g_list_next (glist))
     {
-      guide = (Guide *) glist->data;
+      guide = (GimpGuide *) glist->data;
       remove_guide = FALSE;
 
       switch (guide->orientation)
@@ -949,7 +949,7 @@ crop_image (GimpImage *gimage,
 	  guide_list_ptr = gimage->guides;
 	  while ( guide_list_ptr != NULL)
 	    {
-	      undo_push_guide (gimage, (Guide *)guide_list_ptr->data);
+	      undo_push_guide (gimage, (GimpGuide *) guide_list_ptr->data);
 	      guide_list_ptr = guide_list_ptr->next;
 	    }
 	  undo_push_group_end (gimage);

@@ -112,6 +112,11 @@ typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 
 
+/*  non-object types  */
+
+typedef struct _GimpGuide           GimpGuide;
+
+
 /*  functions  */
 
 typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,

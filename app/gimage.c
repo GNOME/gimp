@@ -106,7 +106,6 @@ gimage_dirty_handler (GimpImage *gimage)
 	    tool_manager_initialize_tool (active_tool, gdisp);
 	  else
 	    tool_manager_initialize_tool (active_tool, NULL);
-
 	}
     }
 }
@@ -114,18 +113,8 @@ gimage_dirty_handler (GimpImage *gimage)
 static void
 gimage_destroy_handler (GimpImage *gimage)
 {
-  GList *list;
-  
   /*  free the undo list  */
   undo_free (gimage);
-
-  /*  free all guides  */
-  for (list = gimage->guides; list; list = g_list_next (list))
-    {
-      g_free ((Guide*) list->data);
-    }
-
-  g_list_free (gimage->guides);
 
   /*  check if this is the last image  */
   if (gimp_container_num_children (image_context) == 1)

@@ -48,8 +48,6 @@ typedef struct _GimpParasite        GimpParasite;
 
 typedef struct _GimpProgress        GimpProgress;
 
-typedef struct _Guide               Guide;
-
 typedef         gpointer            ImageMap;
 
 typedef struct _InfoDialog          InfoDialog;

@@ -188,7 +188,7 @@ move_tool_button_press (GimpTool       *tool,
 {
   GimpMoveTool *move;
   GimpLayer    *layer;
-  Guide        *guide;
+  GimpGuide    *guide;
   gint          x, y;
 
   move = GIMP_MOVE_TOOL (tool);
@@ -264,8 +264,8 @@ move_tool_button_press (GimpTool       *tool,
 }
 
 static void
-move_draw_guide (GDisplay *gdisp, 
-		 Guide    *guide)
+move_draw_guide (GDisplay  *gdisp, 
+		 GimpGuide *guide)
 {
   gint x1, y1;
   gint x2, y2;
@@ -430,7 +430,7 @@ move_tool_cursor_update (GimpTool       *tool,
 			 GDisplay       *gdisp)
 {
   GimpMoveTool *move;
-  Guide        *guide;
+  GimpGuide    *guide;
   GimpLayer    *layer;
   gint          x, y;
 

@@ -28,7 +28,6 @@
 
 #include "appenums.h"
 #include "core/gimpimage.h"
-#include "gimage.h"
 #include "undo.h"
 
 static ProcRecord image_add_hguide_proc;
@@ -57,7 +56,7 @@ image_add_hguide_invoker (Argument *args)
   GimpImage *gimage;
   gint32 offset;
   gint32 guide_ID = 0;
-  Guide *guide;
+  GimpGuide *guide;
 
   gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -135,7 +134,7 @@ image_add_vguide_invoker (Argument *args)
   GimpImage *gimage;
   gint32 offset;
   gint32 guide_ID = 0;
-  Guide *guide;
+  GimpGuide *guide;
 
   gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -227,8 +226,8 @@ image_delete_guide_invoker (Argument *args)
     
       while (guides)
 	{
-	  if ((((Guide *) guides->data)->guide_ID == guide) &&
-	      (((Guide *) guides->data)->position >= 0))
+	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	      (((GimpGuide *) guides->data)->position >= 0))
 	    {
 	      GList *tmp_next;
     
@@ -236,8 +235,8 @@ image_delete_guide_invoker (Argument *args)
     
 	      tmp_next = guides->next;
     
-	      undo_push_guide (gimage, ((Guide *) guides->data));
-	      gimp_image_delete_guide (gimage, (Guide *) guides->data);
+	      undo_push_guide (gimage, ((GimpGuide *) guides->data));
+	      gimp_image_delete_guide (gimage, (GimpGuide *) guides->data);
 	      guides = tmp_next;
 	    }
 	  else
@@ -302,11 +301,11 @@ image_find_next_guide_invoker (Argument *args)
 	{
 	  if (guide == 0) /* init - Return first guide ID in list */
 	    {
-	      while (guides && (((Guide *) guides->data)->position < 0))
+	      while (guides && (((GimpGuide *) guides->data)->position < 0))
 		guides = guides->next;
     
 	      if (guides) /* didn't just come to end of list */
-		next_guide = ((Guide *) guides->data)->guide_ID;
+		next_guide = ((GimpGuide *) guides->data)->guide_ID;
 	    }
 	  else
 	    {
@@ -314,8 +313,8 @@ image_find_next_guide_invoker (Argument *args)
 		  
 	      while (guides)
 		{
-		  if ((((Guide *) guides->data)->guide_ID == guide) &&
-		      (((Guide *) guides->data)->position >= 0))
+		  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+		      (((GimpGuide *) guides->data)->position >= 0))
 		    {
 		      GList* tmplist;
     
@@ -323,11 +322,11 @@ image_find_next_guide_invoker (Argument *args)
     
 		      tmplist = guides->next;
 			  
-		      while (tmplist && (((Guide *) tmplist->data)->position < 0))
+		      while (tmplist && (((GimpGuide *) tmplist->data)->position < 0))
 			tmplist = tmplist->next;
     
 		      if (tmplist)
-			next_guide = ((Guide *) tmplist->data)->guide_ID;
+			next_guide = ((GimpGuide *) tmplist->data)->guide_ID;
 		      else
 			next_guide = 0;
     
@@ -412,10 +411,10 @@ image_get_guide_orientation_invoker (Argument *args)
     
       while (guides)
 	{
-	  if ((((Guide *) guides->data)->guide_ID == guide) &&
-	      (((Guide *) guides->data)->position >= 0))
+	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	      (((GimpGuide *) guides->data)->position >= 0))
 	    {
-	      orientation = ((Guide *) guides->data)->orientation - 1;
+	      orientation = ((GimpGuide *) guides->data)->orientation - 1;
 	      success = TRUE;
 	      break;
 	    }
@@ -495,10 +494,10 @@ image_get_guide_position_invoker (Argument *args)
     
       while (guides)
 	{
-	  if ((((Guide *) guides->data)->guide_ID == guide) &&
-	      (((Guide *) guides->data)->position >= 0))
+	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
+	      (((GimpGuide *) guides->data)->position >= 0))
 	    {
-	      position = ((Guide *) guides->data)->position;
+	      position = ((GimpGuide *) guides->data)->position;
 	      success = TRUE;
 	      break;
 	    }
