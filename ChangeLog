@@ -1,3 +1,8 @@
+Sat Sep  4 00:16:04 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/warp.c,
+	plug-ins/common/mkgen.pl: added warp plug-in.
+
 Fri Sep  3 22:52:26 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/curves.c
