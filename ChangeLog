@@ -6,6 +6,11 @@
 
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptemplateeditor.[ch]: added a label that shows
+	the pixel size (as in the initial mockup done by Jimmac).
+
+2004-09-24  Sven Neumann  <sven@gimp.org>
+
 	* app/base/curves.[ch]
 	* app/tools/gimpcurvestool.c: defined CURVES_NUM_POINTS and use it.
 

@@ -51,6 +51,7 @@ struct _GimpTemplateEditor
   GtkWidget     *expander;
   GtkWidget     *size_se;
   GtkWidget     *memsize_label;
+  GtkWidget     *pixel_label;
   GtkWidget     *resolution_se;
 };
 

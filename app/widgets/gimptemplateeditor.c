@@ -186,6 +186,7 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *aspect_box;
   GtkWidget          *frame;
   GtkWidget          *hbox;
+  GtkWidget          *vbox;
   GtkWidget          *table;
   GtkWidget          *label;
   GtkObject          *adjustment;
@@ -277,7 +278,7 @@ gimp_template_editor_constructor (GType                  type,
                                  editor->template->xresolution,
                                  editor->template->yresolution);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
   gtk_widget_show (hbox);
 
@@ -291,9 +292,25 @@ gimp_template_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (hbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);
 
+  vbox = gtk_vbox_new (2, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  editor->pixel_label = gtk_label_new (NULL);
+  gimp_label_set_attributes (GTK_LABEL (editor->pixel_label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (editor->pixel_label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->pixel_label, FALSE, FALSE, 0);
+  gtk_widget_show (editor->pixel_label);
+
   editor->memsize_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), editor->memsize_label, TRUE, TRUE, 0);
+  gimp_label_set_attributes (GTK_LABEL (editor->memsize_label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->memsize_label, FALSE, FALSE, 0);
   gtk_widget_show (editor->memsize_label);
 
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
@@ -435,6 +452,9 @@ gimp_template_editor_constructor (GType                  type,
   g_signal_connect_object (editor->template, "notify",
                            G_CALLBACK (gimp_template_editor_template_notify),
                            editor, 0);
+
+  /*  call the notify callback once to get the labels set initially  */
+  gimp_template_editor_template_notify (editor->template, NULL, editor);
 
   return object;
 }
@@ -627,6 +647,11 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
 
   text = gimp_memsize_to_string (template->initial_size);
   gtk_label_set_text (GTK_LABEL (editor->memsize_label), text);
+  g_free (text);
+
+  text = g_strdup_printf (_("%d x %d pixels"),
+                          editor->template->width, editor->template->height);
+  gtk_label_set_text (GTK_LABEL (editor->pixel_label), text);
   g_free (text);
 
   if (editor->template->width > editor->template->height)
