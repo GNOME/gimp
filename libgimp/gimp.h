@@ -33,6 +33,7 @@ typedef struct _GTile        GTile;
 typedef struct _GDrawable    GDrawable;
 typedef struct _GPixelRgn    GPixelRgn;
 typedef struct _GParamDef    GParamDef;
+typedef union  _GParamData   GParamData;
 typedef struct _GParam       GParam;
 typedef void   (* GRunProc) (char    *name,
 			     int      nparams,
@@ -110,42 +111,44 @@ struct _GParamDef
   char *description;
 };
 
+union _GParamData
+{
+  gint32 d_int32;
+  gint16 d_int16;
+  gint8 d_int8;
+  gdouble d_float;
+  gchar *d_string;
+  gint32 *d_int32array;
+  gint16 *d_int16array;
+  gint8 *d_int8array;
+  gdouble *d_floatarray;
+  gchar **d_stringarray;
+  struct {
+    guint8 red;
+    guint8 green;
+    guint8 blue;
+  } d_color;
+  struct {
+    gint32 x;
+    gint32 y;
+    gint32 width;
+    gint32 height;
+  } d_region;
+  gint32 d_display;
+  gint32 d_image;
+  gint32 d_layer;
+  gint32 d_channel;
+  gint32 d_drawable;
+  gint32 d_selection;
+  gint32 d_boundary;
+  gint32 d_path;
+  gint32 d_status;
+};
+
 struct _GParam
 {
   GParamType type;
-
-  union {
-    gint32 d_int32;
-    gint16 d_int16;
-    gint8 d_int8;
-    gdouble d_float;
-    gchar *d_string;
-    gint32 *d_int32array;
-    gint16 *d_int16array;
-    gint8 *d_int8array;
-    gdouble *d_floatarray;
-    gchar **d_stringarray;
-    struct {
-      guint8 red;
-      guint8 green;
-      guint8 blue;
-    } d_color;
-    struct {
-      gint32 x;
-      gint32 y;
-      gint32 width;
-      gint32 height;
-    } d_region;
-    gint32 d_display;
-    gint32 d_image;
-    gint32 d_layer;
-    gint32 d_channel;
-    gint32 d_drawable;
-    gint32 d_selection;
-    gint32 d_boundary;
-    gint32 d_path;
-    gint32 d_status;
-  } data;
+  GParamData data;
 };
 
 

@@ -107,7 +107,7 @@ gimp_main (int   argc,
       return 0;
     }
 
-  temp_proc_ht = g_hash_table_new (g_string_hash, g_string_equal);
+  temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   gimp_loop ();
   return 0;
