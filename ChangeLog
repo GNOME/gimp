@@ -1,3 +1,7 @@
+Sun Feb 27 21:55:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* po-script-fu/Makefile.in.in: forgot to check this in
+
 2000-02-27  14:54:18 EST Garry R. Osgood <gosgood@idt.net>
 
 	* gimp/app/gimpimage.c Fixed small typo.
