@@ -1,5 +1,13 @@
 2002-09-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewabledialog.c: use PangoAttributes instead of
+	PangoMarkup.
+
+	* app/gui/preferences-dialog.c: adapt to the look of the
+	GimpViewableDialog.
+
+2002-09-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c: reordered buttons and polished the dialog.
 
 2002-09-17  Sven Neumann  <sven@gimp.org>

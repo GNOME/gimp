@@ -176,8 +176,8 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
 {
   GimpViewableDialog *dialog;
   va_list             args;
-  gchar              *escaped;
-  gchar              *str;
+  PangoAttrList      *attrs;
+  PangoAttribute     *attr;
 
   g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -199,12 +199,23 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
   gtk_image_set_from_stock (GTK_IMAGE (dialog->icon), stock_id,
                             GTK_ICON_SIZE_LARGE_TOOLBAR);
 
-  escaped = g_markup_escape_text (desc, -1);
-  str = g_strdup_printf ("<b><big>%s</big></b>", escaped);
-  g_free (escaped);
 
-  gtk_label_set_markup (GTK_LABEL (dialog->desc_label), str);
-  g_free (str);
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_X_LARGE);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  gtk_label_set_attributes (GTK_LABEL (dialog->desc_label), attrs);
+  pango_attr_list_unref (attrs);
+
+  gtk_label_set_text (GTK_LABEL (dialog->desc_label), desc);
 
   if (viewable)
     gimp_viewable_dialog_set_viewable (dialog, viewable);

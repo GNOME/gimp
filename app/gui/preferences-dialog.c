@@ -1594,6 +1594,7 @@ preferences_dialog_create (Gimp *gimp)
   GtkTreeIter        child_iter;
   gint               page_index;
 
+  GtkWidget         *ebox;
   GtkWidget         *frame;
   GtkWidget         *notebook;
   GtkWidget         *vbox;
@@ -1795,9 +1796,14 @@ preferences_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+  ebox = gtk_event_box_new ();
+  gtk_widget_set_state (ebox, GTK_STATE_PRELIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
+  gtk_widget_show (ebox);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (ebox), frame);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -1811,10 +1817,17 @@ preferences_dialog_create (Gimp *gimp)
   gtk_widget_show (label);
 
   attrs = pango_attr_list_new ();
+
   attr = pango_attr_scale_new (PANGO_SCALE_X_LARGE);
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (attrs, attr);
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
   gtk_label_set_attributes (GTK_LABEL (label), attrs);
   pango_attr_list_unref (attrs);
 
