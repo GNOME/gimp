@@ -72,70 +72,70 @@ typedef struct
  */
 static void   query     (void);
 static void   run       (const gchar      *name,
-		         gint              nparams,
-		         const GimpParam  *param,
-		         gint             *nreturn_vals,
-		         GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static gint32 load_image    (const gchar  *filename);
 
 static void   load_rgba     (TIFF         *tif,
-			     channel_data *channel);
+                             channel_data *channel);
 static void   load_lines    (TIFF         *tif,
-			     channel_data *channel,
-			     gushort       bps,
-			     gushort       photomet,
-			     gboolean      alpha,
-			     gint          extra);
+                             channel_data *channel,
+                             gushort       bps,
+                             gushort       photomet,
+                             gboolean      alpha,
+                             gint          extra);
 static void   load_tiles    (TIFF         *tif,
-			     channel_data *channel,
-			     gushort       bps,
-			     gushort       photomet,
-			     gboolean      alpha,
-			     gint          extra);
+                             channel_data *channel,
+                             gushort       bps,
+                             gushort       photomet,
+                             gboolean      alpha,
+                             gint          extra);
 
 static void   read_separate (guchar       *source,
-			     channel_data *channel,
+                             channel_data *channel,
                              gushort       bps,
-			     gushort       photomet,
+                             gushort       photomet,
                              gint          startcol,
-			     gint          startrow,
-			     gint          rows,
-			     gint          cols,
+                             gint          startrow,
+                             gint          rows,
+                             gint          cols,
                              gboolean      alpha,
-			     gint          extra,
-			     gint          sample);
+                             gint          extra,
+                             gint          sample);
 static void   read_16bit    (guchar       *source,
-			     channel_data *channel,
-			     gushort       photomet,
-			     gint          startcol,
-			     gint          startrow,
-			     gint          rows,
-			     gint          cols,
-			     gboolean      alpha,
-			     gint          extra,
-			     gint          align);
+                             channel_data *channel,
+                             gushort       photomet,
+                             gint          startcol,
+                             gint          startrow,
+                             gint          rows,
+                             gint          cols,
+                             gboolean      alpha,
+                             gint          extra,
+                             gint          align);
 static void   read_8bit     (guchar       *source,
-			     channel_data *channel,
-			     gushort       photomet,
-			     gint          startcol,
-			     gint          startrow,
-			     gint          rows,
-			     gint          cols,
-			     gboolean      alpha,
-			     gint          extra,
-			     gint          align);
+                             channel_data *channel,
+                             gushort       photomet,
+                             gint          startcol,
+                             gint          startrow,
+                             gint          rows,
+                             gint          cols,
+                             gboolean      alpha,
+                             gint          extra,
+                             gint          align);
 static void   read_default  (guchar       *source,
-			     channel_data *channel,
-			     gushort       bps,
-			     gushort       photomet,
-			     gint          startcol,
-			     gint          startrow,
-			     gint          rows,
-			     gint          cols,
-			     gboolean      alpha,
-			     gint          extra,
-			     gint          align);
+                             channel_data *channel,
+                             gushort       bps,
+                             gushort       photomet,
+                             gint          startcol,
+                             gint          startrow,
+                             gint          rows,
+                             gint          cols,
+                             gboolean      alpha,
+                             gint          extra,
+                             gint          align);
 
 static gboolean  save_image             (const gchar *filename,
                                          gint32       image,
@@ -209,7 +209,7 @@ query (void)
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "1995-1996,1998-2003",
                           "<Load>/Tiff",
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -218,13 +218,13 @@ query (void)
   gimp_install_procedure ("file_tiff_save",
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
-			  "The value for the saved comment is taken "
-			  "from the 'gimp-comment' parasite.",
+                          "The value for the saved comment is taken "
+                          "from the 'gimp-comment' parasite.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
                           "<Save>/Tiff",
-			  "RGB*, GRAY*, INDEXED",
+                          "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
@@ -234,24 +234,24 @@ query (void)
   gimp_install_procedure ("file_tiff_save2",
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
-			  "The value for the saved comment is taken "
-			  "from the 'gimp-comment' parasite.",
+                          "The value for the saved comment is taken "
+                          "from the 'gimp-comment' parasite.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
                           NULL,
-			  "RGB*, GRAY*, INDEXED",
+                          "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_tiff_load",
-				    "tif,tiff",
-				    "",
-				    "0,string,II*\\0,0,string,MM\\0*");
+                                    "tif,tiff",
+                                    "",
+                                    "0,string,II*\\0,0,string,MM\\0*");
   gimp_register_save_handler       ("file_tiff_save",
-				    "tif,tiff",
-				    "");
+                                    "tif,tiff",
+                                    "");
 }
 
 static void
@@ -284,15 +284,15 @@ run (const gchar      *name,
       image = load_image (param[1].data.d_string);
 
       if (image != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, "file_tiff_save") == 0
            || strcmp (name, "file_tiff_save2") == 0 )
@@ -302,28 +302,28 @@ run (const gchar      *name,
       drawable = param[2].data.d_int32;
 
       /* Do this right this time, if POSSIBLE query for parasites, otherwise
-	 or if there isn't one, choose the default comment from the gimprc. */
+         or if there isn't one, choose the default comment from the gimprc. */
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("tiff", FALSE);
-	  export = gimp_export_image (&image, &drawable, "TIFF",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("tiff", FALSE);
+          export = gimp_export_image (&image, &drawable, "TIFF",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
@@ -331,85 +331,85 @@ run (const gchar      *name,
       gimp_parasite_free (parasite);
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_tiff_save", &tsvals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("file_tiff_save", &tsvals);
 
-	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
-	  if (parasite)
-	    {
-	      tsvals.compression =
-		((TiffSaveVals *) parasite->data)->compression;
-	      tsvals.save_transp_pixels =
-		((TiffSaveVals *) parasite->data)->save_transp_pixels;
-	    }
-	  gimp_parasite_free (parasite);
+          parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
+          if (parasite)
+            {
+              tsvals.compression =
+                ((TiffSaveVals *) parasite->data)->compression;
+              tsvals.save_transp_pixels =
+                ((TiffSaveVals *) parasite->data)->save_transp_pixels;
+            }
+          gimp_parasite_free (parasite);
 
-	  /*  First acquire information with a dialog  */
-	  if (! save_dialog ())
-	    status = GIMP_PDB_CANCEL;
-	  break;
+          /*  First acquire information with a dialog  */
+          if (! save_dialog ())
+            status = GIMP_PDB_CANCEL;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6 || nparams != 7)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      switch (param[5].data.d_int32)
-		{
-		case 0: tsvals.compression = COMPRESSION_NONE;     break;
-		case 1: tsvals.compression = COMPRESSION_LZW;      break;
-		case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
-		case 3: tsvals.compression = COMPRESSION_DEFLATE;  break;
-		case 4: tsvals.compression = COMPRESSION_JPEG;  break;
-		default: status = GIMP_PDB_CALLING_ERROR; break;
-		}
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 6 || nparams != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              switch (param[5].data.d_int32)
+                {
+                case 0: tsvals.compression = COMPRESSION_NONE;     break;
+                case 1: tsvals.compression = COMPRESSION_LZW;      break;
+                case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
+                case 3: tsvals.compression = COMPRESSION_DEFLATE;  break;
+                case 4: tsvals.compression = COMPRESSION_JPEG;  break;
+                default: status = GIMP_PDB_CALLING_ERROR; break;
+                }
 
               if (nparams == 7)
                 tsvals.save_transp_pixels = param[6].data.d_int32;
               else
                 tsvals.save_transp_pixels = TRUE;
-	    }
-	  break;
+            }
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_tiff_save", &tsvals);
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("file_tiff_save", &tsvals);
 
-	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
-	  if (parasite)
-	    {
-	      tsvals.compression =
-		((TiffSaveVals *) parasite->data)->compression;
-	      tsvals.save_transp_pixels =
-		((TiffSaveVals *) parasite->data)->save_transp_pixels;
-	    }
-	  gimp_parasite_free (parasite);
-	  break;
+          parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
+          if (parasite)
+            {
+              tsvals.compression =
+                ((TiffSaveVals *) parasite->data)->compression;
+              tsvals.save_transp_pixels =
+                ((TiffSaveVals *) parasite->data)->save_transp_pixels;
+            }
+          gimp_parasite_free (parasite);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (save_image (param[3].data.d_string, image, drawable, orig_image))
-	    {
-	      /*  Store mvals data  */
-	      gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (save_image (param[3].data.d_string, image, drawable, orig_image))
+            {
+              /*  Store mvals data  */
+              gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image);
+        gimp_image_delete (image);
     }
   else
     {
@@ -432,7 +432,7 @@ tiff_warning(const gchar *module,
     {
       G_VA_COPY (ap_test, ap);
       if (va_arg (ap_test, int) >= 32768)
-	return;
+        return;
     }
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
@@ -490,6 +490,10 @@ load_image (const gchar *filename)
   uint32        profile_size;
   guchar       *icc_profile;
 #endif
+
+  gboolean      uselayername = FALSE;
+  guchar       *tmp_name;
+
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
@@ -796,14 +800,40 @@ load_image (const gchar *filename)
       /* Allocate channel_data for all channels, even the background layer */
       channel = g_new0 (channel_data, extra + 1);
 
-      if (ilayer == 0)
-        name = g_strdup (_("Background"));
-      else
-        name = g_strdup_printf (_("Page %d"), ilayer);
+      /* try and use layer name from tiff file */
+      name = NULL;
+      uselayername = FALSE;
 
-      layer = gimp_layer_new (image, name,
-                              cols, rows, layer_type, 100, GIMP_NORMAL_MODE);
-      g_free (name);
+      if (TIFFGetField (tif, TIFFTAG_PAGENAME, &name))
+        {
+          tmp_name = name;
+          uselayername = TRUE;
+          for (tmp_name = name ; *tmp_name ; tmp_name++)
+            {
+              if (*tmp_name > 127)
+                {
+                  uselayername = FALSE;
+                  break;
+                }
+            }
+        }
+      if (uselayername)
+        {
+          layer = gimp_layer_new (image, name,
+                                  cols, rows, layer_type, 100, GIMP_NORMAL_MODE);
+          name = NULL;
+        }
+      else
+        {
+          if (ilayer == 0)
+            name = g_strdup (_("Background"));
+          else
+            name = g_strdup_printf (_("Page %d"), ilayer);
+
+          layer = gimp_layer_new (image, name,
+                                  cols, rows, layer_type, 100, GIMP_NORMAL_MODE);
+          g_free (name);
+        }
 
       channel[0].ID       = layer;
       channel[0].drawable = gimp_drawable_get (layer);
@@ -980,8 +1010,8 @@ load_tiles (TIFF         *tif,
   for (i = 0; i <= extra; ++i)
     {
       channel[i].pixels = g_new (guchar,
-				 tileWidth * tileLength *
-				 channel[i].drawable->bpp);
+                                 tileWidth * tileLength *
+                                 channel[i].drawable->bpp);
     }
 
   for (y = 0; y < imageLength; y += tileLength)
@@ -1024,9 +1054,9 @@ load_tiles (TIFF         *tif,
 static void
 load_lines (TIFF         *tif,
             channel_data *channel,
-	    gushort       bps,
+            gushort       bps,
             gushort       photomet,
-	    gboolean      alpha,
+            gboolean      alpha,
             gint          extra)
 {
   uint16  planar= PLANARCONFIG_CONTIG;
@@ -1107,13 +1137,13 @@ load_lines (TIFF         *tif,
 
 static void
 read_16bit (guchar       *source,
-	    channel_data *channel,
-	    gushort       photomet,
-	    gint          startrow,
-	    gint          startcol,
-	    gint          rows,
-	    gint          cols,
-	    gboolean      alpha,
+            channel_data *channel,
+            gushort       photomet,
+            gint          startrow,
+            gint          startcol,
+            gint          rows,
+            gint          cols,
+            gboolean      alpha,
             gint          extra,
             gint          align)
 {
@@ -1251,10 +1281,10 @@ read_16bit (guchar       *source,
             }
 
           for (i = 1; i <= extra; ++i)
-	    {
-	      *channel[i].pixel++ = *source; source += 2;
-	    }
-	}
+            {
+              *channel[i].pixel++ = *source; source += 2;
+            }
+        }
 
       if (align)
         {
@@ -1274,20 +1304,20 @@ read_16bit (guchar       *source,
 
   for (i = 0; i <= extra; ++i)
     gimp_pixel_rgn_set_rect (&(channel[i].pixel_rgn), channel[i].pixels,
-			     startcol, startrow, cols, rows);
+                             startcol, startrow, cols, rows);
 }
 
 static void
 read_8bit (guchar       *source,
-	   channel_data *channel,
-	   gushort       photomet,
-	   gint          startrow,
-	   gint          startcol,
-	   gint          rows,
-	   gint          cols,
-	   gboolean      alpha,
-	   gint          extra,
-	   gint          align)
+           channel_data *channel,
+           gushort       photomet,
+           gint          startrow,
+           gint          startcol,
+           gint          rows,
+           gint          cols,
+           gboolean      alpha,
+           gint          extra,
+           gint          align)
 {
   guchar *dest;
   gint    gray_val, red_val, green_val, blue_val, alpha_val;
@@ -1448,8 +1478,8 @@ read_8bit (guchar       *source,
   {                                           \
       if (bitsleft == 0)                      \
       {                                       \
-	  source++;                           \
-	  bitsleft = 8;                       \
+          source++;                           \
+          bitsleft = 8;                       \
       }                                       \
       bitsleft -= bps;                        \
       var = ( *source >> bitsleft ) & maxval; \
@@ -1457,15 +1487,15 @@ read_8bit (guchar       *source,
 
 static void
 read_default (guchar       *source,
-	      channel_data *channel,
-	      gushort       bps,
-	      gushort       photomet,
-	      gint          startrow,
-	      gint          startcol,
-	      gint          rows,
-	      gint          cols,
-	      gboolean      alpha,
-	      gint          extra,
+              channel_data *channel,
+              gushort       bps,
+              gushort       photomet,
+              gint          startrow,
+              gint          startcol,
+              gint          rows,
+              gint          cols,
+              gboolean      alpha,
+              gint          extra,
               gint          align)
 {
   guchar *dest;
@@ -1636,16 +1666,16 @@ read_default (guchar       *source,
 
 static void
 read_separate (guchar       *source,
-	       channel_data *channel,
+               channel_data *channel,
                gushort       bps,
-	       gushort       photomet,
+               gushort       photomet,
                gint          startrow,
-	       gint          startcol,
-	       gint          rows,
-	       gint          cols,
+               gint          startcol,
+               gint          rows,
+               gint          cols,
                gboolean      alpha,
-	       gint          extra,
-	       gint          sample)
+               gint          extra,
+               gint          sample)
 {
   guchar *dest;
   gint    col, row, c;
@@ -1712,9 +1742,9 @@ read_separate (guchar       *source,
 
 static gboolean
 save_image (const gchar *filename,
-	    gint32       image,
-	    gint32       layer,
-	    gint32       orig_image)  /* the export function might have created a duplicate */
+            gint32       image,
+            gint32       layer,
+            gint32       orig_image)  /* the export function might have created a duplicate */
 {
   TIFF          *tif;
   gushort        red[256];
@@ -1773,7 +1803,7 @@ save_image (const gchar *filename,
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   cols = drawable->width;
   rows = drawable->height;
@@ -1820,11 +1850,11 @@ save_image (const gchar *filename,
       cmap = gimp_image_get_cmap (image, &colors);
 
       for (i = 0; i < colors; i++)
-	{
-	  red[i] = *cmap++ * 65535 / 255;
-	  grn[i] = *cmap++ * 65535 / 255;
-	  blu[i] = *cmap++ * 65535 / 255;
-	}
+        {
+          red[i] = *cmap++ * 65535 / 255;
+          grn[i] = *cmap++ * 65535 / 255;
+          blu[i] = *cmap++ * 65535 / 255;
+        }
       break;
     case GIMP_INDEXEDA_IMAGE:
     default:
@@ -1870,20 +1900,20 @@ save_image (const gchar *filename,
     /*  if we have a metric unit, save the resolution as centimeters
      */
     if ((ABS (factor - 0.0254) < 1e-5) ||  /* m  */
-	(ABS (factor - 0.254) < 1e-5) ||   /* dm */
-	(ABS (factor - 2.54) < 1e-5) ||    /* cm */
-	(ABS (factor - 25.4) < 1e-5))      /* mm */
+        (ABS (factor - 0.254) < 1e-5) ||   /* dm */
+        (ABS (factor - 2.54) < 1e-5) ||    /* cm */
+        (ABS (factor - 25.4) < 1e-5))      /* mm */
       {
-	save_unit = RESUNIT_CENTIMETER;
-	xresolution /= 2.54;
-	yresolution /= 2.54;
+        save_unit = RESUNIT_CENTIMETER;
+        xresolution /= 2.54;
+        yresolution /= 2.54;
       }
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
       {
-	TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
-	TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
-	TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
+        TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
+        TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
+        TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
   }
 
@@ -1917,8 +1947,8 @@ save_image (const gchar *filename,
 
       TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
       parasite = gimp_parasite_new ("gimp-comment",
-				    GIMP_PARASITE_PERSISTENT,
-				    strlen (image_comment) + 1, image_comment);
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (image_comment) + 1, image_comment);
       gimp_image_parasite_attach (orig_image, parasite);
       gimp_parasite_free (parasite);
     }
@@ -1934,9 +1964,9 @@ save_image (const gchar *filename,
     if (parasite)
       {
         profile_size = gimp_parasite_data_size (parasite);
-	icc_profile = gimp_parasite_data (parasite);
+        icc_profile = gimp_parasite_data (parasite);
 
-	TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
+        TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
         gimp_parasite_free (parasite);
       }
   }
@@ -1958,20 +1988,20 @@ save_image (const gchar *filename,
       gimp_pixel_rgn_get_rect (&pixel_rgn, src, 0, y, cols, yend - y);
 
       for (row = y; row < yend; row++)
-	{
-	  t = src + bytesperrow * (row - y);
+        {
+          t = src + bytesperrow * (row - y);
 
-	  switch (drawable_type)
-	    {
-	    case GIMP_INDEXED_IMAGE:
-	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-	      break;
-	    case GIMP_GRAY_IMAGE:
-	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-	      break;
-	    case GIMP_GRAYA_IMAGE:
-	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
-		{
+          switch (drawable_type)
+            {
+            case GIMP_INDEXED_IMAGE:
+              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+              break;
+            case GIMP_GRAY_IMAGE:
+              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+              break;
+            case GIMP_GRAYA_IMAGE:
+              for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+                {
                   if (tsvals.save_transp_pixels)
                     {
                       data[col + 0] = t[col + 0];
@@ -1983,15 +2013,15 @@ save_image (const gchar *filename,
                     }
 
                   data[col + 1] = t[col + 1];  /* alpha channel */
-		}
-	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
-	      break;
-	    case GIMP_RGB_IMAGE:
-	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-	      break;
-	    case GIMP_RGBA_IMAGE:
-	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
-		{
+                }
+              success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+              break;
+            case GIMP_RGB_IMAGE:
+              success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+              break;
+            case GIMP_RGBA_IMAGE:
+              for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+                {
                   if (tsvals.save_transp_pixels)
                     {
                       data[col+0] = t[col + 0];
@@ -2007,20 +2037,20 @@ save_image (const gchar *filename,
                     }
 
                   data[col+3] = t[col + 3];  /* alpha channel */
-		}
-	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
-	      break;
-	    default:
-	      success = FALSE;
-	      break;
-	    }
+                }
+              success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+              break;
+            default:
+              success = FALSE;
+              break;
+            }
 
-	  if (!success)
+          if (!success)
             {
               g_message ("Failed a scanline write on row %d", row);
               return FALSE;
             }
-	}
+        }
 
       gimp_progress_update ((gdouble) row / (gdouble) rows);
     }
@@ -2048,7 +2078,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as TIFF"), "tiff",
                          NULL, 0,
-			 gimp_standard_help_func, "file-tiff-save",
+                         gimp_standard_help_func, "file-tiff-save",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2119,7 +2149,7 @@ save_dialog (void)
 
 static void
 comment_entry_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
 

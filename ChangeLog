@@ -1,3 +1,11 @@
+2004-02-08  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/tiff.c: applied a modified patch from Pablo
+	d'Angelo, which add support for tiff layer names when the name is 7
+	bits clean.
+
+	Fixes bug #131044
+
 2004-02-07  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: fix use of EXEEXT in tiff checks. Fixes bug #133763.
