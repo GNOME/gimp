@@ -41,6 +41,7 @@
 #include "gimpcontext.h"
 #include "gimpgrid.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
@@ -652,14 +653,11 @@ gimp_image_undo_push_image_grid (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (grid == NULL || GIMP_IS_GRID (grid), FALSE);
 
-#ifdef __GNUC__
-#warning FIXME: mark image as dirty when grid save functionality is added
-#endif
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (GridUndo),
                                    sizeof (GridUndo),
                                    GIMP_UNDO_IMAGE_GRID, undo_desc,
-                                   FALSE,
+                                   TRUE,
                                    undo_pop_image_grid,
                                    undo_free_image_grid)))
     {

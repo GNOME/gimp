@@ -103,6 +103,8 @@ libappcore_a_sources = \
 	gimpimage-duplicate.h		\
 	gimpimage-flip.c		\
 	gimpimage-flip.h		\
+	gimpimage-grid.h                \
+	gimpimage-grid.c                \
 	gimpimage-guides.c		\
 	gimpimage-guides.h		\
 	gimpimage-mask.c		\

@@ -1,3 +1,30 @@
+2003-07-04  Henrik Brix Andersen  <brix@gimp.org>
+
+	Added persistent storage of image grid in XCF files.
+	
+	* app/core/gimpimage.[ch]: removed gimp_image_get_grid() and
+	gimp_image_set_grid() ...
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-grid.[ch]: ... and added them to these new
+	files. Added gimp_grid_parasite_name(), gimp_grid_to_parasite()
+	and gimp_grid_from_parasite() functions.
+	
+	* app/core/gimpimage-snap.c
+	* app/gui/grid-dialog.c: #include "gimpimage-grid.h"
+
+	* app/core/gimpimage-undo-push.c: #include "gimpimage-grid.h".
+	(gimp_image_undo_push_image_grid) mark image as dirty.
+	
+	* app/xcf/xcf-save.c (xcf_save_image_props): save GimpGrid object
+	as a parasite.
+	
+	* app/xcf/xcf-load.c (xcf_load_image): load GimpGrid from
+	parasite.
+	
+	* devel-docs/parasites.txt: documented the new "gimp-image-grid"
+	parasite.
+
 2003-07-04  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

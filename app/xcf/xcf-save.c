@@ -34,7 +34,9 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpgrid.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
@@ -391,6 +393,8 @@ xcf_save_image_props (XcfInfo   *info,
 		      GimpImage *gimage,
 		      GError   **error)
 {
+  GimpParasite *parasite = NULL;
+
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
     xcf_check_error (xcf_save_prop (info, gimage, PROP_COLORMAP, error, 
@@ -424,6 +428,27 @@ xcf_save_image_props (XcfInfo   *info,
   if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT, 
                                     error, gimage->unit));
+
+  if (GIMP_IS_GRID (gimage->grid))
+    {
+      GimpGrid *grid = gimp_image_get_grid (gimage);
+
+      parasite = gimp_grid_to_parasite (grid);
+      gimp_parasite_list_add (GIMP_IMAGE (gimage)->parasites, parasite);
+    }
+
+  if (gimp_parasite_list_length (GIMP_IMAGE (gimage)->parasites) > 0)
+    {
+      xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES, error,
+                                      GIMP_IMAGE (gimage)->parasites));
+    }
+
+  if (parasite)
+    {
+      gimp_parasite_list_remove (GIMP_IMAGE (gimage)->parasites,
+                                 gimp_parasite_name (parasite));
+      gimp_parasite_free (parasite);
+    }
 
   xcf_check_error (xcf_save_prop (info, gimage, PROP_END, error));
 

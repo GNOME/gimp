@@ -39,7 +39,6 @@
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpcontext.h"
-#include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
@@ -1243,6 +1242,14 @@ gimp_image_get_component_visible (const GimpImage *gimage,
     return gimage->visible[index];
 
   return FALSE;
+}
+
+void
+gimp_image_grid_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (gimage, gimp_image_signals[GRID_CHANGED], 0);
 }
 
 void
@@ -3242,48 +3249,4 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
   gimp_container_foreach (gimage->channels, 
 			  (GFunc) gimp_viewable_invalidate_preview, 
 			  NULL);
-}
-
-
-/*  grid  */
-
-void
-gimp_image_grid_changed (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  g_signal_emit (gimage, gimp_image_signals[GRID_CHANGED], 0);
-}
-
-GimpGrid *
-gimp_image_get_grid (GimpImage *gimage)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  return gimage->grid;
-}
-
-void
-gimp_image_set_grid (GimpImage *gimage,
-                     GimpGrid  *grid,
-                     gboolean   push_undo)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (grid == NULL || GIMP_IS_GRID (grid));
-
-  if (grid != gimage->grid)
-    {
-      if (push_undo)
-        gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
-
-      if (gimage->grid)
-        g_object_unref (gimage->grid);
-
-      gimage->grid = grid;
-
-      if (gimage->grid)
-        g_object_ref (gimage->grid);
-    }
-
-  gimp_image_grid_changed (gimage);
 }

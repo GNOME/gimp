@@ -39,6 +39,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
@@ -107,15 +108,16 @@ GimpImage *
 xcf_load_image (Gimp    *gimp,
 		XcfInfo *info)
 {
-  GimpImage   *gimage;
-  GimpLayer   *layer;
-  GimpChannel *channel;
-  guint32      saved_pos;
-  guint32      offset;
-  gint         width;
-  gint         height;
-  gint         image_type;
-  gint         num_successful_elements = 0;
+  GimpImage    *gimage;
+  GimpLayer    *layer;
+  GimpChannel  *channel;
+  GimpParasite *parasite;
+  guint32       saved_pos;
+  guint32       offset;
+  gint          width;
+  gint          height;
+  gint          image_type;
+  gint          num_successful_elements = 0;
 
   /* read in the image width, height and type */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
@@ -130,6 +132,23 @@ xcf_load_image (Gimp    *gimp,
   /* read the image properties */
   if (!xcf_load_image_props (info, gimage))
     goto hard_error;
+
+  /* check for a GimpGrid parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (gimage),
+                                       gimp_grid_parasite_name ());
+  if (parasite)
+    {
+      GimpGrid *grid = gimp_grid_from_parasite (parasite);
+
+      if (grid)
+        {
+          gimp_parasite_list_remove (GIMP_IMAGE (gimage)->parasites,
+                                     gimp_parasite_name (parasite));
+
+          gimp_image_set_grid (GIMP_IMAGE (gimage), grid, FALSE);
+        }
+    }
+
 
   while (TRUE)
     {

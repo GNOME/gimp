@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpgrid.h"
 
 #include "display/gimpdisplay.h"

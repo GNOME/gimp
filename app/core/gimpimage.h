@@ -486,10 +486,5 @@ GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *gimage,
 void        gimp_image_invalidate_layer_previews (GimpImage          *gimage);
 void      gimp_image_invalidate_channel_previews (GimpImage          *gimage);
 
-GimpGrid  * gimp_image_get_grid                  (GimpImage          *gimage);
-void        gimp_image_set_grid                  (GimpImage          *gimage,
-                                                  GimpGrid           *grid,
-                                                  gboolean            push_undo);
-
 
 #endif /* __GIMP_IMAGE_H__ */
