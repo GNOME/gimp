@@ -1250,13 +1250,14 @@ crop_automatic_callback (GtkWidget *w,
   Tool * tool;
   Crop * crop;
   GDisplay * gdisp;
-  GimpDrawable * active_drawable;  
+  GimpDrawable * active_drawable = NULL;  
   GetColorFunc get_color_func;
   ColorsEqualFunc colors_equal_func;
   GtkObject *get_color_obj;
   guchar bgcolor[4] = {0, 0, 0, 0};
   gint has_alpha = FALSE;
-  guchar *color;
+  PixelRegion PR;
+  guchar *buffer;
   gint width, height, bytes;
   gint x, y, abort;
   gint x1, y1, x2, y2;
@@ -1289,8 +1290,7 @@ crop_automatic_callback (GtkWidget *w,
       height = gdisp->gimage->height;
       get_color_obj = GTK_OBJECT (gdisp->gimage);
       get_color_func = (GetColorFunc) gimp_image_get_color_at;
-      /* gimp_image_get_color_at always returns an alpha value */       
-      bytes  = 4;
+      bytes  = gimp_image_composite_bytes (gdisp->gimage);
       has_alpha = TRUE; 
       crop->tx1 = crop->ty1 = 0;
       crop->tx2 = width;
@@ -1309,18 +1309,25 @@ crop_automatic_callback (GtkWidget *w,
       goto FINISH;
     }
 
+  if (crop_options->layer_only)
+    pixel_region_init (&PR, drawable_data (active_drawable), 0, 0, width, height, FALSE);
+  else
+    pixel_region_init (&PR, gimp_image_composite (gdisp->gimage), 0, 0, width, height, FALSE);
+
+  buffer = g_malloc((width > height ? width : height) * bytes);
+
   x1 = x2 = y1 = y2 = 0;
 
  /* Check how many of the top lines are uniform/transparent. */
   abort = FALSE;
-  for (y = 0; y < height && !abort; y++) 
-    for (x = 0; x < width && !abort; x++)
-      {
-	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !(colors_equal_func) (bgcolor, color, bytes);
-	g_free (color);
-      }
+  for (y = 0; y < height && !abort; y++)
+    {
+      pixel_region_get_row (&PR, 0, y, width, buffer, 1);
+      for (x = 0; x < width && !abort; x++)
+	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+    }
   if (y == height) {
+    g_free (buffer);
     goto FINISH;
   }
   y1 = y - 1;
@@ -1328,35 +1335,34 @@ crop_automatic_callback (GtkWidget *w,
   /* Check how many of the bottom lines are uniform/transparent. */
   abort = FALSE;
   for (y = height - 1; y >= y1 && !abort; y--)
-    for (x = 0; x < width && !abort; x++)
-      { 
-	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !(colors_equal_func) (bgcolor, color, bytes);
-	g_free (color);
-      }
+    {
+      pixel_region_get_row (&PR, 0, y, width, buffer, 1);
+      for (x = 0; x < width && !abort; x++)
+	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+    }
   y2 = y + 1;
 
   /* Check how many of the left lines are uniform/transparent. */
   abort = FALSE;
   for (x = 0; x < width && !abort; x++)
-    for (y = y1; y < width && !abort; y++)
-      {
-	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !(colors_equal_func) (bgcolor, color, bytes);
-	g_free (color);	
-      }
+    {
+      pixel_region_get_col (&PR, x, y1, y2 - y1 + 1, buffer, 1);
+      for (y = 0; y <= (y2 - y1) && !abort; y++)
+	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+    }
   x1 = x - 1;
  
  /* Check how many of the right lines are uniform/transparent. */
   abort = FALSE;
   for (x = width - 1; x >= x1 && !abort; x--)
-    for (y = y1; y < y2 && !abort; y++)
-      {
-	color = (*get_color_func) (get_color_obj, x, y);	
-	abort = !(colors_equal_func) (bgcolor, color, bytes);
-	g_free (color);	
-      }
+    {
+      pixel_region_get_col (&PR, x, y1, y2 - y1 + 1, buffer, 1);
+      for (y = 0; y <= (y2 - y1) && !abort; y++)
+	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+    }
   x2 = x + 1;
+
+  g_free (buffer);
 
   crop->tx2 = crop->tx1 + x2 + 1;
   crop->ty2 = crop->ty1 + y2 + 1;

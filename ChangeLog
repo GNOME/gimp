@@ -1,3 +1,7 @@
+Wed Apr 21 01:21:55 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/crop.c: optimized the autocrop algorithm
+
 Tue Apr 20 23:38:26 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/bezier_select.c: add the new args to gimp-paintbrush PDB
