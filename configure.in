@@ -400,6 +400,7 @@ plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
 plug-ins/flarefx/Makefile
 plug-ins/webbrowser/Makefile
+plug-ins/animoptimze/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

@@ -15,6 +15,7 @@ SUBDIRS = 			\
 	@XPM@			\
 	CML_explorer		\
 	align_layers		\
+	animoptimize		\
 	apply_lens		\
 	autocrop		\
 	animationplay		\

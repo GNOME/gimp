@@ -1,3 +1,7 @@
+Wed Mar 11 02:26:51 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* added animoptimize plugin
+
 Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/convert.c: fixed memory overrun error
