@@ -26,16 +26,25 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
+#include "paint/gimppaintcore.h"
+#include "paint/gimppaintcore-stroke.h"
+
+#include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
+
+#include "tools/gimpvectortool.h"
+#include "tools/tool_manager.h"
 
 #include "vectors-commands.h"
 
@@ -307,18 +316,78 @@ void
 vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpImage    *gimage;
+  GimpVectors  *active_vectors;
+  GimpDrawable *active_drawable;
 
   gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
 
-  active_vectors = gimp_image_get_active_vectors (gimage);
+  active_vectors  = gimp_image_get_active_vectors (gimage);
+  active_drawable = gimp_image_active_drawable (gimage);
 
-  if (active_vectors)
+  if (! active_drawable)
     {
+      g_message (_("There is no active Layer or Channel to stroke to"));
+      return;
+    }
+
+  if (active_vectors && active_vectors->strokes)
+    {
+      GimpPaintCore    *core;
+      GType             core_type;
+      GimpToolInfo     *tool_info;
+      GimpPaintOptions *paint_options;
+      GimpDisplay      *gdisp;
+      GimpStroke       *stroke;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
+                                          "gimp:paintbrush_tool");
+
+      paint_options = (GimpPaintOptions *) tool_info->tool_options;
+
+      core_type = g_type_from_name (tool_info->paint_core_name);
+
+      core = g_object_new (g_type_from_name (tool_info->paint_core_name), NULL);
+
+      gdisp = gimp_context_get_display (gimp_get_current_context (gimage->gimp));
+
+      tool_manager_control_active (gimage->gimp, PAUSE, gdisp);
+
+      undo_push_group_start (gimage, PAINT_UNDO_GROUP);
+
+      for (stroke = active_vectors->strokes; stroke; stroke = stroke->next)
+        {
+          GimpCoords *coords;
+          gint        n_coords;
+          gboolean    closed;
+
+          coords = gimp_stroke_interpolate (stroke, 1.0,
+                                            &n_coords,
+                                            &closed);
+
+          if (coords)
+            {
+              gimp_paint_core_stroke (core,
+                                      active_drawable,
+                                      paint_options,
+                                      coords,
+                                      n_coords);
+
+              g_free (coords);
+            }
+        }
+
+      undo_push_group_end (gimage);
+
+      tool_manager_control_active (gimage->gimp, RESUME, gdisp);
+
+      g_object_unref (G_OBJECT (core));
+
+      gdisplays_flush ();
     }
 }
 
@@ -528,6 +597,30 @@ vectors_edit_vectors_query (GimpVectors *vectors)
   GtkWidget          *vbox;
   GtkWidget          *table;
   GtkWidget          *label;
+
+  {
+    Gimp     *gimp;
+    GimpTool *active_tool;
+
+    gimp = GIMP_ITEM (vectors)->gimage->gimp;
+
+    active_tool = tool_manager_get_active (gimp);
+
+    if (! GIMP_IS_VECTOR_TOOL (active_tool))
+      {
+        GimpToolInfo *tool_info;
+
+        tool_info = tool_manager_get_info_by_type (gimp, GIMP_TYPE_VECTOR_TOOL);
+
+        gimp_context_set_tool (gimp_get_current_context (gimp), tool_info);
+
+        active_tool = tool_manager_get_active (gimp);
+      }
+
+    gimp_vectors_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
+
+    return;
+  }
 
   options = g_new0 (EditVectorsOptions, 1);
 

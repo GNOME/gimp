@@ -32,30 +32,21 @@ gboolean
 gimp_paint_core_stroke (GimpPaintCore    *core,
                         GimpDrawable     *drawable,
                         GimpPaintOptions *paint_options,
-                        gint              n_strokes,
-                        gdouble          *strokes)
+                        GimpCoords       *strokes,
+                        gint              n_strokes)
 {
-  GimpCoords coords;
-
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (paint_options != NULL, FALSE);
-  g_return_val_if_fail (n_strokes > 0, FALSE);
   g_return_val_if_fail (strokes != NULL, FALSE);
+  g_return_val_if_fail (n_strokes > 0, FALSE);
 
-  coords.x        = strokes[0];
-  coords.y        = strokes[1];
-  coords.pressure = 1.0;
-  coords.xtilt    = 0.5;
-  coords.ytilt    = 0.5;
-  coords.wheel    = 0.5;
-
-  if (gimp_paint_core_start (core, drawable, &coords))
+  if (gimp_paint_core_start (core, drawable, &strokes[0]))
     {
       gint i;
 
-      core->start_coords = coords;
-      core->last_coords  = coords;
+      core->start_coords = strokes[0];
+      core->last_coords  = strokes[0];
 
       gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
@@ -63,10 +54,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
 
       for (i = 1; i < n_strokes; i++)
         {
-          coords.x = strokes[i * 2 + 0];
-          coords.y = strokes[i * 2 + 1];
-
-          core->cur_coords = coords;
+          core->cur_coords = strokes[i];
 
           gimp_paint_core_interpolate (core, drawable, paint_options);
 

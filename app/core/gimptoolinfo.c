@@ -89,23 +89,26 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 static void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
-  tool_info->tool_type    = G_TYPE_NONE;
+  tool_info->tool_type       = G_TYPE_NONE;
 
-  tool_info->blurb        = NULL;
-  tool_info->help         = NULL;
+  tool_info->blurb           = NULL;
+  tool_info->help            = NULL;
 
-  tool_info->menu_path    = NULL;
-  tool_info->menu_accel   = NULL;
+  tool_info->menu_path       = NULL;
+  tool_info->menu_accel      = NULL;
 
-  tool_info->help_domain  = NULL;
-  tool_info->help_data    = NULL;
+  tool_info->help_domain     = NULL;
+  tool_info->help_data       = NULL;
 
-  tool_info->stock_id     = NULL;
-  tool_info->stock_pixbuf = NULL;
+  tool_info->pdb_string      = NULL;
+  tool_info->paint_core_name = NULL;
 
-  tool_info->context      = NULL;
+  tool_info->stock_id        = NULL;
+  tool_info->stock_pixbuf    = NULL;
 
-  tool_info->tool_options = NULL;
+  tool_info->context         = NULL;
+
+  tool_info->tool_options    = NULL;
 }
 
 static void
@@ -244,6 +247,7 @@ gimp_tool_info_new (Gimp         *gimp,
 		    const gchar  *help_domain,
 		    const gchar  *help_data,
 		    const gchar  *pdb_string,
+                    const gchar  *paint_core_name,
 		    const gchar  *stock_id,
 		    GdkPixbuf    *stock_pixbuf)
 {
@@ -255,6 +259,8 @@ gimp_tool_info_new (Gimp         *gimp,
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
   g_return_val_if_fail (menu_path != NULL, NULL);
+  g_return_val_if_fail (pdb_string != NULL, NULL);
+  g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (! stock_pixbuf || GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
@@ -269,23 +275,23 @@ gimp_tool_info_new (Gimp         *gimp,
                                              context);
     }
 
-  tool_info->gimp          = gimp;
-  tool_info->tool_type     = tool_type;
+  tool_info->gimp            = gimp;
+  tool_info->tool_type       = tool_type;
 
-  tool_info->blurb         = g_strdup (blurb);
-  tool_info->help          = g_strdup (help);
+  tool_info->blurb           = g_strdup (blurb);
+  tool_info->help            = g_strdup (help);
 
-  tool_info->menu_path     = g_strdup (menu_path);
-  tool_info->menu_accel    = g_strdup (menu_accel);
+  tool_info->menu_path       = g_strdup (menu_path);
+  tool_info->menu_accel      = g_strdup (menu_accel);
 
-  tool_info->help_domain   = g_strdup (help_domain);
-  tool_info->help_data     = g_strdup (help_data);
+  tool_info->help_domain     = g_strdup (help_domain);
+  tool_info->help_data       = g_strdup (help_data);
 
-  tool_info->pdb_string    = (pdb_string ?
-			      g_strdup (pdb_string) : "gimp_paintbrush_default");
+  tool_info->pdb_string      = g_strdup (pdb_string);
+  tool_info->paint_core_name = g_strdup (paint_core_name);
 
-  tool_info->stock_id      = stock_id;
-  tool_info->stock_pixbuf  = stock_pixbuf;
+  tool_info->stock_id        = stock_id;
+  tool_info->stock_pixbuf    = stock_pixbuf;
 
   if (stock_pixbuf)
     g_object_ref (G_OBJECT (stock_pixbuf));

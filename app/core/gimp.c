@@ -25,10 +25,11 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
-#include "pdb/pdb-types.h"
 
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
+
+#include "paint/paint.h"
 
 #include "xcf/xcf.h"
 
@@ -139,6 +140,8 @@ gimp_init (Gimp *gimp)
   gimp_units_init (gimp);
 
   gimp_parasites_init (gimp);
+
+  paint_init (gimp);
 
   gimp_modules_init (gimp);
 
@@ -319,6 +322,8 @@ gimp_finalize (GObject *object)
 
   if (gimp->modules)
     gimp_modules_exit (gimp);
+
+  paint_exit (gimp);
 
   if (gimp->parasites)
     gimp_parasites_exit (gimp);

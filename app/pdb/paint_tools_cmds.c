@@ -87,12 +87,28 @@ paint_tools_stroke (Gimp             *gimp,
                     gdouble          *strokes)
 {
   GimpPaintCore *core;
+  GimpCoords    *coords;
   gboolean       retval;
+  gint           i;
 
   core = g_object_new (core_type, NULL);
 
+  coords = g_new (GimpCoords, n_strokes);
+
+  for (i = 0; i < n_strokes; i++)
+    {
+      coords[i].x        = strokes[2 * i];
+      coords[i].y        = strokes[2 * i + 1];
+      coords[i].pressure = 1.0;
+      coords[i].xtilt    = 0.5;
+      coords[i].ytilt    = 0.5;
+      coords[i].wheel    = 0.5;
+    }
+
   retval = gimp_paint_core_stroke (core, drawable, paint_options,
-                                   n_strokes, strokes);
+                                   coords, n_strokes);
+
+  g_free (coords);
 
   g_object_unref (G_OBJECT (core));
 

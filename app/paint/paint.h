@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis and others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PAINT_CORE_STROKE_H__
-#define __GIMP_PAINT_CORE_STROKE_H__
+#ifndef __PAINT_H__
+#define __PAINT_H__
 
 
-gboolean   gimp_paint_core_stroke (GimpPaintCore    *core,
-                                   GimpDrawable     *drawable,
-                                   GimpPaintOptions *paint_options,
-                                   GimpCoords       *strokes,
-                                   gint              n_strokes);
+void   paint_init (Gimp *gimp);
+void   paint_exit (Gimp *gimp);
 
 
-#endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */
+#endif  /* __PAINT_H__ */

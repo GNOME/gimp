@@ -4,6 +4,8 @@ noinst_LIBRARIES = libapppaint.a
 
 libapppaint_a_SOURCES = @STRIP_BEGIN@ \
 	paint-types.h			\
+	paint.c				\
+	paint.h				\
 	gimpairbrush.c			\
 	gimpairbrush.h			\
 	gimpclone.c			\

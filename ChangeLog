@@ -1,3 +1,30 @@
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
+	Added some kind of paint core registry. It's ugly and will change...
+
+	* app/core/gimp.c: call paint_init() and paint_exit().
+
+	* app/core/gimptoolinfo.[ch]: added "gchar *paint_core_name" to
+	the GimpToolInfo structure and the contstructor.
+
+	* app/tools/tool_manager.c: pass the class names of the
+	GimpPaintCore subclasses to gimp_tool_info_new().
+
+	* app/paint/Makefile.am
+	* app/paint/paint.[ch]: new files. Simlply ref/unref all paint
+	core classes so we can find them using g_type_from_name().
+
+	* app/paint/gimppaintcore-stroke.[ch]: changed to take an array
+	of GimpCoords, not just gdouble.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: convert the stroke array here.
+
+	* app/gui/vectors-commands.c: ad-hoc implementation of vectors
+	stroking.  Double click now sets the active vectors in the vectors
+	tool.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tips-parser.c: some documentation can't hurt.

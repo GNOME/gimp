@@ -510,7 +510,8 @@ tool_manager_register_tool (Gimp                   *gimp,
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
-  const gchar     *pdb_string = "gimp_paintbrush_default";
+  const gchar     *pdb_string;
+  const gchar     *paint_core_name;
   GtkIconSet      *icon_set;
   GtkStyle        *style;
   GdkPixbuf       *pixbuf;
@@ -520,35 +521,48 @@ tool_manager_register_tool (Gimp                   *gimp,
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-      pdb_string = "gimp_pencil";
+      pdb_string      = "gimp_pencil";
+      paint_core_name = "GimpPencil";
     }
   else if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     {
-      pdb_string = "gimp_paintbrush_default";
+      pdb_string      = "gimp_paintbrush_default";
+      paint_core_name = "GimpPaintbrush";
     }
   else if (tool_type == GIMP_TYPE_ERASER_TOOL)
     {
-      pdb_string = "gimp_eraser_default";
+      pdb_string      = "gimp_eraser_default";
+      paint_core_name = "GimpEraser";
     }
   else if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
     {
-      pdb_string = "gimp_airbrush_default";
+      pdb_string      = "gimp_airbrush_default";
+      paint_core_name = "GimpAirbrush";
     }
   else if (tool_type == GIMP_TYPE_CLONE_TOOL)
     {
-      pdb_string = "gimp_clone_default";
+      pdb_string      = "gimp_clone_default";
+      paint_core_name = "GimpClone";
     }
   else if (tool_type == GIMP_TYPE_CONVOLVE_TOOL)
     {
-      pdb_string = "gimp_convolve_default";
+      pdb_string      = "gimp_convolve_default";
+      paint_core_name = "GimpConvolve";
     }
   else if (tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      pdb_string = "gimp_smudge_default";
+      pdb_string      = "gimp_smudge_default";
+      paint_core_name = "GimpSmudge";
     }
   else if (tool_type == GIMP_TYPE_DODGEBURN_TOOL)
     {
-      pdb_string = "gimp_dodgeburn_default";
+      pdb_string      = "gimp_dodgeburn_default";
+      paint_core_name = "GimpDodgeBurn";
+    }
+  else
+    {
+      pdb_string      = "gimp_paintbrush_default";
+      paint_core_name = "GimpPaintbrush";
     }
 
   icon_set = gtk_icon_factory_lookup_default (stock_id);
@@ -580,6 +594,7 @@ tool_manager_register_tool (Gimp                   *gimp,
 				  help_domain,
 				  help_data,
 				  pdb_string,
+                                  paint_core_name,
 				  stock_id,
 				  pixbuf);
 
