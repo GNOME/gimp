@@ -40,9 +40,8 @@ struct _GimpContainerTreeView
 {
   GimpContainerView  parent_instance;
 
-  GtkListStore      *list;
-
   GtkWidget         *scrolled_win;
+  GtkTreeModel      *model;
   GtkTreeView       *view;
   GtkTreeSelection  *selection;
 

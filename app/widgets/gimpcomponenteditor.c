@@ -137,8 +137,6 @@ gimp_component_editor_init (GimpComponentEditor *editor)
 {
   GtkWidget         *frame;
   GtkListStore      *list;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer   *cell;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -158,8 +156,6 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_tree_view_set_headers_visible (editor->view, FALSE);
 
   editor->eye_column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_sizing (editor->eye_column,
-                                   GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_append_column (editor->view, editor->eye_column);
 
   editor->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
@@ -173,18 +169,14 @@ gimp_component_editor_init (GimpComponentEditor *editor)
                     G_CALLBACK (gimp_component_editor_toggled),
                     editor);
 
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-  gtk_tree_view_append_column (editor->view, column);
-
-  cell = gimp_cell_renderer_viewable_new ();
-  gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell,
-                                       "renderer", COLUMN_RENDERER,
-                                       NULL);
+  gtk_tree_view_insert_column_with_attributes (editor->view,
+                                               -1, NULL,
+                                               gimp_cell_renderer_viewable_new (),
+                                               "renderer", COLUMN_RENDERER,
+                                               NULL);
 
   gtk_tree_view_insert_column_with_attributes (editor->view,
-                                               2, NULL,
+                                               -1, NULL,
                                                gtk_cell_renderer_text_new (),
                                                "text", COLUMN_NAME,
                                                NULL);
@@ -312,8 +304,6 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
                                   preview_size -
                                   2 * tree_widget->style->ythickness);
 
-  g_print ("icon_size = %d\n", icon_size);
-
   g_object_set (editor->eye_cell,
                 "stock-size", icon_size,
                 NULL);
@@ -338,6 +328,8 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
     }
 
   editor->preview_size = preview_size;
+
+  gtk_tree_view_columns_autosize (editor->view);
 }
 
 static void

@@ -1,3 +1,13 @@
+2003-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcomponenteditor.c: disable expensive column
+	auto-resizing and call gtk_tree_view_columns_autosize() in
+	gimp_component_editor_set_preview_size().
+
+	* app/widgets/gimpcontainertreeview.[ch]: ditto. Changed the
+	GtkListStore pointer in the GimpContainerTreeView struct to
+	GtkTreeModel.
+
 2003-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c (splash_create): suppress notifcation of
