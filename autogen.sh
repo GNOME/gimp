@@ -94,7 +94,7 @@ elif (automake --version) < /dev/null > /dev/null 2>&1; then
 
     echo
     echo "  You do not have automake 1.6."
-    echo "  The $PROJECT build will work, but the python binding will not be there."
+    echo "  $PROJECT build will work, but the python binding will not be there."
     echo "  Upgrade automake if you want this functionality."
     echo
     echo "  NOTE: you will get warnings from plug-ins/pygimp/Makefile.am."
