@@ -192,7 +192,7 @@ gimp_vector_tool_finalize (GObject *object)
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (object);
 
   if (vector_tool->vectors)
-    g_object_unref (G_OBJECT (vector_tool->vectors));
+    g_object_unref (vector_tool->vectors);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -560,7 +560,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
     }
 
   if (vector_tool->vectors)
-    g_object_unref (G_OBJECT (vector_tool->vectors));
+    g_object_unref (vector_tool->vectors);
 
   vector_tool->vectors        = vectors;
   vector_tool->cur_stroke     = NULL;
@@ -569,7 +569,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
   vector_tool->function       = VECTORS_CREATING;
 
   if (vector_tool->vectors)
-    g_object_ref (G_OBJECT (vector_tool->vectors));
+    g_object_ref (vector_tool->vectors);
 
   if (draw_tool->gdisp && draw_tool->gdisp->gimage == item->gimage)
     {

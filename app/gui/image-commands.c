@@ -150,9 +150,9 @@ image_resize_cmd_callback (GtkWidget *widget,
                        G_CALLBACK (image_resize_callback),
                        image_resize);
 
-  g_signal_connect_object (G_OBJECT (gdisp), "disconnect",
+  g_signal_connect_object (gdisp, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           G_OBJECT (image_resize->resize->resize_shell),
+                           image_resize->resize->resize_shell,
                            G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (image_resize->resize->resize_shell),
@@ -190,9 +190,9 @@ image_scale_cmd_callback (GtkWidget *widget,
                        G_CALLBACK (image_scale_callback),
                        image_scale);
 
-  g_signal_connect_object (G_OBJECT (gdisp), "disconnect",
+  g_signal_connect_object (gdisp, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           G_OBJECT (image_scale->resize->resize_shell),
+                           image_scale->resize->resize_shell,
                            G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (image_scale->resize->resize_shell),
@@ -231,7 +231,7 @@ image_duplicate_cmd_callback (GtkWidget *widget,
 
   gimp_create_display (new_gimage->gimp, new_gimage, 0x0101);
 
-  g_object_unref (G_OBJECT (new_gimage));
+  g_object_unref (new_gimage);
 }
 
 void

@@ -549,7 +549,7 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
     return;
 
   if (clone->src_drawable)
-    g_signal_handlers_disconnect_by_func (G_OBJECT (clone->src_drawable),
+    g_signal_handlers_disconnect_by_func (clone->src_drawable,
                                           gimp_clone_src_drawable_disconnect_cb, 
                                           clone);
 
@@ -557,7 +557,7 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
 
   if (clone->src_drawable)
     {
-      g_signal_connect (G_OBJECT (clone->src_drawable), "disconnect",
+      g_signal_connect (clone->src_drawable, "disconnect",
                         G_CALLBACK (gimp_clone_src_drawable_disconnect_cb),
                         clone);
     }

@@ -112,7 +112,7 @@ paint_tools_stroke (Gimp             *gimp,
 
   g_free (coords);
 
-  g_object_unref (G_OBJECT (core));
+  g_object_unref (core);
 
   return retval;
 }

@@ -579,13 +579,13 @@ gimp_dnd_data_source_set (GimpDndType  data_type,
 
   if (! drag_connected)
     {
-      g_signal_connect (G_OBJECT (widget), "drag_begin",
+      g_signal_connect (widget, "drag_begin",
                         G_CALLBACK (gimp_dnd_data_drag_begin),
                         NULL);
-      g_signal_connect (G_OBJECT (widget), "drag_end",
+      g_signal_connect (widget, "drag_end",
                         G_CALLBACK (gimp_dnd_data_drag_end),
                         NULL);
-      g_signal_connect (G_OBJECT (widget), "drag_data_get",
+      g_signal_connect (widget, "drag_data_get",
                         G_CALLBACK (gimp_dnd_data_drag_handle),
                         NULL);
 
@@ -637,7 +637,7 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
 
   if (! drop_connected)
     {
-      g_signal_connect (G_OBJECT (widget), "drag_data_received",
+      g_signal_connect (widget, "drag_data_received",
                         G_CALLBACK (gimp_dnd_data_drop_handle),
                         NULL);
 

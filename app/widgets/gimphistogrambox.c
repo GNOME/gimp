@@ -130,7 +130,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_histogram_box_low_adj_update),
                     box);
 
@@ -142,7 +142,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_histogram_box_high_adj_update),
                     box);
 
@@ -158,7 +158,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
-  g_signal_connect (G_OBJECT (view), "range_changed",
+  g_signal_connect (view, "range_changed",
                     G_CALLBACK (gimp_histogram_box_histogram_range),
                     box);
 
@@ -176,10 +176,10 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
   gtk_widget_show (box->gradient);
 
-  g_signal_connect (G_OBJECT (box->gradient), "size_allocate",
+  g_signal_connect (box->gradient, "size_allocate",
                     G_CALLBACK (gimp_histogram_box_gradient_size_allocate),
                     box);
-  g_signal_connect (G_OBJECT (box->gradient), "expose_event",
+  g_signal_connect (box->gradient, "expose_event",
                     G_CALLBACK (gimp_histogram_box_gradient_expose),
                     box);
 }

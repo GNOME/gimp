@@ -186,7 +186,7 @@ gimp_fuzzy_select_tool_finalize (GObject *object)
 
   if (fuzzy_sel->fuzzy_mask)
     {
-      g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
+      g_object_unref (fuzzy_sel->fuzzy_mask);
       fuzzy_sel->fuzzy_mask = NULL;
     }
 
@@ -301,7 +301,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
                                       sel_options->feather_radius,
                                       sel_options->feather_radius);
 
-      g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
+      g_object_unref (fuzzy_sel->fuzzy_mask);
       fuzzy_sel->fuzzy_mask = NULL;
 
       gimp_image_flush (gdisp->gimage);
@@ -431,7 +431,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
                                               x, y);
 
   if (fuzzy_sel->fuzzy_mask)
-    g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
+    g_object_unref (fuzzy_sel->fuzzy_mask);
 
   fuzzy_sel->fuzzy_mask = new;
 

@@ -453,7 +453,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 
   if (! list)  /* all devices have cursor */
     {
-      g_signal_connect (G_OBJECT (toolbox), "motion_notify_event",
+      g_signal_connect (toolbox, "motion_notify_event",
 			G_CALLBACK (toolbox_check_device),
 			gimp);
 
@@ -466,9 +466,9 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   toolbox_create_color_area (toolbox, context);
   toolbox_create_indicator_area (toolbox, context);
 
-  g_signal_connect_object (G_OBJECT (context), "tool_changed",
+  g_signal_connect_object (context, "tool_changed",
 			   G_CALLBACK (toolbox_tool_changed),
-			   G_OBJECT (toolbox->wbox),
+			   toolbox->wbox,
 			   0);
 
   gimp_dnd_file_dest_add (GTK_WIDGET (toolbox), gimp_dnd_open_files, NULL);
@@ -655,11 +655,11 @@ toolbox_create_tools (GimpToolbox *toolbox,
       if (tool_info == active_tool)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
 			G_CALLBACK (toolbox_tool_button_toggled),
 			tool_info);
 
-      g_signal_connect (G_OBJECT (button), "button_press_event",
+      g_signal_connect (button, "button_press_event",
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
@@ -778,14 +778,14 @@ toolbox_tool_changed (GimpContext  *context,
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{
-	  g_signal_handlers_block_by_func (G_OBJECT (toolbox_button),
+	  g_signal_handlers_block_by_func (toolbox_button,
 					   toolbox_tool_button_toggled,
 					   tool_info);
 
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toolbox_button),
                                         TRUE);
 
-	  g_signal_handlers_unblock_by_func (G_OBJECT (toolbox_button),
+	  g_signal_handlers_unblock_by_func (toolbox_button,
 					     toolbox_tool_button_toggled,
 					     tool_info);
 	}
@@ -891,7 +891,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_create_display (gimage->gimp, new_gimage, 0x0101);
 
-  g_object_unref (G_OBJECT (new_gimage));
+  g_object_unref (new_gimage);
 }
 
 static void

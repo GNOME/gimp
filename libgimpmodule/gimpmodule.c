@@ -365,7 +365,7 @@ gimp_module_modified (GimpModule *module)
 {
   g_return_if_fail (GIMP_IS_MODULE (module));
 
-  g_signal_emit (G_OBJECT (module), module_signals[MODIFIED], 0);
+  g_signal_emit (module, module_signals[MODIFIED], 0);
 }
 
 /**

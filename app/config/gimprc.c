@@ -434,11 +434,11 @@ gimp_rc_set_autosave (GimpRc   *rc,
     return;
 
   if (autosave)
-    g_signal_connect (G_OBJECT (rc), "notify",
+    g_signal_connect (rc, "notify",
                       G_CALLBACK (gimp_rc_notify),
                       NULL);
   else
-    g_signal_handlers_disconnect_by_func (G_OBJECT (rc),
+    g_signal_handlers_disconnect_by_func (rc,
                                           gimp_rc_notify, NULL);
 
   rc->autosave = autosave;

@@ -139,16 +139,16 @@ about_dialog_create (void)
       gimp_help_connect (about_dialog, gimp_standard_help_func,
 			 "dialogs/about.html");
 
-      g_signal_connect (G_OBJECT (about_dialog), "destroy",
+      g_signal_connect (about_dialog, "destroy",
 			G_CALLBACK (about_dialog_destroy),
 			NULL);
-      g_signal_connect (G_OBJECT (about_dialog), "unmap",
+      g_signal_connect (about_dialog, "unmap",
 			G_CALLBACK (about_dialog_unmap),
 			NULL);
-      g_signal_connect (G_OBJECT (about_dialog), "button_press_event",
+      g_signal_connect (about_dialog, "button_press_event",
 			G_CALLBACK (about_dialog_button),
 			NULL);
-      g_signal_connect (G_OBJECT (about_dialog), "key_press_event",
+      g_signal_connect (about_dialog, "key_press_event",
 			G_CALLBACK (about_dialog_key),
 			NULL);
       
@@ -188,7 +188,7 @@ about_dialog_create (void)
       gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
       gtk_widget_show (logo_area);
 
-      g_signal_connect (G_OBJECT (logo_area), "expose_event",
+      g_signal_connect (logo_area, "expose_event",
 			G_CALLBACK (about_dialog_logo_expose),
 			NULL);
 
@@ -345,8 +345,8 @@ about_dialog_load_logo (GtkWidget *window)
                                  GDK_RGB_DITHER_NORMAL,
                                  0, 0);
 
-  g_object_unref (G_OBJECT (gc));
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (gc);
+  g_object_unref (pixbuf);
 
   dissolve_width =
     (logo_width / ANIMATION_SIZE) +

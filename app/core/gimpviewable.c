@@ -170,7 +170,7 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[INVALIDATE_PREVIEW], 0);
+  g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
 }
 
 void
@@ -178,7 +178,7 @@ gimp_viewable_size_changed (GimpViewable *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[SIZE_CHANGED], 0);
+  g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
 }
 
 static void

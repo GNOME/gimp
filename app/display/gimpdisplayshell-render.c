@@ -65,7 +65,7 @@ struct _RenderInfo
 };
 
 
-static void   render_setup_notify (GObject    *config,
+static void   render_setup_notify (gpointer    config,
                                    GParamSpec *param_spec,
                                    Gimp       *gimp);
 
@@ -98,14 +98,14 @@ render_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  g_signal_connect (G_OBJECT (gimp->config), "notify::transparency-size",
+  g_signal_connect (gimp->config, "notify::transparency-size",
                     G_CALLBACK (render_setup_notify),
                     gimp);
-  g_signal_connect (G_OBJECT (gimp->config), "notify::transparency-type",
+  g_signal_connect (gimp->config, "notify::transparency-type",
                     G_CALLBACK (render_setup_notify),
                     gimp);
 
-  render_setup_notify (G_OBJECT (gimp->config), NULL, gimp);
+  render_setup_notify (gimp->config, NULL, gimp);
 }
 
 void
@@ -113,7 +113,7 @@ render_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
+  g_signal_handlers_disconnect_by_func (gimp->config,
                                         render_setup_notify,
                                         gimp);
 
@@ -156,7 +156,7 @@ render_exit (Gimp *gimp)
 
 
 static void
-render_setup_notify (GObject    *config,
+render_setup_notify (gpointer    config,
                      GParamSpec *param_spec,
                      Gimp       *gimp)
 {

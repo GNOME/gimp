@@ -185,7 +185,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                                          GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                          G_CALLBACK (gimp_scale_tool_size_changed),
                                          tr_tool);
-  g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
+  g_signal_connect (sizeentry, "unit_changed",
                     G_CALLBACK (gimp_scale_tool_unit_changed),
                     tr_tool);
 
@@ -212,10 +212,10 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   size_vals[0] = tr_tool->x2 - tr_tool->x1;
   size_vals[1] = tr_tool->y2 - tr_tool->y1;
 
-  g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_block_by_func (sizeentry, 
                                    gimp_scale_tool_size_changed,
                                    tr_tool);
-  g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_block_by_func (sizeentry, 
                                    gimp_scale_tool_unit_changed,
                                    tr_tool);
 
@@ -247,10 +247,10 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
                               size_vals[1]);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_unblock_by_func (sizeentry, 
                                      gimp_scale_tool_size_changed,
                                      tr_tool);
-  g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_unblock_by_func (sizeentry, 
                                      gimp_scale_tool_unit_changed,
                                      tr_tool);
 

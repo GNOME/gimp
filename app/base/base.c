@@ -80,7 +80,7 @@ base_init (GimpBaseConfig *config,
 
   tile_cache_init (config->tile_cache_size);
 
-  g_signal_connect (G_OBJECT (config), "notify::tile-cache-size",
+  g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (base_tile_cache_size_notify),
                     NULL);
 
@@ -88,7 +88,7 @@ base_init (GimpBaseConfig *config,
 
   /* Add the swap file */
   if (! config->swap_path)
-    g_object_set (G_OBJECT (config), "swap_path", "${gimp_dir}", NULL);
+    g_object_set (config, "swap_path", "${gimp_dir}", NULL);
 
   swapdir  = gimp_config_path_expand (config->swap_path, TRUE, NULL);
   swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
@@ -113,7 +113,7 @@ base_exit (void)
   tile_swap_exit ();
   tile_cache_exit ();
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (base_config),
+  g_signal_handlers_disconnect_by_func (base_config,
                                         base_tile_cache_size_notify,
                                         NULL);
 

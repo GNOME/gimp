@@ -120,23 +120,23 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
 
-  g_signal_connect (G_OBJECT (filesel->ok_button), "clicked",
+  g_signal_connect (filesel->ok_button, "clicked",
                     G_CALLBACK (gradients_save_as_pov_ok_callback),
                     gradient);
 
-  g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
+  g_signal_connect_swapped (filesel->cancel_button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             filesel);
 
-  g_signal_connect_swapped (G_OBJECT (filesel), "delete_event",
+  g_signal_connect_swapped (filesel, "delete_event",
                             G_CALLBACK (gtk_widget_destroy),
                             filesel);
 
-  g_object_ref (G_OBJECT (gradient));
+  g_object_ref (gradient);
 
-  g_signal_connect_object (G_OBJECT (filesel), "destroy",
+  g_signal_connect_object (filesel, "destroy",
                            G_CALLBACK (g_object_unref),
-                           G_OBJECT (gradient), 
+                           gradient, 
                            G_CONNECT_SWAPPED);
 
   /*  Connect the "F1" help key  */

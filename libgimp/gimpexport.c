@@ -364,7 +364,7 @@ confirm_save_dialog (const gchar *saving_what,
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (export_cancel_callback),
                     NULL);
 
@@ -429,7 +429,7 @@ export_dialog (GSList      *actions,
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (export_cancel_callback),
                     NULL);
 
@@ -489,7 +489,7 @@ export_dialog (GSList      *actions,
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-	  g_signal_connect (G_OBJECT (button), "toggled",
+	  g_signal_connect (button, "toggled",
                             G_CALLBACK (export_toggle_callback),
                             &action->choice);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);

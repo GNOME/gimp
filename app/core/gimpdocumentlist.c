@@ -178,7 +178,7 @@ gimp_document_list_deserialize (GObject  *document_list,
               gimp_container_add (GIMP_CONTAINER (document_list),
                                   GIMP_OBJECT (imagefile));
 
-              g_object_unref (G_OBJECT (imagefile));
+              g_object_unref (imagefile);
             }
           break;
 
@@ -233,7 +233,7 @@ gimp_document_list_add_uri (GimpDocumentList *document_list,
     {
       imagefile = gimp_imagefile_new (uri);
       gimp_container_add (container, GIMP_OBJECT (imagefile));
-      g_object_unref (G_OBJECT (imagefile));
+      g_object_unref (imagefile);
     }
 
   return imagefile;

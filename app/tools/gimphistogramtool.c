@@ -379,7 +379,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (htd->histogram_box));
 
-  g_signal_connect (G_OBJECT (htd->histogram_box->histogram), "range_changed",
+  g_signal_connect (htd->histogram_box->histogram, "range_changed",
                     G_CALLBACK (histogram_tool_histogram_range),
                     htd);
 

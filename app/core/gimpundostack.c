@@ -100,10 +100,10 @@ gimp_undo_stack_init (GimpUndoStack *stack)
 
   stack->undos = undos;
 
-  g_signal_connect (G_OBJECT (undos), "add",
+  g_signal_connect (undos, "add",
 		    G_CALLBACK (gimp_undo_stack_add_callback), 
 		    stack);
-  g_signal_connect (G_OBJECT (undos), "remove",
+  g_signal_connect (undos, "remove",
 		    G_CALLBACK (gimp_undo_stack_remove_callback), 
 		    stack);
 
@@ -119,7 +119,7 @@ gimp_undo_stack_finalize (GObject *object)
 
   if (stack->undos)
     {
-      g_object_unref (G_OBJECT (stack->undos));
+      g_object_unref (stack->undos);
       stack->undos = NULL;
     }
 
@@ -163,7 +163,7 @@ gimp_undo_stack_push (GimpUndoStack *stack,
 
   gimp_undo_push (undo, stack->gimage);
   gimp_container_add (GIMP_CONTAINER (stack->undos), GIMP_OBJECT (undo));
-  g_object_unref (G_OBJECT (undo));
+  g_object_unref (undo);
 }
 
 GimpUndo * 

@@ -324,7 +324,7 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (gamma->hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (gamma->adjustment), "value_changed",
+  g_signal_connect (gamma->adjustment, "value_changed",
                     G_CALLBACK (gamma_configure_adj_callback),
                     gamma);
 

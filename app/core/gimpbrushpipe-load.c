@@ -159,7 +159,7 @@ gimp_brush_pipe_finalize (GObject *object)
 
       for (i = 0; i < pipe->nbrushes; i++)
 	if (pipe->brushes[i])
-	  g_object_unref (G_OBJECT (pipe->brushes[i]));
+	  g_object_unref (pipe->brushes[i]);
 
       g_free (pipe->brushes);
       pipe->brushes = NULL;
@@ -371,7 +371,7 @@ gimp_brush_pipe_load (const gchar  *filename,
                      "Brush file '%s' is corrupt."),
                    filename);
       close (fd);
-      g_object_unref (G_OBJECT (pipe));
+      g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
     }
@@ -461,7 +461,7 @@ gimp_brush_pipe_load (const gchar  *filename,
                          "Brush file '%s' is corrupt."),
                        filename);
 	  close (fd);
-	  g_object_unref (G_OBJECT (pipe));
+	  g_object_unref (pipe);
 	  return NULL;
 	}
   

@@ -128,7 +128,7 @@ gimp_display_shell_events (GtkWidget        *widget,
         {
           gchar *accel = NULL;
 
-          g_object_get (G_OBJECT (gtk_widget_get_settings (widget)),
+          g_object_get (gtk_widget_get_settings (widget),
                         "gtk-menu-bar-accel", &accel,
                         NULL);
 
@@ -275,10 +275,10 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gdk_gc_set_exposures (shell->render_gc, TRUE);
 
   /*  set up the scrollbar observers  */
-  g_signal_connect (G_OBJECT (shell->hsbdata), "value_changed",
+  g_signal_connect (shell->hsbdata, "value_changed",
                     G_CALLBACK (gimp_display_shell_hscrollbar_update),
                     shell);
-  g_signal_connect (G_OBJECT (shell->vsbdata), "value_changed",
+  g_signal_connect (shell->vsbdata, "value_changed",
                     G_CALLBACK (gimp_display_shell_vscrollbar_update),
                     shell);
 

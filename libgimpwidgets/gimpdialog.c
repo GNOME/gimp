@@ -318,11 +318,11 @@ gimp_dialog_create_action_areav (GimpDialog *dialog,
       if (callback)
         {
           if (slot_object)
-            g_signal_connect_swapped (G_OBJECT (button), "clicked",
+            g_signal_connect_swapped (button, "clicked",
                                       G_CALLBACK (callback),
                                       slot_object);
           else
-            g_signal_connect (G_OBJECT (button), "clicked",
+            g_signal_connect (button, "clicked",
                               G_CALLBACK (callback),
                               callback_data);
         }

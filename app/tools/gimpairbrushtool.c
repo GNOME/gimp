@@ -153,7 +153,7 @@ airbrush_options_new (GimpToolInfo *tool_info)
 					  TRUE, 0.0, 0.0,
 					  NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->rate_w), "value_changed",
+  g_signal_connect (options->rate_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->rate);
 
@@ -165,7 +165,7 @@ airbrush_options_new (GimpToolInfo *tool_info)
 					      TRUE, 0.0, 0.0,
 					      NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->pressure_w), "value_changed",
+  g_signal_connect (options->pressure_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->pressure);
 

@@ -402,7 +402,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
               g_free (thumb_name);
             }
 
-          g_object_unref (G_OBJECT (gimage));
+          g_object_unref (gimage);
         }
       else
         {
@@ -574,8 +574,7 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
     }
 
   if (changed || emit_always)
-    g_signal_emit (G_OBJECT (imagefile),
-                   gimp_imagefile_signals[INFO_CHANGED], 0);
+    g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);
 }
 
 static void
@@ -980,7 +979,7 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     g_free (l_str);
   }
 
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (pixbuf);
 
   g_free (temp_name);
 

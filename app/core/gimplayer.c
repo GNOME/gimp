@@ -210,7 +210,7 @@ gimp_layer_finalize (GObject *object)
 
   if (layer->mask)
     {
-      g_object_unref (G_OBJECT (layer->mask));
+      g_object_unref (layer->mask);
       layer->mask = NULL;
     }
 
@@ -589,7 +589,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
     }
 
   layer->mask = mask;
-  g_object_ref (G_OBJECT (layer->mask));
+  g_object_ref (layer->mask);
 
   gimp_layer_mask_set_layer (mask, layer);
 
@@ -601,7 +601,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
   if (push_undo)
     undo_push_layer_mask_add (gimage, layer, mask);
 
-  g_signal_emit (G_OBJECT (layer), layer_signals[MASK_CHANGED], 0);
+  g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 
   return layer->mask;
 }
@@ -819,7 +819,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       GIMP_DRAWABLE (layer)->preview_valid = FALSE;
     }
 
-  g_object_unref (G_OBJECT (layer->mask));
+  g_object_unref (layer->mask);
   layer->mask = NULL;
 
   if (push_undo)
@@ -840,7 +840,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 			    gimp_drawable_height (GIMP_DRAWABLE (layer)));
     }
 
-  g_signal_emit (G_OBJECT (layer), layer_signals[MASK_CHANGED], 0);
+  g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 }
 
 void
@@ -1506,7 +1506,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
     {
       layer->opacity = opacity;
 
-      g_signal_emit (G_OBJECT (layer), layer_signals[OPACITY_CHANGED], 0);
+      g_signal_emit (layer, layer_signals[OPACITY_CHANGED], 0);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
@@ -1533,7 +1533,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
     {
       layer->mode = mode;
 
-      g_signal_emit (G_OBJECT (layer), layer_signals[MODE_CHANGED], 0);
+      g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
@@ -1560,8 +1560,7 @@ gimp_layer_set_preserve_trans (GimpLayer *layer,
     {
       layer->preserve_trans = preserve ? TRUE : FALSE;
 
-      g_signal_emit (G_OBJECT (layer),
-		     layer_signals[PRESERVE_TRANS_CHANGED], 0);
+      g_signal_emit (layer, layer_signals[PRESERVE_TRANS_CHANGED], 0);
     }
 }
 
@@ -1583,7 +1582,7 @@ gimp_layer_set_linked (GimpLayer *layer,
     {
       layer->linked = linked ? TRUE : FALSE;
 
-      g_signal_emit (G_OBJECT (layer), layer_signals[LINKED_CHANGED], 0);
+      g_signal_emit (layer, layer_signals[LINKED_CHANGED], 0);
     }
 }
 

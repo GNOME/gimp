@@ -209,8 +209,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 				gimp_drawable_height (drawable));
         }
 
-      g_signal_emit (G_OBJECT (layer_mask),
-		     layer_mask_signals[APPLY_CHANGED], 0);
+      g_signal_emit (layer_mask, layer_mask_signals[APPLY_CHANGED], 0);
     }
 }
 
@@ -232,8 +231,7 @@ gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
     {
       layer_mask->edit_mask = edit ? TRUE : FALSE;
 
-      g_signal_emit (G_OBJECT (layer_mask),
-		     layer_mask_signals[EDIT_CHANGED], 0);
+      g_signal_emit (layer_mask, layer_mask_signals[EDIT_CHANGED], 0);
     }
 }
 
@@ -267,8 +265,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 				gimp_drawable_height (drawable));
         }
 
-      g_signal_emit (G_OBJECT (layer_mask),
-		     layer_mask_signals[SHOW_CHANGED], 0);
+      g_signal_emit (layer_mask, layer_mask_signals[SHOW_CHANGED], 0);
     }
 }
 

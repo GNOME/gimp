@@ -142,7 +142,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                       TRUE, TRUE, content_spacing);
   gtk_widget_show (editor->notebook);
 
-  g_signal_connect (G_OBJECT (editor->notebook), "color_changed",
+  g_signal_connect (editor->notebook, "color_changed",
                     G_CALLBACK (gimp_color_editor_color_changed),
                     editor);
 
@@ -206,7 +206,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
       g_object_set_data (G_OBJECT (button), "selector", selector);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_color_editor_tab_toggled),
                         editor);
     }
@@ -219,7 +219,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
     gtk_box_pack_start (GTK_BOX (editor->hbox), button, TRUE, TRUE, 0);
     gtk_widget_show (button);
 
-    g_signal_connect (G_OBJECT (button), "color_picked",
+    g_signal_connect (button, "color_picked",
                       G_CALLBACK (gimp_color_editor_color_picked),
                       editor);
   }
@@ -269,7 +269,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
         if ((i == 1) == editor->edit_bg)
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-        g_signal_connect (G_OBJECT (button), "toggled",
+        g_signal_connect (button, "toggled",
                           G_CALLBACK (gimp_color_editor_fg_bg_toggled),
                           editor);
       }
@@ -285,7 +285,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
     gtk_container_add (GTK_CONTAINER (frame), editor->color_area);
     gtk_widget_show (editor->color_area);
 
-    g_signal_connect (G_OBJECT (editor->color_area), "color_changed",
+    g_signal_connect (editor->color_area, "color_changed",
                       G_CALLBACK (gimp_color_editor_area_changed),
                       editor);
   }
@@ -334,10 +334,10 @@ gimp_color_editor_set_context (GimpColorEditor *editor,
 
   if (editor->context)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->context),
+      g_signal_handlers_disconnect_by_func (editor->context,
 					    gimp_color_editor_fg_changed,
 					    editor);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->context),
+      g_signal_handlers_disconnect_by_func (editor->context,
 					    gimp_color_editor_bg_changed,
 					    editor);
 
@@ -351,10 +351,10 @@ gimp_color_editor_set_context (GimpColorEditor *editor,
 
       editor->context = g_object_ref (context);
 
-      g_signal_connect (G_OBJECT (editor->context), "foreground_changed",
+      g_signal_connect (editor->context, "foreground_changed",
 			G_CALLBACK (gimp_color_editor_fg_changed),
 			editor);
-      g_signal_connect (G_OBJECT (editor->context), "background_changed",
+      g_signal_connect (editor->context, "background_changed",
 			G_CALLBACK (gimp_color_editor_bg_changed),
 			editor);
 
@@ -385,10 +385,10 @@ gimp_color_editor_fg_changed (GimpContext     *context,
 
       gimp_rgb_to_hsv (rgb, &hsv);
 
-      g_signal_handlers_block_by_func (G_OBJECT (editor->notebook),
+      g_signal_handlers_block_by_func (editor->notebook,
                                        gimp_color_editor_color_changed,
                                        editor);
-      g_signal_handlers_block_by_func (G_OBJECT (editor->color_area),
+      g_signal_handlers_block_by_func (editor->color_area,
                                        gimp_color_editor_area_changed,
                                        editor);
 
@@ -396,10 +396,10 @@ gimp_color_editor_fg_changed (GimpContext     *context,
                                      rgb, &hsv);
       gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (editor->notebook),
+      g_signal_handlers_unblock_by_func (editor->notebook,
                                          gimp_color_editor_color_changed,
                                          editor);
-      g_signal_handlers_unblock_by_func (G_OBJECT (editor->color_area),
+      g_signal_handlers_unblock_by_func (editor->color_area,
                                          gimp_color_editor_area_changed,
                                          editor);
     }
@@ -416,10 +416,10 @@ gimp_color_editor_bg_changed (GimpContext     *context,
 
       gimp_rgb_to_hsv (rgb, &hsv);
 
-      g_signal_handlers_block_by_func (G_OBJECT (editor->notebook),
+      g_signal_handlers_block_by_func (editor->notebook,
                                        gimp_color_editor_color_changed,
                                        editor);
-      g_signal_handlers_block_by_func (G_OBJECT (editor->color_area),
+      g_signal_handlers_block_by_func (editor->color_area,
                                        gimp_color_editor_area_changed,
                                        editor);
 
@@ -427,10 +427,10 @@ gimp_color_editor_bg_changed (GimpContext     *context,
                                      rgb, &hsv);
       gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (editor->notebook),
+      g_signal_handlers_unblock_by_func (editor->notebook,
                                          gimp_color_editor_color_changed,
                                          editor);
-      g_signal_handlers_unblock_by_func (G_OBJECT (editor->color_area),
+      g_signal_handlers_unblock_by_func (editor->color_area,
                                          gimp_color_editor_area_changed,
                                          editor);
     }
@@ -446,37 +446,37 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
     {
       if (editor->edit_bg)
         {
-          g_signal_handlers_block_by_func (G_OBJECT (editor->context),
+          g_signal_handlers_block_by_func (editor->context,
                                            gimp_color_editor_bg_changed,
                                            editor);
 
           gimp_context_set_background (editor->context, rgb);
 
-          g_signal_handlers_unblock_by_func (G_OBJECT (editor->context),
+          g_signal_handlers_unblock_by_func (editor->context,
                                              gimp_color_editor_bg_changed,
                                              editor);
         }
       else
         {
-          g_signal_handlers_block_by_func (G_OBJECT (editor->context),
+          g_signal_handlers_block_by_func (editor->context,
                                            gimp_color_editor_fg_changed,
                                            editor);
 
           gimp_context_set_foreground (editor->context, rgb);
 
-          g_signal_handlers_unblock_by_func (G_OBJECT (editor->context),
+          g_signal_handlers_unblock_by_func (editor->context,
                                              gimp_color_editor_fg_changed,
                                              editor);
         }
     }
 
-  g_signal_handlers_block_by_func (G_OBJECT (editor->color_area),
+  g_signal_handlers_block_by_func (editor->color_area,
                                    gimp_color_editor_area_changed,
                                    editor);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (editor->color_area), rgb);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (editor->color_area),
+  g_signal_handlers_unblock_by_func (editor->color_area,
                                      gimp_color_editor_area_changed,
                                      editor);
 }

@@ -163,7 +163,7 @@ device_status_dialog_create (Gimp *gimp)
 
       context = GIMP_CONTEXT (device_info);
 
-      g_signal_connect (G_OBJECT (device_info), "changed",
+      g_signal_connect (device_info, "changed",
                         G_CALLBACK (device_status_dialog_update),
                         deviceD);
 
@@ -189,9 +189,9 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      g_signal_connect_object (G_OBJECT (context), "tool_changed",
+      g_signal_connect_object (context, "tool_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
-                               G_OBJECT (deviceD->tools[i]),
+                               deviceD->tools[i],
                                G_CONNECT_SWAPPED);
       gimp_dnd_viewable_dest_add (deviceD->tools[i],
 				  GIMP_TYPE_TOOL_INFO,
@@ -209,7 +209,7 @@ device_status_dialog_create (Gimp *gimp)
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
       gtk_widget_set_size_request (deviceD->foregrounds[i],
                                    CELL_SIZE, CELL_SIZE);
-      g_signal_connect (G_OBJECT (deviceD->foregrounds[i]), "color_changed",
+      g_signal_connect (deviceD->foregrounds[i], "color_changed",
                         G_CALLBACK (device_status_foreground_changed),
                         device_info);
       gtk_table_attach (GTK_TABLE (deviceD->table), 
@@ -225,7 +225,7 @@ device_status_dialog_create (Gimp *gimp)
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
       gtk_widget_set_size_request (deviceD->backgrounds[i],
                                    CELL_SIZE, CELL_SIZE);
-      g_signal_connect (G_OBJECT (deviceD->backgrounds[i]), "color_changed",
+      g_signal_connect (deviceD->backgrounds[i], "color_changed",
                         G_CALLBACK (device_status_background_changed),
                         device_info);
       gtk_table_attach (GTK_TABLE (deviceD->table), 
@@ -239,9 +239,9 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      g_signal_connect_object (G_OBJECT (context),"brush_changed",
+      g_signal_connect_object (context,"brush_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
-                               G_OBJECT (deviceD->brushes[i]),
+                               deviceD->brushes[i],
                                G_CONNECT_SWAPPED);
       gimp_dnd_viewable_dest_add (deviceD->brushes[i],
 				  GIMP_TYPE_BRUSH,
@@ -257,9 +257,9 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+      g_signal_connect_object (context, "pattern_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
-                               G_OBJECT (deviceD->patterns[i]),
+                               deviceD->patterns[i],
                                G_CONNECT_SWAPPED);
       gimp_dnd_viewable_dest_add (deviceD->patterns[i],
 				  GIMP_TYPE_PATTERN,
@@ -275,9 +275,9 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
 			       CELL_SIZE * 2, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+      g_signal_connect_object (context, "gradient_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
-                               G_OBJECT (deviceD->gradients[i]),
+                               deviceD->gradients[i],
                                G_CONNECT_SWAPPED);
       gimp_dnd_viewable_dest_add (deviceD->gradients[i],
 				  GIMP_TYPE_GRADIENT,
@@ -294,7 +294,7 @@ device_status_dialog_create (Gimp *gimp)
 
   device_status_dialog_update_current (gimp);
 
-  g_signal_connect (G_OBJECT (deviceD->shell), "destroy",
+  g_signal_connect (deviceD->shell, "destroy",
                     G_CALLBACK (device_status_destroy_callback),
                     NULL);
 

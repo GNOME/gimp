@@ -127,11 +127,11 @@ paint_options_init (GimpPaintOptions *options,
 			  TRUE, 0.0, 0.0,
 			  NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->opacity_w), "value_changed",
+  g_signal_connect (options->opacity_w, "value_changed",
                     G_CALLBACK (paint_options_opacity_adjustment_update),
                     tool_info->context);
 
-  g_signal_connect (G_OBJECT (tool_info->context), "opacity_changed",
+  g_signal_connect (tool_info->context, "opacity_changed",
                     G_CALLBACK (paint_options_opacity_changed),
                     options->opacity_w);
 
@@ -145,7 +145,7 @@ paint_options_init (GimpPaintOptions *options,
                                           _("Mode:"), 1.0, 0.5,
                                           options->paint_mode_w, 2, TRUE);
 
-  g_signal_connect (G_OBJECT (tool_info->context), "paint_mode_changed",
+  g_signal_connect (tool_info->context, "paint_mode_changed",
                     G_CALLBACK (paint_options_paint_mode_changed),
                     options->paint_mode_w);
 
@@ -180,11 +180,11 @@ paint_options_init (GimpPaintOptions *options,
                                  _("Brush:"), 1.0, 0.5,
                                  button, 2, TRUE);
 
-      g_signal_connect_object (G_OBJECT (options->context), "brush_changed",
+      g_signal_connect_object (options->context, "brush_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
-                               G_OBJECT (preview),
+                               preview,
                                G_CONNECT_SWAPPED);
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
                         NULL);
     }
@@ -213,7 +213,7 @@ paint_options_init (GimpPaintOptions *options,
 				    options->incremental);
       gtk_widget_show (options->incremental_w);
 
-      g_signal_connect (G_OBJECT (options->incremental_w), "toggled",
+      g_signal_connect (options->incremental_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->incremental);
     }
@@ -321,7 +321,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 				    pressure->opacity);
       gtk_widget_show (pressure->opacity_w);
 
-      g_signal_connect (G_OBJECT (pressure->opacity_w), "toggled",
+      g_signal_connect (pressure->opacity_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pressure->opacity);
     }
@@ -340,7 +340,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 				    pressure->pressure);
       gtk_widget_show (pressure->pressure_w);
 
-      g_signal_connect (G_OBJECT (pressure->pressure_w), "toggled",
+      g_signal_connect (pressure->pressure_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pressure->pressure);
     }
@@ -357,7 +357,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 				    pressure->rate);
       gtk_widget_show (pressure->rate_w);
 
-      g_signal_connect (G_OBJECT (pressure->rate_w), "toggled",
+      g_signal_connect (pressure->rate_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pressure->rate);
     }
@@ -378,7 +378,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 				    pressure->size);
       gtk_widget_show (pressure->size_w);
 
-      g_signal_connect (G_OBJECT (pressure->size_w), "toggled",
+      g_signal_connect (pressure->size_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pressure->size);
     }
@@ -395,7 +395,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 				    pressure->color);
       gtk_widget_show (pressure->color_w);
 
-      g_signal_connect (G_OBJECT (pressure->color_w), "toggled",
+      g_signal_connect (pressure->color_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pressure->color);
     }
@@ -455,13 +455,13 @@ gradient_options_init (GimpGradientOptions *gradient,
                                   gradient->use_fade_w);
       gtk_widget_show (gradient->use_fade_w);
 
-      g_signal_connect (G_OBJECT (gradient->use_fade_w), "toggled",
+      g_signal_connect (gradient->use_fade_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &gradient->use_fade);
 
       gtk_widget_set_sensitive (table, gradient->use_fade);
       g_object_set_data (G_OBJECT (gradient->use_fade_w),
-                           "set_sensitive", table);
+                         "set_sensitive", table);
 
       /*  the fade-out sizeentry  */
       spinbutton = gimp_spin_button_new (&gradient->fade_out_w,
@@ -474,7 +474,7 @@ gradient_options_init (GimpGradientOptions *gradient,
                                  _("Length:"), 1.0, 0.5,
                                  spinbutton, 1, FALSE);
 
-      g_signal_connect (G_OBJECT (gradient->fade_out_w), "value_changed",
+      g_signal_connect (gradient->fade_out_w, "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &gradient->fade_out);
 
@@ -488,7 +488,7 @@ gradient_options_init (GimpGradientOptions *gradient,
       g_object_set_data (G_OBJECT (gradient->fade_unit_w), "set_digits",
                          spinbutton);
 
-      g_signal_connect (G_OBJECT (gradient->fade_unit_w), "unit_changed",
+      g_signal_connect (gradient->fade_unit_w, "unit_changed",
                         G_CALLBACK (gimp_unit_menu_update),
                         &gradient->fade_unit);
     }
@@ -510,7 +510,7 @@ gradient_options_init (GimpGradientOptions *gradient,
                                   gradient->use_gradient_w);
       gtk_widget_show (gradient->use_gradient_w);
 
-      g_signal_connect (G_OBJECT (gradient->use_gradient_w), "toggled",
+      g_signal_connect (gradient->use_gradient_w, "toggled",
                         G_CALLBACK (paint_options_gradient_toggle_callback),
                         paint_options);
 
@@ -532,7 +532,7 @@ gradient_options_init (GimpGradientOptions *gradient,
                                  _("Length:"), 1.0, 0.5,
                                  spinbutton, 1, FALSE);
 
-      g_signal_connect (G_OBJECT (gradient->gradient_length_w), "value_changed",
+      g_signal_connect (gradient->gradient_length_w, "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &gradient->gradient_length);
 
@@ -546,7 +546,7 @@ gradient_options_init (GimpGradientOptions *gradient,
       g_object_set_data (G_OBJECT (gradient->gradient_unit_w), "set_digits",
                            spinbutton);
 
-      g_signal_connect (G_OBJECT (gradient->gradient_unit_w), "unit_changed",
+      g_signal_connect (gradient->gradient_unit_w, "unit_changed",
                         G_CALLBACK (gimp_unit_menu_update),
                         &gradient->gradient_unit);
 
@@ -615,14 +615,14 @@ static void
 paint_options_opacity_adjustment_update (GtkAdjustment *adjustment,
 					 gpointer       data)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (data), 
+  g_signal_handlers_block_by_func (data, 
                                    paint_options_opacity_changed,
                                    adjustment);
 
   gimp_context_set_opacity (GIMP_CONTEXT (data),
 			    adjustment->value / 100);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (data), 
+  g_signal_handlers_unblock_by_func (data, 
                                      paint_options_opacity_changed,
                                      adjustment);
 }
@@ -632,13 +632,13 @@ paint_options_opacity_changed (GimpContext *context,
 			       gdouble      opacity,
 			       gpointer     data)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (data), 
+  g_signal_handlers_block_by_func (data, 
                                    paint_options_opacity_adjustment_update,
                                    context);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (data), opacity * 100);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (data), 
+  g_signal_handlers_unblock_by_func (data, 
                                      paint_options_opacity_adjustment_update,
                                      context);
 }
@@ -655,13 +655,13 @@ paint_options_paint_mode_update (GtkWidget *widget,
 
   options = (GimpPaintOptions *) data;
 
-  g_signal_handlers_block_by_func (G_OBJECT (options->context),
+  g_signal_handlers_block_by_func (options->context,
 				   paint_options_paint_mode_changed,
 				   options->paint_mode_w);
 
   gimp_context_set_paint_mode (GIMP_CONTEXT (options->context), paint_mode);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (options->context),
+  g_signal_handlers_unblock_by_func (options->context,
 				     paint_options_paint_mode_changed,
 				     options->paint_mode_w);
 }

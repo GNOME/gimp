@@ -332,7 +332,7 @@ gimp_size_entry_new (gint                       number_of_fields,
       gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
 				 i+1, i+2,
 				 gse->show_refval+1, gse->show_refval+2);
-      g_signal_connect (G_OBJECT (gsef->value_adjustment), "value_changed",
+      g_signal_connect (gsef->value_adjustment, "value_changed",
                         G_CALLBACK (gimp_size_entry_value_callback),
                         gsef);
 
@@ -352,7 +352,7 @@ gimp_size_entry_new (gint                       number_of_fields,
 				       spinbutton_width, -1);
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
 				     i + 1, i + 2, 1, 2);
-	  g_signal_connect (G_OBJECT (gsef->refval_adjustment),
+	  g_signal_connect (gsef->refval_adjustment,
                             "value_changed",
                             G_CALLBACK (gimp_size_entry_refval_callback),
                             gsef);
@@ -372,7 +372,7 @@ gimp_size_entry_new (gint                       number_of_fields,
 		    i+2, i+3,
 		    gse->show_refval+1, gse->show_refval+2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (G_OBJECT (gse->unitmenu), "unit_changed",
+  g_signal_connect (gse->unitmenu, "unit_changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
   gtk_widget_show (gse->unitmenu);
@@ -431,7 +431,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gsef->value_adjustment =
     GTK_OBJECT (gtk_spin_button_get_adjustment (value_spinbutton));
   gsef->value_spinbutton = GTK_WIDGET (value_spinbutton);
-  g_signal_connect (G_OBJECT (gsef->value_adjustment), "value_changed",
+  g_signal_connect (gsef->value_adjustment, "value_changed",
                     G_CALLBACK (gimp_size_entry_value_callback),
                     gsef);
 
@@ -440,7 +440,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       gsef->refval_adjustment =
 	GTK_OBJECT (gtk_spin_button_get_adjustment (refval_spinbutton));
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
-      g_signal_connect (G_OBJECT (gsef->refval_adjustment), "value_changed",
+      g_signal_connect (gsef->refval_adjustment, "value_changed",
                         G_CALLBACK (gimp_size_entry_refval_callback),
                         gsef);
     }
@@ -807,8 +807,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
   if (gsef->value != new_value)
     {
       gimp_size_entry_update_value (gsef, new_value);
-      g_signal_emit (G_OBJECT (gsef->gse),
-                     gimp_size_entry_signals[VALUE_CHANGED], 0);
+      g_signal_emit (gsef->gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
     }
 }
 
@@ -1065,8 +1064,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
   if (gsef->refval != new_refval)
     {
       gimp_size_entry_update_refval (gsef, new_refval);
-      g_signal_emit (G_OBJECT (gsef->gse),
-                     gimp_size_entry_signals[REFVAL_CHANGED], 0);
+      g_signal_emit (gsef->gse, gimp_size_entry_signals[REFVAL_CHANGED], 0);
     }
 }
 
@@ -1124,7 +1122,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
       gsef->stop_recursion = 0; /* hack !!! */
 
-      g_signal_handlers_block_by_func (G_OBJECT (gsef->value_adjustment),
+      g_signal_handlers_block_by_func (gsef->value_adjustment,
                                        gimp_size_entry_value_callback,
                                        gsef);
 
@@ -1132,12 +1130,12 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 					     gsef->min_refval, 
                                              gsef->max_refval);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (gsef->value_adjustment),
+      g_signal_handlers_unblock_by_func (gsef->value_adjustment,
                                          gimp_size_entry_value_callback,
                                          gsef);
     }
 
-  g_signal_emit (G_OBJECT (gse), gimp_size_entry_signals[VALUE_CHANGED], 0);
+  g_signal_emit (gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
 }
 
 /**
@@ -1169,7 +1167,7 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
   gimp_size_entry_update_unit (GIMP_SIZE_ENTRY (data),
 			       gimp_unit_menu_get_unit (GIMP_UNIT_MENU(widget)));
 
-  g_signal_emit (G_OBJECT (data), gimp_size_entry_signals[UNIT_CHANGED], 0);
+  g_signal_emit (data, gimp_size_entry_signals[UNIT_CHANGED], 0);
 }
 
 /**

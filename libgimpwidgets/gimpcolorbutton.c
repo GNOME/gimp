@@ -168,7 +168,7 @@ gimp_color_button_init (GimpColorButton *button)
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
   button->color_area = gimp_color_area_new (&color, FALSE, GDK_BUTTON2_MASK);
-  g_signal_connect (G_OBJECT (button->color_area), "color_changed",
+  g_signal_connect (button->color_area, "color_changed",
 		    G_CALLBACK (gimp_color_button_color_changed),
 		    button);
 
@@ -392,14 +392,14 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (dialog)->help_button);
       gtk_container_set_border_width (GTK_CONTAINER (dialog), 2);
 
-      g_signal_connect (G_OBJECT (dialog), "destroy",
+      g_signal_connect (dialog, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
 			&color_button->dialog);
-      g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (dialog)->ok_button), 
+      g_signal_connect (GTK_COLOR_SELECTION_DIALOG (dialog)->ok_button,
                         "clicked",
                         G_CALLBACK (gimp_color_button_dialog_ok), 
                         color_button);
-      g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (dialog)->cancel_button), 
+      g_signal_connect (GTK_COLOR_SELECTION_DIALOG (dialog)->cancel_button,
                         "clicked",
                         G_CALLBACK (gimp_color_button_dialog_cancel), 
                         color_button);
@@ -504,8 +504,7 @@ gimp_color_button_color_changed (GtkObject *object,
       gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (button->dialog)->colorsel), alpha);
     }
 
-  g_signal_emit (G_OBJECT (button), 
-                 gimp_color_button_signals[COLOR_CHANGED], 0);
+  g_signal_emit (button, gimp_color_button_signals[COLOR_CHANGED], 0);
 }
 
 static gchar *

@@ -297,10 +297,10 @@ gimp_window_add_accel_group (GtkWindow               *window,
                               context_data,
                               (GDestroyNotify) g_free);
 
-      g_signal_connect (G_OBJECT (window), "key_press_event",
+      g_signal_connect (window, "key_press_event",
                         G_CALLBACK (gimp_window_accel_key_press),
                         context_data);
-      g_signal_connect (G_OBJECT (window), "key_release_event",
+      g_signal_connect (window, "key_release_event",
                         G_CALLBACK (gimp_window_accel_key_release),
                         context_data);
     }
@@ -319,10 +319,10 @@ gimp_window_remove_accel_group (GtkWindow      *window,
 
   if (context_data)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (window),
+      g_signal_handlers_disconnect_by_func (window,
                                             G_CALLBACK (gimp_window_accel_key_press),
                                             context_data);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (window),
+      g_signal_handlers_disconnect_by_func (window,
                                             G_CALLBACK (gimp_window_accel_key_release),
                                             context_data);
 

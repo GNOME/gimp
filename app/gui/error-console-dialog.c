@@ -130,7 +130,7 @@ error_console_create (Gimp *gimp)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
 		    G_CALLBACK (error_console_clear_callback),
 		    text_buffer);
 
@@ -143,7 +143,7 @@ error_console_create (Gimp *gimp)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (error_console_write_all_callback),
                     text_buffer);
   
@@ -151,20 +151,20 @@ error_console_create (Gimp *gimp)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect (G_OBJECT (menuitem), "activate",
+  g_signal_connect (menuitem, "activate",
                     G_CALLBACK (error_console_write_selection_callback),
                     text_buffer);
 
   /*  The output text widget  */
   text_view = gtk_text_view_new_with_buffer (text_buffer);
-  g_object_unref (G_OBJECT (text_buffer));
+  g_object_unref (text_buffer);
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_signal_connect (G_OBJECT (text_view), "button_press_event",
+  g_signal_connect (text_view, "button_press_event",
 		    G_CALLBACK (text_clicked_callback),
 		    menu);
 
@@ -295,15 +295,15 @@ error_console_create_file_dialog (GtkTextBuffer *buffer,
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
 
-  g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
+  g_signal_connect_swapped (filesel->cancel_button, "clicked",
 			    G_CALLBACK (gtk_widget_destroy),
 			    filesel);
 
-  g_signal_connect_swapped (G_OBJECT (filesel), "delete_event",
+  g_signal_connect_swapped (filesel, "delete_event",
 			    G_CALLBACK (gtk_widget_destroy),
 			    filesel);
 
-  g_signal_connect (G_OBJECT (filesel->ok_button), "clicked",
+  g_signal_connect (filesel->ok_button, "clicked",
 		    G_CALLBACK (error_console_file_ok_callback),
 		    filesel);
 

@@ -336,7 +336,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
           gtk_widget_show (hs_tool->hue_partition_da[i - 1]);
         }
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
                         G_CALLBACK (hue_saturation_partition_callback),
                         hs_tool);
 
@@ -372,7 +372,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (G_OBJECT (data), "value_changed",
+  g_signal_connect (data, "value_changed",
                     G_CALLBACK (hue_saturation_hue_adjustment_update),
                     hs_tool);
 
@@ -386,7 +386,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (G_OBJECT (data), "value_changed",
+  g_signal_connect (data, "value_changed",
                     G_CALLBACK (hue_saturation_lightness_adjustment_update),
                     hs_tool);
 
@@ -400,7 +400,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (G_OBJECT (hs_tool->saturation_data), "value_changed",
+  g_signal_connect (hs_tool->saturation_data, "value_changed",
                     G_CALLBACK (hue_saturation_saturation_adjustment_update),
                     hs_tool);
 
@@ -412,7 +412,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (hue_saturation_partition_reset_callback),
                     hs_tool);
 }

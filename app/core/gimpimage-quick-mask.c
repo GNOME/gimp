@@ -111,7 +111,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
               undo_push_group_end (gimage);
 
               /* connect to the removed signal, so the buttons get updated */
-              g_signal_connect (G_OBJECT (mask), "removed", 
+              g_signal_connect (mask, "removed", 
                                 G_CALLBACK (gimp_image_qmask_removed_callback),
                                 gimage);
             }

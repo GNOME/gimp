@@ -709,7 +709,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
-  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+  g_signal_connect (options->sample_merged_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_merged);
 
@@ -732,7 +732,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->sample_average_w);
   gtk_widget_show (options->sample_average_w);
 
-  g_signal_connect (G_OBJECT (options->sample_average_w), "toggled",
+  g_signal_connect (options->sample_average_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_average);
 
@@ -748,7 +748,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
 			  TRUE, 0.0, 0.0,
 			  NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->average_radius_w), "value_changed",
+  g_signal_connect (options->average_radius_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->average_radius);
 
@@ -760,7 +760,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
   gtk_widget_show (options->update_active_w);
 
-  g_signal_connect (G_OBJECT (options->update_active_w), "toggled",
+  g_signal_connect (options->update_active_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->update_active);
 

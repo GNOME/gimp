@@ -209,12 +209,12 @@ gimp_editor_add_button (GimpEditor  *editor,
     gimp_help_set_help_data (button, tooltip, help_data);
 
   if (callback)
-    g_signal_connect (G_OBJECT (button), "clicked",
+    g_signal_connect (button, "clicked",
 		      callback,
 		      callback_data);
 
   if (extended_callback)
-    g_signal_connect (G_OBJECT (button), "extended_clicked",
+    g_signal_connect (button, "extended_clicked",
 		      extended_callback,
 		      callback_data);
 

@@ -196,7 +196,7 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 
   g_free (str);
 
-  g_signal_connect (G_OBJECT (options->anti_erase_w), "toggled",
+  g_signal_connect (options->anti_erase_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->anti_erase);
 
@@ -207,7 +207,7 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
   gtk_widget_show (options->hard_w);
 
-  g_signal_connect (G_OBJECT (options->hard_w), "toggled",
+  g_signal_connect (options->hard_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->hard);
 

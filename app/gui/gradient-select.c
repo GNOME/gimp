@@ -109,7 +109,7 @@ gradient_select_new (Gimp        *gimp,
 
   gimp_context_set_gradient (gsp->context, active);
 
-  g_signal_connect (G_OBJECT (gsp->context), "gradient_changed",
+  g_signal_connect (gsp->context, "gradient_changed",
                     G_CALLBACK (gradient_select_gradient_changed),
                     gsp);
 
@@ -158,7 +158,7 @@ gradient_select_free (GradientSelect *gsp)
     g_free (gsp->callback_name);
 
   if (gsp->context)
-    g_object_unref (G_OBJECT (gsp->context));
+    g_object_unref (gsp->context);
  
    g_free (gsp);
 }

@@ -111,7 +111,7 @@ pattern_select_new (Gimp        *gimp,
 
   gimp_context_set_pattern (psp->context, active);
 
-  g_signal_connect (G_OBJECT (psp->context), "pattern_changed",
+  g_signal_connect (psp->context, "pattern_changed",
                     G_CALLBACK (pattern_select_pattern_changed),
                     psp);
 
@@ -161,7 +161,7 @@ pattern_select_free (PatternSelect *psp)
     g_free (psp->callback_name);
 
   if (psp->context)
-    g_object_unref (G_OBJECT (psp->context));
+    g_object_unref (psp->context);
 
   g_free (psp);
 }

@@ -459,7 +459,7 @@ magnify_options_new (GimpToolInfo *tool_info)
                       FALSE, FALSE, 0);
   gtk_widget_show (options->allow_resize_w);
 
-  g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
+  g_signal_connect (options->allow_resize_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->allow_resize);
 
@@ -492,7 +492,7 @@ magnify_options_new (GimpToolInfo *tool_info)
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+  g_signal_connect (options->threshold_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
 

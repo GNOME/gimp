@@ -71,21 +71,21 @@ gimp_display_connect (GimpDisplay *gdisp,
            G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
 #endif
 
-  g_object_ref (G_OBJECT (gimage));
+  g_object_ref (gimage);
 
-  g_signal_connect (G_OBJECT (gimage), "update",
+  g_signal_connect (gimage, "update",
                     G_CALLBACK (gimp_display_update_handler),
                     gdisp);
-  g_signal_connect (G_OBJECT (gimage), "mode_changed",
+  g_signal_connect (gimage, "mode_changed",
                     G_CALLBACK (gimp_display_mode_changed_handler),
                     gdisp);
-  g_signal_connect (G_OBJECT (gimage), "colormap_changed",
+  g_signal_connect (gimage, "colormap_changed",
                     G_CALLBACK (gimp_display_colormap_changed_handler),
                     gdisp);
-  g_signal_connect (G_OBJECT (gimage), "size_changed",
+  g_signal_connect (gimage, "size_changed",
                     G_CALLBACK (gimp_display_size_changed_handler),
                     gdisp);
-  g_signal_connect (G_OBJECT (gimage), "flush",
+  g_signal_connect (gimage, "flush",
                     G_CALLBACK (gimp_display_flush_handler),
                     gdisp);
 }
@@ -96,19 +96,19 @@ gimp_display_disconnect (GimpDisplay *gdisp)
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gdisp->gimage));
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+  g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_flush_handler,
                                         gdisp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+  g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_size_changed_handler,
                                         gdisp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+  g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_colormap_changed_handler,
                                         gdisp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+  g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_mode_changed_handler,
                                         gdisp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+  g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_update_handler,
                                         gdisp);
 
@@ -119,7 +119,7 @@ gimp_display_disconnect (GimpDisplay *gdisp)
            G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
 #endif
 
-  g_object_unref (G_OBJECT (gdisp->gimage));
+  g_object_unref (gdisp->gimage);
   gdisp->gimage = NULL;
 }
 

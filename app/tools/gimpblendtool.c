@@ -483,7 +483,7 @@ blend_options_new (GimpToolInfo *tool_info)
 					    TRUE, 0.0, 0.0,
 					    NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->offset_w), "value_changed",
+  g_signal_connect (options->offset_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->offset);
 
@@ -506,11 +506,11 @@ blend_options_new (GimpToolInfo *tool_info)
                                _("Gradient:"), 1.0, 0.5,
                                button, 2, TRUE);
 
-    g_signal_connect_object (G_OBJECT (tool_info->context), "gradient_changed",
+    g_signal_connect_object (tool_info->context, "gradient_changed",
                              G_CALLBACK (gimp_preview_set_viewable),
-                             G_OBJECT (preview),
+                             preview,
                              G_CONNECT_SWAPPED);
-    g_signal_connect (G_OBJECT (button), "clicked",
+    g_signal_connect (button, "clicked",
                       G_CALLBACK (blend_options_gradient_clicked),
                       NULL);
   }
@@ -559,7 +559,7 @@ blend_options_new (GimpToolInfo *tool_info)
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->supersample_w);
   gtk_widget_show (options->supersample_w);
 
-  g_signal_connect (G_OBJECT (options->supersample_w), "toggled",
+  g_signal_connect (options->supersample_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->supersample);
 
@@ -583,7 +583,7 @@ blend_options_new (GimpToolInfo *tool_info)
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
 
-  g_signal_connect (G_OBJECT(options->max_depth_w), "value_changed",
+  g_signal_connect (options->max_depth_w, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &options->max_depth);
 
@@ -595,7 +595,7 @@ blend_options_new (GimpToolInfo *tool_info)
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+  g_signal_connect (options->threshold_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
 

@@ -285,10 +285,10 @@ file_new_dialog_create (Gimp      *gimp,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
 			      info->values->height);
 
-  g_signal_connect (G_OBJECT (info->size_se), "refval_changed",
+  g_signal_connect (info->size_se, "refval_changed",
 		    G_CALLBACK (file_new_image_size_callback),
 		    info);
-  g_signal_connect (G_OBJECT (info->size_se), "value_changed",
+  g_signal_connect (info->size_se, "value_changed",
 		    G_CALLBACK (file_new_image_size_callback),
 		    info);
 
@@ -348,7 +348,7 @@ file_new_dialog_create (Gimp      *gimp,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
 			      info->values->yresolution);
 
-  g_signal_connect (G_OBJECT (info->resolution_se), "value_changed",
+  g_signal_connect (info->resolution_se, "value_changed",
 		    G_CALLBACK (file_new_resolution_callback),
 		    info);
 
@@ -456,7 +456,7 @@ file_new_reset_callback (GtkWidget *widget,
 
   config = info->gimp->config;
 
-  g_signal_handlers_block_by_func (G_OBJECT (info->resolution_se),
+  g_signal_handlers_block_by_func (info->resolution_se,
                                    file_new_resolution_callback,
                                    info);
 
@@ -472,7 +472,7 @@ file_new_reset_callback (GtkWidget *widget,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
 			    config->default_resolution_unit);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
+  g_signal_handlers_unblock_by_func (info->resolution_se,
                                      file_new_resolution_callback,
                                      info);
 
@@ -594,7 +594,7 @@ file_new_resolution_callback (GtkWidget *widget,
   if (gimp_chain_button_get_active
       (GIMP_CHAIN_BUTTON (info->couple_resolutions)))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (info->resolution_se),
+      g_signal_handlers_block_by_func (info->resolution_se,
                                        file_new_resolution_callback,
                                        info);
 
@@ -610,7 +610,7 @@ file_new_resolution_callback (GtkWidget *widget,
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
 	}
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
+      g_signal_handlers_unblock_by_func (info->resolution_se,
                                          file_new_resolution_callback,
                                          info);
     }

@@ -257,7 +257,7 @@ channel_delete_invoker (Gimp     *gimp,
     {
       if (! gimp_item_get_image (GIMP_ITEM (channel)))
 	{
-	  g_object_unref (G_OBJECT (channel));
+	  g_object_unref (channel);
 	  success = TRUE;
 	}
     

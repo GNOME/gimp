@@ -155,7 +155,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
                                          grid_view->wrap_box);
   gtk_widget_show (grid_view->wrap_box);
 
-  g_signal_connect (G_OBJECT (grid_view->wrap_box->parent), "size_allocate",
+  g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
                     G_CALLBACK (gimp_container_grid_view_vieport_resized),
                     grid_view);
 
@@ -241,15 +241,15 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
                     G_CALLBACK (gimp_container_grid_view_item_selected),
                     view);
 
-  g_signal_connect (G_OBJECT (preview), "double_clicked",
+  g_signal_connect (preview, "double_clicked",
                     G_CALLBACK (gimp_container_grid_view_item_activated),
                     view);
 
-  g_signal_connect (G_OBJECT (preview), "context",
+  g_signal_connect (preview, "context",
                     G_CALLBACK (gimp_container_grid_view_item_context),
                     view);
 

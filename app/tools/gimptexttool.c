@@ -429,7 +429,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   options->font_selection = gimp_font_selection_new (pango_context);
 
-  g_object_unref (G_OBJECT (pango_context));
+  g_object_unref (pango_context);
 
   gimp_font_selection_set_fontname 
     (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
@@ -447,7 +447,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   size_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->size_w);
 
-  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+  g_signal_connect (options->size_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->size);
 
@@ -460,7 +460,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   border_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->border_w);
 
-  g_signal_connect (G_OBJECT (options->border_w), "value_changed",
+  g_signal_connect (options->border_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->border);
 
@@ -476,7 +476,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
                      border_spinbutton);
 
-  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
+  g_signal_connect (options->unit_w, "unit_changed",
                     G_CALLBACK (gimp_unit_menu_update),
                     &options->unit);
 
@@ -487,7 +487,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
                            GIMP_STOCK_LETTER_SPACING, spin_button);
 
-  g_signal_connect (G_OBJECT (options->letter_spacing_w), "value_changed",
+  g_signal_connect (options->letter_spacing_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->letter_spacing);
 
@@ -498,7 +498,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   gimp_table_attach_stock (GTK_TABLE (table), 0, 5,
                            GIMP_STOCK_LINE_SPACING, spin_button);
 
-  g_signal_connect (G_OBJECT (options->line_spacing_w), "value_changed",
+  g_signal_connect (options->line_spacing_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->line_spacing);
 
@@ -637,10 +637,10 @@ text_tool_editor_load (GtkWidget    *widget,
                                 GTK_WINDOW (text_tool->editor));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (filesel), TRUE);
 
-  g_signal_connect_swapped (G_OBJECT (filesel->ok_button), "clicked",
+  g_signal_connect_swapped (filesel->ok_button, "clicked",
                             G_CALLBACK (text_tool_editor_load_ok),
                             text_tool);
-  g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
+  g_signal_connect_swapped (filesel->cancel_button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             filesel);
 

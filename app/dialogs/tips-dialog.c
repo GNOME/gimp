@@ -112,11 +112,11 @@ tips_dialog_create (Gimp *gimp)
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (tips_dialog), TRUE);
 
-  g_signal_connect (G_OBJECT (tips_dialog), "delete_event",
+  g_signal_connect (tips_dialog, "delete_event",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
-  g_signal_connect (G_OBJECT (tips_dialog), "destroy",
+  g_signal_connect (tips_dialog, "destroy",
 		    G_CALLBACK (tips_dialog_destroy),
 		    config);
 
@@ -186,7 +186,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+  g_signal_connect_swapped (button, "clicked",
 			    G_CALLBACK (gtk_widget_destroy),
 			    tips_dialog);
 
@@ -202,7 +202,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (tips_show_previous),
 		    NULL);
 
@@ -212,7 +212,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (tips_show_next),
 		    NULL);
 

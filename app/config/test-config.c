@@ -93,7 +93,7 @@ main (int   argc,
     }
   g_print (" done.\n\n");
 
-  g_signal_connect (G_OBJECT (gimprc), "notify",
+  g_signal_connect (gimprc, "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
@@ -109,18 +109,18 @@ main (int   argc,
   g_print ("\n done.\n");
 
   g_print ("\n Changing a property ...");
-  g_object_set (G_OBJECT (gimprc), "use-help", FALSE, NULL);
+  g_object_set (gimprc, "use-help", FALSE, NULL);
 
   g_print ("\n Testing gimp_config_duplicate() ...");
   gimprc2 = GIMP_RC (gimp_config_duplicate (G_OBJECT (gimprc)));
   g_print (" done.\n");
 
-  g_signal_connect (G_OBJECT (gimprc2), "notify",
+  g_signal_connect (gimprc2, "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
   g_print ("\n Changing a property in the duplicate ...");
-  g_object_set (G_OBJECT (gimprc2), "show-tips", FALSE, NULL);
+  g_object_set (gimprc2, "show-tips", FALSE, NULL);
 
   g_print ("\n Querying for \"default-comment\" ... ");
   
@@ -151,7 +151,7 @@ main (int   argc,
 
   g_free (result);
 
-  g_object_unref (G_OBJECT (gimprc2));
+  g_object_unref (gimprc2);
 
   g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
   if (! gimp_config_deserialize (G_OBJECT (gimprc),
@@ -166,7 +166,7 @@ main (int   argc,
       return EXIT_FAILURE;
     }
 
-  g_object_unref (G_OBJECT (gimprc));
+  g_object_unref (gimprc);
   
   g_print ("\nFinished test of GimpConfig.\n\n");
 

@@ -303,10 +303,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_container_add (GTK_CONTAINER (xy_frame), select->xy_color);
   gtk_widget_show (select->xy_color);
 
-  g_signal_connect_after (G_OBJECT (select->xy_color), "expose_event",
+  g_signal_connect_after (select->xy_color, "expose_event",
 			  G_CALLBACK (gimp_color_select_xy_expose),
 			  select);
-  g_signal_connect (G_OBJECT (select->xy_color), "event",
+  g_signal_connect (select->xy_color, "event",
 		    G_CALLBACK (gimp_color_select_xy_events),
 		    select);
 
@@ -332,10 +332,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_container_add (GTK_CONTAINER (z_frame), select->z_color);
   gtk_widget_show (select->z_color);
 
-  g_signal_connect_after (G_OBJECT (select->z_color), "expose_event",
+  g_signal_connect_after (select->z_color, "expose_event",
 			  G_CALLBACK (gimp_color_select_z_expose),
 			  select);
-  g_signal_connect (G_OBJECT (select->z_color), "event",
+  g_signal_connect (select->z_color, "event",
 		    G_CALLBACK (gimp_color_select_z_events),
 		    select);
 
@@ -385,7 +385,7 @@ gimp_color_select_init (GimpColorSelect *select)
 
         gimp_help_set_help_data (button, gettext (tips[channel]), NULL);
 
-        g_signal_connect (G_OBJECT (button), "toggled",
+        g_signal_connect (button, "toggled",
                           G_CALLBACK (gimp_color_select_channel_toggled),
                           select);
       }

@@ -151,7 +151,7 @@ gimp_image_dock_init (GimpImageDock *dock)
   gtk_box_pack_start (GTK_BOX (hbox), dock->option_menu, TRUE, TRUE, 0);
   gtk_widget_show (dock->option_menu);
 
-  g_signal_connect (G_OBJECT (dock->option_menu), "destroy",
+  g_signal_connect (dock->option_menu, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
 		    &dock->option_menu);
 
@@ -161,7 +161,7 @@ gimp_image_dock_init (GimpImageDock *dock)
   gtk_box_pack_start (GTK_BOX (hbox), dock->auto_button, FALSE, FALSE, 0);
   gtk_widget_show (dock->auto_button);
 
-  g_signal_connect (G_OBJECT (dock->auto_button), "clicked",
+  g_signal_connect (dock->auto_button, "clicked",
 		    G_CALLBACK (gimp_image_dock_auto_clicked),
 		    dock);
 }
@@ -283,18 +283,18 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
                                     GIMP_CONTEXT_PROP_IMAGE);
     }
 
-  g_signal_connect_object (G_OBJECT (dialog_factory->context), "display_changed",
+  g_signal_connect_object (dialog_factory->context, "display_changed",
 			   G_CALLBACK (gimp_image_dock_factory_display_changed),
-			   G_OBJECT (image_dock),
+			   image_dock,
 			   0);
-  g_signal_connect_object (G_OBJECT (dialog_factory->context), "image_changed",
+  g_signal_connect_object (dialog_factory->context, "image_changed",
 			   G_CALLBACK (gimp_image_dock_factory_image_changed),
-			   G_OBJECT (image_dock),
+			   image_dock,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (context), "image_changed",
+  g_signal_connect_object (context, "image_changed",
 			   G_CALLBACK (gimp_image_dock_image_changed),
-			   G_OBJECT (image_dock),
+			   image_dock,
 			   0);
 
   gtk_icon_size_lookup (DEFAULT_MENU_PREVIEW_SIZE,
@@ -306,7 +306,7 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);
 
-  g_object_unref (G_OBJECT (context));
+  g_object_unref (context);
 
   return GTK_WIDGET (image_dock);
 }
@@ -390,7 +390,7 @@ gimp_image_dock_image_changed (GimpContext *context,
 	  /*  stop the emission of the original signal (the emission of
 	   *  the recursive signal is finished)
 	   */
-	  g_signal_stop_emission_by_name (G_OBJECT (context), "image_changed");
+	  g_signal_stop_emission_by_name (context, "image_changed");
 	}
     }
   else if (image_dock->display_container->num_children > 0)
@@ -405,7 +405,7 @@ gimp_image_dock_image_changed (GimpContext *context,
           GimpImage *gdisp_gimage;
 
           g_object_get (gdisp, "image", &gdisp_gimage, NULL);
-          g_object_unref (G_OBJECT (gdisp_gimage));
+          g_object_unref (gdisp_gimage);
 
           if (gdisp_gimage == gimage)
             find_display = FALSE;
@@ -424,7 +424,7 @@ gimp_image_dock_image_changed (GimpContext *context,
               gdisp = GIMP_OBJECT (list->data);
 
               g_object_get (gdisp, "image", &gdisp_gimage, NULL);
-              g_object_unref (G_OBJECT (gdisp_gimage));
+              g_object_unref (gdisp_gimage);
 
               if (gdisp_gimage == gimage)
                 {

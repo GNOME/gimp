@@ -198,7 +198,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 					 eventbox);
   gtk_widget_show (eventbox);
 
-  g_signal_connect (G_OBJECT (eventbox), "button_press_event",
+  g_signal_connect (eventbox, "button_press_event",
 		    G_CALLBACK (palette_editor_eventbox_button_press),
 		    editor);
 
@@ -215,7 +215,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (alignment), editor->color_area);
   gtk_widget_show (editor->color_area);
 
-  g_signal_connect (G_OBJECT (editor->color_area), "button_press_event",
+  g_signal_connect (editor->color_area, "button_press_event",
 		    G_CALLBACK (palette_editor_color_area_button_press),
 		    editor);
 
@@ -246,7 +246,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_widget_show (editor->color_name);
 
   editor->entry_sig_id =
-    g_signal_connect (G_OBJECT (editor->color_name), "changed",
+    g_signal_connect (editor->color_name, "changed",
 		      G_CALLBACK (palette_editor_color_name_changed),
 		      editor);
 
@@ -259,7 +259,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (editor->columns_data), "value_changed",
+  g_signal_connect (editor->columns_data, "value_changed",
                     G_CALLBACK (palette_editor_columns_changed),
                     editor);
 
@@ -327,9 +327,9 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 
   palette_editor = GIMP_PALETTE_EDITOR (editor);
 
-  g_signal_handler_block (G_OBJECT (palette_editor->color_name),
+  g_signal_handler_block (palette_editor->color_name,
                           palette_editor->entry_sig_id);
-  g_signal_handlers_block_by_func (G_OBJECT (palette_editor->columns_data),
+  g_signal_handlers_block_by_func (palette_editor->columns_data,
                                    palette_editor_columns_changed,
                                    editor);
 
@@ -342,7 +342,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
           palette_editor->color_notebook_active = FALSE;
         }
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->data),
+      g_signal_handlers_disconnect_by_func (editor->data,
                                             palette_editor_invalidate_preview,
                                             editor);
 
@@ -365,7 +365,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 
       palette = GIMP_PALETTE (editor->data);
 
-      g_signal_connect (G_OBJECT (editor->data), "invalidate_preview",
+      g_signal_connect (editor->data, "invalidate_preview",
                         G_CALLBACK (palette_editor_invalidate_preview),
                         editor);
 
@@ -378,10 +378,10 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
       palette_editor_scroll_top_left (palette_editor);
     }
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (palette_editor->columns_data),
+  g_signal_handlers_unblock_by_func (palette_editor->columns_data,
                                      palette_editor_columns_changed,
                                      editor);
-  g_signal_handler_unblock (G_OBJECT (palette_editor->color_name),
+  g_signal_handler_unblock (palette_editor->color_name,
                             palette_editor->entry_sig_id);
 }
 
@@ -530,13 +530,13 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
           palette_editor_draw_entries (editor, row, col);
 
           /*  Update the active color name  */
-          g_signal_handler_block (G_OBJECT (editor->color_name),
+          g_signal_handler_block (editor->color_name,
                                   editor->entry_sig_id);
 
           gtk_entry_set_text (GTK_ENTRY (editor->color_name),
                               editor->color->name);
 
-          g_signal_handler_unblock (G_OBJECT (editor->color_name),
+          g_signal_handler_unblock (editor->color_name,
                                     editor->entry_sig_id);
 
           gtk_widget_set_sensitive (editor->color_name, TRUE);

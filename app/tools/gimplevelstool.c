@@ -393,7 +393,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (channel_hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_channel_reset_callback),
                     l_tool);
 
@@ -445,7 +445,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, TRUE, 0);
   gtk_widget_show (l_tool->input_levels_da[0]);
 
-  g_signal_connect (G_OBJECT (l_tool->input_levels_da[0]), "event",
+  g_signal_connect (l_tool->input_levels_da[0], "event",
                     G_CALLBACK (levels_input_da_events),
                     l_tool);
 
@@ -457,7 +457,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, TRUE, 0);
   gtk_widget_show (l_tool->input_levels_da[1]);
 
-  g_signal_connect (G_OBJECT (l_tool->input_levels_da[1]), "event",
+  g_signal_connect (l_tool->input_levels_da[1], "event",
                     G_CALLBACK (levels_input_da_events),
                     l_tool);
 
@@ -482,7 +482,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_object_set_data (G_OBJECT (button), "pick-value",
                      GUINT_TO_POINTER (LOW_INPUT));
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
                     l_tool);
 
@@ -494,7 +494,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (l_tool->low_input_data), "value_changed",
+  g_signal_connect (l_tool->low_input_data, "value_changed",
                     G_CALLBACK (levels_low_input_adjustment_update),
                     l_tool);
 
@@ -514,7 +514,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_object_set_data (G_OBJECT (button), "pick-value",
                      GUINT_TO_POINTER (GAMMA));
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
                     l_tool);
 
@@ -527,7 +527,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (l_tool->gamma_data), "value_changed",
+  g_signal_connect (l_tool->gamma_data, "value_changed",
                     G_CALLBACK (levels_gamma_adjustment_update),
                     l_tool);
 
@@ -547,7 +547,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_object_set_data (G_OBJECT (button), "pick-value",
                      GUINT_TO_POINTER (HIGH_INPUT));
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
                     l_tool);
 
@@ -559,7 +559,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (l_tool->high_input_data), "value_changed",
+  g_signal_connect (l_tool->high_input_data, "value_changed",
                     G_CALLBACK (levels_high_input_adjustment_update),
                     l_tool);
 
@@ -595,7 +595,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, TRUE, 0);
   gtk_widget_show (l_tool->output_levels_da[0]);
 
-  g_signal_connect (G_OBJECT (l_tool->output_levels_da[0]), "event",
+  g_signal_connect (l_tool->output_levels_da[0], "event",
                     G_CALLBACK (levels_output_da_events),
                     l_tool);
 
@@ -607,7 +607,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                       FALSE, TRUE, 0);
   gtk_widget_show (l_tool->output_levels_da[1]);
 
-  g_signal_connect (G_OBJECT (l_tool->output_levels_da[1]), "event",
+  g_signal_connect (l_tool->output_levels_da[1], "event",
                     G_CALLBACK (levels_output_da_events),
                     l_tool);
 
@@ -625,7 +625,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (l_tool->low_output_data), "value_changed",
+  g_signal_connect (l_tool->low_output_data, "value_changed",
                     G_CALLBACK (levels_low_output_adjustment_update),
                     l_tool);
 
@@ -638,7 +638,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (l_tool->high_output_data), "value_changed",
+  g_signal_connect (l_tool->high_output_data, "value_changed",
                     G_CALLBACK (levels_high_output_adjustment_update),
                     l_tool);
 
@@ -661,7 +661,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_auto_callback),
                     l_tool);
 
@@ -671,7 +671,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (button, _("Read levels settings from file"), NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_load_callback),
                     l_tool);
 
@@ -681,7 +681,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (button, _("Save levels settings to file"), NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_save_callback),
                     l_tool);
 }
@@ -1343,10 +1343,10 @@ file_dialog_create (GimpLevelsTool *l_tool)
                                 GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (l_tool)->shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect_swapped (G_OBJECT (file_dlg->ok_button), "clicked", 
+  g_signal_connect_swapped (file_dlg->ok_button, "clicked", 
                             G_CALLBACK (file_dialog_ok_callback),
                             l_tool);
-  g_signal_connect_swapped (G_OBJECT (file_dlg->cancel_button), "clicked", 
+  g_signal_connect_swapped (file_dlg->cancel_button, "clicked", 
                             G_CALLBACK (gtk_widget_destroy),
                             file_dlg);
 

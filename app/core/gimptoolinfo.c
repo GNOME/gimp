@@ -159,7 +159,7 @@ gimp_tool_info_finalize (GObject *object)
     }
   if (tool_info->stock_pixbuf)
     {
-      g_object_unref (G_OBJECT (tool_info->stock_pixbuf));
+      g_object_unref (tool_info->stock_pixbuf);
       tool_info->stock_pixbuf = NULL;
     }
 
@@ -197,7 +197,7 @@ temp_buf_new_from_pixbuf (GdkPixbuf *pixbuf,
     }
   else
     {
-      g_object_ref (G_OBJECT (pixbuf));
+      g_object_ref (pixbuf);
     }
 
   bytes = gdk_pixbuf_get_n_channels (pixbuf);
@@ -215,7 +215,7 @@ temp_buf_new_from_pixbuf (GdkPixbuf *pixbuf,
       t_data += width * bytes;
     }
 
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (pixbuf);
 
   return temp_buf;
 }
@@ -291,7 +291,7 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->stock_pixbuf    = stock_pixbuf;
 
   if (stock_pixbuf)
-    g_object_ref (G_OBJECT (stock_pixbuf));
+    g_object_ref (stock_pixbuf);
 
   return tool_info;
 }
@@ -304,12 +304,12 @@ gimp_tool_info_set_standard (Gimp         *gimp,
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
   if (gimp->standard_tool_info)
-    g_object_unref (G_OBJECT (gimp->standard_tool_info));
+    g_object_unref (gimp->standard_tool_info);
 
   gimp->standard_tool_info = tool_info;
 
   if (gimp->standard_tool_info)
-    g_object_ref (G_OBJECT (gimp->standard_tool_info));
+    g_object_ref (gimp->standard_tool_info);
 }
 
 GimpToolInfo *

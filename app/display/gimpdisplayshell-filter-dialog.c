@@ -156,7 +156,7 @@ make_dialog (ColorDisplayDialog *cdd)
 
   cdd->src = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cdd->src));
-  g_object_unref (G_OBJECT (cdd->src));
+  g_object_unref (cdd->src);
 
   gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
@@ -170,7 +170,7 @@ make_dialog (ColorDisplayDialog *cdd)
 
   cdd->src_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
 
-  g_signal_connect (G_OBJECT (cdd->src_sel), "changed",
+  g_signal_connect (cdd->src_sel, "changed",
                     G_CALLBACK (src_selection_changed),
                     cdd);
 
@@ -191,7 +191,7 @@ make_dialog (ColorDisplayDialog *cdd)
                            _("Add the selected filter to the list of "
                              "active filters."), NULL);
 
-  g_signal_connect (G_OBJECT (cdd->add_button), "clicked",
+  g_signal_connect (cdd->add_button, "clicked",
                     G_CALLBACK (color_display_add_callback),
                     cdd);
 
@@ -208,7 +208,7 @@ make_dialog (ColorDisplayDialog *cdd)
                            _("Remove the selected filter from the list of "
                              "active filters."), NULL);
 
-  g_signal_connect (G_OBJECT (cdd->remove_button), "clicked",
+  g_signal_connect (cdd->remove_button, "clicked",
                     G_CALLBACK (color_display_remove_callback),
                     cdd);
 
@@ -248,7 +248,7 @@ make_dialog (ColorDisplayDialog *cdd)
 
   cdd->dest = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cdd->dest));
-  g_object_unref (G_OBJECT (cdd->dest));
+  g_object_unref (cdd->dest);
 
   gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
@@ -262,7 +262,7 @@ make_dialog (ColorDisplayDialog *cdd)
 
   cdd->dest_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
 
-  g_signal_connect (G_OBJECT (cdd->dest_sel), "changed",
+  g_signal_connect (cdd->dest_sel, "changed",
                     G_CALLBACK (dest_selection_changed),
                     cdd);
 
@@ -289,7 +289,7 @@ make_dialog (ColorDisplayDialog *cdd)
                            _("Reset the selected filter to default values"),
                            NULL);
 
-  g_signal_connect (G_OBJECT (cdd->reset_button), "clicked",
+  g_signal_connect (cdd->reset_button, "clicked",
                     G_CALLBACK (selected_filter_reset),
                     cdd);
 
@@ -620,7 +620,7 @@ dest_selection_changed (GtkTreeSelection   *sel,
 
   if (cdd->selected)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (cdd->selected),
+      g_signal_handlers_disconnect_by_func (cdd->selected,
                                             selected_filter_changed,
                                             cdd);
       g_object_remove_weak_pointer (G_OBJECT (cdd->selected),
@@ -652,7 +652,7 @@ dest_selection_changed (GtkTreeSelection   *sel,
       cdd->selected = filter;
 
       g_object_add_weak_pointer (G_OBJECT (filter), (gpointer) &cdd->selected);
-      g_signal_connect (G_OBJECT (cdd->selected), "changed",
+      g_signal_connect (cdd->selected, "changed",
                         G_CALLBACK (selected_filter_changed),
                         cdd);
 

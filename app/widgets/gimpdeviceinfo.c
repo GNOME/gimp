@@ -489,7 +489,7 @@ gimp_device_info_changed (GimpDeviceInfo *device_info)
 {
   g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
 
-  g_signal_emit (G_OBJECT (device_info), device_info_signals[CHANGED], 0);
+  g_signal_emit (device_info, device_info_signals[CHANGED], 0);
 }
 
 GimpDeviceInfo *

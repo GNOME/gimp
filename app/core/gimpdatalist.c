@@ -113,7 +113,7 @@ gimp_data_list_add (GimpContainer *container,
   list->list = g_list_insert_sorted (list->list, object,
 				     gimp_data_list_data_compare_func);
 
-  g_signal_connect (G_OBJECT (object), "name_changed",
+  g_signal_connect (object, "name_changed",
 		    G_CALLBACK (gimp_data_list_object_renamed_callback),
 		    container);
 }
@@ -126,7 +126,7 @@ gimp_data_list_remove (GimpContainer *container,
 
   list = GIMP_LIST (container);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (object),
+  g_signal_handlers_disconnect_by_func (object,
 					gimp_data_list_object_renamed_callback,
 					container);
 
@@ -226,14 +226,14 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
           while (list2);
 
 	  if (have)
-	    g_signal_handlers_block_by_func (G_OBJECT (object),
+	    g_signal_handlers_block_by_func (object,
 					     gimp_data_list_object_renamed_callback,
 					     data_list);
 
 	  gimp_object_set_name (object, new_name);
 
 	  if (have)
-	    g_signal_handlers_unblock_by_func (G_OBJECT (object),
+	    g_signal_handlers_unblock_by_func (object,
 					       gimp_data_list_object_renamed_callback,
 					       data_list);
 

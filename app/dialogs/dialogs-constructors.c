@@ -811,7 +811,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
-  g_signal_connect (G_OBJECT (view), "selected",
+  g_signal_connect (view, "selected",
 		    G_CALLBACK (dialogs_indexed_palette_selected),
 		    dockable);
 
@@ -1044,9 +1044,9 @@ dialogs_brush_tab_func (GimpDockable *dockable,
 			   width, height, 1,
 			   FALSE, FALSE, FALSE);
 
-  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+  g_signal_connect_object (context, "brush_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   return preview;
@@ -1071,9 +1071,9 @@ dialogs_pattern_tab_func (GimpDockable *dockable,
 			   width, height, 1,
 			   FALSE, FALSE, FALSE);
 
-  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+  g_signal_connect_object (context, "pattern_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   return preview;
@@ -1098,9 +1098,9 @@ dialogs_gradient_tab_func (GimpDockable *dockable,
 			   width, height, 1,
 			   FALSE, FALSE, FALSE);
 
-  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+  g_signal_connect_object (context, "gradient_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   return preview;
@@ -1125,9 +1125,9 @@ dialogs_palette_tab_func (GimpDockable *dockable,
 			   width, height, 1,
 			   FALSE, FALSE, FALSE);
 
-  g_signal_connect_object (G_OBJECT (context), "palette_changed",
+  g_signal_connect_object (context, "palette_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   return preview;
@@ -1154,9 +1154,9 @@ dialogs_tool_tab_func (GimpDockable *dockable,
   image = gtk_image_new_from_stock (gimp_context_get_tool (context)->stock_id,
                                     size);
 
-  g_signal_connect_object (G_OBJECT (context), "tool_changed",
+  g_signal_connect_object (context, "tool_changed",
 			   G_CALLBACK (dialogs_tool_tab_tool_changed),
-			   G_OBJECT (image),
+			   image,
 			   0);
 
   return image;
@@ -1212,9 +1212,9 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 
   g_object_set_data (G_OBJECT (label), "tool-icon", image);
 
-  g_signal_connect_object (G_OBJECT (context), "tool_changed",
+  g_signal_connect_object (context, "tool_changed",
 			   G_CALLBACK (dialogs_tool_options_tool_changed),
-			   G_OBJECT (label),
+			   label,
 			   0);
 
   return hbox;
@@ -1297,14 +1297,14 @@ dialogs_set_image_item_context_func (GimpDockable *dockable,
     {
       if (dockable->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+	  g_signal_handlers_disconnect_by_func (dockable->context,
 						dialogs_image_item_view_image_changed,
 						view);
 	}
 
       if (context)
 	{
-	  g_signal_connect (G_OBJECT (context), "image_changed",
+	  g_signal_connect (context, "image_changed",
 			    G_CALLBACK (dialogs_image_item_view_image_changed),
 			    view);
 
@@ -1332,14 +1332,14 @@ dialogs_set_path_context_func (GimpDockable *dockable,
     {
       if (dockable->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+	  g_signal_handlers_disconnect_by_func (dockable->context,
 						dialogs_path_view_image_changed,
 						view);
 	}
 
       if (context)
 	{
-	  g_signal_connect (G_OBJECT (context), "image_changed",
+	  g_signal_connect (context, "image_changed",
 			    G_CALLBACK (dialogs_path_view_image_changed),
 			    view);
 
@@ -1367,14 +1367,14 @@ dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
     {
       if (dockable->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+	  g_signal_handlers_disconnect_by_func (dockable->context,
 						dialogs_indexed_palette_image_changed,
 						view);
 	}
 
       if (context)
 	{
-	  g_signal_connect (G_OBJECT (context), "image_changed",
+	  g_signal_connect (context, "image_changed",
 			    G_CALLBACK (dialogs_indexed_palette_image_changed),
 			    view);
 
@@ -1402,14 +1402,14 @@ dialogs_set_selection_editor_context_func (GimpDockable *dockable,
     {
       if (dockable->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+	  g_signal_handlers_disconnect_by_func (dockable->context,
 						dialogs_selection_editor_image_changed,
 						view);
 	}
 
       if (context)
 	{
-	  g_signal_connect (G_OBJECT (context), "image_changed",
+	  g_signal_connect (context, "image_changed",
 			    G_CALLBACK (dialogs_selection_editor_image_changed),
 			    view);
 
@@ -1437,14 +1437,14 @@ dialogs_set_navigation_context_func (GimpDockable *dockable,
     {
       if (dockable->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+	  g_signal_handlers_disconnect_by_func (dockable->context,
 						dialogs_navigation_display_changed,
 						view);
 	}
 
       if (context)
 	{
-	  g_signal_connect (G_OBJECT (context), "display_changed",
+	  g_signal_connect (context, "display_changed",
 			    G_CALLBACK (dialogs_navigation_display_changed),
 			    view);
 

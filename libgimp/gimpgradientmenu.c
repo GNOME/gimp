@@ -222,7 +222,7 @@ gimp_gradient_select_widget (gchar                   *gname,
   gtk_widget_show (gradient);
   gtk_container_add (GTK_CONTAINER (button), gradient); 
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gradient_preview_callback),
                     gsel);
   

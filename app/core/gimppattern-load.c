@@ -275,7 +275,7 @@ gimp_pattern_get_standard (void)
 	  }
 
       /*  set ref_count to 2 --> never swap the standard pattern  */
-      g_object_ref (G_OBJECT (standard_pattern));
+      g_object_ref (standard_pattern);
     }
 
   return GIMP_DATA (standard_pattern);
@@ -399,7 +399,7 @@ gimp_pattern_load (const gchar  *filename,
 
  error:
   if (pattern)
-    g_object_unref (G_OBJECT (pattern));
+    g_object_unref (pattern);
   else if (name)
     g_free (name);
 

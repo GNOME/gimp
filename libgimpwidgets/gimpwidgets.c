@@ -136,7 +136,7 @@ gimp_option_menu_new (gboolean            menu_only,
 	{
 	  menuitem = gtk_menu_item_new_with_label (label);
 
-	  g_signal_connect (G_OBJECT (menuitem), "activate",
+	  g_signal_connect (menuitem, "activate",
 			    callback,
 			    callback_data);
 
@@ -244,7 +244,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
 	{
 	  menuitem = gtk_menu_item_new_with_label (label);
 
-	  g_signal_connect (G_OBJECT (menuitem), "activate",
+	  g_signal_connect (menuitem, "activate",
 			    menu_item_callback,
 			    callback_data);
 
@@ -453,7 +453,7 @@ gimp_radio_group_new (gboolean            in_frame,
       if (active)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
 			callback,
 			callback_data);
 
@@ -559,7 +559,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
       if (initial == item_data)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      g_signal_connect (G_OBJECT (button), "toggled",
+      g_signal_connect (button, "toggled",
 			radio_button_callback,
 			callback_data);
 
@@ -661,13 +661,13 @@ static void
 gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
 						    GtkAdjustment *other_adj)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (other_adj),
+  g_signal_handlers_block_by_func (other_adj,
 				   gimp_scale_entry_unconstrained_adjustment_callback,
 				   adjustment);
 
   gtk_adjustment_set_value (other_adj, adjustment->value);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (other_adj),
+  g_signal_handlers_unblock_by_func (other_adj,
 				     gimp_scale_entry_unconstrained_adjustment_callback,
 				     adjustment);
 }
@@ -973,7 +973,7 @@ gimp_random_seed_new (guint       *seed)
   spinbutton = gimp_spin_button_new (&adj, *seed,
                                      0, (guint32) -1 , 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_uint_adjustment_update),
                     seed);
   gtk_widget_show (spinbutton);
@@ -987,7 +987,7 @@ gimp_random_seed_new (guint       *seed)
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   /* Send spinbutton as data so that we can change the value in 
    * gimp_random_seed_update() */
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_random_seed_update),
                     spinbutton);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1028,7 +1028,7 @@ gimp_coordinates_callback (GtkWidget *widget,
 
   if (gimp_chain_button_get_active (gcd->chainbutton))
     {
-      g_signal_stop_emission_by_name (G_OBJECT (widget), "value_changed");
+      g_signal_stop_emission_by_name (widget, "value_changed");
 
       if (gcd->chain_constrains_ratio)
 	{
@@ -1207,11 +1207,11 @@ gimp_coordinates_new (GimpUnit         unit,
   gcd->last_x                 = x;
   gcd->last_y                 = y;
 
-  g_signal_connect_swapped (G_OBJECT (sizeentry), "destroy",
+  g_signal_connect_swapped (sizeentry, "destroy",
 			    G_CALLBACK (g_free),
 			    gcd);
 
-  g_signal_connect (G_OBJECT (sizeentry), "value_changed", 
+  g_signal_connect (sizeentry, "value_changed", 
 		    G_CALLBACK (gimp_coordinates_callback),
 		    gcd);
 

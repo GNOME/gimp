@@ -233,13 +233,13 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       gimp_container_view_clear_items (view);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->container),
+      g_signal_handlers_disconnect_by_func (view->container,
 					    gimp_container_view_add,
 					    view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->container),
+      g_signal_handlers_disconnect_by_func (view->container,
 					    gimp_container_view_remove,
 					    view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->container),
+      g_signal_handlers_disconnect_by_func (view->container,
 					    gimp_container_view_reorder,
 					    view);
 
@@ -249,7 +249,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
       if (view->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (view->context),
+	  g_signal_handlers_disconnect_by_func (view->context,
 						gimp_container_view_context_changed,
 						view);
 
@@ -285,19 +285,19 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 			      (GFunc) gimp_container_view_add_foreach,
 			      view);
 
-      g_signal_connect_object (G_OBJECT (view->container), "add",
+      g_signal_connect_object (view->container, "add",
 			       G_CALLBACK (gimp_container_view_add),
-			       G_OBJECT (view),
+			       view,
 			       G_CONNECT_SWAPPED);
 
-      g_signal_connect_object (G_OBJECT (view->container), "remove",
+      g_signal_connect_object (view->container, "remove",
 			       G_CALLBACK (gimp_container_view_remove),
-			       G_OBJECT (view),
+			       view,
 			       G_CONNECT_SWAPPED);
 
-      g_signal_connect_object (G_OBJECT (view->container), "reorder",
+      g_signal_connect_object (view->container, "reorder",
 			       G_CALLBACK (gimp_container_view_reorder),
-			       G_OBJECT (view),
+			       view,
 			       G_CONNECT_SWAPPED);
 
       if (view->context)
@@ -308,9 +308,9 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	  signal_name =
 	    gimp_context_type_to_signal_name (view->container->children_type);
 
-	  g_signal_connect_object (G_OBJECT (view->context), signal_name,
+	  g_signal_connect_object (view->context, signal_name,
 				   G_CALLBACK (gimp_container_view_context_changed),
-				   G_OBJECT (view),
+				   view,
 				   0);
 
 	  object = gimp_context_get_by_type (view->context,
@@ -342,7 +342,7 @@ gimp_container_view_set_context (GimpContainerView *view,
     {
       if (view->container)
         {
-          g_signal_handlers_disconnect_by_func (G_OBJECT (view->context),
+          g_signal_handlers_disconnect_by_func (view->context,
                                                 gimp_container_view_context_changed,
                                                 view);
 
@@ -354,14 +354,14 @@ gimp_container_view_set_context (GimpContainerView *view,
             }
         }
 
-      g_object_unref (G_OBJECT (view->context));
+      g_object_unref (view->context);
     }
 
   view->context = context;
 
   if (view->context)
     {
-      g_object_ref (G_OBJECT (view->context));
+      g_object_ref (view->context);
 
       if (view->container)
         {
@@ -371,9 +371,9 @@ gimp_container_view_set_context (GimpContainerView *view,
           signal_name =
             gimp_context_type_to_signal_name (view->container->children_type);
 
-          g_signal_connect_object (G_OBJECT (view->context), signal_name,
+          g_signal_connect_object (view->context, signal_name,
                                    G_CALLBACK (gimp_container_view_context_changed),
-                                   G_OBJECT (view),
+                                   view,
                                    0);
 
           object = gimp_context_get_by_type (view->context,
@@ -443,7 +443,7 @@ gimp_container_view_select_item (GimpContainerView *view,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (view), view_signals[SELECT_ITEM], 0,
+  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
 		 viewable, insert_data);
 }
 
@@ -458,7 +458,7 @@ gimp_container_view_activate_item (GimpContainerView *view,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (view), view_signals[ACTIVATE_ITEM], 0,
+  g_signal_emit (view, view_signals[ACTIVATE_ITEM], 0,
 		 viewable, insert_data);
 }
 
@@ -473,7 +473,7 @@ gimp_container_view_context_item (GimpContainerView *view,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (view), view_signals[CONTEXT_ITEM], 0,
+  g_signal_emit (view, view_signals[CONTEXT_ITEM], 0,
 		 viewable, insert_data);
 }
 
@@ -606,7 +606,7 @@ gimp_container_view_context_changed (GimpContext       *context,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (view), view_signals[SELECT_ITEM], 0,
+  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
 		 viewable, insert_data);
 }
 

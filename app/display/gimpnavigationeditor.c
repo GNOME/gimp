@@ -160,7 +160,7 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
-  g_signal_connect (G_OBJECT (abox), "size_allocate",
+  g_signal_connect (abox, "size_allocate",
                     G_CALLBACK (gimp_navigation_view_abox_resized),
                     view);
 
@@ -168,13 +168,13 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_container_add (GTK_CONTAINER (abox), view->preview);
   gtk_widget_show (view->preview);
 
-  g_signal_connect (G_OBJECT (view->preview), "marker_changed",
+  g_signal_connect (view->preview, "marker_changed",
                     G_CALLBACK (gimp_navigation_view_marker_changed),
                     view);
-  g_signal_connect (G_OBJECT (view->preview), "zoom",
+  g_signal_connect (view->preview, "zoom",
                     G_CALLBACK (gimp_navigation_view_zoom),
                     view);
-  g_signal_connect (G_OBJECT (view->preview), "scroll",
+  g_signal_connect (view->preview, "scroll",
                     G_CALLBACK (gimp_navigation_view_scroll),
                     view);
 
@@ -215,13 +215,13 @@ gimp_navigation_view_set_shell (GimpNavigationView *view,
 
   if (view->shell)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->shell),
+      g_signal_handlers_disconnect_by_func (view->shell,
                                             gimp_navigation_view_shell_scaled,
                                             view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->shell),
+      g_signal_handlers_disconnect_by_func (view->shell,
                                             gimp_navigation_view_shell_scrolled,
                                             view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->shell),
+      g_signal_handlers_disconnect_by_func (view->shell,
                                             gimp_navigation_view_shell_reconnect,
                                             view);
     }
@@ -237,13 +237,13 @@ gimp_navigation_view_set_shell (GimpNavigationView *view,
       gimp_preview_set_viewable (GIMP_PREVIEW (view->preview),
                                  GIMP_VIEWABLE (shell->gdisp->gimage));
 
-      g_signal_connect (G_OBJECT (view->shell), "scaled",
+      g_signal_connect (view->shell, "scaled",
                         G_CALLBACK (gimp_navigation_view_shell_scaled),
                         view);
-      g_signal_connect (G_OBJECT (view->shell), "scrolled",
+      g_signal_connect (view->shell, "scrolled",
                         G_CALLBACK (gimp_navigation_view_shell_scrolled),
                         view);
-      g_signal_connect (G_OBJECT (view->shell), "reconnect",
+      g_signal_connect (view->shell, "reconnect",
                         G_CALLBACK (gimp_navigation_view_shell_reconnect),
                         view);
 
@@ -286,7 +286,7 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (view));
       gtk_widget_show (GTK_WIDGET (view));
 
-      g_signal_connect (G_OBJECT (view->preview), "button_release_event",
+      g_signal_connect (view->preview, "button_release_event",
                         G_CALLBACK (gimp_navigation_view_button_release),
                         shell);
     }
@@ -419,7 +419,7 @@ gimp_navigation_view_new_private (GimpDisplayShell *shell,
       view->zoom_adjustment =
         GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -15.0, 15.0, 1.0, 1.0, 0.0));
 
-      g_signal_connect (G_OBJECT (view->zoom_adjustment), "value_changed",
+      g_signal_connect (view->zoom_adjustment, "value_changed",
                         G_CALLBACK (gimp_navigation_view_zoom_adj_changed),
                         view);
 
@@ -704,13 +704,13 @@ gimp_navigation_view_shell_scaled (GimpDisplayShell   *shell,
       else
         val = RINT (f) - 1;
 
-      g_signal_handlers_block_by_func (G_OBJECT (view->zoom_adjustment),
+      g_signal_handlers_block_by_func (view->zoom_adjustment,
                                        gimp_navigation_view_zoom_adj_changed,
                                        view);
 
       gtk_adjustment_set_value (view->zoom_adjustment, val);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (view->zoom_adjustment),
+      g_signal_handlers_unblock_by_func (view->zoom_adjustment,
                                          gimp_navigation_view_zoom_adj_changed,
                                          view);
     }

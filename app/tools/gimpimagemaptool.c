@@ -232,7 +232,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                         FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_image_map_tool_preview_toggled),
                         image_map_tool);
 
@@ -252,7 +252,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   image_map_tool->drawable  = drawable;
   image_map_tool->image_map = gimp_image_map_new (TRUE, drawable);
 
-  g_signal_connect (G_OBJECT (image_map_tool->image_map), "flush",
+  g_signal_connect (image_map_tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
                     image_map_tool);
 

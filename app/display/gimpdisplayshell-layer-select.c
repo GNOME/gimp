@@ -111,7 +111,7 @@ gimp_display_shell_layer_select_init (GimpImage *gimage,
 						   GDK_KEY_RELEASE_MASK |
 						   GDK_BUTTON_PRESS_MASK));
 
-      g_signal_connect (G_OBJECT (layer_select->shell), "event",
+      g_signal_connect (layer_select->shell, "event",
 			G_CALLBACK (layer_select_events),
 			layer_select);
 

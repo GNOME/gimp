@@ -245,13 +245,13 @@ colorsel_triangle_create_preview (ColorselTriangle *triangle)
   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK );
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
 
-  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
+  g_signal_connect (preview, "motion_notify_event",
                     G_CALLBACK (colorsel_triangle_event),
                     triangle);
-  g_signal_connect (G_OBJECT (preview), "button_press_event",
+  g_signal_connect (preview, "button_press_event",
                     G_CALLBACK (colorsel_triangle_event),
                     triangle);
-  g_signal_connect (G_OBJECT (preview), "button_release_event",
+  g_signal_connect (preview, "button_release_event",
                     G_CALLBACK (colorsel_triangle_event),
                     triangle);
 

@@ -139,7 +139,7 @@ file_save (GimpImage     *gimage,
     }
 
   /* ref the image, so it can't get deleted during save */
-  g_object_ref (G_OBJECT (gimage));
+  g_object_ref (gimage);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -202,7 +202,7 @@ file_save (GimpImage     *gimage,
   g_free (return_vals);
   g_free (args);
 
-  g_object_unref (G_OBJECT (gimage));
+  g_object_unref (gimage);
 
   return status;
 }

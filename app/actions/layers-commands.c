@@ -830,7 +830,7 @@ layers_edit_layer_query (GimpLayer *layer)
                              _("Layer _Name"), 1.0, 0.5,
                              options->name_entry, 1, FALSE);
 
-  g_signal_connect (G_OBJECT (options->name_entry), "activate",
+  g_signal_connect (options->name_entry, "activate",
 		    G_CALLBACK (edit_layer_query_ok_callback),
 		    options);
 
@@ -866,7 +866,7 @@ add_mask_query_ok_callback (GtkWidget *widget,
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
       gimp_layer_add_mask (layer, mask, TRUE);
-      g_object_unref (G_OBJECT (mask));
+      g_object_unref (mask);
 
       gimp_image_flush (gimage);
     }

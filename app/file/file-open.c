@@ -207,7 +207,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
       gimp_create_display (gimage->gimp, gimage, 0x0101);
 
-      g_object_unref (G_OBJECT (gimage));
+      g_object_unref (gimage);
 
       documents = GIMP_DOCUMENT_LIST (gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri);

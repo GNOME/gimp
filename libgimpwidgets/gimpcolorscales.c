@@ -218,7 +218,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 	  gimp_help_set_help_data (scales->toggles[i],
 				   gettext (slider_tips[i]), NULL);
 
-	  g_signal_connect (G_OBJECT (scales->toggles[i]), "toggled",
+	  g_signal_connect (scales->toggles[i], "toggled",
 			    G_CALLBACK (gimp_color_scales_toggle_update),
 			    scales);
 	}
@@ -238,7 +238,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 
       gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->sliders[i]), i);
 
-      g_signal_connect (G_OBJECT (scales->slider_data[i]), "value_changed",
+      g_signal_connect (scales->slider_data[i], "value_changed",
 			G_CALLBACK (gimp_color_scales_scale_update),
 			scales);
     }
@@ -257,10 +257,10 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (scales->hex_entry);
 
-  g_signal_connect (G_OBJECT (scales->hex_entry), "focus_out_event",
+  g_signal_connect (scales->hex_entry, "focus_out_event",
 		    G_CALLBACK (gimp_color_scales_hex_events),
 		    scales);
-  g_signal_connect (G_OBJECT (scales->hex_entry), "key_press_event",
+  g_signal_connect (scales->hex_entry, "key_press_event",
 		    G_CALLBACK (gimp_color_scales_hex_events),
 		    scales);
 
@@ -362,14 +362,14 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
 
   if (channel >= 0 && channel <= 7)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (scales->toggles[channel]),
+      g_signal_handlers_block_by_func (scales->toggles[channel],
                                        gimp_color_scales_toggle_update,
                                        scales);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scales->toggles[channel]),
                                     TRUE);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (scales->toggles[channel]),
+      g_signal_handlers_unblock_by_func (scales->toggles[channel],
                                          gimp_color_scales_toggle_update,
                                          scales);
     }
@@ -398,14 +398,14 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
     {
       if (i != skip)
         {
-          g_signal_handlers_block_by_func (G_OBJECT (scales->slider_data[i]),
+          g_signal_handlers_block_by_func (scales->slider_data[i],
                                            gimp_color_scales_scale_update,
                                            scales);
 
           gtk_adjustment_set_value (GTK_ADJUSTMENT (scales->slider_data[i]),
                                     values[i]);
 
-          g_signal_handlers_unblock_by_func (G_OBJECT (scales->slider_data[i]),
+          g_signal_handlers_unblock_by_func (scales->slider_data[i],
                                              gimp_color_scales_scale_update,
                                              scales);
         }

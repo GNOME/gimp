@@ -125,16 +125,16 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
 			    NULL);
 
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
   g_object_set_data (G_OBJECT (dialog), "resolution-entry", resolution_entry);
-  g_signal_connect_object (G_OBJECT (resolution_entry), "destroy",
+  g_signal_connect_object (resolution_entry, "destroy",
                            G_CALLBACK (gtk_widget_destroy),
-                           G_OBJECT (dialog), G_CONNECT_SWAPPED);
-  g_signal_connect_object (G_OBJECT (resolution_entry), "unmap",
+                           dialog, G_CONNECT_SWAPPED);
+  g_signal_connect_object (resolution_entry, "unmap",
                            G_CALLBACK (gtk_widget_destroy),
-                           G_OBJECT (dialog), G_CONNECT_SWAPPED);
+                           dialog, G_CONNECT_SWAPPED);
 
   SET_STYLE (dialog, dialog_style);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
@@ -188,7 +188,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   SET_STYLE (darea, dialog_style);  
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
-    g_signal_connect (G_OBJECT (darea), "expose_event",
+    g_signal_connect (darea, "expose_event",
                       G_CALLBACK (expose_callback),
                       GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
@@ -199,7 +199,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   SET_STYLE (darea, dialog_style);  
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
-    g_signal_connect (G_OBJECT (darea), "expose_event",
+    g_signal_connect (darea, "expose_event",
                       G_CALLBACK (expose_callback),
                       GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
@@ -210,7 +210,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   SET_STYLE (darea, dialog_style);  
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
-    g_signal_connect (G_OBJECT (darea), "expose_event",
+    g_signal_connect (darea, "expose_event",
                       G_CALLBACK (expose_callback),
                       GINT_TO_POINTER (GTK_CORNER_TOP_RIGHT));
   gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 0, 1,
@@ -221,7 +221,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   SET_STYLE (darea, dialog_style);  
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
-    g_signal_connect (G_OBJECT (darea), "expose_event",
+    g_signal_connect (darea, "expose_event",
                       G_CALLBACK (expose_callback),
                       GINT_TO_POINTER (GTK_CORNER_BOTTOM_RIGHT));
   gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 2, 3,
@@ -266,7 +266,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 			   1, GIMP_MAX_IMAGE_SIZE,
 			   0, 0);
   gtk_widget_hide (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)));
-  g_signal_connect (G_OBJECT (dialog), "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &calibrate_entry);
 

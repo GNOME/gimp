@@ -102,7 +102,7 @@ tool_options_dialog_create (Gimp *gimp)
 
   options_shell = editor;
 
-  g_signal_connect (G_OBJECT (options_shell), "destroy",
+  g_signal_connect (options_shell, "destroy",
                     G_CALLBACK (tool_options_dialog_destroy),
                     NULL);
 
@@ -157,9 +157,9 @@ tool_options_dialog_create (Gimp *gimp)
 			      tool_options_dialog_drop_tool,
                               user_context);
 
-  g_signal_connect_object (G_OBJECT (user_context), "tool_changed",
+  g_signal_connect_object (user_context, "tool_changed",
 			   G_CALLBACK (tool_options_dialog_tool_changed),
-			   G_OBJECT (options_shell),
+			   options_shell,
 			   0);
 
   tool_options_dialog_tool_changed (user_context,
@@ -183,7 +183,7 @@ tool_options_dialog_destroy (GtkWidget *widget,
 
   for (list = options; list; list = g_list_next (list))
     {
-      g_object_ref (G_OBJECT (list->data));
+      g_object_ref (list->data);
       gtk_container_remove (GTK_CONTAINER (options_vbox),
                             GTK_WIDGET (list->data));
     }

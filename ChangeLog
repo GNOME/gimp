@@ -1,5 +1,11 @@
 2003-01-05  Manish Singh  <yosh@gimp.org>
 
+	* many files in app, modules and libgimp*: cleanup, removed unecessary
+	G_OBJECT() casts. Should do the same for plug-ins, when more of them
+	get undeprecated.
+
+2003-01-05  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/script-fu/interp_regex.c: same as below for here.
 
 2003-01-05  Manish Singh  <yosh@gimp.org>

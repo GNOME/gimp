@@ -318,7 +318,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 
   gtk_widget_set_events (editor->preview, GRAD_PREVIEW_EVENT_MASK);
 
-  g_signal_connect (G_OBJECT (editor->preview), "event",
+  g_signal_connect (editor->preview, "event",
 		    G_CALLBACK (preview_events),
 		    editor);
 
@@ -349,7 +349,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_start (GTK_BOX (vbox), editor->control, FALSE, FALSE, 0);
   gtk_widget_show (editor->control);
 
-  g_signal_connect (G_OBJECT (editor->control), "event",
+  g_signal_connect (editor->control, "event",
 		    G_CALLBACK (control_events),
 		    editor);
 
@@ -361,10 +361,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                                             GRAD_SCROLLBAR_PAGE_SIZE,
                                             1.0);
 
-  g_signal_connect (G_OBJECT (editor->scroll_data), "value_changed",
+  g_signal_connect (editor->scroll_data, "value_changed",
 		    G_CALLBACK (gradient_editor_scrollbar_update),
 		    editor);
-  g_signal_connect (G_OBJECT (editor->scroll_data), "changed",
+  g_signal_connect (editor->scroll_data, "changed",
 		    G_CALLBACK (gradient_editor_scrollbar_update),
 		    editor);
 
@@ -409,7 +409,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
 		    G_CALLBACK (gradient_editor_instant_update_update),
 		    editor);
 

@@ -200,7 +200,7 @@ gimp_data_dirty (GimpData *data)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
 
-  g_signal_emit (G_OBJECT (data), data_signals[DIRTY], 0);
+  g_signal_emit (data, data_signals[DIRTY], 0);
 }
 
 static void

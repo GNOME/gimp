@@ -336,7 +336,7 @@ gimp_palette_load (const gchar  *filename,
                    _("Loading palette '%s':\nRead error in line %d."),
                    filename, linenum);
       fclose (fp);
-      g_object_unref (G_OBJECT (palette));
+      g_object_unref (palette);
       return NULL;
     }
 
@@ -361,7 +361,7 @@ gimp_palette_load (const gchar  *filename,
                        _("Loading palette '%s':\nRead error in line %d."),
                        filename, linenum);
 	  fclose (fp);
-	  g_object_unref (G_OBJECT (palette));
+	  g_object_unref (palette);
 	  return NULL;
 	}
 
@@ -389,7 +389,7 @@ gimp_palette_load (const gchar  *filename,
                            _("Loading palette '%s':\nRead error in line %d."),
                            filename, linenum);
 	      fclose (fp);
-	      g_object_unref (G_OBJECT (palette));
+	      g_object_unref (palette);
 	      return NULL;
 	    }
 
@@ -459,7 +459,7 @@ gimp_palette_load (const gchar  *filename,
                        _("Loading palette '%s':\nRead error in line %d."),
                        filename, linenum);
 	  fclose (fp);
-	  g_object_unref (G_OBJECT (palette));
+	  g_object_unref (palette);
 	  return NULL;
 	}
 

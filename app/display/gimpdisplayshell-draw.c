@@ -282,13 +282,13 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_KEY_RELEASE_MASK));
 
   /*  active display callback  */
-  g_signal_connect (G_OBJECT (shell), "button_press_event",
+  g_signal_connect (shell, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
-  g_signal_connect (G_OBJECT (shell), "button_release_event",
+  g_signal_connect (shell, "button_release_event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
-  g_signal_connect (G_OBJECT (shell), "key_press_event",
+  g_signal_connect (shell, "key_press_event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
 
@@ -363,7 +363,7 @@ gimp_display_shell_destroy (GtkObject *object)
 
   if (shell->padding_gc)
     {
-      g_object_unref (G_OBJECT (shell->padding_gc));
+      g_object_unref (shell->padding_gc);
       shell->padding_gc = NULL;
     }
 
@@ -527,13 +527,13 @@ gimp_display_shell_new (GimpDisplay *gdisp,
     gtk_widget_show (menubar);
 
   /*  active display callback  */
-  g_signal_connect (G_OBJECT (menubar), "button_press_event",
+  g_signal_connect (menubar, "button_press_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-  g_signal_connect (G_OBJECT (menubar), "button_release_event",
+  g_signal_connect (menubar, "button_release_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-  g_signal_connect (G_OBJECT (menubar), "key_press_event",
+  g_signal_connect (menubar, "key_press_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
 
@@ -587,7 +587,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_set_events (GTK_WIDGET (shell->origin),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect (G_OBJECT (shell->origin), "button_press_event",
+  g_signal_connect (shell->origin, "button_press_event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
@@ -606,10 +606,10 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect_swapped (G_OBJECT (shell->canvas), "motion_notify_event",
+  g_signal_connect_swapped (shell->canvas, "motion_notify_event",
 			    G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->hrule)->motion_notify_event),
 			    shell->hrule);
-  g_signal_connect (G_OBJECT (shell->hrule), "button_press_event",
+  g_signal_connect (shell->hrule, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_hruler_button_press),
 		    shell);
 
@@ -620,10 +620,10 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_set_events (GTK_WIDGET (shell->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect_swapped (G_OBJECT (shell->canvas), "motion_notify_event",
+  g_signal_connect_swapped (shell->canvas, "motion_notify_event",
 			    G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->vrule)->motion_notify_event),
 			    shell->vrule);
-  g_signal_connect (G_OBJECT (shell->vrule), "button_press_event",
+  g_signal_connect (shell->vrule, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_vruler_button_press),
 		    shell);
 
@@ -636,22 +636,22 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
 
-  g_signal_connect (G_OBJECT (shell->canvas), "realize",
+  g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),
                     shell);
 
   /*  set the active display before doing any other canvas event processing  */
-  g_signal_connect (G_OBJECT (shell->canvas), "event",
+  g_signal_connect (shell->canvas, "event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
 
-  g_signal_connect (G_OBJECT (shell->canvas), "expose_event",
+  g_signal_connect (shell->canvas, "expose_event",
 		    G_CALLBACK (gimp_display_shell_canvas_expose),
 		    shell);
-  g_signal_connect (G_OBJECT (shell->canvas), "configure_event",
+  g_signal_connect (shell->canvas, "configure_event",
 		    G_CALLBACK (gimp_display_shell_canvas_configure),
 		    shell);
-  g_signal_connect (G_OBJECT (shell->canvas), "event",
+  g_signal_connect (shell->canvas, "event",
 		    G_CALLBACK (gimp_display_shell_canvas_tool_events),
 		    shell);
 
@@ -667,10 +667,10 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gimp_help_set_help_data (shell->padding_button,
                            _("Set canvas padding color"), "#padding_button");
 
-  g_signal_connect (G_OBJECT (shell->padding_button), "button_press_event",
+  g_signal_connect (shell->padding_button, "button_press_event",
                     G_CALLBACK (gimp_display_shell_color_button_press),
                     shell);
-  g_signal_connect (G_OBJECT (shell->padding_button), "color_changed",
+  g_signal_connect (shell->padding_button, "color_changed",
                     G_CALLBACK (gimp_display_shell_color_button_changed),
                     shell);
 
@@ -720,10 +720,10 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gimp_help_set_help_data (shell->qmask,
                            _("Toggle QuickMask"), "#qmask_button");
 
-  g_signal_connect (G_OBJECT (shell->qmask), "toggled",
+  g_signal_connect (shell->qmask, "toggled",
 		    G_CALLBACK (gimp_display_shell_qmask_toggled),
 		    shell);
-  g_signal_connect (G_OBJECT (shell->qmask), "button_press_event",
+  g_signal_connect (shell->qmask, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_qmask_button_press),
 		    shell);
 
@@ -734,7 +734,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image); 
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (shell->nav_ebox), "button_press_event",
+  g_signal_connect (shell->nav_ebox, "button_press_event",
 		    G_CALLBACK (gimp_display_shell_nav_button_press),
 		    shell);
 
@@ -843,7 +843,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
   gimp_display_shell_shrink_wrap (shell);
 
-  g_signal_emit (G_OBJECT (shell), display_shell_signals[RECONNECT], 0);
+  g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
 }
 
 void
@@ -851,7 +851,7 @@ gimp_display_shell_scaled (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  g_signal_emit (G_OBJECT (shell), display_shell_signals[SCALED], 0);
+  g_signal_emit (shell, display_shell_signals[SCALED], 0);
 }
 
 void
@@ -859,7 +859,7 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  g_signal_emit (G_OBJECT (shell), display_shell_signals[SCROLLED], 0);
+  g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
 }
 
 
@@ -1482,7 +1482,7 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
 
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (pixbuf);
 }
 
 void
@@ -1549,14 +1549,14 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
 
   if (shell->padding_button)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (shell->padding_button),
+      g_signal_handlers_block_by_func (shell->padding_button,
                                        gimp_display_shell_color_button_changed,
                                        shell);
 
       gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
                                    &shell->padding_color);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->padding_button),
+      g_signal_handlers_unblock_by_func (shell->padding_button,
                                          gimp_display_shell_color_button_changed,
                                          shell);
     }
@@ -1803,7 +1803,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       /*  block the resulting expose event on any of the following
        *  changes because our caller has to do a full display update anyway
        */
-      g_signal_handlers_block_by_func (G_OBJECT (shell->canvas),
+      g_signal_handlers_block_by_func (shell->canvas,
                                        gimp_display_shell_canvas_expose,
                                        shell);
 
@@ -1832,7 +1832,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
                            MAX (0, shell_x), MAX (0, shell_y));
 	}
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
+      g_signal_handlers_unblock_by_func (shell->canvas,
                                          gimp_display_shell_canvas_expose,
                                          shell);
     }

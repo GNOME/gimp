@@ -351,7 +351,7 @@ gimp_brush_get_standard (void)
       gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
 
       /*  set ref_count to 2 --> never swap the standard brush  */
-      g_object_ref (G_OBJECT (standard_brush));
+      g_object_ref (standard_brush);
     }
 
   return GIMP_DATA (standard_brush);
@@ -489,7 +489,7 @@ gimp_brush_spacing_changed (GimpBrush *brush)
 {
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
-  g_signal_emit (G_OBJECT (brush), brush_signals[SPACING_CHANGED], 0);
+  g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
 }
 
 GimpBrush *
@@ -587,7 +587,7 @@ gimp_brush_load_brush (gint          fd,
                          "Brush file '%s' appears truncated."),
                        filename);
 	  g_free (name);
-	  g_object_unref (G_OBJECT (brush));
+	  g_object_unref (brush);
 	  return NULL;
 	}
       break;
@@ -608,7 +608,7 @@ gimp_brush_load_brush (gint          fd,
                              "Brush file '%s' appears truncated."),
                            filename);
 	      g_free (name);
-	      g_object_unref (G_OBJECT (brush));
+	      g_object_unref (brush);
 	      return NULL;
 	    }
 	}

@@ -146,7 +146,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 					  min_items_y,
 					  item_factory))
     {
-      g_object_unref (G_OBJECT (factory_view));
+      g_object_unref (factory_view);
       return NULL;
     }
 

@@ -335,7 +335,7 @@ gimp_pattern_select_widget (gchar                  *dname,
 
   gtk_widget_set_events (pattern, PREVIEW_EVENT_MASK);
 
-  g_signal_connect (G_OBJECT (pattern), "event",
+  g_signal_connect (pattern, "event",
                     G_CALLBACK (pattern_preview_events),
                     psel);
   
@@ -375,7 +375,7 @@ gimp_pattern_select_widget (gchar                  *dname,
   gtk_widget_show (button);
 
   psel->button = button;
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (patterns_select_callback),
                     psel);
 

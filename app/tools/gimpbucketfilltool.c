@@ -393,7 +393,7 @@ bucket_options_new (GimpToolInfo *tool_info)
                            _("Allow completely transparent regions "
                              "to be filled"), NULL);
 
-  g_signal_connect (G_OBJECT (options->fill_transparent_w), "toggled",
+  g_signal_connect (options->fill_transparent_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->fill_transparent);
 
@@ -407,7 +407,7 @@ bucket_options_new (GimpToolInfo *tool_info)
   gimp_help_set_help_data (options->sample_merged_w,
 			   _("Base filled area on all visible layers"), NULL);
 
-  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+  g_signal_connect (options->sample_merged_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_merged);
 
@@ -425,7 +425,7 @@ bucket_options_new (GimpToolInfo *tool_info)
 					       _("Maximum color difference"),
 					       NULL);
 
-  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+  g_signal_connect (options->threshold_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
 

@@ -1425,7 +1425,7 @@ ink_options_new (GimpToolInfo *tool_info)
 					  TRUE, 0.0, 0.0,
 					  NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+  g_signal_connect (options->size_w, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->size);
 
@@ -1437,7 +1437,7 @@ ink_options_new (GimpToolInfo *tool_info)
 						TRUE, 0.0, 0.0,
 						NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->tilt_angle_w), "value_changed",
+  g_signal_connect (options->tilt_angle_w, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->tilt_angle);
 
@@ -1461,7 +1461,7 @@ ink_options_new (GimpToolInfo *tool_info)
 						 TRUE, 0.0, 0.0,
 						 NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->sensitivity_w), "value_changed",
+  g_signal_connect (options->sensitivity_w, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->sensitivity);
   
@@ -1473,7 +1473,7 @@ ink_options_new (GimpToolInfo *tool_info)
 						      TRUE, 0.0, 0.0,
 						      NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->tilt_sensitivity_w), "value_changed",
+  g_signal_connect (options->tilt_sensitivity_w, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->tilt_sensitivity);
 
@@ -1485,7 +1485,7 @@ ink_options_new (GimpToolInfo *tool_info)
 						     TRUE, 0.0, 0.0,
 						     NULL, NULL);
 
-  g_signal_connect (G_OBJECT (options->vel_sensitivity_w), "value_changed",
+  g_signal_connect (options->vel_sensitivity_w, "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->vel_sensitivity);
 
@@ -1509,7 +1509,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   blob = gtk_drawing_area_new ();
   gtk_widget_set_size_request (blob, 21, 21);
-  g_signal_connect (G_OBJECT (blob), "expose_event",
+  g_signal_connect (blob, "expose_event",
                     G_CALLBACK (blob_button_expose),
                     blob_ellipse);
 
@@ -1519,7 +1519,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_ellipse);
 
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
+  g_signal_connect (radio_button, "toggled",
 		    G_CALLBACK (ink_type_update),
 		    options);
 
@@ -1527,7 +1527,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   blob = gtk_drawing_area_new ();
   gtk_widget_set_size_request (blob, 21, 21);
-  g_signal_connect (G_OBJECT (blob), "expose_event",
+  g_signal_connect (blob, "expose_event",
                     G_CALLBACK (blob_button_expose),
                     blob_square);
   radio_button =
@@ -1537,7 +1537,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_square);
 
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
+  g_signal_connect (radio_button, "toggled",
 		    G_CALLBACK (ink_type_update), 
 		    options);
   
@@ -1546,7 +1546,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   blob = gtk_drawing_area_new ();
   gtk_widget_set_size_request (blob, 21, 21);
-  g_signal_connect (G_OBJECT (blob), "expose_event",
+  g_signal_connect (blob, "expose_event",
                     G_CALLBACK (blob_button_expose),
                     blob_diamond);
   radio_button =
@@ -1556,7 +1556,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_diamond);
 
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
+  g_signal_connect (radio_button, "toggled",
 		    G_CALLBACK (ink_type_update), 
 		    options);
 
@@ -1590,19 +1590,19 @@ ink_options_new (GimpToolInfo *tool_info)
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
 			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
 
-  g_signal_connect (G_OBJECT (darea), "button_press_event",
+  g_signal_connect (darea, "button_press_event",
 		    G_CALLBACK (brush_widget_button_press),
 		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "button_release_event",
+  g_signal_connect (darea, "button_release_event",
 		    G_CALLBACK (brush_widget_button_release),
 		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "motion_notify_event",
+  g_signal_connect (darea, "motion_notify_event",
 		    G_CALLBACK (brush_widget_motion_notify),
 		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "expose_event",
+  g_signal_connect (darea, "expose_event",
 		    G_CALLBACK (brush_widget_expose), 
 		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "realize",
+  g_signal_connect (darea, "realize",
 		    G_CALLBACK (brush_widget_realize),
 		    options->brush_w);
 

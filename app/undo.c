@@ -1657,7 +1657,7 @@ undo_push_layer (GimpImage *gimage,
       new->pop_func  = undo_pop_layer;
       new->free_func = undo_free_layer;
 
-      g_object_ref (G_OBJECT (layer));
+      g_object_ref (layer);
 
       lu->layer         = layer;
       lu->prev_position = prev_position;
@@ -1765,7 +1765,7 @@ undo_free_layer (UndoState  state,
 
   lu = (LayerUndo *) lu_ptr;
 
-  g_object_unref (G_OBJECT (lu->layer));
+  g_object_unref (lu->layer);
   g_free (lu);
 }
 
@@ -1972,7 +1972,7 @@ undo_push_layer_mask (GimpImage     *gimage,
       new->pop_func  = undo_pop_layer_mask;
       new->free_func = undo_free_layer_mask;
 
-      g_object_ref (G_OBJECT (mask));
+      g_object_ref (mask);
 
       lmu->layer = layer;
       lmu->mask  = mask;
@@ -2019,7 +2019,7 @@ undo_free_layer_mask (UndoState  state,
 
   lmu = (LayerMaskUndo *) lmu_ptr;
 
-  g_object_unref (G_OBJECT (lmu->mask));
+  g_object_unref (lmu->mask);
   g_free (lmu);
 }
 
@@ -2276,7 +2276,7 @@ undo_push_channel (GimpImage   *gimage,
       new->pop_func  = undo_pop_channel;
       new->free_func = undo_free_channel;
 
-      g_object_ref (G_OBJECT (channel));
+      g_object_ref (channel);
 
       cu->channel       = channel;
       cu->prev_position = prev_position;
@@ -2354,7 +2354,7 @@ undo_free_channel (UndoState  state,
 
   cu = (ChannelUndo *) cu_ptr;
 
-  g_object_unref (G_OBJECT (cu->channel));
+  g_object_unref (cu->channel);
 
   g_free (cu);
 }
@@ -2601,7 +2601,7 @@ undo_push_vectors (GimpImage   *gimage,
       new->pop_func  = undo_pop_vectors;
       new->free_func = undo_free_vectors;
 
-      g_object_ref (G_OBJECT (vectors));
+      g_object_ref (vectors);
 
       vu->vectors       = vectors;
       vu->prev_position = prev_position;
@@ -2667,7 +2667,7 @@ undo_free_vectors (UndoState  state,
 
   vu = (VectorsUndo *) vu_ptr;
 
-  g_object_unref (G_OBJECT (vu->vectors));
+  g_object_unref (vu->vectors);
 
   g_free (vu);
 }
@@ -2734,7 +2734,7 @@ undo_pop_vectors_mod (GimpImage *gimage,
 
   /* gimp_vectors_copy_strokes (temp, vmu->vectors); */
 
-  /* g_object_unref (G_OBJECT (temp)); */
+  /* g_object_unref (temp); */
 
   return TRUE;
 }
@@ -2748,7 +2748,7 @@ undo_free_vectors_mod (UndoState state,
 
   vmu = (VectorsModUndo *) vmu_ptr;
 
-  /* g_object_unref (G_OBJECT (vmu->undo_vectors)); */
+  /* g_object_unref (vmu->undo_vectors); */
 
   g_free (vmu);
 }

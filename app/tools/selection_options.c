@@ -154,7 +154,7 @@ selection_options_init (SelectionOptions *options,
 
         g_object_set_data (G_OBJECT (options->op_w[i]), "gimp-item-data",
                            GINT_TO_POINTER (radio_ops[i]));
-        g_signal_connect (G_OBJECT (options->op_w[i]), "toggled",
+        g_signal_connect (options->op_w[i], "toggled",
                           G_CALLBACK (gimp_radio_button_update),
                           &options->op);
       }
@@ -175,7 +175,7 @@ selection_options_init (SelectionOptions *options,
     }
   else
     {
-      g_signal_connect (G_OBJECT (options->antialias_w), "toggled",
+      g_signal_connect (options->antialias_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->antialias);
     }
@@ -195,7 +195,7 @@ selection_options_init (SelectionOptions *options,
     gtk_frame_set_label_widget (GTK_FRAME (frame), options->feather_w);
     gtk_widget_show (options->feather_w);
 
-    g_signal_connect (G_OBJECT (options->feather_w), "toggled",
+    g_signal_connect (options->feather_w, "toggled",
                       G_CALLBACK (gimp_toggle_button_update),
                       &options->feather);
 
@@ -213,7 +213,7 @@ selection_options_init (SelectionOptions *options,
                                                       TRUE, 0.0, 0.0,
                                                       NULL, NULL);
 
-    g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
+    g_signal_connect (options->feather_radius_w, "value_changed",
                       G_CALLBACK (gimp_double_adjustment_update),
                       &options->feather_radius);
 
@@ -249,7 +249,7 @@ selection_options_init (SelectionOptions *options,
 			  FALSE, FALSE, 0);
       gtk_widget_show (options->interactive_w);
 
-      g_signal_connect (G_OBJECT (options->interactive_w), "toggled",
+      g_signal_connect (options->interactive_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->interactive);
     }
@@ -284,7 +284,7 @@ selection_options_init (SelectionOptions *options,
                                _("Allow completely transparent regions "
                                  "to be selected"), NULL);
 
-      g_signal_connect (G_OBJECT (options->select_transparent_w), "toggled",
+      g_signal_connect (options->select_transparent_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->select_transparent);
 
@@ -300,7 +300,7 @@ selection_options_init (SelectionOptions *options,
       gimp_help_set_help_data (options->sample_merged_w,
                                _("Base selection on all visible layers"), NULL);
 
-      g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+      g_signal_connect (options->sample_merged_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->sample_merged);
 
@@ -318,7 +318,7 @@ selection_options_init (SelectionOptions *options,
 			      TRUE, 0.0, 0.0,
 			      _("Maximum color difference"), NULL);
 
-      g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+      g_signal_connect (options->threshold_w, "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &options->threshold);
     }
@@ -349,7 +349,7 @@ selection_options_init (SelectionOptions *options,
       gtk_frame_set_label_widget (GTK_FRAME (frame), options->auto_shrink_w);
       gtk_widget_show (options->auto_shrink_w);
 
-      g_signal_connect (G_OBJECT (options->auto_shrink_w), "toggled",
+      g_signal_connect (options->auto_shrink_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->auto_shrink);
 
@@ -369,7 +369,7 @@ selection_options_init (SelectionOptions *options,
                                _("Use all visible layers when shrinking "
                                  "the selection"), NULL);
 
-      g_signal_connect (G_OBJECT (options->shrink_merged_w), "toggled",
+      g_signal_connect (options->shrink_merged_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->shrink_merged);
 
@@ -384,7 +384,7 @@ selection_options_init (SelectionOptions *options,
       gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_size_w);
       gtk_widget_show (options->fixed_size_w);
 
-      g_signal_connect (G_OBJECT (options->fixed_size_w), "toggled",
+      g_signal_connect (options->fixed_size_w, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->fixed_size);
 
@@ -407,7 +407,7 @@ selection_options_init (SelectionOptions *options,
 
       width_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_width_w);
 
-      g_signal_connect (G_OBJECT (options->fixed_width_w), "value_changed",
+      g_signal_connect (options->fixed_width_w, "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &options->fixed_width);
 
@@ -420,7 +420,7 @@ selection_options_init (SelectionOptions *options,
 
       height_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->fixed_height_w);
 
-      g_signal_connect (G_OBJECT (options->fixed_height_w), "value_changed",
+      g_signal_connect (options->fixed_height_w, "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &options->fixed_height);
 
@@ -435,7 +435,7 @@ selection_options_init (SelectionOptions *options,
       g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
                          height_spinbutton);
 
-      g_signal_connect (G_OBJECT (options->fixed_unit_w), "unit_changed",
+      g_signal_connect (options->fixed_unit_w, "unit_changed",
                         G_CALLBACK (gimp_unit_menu_update),
                         &options->fixed_unit);
 

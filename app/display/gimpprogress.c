@@ -398,11 +398,11 @@ gimp_progress_signal_setup (GimpProgress *progress,
   /* remove any existing signal handlers */
   if (progress->cancel_callback)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (button),
+      g_signal_handlers_disconnect_by_func (button,
                                             progress->cancel_callback, 
                                             progress->cancel_data);
       if (dialog)
-	g_signal_handlers_disconnect_by_func (G_OBJECT (dialog),
+	g_signal_handlers_disconnect_by_func (dialog,
                                               progress->cancel_callback, 
                                               progress->cancel_data);
     }
@@ -410,12 +410,12 @@ gimp_progress_signal_setup (GimpProgress *progress,
   /* add the new handlers */
   if (cancel_callback)
     {
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
                         G_CALLBACK (cancel_callback), 
                         cancel_data);
 
       if (dialog)
-	g_signal_connect (G_OBJECT (dialog), "destroy",
+	g_signal_connect (dialog, "destroy",
                           G_CALLBACK (cancel_callback), 
                           cancel_data);
     }

@@ -136,13 +136,13 @@ brush_select_new (Gimp                 *gimp,
   gimp_context_set_opacity (bsp->context, initial_opacity);
   bsp->spacing_value = initial_spacing;
 
-  g_signal_connect (G_OBJECT (bsp->context), "brush_changed",
+  g_signal_connect (bsp->context, "brush_changed",
                     G_CALLBACK (brush_select_brush_changed),
                     bsp);
-  g_signal_connect (G_OBJECT (bsp->context), "opacity_changed",
+  g_signal_connect (bsp->context, "opacity_changed",
                     G_CALLBACK (brush_select_opacity_changed),
                     bsp);
-  g_signal_connect (G_OBJECT (bsp->context), "paint_mode_changed",
+  g_signal_connect (bsp->context, "paint_mode_changed",
                     G_CALLBACK (brush_select_paint_mode_changed),
                     bsp);
 
@@ -188,7 +188,7 @@ brush_select_new (Gimp                 *gimp,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (G_OBJECT (bsp->opacity_data), "value_changed",
+  g_signal_connect (bsp->opacity_data, "value_changed",
                     G_CALLBACK (opacity_scale_update),
                     bsp);
 
@@ -208,7 +208,7 @@ brush_select_new (Gimp                 *gimp,
   if (initial_spacing >= 0)
     gtk_adjustment_set_value (spacing_adj, initial_spacing);
 
-  g_signal_connect (G_OBJECT (spacing_adj), "value_changed",
+  g_signal_connect (spacing_adj, "value_changed",
                     G_CALLBACK (spacing_scale_update),
                     bsp);
 
@@ -233,7 +233,7 @@ brush_select_free (BrushSelect *bsp)
     g_free (bsp->callback_name);
 
   if (bsp->context)
-    g_object_unref (G_OBJECT (bsp->context));
+    g_object_unref (bsp->context);
 
   g_free (bsp);
 }
@@ -344,14 +344,14 @@ brush_select_opacity_changed (GimpContext *context,
 			      gdouble      opacity,
 			      BrushSelect *bsp)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (bsp->opacity_data),
+  g_signal_handlers_block_by_func (bsp->opacity_data,
 				   opacity_scale_update,
 				   bsp);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->opacity_data),
 			    opacity * 100.0);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (bsp->opacity_data),
+  g_signal_handlers_unblock_by_func (bsp->opacity_data,
 				     opacity_scale_update,
 				     bsp);
 
@@ -373,13 +373,13 @@ static void
 opacity_scale_update (GtkAdjustment *adjustment,
 		      BrushSelect   *bsp)
 {
-  g_signal_handlers_block_by_func (G_OBJECT (bsp->context),
+  g_signal_handlers_block_by_func (bsp->context,
 				   brush_select_opacity_changed,
 				   bsp);
 
   gimp_context_set_opacity (bsp->context, adjustment->value / 100.0);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (bsp->context),
+  g_signal_handlers_unblock_by_func (bsp->context,
 				     brush_select_opacity_changed,
 				     bsp);
 }

@@ -323,7 +323,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 
   /*  free the mask  */
   if (mask)
-    g_object_unref (G_OBJECT (mask));
+    g_object_unref (mask);
 
   if (new_buf)
     temp_buf_free (pat_buf);

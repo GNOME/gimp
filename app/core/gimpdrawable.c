@@ -339,7 +339,7 @@ gimp_drawable_copy (GimpDrawable *drawable,
       add_alpha_region (&srcPR, &destPR);
     }
 
-  g_object_unref (G_OBJECT (GIMP_ITEM (new_drawable)->parasites));
+  g_object_unref (GIMP_ITEM (new_drawable)->parasites);
   GIMP_ITEM (new_drawable)->parasites =
     gimp_parasite_list_copy (GIMP_ITEM (drawable)->parasites);
 
@@ -692,8 +692,7 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
     {
       drawable->visible = visible;
 
-      g_signal_emit (G_OBJECT (drawable),
-		     gimp_drawable_signals[VISIBILITY_CHANGED], 0);
+      g_signal_emit (drawable, gimp_drawable_signals[VISIBILITY_CHANGED], 0);
 
       gimp_drawable_update (drawable,
 			    0, 0,

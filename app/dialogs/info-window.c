@@ -310,7 +310,7 @@ info_window_create_extended (InfoDialog *info_win,
   /* Set back to first page */
   gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
 
-  g_signal_connect (G_OBJECT (info_win->info_notebook), "switch_page",
+  g_signal_connect (info_win->info_notebook, "switch_page",
 		    G_CALLBACK (info_window_page_switch),
 		    info_win);
 }
@@ -416,7 +416,7 @@ info_window_follow_auto (Gimp *gimp)
     {
       info_window_auto = info_window_create (gdisp);
 
-      g_signal_connect (G_OBJECT (context), "display_changed",
+      g_signal_connect (context, "display_changed",
 			G_CALLBACK (info_window_change_display), 
 			NULL);
 

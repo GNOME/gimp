@@ -239,8 +239,7 @@ gimp_histogram_view_events (GimpHistogramView *view,
         view->end   = MAX (start, end);
       }
 
-      g_signal_emit (G_OBJECT (view),
-                     histogram_view_signals[RANGE_CHANGED], 0,
+      g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
                      view->start, view->end);
       break;
 
@@ -279,7 +278,7 @@ gimp_histogram_view_new (gint     width,
   else
     GIMP_HISTOGRAM_VIEW (view)->start = GIMP_HISTOGRAM_VIEW (view)->end = -1;
 
-  g_signal_connect (G_OBJECT (view), "event",
+  g_signal_connect (view, "event",
                     G_CALLBACK (gimp_histogram_view_events),
                     view);
 
@@ -315,8 +314,7 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 
-  g_signal_emit (G_OBJECT (view),
-                 histogram_view_signals[RANGE_CHANGED], 0,
+  g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
                  view->start, view->end);
 }
 
@@ -330,8 +328,7 @@ gimp_histogram_view_set_channel (GimpHistogramView *view,
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 
-  g_signal_emit (G_OBJECT (view),
-                 histogram_view_signals[RANGE_CHANGED], 0,
+  g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
                  view->start, view->end);
 }
 

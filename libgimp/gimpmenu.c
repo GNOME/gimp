@@ -144,7 +144,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 	g_free (name);
 
 	menuitem = gtk_menu_item_new_with_label (label);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
+	g_signal_connect (menuitem, "activate",
                           G_CALLBACK (gimp_menu_callback),
                           &images[i]);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -225,19 +225,19 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new();
-	      g_signal_connect (G_OBJECT (menuitem), "activate",
+	      g_signal_connect (menuitem, "activate",
                                 G_CALLBACK (gimp_menu_callback),
                                 &layers[j]);
 
-	      hbox = gtk_hbox_new(FALSE, 0);
-	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
-	      gtk_widget_show(hbox);
+	      hbox = gtk_hbox_new (FALSE, 0);
+	      gtk_container_add (GTK_CONTAINER (menuitem), hbox);
+	      gtk_widget_show (hbox);
 
-	      vbox = gtk_vbox_new(FALSE, 0);
-	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-	      gtk_widget_show(vbox);
+	      vbox = gtk_vbox_new (FALSE, 0);
+	      gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show (vbox);
 	      
-	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	      wcolor_box = gtk_preview_new (GTK_PREVIEW_COLOR);
 	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box),
                                       GDK_RGB_DITHER_MAX);
 
@@ -340,7 +340,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      g_signal_connect (G_OBJECT (menuitem), "activate",
+	      g_signal_connect (menuitem, "activate",
                                 G_CALLBACK (gimp_menu_callback),
                                 &channels[j]);
 	      
@@ -459,7 +459,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      g_signal_connect (G_OBJECT (menuitem), "activate",
+	      g_signal_connect (menuitem, "activate",
                                 G_CALLBACK (gimp_menu_callback),
                                 &layers[j]);
 
@@ -522,7 +522,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
-	      g_signal_connect (G_OBJECT (menuitem), "activate",
+	      g_signal_connect (menuitem, "activate",
                                 G_CALLBACK (gimp_menu_callback),
                                 &channels[j]);
 

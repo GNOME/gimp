@@ -219,7 +219,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   center_vals[0] = tr_tool->cx;
   center_vals[1] = tr_tool->cy;
 
-  g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_block_by_func (sizeentry, 
                                    rotate_center_changed,
                                    tr_tool);
 
@@ -251,7 +251,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
                               center_vals[1]);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+  g_signal_handlers_unblock_by_func (sizeentry, 
                                      rotate_center_changed,
                                      tr_tool);
 

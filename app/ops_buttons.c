@@ -79,13 +79,13 @@ ops_button_box_new (OpsButton     *ops_button,
 
       if (ops_button->ext_callbacks == NULL)
 	{
-	  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+	  g_signal_connect_swapped (button, "clicked",
                                     G_CALLBACK (ops_button->callback),
                                     NULL);
 	}
       else
 	{
-	  g_signal_connect (G_OBJECT (button), "extended_clicked",
+	  g_signal_connect (button, "extended_clicked",
                             G_CALLBACK (ops_button_extended_clicked),
                             ops_button);	  
 	}

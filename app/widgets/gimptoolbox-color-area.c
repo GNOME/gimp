@@ -129,7 +129,7 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                          GDK_ENTER_NOTIFY_MASK |
 			 GDK_LEAVE_NOTIFY_MASK);
 
-  g_signal_connect (G_OBJECT (color_area), "event",
+  g_signal_connect (color_area, "event",
 		    G_CALLBACK (color_area_events),
 		    context);
 
@@ -143,10 +143,10 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 
   gimp_dnd_color_dest_add (color_area, color_area_drop_color, context);
 
-  g_signal_connect_swapped (G_OBJECT (context), "foreground_changed",
+  g_signal_connect_swapped (context, "foreground_changed",
                             G_CALLBACK (gtk_widget_queue_draw),
                             color_area);
-  g_signal_connect_swapped (G_OBJECT (context), "background_changed",
+  g_signal_connect_swapped (context, "background_changed",
                             G_CALLBACK (gtk_widget_queue_draw),
                             color_area);
 

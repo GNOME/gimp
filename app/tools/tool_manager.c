@@ -121,7 +121,7 @@ tool_manager_init (Gimp *gimp)
 
   user_context = gimp_get_user_context (gimp);
 
-  g_signal_connect (G_OBJECT (user_context), "tool_changed",
+  g_signal_connect (user_context, "tool_changed",
 		    G_CALLBACK (tool_manager_tool_changed),
 		    tool_manager);
 
@@ -192,7 +192,7 @@ tool_manager_exit (Gimp *gimp)
   tool_manager = tool_manager_get (gimp);
   tool_manager_set (gimp, NULL);
 
-  g_object_unref (G_OBJECT (tool_manager->global_tool_context));
+  g_object_unref (tool_manager->global_tool_context);
 
   gimp_container_remove_handler (gimp->images,
 				 tool_manager->image_dirty_handler_id);
@@ -200,7 +200,7 @@ tool_manager_exit (Gimp *gimp)
 				 tool_manager->image_undo_start_handler_id);
 
   if (tool_manager->active_tool)
-    g_object_unref (G_OBJECT (tool_manager->active_tool));
+    g_object_unref (tool_manager->active_tool);
 
   g_free (tool_manager);
 }
@@ -237,12 +237,12 @@ tool_manager_select_tool (Gimp     *gimp,
                                        tool_manager->active_tool->gdisp);
         }
 
-      g_object_unref (G_OBJECT (tool_manager->active_tool));
+      g_object_unref (tool_manager->active_tool);
     }
 
   tool_manager->active_tool = tool;
 
-  g_object_ref (G_OBJECT (tool_manager->active_tool));
+  g_object_ref (tool_manager->active_tool);
 }
 
 void
@@ -261,7 +261,7 @@ tool_manager_push_tool (Gimp     *gimp,
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
 						  tool_manager->active_tool);
 
-      g_object_ref (G_OBJECT (tool_manager->tool_stack->data));
+      g_object_ref (tool_manager->tool_stack->data);
     }
 
   tool_manager_select_tool (gimp, tool);
@@ -281,7 +281,7 @@ tool_manager_pop_tool (Gimp *gimp)
       tool_manager_select_tool (gimp,
 				GIMP_TOOL (tool_manager->tool_stack->data));
 
-      g_object_unref (G_OBJECT (tool_manager->tool_stack->data));
+      g_object_unref (tool_manager->tool_stack->data);
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
 						 tool_manager->active_tool);
@@ -573,12 +573,12 @@ tool_manager_register_tool (GType                   tool_type,
 				  stock_id,
 				  pixbuf);
 
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (pixbuf);
 
   tool_info->options_new_func = options_new_func;
 
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
-  g_object_unref (G_OBJECT (tool_info));
+  g_object_unref (tool_info);
 }
 
 GimpToolInfo *
@@ -666,12 +666,12 @@ tool_manager_tool_changed (GimpContext  *user_context,
       /*  there may be contexts waiting for the user_context's "tool_changed"
        *  signal, so stop emitting it.
        */
-      g_signal_stop_emission_by_name (G_OBJECT (user_context), "tool_changed");
+      g_signal_stop_emission_by_name (user_context, "tool_changed");
 
       if (G_TYPE_FROM_INSTANCE (tool_manager->active_tool) !=
 	  tool_info->tool_type)
 	{
-	  g_signal_handlers_block_by_func (G_OBJECT (user_context),
+	  g_signal_handlers_block_by_func (user_context,
 					   tool_manager_tool_changed,
 					   data);
 
@@ -679,7 +679,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 	  gimp_context_set_tool (user_context,
                                  tool_manager->active_tool->tool_info);
 
-	  g_signal_handlers_unblock_by_func (G_OBJECT (user_context),
+	  g_signal_handlers_unblock_by_func (user_context,
 					     tool_manager_tool_changed,
 					     data);
 	}
@@ -715,7 +715,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
   tool_manager_select_tool (user_context->gimp, new_tool);
 
-  g_object_unref (G_OBJECT (new_tool));
+  g_object_unref (new_tool);
 }
 
 static void

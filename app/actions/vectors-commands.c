@@ -343,7 +343,7 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
       tool_manager_control_active (gimage->gimp, RESUME, gdisp);
 
-      g_object_unref (G_OBJECT (core));
+      g_object_unref (core);
 
       gimp_image_flush (gimage);
     }

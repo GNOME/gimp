@@ -223,7 +223,7 @@ qmask_channel_query (GimpDisplayShell *shell)
 			     _("Mask Opacity:"), 1.0, 1.0,
 			     opacity_scale, 1, FALSE);
 
-  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+  g_signal_connect (opacity_scale_data, "value_changed",
 		    G_CALLBACK (qmask_query_scale_update),
 		    options->color_panel);
 
@@ -232,7 +232,7 @@ qmask_channel_query (GimpDisplayShell *shell)
                       TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
-  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+  g_signal_connect (options->color_panel, "color_changed",
 		    G_CALLBACK (qmask_query_color_changed),
 		    opacity_scale_data);		      
 

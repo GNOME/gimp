@@ -371,7 +371,7 @@ gimp_brush_select_widget (gchar                *dname,
 
   gtk_widget_set_events (brush, BRUSH_EVENT_MASK);
 
-  g_signal_connect (G_OBJECT (brush), "event",
+  g_signal_connect (brush, "event",
                     G_CALLBACK (brush_preview_events),
                     bsel);
 
@@ -418,10 +418,10 @@ gimp_brush_select_widget (gchar                *dname,
 
   button = gtk_button_new_with_label ("... ");
   gtk_container_add (GTK_CONTAINER (hbox), button); 
-  gtk_widget_show(button);
+  gtk_widget_show (button);
 
   bsel->button = button;
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (brush_select_callback),
                     bsel);
 

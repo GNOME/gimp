@@ -90,10 +90,10 @@ gimp_gradients_init (Gimp *gimp)
                  gradient->segments->left_color.b,
                  0.0);
 
-  g_signal_connect (G_OBJECT (gimp->user_context), "foreground_changed",
+  g_signal_connect (gimp->user_context, "foreground_changed",
                     G_CALLBACK (gimp_gradients_foreground_changed),
                     gimp);
-  g_signal_connect (G_OBJECT (gimp->user_context), "background_changed",
+  g_signal_connect (gimp->user_context, "background_changed",
                     G_CALLBACK (gimp_gradients_background_changed),
                     gimp);
 }
@@ -123,7 +123,7 @@ gimp_gradients_add_gradient (Gimp        *gimp,
 
   gimp_container_add (gimp->gradient_factory->container,
                       GIMP_OBJECT (gradient));
-  g_object_unref (G_OBJECT (gradient));
+  g_object_unref (gradient);
 
   g_object_set_data (G_OBJECT (gimp), id, gradient);
 

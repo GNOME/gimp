@@ -164,7 +164,7 @@ gimp_enum_menu_new_with_range (GType      enum_type,
                          GINT_TO_POINTER (value->value));
 
       if (callback)
-        g_signal_connect (G_OBJECT (menu_item), "activate",
+        g_signal_connect (menu_item, "activate",
                           callback,
                           callback_data);
     }
@@ -228,7 +228,7 @@ gimp_enum_menu_new_with_values_valist (GType      enum_type,
                              GINT_TO_POINTER (value->value));
 
           if (callback)
-            g_signal_connect (G_OBJECT (menu_item), "activate",
+            g_signal_connect (menu_item, "activate",
                               callback,
                               callback_data);
         }
@@ -415,7 +415,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
                          GINT_TO_POINTER (value->value));
 
       if (callback)
-        g_signal_connect (G_OBJECT (button), "toggled",
+        g_signal_connect (button, "toggled",
                           callback,
                           callback_data);
     }

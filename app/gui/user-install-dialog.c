@@ -399,8 +399,8 @@ user_install_continue_callback (GtkWidget *widget,
     case RESOLUTION_PAGE:
       gimp_rc_save (gimprc);
       
-      g_object_unref (G_OBJECT (title_style));
-      g_object_unref (G_OBJECT (page_style));
+      g_object_unref (title_style);
+      g_object_unref (page_style);
 
       gtk_widget_destroy (user_install_dialog);
 
@@ -702,7 +702,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
   gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (G_OBJECT (darea), "expose_event",
+  g_signal_connect (darea, "expose_event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
@@ -712,7 +712,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
   gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (G_OBJECT (darea), "expose_event",
+  g_signal_connect (darea, "expose_event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
@@ -842,7 +842,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
-    g_signal_connect (G_OBJECT (sel), "changed",
+    g_signal_connect (sel, "changed",
 		      G_CALLBACK (user_install_sel_changed),
 		      notebook2);
 
@@ -1321,7 +1321,7 @@ user_install_resolution (GimpRc *gimprc)
   gtk_widget_set_sensitive (button, !config->monitor_res_from_gdk);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (user_install_resolution_calibrate),
                     entry);
 
@@ -1329,7 +1329,7 @@ user_install_resolution (GimpRc *gimprc)
                      entry);
   g_object_set_data (G_OBJECT (entry), "inverse_sensitive",
                      button);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_sensitive_update),
                     NULL);
 }

@@ -70,14 +70,14 @@ file_dialog_new (Gimp            *gimp,
   gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
 
-  g_signal_connect_swapped (G_OBJECT (fs->cancel_button), "clicked",
+  g_signal_connect_swapped (fs->cancel_button, "clicked",
 			    G_CALLBACK (file_dialog_hide),
 			    filesel);
-  g_signal_connect (G_OBJECT (filesel), "delete_event",
+  g_signal_connect (filesel, "delete_event",
 		    G_CALLBACK (file_dialog_hide),
 		    NULL);
 
-  g_signal_connect (G_OBJECT (fs->ok_button), "clicked",
+  g_signal_connect (fs->ok_button, "clicked",
 		    G_CALLBACK (ok_callback),
 		    filesel);
 

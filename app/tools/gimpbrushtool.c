@@ -169,7 +169,7 @@ gimp_paint_tool_finalize (GObject *object)
 
   if (paint_tool->core)
     {
-      g_object_unref (G_OBJECT (paint_tool->core));
+      g_object_unref (paint_tool->core);
       paint_tool->core = NULL;
     }
 

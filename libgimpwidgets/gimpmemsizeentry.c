@@ -174,7 +174,7 @@ gimp_memsize_entry_new (gulong  value,
   gtk_box_pack_start (GTK_BOX (entry), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (entry->adjustment), "value_changed",
+  g_signal_connect (entry->adjustment, "value_changed",
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
   
@@ -254,8 +254,7 @@ gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
 
   entry->value = size << entry->shift;
 
-  g_signal_emit (G_OBJECT (entry),
-		 gimp_memsize_entry_signals[VALUE_CHANGED], 0);
+  g_signal_emit (entry, gimp_memsize_entry_signals[VALUE_CHANGED], 0);
 }
 
 static void

@@ -108,77 +108,77 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   shell->padding_mode  = display_config->canvas_padding_mode;
   shell->padding_color = display_config->canvas_padding_color;
 
-  g_signal_connect (G_OBJECT (gimage), "clean",
+  g_signal_connect (gimage, "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "dirty",
+  g_signal_connect (gimage, "dirty",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "undo_event",
+  g_signal_connect (gimage, "undo_event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "name_changed",
+  g_signal_connect (gimage, "name_changed",
                     G_CALLBACK (gimp_display_shell_name_changed_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "selection_control",
+  g_signal_connect (gimage, "selection_control",
                     G_CALLBACK (gimp_display_shell_selection_control_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "size_changed",
+  g_signal_connect (gimage, "size_changed",
                     G_CALLBACK (gimp_display_shell_size_changed_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "resolution_changed",
+  g_signal_connect (gimage, "resolution_changed",
                     G_CALLBACK (gimp_display_shell_resolution_changed_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "unit_changed",
+  g_signal_connect (gimage, "unit_changed",
                     G_CALLBACK (gimp_display_shell_unit_changed_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "qmask_changed",
+  g_signal_connect (gimage, "qmask_changed",
                     G_CALLBACK (gimp_display_shell_qmask_changed_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "update_guide",
+  g_signal_connect (gimage, "update_guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage), "invalidate_preview",
+  g_signal_connect (gimage, "invalidate_preview",
 		    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
 		    shell);
 
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::transparency-size",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::transparency-type",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::image-title-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::image-status-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::navigation-preview-size",
                     G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::monitor-xresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::monitor-yresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::canvas-padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::canvas-padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (G_OBJECT (gimage->gimp->config),
+  g_signal_connect (gimage->gimp->config,
                     "notify::marching-ants-speed",
                     G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
                     shell);
@@ -204,53 +204,53 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->icon_idle_id = 0;
     }
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_monitor_res_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_nav_size_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_title_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_check_notify_handler,
                                         shell);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_invalidate_preview_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_update_guide_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_qmask_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_unit_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_resolution_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_size_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_selection_control_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_name_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_undo_event_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_clean_dirty_handler,
                                         shell);
 }
@@ -327,7 +327,7 @@ gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
 
   image = GTK_IMAGE (GTK_BIN (shell->qmask)->child);
 
-  g_signal_handlers_block_by_func (G_OBJECT (shell->qmask),
+  g_signal_handlers_block_by_func (shell->qmask,
                                    gimp_display_shell_qmask_toggled,
                                    shell);
 
@@ -339,7 +339,7 @@ gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
   else
     gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmask),
+  g_signal_handlers_unblock_by_func (shell->qmask,
                                      gimp_display_shell_qmask_toggled,
                                      shell);
 }

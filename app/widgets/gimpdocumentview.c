@@ -154,7 +154,7 @@ gimp_document_view_new (GimpViewType     view_type,
                                          min_items_y,
                                          item_factory))
     {
-      g_object_unref (G_OBJECT (document_view));
+      g_object_unref (document_view);
       return NULL;
     }
 

@@ -357,10 +357,10 @@ resize_widget_new (GimpViewable *viewable,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0, width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1, height);
 
-  g_signal_connect (G_OBJECT (private->size_se), "value_changed",
+  g_signal_connect (private->size_se, "value_changed",
 		    G_CALLBACK (size_callback),
 		    resize);
-  g_signal_connect (G_OBJECT (private->size_se), "unit_changed",
+  g_signal_connect (private->size_se, "unit_changed",
 		    G_CALLBACK (orig_labels_update),
 		    resize);
 
@@ -402,7 +402,7 @@ resize_widget_new (GimpViewable *viewable,
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT ( private->ratio_x_adj), "value_changed",
+  g_signal_connect (private->ratio_x_adj, "value_changed",
 		    G_CALLBACK (ratio_callback),
 		    resize);
 
@@ -417,7 +417,7 @@ resize_widget_new (GimpViewable *viewable,
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (private->ratio_y_adj), "value_changed",
+  g_signal_connect (private->ratio_y_adj, "value_changed",
 		    G_CALLBACK (ratio_callback),
 		    resize);
 
@@ -494,7 +494,7 @@ resize_widget_new (GimpViewable *viewable,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
 
-      g_signal_connect (G_OBJECT (private->offset_se), "value_changed",
+      g_signal_connect (private->offset_se, "value_changed",
 			G_CALLBACK (offset_update),
 			resize);
 
@@ -504,7 +504,7 @@ resize_widget_new (GimpViewable *viewable,
                                  4, 5, 1, 2);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
 			G_CALLBACK (offset_center_clicked),
 			resize);
 
@@ -523,7 +523,7 @@ resize_widget_new (GimpViewable *viewable,
       gtk_container_add (GTK_CONTAINER (frame), private->offset_area);
       gtk_widget_show (private->offset_area);
 
-      g_signal_connect (G_OBJECT (private->offset_area), "offsets_changed",
+      g_signal_connect (private->offset_area, "offsets_changed",
 			G_CALLBACK (offset_area_offsets_changed),
 			resize);
 
@@ -608,10 +608,10 @@ resize_widget_new (GimpViewable *viewable,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
 				  1, resize->height);
 
-      g_signal_connect (G_OBJECT (private->printsize_se), "value_changed",
+      g_signal_connect (private->printsize_se, "value_changed",
 			G_CALLBACK (printsize_update),
 			resize);
-      g_signal_connect (G_OBJECT (private->printsize_se), "unit_changed",
+      g_signal_connect (private->printsize_se, "unit_changed",
 			G_CALLBACK (unit_update),
 			resize);
 
@@ -665,7 +665,7 @@ resize_widget_new (GimpViewable *viewable,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 				  1, resize->resolution_y);
 
-      g_signal_connect (G_OBJECT (private->resolution_se), "value_changed",
+      g_signal_connect (private->resolution_se, "value_changed",
 			G_CALLBACK (resolution_callback),
 			resize);
 
@@ -840,7 +840,7 @@ offset_center_clicked (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, off_x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, off_y);
 
-  g_signal_emit_by_name (G_OBJECT (private->offset_se), "value_changed", 0);
+  g_signal_emit_by_name (private->offset_se, "value_changed", 0);
 }
 
 static void
@@ -971,7 +971,7 @@ size_update (Resize *resize,
     gimp_offset_area_set_size (GIMP_OFFSET_AREA (private->offset_area), 
 			       resize->width, resize->height);
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->size_se),
+  g_signal_handlers_block_by_func (private->size_se,
                                    size_callback,
                                    resize);
 
@@ -980,24 +980,24 @@ size_update (Resize *resize,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
 			      1, height);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->size_se),
+  g_signal_handlers_unblock_by_func (private->size_se,
                                      size_callback,
                                      resize);
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->ratio_x_adj),
+  g_signal_handlers_block_by_func (private->ratio_x_adj,
                                    ratio_callback,
                                    resize);
-  g_signal_handlers_block_by_func (G_OBJECT (private->ratio_y_adj),
+  g_signal_handlers_block_by_func (private->ratio_y_adj,
                                    ratio_callback,
                                    resize);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_x_adj), ratio_x);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_y_adj), ratio_y);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->ratio_x_adj),
+  g_signal_handlers_unblock_by_func (private->ratio_x_adj,
                                      ratio_callback,
                                      resize);
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->ratio_y_adj),
+  g_signal_handlers_unblock_by_func (private->ratio_y_adj,
                                      ratio_callback,
                                      resize);
   
@@ -1015,7 +1015,7 @@ size_update (Resize *resize,
 
   if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (private->printsize_se),
+      g_signal_handlers_block_by_func (private->printsize_se,
                                        printsize_update,
                                        resize);
 
@@ -1024,7 +1024,7 @@ size_update (Resize *resize,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
 				  1, height);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (private->printsize_se),
+      g_signal_handlers_unblock_by_func (private->printsize_se,
                                          printsize_update,
                                          resize);
     }
@@ -1100,7 +1100,7 @@ printsize_update (GtkWidget *widget,
   resize->resolution_x = res_x;
   resize->resolution_y = res_y;
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->resolution_se),
+  g_signal_handlers_block_by_func (private->resolution_se,
                                    resolution_callback,
                                    resize);
 
@@ -1109,11 +1109,11 @@ printsize_update (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 			      1, res_y);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->resolution_se),
+  g_signal_handlers_unblock_by_func (private->resolution_se,
                                      resolution_callback,
                                      resize);
 
-  g_signal_handlers_block_by_func (GTK_OBJECT (private->size_se),
+  g_signal_handlers_block_by_func (private->size_se,
                                    size_callback,
                                    resize);
 
@@ -1126,11 +1126,11 @@ printsize_update (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
 			      1, height);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->size_se),
+  g_signal_handlers_unblock_by_func (private->size_se,
                                      size_callback,
                                      resize);
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->printsize_se),
+  g_signal_handlers_block_by_func (private->printsize_se,
                                    printsize_update,
                                    resize);
 
@@ -1143,7 +1143,7 @@ printsize_update (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
 			      1, height);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->printsize_se),
+  g_signal_handlers_unblock_by_func (private->printsize_se,
                                      printsize_update,
                                      resize);
 }
@@ -1194,7 +1194,7 @@ resolution_update (Resize  *resize,
   resize->resolution_x = res_x;
   resize->resolution_y = res_y;
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->resolution_se),
+  g_signal_handlers_block_by_func (private->resolution_se,
                                    resolution_callback,
                                    resize);
 
@@ -1203,11 +1203,11 @@ resolution_update (Resize  *resize,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 			      1, res_y);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->resolution_se),
+  g_signal_handlers_unblock_by_func (private->resolution_se,
                                      resolution_callback,
                                      resize);
 
-  g_signal_handlers_block_by_func (GTK_OBJECT (private->size_se),
+  g_signal_handlers_block_by_func (private->size_se,
                                    size_callback,
                                    resize);
 
@@ -1216,11 +1216,11 @@ resolution_update (Resize  *resize,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
 				  1, res_y, TRUE);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (private->size_se),
+  g_signal_handlers_unblock_by_func (private->size_se,
                                      size_callback,
                                      resize);
 
-  g_signal_handlers_block_by_func (G_OBJECT (private->printsize_se),
+  g_signal_handlers_block_by_func (private->printsize_se,
                                    printsize_update,
                                    resize);
 
@@ -1229,7 +1229,7 @@ resolution_update (Resize  *resize,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
 				  1, res_y, TRUE);
 
-  g_signal_handlers_unblock_by_func (GTK_OBJECT (private->printsize_se),
+  g_signal_handlers_unblock_by_func (private->printsize_se,
                                      printsize_update,
                                      resize);
 }

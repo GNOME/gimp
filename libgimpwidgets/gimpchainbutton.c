@@ -119,13 +119,13 @@ gimp_chain_button_init (GimpChainButton *button)
   gtk_container_add (GTK_CONTAINER (button->button), button->image);
   gtk_widget_show (button->image);
 
-  g_signal_connect (G_OBJECT (button->button), "clicked",
+  g_signal_connect (button->button, "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback), 
                     button);
-  g_signal_connect (G_OBJECT (button->line1), "expose_event",
+  g_signal_connect (button->line1, "expose_event",
                     G_CALLBACK (gimp_chain_button_draw_lines),
                     button);
-  g_signal_connect (G_OBJECT (button->line2), "expose_event",
+  g_signal_connect (button->line2, "expose_event",
                     G_CALLBACK (gimp_chain_button_draw_lines),
                     button);
 }
@@ -240,7 +240,7 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
 
   gimp_chain_button_set_active (button, ! button->active);
 
-  g_signal_emit (G_OBJECT (button), gimp_chain_button_signals[TOGGLED], 0);
+  g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
 }
 
 static gboolean

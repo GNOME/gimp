@@ -179,7 +179,7 @@ offset_dialog_create (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (offset_halfheight_callback),
 		    off_d);
 
@@ -189,7 +189,7 @@ offset_dialog_create (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
-  g_signal_connect (G_OBJECT (check), "toggled",
+  g_signal_connect (check, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &off_d->wrap_around);
 

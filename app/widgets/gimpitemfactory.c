@@ -318,7 +318,7 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 
   if (menu_item)
     {
-      g_signal_connect_after (G_OBJECT (menu_item), "realize",
+      g_signal_connect_after (menu_item, "realize",
 			      G_CALLBACK (gimp_item_factory_item_realize),
 			      item_factory);
 
@@ -479,7 +479,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
 
       label = GTK_BIN (widget)->child;
 
-      g_object_ref (G_OBJECT (label));
+      g_object_ref (label);
 
       gtk_container_remove (GTK_CONTAINER (widget), label);
 
@@ -496,7 +496,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
       gtk_widget_show (label);
 
-      g_object_unref (G_OBJECT (label));
+      g_object_unref (label);
 
       g_object_set_data (G_OBJECT (hbox), "preview", preview);
       g_object_set_data (G_OBJECT (hbox), "label",   label);
@@ -900,7 +900,7 @@ gimp_item_factory_item_realize (GtkWidget *widget,
       if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (widget->parent),
                                                  quark_key_press_connected)))
 	{
-	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
+	  g_signal_connect (widget->parent, "key_press_event",
                             G_CALLBACK (gimp_item_factory_item_key_press),
                             data);
 

@@ -192,5 +192,5 @@ gimp_color_display_changed (GimpColorDisplay *display)
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  g_signal_emit (G_OBJECT (display), display_signals[CHANGED], 0);
+  g_signal_emit (display, display_signals[CHANGED], 0);
 }

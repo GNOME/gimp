@@ -164,13 +164,13 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
 		    G_CALLBACK (brushes_callback),
 		    view);
 
-  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+  g_signal_connect_object (context, "brush_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   preview =
@@ -181,13 +181,13 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
 		    G_CALLBACK (patterns_callback),
 		    view);
 
-  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+  g_signal_connect_object (context, "pattern_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   preview =
@@ -198,13 +198,13 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
 		    G_CALLBACK (gradients_callback),
 		    view);
 
-  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+  g_signal_connect_object (context, "gradient_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
   preview =
@@ -215,13 +215,13 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
 		    G_CALLBACK (palettes_callback),
 		    view);
 
-  g_signal_connect_object (G_OBJECT (context), "palette_changed",
+  g_signal_connect_object (context, "palette_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 
 #if 0
@@ -233,13 +233,13 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (preview, "clicked",
 		    G_CALLBACK (images_callback),
 		    view);
 
-  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+  g_signal_connect_object (context, "pattern_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
+			   preview,
 			   G_CONNECT_SWAPPED);
 #endif
 
@@ -252,7 +252,7 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
 		    G_CALLBACK (container_view_scale_callback),
 		    view);
 

@@ -158,7 +158,7 @@ gimp_object_dispose (GObject *object)
 
   if (! disconnected)
     {
-      g_signal_emit (G_OBJECT (object), object_signals[DISCONNECT], 0);
+      g_signal_emit (object, object_signals[DISCONNECT], 0);
 
       g_object_set_data (G_OBJECT (object), "disconnected",
 			 GINT_TO_POINTER (TRUE));
@@ -255,7 +255,7 @@ gimp_object_name_changed (GimpObject *object)
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  g_signal_emit (G_OBJECT (object), object_signals[NAME_CHANGED], 0);
+  g_signal_emit (object, object_signals[NAME_CHANGED], 0);
 }
 
 

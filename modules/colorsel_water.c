@@ -212,16 +212,16 @@ colorsel_water_init (ColorselWater *water)
   select_area_draw (preview);
 
   /* Event signals */
-  g_signal_connect (G_OBJECT (event_box), "motion_notify_event",
+  g_signal_connect (event_box, "motion_notify_event",
                     G_CALLBACK (motion_notify_event),
                     water);
-  g_signal_connect (G_OBJECT (event_box), "button_press_event",
+  g_signal_connect (event_box, "button_press_event",
                     G_CALLBACK (button_press_event),
                     water);
-  g_signal_connect (G_OBJECT (event_box), "button_release_event",
+  g_signal_connect (event_box, "button_release_event",
                     G_CALLBACK (button_release_event),
                     water);
-  g_signal_connect (G_OBJECT (event_box), "proximity_out_event",
+  g_signal_connect (event_box, "proximity_out_event",
                     G_CALLBACK (proximity_out_event),
                     water);
 
@@ -242,7 +242,7 @@ colorsel_water_init (ColorselWater *water)
 
   adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
 			    0.0, 200.0, 1.0, 1.0, 0.0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
+  g_signal_connect (adj, "value_changed",
                     G_CALLBACK (pressure_adjust_update),
                     water);
   scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));

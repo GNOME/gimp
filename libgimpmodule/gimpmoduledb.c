@@ -411,12 +411,12 @@ gimp_module_db_module_initialize (GimpDatafileData *file_data)
                             load_inhibit,
                             db->verbose);
 
-  g_signal_connect (G_OBJECT (module), "modified",
+  g_signal_connect (module, "modified",
                     G_CALLBACK (gimp_module_db_module_modified),
                     db);
 
   db->modules = g_list_append (db->modules, module);
-  g_signal_emit (G_OBJECT (db), db_signals[ADD], 0, module);
+  g_signal_emit (db, db_signals[ADD], 0, module);
 }
 
 static GimpModule *
@@ -508,17 +508,17 @@ gimp_module_db_module_remove_func (gpointer data,
   module = (GimpModule *)   data;
   db     = (GimpModuleDB *) user_data;
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (module),
+  g_signal_handlers_disconnect_by_func (module,
                                         gimp_module_db_module_modified,
                                         db);
 
   g_list_remove (db->modules, module);
-  g_signal_emit (G_OBJECT (db), db_signals[REMOVE], 0, module);
+  g_signal_emit (db, db_signals[REMOVE], 0, module);
 }
 
 static void
 gimp_module_db_module_modified (GimpModule   *module,
                                 GimpModuleDB *db)
 {
-  g_signal_emit (G_OBJECT (db), db_signals[MODULE_MODIFIED], 0, module);
+  g_signal_emit (db, db_signals[MODULE_MODIFIED], 0, module);
 }

@@ -258,7 +258,7 @@ gimp_color_selector_color_changed (GimpColorSelector *selector)
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  g_signal_emit (G_OBJECT (selector), selector_signals[COLOR_CHANGED], 0,
+  g_signal_emit (selector, selector_signals[COLOR_CHANGED], 0,
                  &selector->rgb, &selector->hsv);
 }
 
@@ -267,6 +267,6 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  g_signal_emit (G_OBJECT (selector), selector_signals[CHANNEL_CHANGED], 0,
+  g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
                  selector->channel);
 }

@@ -140,7 +140,7 @@ convert_to_indexed (GimpImage *gimage)
 
                               NULL);
 
-  g_signal_connect (G_OBJECT (dialog->shell), "destroy",
+  g_signal_connect (dialog->shell, "destroy",
                     G_CALLBACK (indexed_destroy_callback),
                     dialog);
 
@@ -171,7 +171,7 @@ convert_to_indexed (GimpImage *gimage)
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data", 
                      GINT_TO_POINTER (GIMP_MAKE_PALETTE));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_radio_button_update),
 		    &dialog->palette_type);
 
@@ -185,7 +185,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_colors);
 
@@ -219,7 +219,7 @@ convert_to_indexed (GimpImage *gimage)
 
       g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                          GINT_TO_POINTER (GIMP_WEB_PALETTE));
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
 			G_CALLBACK (gimp_radio_button_update),
 			&dialog->palette_type);
     }
@@ -237,7 +237,7 @@ convert_to_indexed (GimpImage *gimage)
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (GIMP_MONO_PALETTE));
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_radio_button_update),
 		    &dialog->palette_type);
 
@@ -249,7 +249,7 @@ convert_to_indexed (GimpImage *gimage)
       remove_toggle = gtk_check_button_new_with_label (_("Remove Unused Colors from Final Palette"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remove_toggle), 
                                     dialog->remove_dups);
-      g_signal_connect (G_OBJECT (remove_toggle), "toggled",
+      g_signal_connect (remove_toggle, "toggled",
 			G_CALLBACK (gimp_toggle_button_update),
 			&dialog->remove_dups);
 
@@ -266,12 +266,12 @@ convert_to_indexed (GimpImage *gimage)
 
       g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                          GINT_TO_POINTER (GIMP_CUSTOM_PALETTE));
-      g_signal_connect (G_OBJECT (toggle), "toggled",
+      g_signal_connect (toggle, "toggled",
 			G_CALLBACK (gimp_radio_button_update),
 			&dialog->palette_type);
       g_object_set_data (G_OBJECT (toggle), "set_sensitive", remove_toggle);
 
-      g_signal_connect (G_OBJECT (dialog->custom_palette_button), "clicked",
+      g_signal_connect (dialog->custom_palette_button, "clicked",
 			G_CALLBACK (indexed_custom_palette_button_callback), 
 			dialog);
       gtk_box_pack_end (GTK_BOX (hbox), 
@@ -324,7 +324,7 @@ convert_to_indexed (GimpImage *gimage)
 				dialog->alpha_dither);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &dialog->alpha_dither);
   
@@ -518,10 +518,10 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
 			    GIMP_OBJECT (theCustomPalette)->name,
                             NULL);
 
-      g_signal_connect (G_OBJECT (dialog->palette_select->shell), "destroy", 
+      g_signal_connect (dialog->palette_select->shell, "destroy", 
 			G_CALLBACK (indexed_palette_select_destroy_callback), 
 			dialog);
-      g_signal_connect (G_OBJECT (dialog->palette_select->context),
+      g_signal_connect (dialog->palette_select->context,
 			"palette_changed",
 			G_CALLBACK (indexed_palette_select_palette),
 			dialog);

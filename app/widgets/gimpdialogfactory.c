@@ -806,7 +806,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
 
-  g_signal_connect_object (G_OBJECT (dialog), "destroy",
+  g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (gimp_dialog_factory_remove_dialog),
                            factory,
                            G_CONNECT_SWAPPED);

@@ -161,7 +161,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_container_add (GTK_CONTAINER (abox), view->preserve_trans_toggle);
   gtk_widget_show (view->preserve_trans_toggle);
 
-  g_signal_connect (G_OBJECT (view->preserve_trans_toggle), "toggled",
+  g_signal_connect (view->preserve_trans_toggle, "toggled",
 		    G_CALLBACK (gimp_layer_list_view_preserve_button_toggled),
 		    view);
 
@@ -181,7 +181,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 					  TRUE, 0.0, 0.0,
 					  NULL, "#opacity_sacle"));
 
-  g_signal_connect (G_OBJECT (view->opacity_adjustment), "value_changed",
+  g_signal_connect (view->opacity_adjustment, "value_changed",
 		    G_CALLBACK (gimp_layer_list_view_opacity_scale_changed),
 		    view);
 
@@ -348,11 +348,11 @@ gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 /*  Paint Mode, Opacity and Preserve trans. callbacks  */
 
 #define BLOCK() \
-        g_signal_handlers_block_by_func (G_OBJECT (layer), \
+        g_signal_handlers_block_by_func (layer, \
 	gimp_layer_list_view_layer_signal_handler, view)
 
 #define UNBLOCK() \
-        g_signal_handlers_unblock_by_func (G_OBJECT (layer), \
+        g_signal_handlers_unblock_by_func (layer, \
 	gimp_layer_list_view_layer_signal_handler, view)
 
 
@@ -460,12 +460,10 @@ gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
 
 
 #define BLOCK(object,function) \
-        g_signal_handlers_block_by_func (G_OBJECT (object), \
-	                                 (function), view)
+        g_signal_handlers_block_by_func ((object), (function), view)
 
 #define UNBLOCK(object,function) \
-        g_signal_handlers_unblock_by_func (G_OBJECT (object), \
-	                                   (function), view)
+        g_signal_handlers_unblock_by_func ((object), (function), view)
 
 static void
 gimp_layer_list_view_update_options (GimpLayerListView *view,

@@ -62,7 +62,7 @@ gimp_modules_exit (Gimp *gimp)
 
   if (gimp->module_db)
     {
-      g_object_unref (G_OBJECT (gimp->module_db));
+      g_object_unref (gimp->module_db);
       gimp->module_db = NULL;
     }
 }

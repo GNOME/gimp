@@ -1624,7 +1624,7 @@ gimp_channel_translate (GimpChannel *mask,
       copy_region (&srcPR, &destPR);
 
       /*  free the temporary mask  */
-      g_object_unref (G_OBJECT (tmp_mask));
+      g_object_unref (tmp_mask);
     }
 
   /*  calculate new bounds  */

@@ -308,7 +308,7 @@ gimp_gradient_get_standard (void)
     {
       standard_gradient = GIMP_GRADIENT (gimp_gradient_new ("Standard", FALSE));
 
-      g_object_ref (G_OBJECT (standard_gradient));
+      g_object_ref (standard_gradient);
     }
 
   return GIMP_DATA (standard_gradient);
@@ -388,7 +388,7 @@ gimp_gradient_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parsing error:\nGradient file '%s' is corrupt."),
                    filename);
-      g_object_unref (G_OBJECT (gradient));
+      g_object_unref (gradient);
       fclose (file);
       return NULL;
     }

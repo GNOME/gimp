@@ -533,17 +533,17 @@ gimp_image_finalize (GObject *object)
 
   if (gimage->layers)
     {
-      g_object_unref (G_OBJECT (gimage->layers));
+      g_object_unref (gimage->layers);
       gimage->layers = NULL;
     }
   if (gimage->channels)
     {
-      g_object_unref (G_OBJECT (gimage->channels));
+      g_object_unref (gimage->channels);
       gimage->channels = NULL;
     }
   if (gimage->vectors)
     {
-      g_object_unref (G_OBJECT (gimage->vectors));
+      g_object_unref (gimage->vectors);
       gimage->vectors = NULL;
     }
   if (gimage->layer_stack)
@@ -554,7 +554,7 @@ gimp_image_finalize (GObject *object)
 
   if (gimage->selection_mask)
     {
-      g_object_unref (G_OBJECT (gimage->selection_mask));
+      g_object_unref (gimage->selection_mask);
       gimage->selection_mask = NULL;
     }
 
@@ -566,7 +566,7 @@ gimp_image_finalize (GObject *object)
 
   if (gimage->parasites)
     {
-      g_object_unref (G_OBJECT (gimage->parasites));
+      g_object_unref (gimage->parasites);
       gimage->parasites = NULL;
     }
 
@@ -579,12 +579,12 @@ gimp_image_finalize (GObject *object)
 
   if (gimage->new_undo_stack)
     {
-      g_object_unref (G_OBJECT (gimage->new_undo_stack));
+      g_object_unref (gimage->new_undo_stack);
       gimage->new_undo_stack = NULL;
     }
   if (gimage->new_redo_stack)
     {
-      g_object_unref (G_OBJECT (gimage->new_redo_stack));
+      g_object_unref (gimage->new_redo_stack);
       gimage->new_redo_stack = NULL;
     }
 
@@ -977,10 +977,10 @@ gimp_image_new (Gimp              *gimp,
 						  gimage->width,
 						  gimage->height);
 
-  g_signal_connect_object (G_OBJECT (gimp->config), "notify::transparency-type",
+  g_signal_connect_object (gimp->config, "notify::transparency-type",
                            G_CALLBACK (gimp_image_invalidate_layer_previews),
                            gimage, G_CONNECT_SWAPPED);
-  g_signal_connect_object (G_OBJECT (gimp->config), "notify::transparency-size",
+  g_signal_connect_object (gimp->config, "notify::transparency-size",
                            G_CALLBACK (gimp_image_invalidate_layer_previews),
                            gimage, G_CONNECT_SWAPPED);
 
@@ -1159,7 +1159,7 @@ gimp_image_resolution_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[RESOLUTION_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[RESOLUTION_CHANGED], 0);
 }
 
 void
@@ -1191,7 +1191,7 @@ gimp_image_unit_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNIT_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[UNIT_CHANGED], 0);
 }
 
 gint
@@ -1247,8 +1247,7 @@ gimp_image_floating_selection_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage),
-		 gimp_image_signals[FLOATING_SELECTION_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[FLOATING_SELECTION_CHANGED], 0);
 }
 
 guchar *
@@ -1266,7 +1265,7 @@ gimp_image_colormap_changed (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (col < gimage->num_cols);
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[COLORMAP_CHANGED], 0,
+  g_signal_emit (gimage, gimp_image_signals[COLORMAP_CHANGED], 0,
 		 col);
 }
 
@@ -1283,7 +1282,7 @@ gimp_image_mask_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[MASK_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[MASK_CHANGED], 0);
 }
 
 void
@@ -1324,7 +1323,7 @@ gimp_image_set_component_active (GimpImage       *gimage,
        */
       gimp_image_unset_active_channel (gimage);
 
-      g_signal_emit (G_OBJECT (gimage),
+      g_signal_emit (gimage,
 		     gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
 		     type);
     }
@@ -1426,7 +1425,7 @@ gimp_image_set_component_visible (GimpImage       *gimage,
     {
       gimage->visible[pixel] = visible ? TRUE : FALSE;
 
-      g_signal_emit (G_OBJECT (gimage),
+      g_signal_emit (gimage,
 		     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
 		     type);
 
@@ -1467,7 +1466,7 @@ gimp_image_mode_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[MODE_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[MODE_CHANGED], 0);
 }
 
 void
@@ -1475,7 +1474,7 @@ gimp_image_alpha_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[ALPHA_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[ALPHA_CHANGED], 0);
 }
 
 void
@@ -1487,7 +1486,7 @@ gimp_image_update (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE], 0,
+  g_signal_emit (gimage, gimp_image_signals[UPDATE], 0,
 		 x, y, width, height);
 }
 
@@ -1498,8 +1497,7 @@ gimp_image_update_guide (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (guide != NULL);
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE_GUIDE], 0,
-                 guide);
+  g_signal_emit (gimage, gimp_image_signals[UPDATE_GUIDE], 0, guide);
 }
 
 void
@@ -1508,8 +1506,7 @@ gimp_image_selection_control (GimpImage            *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[SELECTION_CONTROL], 0,
-                 control);
+  g_signal_emit (gimage, gimp_image_signals[SELECTION_CONTROL], 0, control);
 }
 
 void
@@ -1517,7 +1514,7 @@ gimp_image_qmask_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[QMASK_CHANGED], 0);
+  g_signal_emit (gimage, gimp_image_signals[QMASK_CHANGED], 0);
 }
 
 
@@ -1575,15 +1572,14 @@ gimp_image_undo_start (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNDO_START], 0);
+  g_signal_emit (gimage, gimp_image_signals[UNDO_START], 0);
 }
 
 void
 gimp_image_undo_event (GimpImage *gimage, 
 		       gint       event)
 {
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNDO_EVENT], 0,
-		 event);
+  g_signal_emit (gimage, gimp_image_signals[UNDO_EVENT], 0, event);
 }
 
 
@@ -1624,7 +1620,7 @@ gimp_image_dirty (GimpImage *gimage)
 
   gimage->dirty++;
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[DIRTY], 0);
+  g_signal_emit (gimage, gimp_image_signals[DIRTY], 0);
 
   TRC (("dirty %d -> %d\n", gimage->dirty-1, gimage->dirty));
 
@@ -1638,7 +1634,7 @@ gimp_image_clean (GimpImage *gimage)
 
   gimage->dirty--;
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[CLEAN], 0);
+  g_signal_emit (gimage, gimp_image_signals[CLEAN], 0);
   
   TRC (("clean %d -> %d\n", gimage->dirty+1, gimage->dirty));
   
@@ -1652,7 +1648,7 @@ gimp_image_clean_all (GimpImage *gimage)
 
   gimage->dirty = 0;
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[CLEAN], 0);
+  g_signal_emit (gimage, gimp_image_signals[CLEAN], 0);
 }
 
 
@@ -1663,7 +1659,7 @@ gimp_image_flush (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[FLUSH], 0);
+  g_signal_emit (gimage, gimp_image_signals[FLUSH], 0);
 }
 
 
@@ -2395,15 +2391,13 @@ gimp_image_set_active_layer (GimpImage *gimage,
     {
       gimage->active_layer = layer;
 
-      g_signal_emit (G_OBJECT (gimage),
-		     gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+      g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 
       if (gimage->active_channel)
 	{
 	  gimage->active_channel = NULL;
 
-	  g_signal_emit (G_OBJECT (gimage),
-			 gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+	  g_signal_emit (gimage, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 	}
     }
 
@@ -2432,15 +2426,13 @@ gimp_image_set_active_channel (GimpImage   *gimage,
     {
       gimage->active_channel = channel;
 
-      g_signal_emit (G_OBJECT (gimage),
-		     gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+      g_signal_emit (gimage, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 
       if (gimage->active_layer)
 	{
 	  gimage->active_layer = NULL;
 
-	  g_signal_emit (G_OBJECT (gimage),
-			 gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+	  g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 	}
     }
 
@@ -2461,8 +2453,7 @@ gimp_image_unset_active_channel (GimpImage *gimage)
     {
       gimage->active_channel = NULL;
 
-      g_signal_emit (G_OBJECT (gimage),
-		     gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+      g_signal_emit (gimage, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 
       if (gimage->layer_stack)
 	{
@@ -2495,8 +2486,7 @@ gimp_image_set_active_vectors (GimpImage   *gimage,
     {
       gimage->active_vectors = vectors;
 
-      g_signal_emit (G_OBJECT (gimage),
-		     gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+      g_signal_emit (gimage, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
     }
 
   return vectors;
@@ -2743,7 +2733,7 @@ gimp_image_add_layer (GimpImage *gimage,
     }
 
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
-  g_object_unref (G_OBJECT (layer));
+  g_object_unref (layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
@@ -2778,7 +2768,7 @@ gimp_image_remove_layer (GimpImage *gimage,
                                                           GIMP_OBJECT (layer)),
                           layer);
 
-  g_object_ref (G_OBJECT (layer));
+  g_object_ref (layer);
 
   gimp_container_remove (gimage->layers, GIMP_OBJECT (layer));
   gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);  
@@ -2801,8 +2791,7 @@ gimp_image_remove_layer (GimpImage *gimage,
 	{
 	  gimage->active_layer = NULL;
 
-	  g_signal_emit (G_OBJECT (gimage),
-			 gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+	  g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 	}
     }
 
@@ -2813,7 +2802,7 @@ gimp_image_remove_layer (GimpImage *gimage,
   w = gimp_drawable_width (GIMP_DRAWABLE (layer));
   h = gimp_drawable_height (GIMP_DRAWABLE (layer));
 
-  g_object_unref (G_OBJECT (layer));
+  g_object_unref (layer);
 
   gimp_image_update (gimage, x, y, w, h);
 
@@ -3033,7 +3022,7 @@ gimp_image_add_channel (GimpImage   *gimage,
     }
 
   gimp_container_insert (gimage->channels, GIMP_OBJECT (channel), position);
-  g_object_unref (G_OBJECT (channel));
+  g_object_unref (channel);
 
   /*  notify this gimage of the currently active channel  */
   gimp_image_set_active_channel (gimage, channel);
@@ -3064,7 +3053,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
                                                             GIMP_OBJECT (channel)),
                             gimp_image_get_active_channel (gimage));
 
-  g_object_ref (G_OBJECT (channel));
+  g_object_ref (channel);
 
   gimp_container_remove (gimage->channels, GIMP_OBJECT (channel));
 
@@ -3086,7 +3075,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
 	}
     }
 
-  g_object_unref (G_OBJECT (channel));
+  g_object_unref (channel);
 
   gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 
@@ -3220,7 +3209,7 @@ gimp_image_add_vectors (GimpImage   *gimage,
     }
 
   gimp_container_insert (gimage->vectors, GIMP_OBJECT (vectors), position);
-  g_object_unref (G_OBJECT (vectors));
+  g_object_unref (vectors);
 
   /*  notify this gimage of the currently active vectors  */
   gimp_image_set_active_vectors (gimage, vectors);
@@ -3244,7 +3233,7 @@ gimp_image_remove_vectors (GimpImage   *gimage,
                                                             GIMP_OBJECT (vectors)),
                             gimp_image_get_active_vectors (gimage));
 
-  g_object_ref (G_OBJECT (vectors));
+  g_object_ref (vectors);
 
   gimp_container_remove (gimage->vectors, GIMP_OBJECT (vectors));
 
@@ -3266,12 +3255,11 @@ gimp_image_remove_vectors (GimpImage   *gimage,
         {
           gimage->active_vectors = NULL;
 
-          g_signal_emit (G_OBJECT (gimage),
-                         gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+          g_signal_emit (gimage, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
         }
     }
 
-  g_object_unref (G_OBJECT (vectors));
+  g_object_unref (vectors);
 }
 
 gboolean

@@ -254,7 +254,7 @@ file_open_dialog_create (Gimp *gimp)
       gchar     *str;
       
       /* Catch file-list clicks so we can update the preview thumbnail */
-      g_signal_connect (G_OBJECT (tree_sel), "changed",
+      g_signal_connect (tree_sel, "changed",
                         G_CALLBACK (file_open_selchanged_callback),
                         open_dialog);
 
@@ -274,7 +274,7 @@ file_open_dialog_create (Gimp *gimp)
       gtk_container_add (GTK_CONTAINER (open_options_frame), ebox);
       gtk_widget_show (ebox);
 
-      g_signal_connect (G_OBJECT (ebox), "button_press_event",
+      g_signal_connect (ebox, "button_press_event",
                         G_CALLBACK (file_open_thumbnail_button_press),
                         open_dialog);
 
@@ -300,16 +300,16 @@ file_open_dialog_create (Gimp *gimp)
       gtk_container_add (GTK_CONTAINER (button), label);
       gtk_widget_show (label);
       
-      g_signal_connect (G_OBJECT (button), "button_press_event",
+      g_signal_connect (button, "button_press_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-      g_signal_connect (G_OBJECT (button), "button_release_event",
+      g_signal_connect (button, "button_release_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-      g_signal_connect (G_OBJECT (button), "enter_notify_event",
+      g_signal_connect (button, "enter_notify_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-      g_signal_connect (G_OBJECT (button), "leave_notify_event",
+      g_signal_connect (button, "leave_notify_event",
                         G_CALLBACK (gtk_true),
                         NULL);
       
@@ -341,10 +341,10 @@ file_open_dialog_create (Gimp *gimp)
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), open_options_preview);
 
-      g_signal_connect (G_OBJECT (open_options_preview), "clicked",
+      g_signal_connect (open_options_preview, "clicked",
                         G_CALLBACK (file_open_thumbnail_clicked),
                         open_dialog);
-      g_signal_connect (G_OBJECT (open_options_preview), "extended_clicked",
+      g_signal_connect (open_options_preview, "extended_clicked",
                         G_CALLBACK (file_open_thumbnail_ext_clicked),
                         open_dialog);
 
@@ -367,7 +367,7 @@ file_open_dialog_create (Gimp *gimp)
         gtk_widget_set_size_request (label, -1, requisition.height);
       }
       
-      g_signal_connect (G_OBJECT (open_options_imagefile), "info_changed",
+      g_signal_connect (open_options_imagefile, "info_changed",
                         G_CALLBACK (file_open_imagefile_info_changed),
                         label);
 
@@ -502,7 +502,7 @@ file_open_create_thumbnail (const gchar       *filename,
             gimp_imagefile_create_thumbnail (imagefile, size);
         }
 
-      g_object_unref (G_OBJECT (imagefile));
+      g_object_unref (imagefile);
 
       basename = file_utils_uri_to_utf8_basename (uri);
       gtk_label_set_text (GTK_LABEL (open_options_title), basename);

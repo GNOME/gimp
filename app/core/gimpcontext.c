@@ -717,74 +717,74 @@ gimp_context_constructor (GType                  type,
 
   g_assert (GIMP_IS_GIMP (gimp));
 
-  g_signal_connect_object (G_OBJECT (gimp->images), "remove",
+  g_signal_connect_object (gimp->images, "remove",
 			   G_CALLBACK (gimp_context_image_removed),
 			   object,
                            0);
-  g_signal_connect_object (G_OBJECT (gimp->displays), "remove",
+  g_signal_connect_object (gimp->displays, "remove",
 			   G_CALLBACK (gimp_context_display_removed),
 			   object,
                            0);
 
-  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "remove",
+  g_signal_connect_object (gimp->tool_info_list, "remove",
 			   G_CALLBACK (gimp_context_tool_removed),
 			   object,
                            0);
-  g_signal_connect_object (G_OBJECT (gimp->tool_info_list), "thaw",
+  g_signal_connect_object (gimp->tool_info_list, "thaw",
 			   G_CALLBACK (gimp_context_tool_list_thaw),
 			   object,
                            0);
 
-  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "remove",
+  g_signal_connect_object (gimp->brush_factory->container, "remove",
 			   G_CALLBACK (gimp_context_brush_removed),
 			   object,
                            0);
-  g_signal_connect_object (G_OBJECT (gimp->brush_factory->container), "thaw",
+  g_signal_connect_object (gimp->brush_factory->container, "thaw",
 			   G_CALLBACK (gimp_context_brush_list_thaw),
 			   object,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "remove",
+  g_signal_connect_object (gimp->pattern_factory->container, "remove",
 			   G_CALLBACK (gimp_context_pattern_removed),
 			   object,
 			   0);
-  g_signal_connect_object (G_OBJECT (gimp->pattern_factory->container), "thaw",
+  g_signal_connect_object (gimp->pattern_factory->container, "thaw",
 			   G_CALLBACK (gimp_context_pattern_list_thaw),
 			   object,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "remove",
+  g_signal_connect_object (gimp->gradient_factory->container, "remove",
 			   G_CALLBACK (gimp_context_gradient_removed),
 			   object,
 			   0);
-  g_signal_connect_object (G_OBJECT (gimp->gradient_factory->container), "thaw",
+  g_signal_connect_object (gimp->gradient_factory->container, "thaw",
 			   G_CALLBACK (gimp_context_gradient_list_thaw),
 			   object,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "remove",
+  g_signal_connect_object (gimp->palette_factory->container, "remove",
 			   G_CALLBACK (gimp_context_palette_removed),
 			   object,
 			   0);
-  g_signal_connect_object (G_OBJECT (gimp->palette_factory->container), "thaw",
+  g_signal_connect_object (gimp->palette_factory->container, "thaw",
 			   G_CALLBACK (gimp_context_palette_list_thaw),
 			   object,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "remove",
+  g_signal_connect_object (gimp->named_buffers, "remove",
 			   G_CALLBACK (gimp_context_buffer_removed),
 			   object,
 			   0);
-  g_signal_connect_object (G_OBJECT (gimp->named_buffers), "thaw",
+  g_signal_connect_object (gimp->named_buffers, "thaw",
 			   G_CALLBACK (gimp_context_buffer_list_thaw),
 			   object,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (gimp->documents), "remove",
+  g_signal_connect_object (gimp->documents, "remove",
 			   G_CALLBACK (gimp_context_imagefile_removed),
 			   object,
 			   0);
-  g_signal_connect_object (G_OBJECT (gimp->documents), "thaw",
+  g_signal_connect_object (gimp->documents, "thaw",
 			   G_CALLBACK (gimp_context_imagefile_list_thaw),
 			   object,
 			   0);
@@ -824,7 +824,7 @@ gimp_context_finalize (GObject *object)
 
   if (context->tool_info)
     {
-      g_object_unref (G_OBJECT (context->tool_info));
+      g_object_unref (context->tool_info);
       context->tool_info = NULL;
     }
   if (context->tool_name)
@@ -835,7 +835,7 @@ gimp_context_finalize (GObject *object)
 
   if (context->brush)
     {
-      g_object_unref (G_OBJECT (context->brush));
+      g_object_unref (context->brush);
       context->brush = NULL;
     }
   if (context->brush_name)
@@ -846,7 +846,7 @@ gimp_context_finalize (GObject *object)
 
   if (context->pattern)
     {
-      g_object_unref (G_OBJECT (context->pattern));
+      g_object_unref (context->pattern);
       context->pattern = NULL;
     }
   if (context->pattern_name)
@@ -857,7 +857,7 @@ gimp_context_finalize (GObject *object)
 
   if (context->gradient)
     {
-      g_object_unref (G_OBJECT (context->gradient));
+      g_object_unref (context->gradient);
       context->gradient = NULL;
     }
   if (context->gradient_name)
@@ -868,7 +868,7 @@ gimp_context_finalize (GObject *object)
 
   if (context->palette)
     {
-      g_object_unref (G_OBJECT (context->palette));
+      g_object_unref (context->palette);
       context->palette = NULL;
     }
   if (context->palette_name)
@@ -879,13 +879,13 @@ gimp_context_finalize (GObject *object)
 
   if (context->buffer)
     {
-      g_object_unref (G_OBJECT (context->buffer));
+      g_object_unref (context->buffer);
       context->buffer = NULL;
     }
 
   if (context->imagefile)
     {
-      g_object_unref (G_OBJECT (context->imagefile));
+      g_object_unref (context->imagefile);
       context->imagefile = NULL;
     }
 
@@ -1256,10 +1256,10 @@ gimp_context_set_parent (GimpContext *context,
     if (! ((1 << prop) & context->defined_props))
       {
 	gimp_context_copy_property (parent, context, prop);
-	g_signal_connect_object (G_OBJECT (parent),
+	g_signal_connect_object (parent,
 				 gimp_context_signal_names[prop],
 				 gimp_context_signal_handlers[prop],
-				 G_OBJECT (context),
+				 context,
 				 G_CONNECT_SWAPPED);
       }
 
@@ -1277,7 +1277,7 @@ gimp_context_unset_parent (GimpContext *context)
   for (prop = 0; prop < GIMP_CONTEXT_NUM_PROPS; prop++)
     if (! ((1 << prop) & context->defined_props))
       {
-	g_signal_handlers_disconnect_by_func (G_OBJECT (context->parent),
+	g_signal_handlers_disconnect_by_func (context->parent,
 					      gimp_context_signal_handlers[prop],
 					      context);
       }
@@ -1305,7 +1305,7 @@ gimp_context_define_property (GimpContext         *context,
 	{
 	  context->defined_props |= mask;
 	  if (context->parent)
-	    g_signal_handlers_disconnect_by_func (G_OBJECT (context->parent),
+	    g_signal_handlers_disconnect_by_func (context->parent,
 						  gimp_context_signal_handlers[prop],
 						  context);
 	}
@@ -1318,10 +1318,10 @@ gimp_context_define_property (GimpContext         *context,
 	  if (context->parent)
 	    {
 	      gimp_context_copy_property (context->parent, context, prop);
-	      g_signal_connect_object (G_OBJECT (context->parent),
+	      g_signal_connect_object (context->parent,
 				       gimp_context_signal_names[prop],
 				       gimp_context_signal_handlers[prop],
-				       G_OBJECT (context),
+				       context,
 				       G_CONNECT_SWAPPED);
 	    }
 	}
@@ -1426,7 +1426,7 @@ gimp_context_get_by_type (GimpContext *context,
   g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1,
 			NULL);
 
-  g_object_get (G_OBJECT (context),
+  g_object_get (context,
 		gimp_context_prop_names[prop], &object,
 		NULL);
 
@@ -1434,7 +1434,7 @@ gimp_context_get_by_type (GimpContext *context,
    *  which usually doesn't ref it's return value
    */
   if (object)
-    g_object_unref (G_OBJECT (object));
+    g_object_unref (object);
 
   return object;
 }
@@ -1449,7 +1449,7 @@ gimp_context_set_by_type (GimpContext *context,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
 
-  g_object_set (G_OBJECT (context),
+  g_object_set (context,
 		gimp_context_prop_names[prop], object,
 		NULL);
 }
@@ -1466,7 +1466,7 @@ gimp_context_changed_by_type (GimpContext *context,
 
   object = gimp_context_get_by_type (context, type);
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[prop], 0,
 		 object);
 }
@@ -1497,7 +1497,7 @@ gimp_context_image_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[IMAGE_CHANGED], 0,
 		 context->image);
 }
@@ -1557,7 +1557,7 @@ gimp_context_display_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[DISPLAY_CHANGED], 0,
 		 context->display);
 }
@@ -1589,7 +1589,7 @@ gimp_context_real_set_display (GimpContext *context,
 
       gimp_context_real_set_image (context, gimage);
 
-      g_object_unref (G_OBJECT (gimage));
+      g_object_unref (gimage);
     }
 
   gimp_context_display_changed (context);
@@ -1631,7 +1631,7 @@ gimp_context_tool_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[TOOL_CHANGED], 0,
 		 context->tool_info);
 }
@@ -1684,10 +1684,10 @@ gimp_context_tool_removed (GimpContainer *container,
     {
       context->tool_info = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (tool_info),
+      g_signal_handlers_disconnect_by_func (tool_info,
 					    gimp_context_tool_dirty,
 					    context);
-      g_object_unref (G_OBJECT (tool_info));
+      g_object_unref (tool_info);
 
       if (! gimp_container_frozen (container))
 	gimp_context_tool_list_thaw (container, context);
@@ -1713,25 +1713,25 @@ gimp_context_real_set_tool (GimpContext  *context,
   /*  disconnect from the old tool's signals  */
   if (context->tool_info)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->tool_info),
+      g_signal_handlers_disconnect_by_func (context->tool_info,
 					    gimp_context_tool_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->tool_info));
+      g_object_unref (context->tool_info);
     }
 
   context->tool_info = tool_info;
 
   if (tool_info)
     {
-      g_object_ref (G_OBJECT (tool_info));
+      g_object_ref (tool_info);
 
-      g_signal_connect_object (G_OBJECT (tool_info), "invalidate_preview",
+      g_signal_connect_object (tool_info, "invalidate_preview",
 			       G_CALLBACK (gimp_context_tool_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
-      g_signal_connect_object (G_OBJECT (tool_info), "name_changed",
+      g_signal_connect_object (tool_info, "name_changed",
 			       G_CALLBACK (gimp_context_tool_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       if (tool_info != standard_tool_info)
@@ -1785,7 +1785,7 @@ gimp_context_foreground_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[FOREGROUND_CHANGED], 0,
 		 &context->foreground);
 }
@@ -1839,7 +1839,7 @@ gimp_context_background_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[BACKGROUND_CHANGED], 0,
 		 &context->background);
 }
@@ -1934,7 +1934,7 @@ gimp_context_opacity_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[OPACITY_CHANGED], 0,
 		 context->opacity);
 }
@@ -1983,7 +1983,7 @@ gimp_context_paint_mode_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[PAINT_MODE_CHANGED], 0,
 		 context->paint_mode);
 }
@@ -2035,7 +2035,7 @@ gimp_context_brush_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[BRUSH_CHANGED], 0,
 		 context->brush);
 }
@@ -2087,10 +2087,10 @@ gimp_context_brush_removed (GimpContainer *container,
     {
       context->brush = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (brush),
+      g_signal_handlers_disconnect_by_func (brush,
 					    gimp_context_brush_dirty,
 					    context);
-      g_object_unref (G_OBJECT (brush));
+      g_object_unref (brush);
 
       if (! gimp_container_frozen (container))
 	gimp_context_brush_list_thaw (container, context);
@@ -2128,11 +2128,11 @@ gimp_context_real_set_brush (GimpContext *context,
 	  temp_buf_swap (context->brush->mask);
 	}
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->brush),
+      g_signal_handlers_disconnect_by_func (context->brush,
 					    gimp_context_brush_dirty,
 					    context);
 
-      g_object_unref (G_OBJECT (context->brush));
+      g_object_unref (context->brush);
     }
 
   context->brush = brush;
@@ -2143,15 +2143,15 @@ gimp_context_real_set_brush (GimpContext *context,
 
       base_config = GIMP_BASE_CONFIG (context->gimp->config);
 
-      g_object_ref (G_OBJECT (brush));
+      g_object_ref (brush);
 
-      g_signal_connect_object (G_OBJECT (brush), "invalidate_preview",
+      g_signal_connect_object (brush, "invalidate_preview",
 			       G_CALLBACK (gimp_context_brush_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
-      g_signal_connect_object (G_OBJECT (brush), "name_changed",
+      g_signal_connect_object (brush, "name_changed",
 			       G_CALLBACK (gimp_context_brush_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       /*  Make sure the active brush is unswapped... */
@@ -2211,7 +2211,7 @@ gimp_context_pattern_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[PATTERN_CHANGED], 0,
 		 context->pattern);
 }
@@ -2264,10 +2264,10 @@ gimp_context_pattern_removed (GimpContainer *container,
     {
       context->pattern = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (pattern),
+      g_signal_handlers_disconnect_by_func (pattern,
 					    gimp_context_pattern_dirty,
 					    context);
-      g_object_unref (G_OBJECT (pattern));
+      g_object_unref (pattern);
 
       if (! gimp_container_frozen (container))
 	gimp_context_pattern_list_thaw (container, context);
@@ -2305,10 +2305,10 @@ gimp_context_real_set_pattern (GimpContext *context,
   /*  disconnect from the old pattern's signals  */
   if (context->pattern)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->pattern),
+      g_signal_handlers_disconnect_by_func (context->pattern,
 					    gimp_context_pattern_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->pattern));
+      g_object_unref (context->pattern);
     }
 
   context->pattern = pattern;
@@ -2319,11 +2319,11 @@ gimp_context_real_set_pattern (GimpContext *context,
 
       base_config = GIMP_BASE_CONFIG (context->gimp->config);
 
-      g_object_ref (G_OBJECT (pattern));
+      g_object_ref (pattern);
 
-      g_signal_connect_object (G_OBJECT (pattern), "name_changed",
+      g_signal_connect_object (pattern, "name_changed",
 			       G_CALLBACK (gimp_context_pattern_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       /*  Make sure the active pattern is unswapped... */
@@ -2383,7 +2383,7 @@ gimp_context_gradient_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[GRADIENT_CHANGED], 0,
 		 context->gradient);
 }
@@ -2436,10 +2436,10 @@ gimp_context_gradient_removed (GimpContainer *container,
     {
       context->gradient = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (gradient),
+      g_signal_handlers_disconnect_by_func (gradient,
 					    gimp_context_gradient_dirty,
 					    context);
-      g_object_unref (G_OBJECT (gradient));
+      g_object_unref (gradient);
 
       if (! gimp_container_frozen (container))
 	gimp_context_gradient_list_thaw (container, context);
@@ -2465,21 +2465,21 @@ gimp_context_real_set_gradient (GimpContext  *context,
   /*  disconnect from the old gradient's signals  */
   if (context->gradient)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->gradient),
+      g_signal_handlers_disconnect_by_func (context->gradient,
 					    gimp_context_gradient_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->gradient));
+      g_object_unref (context->gradient);
     }
 
   context->gradient = gradient;
 
   if (gradient)
     {
-      g_object_ref (G_OBJECT (gradient));
+      g_object_ref (gradient);
 
-      g_signal_connect_object (G_OBJECT (gradient), "name_changed",
+      g_signal_connect_object (gradient, "name_changed",
 			       G_CALLBACK (gimp_context_gradient_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       if (gradient != standard_gradient)
@@ -2532,7 +2532,7 @@ gimp_context_palette_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[PALETTE_CHANGED], 0,
 		 context->palette);
 }
@@ -2585,10 +2585,10 @@ gimp_context_palette_removed (GimpContainer *container,
     {
       context->palette = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (palette),
+      g_signal_handlers_disconnect_by_func (palette,
 					    gimp_context_palette_dirty,
 					    context);
-      g_object_unref (G_OBJECT (palette));
+      g_object_unref (palette);
 
       if (! gimp_container_frozen (container))
 	gimp_context_palette_list_thaw (container, context);
@@ -2614,21 +2614,21 @@ gimp_context_real_set_palette (GimpContext *context,
   /*  disconnect from the old palette's signals  */
   if (context->palette)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->palette),
+      g_signal_handlers_disconnect_by_func (context->palette,
 					    gimp_context_palette_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->palette));
+      g_object_unref (context->palette);
     }
 
   context->palette = palette;
 
   if (palette)
     {
-      g_object_ref (G_OBJECT (palette));
+      g_object_ref (palette);
 
-      g_signal_connect_object (G_OBJECT (palette), "name_changed",
+      g_signal_connect_object (palette, "name_changed",
 			       G_CALLBACK (gimp_context_palette_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       if (palette != standard_palette)
@@ -2682,7 +2682,7 @@ gimp_context_buffer_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[BUFFER_CHANGED], 0,
 		 context->buffer);
 }
@@ -2744,10 +2744,10 @@ gimp_context_buffer_removed (GimpContainer *container,
     {
       context->buffer = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (buffer),
+      g_signal_handlers_disconnect_by_func (buffer,
 					    gimp_context_buffer_dirty,
 					    context);
-      g_object_unref (G_OBJECT (buffer));
+      g_object_unref (buffer);
 
       if (! gimp_container_frozen (container))
 	gimp_context_buffer_list_thaw (container, context);
@@ -2777,21 +2777,21 @@ gimp_context_real_set_buffer (GimpContext *context,
   /*  disconnect from the old buffer's signals  */
   if (context->buffer)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->buffer),
+      g_signal_handlers_disconnect_by_func (context->buffer,
 					    gimp_context_buffer_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->buffer));
+      g_object_unref (context->buffer);
     }
 
   context->buffer = buffer;
 
   if (buffer)
     {
-      g_object_ref (G_OBJECT (buffer));
+      g_object_ref (buffer);
 
-      g_signal_connect_object (G_OBJECT (buffer), "name_changed",
+      g_signal_connect_object (buffer, "name_changed",
 			       G_CALLBACK (gimp_context_buffer_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       /*
@@ -2849,7 +2849,7 @@ gimp_context_imagefile_changed (GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  g_signal_emit (G_OBJECT (context),
+  g_signal_emit (context,
 		 gimp_context_signals[IMAGEFILE_CHANGED], 0,
 		 context->imagefile);
 }
@@ -2911,10 +2911,10 @@ gimp_context_imagefile_removed (GimpContainer *container,
     {
       context->imagefile = NULL;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (imagefile),
+      g_signal_handlers_disconnect_by_func (imagefile,
 					    gimp_context_imagefile_dirty,
 					    context);
-      g_object_unref (G_OBJECT (imagefile));
+      g_object_unref (imagefile);
 
       if (! gimp_container_frozen (container))
 	gimp_context_imagefile_list_thaw (container, context);
@@ -2944,21 +2944,21 @@ gimp_context_real_set_imagefile (GimpContext   *context,
   /*  disconnect from the old imagefile's signals  */
   if (context->imagefile)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (context->imagefile),
+      g_signal_handlers_disconnect_by_func (context->imagefile,
 					    gimp_context_imagefile_dirty,
 					    context);
-      g_object_unref (G_OBJECT (context->imagefile));
+      g_object_unref (context->imagefile);
     }
 
   context->imagefile = imagefile;
 
   if (imagefile)
     {
-      g_object_ref (G_OBJECT (imagefile));
+      g_object_ref (imagefile);
 
-      g_signal_connect_object (G_OBJECT (imagefile), "name_changed",
+      g_signal_connect_object (imagefile, "name_changed",
 			       G_CALLBACK (gimp_context_imagefile_dirty),
-			       G_OBJECT (context),
+			       context,
 			       0);
 
       /*

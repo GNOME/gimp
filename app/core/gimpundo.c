@@ -212,8 +212,7 @@ gimp_undo_push (GimpUndo  *undo,
   g_return_if_fail (GIMP_IS_UNDO (undo));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (undo), undo_signals[PUSH], 0,
-		 gimage);
+  g_signal_emit (undo, undo_signals[PUSH], 0, gimage);
 }
 
 void
@@ -223,8 +222,7 @@ gimp_undo_pop (GimpUndo  *undo,
   g_return_if_fail (GIMP_IS_UNDO (undo));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (undo), undo_signals[POP], 0,
-		 gimage);
+  g_signal_emit (undo, undo_signals[POP], 0, gimage);
 }
 
 static void

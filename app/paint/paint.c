@@ -81,7 +81,7 @@ paint_exit (Gimp *gimp)
 
   if (gimp->paint_info_list)
     {
-      g_object_unref (G_OBJECT (gimp->paint_info_list));
+      g_object_unref (gimp->paint_info_list);
       gimp->paint_info_list = NULL;
     }
 }
@@ -142,5 +142,5 @@ paint_register (Gimp  *gimp,
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
 
-  g_object_unref (G_OBJECT (paint_info));
+  g_object_unref (paint_info);
 }

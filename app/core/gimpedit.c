@@ -92,7 +92,7 @@ gimp_edit_cut (GimpImage    *gimage,
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
-	g_object_unref (G_OBJECT (gimage->gimp->global_buffer));
+	g_object_unref (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
       gimage->gimp->global_buffer = gimp_buffer_new (cropped_cut,
@@ -149,7 +149,7 @@ gimp_edit_copy (GimpImage    *gimage,
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
-	g_object_unref (G_OBJECT (gimage->gimp->global_buffer));
+	g_object_unref (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
       gimage->gimp->global_buffer = gimp_buffer_new (cropped_copy,
@@ -275,7 +275,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
       gimp_create_display (gimp, gimage, 0x0101);
 
-      g_object_unref (G_OBJECT (gimage));
+      g_object_unref (gimage);
 
       return gimage;
     }

@@ -139,8 +139,7 @@ gimp_button_extended_clicked (GimpButton *button,
 {
   g_return_if_fail (GIMP_IS_BUTTON (button));
 
-  g_signal_emit (G_OBJECT (button), button_signals[EXTENDED_CLICKED], 0,
-                 state);
+  g_signal_emit (button, button_signals[EXTENDED_CLICKED], 0, state);
 }
 
 static gboolean

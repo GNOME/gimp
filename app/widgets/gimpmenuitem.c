@@ -147,7 +147,7 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 
   gimp_menu_item_name_changed (viewable, menu_item);
 
-  g_signal_connect_object (G_OBJECT (viewable),
+  g_signal_connect_object (viewable,
                            GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                            G_CALLBACK (gimp_menu_item_name_changed),
                            menu_item, 0);

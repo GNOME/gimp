@@ -218,13 +218,13 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 
       gimp_container_menu_clear_items (menu);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (menu->container),
+      g_signal_handlers_disconnect_by_func (menu->container,
 					    gimp_container_menu_add,
 					    menu);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (menu->container),
+      g_signal_handlers_disconnect_by_func (menu->container,
 					    gimp_container_menu_remove,
 					    menu);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (menu->container),
+      g_signal_handlers_disconnect_by_func (menu->container,
 					    gimp_container_menu_reorder,
 					    menu);
 
@@ -234,7 +234,7 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 
       if (menu->context)
 	{
-	  g_signal_handlers_disconnect_by_func (G_OBJECT (menu->context),
+	  g_signal_handlers_disconnect_by_func (menu->context,
 						gimp_container_menu_context_changed,
 						menu);
 	}
@@ -263,15 +263,15 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 			      (GFunc) gimp_container_menu_add_foreach,
 			      menu);
 
-      g_signal_connect_swapped (G_OBJECT (menu->container), "add",
+      g_signal_connect_swapped (menu->container, "add",
 				G_CALLBACK (gimp_container_menu_add),
 				menu);
 
-      g_signal_connect_swapped (G_OBJECT (menu->container), "remove",
+      g_signal_connect_swapped (menu->container, "remove",
 				G_CALLBACK (gimp_container_menu_remove),
 				menu);
 
-      g_signal_connect_swapped (G_OBJECT (menu->container), "reorder",
+      g_signal_connect_swapped (menu->container, "reorder",
 				G_CALLBACK (gimp_container_menu_reorder),
 				menu);
 
@@ -283,7 +283,7 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 	  signal_name =
 	    gimp_context_type_to_signal_name (menu->container->children_type);
 
-	  g_signal_connect (G_OBJECT (menu->context), signal_name,
+	  g_signal_connect (menu->context, signal_name,
 			    G_CALLBACK (gimp_container_menu_context_changed),
 			    menu);
 
@@ -311,19 +311,19 @@ gimp_container_menu_set_context (GimpContainerMenu *menu,
     {
       if (menu->container)
         {
-          g_signal_handlers_disconnect_by_func (G_OBJECT (menu->context),
+          g_signal_handlers_disconnect_by_func (menu->context,
                                                 gimp_container_menu_context_changed,
                                                 menu);
         }
 
-      g_object_unref (G_OBJECT (menu->context));
+      g_object_unref (menu->context);
     }
 
   menu->context = context;
 
   if (menu->context)
     {
-      g_object_ref (G_OBJECT (menu->context));
+      g_object_ref (menu->context);
 
       if (menu->container)
         {
@@ -333,7 +333,7 @@ gimp_container_menu_set_context (GimpContainerMenu *menu,
           signal_name =
             gimp_context_type_to_signal_name (menu->container->children_type);
 
-          g_signal_connect (G_OBJECT (menu->context), signal_name,
+          g_signal_connect (menu->context, signal_name,
                             G_CALLBACK (gimp_container_menu_context_changed),
                             menu);
 
@@ -384,8 +384,7 @@ gimp_container_menu_select_item (GimpContainerMenu *menu,
 
   insert_data = g_hash_table_lookup (menu->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (menu), menu_signals[SELECT_ITEM], 0,
-		 viewable, insert_data);
+  g_signal_emit (menu, menu_signals[SELECT_ITEM], 0, viewable, insert_data);
 }
 
 void
@@ -399,8 +398,7 @@ gimp_container_menu_activate_item (GimpContainerMenu *menu,
 
   insert_data = g_hash_table_lookup (menu->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (menu), menu_signals[ACTIVATE_ITEM], 0,
-		 viewable, insert_data);
+  g_signal_emit (menu, menu_signals[ACTIVATE_ITEM], 0, viewable, insert_data);
 }
 
 void
@@ -414,8 +412,7 @@ gimp_container_menu_context_item (GimpContainerMenu *menu,
 
   insert_data = g_hash_table_lookup (menu->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (menu), menu_signals[CONTEXT_ITEM], 0,
-		 viewable, insert_data);
+  g_signal_emit (menu, menu_signals[CONTEXT_ITEM], 0, viewable, insert_data);
 }
 
 void
@@ -547,6 +544,5 @@ gimp_container_menu_context_changed (GimpContext       *context,
 
   insert_data = g_hash_table_lookup (menu->hash_table, viewable);
 
-  g_signal_emit (G_OBJECT (menu), menu_signals[SELECT_ITEM], 0,
-		 viewable, insert_data);
+  g_signal_emit (menu, menu_signals[SELECT_ITEM], 0, viewable, insert_data);
 }

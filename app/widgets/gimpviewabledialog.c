@@ -243,11 +243,11 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
 
       if (old_viewable)
         {
-          g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
+          g_signal_handlers_disconnect_by_func (old_viewable,
                                                 gimp_viewable_dialog_name_changed,
                                                 dialog);
 
-          g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
+          g_signal_handlers_disconnect_by_func (old_viewable,
                                                 gimp_viewable_dialog_close,
                                                 dialog);
         }
@@ -255,10 +255,10 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
 
   if (viewable)
     {
-      g_signal_connect_object (G_OBJECT (viewable),
+      g_signal_connect_object (viewable,
                                GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                                G_CALLBACK (gimp_viewable_dialog_name_changed),
-                               G_OBJECT (dialog),
+                               dialog,
                                0);
 
       dialog->preview = gimp_preview_new (viewable, 32, 1, TRUE);
@@ -273,16 +273,16 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
 
       if (GIMP_IS_ITEM (viewable))
         {
-          g_signal_connect_object (G_OBJECT (viewable), "removed",
+          g_signal_connect_object (viewable, "removed",
                                    G_CALLBACK (gimp_viewable_dialog_close),
-                                   G_OBJECT (dialog),
+                                   dialog,
                                    G_CONNECT_SWAPPED);
         }
       else
         {
-          g_signal_connect_object (G_OBJECT (viewable), "disconnect",
+          g_signal_connect_object (viewable, "disconnect",
                                    G_CALLBACK (gimp_viewable_dialog_close),
-                                   G_OBJECT (dialog),
+                                   dialog,
                                    G_CONNECT_SWAPPED);
         }
     }
@@ -347,10 +347,10 @@ gimp_viewable_dialog_close (GimpViewableDialog *dialog)
       event.window     = widget->window;
       event.send_event = TRUE;
   
-      g_object_ref (G_OBJECT (event.window));
+      g_object_ref (event.window);
   
       gtk_main_do_event ((GdkEvent *) &event);
       
-      g_object_unref (G_OBJECT (event.window));
+      g_object_unref (event.window);
     }
 }

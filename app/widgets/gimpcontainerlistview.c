@@ -147,9 +147,9 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 			  (list_view->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  g_signal_connect_object (G_OBJECT (list_view->gtk_list), "select_child",
+  g_signal_connect_object (list_view->gtk_list, "select_child",
 			   G_CALLBACK (gimp_container_list_view_item_selected),
-			   G_OBJECT (list_view),
+			   list_view,
 			   0);
 
 }
@@ -220,7 +220,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
     gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item), TRUE,
                                     view->container);
 
-  g_signal_connect (G_OBJECT (list_item), "button_press_event",
+  g_signal_connect (list_item, "button_press_event",
 		    G_CALLBACK (gimp_container_list_view_item_activated),
 		    list_view);
 
@@ -286,7 +286,7 @@ gimp_container_list_view_reorder_item (GimpContainerView *view,
 
       selected = GTK_WIDGET_STATE (list_item) == GTK_STATE_SELECTED;
 
-      g_object_ref (G_OBJECT (list_item));
+      g_object_ref (list_item);
 
       gtk_list_remove_items (GTK_LIST (list_view->gtk_list), list);
 
@@ -298,7 +298,7 @@ gimp_container_list_view_reorder_item (GimpContainerView *view,
       if (selected)
 	gimp_container_view_select_item (view, viewable);
 
-      g_object_unref (G_OBJECT (list_item));
+      g_object_unref (list_item);
     }
 }
 
@@ -331,13 +331,13 @@ gimp_container_list_view_select_item (GimpContainerView *view,
       index = gimp_container_get_child_index (view->container,
 					      GIMP_OBJECT (viewable));
 
-      g_signal_handlers_block_by_func (G_OBJECT (list_view->gtk_list),
+      g_signal_handlers_block_by_func (list_view->gtk_list,
 				       gimp_container_list_view_item_selected,
 				       list_view);
 
       gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (list_view->gtk_list),
+      g_signal_handlers_unblock_by_func (list_view->gtk_list,
 					 gimp_container_list_view_item_selected,
 					 list_view);
 

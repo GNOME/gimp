@@ -141,12 +141,12 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 			   _("The active brush.\n"
 			     "Click to open the Brush Dialog."), NULL);
 
-  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+  g_signal_connect_object (context, "brush_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (brush_preview),
+			   brush_preview,
 			   G_CONNECT_SWAPPED);
 
-  g_signal_connect (G_OBJECT (brush_preview), "clicked",
+  g_signal_connect (brush_preview, "clicked",
 		    G_CALLBACK (brush_preview_clicked),
 		    toolbox);
 
@@ -169,12 +169,12 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 			   _("The active pattern.\n"
 			     "Click to open the Pattern Dialog."), NULL);
 
-  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+  g_signal_connect_object (context, "pattern_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (pattern_preview),
+			   pattern_preview,
 			   G_CONNECT_SWAPPED);
 
-  g_signal_connect (G_OBJECT (pattern_preview), "clicked",
+  g_signal_connect (pattern_preview, "clicked",
 		    G_CALLBACK (pattern_preview_clicked),
 		    toolbox);
 
@@ -197,12 +197,12 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 			   _("The active gradient.\n"
 			     "Click to open the Gradient Dialog."), NULL);
 
-  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+  g_signal_connect_object (context, "gradient_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (gradient_preview),
+			   gradient_preview,
 			   G_CONNECT_SWAPPED);
 
-  g_signal_connect (G_OBJECT (gradient_preview), "clicked",
+  g_signal_connect (gradient_preview, "clicked",
 		    G_CALLBACK (gradient_preview_clicked),
 		    toolbox);
 

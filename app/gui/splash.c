@@ -56,7 +56,7 @@ splash_create (gboolean show_image)
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
 
-  g_signal_connect (G_OBJECT (win_initstatus), "delete_event",
+  g_signal_connect (win_initstatus, "delete_event",
                     G_CALLBACK (gtk_true), NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);

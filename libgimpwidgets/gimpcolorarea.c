@@ -296,8 +296,7 @@ gimp_color_area_set_color (GimpColorArea *area,
       area->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (area));
 
-      g_signal_emit (G_OBJECT (area),
-                     gimp_color_area_signals[COLOR_CHANGED], 0);
+      g_signal_emit (area, gimp_color_area_signals[COLOR_CHANGED], 0);
     }
 }
 

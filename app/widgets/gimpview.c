@@ -399,7 +399,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
 	  if (bevent->button == 3)
 	    {
-	      g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
+	      g_signal_emit (widget, preview_signals[CONTEXT], 0);
 	    }
 	  else
 	    {
@@ -411,7 +411,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
     {
       if (bevent->button == 1)
 	{
-	  g_signal_emit (G_OBJECT (widget), preview_signals[DOUBLE_CLICKED], 0);
+	  g_signal_emit (widget, preview_signals[DOUBLE_CLICKED], 0);
 	}
     }
 
@@ -448,13 +448,13 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 	  if (preview->press_state &
 	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
 	    {
-	      g_signal_emit (G_OBJECT (widget),
+	      g_signal_emit (widget,
                              preview_signals[EXTENDED_CLICKED], 0,
                              preview->press_state);
 	    }
 	  else
 	    {
-	      g_signal_emit (G_OBJECT (widget), preview_signals[CLICKED], 0);
+	      g_signal_emit (widget, preview_signals[CLICKED], 0);
 	    }
 	}
     }
@@ -623,11 +623,11 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       g_object_remove_weak_pointer (G_OBJECT (preview->viewable),
 				    (gpointer *) &preview->viewable);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
+      g_signal_handlers_disconnect_by_func (preview->viewable,
                                             G_CALLBACK (gimp_preview_update),
                                             preview);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (preview->viewable),
+      g_signal_handlers_disconnect_by_func (preview->viewable,
                                             G_CALLBACK (gimp_preview_size_changed),
                                             preview);
     }
@@ -650,12 +650,12 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       g_object_add_weak_pointer (G_OBJECT (preview->viewable),
 				 (gpointer *) &preview->viewable);
 
-      g_signal_connect_swapped (G_OBJECT (preview->viewable),
+      g_signal_connect_swapped (preview->viewable,
                                 "invalidate_preview",
                                 G_CALLBACK (gimp_preview_update),
                                 preview);
 
-      g_signal_connect_swapped (G_OBJECT (preview->viewable),
+      g_signal_connect_swapped (preview->viewable,
                                 "size_changed",
                                 G_CALLBACK (gimp_preview_size_changed),
                                 preview);

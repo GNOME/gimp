@@ -90,7 +90,7 @@ gimp_devices_init (Gimp                   *gimp,
       device_info = gimp_device_info_new (gimp, device->name);
       gimp_container_add (manager->device_info_list,
                           GIMP_OBJECT (device_info));
-      g_object_unref (G_OBJECT (device_info));
+      g_object_unref (device_info);
 
       gimp_device_info_set_from_device (device_info, device);
     }
@@ -107,7 +107,7 @@ gimp_devices_exit (Gimp *gimp)
 
   g_return_if_fail (manager != NULL);
 
-  g_object_unref (G_OBJECT (manager->device_info_list));
+  g_object_unref (manager->device_info_list);
   g_object_set_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY, NULL);
 }
 

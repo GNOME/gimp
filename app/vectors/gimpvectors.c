@@ -187,7 +187,7 @@ gimp_vectors_stroke_add (GimpVectors *vectors,
     {
       stroke->next = vectors->strokes;
       vectors->strokes = stroke;
-      g_object_ref (G_OBJECT (stroke));
+      g_object_ref (stroke);
     }
 }
 

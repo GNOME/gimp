@@ -131,7 +131,7 @@ gimp_image_view_new (GimpViewType     view_type,
                                          min_items_y,
                                          item_factory))
     {
-      g_object_unref (G_OBJECT (image_view));
+      g_object_unref (image_view);
       return NULL;
     }
 
@@ -232,7 +232,7 @@ gimp_image_view_delete_clicked (GtkWidget     *widget,
                                     GIMP_OBJECT (image)))
     {
       if (image->disp_count == 0)
-        g_object_unref (G_OBJECT (image));
+        g_object_unref (image);
     }
 }
 

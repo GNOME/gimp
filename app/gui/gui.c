@@ -204,7 +204,7 @@ gui_themes_init (Gimp *gimp)
   if (! config->show_tool_tips)
     gimp_help_disable_tooltips ();
 
-  g_signal_connect (G_OBJECT (gimp->config), "notify::show-tool-tips",
+  g_signal_connect (gimp->config, "notify::show-tool-tips",
                     G_CALLBACK (gui_show_tooltips_notify),
                     gimp);
 
@@ -248,7 +248,7 @@ gui_init (Gimp *gimp)
 				G_CALLBACK (gui_image_disconnect),
 				gimp);
 
-  g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)), "display_changed",
+  g_signal_connect (gimp_get_user_context (gimp), "display_changed",
 		    G_CALLBACK (gui_display_changed),
 		    gimp);
 
@@ -261,11 +261,11 @@ gui_init (Gimp *gimp)
       
       gui_get_screen_resolution (&xres, &yres);
 
-      g_object_set (G_OBJECT (gimp->config),
-			      "monitor-xresolution",                      xres,
-			      "monitor-yresolution",                      yres,
-			      "monitor-resolution-from-windowing-system", TRUE,
-			      NULL);
+      g_object_set (gimp->config,
+		    "monitor-xresolution",                      xres,
+		    "monitor-yresolution",                      yres,
+		    "monitor-resolution-from-windowing-system", TRUE,
+		    NULL);
     }
 
   menus_init (gimp);
@@ -297,10 +297,10 @@ gui_restore (Gimp     *gimp,
 
   dialogs_show_toolbox ();
 
-  g_signal_connect (G_OBJECT (gimp), "exit",
+  g_signal_connect (gimp, "exit",
                     G_CALLBACK (gui_exit_callback),
                     NULL);
-  g_signal_connect_after (G_OBJECT (gimp), "exit",
+  g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (gui_exit_finish_callback),
                           NULL);
 }
@@ -437,7 +437,7 @@ gui_display_new (GimpImage *gimage,
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
   if (double_speed)
-    g_signal_connect_after (G_OBJECT (shell->canvas), "expose_event",
+    g_signal_connect_after (shell->canvas, "expose_event",
                             G_CALLBACK (gui_rotate_the_shield_harmonics),
                             NULL);
 
@@ -472,7 +472,7 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
   gint       width  = 0;
   gint       height = 0;
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (widget),
+  g_signal_handlers_disconnect_by_func (widget,
 					gui_rotate_the_shield_harmonics,
 					data);
 
@@ -561,7 +561,7 @@ gui_exit_finish_callback (Gimp     *gimp,
 
   gimp_help_free ();
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
+  g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_tooltips_notify,
                                         gimp);
 

@@ -620,7 +620,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (curves_channel_reset_callback),
                     c_tool);
 
@@ -682,7 +682,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), c_tool->graph);
   gtk_widget_show (c_tool->graph);
 
-  g_signal_connect (G_OBJECT (c_tool->graph), "event",
+  g_signal_connect (c_tool->graph, "event",
 		    G_CALLBACK (curves_graph_events),
 		    c_tool);
 
@@ -718,7 +718,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (button, _("Read curves settings from file"), NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (curves_load_callback),
 		    c_tool);
 
@@ -728,7 +728,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_help_set_help_data (button, _("Save curves settings to file"), NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (curves_save_callback),
 		    c_tool);
 }
@@ -1384,10 +1384,10 @@ file_dialog_create (GimpCurvesTool *c_tool)
                                 GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (c_tool)->shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect_swapped (G_OBJECT (file_dlg->ok_button), "clicked",
+  g_signal_connect_swapped (file_dlg->ok_button, "clicked",
                             G_CALLBACK (file_dialog_ok_callback),
                             c_tool);
-  g_signal_connect_swapped (G_OBJECT (file_dlg->cancel_button), "clicked",
+  g_signal_connect_swapped (file_dlg->cancel_button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             file_dlg);
 

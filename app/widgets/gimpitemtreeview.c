@@ -265,7 +265,7 @@ gimp_item_list_view_destroy (GtkObject *object)
 
   if (view->item_factory)
     {
-      g_object_unref (G_OBJECT (view->item_factory));
+      g_object_unref (view->item_factory);
       view->item_factory = NULL;
     }
 
@@ -352,7 +352,7 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->activate_item_func = activate_item_func;
 
   list_view->item_factory = item_factory;
-  g_object_ref (G_OBJECT (list_view->item_factory));
+  g_object_ref (list_view->item_factory);
 
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
@@ -384,8 +384,7 @@ gimp_item_list_view_set_image (GimpItemListView *view,
   g_return_if_fail (GIMP_IS_ITEM_LIST_VIEW (view));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (G_OBJECT (view), view_signals[SET_IMAGE], 0,
-		 gimage);
+  g_signal_emit (view, view_signals[SET_IMAGE], 0, gimage);
 }
 
 static void
@@ -400,10 +399,10 @@ gimp_item_list_view_real_set_image (GimpItemListView *view,
 
   if (view->gimage)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+      g_signal_handlers_disconnect_by_func (view->gimage,
 					    gimp_item_list_view_item_changed,
 					    view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+      g_signal_handlers_disconnect_by_func (view->gimage,
 					    gimp_item_list_view_size_changed,
 					    view);
 
@@ -420,10 +419,10 @@ gimp_item_list_view_real_set_image (GimpItemListView *view,
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
 
-      g_signal_connect (G_OBJECT (view->gimage), view->signal_name,
+      g_signal_connect (view->gimage, view->signal_name,
 			G_CALLBACK (gimp_item_list_view_item_changed),
 			view);
-      g_signal_connect (G_OBJECT (view->gimage), "size_changed",
+      g_signal_connect (view->gimage, "size_changed",
 			G_CALLBACK (gimp_item_list_view_size_changed),
 			view);
 

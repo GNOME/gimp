@@ -369,7 +369,7 @@ channels_new_channel_query (GimpImage   *gimage,
 					     TRUE, 0.0, 0.0,
 					     NULL, NULL);
 
-  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+  g_signal_connect (opacity_scale_data, "value_changed",
 		    G_CALLBACK (channels_opacity_update),
 		    options->color_panel);
 
@@ -378,7 +378,7 @@ channels_new_channel_query (GimpImage   *gimage,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
-  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+  g_signal_connect (options->color_panel, "color_changed",
 		    G_CALLBACK (channels_color_changed),
 		    opacity_scale_data);
 
@@ -518,7 +518,7 @@ channels_edit_channel_query (GimpChannel *channel)
 					     TRUE, 0.0, 0.0,
 					     NULL, NULL);
 
-  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+  g_signal_connect (opacity_scale_data, "value_changed",
 		    G_CALLBACK (channels_opacity_update),
 		    options->color_panel);
 
@@ -527,7 +527,7 @@ channels_edit_channel_query (GimpChannel *channel)
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
-  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+  g_signal_connect (options->color_panel, "color_changed",
 		    G_CALLBACK (channels_color_changed),
 		    opacity_scale_data);		      
 

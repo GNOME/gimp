@@ -206,10 +206,10 @@ gimp_channel_list_view_set_image (GimpItemListView *item_view,
 
       gimp_channel_list_view_clear_components (channel_view);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (item_view->gimage),
+      g_signal_handlers_disconnect_by_func (item_view->gimage,
 					    gimp_channel_list_view_mode_changed,
 					    channel_view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (item_view->gimage),
+      g_signal_handlers_disconnect_by_func (item_view->gimage,
 					    gimp_channel_list_view_alpha_changed,
 					    channel_view);
     }
@@ -224,10 +224,10 @@ gimp_channel_list_view_set_image (GimpItemListView *item_view,
 
       gimp_channel_list_view_create_components (channel_view);
 
-      g_signal_connect (G_OBJECT (item_view->gimage), "mode_changed",
+      g_signal_connect (item_view->gimage, "mode_changed",
 			G_CALLBACK (gimp_channel_list_view_mode_changed),
 			channel_view);
-      g_signal_connect (G_OBJECT (item_view->gimage), "alpha_changed",
+      g_signal_connect (item_view->gimage, "alpha_changed",
 			G_CALLBACK (gimp_channel_list_view_alpha_changed),
 			channel_view);
     }

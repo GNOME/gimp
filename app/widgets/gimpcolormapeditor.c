@@ -255,11 +255,11 @@ gimp_colormap_editor_new (GimpImage *gimage)
   gtk_container_add (GTK_CONTAINER (frame), editor->palette);
   gtk_widget_show (editor->palette);
 
-  g_signal_connect_after (G_OBJECT (editor->palette), "size_allocate",
+  g_signal_connect_after (editor->palette, "size_allocate",
 			  G_CALLBACK (gimp_colormap_preview_size_allocate),
 			  editor);
 
-  g_signal_connect (G_OBJECT (editor->palette), "button_press_event",
+  g_signal_connect (editor->palette, "button_press_event",
 		    G_CALLBACK (gimp_colormap_preview_button_press),
 		    editor);
 
@@ -289,7 +289,7 @@ gimp_colormap_editor_new (GimpImage *gimage)
 			     _("Color Index:"), 1.0, 0.5,
 			     editor->index_spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (editor->index_adjustment), "value_changed",
+  g_signal_connect (editor->index_adjustment, "value_changed",
 		    G_CALLBACK (gimp_colormap_adjustment_changed),
 		    editor);
 
@@ -300,10 +300,10 @@ gimp_colormap_editor_new (GimpImage *gimage)
 			     _("Hex Triplet:"), 1.0, 0.5,
 			     editor->color_entry, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (editor->color_entry), "activate",
+  g_signal_connect (editor->color_entry, "activate",
 		    G_CALLBACK (gimp_colormap_hex_entry_activate),
 		    editor);
-  g_signal_connect (G_OBJECT (editor->color_entry), "focus_out_event",
+  g_signal_connect (editor->color_entry, "focus_out_event",
 		    G_CALLBACK (gimp_colormap_hex_entry_focus_out),
 		    editor);
 
@@ -317,7 +317,7 @@ gimp_colormap_editor_selected (GimpColormapEditor *editor)
 {
   g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
 
-  g_signal_emit (G_OBJECT (editor), editor_signals[SELECTED], 0);
+  g_signal_emit (editor, editor_signals[SELECTED], 0);
 }
 
 void
@@ -329,10 +329,10 @@ gimp_colormap_editor_set_image (GimpColormapEditor *editor,
 
   if (editor->gimage)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->gimage),
+      g_signal_handlers_disconnect_by_func (editor->gimage,
 					    gimp_colormap_image_mode_changed,
 					    editor);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->gimage),
+      g_signal_handlers_disconnect_by_func (editor->gimage,
 					    gimp_colormap_image_colormap_changed,
 					    editor);
 
@@ -355,10 +355,10 @@ gimp_colormap_editor_set_image (GimpColormapEditor *editor,
 
   if (gimage)
     {
-      g_signal_connect (G_OBJECT (gimage), "mode_changed",
+      g_signal_connect (gimage, "mode_changed",
 			G_CALLBACK (gimp_colormap_image_mode_changed),
 			editor);
-      g_signal_connect (G_OBJECT (gimage), "colormap_changed",
+      g_signal_connect (gimage, "colormap_changed",
 			G_CALLBACK (gimp_colormap_image_colormap_changed),
 			editor);
 

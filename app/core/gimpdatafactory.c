@@ -191,7 +191,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   gimp_data_factory_data_free (factory);
 
-  g_object_get (G_OBJECT (factory->gimp->config),
+  g_object_get (factory->gimp->config,
                 factory->path_property_name, &path,
                 NULL);
 
@@ -224,7 +224,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
   if (gimp_container_num_children (factory->container) == 0)
     return;
 
-  g_object_get (G_OBJECT (factory->gimp->config),
+  g_object_get (factory->gimp->config,
                 factory->path_property_name, &path,
                 NULL);
 
@@ -344,7 +344,7 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
       data = factory->data_new_func (name, base_config->stingy_memory_use);
 
       gimp_container_add (factory->container, GIMP_OBJECT (data));
-      g_object_unref (G_OBJECT (data));
+      g_object_unref (data);
 
       return data;
     }
@@ -466,7 +466,7 @@ gimp_data_factory_load_callback (GimpDatafileData *file_data)
     else
       {
 	gimp_container_add (factory->container, GIMP_OBJECT (data));
-	g_object_unref (G_OBJECT (data));
+	g_object_unref (data);
       }
   }
 }

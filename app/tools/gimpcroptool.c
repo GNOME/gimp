@@ -888,10 +888,10 @@ crop_start (GimpCropTool *crop)
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (crop->crop_info->shell),
                                      GIMP_VIEWABLE (tool->gdisp->gimage));
 
-  g_signal_handlers_block_by_func (G_OBJECT (crop->origin_sizeentry), 
+  g_signal_handlers_block_by_func (crop->origin_sizeentry, 
                                    crop_origin_changed,
                                    crop);
-  g_signal_handlers_block_by_func (G_OBJECT (crop->size_sizeentry), 
+  g_signal_handlers_block_by_func (crop->size_sizeentry, 
                                    crop_size_changed,
                                    crop);
 
@@ -935,10 +935,10 @@ crop_start (GimpCropTool *crop)
 	}
     }
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (crop->origin_sizeentry), 
+  g_signal_handlers_unblock_by_func (crop->origin_sizeentry, 
                                      crop_origin_changed,
                                      crop);
-  g_signal_handlers_unblock_by_func (G_OBJECT (crop->size_sizeentry), 
+  g_signal_handlers_unblock_by_func (crop->size_sizeentry, 
                                      crop_size_changed,
                                      crop);
 
@@ -1038,7 +1038,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button) , "clicked",
+  g_signal_connect (button , "clicked",
                     G_CALLBACK (crop_selection_callback), 
                     crop);
 
@@ -1046,7 +1046,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button) , "clicked",
+  g_signal_connect (button , "clicked",
                     G_CALLBACK (crop_automatic_callback),
                     crop);
 
@@ -1322,7 +1322,7 @@ crop_options_new (GimpToolInfo *tool_info)
 		      FALSE, FALSE, 0);
   gtk_widget_show (options->layer_only_w);
 
-  g_signal_connect (G_OBJECT (options->layer_only_w), "toggled",
+  g_signal_connect (options->layer_only_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->layer_only);
 
@@ -1338,7 +1338,7 @@ crop_options_new (GimpToolInfo *tool_info)
 
   g_free (str);
 
-  g_signal_connect (G_OBJECT (options->allow_enlarge_w), "toggled",
+  g_signal_connect (options->allow_enlarge_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->allow_enlarge);
 

@@ -148,10 +148,10 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   gtk_widget_set_size_request (dialog->preview, -1, 30);
   gtk_container_add (GTK_CONTAINER (frame), dialog->preview);
   gtk_widget_show (dialog->preview);
-  g_signal_connect (G_OBJECT (dialog->preview), "size_allocate",
+  g_signal_connect (dialog->preview, "size_allocate",
                     G_CALLBACK (gimp_font_selection_dialog_preview_resize),
                     dialog);
-  g_signal_connect (G_OBJECT (dialog->preview), "expose_event",
+  g_signal_connect (dialog->preview, "expose_event",
                     G_CALLBACK (gimp_font_selection_dialog_preview_expose),
                     dialog);
 

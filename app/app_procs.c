@@ -132,7 +132,7 @@ app_init (gint    gimp_argc,
 
 #if 0
   /* solely for debugging */
-  g_signal_connect (G_OBJECT (gimprc), "notify",
+  g_signal_connect (gimprc, "notify",
                     G_CALLBACK (gimprc_notify_callback),
                     NULL);
 #endif
@@ -189,10 +189,10 @@ app_init (gint    gimp_argc,
   /*  connect our "exit" callbacks after gui_restore() so they are
    *  invoked after the GUI's "exit" callbacks
    */
-  g_signal_connect (G_OBJECT (the_gimp), "exit",
+  g_signal_connect (the_gimp, "exit",
                     G_CALLBACK (app_exit_callback),
                     NULL);
-  g_signal_connect_after (G_OBJECT (the_gimp), "exit",
+  g_signal_connect_after (the_gimp, "exit",
                           G_CALLBACK (app_exit_finish_callback),
                           NULL);
 
@@ -270,7 +270,7 @@ static gboolean
 app_exit_finish_callback (Gimp     *gimp,
                           gboolean  kill_it)
 {
-  g_object_unref (G_OBJECT (gimp));
+  g_object_unref (gimp);
   the_gimp = NULL;
 
   base_exit ();

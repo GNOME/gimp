@@ -129,7 +129,7 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
   gtk_widget_show (options->clip_w);
 
-  g_signal_connect (G_OBJECT (options->clip_w), "toggled",
+  g_signal_connect (options->clip_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->clip);
 
@@ -173,7 +173,7 @@ transform_options_init (TransformOptions *options,
                                                NULL, NULL);
   grid_density = GIMP_SCALE_ENTRY_SPINBUTTON (options->grid_size_w);
 
-  g_signal_connect (G_OBJECT (options->grid_size_w), "value_changed",
+  g_signal_connect (options->grid_size_w, "value_changed",
                     G_CALLBACK (gimp_transform_tool_grid_density_update),
                     options);
 
@@ -182,7 +182,7 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (vbox), options->show_path_w, FALSE, FALSE, 0);
   gtk_widget_show (options->show_path_w);
 
-  g_signal_connect (G_OBJECT (options->show_path_w), "toggled",
+  g_signal_connect (options->show_path_w, "toggled",
                     G_CALLBACK (gimp_transform_tool_show_path_update),
                     options);
 
@@ -214,7 +214,7 @@ transform_options_init (TransformOptions *options,
 
           g_free (str);
 
-          g_signal_connect (G_OBJECT (options->constrain_1_w), "toggled",
+          g_signal_connect (options->constrain_1_w, "toggled",
                             G_CALLBACK (gimp_toggle_button_update),
                             &options->constrain_1);
         }
@@ -235,7 +235,7 @@ transform_options_init (TransformOptions *options,
                                      "\"Keep Width\" toggles to constrain\n"
                                      "the aspect ratio"), NULL);
 
-          g_signal_connect (G_OBJECT (options->constrain_1_w), "toggled",
+          g_signal_connect (options->constrain_1_w, "toggled",
                             G_CALLBACK (gimp_toggle_button_update),
                             &options->constrain_1);
 
@@ -254,7 +254,7 @@ transform_options_init (TransformOptions *options,
                                      "\"Keep Width\" toggles to constrain\n"
                                      "the aspect ratio"), NULL);
 
-          g_signal_connect (G_OBJECT (options->constrain_2_w), "toggled",
+          g_signal_connect (options->constrain_2_w, "toggled",
                             G_CALLBACK (gimp_toggle_button_update),
                             &options->constrain_2);
         }

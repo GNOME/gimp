@@ -366,7 +366,7 @@ xcf_load_image (Gimp    *gimp,
   g_message ("XCF: This file is corrupt!  I could not even\n"
 	     "salvage any partial image data from it.");
 
-  g_object_unref (G_OBJECT (gimage));
+  g_object_unref (gimage);
 
   return NULL;
 }
@@ -759,7 +759,7 @@ xcf_load_channel_props (XcfInfo     *info,
 	  info->active_channel = channel;
 	  break;
 	case PROP_SELECTION:
-	  g_object_unref (G_OBJECT (gimage->selection_mask));
+	  g_object_unref (gimage->selection_mask);
 	  gimage->selection_mask = channel;
 	  channel->boundary_known = FALSE;
 	  channel->bounds_known   = FALSE;
@@ -913,7 +913,7 @@ xcf_load_layer (XcfInfo   *info,
       GIMP_DRAWABLE (layer_mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
-      g_object_unref (G_OBJECT (layer_mask));
+      g_object_unref (layer_mask);
 
       layer->mask->apply_mask = apply_mask;
       layer->mask->edit_mask  = edit_mask;
@@ -932,7 +932,7 @@ xcf_load_layer (XcfInfo   *info,
   return layer;
 
  error:
-  g_object_unref (G_OBJECT (layer));
+  g_object_unref (layer);
   return NULL;
 }
 
@@ -991,7 +991,7 @@ xcf_load_channel (XcfInfo   *info,
   return channel;
 
 error:
-  g_object_unref (G_OBJECT (channel));
+  g_object_unref (channel);
   return NULL;
 }
 
@@ -1050,7 +1050,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   return layer_mask;
 
 error:
-  g_object_unref (G_OBJECT (layer_mask));
+  g_object_unref (layer_mask);
   return NULL;
 }
 

@@ -274,7 +274,7 @@ gimp_display_delete (GimpDisplay *gdisp)
   /*  unrefs the gimage  */
   gimp_display_disconnect (gdisp);
 
-  g_object_unref (G_OBJECT (gdisp));
+  g_object_unref (gdisp);
 }
 
 gint

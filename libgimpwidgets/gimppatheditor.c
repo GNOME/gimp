@@ -139,7 +139,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_new_callback),
 		    gpe);
 
@@ -152,7 +152,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
 		    gpe);
 
@@ -165,7 +165,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_callback),
 		    gpe);
 
@@ -178,7 +178,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_delete_callback),
 		    gpe);
 
@@ -193,7 +193,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   
   gpe->dir_list = gtk_list_store_new (1, G_TYPE_STRING);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (gpe->dir_list));
-  g_object_unref (G_OBJECT (gpe->dir_list));
+  g_object_unref (gpe->dir_list);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
 					       -1, NULL,
@@ -207,7 +207,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_widget_show (tv);
 
   gpe->sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
-  g_signal_connect (G_OBJECT (gpe->sel), "changed",
+  g_signal_connect (gpe->sel, "changed",
 		    G_CALLBACK (gimp_path_editor_select_callback),
 		    gpe);
 }
@@ -241,7 +241,7 @@ gimp_path_editor_new (const gchar *filesel_title,
 		      TRUE, TRUE, 0);
   gtk_widget_show (gpe->file_selection);
 
-  g_signal_connect (G_OBJECT (gpe->file_selection), "filename_changed",
+  g_signal_connect (gpe->file_selection, "filename_changed",
                     G_CALLBACK (gimp_path_editor_filesel_callback),
 		    gpe);
 
@@ -357,12 +357,12 @@ gimp_path_editor_select_callback (GtkTreeSelection *sel,
 			  0, &directory,
 			  -1);
 
-      g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
+      g_signal_handlers_block_by_func (gpe->file_selection, 
 				       gimp_path_editor_filesel_callback,
 				       gpe);
       gimp_file_selection_set_filename
 	(GIMP_FILE_SELECTION (gpe->file_selection), directory);
-      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
+      g_signal_handlers_unblock_by_func (gpe->file_selection, 
 					 gimp_path_editor_filesel_callback,
 					 gpe);
 
@@ -384,11 +384,11 @@ gimp_path_editor_select_callback (GtkTreeSelection *sel,
     }
   else
     {
-      g_signal_handlers_block_by_func (G_OBJECT (sel), 
+      g_signal_handlers_block_by_func (sel, 
 				       gimp_path_editor_select_callback,
 				       gpe);
       gtk_tree_selection_select_path (gpe->sel, gpe->sel_path);
-      g_signal_handlers_unblock_by_func (G_OBJECT (sel), 
+      g_signal_handlers_unblock_by_func (sel, 
 					 gimp_path_editor_select_callback,
 					 gpe);
     }
@@ -404,10 +404,10 @@ gimp_path_editor_new_callback (GtkWidget *widget,
 
   if (gpe->sel_path)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (gpe->sel), 
+      g_signal_handlers_block_by_func (gpe->sel, 
 				       gimp_path_editor_select_callback, gpe);
       gtk_tree_selection_unselect_path (gpe->sel, gpe->sel_path);
-      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->sel), 
+      g_signal_handlers_unblock_by_func (gpe->sel, 
 					 gimp_path_editor_select_callback, gpe);
 
       gtk_tree_path_free (gpe->sel_path);
@@ -461,7 +461,7 @@ gimp_path_editor_move_callback (GtkWidget *widget,
 
   gtk_tree_selection_select_iter (gpe->sel, &iter2);
 
-  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
+  g_signal_emit (gpe, gimp_path_editor_signals[PATH_CHANGED], 0);
 }
 
 static void
@@ -486,12 +486,12 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
       gtk_tree_path_free (gpe->sel_path);
       gpe->sel_path = NULL;
 
-      g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
+      g_signal_handlers_block_by_func (gpe->file_selection, 
                                        gimp_path_editor_filesel_callback,
                                        gpe);
       gimp_file_selection_set_filename
 	(GIMP_FILE_SELECTION (gpe->file_selection), "");
-      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
+      g_signal_handlers_unblock_by_func (gpe->file_selection, 
                                          gimp_path_editor_filesel_callback,
                                          gpe);
 
@@ -509,7 +509,7 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
 
   gtk_tree_selection_select_path (gpe->sel, gpe->sel_path);
 
-  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
+  g_signal_emit (gpe, gimp_path_editor_signals[PATH_CHANGED], 0);
 }
 
 static void
@@ -544,5 +544,5 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
 
   g_free (directory);
 
-  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
+  g_signal_emit (gpe, gimp_path_editor_signals[PATH_CHANGED], 0);
 }

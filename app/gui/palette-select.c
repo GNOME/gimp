@@ -110,7 +110,7 @@ palette_select_new (Gimp        *gimp,
 
   gimp_context_set_palette (psp->context, active);
 
-  g_signal_connect (G_OBJECT (psp->context), "palette_changed",
+  g_signal_connect (psp->context, "palette_changed",
                     G_CALLBACK (palette_select_palette_changed),
                     psp);
 
@@ -159,7 +159,7 @@ palette_select_free (PaletteSelect *psp)
     g_free (psp->callback_name);
 
   if (psp->context)
-    g_object_unref (G_OBJECT (psp->context));
+    g_object_unref (psp->context);
 
   g_free (psp);
 }

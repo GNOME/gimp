@@ -86,7 +86,7 @@ gimp_help_init (void)
   tool_tips = gtk_tooltips_new ();
 
   /* take ownership of the tooltips */
-  g_object_ref (G_OBJECT (tool_tips));
+  g_object_ref (tool_tips);
   gtk_object_sink (GTK_OBJECT (tool_tips));
 }
 
@@ -99,7 +99,7 @@ gimp_help_init (void)
 void
 gimp_help_free (void)
 {
-  g_object_unref (G_OBJECT (tool_tips));
+  g_object_unref (tool_tips);
   tool_tips = NULL;
 
   tips_query->parent = NULL;
@@ -168,11 +168,11 @@ gimp_help_connect (GtkWidget    *widget,
 
       tips_query = gtk_tips_query_new ();
 
-      g_object_set (G_OBJECT (tips_query),
+      g_object_set (tips_query,
                     "emit_always", TRUE,
                     NULL);
 
-      g_signal_connect (G_OBJECT (tips_query), "widget_selected",
+      g_signal_connect (tips_query, "widget_selected",
 			G_CALLBACK (gimp_help_tips_query_widget_selected),
 			NULL);
 
@@ -186,7 +186,7 @@ gimp_help_connect (GtkWidget    *widget,
 
   gimp_help_set_help_data (widget, NULL, help_data);
 
-  g_signal_connect (G_OBJECT (widget), "show_help",
+  g_signal_connect (widget, "show_help",
                     G_CALLBACK (gimp_help_callback),
                     help_func);
 

@@ -124,7 +124,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_container_add (GTK_CONTAINER (editor->frame), editor->preview);
   gtk_widget_show (editor->preview);
 
-  g_signal_connect_after (G_OBJECT (editor->frame), "size_allocate",
+  g_signal_connect_after (editor->frame, "size_allocate",
 			  G_CALLBACK (gimp_brush_editor_preview_resize),
 			  editor);
 
@@ -151,7 +151,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (G_OBJECT (editor->radius_data), "value_changed",
+  g_signal_connect (editor->radius_data, "value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -164,7 +164,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (G_OBJECT (editor->hardness_data), "value_changed",
+  g_signal_connect (editor->hardness_data, "value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -177,7 +177,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (G_OBJECT (editor->aspect_ratio_data),"value_changed",
+  g_signal_connect (editor->aspect_ratio_data,"value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -190,7 +190,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (G_OBJECT (editor->angle_data), "value_changed",
+  g_signal_connect (editor->angle_data, "value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 }
@@ -205,7 +205,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
   if (editor->data)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->data),
+      g_signal_handlers_disconnect_by_func (editor->data,
                                             gimp_brush_editor_brush_dirty,
                                             editor);
     }
@@ -219,7 +219,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
       gdouble angle    = 0.0;
       gdouble ratio    = 0.0;
 
-      g_signal_connect (G_OBJECT (editor->data), "invalidate_preview",
+      g_signal_connect (editor->data, "invalidate_preview",
                         G_CALLBACK (gimp_brush_editor_brush_dirty),
                         editor);
 

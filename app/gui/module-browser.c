@@ -157,7 +157,7 @@ module_browser_new (Gimp *gimp)
 
   rend = gtk_cell_renderer_toggle_new ();
 
-  g_signal_connect (G_OBJECT (rend), "toggled",
+  g_signal_connect (rend, "toggled",
                     G_CALLBACK (browser_autoload_toggled),
                     browser);
 
@@ -194,7 +194,7 @@ module_browser_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), browser->button, TRUE, TRUE, 0);
   gtk_widget_show (browser->button);
 
-  g_signal_connect (G_OBJECT (browser->button), "clicked",
+  g_signal_connect (browser->button, "clicked",
                     G_CALLBACK (browser_load_unload_callback),
                     browser);
 
@@ -204,7 +204,7 @@ module_browser_new (Gimp *gimp)
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
 
-  g_signal_connect (G_OBJECT (sel), "changed",
+  g_signal_connect (sel, "changed",
                     G_CALLBACK (browser_select_callback),
                     browser);
 
@@ -214,17 +214,17 @@ module_browser_new (Gimp *gimp)
   /* hook the GimpModuleDB signals so we can refresh the display
    * appropriately.
    */
-  g_signal_connect (G_OBJECT (gimp->module_db), "add", 
+  g_signal_connect (gimp->module_db, "add", 
                     G_CALLBACK (browser_info_add), 
                     browser);
-  g_signal_connect (G_OBJECT (gimp->module_db), "remove", 
+  g_signal_connect (gimp->module_db, "remove", 
                     G_CALLBACK (browser_info_remove), 
                     browser);
-  g_signal_connect (G_OBJECT (gimp->module_db), "module_modified",
+  g_signal_connect (gimp->module_db, "module_modified",
                     G_CALLBACK (browser_info_update), 
                     browser);
 
-  g_signal_connect (G_OBJECT (shell), "destroy",
+  g_signal_connect (shell, "destroy",
                     G_CALLBACK (browser_destroy_callback), 
                     browser);
 
@@ -245,13 +245,13 @@ static void
 browser_destroy_callback (GtkWidget     *widget,
 			  ModuleBrowser *browser)
 {
-  g_signal_handlers_disconnect_by_func (G_OBJECT (browser->gimp->module_db),
+  g_signal_handlers_disconnect_by_func (browser->gimp->module_db,
                                         browser_info_add,
                                         browser);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (browser->gimp->module_db), 
+  g_signal_handlers_disconnect_by_func (browser->gimp->module_db, 
                                         browser_info_remove,
                                         browser);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (browser->gimp->module_db), 
+  g_signal_handlers_disconnect_by_func (browser->gimp->module_db, 
                                         browser_info_update,
                                         browser);
 

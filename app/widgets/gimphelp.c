@@ -170,7 +170,7 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
   Gimp *gimp = GIMP (data);
 
   if (use_netscape)
-    g_object_set (G_OBJECT (gimp->config),
+    g_object_set (gimp->config,
 		  "help-browser", GIMP_HELP_BROWSER_NETSCAPE,
 		  NULL);
   

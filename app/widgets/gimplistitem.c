@@ -326,7 +326,7 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
 
   gimp_list_item_name_changed (viewable, list_item);
 
-  g_signal_connect_object (G_OBJECT (viewable),
+  g_signal_connect_object (viewable,
                            GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                            G_CALLBACK (gimp_list_item_name_changed),
                            list_item, 0);

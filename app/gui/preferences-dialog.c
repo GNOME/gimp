@@ -884,7 +884,7 @@ prefs_dialog_new (Gimp    *gimp,
                              GDK_TYPE_PIXBUF, G_TYPE_STRING,
                              G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
-  g_object_unref (G_OBJECT (tree));
+  g_object_unref (tree);
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
 
@@ -962,7 +962,7 @@ prefs_dialog_new (Gimp    *gimp,
   g_object_set_data (G_OBJECT (notebook), "image", image);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
-  g_signal_connect (G_OBJECT (sel), "changed",
+  g_signal_connect (sel, "changed",
 		    G_CALLBACK (prefs_tree_select_callback),
 		    notebook);
 
@@ -1045,10 +1045,10 @@ prefs_dialog_new (Gimp    *gimp,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
 				_("dpi"), 1, 4, 0.0);
 
-  g_signal_connect (G_OBJECT (sizeentry2), "value_changed",
+  g_signal_connect (sizeentry2, "value_changed",
                     G_CALLBACK (prefs_default_resolution_callback),
                     sizeentry);
-  g_signal_connect (G_OBJECT (sizeentry2), "refval_changed",
+  g_signal_connect (sizeentry2, "refval_changed",
                     G_CALLBACK (prefs_default_resolution_callback),
                     sizeentry);
 
@@ -1100,7 +1100,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_object_unref (G_OBJECT (text_buffer));
+  g_object_unref (text_buffer);
 
 
   /***************/
@@ -1165,7 +1165,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_dialog_factories_session_clear),
                     NULL);
 
@@ -1269,22 +1269,22 @@ prefs_dialog_new (Gimp    *gimp,
 
     g_list_free (input_children);
 
-    g_object_ref (G_OBJECT (input_vbox));
+    g_object_ref (input_vbox);
 
     gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (input_dialog)->vbox),
                           input_vbox);
     gtk_box_pack_start (GTK_BOX (vbox2), input_vbox, TRUE, TRUE, 0);
 
-    g_object_unref (G_OBJECT (input_vbox));
+    g_object_unref (input_vbox);
 
     g_object_weak_ref (G_OBJECT (input_vbox),
                        (GWeakNotify) gtk_widget_destroy,
                        input_dialog);
 
-    g_signal_connect (G_OBJECT (input_dialog), "enable_device",
+    g_signal_connect (input_dialog, "enable_device",
                       G_CALLBACK (prefs_input_dialog_able_callback),
                       NULL);
-    g_signal_connect (G_OBJECT (input_dialog), "disable_device",
+    g_signal_connect (input_dialog, "disable_device",
                       G_CALLBACK (prefs_input_dialog_able_callback),
                       NULL);
   }
@@ -1303,7 +1303,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+  g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_devices_save),
                             gimp);
 
@@ -1499,7 +1499,7 @@ prefs_dialog_new (Gimp    *gimp,
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
 
         sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-        g_signal_connect (G_OBJECT (sel), "changed",
+        g_signal_connect (sel, "changed",
                           G_CALLBACK (prefs_format_string_select_callback),
                           entry);
 
@@ -1629,7 +1629,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_widget_set_sensitive (calibrate_button,
                             ! display_config->monitor_res_from_gdk);
 
-  g_signal_connect (G_OBJECT (calibrate_button), "clicked",
+  g_signal_connect (calibrate_button, "clicked",
 		    G_CALLBACK (prefs_resolution_calibrate_callback),
 		    sizeentry);
 
@@ -1650,7 +1650,7 @@ prefs_dialog_new (Gimp    *gimp,
   g_object_set_data (G_OBJECT (sizeentry), "inverse_sensitive",
                      calibrate_button);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
 		    G_CALLBACK (prefs_res_source_callback),
 		    config);
 

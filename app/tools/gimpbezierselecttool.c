@@ -1071,7 +1071,7 @@ bezier_select_reset  (GimpBezierSelectTool *bezier_sel)
 
   if (bezier_sel->mask)
     {
-      g_object_unref (G_OBJECT (bezier_sel->mask));
+      g_object_unref (bezier_sel->mask);
       bezier_sel->mask = NULL;
     }
 
@@ -2481,7 +2481,7 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
   /* destroy previous mask */
   if (bezier_sel->mask)
     {
-      g_object_unref (G_OBJECT (bezier_sel->mask));
+      g_object_unref (bezier_sel->mask);
       bezier_sel->mask = NULL;
     }
 

@@ -151,10 +151,10 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   gtk_box_pack_start (GTK_BOX (fontsel), fontsel->entry, TRUE, TRUE, 0);
   gtk_widget_show (fontsel->entry);
 
-  g_signal_connect (G_OBJECT (fontsel->entry), "activate",
+  g_signal_connect (fontsel->entry, "activate",
                     G_CALLBACK (gimp_font_selection_entry_callback),
                     fontsel);
-  g_signal_connect (G_OBJECT (fontsel->entry), "focus_out_event",
+  g_signal_connect (fontsel->entry, "focus_out_event",
                     G_CALLBACK (gimp_font_selection_entry_focus_out),
                     fontsel);
 
@@ -166,7 +166,7 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_font_selection_browse_callback),
                     fontsel);
 }
@@ -180,7 +180,7 @@ gimp_font_selection_finalize (GObject *object)
     gimp_font_selection_dialog_destroy (fontsel->dialog);
 
   if (fontsel->context)
-    g_object_unref (G_OBJECT (fontsel->context));
+    g_object_unref (fontsel->context);
 
   if (G_OBJECT_CLASS (parent_class)->finalize)
     G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -204,7 +204,7 @@ gimp_font_selection_new (PangoContext *context)
   fontsel = g_object_new (GIMP_TYPE_FONT_SELECTION, NULL);
 
   fontsel->context = context;
-  g_object_ref (G_OBJECT (fontsel->context));
+  g_object_ref (fontsel->context);
   
   return GTK_WIDGET (fontsel);
 }
@@ -214,8 +214,7 @@ gimp_font_selection_font_changed (GimpFontSelection *fontsel)
 {
   g_return_if_fail (GIMP_IS_FONT_SELECTION (fontsel));
 
-  g_signal_emit (G_OBJECT (fontsel), 
-                 gimp_font_selection_signals[FONT_CHANGED], 0);
+  g_signal_emit (fontsel, gimp_font_selection_signals[FONT_CHANGED], 0);
 }
 
 static void

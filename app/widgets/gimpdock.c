@@ -206,7 +206,7 @@ gimp_dock_destroy (GtkObject *object)
 
   if (dock->context)
     {
-      g_object_unref (G_OBJECT (dock->context));
+      g_object_unref (dock->context);
       dock->context = NULL;
     }
 
@@ -286,14 +286,14 @@ gimp_dock_separator_new (GimpDock *dock)
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
-  g_signal_connect (G_OBJECT (event_box), "drag_drop",
+  g_signal_connect (event_box, "drag_drop",
 		    G_CALLBACK (gimp_dock_separator_drag_drop),
 		    dock);
 
-  g_signal_connect (G_OBJECT (event_box), "button_press_event",
+  g_signal_connect (event_box, "button_press_event",
 		    G_CALLBACK (gimp_dock_separator_button_press),
 		    dock);
-  g_signal_connect (G_OBJECT (event_box), "button_release_event",
+  g_signal_connect (event_box, "button_release_event",
 		    G_CALLBACK (gimp_dock_separator_button_release),
 		    dock);
 
@@ -312,7 +312,7 @@ gimp_dock_construct (GimpDock          *dock,
   dock->dialog_factory = dialog_factory;
   dock->context        = context;
 
-  g_object_ref (G_OBJECT (dock->context));
+  g_object_ref (dock->context);
 
   return TRUE;
 }
@@ -403,7 +403,7 @@ gimp_dock_add_book (GimpDock     *dock,
           parent   = grandparent;
         }
 
-      g_object_ref (G_OBJECT (old_book));
+      g_object_ref (old_book);
 
       gtk_container_remove (GTK_CONTAINER (parent), old_book);
 
@@ -431,12 +431,12 @@ gimp_dock_add_book (GimpDock     *dock,
                            TRUE, FALSE);
         }
 
-      g_object_unref (G_OBJECT (old_book));
+      g_object_unref (old_book);
     }
 
   gtk_widget_show (GTK_WIDGET (dockbook));
 
-  g_signal_emit (G_OBJECT (dock), dock_signals[BOOK_ADDED], 0, dockbook);
+  g_signal_emit (dock, dock_signals[BOOK_ADDED], 0, dockbook);
 }
 
 void
@@ -487,7 +487,7 @@ gimp_dock_remove_book (GimpDock     *dock,
       else
         other_book = GTK_PANED (parent)->child1;
 
-      g_object_ref (G_OBJECT (other_book));
+      g_object_ref (other_book);
 
       gtk_container_remove (GTK_CONTAINER (parent), other_book);
       gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
@@ -499,10 +499,10 @@ gimp_dock_remove_book (GimpDock     *dock,
       else
         gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
 
-      g_object_unref (G_OBJECT (other_book));
+      g_object_unref (other_book);
     }
 
-  g_signal_emit (G_OBJECT (dock), dock_signals[BOOK_REMOVED], 0, dockbook);
+  g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 
   g_object_unref (dockbook);
 }
@@ -594,12 +594,12 @@ gimp_dock_tab_drag_end (GtkWidget      *widget,
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 
-      g_object_ref (G_OBJECT (dockable));
+      g_object_ref (dockable);
 
       gimp_dock_remove (dockable->dock, dockable);
       gimp_dock_add (GIMP_DOCK (dock), dockable, -1, -1);
 
-      g_object_unref (G_OBJECT (dockable));
+      g_object_unref (dockable);
 
       gtk_widget_show (dock);
     }
@@ -646,7 +646,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
           else if (index == 2)
             index = -1;
 
-	  g_object_ref (G_OBJECT (src_dockable));
+	  g_object_ref (src_dockable);
 
 	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
 
@@ -655,7 +655,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
 	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), src_dockable, -1);
 
-	  g_object_unref (G_OBJECT (src_dockable));
+	  g_object_unref (src_dockable);
 
 	  return TRUE;
 	}

@@ -122,7 +122,7 @@ gimp_container_editor_finalize (GObject *object)
 
   if (editor->item_factory)
     {
-      g_object_unref (G_OBJECT (editor->item_factory));
+      g_object_unref (editor->item_factory);
       editor->item_factory = NULL;
     }
 
@@ -151,7 +151,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
   editor->item_factory = item_factory;
-  g_object_ref (G_OBJECT (editor->item_factory));
+  g_object_ref (editor->item_factory);
 
   switch (view_type)
     {
@@ -184,19 +184,19 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 		     GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
-  g_signal_connect_object (G_OBJECT (editor->view), "select_item",
+  g_signal_connect_object (editor->view, "select_item",
 			   G_CALLBACK (gimp_container_editor_select_item),
-			   G_OBJECT (editor),
+			   editor,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (editor->view), "activate_item",
+  g_signal_connect_object (editor->view, "activate_item",
 			   G_CALLBACK (gimp_container_editor_activate_item),
-			   G_OBJECT (editor),
+			   editor,
 			   0);
 
-  g_signal_connect_object (G_OBJECT (editor->view), "context_item",
+  g_signal_connect_object (editor->view, "context_item",
 			   G_CALLBACK (gimp_container_editor_context_item),
-			   G_OBJECT (editor),
+			   editor,
 			   0);
 
   return TRUE;

@@ -144,7 +144,7 @@ gimp_drawable_list_view_set_image (GimpItemListView *item_view,
 
   if (item_view->gimage)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (item_view->gimage),
+      g_signal_handlers_disconnect_by_func (item_view->gimage,
 					    gimp_drawable_list_view_floating_selection_changed,
 					    view);
     }
@@ -153,7 +153,7 @@ gimp_drawable_list_view_set_image (GimpItemListView *item_view,
 
   if (item_view->gimage)
     {
-      g_signal_connect (G_OBJECT (item_view->gimage),
+      g_signal_connect (item_view->gimage,
                         "floating_selection_changed",
 			G_CALLBACK (gimp_drawable_list_view_floating_selection_changed),
 			view);

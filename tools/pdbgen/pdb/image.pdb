@@ -391,7 +391,7 @@ HELP
 {
   if (gimage->disp_count == 0)
     {
-      g_object_unref (G_OBJECT (gimage));
+      g_object_unref (gimage);
       success = TRUE;
     }
 }
@@ -681,7 +681,7 @@ HELP
   success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
 
   if (success)
-    g_object_unref (G_OBJECT (mask));
+    g_object_unref (mask);
 }
 CODE
     );

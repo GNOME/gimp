@@ -143,17 +143,17 @@ gimp_file_selection_init (GimpFileSelection *selection)
   selection->browse_button = gtk_button_new_with_label (" ... ");
   gtk_box_pack_end (GTK_BOX (selection),
 		    selection->browse_button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (selection->browse_button), "clicked",
+  g_signal_connect (selection->browse_button, "clicked",
                     G_CALLBACK (gimp_file_selection_browse_callback),
                     selection);
   gtk_widget_show (selection->browse_button);
 
   selection->entry = gtk_entry_new ();
   gtk_box_pack_end (GTK_BOX (selection), selection->entry, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (selection->entry), "activate",
+  g_signal_connect (selection->entry, "activate",
                     G_CALLBACK (gimp_file_selection_entry_callback),
                     selection);
-  g_signal_connect (G_OBJECT (selection->entry), "focus_out_event",
+  g_signal_connect (selection->entry, "focus_out_event",
                     G_CALLBACK (gimp_file_selection_entry_focus_out_callback),
                     selection);
   gtk_widget_show (selection->entry);
@@ -283,11 +283,11 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
 	 (filename[len - 1] == G_DIR_SEPARATOR))
     filename[len - 1] = '\0';
 
-  g_signal_handlers_block_by_func (G_OBJECT (selection->entry), 
+  g_signal_handlers_block_by_func (selection->entry, 
                                    gimp_file_selection_entry_callback,
                                    selection);
   gtk_entry_set_text (GTK_ENTRY (selection->entry), filename);
-  g_signal_handlers_unblock_by_func (G_OBJECT (selection->entry), 
+  g_signal_handlers_unblock_by_func (selection->entry, 
                                      gimp_file_selection_entry_callback,
                                      selection);
 
@@ -300,8 +300,7 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
 
   gtk_editable_set_position (GTK_EDITABLE (selection->entry), -1);
 
-  g_signal_emit (G_OBJECT (selection),
-                 gimp_file_selection_signals[FILENAME_CHANGED], 0);
+  g_signal_emit (selection, gimp_file_selection_signals[FILENAME_CHANGED], 0);
 }
 
 static gboolean
@@ -378,25 +377,25 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
       gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (selection->file_selection)->button_area),
 				      2);
 
-      g_signal_connect 
-	(G_OBJECT (GTK_FILE_SELECTION (selection->file_selection)->ok_button),
+      g_signal_connect
+	(GTK_FILE_SELECTION (selection->file_selection)->ok_button,
 	 "clicked",
 	 G_CALLBACK (gimp_file_selection_filesel_ok_callback),
 	 selection);
       g_signal_connect
-	(G_OBJECT (GTK_FILE_SELECTION (selection->file_selection)->selection_entry),
+	(GTK_FILE_SELECTION (selection->file_selection)->selection_entry,
 	 "activate",
 	 G_CALLBACK (gimp_file_selection_filesel_ok_callback),
 	 selection);
 
-      g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (selection->file_selection)->cancel_button),
+      g_signal_connect_swapped (GTK_FILE_SELECTION (selection->file_selection)->cancel_button,
                                 "clicked",
                                 G_CALLBACK (gtk_widget_hide),
                                 selection->file_selection);
-      g_signal_connect_swapped (GTK_OBJECT (selection), "unmap",
+      g_signal_connect_swapped (selection, "unmap",
                                 G_CALLBACK (gtk_widget_hide),
                                 selection->file_selection);
-      g_signal_connect_swapped (GTK_OBJECT (selection->file_selection),
+      g_signal_connect_swapped (selection->file_selection,
                                 "delete_event",
                                 G_CALLBACK (gtk_widget_hide),
                                 selection->file_selection);

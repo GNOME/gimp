@@ -283,10 +283,10 @@ gimp_paint_core_finalize (GObject *object)
 
   if (core->grr_brush)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (core->grr_brush),
+      g_signal_handlers_disconnect_by_func (core->grr_brush,
                                             gimp_paint_core_invalidate_cache,
                                             core);
-      g_object_unref (G_OBJECT (core->grr_brush));
+      g_object_unref (core->grr_brush);
       core->grr_brush = NULL;
     }
 
@@ -363,10 +363,10 @@ gimp_paint_core_start (GimpPaintCore    *core,
   if (core->grr_brush &&
       core->grr_brush != gimp_context_get_brush (paint_options->context))
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (core->grr_brush),
+      g_signal_handlers_disconnect_by_func (core->grr_brush,
                                             gimp_paint_core_invalidate_cache,
                                             core);
-      g_object_unref (G_OBJECT (core->grr_brush));
+      g_object_unref (core->grr_brush);
     }
 
   core->grr_brush = gimp_context_get_brush (paint_options->context);
@@ -377,8 +377,8 @@ gimp_paint_core_start (GimpPaintCore    *core,
       return FALSE;
     }
 
-  g_object_ref (G_OBJECT (core->grr_brush));
-  g_signal_connect (G_OBJECT (core->grr_brush), "invalidate_preview",
+  g_object_ref (core->grr_brush);
+  g_signal_connect (core->grr_brush, "invalidate_preview",
                     G_CALLBACK (gimp_paint_core_invalidate_cache),
                     core);
 

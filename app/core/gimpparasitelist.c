@@ -364,8 +364,7 @@ gimp_parasite_list_add (GimpParasiteList *list,
   parasite = gimp_parasite_copy (parasite);
   g_hash_table_insert (list->table, parasite->name, parasite);
 
-  g_signal_emit (G_OBJECT (list), parasite_list_signals[ADD], 0,
-		 parasite);
+  g_signal_emit (list, parasite_list_signals[ADD], 0, parasite);
 }
 
 void
@@ -384,8 +383,7 @@ gimp_parasite_list_remove (GimpParasiteList *list,
 	{
 	  g_hash_table_remove (list->table, name);
 
-	  g_signal_emit (G_OBJECT (list), parasite_list_signals[REMOVE], 0,
-			 parasite);
+	  g_signal_emit (list, parasite_list_signals[REMOVE], 0, parasite);
 
 	  gimp_parasite_free (parasite);
 	}

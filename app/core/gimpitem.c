@@ -153,7 +153,7 @@ gimp_item_finalize (GObject *object)
 
   if (item->parasites)
     {
-      g_object_unref (G_OBJECT (item->parasites));
+      g_object_unref (item->parasites);
       item->parasites = NULL;
     }
 
@@ -276,7 +276,7 @@ gimp_item_removed (GimpItem *item)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  g_signal_emit (G_OBJECT (item), gimp_item_signals[REMOVED], 0);
+  g_signal_emit (item, gimp_item_signals[REMOVED], 0);
 }
 
 gint

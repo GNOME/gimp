@@ -130,7 +130,7 @@ create_query_box (const gchar   *title,
 
 				     NULL);
 
-  g_signal_connect (G_OBJECT (query_box->qbox), "destroy",
+  g_signal_connect (query_box->qbox, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
 		    &query_box->qbox);
 
@@ -144,7 +144,7 @@ create_query_box (const gchar   *title,
 				query_box, NULL);
       g_object_watch_closure (G_OBJECT (query_box->qbox), closure);
 
-      g_signal_connect_closure (G_OBJECT (object), signal, closure, FALSE);
+      g_signal_connect_closure (object, signal, closure, FALSE);
     }
 
   if (stock_id)

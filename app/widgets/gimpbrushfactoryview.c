@@ -119,7 +119,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 
   view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
-  g_signal_connect (G_OBJECT (view->spacing_adjustment), "value_changed",
+  g_signal_connect (view->spacing_adjustment, "value_changed",
 		    G_CALLBACK (gimp_brush_factory_view_spacing_update),
 		    view);
 
@@ -178,7 +178,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 					  min_items_y,
 					  item_factory))
     {
-      g_object_unref (G_OBJECT (factory_view));
+      g_object_unref (factory_view);
       return NULL;
     }
 
@@ -222,14 +222,14 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
       edit_sensitive    = GIMP_IS_BRUSH_GENERATED (brush);
       spacing_sensitive = TRUE;
 
-      g_signal_handlers_block_by_func (G_OBJECT (view->spacing_adjustment),
+      g_signal_handlers_block_by_func (view->spacing_adjustment,
 				       gimp_brush_factory_view_spacing_update,
 				       view);
 
       gtk_adjustment_set_value (view->spacing_adjustment,
 				gimp_brush_get_spacing (brush));
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (view->spacing_adjustment),
+      g_signal_handlers_unblock_by_func (view->spacing_adjustment,
 					 gimp_brush_factory_view_spacing_update,
 					 view);
     }
@@ -245,14 +245,14 @@ gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
 {
   if (brush == GIMP_CONTAINER_EDITOR (view)->view->context->brush)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (view->spacing_adjustment),
+      g_signal_handlers_block_by_func (view->spacing_adjustment,
 				       gimp_brush_factory_view_spacing_update,
 				       view);
 
       gtk_adjustment_set_value (view->spacing_adjustment,
 				gimp_brush_get_spacing (brush));
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (view->spacing_adjustment),
+      g_signal_handlers_unblock_by_func (view->spacing_adjustment,
 					 gimp_brush_factory_view_spacing_update,
 					 view);
     }
@@ -268,13 +268,13 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
 
   if (brush && view->change_brush_spacing)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (brush),
+      g_signal_handlers_block_by_func (brush,
 				       gimp_brush_factory_view_spacing_changed,
 				       view);
 
       gimp_brush_set_spacing (brush, adjustment->value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (brush),
+      g_signal_handlers_unblock_by_func (brush,
 					 gimp_brush_factory_view_spacing_changed,
 					 view);
     }

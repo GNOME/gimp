@@ -281,10 +281,10 @@ gimp_pick_button_clicked (GtkButton *gtk_button)
 
   gtk_grab_add (button->grab_widget);
   
-  g_signal_connect (G_OBJECT (button->grab_widget), "button_press_event",
+  g_signal_connect (button->grab_widget, "button_press_event",
                     G_CALLBACK (gimp_pick_button_mouse_press),
                     button);
-  g_signal_connect (G_OBJECT (button->grab_widget), "key_press_event",
+  g_signal_connect (button->grab_widget, "key_press_event",
                     G_CALLBACK (gimp_pick_button_key_press),
                     button);
 }
@@ -296,17 +296,17 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
 {
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      g_signal_connect (G_OBJECT (invisible), "motion_notify_event",
+      g_signal_connect (invisible, "motion_notify_event",
                         G_CALLBACK (gimp_pick_button_mouse_motion),
                         button);
-      g_signal_connect (G_OBJECT (invisible), "button_release_event",
+      g_signal_connect (invisible, "button_release_event",
                         G_CALLBACK (gimp_pick_button_mouse_release),
                         button);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+      g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_mouse_press,
                                             button);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+      g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_key_press,
                                             button);
       return TRUE;
@@ -324,10 +324,10 @@ gimp_pick_button_key_press (GtkWidget      *invisible,
     {
       gimp_pick_button_shutdown (button);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+      g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_mouse_press,
                                             button);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+      g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_key_press,
                                             button);
       
@@ -359,10 +359,10 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 
   gimp_pick_button_shutdown (button);
   
-  g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+  g_signal_handlers_disconnect_by_func (invisible,
                                         gimp_pick_button_mouse_motion,
                                         button);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (invisible),
+  g_signal_handlers_disconnect_by_func (invisible,
                                         gimp_pick_button_mouse_release,
                                         button);
 
@@ -403,6 +403,5 @@ gimp_pick_button_grab (GtkWidget      *invisible,
                  color.blue  / 65535.0,
                  1.0);
 
-  g_signal_emit (G_OBJECT (button), pick_button_signals[COLOR_PICKED], 0,
-                 &rgb);
+  g_signal_emit (button, pick_button_signals[COLOR_PICKED], 0, &rgb);
 }

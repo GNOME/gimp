@@ -144,7 +144,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   gtk_widget_set_size_request (abox, nav_preview_size, nav_preview_size);
 
-  g_signal_connect (G_OBJECT (abox), "size_allocate",
+  g_signal_connect (abox, "size_allocate",
                     G_CALLBACK (gimp_selection_editor_abox_resized),
                     selection_editor);
 
@@ -155,7 +155,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   gtk_container_add (GTK_CONTAINER (abox), selection_editor->preview);
   gtk_widget_show (selection_editor->preview);
 
-  g_signal_connect (G_OBJECT (selection_editor->preview), "button_press_event",
+  g_signal_connect (selection_editor->preview, "button_press_event",
                     G_CALLBACK (gimp_selection_preview_button_press),
                     selection_editor);
 
@@ -243,7 +243,7 @@ gimp_selection_editor_set_image (GimpSelectionEditor *editor,
 
   if (editor->gimage)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (editor->gimage),
+      g_signal_handlers_disconnect_by_func (editor->gimage,
 					    gimp_selection_editor_mask_changed,
 					    editor);
     }
@@ -256,7 +256,7 @@ gimp_selection_editor_set_image (GimpSelectionEditor *editor,
 
   if (gimage)
     {
-      g_signal_connect (G_OBJECT (gimage), "mask_changed",
+      g_signal_connect (gimage, "mask_changed",
 			G_CALLBACK (gimp_selection_editor_mask_changed),
 			editor);
 

@@ -164,7 +164,7 @@ info_dialog_add_entry (InfoDialog    *idialog,
   gtk_entry_set_text (GTK_ENTRY (entry), text_ptr ? text_ptr : "");
 
   if (callback)
-    g_signal_connect (G_OBJECT (entry), "changed",
+    g_signal_connect (entry, "changed",
 		      callback,
 		      callback_data);
 
@@ -203,7 +203,7 @@ info_dialog_add_scale   (InfoDialog    *idialog,
     gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   if (callback)
-    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+    g_signal_connect (adjustment, "value_changed",
 		      callback,
 		      callback_data);
 
@@ -244,7 +244,7 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
   if (callback)
-    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+    g_signal_connect (adjustment, "value_changed",
 		      callback,
 		      callback_data);
 
@@ -290,7 +290,7 @@ info_dialog_add_sizeentry (InfoDialog                *idialog,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), i, value_ptr[i]);
 
   if (callback)
-    g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+    g_signal_connect (sizeentry, "value_changed",
 		      callback,
 		      callback_data);
 
@@ -428,7 +428,7 @@ info_dialog_update_field (InfoField *field)
     return;
 
   if (field->field_type != INFO_LABEL)
-    g_signal_handlers_block_by_func (G_OBJECT (field->obj),
+    g_signal_handlers_block_by_func (field->obj,
 				     field->callback,
 				     field->callback_data);
 
@@ -463,7 +463,7 @@ info_dialog_update_field (InfoField *field)
     }
 
   if (field->field_type != INFO_LABEL)
-    g_signal_handlers_unblock_by_func (G_OBJECT (field->obj),
+    g_signal_handlers_unblock_by_func (field->obj,
 				       field->callback,
 				       field->callback_data);
 }

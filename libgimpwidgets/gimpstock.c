@@ -54,7 +54,7 @@ sized_with_same_fallback_icon_set_from_inline (const guchar *inline_data,
 
   gtk_icon_source_set_pixbuf (source, pixbuf);
 
-  g_object_unref (G_OBJECT (pixbuf));
+  g_object_unref (pixbuf);
 
   set = gtk_icon_set_new ();
 

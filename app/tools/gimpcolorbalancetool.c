@@ -305,21 +305,21 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   cb_tool->cyan_red_adj = 
     create_levels_scale (_("Cyan"), _("Red"), table, 0);
 
-  g_signal_connect (G_OBJECT (cb_tool->cyan_red_adj), "value_changed",
+  g_signal_connect (cb_tool->cyan_red_adj, "value_changed",
                     G_CALLBACK (color_balance_cr_adjustment_update),
                     cb_tool);
 
   cb_tool->magenta_green_adj = 
     create_levels_scale (_("Magenta"), _("Green"), table, 1);
 
-  g_signal_connect (G_OBJECT (cb_tool->magenta_green_adj), "value_changed",
+  g_signal_connect (cb_tool->magenta_green_adj, "value_changed",
                     G_CALLBACK (color_balance_mg_adjustment_update),
                     cb_tool);
 
   cb_tool->yellow_blue_adj = 
     create_levels_scale (_("Yellow"), _("Blue"), table, 2);
 
-  g_signal_connect (G_OBJECT (cb_tool->yellow_blue_adj), "value_changed",
+  g_signal_connect (cb_tool->yellow_blue_adj, "value_changed",
                     G_CALLBACK (color_balance_yb_adjustment_update),
                     cb_tool);
 
@@ -331,7 +331,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (color_balance_range_reset_callback),
                     cb_tool);
 
@@ -343,7 +343,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                     cb_tool->preserve_toggle, FALSE, FALSE, 0);
   gtk_widget_show (cb_tool->preserve_toggle);
 
-  g_signal_connect (G_OBJECT (cb_tool->preserve_toggle), "toggled",
+  g_signal_connect (cb_tool->preserve_toggle, "toggled",
                     G_CALLBACK (color_balance_preserve_update),
                     cb_tool);
 

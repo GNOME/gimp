@@ -279,8 +279,7 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   x = RINT (tx / ratiox);
   y = RINT (ty / ratioy);
 
-  g_signal_emit (GTK_OBJECT (preview), preview_signals[MARKER_CHANGED], 0,
-                 x, y);
+  g_signal_emit (preview, preview_signals[MARKER_CHANGED], 0, x, y);
 }
 
 void
@@ -393,13 +392,11 @@ gimp_navigation_preview_scroll (GtkWidget      *widget,
     {
       if (sevent->direction == GDK_SCROLL_UP)
 	{
-	  g_signal_emit (G_OBJECT (widget), preview_signals[ZOOM], 0,
-			 GIMP_ZOOM_IN);
+	  g_signal_emit (widget, preview_signals[ZOOM], 0, GIMP_ZOOM_IN);
 	}
       else
 	{
-	  g_signal_emit (G_OBJECT (widget), preview_signals[ZOOM], 0,
-			 GIMP_ZOOM_OUT);
+	  g_signal_emit (widget, preview_signals[ZOOM], 0, GIMP_ZOOM_OUT);
 	}
     }
   else
@@ -418,8 +415,7 @@ gimp_navigation_preview_scroll (GtkWidget      *widget,
 	  direction = sevent->direction;
 	}
 
-      g_signal_emit (G_OBJECT (widget), preview_signals[SCROLL], 0,
-		     direction);
+      g_signal_emit (widget, preview_signals[SCROLL], 0, direction);
     }
 
   return TRUE;

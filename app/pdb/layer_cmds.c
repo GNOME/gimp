@@ -573,7 +573,7 @@ layer_delete_invoker (Gimp     *gimp,
     {
       if (! gimp_item_get_image (GIMP_ITEM (layer)))
 	{
-	  g_object_unref (G_OBJECT (layer));
+	  g_object_unref (layer);
 	  success = TRUE;
 	}
     }

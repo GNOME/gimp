@@ -69,7 +69,7 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
                               FALSE /* no undo */);
 
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
-      g_object_unref (G_OBJECT (mask));
+      g_object_unref (mask);
     }
   else
     {
@@ -117,7 +117,7 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
                               FALSE /* no undo */);
 
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
-      g_object_unref (G_OBJECT (mask));
+      g_object_unref (mask);
     }
   else
     {
@@ -173,7 +173,7 @@ gimp_image_mask_select_polygon (GimpImage       *gimage,
                               FALSE /* no undo */);
 
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
-      g_object_unref (G_OBJECT (mask));
+      g_object_unref (mask);
     }
 
   gimp_image_mask_changed (gimage);
@@ -310,7 +310,7 @@ gimp_image_mask_select_fuzzy (GimpImage      *gimage,
                                   feather_radius_x,
                                   feather_radius_y);
 
-  g_object_unref (G_OBJECT (mask));
+  g_object_unref (mask);
 }
 
 void
@@ -360,5 +360,5 @@ gimp_image_mask_select_by_color (GimpImage      *gimage,
                                   feather_radius_x,
                                   feather_radius_y);
 
-  g_object_unref (G_OBJECT (mask));
+  g_object_unref (mask);
 }

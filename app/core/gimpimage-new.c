@@ -192,7 +192,7 @@ gimp_image_new_create_image (Gimp               *gimp,
 
       gimp_create_display (gimp, gimage, 0x0101);
 
-      g_object_unref (G_OBJECT (gimage));
+      g_object_unref (gimage);
     }
 
   return gimage;

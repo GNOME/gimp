@@ -94,7 +94,7 @@ gimp_prop_check_button_new (GObject     *config,
 
   set_param_spec (G_OBJECT (button), param_spec);
 
-  g_signal_connect (G_OBJECT (button), "toggled",
+  g_signal_connect (button, "toggled",
 		    G_CALLBACK (gimp_prop_check_button_callback),
 		    config);
 
@@ -133,13 +133,13 @@ gimp_prop_check_button_notify (GObject    *config,
 
   if (GTK_TOGGLE_BUTTON (button)->active != value)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (button),
+      g_signal_handlers_block_by_func (button,
                                        gimp_prop_check_button_callback,
                                        config);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (button),
+      g_signal_handlers_unblock_by_func (button,
                                          gimp_prop_check_button_callback,
                                          config);
     }
@@ -431,7 +431,7 @@ gimp_prop_spin_button_new (GObject     *config,
 
   set_param_spec (G_OBJECT (adjustment), param_spec);
 
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+  g_signal_connect (adjustment, "value_changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
@@ -544,13 +544,13 @@ gimp_prop_adjustment_notify (GObject       *config,
 
   if (adjustment->value != value)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (adjustment),
+      g_signal_handlers_block_by_func (adjustment,
                                        gimp_prop_adjustment_callback,
                                        config);
 
       gtk_adjustment_set_value (adjustment, value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (adjustment),
+      g_signal_handlers_unblock_by_func (adjustment,
                                          gimp_prop_adjustment_callback,
                                          config);
     }
@@ -593,7 +593,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
 
   set_param_spec (G_OBJECT (entry), param_spec);
 
-  g_signal_connect (G_OBJECT (entry), "value_changed",
+  g_signal_connect (entry, "value_changed",
 		    G_CALLBACK (gimp_prop_memsize_callback),
 		    config);
 
@@ -637,13 +637,13 @@ gimp_prop_memsize_notify (GObject          *config,
 
   if (entry->value != value)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (entry),
+      g_signal_handlers_block_by_func (entry,
                                        gimp_prop_memsize_callback,
                                        config);
 
       gimp_memsize_entry_set_value (entry, value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+      g_signal_handlers_unblock_by_func (entry,
                                          gimp_prop_memsize_callback,
                                          config);
     }
@@ -688,7 +688,7 @@ gimp_prop_entry_new (GObject     *config,
 
   set_param_spec (G_OBJECT (entry), param_spec);
 
-  g_signal_connect (G_OBJECT (entry), "changed",
+  g_signal_connect (entry, "changed",
 		    G_CALLBACK (gimp_prop_entry_callback),
 		    config);
 
@@ -712,7 +712,7 @@ gimp_prop_entry_callback (GtkWidget *entry,
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  g_signal_handlers_block_by_func (G_OBJECT (config),
+  g_signal_handlers_block_by_func (config,
                                    gimp_prop_entry_notify,
                                    entry);
 
@@ -720,7 +720,7 @@ gimp_prop_entry_callback (GtkWidget *entry,
                 param_spec->name, text,
                 NULL);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (config),
+  g_signal_handlers_unblock_by_func (config,
                                      gimp_prop_entry_notify,
                                      entry);
 }
@@ -736,13 +736,13 @@ gimp_prop_entry_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (G_OBJECT (entry),
+  g_signal_handlers_block_by_func (entry,
                                    gimp_prop_entry_callback,
                                    config);
 
   gtk_entry_set_text (GTK_ENTRY (entry), value);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+  g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_entry_callback,
                                      config);
 
@@ -789,7 +789,7 @@ gimp_prop_text_buffer_new (GObject     *config,
 
   set_param_spec (G_OBJECT (text_buffer), param_spec);
 
-  g_signal_connect (G_OBJECT (text_buffer), "changed",
+  g_signal_connect (text_buffer, "changed",
 		    G_CALLBACK (gimp_prop_text_buffer_callback),
 		    config);
 
@@ -834,7 +834,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
     }
   else
     {
-      g_signal_handlers_block_by_func (G_OBJECT (config),
+      g_signal_handlers_block_by_func (config,
                                        gimp_prop_text_buffer_notify,
                                        text_buffer);
 
@@ -842,7 +842,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
                     param_spec->name, text,
                     NULL);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (config),
+      g_signal_handlers_unblock_by_func (config,
                                          gimp_prop_text_buffer_notify,
                                          text_buffer);
     }
@@ -861,13 +861,13 @@ gimp_prop_text_buffer_notify (GObject       *config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (G_OBJECT (text_buffer),
+  g_signal_handlers_block_by_func (text_buffer,
                                    gimp_prop_text_buffer_callback,
                                    config);
 
   gtk_text_buffer_set_text (text_buffer, value, -1);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (text_buffer),
+  g_signal_handlers_unblock_by_func (text_buffer,
                                      gimp_prop_text_buffer_callback,
                                      config);
 
@@ -917,7 +917,7 @@ gimp_prop_file_entry_new (GObject     *config,
 
   set_param_spec (G_OBJECT (entry), param_spec);
 
-  g_signal_connect (G_OBJECT (entry), "filename_changed",
+  g_signal_connect (entry, "filename_changed",
 		    G_CALLBACK (gimp_prop_file_entry_callback),
 		    config);
 
@@ -959,13 +959,13 @@ gimp_prop_file_entry_notify (GObject           *config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (G_OBJECT (entry),
+  g_signal_handlers_block_by_func (entry,
                                    gimp_prop_file_entry_callback,
                                    config);
 
   gimp_file_selection_set_filename (entry, value);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+  g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_file_entry_callback,
                                      config);
 
@@ -1011,7 +1011,7 @@ gimp_prop_path_editor_new (GObject     *config,
 
   set_param_spec (G_OBJECT (editor), param_spec);
 
-  g_signal_connect (G_OBJECT (editor), "path_changed",
+  g_signal_connect (editor, "path_changed",
 		    G_CALLBACK (gimp_prop_path_editor_callback),
 		    config);
 
@@ -1053,13 +1053,13 @@ gimp_prop_path_editor_notify (GObject        *config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (G_OBJECT (editor),
+  g_signal_handlers_block_by_func (editor,
                                    gimp_prop_path_editor_callback,
                                    config);
 
   gimp_path_editor_set_path (editor, value);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (editor),
+  g_signal_handlers_unblock_by_func (editor,
                                      gimp_prop_path_editor_callback,
                                      config);
 
@@ -1225,16 +1225,16 @@ gimp_prop_coordinates_new (GObject                   *config,
       g_object_set_data (G_OBJECT (sizeentry), "chainbutton", button);
     }
 
-  g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+  g_signal_connect (sizeentry, "value_changed",
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
-  g_signal_connect (G_OBJECT (sizeentry), "refval_changed",
+  g_signal_connect (sizeentry, "refval_changed",
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
 
   if (unit_property_name)
     {
-      g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
+      g_signal_connect (sizeentry, "unit_changed",
                         G_CALLBACK (gimp_prop_coordinates_callback),
                         config);
     }
@@ -1390,13 +1390,13 @@ gimp_prop_coordinates_notify_x (GObject       *config,
 
   if (value != gimp_size_entry_get_refval (sizeentry, 0))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_block_by_func (sizeentry,
                                        gimp_prop_coordinates_callback,
                                        config);
 
       gimp_size_entry_set_refval (sizeentry, 0, value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_unblock_by_func (sizeentry,
                                          gimp_prop_coordinates_callback,
                                          config);
     }
@@ -1428,13 +1428,13 @@ gimp_prop_coordinates_notify_y (GObject       *config,
 
   if (value != gimp_size_entry_get_refval (sizeentry, 1))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_block_by_func (sizeentry,
                                        gimp_prop_coordinates_callback,
                                        config);
 
       gimp_size_entry_set_refval (sizeentry, 1, value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_unblock_by_func (sizeentry,
                                          gimp_prop_coordinates_callback,
                                          config);
     }
@@ -1453,13 +1453,13 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
 
   if (value != gimp_size_entry_get_unit (sizeentry))
     {
-      g_signal_handlers_block_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_block_by_func (sizeentry,
                                        gimp_prop_coordinates_callback,
                                        config);
 
       gimp_size_entry_set_unit (sizeentry, value);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry),
+      g_signal_handlers_unblock_by_func (sizeentry,
                                          gimp_prop_coordinates_callback,
                                          config);
     }
@@ -1503,7 +1503,7 @@ gimp_prop_color_button_new (GObject           *config,
 
   set_param_spec (G_OBJECT (button), param_spec);
 
-  g_signal_connect (G_OBJECT (button), "color_changed",
+  g_signal_connect (button, "color_changed",
 		    G_CALLBACK (gimp_prop_color_button_callback),
 		    config);
 
@@ -1551,7 +1551,7 @@ gimp_prop_color_button_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (G_OBJECT (button),
+  g_signal_handlers_block_by_func (button,
                                    gimp_prop_color_button_callback,
                                    config);
 
@@ -1559,7 +1559,7 @@ gimp_prop_color_button_notify (GObject    *config,
 
   g_free (value);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (button),
+  g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_color_button_callback,
                                      config);
 }

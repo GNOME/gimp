@@ -2167,10 +2167,10 @@ menus_get_new_image_factory (Gimp     *gimp,
 
     user_context = gimp_get_user_context (gimp);
 
-    g_signal_connect_object (G_OBJECT (user_context), "foreground_changed",
+    g_signal_connect_object (user_context, "foreground_changed",
                              G_CALLBACK (menus_foreground_changed),
                              image_factory, 0);
-    g_signal_connect_object (G_OBJECT (user_context), "background_changed",
+    g_signal_connect_object (user_context, "background_changed",
                              G_CALLBACK (menus_background_changed),
                              image_factory, 0);
 
@@ -2659,13 +2659,13 @@ menus_last_opened_add (GimpItemFactory *item_factory,
 
   g_free (last_opened_entries);
 
-  g_signal_connect_object (G_OBJECT (gimp->documents), "add",
+  g_signal_connect_object (gimp->documents, "add",
                            G_CALLBACK (menus_last_opened_update),
                            item_factory, 0);
-  g_signal_connect_object (G_OBJECT (gimp->documents), "remove",
+  g_signal_connect_object (gimp->documents, "remove",
                            G_CALLBACK (menus_last_opened_update),
                            item_factory, 0);
-  g_signal_connect_object (G_OBJECT (gimp->documents), "reorder",
+  g_signal_connect_object (gimp->documents, "reorder",
                            G_CALLBACK (menus_last_opened_reorder),
                            item_factory, 0);
 

@@ -484,16 +484,16 @@ undo_history_shell_destroy_callback (GtkWidget *widget,
 
   if (st->gimage)
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+      g_signal_handlers_disconnect_by_func (st->gimage, 
                                             undo_history_undo_event,
                                             st);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+      g_signal_handlers_disconnect_by_func (st->gimage, 
                                             undo_history_gimage_rename_callback,
                                             st);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+      g_signal_handlers_disconnect_by_func (st->gimage, 
                                             undo_history_clean_callback,
                                             st);
-      g_object_unref(G_OBJECT(st->gimage));
+      g_object_unref (st->gimage);
 
     }
 
@@ -575,7 +575,7 @@ undo_history_undo_event (GtkWidget *widget,
   clist = GTK_CLIST (st->clist); 
 
   /* block select events */
-  g_signal_handlers_block_by_func (G_OBJECT (st->clist), 
+  g_signal_handlers_block_by_func (st->clist, 
                                    undo_history_select_row_callback,
                                    st);
 
@@ -646,7 +646,7 @@ undo_history_undo_event (GtkWidget *widget,
   if (st->gimage->dirty == 0)
     gtk_clist_set_pixmap (clist, cur_selection, 1, clean_pixmap, clean_mask);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (st->clist), 
+  g_signal_handlers_unblock_by_func (st->clist, 
                                      undo_history_select_row_callback,
                                      st);
 
@@ -672,7 +672,7 @@ undo_history_select_row_callback (GtkWidget *widget,
 
   /* Disable undo_event signals while we do these multiple undo or
    * redo actions. */
-  g_signal_handlers_block_by_func (G_OBJECT (st->gimage),
+  g_signal_handlers_block_by_func (st->gimage,
                                    undo_history_undo_event, st);
 
   while (cur_selection < st->old_selection)
@@ -696,7 +696,7 @@ undo_history_select_row_callback (GtkWidget *widget,
     gtk_clist_set_pixmap (GTK_CLIST (widget),
                           cur_selection, 1, clean_pixmap, clean_mask);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (st->gimage),
+  g_signal_handlers_unblock_by_func (st->gimage,
                                      undo_history_undo_event, st);    
 
   undo_history_set_sensitive (st, GTK_CLIST(st->clist)->rows);
@@ -786,17 +786,17 @@ undo_history_new (GimpImage *gimage)
 
   st = g_new0 (undo_history_st, 1);
   st->gimage = gimage;
-  g_object_ref(G_OBJECT(gimage));
+  g_object_ref (gimage);
   st->preview_size = gimage->gimp->config->preview_size;
 
   /*  gimage signals  */
-  g_signal_connect (G_OBJECT (gimage), "undo_event",
+  g_signal_connect (gimage, "undo_event",
                     G_CALLBACK (undo_history_undo_event),
                     st);
-  g_signal_connect (G_OBJECT (gimage), "name_changed",
+  g_signal_connect (gimage, "name_changed",
                     G_CALLBACK (undo_history_gimage_rename_callback),
                     st);
-  g_signal_connect (G_OBJECT (gimage), "clean",
+  g_signal_connect (gimage, "clean",
                     G_CALLBACK (undo_history_clean_callback),
                     st);
 
@@ -819,7 +819,7 @@ undo_history_new (GimpImage *gimage)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (st->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  g_signal_connect (G_OBJECT (st->shell), "destroy",
+  g_signal_connect (st->shell, "destroy",
                     G_CALLBACK (undo_history_shell_destroy_callback),
                     st);
 
@@ -871,7 +871,7 @@ undo_history_new (GimpImage *gimage)
   undo_history_set_pixmap (GTK_CLIST (st->clist),
 			   st->old_selection, st->preview_size, st->gimage);
 
-  g_signal_connect (G_OBJECT (st->clist), "select_row",
+  g_signal_connect (st->clist, "select_row",
                     G_CALLBACK (undo_history_select_row_callback),
                     st);
 
@@ -895,14 +895,14 @@ undo_history_new (GimpImage *gimage)
 
   st->undo_button = button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (undo_history_undo_callback),
                     st);
   gtk_widget_show (GTK_WIDGET (button));
 
   st->redo_button = button = gtk_button_new_from_stock (GTK_STOCK_REDO);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
                     G_CALLBACK (undo_history_redo_callback),
                     st);
   gtk_widget_show (GTK_WIDGET (button));

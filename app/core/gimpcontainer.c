@@ -555,7 +555,7 @@ gimp_container_deserialize (GObject  *object,
                 gimp_container_add (container, child);
 
                 if (container->policy == GIMP_CONTAINER_POLICY_STRONG)
-                  g_object_unref (G_OBJECT (child));
+                  g_object_unref (child);
               }
 
             {
@@ -648,7 +648,7 @@ gimp_container_add (GimpContainer *container,
     {
       handler = (GimpContainerHandler *) list->data;
 
-      handler_id = g_signal_connect (G_OBJECT (object),
+      handler_id = g_signal_connect (object,
 				     handler->signame,
 				     handler->callback,
 				     handler->callback_data);
@@ -660,11 +660,11 @@ gimp_container_add (GimpContainer *container,
   switch (container->policy)
     {
     case GIMP_CONTAINER_POLICY_STRONG:
-      g_object_ref (G_OBJECT (object));
+      g_object_ref (object);
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
-      g_signal_connect (G_OBJECT (object), "disconnect",
+      g_signal_connect (object, "disconnect",
 			G_CALLBACK (gimp_container_disconnect_callback),
 			container);
       break;
@@ -672,7 +672,7 @@ gimp_container_add (GimpContainer *container,
 
   container->num_children++;
 
-  g_signal_emit (G_OBJECT (container), container_signals[ADD], 0, object);
+  g_signal_emit (container, container_signals[ADD], 0, object);
 
   return TRUE;
 }
@@ -707,7 +707,7 @@ gimp_container_remove (GimpContainer *container,
 
       if (handler_id)
 	{
-	  g_signal_handler_disconnect (G_OBJECT (object), handler_id);
+	  g_signal_handler_disconnect (object, handler_id);
 
 	  g_object_set_qdata (G_OBJECT (object), handler->quark, NULL);
 	}
@@ -715,17 +715,17 @@ gimp_container_remove (GimpContainer *container,
 
   container->num_children--;
 
-  g_signal_emit (G_OBJECT (container), container_signals[REMOVE], 0,
+  g_signal_emit (container, container_signals[REMOVE], 0,
 		 object);
 
   switch (container->policy)
     {
     case GIMP_CONTAINER_POLICY_STRONG:
-      g_object_unref (G_OBJECT (object));
+      g_object_unref (object);
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
-      g_signal_handlers_disconnect_by_func (G_OBJECT (object),
+      g_signal_handlers_disconnect_by_func (object,
                                             gimp_container_disconnect_callback,
                                             container);
       break;
@@ -784,7 +784,7 @@ gimp_container_reorder (GimpContainer *container,
       return FALSE;
     }
 
-  g_signal_emit (G_OBJECT (container), container_signals[REORDER], 0,
+  g_signal_emit (container, container_signals[REORDER], 0,
 		 object, new_index);
 
   return TRUE;
@@ -798,7 +798,7 @@ gimp_container_freeze (GimpContainer *container)
   container->freeze_count++;
 
   if (container->freeze_count == 1)
-    g_signal_emit (G_OBJECT (container), container_signals[FREEZE], 0);
+    g_signal_emit (container, container_signals[FREEZE], 0);
 }
 
 void
@@ -810,7 +810,7 @@ gimp_container_thaw (GimpContainer *container)
     container->freeze_count--;
 
   if (container->freeze_count == 0)
-    g_signal_emit (G_OBJECT (container), container_signals[THAW], 0);
+    g_signal_emit (container, container_signals[THAW], 0);
 }
 
 gboolean
@@ -893,7 +893,7 @@ gimp_container_add_handler_foreach_func (GimpObject           *object,
 {
   gulong handler_id;
 
-  handler_id = g_signal_connect (G_OBJECT (object),
+  handler_id = g_signal_connect (object,
 				 handler->signame,
 				 handler->callback,
 				 handler->callback_data);
@@ -953,7 +953,7 @@ gimp_container_remove_handler_foreach_func (GimpObject           *object,
 
   if (handler_id)
     {
-      g_signal_handler_disconnect (G_OBJECT (object), handler_id);
+      g_signal_handler_disconnect (object, handler_id);
 
       g_object_set_qdata (G_OBJECT (object), handler->quark, NULL);
     }

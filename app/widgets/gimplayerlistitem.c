@@ -161,11 +161,11 @@ gimp_layer_list_item_init (GimpLayerListItem *list_item)
   gtk_container_add (GTK_CONTAINER (abox), list_item->linked_button);
   gtk_widget_show (list_item->linked_button);
 
-  g_signal_connect (G_OBJECT (list_item->linked_button), "realize",
+  g_signal_connect (list_item->linked_button, "realize",
 		    G_CALLBACK (gimp_list_item_button_realize),
 		    list_item);
 
-  g_signal_connect (G_OBJECT (list_item->linked_button), "state_changed",
+  g_signal_connect (list_item->linked_button, "state_changed",
 		    G_CALLBACK (gimp_list_item_button_state_changed),
 		    list_item);
 
@@ -210,16 +210,16 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layer_item->linked_button),
                                 linked);
 
-  g_signal_connect (G_OBJECT (layer_item->linked_button), "toggled",
+  g_signal_connect (layer_item->linked_button, "toggled",
 		    G_CALLBACK (gimp_layer_list_item_linked_toggled),
 		    list_item);
 
-  g_signal_connect_object (G_OBJECT (viewable), "linked_changed",
+  g_signal_connect_object (viewable, "linked_changed",
 			   G_CALLBACK (gimp_layer_list_item_linked_changed),
-			   G_OBJECT (list_item),
+			   list_item,
 			   0);
 
-  g_signal_connect (G_OBJECT (list_item->preview), "clicked",
+  g_signal_connect (list_item->preview, "clicked",
 		    G_CALLBACK (gimp_layer_list_item_layer_clicked),
 		    layer);
 
@@ -228,9 +228,9 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
       gimp_layer_list_item_mask_changed (layer, layer_item);
     }
 
-  g_signal_connect_object (G_OBJECT (layer), "mask_changed",
+  g_signal_connect_object (layer, "mask_changed",
 			   G_CALLBACK (gimp_layer_list_item_mask_changed),
-			   G_OBJECT (list_item),
+			   list_item,
 			   0);
 }
 
@@ -383,13 +383,13 @@ gimp_layer_list_item_linked_toggled (GtkWidget *widget,
           gtk_widget_set_size_request (GTK_WIDGET (widget), -1, -1);
         }
 
-      g_signal_handlers_block_by_func (G_OBJECT (layer),
+      g_signal_handlers_block_by_func (layer,
 				       gimp_layer_list_item_linked_changed,
 				       list_item);
 
       gimp_layer_set_linked (layer, linked);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (layer),
+      g_signal_handlers_unblock_by_func (layer,
 					 gimp_layer_list_item_linked_changed,
 					 list_item);
     }
@@ -422,13 +422,13 @@ gimp_layer_list_item_linked_changed (GimpLayer *layer,
           gtk_widget_set_size_request (GTK_WIDGET (toggle), -1, -1);
         }
 
-      g_signal_handlers_block_by_func (G_OBJECT (toggle),
+      g_signal_handlers_block_by_func (toggle,
 				       gimp_layer_list_item_linked_toggled,
 				       list_item);
 
       gtk_toggle_button_set_active (toggle, linked);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (toggle),
+      g_signal_handlers_unblock_by_func (toggle,
 					 gimp_layer_list_item_linked_toggled,
 					 list_item);
     }
@@ -459,26 +459,26 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
                              layer_item->mask_preview, 3);
       gtk_widget_show (layer_item->mask_preview);
 
-      g_signal_connect (G_OBJECT (layer_item->mask_preview), "clicked",
+      g_signal_connect (layer_item->mask_preview, "clicked",
 			G_CALLBACK (gimp_layer_list_item_mask_clicked),
 			mask);
-      g_signal_connect (G_OBJECT (layer_item->mask_preview), "extended_clicked",
+      g_signal_connect (layer_item->mask_preview, "extended_clicked",
 			G_CALLBACK (gimp_layer_list_item_mask_extended_clicked),
 			mask);
 
-      g_signal_connect_object (G_OBJECT (mask), "apply_changed",
+      g_signal_connect_object (mask, "apply_changed",
 			       G_CALLBACK (gimp_layer_list_item_update_state),
-			       G_OBJECT (layer_item),
+			       layer_item,
 			       G_CONNECT_SWAPPED);
 
-      g_signal_connect_object (G_OBJECT (mask), "edit_changed",
+      g_signal_connect_object (mask, "edit_changed",
 			       G_CALLBACK (gimp_layer_list_item_update_state),
-			       G_OBJECT (layer_item),
+			       layer_item,
 			       G_CONNECT_SWAPPED);
 
-      g_signal_connect_object (G_OBJECT (mask), "show_changed",
+      g_signal_connect_object (mask, "show_changed",
 			       G_CALLBACK (gimp_layer_list_item_update_state),
-			       G_OBJECT (layer_item),
+			       layer_item,
 			       G_CONNECT_SWAPPED);
     }
   else if (! mask && layer_item->mask_preview)

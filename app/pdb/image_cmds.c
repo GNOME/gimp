@@ -356,7 +356,7 @@ image_delete_invoker (Gimp     *gimp,
     {
       if (gimage->disp_count == 0)
 	{
-	  g_object_unref (G_OBJECT (gimage));
+	  g_object_unref (gimage);
 	  success = TRUE;
 	}
     }
@@ -1623,7 +1623,7 @@ image_add_layer_mask_invoker (Gimp     *gimp,
       success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
     
       if (success)
-	g_object_unref (G_OBJECT (mask));
+	g_object_unref (mask);
     }
 
   return procedural_db_return_args (&image_add_layer_mask_proc, success);

@@ -136,7 +136,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook->notebook);
 
-  g_signal_connect (G_OBJECT (notebook->notebook), "switch_page",
+  g_signal_connect (notebook->notebook, "switch_page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
                     notebook);
 
@@ -179,10 +179,10 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
       gtk_widget_show (page);
 
-      g_signal_connect (G_OBJECT (page), "color_changed",
+      g_signal_connect (page, "color_changed",
                         G_CALLBACK (gimp_color_notebook_color_changed),
                         notebook);
-      g_signal_connect (G_OBJECT (page), "channel_changed",
+      g_signal_connect (page, "channel_changed",
                         G_CALLBACK (gimp_color_notebook_channel_changed),
                         notebook);
     }
@@ -269,13 +269,13 @@ gimp_color_notebook_set_color (GimpColorSelector *selector,
 
   notebook = GIMP_COLOR_NOTEBOOK (selector);
 
-  g_signal_handlers_block_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_block_by_func (notebook->cur_page,
                                    gimp_color_notebook_color_changed,
                                    notebook);
 
   gimp_color_selector_set_color (notebook->cur_page, rgb, hsv);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_color_changed,
                                      notebook);
 }
@@ -288,13 +288,13 @@ gimp_color_notebook_set_channel (GimpColorSelector        *selector,
 
   notebook = GIMP_COLOR_NOTEBOOK (selector);
 
-  g_signal_handlers_block_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_block_by_func (notebook->cur_page,
                                    gimp_color_notebook_channel_changed,
                                    notebook);
 
   gimp_color_selector_set_channel (notebook->cur_page, channel);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_channel_changed,
                                      notebook);
 }
@@ -314,10 +314,10 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
 
   notebook->cur_page = GIMP_COLOR_SELECTOR (page_widget);
 
-  g_signal_handlers_block_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_block_by_func (notebook->cur_page,
                                    gimp_color_notebook_color_changed,
                                    notebook);
-  g_signal_handlers_block_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_block_by_func (notebook->cur_page,
                                    gimp_color_notebook_channel_changed,
                                    notebook);
 
@@ -327,10 +327,10 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
   gimp_color_selector_set_channel (notebook->cur_page,
                                    selector->channel);
 
-  g_signal_handlers_unblock_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_color_changed,
                                      notebook);
-  g_signal_handlers_unblock_by_func (G_OBJECT (notebook->cur_page),
+  g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_channel_changed,
                                      notebook);
 }
@@ -431,10 +431,10 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
 
   gtk_widget_show (GTK_WIDGET (page));
 
-  g_signal_connect (G_OBJECT (page), "color_changed",
+  g_signal_connect (page, "color_changed",
                     G_CALLBACK (gimp_color_notebook_color_changed),
                     notebook);
-  g_signal_connect (G_OBJECT (page), "channel_changed",
+  g_signal_connect (page, "channel_changed",
                     G_CALLBACK (gimp_color_notebook_channel_changed),
                     notebook);
 

@@ -136,7 +136,7 @@ dialogs_exit (Gimp *gimp)
 {
   if (global_dialog_factory)
     {
-      g_object_unref (G_OBJECT (global_dialog_factory));
+      g_object_unref (global_dialog_factory);
       global_dialog_factory = NULL;
     }
 
@@ -148,13 +148,13 @@ dialogs_exit (Gimp *gimp)
    */
   if (global_toolbox_factory)
     {
-      g_object_unref (G_OBJECT (global_toolbox_factory));
+      g_object_unref (global_toolbox_factory);
       global_toolbox_factory = NULL;
     }
 
   if (global_dock_factory)
     {
-      g_object_unref (G_OBJECT (global_dock_factory));
+      g_object_unref (global_dock_factory);
       global_dock_factory = NULL;
     }
 }

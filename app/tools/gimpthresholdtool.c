@@ -206,7 +206,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
-  g_signal_handlers_block_by_func (G_OBJECT (t_tool->histogram_box->histogram),
+  g_signal_handlers_block_by_func (t_tool->histogram_box->histogram,
                                    gimp_threshold_tool_histogram_range,
                                    t_tool);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->histogram,
@@ -214,7 +214,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
   gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
                                  t_tool->threshold->low_threshold,
                                  t_tool->threshold->high_threshold);
-  g_signal_handlers_unblock_by_func (G_OBJECT (t_tool->histogram_box->histogram),
+  g_signal_handlers_unblock_by_func (t_tool->histogram_box->histogram,
                                      gimp_threshold_tool_histogram_range,
                                      t_tool);
 
@@ -252,7 +252,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
-  g_signal_connect (G_OBJECT (t_tool->histogram_box->histogram), "range_changed",
+  g_signal_connect (t_tool->histogram_box->histogram, "range_changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 }

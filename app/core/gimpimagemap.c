@@ -302,7 +302,7 @@ gimp_image_map_commit (GimpImageMap *image_map)
                                image_map->undo_tiles, FALSE);
     }
 
-  g_object_unref (G_OBJECT (image_map));
+  g_object_unref (image_map);
 }
 
 void
@@ -360,7 +360,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
                                                    image_map->gdisp->gimage->gimp);
 #endif
 
-	  g_object_unref (G_OBJECT (image_map));
+	  g_object_unref (image_map);
 	  return;
 	}
 
@@ -393,7 +393,7 @@ gimp_image_map_abort (GimpImageMap *image_map)
 
   gimp_image_undo_thaw (gimage);
 
-  g_object_unref (G_OBJECT (image_map));
+  g_object_unref (image_map);
 }
 
 guchar *
@@ -489,7 +489,7 @@ gimp_image_map_do (GimpImageMap *image_map)
   gimp_drawable_update (image_map->drawable, x, y, w, h);
 
   if (image_map->interactive)
-    g_signal_emit (G_OBJECT (image_map), image_map_signals[FLUSH], 0);
+    g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 
   image_map->PRI = pixel_regions_process (image_map->PRI);
 

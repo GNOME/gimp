@@ -355,10 +355,10 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_box_pack_start (GTK_BOX (left_vbox), cnp->notebook, TRUE, TRUE, 0);
   gtk_widget_show (cnp->notebook);
 
-  g_signal_connect (G_OBJECT (cnp->notebook), "color_changed",
+  g_signal_connect (cnp->notebook, "color_changed",
                     G_CALLBACK (color_notebook_notebook_changed),
                     cnp);
-  g_signal_connect (G_OBJECT (GIMP_COLOR_NOTEBOOK (cnp->notebook)->notebook),
+  g_signal_connect (GIMP_COLOR_NOTEBOOK (cnp->notebook)->notebook,
                     "switch_page",
                     G_CALLBACK (color_notebook_switch_page),
                     cnp);
@@ -388,7 +388,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_container_add (GTK_CONTAINER (color_frame), cnp->new_color);
   gtk_widget_show (cnp->new_color);
 
-  g_signal_connect (G_OBJECT (cnp->new_color), "color_changed",
+  g_signal_connect (cnp->new_color, "color_changed",
 		    G_CALLBACK (color_notebook_new_color_changed),
 		    cnp);
 
@@ -421,7 +421,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   gimp_help_set_help_data (button, _("Revert to old color"), NULL);
 
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+  g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (color_notebook_reset_clicked),
                             cnp);
 
@@ -437,10 +437,10 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_box_pack_start (GTK_BOX (right_vbox), cnp->scales, TRUE, TRUE, 0);
   gtk_widget_show (cnp->scales);
 
-  g_signal_connect (G_OBJECT (cnp->scales), "channel_changed",
+  g_signal_connect (cnp->scales, "channel_changed",
                     G_CALLBACK (color_notebook_channel_changed),
                     cnp);
-  g_signal_connect (G_OBJECT (cnp->scales), "color_changed",
+  g_signal_connect (cnp->scales, "color_changed",
                     G_CALLBACK (color_notebook_scales_changed),
                     cnp);
 
@@ -460,7 +460,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 			   NULL);
   gtk_widget_show (button);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
+  g_signal_connect (button, "clicked",
 		    G_CALLBACK (color_history_add_clicked),
 		    cnp);
 
@@ -489,11 +489,11 @@ color_notebook_new_internal (GimpViewable          *viewable,
       gtk_widget_show (cnp->history[i]);
       gtk_widget_show (button);
 
-      g_signal_connect (G_OBJECT (button), "clicked",
+      g_signal_connect (button, "clicked",
 			G_CALLBACK (color_history_color_clicked),
 			cnp);
 
-      g_signal_connect (G_OBJECT (cnp->history[i]), "color_changed",
+      g_signal_connect (cnp->history[i], "color_changed",
 			G_CALLBACK (color_history_color_changed),
 			GINT_TO_POINTER (i));
     }
@@ -556,16 +556,16 @@ color_notebook_update (ColorNotebook           *cnp,
 
   if (update & UPDATE_NOTEBOOK)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (cnp->notebook),
-                                       G_CALLBACK (color_notebook_notebook_changed),
+      g_signal_handlers_block_by_func (cnp->notebook,
+                                       color_notebook_notebook_changed,
                                        cnp);
 
       gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->notebook),
                                      &cnp->rgb,
                                      &cnp->hsv);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->notebook),
-                                         G_CALLBACK (color_notebook_notebook_changed),
+      g_signal_handlers_unblock_by_func (cnp->notebook,
+                                         color_notebook_notebook_changed,
                                          cnp);
     }
 
@@ -575,16 +575,16 @@ color_notebook_update (ColorNotebook           *cnp,
 
   if (update & UPDATE_SCALES)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (cnp->scales),
-                                       G_CALLBACK (color_notebook_scales_changed),
+      g_signal_handlers_block_by_func (cnp->scales,
+                                       color_notebook_scales_changed,
                                        cnp);
 
       gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->scales),
                                      &cnp->rgb,
                                      &cnp->hsv);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->scales),
-                                         G_CALLBACK (color_notebook_scales_changed),
+      g_signal_handlers_unblock_by_func (cnp->scales,
+                                         color_notebook_scales_changed,
                                          cnp);
     }
 
@@ -594,14 +594,14 @@ color_notebook_update (ColorNotebook           *cnp,
 
   if (update & UPDATE_NEW_COLOR)
     {
-      g_signal_handlers_block_by_func (G_OBJECT (cnp->new_color),
+      g_signal_handlers_block_by_func (cnp->new_color,
 				       color_notebook_new_color_changed,
 				       cnp);
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->new_color), 
 				 &cnp->rgb);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->new_color),
+      g_signal_handlers_unblock_by_func (cnp->new_color,
 					 color_notebook_new_color_changed,
 					 cnp);
     }
@@ -751,14 +751,14 @@ color_history_color_changed (GtkWidget *widget,
       if (notebook->history[color_index] == widget)
         continue;
 
-      g_signal_handlers_block_by_func (G_OBJECT (notebook->history[color_index]),
+      g_signal_handlers_block_by_func (notebook->history[color_index],
                                        color_history_color_changed,
                                        data);
 
       gimp_color_area_set_color
         (GIMP_COLOR_AREA (notebook->history[color_index]), &changed_color);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (notebook->history[color_index]),
+      g_signal_handlers_unblock_by_func (notebook->history[color_index],
                                          color_history_color_changed,
                                          data);
     }
