@@ -237,7 +237,7 @@ run (gchar  *name,
 	  dvals.amount_x = param[3].data.d_float;
 	  dvals.amount_y = param[4].data.d_float;
 	  dvals.do_x = param[5].data.d_int32;
-	  dvals.do_x = param[6].data.d_int32;
+	  dvals.do_y = param[6].data.d_int32;
 	  dvals.displace_map_x = param[7].data.d_int32;
 	  dvals.displace_map_y = param[8].data.d_int32;
 	  dvals.displace_type = param[9].data.d_int32;

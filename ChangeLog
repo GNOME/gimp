@@ -1,3 +1,8 @@
+1999-05-16  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* plug-ins/displace/displace.c (run): Fixed a dumb typo reported
+	on gimp-developer by Claes G. Lindblad.
+
 Sun May 16 22:54:23 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/xd/xd.c: Add OS/2 patches. include <sys/types.h>,,,
