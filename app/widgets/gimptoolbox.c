@@ -51,6 +51,9 @@
 #define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON
 #define DEFAULT_BUTTON_RELIEF  GTK_RELIEF_NONE
 
+#define TOOL_BUTTON_DATA_KEY   "gimp-tool-button"
+#define TOOL_INFO_DATA_KEY     "gimp-tool-info"
+
 
 /*  local function prototypes  */
 
@@ -228,7 +231,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list,
                                       "gimp-rect-select-tool");
-  tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
+  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
     {
@@ -324,7 +327,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
         continue;
 
       tool_button = g_object_get_data (G_OBJECT (tool_info),
-                                       "toolbox-button");
+                                       TOOL_BUTTON_DATA_KEY);
 
       if (tool_button)
         {
@@ -372,7 +375,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list,
                                       "gimp-rect-select-tool");
-  tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
+  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
 
   if (tool_button)
     {
@@ -516,7 +519,7 @@ gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
       GtkAccelKey  *accel_key;
       gchar        *tooltip;
 
-      tool_info = g_object_get_data (G_OBJECT (tool_button), "tool-info");
+      tool_info = g_object_get_data (G_OBJECT (tool_button), TOOL_INFO_DATA_KEY);
 
       accel_key = gtk_accel_group_find (accel_group,
                                         gimp_toolbox_button_accel_find_func,
@@ -645,8 +648,8 @@ toolbox_create_tools (GimpToolbox *toolbox,
           gtk_container_add (GTK_CONTAINER (toolbox->trash), button);
         }
 
-      g_object_set_data (G_OBJECT (tool_info), "toolbox-button", button);
-      g_object_set_data (G_OBJECT (button), "tool-info", tool_info);
+      g_object_set_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY, button);
+      g_object_set_data (G_OBJECT (button),    TOOL_INFO_DATA_KEY,   tool_info);
 
       if (tool_info == active_tool)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -780,10 +783,8 @@ toolbox_tool_changed (GimpContext  *context,
 {
   if (tool_info)
     {
-      GtkWidget *toolbox_button;
-
-      toolbox_button = g_object_get_data (G_OBJECT (tool_info),
-                                          "toolbox-button");
+      GtkWidget *toolbox_button = g_object_get_data (G_OBJECT (tool_info),
+                                                     TOOL_BUTTON_DATA_KEY);
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{

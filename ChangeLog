@@ -1,5 +1,10 @@
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c: added #defines for the data keys used
+	for g_object_set_data() and _get_data().
+
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpdialog.c: added a "role" property.
 
 	* app/widgets/gimptexteditor.c
