@@ -16,6 +16,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */                                                                             
+
 #include "gimp.h"
 
 
@@ -82,30 +83,6 @@ gimp_channel_delete (gint32 channel_ID)
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-guint
-gimp_channel_width (gint32 channel_ID)
-{
-  return gimp_drawable_width (channel_ID);
-}
-
-guint
-gimp_channel_height (gint32 channel_ID)
-{
-  return gimp_drawable_height (channel_ID);
-}
-
-gint32
-gimp_channel_get_image_id (gint32 channel_ID)
-{
-  return gimp_drawable_image_id (channel_ID);
-}
-
-gint32
-gimp_channel_get_layer_id (gint32 channel_ID)
-{
-  return -1;
 }
 
 void

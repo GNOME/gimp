@@ -1,31 +1,34 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpgradient_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
+ */
+
 #include "gimp.h"
 
 
-char **
-gimp_gradients_get_list(gint *num_gradients)
+gchar **
+gimp_gradients_get_list (gint *num_gradients)
 {
   GParam  *return_vals;
-  int      nreturn_vals;
-  char   **gradient_names;
-  int      i;
+  gint     nreturn_vals;
+  gchar  **gradient_names;
+  gint     i;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_list",
 				    &nreturn_vals,
@@ -47,12 +50,12 @@ gimp_gradients_get_list(gint *num_gradients)
 }
 
 
-char *
-gimp_gradients_get_active(void)
+gchar *
+gimp_gradients_get_active (void)
 {
   GParam *return_vals;
-  int     nreturn_vals;
-  char   *result;
+  gint    nreturn_vals;
+  gchar  *result;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_active",
 				    &nreturn_vals,
@@ -70,10 +73,10 @@ gimp_gradients_get_active(void)
 
 
 void
-gimp_gradients_set_active(char *name)
+gimp_gradients_set_active (gchar *name)
 {
   GParam *return_vals;
-  int     nreturn_vals;
+  gint    nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gradients_set_active",
 				    &nreturn_vals,
@@ -84,13 +87,13 @@ gimp_gradients_set_active(char *name)
 
 
 gdouble *
-gimp_gradients_sample_uniform(gint num_samples)
+gimp_gradients_sample_uniform (gint num_samples)
 {
   GParam  *return_vals;
-  int      nreturn_vals;
+  gint     nreturn_vals;
   gdouble *result;
-  int      nresult;
-  int      i;
+  gint     nresult;
+  gint     i;
 
   return_vals = gimp_run_procedure ("gimp_gradients_sample_uniform",
 				    &nreturn_vals,
@@ -114,13 +117,14 @@ gimp_gradients_sample_uniform(gint num_samples)
 
 
 gdouble *
-gimp_gradients_sample_custom(gint num_samples, gdouble *positions)
+gimp_gradients_sample_custom (gint     num_samples,
+			      gdouble *positions)
 {
   GParam  *return_vals;
-  int      nreturn_vals;
+  gint     nreturn_vals;
   gdouble *result;
-  int      nresult;
-  int      i;
+  gint     nresult;
+  gint     i;
 
   return_vals = gimp_run_procedure ("gimp_gradients_sample_custom",
 				    &nreturn_vals,

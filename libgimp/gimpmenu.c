@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimpmenu.c
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -28,17 +30,17 @@
 /* Copy data from temp_PDB call */
 struct _GimpBrushData 
 {
-  gboolean           busy;
-  gchar             *bname;
-  gdouble            opacity;
-  gint               spacing;
-  gint               paint_mode;
-  gint               width;
-  gint               height;
-  gchar             *brush_mask_data;
-  GRunBrushCallback  callback;
-  gboolean           closing;
-  gpointer           data;
+  gboolean  busy;
+  gchar    *bname;
+  gdouble   opacity;
+  gint      spacing;
+  gint      paint_mode;
+  gint      width;
+  gint      height;
+  gchar    *brush_mask_data;
+  GimpRunBrushCallback callback;
+  gboolean  closing;
+  gpointer  data;
 };
 
 typedef struct _GimpBrushData GimpBrushData;
@@ -46,15 +48,15 @@ typedef struct _GimpBrushData GimpBrushData;
 /* Copy data from temp_PDB call */
 struct _GimpPatternData 
 {
-  gboolean             busy;
-  gchar               *pname;
-  gint                 width;
-  gint                 height;
-  gint                 bytes;
-  gchar               *pattern_mask_data;
-  GRunPatternCallback  callback;
-  gboolean             closing;
-  gpointer             data;
+  gboolean  busy;
+  gchar    *pname;
+  gint      width;
+  gint      height;
+  gint      bytes;
+  gchar    *pattern_mask_data;
+  GimpRunPatternCallback  callback;
+  gboolean  closing;
+  gpointer  data;
 };
 
 typedef struct _GimpPatternData GimpPatternData;
@@ -62,48 +64,49 @@ typedef struct _GimpPatternData GimpPatternData;
 /* Copy data from temp_PDB call */
 struct _GimpGradientData 
 {
-  gboolean              busy;
-  gchar                *gname;
-  gint                  width;
-  gdouble              *gradient_data;
-  GRunGradientCallback  callback;
-  gboolean              closing;
-  gpointer              data;
+  gboolean  busy;
+  gchar    *gname;
+  gint      width;
+  gdouble  *gradient_data;
+  GimpRunGradientCallback  callback;
+  gboolean  closing;
+  gpointer  data;
 };
 
 typedef struct _GimpGradientData GimpGradientData;
 
-static void     gimp_menu_callback      (GtkWidget        *widget,
-					 gint32           *id);
-static void     do_brush_callback       (GimpBrushData       *bdata);
-static gint     idle_test_brush         (GimpBrushData       *bdata);
-static gint     idle_test_pattern       (GimpPatternData     *pdata);
-static gint     idle_test_gradient      (GimpGradientData    *gdata);
-static void     temp_brush_invoker      (gchar            *name,
-					 gint              nparams,
-					 GParam           *param,
-					 gint             *nreturn_vals,
-					 GParam          **return_vals);
-static gboolean input_callback	        (GIOChannel       *channel,
-					 GIOCondition      condition,
-					 gpointer          data);
+static void     gimp_menu_callback      (GtkWidget         *widget,
+					 gint32            *id);
+static void     do_brush_callback       (GimpBrushData     *bdata);
+static gint     idle_test_brush         (GimpBrushData     *bdata);
+static gint     idle_test_pattern       (GimpPatternData   *pdata);
+static gint     idle_test_gradient      (GimpGradientData  *gdata);
+static void     temp_brush_invoker      (gchar             *name,
+					 gint               nparams,
+					 GimpParam         *param,
+					 gint              *nreturn_vals,
+					 GimpParam        **return_vals);
+static gboolean input_callback	        (GIOChannel        *channel,
+					 GIOCondition       condition,
+					 gpointer           data);
 static void     gimp_setup_callbacks    (void);
-static gchar*   gen_temp_plugin_name    (void);
-static void     fill_preview_with_thumb (GtkWidget        *widget,
-					 gint32            drawable_ID,
-					 gint              width,
-					 gint              height);
+static gchar  * gen_temp_plugin_name    (void);
+static void     fill_preview_with_thumb (GtkWidget         *widget,
+					 gint32             drawable_ID,
+					 gint               width,
+					 gint               height);
+
 /* From gimp.c */
 void gimp_run_temp (void);
 
-static GHashTable *gbrush_ht = NULL;
-static GHashTable *gpattern_ht = NULL;
-static GHashTable *ggradient_ht = NULL;
-static GimpBrushData *active_brush_pdb = NULL;
-static GimpPatternData *active_pattern_pdb = NULL;
+static GHashTable       *gbrush_ht           = NULL;
+static GHashTable       *gpattern_ht         = NULL;
+static GHashTable       *ggradient_ht        = NULL;
+static GimpBrushData    *active_brush_pdb    = NULL;
+static GimpPatternData  *active_pattern_pdb  = NULL;
 static GimpGradientData *active_gradient_pdb = NULL;
 
-GtkWidget*
+GtkWidget *
 gimp_image_menu_new (GimpConstraintFunc constraint,
 		     GimpMenuCallback   callback,
 		     gpointer           data,
@@ -111,11 +114,11 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  char *filename;
-  char *label;
+  gchar *filename;
+  gchar *label;
   gint32 *images;
-  int nimages;
-  int i, k;
+  gint nimages;
+  gint i, k;
 
   menu = gtk_menu_new ();
   gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
@@ -126,8 +129,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	filename = gimp_image_get_filename (images[i]);
-	label = g_new (char, strlen (filename) + 16);
-	sprintf (label, "%s-%d", g_basename (filename), images[i]);
+	label = g_strdup_printf ("%s-%d", g_basename (filename), images[i]);
 	g_free (filename);
 
 	menuitem = gtk_menu_item_new_with_label (label);
@@ -164,8 +166,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 }
 
 
-
-GtkWidget*
+GtkWidget *
 gimp_layer_menu_new (GimpConstraintFunc constraint,
 		     GimpMenuCallback   callback,
 		     gpointer           data,
@@ -173,15 +174,15 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  char *name;
-  char *image_label;
-  char *label;
+  gchar *name;
+  gchar *image_label;
+  gchar *label;
   gint32 *images;
   gint32 *layers;
   gint32 layer;
-  int nimages;
-  int nlayers;
-  int i, j, k;
+  gint nimages;
+  gint nlayers;
+  gint i, j, k;
 
   menu = gtk_menu_new ();
   gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
@@ -194,8 +195,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
+	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
@@ -208,8 +208,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      GtkWidget *wlabel;
 
 	      name = gimp_layer_get_name (layers[j]);
-	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
-	      sprintf (label, "%s/%s", image_label, name);
+	      label = g_strdup_printf ("%s/%s", image_label, name);
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new();
@@ -228,22 +227,22 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
 	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
 
-	      fill_preview_with_thumb(wcolor_box,
-				      layers[j],
-				      MENU_THUMBNAIL_WIDTH,
-				      MENU_THUMBNAIL_HEIGHT);
+	      fill_preview_with_thumb (wcolor_box,
+				       layers[j],
+				       MENU_THUMBNAIL_WIDTH,
+				       MENU_THUMBNAIL_HEIGHT);
 
-	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
-				    MENU_THUMBNAIL_WIDTH , 
+	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box),
+				    MENU_THUMBNAIL_WIDTH,
 				    MENU_THUMBNAIL_HEIGHT);
 
-	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
-	      gtk_widget_show(wcolor_box);
+	      gtk_container_add (GTK_CONTAINER (vbox), wcolor_box);
+	      gtk_widget_show (wcolor_box);
 
-	      wlabel = gtk_label_new(label);
-	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
-	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
-	      gtk_widget_show(wlabel);
+	      wlabel = gtk_label_new (label);
+	      gtk_misc_set_alignment (GTK_MISC (wlabel), 0.0, 0.5);
+	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show (wlabel);
 
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
@@ -279,7 +278,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
-GtkWidget*
+GtkWidget *
 gimp_channel_menu_new (GimpConstraintFunc constraint,
 		       GimpMenuCallback   callback,
 		       gpointer           data,
@@ -287,15 +286,15 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  char *name;
-  char *image_label;
-  char *label;
+  gchar *name;
+  gchar *image_label;
+  gchar *label;
   gint32 *images;
   gint32 *channels;
   gint32 channel;
-  int nimages;
-  int nchannels;
-  int i, j, k;
+  gint nimages;
+  gint nchannels;
+  gint i, j, k;
 
   menu = gtk_menu_new ();
   gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
@@ -308,8 +307,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
+	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	channels = gimp_image_get_channels (images[i], &nchannels);
@@ -322,42 +320,42 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	      GtkWidget *wlabel;
 
 	      name = gimp_channel_get_name (channels[j]);
-	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
-	      sprintf (label, "%s/%s", image_label, name);
+	      label = g_strdup_printf ("%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new();
+	      menuitem = gtk_menu_item_new ();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  (GtkSignalFunc) gimp_menu_callback,
+				  GTK_SIGNAL_FUNC (gimp_menu_callback),
 				  &channels[j]);
 	      
-	      hbox = gtk_hbox_new(FALSE, 0);
-	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
-	      gtk_widget_show(hbox);
+	      hbox = gtk_hbox_new (FALSE, 0);
+	      gtk_container_add (GTK_CONTAINER (menuitem), hbox);
+	      gtk_widget_show (hbox);
 
-	      vbox = gtk_vbox_new(FALSE, 0);
-	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-	      gtk_widget_show(vbox);
-	      
-	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
-	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+	      vbox = gtk_vbox_new (FALSE, 0);
+	      gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show (vbox);
 
- 	      fill_preview_with_thumb(wcolor_box, 
- 				      channels[j], 
- 				      MENU_THUMBNAIL_WIDTH, 
- 				      MENU_THUMBNAIL_HEIGHT); 
+	      wcolor_box = gtk_preview_new (GTK_PREVIEW_COLOR);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box),
+				      GDK_RGB_DITHER_MAX);
 
-	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
-				    MENU_THUMBNAIL_WIDTH , 
+ 	      fill_preview_with_thumb (wcolor_box, 
+				       channels[j], 
+				       MENU_THUMBNAIL_WIDTH, 
+				       MENU_THUMBNAIL_HEIGHT); 
+
+	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box),
+				    MENU_THUMBNAIL_WIDTH,
 				    MENU_THUMBNAIL_HEIGHT);
 
-	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
-	      gtk_widget_show(wcolor_box);
+	      gtk_container_add (GTK_CONTAINER(vbox), wcolor_box);
+	      gtk_widget_show (wcolor_box);
 
-	      wlabel = gtk_label_new(label);
-	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
-	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
-	      gtk_widget_show(wlabel);
+	      wlabel = gtk_label_new (label);
+	      gtk_misc_set_alignment (GTK_MISC (wlabel), 0.0, 0.5);
+	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show (wlabel);
 
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
@@ -393,7 +391,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
-GtkWidget*
+GtkWidget *
 gimp_drawable_menu_new (GimpConstraintFunc constraint,
 			GimpMenuCallback   callback,
 			gpointer           data,
@@ -425,8 +423,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_new (char, strlen (name) + 16);
-	sprintf (image_label, "%s-%d", g_basename (name), images[i]);
+	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
 	g_free (name);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
@@ -440,8 +437,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      GtkWidget *wlabel;
 
 	      name = gimp_layer_get_name (layers[j]);
-	      label = g_new (gchar, strlen (image_label) + strlen (name) + 2);
-	      sprintf (label, "%s/%s", image_label, name);
+	      label = g_strdup_printf ("%s/%s", image_label, name);
 	      g_free (name);
 
 	      menuitem = gtk_menu_item_new ();
@@ -504,13 +500,12 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      GtkWidget *wlabel;
 
 	      name = gimp_channel_get_name (channels[j]);
-	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
-	      sprintf (label, "%s/%s", image_label, name);
+	      label = g_strdup_printf ("%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new();
+	      menuitem = gtk_menu_item_new ();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  (GtkSignalFunc) gimp_menu_callback,
+				  GTK_SIGNAL_FUNC (gimp_menu_callback),
 				  &channels[j]);
 
 	      hbox = gtk_hbox_new (FALSE, 0);
@@ -522,7 +517,8 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      gtk_widget_show (vbox);
 	      
 	      wcolor_box = gtk_preview_new (GTK_PREVIEW_COLOR);
-	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box),
+				      GDK_RGB_DITHER_MAX);
 
  	      fill_preview_with_thumb (wcolor_box, 
 				       channels[j], 
@@ -583,8 +579,10 @@ gimp_menu_callback (GtkWidget *widget,
   GimpMenuCallback callback;
   gpointer         callback_data;
 
-  callback = (GimpMenuCallback) gtk_object_get_user_data (GTK_OBJECT (widget->parent));
-  callback_data = gtk_object_get_data (GTK_OBJECT (widget->parent), "gimp_callback_data");
+  callback =
+    (GimpMenuCallback) gtk_object_get_user_data (GTK_OBJECT (widget->parent));
+  callback_data = gtk_object_get_data (GTK_OBJECT (widget->parent),
+				       "gimp_callback_data");
 
   (* callback) (*id, callback_data);
 }
@@ -621,30 +619,30 @@ fill_preview_with_thumb (GtkWidget *widget,
       
       for (x = 0; x < width; x++) 
 	{
-	  if(bpp == 4)
+	  if (bpp == 4)
 	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
+	      r = ((gdouble) src[x*4+0]) / 255.0;
+	      g = ((gdouble) src[x*4+1]) / 255.0;
+	      b = ((gdouble) src[x*4+2]) / 255.0;
+	      a = ((gdouble) src[x*4+3]) / 255.0;
 	    }
-	  else if(bpp == 3)
+	  else if (bpp == 3)
 	    {
-	      r =  ((gdouble)src[x*3+0])/255.0;
-	      g = ((gdouble)src[x*3+1])/255.0;
-	      b = ((gdouble)src[x*3+2])/255.0;
+	      r = ((gdouble) src[x*3+0]) / 255.0;
+	      g = ((gdouble) src[x*3+1]) / 255.0;
+	      b = ((gdouble) src[x*3+2]) / 255.0;
 	      a = 1.0;
 	    }
 	  else
 	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
+	      r = ((gdouble) src[x*bpp+0]) / 255.0;
 	      g = b = r;
-	      if(bpp == 2)
-		a = ((gdouble)src[x*bpp+1])/255.0;
+	      if (bpp == 2)
+		a = ((gdouble) src[x*bpp+1]) / 255.0;
 	      else
 		a = 1.0;
 	    }
-	
+
 	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	    {
 	      c0 = GIMP_CHECK_LIGHT;
@@ -659,14 +657,14 @@ fill_preview_with_thumb (GtkWidget *widget,
 	  *p0++ = (c0 + (r - c0) * a) * 255.0;
 	  *p0++ = (c0 + (g - c0) * a) * 255.0;
 	  *p0++ = (c0 + (b - c0) * a) * 255.0;
-	  
+
 	  *p1++ = (c1 + (r - c1) * a) * 255.0;
 	  *p1++ = (c1 + (g - c1) * a) * 255.0;
 	  *p1++ = (c1 + (b - c1) * a) * 255.0;  
 	}
       
       if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd, 0, y, width);
+	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
       else
 	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
 
@@ -791,13 +789,13 @@ idle_test_gradient (GimpGradientData *gdata)
 }
 
 static void
-temp_brush_invoker(gchar    *name,
-		   gint      nparams,
-		   GParam   *param,
-		   gint     *nreturn_vals,
-		   GParam **return_vals)
+temp_brush_invoker (gchar      *name,
+		    gint        nparams,
+		    GimpParam  *param,
+		    gint       *nreturn_vals,
+		    GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   GStatusType status = STATUS_SUCCESS;
   GimpBrushData *bdata;
 
@@ -832,13 +830,13 @@ temp_brush_invoker(gchar    *name,
 }
 
 static void
-temp_pattern_invoker(gchar    *name,
-		     gint      nparams,
-		     GParam   *param,
-		     gint     *nreturn_vals,
-		     GParam  **return_vals)
+temp_pattern_invoker (gchar      *name,
+		      gint        nparams,
+		      GimpParam  *param,
+		      gint       *nreturn_vals,
+		      GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   GStatusType status = STATUS_SUCCESS;
   GimpPatternData *pdata;
 
@@ -871,13 +869,13 @@ temp_pattern_invoker(gchar    *name,
 }
 
 static void
-temp_gradient_invoker(gchar    *name,
-		      gint      nparams,
-		      GParam   *param,
-		      gint     *nreturn_vals,
-		      GParam  **return_vals)
+temp_gradient_invoker (gchar      *name,
+		       gint        nparams,
+		       GimpParam  *param,
+		       gint       *nreturn_vals,
+		       GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   GStatusType status = STATUS_SUCCESS;
   GimpGradientData *gdata;
 
@@ -949,7 +947,7 @@ gimp_setup_callbacks (void)
 static gchar *
 gen_temp_plugin_name (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint   nreturn_vals;
   gchar *result;
 
@@ -970,32 +968,32 @@ gen_temp_plugin_name (void)
  * selection mech.
  */
 gpointer
-gimp_interactive_selection_brush(gchar             *dialogname, 
-				 gchar             *brush_name,
-				 gdouble            opacity,
-				 gint               spacing,
-				 gint               paint_mode,
-				 GRunBrushCallback  callback,
-				 gpointer           data)
+gimp_interactive_selection_brush (gchar             *dialogname, 
+				  gchar             *brush_name,
+				  gdouble            opacity,
+				  gint               spacing,
+				  gint               paint_mode,
+				  GimpRunBrushCallback  callback,
+				  gpointer           data)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_STRING,    "str",           "String"},
-    { PARAM_FLOAT,     "opacity",       "Opacity"},
-    { PARAM_INT32,     "spacing",       "Spacing"},
-    { PARAM_INT32,     "paint mode",    "Paint mode"},
-    { PARAM_INT32,     "mask width",    "Brush width"},
-    { PARAM_INT32,     "mask height"    "Brush heigth"},
-    { PARAM_INT32,     "mask len",      "Length of brush mask data"},
-    { PARAM_INT8ARRAY, "mask data",     "The brush mask data"},
+    { PARAM_STRING,    "str",           "String" },
+    { PARAM_FLOAT,     "opacity",       "Opacity" },
+    { PARAM_INT32,     "spacing",       "Spacing" },
+    { PARAM_INT32,     "paint mode",    "Paint mode" },
+    { PARAM_INT32,     "mask width",    "Brush width" },
+    { PARAM_INT32,     "mask height"    "Brush heigth" },
+    { PARAM_INT32,     "mask len",      "Length of brush mask data" },
+    { PARAM_INT8ARRAY, "mask data",     "The brush mask data" },
     { PARAM_INT32,     "dialog status", "Registers if the dialog was closing "
-                                        "[0 = No, 1 = Yes]"},
+                                        "[0 = No, 1 = Yes]" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static GimpParamDef *return_vals = NULL;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
   gint bnreturn_vals;
-  GParam *pdbreturn_vals;
+  GimpParam *pdbreturn_vals;
   gchar *pdbname = gen_temp_plugin_name ();
   GimpBrushData *bdata;
 
@@ -1015,15 +1013,15 @@ gimp_interactive_selection_brush(gchar             *dialogname,
 			  temp_brush_invoker);
 
   pdbreturn_vals =
-    gimp_run_procedure("gimp_brushes_popup",
-		       &bnreturn_vals,
-		       PARAM_STRING, pdbname,
-		       PARAM_STRING, dialogname,
-		       PARAM_STRING, brush_name,
-		       PARAM_FLOAT,  opacity,
-		       PARAM_INT32,  spacing,
-		       PARAM_INT32,  paint_mode,
-		       PARAM_END);
+    gimp_run_procedure ("gimp_brushes_popup",
+			&bnreturn_vals,
+			PARAM_STRING, pdbname,
+			PARAM_STRING, dialogname,
+			PARAM_STRING, brush_name,
+			PARAM_FLOAT,  opacity,
+			PARAM_INT32,  spacing,
+			PARAM_INT32,  paint_mode,
+			PARAM_END);
 
 /*   if (pdbreturn_vals[0].data.d_status != STATUS_SUCCESS) */
 /*     { */
@@ -1032,7 +1030,7 @@ gimp_interactive_selection_brush(gchar             *dialogname,
 /*   else */
 /*       printf("worked = 0x%x\n",bnreturn_vals); */
 
-  gimp_setup_callbacks(); /* New function to allow callbacks to be watched */
+  gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
 
@@ -1060,7 +1058,7 @@ gimp_brushes_get_brush_data (gchar    *bname,
 			     gint     *height,
 			     gchar   **mask_data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
@@ -1090,7 +1088,7 @@ gimp_brushes_get_brush_data (gchar    *bname,
 gint 
 gimp_brush_close_popup (gpointer popup_pnt)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1107,13 +1105,13 @@ gimp_brush_close_popup (gpointer popup_pnt)
 }
 
 gint 
-gimp_brush_set_popup(gpointer  popup_pnt, 
-		     gchar    *pname,
-		     gdouble   opacity,
-		     gint      spacing,
-		     gint      paint_mode)
+gimp_brush_set_popup (gpointer  popup_pnt, 
+		      gchar    *pname,
+		      gdouble   opacity,
+		      gint      spacing,
+		      gint      paint_mode)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1136,27 +1134,27 @@ gimp_brush_set_popup(gpointer  popup_pnt,
 
 
 gpointer
-gimp_interactive_selection_pattern (gchar               *dialogname, 
-				    gchar               *pattern_name,
-				    GRunPatternCallback  callback,
-				    gpointer             data)
+gimp_interactive_selection_pattern (gchar                  *dialogname, 
+				    gchar                  *pattern_name,
+				    GimpRunPatternCallback  callback,
+				    gpointer                data)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_STRING,   "str",           "String"},
-    { PARAM_INT32,    "mask width",    "Pattern width"},
-    { PARAM_INT32,    "mask height",   "Pattern heigth"},
-    { PARAM_INT32,    "mask bpp",      "Pattern bytes per pixel"},
-    { PARAM_INT32,    "mask len",      "Length of pattern mask data"},
-    { PARAM_INT8ARRAY,"mask data",     "The pattern mask data"},
+    { PARAM_STRING,   "str",           "String" },
+    { PARAM_INT32,    "mask width",    "Pattern width" },
+    { PARAM_INT32,    "mask height",   "Pattern heigth" },
+    { PARAM_INT32,    "mask bpp",      "Pattern bytes per pixel" },
+    { PARAM_INT32,    "mask len",      "Length of pattern mask data" },
+    { PARAM_INT8ARRAY,"mask data",     "The pattern mask data" },
     { PARAM_INT32,    "dialog status", "Registers if the dialog was closing "
-                                       "[0 = No, 1 = Yes]"},
+                                       "[0 = No, 1 = Yes]" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static GimpParamDef *return_vals = NULL;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
   gint bnreturn_vals;
-  GParam *pdbreturn_vals;
+  GimpParam *pdbreturn_vals;
   gchar *pdbname = gen_temp_plugin_name ();
   GimpPatternData *pdata;
 
@@ -1207,7 +1205,7 @@ gimp_pattern_get_pattern_data (gchar   *pname,
 			       gint    *bytes,
 			       gchar  **mask_data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
@@ -1235,7 +1233,7 @@ gimp_pattern_get_pattern_data (gchar   *pname,
 gint 
 gimp_pattern_close_popup (gpointer popup_pnt)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1255,7 +1253,7 @@ gint
 gimp_pattern_set_popup (gpointer  popup_pnt, 
 		        gchar    *pname)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1273,26 +1271,26 @@ gimp_pattern_set_popup (gpointer  popup_pnt,
 }
 
 gpointer
-gimp_interactive_selection_gradient (gchar                 *dialogname, 
-				     gchar                 *gradient_name,
-				     gint                  sample_sz,
-				     GRunGradientCallback  callback,
-				     gpointer              data)
+gimp_interactive_selection_gradient (gchar                   *dialogname, 
+				     gchar                   *gradient_name,
+				     gint                     sample_sz,
+				     GimpRunGradientCallback  callback,
+				     gpointer                 data)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_STRING,    "str",           "String"},
-    { PARAM_INT32,     "grad width",    "Gradient width"},
-    { PARAM_FLOATARRAY,"grad data",     "The gradient mask data"},
+    { PARAM_STRING,    "str",           "String" },
+    { PARAM_INT32,     "grad width",    "Gradient width" },
+    { PARAM_FLOATARRAY,"grad data",     "The gradient mask data" },
     { PARAM_INT32,     "dialog status", "Registers if the dialog was closing "
-                                        "[0 = No, 1 = Yes]"},
+                                        "[0 = No, 1 = Yes]" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-  gint bnreturn_vals;
-  GParam *pdbreturn_vals;
-  gchar *pdbname = gen_temp_plugin_name();
+  static GimpParamDef *return_vals = NULL;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
+  gint    bnreturn_vals;
+  GimpParam *pdbreturn_vals;
+  gchar  *pdbname = gen_temp_plugin_name();
   GimpGradientData *gdata;
 
   gdata = g_new0 (GimpGradientData, 1);
@@ -1341,9 +1339,9 @@ gimp_gradient_get_gradient_data (gchar     *gname,
 				 gint       sample_sz,
 				 gdouble  **grad_data)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
-  gchar *ret_name = NULL;
+  GimpParam *return_vals;
+  gint    nreturn_vals;
+  gchar  *ret_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
 				    &nreturn_vals,
@@ -1372,7 +1370,7 @@ gimp_gradient_get_gradient_data (gchar     *gname,
 gint 
 gimp_gradient_close_popup (gpointer popup_pnt)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1392,7 +1390,7 @@ gint
 gimp_gradient_set_popup (gpointer  popup_pnt, 
 			 gchar    *gname)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint retval;
 
@@ -1408,6 +1406,3 @@ gimp_gradient_set_popup (gpointer  popup_pnt,
 
   return retval;
 }
-
-
-

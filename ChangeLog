@@ -1,4 +1,64 @@
 2000-05-31  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpchannel_pdb.h
+	* libgimp/gimpdisplay_pdb.h
+	* libgimp/gimpdrawable_pdb.h
+	* libgimp/gimpgradient_pdb.h
+	* libgimp/gimphelp_pdb.h
+	* libgimp/gimpimage_pdb.h
+	* libgimp/gimplayer_pdb.h
+	* libgimp/gimpparasite_pdb.h
+	* libgimp/gimpselection_pdb.h
+	* libgimp/gimpunit_pdb.h
+	* libgimp/gimpdrawable.[ch]
+	* libgimp/gimphelp.c
+	* libgimp/gimppixelrgn.h
+	* libgimp/gimptile.h: new files
+
+	* libgimp/gimp.[ch]
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgradient_pdb.c
+	* libgimp/gimppalette_pdb.c
+	* libgimp/gimpselection_pdb.c
+	* libgimp/gimphelp_pdb.c
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimplayer_pdb.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpmenu.[ch]
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimppixelrgn.c
+	* libgimp/gimptile.c: part III of the (final) libgimp cleanup
+
+	Split gimp.h into a bunch of headers. More or less finished the
+	task of moving PDB wrappers into separate files in preparation 
+	of the upcoming autogen-it-all-attack.
+
+	* libgimp/gimpcompat.h: declared the following functions obsolete:
+	gimp_[channel|layer]_[width|height]
+	gimp_layer_[bpp|type]
+	gimp_channel_get_[image|layer]_ID
+
+	* libgimp/gimptypes.h: new file:
+	GPlugInInfo
+	GTile
+	GDrawable
+	GPixelRgn
+	GParamColor
+	GParamRegion
+	GParamData
+	GParamDef
+	GParam: s/G/Gimp/
+
+	* app/gimphelp_cmds.c
+	* app/plug_in_cmds.c
+	* tools/pdbgen/pdb/gimphelp.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed help texts.
+
+2000-05-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpunit.c
 	* libgimp/*: all libgimp headers are included via gimp.h or

@@ -21,7 +21,6 @@
 
 #include <locale.h>
 #include <errno.h>
-#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +47,7 @@
 #define WAIT_ANY -1
 #endif
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #ifndef G_OS_WIN32
 #include "gimpsignal.h"
@@ -86,9 +85,10 @@
 
 #define WRITE_BUFFER_SIZE  1024
 
-void gimp_extension_process (guint timeout);
+void gimp_extension_process (guint        timeout);
 void gimp_extension_ack     (void);
-void gimp_read_expect_msg   (WireMessage *msg, gint type);
+void gimp_read_expect_msg   (WireMessage *msg,
+			     gint         type);
 
 
 #ifndef G_OS_WIN32
@@ -99,10 +99,10 @@ static gboolean   gimp_plugin_io_error_handler (GIOChannel   *channel,
 						GIOCondition  cond,
 						gpointer      data);
 
-static gint       gimp_write                   (GIOChannel   *channel,
+static gboolean   gimp_write                   (GIOChannel   *channel,
 						guint8       *buf,
 						gulong        count);
-static gint       gimp_flush                   (GIOChannel   *channel);
+static gboolean   gimp_flush                   (GIOChannel   *channel);
 static void       gimp_loop                    (void);
 static void       gimp_config                  (GPConfig     *config);
 static void       gimp_proc_run                (GPProcRun    *proc_run);
@@ -140,19 +140,19 @@ static guint    write_buffer_index = 0;
 static GHashTable *temp_proc_ht = NULL;
 
 #ifdef G_OS_WIN32
-static GPlugInInfo *PLUG_IN_INFO_PTR;
+static GimpPlugInInfo *PLUG_IN_INFO_PTR;
 #define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
 void
-set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *p)
+set_gimp_PLUG_IN_INFO_PTR (GimpPlugInInfo *p)
 {
   PLUG_IN_INFO_PTR = p;
 }
 #else
 #ifndef __EMX__
-extern GPlugInInfo PLUG_IN_INFO;
+extern GimpPlugInInfo PLUG_IN_INFO;
 #else
-static GPlugInInfo PLUG_IN_INFO;
-void set_gimp_PLUG_IN_INFO(const GPlugInInfo *p)
+static GimpPlugInInfo PLUG_IN_INFO;
+void set_gimp_PLUG_IN_INFO (const GimpPlugInInfo *p)
 {
   PLUG_IN_INFO = *p;
 }
@@ -203,7 +203,7 @@ gimp_main (int   argc,
 	    argc -= i;
 	    break;
 	  }
-    }    
+    }
 #endif
 
   if ((argc < 4) || (strcmp (argv[1], "-gimp") != 0))
@@ -315,7 +315,7 @@ gimp_set_data (gchar    *id,
 	       gpointer  data,
 	       guint32   length)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   int nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_procedural_db_set_data",
@@ -331,7 +331,7 @@ gimp_set_data (gchar    *id,
 guint32
 gimp_get_data_size (gchar *id)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   guint32 length;
 
@@ -354,7 +354,7 @@ void
 gimp_get_data (gchar    *id,
 	       gpointer  data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint length;
   gchar *returned_data;
@@ -379,7 +379,7 @@ gimp_get_data (gchar    *id,
 void
 gimp_progress_init (char *message)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_progress_init",
@@ -394,7 +394,7 @@ gimp_progress_init (char *message)
 void
 gimp_progress_update (gdouble percentage)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_progress_update",
@@ -415,7 +415,7 @@ gimp_default_display (void)
 void
 gimp_message (const gchar *message)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_message",
@@ -444,7 +444,7 @@ gimp_query_database (gchar   *name_regexp,
 		     gint    *nprocs,
 		     gchar ***proc_names)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint i;
 
@@ -475,19 +475,19 @@ gimp_query_database (gchar   *name_regexp,
 }
 
 gboolean
-gimp_query_procedure (gchar      *proc_name,
-		      gchar     **proc_blurb,
-		      gchar     **proc_help,
-		      gchar     **proc_author,
-		      gchar     **proc_copyright,
-		      gchar     **proc_date,
-		      gint       *proc_type,
-		      gint       *nparams,
-		      gint       *nreturn_vals,
-		      GParamDef **params,
-		      GParamDef **return_vals)
+gimp_query_procedure (gchar         *proc_name,
+		      gchar        **proc_blurb,
+		      gchar        **proc_help,
+		      gchar        **proc_author,
+		      gchar        **proc_copyright,
+		      gchar        **proc_date,
+		      gint          *proc_type,
+		      gint          *nparams,
+		      gint          *nreturn_vals,
+		      GimpParamDef **params,
+		      GimpParamDef **return_vals)
 {
-  GParam *ret_vals;
+  GimpParam *ret_vals;
   gint nret_vals;
   gint i;
   gboolean success = TRUE;
@@ -499,20 +499,20 @@ gimp_query_procedure (gchar      *proc_name,
 
   if (ret_vals[0].data.d_status == STATUS_SUCCESS)
     {
-      *proc_blurb = g_strdup (ret_vals[1].data.d_string);
-      *proc_help = g_strdup (ret_vals[2].data.d_string);
-      *proc_author = g_strdup (ret_vals[3].data.d_string);
+      *proc_blurb     = g_strdup (ret_vals[1].data.d_string);
+      *proc_help      = g_strdup (ret_vals[2].data.d_string);
+      *proc_author    = g_strdup (ret_vals[3].data.d_string);
       *proc_copyright = g_strdup (ret_vals[4].data.d_string);
-      *proc_date = g_strdup (ret_vals[5].data.d_string);
-      *proc_type = ret_vals[6].data.d_int32;
-      *nparams = ret_vals[7].data.d_int32;
-      *nreturn_vals = ret_vals[8].data.d_int32;
-      *params = g_new (GParamDef, *nparams);
-      *return_vals = g_new (GParamDef, *nreturn_vals);
+      *proc_date      = g_strdup (ret_vals[5].data.d_string);
+      *proc_type      = ret_vals[6].data.d_int32;
+      *nparams        = ret_vals[7].data.d_int32;
+      *nreturn_vals   = ret_vals[8].data.d_int32;
+      *params         = g_new (GimpParamDef, *nparams);
+      *return_vals    = g_new (GimpParamDef, *nreturn_vals);
 
       for (i = 0; i < *nparams; i++)
 	{
-	  GParam *rvals;
+	  GimpParam *rvals;
 	  gint nrvals;
 
 	  rvals = gimp_run_procedure ("gimp_procedural_db_proc_arg",
@@ -523,9 +523,9 @@ gimp_query_procedure (gchar      *proc_name,
 
 	  if (rvals[0].data.d_status == STATUS_SUCCESS)
 	    {
-	      (*params)[i].type = rvals[1].data.d_int32;
-	      (*params)[i].name = g_strdup (rvals[2].data.d_string);
-	      (*params)[i].description = g_strdup (rvals[3].data.d_string);
+	      (* params) [i].type        = rvals[1].data.d_int32;
+	      (* params) [i].name        = g_strdup (rvals[2].data.d_string);
+	      (* params) [i].description = g_strdup (rvals[3].data.d_string);
 	    }
 	  else
 	    {
@@ -540,8 +540,8 @@ gimp_query_procedure (gchar      *proc_name,
 
       for (i = 0; i < *nreturn_vals; i++)
 	{
-	  GParam *rvals;
-	  int nrvals;
+	  GimpParam *rvals;
+	  gint nrvals;
 
 	  rvals = gimp_run_procedure ("gimp_procedural_db_proc_val",
 				      &nrvals,
@@ -551,9 +551,9 @@ gimp_query_procedure (gchar      *proc_name,
 
 	  if (rvals[0].data.d_status == STATUS_SUCCESS)
 	    {
-	      (*return_vals)[i].type = rvals[1].data.d_int32;
-	      (*return_vals)[i].name = g_strdup (rvals[2].data.d_string);
-	      (*return_vals)[i].description = g_strdup (rvals[3].data.d_string);
+	      (* return_vals)[i].type        = rvals[1].data.d_int32;
+	      (* return_vals)[i].name        = g_strdup (rvals[2].data.d_string);
+	      (* return_vals)[i].description = g_strdup (rvals[3].data.d_string);
 	    }
 	  else
 	    {
@@ -574,10 +574,10 @@ gimp_query_procedure (gchar      *proc_name,
   return success;
 }
 
-gint32*
+gint32 *
 gimp_query_images (gint *nimages)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 *images;
 
@@ -599,59 +599,64 @@ gimp_query_images (gint *nimages)
 }
 
 void
-gimp_install_procedure (gchar     *name,
-			gchar     *blurb,
-			gchar     *help,
-			gchar     *author,
-			gchar     *copyright,
-			gchar     *date,
-			gchar     *menu_path,
-			gchar     *image_types,
-			gint       type,
-			gint       nparams,
-			gint       nreturn_vals,
-			GParamDef *params,
-			GParamDef *return_vals)
+gimp_install_procedure (gchar        *name,
+			gchar        *blurb,
+			gchar        *help,
+			gchar        *author,
+			gchar        *copyright,
+			gchar        *date,
+			gchar        *menu_path,
+			gchar        *image_types,
+			gint          type,
+			gint          nparams,
+			gint          nreturn_vals,
+			GimpParamDef *params,
+			GimpParamDef *return_vals)
 {
   GPProcInstall proc_install;
 
-  proc_install.name = name;
-  proc_install.blurb = blurb;
-  proc_install.help = help;
-  proc_install.author = author;
-  proc_install.copyright = copyright;
-  proc_install.date = date;
-  proc_install.menu_path = menu_path;
-  proc_install.image_types = image_types;
-  proc_install.type = type;
-  proc_install.nparams = nparams;
+  proc_install.name         = name;
+  proc_install.blurb        = blurb;
+  proc_install.help         = help;
+  proc_install.author       = author;
+  proc_install.copyright    = copyright;
+  proc_install.date         = date;
+  proc_install.menu_path    = menu_path;
+  proc_install.image_types  = image_types;
+  proc_install.type         = type;
+  proc_install.nparams      = nparams;
   proc_install.nreturn_vals = nreturn_vals;
-  proc_install.params = (GPParamDef*) params;
-  proc_install.return_vals = (GPParamDef*) return_vals;
+  proc_install.params       = (GPParamDef *) params;
+  proc_install.return_vals  = (GPParamDef *) return_vals;
 
   if (!gp_proc_install_write (_writechannel, &proc_install))
     gimp_quit ();
 }
 
 void
-gimp_install_temp_proc (gchar     *name,
-			gchar     *blurb,
-			gchar     *help,
-			gchar     *author,
-			gchar     *copyright,
-			gchar     *date,
-			gchar     *menu_path,
-			gchar     *image_types,
-			gint       type,
-			gint       nparams,
-			gint       nreturn_vals,
-			GParamDef *params,
-			GParamDef *return_vals,
-			GRunProc   run_proc)
+gimp_install_temp_proc (gchar        *name,
+			gchar        *blurb,
+			gchar        *help,
+			gchar        *author,
+			gchar        *copyright,
+			gchar        *date,
+			gchar        *menu_path,
+			gchar        *image_types,
+			gint          type,
+			gint          nparams,
+			gint          nreturn_vals,
+			GimpParamDef *params,
+			GimpParamDef *return_vals,
+			GimpRunProc   run_proc)
 {
-  gimp_install_procedure (name, blurb, help, author, copyright, date,
-			  menu_path, image_types, type,
-			  nparams, nreturn_vals, params, return_vals);
+  gimp_install_procedure (name,
+			  blurb, help,
+			  author, copyright, date,
+			  menu_path,
+			  image_types,
+			  type,
+			  nparams, nreturn_vals,
+			  params, return_vals);
 
   /*  Insert the temp proc run function into the hash table  */
   g_hash_table_insert (temp_proc_ht, g_strdup (name), (gpointer) run_proc);
@@ -670,10 +675,10 @@ gimp_uninstall_temp_proc (gchar *name)
   
   found = g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
   if (found)
-  {
-    g_free (hash_name);
-    g_hash_table_remove (temp_proc_ht, (gpointer) name);
-  }
+    {
+      g_free (hash_name);
+      g_hash_table_remove (temp_proc_ht, (gpointer) name);
+    }
 }
 
 void
@@ -682,7 +687,7 @@ gimp_register_magic_load_handler (gchar *name,
 				  gchar *prefixes,
 				  gchar *magics)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_register_magic_load_handler",
@@ -701,7 +706,7 @@ gimp_register_load_handler (gchar *name,
 			    gchar *extensions,
 			    gchar *prefixes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_register_load_handler",
@@ -719,7 +724,7 @@ gimp_register_save_handler (gchar *name,
 			    gchar *extensions,
 			    gchar *prefixes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_register_save_handler",
@@ -732,26 +737,26 @@ gimp_register_save_handler (gchar *name,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-GParam*
+GimpParam *
 gimp_run_procedure (gchar *name,
 		    gint  *nreturn_vals,
 		    ...)
 {
-  GPProcRun proc_run;
-  GPProcReturn *proc_return;
-  WireMessage msg;
-  GParamType param_type;
-  GParam *return_vals;
-  va_list args;
-  guchar *color;
-  gint i;
+  GPProcRun       proc_run;
+  GPProcReturn   *proc_return;
+  WireMessage     msg;
+  GimpPDBArgType  param_type;
+  GimpParam      *return_vals;
+  va_list         args;
+  guchar         *color;
+  gint            i;
 
   proc_run.name = name;
   proc_run.nparams = 0;
   proc_run.params = NULL;
 
   va_start (args, nreturn_vals);
-  param_type = va_arg (args, GParamType);
+  param_type = va_arg (args, GimpPDBArgType);
 
   while (param_type != PARAM_END)
     {
@@ -767,40 +772,40 @@ gimp_run_procedure (gchar *name,
         case PARAM_BOUNDARY:
         case PARAM_PATH:
         case PARAM_STATUS:
-	  (void) va_arg (args, int);
+	  (void) va_arg (args, gint);
 	  break;
 	case PARAM_INT16:
-	  (void) va_arg (args, int);
+	  (void) va_arg (args, gint);
 	  break;
 	case PARAM_INT8:
-	  (void) va_arg (args, int);
+	  (void) va_arg (args, gint);
 	  break;
         case PARAM_FLOAT:
-          (void) va_arg (args, double);
+          (void) va_arg (args, gdouble);
           break;
         case PARAM_STRING:
-          (void) va_arg (args, gchar*);
+          (void) va_arg (args, gchar *);
           break;
         case PARAM_INT32ARRAY:
-          (void) va_arg (args, gint32*);
+          (void) va_arg (args, gint32 *);
           break;
         case PARAM_INT16ARRAY:
-          (void) va_arg (args, gint16*);
+          (void) va_arg (args, gint16 *);
           break;
         case PARAM_INT8ARRAY:
-          (void) va_arg (args, gint8*);
+          (void) va_arg (args, gint8 *);
           break;
         case PARAM_FLOATARRAY:
-          (void) va_arg (args, gdouble*);
+          (void) va_arg (args, gdouble *);
           break;
         case PARAM_STRINGARRAY:
-          (void) va_arg (args, gchar**);
+          (void) va_arg (args, gchar **);
           break;
         case PARAM_COLOR:
-          (void) va_arg (args, guchar*);
+          (void) va_arg (args, guchar *);
           break;
         case PARAM_PARASITE:
-          (void) va_arg (args, GimpParasite*);
+          (void) va_arg (args, GimpParasite *);
           break;
         case PARAM_REGION:
           break;
@@ -809,7 +814,7 @@ gimp_run_procedure (gchar *name,
 	}
 
       proc_run.nparams += 1;
-      param_type = va_arg (args, GParamType);
+      param_type = va_arg (args, GimpPDBArgType);
     }
 
   va_end (args);
@@ -820,45 +825,45 @@ gimp_run_procedure (gchar *name,
 
   for (i = 0; i < proc_run.nparams; i++)
     {
-      proc_run.params[i].type = va_arg (args, GParamType);
+      proc_run.params[i].type = va_arg (args, GimpPDBArgType);
 
       switch (proc_run.params[i].type)
 	{
 	case PARAM_INT32:
-	  proc_run.params[i].data.d_int32 = (gint32) va_arg (args, int);
+	  proc_run.params[i].data.d_int32 = (gint32) va_arg (args, gint);
 	  break;
 	case PARAM_INT16:
-	  proc_run.params[i].data.d_int16 = (gint16) va_arg (args, int);
+	  proc_run.params[i].data.d_int16 = (gint16) va_arg (args, gint);
 	  break;
 	case PARAM_INT8:
-	  proc_run.params[i].data.d_int8 = (gint8) va_arg (args, int);
+	  proc_run.params[i].data.d_int8 = (gint8) va_arg (args, gint);
 	  break;
         case PARAM_FLOAT:
-          proc_run.params[i].data.d_float = (gdouble) va_arg (args, double);
+          proc_run.params[i].data.d_float = (gdouble) va_arg (args, gdouble);
           break;
         case PARAM_STRING:
-          proc_run.params[i].data.d_string = va_arg (args, gchar*);
+          proc_run.params[i].data.d_string = va_arg (args, gchar *);
           break;
         case PARAM_INT32ARRAY:
-          proc_run.params[i].data.d_int32array = va_arg (args, gint32*);
+          proc_run.params[i].data.d_int32array = va_arg (args, gint32 *);
           break;
         case PARAM_INT16ARRAY:
-          proc_run.params[i].data.d_int16array = va_arg (args, gint16*);
+          proc_run.params[i].data.d_int16array = va_arg (args, gint16 *);
           break;
         case PARAM_INT8ARRAY:
-          proc_run.params[i].data.d_int8array = va_arg (args, gint8*);
+          proc_run.params[i].data.d_int8array = va_arg (args, gint8 *);
           break;
         case PARAM_FLOATARRAY:
-          proc_run.params[i].data.d_floatarray = va_arg (args, gdouble*);
+          proc_run.params[i].data.d_floatarray = va_arg (args, gdouble *);
           break;
         case PARAM_STRINGARRAY:
-          proc_run.params[i].data.d_stringarray = va_arg (args, gchar**);
+          proc_run.params[i].data.d_stringarray = va_arg (args, gchar **);
           break;
         case PARAM_COLOR:
-	  color = va_arg (args, guchar*);
-          proc_run.params[i].data.d_color.red = color[0];
+	  color = va_arg (args, guchar *);
+          proc_run.params[i].data.d_color.red   = color[0];
           proc_run.params[i].data.d_color.green = color[1];
-          proc_run.params[i].data.d_color.blue = color[2];
+          proc_run.params[i].data.d_color.blue  = color[2];
           break;
         case PARAM_REGION:
           break;
@@ -888,18 +893,19 @@ gimp_run_procedure (gchar *name,
           break;
         case PARAM_PARASITE:
 	  {
-	    GimpParasite *p = va_arg (args, GimpParasite*);
-	    if (p == NULL)
+	    GimpParasite *parasite = va_arg (args, GimpParasite *);
+
+	    if (parasite == NULL)
 	      {
 		proc_run.params[i].data.d_parasite.name = NULL;
 		proc_run.params[i].data.d_parasite.data = NULL;
 	      }
 	    else
 	      {
-		proc_run.params[i].data.d_parasite.name  = p->name;
-		proc_run.params[i].data.d_parasite.flags = p->flags;
-		proc_run.params[i].data.d_parasite.size  = p->size;
-		proc_run.params[i].data.d_parasite.data  = p->data;
+		proc_run.params[i].data.d_parasite.name  = parasite->name;
+		proc_run.params[i].data.d_parasite.flags = parasite->flags;
+		proc_run.params[i].data.d_parasite.size  = parasite->size;
+		proc_run.params[i].data.d_parasite.data  = parasite->data;
 	      }
 	  }
 	  break;
@@ -920,7 +926,7 @@ gimp_run_procedure (gchar *name,
 
   proc_return = msg.data;
   *nreturn_vals = proc_return->nparams;
-  return_vals = (GParam*) proc_return->params;
+  return_vals = (GimpParam*) proc_return->params;
 
   switch (return_vals[0].data.d_status)
     {
@@ -966,20 +972,20 @@ gimp_read_expect_msg (WireMessage *msg,
 }
 
 
-GParam*
-gimp_run_procedure2 (gchar  *name,
-		     gint   *nreturn_vals,
-		     gint    nparams,
-		     GParam *params)
+GimpParam *
+gimp_run_procedure2 (gchar     *name,
+		     gint      *nreturn_vals,
+		     gint       nparams,
+		     GimpParam *params)
 {
-  GPProcRun proc_run;
+  GPProcRun     proc_run;
   GPProcReturn *proc_return;
-  WireMessage msg;
-  GParam *return_vals;
+  WireMessage   msg;
+  GimpParam    *return_vals;
 
-  proc_run.name = name;
+  proc_run.name    = name;
   proc_run.nparams = nparams;
-  proc_run.params = (GPParam *) params;
+  proc_run.params  = (GPParam *) params;
 
   if (!gp_proc_run_write (_writechannel, &proc_run))
     gimp_quit ();
@@ -988,7 +994,7 @@ gimp_run_procedure2 (gchar  *name,
   
   proc_return = msg.data;
   *nreturn_vals = proc_return->nparams;
-  return_vals = (GParam*) proc_return->params;
+  return_vals = (GimpParam *) proc_return->params;
 
   switch (return_vals[0].data.d_status)
     {
@@ -1009,8 +1015,8 @@ gimp_run_procedure2 (gchar  *name,
 }
 
 void
-gimp_destroy_params (GParam *params,
-		     gint    nparams)
+gimp_destroy_params (GimpParam *params,
+		     gint       nparams)
 {
   extern void _gp_params_destroy (GPParam *params, gint nparams);
 
@@ -1018,15 +1024,15 @@ gimp_destroy_params (GParam *params,
 }
 
 void
-gimp_destroy_paramdefs (GParamDef *paramdefs,
-			gint       nparams)
+gimp_destroy_paramdefs (GimpParamDef *paramdefs,
+			gint          nparams)
 {
   while (nparams--)
     {
       g_free (paramdefs[nparams].name);
       g_free (paramdefs[nparams].description);
     }
-  
+
   g_free (paramdefs);
 }
 
@@ -1113,8 +1119,8 @@ gimp_extension_process (guint timeout)
 {
 #ifndef G_OS_WIN32
   fd_set readfds;
-  gint select_val;
-  struct timeval tv;
+  gint   select_val;
+  struct timeval  tv;
   struct timeval *tvp;
 
   if (timeout)
@@ -1131,7 +1137,7 @@ gimp_extension_process (guint timeout)
 
   if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
     {
-      gimp_single_message();
+      gimp_single_message ();
     }
   else if (select_val == -1)
     {
@@ -1168,7 +1174,7 @@ gimp_extension_ack (void)
 void
 gimp_run_temp (void)
 {
-  gimp_single_message();
+  gimp_single_message ();
 }
 
 void
@@ -1246,7 +1252,7 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
   return TRUE;
 }
 
-static int
+static gboolean
 gimp_write (GIOChannel *channel, 
 	    guint8     *buf, 
 	    gulong      count)
@@ -1277,7 +1283,7 @@ gimp_write (GIOChannel *channel,
   return TRUE;
 }
 
-static int
+static gboolean
 gimp_flush (GIOChannel *channel)
 {
   GIOError error;
@@ -1289,12 +1295,14 @@ gimp_flush (GIOChannel *channel)
       count = 0;
       while (count != write_buffer_index)
         {
-	  do {
-	    bytes = 0;
-	    error = g_io_channel_write (channel, &write_buffer[count],
-					(write_buffer_index - count),
-					&bytes);
-	  } while (error == G_IO_ERROR_AGAIN);
+	  do
+	    {
+	      bytes = 0;
+	      error = g_io_channel_write (channel, &write_buffer[count],
+					  (write_buffer_index - count),
+					  &bytes);
+	    }
+	  while (error == G_IO_ERROR_AGAIN);
 
 	  if (error != G_IO_ERROR_NONE)
 	    return FALSE;
@@ -1400,7 +1408,7 @@ gimp_config (GPConfig *config)
        * transfering tile data
        */
       gchar fileMapName[128];
-      gint tileByteSize = _gimp_tile_width * _gimp_tile_height * 4;
+      gint  tileByteSize = _gimp_tile_width * _gimp_tile_height * 4;
 
       /* From the id, derive the file map name */
       g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
@@ -1442,14 +1450,14 @@ static void
 gimp_proc_run (GPProcRun *proc_run)
 {
   GPProcReturn proc_return;
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   if (PLUG_IN_INFO.run_proc)
     {
       (* PLUG_IN_INFO.run_proc) (proc_run->name,
 				 proc_run->nparams,
-				 (GParam*) proc_run->params,
+				 (GimpParam*) proc_run->params,
 				 &nreturn_vals,
 				 &return_vals);
 
@@ -1465,17 +1473,18 @@ gimp_proc_run (GPProcRun *proc_run)
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
-  GRunProc run_proc;
+  GimpParam   *return_vals;
+  gint         nreturn_vals;
+  GimpRunProc  run_proc;
 
-  run_proc = (GRunProc)g_hash_table_lookup (temp_proc_ht, (gpointer) proc_run->name);
+  run_proc = (GimpRunProc)g_hash_table_lookup (temp_proc_ht, 
+					       (gpointer) proc_run->name);
 
   if (run_proc)
     {
       (* run_proc) (proc_run->name,
 		    proc_run->nparams,
-		    (GParam*) proc_run->params,
+		    (GimpParam*) proc_run->params,
 		    &nreturn_vals,
 		    &return_vals);
 
@@ -1492,7 +1501,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 void
 gimp_plugin_domain_add (gchar *domain_name)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_plugin_domain_add",
@@ -1508,7 +1517,7 @@ void
 gimp_plugin_domain_add_with_path (gchar *domain_name,
 				  gchar *domain_path)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_plugin_domain_add",

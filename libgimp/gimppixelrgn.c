@@ -1,28 +1,32 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimppixelrgn.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
+ */
 
 /* Experimental: comment-out the following #define if a memcpy() call is
    slower than compiler-optimized memory copies for transfers of approx.
    64-256 bytes.
 
    FYI this #define is a win on Linux486/libc5.  Unbenchmarked on other
-   architectures.  --adam */
+   architectures.  --adam
+*/
+
 #define MEMCPY_IS_NICE
 
 #ifdef MEMCPY_IS_NICE
@@ -33,42 +37,39 @@
 #include "gimp.h"
 
 
-
-
-
 #define TILE_WIDTH     _gimp_tile_width
 #define TILE_HEIGHT    _gimp_tile_height
 #define BOUNDS(a,x,y)  ((a < x) ? x : ((a > y) ? y : a))
 
 
-typedef struct _GPixelRgnHolder    GPixelRgnHolder;
-typedef struct _GPixelRgnIterator  GPixelRgnIterator;
+typedef struct _GimpPixelRgnHolder    GimpPixelRgnHolder;
+typedef struct _GimpPixelRgnIterator  GimpPixelRgnIterator;
 
-struct _GPixelRgnHolder
+struct _GimpPixelRgnHolder
 {
-  GPixelRgn *pr;
-  guchar *original_data;
-  int startx;
-  int starty;
-  int count;
+  GimpPixelRgn *pr;
+  guchar       *original_data;
+  gint          startx;
+  gint          starty;
+  gint          count;
 };
 
-struct _GPixelRgnIterator
+struct _GimpPixelRgnIterator
 {
   GSList *pixel_regions;
-  int region_width;
-  int region_height;
-  int portion_width;
-  int portion_height;
-  int process_count;
+  gint    region_width;
+  gint    region_height;
+  gint    portion_width;
+  gint    portion_height;
+  gint    process_count;
 };
 
 
-static int      gimp_get_portion_width    (GPixelRgnIterator *pri);
-static int      gimp_get_portion_height   (GPixelRgnIterator *pri);
-static gpointer gimp_pixel_rgns_configure (GPixelRgnIterator *pri);
-static void     gimp_pixel_rgn_configure  (GPixelRgnHolder   *prh,
-					   GPixelRgnIterator *pri);
+static gint     gimp_get_portion_width    (GimpPixelRgnIterator *pri);
+static gint     gimp_get_portion_height   (GimpPixelRgnIterator *pri);
+static gpointer gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri);
+static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
+					   GimpPixelRgnIterator *pri);
 
 
 extern gint _gimp_tile_width;
@@ -76,33 +77,33 @@ extern gint _gimp_tile_height;
 
 
 void
-gimp_pixel_rgn_init (GPixelRgn *pr,
-		     GDrawable *drawable,
-		     int       x,
-		     int       y,
-		     int       width,
-		     int       height,
-		     int       dirty,
-		     int       shadow)
+gimp_pixel_rgn_init (GimpPixelRgn *pr,
+		     GimpDrawable *drawable,
+		     gint          x,
+		     gint          y,
+		     gint          width,
+		     gint          height,
+		     gboolean      dirty,
+		     gboolean      shadow)
 {
-  pr->data = NULL;
-  pr->drawable = drawable;
-  pr->bpp = drawable->bpp;
+  pr->data      = NULL;
+  pr->drawable  = drawable;
+  pr->bpp       = drawable->bpp;
   pr->rowstride = pr->bpp * TILE_WIDTH;
-  pr->x = x;
-  pr->y = y;
-  pr->w = width;
-  pr->h = height;
-  pr->dirty = dirty;
-  pr->shadow = shadow;
+  pr->x         = x;
+  pr->y         = y;
+  pr->w         = width;
+  pr->h         = height;
+  pr->dirty     = dirty;
+  pr->shadow    = shadow;
 }
 
 void
-gimp_pixel_rgn_resize (GPixelRgn *pr,
-		       int       x,
-		       int       y,
-		       int       width,
-		       int       height)
+gimp_pixel_rgn_resize (GimpPixelRgn *pr,
+		       gint          x,
+		       gint          y,
+		       gint          width,
+		       gint          height)
 {
   if (pr->data != NULL)
     pr->data += ((y - pr->y) * pr->rowstride +
@@ -115,14 +116,14 @@ gimp_pixel_rgn_resize (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_get_pixel (GPixelRgn *pr,
-			  guchar   *buf,
-			  int       x,
-			  int       y)
+gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
+			  guchar      *buf,
+			  gint         x,
+			  gint         y)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int b;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint      b;
 
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
   gimp_tile_ref (tile);
@@ -136,19 +137,19 @@ gimp_pixel_rgn_get_pixel (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_get_row (GPixelRgn *pr,
-			guchar   *buf,
-			int       x,
-			int       y,
-			int       width)
+gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
+			guchar       *buf,
+			gint          x,
+			gint          y,
+			gint          width)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int bpp, inc, min;
-  int end;
-  int boundary;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint bpp, inc, min;
+  gint end;
+  gint boundary;
 #ifndef MEMCPY_IS_NICE
-  int b;
+  gint b;
 #endif
 
   end = x + width;
@@ -165,8 +166,8 @@ gimp_pixel_rgn_get_row (GPixelRgn *pr,
 #ifdef MEMCPY_IS_NICE
       memcpy ((void *)buf,
 	      (const void *)tile_data,
-	      inc = (bpp *
-		     ( (min = MIN(end,boundary)) -x) ) );
+	      inc = (bpp * 
+		     ( (min = MIN (end, boundary)) -x) ) );
       x = min;;
       buf += inc;
 #else
@@ -183,18 +184,18 @@ gimp_pixel_rgn_get_row (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_get_col (GPixelRgn *pr,
-			guchar   *buf,
-			int       x,
-			int       y,
-			int       height)
+gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
+			guchar       *buf,
+			gint          x,
+			gint          y,
+			gint          height)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int inc;
-  int end;
-  int boundary;
-  int b;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint inc;
+  gint end;
+  gint boundary;
+  gint b;
 
   end = y + height;
 
@@ -219,24 +220,25 @@ gimp_pixel_rgn_get_col (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_get_rect (GPixelRgn *pr,
-			 guchar   *buf,
-			 int       x,
-			 int       y,
-			 int       width,
-			 int       height)
+gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
+			 guchar       *buf,
+			 gint          x,
+			 gint          y,
+			 gint          width,
+			 gint          height)
 {
-  GTile *tile;
-  guchar *src, *dest;
-  gulong bufstride;
-  int xstart, ystart;
-  int xend, yend;
-  int xboundary;
-  int yboundary;
-  int xstep, ystep;
-  int ty, bpp;
+  GimpTile *tile;
+  guchar   *src;
+  guchar   *dest;
+  gulong    bufstride;
+  gint xstart, ystart;
+  gint xend, yend;
+  gint xboundary;
+  gint yboundary;
+  gint xstep, ystep;
+  gint ty, bpp;
 #ifndef MEMCPY_IS_NICE
-  int b, tx;
+  gint b, tx;
 #endif
 
   bpp = pr->bpp;
@@ -289,14 +291,14 @@ gimp_pixel_rgn_get_rect (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_set_pixel (GPixelRgn *pr,
-			  guchar   *buf,
-			  int       x,
-			  int       y)
+gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
+			  guchar       *buf,
+			  gint          x,
+			  gint          y)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int b;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint b;
 
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
   gimp_tile_ref (tile);
@@ -310,19 +312,19 @@ gimp_pixel_rgn_set_pixel (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_set_row (GPixelRgn *pr,
-			guchar   *buf,
-			int       x,
-			int       y,
-			int       width)
+gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
+			guchar       *buf,
+			gint          x,
+			gint          y,
+			gint          width)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int inc, min;
-  int end;
-  int boundary;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint inc, min;
+  gint end;
+  gint boundary;
 #ifndef MEMCPY_IS_NICE
-  int b;
+  gint b;
 #endif
 
   end = x + width;
@@ -355,18 +357,18 @@ gimp_pixel_rgn_set_row (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_set_col (GPixelRgn *pr,
-			guchar   *buf,
-			int       x,
-			int       y,
-			int       height)
+gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
+			guchar       *buf,
+			gint          x,
+			gint          y,
+			gint          height)
 {
-  GTile *tile;
-  guchar *tile_data;
-  int inc;
-  int end;
-  int boundary;
-  int b;
+  GimpTile *tile;
+  guchar   *tile_data;
+  gint inc;
+  gint end;
+  gint boundary;
+  gint b;
 
   end = y + height;
 
@@ -391,24 +393,25 @@ gimp_pixel_rgn_set_col (GPixelRgn *pr,
 }
 
 void
-gimp_pixel_rgn_set_rect (GPixelRgn *pr,
-			 guchar   *buf,
-			 int       x,
-			 int       y,
-			 int       width,
-			 int       height)
+gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
+			 guchar       *buf,
+			 gint          x,
+			 gint          y,
+			 gint          width,
+			 gint          height)
 {
-  GTile *tile;
-  guchar *src, *dest;
-  gulong bufstride;
-  int xstart, ystart;
-  int xend, yend;
-  int xboundary;
-  int yboundary;
-  int xstep, ystep;
-  int ty, bpp;
+  GimpTile *tile;
+  guchar   *src;
+  guchar   *dest;
+  gulong    bufstride;
+  gint xstart, ystart;
+  gint xend, yend;
+  gint xboundary;
+  gint yboundary;
+  gint xstep, ystep;
+  gint ty, bpp;
 #ifndef MEMCPY_IS_NICE
-  int b, tx;
+  gint b, tx;
 #endif
 
   bpp = pr->bpp;
@@ -460,14 +463,15 @@ gimp_pixel_rgn_set_rect (GPixelRgn *pr,
 }
 
 gpointer
-gimp_pixel_rgns_register2 (int nrgns, GPixelRgn **prs)
+gimp_pixel_rgns_register2 (gint           nrgns,
+			   GimpPixelRgn **prs)
 {
-  GPixelRgn *pr;
-  GPixelRgnHolder *prh;
-  GPixelRgnIterator *pri;
-  int found;
+  GimpPixelRgn         *pr;
+  GimpPixelRgnHolder   *prh;
+  GimpPixelRgnIterator *pri;
+  gboolean found;
 
-  pri = g_new (GPixelRgnIterator, 1);
+  pri = g_new (GimpPixelRgnIterator, 1);
   pri->pixel_regions = NULL;
   pri->process_count = 0;
 
@@ -478,7 +482,7 @@ gimp_pixel_rgns_register2 (int nrgns, GPixelRgn **prs)
   while (nrgns --)
     {
       pr = prs[nrgns];
-      prh = g_new (GPixelRgnHolder, 1);
+      prh = g_new (GimpPixelRgnHolder, 1);
       prh->pr = pr;
 
       if (pr != NULL)
@@ -486,15 +490,15 @@ gimp_pixel_rgns_register2 (int nrgns, GPixelRgn **prs)
 	  /*  If there is a defined value for data, make sure tiles is NULL  */
 	  if (pr->data)
 	    pr->drawable = NULL;
-	  prh->original_data = pr->data;
-	  prh->startx = pr->x;
-	  prh->starty = pr->y;
+	  prh->original_data     = pr->data;
+	  prh->startx            = pr->x;
+	  prh->starty            = pr->y;
 	  prh->pr->process_count = 0;
 
 	  if (!found)
 	    {
 	      found = TRUE;
-	      pri->region_width = pr->w;
+	      pri->region_width  = pr->w;
 	      pri->region_height = pr->h;
 	    }
 	}
@@ -507,25 +511,25 @@ gimp_pixel_rgns_register2 (int nrgns, GPixelRgn **prs)
 }
 
 gpointer
-gimp_pixel_rgns_register (int nrgns,
+gimp_pixel_rgns_register (gint nrgns,
 			  ...)
 {
-  GPixelRgn **prs;
+  GimpPixelRgn **prs;
   gpointer pri;
-  int n;
+  gint n;
   va_list ap;
 
-  prs = g_new (GPixelRgn *,nrgns);
+  prs = g_new (GimpPixelRgn *, nrgns);
 
   va_start (ap, nrgns);
 
   for (n = nrgns; n--; )
-    prs[n] = va_arg (ap, GPixelRgn *);
+    prs[n] = va_arg (ap, GimpPixelRgn *);
 
   va_end (ap);
 
   pri = gimp_pixel_rgns_register2 (nrgns, prs);
-  
+
   g_free (prs);
 
   return pri;
@@ -535,10 +539,10 @@ gpointer
 gimp_pixel_rgns_process (gpointer pri_ptr)
 {
   GSList *list;
-  GPixelRgnHolder *prh;
-  GPixelRgnIterator *pri;
+  GimpPixelRgnHolder   *prh;
+  GimpPixelRgnIterator *pri;
 
-  pri = (GPixelRgnIterator*) pri_ptr;
+  pri = (GimpPixelRgnIterator*) pri_ptr;
   pri->process_count++;
 
   /*  Unref all referenced tiles and increment the offsets  */
@@ -546,7 +550,7 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
   list = pri->pixel_regions;
   while (list)
     {
-      prh = (GPixelRgnHolder*) list->data;
+      prh = (GimpPixelRgnHolder *) list->data;
       list = list->next;
 
       if ((prh->pr != NULL) && (prh->pr->process_count != pri->process_count))
@@ -559,7 +563,7 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (prh->pr->drawable)
 	    {
-	      GTile *tile = gimp_drawable_get_tile2 (prh->pr->drawable, prh->pr->shadow,
+	      GimpTile *tile = gimp_drawable_get_tile2 (prh->pr->drawable, prh->pr->shadow,
 						    prh->pr->x, prh->pr->y);
 	      gimp_tile_unref (tile, prh->pr->dirty);
 	    }
@@ -578,13 +582,13 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
 }
 
 
-static int
-gimp_get_portion_width (GPixelRgnIterator *pri)
+static gint
+gimp_get_portion_width (GimpPixelRgnIterator *pri)
 {
+  GimpPixelRgnHolder *prh;
   GSList *list;
-  GPixelRgnHolder *prh;
-  int min_width = G_MAXINT;
-  int width;
+  gint    min_width = G_MAXINT;
+  gint    width;
 
   /* Find the minimum width to the next vertical tile (in the case of a tile manager)
    * or to the end of the pixel region (in the case of no tile manager)
@@ -593,7 +597,7 @@ gimp_get_portion_width (GPixelRgnIterator *pri)
   list = pri->pixel_regions;
   while (list)
     {
-      prh = (GPixelRgnHolder *) list->data;
+      prh = (GimpPixelRgnHolder *) list->data;
 
       if (prh->pr)
         {
@@ -620,12 +624,12 @@ gimp_get_portion_width (GPixelRgnIterator *pri)
 }
 
 static int
-gimp_get_portion_height (GPixelRgnIterator *pri)
+gimp_get_portion_height (GimpPixelRgnIterator *pri)
 {
+  GimpPixelRgnHolder *prh;
   GSList *list;
-  GPixelRgnHolder *prh;
-  int min_height = G_MAXINT;
-  int height;
+  gint    min_height = G_MAXINT;
+  gint    height;
 
   /* Find the minimum height to the next vertical tile (in the case of a tile manager)
    * or to the end of the pixel region (in the case of no tile manager)
@@ -634,7 +638,7 @@ gimp_get_portion_height (GPixelRgnIterator *pri)
   list = pri->pixel_regions;
   while (list)
     {
-      prh = (GPixelRgnHolder *) list->data;
+      prh = (GimpPixelRgnHolder *) list->data;
 
       if (prh->pr)
         {
@@ -661,10 +665,10 @@ gimp_get_portion_height (GPixelRgnIterator *pri)
 }
 
 static gpointer
-gimp_pixel_rgns_configure (GPixelRgnIterator *pri)
+gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri)
 {
-  GPixelRgnHolder *prh;
-  GSList *list;
+  GimpPixelRgnHolder *prh;
+  GSList             *list;
 
   /*  Determine the portion width and height  */
   pri->portion_width = gimp_get_portion_width (pri);
@@ -691,26 +695,23 @@ gimp_pixel_rgns_configure (GPixelRgnIterator *pri)
 
   pri->process_count++;
 
-  list = pri->pixel_regions;
-  while (list)
+  for (list = pri->pixel_regions; list; list = g_slist_next (list))
     {
-      prh = (GPixelRgnHolder *) list->data;
+      prh = (GimpPixelRgnHolder *) list->data;
 
       if ((prh->pr != NULL) && (prh->pr->process_count != pri->process_count))
         {
           prh->pr->process_count++;
           gimp_pixel_rgn_configure (prh, pri);
         }
-
-      list = list->next;
     }
 
   return pri;
 }
 
 static void
-gimp_pixel_rgn_configure (GPixelRgnHolder   *prh,
-			  GPixelRgnIterator *pri)
+gimp_pixel_rgn_configure (GimpPixelRgnHolder   *prh,
+			  GimpPixelRgnIterator *pri)
 {
   /* Configure the rowstride and data pointer for the pixel region
    * based on the current offsets into the region and whether the
@@ -718,8 +719,9 @@ gimp_pixel_rgn_configure (GPixelRgnHolder   *prh,
    */
   if (prh->pr->drawable)
     {
-      GTile *tile;
-      int offx, offy;
+      GimpTile *tile;
+      gint      offx;
+      gint      offy;
 
       tile = gimp_drawable_get_tile2 (prh->pr->drawable, prh->pr->shadow, prh->pr->x, prh->pr->y);
       gimp_tile_ref (tile);

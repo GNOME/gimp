@@ -37,16 +37,29 @@ extern "C" {
 #define gimp_drawable_attach_parasite	gimp_drawable_parasite_attach
 #define gimp_drawable_detach_parasite	gimp_drawable_parasite_detach
 #define gimp_drawable_find_parasite	gimp_drawable_parasite_find
+
 #define gimp_drawable_channel		gimp_drawable_is_channel
 #define gimp_drawable_gray		gimp_drawable_is_gray
 #define gimp_drawable_color		gimp_drawable_is_rgb
 #define gimp_drawable_indexed		gimp_drawable_is_indexed
 #define gimp_drawable_layer		gimp_drawable_is_layer
 #define gimp_drawable_layer_mask	gimp_drawable_is_layer_mask
+
 #define gimp_image_disable_undo		gimp_image_undo_disable
 #define gimp_image_enable_undo		gimp_image_undo_enable
 #define gimp_image_freeze_undo		gimp_image_undo_freeze
 #define gimp_image_thaw_undo		gimp_image_undo_thaw
+
+#define gimp_channel_width              gimp_drawable_width
+#define gimp_channel_height             gimp_drawable_height
+#define gimp_channel_get_image_ID       gimp_drawable_get_image_ID
+#define gimp_channel_get_layer_ID       -1
+
+#define gimp_layer_width                gimp_drawable_width
+#define gimp_layer_height               gimp_drawable_height
+#define gimp_layer_bpp                  gimp_drawable_bpp
+#define gimp_layer_type                 gimp_drawable_type
+
 #define gimp_plugin_help_func           gimp_standard_help_func
 
 #define Parasite                        GimpParasite
@@ -75,6 +88,16 @@ extern "C" {
 #define pixpipeparams_init              gimp_pixpipe_params_init
 #define pixpipeparams_parse             gimp_pixpipe_params_parse
 #define pixpipeparams_build             gimp_pixpipe_params_build
+
+#define GPlugInInfo  GimpPlugInInfo
+#define GTile        GimpTile
+#define GDrawable    GimpDrawable
+#define GPixelRgn    GimpPixelRgn
+#define GParamColor  GimpParamColor
+#define GParamRegion GimpParamRegion
+#define GParamData   GimpParamData
+#define GParamDef    GimpParamDef
+#define GParam       GimpParam
 
 #endif /* GIMP_DISABLE_COMPAT_H */
 

@@ -56,7 +56,8 @@ sub plugin_help_register {
     $help = <<HELP;
 This procedure changes the help rootdir for the plug-in which calls it. All
 subsequent calls of gimp_help from this plug-in will be interpreted relative
-to this rootdir.
+to this rootdir.  This procedure can only be called in the query function of
+a plug-in and it has to be called before any procedure is installed.
 HELP
 
     &pdb_misc;

@@ -31,6 +31,7 @@ libgimpi_a_SOURCES = \
 	gimpchainbutton.h	\
 	gimpcolorbutton.c	\
 	gimpcolorspace.c	\
+	gimpcolorspace.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
 	gimpfileselection.c	\
@@ -78,31 +79,48 @@ endif
 
 libgimp_la_SOURCES = \
 	gimp.c			\
+	gimp.h			\
+	gimpchannel_pdb.h	\
 	gimpchannel_pdb.c	\
-	gimpcolorbutton.h	\
 	gimpcolorspace.c	\
+	gimpcolorspace.h	\
 	gimpdisplay_pdb.c	\
+	gimpdisplay_pdb.h	\
+	gimpdrawable.c		\
+	gimpdrawable.h		\
 	gimpdrawable_pdb.c	\
+	gimpdrawable_pdb.h	\
 	gimpenv.c		\
+	gimpenv.h		\
 	gimpgradient_pdb.c	\
+	gimphelp.c		\
 	gimphelp_pdb.c		\
+	gimphelp_pdb.h		\
 	gimpimage_pdb.c		\
+	gimpimage_pdb.h		\
 	gimplayer_pdb.c		\
+	gimplayer_pdb.h		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
 	gimppalette_pdb.c	\
-	gimpparasite_pdb.c	\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h	\
+	gimpparasite_pdb.c	\
+	gimpparasite_pdb.h	\
 	gimppixelrgn.c		\
+	gimppixelrgn.h		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpselection_pdb.c	\
+	gimpselection_pdb.h	\
 	gimpsignal.c		\
+	gimpsignal.h		\
 	gimptile.c		\
+	gimptile.h		\
 	gimpunit_pdb.c		\
+	gimpunit_pdb.h		\
 	gimpunit.h		\
 	gimputils.c		\
 	gimputils.h		\
@@ -120,6 +138,7 @@ libgimpui_la_SOURCES = \
 	gimppatternmenu.c	\
 	gimpchainbutton.c	\
 	gimpcolorbutton.c	\
+	gimpcolorbutton.h	\
 	gimpdialog.c		\
 	gimpexport.c		\
 	gimpfileselection.c	\
@@ -134,6 +153,16 @@ libgimpui_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h			\
+	gimpchannel_pdb.h	\
+	gimpdisplay_pdb.h	\
+	gimpdrawable_pdb.h	\
+	gimpgradient_pdb.h	\
+	gimphelp_pdb.h		\
+	gimpimage_pdb.h		\
+	gimplayer_pdb.h		\
+	gimppalette_pdb.h	\
+	gimpparasite_pdb.h	\
+	gimpselection_pdb.h	\
 	gimpchainbutton.h	\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
@@ -155,17 +184,22 @@ gimpinclude_HEADERS = \
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimppatheditor.h	\
+	gimppixelrgn.h		\
 	gimppixmap.h		\
 	gimpquerybox.h		\
 	gimpsignal.h		\
 	gimpsizeentry.h		\
+	gimptile.h		\
+	gimptypes.h		\
 	gimpui.h		\
-	gimpunit.h              \
-	gimpunitmenu.h          \
-	gimputils.h             \
+	gimpunit.h		\
+	gimpunit_pdb.h		\
+	gimpunitmenu.h		\
+	gimputils.h		\
 	gimpvector.h		\
 	gimpwidgets.h		\
 	gimpintl.h
+
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

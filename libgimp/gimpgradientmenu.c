@@ -1,5 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpgradientmenu.c
  * Copyright (C) 1998 Andy Thomas                
  *
  * This library is free software; you can redistribute it and/or
@@ -28,7 +30,7 @@
  * completely controls the selection of a gradient.
  * you get a widget returned that you can use in a table say.
  * In:- Initial gradient name. Null means use current selection.
- *      pointer to func to call when gradient changes (GRunGradientCallback).
+ *      pointer to func to call when gradient changes (GimpRunGradientCallback).
  * Returned:- Pointer to a widget that you can use in UI.
  * 
  * Widget simply made up of a preview widget (20x40) containing the gradient
@@ -43,24 +45,24 @@
 
 struct __gradients_sel 
 {
-  gchar                *dname;
-  GRunGradientCallback  cback;
-  GtkWidget            *gradient_preview;
-  GtkWidget            *button;
-  GtkWidget            *gradient_popup_pnt;
-  gint                  width;
-  gchar                *gradient_name;      /* Local copy */
-  gdouble              *grad_data;          /* local copy */
-  gint                  sample_size;
-  gpointer              data;
-};
+  gchar                   *dname;
+  GimpRunGradientCallback  cback;
+  GtkWidget               *gradient_preview;
+  GtkWidget               *button;
+  GtkWidget               *gradient_popup_pnt;
+  gint                     width;
+  gchar                   *gradient_name;      /* Local copy */
+  gdouble                 *grad_data;          /* local copy */
+  gint                     sample_size;
+  gpointer                 data;
+}; 
 
 typedef struct __gradients_sel GSelect;
 
 static void
-gradient_pre_update(GtkWidget *gradient_preview,
-		    gint       width_data,
-		    gdouble   *grad_data)
+gradient_pre_update (GtkWidget *gradient_preview,
+		     gint       width_data,
+		     gdouble   *grad_data)
 {
   gint     x;
   gint     y;
@@ -144,7 +146,7 @@ gradient_select_invoker (gchar    *name,
 
   gsel->gradient_name = g_strdup (name);
   /* one row only each row has four doubles r,g,b,a */
-  gsel->grad_data = g_malloc (width * sizeof (gdouble));
+  gsel->grad_data = g_new (gdouble, width);
   /*  printf("name = %s width = %d\n",name,width);*/
   g_memmove (gsel->grad_data, grad_data, width * sizeof (gdouble)); 
   gradient_pre_update (gsel->gradient_preview, gsel->width, gsel->grad_data);
@@ -175,10 +177,10 @@ gradient_preview_callback (GtkWidget *widget,
 }
 
 GtkWidget * 
-gimp_gradient_select_widget (gchar                *dname,
-			     gchar                *igradient, 
-			     GRunGradientCallback  cback,
-			     gpointer              data)
+gimp_gradient_select_widget (gchar                   *dname,
+			     gchar                   *igradient, 
+			     GimpRunGradientCallback  cback,
+			     gpointer                 data)
 {
   GtkWidget *button;
   GtkWidget *hbox;

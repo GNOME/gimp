@@ -1,5 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimppatternmenu.c
  * Copyright (C) 1998 Andy Thomas 
  *
  * This library is free software; you can redistribute it and/or
@@ -27,7 +29,7 @@
  * completely controls the selection of a pattern.
  * you get a widget returned that you can use in a table say.
  * In:- Initial pattern name. Null means use current selection.
- *      pointer to func to call when pattern changes (GRubPatternCallback).
+ *      pointer to func to call when pattern changes (GimpRunPatternCallback).
  * Returned:- Pointer to a widget that you can use in UI.
  * 
  * Widget simply made up of a preview widget (20x20) containing the pattern
@@ -44,20 +46,20 @@
 
 struct __patterns_sel 
 {
-  gchar               *dname;
-  GRunPatternCallback  cback;
-  GtkWidget           *pattern_preview;
-  GtkWidget           *device_patpopup; 
-  GtkWidget           *device_patpreview;
-  GtkWidget           *button;
-  GtkWidget           *top_hbox;
-  gchar               *pattern_name;      /* Local copy */
-  gint                 width;
-  gint                 height;
-  gint                 bytes;
-  gchar               *mask_data;         /* local copy */
-  void                *pattern_popup_pnt; /* Pointer use to control the popup */
-  gpointer             data;
+  gchar                  *dname;
+  GimpRunPatternCallback  cback;
+  GtkWidget              *pattern_preview;
+  GtkWidget              *device_patpopup; 
+  GtkWidget              *device_patpreview;
+  GtkWidget              *button;
+  GtkWidget              *top_hbox;
+  gchar                  *pattern_name;      /* Local copy */
+  gint                    width;
+  gint                    height;
+  gint                    bytes;
+  gchar                  *mask_data;         /* local copy */
+  void                   *pattern_popup_pnt; /* Pointer use to control the popup */
+  gpointer                data;
 };
 
 typedef struct __patterns_sel PSelect;
@@ -280,10 +282,10 @@ patterns_select_callback (GtkWidget *widget,
 }
 
 GtkWidget * 
-gimp_pattern_select_widget(gchar               *dname,
-			   gchar               *ipattern, 
-			   GRunPatternCallback  cback,
-			   gpointer             data)
+gimp_pattern_select_widget (gchar                  *dname,
+			    gchar                  *ipattern, 
+			    GimpRunPatternCallback  cback,
+			    gpointer                data)
 {
   GtkWidget *frame;
   GtkWidget *hbox;
@@ -357,12 +359,12 @@ gimp_pattern_select_widget(gchar               *dname,
 
 
 gboolean
-gimp_pattern_select_widget_close_popup (GtkWidget *w)
+gimp_pattern_select_widget_close_popup (GtkWidget *widget)
 {
   gboolean  ret_val = FALSE;
   PSelect  *psel;
 
-  psel = (PSelect*) gtk_object_get_data (GTK_OBJECT (w), PSEL_DATA_KEY);
+  psel = (PSelect *) gtk_object_get_data (GTK_OBJECT (widget), PSEL_DATA_KEY);
 
   if (psel && psel->pattern_popup_pnt)
     {
@@ -390,7 +392,8 @@ gimp_pattern_select_widget_set_popup (GtkWidget *widget,
   if (psel)
     {
       pattern_name = 
-	gimp_pattern_get_pattern_data (pname, &width, &height, &bytes, &mask_data);
+	gimp_pattern_get_pattern_data (pname,
+				       &width, &height, &bytes, &mask_data);
   
       pattern_select_invoker (pname, width, height, bytes, mask_data, 0, psel);
 
@@ -398,5 +401,6 @@ gimp_pattern_select_widget_set_popup (GtkWidget *widget,
 	  gimp_pattern_set_popup (psel->pattern_popup_pnt, pname))
 	ret_val = TRUE;
     }
+
   return ret_val;
 }

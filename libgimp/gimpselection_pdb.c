@@ -1,5 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpselection_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -113,4 +115,3 @@ gimp_selection_none (gint32 image_ID)
 
   return;
 }
-

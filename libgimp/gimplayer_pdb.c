@@ -1,5 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimplayer_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,15 +24,15 @@
 
 gint32
 gimp_layer_new (gint32        image_ID,
-		char         *name,
+		gchar        *name,
 		guint         width,
 		guint         height,
-		GDrawableType  type,
+		GDrawableType type,
 		gdouble       opacity,
 		GLayerMode    mode)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_layer_new",
@@ -57,7 +59,7 @@ gint32
 gimp_layer_copy (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_copy",
 				    &nreturn_vals,
@@ -78,7 +80,7 @@ void
 gimp_layer_delete (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_delete",
 				    &nreturn_vals,
@@ -88,35 +90,11 @@ gimp_layer_delete (gint32 layer_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-guint
-gimp_layer_width (gint32 layer_ID)
-{
-  return gimp_drawable_width (layer_ID);
-}
-
-guint
-gimp_layer_height (gint32 layer_ID)
-{
-  return gimp_drawable_height (layer_ID);
-}
-
-guint
-gimp_layer_bpp (gint32 layer_ID)
-{
-  return gimp_drawable_bpp (layer_ID);
-}
-
-GDrawableType
-gimp_layer_type (gint32 layer_ID)
-{
-  return gimp_drawable_type (layer_ID);
-}
-
 void
 gimp_layer_add_alpha (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_add_alpha",
 				    &nreturn_vals,
@@ -131,7 +109,7 @@ gimp_layer_create_mask (gint32          layer_ID,
 			GimpAddMaskType mask_type)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 mask_ID;
 
   return_vals = gimp_run_procedure ("gimp_layer_create_mask",
@@ -157,7 +135,7 @@ gimp_layer_resize (gint32 layer_ID,
 		   gint   offset_y)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_resize",
 				    &nreturn_vals,
@@ -178,7 +156,7 @@ gimp_layer_scale (gint32 layer_ID,
 		  gint   local_origin)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_scale",
 				    &nreturn_vals,
@@ -197,7 +175,7 @@ gimp_layer_translate (gint32 layer_ID,
 		      gint   offset_y)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_translate",
 				    &nreturn_vals,
@@ -213,8 +191,8 @@ gint
 gimp_layer_is_floating_selection (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_is_floating_sel",
 				    &nreturn_vals,
@@ -240,7 +218,7 @@ gint32
 gimp_layer_get_mask_id (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint32 mask_ID;
 
   return_vals = gimp_run_procedure ("gimp_layer_mask",
@@ -261,8 +239,8 @@ gint
 gimp_layer_get_apply_mask (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_apply_mask",
 				    &nreturn_vals,
@@ -282,8 +260,8 @@ gint
 gimp_layer_get_edit_mask (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_edit_mask",
 				    &nreturn_vals,
@@ -303,8 +281,8 @@ GLayerMode
 gimp_layer_get_mode (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_mode",
 				    &nreturn_vals,
@@ -320,12 +298,12 @@ gimp_layer_get_mode (gint32 layer_ID)
   return result;
 }
 
-char*
+gchar *
 gimp_layer_get_name (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  char *result;
+  gint nreturn_vals;
+  gchar *result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_name",
 				    &nreturn_vals,
@@ -345,7 +323,7 @@ gdouble
 gimp_layer_get_opacity (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gdouble result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_opacity",
@@ -366,8 +344,8 @@ gint
 gimp_layer_get_preserve_transparency (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_preserve_trans",
 				    &nreturn_vals,
@@ -387,8 +365,8 @@ gint
 gimp_layer_get_show_mask (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_show_mask",
 				    &nreturn_vals,
@@ -408,8 +386,8 @@ gint
 gimp_layer_get_visible (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int result;
+  gint nreturn_vals;
+  gint result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_visible",
 				    &nreturn_vals,
@@ -430,7 +408,7 @@ gimp_layer_set_apply_mask (gint32 layer_ID,
 			   gint   apply_mask)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_apply_mask",
 				    &nreturn_vals,
@@ -446,7 +424,7 @@ gimp_layer_set_edit_mask (gint32 layer_ID,
 			  gint   edit_mask)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_edit_mask",
 				    &nreturn_vals,
@@ -462,7 +440,7 @@ gimp_layer_set_mode (gint32     layer_ID,
 		     GLayerMode mode)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_mode",
 				    &nreturn_vals,
@@ -475,10 +453,10 @@ gimp_layer_set_mode (gint32     layer_ID,
 
 void
 gimp_layer_set_name (gint32  layer_ID,
-		     char   *name)
+		     gchar  *name)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_name",
 				    &nreturn_vals,
@@ -491,11 +469,11 @@ gimp_layer_set_name (gint32  layer_ID,
 
 void
 gimp_layer_set_offsets (gint32 layer_ID,
-			int    offset_x,
-			int    offset_y)
+			gint   offset_x,
+			gint   offset_y)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_offsets",
 				    &nreturn_vals,
@@ -512,7 +490,7 @@ gimp_layer_set_opacity (gint32  layer_ID,
 			gdouble opacity)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_opacity",
 				    &nreturn_vals,
@@ -524,11 +502,11 @@ gimp_layer_set_opacity (gint32  layer_ID,
 }
 
 void
-gimp_layer_set_preserve_transparency (gint32 layer_ID,
-				      int    preserve_transparency)
+gimp_layer_set_preserve_transparency (gint32   layer_ID,
+				      gboolean preserve_transparency)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_preserve_trans",
 				    &nreturn_vals,
@@ -540,11 +518,11 @@ gimp_layer_set_preserve_transparency (gint32 layer_ID,
 }
 
 void
-gimp_layer_set_show_mask (gint32 layer_ID,
-			  gint   show_mask)
+gimp_layer_set_show_mask (gint32   layer_ID,
+			  gboolean show_mask)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_show_mask",
 				    &nreturn_vals,
@@ -556,11 +534,11 @@ gimp_layer_set_show_mask (gint32 layer_ID,
 }
 
 void
-gimp_layer_set_visible (gint32 layer_ID,
-			gint   visible)
+gimp_layer_set_visible (gint32   layer_ID,
+			gboolean visible)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_layer_set_visible",
 				    &nreturn_vals,
@@ -575,8 +553,8 @@ gint32
 gimp_layer_get_tattoo (gint32 layer_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
-  int tattoo;
+  gint nreturn_vals;
+  gint tattoo;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_tattoo",
 				    &nreturn_vals,
@@ -591,4 +569,3 @@ gimp_layer_get_tattoo (gint32 layer_ID)
 
   return tattoo;
 }
-

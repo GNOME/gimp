@@ -1,55 +1,61 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimptile.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
+ */
+
 #include <string.h>
+
 #include "gimp.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"
 
 
-/*  This is the percentage of the maximum cache size that should be cleared
- *   from the cache when an eviction is necessary
+/*  This is the percentage of the maximum cache size that 
+ *  should be cleared from the cache when an eviction is 
+ *  necessary.
  */
 #define FREE_QUANTUM 0.1
 
-void gimp_read_expect_msg(WireMessage *msg, int type);
+void         gimp_read_expect_msg   (WireMessage *msg,
+				     gint         type);
 
-static void  gimp_tile_get          (GTile *tile);
-static void  gimp_tile_put          (GTile *tile);
-static void  gimp_tile_cache_insert (GTile *tile);
-static void  gimp_tile_cache_flush  (GTile *tile);
+static void  gimp_tile_get          (GimpTile    *tile);
+static void  gimp_tile_put          (GimpTile    *tile);
+static void  gimp_tile_cache_insert (GimpTile    *tile);
+static void  gimp_tile_cache_flush  (GimpTile    *tile);
 static void  gimp_tile_cache_zorch  (void);
-static guint gimp_tile_hash         (GTile *tile);
+static guint gimp_tile_hash         (GimpTile    *tile);
 
 
-gint _gimp_tile_width = -1;
+gint _gimp_tile_width  = -1;
 gint _gimp_tile_height = -1;
 
 static GHashTable *tile_hash_table = NULL;
-static GList *tile_list_head = NULL;
-static GList *tile_list_tail = NULL;
-static gulong max_tile_size = 0;
-static gulong cur_cache_size = 0;
-static gulong max_cache_size = 0;
+static GList      *tile_list_head  = NULL;
+static GList      *tile_list_tail  = NULL;
+static gulong      max_tile_size   = 0;
+static gulong      cur_cache_size  = 0;
+static gulong      max_cache_size  = 0;
 
 
 void
-gimp_tile_ref (GTile *tile)
+gimp_tile_ref (GimpTile *tile)
 {
   if (tile)
     {
@@ -66,7 +72,7 @@ gimp_tile_ref (GTile *tile)
 }
 
 void
-gimp_tile_ref_zero (GTile *tile)
+gimp_tile_ref_zero (GimpTile *tile)
 {
   if (tile)
     {
@@ -83,8 +89,8 @@ gimp_tile_ref_zero (GTile *tile)
 }
 
 void
-gimp_tile_unref (GTile *tile,
-		 int   dirty)
+gimp_tile_unref (GimpTile *tile,
+		 gboolean  dirty)
 {
   if (tile)
     {
@@ -101,7 +107,7 @@ gimp_tile_unref (GTile *tile,
 }
 
 void
-gimp_tile_flush (GTile *tile)
+gimp_tile_flush (GimpTile *tile)
 {
   if (tile && tile->data && tile->dirty)
     {
@@ -123,20 +129,20 @@ gimp_tile_cache_ntiles (gulong ntiles)
 }
 
 guint
-gimp_tile_width ()
+gimp_tile_width (void)
 {
   return _gimp_tile_width;
 }
 
 guint
-gimp_tile_height ()
+gimp_tile_height (void)
 {
   return _gimp_tile_height;
 }
 
 
 static void
-gimp_tile_get (GTile *tile)
+gimp_tile_get (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
   extern guchar* _shm_addr;
@@ -183,10 +189,10 @@ gimp_tile_get (GTile *tile)
 }
 
 static void
-gimp_tile_put (GTile *tile)
+gimp_tile_put (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
-  extern guchar* _shm_addr;
+  extern guchar *_shm_addr;
 
   GPTileReq tile_req;
   GPTileData tile_data;
@@ -229,7 +235,7 @@ gimp_tile_put (GTile *tile)
  *  in the file 'tile_cache.c' which is part of the main gimp application.
  */
 static void
-gimp_tile_cache_insert (GTile *tile)
+gimp_tile_cache_insert (GimpTile *tile)
 {
   GList *tmp;
 
@@ -320,7 +326,7 @@ gimp_tile_cache_insert (GTile *tile)
 }
 
 static void
-gimp_tile_cache_flush (GTile *tile)
+gimp_tile_cache_flush (GimpTile *tile)
 {
   GList *tmp;
 
@@ -362,14 +368,14 @@ gimp_tile_cache_flush (GTile *tile)
 }
 
 static void
-gimp_tile_cache_zorch ()
+gimp_tile_cache_zorch (void)
 {
   if (tile_list_head)
-    gimp_tile_cache_flush ((GTile*) tile_list_head->data);
+    gimp_tile_cache_flush ((GimpTile*) tile_list_head->data);
 }
 
 static guint
-gimp_tile_hash (GTile *tile)
+gimp_tile_hash (GimpTile *tile)
 {
   return (gulong) tile;
 }

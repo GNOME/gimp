@@ -123,7 +123,7 @@ static ProcRecord plugin_help_register_proc =
 {
   "gimp_plugin_help_register",
   "Register a help path for a plug-in.",
-  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
+  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",

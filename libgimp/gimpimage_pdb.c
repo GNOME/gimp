@@ -1,5 +1,7 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * gimpimage_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,6 +20,7 @@
  */
 
 #include <string.h>
+
 #include "gimp.h"
 
 
@@ -151,9 +154,6 @@ gimp_image_get_guide_position (gint32 image_id,
 
   return rtn_guide_position;
 }
-
-
-
 
 
 
@@ -1274,4 +1274,3 @@ gimp_image_convert_indexed (gint32                 image_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }     
-
