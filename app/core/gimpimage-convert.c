@@ -1066,9 +1066,7 @@ generate_histogram_rgb (Histogram  histogram,
 		      found_cols[num_found_cols][1] = data[GREEN_PIX];
 		      found_cols[num_found_cols][2] = data[BLUE_PIX];
 		      
-		      num_found_cols++;
-		      
-		      if (num_found_cols >= col_limit)
+		      if (num_found_cols > col_limit)
 			{
 			  /* There are more colours in the image
 			   *  than were allowed.  We switch to plain
@@ -1079,6 +1077,9 @@ generate_histogram_rgb (Histogram  histogram,
 			  g_print ("max colours exceeded - needs quantize.\n");
 			  goto already_found;
 			}
+
+		      num_found_cols++;
+		      
 		    }
 		}
 	    already_found:
