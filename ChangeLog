@@ -1,3 +1,9 @@
+2004-08-04  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/grid.c: changed the default colors for the
+	first invocation to the current foregroud color which is more
+	likely to be useful than the blue shades.
+
 2004-08-04  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

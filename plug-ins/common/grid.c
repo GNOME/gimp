@@ -106,9 +106,9 @@ typedef struct
 
 Config grid_cfg =
 {
-  1, 16, 8, { 0.0, 0.0, 0.5, 1.0 },    /* horizontal   */
-  1, 16, 8, { 0.0, 0.0, 0.5, 1.0 },    /* vertical     */
-  0,  2, 6, { 0.0, 0.0, 1.0, 1.0 },    /* intersection */
+  1, 16, 8, { 0.0, 0.0, 0.0, 1.0 },    /* horizontal   */
+  1, 16, 8, { 0.0, 0.0, 0.0, 1.0 },    /* vertical     */
+  0,  2, 6, { 0.0, 0.0, 0.0, 1.0 },    /* intersection */
 };
 
 
@@ -218,6 +218,9 @@ run (const gchar      *name,
     }
   else
     {
+      gimp_palette_get_foreground (&grid_cfg.hcolor);
+      grid_cfg.vcolor = grid_cfg.icolor = grid_cfg.hcolor;
+
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_grid", &grid_cfg);
     }
