@@ -17,29 +17,30 @@
    to figure out which button the user pushed, etc.
    Not my design, please don't blame me -- njl */
 
-static const char *hue_red=	N_("Red:");
-static const char *hue_green=	N_("Green:");
-static const char *hue_blue=	N_("Blue:");
-static const char *hue_cyan=	N_("Cyan:");
-static const char *hue_yellow=	N_("Yellow:");
-static const char *hue_magenta=	N_("Magenta:");
+static const gchar *hue_red     = N_("Red:");
+static const gchar *hue_green   = N_("Green:");
+static const gchar *hue_blue    = N_("Blue:");
+static const gchar *hue_cyan    = N_("Cyan:");
+static const gchar *hue_yellow  = N_("Yellow:");
+static const gchar *hue_magenta = N_("Magenta:");
 
-static const char *val_darker=	N_("Darker:");
-static const char *val_lighter=	N_("Lighter:");
+static const gchar *val_darker  = N_("Darker:");
+static const gchar *val_lighter = N_("Lighter:");
 
-static const char *sat_more=	N_("More Sat:");
-static const char *sat_less=	N_("Less Sat:");
+static const gchar *sat_more    = N_("More Sat:");
+static const gchar *sat_less    = N_("Less Sat:");
 
-static const char *current_val= N_("Current:");
+static const gchar *current_val = N_("Current:");
 
 AdvancedWindow AW = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 extern FP_Params Current;
 
-extern GimpDrawable *drawable, *mask;
+extern GimpDrawable *drawable;
+extern GimpDrawable *mask;
 
 FP_Intensity ShMidHi[]   = { SHADOWS, MIDTONES, HIGHLIGHTS };
-int          HueSatVal[] = { BY_HUE, BY_SAT, BY_VAL };
+gint         HueSatVal[] = { BY_HUE, BY_SAT, BY_VAL };
 
 gint nudgeArray[256];
 
@@ -51,23 +52,24 @@ GtkWidget *darkerPreview, *lighterPreview, *middlePreview;
 GtkWidget *allOrSell, *dlg;
 GtkWidget *plusSatPreview, *SatPreview, *minusSatPreview;
 
-struct 
+struct
 {
-  GtkWidget *bna,
-    *palette,
-    *rough,
-    *range,
-    *show,
-    *lnd,
-    *pixelsBy,
-    *frameSelect,
-    *satur;
+  GtkWidget *bna;
+  GtkWidget *palette;
+  GtkWidget *rough;
+  GtkWidget *range;
+  GtkWidget *show;
+  GtkWidget *lnd;
+  GtkWidget *pixelsBy;
+  GtkWidget *frameSelect;
+  GtkWidget *satur;
 } fpFrames;
 
 fpInterface FPint =
 {
   FALSE   /*  run  */
 };
+
 ReducedImage *reduced;
 
 /***********************************************************/
@@ -256,9 +258,9 @@ fp_create_range (void)
 			   ShMidHi + MIDTONES,
 			   Current.Range == MIDTONES);
   group = Button_In_A_Box (vbox, group, _("Highlights"), 
-			 GTK_SIGNAL_FUNC (fp_change_current_range),
-			 ShMidHi + HIGHLIGHTS,
-			 Current.Range == HIGHLIGHTS);
+			   GTK_SIGNAL_FUNC (fp_change_current_range),
+			   ShMidHi + HIGHLIGHTS,
+			   Current.Range == HIGHLIGHTS);
 
   return frame;
 }
@@ -373,7 +375,7 @@ fp_create_msnls (void)
   table = gtk_table_new (1, 11, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_widget_show (table);
-    
+
   gtk_table_attach (GTK_TABLE (table), moreVbox, 0, 3, 0, 1,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_table_attach (GTK_TABLE (table), middleVbox, 4, 7, 0, 1,
@@ -564,9 +566,9 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
 }
 
 void
-Create_A_Table_Entry (GtkWidget **box,
-		      GtkWidget *SmallerFrame,
-		      const gchar *description)
+Create_A_Table_Entry (GtkWidget   **box,
+		      GtkWidget    *SmallerFrame,
+		      const gchar  *description)
 {
   GtkWidget *label, *button, *table;
 
@@ -575,7 +577,7 @@ Create_A_Table_Entry (GtkWidget **box,
   gtk_widget_show (*box);
 
   /* Delayed translation applied here */
-  label = gtk_label_new (gettext(description));
+  label = gtk_label_new (gettext (description));
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_widget_show (label);
@@ -595,14 +597,16 @@ Create_A_Table_Entry (GtkWidget **box,
 			  GTK_SIGNAL_FUNC (selectionMade),
 			  (gchar *) description);
 
-    gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
-    gtk_widget_show (button);
-    gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-		      0, 0, 0, 4);
+      gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
+      gtk_widget_show (button);
+      gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
+			0, 0, 0, 4);
     }
   else
-    gtk_table_attach (GTK_TABLE (table), SmallerFrame, 0, 1, 1, 2,
-		      0, 0, 0, 4);
+    {
+      gtk_table_attach (GTK_TABLE (table), SmallerFrame, 0, 1, 1, 2,
+			0, 0, 0, 4);
+    }
 }
 
 void
@@ -642,7 +646,7 @@ void
 fp_selection_only (GtkWidget *button,
 		   gpointer   data)
 {
-  static int notFirstTime = 0;
+  static gint notFirstTime = 0;
 
   if (!(notFirstTime++))
     return;
@@ -668,7 +672,7 @@ void
 fp_show_hide_frame (GtkWidget *button, 
 		    GtkWidget *frame)
 {
-  int prev = Current.VisibleFrames;
+  gint prev = Current.VisibleFrames;
 
   if (frame == NULL)
     return;
@@ -800,7 +804,7 @@ void
 fp_scale_update (GtkAdjustment *adjustment,
 		 float         *scale_val)
 {
-  static float prevValue=.25;
+  static gfloat prevValue = 0.25;
 
   *scale_val = adjustment->value;
 
@@ -836,12 +840,17 @@ void
 fp_change_current_pixels_by (GtkWidget *button,
 			     gint      *valueBy)
 {
-  int prevValue=VALUE;
-  static int notFirstTime=0;
+  gint prevValue = VALUE;
+  static gint notFirstTime = 0;
   
-  if (!(notFirstTime++))  return;
-  if (!GTK_TOGGLE_BUTTON(button)->active)  return;
-  if (*valueBy == prevValue) return;
+  if (!(notFirstTime++))
+    return;
+
+  if (!GTK_TOGGLE_BUTTON(button)->active)
+    return;
+
+  if (*valueBy == prevValue)
+    return;
  
   Current.ValueBy = *valueBy;
   refreshPreviews (Current.VisibleFrames);
@@ -865,7 +874,7 @@ fp_advanced_call (void)
     fp_advanced_dialog ();
 }
 
-int
+gint
 fp_dialog (void)
 {
   GtkWidget *bna;

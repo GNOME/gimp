@@ -1,5 +1,10 @@
 2000-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/fp/fp_gdk.c
+	* plug-ins/fp/fp_gtk.c: #include <libgimp/gimpmath.h> g* types, stuff.
+
+2000-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/RELNOTES
 	* plug-ins/print/print-canon.c: Version 4.0.2 (this time the
 	official one, not just the README saying 4.0.2 :)
