@@ -741,63 +741,38 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 static void
 preview_update (GimpPreview *preview)
 {
-  /* drawable */
-  glong bytes;
-  gint  x1, y1, x2, y2;
-
-  /* preview */
   GimpDrawable *drawable;
-  gint          preview_x1;           /* Upper-left X of preview */
-  gint          preview_y1;           /* Upper-left Y of preview */
-  gint          preview_x2;           /* Lower-right X of preview */
-  gint          preview_y2;           /* Lower-right Y of preview */
-  /* preview buffer */
-  gint          preview_buf_width;    /* Width of preview widget */
-  gint          preview_buf_height;   /* Height of preview widget */
-  gint          preview_buf_x1;       /* Upper-left X of preview */
-  gint          preview_buf_y1;       /* Upper-left Y of preview */
-  gint          preview_buf_x2;       /* Lower-right X of preview */
-  gint          preview_buf_y2;       /* Lower-right Y of preview */
-
-  GimpPixelRgn  srcPR, destPR;        /* Pixel regions */
+  gint          x1, x2;
+  gint          y1, y2;
+  GimpPixelRgn  srcPR;
+  GimpPixelRgn  destPR;
 
   drawable =
     gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
-  /* Get drawable info */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  bytes = drawable->bpp;
+  /* get previewed area */
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &x2, &y2);
+  x2 += x1;
+  y2 += y1;
 
-  /*
-   * Setup for filter...
-   */
-  gimp_preview_get_position (preview, &preview_x1, &preview_y1);
-  gimp_preview_get_size (preview, &preview_x2, &preview_y2);
-  preview_x2 += preview_x1;
-  preview_y2 += preview_y1;
-
-  /* Make buffer large enough to minimize disturbence */
-  preview_buf_x1     = MAX (0, preview_x1 - unsharp_params.radius);
-  preview_buf_y1     = MAX (0, preview_y1 - unsharp_params.radius);
-  preview_buf_x2     = MIN (x2, preview_x2 + unsharp_params.radius);
-  preview_buf_y2     = MIN (y2, preview_y2 + unsharp_params.radius);
-  preview_buf_width  = preview_buf_x2 - preview_buf_x1;
-  preview_buf_height = preview_buf_y2 - preview_buf_y1;
+  /* make buffer large enough to minimize disturbence */
+  x1 = MAX (0, x1 - unsharp_params.radius);
+  y1 = MAX (0, y1 - unsharp_params.radius);
+  x2 = MIN (drawable->width,  x2 + unsharp_params.radius);
+  y2 = MIN (drawable->height, y2 + unsharp_params.radius);
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, drawable,
-                       preview_buf_x1, preview_buf_y1,
-                       preview_buf_width, preview_buf_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable,
-                       preview_buf_x1, preview_buf_y1,
-                       preview_buf_width, preview_buf_height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR,  drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, x2-x1, y2-y1, TRUE,  TRUE);
 
+  /* unsharp region */
   unsharp_region (&srcPR, &destPR,
-                  preview_buf_width, preview_buf_height, bytes,
+                  x2 - x1, y2 - y1, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
-                  preview_buf_x1, preview_buf_x2,
-                  preview_buf_y1, preview_buf_y2,
+                  x1, x2, y1, y2,
                   FALSE);
 
+  /* draw preview */
   gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview), &destPR);
 }
