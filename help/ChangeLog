@@ -1,3 +1,8 @@
+2001-01-01  Michael Natterer  <mitch@gimp.org>
+
+	* C/[some files]: removed the display filters help and the links
+	to them. DocBook insists on canging lots of files, though :(
+
 2000-12-24  Michael Natterer  <mitch@gimp.org>
 
 	* C/tools/Makefile.am
