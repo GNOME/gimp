@@ -36,6 +36,8 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
@@ -69,32 +71,17 @@ static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
                                                  gboolean         set_image_clean);
 
 
-static GtkWidget     *filesave         = NULL;
-
-static PlugInProcDef *save_file_proc   = NULL;
-static GimpImage     *the_gimage       = NULL;
-static gboolean       set_uri_and_proc = TRUE;
-static gboolean       set_image_clean  = TRUE;
+static GtkWidget *filesave = NULL;
 
 
 /*  public functions  */
-
-void
-file_save_dialog_set_type (PlugInProcDef *proc)
-{
-  if (proc)
-    file_dialog_update_name (proc, GTK_FILE_SELECTION (filesave));
-
-  save_file_proc = proc;
-}
 
 void
 file_save_dialog_show (GimpImage       *gimage,
                        GimpMenuFactory *menu_factory,
                        GtkWidget       *parent)
 {
-  GimpItemFactory *item_factory;
-  gchar           *filename;
+  gchar *filename;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
@@ -102,12 +89,12 @@ file_save_dialog_show (GimpImage       *gimage,
   if (! gimp_image_active_drawable (gimage))
     return;
 
-  the_gimage       = gimage;
-  set_uri_and_proc = TRUE;
-  set_image_clean  = TRUE;
-
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
+
+  GIMP_FILE_DIALOG (filesave)->gimage           = gimage;
+  GIMP_FILE_DIALOG (filesave)->set_uri_and_proc = TRUE;
+  GIMP_FILE_DIALOG (filesave)->set_image_clean  = TRUE;
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -128,9 +115,7 @@ file_save_dialog_show (GimpImage       *gimage,
 
   g_free (filename);
 
-  item_factory = g_object_get_data (G_OBJECT (filesave), "gimp-item-factory");
-
-  gimp_item_factory_update (item_factory,
+  gimp_item_factory_update (GIMP_FILE_DIALOG (filesave)->item_factory,
                             gimp_image_active_drawable (gimage));
 
   file_dialog_show (filesave, parent);
@@ -141,19 +126,14 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
                               GimpMenuFactory *menu_factory,
                               GtkWidget       *parent)
 {
-  GimpItemFactory *item_factory;
-  const gchar     *uri;
-  gchar           *filename = NULL;
+  const gchar *uri;
+  gchar       *filename = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
   if (! gimp_image_active_drawable (gimage))
     return;
-
-  the_gimage       = gimage;
-  set_uri_and_proc = FALSE;
-  set_image_clean  = FALSE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -162,6 +142,10 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
 
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
+
+  GIMP_FILE_DIALOG (filesave)->gimage           = gimage;
+  GIMP_FILE_DIALOG (filesave)->set_uri_and_proc = FALSE;
+  GIMP_FILE_DIALOG (filesave)->set_image_clean  = FALSE;
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -180,9 +164,7 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
 
   g_free (filename);
 
-  item_factory = g_object_get_data (G_OBJECT (filesave), "gimp-item-factory");
-
-  gimp_item_factory_update (item_factory,
+  gimp_item_factory_update (GIMP_FILE_DIALOG (filesave)->item_factory,
                             gimp_image_active_drawable (gimage));
 
   file_dialog_show (filesave, parent);
@@ -197,12 +179,15 @@ file_save_dialog_create (Gimp            *gimp,
 {
   GtkWidget *save_dialog;
 
-  save_dialog = file_dialog_new (gimp,
-                                 global_dialog_factory,
-                                 "gimp-file-save-dialog",
-                                 menu_factory, "<Save>",
-                                 _("Save Image"), "gimp-file-save",
-                                 GIMP_HELP_FILE_SAVE);
+  save_dialog = gimp_file_dialog_new (gimp,
+                                      menu_factory, "<Save>",
+                                      _("Save Image"), "gimp-file-save",
+                                      GTK_STOCK_SAVE,
+                                      GIMP_HELP_FILE_SAVE);
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-file-save-dialog",
+                                   save_dialog);
 
   g_signal_connect (save_dialog, "response",
                     G_CALLBACK (file_save_response_callback),
@@ -258,17 +243,19 @@ file_save_response_callback (GtkWidget *save_dialog,
     }
   else
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+      GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
+
+      gtk_widget_set_sensitive (save_dialog, FALSE);
 
       file_save_dialog_save_image (save_dialog,
-                                   the_gimage,
+                                   dialog->gimage,
                                    uri,
                                    raw_filename,
-                                   save_file_proc,
-                                   set_uri_and_proc,
-                                   set_image_clean);
+                                   dialog->file_proc,
+                                   dialog->set_uri_and_proc,
+                                   dialog->set_image_clean);
 
-      gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+      gtk_widget_set_sensitive (save_dialog, TRUE);
     }
 
   g_free (uri);
@@ -336,13 +323,15 @@ file_save_overwrite_callback (GtkWidget *widget,
 
   if (overwrite)
     {
+      GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
+
       file_save_dialog_save_image (overwrite_data->save_dialog,
-                                   the_gimage,
+                                   dialog->gimage,
                                    overwrite_data->uri,
                                    overwrite_data->raw_filename,
-                                   save_file_proc,
-                                   set_uri_and_proc,
-                                   set_image_clean);
+                                   dialog->file_proc,
+                                   dialog->set_uri_and_proc,
+                                   dialog->set_image_clean);
     }
 
   gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);

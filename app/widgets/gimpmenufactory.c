@@ -198,7 +198,7 @@ gimp_menu_factory_menu_new (GimpMenuFactory *factory,
                                                 create_tearoff);
 
           if (entry->setup_func)
-            entry->setup_func (item_factory);
+            entry->setup_func (item_factory, callback_data);
 
           return item_factory;
         }

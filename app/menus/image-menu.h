@@ -24,9 +24,10 @@ extern GimpItemFactoryEntry image_menu_entries[];
 extern gint                 n_image_menu_entries;
 
 
-void   image_menu_setup  (GimpItemFactory *factory);
+void   image_menu_setup  (GimpItemFactory *factory,
+                          gpointer         callback_data);
 void   image_menu_update (GtkItemFactory  *factory,
-                          gpointer         data);
+                          gpointer         update_data);
 
 
 #endif /* __IMAGE_MENU_H__ */

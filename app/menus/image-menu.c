@@ -1130,7 +1130,8 @@ gint n_image_menu_entries = G_N_ELEMENTS (image_menu_entries);
 
 
 void
-image_menu_setup (GimpItemFactory *factory)
+image_menu_setup (GimpItemFactory *factory,
+                  gpointer         setup_data)
 {
   if (GTK_IS_MENU_BAR (GTK_ITEM_FACTORY (factory)->widget))
     {

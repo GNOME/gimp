@@ -1,3 +1,37 @@
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpfiledialog.[ch]: new widget swallowing most
+	of file-dialog-utils.[ch]'s functionality.
+
+	* app/widgets/widgets-types.h: added "gpointer callback_data" to
+	GimpItemFactorySetupFunc so the setup_funcs can create items in
+	the same context as the item factory's default items.
+
+	* app/widgets/gimpmenufactory.c (gimp_menu_factory_menu_new):
+	pass "callback_data" to setup_func().
+
+	* app/gui/file-open-menu.[ch]
+	* app/gui/file-save-menu.[ch]: use the passed callback_data
+	when creating the menus and attach the file_proc to the
+	menu items using g_object_set_data().
+
+	* app/gui/file-commands.[ch]: merged separate file type callbacks
+	for open and save dialogs into one callback which simply
+	calls gimp_file_dialog_set_file_proc().
+
+	* app/gui/file-dialog-utils.[ch]: removed file_dialog_new()
+	and file_dialog_set_proc().
+
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]: use the new widget and removed
+	global variables except the dialog pointer itself.
+
+	* app/gui/image-menu.[ch]
+	* app/gui/tool-options-menu.[ch]
+	* app/gui/toolbox-menu.[ch]: changed accordingly.
+
 2004-02-26  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: improved help on missing libraries at run-time.

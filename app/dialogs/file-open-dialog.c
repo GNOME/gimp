@@ -38,6 +38,8 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpthumbbox.h"
@@ -65,20 +67,11 @@ static void        file_open_dialog_open_image   (GtkWidget        *open_dialog,
                                                   PlugInProcDef    *load_proc);
 
 
-static GtkWidget     *fileload       = NULL;
-static GtkWidget     *thumb_box      = NULL;
-static PlugInProcDef *load_file_proc = NULL;
+static GtkWidget *fileload  = NULL;
+static GtkWidget *thumb_box = NULL;
 
 
 /*  public functions  */
-
-void
-file_open_dialog_set_type (PlugInProcDef *proc)
-{
-  /* Don't call file_dialog_update_name() here, see bug #112273.  */
-
-  load_file_proc = proc;
-}
 
 void
 file_open_dialog_show (Gimp            *gimp,
@@ -146,12 +139,15 @@ file_open_dialog_create (Gimp            *gimp,
   GtkWidget        *open_dialog;
   GtkFileSelection *fs;
 
-  open_dialog = file_dialog_new (gimp,
-                                 global_dialog_factory,
-                                 "gimp-file-open-dialog",
-                                 menu_factory, "<Load>",
-                                 _("Open Image"), "gimp-file-open",
-                                 GIMP_HELP_FILE_OPEN);
+  open_dialog = gimp_file_dialog_new (gimp,
+                                      menu_factory, "<Load>",
+                                      _("Open Image"), "gimp-file-open",
+                                      GTK_STOCK_OPEN,
+                                      GIMP_HELP_FILE_OPEN);
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-file-open-dialog",
+                                   open_dialog);
 
   g_signal_connect (open_dialog, "response",
                     G_CALLBACK (file_open_response_callback),
@@ -202,8 +198,8 @@ static void
 file_open_selchanged_callback (GtkTreeSelection *sel,
 			       GtkWidget        *open_dialog)
 {
-  GtkFileSelection *fs;
-  Gimp             *gimp;
+  GimpFileDialog   *dialog   = GIMP_FILE_DIALOG (open_dialog);
+  GtkFileSelection *fs       = GTK_FILE_SELECTION (open_dialog);
   const gchar      *fullfname;
   gboolean          selected = FALSE;
 
@@ -211,17 +207,14 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
 				       selchanged_foreach,
 				       &selected);
 
-  fs = GTK_FILE_SELECTION (open_dialog);
-
-  gimp = GIMP (g_object_get_data (G_OBJECT (open_dialog), "gimp"));
-
   if (selected)
     {
       gchar *uri;
 
       fullfname = gtk_file_selection_get_filename (fs);
 
-      uri = file_utils_filename_to_uri (gimp->load_procs, fullfname, NULL);
+      uri = file_utils_filename_to_uri (dialog->gimp->load_procs,
+                                        fullfname, NULL);
       gimp_thumb_box_set_uri (GIMP_THUMB_BOX (thumb_box), uri);
       g_free (uri);
     }
@@ -310,7 +303,7 @@ file_open_response_callback (GtkWidget *open_dialog,
                                gimp,
                                uri,
                                entered_filename,
-                               load_file_proc);
+                               GIMP_FILE_DIALOG (open_dialog)->file_proc);
 
   g_free (uri);
 
@@ -328,7 +321,7 @@ file_open_response_callback (GtkWidget *open_dialog,
                                        gimp,
                                        uri,
                                        uri,
-                                       load_file_proc);
+                                       GIMP_FILE_DIALOG (open_dialog)->file_proc);
 
           g_free (uri);
 	}

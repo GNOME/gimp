@@ -285,7 +285,8 @@ gint n_toolbox_menu_entries = G_N_ELEMENTS (toolbox_menu_entries);
 
 
 void
-toolbox_menu_setup (GimpItemFactory *factory)
+toolbox_menu_setup (GimpItemFactory *factory,
+                    gpointer         callback_data)
 {
   static gchar *reorder_subsubmenus[] = { "/Xtns" };
 

@@ -106,6 +106,7 @@ typedef struct _GimpDockedInterface     GimpDockedInterface;
 typedef struct _GimpContainerPopup      GimpContainerPopup;
 typedef struct _GimpViewableButton      GimpViewableButton;
 typedef struct _GimpViewableDialog      GimpViewableDialog;
+typedef struct _GimpFileDialog          GimpFileDialog;
 
 typedef struct _GimpHistogramView       GimpHistogramView;
 typedef struct _GimpHistogramBox        GimpHistogramBox;
@@ -130,9 +131,10 @@ typedef struct _GimpSessionInfoAux      GimpSessionInfoAux;
 
 /*  function types  */
 
-typedef void (* GimpItemFactorySetupFunc)   (GimpItemFactory *factory);
+typedef void (* GimpItemFactorySetupFunc)   (GimpItemFactory *factory,
+                                             gpointer         callback_data);
 typedef void (* GimpItemFactoryUpdateFunc)  (GtkItemFactory  *factory,
-                                             gpointer         data);
+                                             gpointer         update_data);
 
 typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
                                              gint            *x,

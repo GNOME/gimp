@@ -104,7 +104,8 @@ gint n_tool_options_menu_entries = G_N_ELEMENTS (tool_options_menu_entries);
 /*  public functions  */
 
 void
-tool_options_menu_setup (GimpItemFactory *factory)
+tool_options_menu_setup (GimpItemFactory *factory,
+                         gpointer         callback_data)
 {
   gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
                                    "/Restore Options from/(None)", FALSE);

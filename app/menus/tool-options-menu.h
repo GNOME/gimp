@@ -24,9 +24,10 @@ extern GimpItemFactoryEntry tool_options_menu_entries[];
 extern gint                 n_tool_options_menu_entries;
 
 
-void   tool_options_menu_setup  (GimpItemFactory *factory);
+void   tool_options_menu_setup  (GimpItemFactory *factory,
+                                 gpointer         callback_data);
 void   tool_options_menu_update (GtkItemFactory  *factory,
-                                 gpointer         data);
+                                 gpointer         update_data);
 
 
 #endif /* __TOOL_OPTIONS_MENU_H__ */

@@ -43,6 +43,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpfiledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -124,19 +125,13 @@ file_new_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_open_by_extension_cmd_callback (GtkWidget *widget,
-				     gpointer   data,
-                                     guint      action)
+file_type_cmd_callback (GtkWidget *widget,
+                        gpointer   data,
+                        guint      action)
 {
-  file_open_dialog_set_type (NULL);
-}
-
-void
-file_open_type_cmd_callback (GtkWidget *widget,
-                             gpointer   data,
-                             guint      action)
-{
-  file_open_dialog_set_type ((PlugInProcDef *) data);
+  gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (data),
+                                  g_object_get_data (G_OBJECT (widget),
+                                                     "file-proc"));
 }
 
 void
@@ -198,22 +193,6 @@ file_last_opened_cmd_callback (GtkWidget *widget,
           g_free (filename);
         }
     }
-}
-
-void
-file_save_by_extension_cmd_callback (GtkWidget *widget,
-				     gpointer   data,
-                                     guint      action)
-{
-  file_save_dialog_set_type (NULL);
-}
-
-void
-file_save_type_cmd_callback (GtkWidget *widget,
-                             gpointer   data,
-                             guint      action)
-{
-  file_save_dialog_set_type ((PlugInProcDef *) data);
 }
 
 void

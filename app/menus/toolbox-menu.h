@@ -24,7 +24,8 @@ extern GimpItemFactoryEntry toolbox_menu_entries[];
 extern gint                 n_toolbox_menu_entries;
 
 
-void   toolbox_menu_setup (GimpItemFactory *factory);
+void   toolbox_menu_setup (GimpItemFactory *factory,
+                           gpointer         callback_data);
 
 
 #endif /* __TOOLBOX_MENU_H__ */

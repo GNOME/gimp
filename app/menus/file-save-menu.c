@@ -45,7 +45,7 @@
 GimpItemFactoryEntry file_save_menu_entries[] =
 {
   { { N_("/By Extension"), NULL,
-      file_save_by_extension_cmd_callback, 0 },
+      file_type_cmd_callback, 0 },
     NULL,
     GIMP_HELP_FILE_SAVE_BY_EXTENSION, NULL },
 
@@ -56,21 +56,21 @@ gint n_file_save_menu_entries = G_N_ELEMENTS (file_save_menu_entries);
 
 
 void
-file_save_menu_setup (GimpItemFactory *factory)
+file_save_menu_setup (GimpItemFactory *factory,
+                      gpointer         callback_data)
 {
   GSList *list;
 
   for (list = factory->gimp->save_procs; list; list = g_slist_next (list))
     {
-      PlugInProcDef        *file_proc;
-      GimpItemFactoryEntry  entry;
+      PlugInProcDef        *file_proc     = list->data;
       const gchar          *locale_domain = NULL;
       const gchar          *item_type     = NULL;
       const gchar          *stock_id      = NULL;
       gchar                *help_id;
+      GimpItemFactoryEntry  entry;
       gboolean              is_xcf;
-
-      file_proc = (PlugInProcDef *) list->data;
+      GtkWidget            *menu_item;
 
       if (! file_proc->menu_path)
         continue;
@@ -98,7 +98,7 @@ file_save_menu_setup (GimpItemFactory *factory)
 
       entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
-      entry.entry.callback        = file_save_type_cmd_callback;
+      entry.entry.callback        = file_type_cmd_callback;
       entry.entry.callback_action = 0;
       entry.entry.item_type       = (gchar *) item_type;
       entry.entry.extra_data      = stock_id;
@@ -109,16 +109,16 @@ file_save_menu_setup (GimpItemFactory *factory)
       gimp_item_factory_create_item (factory,
                                      &entry,
                                      locale_domain,
-                                     file_proc, 2, FALSE);
+                                     callback_data, 2, FALSE);
 
-      if (is_xcf)
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
+                                               entry.entry.path);
+
+      if (menu_item)
         {
-          GtkWidget *menu_item;
+          g_object_set_data (G_OBJECT (menu_item), "file-proc", file_proc);
 
-          menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                                   entry.entry.path);
-
-          if (menu_item)
+          if (is_xcf)
             gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
                                     menu_item, 1);
         }

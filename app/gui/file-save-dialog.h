@@ -20,8 +20,6 @@
 #define __FILE_SAVE_DIALOG_H__
 
 
-void   file_save_dialog_set_type    (PlugInProcDef   *proc);
-
 void   file_save_dialog_show        (GimpImage       *gimage,
                                      GimpMenuFactory *menu_factory,
                                      GtkWidget       *parent);

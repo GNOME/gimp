@@ -24,7 +24,8 @@ extern GimpItemFactoryEntry file_open_menu_entries[];
 extern gint                 n_file_open_menu_entries;
 
 
-void   file_open_menu_setup (GimpItemFactory *factory);
+void   file_open_menu_setup (GimpItemFactory *factory,
+                             gpointer         callback_data);
 
 
 #endif /* __FILE_OPEN_MENU_H__ */
