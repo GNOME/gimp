@@ -77,16 +77,6 @@ static GtkWidget *swatch = NULL;
 #define SWATCH_W (128)
 #define SWATCH_H (128)
 
-static char *
-c_strdup(const char *s)
-{
-  char *ret = malloc(strlen(s) + 1);
-  if (!s)
-    exit(1);
-  strcpy(ret, s);
-  return ret;
-}
-
 static void
 gimp_dither_algo_callback (GtkWidget *widget,
 			   gpointer   data)
@@ -106,13 +96,13 @@ gimp_dither_algo_callback (GtkWidget *widget,
 void
 gimp_build_dither_combo (void)
 {
-  int i;
-  stp_param_t *vec = g_malloc(sizeof(stp_param_t) * stp_dither_algorithm_count());
+  stp_param_t *vec = g_new (stp_param_t, stp_dither_algorithm_count());
+  gint i;
 
   for (i = 0; i < stp_dither_algorithm_count(); i++)
     {
-      vec[i].name = c_strdup (stp_dither_algorithm_name (i));
-      vec[i].text = c_strdup (stp_dither_algorithm_text (i));
+      vec[i].name = g_strdup (stp_dither_algorithm_name (i));
+      vec[i].text = g_strdup (stp_dither_algorithm_text (i));
     }
 
   gimp_plist_build_combo (dither_algo_combo,

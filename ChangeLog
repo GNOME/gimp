@@ -1,3 +1,10 @@
+2002-05-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c: a couple of cleanups and fixes.
+	This code relies heavily on GTK+ implementation details and thus
+	tends to work differently or even crashes on GTK+-2.0 :-(
+
 2002-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.h: removed unused commented out prototype.
