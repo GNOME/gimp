@@ -135,7 +135,7 @@ enum
 {
   LINEAR = 0,
   SPHERICAL,
-  SINUOSIDAL
+  SINUSOIDAL
 };
 
 enum
@@ -354,7 +354,7 @@ query (void)
     { GIMP_PDB_INT32,    "ambient",    "Ambient lighting factor" },
     { GIMP_PDB_INT32,    "compensate", "Compensate for darkening" },
     { GIMP_PDB_INT32,    "invert",     "Invert bumpmap" },
-    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
+    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUSOIDAL (2))" }
   };
 
   gimp_install_procedure ("plug_in_bump_map",
@@ -691,7 +691,7 @@ bumpmap_init_params (bumpmap_params_t *params)
           params->lut[i] = (int) (255.0 * sqrt(1.0 - n * n) + 0.5);
           break;
 
-        case SINUOSIDAL:
+        case SINUSOIDAL:
           n = i / 255.0;
           params->lut[i] = (int) (255.0 * (sin((-G_PI / 2.0) + G_PI * n) + 1.0) /
                                   2.0 + 0.5);
@@ -967,7 +967,7 @@ bumpmap_dialog (void)
 
                               _("_Linear Map"),     LINEAR,     NULL,
                               _("_Spherical Map"),  SPHERICAL,  NULL,
-                              _("S_inuosidal Map"), SINUOSIDAL, NULL,
+                              _("S_inusoidal Map"), SINUSOIDAL, NULL,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);

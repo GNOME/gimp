@@ -1171,7 +1171,7 @@ create_scaling_frame (void)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (event_box);
 
-  label = gtk_label_new ("Scale by:");
+  label = gtk_label_new (_("Scale by:"));
   gtk_container_add (GTK_CONTAINER (event_box), label);
   gtk_widget_show (label);
 

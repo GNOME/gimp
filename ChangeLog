@@ -1,3 +1,17 @@
+2004-05-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/config/gimprc-blurbs.h
+	* plug-ins/gfig/gfig-spiral.c (spiral_button_press)
+	* plug-ins/gimpressionist/orientation.c (create_orientationpage)
+	* plug-ins/common/diffraction.c (diffraction_dialog)
+	* plug-ins/common/bumpmap.c (bumpmap_dialog)
+	* plug-ins/maze/maze.h
+	* plug-ins/MapObject/mapobject_apply.c (compute_image)
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_dialog_update)
+	* plug-ins/print/gimp_main_window.c (create_scaling_frame): marked
+	strings for translation, corrected small typos. Fixes part of bug
+	#142996
+
 2004-05-23  Žygimantas Beručka  <uid0@akl.lt>
 
 	* configure.in: Added "lt" to ALL_LINGUAS.

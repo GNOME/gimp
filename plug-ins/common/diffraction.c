@@ -632,7 +632,7 @@ diffraction_dialog (void)
                     &dvals.scattering);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Po_latization:"), SCALE_WIDTH, 7,
+			      _("Po_larization:"), SCALE_WIDTH, 7,
 			      dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -7,6 +7,7 @@ plug-ins/Lighting/lighting_apply.c
 plug-ins/Lighting/lighting_main.c
 plug-ins/Lighting/lighting_ui.c
 plug-ins/MapObject/arcball.c
+plug-ins/MapObject/mapobject_apply.c
 plug-ins/MapObject/mapobject_main.c
 plug-ins/MapObject/mapobject_ui.c
 plug-ins/bmp/bmp.c
@@ -234,6 +235,7 @@ plug-ins/imagemap/imap_toolbar.c
 plug-ins/imagemap/imap_tools.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
+plug-ins/maze/maze.h
 plug-ins/maze/maze_face.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/gimp_color_window.c

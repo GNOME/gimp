@@ -1,5 +1,5 @@
 /* $Id$ */
-#define MAZE_TITLE "Maze"
+#define MAZE_TITLE N_("Maze")
 #define MAZE_URL "http://gimp-plug-ins.sourceforge.net/maze/help.html"
 
 #define HELP_OPENS_NEW_WINDOW FALSE

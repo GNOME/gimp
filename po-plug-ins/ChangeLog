@@ -1,3 +1,8 @@
+2004-05-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	* POTFILES.in: added plug-ins/MapObject/mapobject_apply.c and
+	plug-ins/maze/maze.h. Fixes part of bug #142996
+
 2004-05-23  Žygimantas Beručka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
