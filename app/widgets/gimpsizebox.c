@@ -222,23 +222,22 @@ gimp_size_box_constructor (GType                  type,
                                 TRUE, TRUE,
                                 _("_Width:"),
                                 box->width, box->xresolution,
-                                0, 100000, 0, box->width,
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                0, box->width,
                                 _("H_eight:"),
                                 box->height, box->yresolution,
-                                0, 100000, 0, box->height);
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                0, box->height);
 
-  priv->size_entry  = GIMP_SIZE_ENTRY (entry);
-  priv->size_chain  = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
-  priv->aspect      = (gdouble) box->width / (gdouble) box->height;
+  priv->size_entry = GIMP_SIZE_ENTRY (entry);
+  priv->size_chain = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
+  priv->aspect     = (gdouble) box->width / (gdouble) box->height;
 
   /*
-   * let gimp_prop_coordinates_callback know how to
-   * interpret the chainbutton.  This should be removed
-   * eventually.
+   * let gimp_prop_coordinates_callback know how to interpret the chainbutton
    */
   g_object_set_data (G_OBJECT (priv->size_chain),
-                     "constrains-ratio",
-                     GINT_TO_POINTER (TRUE));
+                     "constrains-ratio", GINT_TO_POINTER (TRUE));
 
   gimp_prop_coordinates_connect (G_OBJECT (box),
                                  "width", "height",
@@ -450,14 +449,13 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
   if (priv->res_label)
     {
       gchar *text;
+      gint   xres = ROUND (box->xresolution);
+      gint   yres = ROUND (box->yresolution);
 
-      if ((gint) box->xresolution != (gint) box->yresolution)
-        text = g_strdup_printf (_("%d x %d dpi"),
-                                (gint) box->xresolution,
-                                (gint) box->yresolution);
+      if (xres != yres)
+        text = g_strdup_printf (_("%d x %d dpi"), xres, yres);
       else
-        text = g_strdup_printf (_("%d dpi"),
-                                (gint) box->yresolution);
+        text = g_strdup_printf (_("%d dpi"), yres);
 
       gtk_label_set_text (GTK_LABEL (priv->res_label), text);
       g_free (text);
