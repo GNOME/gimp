@@ -1114,7 +1114,6 @@ prefs_dialog_new (Gimp       *gimp,
   gint               page_index;
 
   GtkSizeGroup      *size_group = NULL;
-  GtkWidget         *ebox;
   GtkWidget         *frame;
   GtkWidget         *notebook;
   GtkWidget         *vbox;
@@ -1201,14 +1200,9 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_state (ebox, GTK_STATE_PRELIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
-  gtk_widget_show (ebox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (ebox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);

@@ -126,21 +126,14 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 static void
 gimp_viewable_dialog_init (GimpViewableDialog *dialog)
 {
-  GtkWidget *ebox;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *sep;
-
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_state (ebox, GTK_STATE_PRELIGHT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), ebox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (ebox), frame);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -152,10 +145,6 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_misc_set_alignment (GTK_MISC (dialog->icon), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->icon, FALSE, FALSE, 0);
   gtk_widget_show (dialog->icon);
-
-  sep = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (hbox), vbox);
@@ -172,6 +161,9 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
 
   dialog->viewable_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (dialog->viewable_label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (dialog->viewable_label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->viewable_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->viewable_label);
 }

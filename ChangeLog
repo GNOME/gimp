@@ -1,3 +1,13 @@
+2004-09-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewabledialog.c: removed the prelit event box
+	from the header frame, use a smaller font for the subtitle,
+	removed the separator.
+
+	* app/dialogs/preferences-dialog.c: removed the prelit event box
+	from the header frame. Perhaps we should have subtitles here with
+	a more verbose description of the settings page?
+
 2004-09-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-actions.c (file_actions): resolved conflicting
