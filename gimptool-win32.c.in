@@ -21,8 +21,8 @@
  * want to build and install a plug-in from source don't necessarily have
  * any Bourne-compatible shell to run the gimptool script in.
  *
- * Yes, this program leaks g_strconcat'ed strings without
- * hesitation. So what, it runs for a couple of milliseconds.
+ * Yes, this program leaks dynamically allocated strings without
+ * hesitation. So what, it runs only for a minimal time.
  */
 
 #include <stdlib.h>
@@ -65,8 +65,8 @@ static gchar *env_libs;
 #endif
 
 #ifdef G_OS_WIN32
-#define COPY "copy"
-#define REMOVE "del"
+#define COPY win32_command ("copy")
+#define REMOVE win32_command ("del")
 #else
 #define COPY "cp"
 #define REMOVE "rm -f"
@@ -92,6 +92,21 @@ static struct {
   { "gimpplugindir", "@gimpplugindir@" },
   { "gimpdatadir", "@gimpdatadir@" }
 };
+
+#ifdef G_OS_WIN32
+
+static gchar *
+win32_command (gchar *command)
+{
+  gchar *comspec = getenv ("COMSPEC");
+
+  if (!comspec)
+    comspec = "command.com";
+
+  return g_strdup_printf ("%s /c %s", comspec, command);
+}
+
+#endif
 
 static gboolean
 starts_with (gchar *string,

@@ -1,3 +1,10 @@
+2003-05-27  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in: Don't try to execute the COPY or DEL
+	commands directly with system(), it doesn't seem to work, as they
+	are built-in commands in the command interpreter(s). (Strange, I
+	would have thought I had tested this?) Instead, use %COMSPEC% /c.
+
 2003-05-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c (export_merge): merged fix for bug #113639
