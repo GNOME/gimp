@@ -142,7 +142,6 @@ run(gchar *name, gint nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  /* bzero(&args, sizeof(struct piArgs)); */
   memset(&args,(int)0,sizeof(struct piArgs));
 
   rvals[0].type = PARAM_STATUS;
@@ -332,9 +331,7 @@ int pluginCore(struct piArgs *argp) {
   srcbuf=(guchar*)malloc(rowsize*3);
   dstbuf=(guchar*)malloc(rowsize);
 
-  /* bzero(srcbuf, rowsize*3); */
   memset(srcbuf,(int)0,(size_t)(rowsize*3));
-  /* bzero(dstbuf, rowsize); */
   memset(dstbuf,(int)0,(size_t)rowsize);
 
   EmbossInit(DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
@@ -344,14 +341,14 @@ int pluginCore(struct piArgs *argp) {
 
   /* first row */
   gimp_pixel_rgn_get_rect(&src, srcbuf, 0, 0, width, 3);
-  bcopy(srcbuf+rowsize, srcbuf, rowsize);
+  memcpy(srcbuf, srcbuf+rowsize, rowsize);
   EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
             dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row(&dst, dstbuf, 0, 0, width);
 
   /* last row */
   gimp_pixel_rgn_get_rect(&src, srcbuf, 0, height-3, width, 3);
-  bcopy(srcbuf+rowsize, srcbuf+rowsize*2, rowsize);
+  memcpy(srcbuf+rowsize*2, srcbuf+rowsize, rowsize);
   EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
             dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row(&dst, dstbuf, 0, height-1, width);
@@ -467,8 +464,8 @@ emboss_do_preview(GtkWidget *w) {
 
    dst = malloc(rowsize);
    c = malloc(rowsize*3);
-   bcopy(thePreview->bits, c, rowsize);
-   bcopy(thePreview->bits, c+rowsize, rowsize*2);
+   memcpy(c, thePreview->bits, rowsize);
+   memcpy(c+rowsize, thePreview->bits, rowsize*2);
    EmbossInit(DtoR(ap->azimuth), DtoR(ap->elevation), ap->depth);
 
    EmbossRow(c, ap->embossp ? (guchar *)0 : c,
@@ -476,9 +473,9 @@ emboss_do_preview(GtkWidget *w) {
    gtk_preview_draw_row(GTK_PREVIEW(theWidget),
                         dst, 0, 0, thePreview->width);
 
-   bcopy(thePreview->bits+((thePreview->height-2)*rowsize), c, rowsize*2);
-   bcopy(thePreview->bits+((thePreview->height-1)*rowsize),
-         c+(rowsize*2), rowsize);
+   memcpy(c, thePreview->bits+((thePreview->height-2)*rowsize), rowsize*2);
+   memcpy(c+(rowsize*2), thePreview->bits+((thePreview->height-1)*rowsize),
+          rowsize);
    EmbossRow(c, ap->embossp ? (guchar *)0 : c,
              dst, thePreview->width, thePreview->bpp, FALSE);
    gtk_preview_draw_row(GTK_PREVIEW(theWidget),

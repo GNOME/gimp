@@ -39,7 +39,6 @@
 #define PROGRESS_NAME	"value propagating..."
 #define MENU_POSITION	"<Image>/Filters/Distorts/Value Propagate"
 
-/* void bcopy(void *, void *, int); */
 typedef guchar CH;
 #define	RGB	(1 << 0)
 #define GRAY	(1 << 1)
@@ -411,7 +410,7 @@ value_propagate_body (gint	drawable_id)
 	  dest = dest_row + (x * bytes);
 	  here = cr + (x * bytes);
 	  /* *** copy source value to best value holder *** */
-	  bcopy ((void *)here, (void *)best, bytes);
+	  memcpy ((void *)best, (void *)here, bytes);
 	  if ( operation.initializer )
 	    (* operation.initializer)(dtype, bytes, best, here, &tmp);
 	  /* *** gather neighbors' values: loop-unfolded version *** */
@@ -569,7 +568,7 @@ propagate_white (dtype, bytes, orig, here, best, tmp)
      if ( *(float *)tmp < v_here && value_difference_check(orig, here, 3) )
 	{
 	  *(float *)tmp = v_here;
-	  bcopy(here, best, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy(best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
     case GRAYA_IMAGE:
@@ -615,7 +614,7 @@ propagate_black (image_type, channels, orig, here, best, tmp)
       if ( v_here < *(float *)tmp && value_difference_check(orig, here, 3) )
 	{	
 	  *(float *)tmp = v_here;
-	  bcopy (here, best, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
     case GRAYA_IMAGE:
@@ -695,13 +694,13 @@ propagate_middle (image_type, channels, orig, here, best, tmp)
       if ( (v_here <= data->minv) && value_difference_check(orig, here, 3) )
 	{	
 	  data->minv = v_here;
-	  bcopy (here, data->min, 3*sizeof(CH));
+	  memcpy (data->min, here, 3*sizeof(CH));
 	  data->min_modified = 1;
 	}
       if ( data->maxv <= v_here && value_difference_check(orig, here, 3) )
 	{	
 	  data->maxv = v_here;
-	  bcopy (here, data->max, 3*sizeof(CH));
+	  memcpy (data->max, here, 3*sizeof(CH));
 	  data->max_modified = 1;
 	}
       break;
@@ -881,7 +880,7 @@ propagate_a_color (image_type, channels, orig, here, best, tmp)
       if ( here[0] == fg[0] && here[1] == fg[1] && here[2] == fg[2] &&
 	   value_difference_check(orig, here, 3) )
 	{	
-	  bcopy (here, best, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
     case GRAYA_IMAGE:
@@ -903,11 +902,11 @@ propagate_opaque (image_type, channels, orig, here, best, tmp)
     {
     case RGBA_IMAGE:
       if ( best[3] < here[3] && value_difference_check(orig, here, 3) )
-	bcopy(here, best, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(CH));
       break;
     case GRAYA_IMAGE:
       if ( best[1] < here[1] && value_difference_check(orig, here, 1))
-	bcopy(here, best, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(CH));
       break;
     default:
       break;
@@ -925,11 +924,11 @@ propagate_transparent (image_type, channels, orig, here, best, tmp)
     {
     case RGBA_IMAGE:
       if ( here[3] < best[3] && value_difference_check(orig, here, 3))
-	bcopy(here, best, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(CH));
       break;
     case GRAYA_IMAGE:
       if ( here[1] < best[1] && value_difference_check(orig, here, 1))
-	bcopy(here, best, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(CH));
       break;
     default:
       break;

@@ -228,7 +228,6 @@ run(char *name, int nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  /* bzero(&args, sizeof(struct piArgs)); */
   memset(&args,(int)0,sizeof(struct piArgs));
   args.mode=-1;
 

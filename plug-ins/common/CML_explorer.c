@@ -1913,9 +1913,9 @@ CML_copy_parameters_callback (GtkWidget *widget, gpointer data)
       gdk_flush ();
       return;
     }
-  bcopy (channel_menu[copy_source].data,
-	 channel_menu[copy_destination].data,
-	 sizeof (CML_PARAM));
+  memcpy (channel_menu[copy_destination].data,
+	  channel_menu[copy_source].data,
+	  sizeof (CML_PARAM));
   CML_preview_defer = TRUE;
   widgets = widget_pointers[copy_destination];
   for (index = 0; index < CML_PARAM_NUM; index++)
@@ -2385,9 +2385,9 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
     {
       if ((selective_load_source == 0) || (selective_load_destination == 0))
 	{
-	  bcopy ((void *)&ch[0], &(VALS.hue), sizeof (CML_PARAM));
-	  bcopy ((void *)&ch[1], &(VALS.sat), sizeof (CML_PARAM));
-	  bcopy ((void *)&ch[2], &(VALS.val), sizeof (CML_PARAM));
+	  memcpy (&(VALS.hue), (void *)&ch[0], sizeof (CML_PARAM));
+	  memcpy (&(VALS.sat), (void *)&ch[1], sizeof (CML_PARAM));
+	  memcpy (&(VALS.val), (void *)&ch[2], sizeof (CML_PARAM));
 	  VALS.initial_value = initial_value;
 	  VALS.scale = scale;
 	  VALS.start_offset = start_offset;
@@ -2395,9 +2395,9 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
 	}
       else
 	{
-	  bcopy ((void *)&ch[selective_load_source - 1],
-		 (CML_PARAM *)&VALS + (selective_load_destination - 1),
-		 sizeof (CML_PARAM));
+	  memcpy ((CML_PARAM *)&VALS + (selective_load_destination - 1),
+		  (void *)&ch[selective_load_source - 1],
+		  sizeof (CML_PARAM));
 	}
 
       if ( sizeof (VALS.last_file_name) <= strlen (filename))

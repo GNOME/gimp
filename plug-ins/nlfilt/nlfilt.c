@@ -135,7 +135,6 @@ run(char *name, gint nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  /* bzero(&args, sizeof(struct piArgs)); */
   memset(&args,(int)0,sizeof(struct piArgs));
 
   args.radius=-1.0;
@@ -213,9 +212,7 @@ gint pluginCore(struct piArgs *argp) {
   srcbuf=(guchar*)malloc(width*Bpp*3);
   dstbuf=(guchar*)malloc(width*Bpp);
 
-  /* bzero(srcbuf, rowsize*3); */
   memset(srcbuf,(int)0,(size_t)(rowsize*3));
-  /* bzero(dstbuf, rowsize); */
   memset(dstbuf,(int)0,(size_t)rowsize);
 
   filtno=nlfiltInit(argp->alpha, argp->radius, argp->filter);
@@ -223,13 +220,13 @@ gint pluginCore(struct piArgs *argp) {
 
       /* first row */
   gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, 0, width, 3);
-  bcopy(srcbuf+width*Bpp, srcbuf, rowsize);
+  memcpy(srcbuf, srcbuf+width*Bpp, rowsize);
   nlfiltRow(srcbuf, dstbuf, width, Bpp, filtno);
   gimp_pixel_rgn_set_row(&dstPr, dstbuf, 0, 0, width);
 
       /* last row */
   gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, height-3, width, 3);
-  bcopy(srcbuf+rowsize, srcbuf+rowsize*2, rowsize);
+  memcpy(srcbuf+rowsize*2, srcbuf+rowsize, rowsize);
   nlfiltRow(srcbuf, dstbuf, width, Bpp, filtno);
   gimp_pixel_rgn_set_row(&dstPr, dstbuf, 0, height-1, width);
 
@@ -346,16 +343,16 @@ nlfilt_do_preview(GtkWidget *w) {
    rowsize=thePreview->width*thePreview->bpp;
    dst = malloc(rowsize);
    c = malloc(rowsize*3);
-   bcopy(thePreview->bits, c, rowsize);
-   bcopy(thePreview->bits, c+rowsize, rowsize*2);
+   memcpy(c, thePreview->bits, rowsize);
+   memcpy(c+rowsize, thePreview->bits, rowsize*2);
    filtno =  nlfiltInit(ap->alpha, ap->radius, ap->filter);
    nlfiltRow(c, dst, thePreview->width, thePreview->bpp, filtno);
    gtk_preview_draw_row(GTK_PREVIEW(theWidget),
                         dst, 0, 0, thePreview->width);
    
-   bcopy(thePreview->bits+((thePreview->height-2)*rowsize), c, rowsize*2);
-   bcopy(thePreview->bits+((thePreview->height-1)*rowsize),
-         c+(rowsize*2), rowsize);
+   memcpy(c, thePreview->bits+((thePreview->height-2)*rowsize), rowsize*2);
+   memcpy(c+(rowsize*2), thePreview->bits+((thePreview->height-1)*rowsize),
+          rowsize);
    gtk_preview_draw_row(GTK_PREVIEW(theWidget),
                         dst, 0, thePreview->height-1, thePreview->width);
    free(c);

@@ -189,12 +189,12 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
      points = (point *)  (last_block + (sizeof(bucket) + sizeof(abucket)) * nbuckets);
    }
 
-   bzero((char *) accumulate, sizeof(abucket) * nbuckets);
+   memset((char *) accumulate, 0, sizeof(abucket) * nbuckets);
    for (batch_num = 0; batch_num < nbatches; batch_num++) {
       double batch_time;
       double sample_density;
       control_point cp;
-      bzero((char *) buckets, sizeof(bucket) * nbuckets);
+      memset((char *) buckets, 0, sizeof(bucket) * nbuckets);
       batch_time = spec->time + temporal_deltas[batch_num];
 
       /* interpolate and get a control point */
