@@ -133,7 +133,9 @@ static const LinuxInputEvent input_events[] =
   { EV_KEY, BTN_RIGHT,  "button-right",     N_("Button Right")     },
   { EV_KEY, BTN_MIDDLE, "button-middle",    N_("Button Middle")    },
   { EV_REL, REL_WHEEL,  "wheel-turn-left",  N_("Wheel Turn Left")  },
-  { EV_REL, REL_WHEEL,  "wheel-rurn-right", N_("Wheel Turn Right") },
+  { EV_REL, REL_WHEEL,  "wheel-turn-right", N_("Wheel Turn Right") },
+  { EV_REL, REL_DIAL,   "dial-turn-left",   N_("Dial Turn Left")   },
+  { EV_REL, REL_DIAL,   "dial-turn-right",  N_("Dial Turn Right")  },
 };
 
 static GType                controller_type = 0;
@@ -351,7 +353,7 @@ linux_input_read_event (GIOChannel   *io,
               cevent.any.event_id = i;
 
               /* EEEEEEK */
-              if (ev.code == REL_WHEEL)
+              if (ev.code == REL_WHEEL || ev.code == REL_DIAL)
                 {
                   gint count;
 

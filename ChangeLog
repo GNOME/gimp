@@ -1,3 +1,8 @@
+2004-06-16  Simon Budig  <simon@gimp.org>
+
+	* modules/controller_linux_input.c: enable dial-events for
+	e.g. the powermate. Fixed typo.
+
 2004-06-16  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: added missing menu entries (bug #144449).
