@@ -23,6 +23,11 @@ Revision history for Gimp-Perl extension.
         - add a call to gimp_plugin_add_domain to Lib.xs.
         - fix some of the bugs Raphael "reported" (missing Gtk makde Gimp::UI
           crash).
+        - fix pxgettext call in po/update.sh to use the correct "perl".
+        - fix po/Makefile.PL to not barf on multiply defined "translation"
+          target.
+        - do not install scripts depending on Gtk.
+        - do not register menus when Gtk is needed for dialogs.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

@@ -19,7 +19,7 @@ if ($MSGFMT =~ /./) {
 print "\n";
 
 WriteMakefile(
-    NAME	=> 'i18n translation tables',
+    NAME	=> 'i18n',
     macro	=> \%cfg,
     realclean	=> { FILES => "gimp-perl.pot" },
     clean	=> { FILES => "*.mo" },
@@ -35,8 +35,8 @@ all :: update-pot
 update-po: update-pot
 $updatepo
 
-update-pot: ./update.sh
-	./update.sh
+update-pot:
+	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path './examples/*'` ../Perl-Server > gimp-perl.pot
 
 install :: install-po
 

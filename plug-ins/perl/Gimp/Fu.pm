@@ -319,7 +319,8 @@ Gimp::on_query {
    script:
    for(@scripts) {
       my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
-         $menupath,$imagetypes,$params,$results,$features,$code,$type)=@$_;
+         $menupath,$imagetypes,$params,$results,$features,$code,$type,
+         $defargs)=@$_;
 
       for (@$results) {
          next if ref $_;
@@ -358,6 +359,13 @@ Gimp::on_query {
          $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SPINNER;
          $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_ADJUSTMENT;
       }
+
+      # Gtk not installed -> do not install menu entry
+      if (@$params > $defargs) {
+         require Gimp::Feature;
+         undef $menupath unless Gimp::Feature::present('gtk');
+      }
+      
       Gimp->gimp_install_procedure($function,$blurb,$help,$author,$copyright,$date,
                                    $menupath,$imagetypes,$type,
                                    [[Gimp::PARAM_INT32,"run_mode","Interactive, [non-interactive]"],
@@ -616,7 +624,7 @@ sub register($$$$$$$$$;@) {
    no strict 'refs';
    my($function,$blurb,$help,$author,$copyright,$date,
       $menupath,$imagetypes,$params)=splice(@_,0,9);
-   my($results,$features,$code,$type);
+   my($results,$features,$code,$type,$defargs);
 
    $results  = (ref $_[0] eq "ARRAY") ? shift : [];
    $features = (ref $_[0] eq "ARRAY") ? shift : [];
@@ -626,23 +634,26 @@ sub register($$$$$$$$$;@) {
       if (/^<Image>\//) {
          $type = &Gimp::PROC_PLUG_IN;
          unshift @$params, @image_params;
+         $defargs = @image_params;
       } elsif (/^<Load>\//) {
          $type = &Gimp::PROC_PLUG_IN;
          unshift @$params, @load_params;
          unshift @$results, @load_retvals;
+         $defargs = @load_params;
       } elsif (/^<Save>\//) {
          $type = &Gimp::PROC_PLUG_IN;
          unshift @$params, @save_params;
+         $defargs = @save_params;
       } elsif (/^<Toolbox>\//) {
          $type = &Gimp::PROC_EXTENSION;
+         $defargs = 0;
       } elsif (/^<None>/) {
          $type = &Gimp::PROC_EXTENSION;
+         $defargs = 0;
       } else {
          die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
    }
-   #$menupath =~ s%^<Toolbox>/Xtns/%__("<Toolbox>/Xtns/")%e;
-   #$menupath =~ s%^<Image>/Filters/%__("<Image>/Filters/")%e;
    undef $menupath if $menupath eq "<None>";#d#
 
    @_==0 or die __"register called with too many or wrong arguments\n";
@@ -766,7 +777,8 @@ sub register($$$$$$$$$;@) {
 
    Gimp::register_callback($function,$perl_sub);
    push(@scripts,[$perl_sub,$function,$blurb,$help,$author,$copyright,$date,
-                  $menupath,$imagetypes,$params,$results,$features,$code,$type]);
+                  $menupath,$imagetypes,$params,$results,$features,$code,$type,
+                  $defargs]);
 }
 
 =cut

@@ -26,23 +26,62 @@ if ($ARGV[0] ne "--writemakefile") {
    do './config.pl'; die $@ if $@;
 }
 
+@otherdeps = qw(
+      povray imagemagick
+);
+@gtk_pins =
+   qw(
+     dataurl colorhtml avi PDB parasite-editor
+   ); # miff should be in @pins(!) but detection of non-default arguments is broken
 @pins =
-   qw(windify prep4gif webify PDB tex-to-float ditherize
-      xachlego xachshadow parasite-editor roundsel blended2
+   qw(
+      windify prep4gif webify tex-to-float ditherize
+      xachlego xachshadow roundsel blended2
       scratches blowinout terral_text xachvision perlcc translogo
       animate_cells image_tile yinyang stamps font_table sethspin
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle mirrorsplit
       layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
-      logulator miff gimpmagick guide_remove guides_to_selection burst
-      fire povray avi layerfuncs bricks dataurl colorhtml
+      logulator guide_remove guides_to_selection burst
+      layerfuncs bricks miff
    );
 @pdl_pins =
    qw(
       border gouge map_to_gradient pixelmap view3d
-   );
 
-push @pins, @pdl_pins if $PDL;
+      fire
+   ); # fire should use nmormal gradient map!
+
+eval "use Gtk;"; $GTK = $@ eq "";
+eval "use Parse::RecDescent;"; $PRD = $@ eq "";
+
+$] >= 5.005 or print <<EOF;
+
+NOTICE:  You are using a version of perl older than 5.005. This will slightly
+         reduce the features available to the Gimp-Perl extension.
+
+EOF
+
+$GTK or print <<EOF;
+
+NOTICE:  unable to use the Perl-Gtk interface. Many features (like
+         Gimp::Fu) rely on this extension. You can build without it (and
+         many scripts will be disabled or run with reduced functionality
+         only), but it's better to install it (version 0.6123 or higher is
+         required, you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or
+         any CPAN mirror.
+
+EOF
+
+$PRD or print <<EOF;
+
+NOTICE: Parse::RecDescent not found, scm2perl, the Scheme->Perl
+        translator, will not work. This is normally not a problem, since
+        it is quite unimportant for most people.
+
+EOF
+
+($major,$minor,$patch)=split /[._]/,$Gtk::VERSION;
 
 require ExtUtils::MakeMaker;
 import ExtUtils::MakeMaker;
@@ -68,6 +107,9 @@ WARNING: You are using the experimental (and very broken) multithread support.
             
 EOF
 }
+
+push @pins, @pdl_pins if $PDL;
+push @pins, @gtk_pins if $GTK;
 
 @INC = grep /^\//,@INC; # comment out as well?
 if (0) {		# comment out because it breaks
@@ -110,37 +152,6 @@ EOF
    }
 }
 }
-
-eval "use Gtk;"; $GTK = $@ eq "";
-eval "use Parse::RecDescent;"; $PRD = $@ eq "";
-
-$] >= 5.005 or print <<EOF;
-
-NOTICE:  You are using a version of perl older than 5.005. This will slightly
-         reduce the features available to the Gimp-Perl extension.
-
-EOF
-
-$GTK or print <<EOF;
-
-NOTICE:  unable to use the Perl-Gtk interface. Many features (like
-         Gimp::Fu) rely on this extension. You can build without it (and
-         many scripts will be disabled or run with reduced functionality
-         only), but it's better to install it (version 0.6123 or higher is
-         required, you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or
-         any CPAN mirror.
-
-EOF
-
-$PRD or print <<EOF;
-
-NOTICE: Parse::RecDescent not found, scm2perl, the Scheme->Perl
-        translator, will not work. This is normally not a problem, since
-        it is quite unimportant for most people.
-
-EOF
-
-($major,$minor,$patch)=split /[._]/,$Gtk::VERSION;
 
 sub MY::install {
    my $self=shift;
