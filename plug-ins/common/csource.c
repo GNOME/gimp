@@ -33,6 +33,7 @@ typedef struct {
   gboolean glib_types;
   gboolean alpha;
   gboolean use_macros;
+  gboolean use_rle;
   gdouble  opacity;
 } Config;
 
@@ -124,6 +125,7 @@ run (gchar   *name,
 	TRUE,			/* glib_types */
 	FALSE,			/* alpha */
 	FALSE,			/* use_macros */
+	FALSE,			/* use_rle */
 	100.0,			/* opacity */
       };
 
@@ -165,6 +167,100 @@ run (gchar   *name,
 	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
     }
+}
+
+static gboolean
+diff2_rgb (guint8 *ip)
+{
+  return ip[0] != ip[3] || ip[1] != ip[4] || ip[2] != ip[5];
+}
+
+static gboolean
+diff2_rgba (guint8 *ip)
+{
+  return ip[0] != ip[4] || ip[1] != ip[5] || ip[2] != ip[6] || ip[3] != ip[7];
+}
+
+static guint8*
+rl_encode_rgbx (guint8 *bp,
+		guint8 *ip,
+		guint8 *limit,
+		guint   n_ch)
+{
+  gboolean (*diff2_pix) (guint8 *) = n_ch > 3 ? diff2_rgba : diff2_rgb;
+  guint8 *ilimit = limit - n_ch;
+
+  while (ip < limit)
+    {
+      g_assert (ip < ilimit); /* paranoid */
+
+      if (diff2_pix (ip))
+	{
+	  guint8 *s_ip = ip;
+	  guint l = 1;
+
+	  ip += n_ch;
+	  while (l < 127 && ip < ilimit && diff2_pix (ip))
+	    { ip += n_ch; l += 1; }
+	  if (ip == ilimit && l < 127)
+            { ip += n_ch; l += 1; }
+	  *(bp++) = l;
+	  memcpy (bp, s_ip, l * n_ch);
+	  bp += l * n_ch;
+	}
+      else
+	{
+	  guint l = 2;
+
+	  ip += n_ch;
+	  while (l < 127 && ip < ilimit && !diff2_pix (ip))
+            { ip += n_ch; l += 1; }
+	  *(bp++) = l | 128;
+	  memcpy (bp, ip, n_ch);
+	  ip += n_ch;
+	  bp += n_ch;
+	}
+      if (ip == ilimit)
+	{
+	  *(bp++) = 1;
+	  memcpy (bp, ip, n_ch);
+	  ip += n_ch;
+	  bp += n_ch;
+	}
+    }
+
+  return bp;
+}
+
+static inline void
+save_rle_decoder (FILE        *fp,
+		  const gchar *macro_name,
+		  const gchar *s_uint,
+		  const gchar *s_uint_8,
+		  guint        n_ch)
+{
+  fprintf (fp, "#define %s_RUN_LENGTH_DECODE(image_buf, rle_data, size, bpp) do \\\n",
+	   macro_name);
+  fprintf (fp, "{ %s __bpp; %s *__ip; const %s *__il, *__rd; \\\n", s_uint, s_uint_8, s_uint_8);
+  fprintf (fp, "  __bpp = (bpp); __ip = (image_buf); __il = __ip + (size) * __bpp; \\\n");
+
+  fprintf (fp, "  __rd = (rle_data); if (__bpp > 3) { /* RGBA */ \\\n");
+
+  fprintf (fp, "    while (__ip < __il) { %s __l = *(__rd++); \\\n", s_uint);
+  fprintf (fp, "      if (__l & 128) { __l = __l - 128; \\\n");
+  fprintf (fp, "        do { memcpy (__ip, __rd, 4); __ip += 4; } while (--__l); __rd += 4; \\\n");
+  fprintf (fp, "      } else { __l *= 4; memcpy (__ip, __rd, __l); \\\n");
+  fprintf (fp, "               __ip += __l; __rd += __l; } } \\\n");
+
+  fprintf (fp, "  } else { /* RGB */ \\\n");
+
+  fprintf (fp, "    while (__ip < __il) { %s __l = *(__rd++); \\\n", s_uint);
+  fprintf (fp, "      if (__l & 128) { __l = __l - 128; \\\n");
+  fprintf (fp, "        do { memcpy (__ip, __rd, 3); __ip += 3; } while (--__l); __rd += 3; \\\n");
+  fprintf (fp, "      } else { __l *= 3; memcpy (__ip, __rd, __l); \\\n");
+  fprintf (fp, "               __ip += __l; __rd += __l; } } \\\n");
+
+  fprintf (fp, "  } } while (0)\n");
 }
 
 static inline guint
@@ -235,12 +331,62 @@ save_image (Config *config,
   FILE *fp;
   guint c;
   gchar *macro_name;
+  guint8 *img_buffer, *img_buffer_end;
   
   fp = fopen (config->file_name, "w");
   if (!fp)
     return FALSE;
   
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+
+  if (1)
+    {
+      guint8 *data, *p;
+      gint x, y, pad, n_bytes, bpp;
+
+      bpp = config->alpha ? 4 : 3;
+      n_bytes = drawable->width * drawable->height * bpp;
+      pad = drawable->width * drawable->bpp;
+      if (config->use_rle)
+	pad = MAX (pad, 130 + n_bytes / 127);
+      data = g_new (guint8, pad + n_bytes);
+      p = data + pad;
+      for (y = 0; y < drawable->height; y++)
+	{
+	  gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
+	  if (config->alpha)
+	    for (x = 0; x < drawable->width; x++)
+	      {
+		guint8 *d = data + x * drawable->bpp;
+		gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
+		
+		alpha *= config->opacity / 100.0;
+		*(p++) = d[0];
+		*(p++) = d[1];
+		*(p++) = d[2];
+		*(p++) = alpha + 0.5;
+	      }
+	  else
+	    for (x = 0; x < drawable->width; x++)
+	      {
+		guint8 *d = data + x * drawable->bpp;
+		gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
+		
+		alpha *= config->opacity / 25600.0;
+		*(p++) = 0.5 + alpha * (gdouble) d[0];
+		*(p++) = 0.5 + alpha * (gdouble) d[1];
+		*(p++) = 0.5 + alpha * (gdouble) d[2];
+	      }
+	}
+      img_buffer = data + pad;
+      if (config->use_rle)
+	{
+	  img_buffer_end = rl_encode_rgbx (data, img_buffer, img_buffer + n_bytes, bpp);
+	  img_buffer = data;
+	}
+      else
+	img_buffer_end = img_buffer + n_bytes;
+    }
 
   if (!config->use_macros && config->glib_types)
     {
@@ -277,9 +423,17 @@ save_image (Config *config,
   macro_name = g_strdup (config->prefixed_name);
   g_strup (macro_name);
   
-  fprintf (fp, "/* GIMP %s C-Source image dump (%s) */\n\n",
+  fprintf (fp, "/* GIMP %s C-Source image dump %s(%s) */\n\n",
 	   config->alpha ? "RGBA" : "RGB",
+	   config->use_rle ? "1-byte-run-length-encoded " : "",
 	   g_basename (config->file_name));
+
+  if (config->use_rle && !config->use_macros)
+    save_rle_decoder (fp,
+		      macro_name,
+		      config->glib_types ? "guint" : "unsigned int",
+		      config->glib_types ? "guint8" : "unsigned char",
+		      config->alpha ? 4 : 3);
 
   if (!config->use_macros)
     {
@@ -289,11 +443,16 @@ save_image (Config *config,
       fprintf (fp, "  %s\t bytes_per_pixel; /* 3:RGB, 4:RGBA */ \n", s_uint);
       if (config->use_comment)
 	fprintf (fp, "  %s\t*comment;\n", s_char);
-      fprintf (fp, "  %s\t pixel_data[%u * %u * %u];\n",
+      fprintf (fp, "  %s\t %spixel_data[",
 	       s_uint_8,
-	       drawable->width,
-	       drawable->height,
-	       config->alpha ? 4 : 3);
+	       config->use_rle ? "rle_" : "");
+      if (config->use_rle)
+	fprintf (fp, "%u];\n", img_buffer_end - img_buffer);
+      else
+	fprintf (fp, "%u * %u * %u];\n",
+		 drawable->width,
+		 drawable->height,
+		 config->alpha ? 4 : 3);
       fprintf (fp, "} %s = {\n", config->prefixed_name);
       fprintf (fp, "  %u, %u, %u,\n",
 	       drawable->width,
@@ -306,7 +465,7 @@ save_image (Config *config,
 	       macro_name, drawable->width);
       fprintf (fp, "#define %s_HEIGHT (%u)\n",
 	       macro_name, drawable->height);
-      fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u)\n",
+      fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u) /* 3:RGB, 4:RGBA */\n",
 	       macro_name, config->alpha ? 4 : 3);
     }
   if (config->use_comment && !config->comment)
@@ -350,14 +509,29 @@ save_image (Config *config,
     }
   if (config->use_macros)
     {
-      fprintf (fp, "#define %s_PIXEL_DATA (%s_pixel_data)\n",
-	       macro_name, macro_name);
-      fprintf (fp, "static const %s %s_pixel_data[%u * %u * %u] = \n",
+      fprintf (fp, "#define %s_%sPIXEL_DATA ((%s*) %s_%spixel_data)\n",
+	       macro_name,
+	       config->use_rle ? "RLE_" : "",
 	       s_uint_8,
 	       macro_name,
-	       drawable->width,
-	       drawable->height,
-	       config->alpha ? 4 : 3);
+	       config->use_rle ? "rle_" : "");
+      if (config->use_rle)
+	save_rle_decoder (fp,
+			  macro_name,
+			  s_uint,
+			  s_uint_8,
+			  config->alpha ? 4 : 3);
+      fprintf (fp, "static const %s %s_%spixel_data[",
+	       s_uint_8,
+	       macro_name,
+	       config->use_rle ? "rle_" : "");
+      if (config->use_rle)
+	fprintf (fp, "%u] =\n", img_buffer_end - img_buffer);
+      else
+	fprintf (fp, "%u * %u * %u] =\n",
+		 drawable->width,
+		 drawable->height,
+		 config->alpha ? 4 : 3);
       fprintf (fp, "(\"");
       c = 2;
     }
@@ -368,34 +542,11 @@ save_image (Config *config,
     }
   switch (drawable_type)
     {
-      guint8 *data;
-      gint x, y;
-      
     case RGB_IMAGE:
     case RGBA_IMAGE:
-      data = g_new (guint8, drawable->width * drawable->bpp);
-      
-      for (y = 0; y < drawable->height; y++)
-	{
-	  gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
-	  for (x = 0; x < drawable->width; x++)
-	    {
-	      guint8 *d = data + x * drawable->bpp;
-	      
-	      c = save_uchar (fp, c, d[0], config);
-	      c = save_uchar (fp, c, d[1], config);
-	      c = save_uchar (fp, c, d[2], config);
-	      if (config->alpha)
-		{
-		  gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
-
-		  alpha *= config->opacity / 100.0;
-		  c = save_uchar (fp, c, alpha + 0.5, config);
-		}
-	    }
-	}
-      
-      g_free (data);
+      do
+	c = save_uchar (fp, c, *(img_buffer++), config);
+      while (img_buffer < img_buffer_end);
       break;
     default:
       g_warning ("unhandled drawable type (%d)", drawable_type);
@@ -423,7 +574,7 @@ static gboolean
 run_save_dialog	(Config *config)
 {
   GtkWidget *dialog, *vbox, *hbox;
-  GtkWidget *prefixed_name, *centry, *alpha, *use_macros, *gtype, *use_comment, *any;
+  GtkWidget *prefixed_name, *centry, *alpha, *use_macros, *use_rle, *gtype, *use_comment, *any;
   GtkObject *opacity;
   gboolean do_save = FALSE;
   
@@ -541,6 +692,20 @@ run_save_dialog	(Config *config)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_macros), config->use_macros);
   gtk_widget_ref (use_macros);
 
+  /* Use RLE
+   */
+  hbox = gtk_widget_new (GTK_TYPE_HBOX,
+			 "visible", TRUE,
+			 "parent", vbox,
+			 NULL);
+  use_rle = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
+			    "label", "Use 1 Byte Run-Length-Encoding",
+			    "visible", TRUE,
+			    "parent", hbox,
+			    NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_rle), config->use_rle);
+  gtk_widget_ref (use_rle);
+
   /* Alpha
    */
   hbox = gtk_widget_new (GTK_TYPE_HBOX,
@@ -548,7 +713,7 @@ run_save_dialog	(Config *config)
 			 "parent", vbox,
 			 NULL);
   alpha = gtk_widget_new (GTK_TYPE_CHECK_BUTTON,
-			  "label", "Save RGBA instead of RGB",
+			  "label", "Save Alpha channel (RGBA/RGB)",
 			  "visible", TRUE,
 			  "parent", hbox,
 			  NULL);
@@ -586,6 +751,7 @@ run_save_dialog	(Config *config)
   
   config->prefixed_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
   config->use_macros = GTK_TOGGLE_BUTTON (use_macros)->active;
+  config->use_rle = GTK_TOGGLE_BUTTON (use_rle)->active;
   config->alpha = GTK_TOGGLE_BUTTON (alpha)->active;
   config->glib_types = GTK_TOGGLE_BUTTON (gtype)->active;
   config->comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
@@ -596,6 +762,7 @@ run_save_dialog	(Config *config)
   gtk_widget_unref (centry);
   gtk_widget_unref (alpha);
   gtk_widget_unref (use_macros);
+  gtk_widget_unref (use_rle);
   gtk_widget_unref (use_comment);
   gtk_widget_unref (prefixed_name);
   gtk_object_unref (opacity);

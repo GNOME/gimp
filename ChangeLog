@@ -1,3 +1,13 @@
+Mon Oct  4 21:09:20 1999  Tim Janik  <timj@gtk.org>
+
+	* plug-ins/common/csource.c: minor cleanups. fixed up alpha channel
+	elimination for RGBA_IMAGE && !config->alpha configuration.
+	added option to save data with 1Byte Run Length Encoding, in this
+	case the outputted source contains a macro (15 lines), implementing
+	an RLE decoder for RGB or RGBA buffers.
+	RLE gains us a size decrease of ca. 50% for average images, while
+	decoding speed amounts to a few invokations of memcpy().
+
 Mon Oct  4 12:16:44 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c
