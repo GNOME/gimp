@@ -31,10 +31,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "tools/paint_options.h"
 
 #include "gdisplay.h"
-#include "gimpdnd.h"
 #include "layers-commands.h"
 #include "layers-dialog.h"
 #include "menus.h"

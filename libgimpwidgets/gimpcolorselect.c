@@ -31,9 +31,10 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "color-select.h"
 #include "color-area.h"
-#include "gimpdnd.h"
 
 #include "colormaps.h"
 #include "gimprc.h"

@@ -30,6 +30,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "appenv.h"
 #include "asupsample.h"
 #include "cursorutil.h"
@@ -39,7 +41,6 @@
 #include "gimpimage.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
-#include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimpprogress.h"
 #include "pixel_region.h"

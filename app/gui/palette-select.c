@@ -29,10 +29,10 @@
 #include "widgets/widgets-types.h"
 
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpdnd.h"
 
 #include "dialog_handler.h"
 #include "dialogs-constructors.h"
-#include "gimpdnd.h"
 #include "palette-editor.h"
 #include "palette-select.h"
 

@@ -30,11 +30,11 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpdnd.h"
 
 #include "channels-commands.h"
 #include "channels-dialog.h"
 #include "gdisplay.h"
-#include "gimpdnd.h"
 #include "gimpui.h"
 #include "layers-dialog.h"
 #include "lc_dialog.h"

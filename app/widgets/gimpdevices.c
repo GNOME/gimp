@@ -32,6 +32,7 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
 #include "appenv.h"
@@ -41,7 +42,6 @@
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
 #include "gimplist.h"

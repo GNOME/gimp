@@ -35,11 +35,12 @@
 
 #include "tools/gimptoolinfo.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "about-dialog.h"
 
 #include "appenv.h"
 #include "authors.h"
-#include "gimpdnd.h"
 #include "gimphelp.h"
 
 #include "libgimp/gimpintl.h"

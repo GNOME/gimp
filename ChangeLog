@@ -1,5 +1,31 @@
 2001-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimpdnd.[ch]: removed.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdnd.[ch]: and moved here.
+
+	* app/devices.c
+	* app/docindex.c
+	* app/interface.c
+	* app/gui/about-dialog.c
+	* app/gui/channels-dialog.c
+	* app/gui/color-area.c
+	* app/gui/color-select.c
+	* app/gui/colormap-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/indicator-area.c
+	* app/gui/layers-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-select.c
+	* app/gui/toolbox.c
+	* app/tools/gimpblendtool.c
+	* app/tools/tool_manager.c
+	* app/tools/tool_options_dialog.c: changed #includes accordingly.
+
+2001-05-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/appenums.h: added ChannelType.
 	* app/gimpimage.h: removed ChannelType.
 	* tools/pdbgen/enums.pl: regenerated.

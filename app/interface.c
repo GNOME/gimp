@@ -24,9 +24,10 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "disp_callbacks.h"
 #include "gdisplay_ops.h"
-#include "gimpdnd.h"
 #include "gimpui.h"
 #include "interface.h"
 #include "gui/menus.h"

@@ -30,7 +30,6 @@
 #include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimplist.h"
 #include "gimpui.h"

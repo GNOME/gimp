@@ -29,6 +29,7 @@
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
 #include "color-area.h"
@@ -43,7 +44,6 @@
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpdatalist.h"
-#include "gimpdnd.h"
 #include "gimppalette.h"
 #include "gimprc.h"
 

@@ -29,10 +29,10 @@
 #include "widgets/widgets-types.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
 #include "dialogs.h"
-#include "gimpdnd.h"
 #include "indicator-area.h"
 
 #include "gimpbrush.h"

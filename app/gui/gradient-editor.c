@@ -65,17 +65,17 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "color-notebook.h"
 #include "gradient-editor.h"
 
 #include "context_manager.h"
 #include "cursorutil.h"
-#include "datafiles.h"
 #include "errors.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimplist.h"
 #include "gimprc.h"

@@ -25,11 +25,11 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
 #include "dialog_handler.h"
 #include "gimpcontext.h"
-#include "gimpdnd.h"
 #include "gimplist.h"
 #include "gimpui.h"
 

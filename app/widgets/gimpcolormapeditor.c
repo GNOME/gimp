@@ -31,8 +31,9 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "color-notebook.h"
-#include "gimpdnd.h"
 #include "image_render.h"
 #include "dialog_handler.h"
 #include "colormap-dialog.h"

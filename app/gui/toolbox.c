@@ -33,6 +33,7 @@
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -42,7 +43,6 @@
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "gdisplay.h"
-#include "gimpdnd.h"
 #include "indicator-area.h"
 #include "menus.h"
 

@@ -30,10 +30,11 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdnd.h"
+
 #include "color-area.h"
 #include "color-notebook.h"
 #include "gdisplay.h"
-#include "gimpdnd.h"
 
 #include "gimpcontext.h"
 

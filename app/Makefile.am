@@ -27,8 +27,6 @@ gimp_SOURCES = \
 ##
 	colormaps.c		\
 	colormaps.h		\
-	cursorutil.c		\
-	cursorutil.h		\
 	devices.c		\
 	devices.h		\
 	dialog_handler.c	\
@@ -37,8 +35,6 @@ gimp_SOURCES = \
 	docindex.h		\
 	errorconsole.c		\
 	errorconsole.h		\
-	gimpdnd.c		\
-	gimpdnd.h		\
 	gimpprogress.c		\
 	gimpprogress.h		\
 	gimpui.c		\
@@ -58,6 +54,11 @@ gimp_SOURCES = \
 	resolution_calibrate.h	\
 	undo_history.c		\
 	undo_history.h		\
+##
+## stuff for widgets/
+##
+	cursorutil.c		\
+	cursorutil.h		\
 ##
 ## display stuff
 ##
