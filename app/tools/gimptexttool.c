@@ -33,7 +33,6 @@
 #include "base/base-types.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
-#include "base/tile-manager-crop.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
@@ -53,6 +52,8 @@
 #include "floating_sel.h"
 #include "undo_types.h"
 #include "undo.h"
+
+#include "gimpeditselectiontool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -343,6 +344,7 @@ text_tool_button_press (GimpTool       *tool,
 			GDisplay       *gdisp)
 {
   GimpTextTool *text_tool;
+  GimpLayer    *layer;
 
   text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -354,6 +356,18 @@ text_tool_button_press (GimpTool       *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &text_tool->click_x, &text_tool->click_y,
 			       TRUE, 0);
+
+  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                                text_tool->click_x,
+                                                text_tool->click_y)))
+    /*  If there is a floating selection, and this aint it, use the move tool  */
+    if (gimp_layer_is_floating_sel (layer))
+      {
+	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
+	return;
+      }
+
+  text_tool_render (GIMP_TEXT_TOOL (tool));
 }
 
 static void
@@ -361,8 +375,6 @@ text_tool_button_release (GimpTool       *tool,
 			  GdkEventButton *bevent,
 			  GDisplay       *gdisp)
 {
-  text_tool_render (GIMP_TEXT_TOOL (tool));
-
   tool->state = INACTIVE;
 }
 
@@ -371,6 +383,22 @@ text_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
 			 GDisplay       *gdisp)
 {
+  GimpLayer *layer;
+  gint x, y;
+
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &x, &y, FALSE, FALSE);
+
+  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
+    /*  if there is a floating selection, and this aint it...  */
+    if (gimp_layer_is_floating_sel (layer))
+      {
+	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
+				      GIMP_MOVE_TOOL_CURSOR,
+				      GIMP_CURSOR_MODIFIER_NONE);
+	return;
+      }
+
   gdisplay_install_tool_cursor (gdisp,
 				GDK_XTERM,
 				GIMP_TEXT_TOOL_CURSOR,
@@ -389,7 +417,7 @@ text_tool_render (GimpTextTool *text_tool)
   
   font_desc = gimp_font_selection_get_font_desc (GIMP_FONT_SELECTION (text_tool_options->font_selection));
   
-  font_desc->size = (gdouble) PANGO_SCALE * text_tool_options->size;
+  font_desc->size = (gdouble) PANGO_SCALE * MAX (1, text_tool_options->size);
   fontname = pango_font_description_to_string (font_desc);
   pango_font_description_free (font_desc);
 
@@ -418,12 +446,15 @@ text_render (GimpImage    *gimage,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
-  PangoRectangle        rect;
+  PangoRectangle        ink;
   GimpImageType         layer_type;
   GimpLayer            *layer;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
+
+  if (border < 0)
+    border = 0;
 
   /*  determine the layer type  */
   if (drawable)
@@ -442,68 +473,75 @@ text_render (GimpImage    *gimage,
   pango_font_description_free (font_desc);
   pango_layout_set_text (layout, text, -1);
 
-  pango_layout_get_pixel_extents (layout, &rect, NULL);
+  pango_layout_get_pixel_extents (layout, &ink, NULL);
 
-  if (rect.width > 0 && rect.height > 0)
+  if (ink.width > 0 && ink.height > 0)
     {
       TileManager *mask;
-      TileManager *tmpmask;
       PixelRegion  textPR;
       PixelRegion  maskPR;
       FT_Bitmap    bitmap;
+      guchar      *black = NULL;
       guchar       color[MAX_CHANNELS];
+      gint         width;
+      gint         height;
       gint         y;
 
-      bitmap.width  = rect.width;
-      bitmap.rows   = rect.height;
-      bitmap.pitch  = rect.width;
+      bitmap.width  = ink.width;
+      bitmap.rows   = ink.height;
+      bitmap.pitch  = ink.width;
       if (bitmap.pitch & 3)
         bitmap.pitch += 4 - (bitmap.pitch & 3);
 
       bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
       
-      pango_ft2_render_layout (&bitmap, layout, 0, 0);
+      pango_ft2_render_layout (&bitmap, layout, 
+                               - ink.x, 
+                               - ink.height - ink.y);
       
-      mask = tile_manager_new (rect.width, rect.height, 1);
-      pixel_region_init (&maskPR, mask, 0, 0, rect.width, rect.height, TRUE);
+      width  = ink.width  + 2 * border;
+      height = ink.height + 2 * border;
 
-      for (y = 0; y < bitmap.rows; y++)
-        pixel_region_set_row (&maskPR, 0, y, bitmap.width, 
-                              bitmap.buffer + y * bitmap.pitch);
+      mask = tile_manager_new (width, height, 1);
+      pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
 
+      if (border)
+        black = g_malloc0 (width);
+
+      for (y = 0; y < border; y++)
+        pixel_region_set_row (&maskPR, 0, y, width, black);
+      for (; y < height - border; y++)
+        {
+          if (border)
+            {
+              pixel_region_set_row (&maskPR, 0, y, border, black);
+              pixel_region_set_row (&maskPR, width - border, y, border, black);
+            }
+          pixel_region_set_row (&maskPR, border, y, bitmap.width,
+                                bitmap.buffer + (y - border) * bitmap.pitch);
+        }
+      for (; y < height; y++)
+        pixel_region_set_row (&maskPR, 0, y, width, black);
+
+      g_free (black);
       g_free (bitmap.buffer);
 
-      /*  Crop the mask buffer  */
-      tmpmask = (border > 0) ? tile_manager_crop (mask, border) : mask;
-      if (tmpmask != mask)
-        {
-          tile_manager_destroy (mask);
-          mask = tmpmask;
-        }
-
-      layer = gimp_layer_new (gimage, rect.width, rect.height, layer_type,
+      layer = gimp_layer_new (gimage, width, height, layer_type,
                               _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
       /*  color the layer buffer  */
       gimp_image_get_foreground (gimage, drawable, color);
       color[GIMP_DRAWABLE (layer)->bytes - 1] = OPAQUE_OPACITY;
       pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
-			 0, 0,
-			 GIMP_DRAWABLE (layer)->width,
-			 GIMP_DRAWABLE (layer)->height, TRUE);
+			 0, 0, width, height, TRUE);
       color_region (&textPR, color);
 
       /*  apply the text mask  */
       pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
-			 0, 0,
-			 GIMP_DRAWABLE (layer)->width,
-			 GIMP_DRAWABLE (layer)->height, TRUE);
+                         0, 0, width, height, TRUE);
       pixel_region_init (&maskPR, mask,
-			 0, 0,
-			 GIMP_DRAWABLE (layer)->width,
-			 GIMP_DRAWABLE (layer)->height, FALSE);
+			 0, 0, width, height, FALSE);
       apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
-      tile_manager_destroy (mask);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, TEXT_UNDO);
@@ -519,7 +557,7 @@ text_render (GimpImage    *gimage,
       if (! gimage_mask_is_empty (gimage))
 	gimp_channel_clear (gimp_image_get_mask (gimage));
 
-      /*  If the drawable id is invalid, create a new layer  */
+      /*  If the drawable is NULL, create a new layer  */
       if (drawable == NULL)
 	gimp_image_add_layer (gimage, layer, -1);
       /*  Otherwise, instantiate the text as the new floating selection */
@@ -528,6 +566,8 @@ text_render (GimpImage    *gimage,
 
       /*  end the group undo  */
       undo_push_group_end (gimage);
+
+      tile_manager_destroy (mask);
     }
 
   g_object_unref (layout);

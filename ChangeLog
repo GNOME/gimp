@@ -1,5 +1,9 @@
 2001-08-11  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c: made border work and fixed render offsets.
+
+2001-08-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c: allow to specify size and border. 
 	
 	* app/widgets/gimpfontselection.c: use GTK_STOCK_SELECT_FONT icon.
