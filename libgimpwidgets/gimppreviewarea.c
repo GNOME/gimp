@@ -392,7 +392,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
     {
       gint  bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf   += x * bpp;
+      buf   -= x * bpp;
       width -= x;
 
       x = 0;
@@ -403,7 +403,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf    += y * rowstride;
+      buf    -= y * rowstride;
       height -= y;
 
       y = 0;
@@ -668,8 +668,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
     {
       gint  bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf1  += x * bpp;
-      buf2  += x * bpp;
+      buf1  -= x * bpp;
+      buf2  -= x * bpp;
       width -= x;
 
       x = 0;
@@ -680,8 +680,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf1   += y * rowstride1;
-      buf2   += y * rowstride2;
+      buf1   -= y * rowstride1;
+      buf2   -= y * rowstride2;
       height -= y;
 
       y = 0;
@@ -1035,9 +1035,9 @@ gimp_preview_area_mask (GimpPreviewArea *area,
     {
       gint  bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf1  += x * bpp;
-      buf2  += x * bpp;
-      mask  += x;
+      buf1  -= x * bpp;
+      buf2  -= x * bpp;
+      mask  -= x;
       width -= x;
 
       x = 0;
@@ -1048,9 +1048,9 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf1   += y * rowstride1;
-      buf2   += y * rowstride2;
-      mask   += y * rowstride_mask;
+      buf1   -= y * rowstride1;
+      buf2   -= y * rowstride2;
+      mask   -= y * rowstride_mask;
       height -= y;
 
       y = 0;

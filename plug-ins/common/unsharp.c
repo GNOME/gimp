@@ -77,8 +77,8 @@ static gint      gen_convolve_matrix     (gdouble        std_dev,
                                           gdouble      **cmatrix);
 static gdouble * gen_lookup_table        (gdouble       *cmatrix,
                                           gint           cmatrix_length);
-static void      unsharp_region          (GimpPixelRgn   srcPTR,
-                                          GimpPixelRgn   dstPTR,
+static void      unsharp_region          (GimpPixelRgn  *srcPTR,
+                                          GimpPixelRgn  *dstPTR,
                                           gint           width,
                                           gint           height,
                                           gint           bytes,
@@ -94,8 +94,8 @@ static void      unsharp_mask            (GimpDrawable  *drawable,
                                           gdouble        radius,
                                           gdouble        amount);
 
-static gboolean  unsharp_mask_dialog     (GimpDrawable        *drawable);
-static void      preview_update          (GimpDrawablePreview *preview);
+static gboolean  unsharp_mask_dialog     (GimpDrawable  *drawable);
+static void      preview_update          (GimpPreview   *preview);
 
 
 /* create a few globals, set default values */
@@ -270,7 +270,7 @@ unsharp_mask (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  unsharp_region (srcPR, destPR, width, height, bytes, radius, amount,
+  unsharp_region (&srcPR, &destPR, width, height, bytes, radius, amount,
                   x1, x2, y1, y2, TRUE);
 
   gimp_drawable_flush (drawable);
@@ -283,18 +283,18 @@ unsharp_mask (GimpDrawable *drawable,
    a subregion to act upon.  Everything outside the subregion is unaffected.
 */
 static void
-unsharp_region (GimpPixelRgn srcPR,
-                GimpPixelRgn destPR,
-                gint         width,
-                gint         height,
-                gint         bytes,
-                gdouble      radius,
-                gdouble      amount,
-                gint         x1,
-                gint         x2,
-                gint         y1,
-                gint         y2,
-                gboolean     show_progress)
+unsharp_region (GimpPixelRgn *srcPR,
+                GimpPixelRgn *destPR,
+                gint          width,
+                gint          height,
+                gint          bytes,
+                gdouble       radius,
+                gdouble       amount,
+                gint          x1,
+                gint          x2,
+                gint          y1,
+                gint          y2,
+                gboolean      show_progress)
 {
   guchar  *cur_col;
   guchar  *dest_col;
@@ -336,18 +336,18 @@ unsharp_region (GimpPixelRgn srcPR,
   /* blank out a region of the destination memory area, I think */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, (x2-x1));
-      memset (dest_row, 0, x*bytes);
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, (x2-x1));
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, (x2-x1));
+      memset (dest_row, 0, x * bytes);
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, (x2-x1));
     }
 
   /* blur the rows */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, x);
-      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, x);
       blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, x);
 
       if (show_progress && row % 5 == 0)
         gimp_progress_update ((gdouble) row / (3 * y));
@@ -360,10 +360,10 @@ unsharp_region (GimpPixelRgn srcPR,
   /* blur the cols */
   for (col = 0; col < x; col++)
     {
-      gimp_pixel_rgn_get_col (&destPR, cur_col, x1+col, y1, y);
-      gimp_pixel_rgn_get_col (&destPR, dest_col, x1+col, y1, y);
+      gimp_pixel_rgn_get_col (destPR, cur_col, x1+col, y1, y);
+      gimp_pixel_rgn_get_col (destPR, dest_col, x1+col, y1, y);
       blur_line (ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
-      gimp_pixel_rgn_set_col (&destPR, dest_col, x1+col, y1, y);
+      gimp_pixel_rgn_set_col (destPR, dest_col, x1+col, y1, y);
 
       if (show_progress && col % 5 == 0)
         gimp_progress_update ((gdouble) col / (3 * x) + 0.33);
@@ -382,10 +382,10 @@ unsharp_region (GimpPixelRgn srcPR,
       value = 0;
 
       /* get source row */
-      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1+row, x);
 
       /* get dest row */
-      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, x);
 
       /* combine the two */
       for (u = 0; u < x; u++)
@@ -404,10 +404,10 @@ unsharp_region (GimpPixelRgn srcPR,
             }
         }
       /* update progress bar every five rows */
-      if (show_progress && row%5 == 0)
+      if (show_progress && row % 5 == 0)
         gimp_progress_update ((gdouble) row / (3 * y) + 0.67);
 
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, x);
     }
 
   if (show_progress)
@@ -736,7 +736,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 }
 
 static void
-preview_update (GimpDrawablePreview *preview)
+preview_update (GimpPreview *preview)
 {
   /* drawable */
   glong bytes;
@@ -744,7 +744,6 @@ preview_update (GimpDrawablePreview *preview)
 
   /* preview */
   GimpDrawable *drawable;
-  guchar       *render_buffer = NULL; /* Buffer to hold rendered image */
   gint          preview_x1;           /* Upper-left X of preview */
   gint          preview_y1;           /* Upper-left Y of preview */
   gint          preview_x2;           /* Lower-right X of preview */
@@ -757,15 +756,13 @@ preview_update (GimpDrawablePreview *preview)
   gint          preview_buf_x2;       /* Lower-right X of preview */
   gint          preview_buf_y2;       /* Lower-right Y of preview */
 
-  GimpPixelRgn srcPR, destPR;      /* Pixel regions */
-  gint       x, y;                 /* Current location in image */
-
-  gint       offset;               /* Preview loop control      */
+  GimpPixelRgn  srcPR, destPR;        /* Pixel regions */
 
   if (!unsharp_params.update_preview)
     return;
 
-  drawable = gimp_drawable_preview_get_drawable (preview);
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
   /* Get drawable info */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -774,8 +771,8 @@ preview_update (GimpDrawablePreview *preview)
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &preview_x1, &preview_y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &preview_x2, &preview_y2);
+  gimp_preview_get_position (preview, &preview_x1, &preview_y1);
+  gimp_preview_get_size (preview, &preview_x2, &preview_y2);
   preview_x2 += preview_x1;
   preview_y2 += preview_y1;
 
@@ -791,36 +788,16 @@ preview_update (GimpDrawablePreview *preview)
   gimp_pixel_rgn_init (&srcPR, drawable,
                        preview_buf_x1, preview_buf_y1,
                        preview_buf_width, preview_buf_height, FALSE, FALSE);
-  render_buffer = g_new (guchar,
-                         preview_buf_width * preview_buf_height * bytes);
-
-  /* render image */
   gimp_pixel_rgn_init (&destPR, drawable,
-                       preview_buf_x1,preview_buf_y1,
-                       preview_buf_width, preview_buf_height,  TRUE, TRUE);
+                       preview_buf_x1, preview_buf_y1,
+                       preview_buf_width, preview_buf_height, TRUE, TRUE);
 
-  unsharp_region (srcPR, destPR,
+  unsharp_region (&srcPR, &destPR,
                   preview_buf_width, preview_buf_height, bytes,
                   unsharp_params.radius, unsharp_params.amount,
                   preview_buf_x1, preview_buf_x2,
                   preview_buf_y1, preview_buf_y2,
                   FALSE);
 
-  gimp_pixel_rgn_get_rect (&destPR, render_buffer,
-                           preview_buf_x1, preview_buf_y1,
-                           preview_buf_width, preview_buf_height);
-
-  /*
-   * Draw the preview image on the screen...
-   */
-  y = preview_y1 - preview_buf_y1;
-  x = preview_x1 - preview_buf_x1;
-
-  offset = (x * bytes) + (y * preview_buf_width * bytes);
-
-  gimp_drawable_preview_draw_buffer (preview,
-                                     render_buffer + offset,
-                                     preview_buf_width * bytes);
-
-  g_free (render_buffer);
+  gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview), &destPR);
 }

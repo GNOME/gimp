@@ -1,3 +1,12 @@
+2004-09-15  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.c
+	(gimp_preview_area_[draw|blend|mask]): fixed code that handles
+	drawing outside of the preview area.
+
+	* plug-ins/common/unsharp.c (preview_update): draw the preview
+	directly from the pixel region.
+
 2004-09-15  Manish Singh  <yosh@gimp.org>
 
 	* modules/controller_linux_input.c: use guint16 instead of __u16.
