@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-05-01 10:46-0700\n"
-"PO-Revision-Date: 2000-04-25 03:31+02:00\n"
+"PO-Revision-Date: 2000-05-02 03:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -4302,7 +4302,7 @@ msgstr "8-bit skærme"
 
 #: app/preferences_dialog.c:1749
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Minimum antal farver:"
 
 #: app/preferences_dialog.c:1752
 msgid "Install Colormap"
