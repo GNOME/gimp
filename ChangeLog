@@ -1,10 +1,27 @@
 2003-04-03  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-template-16.png
+	* themes/Default/images/stock-texture-64.png: new icons by Jimmac.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* app/widgets/gimppreview.[ch]: added the possibility to set a
+	background pixmap on the preview widget.
+
+	* app/gui/dialogs-constructors.c
+	* app/display/gimpnavigationview.[ch]
+	* app/widgets/gimpselectioneditor.[ch]: set a background on the
+	navigation and selection previews when layer previews are disabled
+	in the preferences.
+
+2003-04-03  Sven Neumann  <sven@gimp.org>
+
 	* docs/keybindings.txt: updated list of keybindings provided by
 	Owen <oc@webone.com.au>.
 
 	* docs/Makefile.am
-	* cheat_sheet.txt: removed this hopelessly outdated file.
+	* docs/cheat_sheet.txt: removed this hopelessly outdated file.
 
 2003-04-02  Sven Neumann  <sven@gimp.org>
 

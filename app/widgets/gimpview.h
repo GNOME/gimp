@@ -50,7 +50,8 @@ struct _GimpPreview
 
   /*< private >*/
   gboolean             in_button;
-  guint                press_state;
+  GdkModifierType      press_state;
+  gchar               *bg_stock_id;
 };
 
 struct _GimpPreviewClass
@@ -107,6 +108,8 @@ void        gimp_preview_set_dot_for_dot   (GimpPreview   *preview,
 					    gboolean       dot_for_dot);
 void        gimp_preview_set_border_color  (GimpPreview   *preview,
 					    const GimpRGB *border_color);
+void        gimp_preview_set_background    (GimpPreview   *preview,
+                                            const gchar   *stock_id);
 
 
 #endif /* __GIMP_PREVIEW_H__ */

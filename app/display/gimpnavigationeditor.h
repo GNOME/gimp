@@ -64,7 +64,8 @@ struct _GimpNavigationViewClass
 
 GType       gimp_navigation_view_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_navigation_view_new       (GimpDisplayShell   *shell);
+GtkWidget * gimp_navigation_view_new       (GimpDisplayShell   *shell,
+                                            GimpDisplayConfig  *config);
 void        gimp_navigation_view_set_shell (GimpNavigationView *view,
                                             GimpDisplayShell   *shell);
 

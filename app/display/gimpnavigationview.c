@@ -33,7 +33,6 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpnavigationpreview.h"
@@ -57,6 +56,7 @@ static void   gimp_navigation_view_init       (GimpNavigationView      *view);
 static void   gimp_navigation_view_destroy          (GtkObject          *object);
 
 static GtkWidget * gimp_navigation_view_new_private (GimpDisplayShell   *shell,
+                                                     GimpDisplayConfig  *config,
                                                      gboolean            popup);
 
 static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
@@ -94,6 +94,9 @@ static void   gimp_navigation_view_shell_scrolled   (GimpDisplayShell   *shell,
 static void   gimp_navigation_view_shell_reconnect  (GimpDisplayShell   *shell,
                                                      GimpNavigationView *view);
 static void   gimp_navigation_view_update_marker    (GimpNavigationView *view);
+static void   gimp_navigation_view_set_background   (GObject            *config,
+                                                     GParamSpec         *pspec,
+                                                     GimpPreview        *preview);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -192,9 +195,10 @@ gimp_navigation_view_destroy (GtkObject *object)
 /*  public functions  */
 
 GtkWidget *
-gimp_navigation_view_new (GimpDisplayShell *shell)
+gimp_navigation_view_new (GimpDisplayShell  *shell,
+                          GimpDisplayConfig *config)
 {
-  return gimp_navigation_view_new_private (shell, FALSE);
+  return gimp_navigation_view_new_private (shell, config, FALSE);
 }
 
 void
@@ -266,7 +270,8 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
 
   if (! shell->nav_popup)
     {
-      GtkWidget *frame;
+      GimpDisplayConfig *config;
+      GtkWidget         *frame;
 
       shell->nav_popup = gtk_window_new (GTK_WINDOW_POPUP);
 
@@ -275,7 +280,10 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
       gtk_container_add (GTK_CONTAINER (shell->nav_popup), frame);
       gtk_widget_show (frame);
 
+      config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
       view = GIMP_NAVIGATION_VIEW (gimp_navigation_view_new_private (shell,
+                                                                     config,
                                                                      TRUE));
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (view));
       gtk_widget_show (GTK_WIDGET (view));
@@ -340,23 +348,21 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
 /*  private functions  */
 
 static GtkWidget *
-gimp_navigation_view_new_private (GimpDisplayShell *shell,
-                                  gboolean          popup)
+gimp_navigation_view_new_private (GimpDisplayShell  *shell,
+                                  GimpDisplayConfig *config,
+                                  gboolean           popup)
 {
   GimpNavigationView *view;
 
   g_return_val_if_fail (! shell || GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_CONFIG (config), NULL);
   g_return_val_if_fail (! popup || (popup && shell), NULL);
 
   view = g_object_new (GIMP_TYPE_NAVIGATION_VIEW, NULL);
 
   if (popup)
     {
-      GimpDisplayConfig *config;
-      GimpPreview       *preview;
-
-      preview = GIMP_PREVIEW (view->preview);
-      config  = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+      GimpPreview *preview = GIMP_PREVIEW (view->preview);
 
       gimp_preview_set_size (preview,
                              config->nav_preview_size * 3,
@@ -443,6 +449,15 @@ gimp_navigation_view_new_private (GimpDisplayShell *shell,
 
   if (shell)
     gimp_navigation_view_set_shell (view, shell);
+
+
+  if (! GIMP_CORE_CONFIG (config)->layer_previews)
+    gimp_preview_set_background (GIMP_PREVIEW (view->preview),
+                                 GIMP_STOCK_TEXTURE);
+
+  g_signal_connect_object (config, "notify::layer-previews",
+                           G_CALLBACK (gimp_navigation_view_set_background),
+                           view->preview, 0);
 
   return GTK_WIDGET (view);
 }
@@ -684,4 +699,19 @@ gimp_navigation_view_update_marker (GimpNavigationView *view)
                                       view->shell->offset_y    / yratio,
                                       view->shell->disp_width  / xratio,
                                       view->shell->disp_height / yratio);
+}
+
+static void
+gimp_navigation_view_set_background (GObject     *config,
+                                     GParamSpec  *pspec,
+                                     GimpPreview *preview)
+{
+  gboolean  layer_previews;
+
+  g_object_get (config,
+                "layer-previews", &layer_previews,
+                NULL);
+
+  gimp_preview_set_background (preview,
+                               layer_previews ? NULL : GIMP_STOCK_TEXTURE);
 }

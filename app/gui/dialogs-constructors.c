@@ -36,7 +36,7 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/gimpdisplayconfig.h"
 
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
@@ -801,7 +801,7 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_selection_editor_new (gimage);
+  view = gimp_selection_editor_new (gimage, context->gimp->config);
 
   dockable = dialogs_dockable_new (view,
 				   _("Selection Editor"), _("Selection"),
@@ -1003,7 +1003,8 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
   if (gdisp)
     shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  view = gimp_navigation_view_new (shell);
+  view = gimp_navigation_view_new (shell,
+                                   GIMP_DISPLAY_CONFIG (context->gimp->config));
 
   return dialogs_dockable_new (view,
                                _("Display Navigation"), _("Navigation"),

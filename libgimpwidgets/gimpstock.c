@@ -174,6 +174,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHANNEL_BLUE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_GRAY,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_ALPHA,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -181,6 +182,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_SHRINK,         NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -384,6 +386,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_16                    },
   { GIMP_STOCK_LAYER,                    stock_layer_16                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_16               },
+  { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
 
   { GIMP_STOCK_LINKED,                   stock_linked_12                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_12                      },
@@ -486,7 +489,9 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_QUESTION,             stock_question_64             },
   { GIMP_STOCK_WARNING,              stock_warning_64              },
   { GIMP_STOCK_WILBER,               stock_wilber_64               },
-  { GIMP_STOCK_WILBER_EEK,           stock_wilber_eek_64           }
+  { GIMP_STOCK_WILBER_EEK,           stock_wilber_eek_64           },
+
+  { GIMP_STOCK_TEXTURE,              stock_texture_64              }
 };
 
 void

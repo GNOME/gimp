@@ -47,6 +47,7 @@
                             GDK_ENTER_NOTIFY_MASK   | \
                             GDK_LEAVE_NOTIFY_MASK)
 
+
 enum
 {
   CLICKED,
@@ -60,6 +61,7 @@ static void        gimp_preview_class_init           (GimpPreviewClass *klass);
 static void        gimp_preview_init                 (GimpPreview      *preview);
 
 static void        gimp_preview_destroy              (GtkObject        *object);
+static void        gimp_preview_realize              (GtkWidget        *widget);
 static void        gimp_preview_size_request         (GtkWidget        *widget,
 						      GtkRequisition   *requisition);
 static void        gimp_preview_size_allocate        (GtkWidget        *widget,
@@ -80,6 +82,8 @@ static void        gimp_preview_update_callback   (GimpPreviewRenderer *renderer
 
 static GimpViewable * gimp_preview_drag_viewable     (GtkWidget        *widget,
 						      gpointer          data);
+
+static void        gimp_preview_set_back_pixmap      (GimpPreview      *preview);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
@@ -157,6 +161,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   object_class->destroy              = gimp_preview_destroy;
 
   widget_class->activate_signal      = preview_signals[CLICKED];
+  widget_class->realize              = gimp_preview_realize;
   widget_class->size_request         = gimp_preview_size_request;
   widget_class->size_allocate        = gimp_preview_size_allocate;
   widget_class->expose_event         = gimp_preview_expose_event;
@@ -183,6 +188,8 @@ gimp_preview_init (GimpPreview *preview)
 
   preview->in_button         = FALSE;
 
+  preview->bg_stock_id       = NULL;
+
   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_EVENT_MASK);
 }
 
@@ -201,8 +208,21 @@ gimp_preview_destroy (GtkObject *object)
       g_object_unref (preview->renderer);
       preview->renderer = NULL;
     }
+  if (preview->bg_stock_id)
+    {
+      g_free (preview->bg_stock_id);
+      preview->bg_stock_id = NULL;
+    }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_preview_realize (GtkWidget *widget)
+{
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  gimp_preview_set_back_pixmap (GIMP_PREVIEW (widget));
 }
 
 static void
@@ -662,6 +682,8 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       g_object_add_weak_pointer (G_OBJECT (preview->viewable),
 				 (gpointer *) &preview->viewable);
     }
+
+  gimp_preview_set_back_pixmap (preview);
 }
 
 void
@@ -729,6 +751,20 @@ gimp_preview_set_border_color (GimpPreview   *preview,
   gimp_preview_renderer_set_border_color (preview->renderer, color);
 }
 
+void
+gimp_preview_set_background (GimpPreview *preview,
+                             const gchar *stock_id)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  if (preview->bg_stock_id)
+    g_free (preview->bg_stock_id);
+
+  preview->bg_stock_id = g_strdup (stock_id);
+
+  gimp_preview_set_back_pixmap (preview);
+}
+
 
 /*  private functions  */
 
@@ -764,4 +800,57 @@ gimp_preview_drag_viewable (GtkWidget *widget,
 			    gpointer   data)
 {
   return GIMP_PREVIEW (widget)->viewable;
+}
+
+static void
+gimp_preview_set_back_pixmap (GimpPreview *preview)
+{
+  GtkWidget *widget;
+  GdkPixmap *pixmap = NULL;
+    
+  if (! GTK_WIDGET_REALIZED (preview))
+    return;
+
+  widget = GTK_WIDGET (preview);
+
+  if (preview->bg_stock_id && preview->viewable)
+    {
+      GdkPixbuf *pixbuf;
+
+      pixbuf = gtk_widget_render_icon (widget,
+                                       preview->bg_stock_id,
+                                       GTK_ICON_SIZE_DIALOG, NULL);
+
+      if (pixbuf)
+        {
+          GdkColormap *colormap;
+          gint         width;
+          gint         height;
+
+          colormap = gdk_drawable_get_colormap (widget->window);
+
+          width  = gdk_pixbuf_get_width (pixbuf);
+          height = gdk_pixbuf_get_height (pixbuf);
+
+          pixmap = gdk_pixmap_new (widget->window, width, height,
+                                   gdk_colormap_get_visual (colormap)->depth);
+          gdk_drawable_set_colormap (pixmap, colormap);
+
+          gdk_draw_rectangle (pixmap, widget->style->white_gc,
+                              TRUE,
+                              0, 0, width, height);
+
+          gdk_draw_pixbuf (pixmap, widget->style->white_gc,
+                           pixbuf, 0, 0,
+                           0, 0, width, height,
+                           GDK_RGB_DITHER_NORMAL, 0, 0);
+
+          g_object_unref (pixbuf);
+        }
+    }
+
+  gdk_window_set_back_pixmap (widget->window, pixmap, FALSE);
+
+  if (pixmap)
+    g_object_unref (pixmap);
 }

@@ -62,6 +62,7 @@ STOCK_MENU_IMAGES = \
 	stock-selection-none-16.png		\
 	stock-selection-shrink-16.png		\
 	stock-swap-colors-12.png		\
+	stock-template-16.png			\
 	stock-text-layer-16.png			\
 	stock-tool-options-16.png		\
 	stock-warning-16.png			\
@@ -148,6 +149,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-layer-48.png			\
 	stock-question-64.png			\
 	stock-text-layer-48.png			\
+	stock-texture-64.png			\
 	stock-warning-64.png			\
 	stock-wilber-64.png			\
 	stock-wilber-eek-64.png
