@@ -1364,7 +1364,7 @@ static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL);
+  resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL, NULL);
 }
 
 /*  create a new notebook page  */

@@ -1,3 +1,11 @@
+2002-02-28  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/resolution-calibrate-dialog.[ch]: take an optional pixbuf
+	as eye-candy.
+
+	* app/gui/preferences-dialog.c
+	* app/gui/user-install-dialog.c: changed accordingly.
+
 2002-02-28  Michael Natterer  <mitch@gimp.org>
             Sven Naumann  <sven@gimp.org>
 

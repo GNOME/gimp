@@ -1160,10 +1160,22 @@ static void
 user_install_resolution_calibrate (GtkWidget *button,
 				   gpointer   data)
 {
+  GdkPixbuf *pixbuf;
+  gchar     *filename;
+
+  filename = g_build_filename (gimp_data_directory (),
+                               "themes", "Default", "images", "preferences",
+                               "monitor.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
   resolution_calibrate_dialog (resolution_entry, 
+                               pixbuf,
 			       title_style,
 			       page_style,
 			       G_CALLBACK (user_install_corner_expose));
+  if (pixbuf)
+    g_object_unref (pixbuf);
 }
 
 static void
