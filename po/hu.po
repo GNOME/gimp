@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-13 03:57+0200\n"
-"PO-Revision-Date: 2004-05-23 12:16+0200\n"
+"POT-Creation-Date: 2004-05-23 19:42+0200\n"
+"PO-Revision-Date: 2004-05-28 20:05+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -588,6 +588,28 @@ msgstr ""
 "A GIMP számára kiosztott rendszerszínek minimális számát adja meg. Általában "
 "csak 8 bites megjelenítők esetében van rá szükség."
 
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+"Beállítja a monitor vízszintes felbontását hüvelykenkénti képpontok "
+"számában mérve. Ha az érték 0-ra van állítva, akkor az X grafikus "
+"környezettől lesz lekérdezve a vízszintes és a függőleges felbontási "
+"információ."
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+"Beállítja a monitor függőleges felbontását hüvelykenkénti képpontok "
+"számában mérve. Ha az érték 0-ra van állítva, akkor az X grafikus "
+"környezettől lesz lekérdezve a vízszintes és a függőleges felbontási "
+"információ."
+
 #: app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
@@ -1153,15 +1175,15 @@ msgstr "Szürkeárnyalatos"
 
 #: app/core/core-enums.c:369
 msgid "RGB-Alpha"
-msgstr "RGB-Alfa"
+msgstr "RGB-alfa"
 
 #: app/core/core-enums.c:371
 msgid "Grayscale-Alpha"
-msgstr "Szürkeárnyalatos-Alfa"
+msgstr "Szürkeárnyalatos-alfa"
 
 #: app/core/core-enums.c:373
 msgid "Indexed-Alpha"
-msgstr "Indexelt-Alfa"
+msgstr "Indexelt-alfa"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1779
 #: app/gui/user-install-dialog.c:1305
@@ -1534,7 +1556,7 @@ msgstr "Eljárás-adatbázis"
 
 #: app/core/gimp.c:667
 msgid "Plug-In Environment"
-msgstr "Bővítmény környezet"
+msgstr "Bővítmény-környezet"
 
 #. initialize  the global parasite table
 #: app/core/gimp.c:878
@@ -1608,12 +1630,16 @@ msgstr "Nem lehet %d bájtot beolvasni a(z) \"%s\" fájlból: %s"
 #: app/core/gimpbrush.c:569
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" mélység."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" "
+"mélység."
 
 #: app/core/gimpbrush.c:582
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" verzió."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" "
+"verzió."
 
 #: app/core/gimpbrush.c:598 app/core/gimpbrush.c:718
 #, c-format
@@ -2232,8 +2258,8 @@ msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 #: app/core/gimplayer.c:968
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
-"Nem lehet rétegmaszkot hozzáadni olyan réteghez, amelynek nincs "
-"alfa-csatornája."
+"Nem lehet rétegmaszkot hozzáadni olyan réteghez, amelynek nincs alfa-"
+"csatornája."
 
 #: app/core/gimplayer.c:978
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -2426,8 +2452,8 @@ msgstr "A függőleges képfelbontás."
 msgid "pixel"
 msgstr "képpont"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "képpont"
 
@@ -5247,7 +5273,7 @@ msgstr "Eltolás"
 
 #: app/gui/offset-dialog.c:152
 msgid "Offset _X:"
-msgstr "_X eltolás:"
+msgstr "_X-eltolás:"
 
 #: app/gui/offset-dialog.c:154 app/gui/resize-dialog.c:490
 msgid "_Y:"
@@ -6163,7 +6189,7 @@ msgstr "Új szélesség:"
 #. the scale ratio labels
 #: app/gui/resize-dialog.c:385
 msgid "Ratio X:"
-msgstr "X arány:"
+msgstr "X-arány:"
 
 #: app/gui/resize-dialog.c:448
 msgid "Constrain aspect ratio"
@@ -6184,7 +6210,7 @@ msgstr "Nyomtatási méret és a képernyő mértékegysége"
 #. the resolution labels
 #: app/gui/resize-dialog.c:631 app/widgets/gimptemplateeditor.c:374
 msgid "Resolution X:"
-msgstr "X felbontás:"
+msgstr "X-felbontás:"
 
 #: app/gui/resize-dialog.c:651 app/widgets/gimptemplateeditor.c:403
 #, c-format
@@ -6853,7 +6879,7 @@ msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
 msgstr ""
-"A GIMP megfelelő működéséhez szükséges egy '<b>%s</b>' nevű mappa "
+"A GIMP megfelelő működéséhez szükséges egy \"<b>%s</b>\" nevű mappa "
 "létrehozása."
 
 #: app/gui/user-install-dialog.c:856
@@ -6896,7 +6922,7 @@ msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
 msgstr ""
-"<b>A GIMP-nek ismernie kell az ön monitorának felbontását, hogy természetes "
+"<b>A GIMP-nek ismernie kell az Ön monitorának felbontását, hogy természetes "
 "méretükben jeleníthesse meg a képeket.</b>"
 
 #: app/gui/user-install-dialog.c:975
@@ -7259,7 +7285,7 @@ msgstr "Egyebek"
 
 #: app/pdb/internal_procs.c:143
 msgid "Paint Tool procedures"
-msgstr "Festőeszköz eljárások"
+msgstr "Festőeszköz-eljárások"
 
 #: app/pdb/internal_procs.c:146
 msgid "Palette"
@@ -7728,7 +7754,7 @@ msgstr "Színegyensúly beállítása"
 
 #: app/tools/gimpcolorbalancetool.c:193
 msgid "Color balance operates only on RGB color layers."
-msgstr "A színegyensúly csak RGB színes rétegeken működik."
+msgstr "A színegyensúly csak RGB színű rétegeken működik."
 
 #: app/tools/gimpcolorbalancetool.c:276
 msgid "Select Range to Modify"
@@ -7776,7 +7802,7 @@ msgstr "A kép színezése"
 
 #: app/tools/gimpcolorizetool.c:195
 msgid "Colorize operates only on RGB color layers."
-msgstr "A színezés csak RGB színes rétegeken működik."
+msgstr "A színezés csak RGB színű rétegeken működik."
 
 #: app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
@@ -8066,7 +8092,7 @@ msgstr "Árnyalat / fényerő / telítettség beállítása"
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr "Az árnyalat-telítettség csak RGB színes rétegeken működik."
+msgstr "Az árnyalat-telítettség csak RGB színű rétegeken működik."
 
 #: app/tools/gimphuesaturationtool.c:263
 msgid "M_aster"
@@ -8497,7 +8523,7 @@ msgstr "Jelenlegi szélesség:"
 
 #: app/tools/gimpscaletool.c:197
 msgid "Scale Ratio X:"
-msgstr "X átméretezés aránya:"
+msgstr "X-átméretezés aránya:"
 
 #: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
@@ -10063,3 +10089,26 @@ msgstr "XCF hiba: nem támogatott, %d verziójú XCF-fájl"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Képek vagy fotók létrehozása és szerkesztése"
+
+msgid ""
+"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
+"algorithm.  The seed fill starts at the initially selected pixel and "
+"progresses in all directions until the difference of pixel intensity from "
+"the original is greater than a specified threshold. This value represents "
+"the default threshold."
+msgstr ""
+"A varázspálca-kijelölés, a kitöltés és a hasonló eszközök egy kezdőértéken "
+"alapuló algoritmust használnak a megfelelő terület meghatározásához. A "
+"terület meghatározásakor a program a kijelölt képponttól indulva addig halad "
+"minden irányban, amíg az eredeti képponthoz viszonyított intenzitásbeli "
+"különbség nagyobb nem lesz egy megadott küszöbértéknél. Az itt megadott "
+"érték az alapértelmezett küszöbérték."
+
+msgid "The horizontal image resolution."
+msgstr "A vízszintes képfelbontás."
+
+msgid "/blendingfunction/_Sinusoidal"
+msgstr "/blendingfunction/_Szinuszos"
+
+msgid "Initial Zoom Ratio:"
+msgstr "Kezdeti nagyítási arány:"

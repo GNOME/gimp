@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-13 04:02+0200\n"
-"PO-Revision-Date: 2004-05-23 12:17+0200\n"
+"POT-Creation-Date: 2004-05-23 19:47+0200\n"
+"PO-Revision-Date: 2004-05-28 20:07+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Átalakítás indexeltté az alapértelmezett beállítások használatával\n"
-"(A finomhangoláshoz válassza a kézi beállítást)"
+"(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: libgimp/gimpexport.c:306
 #, c-format
@@ -107,7 +107,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Átalakítás indexeltté az alapértelmezett bitképes beállítások használatával\n"
-"(A finomhangoláshoz válassza a kézi beállítást)"
+"(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
@@ -160,8 +160,8 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"A képet a következő okokból exportálni kellene, mielőtt %s formátumban mentésre "
-"kerülne:"
+"A képet a következő okokból exportálni kellene, mielőtt %s formátumban "
+"mentésre kerülne:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
@@ -521,8 +521,8 @@ msgstr "Ú_j kiindulóérték"
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"A véletlenszám-előállítás kiindulóértékének beállítása egy "
-"előállított véletlenszámmal"
+"A véletlenszám-előállítás kiindulóértékének beállítása egy előállított "
+"véletlenszámmal"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
@@ -530,9 +530,7 @@ msgstr "_Véletlenszerűen"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Színérzékelési problémát szimuláló szűrő "
-"(Brettel-Vienot-Mollon-módszer)"
+msgstr "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
