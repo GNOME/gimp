@@ -149,50 +149,22 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
-
   context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
   fade_options     = paint_options->fade_options;
   gradient_options = paint_options->gradient_options;
 
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+    return;
+
+  opacity *= gimp_paint_options_get_fade (paint_options, gimage,
+                                          paint_core->pixel_dist);
+
+  if (opacity == 0.0)
+    return;
+
   paint_appl_mode = paint_options->application_mode;
-
-  if (fade_options->use_fade)
-    {
-      gdouble fade_out = 0.0;
-      gdouble unit_factor;
-
-      switch (fade_options->fade_unit)
-        {
-        case GIMP_UNIT_PIXEL:
-          fade_out = fade_options->fade_length;
-          break;
-        case GIMP_UNIT_PERCENT:
-          fade_out = (MAX (gimage->width, gimage->height) *
-                      fade_options->fade_length / 100);
-          break;
-        default:
-          unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
-          fade_out    = (fade_options->fade_length *
-                         MAX (gimage->xresolution,
-                              gimage->yresolution) / unit_factor);
-          break;
-        }
-
-      /*  factor in the fade out value  */
-      if (fade_out)
-        {
-          gdouble x;
-
-          /*  Model the amount of paint left as a gaussian curve  */
-          x = ((gdouble) paint_core->pixel_dist / fade_out);
-
-          opacity = exp (- x * x * 5.541);    /*  ln (1/255)  */
-        }
-    }
 
   if (gradient_options->use_gradient)
     {
@@ -232,68 +204,65 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  if (opacity > 0.0)
+  if (gradient_length)
     {
-      if (gradient_length)
-	{
-          GimpGradient *gradient;
-          GimpRGB       color;
+      GimpGradient *gradient;
+      GimpRGB       color;
 
-          gradient = gimp_context_get_gradient (context);
+      gradient = gimp_context_get_gradient (context);
 
-	  if (pressure_options->color)
-	    gimp_gradient_get_color_at (gradient,
-					paint_core->cur_coords.pressure,
-                                        &color);
-	  else
-	    gimp_paint_core_get_color_from_gradient (paint_core,
-                                                     gradient,
-                                                     gradient_length,
-						     &color,
-                                                     gradient_options->gradient_type);
-
-	  opacity *= color.a;
-
-	  gimp_rgb_get_uchar (&color,
-			      &col[RED_PIX],
-			      &col[GREEN_PIX],
-			      &col[BLUE_PIX]);
-	  col[ALPHA_PIX] = OPAQUE_OPACITY;
-
-	  color_pixels (temp_buf_data (area), col,
-			area->width * area->height,
-                        area->bytes);
-
-	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
-	}
-      else if (paint_core->brush && paint_core->brush->pixmap)
-	{
-          /* if it's a pixmap, do pixmap stuff */
-	  gimp_paint_core_color_area_with_pixmap (paint_core, gimage, drawable,
-						  area,
-						  scale,
-                                                  gimp_paint_options_get_brush_mode (paint_options));
-
-	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
-	}
+      if (pressure_options->color)
+        gimp_gradient_get_color_at (gradient,
+                                    paint_core->cur_coords.pressure,
+                                    &color);
       else
-	{
-	  gimp_image_get_foreground (gimage, drawable, col);
-	  col[area->bytes - 1] = OPAQUE_OPACITY;
-	  color_pixels (temp_buf_data (area), col,
-			area->width * area->height,
-                        area->bytes);
-	}
+        gimp_paint_core_get_color_from_gradient (paint_core,
+                                                 gradient,
+                                                 gradient_length,
+                                                 &color,
+                                                 gradient_options->gradient_type);
 
-      if (pressure_options->opacity)
-	opacity *= 2.0 * paint_core->cur_coords.pressure;
+      opacity *= color.a;
 
-      gimp_paint_core_paste_canvas (paint_core, drawable,
-				    MIN (opacity, GIMP_OPACITY_OPAQUE),
-				    gimp_context_get_opacity (context),
-				    gimp_context_get_paint_mode (context),
-                                    gimp_paint_options_get_brush_mode (paint_options),
-				    scale,
-                                    paint_appl_mode);
+      gimp_rgb_get_uchar (&color,
+                          &col[RED_PIX],
+                          &col[GREEN_PIX],
+                          &col[BLUE_PIX]);
+      col[ALPHA_PIX] = OPAQUE_OPACITY;
+
+      color_pixels (temp_buf_data (area), col,
+                    area->width * area->height,
+                    area->bytes);
+
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
+  else if (paint_core->brush && paint_core->brush->pixmap)
+    {
+      /* if it's a pixmap, do pixmap stuff */
+      gimp_paint_core_color_area_with_pixmap (paint_core, gimage, drawable,
+                                              area,
+                                              scale,
+                                              gimp_paint_options_get_brush_mode (paint_options));
+
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
+    }
+  else
+    {
+      gimp_image_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
+      color_pixels (temp_buf_data (area), col,
+                    area->width * area->height,
+                    area->bytes);
+    }
+
+  if (pressure_options->opacity)
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
+
+  gimp_paint_core_paste_canvas (paint_core, drawable,
+                                MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                gimp_context_get_opacity (context),
+                                gimp_context_get_paint_mode (context),
+                                gimp_paint_options_get_brush_mode (paint_options),
+                                scale,
+                                paint_appl_mode);
 }

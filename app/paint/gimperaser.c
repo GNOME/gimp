@@ -148,6 +148,12 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
+  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+                                         paint_core->pixel_dist);
+
+  if (opacity == 0.0)
+    return;
+
   options = GIMP_ERASER_OPTIONS (paint_options);
   context = GIMP_CONTEXT (paint_options);
 
@@ -171,10 +177,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
-  opacity = gimp_context_get_opacity (context);
-
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
 
   gimp_paint_core_paste_canvas (paint_core, drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),

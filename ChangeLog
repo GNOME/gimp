@@ -1,3 +1,35 @@
+2003-07-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintoptions.[ch]: added utility function
+	gimp_paint_options_get_fade() which calculates an opacity
+	value from paint_core->pixel_dist.
+
+	* app/paint/gimppaintbrush.c: removed the same code here and use
+	gimp_paint_options_get_fade().
+
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpsmudge.c: enabled fade for all paint tools, along
+	with a general opacity cleanup:
+
+	Use the opacity from gimp_context_get_opacity() *only* for the
+	image_opacity. In particular, *never* use it as initial value for
+	calculating the brush_opacity. Instead, start calculating the
+	brush_opacity from gimp_paint_options_get_fade() and return early
+	if it returns 0.0, if not, multiply tool specific opacity sources
+	like the current pressure.
+
+	(This changes the effect of the paint tools for particular opacity
+	values, but makes the impact of opacity on the final rendering
+	linear and more intuitive)
+
+	* app/tools/gimppaintoptions-gui.c: enabled the "Fade" frame for
+	the tools above.
+
+	* app/paint/gimppaintcore.c: purely cosmetic cleanup.
+
 2003-07-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c (prefs_dialog_new)

@@ -89,11 +89,15 @@ struct _GimpPaintOptionsClass
 
 GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
 
-GimpPaintOptions * gimp_paint_options_new      (Gimp  *gimp,
-                                                GType  options_type);
+GimpPaintOptions * gimp_paint_options_new      (Gimp             *gimp,
+                                                GType             options_type);
+
+gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
+                                                GimpImage        *gimage,
+                                                gdouble           pixel_dist);
 
 GimpBrushApplicationMode
-gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
+             gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

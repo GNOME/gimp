@@ -192,11 +192,14 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpConvolveOptions *options;
   GimpPressureOptions *pressure_options;
   GimpContext         *context;
+  GimpImage           *gimage;
   TempBuf             *area;
   guchar              *temp_data;
   PixelRegion          srcPR;
   PixelRegion          destPR;
+  gdouble              opacity;
   gdouble              scale;
+  gdouble              rate;
   ConvolveClipType     area_hclip = CONVOLVE_NOT_CLIPPED;
   ConvolveClipType     area_vclip = CONVOLVE_NOT_CLIPPED;
   gint                 marginx    = 0;
@@ -207,17 +210,21 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   pressure_options = paint_options->pressure_options;
 
-  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
-  /*  If the image type is indexed, don't convolve  */
   if (gimp_drawable_is_indexed (drawable))
     return;
 
   /* If the brush is smaller than the convolution matrix, don't convolve */
+  if (paint_core->brush->mask->width  < matrix_size ||
+      paint_core->brush->mask->height < matrix_size)
+    return;
 
-  if ((paint_core->brush->mask->width < matrix_size) ||
-      (paint_core->brush->mask->height < matrix_size))
+  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+                                         paint_core->pixel_dist);
+
+  if (opacity == 0.0)
     return;
 
   if (pressure_options->size)
@@ -225,7 +232,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   else
     scale = 1.0;
 
-  /*  Get image region around current brush (mask bbox + 1 pixel)  */
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
@@ -233,8 +239,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
-  /* Configure the destination pixel region - a paint_core TempBuf */
-
+  /*  configure the destination pixel region  */
   destPR.bytes     = area->bytes;
   destPR.tiles     = NULL;
   destPR.x         = 0;
@@ -244,10 +249,12 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   destPR.rowstride = area->width * destPR.bytes;
   destPR.data      = temp_buf_data (area);
 
-  if (pressure_options->rate)
-    options->rate = options->rate * 2.0 * paint_core->cur_coords.pressure;
+  rate = options->rate;
 
-  gimp_convolve_calculate_matrix (options->type, options->rate);
+  if (pressure_options->rate)
+    rate *= 2.0 * paint_core->cur_coords.pressure;
+
+  gimp_convolve_calculate_matrix (options->type, rate);
 
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
@@ -262,9 +269,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   else if ((marginy = area->height - paint_core->brush->mask->height - 2) != 0)
     area_vclip = CONVOLVE_PCLIP;
 
-  /* Has the TempBuf been clipped by a canvas edge or two ?        */
-  if ((area_hclip == CONVOLVE_NOT_CLIPPED)  &&
-      (area_vclip == CONVOLVE_NOT_CLIPPED))
+  /*  Has the TempBuf been clipped by a canvas edge or two?  */
+  if (area_hclip == CONVOLVE_NOT_CLIPPED &&
+      area_vclip == CONVOLVE_NOT_CLIPPED)
     {
       /* No clipping...                                              */
       /* Standard case: copy src to temp. convolve temp to dest.     */
@@ -324,11 +331,11 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
        * expanded buffers. copy src -> ovrsz1 convolve ovrsz1 -> ovrsz2
        * copy-with-crop ovrsz2 -> dest
        */
-      PixelRegion   ovrsz1PR;
-      PixelRegion   ovrsz2PR;
-      guchar        *ovrsz1_data = NULL;
-      guchar        *ovrsz2_data = NULL;
-      guchar        *fillcolor;
+      PixelRegion  ovrsz1PR;
+      PixelRegion  ovrsz2PR;
+      guchar      *ovrsz1_data = NULL;
+      guchar      *ovrsz2_data = NULL;
+      guchar      *fillcolor;
 
       fillcolor = gimp_drawable_get_color_at
 	(drawable,
@@ -366,7 +373,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       ovrsz1_data        = g_malloc (ovrsz1PR.h * ovrsz1PR.rowstride);
       ovrsz1PR.data      = ovrsz1_data;
 
-      color_region (&ovrsz1PR, (const guchar *)fillcolor);
+      color_region (&ovrsz1PR, fillcolor);
 
       ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0;
       ovrsz1PR.y         = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
@@ -404,17 +411,17 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
       copy_region (&ovrsz2PR, &destPR);
 
-      g_free(ovrsz1_data);
-      g_free(ovrsz2_data);
-      g_free(fillcolor);
+      g_free (ovrsz1_data);
+      g_free (ovrsz2_data);
+      g_free (fillcolor);
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_replace_canvas (paint_core, drawable,
-                                  GIMP_OPACITY_OPAQUE,
+                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
-				  scale,
+                                  scale,
                                   GIMP_PAINT_INCREMENTAL);
 }
 

@@ -20,13 +20,15 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "paint-types.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
 #include "gimppaintoptions.h"
 
@@ -398,6 +400,58 @@ gimp_paint_options_new (Gimp  *gimp,
                           NULL);
 
   return options;
+}
+
+gdouble
+gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
+                             GimpImage        *gimage,
+                             gdouble           pixel_dist)
+{
+  GimpFadeOptions *fade_options;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
+                        GIMP_OPACITY_OPAQUE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_OPACITY_OPAQUE);
+
+  fade_options = paint_options->fade_options;
+
+  if (fade_options->use_fade)
+    {
+      gdouble fade_out = 0.0;
+      gdouble unit_factor;
+
+      switch (fade_options->fade_unit)
+        {
+        case GIMP_UNIT_PIXEL:
+          fade_out = fade_options->fade_length;
+          break;
+        case GIMP_UNIT_PERCENT:
+          fade_out = (MAX (gimage->width, gimage->height) *
+                      fade_options->fade_length / 100);
+          break;
+        default:
+          unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
+          fade_out    = (fade_options->fade_length *
+                         MAX (gimage->xresolution,
+                              gimage->yresolution) / unit_factor);
+          break;
+        }
+
+      /*  factor in the fade out value  */
+      if (fade_out > 0.0)
+        {
+          gdouble x;
+
+          /*  Model the amount of paint left as a gaussian curve  */
+          x = pixel_dist / fade_out;
+
+          return exp (- x * x * 5.541);    /*  ln (1/255)  */
+        }
+
+      return GIMP_OPACITY_TRANSPARENT;
+    }
+
+  return GIMP_OPACITY_OPAQUE;
 }
 
 GimpBrushApplicationMode

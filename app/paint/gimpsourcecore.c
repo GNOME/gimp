@@ -298,6 +298,15 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
 
   pressure_options = paint_options->pressure_options;
 
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+    return;
+
+  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+                                         paint_core->pixel_dist);
+
+  if (opacity == 0.0)
+    return;
+
   /*  make local copies because we change them  */
   offset_x = clone->offset_x;
   offset_y = clone->offset_y;
@@ -314,10 +323,6 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
       /*  Determine whether the source image has an alpha channel  */
       has_alpha = gimp_drawable_has_alpha (clone->src_drawable);
     }
-
-  /*  We always need a destination image */
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -440,10 +445,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
 	}
     }
 
-  opacity = gimp_context_get_opacity (context);
-
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_paste_canvas (paint_core, drawable,

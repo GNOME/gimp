@@ -126,8 +126,6 @@ gimp_smudge_init (GimpSmudge *smudge)
 
   paint_core = GIMP_PAINT_CORE (smudge);
 
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
-
   smudge->initialized = FALSE;
   smudge->accum_data  = NULL;
 }
@@ -197,15 +195,13 @@ gimp_smudge_start (GimpPaintCore *paint_core,
 
   smudge = GIMP_SMUDGE (paint_core);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+    return FALSE;
 
-  /*  If the image type is indexed, don't smudge  */
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0);
-
-  if (!area)
+  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0)))
     return FALSE;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
@@ -287,16 +283,21 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   pressure_options = paint_options->pressure_options;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+    return;
 
-  /*  If the image type is indexed, don't smudge  */
   if (gimp_drawable_is_indexed (drawable))
+    return;
+
+  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+                                         paint_core->pixel_dist);
+
+  if (opacity == 0.0)
     return;
 
   gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
-  /*  Get the paint area */
-  /*  Smudge won't scale!  */
+  /*  Get the paint area (Smudge won't scale!)  */
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0)))
     return;
 
@@ -306,7 +307,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
-    rate = MIN (options->rate / 100.0 * paint_core->cur_coords.pressure * 2.0,
+    rate = MIN (options->rate / 100.0 * 2.0 * paint_core->cur_coords.pressure,
 		1.0);
   else
     rate = options->rate / 100.0;
@@ -359,15 +360,13 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity = gimp_context_get_opacity (context);
-
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
 
-  /*Replace the newly made paint area to the gimage*/
+  /* Replace the newly made paint area to the gimage */
   gimp_paint_core_replace_canvas (paint_core, drawable,
 				  MIN (opacity, GIMP_OPACITY_OPAQUE),
-				  GIMP_OPACITY_OPAQUE,
+				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
 				  1.0,
                                   GIMP_PAINT_INCREMENTAL);

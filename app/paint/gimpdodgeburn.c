@@ -223,9 +223,13 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
-  /*  If the image type is indexed, don't dodgeburn  */
-  if ((gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE) ||
-      (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE))
+  if (gimp_drawable_is_indexed (drawable))
+    return;
+
+  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+                                         paint_core->pixel_dist);
+
+  if (opacity == 0.0)
     return;
 
   if (pressure_options->size)
@@ -266,7 +270,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
     srcPR.data      = temp_buf_data (orig);
   }
 
-  /* tempPR will hold the dodgeburned region*/
+  /* tempPR will hold the dodgeburned region */
   tempPR.bytes     = srcPR.bytes;
   tempPR.x         = srcPR.x;
   tempPR.y         = srcPR.y;
@@ -290,21 +294,20 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   destPR.data      = temp_buf_data (area);
 
   /* Now add an alpha to the dodgeburned region
-     and put this in area = canvas_buf */
+   * and put this in area = canvas_buf
+   */
   if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
   else
     copy_region (&tempPR, &destPR);
 
-  opacity = gimp_context_get_opacity (context);
-
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
 
-  /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/
+  /* Replace the newly dodgedburned area (canvas_buf) to the gimage */
   gimp_paint_core_replace_canvas (paint_core, drawable,
 			          MIN (opacity, GIMP_OPACITY_OPAQUE),
-		                  GIMP_OPACITY_OPAQUE,
+		                  gimp_context_get_opacity (context),
 			          gimp_paint_options_get_brush_mode (paint_options),
 			          scale,
                                   GIMP_PAINT_CONSTANT);

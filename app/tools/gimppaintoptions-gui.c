@@ -341,7 +341,12 @@ fade_options_gui (GimpFadeOptions  *fade,
 
   config = G_OBJECT (paint_options);
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
+      tool_type == GIMP_TYPE_DODGEBURN_TOOL              ||
+      tool_type == GIMP_TYPE_ERASER_TOOL                 ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       frame = gtk_frame_new (NULL);
 

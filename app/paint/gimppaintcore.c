@@ -1506,8 +1506,10 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   /*  set undo blocks  */
   set_undo_tiles (core,
                   drawable,
-		  core->canvas_buf->x, core->canvas_buf->y,
-		  core->canvas_buf->width, core->canvas_buf->height);
+		  core->canvas_buf->x,
+                  core->canvas_buf->y,
+		  core->canvas_buf->width,
+                  core->canvas_buf->height);
 
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the brush mask to the canvas tiles
@@ -1556,7 +1558,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   core->x2 = MAX (core->x2, core->canvas_buf->x + core->canvas_buf->width);
   core->y2 = MAX (core->y2, core->canvas_buf->y + core->canvas_buf->height);
 
-  /*  Update the gimage--it is important to call gimp_image_update
+  /*  Update the gimage -- It is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
@@ -1668,7 +1670,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   core->x2 = MAX (core->x2, core->canvas_buf->x + core->canvas_buf->width) ;
   core->y2 = MAX (core->y2, core->canvas_buf->y + core->canvas_buf->height) ;
 
-  /*  Update the gimage--it is important to call gimp_image_update
+  /*  Update the gimage -- It is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
