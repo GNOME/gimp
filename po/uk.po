@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-04-10 19:17+0200\n"
+"POT-Creation-Date: 2004-04-16 19:03+0300\n"
+"PO-Revision-Date: 2004-04-16 19:17+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1273,12 +1273,10 @@ msgid "Move Item"
 msgstr "Переміщення елемента"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Масштабування зображення"
+msgstr "Масштабування елемента"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
 msgstr "Зміна розміру зображення"
 
@@ -2385,7 +2383,7 @@ msgstr "Вертикальна роздільну здатність."
 msgid "pixel"
 msgstr "точка растру"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "точок растру"
@@ -3815,7 +3813,6 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Помилка масштабування: ширина і висота повинні бути більшими нуля."
 
 #. <Image>/File
-#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Файл"
@@ -3829,7 +3826,6 @@ msgid "/File/_Open..."
 msgstr "/Файл/_Відкрити..."
 
 #. <Image>/File/Open Recent
-#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Файл/Відкрити н_едавні"
@@ -3946,7 +3942,7 @@ msgstr "/Правка/_Обвести виділене..."
 
 #: app/gui/image-menu.c:265
 msgid "/Edit/St_roke Path..."
-msgstr "/Правка/Обвести _шлях"
+msgstr "/Правка/Обвести _за контуром"
 
 #. <Image>/Select
 #: app/gui/image-menu.c:275
@@ -6112,7 +6108,6 @@ msgid "Original Width:"
 msgstr "Оригінальна ширина:"
 
 #. the new size labels
-#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Нова ширина:"
@@ -6258,7 +6253,7 @@ msgstr "/_Правка шаблону..."
 msgid "/_Delete Template"
 msgstr "/В_идалити шаблон"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Запис '%s'\n"
@@ -6950,7 +6945,6 @@ msgid "New Path Options"
 msgstr "Параметри нового контуру"
 
 #. The name entry hbox, label and entry
-#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Назва контуру:"
@@ -7339,12 +7333,12 @@ msgstr "Опитування нових доповнень"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Запит доповнення: '%s'\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Ініціалізація доповнень"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Ініціалізація доповнення: '%s'\n"
@@ -7847,7 +7841,6 @@ msgid "Origin X:"
 msgstr "Початкове X:"
 
 #. the pixel size labels
-#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8088,7 +8081,7 @@ msgstr "Вирівнювання"
 msgid "Size:"
 msgstr "Розмір:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Кут:"
@@ -8242,11 +8235,11 @@ msgid "Add Guides"
 msgstr "Додавання напрямних"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Вимірювання відстаней та кутів"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Відстань:"
 
