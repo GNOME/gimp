@@ -1,5 +1,10 @@
 2003-09-18  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-export.c (gimp_vectors_export): always
+	save the image size; default to centimeters.
+
+2003-09-18  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added a check for librsvg-2.0.
 
 	* plug-ins/common/mkgen.pl

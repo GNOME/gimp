@@ -41,10 +41,10 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_vectors_export_path (const GimpVectors *vectors,
-                                         FILE              *file);
-static gchar * gimp_vectors_path_data   (const GimpVectors *vectors);
-static gchar * gimp_vectors_image_size  (const GimpImage   *image);
+static void    gimp_vectors_export_path        (const GimpVectors *vectors,
+                                                FILE              *file);
+static gchar * gimp_vectors_export_path_data   (const GimpVectors *vectors);
+static gchar * gimp_vectors_export_image_size  (const GimpImage   *image);
 
 
 /**
@@ -87,12 +87,9 @@ gimp_vectors_export (const GimpImage    *image,
            "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
            "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
 
-  size = gimp_vectors_image_size (image);
-  if (size)
-    {
-      fprintf (file, "     %s\n", size);
-      g_free (size);
-    }
+  size = gimp_vectors_export_image_size (image);
+  fprintf (file, "     %s\n", size);
+  g_free (size);
 
   fprintf (file, "     viewBox=\"0 0 %d %d\">\n",
            image->width, image->height);
@@ -123,37 +120,36 @@ gimp_vectors_export (const GimpImage    *image,
 }
 
 static gchar *
-gimp_vectors_image_size (const GimpImage *image)
+gimp_vectors_export_image_size (const GimpImage *image)
 {
-  const gchar *abbrev = NULL;
+  GimpUnit     unit;
+  const gchar *abbrev;
+  gchar        wbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar        hbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gdouble      w, h;
 
-  switch (image->unit)
+  w = (gdouble) image->width  / image->xresolution;
+  h = (gdouble) image->height / image->yresolution;
+
+  unit = image->unit;
+  switch (unit)
     {
     case GIMP_UNIT_INCH:  abbrev = "in";  break;
     case GIMP_UNIT_MM:    abbrev = "mm";  break;
     case GIMP_UNIT_POINT: abbrev = "pt";  break;
     case GIMP_UNIT_PICA:  abbrev = "pc";  break;
-    default:
+    default:              abbrev = "cm";
+      unit = GIMP_UNIT_MM;
+      w /= 10.0;
+      h /= 10.0;
       break;
     }
 
-  if (abbrev)
-    {
-      gchar w[G_ASCII_DTOSTR_BUF_SIZE];
-      gchar h[G_ASCII_DTOSTR_BUF_SIZE];
+  g_ascii_formatd (wbuf, sizeof (wbuf), "%g", w * gimp_unit_get_factor (unit));
+  g_ascii_formatd (hbuf, sizeof (hbuf), "%g", h * gimp_unit_get_factor (unit));
 
-      g_ascii_formatd (w, sizeof (w), "%g",
-                       (image->width * gimp_unit_get_factor (image->unit) /
-                        image->xresolution));
-      g_ascii_formatd (h, sizeof (h), "%g",
-                       (image->height * gimp_unit_get_factor (image->unit) /
-                        image->yresolution));
-
-      return g_strdup_printf ("width=\"%s%s\" height=\"%s%s\"",
-                              w, abbrev, h, abbrev);
-    }
-
-  return NULL;
+  return g_strdup_printf ("width=\"%s%s\" height=\"%s%s\"",
+                          wbuf, abbrev, hbuf, abbrev);
 }
 
 static void
@@ -161,7 +157,7 @@ gimp_vectors_export_path (const GimpVectors *vectors,
                           FILE              *file)
 {
   const gchar *name = gimp_object_get_name (GIMP_OBJECT (vectors));
-  gchar       *data = gimp_vectors_path_data (vectors);
+  gchar       *data = gimp_vectors_export_path_data (vectors);
   gchar       *esc_name;
 
   esc_name = g_markup_escape_text (name, strlen (name));
@@ -176,8 +172,11 @@ gimp_vectors_export_path (const GimpVectors *vectors,
   g_free (data);
 }
 
+
+#define NEWLINE "\n           "
+
 static gchar *
-gimp_vectors_path_data (const GimpVectors *vectors)
+gimp_vectors_export_path_data (const GimpVectors *vectors)
 {
   GString  *str;
   GList    *strokes;
@@ -195,7 +194,7 @@ gimp_vectors_path_data (const GimpVectors *vectors)
       gint        i;
 
       if (closed)
-        g_string_append_printf (str, "\n           ");
+        g_string_append_printf (str, NEWLINE);
 
       control_points = gimp_stroke_control_points_get (stroke, &closed);
 
@@ -213,11 +212,14 @@ gimp_vectors_path_data (const GimpVectors *vectors)
 
           if (control_points->len > 3)
             {
-              g_string_append_printf (str, "\n           C");
+              g_string_append_printf (str, NEWLINE "C");
             }
 
-          for (i=2; i < (control_points->len + (closed ? 2 : - 1)); i++)
+          for (i = 2; i < (control_points->len + (closed ? 2 : - 1)); i++)
             {
+              if (i > 2 && i % 3 == 2)
+                g_string_append_printf (str, NEWLINE " ");
+
               anchor = &g_array_index (control_points, GimpAnchor,
                                        i % control_points->len);
               g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
@@ -225,13 +227,10 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", anchor->position.y);
               g_string_append_printf (str, " %s,%s", x_string, y_string);
-
-              if (i % 3 == 1)
-                g_string_append_printf (str, "\n           ");
             }
 
           if (closed && control_points->len > 3)
-            g_string_append_printf (str, "Z");
+            g_string_append_printf (str, " Z");
         }
       else
         {
@@ -249,10 +248,10 @@ gimp_vectors_path_data (const GimpVectors *vectors)
 
           if (control_points->len > 1)
             {
-              g_string_append_printf (str, "\n           L");
+              g_string_append_printf (str, NEWLINE "L");
             }
 
-          for (i=1; i < control_points->len; i++)
+          for (i = 1; i < control_points->len; i++)
             {
               anchor = &g_array_index (control_points, GimpAnchor, i);
               g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
@@ -262,7 +261,7 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_string_append_printf (str, " %s,%s", x_string, y_string);
 
               if (i % 3 == 1)
-                g_string_append_printf (str, "\n          ");
+                g_string_append_printf (str, NEWLINE " ");
             }
 
           if (closed && control_points->len > 1)
