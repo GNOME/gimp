@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include "libgimpwidgets/gimpwidgets.h"
 
+gimp_action_group_get_type
 gimp_airbrush_get_type
 gimp_airbrush_options_get_type
 gimp_airbrush_tool_get_type
@@ -82,7 +83,9 @@ gimp_drawable_get_type
 gimp_drawable_tree_view_get_type
 gimp_editor_get_type
 gimp_ellipse_select_tool_get_type
-gimp_enum_menu_get_type
+gimp_enum_action_get_type
+gimp_enum_combo_box_get_type
+gimp_enum_store_get_type
 gimp_environ_table_get_type
 gimp_eraser_get_type
 gimp_eraser_options_get_type
@@ -175,6 +178,7 @@ gimp_smudge_get_type
 gimp_smudge_options_get_type
 gimp_smudge_tool_get_type
 gimp_statusbar_get_type
+gimp_string_action_get_type
 gimp_stroke_editor_get_type
 gimp_stroke_get_type
 gimp_stroke_options_get_type
