@@ -1,3 +1,16 @@
+Wed Aug 25 17:27:40 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* gimptool.in: install a gimpinstall script (basically install-sh)
+	for platforms without an install tool
+
+	* plug-ins/common/csource.c: correct some gccisms
+
+	* plug-ins/unsharp/dialog_f.c
+	* plug-ins/unsharp/dialog_i.c
+	* plug-ins/unsharp/unsharp.c: // IS NOT A VALID C COMMENT
+
 1999-08-26  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/module_db.c: Put the list above the description instead of

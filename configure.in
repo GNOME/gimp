@@ -560,6 +560,11 @@ EOF
    fi
 fi
 
+GIMPINSTALL=
+if test "$INSTALL" = "$ac_install_sh"; then
+  GIMPINSTALL="gimpinstall"
+fi
+
 GIMPDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
@@ -618,6 +623,7 @@ AC_SUBST(GIMP_MP_FLAGS)
 AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMPDOCS)
+AC_SUBST(GIMPINSTALL)
 
 dnl easy way to skip the plug-in build
 GIMP_PLUGINS=plug-ins
@@ -633,6 +639,8 @@ gimprc_user
 gimprc.5
 gimptool
 libgimp/gimpfeatures.h
+libgimp/Makefile
+app/Makefile
 plug-ins/Makefile
 plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
 plug-ins/libgck/Makefile
@@ -673,7 +681,6 @@ plug-ins/sinus/Makefile
 plug-ins/struc/Makefile
 plug-ins/unsharp/Makefile
 modules/Makefile
-app/Makefile
 docs/Makefile
 data/Makefile
 data/brushes/Makefile
@@ -686,7 +693,6 @@ po-plug-ins/Makefile.in
 intl/Makefile
 tools/Makefile
 tools/pdbgen/Makefile
-libgimp/Makefile
 help/Makefile
 tips/Makefile],
 [
@@ -702,5 +708,3 @@ tips/Makefile],
    esac
 ]
 )
-
-

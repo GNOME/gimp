@@ -60,7 +60,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 /* --- implement main (), provided by libgimp --- */
-MAIN ();
+MAIN ()
 
 /* --- functions --- */
 static void
@@ -113,21 +113,24 @@ run (gchar   *name,
     {
       gint32 image_ID = param[1].data.d_int32;
       gint32 drawable_ID = param[2].data.d_int32;
+      Parasite *parasite;
+      gchar *x;
       GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
       Config config = {
-	param[3].data.d_string,
+	NULL,
 	"gimp_image",
 	NULL,
 	FALSE,
 	TRUE,
 	TRUE,
-	(drawable_type == RGBA_IMAGE ||
-	 drawable_type == GRAYA_IMAGE ||
-	 drawable_type == INDEXEDA_IMAGE),
+	FALSE,
 	100.0,
       };
-      Parasite *parasite;
-      gchar *x;
+
+      config.file_name = param[3].data.d_string;
+      config.alpha = (drawable_type == RGBA_IMAGE ||
+		      drawable_type == GRAYA_IMAGE ||
+		      drawable_type == INDEXEDA_IMAGE);
 
       parasite = gimp_image_find_parasite (image_ID, "gimp-comment");
       if (parasite)

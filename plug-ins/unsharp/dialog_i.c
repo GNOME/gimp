@@ -169,7 +169,7 @@ dialog_ientry_update(GtkWidget *widget,   /* I - Entry widget */
 	gtk_signal_handler_block_by_data(GTK_OBJECT(widget), value);
 	/* update the entry text */
 	gtk_entry_set_text( GTK_ENTRY(widget), newtextvalue);
-	//gtk_entry_set_position( GTK_ENTRY(widget), i);  //doesn't seem to work
+	/* gtk_entry_set_position( GTK_ENTRY(widget), i); */ /* doesn't seem to work */
 	/* unblock signal handler */
 	gtk_signal_handler_unblock_by_data(GTK_OBJECT(widget), value);
 							

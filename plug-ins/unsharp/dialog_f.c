@@ -151,7 +151,7 @@ dialog_fentry_update(GtkWidget *widget,   /* I - Entry widget */
 	gint          oldtextlength;
 	gint          i;
 
-//	new_value = atod(gtk_entry_get_text(GTK_ENTRY(widget)));
+/*	new_value = atod(gtk_entry_get_text(GTK_ENTRY(widget))); */
 
 	textvalue = gtk_entry_get_text( GTK_ENTRY(widget));
 	strncpy(newtextvalue, textvalue, MAX_ENTRY_LENGTH);
@@ -191,17 +191,17 @@ dialog_fentry_update(GtkWidget *widget,   /* I - Entry widget */
 	gtk_signal_handler_block_by_data(GTK_OBJECT(widget), value);
 	/* update the entry text */
 	gtk_entry_set_text( GTK_ENTRY(widget), newtextvalue);
-	//gtk_entry_set_position( GTK_ENTRY(widget), i);  //doesn't seem to work
+	/* gtk_entry_set_position( GTK_ENTRY(widget), i); */ /* doesn't seem to work */
 	/* unblock signal handler */
 	gtk_signal_handler_unblock_by_data(GTK_OBJECT(widget), value);
 							
 
-//	g_print(newtextvalue);
-//	g_print("\n");
+/*	g_print(newtextvalue); */
+/*	g_print("\n"); */
 	/* set the adjustment thingy */
 	new_value = atof(newtextvalue);
 	
-//	g_print("%e.", new_value);
+/*	g_print("%e.", new_value); */
 
 	/* set the new value */
 	if (*value != new_value) {

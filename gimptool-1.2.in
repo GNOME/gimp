@@ -81,6 +81,10 @@ fi
 
 if test x${INSTALL+set} != xset ; then
   INSTALL='@INSTALL@'
+  if test "$INSTALL" = "./install-sh -c"; then
+    mydirname=`echo $0 | sed -e 's#\(.*\)/[^/].*$#\1#'`
+    INSTALL="$mydirname/gimpinstall"
+  fi
 fi
 
 if test x${CC+set} != xset ; then
@@ -316,4 +320,3 @@ while test $# -gt 0; do
   esac
   shift
 done
-

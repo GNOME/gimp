@@ -41,11 +41,11 @@
    There's really no reason to define this, unless you want to see how
    much pointer aritmetic can speed things up.  I find that it is about
    45% faster with the optimized code. */
-//#define READABLE_CODE
+/* #define READABLE_CODE */
 
 /* uncomment this line to get a rough feel of how long the
    plug-in takes to run */
-//#define TIMER
+/* #define TIMER */
 #ifdef TIMER
 	#include <sys/time.h>
 	#include <unistd.h>
@@ -132,7 +132,7 @@ static UnsharpMaskParams unsharp_params =
 	0    /* default threshold = 0 */
 };
 
-//static UnsharpMaskInterface umint = { FALSE };
+/* static UnsharpMaskInterface umint = { FALSE }; */
 
 /* Setting PLUG_IN_INFO */
 GPlugInInfo PLUG_IN_INFO = {
@@ -229,7 +229,7 @@ static void run(char *name, int nparams, GParam *param, int *nreturn_vals,
 		/* here we go */
 		unsharp_mask(drawable, unsharp_params.radius, unsharp_params.amount);
 	
-		//	values[0].data.d_status = status;
+		/* values[0].data.d_status = status; */
 		gimp_displays_flush ();
 		
 		/* set data for next use of filter */
@@ -307,7 +307,7 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 	gint cmatrix_length;
 	gdouble* ctable;
 
-	gint row, col;  //these are counters for loops
+	gint row, col;  /* these are counters for loops */
 
 	/* these are used for the merging step */
 	gint threshold;
@@ -426,16 +426,17 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 	gint row;
 
 
-	// this is to take care cases in which the matrix can go over
-	// both edges at once.  It's not efficient, but this can only
-	// happen in small pictures anyway.
+	/* this is to take care cases in which the matrix can go over
+	 * both edges at once.  It's not efficient, but this can only
+	 * happen in small pictures anyway.
+	 */
 	if (cmatrix_length > y) {
 	
 		for (row = 0; row < y ; row++) {
 			scale=0;
-			// find the scale factor
+			/* find the scale factor */
 			for (j = 0; j < y ; j++) {
-				// if the index is in bounds, add it to the scale counter
+				/* if the index is in bounds, add it to the scale counter */
 				if ((j + cmatrix_length/2 - row >= 0) &&
 				    (j + cmatrix_length/2 - row < cmatrix_length))
 					scale += cmatrix[j + cmatrix_length/2 - row];
@@ -451,11 +452,11 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 		}
 	}
 	
-	else {  // when the cmatrix is smaller than row length
+	else {  /* when the cmatrix is smaller than row length */
 
-		// for the edge condition, we only use available info, and scale to one
+		/* for the edge condition, we only use available info, and scale to one */
 		for (row = 0; row < cmatrix_length/2; row++) {
-			// find scale factor
+			/* find scale factor */
 			scale=0;
 			for (j = cmatrix_length/2 - row; j<cmatrix_length; j++)
 				scale += cmatrix[j];
@@ -468,7 +469,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 			}
 		}
-		// go through each pixel in each col
+		/* go through each pixel in each col */
 		for ( ; row < y-cmatrix_length/2; row++) {
 			for (i = 0; i<bytes; i++) {
 				sum = 0;
@@ -478,9 +479,9 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 				dest_col[row*bytes + i] = (guchar)round2int(sum);
 			}
 		}
-		// for the edge condition , we only use available info, and scale to one
+		/* for the edge condition , we only use available info, and scale to one */
 		for ( ; row < y; row++) {
-			// find scale factor
+			/* find scale factor */
 			scale=0;
 			for (j = 0; j< y-row + cmatrix_length/2; j++)
 				scale += cmatrix[j];
@@ -511,16 +512,17 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 	gdouble *ctable_p;
 
 
-	// this first block is the same as the non-optimized version --
-	// it is only used for very small pictures, so speed isn't a
-	// big concern.
+	/* this first block is the same as the non-optimized version --
+	 * it is only used for very small pictures, so speed isn't a
+	 * big concern.
+	 */
 	if (cmatrix_length > y) {
 	
 		for (row = 0; row < y ; row++) {
 			scale=0;
-			// find the scale factor
+			/* find the scale factor */
 			for (j = 0; j < y ; j++) {
-				// if the index is in bounds, add it to the scale counter
+				/* if the index is in bounds, add it to the scale counter */
 				if ((j + cmatrix_length/2 - row >= 0) &&
 				    (j + cmatrix_length/2 - row < cmatrix_length))
 					scale += cmatrix[j + cmatrix_length/2 - row];
@@ -537,9 +539,9 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 	}
 
 	else {
-		// for the edge condition, we only use available info and scale to one
+		/* for the edge condition, we only use available info and scale to one */
 		for (row = 0; row < cmatrix_middle; row++) {
-			// find scale factor
+			/* find scale factor */
 			scale=0;
 			for (j = cmatrix_middle - row; j<cmatrix_length; j++)
 				scale += cmatrix[j];
@@ -551,7 +553,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 			}
 		}
-		// go through each pixel in each col
+		/* go through each pixel in each col */
 		dest_col_p = dest_col + row*bytes;
 		for ( ; row < y-cmatrix_middle; row++) {
 			cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
@@ -570,9 +572,9 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			}
 		}
 	
-		// for the edge condition , we only use available info, and scale to one
+		/* for the edge condition , we only use available info, and scale to one */
 		for ( ; row < y; row++) {
-			// find scale factor
+			/* find scale factor */
 			scale=0;
 			for (j = 0; j< y-row + cmatrix_middle; j++)
 				scale += cmatrix[j];
@@ -745,7 +747,7 @@ static gint unsharp_mask_dialog() {
 
 	
 
-	table = gtk_table_new(3, 3, FALSE);  //Make a 3x3 table in mainbox
+	table = gtk_table_new(3, 3, FALSE);  /* Make a 3x3 table in mainbox */
 	gtk_box_pack_start(GTK_BOX( GTK_DIALOG(window)->vbox), table,
 	                   FALSE, FALSE, 0);
 	
@@ -767,7 +769,7 @@ static gint unsharp_mask_dialog() {
 	/* OK and Cancel buttons */
 	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(window)->action_area),2);
 
-		// Make OK button
+		/* Make OK button */
 		button = gtk_button_new_with_label("OK");
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button,
@@ -777,7 +779,7 @@ static gint unsharp_mask_dialog() {
 		gtk_widget_grab_default(button);
 		gtk_widget_show(button);
 
-		// Make Cancel button
+		/* Make Cancel button */
 		button = gtk_button_new_with_label("Cancel");
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 		

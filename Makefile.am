@@ -2,7 +2,9 @@
 
 SUBDIRS = tools po po-plug-ins intl libgimp app $(GIMP_PLUGINS) $(GIMP_MODULES) data tips help $(GIMPDOCS)
 
-bin_SCRIPTS = gimptool
+bin_SCRIPTS = gimptool @GIMPINSTALL@
+
+EXTRA_SCRIPTS = gimpinstall
 
 EXTRA_DIST = \
 	cursors/bad		\
@@ -100,6 +102,9 @@ m4datadir = $(datadir)/aclocal
 m4data_DATA = gimp.m4
 
 scriptdata =
+
+gimpinstall:
+	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
 
 .PHONY: files populate checkin release
 
