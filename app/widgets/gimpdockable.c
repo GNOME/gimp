@@ -153,6 +153,8 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->get_preview_data = NULL;
   dockable->set_context_func = NULL;
 
+  dockable->title_layout     = NULL;
+
   gtk_widget_push_composite_child ();
   dockable->menu_button = gtk_button_new ();
   gtk_widget_pop_composite_child ();
@@ -218,6 +220,12 @@ gimp_dockable_destroy (GtkObject *object)
     {
       g_free (dockable->help_id);
       dockable->help_id = NULL;
+    }
+
+  if (dockable->title_layout)
+    {
+      g_object_unref (dockable->title_layout);
+      dockable->title_layout = NULL;
     }
 
   if (dockable->menu_button)
@@ -290,12 +298,15 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
     {
       gtk_widget_size_request (dockable->close_button, &button_requisition);
 
-      child_allocation.x      = (allocation->x +
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
+        child_allocation.x    = (allocation->x +
                                  allocation->width -
                                  container->border_width -
                                  button_requisition.width);
-      child_allocation.y      = (allocation->y +
-                                 container->border_width);
+      else
+        child_allocation.x    = allocation->x + container->border_width;
+
+      child_allocation.y      = allocation->y + container->border_width;
       child_allocation.width  = button_requisition.width;
       child_allocation.height = button_requisition.height;
 
@@ -304,10 +315,15 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
 
   if (dockable->menu_button)
     {
-      child_allocation.x      = (allocation->x +
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
+        child_allocation.x    = (allocation->x +
                                  allocation->width -
                                  container->border_width -
                                  2 * button_requisition.width);
+      else
+        child_allocation.x    = (allocation->x + container->border_width +
+                                 button_requisition.width);
+
       child_allocation.y      = allocation->y + container->border_width;
       child_allocation.width  = button_requisition.width;
       child_allocation.height = button_requisition.height;
@@ -337,13 +353,22 @@ static void
 gimp_dockable_style_set (GtkWidget *widget,
 			 GtkStyle  *prev_style)
 {
-  gint content_border;
+  GimpDockable *dockable;
+  gint          content_border;
 
   gtk_widget_style_get (widget,
                         "content_border", &content_border,
 			NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
+
+  dockable = GIMP_DOCKABLE (widget);
+
+  if (dockable->title_layout)
+    {
+      g_object_unref (dockable->title_layout);
+      dockable->title_layout = NULL;
+    }
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -365,21 +390,30 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
       title_area.x      = widget->allocation.x + container->border_width;
       title_area.y      = widget->allocation.y + container->border_width;
+
       title_area.width  = (widget->allocation.width -
                            2 * container->border_width -
                            2 * dockable->close_button->allocation.width);
       title_area.height = dockable->close_button->allocation.height;
 
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+        title_area.x   += 2 * dockable->close_button->allocation.width;
+
       if (gdk_rectangle_intersect (&title_area, &event->area, &expose_area))
         {
-          PangoLayout *layout;
-          gint         layout_width;
-          gint         layout_height;
-          gint         text_x;
-          gint         text_y;
+          gint layout_width;
+          gint layout_height;
+          gint text_x;
+          gint text_y;
 
-          layout = gtk_widget_create_pango_layout (widget, dockable->blurb);
-          pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
+          if (!dockable->title_layout)
+            {
+              dockable->title_layout =
+                gtk_widget_create_pango_layout (widget, dockable->blurb);
+            }
+
+          pango_layout_get_pixel_size (dockable->title_layout,
+                                       &layout_width, &layout_height);
 
           if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
             {
@@ -395,9 +429,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
           gtk_paint_layout (widget->style, widget->window,
                             widget->state, TRUE,
                             &expose_area, widget, NULL,
-                            text_x, text_y, layout);
-
-          g_object_unref (layout);
+                            text_x, text_y, dockable->title_layout);
         }
     }
 
@@ -658,20 +690,24 @@ gimp_dockable_menu_position (GtkMenu  *menu,
   gtk_widget_size_request (GIMP_DOCKABLE (dockable)->close_button,
                            &button_requisition);
 
-  *x += (dockable->allocation.x + dockable->allocation.width -
-         container->border_width -
-         2 * button_requisition.width -
-         menu_requisition.width);
+  if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_LTR)
+    *x += (dockable->allocation.x + dockable->allocation.width -
+           container->border_width - 2 * button_requisition.width -
+           menu_requisition.width);
+  else
+    *x += (dockable->allocation.x + container->border_width +
+           2 * button_requisition.width);
+
   *y += (dockable->allocation.y + container->border_width +
          button_requisition.height / 2);
 
   screen = gtk_widget_get_screen (GTK_WIDGET (menu));
 
   if (*x + menu_requisition.width > gdk_screen_get_width (screen))
-    *x -= menu_requisition.width;
+    *x -= menu_requisition.width + button_requisition.width;
 
   if (*x < 0)
-    *x = 0;
+    *x += menu_requisition.width + button_requisition.width;
 
   if (*y + menu_requisition.height > gdk_screen_get_height (screen))
     *y -= menu_requisition.height;

@@ -1,5 +1,14 @@
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: added the title pango layout to
+	the GimpDockable struct. Made gimp_dockable_menu_position() handle
+	RTL layout correctly.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_origin_menu_position): handle RTL layout.
+
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpchainbutton.c (gimp_chain_button_draw_lines): 
 	fixed rendering for RTL layout.
 
