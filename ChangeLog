@@ -1,3 +1,21 @@
+2003-12-14  DindinX  <david@dindinx.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c:
+	* plug-ins/gfig/gfig.c:
+	* plug-ins/gflare/gflare.c: Don't call gimp_plug_in_get_path(), since
+	it doesn't really help, call gimp_gimprc_query() instead and display
+	an error message in case of problem. Aka move the code from
+	gimpmiscui back to these plug-ins.
+
+	* libgimp/gimpmiscui.[ch]: removed these file.
+	* libgimp/Makefile.am: changed accordlingly.
+
+	* plug-ins/libgimpoldpreview/gimpoldpreview.c: removed
+	gimp_plug_in_get_path() from here also, since I forgot to do this in
+	my previous commits (ouch! bad DindinX!).
+
+  All this partly close #125141.
+
 2003-12-13  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/procedural_db.pdb: added a hack that allows to

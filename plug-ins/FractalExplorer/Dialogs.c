@@ -24,21 +24,21 @@
 #define RESPONSE_ABOUT 1
 
 
-static gdouble 		*gradient_samples = NULL;
-static gchar   		*gradient_name    = NULL;
+static gdouble          *gradient_samples = NULL;
+static gchar            *gradient_name    = NULL;
 static gboolean          ready_now = FALSE;
-static gchar 		*tpath = NULL;
+static gchar            *tpath = NULL;
 static DialogElements   *elements = NULL;
 static GtkWidget        *cmap_preview;
 static GtkWidget        *maindlg;
 
-static explorer_vals_t	zooms[100];
-static gint          	zoomindex = 1;
-static gint          	zoommax = 1;
+static explorer_vals_t  zooms[100];
+static gint             zoomindex = 1;
+static gint             zoommax = 1;
 
-static gint 		 oldxpos = -1;
-static gint 		 oldypos = -1;
-static GdkCursor	*MyCursor;
+static gint              oldxpos = -1;
+static gint              oldypos = -1;
+static GdkCursor        *MyCursor;
 static gdouble           x_press = -1.0;
 static gdouble           y_press = -1.0;
 
@@ -112,7 +112,7 @@ dialog_response (GtkWidget *widget,
 
 static void
 dialog_reset_callback (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   wvals.xmin = standardvals.xmin;
   wvals.xmax = standardvals.xmax;
@@ -129,7 +129,7 @@ dialog_reset_callback (GtkWidget *widget,
 
 static void
 dialog_redraw_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   gint alwaysprev = wvals.alwayspreview;
 
@@ -141,7 +141,7 @@ dialog_redraw_callback (GtkWidget *widget,
 
 static void
 dialog_undo_zoom_callback (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   if (zoomindex > 1)
     {
@@ -156,7 +156,7 @@ dialog_undo_zoom_callback (GtkWidget *widget,
 
 static void
 dialog_redo_zoom_callback (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   if (zoomindex < zoommax)
     {
@@ -170,7 +170,7 @@ dialog_redo_zoom_callback (GtkWidget *widget,
 
 static void
 dialog_step_in_callback (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   double xdifferenz;
   double ydifferenz;
@@ -196,7 +196,7 @@ dialog_step_in_callback (GtkWidget *widget,
 
 static void
 dialog_step_out_callback (GtkWidget *widget,
-			  gpointer   data)
+                          gpointer   data)
 {
   gdouble xdifferenz;
   gdouble ydifferenz;
@@ -222,7 +222,7 @@ dialog_step_out_callback (GtkWidget *widget,
 
 static void
 explorer_toggle_update (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
@@ -232,7 +232,7 @@ explorer_toggle_update (GtkWidget *widget,
 
 static void
 explorer_radio_update  (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -242,7 +242,7 @@ explorer_radio_update  (GtkWidget *widget,
 
 static void
 explorer_double_adjustment_update (GtkAdjustment *adjustment,
-				   gpointer       data)
+                                   gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
 
@@ -252,7 +252,7 @@ explorer_double_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 explorer_number_of_colors_callback (GtkAdjustment *adjustment,
-				    gpointer       data)
+                                    gpointer       data)
 {
   gint dummy;
 
@@ -275,10 +275,10 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 
 static void
 explorer_gradient_select_callback (const gchar   *name,
-				   gint           width,
-				   const gdouble *gradient_data,
-				   gboolean       dialog_closing,
-				   gpointer       data)
+                                   gint           width,
+                                   const gdouble *gradient_data,
+                                   gboolean       dialog_closing,
+                                   gpointer       data)
 {
   gint dummy;
 
@@ -291,7 +291,7 @@ explorer_gradient_select_callback (const gchar   *name,
                                     wvals.ncolors,
                                     wvals.gradinvert,
                                     &dummy,
-				    &gradient_samples);
+                                    &gradient_samples);
 
   if (wvals.colormode == 1)
     {
@@ -330,7 +330,7 @@ preview_draw_crosshair (gint px, gint py)
 static void
 preview_redraw (void)
 {
-  gint	   y;
+  gint     y;
   guchar  *p;
 
   p = wint.wimage;
@@ -338,7 +338,7 @@ preview_redraw (void)
   for (y = 0; y < preview_height; y++)
     {
       gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p,
-			    0, y, preview_width);
+                            0, y, preview_width);
       p += preview_width * 3;
     }
 
@@ -347,7 +347,7 @@ preview_redraw (void)
 
 static gboolean
 preview_button_press_event (GtkWidget      *widget,
-			    GdkEventButton *event)
+                            GdkEventButton *event)
 {
   if (event->button == 1)
     {
@@ -366,7 +366,7 @@ preview_button_press_event (GtkWidget      *widget,
 
 static gboolean
 preview_motion_notify_event (GtkWidget      *widget,
-			     GdkEventButton *event)
+                             GdkEventButton *event)
 {
   if (oldypos != -1)
     {
@@ -396,7 +396,7 @@ preview_motion_notify_event (GtkWidget      *widget,
 
 static gboolean
 preview_leave_notify_event (GtkWidget      *widget,
-			    GdkEventButton *event)
+                            GdkEventButton *event)
 {
   GdkDisplay *display;
 
@@ -418,7 +418,7 @@ preview_leave_notify_event (GtkWidget      *widget,
 
 static gboolean
 preview_enter_notify_event (GtkWidget      *widget,
-			    GdkEventButton *event)
+                            GdkEventButton *event)
 {
   GdkDisplay *display;
 
@@ -431,7 +431,7 @@ preview_enter_notify_event (GtkWidget      *widget,
 
 static gboolean
 preview_button_release_event (GtkWidget      *widget,
-			      GdkEventButton *event)
+                              GdkEventButton *event)
 {
   gdouble l_xmin;
   gdouble l_xmax;
@@ -446,32 +446,32 @@ preview_button_release_event (GtkWidget      *widget,
       y_release = event->y;
 
       if ((x_press >= 0.0) && (y_press >= 0.0) &&
-	  (x_release >= 0.0) && (y_release >= 0.0) &&
-	  (x_press < preview_width) && (y_press < preview_height) &&
-	  (x_release < preview_width) && (y_release < preview_height))
-	{
-	  l_xmin = (wvals.xmin +
-		    (wvals.xmax - wvals.xmin) * (x_press / preview_width));
-	  l_xmax = (wvals.xmin +
-		    (wvals.xmax - wvals.xmin) * (x_release / preview_width));
-	  l_ymin = (wvals.ymin +
-		    (wvals.ymax - wvals.ymin) * (y_press / preview_height));
-	  l_ymax = (wvals.ymin +
-		    (wvals.ymax - wvals.ymin) * (y_release / preview_height));
+          (x_release >= 0.0) && (y_release >= 0.0) &&
+          (x_press < preview_width) && (y_press < preview_height) &&
+          (x_release < preview_width) && (y_release < preview_height))
+        {
+          l_xmin = (wvals.xmin +
+                    (wvals.xmax - wvals.xmin) * (x_press / preview_width));
+          l_xmax = (wvals.xmin +
+                    (wvals.xmax - wvals.xmin) * (x_release / preview_width));
+          l_ymin = (wvals.ymin +
+                    (wvals.ymax - wvals.ymin) * (y_press / preview_height));
+          l_ymax = (wvals.ymin +
+                    (wvals.ymax - wvals.ymin) * (y_release / preview_height));
 
-	  zooms[zoomindex] = wvals;
-	  zoomindex++;
-	  if (zoomindex > 99)
-	    zoomindex = 99;
-	  zoommax = zoomindex;
-	  wvals.xmin = l_xmin;
-	  wvals.xmax = l_xmax;
-	  wvals.ymin = l_ymin;
-	  wvals.ymax = l_ymax;
-	  dialog_change_scale ();
-	  dialog_update_preview ();
-	  oldypos = oldxpos = -1;
-	}
+          zooms[zoomindex] = wvals;
+          zoomindex++;
+          if (zoomindex > 99)
+            zoomindex = 99;
+          zoommax = zoomindex;
+          wvals.xmin = l_xmin;
+          wvals.xmax = l_xmax;
+          wvals.ymin = l_ymin;
+          wvals.ymax = l_ymax;
+          dialog_change_scale ();
+          dialog_update_preview ();
+          oldypos = oldxpos = -1;
+        }
     }
 
   return TRUE;
@@ -508,8 +508,35 @@ explorer_dialog (void)
 
   gimp_ui_init ("fractalexplorer", TRUE);
 
-  fractalexplorer_path = gimp_plug_in_get_path ("fractalexplorer-path",
-                                                "fractalexplorer");
+  fractalexplorer_path = gimp_gimprc_query ("fractalexplorer-path");
+
+  if (! fractalexplorer_path)
+    {
+      gchar *gimprc = gimp_personal_rc_file ("gimprc");
+      gchar *full_path;
+      gchar *esc_path;
+
+      full_path =
+        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S,
+                     "fractalexplorer",
+                     G_SEARCHPATH_SEPARATOR_S,
+                     "${gimp_data_dir}", G_DIR_SEPARATOR_S,
+                     "fractalexplorer",
+                     NULL);
+      esc_path = g_strescape (full_path, NULL);
+      g_free (full_path);
+
+      g_message (_("No %s in gimprc:\n"
+                   "You need to add an entry like\n"
+                   "(%s \"%s\")\n"
+                   "to your %s file."),
+                 "fractalexplorer-path",
+                 "fractalexplorer-path", esc_path, gimprc);
+
+      g_free (gimprc);
+      g_free (esc_path);
+    }
+
 
   wint.wimage = g_new (guchar, preview_width * preview_height * 3);
   elements    = g_new (DialogElements, 1);
@@ -517,11 +544,11 @@ explorer_dialog (void)
   dialog = maindlg =
     gimp_dialog_new ("Fractal Explorer", "fractalexplorer",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/fractalexplorer.html",
+                     gimp_standard_help_func, "filters/fractalexplorer.html",
 
-		     _("About"),       RESPONSE_ABOUT,
-		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                     _("About"),       RESPONSE_ABOUT,
+                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                      NULL);
 
@@ -536,7 +563,7 @@ explorer_dialog (void)
   top_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_hbox,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (top_hbox);
 
   left_vbox = gtk_vbox_new (FALSE, 6);
@@ -571,7 +598,7 @@ explorer_dialog (void)
                     NULL);
   g_signal_connect (wint.preview, "button_release_event",
                     G_CALLBACK (preview_button_release_event),
-		    NULL);
+                    NULL);
   g_signal_connect (wint.preview, "motion_notify_event",
                     G_CALLBACK (preview_motion_notify_event),
                     NULL);
@@ -583,10 +610,10 @@ explorer_dialog (void)
                     NULL);
 
   gtk_widget_set_events (wint.preview, (GDK_BUTTON_PRESS_MASK |
-					GDK_BUTTON_RELEASE_MASK |
-					GDK_POINTER_MOTION_MASK |
-					GDK_LEAVE_NOTIFY_MASK |
-					GDK_ENTER_NOTIFY_MASK));
+                                        GDK_BUTTON_RELEASE_MASK |
+                                        GDK_POINTER_MOTION_MASK |
+                                        GDK_LEAVE_NOTIFY_MASK |
+                                        GDK_ENTER_NOTIFY_MASK));
   gtk_widget_show (wint.preview);
 
   toggle = gtk_check_button_new_with_label (_("Realtime Preview"));
@@ -597,7 +624,7 @@ explorer_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.alwayspreview);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("If you enable this option the preview "
-				     "will be redrawn automatically"), NULL);
+                                     "will be redrawn automatically"), NULL);
 
   button = gtk_button_new_with_label (_("Redraw"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -663,7 +690,7 @@ explorer_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new_with_mnemonic (_("_Parameters")));
+                            gtk_label_new_with_mnemonic (_("_Parameters")));
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (_("Fractal Parameters"));
@@ -680,80 +707,80 @@ explorer_dialog (void)
 
   elements->xmin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("XMIN:"), SCALE_WIDTH, 10,
-			  wvals.xmin, -3, 3, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the first (minimal) x-coordinate "
-			    "delimitation"), NULL);
+                          _("XMIN:"), SCALE_WIDTH, 10,
+                          wvals.xmin, -3, 3, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the first (minimal) x-coordinate "
+                            "delimitation"), NULL);
   g_signal_connect (elements->xmin, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
   elements->xmax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("XMAX:"), SCALE_WIDTH, 10,
-			  wvals.xmax, -3, 3, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the second (maximal) x-coordinate "
-			    "delimitation"), NULL);
+                          _("XMAX:"), SCALE_WIDTH, 10,
+                          wvals.xmax, -3, 3, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the second (maximal) x-coordinate "
+                            "delimitation"), NULL);
   g_signal_connect (elements->xmax, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
   elements->ymin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("YMIN:"), SCALE_WIDTH, 10,
-			  wvals.ymin, -3, 3, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the first (minimal) y-coordinate "
-			    "delimitation"), NULL);
+                          _("YMIN:"), SCALE_WIDTH, 10,
+                          wvals.ymin, -3, 3, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the first (minimal) y-coordinate "
+                            "delimitation"), NULL);
   g_signal_connect (elements->ymin, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
   elements->ymax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			  _("YMAX:"), SCALE_WIDTH, 10,
-			  wvals.ymax, -3, 3, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the second (maximal) y-coordinate "
-			    "delimitation"), NULL);
+                          _("YMAX:"), SCALE_WIDTH, 10,
+                          wvals.ymax, -3, 3, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the second (maximal) y-coordinate "
+                            "delimitation"), NULL);
   g_signal_connect (elements->ymax, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
   elements->iter =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			  _("ITER:"), SCALE_WIDTH, 10,
-			  wvals.iter, 0, 1000, 1, 10, 5,
-			  TRUE, 0, 0,
-			  _("Change the iteration value. The higher it "
-			    "is, the more details will be calculated, "
-			    "which will take more time"), NULL);
+                          _("ITER:"), SCALE_WIDTH, 10,
+                          wvals.iter, 0, 1000, 1, 10, 5,
+                          TRUE, 0, 0,
+                          _("Change the iteration value. The higher it "
+                            "is, the more details will be calculated, "
+                            "which will take more time"), NULL);
   g_signal_connect (elements->iter, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
 
   elements->cx =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			  _("CX:"), SCALE_WIDTH, 10,
-			  wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the CX value (changes aspect of "
-			    "fractal, active with every fractal but "
-			    "Mandelbrot and Sierpinski)"), NULL);
+                          _("CX:"), SCALE_WIDTH, 10,
+                          wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the CX value (changes aspect of "
+                            "fractal, active with every fractal but "
+                            "Mandelbrot and Sierpinski)"), NULL);
   g_signal_connect (elements->cx, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
 
   elements->cy =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-			  _("CY:"), SCALE_WIDTH, 10,
-			  wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
-			  TRUE, 0, 0,
-			  _("Change the CY value (changes aspect of "
-			    "fractal, active with every fractal but "
-			    "Mandelbrot and Sierpinski)"), NULL);
+                          _("CY:"), SCALE_WIDTH, 10,
+                          wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
+                          TRUE, 0, 0,
+                          _("Change the CY value (changes aspect of "
+                            "fractal, active with every fractal but "
+                            "Mandelbrot and Sierpinski)"), NULL);
   g_signal_connect (elements->cy, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
@@ -777,7 +804,7 @@ explorer_dialog (void)
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Reset parameters to default values"),
-			   NULL);
+                           NULL);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
@@ -797,29 +824,29 @@ explorer_dialog (void)
 
   toggle_vbox =
     gimp_int_radio_group_new (FALSE, NULL,
-			      G_CALLBACK (explorer_radio_update),
-			      &wvals.fractaltype, wvals.fractaltype,
+                              G_CALLBACK (explorer_radio_update),
+                              &wvals.fractaltype, wvals.fractaltype,
 
-			      _("Mandelbrot"), TYPE_MANDELBROT,
-			      &(elements->type[TYPE_MANDELBROT]),
-			      _("Julia"),      TYPE_JULIA,
-			      &(elements->type[TYPE_JULIA]),
-			      _("Barnsley 1"), TYPE_BARNSLEY_1,
-			      &(elements->type[TYPE_BARNSLEY_1]),
-			      _("Barnsley 2"), TYPE_BARNSLEY_2,
-			      &(elements->type[TYPE_BARNSLEY_2]),
-			      _("Barnsley 3"), TYPE_BARNSLEY_3,
-			      &(elements->type[TYPE_BARNSLEY_3]),
-			      _("Spider"),     TYPE_SPIDER,
-			      &(elements->type[TYPE_SPIDER]),
-			      _("Man'o'war"),  TYPE_MAN_O_WAR,
-			      &(elements->type[TYPE_MAN_O_WAR]),
-			      _("Lambda"),     TYPE_LAMBDA,
-			      &(elements->type[TYPE_LAMBDA]),
-			      _("Sierpinski"), TYPE_SIERPINSKI,
-			      &(elements->type[TYPE_SIERPINSKI]),
+                              _("Mandelbrot"), TYPE_MANDELBROT,
+                              &(elements->type[TYPE_MANDELBROT]),
+                              _("Julia"),      TYPE_JULIA,
+                              &(elements->type[TYPE_JULIA]),
+                              _("Barnsley 1"), TYPE_BARNSLEY_1,
+                              &(elements->type[TYPE_BARNSLEY_1]),
+                              _("Barnsley 2"), TYPE_BARNSLEY_2,
+                              &(elements->type[TYPE_BARNSLEY_2]),
+                              _("Barnsley 3"), TYPE_BARNSLEY_3,
+                              &(elements->type[TYPE_BARNSLEY_3]),
+                              _("Spider"),     TYPE_SPIDER,
+                              &(elements->type[TYPE_SPIDER]),
+                              _("Man'o'war"),  TYPE_MAN_O_WAR,
+                              &(elements->type[TYPE_MAN_O_WAR]),
+                              _("Lambda"),     TYPE_LAMBDA,
+                              &(elements->type[TYPE_LAMBDA]),
+                              _("Sierpinski"), TYPE_SIERPINSKI,
+                              &(elements->type[TYPE_SIERPINSKI]),
 
-			      NULL);
+                              NULL);
 
   toggle_vbox2 = gtk_vbox_new (FALSE, 1);
   for (i = TYPE_BARNSLEY_2; i <= TYPE_SPIDER; i++)
@@ -829,7 +856,7 @@ explorer_dialog (void)
       gtk_widget_hide (elements->type[i]);
       gtk_container_remove (GTK_CONTAINER (toggle_vbox), elements->type[i]);
       gtk_box_pack_start (GTK_BOX (toggle_vbox2), elements->type[i],
-			  FALSE, FALSE, 0);
+                          FALSE, FALSE, 0);
       gtk_widget_show (elements->type[i]);
 
       g_object_unref (elements->type[i]);
@@ -843,7 +870,7 @@ explorer_dialog (void)
       gtk_widget_hide (elements->type[i]);
       gtk_container_remove (GTK_CONTAINER (toggle_vbox), elements->type[i]);
       gtk_box_pack_start (GTK_BOX (toggle_vbox3), elements->type[i],
-			  FALSE, FALSE, 0);
+                          FALSE, FALSE, 0);
       gtk_widget_show (elements->type[i]);
 
       g_object_unref (elements->type[i]);
@@ -866,7 +893,7 @@ explorer_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new_with_mnemonic (_("Co_lors")));
+                            gtk_label_new_with_mnemonic (_("Co_lors")));
   gtk_widget_show (vbox);
 
   /*  Number of Colors frame  */
@@ -883,11 +910,11 @@ explorer_dialog (void)
 
   elements->ncol =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Number of colors:"), SCALE_WIDTH, 0,
-			  wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
-			  TRUE, 0, 0,
-			  _("Change the number of colors in the mapping"),
-			  NULL);
+                          _("Number of colors:"), SCALE_WIDTH, 0,
+                          wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
+                          TRUE, 0, 0,
+                          _("Change the number of colors in the mapping"),
+                          NULL);
   g_signal_connect (elements->ncol, "value_changed",
                     G_CALLBACK (explorer_number_of_colors_callback),
                     &wvals.ncolors);
@@ -901,7 +928,7 @@ explorer_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.useloglog);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use log log smoothing to eliminate "
-				     "\"banding\" in the result"), NULL);
+                                     "\"banding\" in the result"), NULL);
 
   /*  Color Density frame  */
   frame = gtk_frame_new (_("Color Density"));
@@ -917,30 +944,30 @@ explorer_dialog (void)
 
   elements->red =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Red:"), SCALE_WIDTH, 0,
-			  wvals.redstretch, 0, 1, 0.01, 0.1, 2,
-			  TRUE, 0, 0,
-			  _("Change the intensity of the red channel"), NULL);
+                          _("Red:"), SCALE_WIDTH, 0,
+                          wvals.redstretch, 0, 1, 0.01, 0.1, 2,
+                          TRUE, 0, 0,
+                          _("Change the intensity of the red channel"), NULL);
   g_signal_connect (elements->red, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.redstretch);
 
   elements->green =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("Green:"), SCALE_WIDTH, 0,
-			  wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
-			  TRUE, 0, 0,
-			  _("Change the intensity of the green channel"), NULL);
+                          _("Green:"), SCALE_WIDTH, 0,
+                          wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
+                          TRUE, 0, 0,
+                          _("Change the intensity of the green channel"), NULL);
   g_signal_connect (elements->green, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.greenstretch);
 
   elements->blue =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("Blue:"), SCALE_WIDTH, 0,
-			  wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
-			  TRUE, 0, 0,
-			  _("Change the intensity of the blue channel"), NULL);
+                          _("Blue:"), SCALE_WIDTH, 0,
+                          wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
+                          TRUE, 0, 0,
+                          _("Change the intensity of the blue channel"), NULL);
   g_signal_connect (elements->blue, "value_changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.bluestretch);
@@ -957,27 +984,27 @@ explorer_dialog (void)
 
   /*  Redmode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Red"),
-				    G_CALLBACK (explorer_radio_update),
-				    &wvals.redmode, wvals.redmode,
+                                    G_CALLBACK (explorer_radio_update),
+                                    &wvals.redmode, wvals.redmode,
 
-				    _("Sine"),         SINUS,
-				    &elements->redmode[SINUS],
-				    _("Cosine"),       COSINUS,
-				    &elements->redmode[COSINUS],
-				    _("None"),         NONE,
-				    &elements->redmode[NONE],
+                                    _("Sine"),         SINUS,
+                                    &elements->redmode[SINUS],
+                                    _("Cosine"),       COSINUS,
+                                    &elements->redmode[COSINUS],
+                                    _("None"),         NONE,
+                                    &elements->redmode[NONE],
 
-				    NULL);
+                                    NULL);
   gimp_help_set_help_data (elements->redmode[SINUS],
-			   _("Use sine-function for this color component"),
-			   NULL);
+                           _("Use sine-function for this color component"),
+                           NULL);
   gimp_help_set_help_data (elements->redmode[COSINUS],
-			   _("Use cosine-function for this color "
-			     "component"), NULL);
+                           _("Use cosine-function for this color "
+                             "component"), NULL);
   gimp_help_set_help_data (elements->redmode[NONE],
-			   _("Use linear mapping instead of any "
-			     "trigonometrical function for this color "
-			     "channel"), NULL);
+                           _("Use linear mapping instead of any "
+                             "trigonometrical function for this color "
+                             "channel"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -992,33 +1019,33 @@ explorer_dialog (void)
                     &wvals.redinvert);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
-			   _("If you enable this option higher color values "
-			     "will be swapped with lower ones and vice "
-			     "versa"), NULL);
+                           _("If you enable this option higher color values "
+                             "will be swapped with lower ones and vice "
+                             "versa"), NULL);
 
   /*  Greenmode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Green"),
-				    G_CALLBACK (explorer_radio_update),
-				    &wvals.greenmode, wvals.greenmode,
+                                    G_CALLBACK (explorer_radio_update),
+                                    &wvals.greenmode, wvals.greenmode,
 
-				    _("Sine"),           SINUS,
-				    &elements->greenmode[SINUS],
-				    _("Cosine"),         COSINUS,
-				    &elements->greenmode[COSINUS],
-				    _("None"),           NONE,
-				    &elements->greenmode[NONE],
+                                    _("Sine"),           SINUS,
+                                    &elements->greenmode[SINUS],
+                                    _("Cosine"),         COSINUS,
+                                    &elements->greenmode[COSINUS],
+                                    _("None"),           NONE,
+                                    &elements->greenmode[NONE],
 
-				    NULL);
+                                    NULL);
   gimp_help_set_help_data (elements->greenmode[SINUS],
-			   _("Use sine-function for this color component"),
-			   NULL);
+                           _("Use sine-function for this color component"),
+                           NULL);
   gimp_help_set_help_data (elements->greenmode[COSINUS],
-			   _("Use cosine-function for this color "
-			     "component"), NULL);
+                           _("Use cosine-function for this color "
+                             "component"), NULL);
   gimp_help_set_help_data (elements->greenmode[NONE],
-			   _("Use linear mapping instead of any "
-			     "trigonometrical function for this color "
-			     "channel"), NULL);
+                           _("Use linear mapping instead of any "
+                             "trigonometrical function for this color "
+                             "channel"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1033,33 +1060,33 @@ explorer_dialog (void)
                     &wvals.greeninvert);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
-			   _("If you enable this option higher color values "
-			     "will be swapped with lower ones and vice "
-			     "versa"), NULL);
+                           _("If you enable this option higher color values "
+                             "will be swapped with lower ones and vice "
+                             "versa"), NULL);
 
   /*  Bluemode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Blue"),
-				    G_CALLBACK (explorer_radio_update),
-				    &wvals.bluemode, wvals.bluemode,
+                                    G_CALLBACK (explorer_radio_update),
+                                    &wvals.bluemode, wvals.bluemode,
 
-				    _("Sine"),          SINUS,
-				    &elements->bluemode[SINUS],
-				    _("Cosine"),        COSINUS,
-				    &elements->bluemode[COSINUS],
-				    _("None"),          NONE,
-				    &elements->bluemode[NONE],
+                                    _("Sine"),          SINUS,
+                                    &elements->bluemode[SINUS],
+                                    _("Cosine"),        COSINUS,
+                                    &elements->bluemode[COSINUS],
+                                    _("None"),          NONE,
+                                    &elements->bluemode[NONE],
 
-				    NULL);
+                                    NULL);
   gimp_help_set_help_data (elements->bluemode[SINUS],
-			   _("Use sine-function for this color component"),
-			   NULL);
+                           _("Use sine-function for this color component"),
+                           NULL);
   gimp_help_set_help_data (elements->bluemode[COSINUS],
-			   _("Use cosine-function for this color "
-			     "component"), NULL);
+                           _("Use cosine-function for this color "
+                             "component"), NULL);
   gimp_help_set_help_data (elements->bluemode[NONE],
-			   _("Use linear mapping instead of any "
-			     "trigonometrical function for this color "
-			     "channel"), NULL);
+                           _("Use linear mapping instead of any "
+                             "trigonometrical function for this color "
+                             "channel"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1074,9 +1101,9 @@ explorer_dialog (void)
                     &wvals.blueinvert);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
-			   _("If you enable this option higher color values "
-			     "will be swapped with lower ones and vice "
-			     "versa"), NULL);
+                           _("If you enable this option higher color values "
+                             "will be swapped with lower ones and vice "
+                             "versa"), NULL);
 
   /*  Colormode toggle box  */
   frame = gtk_frame_new (_("Color Mode"));
@@ -1098,12 +1125,12 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_radio_update),
                     &wvals.colormode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				wvals.colormode == 0);
+                                wvals.colormode == 0);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
-			   _("Create a color-map with the options you "
-			     "specified above (color density/function). The "
-			     "result is visible in the preview image"), NULL);
+                           _("Create a color-map with the options you "
+                             "specified above (color density/function). The "
+                             "result is visible in the preview image"), NULL);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
@@ -1111,7 +1138,7 @@ explorer_dialog (void)
 
   toggle = elements->colormode[1] =
     gtk_radio_button_new_with_label (group,
-				     _("Apply active gradient to final image"));
+                                     _("Apply active gradient to final image"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -1120,11 +1147,11 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_radio_update),
                     &wvals.colormode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				wvals.colormode == 1);
+                                wvals.colormode == 1);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
-			   _("Create a color-map using a gradient from "
-			     "the gradient editor"), NULL);
+                           _("Create a color-map using a gradient from "
+                             "the gradient editor"), NULL);
 
   gradient_name = gimp_gradients_get_gradient ();
   gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors,
@@ -1161,7 +1188,7 @@ explorer_dialog (void)
 
   frame = add_objects_list ();
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-			    gtk_label_new_with_mnemonic (_("_Fractals")));
+                            gtk_label_new_with_mnemonic (_("_Fractals")));
   gtk_widget_show (frame);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
@@ -1251,156 +1278,156 @@ dialog_update_preview (void)
       iteration = (int) wvals.iter;
       useloglog = wvals.useloglog;
       for (ycoord = 0; ycoord < preview_height; ycoord++)
-	{
-	  px = 0;
+        {
+          px = 0;
 
-	  for (xcoord = 0; xcoord < preview_width; xcoord++)
-	    {
-	      a = (double) xmin + (double) xcoord *xdiff;
-	      b = (double) ymin + (double) ycoord *ydiff;
+          for (xcoord = 0; xcoord < preview_width; xcoord++)
+            {
+              a = (double) xmin + (double) xcoord *xdiff;
+              b = (double) ymin + (double) ycoord *ydiff;
 
-	      if (wvals.fractaltype != TYPE_MANDELBROT)
-		{
-		  tmpx = x = a;
-		  tmpy = y = b;
-		}
-	      else
-		{
-		  x = 0;
-		  y = 0;
-		}
-	      for (zaehler = 0;
-		   (zaehler < iteration) && ((x * x + y * y) < 4);
-		   zaehler++)
-		{
-		  oldx = x;
-		  oldy = y;
+              if (wvals.fractaltype != TYPE_MANDELBROT)
+                {
+                  tmpx = x = a;
+                  tmpy = y = b;
+                }
+              else
+                {
+                  x = 0;
+                  y = 0;
+                }
+              for (zaehler = 0;
+                   (zaehler < iteration) && ((x * x + y * y) < 4);
+                   zaehler++)
+                {
+                  oldx = x;
+                  oldy = y;
 
-		  switch (wvals.fractaltype)
-		    {
-		    case TYPE_MANDELBROT:
-		      xx = x * x - y * y + a;
-		      y = 2.0 * x * y + b;
-		      break;
+                  switch (wvals.fractaltype)
+                    {
+                    case TYPE_MANDELBROT:
+                      xx = x * x - y * y + a;
+                      y = 2.0 * x * y + b;
+                      break;
 
-		    case TYPE_JULIA:
-		      xx = x * x - y * y + cx;
-		      y = 2.0 * x * y + cy;
-		      break;
+                    case TYPE_JULIA:
+                      xx = x * x - y * y + cx;
+                      y = 2.0 * x * y + cy;
+                      break;
 
-		    case TYPE_BARNSLEY_1:
-		      foldxinitx = oldx * cx;
-		      foldyinity = oldy * cy;
-		      foldxinity = oldx * cy;
-		      foldyinitx = oldy * cx;
-		      /* orbit calculation */
-		      if (oldx >= 0)
-			{
-		          xx = (foldxinitx - cx - foldyinity);
-                          y  = (foldyinitx - cy + foldxinity);
-			}
-		      else
-			{
-		          xx = (foldxinitx + cx - foldyinity);
-		          y  = (foldyinitx + cy + foldxinity);
-			}
-		      break;
-
-		    case TYPE_BARNSLEY_2:
-		      foldxinitx = oldx * cx;
-		      foldyinity = oldy * cy;
-		      foldxinity = oldx * cy;
-		      foldyinitx = oldy * cx;
-		      /* orbit calculation */
-		      if (foldxinity + foldyinitx >= 0)
+                    case TYPE_BARNSLEY_1:
+                      foldxinitx = oldx * cx;
+                      foldyinity = oldy * cy;
+                      foldxinity = oldx * cy;
+                      foldyinitx = oldy * cx;
+                      /* orbit calculation */
+                      if (oldx >= 0)
                         {
-			  xx = foldxinitx - cx - foldyinity;
-			  y  = foldyinitx - cy + foldxinity;
+                          xx = (foldxinitx - cx - foldyinity);
+                          y  = (foldyinitx - cy + foldxinity);
                         }
-		      else
-		        {
-			  xx = foldxinitx + cx - foldyinity;
-			  y  = foldyinitx + cy + foldxinity;
+                      else
+                        {
+                          xx = (foldxinitx + cx - foldyinity);
+                          y  = (foldyinitx + cy + foldxinity);
                         }
-		      break;
+                      break;
 
-		    case TYPE_BARNSLEY_3:
-		      foldxinitx  = oldx * oldx;
-		      foldyinity  = oldy * oldy;
-		      foldxinity  = oldx * oldy;
-		      /* orbit calculation */
-		      if(oldx > 0)
-			{
-			  xx = foldxinitx - foldyinity - 1.0;
-			  y  = foldxinity * 2;
-			}
-		      else
-			{
-			  xx = foldxinitx - foldyinity -1.0 + cx * oldx;
-			  y  = foldxinity * 2;
-			  y += cy * oldx;
-			}
-		      break;
+                    case TYPE_BARNSLEY_2:
+                      foldxinitx = oldx * cx;
+                      foldyinity = oldy * cy;
+                      foldxinity = oldx * cy;
+                      foldyinitx = oldy * cx;
+                      /* orbit calculation */
+                      if (foldxinity + foldyinitx >= 0)
+                        {
+                          xx = foldxinitx - cx - foldyinity;
+                          y  = foldyinitx - cy + foldxinity;
+                        }
+                      else
+                        {
+                          xx = foldxinitx + cx - foldyinity;
+                          y  = foldyinitx + cy + foldxinity;
+                        }
+                      break;
 
-		    case TYPE_SPIDER:
-		      /* { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
-		      xx = x*x - y*y + tmpx + cx;
-		      y = 2 * oldx * oldy + tmpy +cy;
-		      tmpx = tmpx/2 + xx;
-		      tmpy = tmpy/2 + y;
-		      break;
+                    case TYPE_BARNSLEY_3:
+                      foldxinitx  = oldx * oldx;
+                      foldyinity  = oldy * oldy;
+                      foldxinity  = oldx * oldy;
+                      /* orbit calculation */
+                      if(oldx > 0)
+                        {
+                          xx = foldxinitx - foldyinity - 1.0;
+                          y  = foldxinity * 2;
+                        }
+                      else
+                        {
+                          xx = foldxinitx - foldyinity -1.0 + cx * oldx;
+                          y  = foldxinity * 2;
+                          y += cy * oldx;
+                        }
+                      break;
 
-		    case TYPE_MAN_O_WAR:
-		      xx = x*x - y*y + tmpx + cx;
-		      y = 2.0 * x * y + tmpy + cy;
-		      tmpx = oldx;
-		      tmpy = oldy;
-		      break;
+                    case TYPE_SPIDER:
+                      /* { c=z=pixel: z=z*z+c; c=c/2+z, |z|<=4 } */
+                      xx = x*x - y*y + tmpx + cx;
+                      y = 2 * oldx * oldy + tmpy +cy;
+                      tmpx = tmpx/2 + xx;
+                      tmpy = tmpy/2 + y;
+                      break;
 
-		    case TYPE_LAMBDA:
-		      tempsqrx = x * x;
-		      tempsqry = y * y;
-		      tempsqrx = oldx - tempsqrx + tempsqry;
-		      tempsqry = -(oldy * oldx);
-		      tempsqry += tempsqry + oldy;
-		      xx = cx * tempsqrx - cy * tempsqry;
-		      y = cx * tempsqry + cy * tempsqrx;
-		      break;
+                    case TYPE_MAN_O_WAR:
+                      xx = x*x - y*y + tmpx + cx;
+                      y = 2.0 * x * y + tmpy + cy;
+                      tmpx = oldx;
+                      tmpy = oldy;
+                      break;
 
-		    case TYPE_SIERPINSKI:
-		      xx = oldx + oldx;
-		      y = oldy + oldy;
-		      if (oldy > .5)
-			y = y - 1;
-		      else if (oldx > .5)
-			xx = xx - 1;
-		      break;
+                    case TYPE_LAMBDA:
+                      tempsqrx = x * x;
+                      tempsqry = y * y;
+                      tempsqrx = oldx - tempsqrx + tempsqry;
+                      tempsqry = -(oldy * oldx);
+                      tempsqry += tempsqry + oldy;
+                      xx = cx * tempsqrx - cy * tempsqry;
+                      y = cx * tempsqry + cy * tempsqrx;
+                      break;
 
-		    default:
-		      break;
-		    }
+                    case TYPE_SIERPINSKI:
+                      xx = oldx + oldx;
+                      y = oldy + oldy;
+                      if (oldy > .5)
+                        y = y - 1;
+                      else if (oldx > .5)
+                        xx = xx - 1;
+                      break;
 
-		  x = xx;
-		}
+                    default:
+                      break;
+                    }
 
-	      if (useloglog)
-		{
-		  adjust = log (log (x * x + y * y) / 2) / log (2);
-		}
-	      else
-		{
-		  adjust = 0.0;
-		}
-	      color = (int) (((zaehler - adjust) *
-			      (wvals.ncolors - 1)) / iteration);
-	      p_ul[0] = colormap[color][0];
-	      p_ul[1] = colormap[color][1];
-	      p_ul[2] = colormap[color][2];
-	      p_ul += 3;
-	      px += 1;
-	    } /* for */
-	  py += 1;
-	} /* for */
+                  x = xx;
+                }
+
+              if (useloglog)
+                {
+                  adjust = log (log (x * x + y * y) / 2) / log (2);
+                }
+              else
+                {
+                  adjust = 0.0;
+                }
+              color = (int) (((zaehler - adjust) *
+                              (wvals.ncolors - 1)) / iteration);
+              p_ul[0] = colormap[color][0];
+              p_ul[1] = colormap[color][1];
+              p_ul[2] = colormap[color][2];
+              p_ul += 3;
+              px += 1;
+            } /* for */
+          py += 1;
+        } /* for */
 
       preview_redraw ();
       gdk_flush ();
@@ -1438,19 +1465,19 @@ set_cmap_preview (void)
   for (y = 0; y < ysize*4; y += 4)
     {
       for (x = 0; x < xsize; x++)
-	{
-	  i = x + (y / 4) * xsize;
-	  if (i > wvals.ncolors)
-	    {
-	      for (j = 0; j < 3; j++)
-		b[x * 3 + j] = 0;
-	    }
-	  else
-	    {
-	      for (j = 0; j < 3; j++)
-		b[x * 3 + j] = colormap[i][j];
-	    }
-	}
+        {
+          i = x + (y / 4) * xsize;
+          if (i > wvals.ncolors)
+            {
+              for (j = 0; j < 3; j++)
+                b[x * 3 + j] = 0;
+            }
+          else
+            {
+              for (j = 0; j < 3; j++)
+                b[x * 3 + j] = colormap[i][j];
+            }
+        }
 
       gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y, xsize);
       gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y + 1, xsize);
@@ -1461,7 +1488,7 @@ set_cmap_preview (void)
   for (x = 0; x < GR_WIDTH; x++)
     {
       for (j = 0; j < 3; j++)
-	c[x * 3 + j] = colormap[(int)((float)x/(float)GR_WIDTH*256.0)][j];
+        c[x * 3 + j] = colormap[(int)((float)x/(float)GR_WIDTH*256.0)][j];
     }
 
   gtk_widget_queue_draw (cmap_preview);
@@ -1500,75 +1527,75 @@ make_color_map (void)
   for (i = 0; i < wvals.ncolors; i++)
     if (wvals.colormode == 1)
       {
-	for (j = 0; j < 3; j++)
-	  colormap[i][j] = (int) (gradient_samples[i * 4 + j] * 255.0);
+        for (j = 0; j < 3; j++)
+          colormap[i][j] = (int) (gradient_samples[i * 4 + j] * 255.0);
       }
     else
       {
-	double x = (i*2.0) / wvals.ncolors;
-	r = gr = bl = 0;
+        double x = (i*2.0) / wvals.ncolors;
+        r = gr = bl = 0;
 
-	switch (wvals.redmode)
-	  {
-	  case SINUS:
-	    r = (int) redstretch *(1.0 + sin((x - 1) * pi));
-	    break;
-	  case COSINUS:
-	    r = (int) redstretch *(1.0 + cos((x - 1) * pi));
-	    break;
-	  case NONE:
-	    r = (int)(redstretch *(x));
-	    break;
-	  default:
-	    break;
-	  }
+        switch (wvals.redmode)
+          {
+          case SINUS:
+            r = (int) redstretch *(1.0 + sin((x - 1) * pi));
+            break;
+          case COSINUS:
+            r = (int) redstretch *(1.0 + cos((x - 1) * pi));
+            break;
+          case NONE:
+            r = (int)(redstretch *(x));
+            break;
+          default:
+            break;
+          }
 
-	switch (wvals.greenmode)
-	  {
-	  case SINUS:
-	    gr = (int) greenstretch *(1.0 + sin((x - 1) * pi));
-	    break;
-	  case COSINUS:
-	    gr = (int) greenstretch *(1.0 + cos((x - 1) * pi));
-	    break;
-	  case NONE:
-	    gr = (int)(greenstretch *(x));
-	    break;
-	  default:
-	    break;
-	  }
+        switch (wvals.greenmode)
+          {
+          case SINUS:
+            gr = (int) greenstretch *(1.0 + sin((x - 1) * pi));
+            break;
+          case COSINUS:
+            gr = (int) greenstretch *(1.0 + cos((x - 1) * pi));
+            break;
+          case NONE:
+            gr = (int)(greenstretch *(x));
+            break;
+          default:
+            break;
+          }
 
-	switch (wvals.bluemode)
-	  {
-	  case SINUS:
-	    bl = (int) bluestretch * (1.0 + sin ((x - 1) * pi));
-	    break;
-	  case COSINUS:
-	    bl = (int) bluestretch * (1.0 + cos ((x - 1) * pi));
-	    break;
-	  case NONE:
-	    bl = (int) (bluestretch * x);
-	    break;
-	  default:
-	    break;
-	  }
+        switch (wvals.bluemode)
+          {
+          case SINUS:
+            bl = (int) bluestretch * (1.0 + sin ((x - 1) * pi));
+            break;
+          case COSINUS:
+            bl = (int) bluestretch * (1.0 + cos ((x - 1) * pi));
+            break;
+          case NONE:
+            bl = (int) (bluestretch * x);
+            break;
+          default:
+            break;
+          }
 
-	r  = MIN (r,  255);
-	gr = MIN (gr, 255);
-	bl = MIN (bl, 255);
+        r  = MIN (r,  255);
+        gr = MIN (gr, 255);
+        bl = MIN (bl, 255);
 
-	if (wvals.redinvert)
-	  r = 255 - r;
+        if (wvals.redinvert)
+          r = 255 - r;
 
-	if (wvals.greeninvert)
-	  gr = 255 - gr;
+        if (wvals.greeninvert)
+          gr = 255 - gr;
 
-	if (wvals.blueinvert)
-	  bl = 255 - bl;
+        if (wvals.blueinvert)
+          bl = 255 - bl;
 
-	colormap[i][0] = r;
-	colormap[i][1] = gr;
-	colormap[i][2] = bl;
+        colormap[i][0] = r;
+        colormap[i][1] = gr;
+        colormap[i][2] = bl;
       }
 }
 
@@ -1605,11 +1632,11 @@ explorer_logo_dialog (GtkWidget *parent)
   xdlg = logodlg =
     gimp_dialog_new (_("About"), "fractalexplorer",
                      parent, 0,
-		     gimp_standard_help_func, "filters/fractalexplorer.html",
+                     gimp_standard_help_func, "filters/fractalexplorer.html",
 
-		     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-		     NULL);
+                     NULL);
 
 
 
@@ -1648,14 +1675,14 @@ explorer_logo_dialog (GtkWidget *parent)
     {
       temp2 = temp;
       for (x = 0; x < logo_width; x++)
-	{
-	  HEADER_PIXEL(datapointer, temp2);
-	  temp2 += 3;
-	}
+        {
+          HEADER_PIXEL(datapointer, temp2);
+          temp2 += 3;
+        }
 
       gtk_preview_draw_row (GTK_PREVIEW (xpreview),
-			    temp,
-			    0, y, logo_width);
+                            temp,
+                            0, y, logo_width);
     }
 
   g_free (temp);
@@ -1677,10 +1704,10 @@ explorer_logo_dialog (GtkWidget *parent)
   gtk_widget_show (xframe3);
 
   xlabel = gtk_label_new ("\nCotting Software Productions\n"
-			  "Quellenstrasse 10\n"
-			  "CH-8005 Zuerich (Switzerland)\n\n"
-			  "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
-			  "Version 2.00 (Multilingual)\n");
+                          "Quellenstrasse 10\n"
+                          "CH-8005 Zuerich (Switzerland)\n\n"
+                          "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
+                          "Version 2.00 (Multilingual)\n");
   gtk_container_add (GTK_CONTAINER (xframe3),  xlabel);
   gtk_widget_show (xlabel);
 
@@ -1689,11 +1716,11 @@ explorer_logo_dialog (GtkWidget *parent)
   gtk_widget_show (xframe3);
 
   xlabel = gtk_label_new ("\nContains code from:\n\n"
-			  "Daniel Cotting\n<cotting@mygale.org>\n"
-			  "Peter Kirchgessner\n<Pkirchg@aol.com>\n"
-			  "Scott Draves\n<spot@cs.cmu.edu>\n"
-			  "Andy Thomas\n<alt@picnic.demon.co.uk>\n"
-			  "and the GIMP distribution.\n");
+                          "Daniel Cotting\n<cotting@mygale.org>\n"
+                          "Peter Kirchgessner\n<Pkirchg@aol.com>\n"
+                          "Scott Draves\n<spot@cs.cmu.edu>\n"
+                          "Andy Thomas\n<alt@picnic.demon.co.uk>\n"
+                          "and the GIMP distribution.\n");
   gtk_container_add (GTK_CONTAINER (xframe3),  xlabel);
   gtk_widget_show (xlabel);
 
@@ -1736,11 +1763,11 @@ dialog_change_scale (void)
     (GTK_TOGGLE_BUTTON (elements->bluemode[wvals.bluemode]), TRUE);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (elements->redinvert),
-				wvals.redinvert);
+                                wvals.redinvert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (elements->greeninvert),
-				wvals.greeninvert);
+                                wvals.greeninvert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (elements->blueinvert),
-				wvals.blueinvert);
+                                wvals.blueinvert);
 
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (elements->colormode[wvals.colormode]), TRUE);
@@ -1927,7 +1954,7 @@ create_file_selection (GtkWidget *widget,
       dir = gimp_path_get_user_writable_dir (path_list);
 
       if (!dir)
-	dir = g_strdup (gimp_directory ());
+        dir = g_strdup (gimp_directory ());
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
 
@@ -1944,9 +1971,9 @@ create_file_selection (GtkWidget *widget,
 
 gchar*
 get_line (gchar *buf,
-	  gint   s,
-	  FILE  *from,
-	  gint   init)
+          gint   s,
+          FILE  *from,
+          gint   init)
 {
   gint   slen;
   gchar *ret;
@@ -1979,7 +2006,7 @@ get_line (gchar *buf,
 
 gint
 load_options (fractalexplorerOBJ *xxx,
-	      FILE               *fp)
+              FILE               *fp)
 {
   gchar load_buf[MAX_LOAD_LINE];
   gchar str_buf[MAX_LOAD_LINE];
@@ -1997,85 +2024,85 @@ load_options (fractalexplorerOBJ *xxx,
       sscanf (load_buf, "%s %s", str_buf, opt_buf);
 
       if (!strcmp (str_buf, "fractaltype:"))
-	{
-	  gint sp = 0;
+        {
+          gint sp = 0;
 
-	  sp = atoi (opt_buf);
-	  if (sp < 0)
-	    return -1;
-	  xxx->opts.fractaltype = sp;
-	}
+          sp = atoi (opt_buf);
+          if (sp < 0)
+            return -1;
+          xxx->opts.fractaltype = sp;
+        }
       else if (!strcmp (str_buf, "xmin:"))
-	{
-	  xxx->opts.xmin = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.xmin = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp (str_buf, "xmax:"))
-	{
-	  xxx->opts.xmax = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.xmax = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp(str_buf, "ymin:"))
-	{
-	  xxx->opts.ymin = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.ymin = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp (str_buf, "ymax:"))
-	{
-	  xxx->opts.ymax = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.ymax = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp(str_buf, "redstretch:"))
-	{
-	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
-	  xxx->opts.redstretch = sp / 128.0;
-	}
+        {
+          gdouble sp = g_ascii_strtod (opt_buf, NULL);
+          xxx->opts.redstretch = sp / 128.0;
+        }
       else if (!strcmp(str_buf, "greenstretch:"))
-	{
-	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
-	  xxx->opts.greenstretch = sp / 128.0;
-	}
+        {
+          gdouble sp = g_ascii_strtod (opt_buf, NULL);
+          xxx->opts.greenstretch = sp / 128.0;
+        }
       else if (!strcmp (str_buf, "bluestretch:"))
-	{
-	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
-	  xxx->opts.bluestretch = sp / 128.0;
-	}
+        {
+          gdouble sp = g_ascii_strtod (opt_buf, NULL);
+          xxx->opts.bluestretch = sp / 128.0;
+        }
       else if (!strcmp (str_buf, "iter:"))
-	{
-	  xxx->opts.iter = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.iter = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp(str_buf, "cx:"))
-	{
-	  xxx->opts.cx = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.cx = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp (str_buf, "cy:"))
-	{
-	  xxx->opts.cy = g_ascii_strtod (opt_buf, NULL);
-	}
+        {
+          xxx->opts.cy = g_ascii_strtod (opt_buf, NULL);
+        }
       else if (!strcmp(str_buf, "redmode:"))
-	{
-	  xxx->opts.redmode = atoi (opt_buf);
-	}
+        {
+          xxx->opts.redmode = atoi (opt_buf);
+        }
       else if (!strcmp(str_buf, "greenmode:"))
-	{
-	  xxx->opts.greenmode = atoi (opt_buf);
-	}
+        {
+          xxx->opts.greenmode = atoi (opt_buf);
+        }
       else if (!strcmp(str_buf, "bluemode:"))
-	{
-	  xxx->opts.bluemode = atoi (opt_buf);
-	}
+        {
+          xxx->opts.bluemode = atoi (opt_buf);
+        }
       else if (!strcmp (str_buf, "redinvert:"))
-	{
-	  xxx->opts.redinvert = atoi (opt_buf);
-	}
+        {
+          xxx->opts.redinvert = atoi (opt_buf);
+        }
       else if (!strcmp (str_buf, "greeninvert:"))
-	{
-	  xxx->opts.greeninvert = atoi (opt_buf);
-	}
+        {
+          xxx->opts.greeninvert = atoi (opt_buf);
+        }
       else if (!strcmp(str_buf, "blueinvert:"))
-	{
-	  xxx->opts.blueinvert = atoi (opt_buf);
-	}
+        {
+          xxx->opts.blueinvert = atoi (opt_buf);
+        }
       else if (!strcmp (str_buf, "colormode:"))
-	{
-	  xxx->opts.colormode = atoi (opt_buf);
-	}
+        {
+          xxx->opts.colormode = atoi (opt_buf);
+        }
 
       get_line (load_buf, MAX_LOAD_LINE, fp, 0);
     }
@@ -2108,7 +2135,7 @@ explorer_load (void)
   if (load_options (current_obj,fp))
     {
       g_message (_("'%s' is corrupt. Line %d Option section incorrect"),
-		 filename, line_no);
+                 filename, line_no);
       return;
     }
 

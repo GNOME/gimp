@@ -198,8 +198,6 @@ libgimpui_1_3_la_SOURCES = \
 	gimpuitypes.h		\
 	gimpmenu.c		\
 	gimpmenu.h		\
-	gimpmiscui.c		\
-	gimpmiscui.h		\
 	gimpbrushmenu.c		\
 	gimpbrushmenu.h		\
 	gimpfontmenu.c		\
@@ -232,7 +230,6 @@ gimpinclude_HEADERS = \
 	gimptile.h		\
 	\
 	gimpexport.h		\
-	gimpmiscui.h		\
 	gimpui.h		\
 	gimpuitypes.h		\
 	gimpmenu.h		\

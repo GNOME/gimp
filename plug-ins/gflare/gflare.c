@@ -876,7 +876,31 @@ plugin_run (const gchar      *name,
    *	Parse gflare path from gimprc and load gflares
    */
 
-  gflare_path = gimp_plug_in_get_path ("gflare-path", "gflare");
+  gflare_path = gimp_gimprc_query ("gflare-path");
+  if (! gflare_path)
+    {
+      gchar *gimprc = gimp_personal_rc_file ("gimprc");
+      gchar *full_path;
+      gchar *esc_path;
+
+      full_path =
+        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gflare",
+                     G_SEARCHPATH_SEPARATOR_S,
+                     "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gflare",
+                     NULL);
+      esc_path = g_strescape (full_path, NULL);
+      g_free (full_path);
+
+      g_message (_("No %s in gimprc:\n"
+                   "You need to add an entry like\n"
+                   "(%s \"%s\")\n"
+                   "to your %s file."),
+                 "gflare-path", "gflare-path", esc_path, gimprc);
+
+      g_free (gimprc);
+      g_free (esc_path);
+    }
+
   gflares_list_load_all ();
 
   gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 2);
