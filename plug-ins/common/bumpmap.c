@@ -331,6 +331,11 @@ static gint       sel_width, sel_height;
 static gint       img_bpp;
 static gboolean   img_has_alpha;
 
+/***** Macros *****/
+
+#define MOD(x, y) \
+  ((x) < 0 ? ((y) - 1 - ((y) - 1 - (x)) % (y)) : (x) % (y))
+
 /***** Functions *****/
 
 MAIN ()
@@ -504,15 +509,15 @@ static void
 bumpmap (void)
 {
   bumpmap_params_t  params;
-  GimpDrawable        *bm_drawable;
-  GimpPixelRgn         src_rgn, dest_rgn, bm_rgn;
+  GimpDrawable     *bm_drawable;
+  GimpPixelRgn      src_rgn, dest_rgn, bm_rgn;
   gint              bm_width, bm_height, bm_bpp, bm_has_alpha;
   gint              yofs1, yofs2, yofs3;
+  gboolean          row_in_bumpmap;
   guchar           *bm_row1, *bm_row2, *bm_row3, *bm_tmprow;
   guchar           *src_row, *dest_row;
   gint              y;
   gint              progress;
-  gint              tmp;
   gint              drawable_tiles_per_row, bm_tiles_per_row;
 
 #if 0
@@ -549,14 +554,19 @@ bumpmap (void)
   gimp_tile_cache_ntiles (bm_tiles_per_row + 2 * drawable_tiles_per_row);
 
   /* Initialize offsets */
-  tmp = bmvals.yofs + sel_y1;
-  if (tmp < 0)
-    yofs2 = bm_height - (- tmp % bm_height);
-  else
-    yofs2 = tmp % bm_height;
 
-  yofs1 = (yofs2 + bm_height - 1) % bm_height;
-  yofs3 = (yofs2 + 1) % bm_height;
+  if (bmvals.tiled)
+    {
+      yofs2 = MOD (bmvals.yofs + sel_y1, bm_height);
+      yofs1 = MOD (yofs2 - 1, bm_height);
+      yofs3 = MOD (yofs2 + 1, bm_height);
+    }
+  else
+    {
+      yofs1 = 0;
+      yofs2 = 0;
+      yofs3 = CLAMP (yofs2 + 1, 0, bm_height - 1);
+    }
 
   /* Initialize row buffers */
   bm_row1 = g_new (guchar, bm_width * bm_bpp);
@@ -590,28 +600,39 @@ bumpmap (void)
 
   for (y = sel_y1; y < sel_y2; y++)
     {
+      row_in_bumpmap = (y >= - bmvals.yofs && y < - bmvals.yofs + bm_height);
+
       gimp_pixel_rgn_get_row (&src_rgn, src_row, sel_x1, y, sel_width);
 
       bumpmap_row (src_row, dest_row, sel_width, img_bpp, img_has_alpha,
 		   bm_row1, bm_row2, bm_row3, bm_width, bmvals.xofs,
 		   bmvals.tiled, 
-		   y == CLAMP (y, - bmvals.yofs, - bmvals.yofs + bm_height),
+		   row_in_bumpmap,
 		   &params);
 
       gimp_pixel_rgn_set_row (&dest_rgn, dest_row, sel_x1, y, sel_width);
 
       /* Next line */
 
-      bm_tmprow = bm_row1;
-      bm_row1   = bm_row2;
-      bm_row2   = bm_row3;
-      bm_row3   = bm_tmprow;
-		
-      if (++yofs3 == bm_height)
-	yofs3 = 0;
+      if (bmvals.tiled || row_in_bumpmap)
+	{
+	  bm_tmprow = bm_row1;
+	  bm_row1   = bm_row2;
+	  bm_row2   = bm_row3;
+	  bm_row3   = bm_tmprow;
 
-      gimp_pixel_rgn_get_row (&bm_rgn, bm_row3, 0, yofs3, bm_width);
-      bumpmap_convert_row (bm_row3, bm_width, bm_bpp, bm_has_alpha, params.lut);
+	  if (++yofs2 == bm_height)
+	    yofs2 = 0;
+
+	  if (bmvals.tiled)
+	    yofs3 = MOD (yofs2 + 1, bm_height);
+	  else
+	    yofs3 = CLAMP (yofs2 + 1, 0, bm_height - 1);
+
+	  gimp_pixel_rgn_get_row (&bm_rgn, bm_row3, 0, yofs3, bm_width);
+	  bumpmap_convert_row (bm_row3, bm_width, bm_bpp, bm_has_alpha,
+			       params.lut);
+	}
 
       gimp_progress_update ((double) ++progress / sel_height);
     }
@@ -717,21 +738,25 @@ bumpmap_row (guchar           *src,
     pbpp = bpp;
 
   tmp = bm_xofs + sel_x1;
-  if (tmp < 0)
-    xofs2 = bm_width - (- tmp % bm_width);
-  else
-    xofs2 = tmp % bm_width;
-
-  xofs1 = (xofs2 + bm_width - 1) % bm_width;
-  xofs3 = (xofs2 + 1) % bm_width;
+  xofs2 = MOD (tmp, bm_width);
 
   for (x = 0; x < width; x++)
     {
       /* Calculate surface normal from bump map */
 
       if (tiled || (row_in_bumpmap &&
-		    x == CLAMP (x, - tmp, - tmp + bm_width)))
+		    x >= - tmp && x < - tmp + bm_width))
 	{
+	  if (tiled)
+	    {
+	      xofs1 = MOD (xofs2 - 1, bm_width);
+	      xofs3 = MOD (xofs2 + 1, bm_width);
+	    }
+	  else
+	    {
+	      xofs1 = CLAMP (xofs2 - 1, 0, bm_width - 1);
+	      xofs3 = CLAMP (xofs2 + 1, 0, bm_width - 1);
+	    }
 	  nx = (bm_row1[xofs1] + bm_row2[xofs1] + bm_row3[xofs1] -
 		bm_row1[xofs3] - bm_row2[xofs3] - bm_row3[xofs3]);
 	  ny = (bm_row3[xofs1] + bm_row3[xofs2] + bm_row3[xofs3] -
@@ -778,14 +803,8 @@ bumpmap_row (guchar           *src,
 
       /* Next pixel */
 
-      if (++xofs1 == bm_width)
-	xofs1 = 0;
-
       if (++xofs2 == bm_width)
 	xofs2 = 0;
-
-      if (++xofs3 == bm_width)
-	xofs3 = 0;
     }
 }
 
@@ -1373,11 +1392,7 @@ dialog_new_bumpmap (gboolean init_offsets)
   /* Initialize row buffers */
 
   yofs = bmvals.yofs + bmint.preview_yofs - 1; /* Minus 1 for conv. matrix */
-
-  if (yofs < 0)
-    yofs = bmint.bm_height - (-yofs % bmint.bm_height);
-  else
-    yofs = yofs % bmint.bm_height;
+  yofs = MOD (yofs, bmint.bm_height);
 
   bmint.bm_yofs = yofs;
 
@@ -1416,16 +1431,20 @@ dialog_update_preview (void)
 
   for (y = 0; y < bmint.preview_height; y++)
     {
+      gint isfirst = ((y == - bmvals.yofs - bmint.preview_yofs - sel_y1)
+		      && ! bmvals.tiled) ? 1 : 0;
+      gint islast = (y == (- bmvals.yofs - bmint.preview_yofs - sel_y1
+			   + bmint.bm_height - 1) && ! bmvals.tiled) ? 1 : 0;
       bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row,
 		   bmint.preview_width, 4, TRUE,
-		   bmint.bm_rows[y], 
+		   bmint.bm_rows[y + isfirst],
 		   bmint.bm_rows[y + 1],
-		   bmint.bm_rows[y + 2],
+		   bmint.bm_rows[y + 2 - islast],
 		   bmint.bm_width, xofs + bmvals.xofs,
 		   bmvals.tiled, 
-		   y == CLAMP (y, 
-			       - bmvals.yofs - bmint.preview_yofs - sel_y1 ,
-			       - bmvals.yofs - bmint.preview_yofs - sel_y1 + bmint.bm_height),
+		   y >= - bmvals.yofs - bmint.preview_yofs - sel_y1 &&
+		   y < (- bmvals.yofs - bmint.preview_yofs - sel_y1
+			+ bmint.bm_height),
 		   &bmint.params);
 
       /* Paint row */
@@ -1516,11 +1535,7 @@ dialog_scroll_bumpmap (void)
   guchar *tmp;
 
   yofs = bmvals.yofs + bmint.preview_yofs - 1; /* Minus 1 for conv. matrix */
-
-  if (yofs < 0)
-    yofs = bmint.bm_height - (-yofs % bmint.bm_height);
-  else
-    yofs %= bmint.bm_height;
+  yofs = MOD (yofs, bmint.bm_height);
 
   if (yofs == bmint.bm_yofs)
     return;
@@ -1693,11 +1708,7 @@ dialog_fill_bumpmap_rows (gint start,
   gint this_pass;
 
   /* Adapt to offset of selection */
-  yofs += sel_y1;
-  if (yofs < 0)
-    yofs = bmint.bm_height - (-yofs % bmint.bm_height);
-  else
-    yofs %= bmint.bm_height;
+  yofs = MOD (yofs + sel_y1, bmint.bm_height);
 
   buf_row_ofs = start;
   remaining   = how_many;

@@ -1,3 +1,12 @@
+2003-04-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-contiguous-region.c
+	(find_contiguous_region_helper): applied patch from Pedro Gimeno
+	that fixes bug #51883.
+
+	* plug-ins/common/bumpmap.c (bumpmap): applied patch from Pedro
+	Gimeno that fixes bug #52543.
+
 2003-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-guides.c (gimp_image_snap_x,y): new functions

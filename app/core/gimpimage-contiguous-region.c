@@ -479,9 +479,6 @@ find_contiguous_region_helper (PixelRegion *mask,
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
 
-  if (threshold == 0)
-    threshold = 1;
-
   tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
   val = *(guchar *)(tile_data_pointer (tile, 
 				       x % TILE_WIDTH, y % TILE_HEIGHT));
