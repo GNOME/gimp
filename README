@@ -9,8 +9,10 @@ not be using it any longer...).
 Some features that were present in GIMP 1.2 are not included in this
 release. The perl bindings as well as all the perl scripts are not any
 longer included in this source tree. They have been moved into its own
-module called gimp-perl. Sooner or later there will be a gimp-perl
-release for GIMP 2.0. GAP, a set of plug-ins that used to live in the
+module called gimp-perl and there's a pre-release available at
+ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/perl/.
+
+GAP, a set of plug-ins that used to live in the
 Video submenu has also become a separate package and can be downloaded
 from ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/gap/.
 

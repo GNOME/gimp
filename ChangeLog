@@ -1,3 +1,7 @@
+2004-03-25  Sven Neumann  <sven@gimp.org>
+
+	* README: mention the gimp-perl pre-release and provide a link.
+
 2004-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile-manager.c (tile_manager_new): g_return_if_fail()
