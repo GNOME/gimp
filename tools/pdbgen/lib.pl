@@ -171,7 +171,6 @@ CODE
 
 		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
 							      : $_->{name};
-		$_->{libname} = $_->{name} if exists $_->{retval};
 
 	        if (exists $_->{num}) {
 		    if (!exists $_->{no_lib}) {

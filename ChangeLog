@@ -1,3 +1,10 @@
+Thu Jun 22 13:43:10 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* libgimp/gimpgradientselect_pdb.c
+	* libgimp/gimptools_pdb.c: stupid brain fart with the duplicate
+	parameter logic
+
 Thu Jun 22 13:02:01 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl

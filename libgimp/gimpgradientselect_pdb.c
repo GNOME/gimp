@@ -81,7 +81,7 @@ _gimp_gradients_get_gradient_data (gchar    *name,
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gchar *name = NULL;
+  gchar *ret_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
 				    &nreturn_vals,
@@ -93,7 +93,7 @@ _gimp_gradients_get_gradient_data (gchar    *name,
 
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
-      name = g_strdup (return_vals[1].data.d_string);
+      ret_name = g_strdup (return_vals[1].data.d_string);
       *width = return_vals[2].data.d_int32;
       *grad_data = g_new (gdouble, *width);
       memcpy (*grad_data, return_vals[3].data.d_floatarray,
@@ -102,5 +102,5 @@ _gimp_gradients_get_gradient_data (gchar    *name,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return name;
+  return ret_name;
 }
