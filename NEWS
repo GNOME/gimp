@@ -13,6 +13,12 @@ Bugs fixed in GIMP 2.2.2
 - fixed misbehaviour in Scale and Resize dialogs (bug #162387)
 - fixed preview in Imagemap plug-in (bug #162592)
 - fixed handling of broken menu path translations (bug #162590)
+- fixed bugs in the Sparkle plug-in and the Frosty Logo script (bug #132145)
+- fixed two broken Python scripts (bug #162707)
+- changed default response in Close dialog (bug #162872)
+- flush the display when plug-in dialogs are disposed (bug #163084)
+- fixed build problem on amd64 with gcc-4.0 (bug #163041)
+- fixed problem in locales that are rendered right-to-left (bug #162663)
 
 
 Bugs fixed in GIMP 2.2.1
