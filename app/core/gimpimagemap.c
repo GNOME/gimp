@@ -101,12 +101,12 @@ image_map_do (gpointer data)
 }
 
 ImageMap
-image_map_create (void *gdisp_ptr,
+image_map_create (void         *gdisp_ptr,
 		  GimpDrawable *drawable)
 {
   _ImageMap *_image_map;
 
-  _image_map = (_ImageMap *) g_malloc (sizeof (_ImageMap));
+  _image_map = g_new (_ImageMap, 1);
   _image_map->gdisp = (GDisplay *) gdisp_ptr;
   _image_map->drawable = drawable;
   _image_map->undo_tiles = NULL;
@@ -121,7 +121,7 @@ image_map_apply (ImageMap           image_map,
 		 void              *user_data)
 {
   _ImageMap *_image_map;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   _image_map = (_ImageMap *) image_map;
   _image_map->apply_func = apply_func;
@@ -213,7 +213,7 @@ void
 image_map_commit (ImageMap image_map)
 {
   _ImageMap *_image_map;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   _image_map = (_ImageMap *) image_map;
 
@@ -300,7 +300,9 @@ image_map_abort (ImageMap image_map)
 }
 
 unsigned char *
-image_map_get_color_at (ImageMap image_map, int x, int y)
+image_map_get_color_at (ImageMap image_map, 
+			gint     x, 
+			gint     y)
 {
   Tile *tile;
   unsigned char *src;
@@ -312,12 +314,12 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
 
   _image_map = (_ImageMap *) image_map;
 
-  if( x >= 0 && x < gimp_drawable_width (_image_map->drawable) && 
+  if (x >= 0 && x < gimp_drawable_width (_image_map->drawable) && 
       y >= 0 && y < gimp_drawable_height (_image_map->drawable))
     {
       /* Check if done damage to original image */
-      if(!_image_map->undo_tiles)
-	return (gimp_drawable_get_color_at(_image_map->drawable,x,y));
+      if (!_image_map->undo_tiles)
+	return (gimp_drawable_get_color_at (_image_map->drawable, x, y));
 
       if (!image_map ||
 	  (!gimp_drawable_gimage(_image_map->drawable) && 

@@ -365,7 +365,11 @@ fuzzy_select (GImage       *gimage,
   else
     gimage_mask_undo (gimage);
 
-  drawable_offsets (drawable, &off_x, &off_y);
+  if (drawable)     /* NULL if sample_merged is active */
+    drawable_offsets (drawable, &off_x, &off_y);
+  else
+    off_x = off_y = 0;
+  
   if (feather)
     channel_feather (fuzzy_mask, gimage_get_mask (gimage),
 		     feather_radius,

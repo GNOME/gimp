@@ -162,13 +162,13 @@ void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
 Parasite *      gimp_image_parasite_find          (const GimpImage *,
 						   const gchar *name);
-gchar **        gimp_image_parasite_list          (GimpImage *image,
+gchar **        gimp_image_parasite_list          (GimpImage *gimage,
                                                    gint *count);
 void            gimp_image_parasite_attach        (GimpImage *, Parasite *);
 void            gimp_image_parasite_detach        (GimpImage *, const gchar *);
 
 Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
-int             gimp_image_set_tattoo_state       (GimpImage *, Tattoo);
+gboolean        gimp_image_set_tattoo_state       (GimpImage *, Tattoo);
 Tattoo          gimp_image_get_tattoo_state       (GimpImage *);
 
 void            gimp_image_set_paths              (GimpImage *, PathList *);

@@ -1,3 +1,26 @@
+Thu Mar  9 12:44:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpdrawable.c: gimp_drawable_get_color_at() now silently
+	returns NULL again if the coordinates are out of range. A lot of 
+	code using this function relies on this feature and correctly 
+	checks the return value. No need to emit critical warnings here.
+	
+	The GTK_CHECK_TYPE macro test for obj != NULL, no need to do this
+	check twice. Removed lots of unnecessary calls to g_return_if_fail().
+
+	* app/color_picker.c: with the old behaviour of 
+	gimp_drawable_get_color_at() the code is a bit simpler.
+
+	* app/fuzzy_select.c: fuzzy_select relied on drawable_offsets()
+	returning off_x = off_y = 0 if drawable == NULL. Decided to change
+	this here, fixes bug #7077.
+
+	* app/gimpimage.[ch]: Even though we made bad experiences with the 
+	changes in gimpdrawable.c, I have introduced similar argument checks
+	here.
+	
+	* app/image_map.c: indentation
+
 Wed Mar  8 23:37:38 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: Oops, my last commit broke LANG=C. This is now fixed.

@@ -504,16 +504,9 @@ pick_color_do (GimpImage    *gimage,
 
   has_alpha = TYPE_HAS_ALPHA (sample_type);
 
-  if( x >= 0 && x < gimp_drawable_width (drawable) && 
-      y >= 0 && y < gimp_drawable_height (drawable))
-    {
-      if (!(color = (*get_color_func) (get_color_obj, x, y)))
-	return FALSE;
-    }
-  else
-    {
-      return FALSE;
-    }
+  if (!(color = (*get_color_func) (get_color_obj, x, y)))
+    return FALSE;
+
   if (sample_average)
     {
       gint i, j;
@@ -527,16 +520,16 @@ pick_color_do (GimpImage    *gimage,
 	  if ((tmp_color = (*get_color_func) (get_color_obj, i, j)))
 	    {
 	      count++;
-
+	      
 	      color_avg[RED_PIX]   += tmp_color[RED_PIX];
 	      color_avg[GREEN_PIX] += tmp_color[GREEN_PIX];
 	      color_avg[BLUE_PIX]  += tmp_color[BLUE_PIX];
 	      if (has_alpha)
 		color_avg[ALPHA_PIX] += tmp_color[3];
-
+	      
 	      g_free (tmp_color);
 	    }
-
+      
       color[RED_PIX]   = (guchar) (color_avg[RED_PIX] / count);
       color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
       color[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX] / count);
