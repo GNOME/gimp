@@ -1,3 +1,8 @@
+2003-06-22  Dave Neary  <bolsh@gimp.org>
+
+	* app/config/gimpbaseconfig.c: Increased default tile
+	cache to 64 MB.
+
 2003-06-22  Sven Neumann  <sven@gimp.org>
 
 	* data/misc/gimp.desktop.in.in: added Encoding, StartupNotify and
