@@ -1,3 +1,12 @@
+1999-07-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brightness_contrast.c: same cleanups as in my previous
+	checkin.
+
+	* app/gradient.c: made the gradient editor look like the other
+	dialogs. It's now possible to set the background color with
+	<Ctrl>+click. Indentation madness in all functions I modified.
+
 Thu Jul 22 21:24:04 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/film.c: Upgraded to gimp-1.1 calling conventions.

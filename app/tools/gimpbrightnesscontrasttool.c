@@ -22,7 +22,6 @@
 #include "actionarea.h"
 #include "brightness_contrast.h"
 #include "drawable.h"
-#include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -48,7 +47,7 @@
 typedef struct _BrightnessContrast BrightnessContrast;
 struct _BrightnessContrast
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _BrightnessContrastDialog BrightnessContrastDialog;
@@ -215,24 +214,24 @@ brightness_contrast_new_dialog ()
     { N_("Cancel"), brightness_contrast_cancel_callback, NULL, NULL }
   };
 
-  bcd = g_malloc (sizeof (BrightnessContrastDialog));
+  bcd = g_new (BrightnessContrastDialog, 1);
   bcd->preview = TRUE;
 
-  bcd->lut = gimp_lut_new();
+  bcd->lut = gimp_lut_new ();
 
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bcd->shell), _("Brightness-Contrast"));
-  
-  /* handle wm close signal */
+
+  /*  handle wm close signal  */
   gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (brightness_contrast_delete_callback),
 		      bcd);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), vbox);
 
   /*  The table containing sliders  */
   table = gtk_table_new (2, 3, FALSE);
@@ -336,7 +335,7 @@ brightness_contrast_new_dialog ()
 
 static void
 brightness_contrast_update (BrightnessContrastDialog *bcd,
-			    int                       update)
+			    gint                      update)
 {
   char text[12];
 
@@ -352,12 +351,12 @@ brightness_contrast_update (BrightnessContrastDialog *bcd,
     }
   if (update & BRIGHTNESS_TEXT)
     {
-      sprintf (text, "%0.0f", bcd->brightness);
+      g_snprintf (text, sizeof (text), "%0.0f", bcd->brightness);
       gtk_entry_set_text (GTK_ENTRY (bcd->brightness_text), text);
     }
   if (update & CONTRAST_TEXT)
     {
-      sprintf (text, "%0.0f", bcd->contrast);
+      g_snprintf (text, sizeof (text), "%0.0f", bcd->contrast);
       gtk_entry_set_text (GTK_ENTRY (bcd->contrast_text), text);
     }
 }
@@ -366,12 +365,16 @@ static void
 brightness_contrast_preview (BrightnessContrastDialog *bcd)
 {
   if (!bcd->image_map)
-    g_message ("brightness_contrast_preview(): No image map");
+    {
+      g_message ("brightness_contrast_preview(): No image map");
+      return;
+    }
+
   active_tool->preserve = TRUE;
-  brightness_contrast_lut_setup(bcd->lut, bcd->brightness / 255.0,
-				bcd->contrast / 127.0,
-				gimp_drawable_bytes(bcd->drawable));
-  image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+  brightness_contrast_lut_setup (bcd->lut, bcd->brightness / 255.0,
+				 bcd->contrast / 127.0,
+				 gimp_drawable_bytes (bcd->drawable));
+  image_map_apply (bcd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) bcd->lut);
   active_tool->preserve = FALSE;
 }
@@ -391,10 +394,10 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   if (!bcd->preview)
   {
-    brightness_contrast_lut_setup(bcd->lut, bcd->brightness / 255.0,
-				  bcd->contrast / 127.0,
-				  gimp_drawable_bytes(bcd->drawable));
-    image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+    brightness_contrast_lut_setup (bcd->lut, bcd->brightness / 255.0,
+				   bcd->contrast / 127.0,
+				   gimp_drawable_bytes (bcd->drawable));
+    image_map_apply (bcd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		     (void *) bcd->lut);
   }
 
@@ -410,22 +413,23 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 }
 
 static gint
-brightness_contrast_delete_callback (GtkWidget *w,
-				     GdkEvent *e,
-				     gpointer d)
+brightness_contrast_delete_callback (GtkWidget *widget,
+				     GdkEvent  *event,
+				     gpointer   data)
 {
-  brightness_contrast_cancel_callback (w, d);
+  brightness_contrast_cancel_callback (widget, data);
 
   return TRUE;
 }
 
 static void
 brightness_contrast_cancel_callback (GtkWidget *widget,
-				     gpointer   client_data)
+				     gpointer   data)
 {
   BrightnessContrastDialog *bcd;
 
-  bcd = (BrightnessContrastDialog *) client_data;
+  bcd = (BrightnessContrastDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
 
@@ -444,14 +448,14 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 }
 
 static void
-brightness_contrast_preview_update (GtkWidget *w,
+brightness_contrast_preview_update (GtkWidget *widget,
 				    gpointer   data)
 {
   BrightnessContrastDialog *bcd;
 
   bcd = (BrightnessContrastDialog *) data;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       bcd->preview = TRUE;
       brightness_contrast_preview (bcd);
@@ -497,14 +501,14 @@ brightness_contrast_contrast_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-brightness_contrast_brightness_text_update (GtkWidget *w,
+brightness_contrast_brightness_text_update (GtkWidget *widget,
 					    gpointer   data)
 {
   BrightnessContrastDialog *bcd;
-  char *str;
-  int value;
+  gchar *str;
+  gint value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
+  str = gtk_entry_get_text (GTK_ENTRY (widget));
   bcd = (BrightnessContrastDialog *) data;
   value = BOUNDS (((int) atof (str)), -127, 127);
 
@@ -519,14 +523,14 @@ brightness_contrast_brightness_text_update (GtkWidget *w,
 }
 
 static void
-brightness_contrast_contrast_text_update (GtkWidget *w,
+brightness_contrast_contrast_text_update (GtkWidget *widget,
 					  gpointer   data)
 {
   BrightnessContrastDialog *bcd;
-  char *str;
-  int value;
+  gchar *str;
+  gint value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
+  str = gtk_entry_get_text (GTK_ENTRY (widget));
   bcd = (BrightnessContrastDialog *) data;
   value = BOUNDS (((int) atof (str)), -127, 127);
 
