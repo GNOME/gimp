@@ -362,19 +362,35 @@
   <part id="app-text-part">
     <title>Text</title>
     <xi:include href="xml/text-enums.xml"/>
-    <xi:include href="xml/gimpfonts.xml"/>
-    <xi:include href="xml/gimpfont.xml"/>
-    <xi:include href="xml/gimpfontlist.xml"/>
-    <xi:include href="xml/gimptext.xml"/>
-    <xi:include href="xml/gimptext-bitmap.xml"/>
-    <xi:include href="xml/gimptext-compat.xml"/>
-    <xi:include href="xml/gimptext-parasite.xml"/>
-    <xi:include href="xml/gimptext-vectors.xml"/>
-    <xi:include href="xml/gimptext-xlfd.xml"/>
-    <xi:include href="xml/gimptextlayer.xml"/>
-    <xi:include href="xml/gimptextlayer-transform.xml"/>
-    <xi:include href="xml/gimptextlayout.xml"/>
-    <xi:include href="xml/gimptextlayout-render.xml"/>
+
+    <chapter>
+      <title>Initialization &amp; Font Management</title>
+      <xi:include href="xml/gimpfonts.xml"/>
+      <xi:include href="xml/gimpfont.xml"/>
+      <xi:include href="xml/gimpfontlist.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>The GimpText Object</title>
+      <xi:include href="xml/gimptext.xml"/>
+      <xi:include href="xml/gimptext-bitmap.xml"/>
+      <xi:include href="xml/gimptext-compat.xml"/>
+      <xi:include href="xml/gimptext-parasite.xml"/>
+      <xi:include href="xml/gimptext-vectors.xml"/>
+      <xi:include href="xml/gimptext-xlfd.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>The GimpTextLayout Object</title>
+      <xi:include href="xml/gimptextlayout.xml"/>
+      <xi:include href="xml/gimptextlayout-render.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>The GimpTextLayer Object</title>
+      <xi:include href="xml/gimptextlayer.xml"/>
+      <xi:include href="xml/gimptextlayer-transform.xml"/>
+    </chapter>
   </part>
 
   <part id="app-display-part">
@@ -519,7 +535,7 @@
     </chapter>
 
     <chapter>
-      <title>Text and Path Tools</title>
+      <title>Text and Vector Tools</title>
       <xi:include href="xml/gimptexttool.xml"/>
       <xi:include href="xml/gimptextoptions.xml"/>
       <xi:include href="xml/gimpvectortool.xml"/>
@@ -546,7 +562,6 @@
       <title>Input Device Management</title>
       <xi:include href="xml/gimpdevices.xml"/>
       <xi:include href="xml/gimpdeviceinfo.xml"/>
-      <xi:include href="xml/gimpdevicestatus.xml"/>
     </chapter>
 
     <chapter>
@@ -562,7 +577,16 @@
     </chapter>
 
     <chapter>
-      <title>Data Editor Widgets</title>
+      <title>GimpEditor Widgets</title>
+      <xi:include href="xml/gimpeditor.xml"/>
+      <xi:include href="xml/gimpcoloreditor.xml"/>
+      <xi:include href="xml/gimpdevicestatus.xml"/>
+      <xi:include href="xml/gimperrorconsole.xml"/>
+      <xi:include href="xml/gimptemplateeditor.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>GimpDataEditor Widgets</title>
       <xi:include href="xml/gimpdataeditor.xml"/>
       <xi:include href="xml/gimpbrusheditor.xml"/>
       <xi:include href="xml/gimpgradienteditor.xml"/>
@@ -570,42 +594,13 @@
     </chapter>
 
     <chapter>
-      <title>Data Factory Views</title>
-      <xi:include href="xml/gimpdatafactoryview.xml"/>
-      <xi:include href="xml/gimpbrushfactoryview.xml"/>
+      <title>GimpImageEditor Widgets</title>
+      <xi:include href="xml/gimpimageeditor.xml"/>
+      <xi:include href="xml/gimpcomponenteditor.xml"/>
+      <xi:include href="xml/gimpcolormapeditor.xml"/>
+      <xi:include href="xml/gimpselectioneditor.xml"/>
+      <xi:include href="xml/gimpundoeditor.xml"/>
     </chapter>
-
-    <xi:include href="xml/gimpeditor.xml"/>
-
-    <xi:include href="xml/gimpcoloreditor.xml"/>
-
-    <xi:include href="xml/gimpcolorpanel.xml"/>
-    <xi:include href="xml/gimpcomponenteditor.xml"/>
-    <xi:include href="xml/gimpcontainerpopup.xml"/>
-    <xi:include href="xml/gimpdialogfactory.xml"/>
-
-
-
-    <xi:include href="xml/gimpcontainereditor.xml"/>
-
-    <xi:include href="xml/gimpbufferview.xml"/>
-    <xi:include href="xml/gimpdocumentview.xml"/>
-    <xi:include href="xml/gimpimageview.xml"/>
-    <xi:include href="xml/gimptemplateview.xml"/>
-
-    <xi:include href="xml/gimpimageeditor.xml"/>
-
-    <xi:include href="xml/gimpcolormapeditor.xml"/>
-    <xi:include href="xml/gimpundoeditor.xml"/>
-
-
-    <xi:include href="xml/gimpselectioneditor.xml"/>
-    <xi:include href="xml/gimptemplateeditor.xml"/>
-    <xi:include href="xml/gimptexteditor.xml"/>
-
-    <xi:include href="xml/gimpviewablebutton.xml"/>
-    <xi:include href="xml/gimpviewabledialog.xml"/>
-
 
     <chapter>
       <title>GimpContainerView Widgets</title>
@@ -628,6 +623,21 @@
     </chapter>
 
     <chapter>
+      <title>GimpContainerEditor Widgets</title>
+      <xi:include href="xml/gimpcontainereditor.xml"/>
+      <xi:include href="xml/gimpbufferview.xml"/>
+      <xi:include href="xml/gimpdocumentview.xml"/>
+      <xi:include href="xml/gimpimageview.xml"/>
+      <xi:include href="xml/gimptemplateview.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>GimpDataFactoryView Widgets</title>
+      <xi:include href="xml/gimpdatafactoryview.xml"/>
+      <xi:include href="xml/gimpbrushfactoryview.xml"/>
+    </chapter>
+
+    <chapter>
       <title>Menus</title>
       <xi:include href="xml/gimpitemfactory.xml"/>
       <xi:include href="xml/gimpmenufactory.xml"/>
@@ -636,11 +646,15 @@
 
     <chapter>
       <title>Misc. Widgets</title>
-      <xi:include href="xml/gimperrorconsole.xml"/>
+      <xi:include href="xml/gimpcolorpanel.xml"/>
+      <xi:include href="xml/gimpcontainerpopup.xml"/>
       <xi:include href="xml/gimpfontselection-dialog.xml"/>
       <xi:include href="xml/gimpfontselection.xml"/>
       <xi:include href="xml/gimphistogrambox.xml"/>
       <xi:include href="xml/gimphistogramview.xml"/>
+      <xi:include href="xml/gimptexteditor.xml"/>
+      <xi:include href="xml/gimpviewablebutton.xml"/>
+      <xi:include href="xml/gimpviewabledialog.xml"/>
     </chapter>
 
     <chapter>
@@ -677,6 +691,7 @@
     <chapter>
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimpcursor.xml"/>
+      <xi:include href="xml/gimpdialogfactory.xml"/>
       <xi:include href="xml/gimpdnd.xml"/>
       <xi:include href="xml/gimphelp.xml"/>
       <xi:include href="xml/gimpwidgets-utils.xml"/>
@@ -697,8 +712,8 @@
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/gui.xml"/>
       <xi:include href="xml/session.xml"/>
-      <xi:include href="xml/dialogs-constructors.xml"/>
       <xi:include href="xml/dialogs.xml"/>
+      <xi:include href="xml/dialogs-constructors.xml"/>
     </chapter>
 
     <chapter>
@@ -738,56 +753,87 @@
 
     <chapter>
       <title>Menus &amp; Callbacks</title>
-      <xi:include href="xml/brushes-menu.xml"/>
-      <xi:include href="xml/buffers-commands.xml"/>
-      <xi:include href="xml/buffers-menu.xml"/>
-      <xi:include href="xml/channels-commands.xml"/>
-      <xi:include href="xml/channels-menu.xml"/>
-      <xi:include href="xml/colormap-editor-commands.xml"/>
-      <xi:include href="xml/colormap-editor-menu.xml"/>
-      <xi:include href="xml/data-commands.xml"/>
-      <xi:include href="xml/debug-commands.xml"/>
-      <xi:include href="xml/dialogs-commands.xml"/>
-      <xi:include href="xml/dialogs-menu.xml"/>
-      <xi:include href="xml/documents-commands.xml"/>
-      <xi:include href="xml/documents-menu.xml"/>
-      <xi:include href="xml/drawable-commands.xml"/>
-      <xi:include href="xml/edit-commands.xml"/>
-      <xi:include href="xml/error-console-commands.xml"/>
-      <xi:include href="xml/error-console-menu.xml"/>
-      <xi:include href="xml/file-commands.xml"/>
+      <xi:include href="xml/menus.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>
+        The &lt;Toolbox&gt;, &lt;Image&gt;, &lt;Open&gt; &amp; &lt;Save&gt;
+        Menus &amp; Callbacks
+      </title>
+      <subtitle>
+        Note that the &lt;Image&gt; menu shares callbacks with the
+        &lt;Layers&gt;, &lt;Channels&gt; &amp; &lt;Vectors&gt; menus.
+      </subtitle>
+      <xi:include href="xml/toolbox-menu.xml"/>
+      <xi:include href="xml/image-menu.xml"/>
       <xi:include href="xml/file-open-menu.xml"/>
       <xi:include href="xml/file-save-menu.xml"/>
-      <xi:include href="xml/gradient-editor-commands.xml"/>
-      <xi:include href="xml/gradient-editor-menu.xml"/>
-      <xi:include href="xml/gradients-commands.xml"/>
-      <xi:include href="xml/gradients-menu.xml"/>
-      <xi:include href="xml/help-commands.xml"/>
-      <xi:include href="xml/image-commands.xml"/>
-      <xi:include href="xml/image-menu.xml"/>
-      <xi:include href="xml/images-commands.xml"/>
-      <xi:include href="xml/images-menu.xml"/>
-      <xi:include href="xml/layers-commands.xml"/>
-      <xi:include href="xml/layers-menu.xml"/>
-      <xi:include href="xml/menus.xml"/>
-      <xi:include href="xml/palette-editor-commands.xml"/>
-      <xi:include href="xml/palette-editor-menu.xml"/>
-      <xi:include href="xml/palettes-commands.xml"/>
-      <xi:include href="xml/palettes-menu.xml"/>
-      <xi:include href="xml/patterns-menu.xml"/>
-      <xi:include href="xml/plug-in-commands.xml"/>
       <xi:include href="xml/plug-in-menus.xml"/>
-      <xi:include href="xml/qmask-commands.xml"/>
-      <xi:include href="xml/qmask-menu.xml"/>
+      <xi:include href="xml/file-commands.xml"/>
+      <xi:include href="xml/edit-commands.xml"/>
       <xi:include href="xml/select-commands.xml"/>
-      <xi:include href="xml/templates-commands.xml"/>
-      <xi:include href="xml/templates-menu.xml"/>
-      <xi:include href="xml/toolbox-menu.xml"/>
+      <xi:include href="xml/image-commands.xml"/>
+      <xi:include href="xml/drawable-commands.xml"/>
       <xi:include href="xml/tools-commands.xml"/>
-      <xi:include href="xml/vectors-commands.xml"/>
-      <xi:include href="xml/vectors-menu.xml"/>
       <xi:include href="xml/view-commands.xml"/>
+      <xi:include href="xml/help-commands.xml"/>
+      <xi:include href="xml/debug-commands.xml"/>
+      <xi:include href="xml/plug-in-commands.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>
+        The &lt;Layers&gt;, &lt;Channels&gt; &amp; &lt;Vectors&gt;
+        Menus &amp; Callbacks
+      </title>
+      <subtitle>
+        Note that these menus share callbacks with the &lt;Image&gt; menu.
+      </subtitle>
+      <xi:include href="xml/channels-menu.xml"/>
+      <xi:include href="xml/channels-commands.xml"/>
+      <xi:include href="xml/layers-menu.xml"/>
+      <xi:include href="xml/layers-commands.xml"/>
+      <xi:include href="xml/vectors-menu.xml"/>
+      <xi:include href="xml/vectors-commands.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>Data Factory Menus &amp; Callbacks</title>
+      <xi:include href="xml/brushes-menu.xml"/>
+      <xi:include href="xml/patterns-menu.xml"/>
+      <xi:include href="xml/gradients-menu.xml"/>
+      <xi:include href="xml/gradients-commands.xml"/>
+      <xi:include href="xml/palettes-menu.xml"/>
+      <xi:include href="xml/palettes-commands.xml"/>
+      <xi:include href="xml/data-commands.xml"/>
+    </chapter>
+
+    <chapter>
+      <title>Other Menus &amp; Callbacks</title>
+      <xi:include href="xml/buffers-menu.xml"/>
+      <xi:include href="xml/buffers-commands.xml"/>
+      <xi:include href="xml/colormap-editor-menu.xml"/>
+      <xi:include href="xml/colormap-editor-commands.xml"/>
+      <xi:include href="xml/dialogs-menu.xml"/>
+      <xi:include href="xml/dialogs-commands.xml"/>
+      <xi:include href="xml/documents-menu.xml"/>
+      <xi:include href="xml/documents-commands.xml"/>
+      <xi:include href="xml/error-console-menu.xml"/>
+      <xi:include href="xml/error-console-commands.xml"/>
+      <xi:include href="xml/gradient-editor-menu.xml"/>
+      <xi:include href="xml/gradient-editor-commands.xml"/>
+      <xi:include href="xml/images-menu.xml"/>
+      <xi:include href="xml/images-commands.xml"/>
+      <xi:include href="xml/palette-editor-menu.xml"/>
+      <xi:include href="xml/palette-editor-commands.xml"/>
+      <xi:include href="xml/qmask-menu.xml"/>
+      <xi:include href="xml/qmask-commands.xml"/>
+      <xi:include href="xml/templates-menu.xml"/>
+      <xi:include href="xml/templates-commands.xml"/>
     </chapter>
   </part>
+
+  <index/>
 
 </book>

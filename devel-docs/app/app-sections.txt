@@ -1810,6 +1810,7 @@ gimp_fonts_reset
 
 <SECTION>
 <FILE>gimpfont</FILE>
+<TITLE>GimpFont</TITLE>
 GimpFont
 gimp_font_get_standard
 <SUBSECTION Standard>
@@ -1913,6 +1914,7 @@ GIMP_TEXT_LAYER_GET_CLASS
 
 <SECTION>
 <FILE>gimptextlayer-transform</FILE>
+<TITLE>GimpTextLayer-transform</TITLE>
 gimp_text_layer_scale
 gimp_text_layer_flip
 gimp_text_layer_rotate
@@ -1932,6 +1934,13 @@ GIMP_TEXT_LAYOUT
 GIMP_IS_TEXT_LAYOUT
 GIMP_TYPE_TEXT_LAYOUT
 gimp_text_layout_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimptextlayout-render</FILE>
+<TITLE>GimpTextLayout-render</TITLE>
+GimpTextRenderFunc
+gimp_text_layout_render
 </SECTION>
 
 <SECTION>
@@ -3955,6 +3964,12 @@ GIMP_PREVIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppreview-popup</FILE>
+<TITLE>GimpPreview-popup</TITLE>
+gimp_preview_popup_show
+</SECTION>
+
+<SECTION>
 <FILE>gimppreviewrenderer</FILE>
 GIMP_PREVIEW_MAX_BORDER_WIDTH
 <TITLE>GimpPreviewRenderer</TITLE>
@@ -4149,6 +4164,28 @@ gimp_toolbox_get_type
 GIMP_TOOLBOX_CLASS
 GIMP_IS_TOOLBOX_CLASS
 GIMP_TOOLBOX_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptoolbox-dnd</FILE>
+<TITLE>GimpToolbox-dnd</TITLE>
+gimp_toolbox_dnd_init
+</SECTION>
+
+<SECTION>
+<FILE>gimptoolbox-color-area</FILE>
+<TITLE>GimpToolbox-color-area</TITLE>
+FOREGROUND
+BACKGROUND
+active_color
+color_area_gdisp
+gimp_toolbox_color_area_create
+</SECTION>
+
+<SECTION>
+<FILE>gimptoolbox-indicator-area</FILE>
+<TITLE>GimpToolbox-indicator-area</TITLE>
+gimp_toolbox_indicator_area_create
 </SECTION>
 
 <SECTION>
@@ -6472,12 +6509,6 @@ plug_ins_image_types_parse
 </SECTION>
 
 <SECTION>
-<FILE>gimptextlayout-render</FILE>
-GimpTextRenderFunc
-gimp_text_layout_render
-</SECTION>
-
-<SECTION>
 <FILE>text-enums</FILE>
 GIMP_TYPE_TEXT_BOX_MODE
 gimp_text_box_mode_get_type
@@ -6688,11 +6719,6 @@ gimp_help
 </SECTION>
 
 <SECTION>
-<FILE>gimppreview-popup</FILE>
-gimp_preview_popup_show
-</SECTION>
-
-<SECTION>
 <FILE>gimppropwidgets</FILE>
 gimp_prop_check_button_new
 gimp_prop_boolean_option_menu_new
@@ -6718,25 +6744,6 @@ gimp_prop_color_button_new
 gimp_prop_unit_menu_new
 gimp_prop_preview_new
 gimp_prop_stock_image_new
-</SECTION>
-
-<SECTION>
-<FILE>gimptoolbox-color-area</FILE>
-FOREGROUND
-BACKGROUND
-active_color
-color_area_gdisp
-gimp_toolbox_color_area_create
-</SECTION>
-
-<SECTION>
-<FILE>gimptoolbox-dnd</FILE>
-gimp_toolbox_dnd_init
-</SECTION>
-
-<SECTION>
-<FILE>gimptoolbox-indicator-area</FILE>
-gimp_toolbox_indicator_area_create
 </SECTION>
 
 <SECTION>

@@ -1,3 +1,9 @@
+2003-09-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: even more cleanup. Put most stuff in
+	<chapter>s so the main TOC has a reasonable size now.
+
 2003-09-08  Sven Neumann  <sven@gimp.org>
 
 	* README
