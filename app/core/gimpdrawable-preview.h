@@ -27,6 +27,10 @@ TempBuf * gimp_drawable_get_preview     (GimpViewable *viewable,
                                          gint          width,
                                          gint          height);
 
+/*
+ *  normal functions (no virtuals)
+ */
+gint      gimp_drawable_preview_bytes   (GimpDrawable *drawable);
 TempBuf * gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                          gint          src_x,
                                          gint          src_y,

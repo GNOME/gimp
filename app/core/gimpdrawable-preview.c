@@ -28,8 +28,6 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -39,7 +37,6 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
-#include "gimpdrawable.h"
 #include "gimpdrawable-preview.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
@@ -47,22 +44,22 @@
 
 /*  local function prototypes  */
 
-static TempBuf * gimp_drawable_preview_private (GimpDrawable      *drawable,
-						gint               width,
-						gint               height);
-static void      gimp_drawable_preview_scale   (GimpImageBaseType  type,
-						const guchar      *cmap,
-						PixelRegion       *srcPR,
-						PixelRegion       *destPR,
-						gint               subsample);
+static TempBuf * gimp_drawable_preview_private (GimpDrawable  *drawable,
+                                                gint           width,
+                                                gint           height);
+static void      gimp_drawable_preview_scale   (GimpImageType  type,
+                                                const guchar  *cmap,
+                                                PixelRegion   *srcPR,
+                                                PixelRegion   *destPR,
+                                                gint           subsample);
 
 
 /*  public functions  */
 
 TempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
-			   gint          width,
-			   gint          height)
+                           gint          width,
+                           gint          height)
 {
   GimpDrawable *drawable;
   GimpImage    *gimage;
@@ -82,17 +79,42 @@ gimp_drawable_get_preview (GimpViewable *viewable,
       gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
     {
       TempBuf *tb = gimp_drawable_preview_private (drawable,
-						   PREVIEW_CACHE_PRIME_WIDTH,
-						   PREVIEW_CACHE_PRIME_HEIGHT);
+                                                   PREVIEW_CACHE_PRIME_WIDTH,
+                                                   PREVIEW_CACHE_PRIME_HEIGHT);
 
       /* Save the 2nd call */
       if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
-	  height == PREVIEW_CACHE_PRIME_HEIGHT)
-	return tb;
+          height == PREVIEW_CACHE_PRIME_HEIGHT)
+        return tb;
     }
 
   /* Second call - should NOT visit the tile cache...*/
   return gimp_drawable_preview_private (drawable, width, height);
+}
+
+gint
+gimp_drawable_preview_bytes (GimpDrawable *drawable)
+{
+  GimpImageBaseType base_type;
+  gint              bytes = 0;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
+
+  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+  switch (base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      bytes = gimp_drawable_bytes (drawable);
+      break;
+
+    case GIMP_INDEXED:
+      bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
+      break;
+    }
+
+  return bytes;
 }
 
 TempBuf *
@@ -104,14 +126,13 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          dest_width,
                                gint          dest_height)
 {
-  GimpItem          *item;
-  GimpImage         *gimage;
-  TempBuf           *preview_buf;
-  PixelRegion        srcPR;
-  PixelRegion        destPR;
-  GimpImageBaseType  base_type;
-  gint               bytes = 0;
-  gint               subsample;
+  GimpItem    *item;
+  GimpImage   *gimage;
+  TempBuf     *preview_buf;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+  gint         bytes;
+  gint         subsample;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -131,19 +152,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   if (! gimage->gimp->config->layer_previews)
     return NULL;
 
-  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-  switch (base_type)
-    {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      bytes = gimp_drawable_bytes (drawable);
-      break;
-
-    case GIMP_INDEXED:
-      bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
-      break;
-    }
+  bytes = gimp_drawable_preview_bytes (drawable);
 
   /*  calculate 'acceptable' subsample  */
   subsample = 1;
@@ -168,7 +177,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      gimp_drawable_preview_scale (base_type,
+      gimp_drawable_preview_scale (gimp_drawable_type (drawable),
                                    gimp_image_get_colormap (gimage),
                                    &srcPR, &destPR,
                                    subsample);
@@ -186,8 +195,8 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
 static TempBuf *
 gimp_drawable_preview_private (GimpDrawable *drawable,
-			       gint          width,
-			       gint          height)
+                               gint          width,
+                               gint          height)
 {
   TempBuf *ret_buf;
 
@@ -205,7 +214,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
                                                height);
 
       if (! drawable->preview_valid)
-	gimp_preview_cache_invalidate (&drawable->preview_cache);
+        gimp_preview_cache_invalidate (&drawable->preview_cache);
 
       drawable->preview_valid = TRUE;
 
@@ -216,11 +225,11 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 }
 
 static void
-gimp_drawable_preview_scale (GimpImageBaseType  type,
-			     const guchar      *cmap,
-			     PixelRegion       *srcPR,
-			     PixelRegion       *destPR,
-			     gint               subsample)
+gimp_drawable_preview_scale (GimpImageType  type,
+                             const guchar  *cmap,
+                             PixelRegion   *srcPR,
+                             PixelRegion   *destPR,
+                             gint           subsample)
 {
 #define EPSILON 0.000001
   guchar  *src,  *s;
@@ -240,7 +249,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   gboolean advance_dest;
   gboolean has_alpha;
 
-  g_return_if_fail (type != GIMP_INDEXED || cmap != NULL);
+  g_return_if_fail (! GIMP_IMAGE_TYPE_IS_INDEXED (type) || cmap != NULL);
 
   orig_width  = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;
@@ -251,7 +260,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   bytes     = destPR->bytes;
   destwidth = destPR->rowstride;
 
-  has_alpha = ((bytes == 2) || (bytes == 4));
+  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   /*  the data pointers...  */
   src  = g_new (guchar, orig_width * bytes);
@@ -267,56 +276,56 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 
   /*  initialize the pre-calculated pixel fraction array  */
   src_col = 0;
-  x_cum = (gdouble) src_col;
-  x_last = x_cum;
+  x_cum   = (gdouble) src_col;
+  x_last  = x_cum;
 
   for (i = 0; i < width + orig_width; i++)
     {
       if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	{
-	  x_cum += x_rat;
-	  x_frac[i] = x_cum - x_last;
-	}
+        {
+          x_cum += x_rat;
+          x_frac[i] = x_cum - x_last;
+        }
       else
-	{
-	  src_col++;
-	  x_frac[i] = src_col - x_last;
-	}
+        {
+          src_col++;
+          x_frac[i] = src_col - x_last;
+        }
 
       x_last += x_frac[i];
     }
 
   /*  counters...  */
   src_row = 0;
-  y_cum = (gdouble) src_row;
-  y_last = y_cum;
+  y_cum   = (gdouble) src_row;
+  y_last  = y_cum;
 
   pixel_region_get_row (srcPR,
-			srcPR->x,
-			srcPR->y + src_row * subsample,
-			orig_width * subsample,
-			src,
-			subsample);
+                        srcPR->x,
+                        srcPR->y + src_row * subsample,
+                        orig_width * subsample,
+                        src,
+                        subsample);
 
   /*  Scale the selected region  */
   for (i = 0; i < height; )
     {
       src_col = 0;
-      x_cum = (gdouble) src_col;
+      x_cum   = (gdouble) src_col;
 
       /* determine the fraction of the src pixel we are using for y */
       if (y_cum + y_rat <= (src_row + 1 + EPSILON))
-	{
-	  y_cum += y_rat;
-	  y_frac = y_cum - y_last;
-	  advance_dest = TRUE;
-	}
+        {
+          y_cum += y_rat;
+          y_frac = y_cum - y_last;
+          advance_dest = TRUE;
+        }
       else
-	{
-	  src_row++;
-	  y_frac = src_row - y_last;
-	  advance_dest = FALSE;
-	}
+        {
+          src_row++;
+          y_frac = src_row - y_last;
+          advance_dest = FALSE;
+        }
 
       y_last += y_frac;
 
@@ -324,15 +333,15 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
       r = row;
 
       frac = 0;
-      j = width;
 
+      j  = width;
       while (j)
-	{
-	  tot_frac = x_frac[frac++] * y_frac;
+        {
+          tot_frac = x_frac[frac++] * y_frac;
 
-	  /*  If indexed, transform the color to RGB  */
-	  if (type == GIMP_INDEXED)
-	    {
+          /*  If indexed, transform the color to RGB  */
+          if (GIMP_IMAGE_TYPE_IS_INDEXED (type))
+            {
               gint index = *s * 3;
 
               if (has_alpha)
@@ -355,8 +364,8 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
                   r[BLUE_PIX]  += cmap[index++] * tot_frac;
                 }
             }
-	  else
-	    {
+          else
+            {
               if (has_alpha)
                 {
                   /* premultiply */
@@ -373,34 +382,34 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
                   for (b = 0; b < bytes; b++)
                     r[b] += s[b] * tot_frac;
                 }
-	    }
+            }
 
-	  /*  increment the destination  */
-	  if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	    {
-	      r += bytes;
-	      x_cum += x_rat;
-	      j--;
-	    }
-	  /* increment the source */
-	  else
-	    {
-	      s += srcPR->bytes;
-	      src_col++;
-	    }
-	}
+          /*  increment the destination  */
+          if (x_cum + x_rat <= (src_col + 1 + EPSILON))
+            {
+              r += bytes;
+              x_cum += x_rat;
+              j--;
+            }
+          /* increment the source */
+          else
+            {
+              s += srcPR->bytes;
+              src_col++;
+            }
+        }
 
       if (advance_dest)
-	{
-	  tot_frac = 1.0 / (x_rat * y_rat);
+        {
+          tot_frac = 1.0 / (x_rat * y_rat);
 
-	  /*  copy "row" to "dest"  */
-	  d = dest;
-	  r = row;
+          /*  copy "row" to "dest"  */
+          d = dest;
+          r = row;
 
-	  j = width;
-	  while (j--)
-	    {
+          j = width;
+          while (j--)
+            {
               if (has_alpha)
                 {
                   /* unpremultiply */
@@ -428,24 +437,24 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 
               r += bytes;
               d += bytes;
-	    }
+            }
 
-	  dest += destwidth;
+          dest += destwidth;
 
-	  /*  clear the "row" array  */
-	  memset (row, 0, sizeof (gdouble) * destwidth);
+          /*  clear the "row" array  */
+          memset (row, 0, sizeof (gdouble) * destwidth);
 
-	  i++;
-	}
+          i++;
+        }
       else
-	{
-	  pixel_region_get_row (srcPR,
-				srcPR->x,
-				srcPR->y + src_row * subsample,
-				orig_width * subsample,
-				src,
-				subsample);
-	}
+        {
+          pixel_region_get_row (srcPR,
+                                srcPR->x,
+                                srcPR->y + src_row * subsample,
+                                orig_width * subsample,
+                                src,
+                                subsample);
+        }
     }
 
   /*  free up temporary arrays  */

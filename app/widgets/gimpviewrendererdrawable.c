@@ -174,24 +174,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             }
           else
             {
-              gint   bytes    = 0;
+              gint   bytes    = gimp_drawable_preview_bytes (drawable);
               guchar empty[4] = { 0, 0, 0, 0 };
-
-              switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
-                {
-                case GIMP_RGB:
-                case GIMP_GRAY:
-                  bytes = gimp_drawable_bytes (drawable);
-                  break;
-
-                case GIMP_INDEXED:
-                  bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
-                  break;
-
-                default:
-                  g_return_if_reached ();
-                  break;
-                }
 
               render_buf = temp_buf_new (1, 1, bytes, 0, 0, empty);
             }

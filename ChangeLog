@@ -1,4 +1,13 @@
 2004-12-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-preview.[ch]: added utility function
+	gimp_drawable_preview_bytes() and use it. Some cleanup,
+	untabified.
+
+	* app/widgets/gimpviewrendererdrawable.c: use
+	gimp_drawable_preview_bytes() instead of duplicating its code.
+
+2004-12-15  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_scale):
