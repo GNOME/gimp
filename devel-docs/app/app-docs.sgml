@@ -591,6 +591,7 @@
       <xi:include href="xml/gimpcoloreditor.xml"/>
       <xi:include href="xml/gimpdevicestatus.xml"/>
       <xi:include href="xml/gimperrorconsole.xml"/>
+      <xi:include href="xml/gimpdasheditor.xml"/>
       <xi:include href="xml/gimpgrideditor.xml"/>
       <xi:include href="xml/gimpstrokeeditor.xml"/>
       <xi:include href="xml/gimptemplateeditor.xml"/>
