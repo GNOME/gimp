@@ -51,7 +51,6 @@ SUBDIRS = 			\
 	fits			\
 	flame			\
 	flarefx			\
-	fp			\
 	fractaltrace		\
 	gauss_iir		\
 	gauss_rle		\

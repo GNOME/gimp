@@ -792,7 +792,7 @@ static void init_calculation () {
 static void do_curl_effect (void) {
    gint x, y, color_image;
    gint x1, y1, k;
-   guint alpha_pos, progress, max_progress, nreturn_vals;
+   guint alpha_pos, progress, max_progress;
    gdouble intensity, alpha, beta;
    vector_t v, dl, dr;
    gdouble dl_mag, dr_mag, angle, factor;
