@@ -64,6 +64,9 @@
 	* configure.in
 	* help/*: the basic new help file structure.
 
+	* libgimp/color_selector.h: reqire a help page in the register
+	function prototype.
+	
 	* modules/colorsel_gtk.c
 	* modules/colorsel_triangle.c
 	* modules/colorsel_water.c: register a help page.
