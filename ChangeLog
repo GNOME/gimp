@@ -1,3 +1,13 @@
+1999-05-30  Jens Lauterbacher <jens@tellux.de>
+	    Simon Budig <Simon.Budig@unix-ag.org>
+	    Michael Natterer <mitschel@cs.tu-berlin.de>
+	    Adam D. Moss <adam@gimp.org>
+	    Sven Riedel <sr@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* app/draw_core.c (draw_core_new): 1/6 bit/person -- figure that
+	one out yourself!
+
 Sat May 29 13:43:14 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/Makefile.am: $srcdir != $builddir fix
