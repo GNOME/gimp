@@ -897,60 +897,52 @@ static void
 browser_show_plugin (PluginBrowser *browser,
                      PInfo         *pinfo)
 {
-  gchar           *selected_proc_blurb;
-  gchar           *selected_proc_help;
-  gchar           *selected_proc_author;
-  gchar           *selected_proc_copyright;
-  gchar           *selected_proc_date;
-  GimpPDBProcType  selected_proc_type;
-  gint             selected_nparams;
-  gint             selected_nreturn_vals;
-  GimpParamDef    *selected_params;
-  GimpParamDef    *selected_return_vals;
+  gchar           *blurb         = NULL;
+  gchar           *help          = NULL;
+  gchar           *author        = NULL;
+  gchar           *copyright     = NULL;
+  gchar           *date          = NULL;
+  GimpPDBProcType  type          = 0;
+  gint             n_params      = 0;
+  gint             n_return_vals = 0;
+  GimpParamDef    *params        = NULL;
+  GimpParamDef    *return_vals   = NULL;
 
   g_return_if_fail (browser != NULL);
   g_return_if_fail (pinfo != NULL);
 
-  selected_proc_blurb     = NULL;
-  selected_proc_help      = NULL;
-  selected_proc_author    = NULL;
-  selected_proc_copyright = NULL;
-  selected_proc_date      = NULL;
-  selected_proc_type      = 0;
-  selected_nparams        = 0;
-  selected_nreturn_vals   = 0;
-  selected_params         = NULL;
-  selected_return_vals    = NULL;
-
   gimp_procedural_db_proc_info (pinfo->realname,
-                                &selected_proc_blurb,
-                                &selected_proc_help,
-                                &selected_proc_author,
-                                &selected_proc_copyright,
-                                &selected_proc_date,
-                                &selected_proc_type,
-                                &selected_nparams, &selected_nreturn_vals,
-                                &selected_params,  &selected_return_vals);
+                                &blurb,
+                                &help,
+                                &author,
+                                &copyright,
+                                &date,
+                                &type,
+                                &n_params,
+                                &n_return_vals,
+                                &params,
+                                &return_vals);
 
   gimp_proc_box_set_widget (browser->proc_box,
                             gimp_proc_view_new (pinfo->realname,
                                                 pinfo->menu,
-                                                selected_proc_blurb,
-                                                selected_proc_help,
-                                                selected_proc_author,
-                                                selected_proc_copyright,
-                                                selected_proc_date,
-                                                selected_proc_type,
-                                                selected_nparams,
-                                                selected_nreturn_vals,
-                                                selected_params,
-                                                selected_return_vals));
+                                                blurb,
+                                                help,
+                                                author,
+                                                copyright,
+                                                date,
+                                                type,
+                                                n_params,
+                                                n_return_vals,
+                                                params,
+                                                return_vals));
 
-  g_free (selected_proc_blurb);
-  g_free (selected_proc_help);
-  g_free (selected_proc_author);
-  g_free (selected_proc_copyright);
-  g_free (selected_proc_date);
-  g_free (selected_params);
-  g_free (selected_return_vals);
+  g_free (blurb);
+  g_free (help);
+  g_free (author);
+  g_free (copyright);
+  g_free (date);
+
+  gimp_destroy_paramdefs (params,      n_params);
+  gimp_destroy_paramdefs (return_vals, n_return_vals);
 }

@@ -24,8 +24,6 @@
 
 #include "gimpprocbox.h"
 
-#include "libgimp/stdplugins-intl.h"
-
 
 /*  public functions  */
 

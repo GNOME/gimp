@@ -308,8 +308,9 @@ browser_show_procedure (GimpDBBrowser *browser,
   g_free (browser->proc_author);
   g_free (browser->proc_copyright);
   g_free (browser->proc_date);
-  g_free (browser->params);
-  g_free (browser->return_vals);
+
+  gimp_destroy_paramdefs (browser->params,      browser->n_params);
+  gimp_destroy_paramdefs (browser->return_vals, browser->n_return_vals);
 
   gimp_procedural_db_proc_info (proc_name,
                                 &browser->proc_blurb,

@@ -72,6 +72,16 @@ gimp_proc_view_new (const gchar     *name,
   GtkSizeGroup *name_group;
   GtkSizeGroup *type_group;
   GtkSizeGroup *desc_group;
+  gint          row;
+
+  if (blurb     && strlen (blurb) < 2)     blurb     = NULL;
+  if (help      && strlen (help) < 2)      help      = NULL;
+  if (author    && strlen (author) < 2)    author    = NULL;
+  if (date      && strlen (date) < 2)      date      = NULL;
+  if (copyright && strlen (copyright) < 2) copyright = NULL;
+
+  if (blurb && help && ! strcmp (blurb, help))
+    help = NULL;
 
   main_vbox = gtk_vbox_new (FALSE, 12);
 
@@ -95,7 +105,7 @@ gimp_proc_view_new (const gchar     *name,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  if (menu_path && strlen (menu_path) > 1)
+  if (menu_path)
     {
       label = gtk_label_new_with_mnemonic (menu_path);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -104,7 +114,7 @@ gimp_proc_view_new (const gchar     *name,
       gtk_widget_show (label);
     }
 
-  if (blurb && strlen (blurb) > 1)
+  if (blurb)
     {
       label = gtk_label_new (blurb);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -143,6 +153,9 @@ gimp_proc_view_new (const gchar     *name,
       gtk_widget_show (table);
     }
 
+  if (! help && ! author && ! date && ! copyright)
+    return main_vbox;
+
   frame = gimp_frame_new (_("Additional Information"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -152,7 +165,7 @@ gimp_proc_view_new (const gchar     *name,
   gtk_widget_show (vbox);
 
   /* show the help */
-  if (help && strlen (help) > 1)
+  if (help)
     {
       label = gtk_label_new (help);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -163,35 +176,50 @@ gimp_proc_view_new (const gchar     *name,
 
   /* show the author & the copyright */
 
-  table = gtk_table_new (3, 2, FALSE);
+  if (! author && ! date && ! copyright)
+    return main_vbox;
+
+  table = gtk_table_new ((author != 0) + (date != 0) + (copyright != 0), 2,
+                         FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (author);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  row = 0;
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Author:"), 0.0, 0.0,
-                             label, 3, FALSE);
+  if (author)
+    {
+      label = gtk_label_new (author);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-  label = gtk_label_new (date);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("Author:"), 0.0, 0.0,
+                                 label, 3, FALSE);
+    }
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Date:"), 0.0, 0.0,
-                             label, 3, FALSE);
+  if (date)
+    {
+      label = gtk_label_new (date);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-  label = gtk_label_new (copyright);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("Date:"), 0.0, 0.0,
+                                 label, 3, FALSE);
+    }
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Copyright:"), 0.0, 0.0,
-                             label, 3, FALSE);
+  if (copyright)
+    {
+      label = gtk_label_new (copyright);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("Copyright:"), 0.0, 0.0,
+                                 label, 3, FALSE);
+    }
 
   return main_vbox;
 }
@@ -229,7 +257,8 @@ gimp_proc_view_create_params (GimpParamDef *params,
       type = GParamType_to_string (params[i].type);
       label = gtk_label_new (type);
       gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                 PANGO_ATTR_FAMILY, "monospace",
+                                 PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_size_group_add_widget (type_group, label);
@@ -243,7 +272,7 @@ gimp_proc_view_create_params (GimpParamDef *params,
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_size_group_add_widget (desc_group, label);
       gtk_table_attach (GTK_TABLE (table), label,
-                        2, 3, i, i + 1, GTK_FILL, GTK_FILL, 0, 0);
+                        2, 3, i, i + 1, GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
     }
 

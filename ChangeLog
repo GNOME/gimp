@@ -1,5 +1,17 @@
 2004-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/dbbrowser/gimpprocbox.c: don't include
+	"libgimp/stdplugins-intl.h".
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: use gimp_destroy_paramdefs()
+	so we don't leak all param names and descriptions.
+
+	* plug-ins/dbbrowser/gimpprocview.c: don't show empty rows or
+	redundant information (help == blurb for deprecated procedures).
+
+2004-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/Makefile.am
 	* plug-ins/dbbrowser/gimpprocbox.c: new files holding more common
 	code from the two browsers.
