@@ -1,5 +1,13 @@
 2005-01-04  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): don't set the default response
+	to Save to reduce the risk of accidentally saving an image (#162872).
+
+2005-01-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_name_canceled): removed debug output.
 	(gimp_container_tree_view_remove_item)

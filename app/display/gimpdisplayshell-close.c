@@ -135,7 +135,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                       NULL);
   g_free (title);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), RESPONSE_SAVE);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
