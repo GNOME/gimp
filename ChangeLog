@@ -1,3 +1,7 @@
+Thu Jul 23 21:57:25 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/interface.c: usize statusbar to 1 width
+
 Thu Jul 23 20:29:40 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/edit_selection.c: Display the move offset in the statusbar.

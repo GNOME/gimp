@@ -716,6 +716,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_container_add(GTK_CONTAINER (frame), gdisp->cursor_label);
 
   gdisp->statusbar = gtk_statusbar_new();
+  gtk_widget_set_usize(gdisp->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
 				 GTK_RESIZE_QUEUE);
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->statusbar, TRUE, TRUE, 0);
