@@ -1,10 +1,24 @@
-This is gimp-print version 4.0.2, a stable release in the 4.0 line.
+This is gimp-print version 4.0.3, a stable release in the 4.0 line.
 
 This software includes the Print plug-in for the Gimp (1.0, 1.1, and
 1.2), and GhostScript and CUPS drivers.  The support for printers in
 GhostScript and CUPS is identical to the support for these printers in
 the Print plugin -- they use the identical code base.  Please read
 Ghost/README and CUPS/README.txt for more information on this.
+
+
+Gimp-Print 4.0.3 contains the following fixes over Gimp-Print 4.0.2:
+
+1) The fix to the GhostScript driver in 4.0.2 broke the handling of
+   printer-specific variables.  This is now fixed.
+
+2) The documentation in Ghost/README contains more information on the
+   color settings.
+
+3) The HP DeskJet 1200C should now operate correctly in color mode.
+
+4) The CUPS utility named 'calibrate' has been renamed
+   'cups-calibrate' because of name collisions on some systems.
 
 
 Gimp-Print 4.0.2 contains the following fixes over Gimp-Print 4.0.1:

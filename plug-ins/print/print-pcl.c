@@ -756,8 +756,43 @@ static pcl_cap_t pcl_model_capabilities[] =
       -1,
     },
   },
-  /* Deskjet 1200C, 1600C */
+  /* Deskjet 1200C */
   { 1200,
+    17 * 72 / 2, 14 * 72,
+    PCL_RES_150_150 | PCL_RES_300_300,
+    12, 12, 18, 18,
+    PCL_COLOR_CMY,
+    PCL_PRINTER_DJ | PCL_PRINTER_NEW_ERG | PCL_PRINTER_TIFF | PCL_PRINTER_MEDIATYPE |
+      PCL_PRINTER_CUSTOM_SIZE,
+    {
+/* This printer is not mentioned in the Comparison tables,
+   so I'll just pick some likely sizes... */
+      PCL_PAPERSIZE_EXECUTIVE,
+      PCL_PAPERSIZE_LETTER,
+      PCL_PAPERSIZE_LEGAL,
+      PCL_PAPERSIZE_A5,
+      PCL_PAPERSIZE_A4,
+      PCL_PAPERSIZE_4x6,
+      PCL_PAPERSIZE_5x8,
+      -1,
+    },
+    {
+      PCL_PAPERTYPE_PLAIN,
+      PCL_PAPERTYPE_BOND,
+      PCL_PAPERTYPE_PREMIUM,
+      PCL_PAPERTYPE_GLOSSY,
+      PCL_PAPERTYPE_TRANS,
+      -1,
+    },
+    {
+      PCL_PAPERSOURCE_STANDARD,
+      PCL_PAPERSOURCE_MANUAL,
+      PCL_PAPERSOURCE_DJ_TRAY,
+      -1,
+    },
+  },
+  /* Deskjet 1600C */
+  { 1600,
     17 * 72 / 2, 14 * 72,
     PCL_RES_150_150 | PCL_RES_300_300,
     12, 12, 18, 18,
