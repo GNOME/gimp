@@ -1,3 +1,8 @@
+2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c: lots of code for dealing
+	with constraints.  Almost functional now ...
+	
 2005-03-10  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-altivec.c: delete trailing whitespace.
