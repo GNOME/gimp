@@ -1,3 +1,9 @@
+2004-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c: fixed position of vertical line
+	indicating the picked color. Patch from William Skaggs and
+	Søren Wedel Nielsen; fixes bug #142506.
+
 2004-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-params.c (plug_in_proc_args_check): changed

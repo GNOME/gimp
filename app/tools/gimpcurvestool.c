@@ -1225,9 +1225,11 @@ curves_graph_expose (GtkWidget      *widget,
       /* draw the color line */
       gdk_draw_line (widget->window,
                      graph_gc,
-                     tool->col_value[channel] + RADIUS,
+                     RADIUS +
+                     ROUND ((gdouble) width  * (tool->col_value[channel]) / 256.0),
                      RADIUS,
-                     tool->col_value[channel] + RADIUS,
+                     RADIUS +
+                     ROUND ((gdouble) width  * (tool->col_value[channel]) / 256.0),
                      height + RADIUS - 1);
 
       /* and xpos indicator */
@@ -1248,7 +1250,8 @@ curves_graph_expose (GtkWidget      *widget,
 
       gdk_draw_layout (widget->window,
                        graph_gc,
-                       tool->col_value[channel] + x,
+                       RADIUS +
+                       ROUND (((gdouble) width  * (tool->col_value[channel])) / 256.0 + x),
                        height - y - 2,
                        tool->xpos_layout);
     }
