@@ -1,3 +1,8 @@
+Mon Mar  8 16:27:25 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* app/hue_saturation.c: comment out Raph's saturation changes,
+	didn't work in all cases
+
 1999-03-08  Tor Lillqvist  <tml@iki.fi>
 
 	* app/devices.c (devices_write_rc): A line had been deleted by
