@@ -32,6 +32,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
+#include "menus.h"
 #include "tool-options-commands.h"
 #include "tool-options-menu.h"
 
@@ -54,30 +55,38 @@ static void tool_options_menu_update_presets (GtkItemFactory         *factory,
 
 GimpItemFactoryEntry tool_options_menu_entries[] =
 {
-  { { N_("/_Save Options to/_New Entry..."), "",
+  MENU_BRANCH (N_("/_Save Options to")),
+
+  { { N_("/Save Options to/_New Entry..."), "",
       tool_options_save_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE, NULL },
-  { { "/_Save Options to/new-separator", "",
+  { { "/Save Options to/new-separator", "",
       NULL, 0,
       "<Separator>", NULL },
     NULL,
     NULL, NULL },
 
-  { { N_("/_Restore Options from/(None)"), "",
+  MENU_BRANCH (N_("/_Restore Options from")),
+
+  { { N_("/Restore Options from/(None)"), "",
       NULL, 0,
       "<Item>", NULL },
     NULL,
     NULL, NULL },
 
-  { { N_("/Re_name Saved Options/(None)"), "",
+  MENU_BRANCH (N_("/Re_name Saved Options")),
+
+  { { N_("/Rename Saved Options/(None)"), "",
       NULL, 0,
       "<Item>", NULL },
     NULL,
     NULL, NULL },
 
-  { { N_("/_Delete Saved Options/(None)"), "",
+  MENU_BRANCH (N_("/_Delete Saved Options")),
+
+  { { N_("/Delete Saved Options/(None)"), "",
       NULL, 0,
       "<Item>", NULL },
     NULL,

@@ -1,3 +1,7 @@
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation.
+
 2004-03-11  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spansih translation.
@@ -22,7 +26,8 @@
 
 2004-03-10  Sigurd Gartmann  <sigurd-translate@brogar.org>
 
-	* no.po: Updated Norwegian Bokmål translation with work from Runar Ingebrigtsen.
+	* no.po: Updated Norwegian Bokmål translation with work from Runar
+	Ingebrigtsen.
 
 2004-03-09  Miloslav Trmac  <mitr@volny.cz>
 

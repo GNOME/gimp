@@ -1,3 +1,8 @@
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tool-options-menu.c (tool_options_menu_entries): added
+	explicit menu branches to allow them to be translated (bug #136937).
+
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_create_text):
