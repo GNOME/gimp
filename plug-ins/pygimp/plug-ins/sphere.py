@@ -75,7 +75,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
-    "<Toolbox>/Xtns/Python-Fu/Misc/_Sphere",
+    "<Toolbox>/Xtns/Python-Fu/Test/_Sphere",
     "RGB*, GRAY*, INDEXED*",
     [
         (PF_INT, "radius", "Radius for sphere", 100),

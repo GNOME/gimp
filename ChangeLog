@@ -1,5 +1,10 @@
 2004-02-20  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/pygimp/plug-ins/sphere.py: Moved to the Test menu,
+	to clarify its station in life.
+
+2004-02-20  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/pygimp/gimpfu.py: Do some simple validation on the
 	GUI input. Arrays are still kinda hokey though. Based on Dave Neary's
 	patch, addresses bug #122049.
