@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
-"PO-Revision-Date: 2002-07-24 02:03+0200\n"
+"POT-Creation-Date: 2002-10-25 01:44+0200\n"
+"PO-Revision-Date: 2002-10-25 01:48+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgid "About"
 msgstr "Om"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1152
+#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1145
 #: plug-ins/MapObject/mapobject_ui.c:1434 plug-ins/common/CML_explorer.c:1197
 #: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1385
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
@@ -145,6 +145,8 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
+"Ändra CX-värdet (ändrar proportion på fraktalen, aktiv med varje fraktal "
+"utom Mandelbrot och Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520
 msgid "CY:"
@@ -155,6 +157,8 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
+"Ändra CY-värdet (ändrar proportion på fraktalen, aktiv med varje fraktal "
+"utom Mandelbrot och Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:540
 msgid "Load a fractal from file"
@@ -243,8 +247,8 @@ msgstr "Färgintensitet"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:691 plug-ins/common/compose.c:120
-#: plug-ins/common/compose.c:124 plug-ins/common/exchange.c:420
+#: plug-ins/FractalExplorer/Dialogs.c:691 plug-ins/common/compose.c:124
+#: plug-ins/common/compose.c:128 plug-ins/common/exchange.c:420
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Röd:"
@@ -253,8 +257,8 @@ msgstr "Röd:"
 msgid "Change the intensity of the red channel"
 msgstr "Ändra intensiteten på den röda kanalen"
 
-#: plug-ins/FractalExplorer/Dialogs.c:701 plug-ins/common/compose.c:121
-#: plug-ins/common/compose.c:125 plug-ins/common/exchange.c:464
+#: plug-ins/FractalExplorer/Dialogs.c:701 plug-ins/common/compose.c:125
+#: plug-ins/common/compose.c:129 plug-ins/common/exchange.c:464
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Grön:"
@@ -263,8 +267,8 @@ msgstr "Grön:"
 msgid "Change the intensity of the green channel"
 msgstr "Ändra intensiteten på den gröna kanalen"
 
-#: plug-ins/FractalExplorer/Dialogs.c:711 plug-ins/common/compose.c:122
-#: plug-ins/common/compose.c:126 plug-ins/common/exchange.c:508
+#: plug-ins/FractalExplorer/Dialogs.c:711 plug-ins/common/compose.c:126
+#: plug-ins/common/compose.c:130 plug-ins/common/exchange.c:508
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Blå:"
@@ -280,7 +284,7 @@ msgstr "Färgfunktion"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:731 plug-ins/common/AlienMap.c:1459
-#: plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:121
 msgid "Red"
 msgstr "Röd"
 
@@ -298,7 +302,7 @@ msgstr "Cosinus"
 
 #: plug-ins/FractalExplorer/Dialogs.c:739
 #: plug-ins/FractalExplorer/Dialogs.c:780
-#: plug-ins/FractalExplorer/Dialogs.c:821 plug-ins/Lighting/lighting_ui.c:564
+#: plug-ins/FractalExplorer/Dialogs.c:821 plug-ins/Lighting/lighting_ui.c:522
 #: plug-ins/common/CML_explorer.c:172 plug-ins/common/align_layers.c:443
 #: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2737
 #: plug-ins/common/ps.c:2750 plug-ins/common/psp.c:444
@@ -346,13 +350,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:772 plug-ins/common/AlienMap.c:1482
-#: plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:122
 msgid "Green"
 msgstr "Grön"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:813 plug-ins/common/AlienMap.c:1505
-#: plug-ins/common/decompose.c:123
+#: plug-ins/common/decompose.c:127
 msgid "Blue"
 msgstr "Blå"
 
@@ -531,12 +535,12 @@ msgstr "Genomsök igenefter fraktaler"
 msgid "Add FractalExplorer Path"
 msgstr "Lägg till FractalExplorer-sökväg"
 
-#: plug-ins/Lighting/lighting_main.c:165
+#: plug-ins/Lighting/lighting_main.c:166
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
 msgstr "<Image>/Filter/Ljuseffekter/Blixteffekter..."
 
 #. General options
-#: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:548
+#: plug-ins/Lighting/lighting_ui.c:351 plug-ins/MapObject/mapobject_ui.c:548
 msgid "General Options"
 msgstr "Allmänna alternativ"
 
@@ -567,140 +571,136 @@ msgstr "Allmänna alternativ"
 #. _("Enable/disable environment mapping (reflection)"),
 #. NULL);
 #.
-#: plug-ins/Lighting/lighting_ui.c:428
+#: plug-ins/Lighting/lighting_ui.c:386
 msgid "T_ransparent Background"
 msgstr "_Genomskinlig bakgrund"
 
-#: plug-ins/Lighting/lighting_ui.c:438
+#: plug-ins/Lighting/lighting_ui.c:396
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Gör målbilden genomskinlig där bumphöjden är noll"
 
-#: plug-ins/Lighting/lighting_ui.c:441
+#: plug-ins/Lighting/lighting_ui.c:399
 msgid "Cre_ate New Image"
 msgstr "Sk_apa ny bild"
 
-#: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:620
+#: plug-ins/Lighting/lighting_ui.c:409 plug-ins/MapObject/mapobject_ui.c:620
 msgid "Create a new image when applying filter"
 msgstr "Skapa en ny bild vid tillämpning av filter"
 
-#: plug-ins/Lighting/lighting_ui.c:453
+#: plug-ins/Lighting/lighting_ui.c:411
 msgid "High _Quality Preview"
 msgstr "Hög_kvalitetsförhandsgranskning"
 
-#: plug-ins/Lighting/lighting_ui.c:463
+#: plug-ins/Lighting/lighting_ui.c:421
 msgid "Enable/disable high quality preview"
 msgstr "Använd/använd inte högkvalitetsförhandsgranskning"
 
-#: plug-ins/Lighting/lighting_ui.c:471
+#: plug-ins/Lighting/lighting_ui.c:429
 msgid "E_nable Antialiasing"
 msgstr "A_nvänd kantutjämning"
 
-#: plug-ins/Lighting/lighting_ui.c:492 plug-ins/MapObject/mapobject_ui.c:665
+#: plug-ins/Lighting/lighting_ui.c:450 plug-ins/MapObject/mapobject_ui.c:665
 #: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:573
 #: plug-ins/common/fractaltrace.c:835 plug-ins/common/struc.c:1330
 msgid "_Depth:"
 msgstr "_Djup:"
 
-#: plug-ins/Lighting/lighting_ui.c:495 plug-ins/MapObject/mapobject_ui.c:668
+#: plug-ins/Lighting/lighting_ui.c:453 plug-ins/MapObject/mapobject_ui.c:668
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalitet på antialiasing. Högre är bättre, men långsammare"
 
-#: plug-ins/Lighting/lighting_ui.c:502
+#: plug-ins/Lighting/lighting_ui.c:460
 msgid "T_hreshold:"
 msgstr "_Tröskelvärde:"
 
-#: plug-ins/Lighting/lighting_ui.c:505 plug-ins/MapObject/mapobject_ui.c:685
+#: plug-ins/Lighting/lighting_ui.c:463 plug-ins/MapObject/mapobject_ui.c:685
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Stoppa då skillnader i bildpunkter är lägre än detta värde"
 
-#: plug-ins/Lighting/lighting_ui.c:548 plug-ins/MapObject/mapobject_ui.c:711
+#: plug-ins/Lighting/lighting_ui.c:506 plug-ins/MapObject/mapobject_ui.c:711
 msgid "Light Settings"
 msgstr "Ljusinställningar"
 
-#: plug-ins/Lighting/lighting_ui.c:566
+#: plug-ins/Lighting/lighting_ui.c:524
 msgid "Directional"
 msgstr "Riktat"
 
-#: plug-ins/Lighting/lighting_ui.c:568
+#: plug-ins/Lighting/lighting_ui.c:526
 msgid "Point"
 msgstr "Punkt"
 
-#: plug-ins/Lighting/lighting_ui.c:570
-msgid "Spot"
-msgstr "Spotlight"
-
-#: plug-ins/Lighting/lighting_ui.c:575
+#: plug-ins/Lighting/lighting_ui.c:533
 msgid "L_ight Type:"
 msgstr "_Ljustyp:"
 
-#: plug-ins/Lighting/lighting_ui.c:578 plug-ins/MapObject/mapobject_ui.c:738
+#: plug-ins/Lighting/lighting_ui.c:536 plug-ins/MapObject/mapobject_ui.c:738
 msgid "Type of light source to apply"
 msgstr "Typ av ljuskälla att tillämpa"
 
-#: plug-ins/Lighting/lighting_ui.c:580 plug-ins/MapObject/mapobject_ui.c:740
+#: plug-ins/Lighting/lighting_ui.c:538 plug-ins/MapObject/mapobject_ui.c:740
 msgid "Select Lightsource Color"
 msgstr "Välj färg på ljuskälla"
 
-#: plug-ins/Lighting/lighting_ui.c:588
+#: plug-ins/Lighting/lighting_ui.c:549
 msgid "Lig_ht Color:"
 msgstr "L_jusfärg:"
 
-#: plug-ins/Lighting/lighting_ui.c:592 plug-ins/MapObject/mapobject_ui.c:753
+#: plug-ins/Lighting/lighting_ui.c:553 plug-ins/MapObject/mapobject_ui.c:753
 msgid "Set light source color"
 msgstr "Ställ in färg på ljuskälla"
 
-#: plug-ins/Lighting/lighting_ui.c:594 plug-ins/MapObject/mapobject_ui.c:755
+#: plug-ins/Lighting/lighting_ui.c:555 plug-ins/MapObject/mapobject_ui.c:755
 #: plug-ins/MapObject/mapobject_ui.c:1064
 #: plug-ins/print/gimp_main_window.c:460
 msgid "Position"
 msgstr "Position"
 
-#: plug-ins/Lighting/lighting_ui.c:611 plug-ins/common/flarefx.c:794
+#: plug-ins/Lighting/lighting_ui.c:573 plug-ins/common/flarefx.c:794
 #: plug-ins/common/nova.c:637 plug-ins/common/papertile.c:285
 #: plug-ins/flame/flame.c:1208 plug-ins/gflare/gflare.c:2958
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/Lighting/lighting_ui.c:618 plug-ins/MapObject/mapobject_ui.c:780
+#: plug-ins/Lighting/lighting_ui.c:584 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source X position in XYZ space"
 msgstr "Ljuskällans X-position i XYX-rymden"
 
-#: plug-ins/Lighting/lighting_ui.c:624 plug-ins/common/flarefx.c:815
+#: plug-ins/Lighting/lighting_ui.c:590 plug-ins/common/flarefx.c:815
 #: plug-ins/common/nova.c:658 plug-ins/common/papertile.c:294
 #: plug-ins/flame/flame.c:1222 plug-ins/gflare/gflare.c:2962
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:631 plug-ins/MapObject/mapobject_ui.c:794
+#: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:794
 msgid "Light source Y position in XYZ space"
 msgstr "Ljuskällans Y-position i XYZ-rymden"
 
-#: plug-ins/Lighting/lighting_ui.c:637
+#: plug-ins/Lighting/lighting_ui.c:607
 msgid "_Z:"
 msgstr "_Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:644 plug-ins/MapObject/mapobject_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:617 plug-ins/MapObject/mapobject_ui.c:808
 msgid "Light source Z position in XYZ space"
 msgstr "Ljuskällans Z-position i XYZ-rymden"
 
-#: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:811
+#: plug-ins/Lighting/lighting_ui.c:620 plug-ins/MapObject/mapobject_ui.c:811
 msgid "Direction Vector"
 msgstr "Riktningsvektor"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:663 plug-ins/MapObject/mapobject_ui.c:772
+#: plug-ins/Lighting/lighting_ui.c:636 plug-ins/MapObject/mapobject_ui.c:772
 #: plug-ins/MapObject/mapobject_ui.c:827
 #: plug-ins/MapObject/mapobject_ui.c:1076
 #: plug-ins/MapObject/mapobject_ui.c:1123 plug-ins/ifscompose/ifscompose.c:536
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:670 plug-ins/MapObject/mapobject_ui.c:835
+#: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:835
 msgid "Light source X direction in XYZ space"
 msgstr "Ljuskällans X-riktning i XYZ-rymden"
 
 #. Y
-#: plug-ins/Lighting/lighting_ui.c:675 plug-ins/MapObject/mapobject_ui.c:786
+#: plug-ins/Lighting/lighting_ui.c:652 plug-ins/MapObject/mapobject_ui.c:786
 #: plug-ins/MapObject/mapobject_ui.c:840
 #: plug-ins/MapObject/mapobject_ui.c:1088
 #: plug-ins/MapObject/mapobject_ui.c:1133
@@ -709,11 +709,11 @@ msgstr "Ljuskällans X-riktning i XYZ-rymden"
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:682 plug-ins/MapObject/mapobject_ui.c:848
+#: plug-ins/Lighting/lighting_ui.c:662 plug-ins/MapObject/mapobject_ui.c:848
 msgid "Light source Y direction in XYZ space"
 msgstr "Ljuskällans Y-riktning i XYZ-rymden"
 
-#: plug-ins/Lighting/lighting_ui.c:687 plug-ins/MapObject/mapobject_ui.c:800
+#: plug-ins/Lighting/lighting_ui.c:667 plug-ins/MapObject/mapobject_ui.c:800
 #: plug-ins/MapObject/mapobject_ui.c:853
 #: plug-ins/MapObject/mapobject_ui.c:1100
 #: plug-ins/MapObject/mapobject_ui.c:1143
@@ -721,162 +721,173 @@ msgstr "Ljuskällans Y-riktning i XYZ-rymden"
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:694 plug-ins/MapObject/mapobject_ui.c:861
+#: plug-ins/Lighting/lighting_ui.c:677 plug-ins/MapObject/mapobject_ui.c:861
 msgid "Light source Z direction in XYZ space"
 msgstr "Ljuskällans Z-riktning i XYZ-rymden"
 
-#: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:886
+#: plug-ins/Lighting/lighting_ui.c:703 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Intensity Levels"
 msgstr "Intensitetsnivåer"
 
-#: plug-ins/Lighting/lighting_ui.c:738
+#: plug-ins/Lighting/lighting_ui.c:721
 msgid "_Ambient:"
 msgstr "_Omgivande:"
 
-#: plug-ins/Lighting/lighting_ui.c:752 plug-ins/MapObject/mapobject_ui.c:918
+#: plug-ins/Lighting/lighting_ui.c:739 plug-ins/MapObject/mapobject_ui.c:918
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Mängd originalfärg att visa där inget direkt ljus faller"
 
-#: plug-ins/Lighting/lighting_ui.c:764
+#: plug-ins/Lighting/lighting_ui.c:751
 msgid "_Diffuse:"
 msgstr "_Diffus:"
 
-#: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:944
+#: plug-ins/Lighting/lighting_ui.c:769 plug-ins/MapObject/mapobject_ui.c:944
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensitet på originalfärgen då den upplyses av en ljuskälla"
 
-#: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:952
+#: plug-ins/Lighting/lighting_ui.c:777 plug-ins/MapObject/mapobject_ui.c:952
 msgid "Reflectivity"
 msgstr "Reflektivitet"
 
-#: plug-ins/Lighting/lighting_ui.c:804
+#: plug-ins/Lighting/lighting_ui.c:795
 msgid "D_iffuse:"
 msgstr "D_iffus:"
 
-#: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:984
+#: plug-ins/Lighting/lighting_ui.c:809 plug-ins/MapObject/mapobject_ui.c:984
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Högre värden gör att objektet reflekterar mer ljus (verkar ljusare)"
 
-#: plug-ins/Lighting/lighting_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:821
 msgid "_Specular:"
 msgstr "_Speglande:"
 
-#: plug-ins/Lighting/lighting_ui.c:844 plug-ins/MapObject/mapobject_ui.c:1010
+#: plug-ins/Lighting/lighting_ui.c:835 plug-ins/MapObject/mapobject_ui.c:1010
 msgid "Controls how intense the highlights will be"
 msgstr "Kontrollerar hur intensiva speglingarna kommer att vara"
 
-#: plug-ins/Lighting/lighting_ui.c:856
+#: plug-ins/Lighting/lighting_ui.c:847
 msgid "_Highlight:"
 msgstr "S_pegling:"
 
-#: plug-ins/Lighting/lighting_ui.c:870 plug-ins/MapObject/mapobject_ui.c:1036
+#: plug-ins/Lighting/lighting_ui.c:861 plug-ins/MapObject/mapobject_ui.c:1036
 msgid "Higher values makes the highlights more focused"
 msgstr "Högre värden gör speglingarna mera fokuserade"
 
-#: plug-ins/Lighting/lighting_ui.c:904
+#: plug-ins/Lighting/lighting_ui.c:895
 msgid "E_nable Bump Mapping"
 msgstr "A_nvänd bumpmapping"
 
-#: plug-ins/Lighting/lighting_ui.c:915
+#: plug-ins/Lighting/lighting_ui.c:906
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Använd/använd inte bumpmapping (bilddjup)"
 
-#: plug-ins/Lighting/lighting_ui.c:933
+#: plug-ins/Lighting/lighting_ui.c:924
 msgid "Bumpm_ap Image:"
 msgstr "Bumpm_ap-bild:"
 
-#: plug-ins/Lighting/lighting_ui.c:942 plug-ins/flame/flame.c:726
+#: plug-ins/Lighting/lighting_ui.c:933 plug-ins/flame/flame.c:726
 msgid "Linear"
 msgstr "Linjär"
 
-#: plug-ins/Lighting/lighting_ui.c:943
+#: plug-ins/Lighting/lighting_ui.c:934
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:727
+#: plug-ins/Lighting/lighting_ui.c:935 plug-ins/flame/flame.c:727
 msgid "Sinusoidal"
 msgstr "Sinusformad"
 
-#: plug-ins/Lighting/lighting_ui.c:945 plug-ins/flame/flame.c:728
+#: plug-ins/Lighting/lighting_ui.c:936 plug-ins/flame/flame.c:728
 msgid "Spherical"
 msgstr "Sfärisk"
 
-#: plug-ins/Lighting/lighting_ui.c:949
+#: plug-ins/Lighting/lighting_ui.c:940
 msgid "Cu_rve:"
 msgstr "Ku_rva:"
 
-#: plug-ins/Lighting/lighting_ui.c:955
+#: plug-ins/Lighting/lighting_ui.c:946
 msgid "Ma_ximum Height:"
 msgstr "St_örsta höjd:"
 
-#: plug-ins/Lighting/lighting_ui.c:962
+#: plug-ins/Lighting/lighting_ui.c:953
 msgid "Maximum height for bumps"
 msgstr "Största höjd för bumpar"
 
-#: plug-ins/Lighting/lighting_ui.c:968
+#: plug-ins/Lighting/lighting_ui.c:959
 msgid "M_inimum Height:"
 msgstr "M_insta höjd:"
 
-#: plug-ins/Lighting/lighting_ui.c:975
+#: plug-ins/Lighting/lighting_ui.c:966
 msgid "Minimum height for bumps"
 msgstr "Minsta höjd för bumpar"
 
-#: plug-ins/Lighting/lighting_ui.c:978
+#: plug-ins/Lighting/lighting_ui.c:969
 msgid "Auto_stretch to Fit Value Range"
 msgstr "Sträck _ut automatiskt för att passa värdesintervallet"
 
-#: plug-ins/Lighting/lighting_ui.c:988
+#: plug-ins/Lighting/lighting_ui.c:979
 msgid "Fit into value range"
 msgstr "Passa i värdesintervallet"
 
-#: plug-ins/Lighting/lighting_ui.c:1013
+#: plug-ins/Lighting/lighting_ui.c:1004
 msgid "E_nable Environment Mapping"
 msgstr "A_nvänd miljömappning"
 
-#: plug-ins/Lighting/lighting_ui.c:1024
+#: plug-ins/Lighting/lighting_ui.c:1015
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Använd/använd inte miljömappning (reflektion)"
 
-#: plug-ins/Lighting/lighting_ui.c:1042
+#: plug-ins/Lighting/lighting_ui.c:1033
 msgid "En_vironment Image:"
 msgstr "Mil_jöbild:"
 
-#: plug-ins/Lighting/lighting_ui.c:1046
+#: plug-ins/Lighting/lighting_ui.c:1037
 msgid "Environment image to use"
 msgstr "Miljöbild att använda"
 
 # src/menus.c:311
-#: plug-ins/Lighting/lighting_ui.c:1069
+#: plug-ins/Lighting/lighting_ui.c:1060
 msgid "Op_tions"
 msgstr "Al_ternativ"
 
-#: plug-ins/Lighting/lighting_ui.c:1073 plug-ins/MapObject/mapobject_ui.c:1365
+#: plug-ins/Lighting/lighting_ui.c:1064 plug-ins/MapObject/mapobject_ui.c:1365
 msgid "_Light"
 msgstr "_Ljus"
 
-#: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1369
+#: plug-ins/Lighting/lighting_ui.c:1068 plug-ins/MapObject/mapobject_ui.c:1369
 msgid "_Material"
 msgstr "_Material"
 
-#: plug-ins/Lighting/lighting_ui.c:1081
+#: plug-ins/Lighting/lighting_ui.c:1072
 msgid "_Bump Map"
 msgstr "_Bumpmap"
 
-#: plug-ins/Lighting/lighting_ui.c:1085
+#: plug-ins/Lighting/lighting_ui.c:1076
 msgid "_Environment Map"
 msgstr "Miljö_karta"
 
-#: plug-ins/Lighting/lighting_ui.c:1127
+#: plug-ins/Lighting/lighting_ui.c:1120
 msgid "Lighting Effects"
 msgstr "Ljuseffekter"
 
-#: plug-ins/Lighting/lighting_ui.c:1187
-msgid "_Update Preview"
-msgstr "_Uppdatera förhandsgranskning"
+# src/menus.c:293
+#: plug-ins/Lighting/lighting_ui.c:1182 plug-ins/imagemap/imap_polygon.c:456
+msgid "_Update"
+msgstr "_Uppdatera"
 
-#: plug-ins/Lighting/lighting_ui.c:1195 plug-ins/MapObject/mapobject_ui.c:1477
+#: plug-ins/Lighting/lighting_ui.c:1189 plug-ins/MapObject/mapobject_ui.c:1477
 msgid "Recompute preview image"
 msgstr "Omberäkna förhandsgranskningsbild"
+
+#: plug-ins/Lighting/lighting_ui.c:1191
+#, fuzzy
+msgid "I_nteractive"
+msgstr "Interlace"
+
+#: plug-ins/Lighting/lighting_ui.c:1206
+#, fuzzy
+msgid "Enable/disable real time preview of changes"
+msgstr "Använd/använd inte högkvalitetsförhandsgranskning"
 
 #: plug-ins/MapObject/mapobject_main.c:203
 msgid "<Image>/Filters/Map/Map Object..."
@@ -928,11 +939,11 @@ msgstr "Gör bilden genomskinlig utanför objektet"
 
 #: plug-ins/MapObject/mapobject_ui.c:595
 msgid "Tile Source Image"
-msgstr ""
+msgstr "Upprepa källbilden"
 
 #: plug-ins/MapObject/mapobject_ui.c:606
 msgid "Tile source image: useful for infinite planes"
-msgstr ""
+msgstr "Upprepa källbilden: användbart för oändliga plan"
 
 #: plug-ins/MapObject/mapobject_ui.c:609
 msgid "Create New Image"
@@ -1086,7 +1097,7 @@ msgstr "Undersida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Images for the Cap Faces"
-msgstr ""
+msgstr "Bilder för ändarna"
 
 #: plug-ins/MapObject/mapobject_ui.c:1305 plug-ins/gimpressionist/size.c:55
 #: plug-ins/gimpressionist/size.c:60 plug-ins/print/gimp_main_window.c:1111
@@ -1149,11 +1160,11 @@ msgstr "Visa/göm förhandsgranskningstrådram"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
-#: plug-ins/common/png.c:478 plug-ins/common/png.c:480
+#: plug-ins/common/png.c:474 plug-ins/common/png.c:476
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
@@ -1192,13 +1203,13 @@ msgstr "%s: felaktig färgkarta"
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:319 plug-ins/bmp/bmpread.c:326
 #: plug-ins/bmp/bmpread.c:333 plug-ins/common/CEL.c:301
-#: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:544
-#: plug-ins/common/decompose.c:481 plug-ins/common/film.c:995
+#: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:568
+#: plug-ins/common/decompose.c:501 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:903 plug-ins/common/lic.c:713
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
 #: plug-ins/common/pcx.c:335 plug-ins/common/pix.c:372
-#: plug-ins/common/png.c:599 plug-ins/common/pnm.c:496
+#: plug-ins/common/png.c:601 plug-ins/common/pnm.c:496
 #: plug-ins/common/psd.c:2115 plug-ins/common/smooth_palette.c:246
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
 #: plug-ins/common/tiff.c:660 plug-ins/common/tile.c:279
@@ -1225,8 +1236,8 @@ msgstr "Kan inte öppna %s"
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:515 plug-ins/common/png.c:827
-#: plug-ins/common/png.c:829 plug-ins/common/pnm.c:780
+#: plug-ins/common/pix.c:515 plug-ins/common/png.c:850
+#: plug-ins/common/png.c:852 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
@@ -1679,20 +1690,20 @@ msgstr "Slumpmässiga värden från frö"
 msgid "Randoms from seed (shared)"
 msgstr "Slumpmässiga värden från frö (delad)"
 
-#: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:127
+#: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:131
 #: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
 #: plug-ins/gimpressionist/orientation.c:196
 #: plug-ins/gimpressionist/size.c:190
 msgid "Hue"
 msgstr "Nyans"
 
-#: plug-ins/common/CML_explorer.c:305 plug-ins/common/decompose.c:128
+#: plug-ins/common/CML_explorer.c:305 plug-ins/common/decompose.c:132
 #: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
 #: plug-ins/rcm/rcm_dialog.c:543
 msgid "Saturation"
 msgstr "Mättnad"
 
-#: plug-ins/common/CML_explorer.c:306 plug-ins/common/decompose.c:129
+#: plug-ins/common/CML_explorer.c:306 plug-ins/common/decompose.c:133
 #: plug-ins/fp/fp_gtk.c:300 plug-ins/fp/fp_gtk.c:434
 #: plug-ins/gimpressionist/orientation.c:139
 #: plug-ins/gimpressionist/size.c:134
@@ -1777,6 +1788,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"\"Fixera frö\" är ett alias till mig.\n"
+"Samma frö producerar samma bild, om (1) bildens vidd är densamma (detta är "
+"anledningen till att ritytans bild är olik förhandsgranskningen), och (2) "
+"alla mutationshastigheter är noll."
 
 #: plug-ins/common/CML_explorer.c:1421
 #, fuzzy
@@ -1858,11 +1873,11 @@ msgstr "Parameter k:"
 
 #: plug-ins/common/CML_explorer.c:1790
 msgid "Range Low:"
-msgstr ""
+msgstr "Undre värde:"
 
 #: plug-ins/common/CML_explorer.c:1799
 msgid "Range High:"
-msgstr ""
+msgstr "Övre värde:"
 
 #: plug-ins/common/CML_explorer.c:1811
 msgid "Plot the Graph of the Settings"
@@ -1989,7 +2004,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:526
 #: plug-ins/common/nova.c:500 plug-ins/common/oilify.c:469
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:367
-#: plug-ins/common/png.c:1178 plug-ins/common/polar.c:963
+#: plug-ins/common/png.c:1227 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
 #: plug-ins/common/scatter_hsv.c:434 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:390
@@ -2110,11 +2125,11 @@ msgstr "Bildruta %d av %d"
 
 #: plug-ins/common/animoptimize.c:176
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr ""
+msgstr "<Image>/Filter/Animering/Optimera Animering"
 
 #: plug-ins/common/animoptimize.c:193
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr ""
+msgstr "<Image>/Filter/Animering/Avoptimera Animering"
 
 #: plug-ins/common/animoptimize.c:208
 msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
@@ -2142,15 +2157,15 @@ msgstr "Optimerar animering..."
 
 #: plug-ins/common/animoptimize.c:472
 msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr ""
+msgstr "Inte tillräckligt med minne  tt allokera buffertar för optimering.\n"
 
 #: plug-ins/common/apply_lens.c:131
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr ""
+msgstr "<Image>/Filter/Glaseffekter/Applicera Lins..."
 
 #: plug-ins/common/apply_lens.c:195
 msgid "Applying lens..."
-msgstr ""
+msgstr "Applicerar lins..."
 
 #: plug-ins/common/apply_lens.c:386
 msgid "Lens Effect"
@@ -2158,11 +2173,11 @@ msgstr "Linseffekt"
 
 #: plug-ins/common/apply_lens.c:413
 msgid "_Keep Original Surroundings"
-msgstr ""
+msgstr "_Behåll ursprungliga omgivningen"
 
 #: plug-ins/common/apply_lens.c:425
 msgid "_Set Surroundings to Index 0"
-msgstr ""
+msgstr "_Sätt omgivningen till index 0"
 
 #: plug-ins/common/apply_lens.c:426
 msgid "_Set Surroundings to Background Color"
@@ -2178,7 +2193,7 @@ msgstr "Refraktionsindex för _lins:"
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/Autocrop"
-msgstr ""
+msgstr "<Image>/Bild/Transformeringar/Autocrop"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2186,24 +2201,24 @@ msgstr "Beskär..."
 
 #: plug-ins/common/autostretch_hsv.c:91
 msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
-msgstr ""
+msgstr "<Image>/Lager/Färger/Auto/Sträck ut HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
-msgstr ""
+msgstr "Sträcker ut HSV..."
 
 #: plug-ins/common/blinds.c:186
 msgid "<Image>/Filters/Distorts/Blinds..."
-msgstr ""
+msgstr "<Image>/Filter/Störningar/Persienner..."
 
 #: plug-ins/common/blinds.c:282
 msgid "Adding Blinds..."
-msgstr ""
+msgstr "Lägger till persienner..."
 
 #. Get the preview image and store it also set has_alpha
 #: plug-ins/common/blinds.c:322
 msgid "Blinds"
-msgstr ""
+msgstr "Persienner"
 
 #. Orientation toggle box
 #: plug-ins/common/blinds.c:373 plug-ins/common/ripple.c:634
@@ -2237,7 +2252,7 @@ msgstr "_Segment"
 
 #: plug-ins/common/blur.c:200
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr ""
+msgstr "<Image>/Filter/Suddigare/Gör suddig..."
 
 #.
 #. *  JUST DO IT!
@@ -2245,7 +2260,7 @@ msgstr ""
 #: plug-ins/common/blur.c:323 plug-ins/common/mblur.c:612
 #: plug-ins/common/unsharp.c:291
 msgid "Blurring..."
-msgstr ""
+msgstr "Gör sudddig..."
 
 #: plug-ins/common/blur.c:637 plug-ins/common/plasma.c:382
 #: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1803
@@ -2271,7 +2286,7 @@ msgstr "Antal gånger filtret skall appliceras"
 
 #: plug-ins/common/borderaverage.c:101
 msgid "<Image>/Filters/Colors/Border Average..."
-msgstr ""
+msgstr "<Image>/Filter/Färger/"
 
 #: plug-ins/common/borderaverage.c:164
 msgid "Border Average..."
@@ -2332,7 +2347,7 @@ msgstr "S_inusformad karta"
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:967
 msgid "Co_mpensate for Darkening"
-msgstr ""
+msgstr "Ko_mpensera för förmörkandet"
 
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:978
@@ -2375,7 +2390,7 @@ msgstr "O_mgivande:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr ""
+msgstr "bz2: kan inte öppna bzip2:ad fil utan en rimlig filändelse\n"
 
 #: plug-ins/common/c_astretch.c:87
 msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
@@ -2383,7 +2398,7 @@ msgstr "<Image>/Lager/Färger/Auto/Sträck ut kontrast"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
-msgstr ""
+msgstr "Sträcker ut kontrast..."
 
 #: plug-ins/common/checkerboard.c:103
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
@@ -2407,23 +2422,23 @@ msgstr "_Storlek:"
 
 #: plug-ins/common/color_enhance.c:91
 msgid "<Image>/Layer/Colors/Auto/Color Enhance"
-msgstr ""
+msgstr "<Image>/Lager/Färger/Auto/Förbättra färger"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
-msgstr ""
+msgstr "Förbättra färger..."
 
 #: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
-msgstr ""
+msgstr "<Image>/Filter/Färger/Kolorera..."
 
 #: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
-msgstr ""
+msgstr "Kolorerar..."
 
 #: plug-ins/common/colorify.c:307
 msgid "Colorify"
-msgstr ""
+msgstr "Kolorera"
 
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2721 plug-ins/common/xpm.c:431
@@ -2438,11 +2453,11 @@ msgstr "Egen färg:"
 
 #: plug-ins/common/colorify.c:343
 msgid "Colorify Custom Color"
-msgstr ""
+msgstr "Kolorera egen färg"
 
 #: plug-ins/common/colortoalpha.c:110
 msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr ""
+msgstr "<Image>/Filter/Färger/Färg till Alfa..."
 
 #: plug-ins/common/colortoalpha.c:183
 msgid "Removing color..."
@@ -2450,7 +2465,7 @@ msgstr "Tar bort färg..."
 
 #: plug-ins/common/colortoalpha.c:398
 msgid "Color to Alpha"
-msgstr ""
+msgstr "Färg till Alfa"
 
 #: plug-ins/common/colortoalpha.c:427 plug-ins/common/mapcolor.c:646
 #: plug-ins/gfli/gfli.c:846 plug-ins/gfli/gfli.c:916
@@ -2459,136 +2474,164 @@ msgstr "Från:"
 
 #: plug-ins/common/colortoalpha.c:432
 msgid "Color to Alpha Color Picker"
-msgstr ""
+msgstr "Färg till Alfa färghämtare"
 
 #: plug-ins/common/colortoalpha.c:444
 msgid "to Alpha"
 msgstr "till Alfa"
 
-#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:114
+#: plug-ins/common/compose.c:124 plug-ins/common/decompose.c:118
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:123
-msgid "rgb-compose"
-msgstr ""
-
-#: plug-ins/common/compose.c:124 plug-ins/common/decompose.c:119
+#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:123
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:127
+#: plug-ins/common/compose.c:131
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: plug-ins/common/compose.c:127
-msgid "rgba-compose"
-msgstr ""
-
-#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:124
+#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:128
 msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:128 plug-ins/rcm/rcm_dialog.c:456
+#: plug-ins/common/compose.c:132 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
 msgstr "Nyans:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:129 plug-ins/print/gimp_color_window.c:327
+#: plug-ins/common/compose.c:133 plug-ins/print/gimp_color_window.c:327
 #: plug-ins/rcm/rcm_dialog.c:482
 msgid "Saturation:"
 msgstr "Mättnad"
 
-#: plug-ins/common/compose.c:130
+#: plug-ins/common/compose.c:134
 msgid "Value:"
 msgstr "Värde:"
 
-#: plug-ins/common/compose.c:131
-msgid "hsv-compose"
-msgstr ""
-
-#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:130
+#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:134
 msgid "CMY"
 msgstr "CMY"
 
-#: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
+#: plug-ins/common/compose.c:136 plug-ins/common/compose.c:140
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:270
 msgid "Cyan:"
 msgstr "Turkos:"
 
-#: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
+#: plug-ins/common/compose.c:137 plug-ins/common/compose.c:141
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:289
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
+#: plug-ins/common/compose.c:138 plug-ins/common/compose.c:142
 #: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:308
 msgid "Yellow:"
 msgstr "Gul:"
 
-#: plug-ins/common/compose.c:135
-msgid "cmy-compose"
-msgstr ""
-
-#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:136
+#: plug-ins/common/compose.c:140 plug-ins/common/decompose.c:140
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:139
+#: plug-ins/common/compose.c:143
 msgid "Black:"
 msgstr "Svart:"
 
-#: plug-ins/common/compose.c:139
-msgid "cmyk-compose"
+#: plug-ins/common/compose.c:145
+msgid "Luma_y470:"
 msgstr ""
 
-#: plug-ins/common/compose.c:233
+#: plug-ins/common/compose.c:146
+msgid "Blueness_cb470:"
+msgstr ""
+
+#: plug-ins/common/compose.c:147
+msgid "Redness_cr470:"
+msgstr ""
+
+#: plug-ins/common/compose.c:150
+msgid "Luma_y709:"
+msgstr ""
+
+#: plug-ins/common/compose.c:151
+msgid "Blueness_cb709:"
+msgstr ""
+
+#: plug-ins/common/compose.c:152
+msgid "Redness_cr709:"
+msgstr ""
+
+#: plug-ins/common/compose.c:155
+msgid "Luma_y470f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:156
+msgid "Blueness_cb470f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:157
+msgid "Redness_cr470f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:160
+msgid "Luma_y709f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:161
+msgid "Blueness_cb709f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:162
+msgid "Redness_cr709f:"
+msgstr ""
+
+#: plug-ins/common/compose.c:257
 msgid "<Image>/Image/Mode/Compose..."
-msgstr ""
+msgstr "<Image>/Bild/Format/Komponera..."
 
-#: plug-ins/common/compose.c:296
-#, c-format
-msgid "compose: Could not get layers for image %d"
-msgstr ""
+#: plug-ins/common/compose.c:320
+#, fuzzy, c-format
+msgid "Compose: Could not get layers for image %d"
+msgstr "komponera: Kunde inte få lagren för bild %d"
 
-#: plug-ins/common/compose.c:347
+#: plug-ins/common/compose.c:371
 msgid "Composing..."
-msgstr ""
+msgstr "Komponerar..."
 
-#: plug-ins/common/compose.c:415
+#: plug-ins/common/compose.c:439
 msgid "Compose: Drawables have different size"
-msgstr ""
+msgstr "Komponera: ritytor är olika stora"
 
-#: plug-ins/common/compose.c:432
+#: plug-ins/common/compose.c:456
 msgid "Compose: Images have different size"
-msgstr ""
+msgstr "Komponera: bilderna är olika stora"
 
-#: plug-ins/common/compose.c:446
+#: plug-ins/common/compose.c:470
 msgid "Compose: Error in getting layer IDs"
-msgstr ""
+msgstr "Komponera: fel vid hämtande av lager-IDn"
 
-#: plug-ins/common/compose.c:463
+#: plug-ins/common/compose.c:487
 #, c-format
 msgid "Compose: Image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "Komponera: Bilden är inte en gråskalebild (bpp=%d)"
 
-#: plug-ins/common/compose.c:772
+#: plug-ins/common/compose.c:954
 msgid "Compose"
 msgstr "Författa"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:795
+#: plug-ins/common/compose.c:977
 msgid "Compose Channels"
-msgstr ""
+msgstr "Komponera kanaler"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:808
+#: plug-ins/common/compose.c:990
 msgid "Channel Representations"
-msgstr ""
+msgstr "Kanalrepresentationer"
 
 #: plug-ins/common/convmatrix.c:85
 msgid "Gr_ey"
@@ -2626,21 +2669,23 @@ msgstr "Be_skär"
 
 #: plug-ins/common/convmatrix.c:193
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr ""
+msgstr "<Image>/Filter/Allmänna/Konvolveringsmatris..."
 
 #: plug-ins/common/convmatrix.c:227
 msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
+"Konvolveringsmatris fungerar inte\n"
+"på lager som är mindre än tre bildpunkter."
 
 #: plug-ins/common/convmatrix.c:290
 msgid "Applying convolution"
-msgstr ""
+msgstr "Applicerar konvolvering"
 
 #: plug-ins/common/convmatrix.c:856
 msgid "Convolution Matrix"
-msgstr ""
+msgstr "Konvolveringsmatris"
 
 #: plug-ins/common/convmatrix.c:884
 msgid "Matrix"
@@ -2676,7 +2721,7 @@ msgstr "Spara som C-källkod"
 
 #: plug-ins/common/csource.c:683
 msgid "Prefixed Name:"
-msgstr ""
+msgstr "Prefixnamn:"
 
 # src/header_stuff.c:462
 #: plug-ins/common/csource.c:692 plug-ins/common/mail.c:530
@@ -2706,7 +2751,7 @@ msgstr "Använd makron istället för structar"
 #.
 #: plug-ins/common/csource.c:735
 msgid "Use 1 Byte Run-Length-Encoding"
-msgstr ""
+msgstr "Använd 1-bytes Run-Length-kodning"
 
 #. Alpha
 #.
@@ -2890,107 +2935,155 @@ msgstr ""
 msgid "Curve Bend..."
 msgstr "röd"
 
-#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
-#: plug-ins/common/decompose.c:119
+#: plug-ins/common/decompose.c:118 plug-ins/common/decompose.c:121
+#: plug-ins/common/decompose.c:123
 msgid "red"
 msgstr "röd"
 
-#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
-#: plug-ins/common/decompose.c:120
+#: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
+#: plug-ins/common/decompose.c:124
 msgid "green"
 msgstr "grön"
 
-#: plug-ins/common/decompose.c:116 plug-ins/common/decompose.c:121
-#: plug-ins/common/decompose.c:123
+#: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:125
+#: plug-ins/common/decompose.c:127
 msgid "blue"
 msgstr "blå"
 
-#: plug-ins/common/decompose.c:122 plug-ins/common/decompose.c:143
+#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:147
 msgid "alpha"
 msgstr "alfa"
 
-#: plug-ins/common/decompose.c:124 plug-ins/common/decompose.c:127
+#: plug-ins/common/decompose.c:128 plug-ins/common/decompose.c:131
 msgid "hue"
 msgstr "nyans"
 
-#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "saturation"
 msgstr "mättnad"
 
-#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
+#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
 msgid "value"
 msgstr "värde"
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:134 plug-ins/common/decompose.c:137
 msgid "cyan"
 msgstr "cyan"
 
-#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:134
+#: plug-ins/common/decompose.c:135 plug-ins/common/decompose.c:138
 msgid "magenta"
 msgstr "magenta"
 
-#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:139
 msgid "yellow"
 msgstr "gul"
 
-#: plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:137
 msgid "Cyan"
 msgstr "Cyan"
 
-#: plug-ins/common/decompose.c:134
+#: plug-ins/common/decompose.c:138
 msgid "Magenta"
 msgstr "Magenta"
 
-#: plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:139
 msgid "Yellow"
 msgstr "Gul"
 
-#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:140
+#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:144
 msgid "cyan_k"
 msgstr ""
 
-#: plug-ins/common/decompose.c:137 plug-ins/common/decompose.c:141
+#: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:145
 msgid "magenta_k"
 msgstr ""
 
-#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
+#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:146
 msgid "yellow_k"
 msgstr ""
 
-#: plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:143
 msgid "black"
 msgstr "svart"
 
-#: plug-ins/common/decompose.c:140
+#: plug-ins/common/decompose.c:144
 msgid "Cyan_K"
 msgstr ""
 
-#: plug-ins/common/decompose.c:141
+#: plug-ins/common/decompose.c:145
 msgid "Magenta_K"
 msgstr ""
 
-#: plug-ins/common/decompose.c:142
+#: plug-ins/common/decompose.c:146
 msgid "Yellow_K"
 msgstr ""
 
-#: plug-ins/common/decompose.c:143
+#: plug-ins/common/decompose.c:147
 msgid "Alpha"
 msgstr "Alfa"
 
-#: plug-ins/common/decompose.c:209
+#: plug-ins/common/decompose.c:149
+msgid "luma_y470"
+msgstr ""
+
+#: plug-ins/common/decompose.c:150
+msgid "blueness_cb470"
+msgstr ""
+
+#: plug-ins/common/decompose.c:151
+msgid "redness_cr470"
+msgstr ""
+
+#: plug-ins/common/decompose.c:153
+msgid "luma_y709"
+msgstr ""
+
+#: plug-ins/common/decompose.c:154
+msgid "blueness_cb709"
+msgstr ""
+
+#: plug-ins/common/decompose.c:155
+msgid "redness_cr709"
+msgstr ""
+
+#: plug-ins/common/decompose.c:157
+msgid "luma_y470f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:158
+msgid "blueness_cb470f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:159
+msgid "redness_cr470f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:161
+msgid "luma_y709f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:162
+msgid "blueness_cb709f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:163
+msgid "redness_cr709f"
+msgstr ""
+
+#: plug-ins/common/decompose.c:229
 msgid "<Image>/Image/Mode/Decompose..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:290
+#: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:907
+#: plug-ins/common/decompose.c:1047
 msgid "Decompose"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/decompose.c:924
+#: plug-ins/common/decompose.c:1064
 msgid "Extract Channels:"
 msgstr ""
 
@@ -3685,7 +3778,7 @@ msgstr "GIF: kan ej öppna %s\n"
 
 #: plug-ins/common/gif.c:1146
 msgid "GIF Warning"
-msgstr "GIF varning"
+msgstr "GIF-varning"
 
 #: plug-ins/common/gif.c:1172
 msgid ""
@@ -3724,7 +3817,7 @@ msgstr "GIF-kommentar:"
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1325
 msgid "Animated GIF Options"
-msgstr "Animerad GIF - inställningar"
+msgstr "Inställningar för animerad GIF"
 
 #: plug-ins/common/gif.c:1333
 msgid "Loop forever"
@@ -3736,7 +3829,7 @@ msgstr "Tidsmellanrum mellan bildrutor när ej specifierat:"
 
 #: plug-ins/common/gif.c:1359
 msgid "Milliseconds"
-msgstr "Millisekunder"
+msgstr "millisekunder"
 
 #: plug-ins/common/gif.c:1369
 #, fuzzy
@@ -3744,7 +3837,6 @@ msgid "Frame Disposal where Unspecified: "
 msgstr "Bildrutehantering där ej specifierat: "
 
 #: plug-ins/common/gif.c:1378
-#, fuzzy
 msgid "I don't Care"
 msgstr "Jag bryr mig inte"
 
@@ -5057,11 +5149,11 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:222
 msgid "Details <<"
-msgstr ""
+msgstr "Detaljer <<"
 
 #: plug-ins/common/plugindetails.c:232 plug-ins/common/plugindetails.c:1115
 msgid "Details >>"
-msgstr ""
+msgstr "Detaljer >>"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:318
@@ -5138,7 +5230,7 @@ msgstr "Trädvy"
 msgid "Search:"
 msgstr "Sök:"
 
-#: plug-ins/common/png.c:187
+#: plug-ins/common/png.c:188
 #, fuzzy
 msgid ""
 "PNG: Couldn't simply reduce colors further.\n"
@@ -5146,7 +5238,7 @@ msgid ""
 msgstr ""
 "GIF: Kunde ej enkelt minska antalet färger mer.  Sparar som ogenomskinlig.\n"
 
-#: plug-ins/common/png.c:455
+#: plug-ins/common/png.c:450
 #, c-format
 msgid ""
 "%s\n"
@@ -5156,14 +5248,14 @@ msgstr ""
 "PNG-fel. Trasig fil?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:584
+#: plug-ins/common/png.c:586
 #, c-format
 msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
 
-#: plug-ins/common/png.c:810
+#: plug-ins/common/png.c:832
 #, c-format
 msgid ""
 "%s\n"
@@ -5172,7 +5264,7 @@ msgstr ""
 "%s\n"
 "PNG-fel. Kunde inte spara bilden"
 
-#: plug-ins/common/png.c:820
+#: plug-ins/common/png.c:843
 #, c-format
 msgid ""
 "%s\n"
@@ -5181,42 +5273,40 @@ msgstr ""
 "%s\n"
 "Kunde inte skapa filen"
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
-#: plug-ins/common/png.c:1141
+#: plug-ins/common/png.c:1192
 msgid "Couldn't losslessly save transparency, saving opacity instead.\n"
 msgstr ""
 
-#: plug-ins/common/png.c:1162
+#: plug-ins/common/png.c:1215
 msgid "Save as PNG"
 msgstr "Spara som PNG"
 
-#: plug-ins/common/png.c:1191
+#: plug-ins/common/png.c:1240
 msgid "_Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1201
+#: plug-ins/common/png.c:1250
 msgid "Save _background color"
 msgstr "Spara _bakgrundsfärg"
 
-#: plug-ins/common/png.c:1211
+#: plug-ins/common/png.c:1258
 msgid "Save _gamma"
 msgstr "Spara _gamma"
 
-#: plug-ins/common/png.c:1221
+#: plug-ins/common/png.c:1266
 msgid "Save _layer offset"
 msgstr "Spara _lageroffset"
 
-#: plug-ins/common/png.c:1231
+#: plug-ins/common/png.c:1274
 msgid "Save _resolution"
 msgstr "Spara _upplösning"
 
-#: plug-ins/common/png.c:1241
+#: plug-ins/common/png.c:1282
 #, fuzzy
 msgid "Save creation _time"
 msgstr "mättnad"
 
-#: plug-ins/common/png.c:1259
+#: plug-ins/common/png.c:1298
 msgid "Co_mpression Level:"
 msgstr "Ko_mpressionsnivå"
 
@@ -5728,7 +5818,7 @@ msgstr ""
 #. main dialog
 #: plug-ins/common/screenshot.c:365
 msgid "Screen Shot"
-msgstr ""
+msgstr "Skärmdump"
 
 #. single window
 #: plug-ins/common/screenshot.c:388 plug-ins/winsnap/winsnap.c:903
@@ -5737,12 +5827,11 @@ msgstr "Fånga"
 
 #: plug-ins/common/screenshot.c:396
 msgid "Single Window"
-msgstr ""
+msgstr "Ensamt fönster"
 
 #: plug-ins/common/screenshot.c:413
-#, fuzzy
 msgid "With Decorations"
-msgstr "Mättnad"
+msgstr "Med dekorationer"
 
 #. root window
 #: plug-ins/common/screenshot.c:432
@@ -5755,7 +5844,7 @@ msgstr "efter"
 
 #: plug-ins/common/screenshot.c:464 plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
-msgstr ""
+msgstr "sekunders fördröjning"
 
 #: plug-ins/common/sel_gauss.c:124
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
@@ -9638,7 +9727,7 @@ msgstr "Avmarkera"
 msgid "Unselect All"
 msgstr "Avmarkera alla"
 
-#: plug-ins/imagemap/imap_default_dialog.c:145
+#: plug-ins/imagemap/imap_default_dialog.c:144
 msgid "Help..."
 msgstr "Hjälp..."
 
@@ -9951,11 +10040,6 @@ msgstr "x (bildpunkter)"
 #: plug-ins/imagemap/imap_polygon.c:399
 msgid "y (pixels)"
 msgstr "y (bildpunkter)"
-
-# src/menus.c:293
-#: plug-ins/imagemap/imap_polygon.c:456
-msgid "_Update"
-msgstr "_Uppdatera"
 
 #: plug-ins/imagemap/imap_polygon.c:462
 msgid "_Insert"
@@ -11242,11 +11326,17 @@ msgstr ""
 #~ msgid "Antialiasing Options"
 #~ msgstr "Alternativ för antialiasing"
 
+#~ msgid "Spot"
+#~ msgstr "Spotlight"
+
 #~ msgid "Bumpmap Settings"
 #~ msgstr "Inställningar för bumpmap"
 
 #~ msgid "Environment Settings"
 #~ msgstr "Miljöinställningar"
+
+#~ msgid "_Update Preview"
+#~ msgstr "_Uppdatera förhandsgranskning"
 
 #~ msgid "Depth:"
 #~ msgstr "Djup:"
@@ -11280,6 +11370,21 @@ msgstr ""
 
 #~ msgid "Misc Operations"
 #~ msgstr "Diverse åtgärder"
+
+#~ msgid "rgb-compose"
+#~ msgstr "rgb-komponera"
+
+#~ msgid "rgba-compose"
+#~ msgstr "rgba-komponera"
+
+#~ msgid "hsv-compose"
+#~ msgstr "hsv-komponera"
+
+#~ msgid "cmy-compose"
+#~ msgstr "cmy-komponera"
+
+#~ msgid "cmyk-compose"
+#~ msgstr "cmyk-komponera"
 
 #, fuzzy
 #~ msgid "CopyInv"
