@@ -13,6 +13,7 @@ app/undo_history.c
 
 app/config/gimpconfig-deserialize.c
 app/config/gimpconfig.c
+app/config/gimprc.c
 
 app/core/gimp.c
 app/core/gimpbrush.c
