@@ -1,5 +1,12 @@
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
+	* devel-docs/gbr.txt
+	* plug-ins/common/gbr.c: applied a patch from Guillermo S. Romero
+	that fixes loading of v1 brushes and documents the difference
+	to version 2 of the brush file format (bug #121304).
+
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpclonetool.c: Ctrl only sets the clone source when
 	Shift isn't pressed at the same time (fixes bug #121324).
 

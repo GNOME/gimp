@@ -47,3 +47,17 @@ BODY
 	Type: uchar *
 	Value: Pixel values (row-first) for brush
 
+
+
+The GIMP Paintbrush File Format Version 1 (.gbr)
+------------------------------------------------
+
+Based on examples and code, it seems that v1 is like v2, but it is
+lacking bytes 20 - 27 (no magic or spacing info), and thus having
+as last header field:
+
+Bytes 20 - (header_size - 20):
+    Type: char *
+    Value: undefined encoding string - name of brush
+
+GBR v1 is deprecated and should never be used to save new brushes.
