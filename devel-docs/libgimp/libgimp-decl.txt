@@ -37,10 +37,10 @@
 <USER_FUNCTION>
 <NAME>GRunProc</NAME>
 <RETURNS>void </RETURNS>
-char    *name,
-			     int      nparams,
+gchar   *name,
+			     gint     nparams,
 			     GParam  *param,
-			     int     *nreturn_vals,
+			     gint    *nreturn_vals,
 			     GParam **return_vals
 </USER_FUNCTION>
 <STRUCT>
@@ -114,8 +114,8 @@ struct GPixelRgn
 struct GParamDef
 {
   GParamType type;
-  char *name;
-  char *description;
+  gchar *name;
+  gchar *description;
 };
 </STRUCT>
 <STRUCT>
@@ -262,67 +262,67 @@ const gchar *message
 <FUNCTION>
 <NAME>gimp_query_database</NAME>
 <RETURNS>void  </RETURNS>
-char   *name_regexp,char   *blurb_regexp,char   *help_regexp,char   *author_regexp,char   *copyright_regexp,char   *date_regexp,char   *proc_type_regexp,int    *nprocs,char ***proc_names
+gchar   *name_regexp,gchar   *blurb_regexp,gchar   *help_regexp,gchar   *author_regexp,gchar   *copyright_regexp,gchar   *date_regexp,gchar   *proc_type_regexp,gint    *nprocs,gchar ***proc_names
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_procedure</NAME>
-<RETURNS>gint  </RETURNS>
-char       *proc_name,char      **proc_blurb,char      **proc_help,char      **proc_author,char      **proc_copyright,char      **proc_date,int        *proc_type,int        *nparams,int        *nreturn_vals,GParamDef  **params,GParamDef  **return_vals
+<RETURNS>gboolean  </RETURNS>
+gchar       *proc_name,gchar      **proc_blurb,gchar      **proc_help,gchar      **proc_author,gchar      **proc_copyright,gchar      **proc_date,gint        *proc_type,gint        *nparams,gint        *nreturn_vals,GParamDef  **params,GParamDef  **return_vals
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_images</NAME>
 <RETURNS>gint32 *</RETURNS>
-int *nimages
+gint *nimages
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_install_procedure</NAME>
 <RETURNS>void  </RETURNS>
-char      *name,char      *blurb,char      *help,char      *author,char      *copyright,char      *date,char      *menu_path,char      *image_types,int        type,int        nparams,int        nreturn_vals,GParamDef *params,GParamDef *return_vals
+gchar     *name,gchar     *blurb,gchar     *help,gchar     *author,gchar     *copyright,gchar     *date,gchar     *menu_path,gchar     *image_types,gint       type,gint       nparams,gint       nreturn_vals,GParamDef *params,GParamDef *return_vals
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_install_temp_proc</NAME>
 <RETURNS>void  </RETURNS>
-char      *name,char      *blurb,char      *help,char      *author,char      *copyright,char      *date,char      *menu_path,char      *image_types,int        type,int        nparams,int        nreturn_vals,GParamDef *params,GParamDef *return_vals,GRunProc   run_proc
+gchar     *name,gchar     *blurb,gchar     *help,gchar     *author,gchar     *copyright,gchar     *date,gchar     *menu_path,gchar     *image_types,gint       type,gint       nparams,gint       nreturn_vals,GParamDef *params,GParamDef *return_vals,GRunProc   run_proc
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_uninstall_temp_proc</NAME>
 <RETURNS>void  </RETURNS>
-char *name
+gchar *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_register_magic_load_handler</NAME>
 <RETURNS>void  </RETURNS>
-char *name,char *extensions,char *prefixes,char *magics
+gchar *name,gchar *extensions,gchar *prefixes,gchar *magics
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_register_load_handler</NAME>
 <RETURNS>void  </RETURNS>
-char *name,char *extensions,char *prefixes
+gchar *name,gchar *extensions,gchar *prefixes
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_register_save_handler</NAME>
 <RETURNS>void  </RETURNS>
-char *name,char *extensions,char *prefixes
+gchar *name,gchar *extensions,gchar *prefixes
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_run_procedure</NAME>
 <RETURNS>GParam *</RETURNS>
-char *name,int  *nreturn_vals,...
+gchar *name,gint  *nreturn_vals,...
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_run_procedure2</NAME>
 <RETURNS>GParam *</RETURNS>
-char   *name,int    *nreturn_vals,int     nparams,GParam *params
+gchar  *name,gint   *nreturn_vals,gint    nparams,GParam *params
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_destroy_params</NAME>
 <RETURNS>void  </RETURNS>
-GParam *params,int     nparams
+GParam *params,gint    nparams
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_destroy_paramdefs</NAME>
 <RETURNS>void  </RETURNS>
-GParamDef *paramdefs,int        nparams
+GParamDef *paramdefs,gint       nparams
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_gamma</NAME>
@@ -331,12 +331,12 @@ void
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_install_cmap</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_use_xshm</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
@@ -516,17 +516,17 @@ gint32     image_ID,gint      *ncolors
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_get_component_active</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     image_ID,gint       component
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_get_component_visible</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     image_ID,gint       component
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_get_filename</NAME>
-<RETURNS>char *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 gint32     image_ID
 </FUNCTION>
 <FUNCTION>
@@ -557,37 +557,37 @@ gint32     image_ID,guchar    *cmap,gint       ncolors
 <FUNCTION>
 <NAME>gimp_image_set_component_active</NAME>
 <RETURNS>void  </RETURNS>
-gint32     image_ID,gint       component,gint       active
+gint32     image_ID,gint       component,gboolean   active
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_set_component_visible</NAME>
 <RETURNS>void  </RETURNS>
-gint32     image_ID,gint       component,gint       visible
+gint32     image_ID,gint       component,gboolean   visible
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_set_filename</NAME>
 <RETURNS>void  </RETURNS>
-gint32     image_ID,char      *name
+gint32     image_ID,gchar     *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_parasite_find</NAME>
 <RETURNS>Parasite   *</RETURNS>
-gint32     image_ID,const char *name
+gint32          image_ID,const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_parasite_attach</NAME>
 <RETURNS>void  </RETURNS>
-gint32      image_ID,const Parasite *p
+gint32          image_ID,const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_attach_new_parasite</NAME>
 <RETURNS>void  </RETURNS>
-gint32      image_ID,const char *name,int         flags,int         size,const void *data
+gint32          image_ID,const gchar    *name,gint            flags,gint            size,const gpointer  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_parasite_detach</NAME>
 <RETURNS>void  </RETURNS>
-gint32      image_ID,const char *name
+gint32          image_ID,const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_image_set_resolution</NAME>
@@ -852,7 +852,7 @@ gint32        layer_ID
 <FUNCTION>
 <NAME>gimp_channel_new</NAME>
 <RETURNS>gint32  </RETURNS>
-gint32   image_ID,char    *name,guint    width,guint    height,gdouble  opacity,guchar  *color
+gint32   image_ID,gchar   *name,guint    width,guint    height,gdouble  opacity,guchar  *color
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_channel_copy</NAME>
@@ -891,7 +891,7 @@ gint32   channel_ID,guchar  *red,guchar  *green,guchar  *blue
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_channel_get_name</NAME>
-<RETURNS>char *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 gint32   channel_ID
 </FUNCTION>
 <FUNCTION>
@@ -906,7 +906,7 @@ gint32   channel_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_channel_get_visible</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32   channel_ID
 </FUNCTION>
 <FUNCTION>
@@ -917,7 +917,7 @@ gint32   channel_ID,guchar   red,guchar   green,guchar   blue
 <FUNCTION>
 <NAME>gimp_channel_set_name</NAME>
 <RETURNS>void  </RETURNS>
-gint32   channel_ID,char    *name
+gint32   channel_ID,gchar   *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_channel_set_opacity</NAME>
@@ -932,7 +932,7 @@ gint32   channel_ID,gint     show_masked
 <FUNCTION>
 <NAME>gimp_channel_set_visible</NAME>
 <RETURNS>void  </RETURNS>
-gint32   channel_ID,gint     visible
+gint32   channel_ID,gboolean visible
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_channel_get_tattoo</NAME>
@@ -976,7 +976,7 @@ gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_name</NAME>
-<RETURNS>char *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
@@ -1001,47 +1001,47 @@ gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_visible</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_channel</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_rgb</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_gray</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_has_alpha</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_indexed</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_layer</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_is_layer_mask</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_mask_bounds</NAME>
-<RETURNS>gint  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 gint32     drawable_ID,gint      *x1,gint      *y1,gint      *x2,gint      *y2
 </FUNCTION>
 <FUNCTION>
@@ -1077,7 +1077,7 @@ GDrawable *drawable,gint       shadow,gint       x,gint       y
 <FUNCTION>
 <NAME>gimp_drawable_parasite_find</NAME>
 <RETURNS>Parasite *</RETURNS>
-gint32          drawable,const char     *name
+gint32          drawable,const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_parasite_attach</NAME>
@@ -1087,7 +1087,7 @@ gint32          drawable,const Parasite *p
 <FUNCTION>
 <NAME>gimp_drawable_attach_new_parasite</NAME>
 <RETURNS>void  </RETURNS>
-gint32          drawable,const char     *name,int             flags,int             size,const void     *data
+gint32          drawable,const gchar    *name,gint            flags,gint            size,const gpointer  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_drawable_parasite_detach</NAME>
@@ -1132,7 +1132,7 @@ GTile   *tile
 <FUNCTION>
 <NAME>gimp_tile_unref</NAME>
 <RETURNS>void  </RETURNS>
-GTile   *tile,int     dirty
+GTile   *tile,gint     dirty
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_tile_flush</NAME>
@@ -1246,12 +1246,12 @@ guchar  red,guchar  green,guchar  blue
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_gradients_get_list</NAME>
-<RETURNS>char **</RETURNS>
+<RETURNS>gchar **</RETURNS>
 gint    *num_gradients
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_gradients_get_active</NAME>
-<RETURNS>char *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
@@ -1272,7 +1272,7 @@ gint     num_samples,gdouble *positions
 <FUNCTION>
 <NAME>gimp_parasite_find</NAME>
 <RETURNS>Parasite  *</RETURNS>
-const char     *name
+const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_parasite_attach</NAME>
@@ -1282,12 +1282,12 @@ const Parasite *p
 <FUNCTION>
 <NAME>gimp_attach_new_parasite</NAME>
 <RETURNS>void  </RETURNS>
-const char     *name,int             flags,int             size,const void     *data
+const gchar    *name,gint            flags,gint            size,const gpointer  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_parasite_detach</NAME>
 <RETURNS>void  </RETURNS>
-const char     *name
+const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_plugin_help_func</NAME>
@@ -2798,7 +2798,7 @@ typedef enum {
   GIMP_MODULE_UNLOAD
 } GimpModuleStatus;
 </ENUM>
-<TYPEDEF>
+<STRUCT>
 <NAME>GimpModuleInfo</NAME>
 typedef struct {
   void *shutdown_data;
@@ -2808,7 +2808,7 @@ typedef struct {
   const char *copyright;
   const char *date;
 } GimpModuleInfo;
-</TYPEDEF>
+</STRUCT>
 <ENUM>
 <NAME>GimpUnit</NAME>
 typedef enum
@@ -2929,6 +2929,15 @@ struct GimpUnitMenu
   GtkWidget     *clist;
 };
 </STRUCT>
+<STRUCT>
+<NAME>GimpUnitMenuClass</NAME>
+struct GimpUnitMenuClass
+{
+  GtkOptionMenuClass parent_class;
+
+  void (* unit_changed) (GimpUnitMenu *gum);
+};
+</STRUCT>
 <FUNCTION>
 <NAME>gimp_unit_menu_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -3003,6 +3012,17 @@ struct GimpSizeEntry
 
   gboolean                   show_refval;
   GimpSizeEntryUpdatePolicy  update_policy;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpSizeEntryClass</NAME>
+struct GimpSizeEntryClass
+{
+  GtkTableClass parent_class;
+
+  void (* value_changed)  (GimpSizeEntry *gse);
+  void (* refval_changed) (GimpSizeEntry *gse);
+  void (* unit_changed)   (GimpSizeEntry *gse);
 };
 </STRUCT>
 <FUNCTION>
@@ -3346,6 +3366,15 @@ struct GimpFileSelection
   gboolean    check_valid;
 };
 </STRUCT>
+<STRUCT>
+<NAME>GimpFileSelectionClass</NAME>
+struct GimpFileSelectionClass
+{
+  GtkHBoxClass parent_class;
+
+  void (* filename_changed) (GimpFileSelection *gfs);
+};
+</STRUCT>
 <FUNCTION>
 <NAME>gimp_file_selection_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -3413,6 +3442,15 @@ struct GimpPathEditor
   gint       number_of_items;
 };
 </STRUCT>
+<STRUCT>
+<NAME>GimpPathEditorClass</NAME>
+struct GimpPathEditorClass
+{
+  GtkVBoxClass parent_class;
+
+  void (* path_changed) (GimpPathEditor *gpe);
+};
+</STRUCT>
 <FUNCTION>
 <NAME>gimp_path_editor_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -3432,7 +3470,7 @@ GimpPathEditor *gpe
 <NAME>PIXPIPE_MAXDIM</NAME>
 #define PIXPIPE_MAXDIM 4
 </MACRO>
-<TYPEDEF>
+<STRUCT>
 <NAME>PixPipeParams</NAME>
 typedef struct {
   gint step;
@@ -3448,7 +3486,7 @@ typedef struct {
   gchar *selection[PIXPIPE_MAXDIM];
   gboolean free_selection_string;
 } PixPipeParams;
-</TYPEDEF>
+</STRUCT>
 <FUNCTION>
 <NAME>pixpipeparams_init</NAME>
 <RETURNS>void  </RETURNS>
@@ -3651,6 +3689,15 @@ gint32                 *image_ID,gint32                 *drawable_ID,gchar      
 </STRUCT>
 <STRUCT>
 <NAME>GimpColorButtonClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpColorButtonClass</NAME>
+struct GimpColorButtonClass
+{
+  GtkButtonClass parent_class;
+
+  void (* color_changed) (GimpColorButton *gcb);
+};
 </STRUCT>
 <FUNCTION>
 <NAME>gimp_color_button_get_type</NAME>
@@ -4092,6 +4139,13 @@ struct GimpChainButton
   gboolean           active;
 };
 </STRUCT>
+<STRUCT>
+<NAME>GimpChainButtonClass</NAME>
+struct GimpChainButtonClass
+{
+  GtkButtonClass parent_class;
+};
+</STRUCT>
 <FUNCTION>
 <NAME>gimp_chain_button_get_type</NAME>
 <RETURNS>GtkType  </RETURNS>
@@ -4277,6 +4331,13 @@ gint         sx,gint         sy,gint         w,gint         h,gdouble     *x,gdo
 </STRUCT>
 <STRUCT>
 <NAME>GimpPixmapClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpPixmapClass</NAME>
+struct GimpPixmapClass
+{
+  GtkPixmapClass parent_class;
+};
 </STRUCT>
 <FUNCTION>
 <NAME>gimp_pixmap_get_type</NAME>

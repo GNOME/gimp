@@ -1,3 +1,9 @@
+2000-03-26  Sven Neumann  <sven@gimp.org>
+
+	* [lotsa files]: looks like newer versions of gtk-doc
+	give different template files. The output looks better 
+	IMHO and Mitch wanted to switch to Debian anyway...
+
 2000-03-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt
