@@ -10,6 +10,7 @@ top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \

@@ -31,7 +31,9 @@
 
 #include "widgets-types.h"
 
+#ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
+#endif
 #include "gui/gui-types.h"
 
 #include "core/gimp.h"

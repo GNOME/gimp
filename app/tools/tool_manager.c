@@ -31,6 +31,8 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "libgimptool/gimptoolcontrol.h"
+
 #include "gui/brush-select.h"
 
 #include "display/gimpdisplay.h"

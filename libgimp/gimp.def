@@ -161,6 +161,7 @@ EXPORTS
 	gimp_image_get_guide_position
 	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layers
+	gimp_image_get_name
 	gimp_image_get_resolution
 	gimp_image_get_selection
 	gimp_image_get_thumbnail_data

@@ -87,6 +87,7 @@ OBJECTS = \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \
+	gimpunits.obj \
 	gimpviewable.obj \
 
 OTHER_FILES = \

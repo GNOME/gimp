@@ -2,6 +2,7 @@ EXPORTS
 	_gp_params_destroy
 	gimp_data_directory
 	gimp_directory
+	gimp_locale_directory
 	gimp_gtkrc
 	gimp_parasite_compare
 	gimp_parasite_copy

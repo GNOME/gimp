@@ -48,6 +48,7 @@ OBJECTS = \
 	gui.obj \
 	help-commands.obj \
 	image-commands.obj \
+	images-commands.obj \
 	info-dialog.obj \
 	info-window.obj \
 	layers-commands.obj \

@@ -38,6 +38,10 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
+#  include <direct.h>
+#  define mkdir(n,a) _mkdir(n)
+#  include <io.h>
+#  define chmod(n,f) _chmod(n,f)
 #  ifndef S_ISREG
 #  define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
 #  endif

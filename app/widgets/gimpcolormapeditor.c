@@ -36,7 +36,9 @@
 
 #include "widgets-types.h"
 
+#ifdef __GNUC__
 #warning FIXME #include "display/display-types.h"
+#endif
 #include "display/display-types.h"
 
 #include "core/gimpcontainer.h"
@@ -446,7 +448,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
   editor->yn       = yn;
   editor->cellsize = cellsize;
 
-  row = g_new (guchar, width * 3);
+  row = g_new (guchar, xn * cellsize * 3);
   col = 0;
   for (i = 0; i < yn; i++)
     {

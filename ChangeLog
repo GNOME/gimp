@@ -1,3 +1,98 @@
+2001-05-11  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc : add appconfig.lib. Statically
+	link libgimptool/gimptool.lib.
+
+	* app/main.c : use gimp_locale_directory()
+
+	* app/config/gimpconfig-utils.c : <string.h>
+
+	* app/config/makefile.msc : add gimpscanner
+
+	* app/core/gimpimagefile.c : some G_OS_WIN32 mess to get
+	mkdir() and chmod()
+
+	* app/display/gimpdisplayshell.c
+	  app/plug-in/plug-in-progrss.c
+	  app/tool/gimpcolorpickertool.c  
+	  app/tool/gimpcroptool.c  
+	  app/tool/gimpmeasuretool.c  
+	  app/tool/gimpperspectivetool.c  
+	  app/tool/gimprotatetool.c  
+	  app/tool/gimpscaletool.c  
+	  app/tool/gimpsheartool.c  
+	  app/tool/gimptransformtool.c  
+	  app/widgets/gimpcolormapeditor.c  
+	  app/widgets/gimpcolorpanel.c  
+	  app/widgets/gimptoolbox-color-area.c  
+	add #ifdef __GNUC__ to avoid breaking on non standard
+	pragma #warning
+
+	* app/tools/makefile.msc : add gimptoolcontrol remove
+	tools-enum
+
+	* app/tools/tool_manager.c : need to include
+	libgimptool/gimptoolcontrol.h after core includes
+	otherwise we would compile without prototypes or
+	break miserably
+
+	* app/gui/plug-in-menus.c : replace LOCALEDIR with
+	gimp_locale_directory ()
+
+	* app/gui/preferences-dialog.c (prefs_notebook_append_page) : 
+	only try to gdk_pixbuf_new_from_file() with a valid filename.
+	It should simply return NULL otherwise, but fails if the
+	filename is an empty string.
+
+	* app/paint-funcs/makefile.msc : add -FImsvc_recommended_pragmas.h
+
+	* app/widgets/gimpcolormapeditor.c : the 'row'
+	allocated needs to be 'xn * cellsize * 2' (to avoid
+	accessing unowned memory) not only width, which has 
+	become allocation.width by someone commenting out 
+	the correct size calculation
+
+	* app/widgets/gimpdialogfactory.c : varargs to macros
+	are GCCism or at least non standard. #define DEBUG
+	to g_print or nothing - without arguments - does fix
+	it somewhat dirty as the compiler needs to tolerate
+	the '(blah, foo, bar);' statement than
+
+	* app/widgets/makefile.msc : updated
+
+	* app/xcf/makefile.msc : add -FImsvc_recommended_pragmas.h
+
+	* etc/gimprc.win32 : use ';' to separate theme-path
+
+	* libgimpbase/gimpenv.c : #include <stdio.h>
+	for sprintf()
+
+	* app/widgets/gimpdnd.c (gimp_dnd_set_file_data) : 
+	the passed in vals chunk is not always null-terminated
+	(at least not on win32). Use the length parameter too 
+	to avoid reading junk filenames.
+
+	* libgimp/gimp.def : export gimp_image_get_name()
+
+	* libgimpbase/gimpbase.def : export gimp_locale_directory()
+	* libgimpbase/gimpenv.[ch] : added gimp_locale_directory ()
+
+	* libgimpbase/makefile.msc : define DATADIR and SYSCONFDIR
+	to empty string to let gimp find its files in the common
+	place (win32: relative to the top level gimp dir)
+
+	* plug-ins/common/pixelize.c : <string.h>
+
+	* plug-ins/flame/cmap.c : #include <glib.h> for g_random_int()
+
+	* plug-ins/makefile.msc : -FImsvc_recommended_pragams.h
+	and a little hack to give imagemap the prototypes it
+	desires without changing the lexed source
+
+	* themes/Default/images/makefile.msc : now added (see below)
+
+	* themes/Default/images/stock-button-reset.png : made it binary
+
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.c: EEK, actually increase

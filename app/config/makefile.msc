@@ -8,7 +8,10 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 PKG_LINK = \
-	$(GLIB_LIBS)
+	..\base\appbase-$(PKG_VER).lib \
+	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib \
+	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
+	$(GLIB_LIBS) $(INTL_LIBS)
 
 OBJECTS = \
 	gimpbaseconfig.obj \
@@ -23,6 +26,7 @@ OBJECTS = \
 	gimpdisplayconfig.obj \
 	gimpguiconfig.obj \
 	gimprc.obj \
+	gimpscanner.obj
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
@@ -36,8 +40,9 @@ DEFINES = \
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \
+!IFDEF DLLGIMP
 	$(PACKAGE)-$(PKG_VER).dll
-
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

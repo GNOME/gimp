@@ -56,10 +56,12 @@ OBJECTS = \
 	gimpfontselection-dialog.obj \
 	gimpgradienteditor.obj \
 	gimpgradientpreview.obj \
+	gimphelp.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimagefilepreview.obj \
 	gimpimagepreview.obj \
+	gimpimageview.obj \
 	gimpitemfactory.obj \
 	gimpitemlistitem.obj \
 	gimpitemlistview.obj \
@@ -87,6 +89,7 @@ OBJECTS = \
 #	gimpconstrainedhwrapbox.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \

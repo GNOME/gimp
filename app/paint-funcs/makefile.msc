@@ -22,6 +22,7 @@ PKG_LINK = \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \

@@ -36,6 +36,7 @@
 #include "plug-in-commands.h"
 #include "plug-in-menus.h"
 
+#include "libgimpbase/gimpenv.h"
 #include "libgimp/gimpintl.h"
 
 
@@ -52,7 +53,7 @@ plug_in_make_menu (GSList      *plug_in_defs,
   GTree           *menu_entries;
 
 #ifdef ENABLE_NLS
-  bindtextdomain (std_plugins_domain, LOCALEDIR);
+  bindtextdomain (std_plugins_domain, gimp_locale_directory ());
   bind_textdomain_codeset (std_plugins_domain, "UTF-8");
   domains = g_slist_append (domains, (gpointer) std_plugins_domain);
 #endif
@@ -94,7 +95,7 @@ plug_in_make_menu (GSList      *plug_in_defs,
 		if (plug_in_def->locale_path)
 		  bindtextdomain (domain, plug_in_def->locale_path);
 		else
-		  bindtextdomain (domain, LOCALEDIR);
+		  bindtextdomain (domain, gimp_locale_directory ());
                 bind_textdomain_codeset (domain, "UTF-8");
 	      }
 	  }

@@ -11,7 +11,8 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base xcf core file display paint vectors pdb plug-in tools widgets gui
+SUBDIRS = paint-funcs base config xcf core file \
+	display paint vectors pdb plug-in tools widgets gui
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -24,6 +25,7 @@ sub-one:
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
 PKG_LINK = \
+	config/appconfig.lib \
 	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
 	plug-in/appplug-in.lib \
@@ -39,6 +41,9 @@ PKG_LINK = \
 	vectors/appvectors.lib \
 	plug-in/appplug-in.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
+	\
+	$(top_builddir)/libgimptool/gimptool.lib \
+	\
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
@@ -67,7 +72,6 @@ mmx_sources = \
 	
 
 OBJECTS = \
-	nav_window.obj \
 	ops_buttons.obj \
 	undo_history.obj \
 	image_map.obj \
@@ -81,7 +85,6 @@ OBJECTS = \
 	main.obj \
 	batch.obj \
 	errors.obj \
-	gimphelp.obj \
 	libgimp_glue.obj \
 
 

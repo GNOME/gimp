@@ -31,6 +31,7 @@ OBJECTS = \
 	gimpdisplayshell-scale.obj \
 	gimpdisplayshell-scroll.obj \
 	gimpdisplayshell-selection.obj \
+	gimpnavigationview.obj \
 	gimpprogress.obj \
 	gimpstatusbar.obj \
 	display-enums.obj \

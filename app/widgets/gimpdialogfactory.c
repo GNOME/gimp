@@ -46,9 +46,9 @@
 /* #define DEBUG_FACTORY */
 
 #ifdef DEBUG_FACTORY
-#define DEBUG(...) g_print(...)
+#define DEBUG g_print
 #else
-#define DEBUG(...)
+#define DEBUG
 #endif
 
 

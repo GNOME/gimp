@@ -70,6 +70,7 @@ OBJECTS = \
 	gimptexttool.obj \
 	gimpthresholdtool.obj \
 	gimptool.obj \
+	gimptoolcontrol.obj \
 	gimptoolmodule.obj \
 	gimptransformtool.obj \
 	gimpvectortool.obj \
@@ -79,9 +80,9 @@ OBJECTS = \
 	tool_options.obj \
 	tool_manager.obj \
 	path_tool.obj \
-	tools-enums.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \

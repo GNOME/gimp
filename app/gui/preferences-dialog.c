@@ -1404,7 +1404,10 @@ prefs_notebook_append_page (Gimp          *gimp,
                                    notebook_icon,
                                    NULL);
 
-      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      else
+        pixbuf = NULL;
 
       g_free (filename);
 

@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <stdio.h>
+
 #include <glib.h>
 
 #include <ctype.h>
@@ -266,6 +268,33 @@ gimp_data_directory (void)
 }
 
 /**
+ * gimp_locale_directory:
+ *
+ * Returns the top directory for GIMP locale files. If the environment
+ * variable GIMP_LOCALEDIR exists, that is used.  It should be an
+ * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * directory is used.  On Win32, the installation directory as deduced
+ * from the executable's name is used.
+ *
+ * The returned string is allocated just once, and should *NOT* be
+ * freed with g_free().
+ *
+ * Returns: The top directory for GIMP locale files.
+ */
+const gchar *
+gimp_locale_directory (void)
+{
+  static gchar *gimp_locale_dir = NULL;
+
+  if (gimp_locale_dir != NULL)
+    return gimp_locale_dir;
+
+  gimp_locale_dir = gimp_env_get_dir ("GIMP_LOCALEDIR", LOCALEDIR);
+
+  return gimp_locale_dir;
+}
+
+/**
  * gimp_sysconf_directory:
  *
  * Returns the top directory for GIMP config files. If the environment
@@ -385,6 +414,15 @@ gimp_path_runtime_fix (gchar **path)
     {
       *p = '\\';
       p++;
+    }
+#elif defined (G_OS_WIN32)
+  /* without defineing PREFIX do something useful too */
+  gchar *p = *path;
+  if (!g_path_is_absolute (p))
+    {
+      *path = g_build_filename (gimp_toplevel_directory (),
+                                *path, NULL);
+      g_free (p);
     }
 #endif
 }
