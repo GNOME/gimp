@@ -97,6 +97,7 @@
 #include "interface.h"
 #include "undo.h"
 #include "palette.h"
+#include "palette_select.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -373,22 +374,24 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget*   shell;
-  GtkWidget*   custom_frame;
-  GimpImage*   gimage;
-  int          nodither_flag;
-  int          fsdither_flag;
-  int          fslowbleeddither_flag;
-  int          fixeddither_flag;
-  int          alphadither; /* flag */
-  int          remdups;     /* flag */
-  int          num_cols;
-  int          palette;
-  int          makepal_flag;
-  int          webpal_flag;
-  int          custompal_flag;
-  int          monopal_flag;
-  int          reusepal_flag;
+  GtkWidget*     shell;
+  GtkWidget*     custom_frame;
+  GtkWidget*     custom_palette_button;
+  GimpImage*     gimage;
+  PaletteSelect* palette_select;
+  int            nodither_flag;
+  int            fsdither_flag;
+  int            fslowbleeddither_flag;
+  int            fixeddither_flag;
+  int            alphadither; /* flag */
+  int            remdups;     /* flag */
+  int            num_cols;
+  int            palette;
+  int            makepal_flag;
+  int            webpal_flag;
+  int            custompal_flag;
+  int            monopal_flag;
+  int            reusepal_flag;
 } IndexedDialog;
 
 static void indexed_ok_callback        (GtkWidget *, gpointer);
@@ -398,6 +401,9 @@ static void indexed_radio_update       (GtkWidget *, gpointer);
 static void frame_sensitivity_update   (GtkWidget *, gpointer);
 static void indexed_alphadither_update (GtkWidget *, gpointer);
 static void indexed_remdups_update     (GtkWidget *, gpointer);
+
+static void indexed_custom_palette_button_callback  (GtkWidget *widget, gpointer data);
+static void indexed_palette_select_destroy_callback (GtkWidget *widget, gpointer data);
 
 static void rgb_converter       (Layer *, TileManager *, int);
 static void grayscale_converter (Layer *, TileManager *, int);
@@ -420,8 +426,8 @@ static unsigned char found_cols[MAXNUMCOLORS][3];
 static int num_found_cols;
 static gboolean needs_quantize;
 
-static GtkWidget *build_palette_menu(int *default_palette);
-static void palette_entries_callback(GtkWidget *w, gpointer client_data);
+static GtkWidget *build_palette_button (void);
+
 static gboolean UserHasWebPal = FALSE;
 
 PaletteEntries *theCustomPalette = NULL;
@@ -473,7 +479,9 @@ convert_to_indexed (GimpImage *gimage)
   dialog = g_new (IndexedDialog, 1);
   dialog->gimage = gimage;
 
-  dialog->custom_frame = NULL;
+  dialog->custom_frame          = NULL;
+  dialog->custom_palette_button = NULL;
+  dialog->palette_select        = NULL;
 
   dialog->num_cols              = snum_cols;
   dialog->nodither_flag         = snodither_flag;
@@ -562,12 +570,10 @@ convert_to_indexed (GimpImage *gimage)
 
   if (TRUE /* gimage->base_type == RGB */ )
     {
-      GtkWidget *menu;
-      GtkWidget *palette_option_menu;
-      int default_palette;
+      GtkWidget *button;
 
-      menu = build_palette_menu (&default_palette);
-      if (menu)
+      dialog->custom_palette_button = button = build_palette_button ();
+      if (button)
 	{
           /* 'custom' palette from dialog */
           hbox = gtk_hbox_new (FALSE, 4);
@@ -585,15 +591,13 @@ convert_to_indexed (GimpImage *gimage)
 					dialog->custompal_flag);
           gtk_widget_show (toggle);
 
-          palette_option_menu = gtk_option_menu_new ();
-          gtk_option_menu_set_menu (GTK_OPTION_MENU (palette_option_menu), menu);
-          gtk_option_menu_set_history (GTK_OPTION_MENU (palette_option_menu),
-				       default_palette);
-          gtk_box_pack_end (GTK_BOX (hbox), palette_option_menu,
-			    FALSE, FALSE, 0);
-	  gtk_widget_show (palette_option_menu);
+	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			      GTK_SIGNAL_FUNC (indexed_custom_palette_button_callback), 
+			      dialog);
+          gtk_box_pack_end (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+	  gtk_widget_show (button);
           gtk_widget_show (hbox);
-      }
+	}
     }
 
   if (!UserHasWebPal)
@@ -786,14 +790,13 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (dialog->shell);
 }
 
+
 static GtkWidget *
-build_palette_menu (int *default_palette)
+build_palette_button (void)
 {
-  GtkWidget *menu;
-  GtkWidget *menu_item;
   GSList *list;
   PaletteEntries *entries;
-  int i, item;
+  int i, default_palette;
 
   UserHasWebPal = FALSE;
 
@@ -805,56 +808,57 @@ build_palette_menu (int *default_palette)
   list = palette_entries_list;
 
   if (!list)
-    return NULL;
+    {
+      return NULL;
+    }
 
-  menu = gtk_menu_new ();
-
-  for (i=0, item=0, list = palette_entries_list, *default_palette = -1;
+  for (i = 0, list = palette_entries_list, default_palette = -1;
        list;
        i++, list = g_slist_next (list))
     {
       entries = (PaletteEntries *) list->data;
-
+      
       /* Preferentially, the initial default is 'Web' if available */
-      if (*default_palette==-1 &&
+      if (default_palette==-1 &&
 	  g_strcasecmp (entries->name, "Web")==0)
 	{
 	  theCustomPalette = entries;
 	  UserHasWebPal = TRUE;
 	}
-
+      
       /* We can't dither to > 256 colors */
       if (entries->n_colors <= 256)
 	{
-	  menu_item = gtk_menu_item_new_with_label (entries->name);
-	  gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-			      GTK_SIGNAL_FUNC (palette_entries_callback),
-			      (gpointer)entries);
-	  gtk_container_add (GTK_CONTAINER (menu), menu_item);
-	  gtk_widget_show (menu_item);
 	  if (theCustomPalette == entries)
 	    {
-	      *default_palette = item;
+	      default_palette = i;
 	    }
-	  item++;
 	}
     }
-
-   /* default to first one (only used if 'web' palette not avail.) */
-   if (*default_palette==-1)
+      
+  /* default to first one with <= 256 colors (only used if 'web' palette not avail.) */
+   if (default_palette == -1)
      {
-       theCustomPalette = (PaletteEntries *) palette_entries_list->data;
-       *default_palette = 0;
+       for (i = 0, list = palette_entries_list;
+	    list && default_palette == -1;
+	    i++, list = g_slist_next (list))
+	 {
+	   entries = (PaletteEntries *) list->data;
+	   
+	   if (entries->n_colors <= 256)
+	     {
+	       theCustomPalette = entries;
+	       default_palette = i;
+	     }
+	 }
      }
-   return menu;
+   
+   if (default_palette == -1)
+     return NULL;
+   else
+     return gtk_button_new_with_label (theCustomPalette->name);
 }
 
-static void
-palette_entries_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  theCustomPalette = (PaletteEntries *) data;
-}
 
 static void
 indexed_ok_callback (GtkWidget *widget,
@@ -904,6 +908,8 @@ indexed_ok_callback (GtkWidget *widget,
   smonopal_flag = dialog->monopal_flag;
   sreusepal_flag = dialog->reusepal_flag;
 
+  if (dialog->palette_select)
+    gtk_widget_destroy (dialog->palette_select->shell);  
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
   dialog = NULL;
@@ -917,10 +923,74 @@ indexed_cancel_callback (GtkWidget *widget,
 
   dialog = (IndexedDialog *) data;
 
+  if (dialog->palette_select)
+    gtk_widget_destroy (dialog->palette_select->shell);
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
   dialog = NULL;
 }
+
+static void
+indexed_palette_select_destroy_callback (GtkWidget *widget,
+					 gpointer   data)
+{
+  IndexedDialog *dialog = (IndexedDialog *)data;
+
+  dialog->palette_select = NULL;
+}
+
+static gint
+indexed_palette_select_row_callback (GtkCList       *clist,
+				     gint            row,
+				     gint            column,
+				     GdkEventButton *event,
+				     gpointer        data)
+{
+  IndexedDialog *dialog = (IndexedDialog *)data;
+  PaletteEntries *p_entries;
+
+  p_entries = (PaletteEntries *) gtk_clist_get_row_data (clist, row);
+  if (p_entries)
+    {
+      if (p_entries->n_colors <= 256)
+	{
+	  theCustomPalette = p_entries;
+	  gtk_label_set_text (GTK_LABEL (GTK_BIN(dialog->custom_palette_button)->child),
+			      theCustomPalette->name);
+	}
+      else
+	{
+	  gtk_clist_unselect_row (clist, row, column);
+	}
+    }
+  return FALSE;
+}
+
+
+static void
+indexed_custom_palette_button_callback (GtkWidget *widget,
+					gpointer   data)
+{
+  IndexedDialog *dialog = (IndexedDialog *)data;
+
+  if (dialog->palette_select == NULL)
+    {
+      dialog->palette_select = palette_select_new (_("Select Custum Palette"), 
+						   theCustomPalette->name);
+
+      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->shell), "destroy", 
+			  GTK_SIGNAL_FUNC (indexed_palette_select_destroy_callback), 
+			  dialog);
+      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->clist), "select_row",
+			  GTK_SIGNAL_FUNC (indexed_palette_select_row_callback),
+			  dialog);
+    } 
+  else
+    {
+      gdk_window_raise (dialog->palette_select->shell->window);
+    }
+}
+
 
 static void
 indexed_num_cols_update (GtkWidget *widget,
@@ -2931,8 +3001,8 @@ custompal_pass1 (QuantizeObj *quantobj)
   GSList *list;
   PaletteEntry *entry;
 
-  /*  fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
-			 theCustomPalette->name, theCustomPalette->filename);*/
+  /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
+			 theCustomPalette->name, theCustomPalette->filename); */
 
   for (i=0,list=theCustomPalette->colors;
        list;

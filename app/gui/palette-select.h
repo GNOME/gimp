@@ -31,8 +31,8 @@ struct _PaletteSelect
   gchar     *callback_name;
 };
 
-PaletteSelect * palette_new_selection (gchar *title,
-				       gchar *initial_palette);
+PaletteSelect * palette_select_new (gchar *title,
+				    gchar *initial_palette);
 
 void   palette_select_clist_insert_all (PaletteEntries *p_entries);
 void   palette_select_set_text_all     (PaletteEntries *entries);

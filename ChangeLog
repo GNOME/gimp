@@ -1,3 +1,11 @@
+Sat Jan 29 15:40:01 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/convert.c
+	* app/palette_select.c
+	* app/palette_select.h: In indexed_conversion dialog, use a 
+	pattern_selector instead op an option_menu. Adam, I hope you like 
+	this...
+
 Sat Jan 29 12:06:51 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c

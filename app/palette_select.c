@@ -27,14 +27,15 @@
 static GSList *active_dialogs = NULL;
 
 /*  local function prototypes  */
+static gint   palette_select_button_press   (GtkWidget *, GdkEventButton *, gpointer);
 static void   palette_select_close_callback (GtkWidget *, gpointer);
 static void   palette_select_edit_callback  (GtkWidget *, gpointer);
 
 /*  public functions  */
 
 PaletteSelect *
-palette_new_selection (gchar *title,
-		       gchar *initial_palette)
+palette_select_new (gchar *title,
+		    gchar *initial_palette)
 {
   PaletteSelect *psp;
   GSList     *list;
@@ -54,7 +55,7 @@ palette_new_selection (gchar *title,
 				"palette_selection",
 				gimp_standard_help_func,
 				"dialogs/palette_selection.html",
-				GTK_WIN_POS_NONE,
+				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
 				_("Edit"), palette_select_edit_callback,
@@ -96,10 +97,6 @@ palette_new_selection (gchar *title,
   gtk_widget_show (scrolled_win);
   gtk_widget_show (psp->clist);
 
-/*   gtk_signal_connect(GTK_OBJECT(gsp->clist), "select_row", */
-/* 		     GTK_SIGNAL_FUNC(sel_list_item_update), */
-/* 		     (gpointer) gsp); */
-
   select_pos = -1;
   if (initial_palette && strlen (initial_palette))
     {
@@ -118,6 +115,9 @@ palette_new_selection (gchar *title,
   psp->gc = gdk_gc_new (psp->shell->window);  
   
   palette_clist_init (psp->clist, psp->shell, psp->gc);
+  gtk_signal_connect (GTK_OBJECT (psp->clist), "button_press_event",
+		      GTK_SIGNAL_FUNC (palette_select_button_press),
+		      (gpointer) psp);
 
   /* Now show the dialog */
   gtk_widget_show (vbox);
@@ -220,6 +220,25 @@ palette_select_refresh_all ()
 }
 
 /*  local functions  */
+
+static gint
+palette_select_button_press (GtkWidget      *widget,
+			     GdkEventButton *bevent,
+			     gpointer        data)
+{
+  PaletteSelect *psp;
+
+  psp = (PaletteSelect *) data;
+
+  if (bevent->button == 1 && bevent->type == GDK_2BUTTON_PRESS)
+    {
+      palette_select_edit_callback (widget, data);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 static void
 palette_select_edit_callback (GtkWidget *widget,
