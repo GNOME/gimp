@@ -63,10 +63,11 @@
  *                          (reported by Ferenc Wagner)
  * V 1.13  PK, 07-Apr-2002: Fix problem with DOS binary EPS files
  * V 1.14  PK, 14-May-2002: Workaround EPS files of Adb. Ill. 8.0
+ * V 1.15  PK, 04-Oct-2002: Be more accurate with using BoundingBox
  */
-#define VERSIO 1.14
-static char dversio[] = "v1.14  14-May-2002";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.14  14-May-2002";
+#define VERSIO 1.15
+static char dversio[] = "v1.15  04-Oct-2002";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.15  04-Oct-2002";
 
 #include "config.h"
 
@@ -1333,12 +1334,12 @@ ps_open (gchar            *filename,
             }
           if ((x0 >= 0) && (y0 >= 0) && (x1 > x0) && (y1 > y0))
             {
-               *llx = (int)((x0/72.0) * resolution + 0.01);
-               *lly = (int)((y0/72.0) * resolution + 0.01);
-               *urx = (int)((x1/72.0) * resolution + 0.01);
-               *ury = (int)((y1/72.0) * resolution + 0.01);
-               width = *urx + 1;
-               height = *ury + 1;
+               *llx = (int)((x0/72.0) * resolution + 0.0001);
+               *lly = (int)((y0/72.0) * resolution + 0.0001);
+               *urx = (int)((x1/72.0) * resolution + 0.5);
+               *ury = (int)((y1/72.0) * resolution + 0.5);
+               width = *urx;
+               height = *ury;
             }
         }
     }
@@ -1801,10 +1802,12 @@ save_ps_setup (FILE   *ofp,
                gint    bpp)
 {
   double x_offset, y_offset, x_size, y_size;
+  double urx, ury;
   double x_scale, y_scale;
   double width_inch, height_inch;
   double f1, f2, dx, dy;
   int xtrans, ytrans;
+  int i_urx, i_ury;
 
   /* initialize */
 
@@ -1839,9 +1842,16 @@ save_ps_setup (FILE   *ofp,
     y_size = width_inch; x_size = height_inch;
   }
 
+  /* Round up upper right corner only for non-integer values */
+  urx = (x_offset+x_size)*72.0;
+  ury = (y_offset+y_size)*72.0;
+  i_urx = (int)urx;
+  i_ury = (int)ury;
+  if (urx != (double)i_urx) i_urx++;  /* Check for non-integer value */
+  if (ury != (double)i_ury) i_ury++;
+
   fprintf (ofp, "%%%%BoundingBox: %d %d %d %d\n",(int)(x_offset*72.0),
-           (int)(y_offset*72.0), (int)((x_offset+x_size)*72.0)+1,
-           (int)((y_offset+y_size)*72.0)+1);
+           (int)(y_offset*72.0), i_urx, i_ury);
   fprintf (ofp, "%%%%EndComments\n");
 
   if (psvals.preview && (psvals.preview_size > 0))
@@ -2858,7 +2868,7 @@ save_dialog (void)
                     &psvals.height);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
-				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("X-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
@@ -2867,7 +2877,7 @@ save_dialog (void)
                     &psvals.x_offset);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
-				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Y-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
