@@ -3,13 +3,10 @@
 	* tools/pdbgen/pdb/channel.pdb: add the 
 	gimp_channel_new_from_component() PDB function.
 
-	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpchannel_pdb.[ch]
 	* app/pdb/channel_cmds.c: resultant files.
 
 	* libgimp/gimp.def: add the new function to the def file
-
-	* devel-docs/libgimp/libgimp-sections.txt: add the new function
-	to devel-docs
 
 2005-02-22  Michael Natterer  <mitch@gimp.org>
 
