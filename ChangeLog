@@ -1,4 +1,4 @@
-1999-10-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
+1999-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c: made the "Dialogs" sub-menus of <Toolbox>/File and
 	<Image> consistent.
