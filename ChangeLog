@@ -1,5 +1,8 @@
 Sat Apr 24 11:30:34 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* app/plug_in.c (plug_in_open): Add OS/2 patches. Setting pipes
+	in binary mode.
+
 	* libgimp/gimpenv.c (gimp_data_directory): Set gimp_data_dir (OS/2).
 
 	* libgimp/gimp.c (set_gimp_PLUG_IN_INFO): Set the PLUG_IN_INFO

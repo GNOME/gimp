@@ -58,6 +58,13 @@
 
 #endif
 
+#ifdef __EMX__
+#include <fcntl.h>
+#include <process.h>
+#define _O_BINARY O_BINARY
+#define _P_NOWAIT P_NOWAIT
+#endif
+
 #include "regex.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
@@ -1067,7 +1074,7 @@ plug_in_open (PlugIn *plug_in)
 	  return 0;
 	}
 
-#ifdef __CYGWIN32__
+#if defined(__CYGWIN32__) || defined(__EMX__)
       /* Set to binary mode */
       setmode(my_read[0], _O_BINARY);
       setmode(my_write[0], _O_BINARY);
@@ -1123,7 +1130,11 @@ plug_in_open (PlugIn *plug_in)
        *  so that we can later use it to kill the filter if
        *  necessary.
        */
-#if defined (__CYGWIN32__) || defined (NATIVE_WIN32)
+#ifdef __EMX__
+      fcntl(my_read[0], F_SETFD, 1);
+      fcntl(my_write[1], F_SETFD, 1);
+#endif
+#if defined (__CYGWIN32__) || defined (NATIVE_WIN32) || defined(__EMX__)
       plug_in->pid = spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
       if (plug_in->pid == -1)
 #else
