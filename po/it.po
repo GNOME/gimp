@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-19 17:30+0200\n"
-"PO-Revision-Date: 2003-09-29 11:47+0200\n"
+"PO-Revision-Date: 2003-09-29 17:54+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -407,7 +407,7 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
+msgstr "Strumenti come la selezione fuzzy ed il riempimento colore trovano le zone in base ad un algoritmo seed-fill. Il seed-fill comincia dal punto selezionato e prosegue in tutte le direzioni fino a che la differenza di intensità del punto dall'origine è maggiore di una soglia specificata. Questo valore rappresenta la soglia predefinita."
 
 #: app/config/gimprc-blurbs.h:139
 msgid "Sets the browser used by the help system."
@@ -488,14 +488,14 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr ""
+msgstr "Se abilitato il server X verrà interrogato per la posizione corrente del mouse ogni evento di moto invece che affidarsi ai suggerimenti di posizione. Ciò significa che il disegno con pennelli grandi sarà più accurato ma più lento. Per assurdo, su alcuni server X è possibile che il disegno venga accelerato."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr ""
+msgstr "Imposta se GIMP debba creare delle anteprime di livelli e canali. Le anteprime nelle finestre dei livelli e canali sono simpatiche ma possono rallentare se si lavora con immagini molto grandi."
 
 #: app/config/gimprc-blurbs.h:226
 msgid "Sets the default preview size for layers and channels."
@@ -505,13 +505,13 @@ msgstr "Imposta l'ampiezza dell'anteprima per livelli e canali."
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr ""
+msgstr "Se abilitata la finestra immagine verrà automaticamente ridimensionata se l'ampiezza fisica dell'immagine cambia."
 
 #: app/config/gimprc-blurbs.h:233
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr ""
+msgstr "Se abilitata la finestra immagine verrà automaticamente ridimensionata se si fa zoom su di un'immagine."
 
 #: app/config/gimprc-blurbs.h:237
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -530,31 +530,31 @@ msgstr "Salva la posizione e l'ampiezza delle finestre di dialogo principali all
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr ""
+msgstr "Se abilitata tutti gli strumenti di disegno mostreranno un'anteprima del profilo del pennello corrente."
 
 #: app/config/gimprc-blurbs.h:254
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr ""
+msgstr "Se abilitata la barra dei menu è visibile. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:258
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr ""
+msgstr "Se abilitata i righelli sono visibili. Questo può essere modificato anche con il comando \"Visualizza->Mostra i righelli\""
 
 #: app/config/gimprc-blurbs.h:262
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr ""
+msgstr "Se abilitata le barre di scorrimento sono visibili. Questo può essere modificato con il comando \"Visualizza->Mostra le barre di scorrimento\"."
 
 #: app/config/gimprc-blurbs.h:266
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr ""
+msgstr "Se abilitata la barra di stato è visibile. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:270
 msgid ""
@@ -1013,7 +1013,7 @@ msgstr "Sposta voce"
 
 #: app/core/core-enums.c:505 app/core/core-enums.c:535
 msgid "Item Visibility"
-msgstr ""
+msgstr "Visibilità elemento"
 
 #: app/core/core-enums.c:506
 msgid "Linked Item"
@@ -1376,12 +1376,12 @@ msgstr "Non è possibile aprire '%s' in scrittura: %s"
 #: app/core/gimpbrushgenerated.c:388
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Brush file"
-msgstr ""
+msgstr "Errore fatale di interpretazione: '%s' non è un file pennello di GIMP"
 
 #: app/core/gimpbrushgenerated.c:398
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr ""
+msgstr "Errore fatale di interpretazione: '%s': versione di pennello GIMP sconosciuta"
 
 #: app/core/gimpbrushpipe.c:384 app/core/gimpbrushpipe.c:404
 #: app/core/gimpbrushpipe.c:494
@@ -1505,6 +1505,9 @@ msgid ""
 "file '%s'\n"
 "with unknown extension."
 msgstr ""
+"Prova del caricatore standard\n"
+"sul file '%s'\n"
+"con estensione sconosciuta."
 
 #: app/core/gimpdatafactory.c:468
 #, c-format
@@ -1873,15 +1876,15 @@ msgstr "Anteprima non disponibile"
 
 #: app/core/gimpimagefile.c:776
 msgid "Loading preview ..."
-msgstr ""
+msgstr "Caricamento anteprima ..."
 
 #: app/core/gimpimagefile.c:780
 msgid "Preview is out of date"
-msgstr ""
+msgstr "L'anteprima non è aggiornata"
 
 #: app/core/gimpimagefile.c:784
 msgid "Cannot create preview"
-msgstr "Impossibil creare l'anteprima"
+msgstr "Impossibile creare l'anteprima"
 
 #: app/core/gimpimagefile.c:794 app/gui/info-window.c:705
 #, c-format
@@ -2473,6 +2476,8 @@ msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Impossibile eseguire la callback del pennello.\n"
+"Può essere andato in crash il plug-in corrispondente."
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
@@ -3074,7 +3079,7 @@ msgstr "/Mostra _menu immagine"
 
 #: app/gui/dialogs-menu.c:174
 msgid "/Auto Follow Active _Image"
-msgstr ""
+msgstr "/Auto segui _immagine attiva"
 
 #: app/gui/documents-menu.c:43
 msgid "/_Open Image"
@@ -3133,8 +3138,9 @@ msgstr "Copia con nome"
 
 #: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:195
 #: app/widgets/gimpvectorstreeview.c:317
+#, fuzzy
 msgid "There is no active layer or channel to stroke to."
-msgstr ""
+msgstr "Non c'è un livello o un canale attivo da colpire."
 
 #: app/gui/edit-commands.c:304 app/gui/edit-commands.c:333
 msgid "(Unnamed Buffer)"
@@ -3202,6 +3208,10 @@ msgid ""
 "\n"
 "You will lose all your changes, including all undo information."
 msgstr ""
+"Ripristinare '%s' a\n"
+"'%s'?\n"
+"\n"
+"Perderai tutti i cambiamenti, incluse le informazioni di annullamento."
 
 #: app/gui/file-commands.c:338
 msgid "Revert Image"
@@ -3331,6 +3341,8 @@ msgid ""
 "Unable to run font callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Impossibile eseguire callback dei font.\n"
+"Probabilmente il corrispondente plug-in è andato in crash."
 
 #: app/gui/gradient-editor-commands.c:85
 #, fuzzy
@@ -5088,23 +5100,20 @@ msgid "Crop Layer"
 msgstr "/Livelli/Ancora livello"
 
 #: app/gui/layers-commands.c:432
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Livelli/Da Maschera a selezione"
+msgstr "Maschera livello a selezione"
 
 #: app/gui/layers-commands.c:639
 msgid "Empty Layer Copy"
 msgstr "Copia livello vuoto"
 
 #: app/gui/layers-commands.c:667
-#, fuzzy
 msgid "Create a New Layer"
 msgstr "Nuovo livello"
 
 #: app/gui/layers-commands.c:699
-#, fuzzy
 msgid "Layer _Name:"
-msgstr "Nome livello:"
+msgstr "_Nome livello:"
 
 #. The size labels
 #: app/gui/layers-commands.c:703
@@ -5372,9 +5381,8 @@ msgid "Offset _X:"
 msgstr "Sposta X:"
 
 #: app/gui/offset-dialog.c:150
-#, fuzzy
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y:"
 
 #. The by half height and half width option
 #: app/gui/offset-dialog.c:178
@@ -5392,100 +5400,82 @@ msgid "Fill Type"
 msgstr "Modalità di riempimento"
 
 #: app/gui/offset-dialog.c:204
-#, fuzzy
 msgid "_Background"
-msgstr "Sfondo"
+msgstr "_Sfondo"
 
 #: app/gui/offset-dialog.c:207
-#, fuzzy
 msgid "_Transparent"
-msgstr "Trasparente"
+msgstr "_Trasparente"
 
 #: app/gui/palette-editor-menu.c:48
-#, fuzzy
 msgid "/_New Color"
-msgstr "True color"
+msgstr "/_Nuovo colore"
 
 #: app/gui/palette-editor-menu.c:53
-#, fuzzy
 msgid "/_Delete Color"
-msgstr "/Strumenti/Colori base"
+msgstr "/_Cancella colore"
 
 #: app/gui/palette-editor-menu.c:61
-#, fuzzy
 msgid "/Zoom _Out"
-msgstr "Zoom indietro"
+msgstr "/Zoom _indietro"
 
 #: app/gui/palette-editor-menu.c:66
-#, fuzzy
 msgid "/Zoom _In"
-msgstr "Zoom avanti"
+msgstr "/Zoom _avanti"
 
 #: app/gui/palette-editor-menu.c:71
-#, fuzzy
 msgid "/Zoom _All"
-msgstr "Zoom totale"
+msgstr "/Zoom _totale"
 
 #: app/gui/palette-import-dialog.c:167
 msgid "Import Palette"
 msgstr "Importa palette"
 
 #: app/gui/palette-import-dialog.c:169
-#, fuzzy
 msgid "Import a New Palette"
-msgstr "Importa palette"
+msgstr "Importa una nuova palette"
 
 #: app/gui/palette-import-dialog.c:176
-#, fuzzy
 msgid "_Import"
-msgstr "Importa"
+msgstr "_Importa"
 
 #. The "Source" frame
 #: app/gui/palette-import-dialog.c:202
-#, fuzzy
 msgid "Select Source"
-msgstr "Seleziona File"
+msgstr "Seleziona sorgente"
 
 #: app/gui/palette-import-dialog.c:214
-#, fuzzy
 msgid "_Gradient"
-msgstr "Gradienti"
+msgstr "_Gradiente"
 
 #: app/gui/palette-import-dialog.c:226
-#, fuzzy
 msgid "I_mage"
-msgstr "Immagine"
+msgstr "I_mmagine"
 
 #. The "Import" frame
 #: app/gui/palette-import-dialog.c:284
-#, fuzzy
 msgid "Import Options"
-msgstr "Opzioni di apertura"
+msgstr "Opzioni di importazione"
 
 #: app/gui/palette-import-dialog.c:298
-#, fuzzy
 msgid "New Import"
-msgstr "Importa"
+msgstr "Nuova importazione"
 
 #: app/gui/palette-import-dialog.c:300
-#, fuzzy
 msgid "Palette _Name:"
-msgstr "Palette"
+msgstr "_Nome palette:"
 
 #: app/gui/palette-import-dialog.c:306
-#, fuzzy
 msgid "N_umber of Colors:"
-msgstr "Minimo numero di colori:"
+msgstr "N_umero di colori:"
 
 #: app/gui/palette-import-dialog.c:319
-#, fuzzy
 msgid "C_olumns:"
-msgstr "Conteggio:"
+msgstr "C_olonne:"
 
 #: app/gui/palette-import-dialog.c:331
-#, fuzzy
 msgid "I_nterval:"
-msgstr "Intervallo:"
+msgstr "I_ntervallo:"
 
 #. The "Preview" frame
 #: app/gui/palette-import-dialog.c:343
@@ -5497,6 +5487,8 @@ msgid ""
 "Unable to run palette callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Impossibile eseguire la callback palette.\n"
+"Probabilmente è andato in crash il corrispondente plug-in."
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
@@ -5856,24 +5848,20 @@ msgid "Default Appearance in Normal Mode"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1464 app/gui/preferences-dialog.c:1493
-#, fuzzy
 msgid "Show Menubar"
-msgstr "Barra di stato"
+msgstr "Mostra barra dei menu"
 
 #: app/gui/preferences-dialog.c:1467 app/gui/preferences-dialog.c:1496
-#, fuzzy
 msgid "Show _Rulers"
-msgstr "Mostra righello"
+msgstr "Mostra _righello"
 
 #: app/gui/preferences-dialog.c:1470 app/gui/preferences-dialog.c:1499
-#, fuzzy
 msgid "Show Scrollbars"
-msgstr "/Visualizza/Righelli indicativi"
+msgstr "Mostra barre di scorrimento"
 
 #: app/gui/preferences-dialog.c:1473 app/gui/preferences-dialog.c:1502
-#, fuzzy
 msgid "Show S_tatusbar"
-msgstr "Barra di stato"
+msgstr "Mostra barra di s_tato"
 
 #: app/gui/preferences-dialog.c:1479 app/gui/preferences-dialog.c:1508
 #, fuzzy
@@ -5893,17 +5881,15 @@ msgstr "Configura dimensione della superficie"
 #. Fullscreen Mode
 #: app/gui/preferences-dialog.c:1489
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "Visualizzazione predefinita in modalità pienoschermo"
 
 #: app/gui/preferences-dialog.c:1523
-#, fuzzy
 msgid "Image Title & Statusbar Format"
-msgstr "Formato del titolo immagine:"
+msgstr "Formato del titolo immagine e della barra di stato"
 
 #: app/gui/preferences-dialog.c:1526
-#, fuzzy
 msgid "Title & Status"
-msgstr "Stato dei dispositivi"
+msgstr "Titolo e stato"
 
 #: app/gui/preferences-dialog.c:1545
 msgid "Custom"
@@ -5927,17 +5913,15 @@ msgstr "Mostra dimensione zoom inversa"
 
 #: app/gui/preferences-dialog.c:1550
 msgid "Show memory usage"
-msgstr ""
+msgstr "Mostra l'uso della memoria"
 
 #: app/gui/preferences-dialog.c:1561
-#, fuzzy
 msgid "Image Title Format"
-msgstr "Formato del titolo immagine:"
+msgstr "Formato del titolo immagine"
 
 #: app/gui/preferences-dialog.c:1562
-#, fuzzy
 msgid "Image Statusbar Format"
-msgstr "Formato del titolo immagine:"
+msgstr "Formato della barra di stato dell'immagine"
 
 #: app/gui/preferences-dialog.c:1648 app/gui/preferences-dialog.c:1651
 msgid "Display"
