@@ -5,10 +5,11 @@ Tue Jun  8 00:30:57 MEST 1999 Sven Neumann <sven@gimp.org>
 	* app/crop.c
 	* app/flip_tool.c
 	* app/paint_core.c: Overworked the line preview. Sorry for the 
-	inconvenience, but it has always worked here due to a bug in icewm. Should
-	work much better now, also it still isn't perfect (yet).
-	Had to change the standard toggle key for all toggleable tools to <Ctrl>
-	since <Shift> collides with line drawing in the Convolver tool.
+	inconvenience, but it has always worked here due to a bug in icewm. 
+	Should work much better now, also it still isn't perfect (yet).
+
+	Had to change the standard toggle key for all toggleable tools to 
+	<Ctrl> since <Shift> collides with line drawing in the Convolver tool.
 
 1999-06-07  Tomas Ogren  <stric@ing.umu.se>
 
