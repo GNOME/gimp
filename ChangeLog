@@ -1,5 +1,9 @@
 Thu Apr  9 09:28:04 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* libgimp/gimp.c (gimp_main): strict C requires that function
+	pointers be preceded by '&'.  SGI compilers seem to not like it
+	when they're not.
+
 	* app/gdisplay.c: fixed updating to not clip display updates to
 	image boundary (so that layer boundaries that hang over will be
 	erased properly when the layer is removed); fixes a long-standing
