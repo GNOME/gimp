@@ -1,3 +1,7 @@
+Thu Dec 11 20:56:09 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* Removed dgimp (it never worked anyway)
+
 Wed Dec 10 16:59:56 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Added gimprc option for enabling/disabling tooltips

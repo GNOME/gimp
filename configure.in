@@ -330,7 +330,6 @@ plug-ins/xpm/Makefile
 plug-ins/AlienMap/Makefile
 plug-ins/c_astretch/Makefile
 plug-ins/bumpmap/Makefile
-plug-ins/dgimp/Makefile
 plug-ins/gflare/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile

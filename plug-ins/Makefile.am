@@ -12,7 +12,6 @@ SUBDIRS = 			\
 	Julia			\
 	Mandelbrot		\
 	dbbrowser		\
-	dgimp			\
 	fuse			\
 	gflare			\
 	@GIMPTCL@		\
