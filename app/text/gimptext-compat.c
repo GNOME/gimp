@@ -141,7 +141,7 @@ text_get_extents (const gchar *fontname,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
-  PangoRectangle        logical_rect;
+  PangoRectangle        rect;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
@@ -157,16 +157,29 @@ text_get_extents (const gchar *fontname,
 
   pango_layout_set_text (layout, text, -1);
 
-  pango_layout_get_pixel_extents (layout, NULL, &logical_rect);
+  pango_layout_get_pixel_extents (layout, NULL, &rect);
 
   if (width)
-    *width = logical_rect.width;
+    *width = rect.width;
   if (height)
-    *height = logical_rect.height;
-  if (ascent)
-    *ascent = -logical_rect.y;
-  if (descent)
-    *descent = logical_rect.height + logical_rect.y;
+    *height = rect.height;
+
+  if (ascent || descent)
+    {
+      PangoLayoutIter *iter;
+      PangoLayoutLine *line;
+
+      iter = pango_layout_get_iter (layout);
+      line = pango_layout_iter_get_line (iter);
+      pango_layout_iter_free (iter);
+
+      pango_layout_line_get_pixel_extents (line, NULL, &rect);
+
+      if (ascent)
+        *ascent = PANGO_ASCENT (rect);
+      if (descent)
+        *descent = - PANGO_DESCENT (rect);
+    }
 
   g_object_unref (layout);
 

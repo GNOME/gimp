@@ -1,3 +1,9 @@
+2003-06-03  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c (text_get_extents): need to get
+	ascent and descent from a PangoLayoutLine. Report negative descent
+	so the function behaves like it used to in 1.2.
+
 2003-06-03  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-path-16.png
