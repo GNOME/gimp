@@ -1,3 +1,7 @@
+Wed Mar 18 21:16:14 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/crop.c: fixed an indented #define 
+
 Wed Mar 18 19:11:01 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: split the "Brought to you by S&P" line in 

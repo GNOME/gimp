@@ -466,8 +466,8 @@ crop_draw (Tool *tool)
   Crop * crop;
   GDisplay * gdisp;
 
-  #define SRW 10
-  #define SRH 10
+#define SRW 10
+#define SRH 10
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   crop = (Crop *) tool->private;
