@@ -66,6 +66,7 @@ enum
 {
   CLICKED,
   DOUBLE_CLICKED,
+  EXTENDED_CLICKED,
   RENDER,
   GET_SIZE,
   NEEDS_POPUP,
@@ -171,6 +172,16 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                     gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
+  preview_signals[EXTENDED_CLICKED] = 
+    gtk_signal_new ("extended_clicked",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       extended_clicked),
+                    gtk_marshal_NONE__UINT,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_UINT);
+
   preview_signals[RENDER] = 
     gtk_signal_new ("render",
                     GTK_RUN_LAST,
@@ -220,12 +231,13 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   widget_class->enter_notify_event   = gimp_preview_enter_notify_event;
   widget_class->leave_notify_event   = gimp_preview_leave_notify_event;
 
-  klass->clicked        = NULL;
-  klass->double_clicked = NULL;
-  klass->render         = gimp_preview_real_render;
-  klass->get_size       = gimp_preview_real_get_size;
-  klass->needs_popup    = gimp_preview_real_needs_popup;
-  klass->create_popup   = gimp_preview_real_create_popup;
+  klass->clicked          = NULL;
+  klass->double_clicked   = NULL;
+  klass->extended_clicked = NULL;
+  klass->render           = gimp_preview_real_render;
+  klass->get_size         = gimp_preview_real_get_size;
+  klass->needs_popup      = gimp_preview_real_needs_popup;
+  klass->create_popup     = gimp_preview_real_create_popup;
 }
 
 static void
@@ -551,6 +563,8 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 	{
 	  gtk_grab_add (widget);
 
+	  preview->press_state = bevent->state;
+
 	  if (preview->show_popup && gimp_preview_needs_popup (preview))
 	    {
 	      gimp_preview_popup_show (preview,
@@ -601,7 +615,17 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 
       if (preview->clickable && click && preview->in_button)
 	{
-	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CLICKED]);
+	  if (preview->press_state &
+	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
+	    {
+	      gtk_signal_emit (GTK_OBJECT (widget),
+			       preview_signals[EXTENDED_CLICKED],
+			       preview->press_state);
+	    }
+	  else
+	    {
+	      gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CLICKED]);
+	    }
 	}
     }
   else

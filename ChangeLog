@@ -1,5 +1,17 @@
 2001-05-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpimage.h: removed prototype of function which doesn't
+	exist.
+
+	* app/widgets/gimppreview.[ch]: new signal "extended_clicked"
+	which is emitted instead of "clicked" if the user pressed shift,
+	control or mod1 on button_press.
+
+	* app/widgets/gimplayerlistitem.c: use the "extended_clicked"
+	signal to toggle the layer mask's "show" and "apply" states.
+
+2001-05-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdnd.[ch]: Made file/url DND work like the other DND types.
 	The drop callback gets passed a GList of filenames.
 	Provide a default callback which calls file_open_with_display()

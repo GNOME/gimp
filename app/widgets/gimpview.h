@@ -58,6 +58,7 @@ struct _GimpPreview
 
   /*< private >*/
   gboolean      in_button;
+  guint         press_state;
   guint         idle_id;
   guint         popup_id;
   gint          popup_x;
@@ -68,15 +69,17 @@ struct _GimpPreviewClass
 {
   GtkPreviewClass  parent_class;
 
-  void        (* clicked)        (GimpPreview *preview);
-  void        (* double_clicked) (GimpPreview *preview);
-  void        (* render)         (GimpPreview *preview);
-  void        (* get_size)       (GimpPreview *preview,
-				  gint         size,
-				  gint        *width,
-				  gint        *height);
-  gboolean    (* needs_popup)    (GimpPreview *preview);
-  GtkWidget * (* create_popup)   (GimpPreview *preview);
+  void        (* clicked)          (GimpPreview *preview);
+  void        (* double_clicked)   (GimpPreview *preview);
+  void        (* extended_clicked) (GimpPreview *preview,
+				    guint        modifier_state);
+  void        (* render)           (GimpPreview *preview);
+  void        (* get_size)         (GimpPreview *preview,
+				    gint         size,
+				    gint        *width,
+				    gint        *height);
+  gboolean    (* needs_popup)      (GimpPreview *preview);
+  GtkWidget * (* create_popup)     (GimpPreview *preview);
 };
 
 

@@ -75,6 +75,10 @@ static void      gimp_layer_list_item_layer_clicked (GtkWidget         *widget,
                                                      GimpLayer         *layer);
 static void      gimp_layer_list_item_mask_clicked  (GtkWidget         *widget,
                                                      GimpLayerMask     *mask);
+static void      gimp_layer_list_item_mask_extended_clicked
+                                                    (GtkWidget         *widget,
+						     guint              state,
+						     GimpLayerMask     *mask);
 
 
 static GimpDrawableListItemClass *parent_class = NULL;
@@ -431,6 +435,9 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
       gtk_signal_connect (GTK_OBJECT (layer_item->mask_preview), "clicked",
                           GTK_SIGNAL_FUNC (gimp_layer_list_item_mask_clicked),
                           mask);
+      gtk_signal_connect (GTK_OBJECT (layer_item->mask_preview), "extended_clicked",
+                          GTK_SIGNAL_FUNC (gimp_layer_list_item_mask_extended_clicked),
+                          mask);
 
       gtk_signal_connect_object
         (GTK_OBJECT (mask), "apply_changed",
@@ -464,32 +471,48 @@ gimp_layer_list_item_update_state (GtkWidget *widget)
   GimpLayer         *layer;
   GimpLayerMask     *mask;
   GimpPreview       *preview;
-  GimpRGB           *layer_color = &black_color;
-  GimpRGB           *mask_color  = &black_color;
+  GimpRGB           *layer_color;
+  GimpRGB           *mask_color;
+  GimpRGB            bg_color;
+
+  gimp_rgb_set_uchar (&bg_color,
+		      widget->style->base[widget->state].red   >> 8,
+		      widget->style->base[widget->state].green >> 8,
+		      widget->style->base[widget->state].blue  >> 8);
+
+  layer_color = &bg_color;
+  mask_color  = &bg_color;
 
   layer_item = GIMP_LAYER_LIST_ITEM (widget);
   list_item  = GIMP_LIST_ITEM (widget);
   layer      = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
   mask       = gimp_layer_get_mask (layer);
 
-  switch (widget->state)
+  if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
     {
-    case GTK_STATE_NORMAL:
-      break;
-
-    case GTK_STATE_SELECTED:
-      if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
-        {
-          layer_color = &white_color;
-        }
+      if (widget->state == GTK_STATE_SELECTED)
+	layer_color = &white_color;
       else
-        {
-          mask_color = &white_color;
-        }
-      break;
+	layer_color = &black_color;
+    }
 
-    default:
-      g_print ("%s(): unhandled state\n", G_GNUC_FUNCTION);
+  if (mask)
+    {
+      if (gimp_layer_mask_get_show (mask))
+	{
+	  mask_color = &green_color;
+	}
+      else if (! gimp_layer_mask_get_apply (mask))
+	{
+	  mask_color = &red_color;
+	}
+      else if (gimp_layer_mask_get_edit (mask))
+	{
+	  if (widget->state == GTK_STATE_SELECTED)
+	    mask_color = &white_color;
+	  else
+	    mask_color = &black_color;
+	}
     }
 
   preview = GIMP_PREVIEW (list_item->preview);
@@ -510,8 +533,6 @@ gimp_layer_list_item_layer_clicked (GtkWidget *widget,
 {
   GimpLayerMask *mask;
 
-  g_print ("layer clicked\n");
-
   mask = gimp_layer_get_mask (layer);
 
   if (mask)
@@ -525,8 +546,21 @@ static void
 gimp_layer_list_item_mask_clicked (GtkWidget     *widget,
                                    GimpLayerMask *mask)
 {
-  g_print ("mask clicked\n");
-
   if (! gimp_layer_mask_get_edit (mask))
     gimp_layer_mask_set_edit (mask, TRUE);
+}
+
+static void
+gimp_layer_list_item_mask_extended_clicked (GtkWidget     *widget,
+					    guint          state,
+					    GimpLayerMask *mask)
+{
+  if (state & GDK_MOD1_MASK)
+    {
+      gimp_layer_mask_set_show (mask, ! gimp_layer_mask_get_show (mask));
+    }
+  else if (state & GDK_CONTROL_MASK)
+    {
+      gimp_layer_mask_set_apply (mask, ! gimp_layer_mask_get_apply (mask));
+    }
 }

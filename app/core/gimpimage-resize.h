@@ -450,9 +450,7 @@ TileManager   * gimp_image_composite               (GimpImage       *gimage);
 GimpImageType	gimp_image_composite_type          (const GimpImage *gimage);
 gint            gimp_image_composite_bytes         (const GimpImage *gimage);
 
-gint            gimp_image_preview_valid           (const GimpImage *gimage);
-
-void            gimp_image_invalidate_previews     (void);
+gboolean        gimp_image_preview_valid           (const GimpImage *gimage);
 
 
 #endif /* __GIMP_IMAGE_H__ */
