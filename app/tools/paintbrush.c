@@ -194,7 +194,7 @@ paintbrush_options_new (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->fade_out_w), "value_changed",
 		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      options);
+		      &options->fade_out);
   gtk_widget_show (scale);
 
   /*  the use gradient toggle  */
