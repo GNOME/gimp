@@ -23,9 +23,9 @@
 #define __GIMP_CONFIG_PATH_H__
 
 
-gchar * gimp_config_path_expand (const gchar  *path,
-                                 gboolean      recode,
-                                 GError      **error);
+gchar  * gimp_config_path_expand (const gchar  *path,
+                                  gboolean      recode,
+                                  GError      **error);
 
 
 #endif /* __GIMP_CONFIG_PATH_H__ */

@@ -33,35 +33,39 @@
 #include "gimp-intl.h"
 
 
-#define SUBSTS_ALLOC 4
-
 static gchar        * gimp_config_path_expand_only (const gchar  *path,
                                                     GError      **error);
 static inline gchar * extract_token                (const gchar **str);
 
-static inline gchar *
-extract_token (const gchar **str)
+
+/*
+ * GimpConfig path utilities
+ */
+
+gchar *
+gimp_config_build_data_path (const gchar *name)
 {
-  const gchar *p;
-  gchar       *token;
-
-  if (strncmp (*str, "${", 2))
-    return NULL;
-
-  p = *str + 2;
-
-  while (*p && (*p != '}'))
-    p = g_utf8_next_char (p);
-
-  if (!p)
-    return NULL;
-
-  token = g_strndup (*str + 2, g_utf8_pointer_to_offset (*str + 2, p));
-
-  *str = p + 1; /* after the closing bracket */
-
-  return token;
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
+                      G_SEARCHPATH_SEPARATOR_S,
+                      "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
+                      NULL);
 }
+
+gchar *
+gimp_config_build_writable_path (const gchar *name)
+{
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
+}
+
+gchar *
+gimp_config_build_plug_in_path (const gchar *name)
+{
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
+                      G_SEARCHPATH_SEPARATOR_S,
+                      "${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name,
+                      NULL);
+}
+
 
 /**
  * gimp_config_path_expand:
@@ -104,6 +108,9 @@ gimp_config_path_expand (const gchar  *path,
 
   return gimp_config_path_expand_only (path, error);
 }
+
+
+#define SUBSTS_ALLOC 4
 
 static gchar *
 gimp_config_path_expand_only (const gchar  *path,
@@ -252,4 +259,28 @@ gimp_config_path_expand_only (const gchar  *path,
   g_free (filename);
 
   return expanded;
+}
+
+static inline gchar *
+extract_token (const gchar **str)
+{
+  const gchar *p;
+  gchar       *token;
+
+  if (strncmp (*str, "${", 2))
+    return NULL;
+
+  p = *str + 2;
+
+  while (*p && (*p != '}'))
+    p = g_utf8_next_char (p);
+
+  if (!p)
+    return NULL;
+
+  token = g_strndup (*str + 2, g_utf8_pointer_to_offset (*str + 2, p));
+
+  *str = p + 1; /* after the closing bracket */
+
+  return token;
 }

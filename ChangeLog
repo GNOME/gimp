@@ -1,5 +1,22 @@
 2005-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/config/Makefile.am
+	* app/config/gimpconfig-file.[ch]
+	* app/config/gimprc-utils.[ch]: more new files, code factored out
+	of gimpconfig-utils.[ch].
+
+	* app/config/gimpconfig-path.[ch]
+	* app/config/gimpconfig-utils.[ch]
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c
+	* app/config/gimprc.c
+	* app/core/gimp-units.c
+	* app/dialogs/user-install-dialog.c
+	* app/gui/session.c: changed accordingly.
+
+2005-01-24  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.[ch]: removed an unused parameter.
 
 	* app/config/gimpconfig.c: changed accordingly.

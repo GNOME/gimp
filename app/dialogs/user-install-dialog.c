@@ -40,7 +40,7 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpconfig-utils.h"
+#include "config/gimpconfig-file.h"
 #include "config/gimprc.h"
 
 #include "core/gimp-templates.h"

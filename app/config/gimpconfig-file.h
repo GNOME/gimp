@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpconfig-path.h
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * File utitility functions for GimpConfig.
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_PATH_H__
-#define __GIMP_CONFIG_PATH_H__
+#ifndef __GIMP_CONFIG_FILE_H__
+#define __GIMP_CONFIG_FILE_H__
 
 
-gchar  * gimp_config_path_expand (const gchar  *path,
-                                  gboolean      recode,
-                                  GError      **error);
+gboolean   gimp_config_file_copy             (const gchar  *source,
+                                              const gchar  *dest,
+                                              GError      **error);
+gboolean   gimp_config_file_backup_on_error  (const gchar  *filename,
+                                              const gchar  *name,
+                                              GError      **error);
 
 
-#endif /* __GIMP_CONFIG_PATH_H__ */
+#endif  /* __GIMP_CONFIG_FILE_H__ */

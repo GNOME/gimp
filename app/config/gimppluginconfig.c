@@ -28,9 +28,9 @@
 #include "config-types.h"
 
 #include "gimpconfig-params.h"
-#include "gimpconfig-utils.h"
 
 #include "gimprc-blurbs.h"
+#include "gimprc-utils.h"
 #include "gimppluginconfig.h"
 
 

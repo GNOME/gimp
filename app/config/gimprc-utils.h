@@ -19,13 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_PATH_H__
-#define __GIMP_CONFIG_PATH_H__
+#ifndef __GIMP_RC_UTILS_H__
+#define __GIMP_RC_UTILS_H__
 
 
-gchar  * gimp_config_path_expand (const gchar  *path,
-                                  gboolean      recode,
-                                  GError      **error);
+gchar  * gimp_config_build_data_path     (const gchar  *name);
+gchar  * gimp_config_build_writable_path (const gchar  *name);
+gchar  * gimp_config_build_plug_in_path  (const gchar  *name);
 
 
-#endif /* __GIMP_CONFIG_PATH_H__ */
+#endif /* __GIMP_RC_UTILS_H__ */

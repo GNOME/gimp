@@ -39,7 +39,7 @@
 #include "gui-types.h"
 
 #include "config/gimpconfig-error.h"
-#include "config/gimpconfig-utils.h"
+#include "config/gimpconfig-file.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpguiconfig.h"
 #include "config/gimpscanner.h"

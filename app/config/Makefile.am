@@ -16,6 +16,8 @@ libappconfig_a_SOURCES = \
 	gimpconfig-dump.h		\
 	gimpconfig-error.c		\
 	gimpconfig-error.h		\
+	gimpconfig-file.c		\
+	gimpconfig-file.h		\
 	gimpconfig-params.h		\
 	gimpconfig-path.c		\
 	gimpconfig-path.h		\
@@ -45,6 +47,8 @@ libappconfig_a_SOURCES = \
 	gimprc-serialize.h		\
 	gimprc-unknown.c		\
 	gimprc-unknown.h		\
+	gimprc-utils.c			\
+	gimprc-utils.h			\
 	gimpscanner.c			\
 	gimpscanner.h			\
 	gimpxmlparser.c			\

@@ -36,6 +36,7 @@
 #include "gimpconfig-utils.h"
 
 #include "gimprc-blurbs.h"
+#include "gimprc-utils.h"
 #include "gimpcoreconfig.h"
 
 #include "gimp-intl.h"
