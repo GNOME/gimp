@@ -1,5 +1,12 @@
 2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback):
+	Make sure last_x and last_y are set to values that match
+	those returned by gimp_size_entry_get_refval(), 
+	fixes bug #163951.
+	
+2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* app/dialogs/info-dialog.c: disconnect callbacks to prevent crash
 	when destroying dialog, fixes bug #163617.
 	
