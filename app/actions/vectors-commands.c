@@ -667,11 +667,7 @@ vectors_export_ok_callback (GtkWidget *widget)
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
 
-      if (gimp_vectors_export (gimage, NULL, filename, &error))
-        {
-          gimp_image_flush (gimage);
-        }
-      else
+      if (! gimp_vectors_export (gimage, NULL, filename, &error))
         {
           g_message (error->message);
           g_error_free (error);

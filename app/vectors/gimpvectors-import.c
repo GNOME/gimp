@@ -131,7 +131,9 @@ gimp_vectors_import (GimpImage    *image,
   GMarkupParseContext *context;
   FILE                *file;
   GQueue              *stack;
-  SvgHandler           base;
+  GList               *paths;
+  GList               *list;
+  SvgHandler          *base;
   gboolean             success = TRUE;
   gsize                bytes;
   gchar                buf[4096];
@@ -152,13 +154,13 @@ gimp_vectors_import (GimpImage    *image,
   stack = g_queue_new ();
 
   /*  the base of the stack, defines the size of the view-port  */
-  base.name      = "image";
-  base.width     = image->width;
-  base.height    = image->height;
-  base.paths     = NULL;
-  base.transform = NULL;
 
-  g_queue_push_head (stack, &base);
+  base = g_new0 (SvgHandler, 1);
+  base->name   = "image";
+  base->width  = image->width;
+  base->height = image->height;
+
+  g_queue_push_head (stack, base);
 
   context = g_markup_parse_context_new (&markup_parser, 0, stack, NULL);
 
@@ -167,31 +169,26 @@ gimp_vectors_import (GimpImage    *image,
     success = g_markup_parse_context_parse (context, buf, bytes, error);
 
   if (success)
-    g_markup_parse_context_end_parse (context, error);
+    success = g_markup_parse_context_end_parse (context, error);
 
   fclose (file);
   g_markup_parse_context_free (context);
 
-  g_queue_free (stack);
-
   if (success)
     {
-      if (base.paths)
+      if (base->paths)
         {
           GimpVectors *vectors;
-          GList       *paths;
 
-          base.paths = g_list_reverse (base.paths);
+          base->paths = g_list_reverse (base->paths);
 
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
                                        _("Import Paths"));
 
           vectors = gimp_vectors_new (image, _("Imported Path"));
 
-          for (paths = base.paths; paths; paths = paths->next)
+          for (paths = base->paths; paths; paths = paths->next)
             {
-              GList *list;
-
               for (list = paths->data; list; list = list->next)
                 gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
 
@@ -202,6 +199,7 @@ gimp_vectors_import (GimpImage    *image,
                 }
 
               g_list_free (paths->data);
+              paths->data = NULL;
             }
 
           gimp_image_add_vectors (image, vectors, -1);
@@ -215,8 +213,22 @@ gimp_vectors_import (GimpImage    *image,
         }
     }
 
-  g_list_free (base.paths);
-  g_free (base.transform);
+  while ((base = g_queue_pop_head (stack)) != NULL)
+    {
+      for (paths = base->paths; paths; paths = paths->next)
+        {
+          for (list = paths->data; list; list = list->next)
+            g_object_unref (list->data);
+
+          g_list_free (paths->data);
+        }
+
+      g_list_free (base->paths);
+      g_free (base->transform);
+      g_free (base);
+    }
+
+  g_queue_free (stack);
 
   return success;
 }
