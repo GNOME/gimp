@@ -272,60 +272,71 @@ render_blast (GDrawable   *drawable,
 	      edge_t       edge)
 {
   gint x1, x2, y1, y2;
-  gint width = drawable->width;
-  gint height = drawable->height;
+  gint width;
+  gint height;
   gint bytes = drawable->bpp;
   guchar *buffer;
   GPixelRgn src_region, dest_region;
   gint row;
-  gint row_stride = width * bytes;
+  gint row_stride;
   gint marker = 0;
-  gint lpi = row_stride - bytes;
+  gint lpi;
   
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
-  gimp_pixel_rgn_init(&src_region, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&dest_region, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  buffer = (guchar *)g_malloc(row_stride);
+  width = x2 - x1;
+  height = y2 - y1;
+  row_stride = width * bytes;
+  lpi = row_stride - bytes;
+
+  gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+
+  buffer = (guchar *) g_malloc(row_stride);
   
   for (row = y1; row < y2; row++)
     {
-      
-      gimp_pixel_rgn_get_row(&src_region, buffer, x1, row, width);
+      gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
+
       if (direction == RIGHT)
 	{
-	  reverse_buffer(buffer, row_stride, bytes);
+	  reverse_buffer (buffer, row_stride, bytes);
 	}
-      marker = render_blast_row(buffer, bytes, lpi, threshold, strength, edge);
+
+      marker = render_blast_row (buffer, bytes, lpi, threshold, strength, edge);
+
       if (direction == RIGHT)
 	{
-	  reverse_buffer(buffer, row_stride, bytes);
+	  reverse_buffer (buffer, row_stride, bytes);
 	}
-      gimp_pixel_rgn_set_row(&dest_region, buffer, x1, row, width);
-      gimp_progress_update((double) row / (double) (y2 - y1));
+
+      gimp_pixel_rgn_set_row (&dest_region, buffer, x1, row, width);
+      gimp_progress_update ((double) (row - y1)/ (double) (height));
+
       if (marker)
 	{
 	  gint j, limit;
 	  
-	  limit = 1 + rand() % 2;
+	  limit = 1 + rand () % 2;
 	  for (j = 0; (j < limit) && (row < y2); j++)
 	    {
 	      row++;
 	      if (row < y2)
 		{
-		  gimp_pixel_rgn_get_row(&src_region, buffer, x1, row, width);
-		  gimp_pixel_rgn_set_row(&dest_region, buffer, x1, row, width);
+		  gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
+		  gimp_pixel_rgn_set_row (&dest_region, buffer, x1, row, width);
 		}
 	    }
 	  marker = 0;
 	}
     }
+
   g_free(buffer);
   
   /*  update the region  */
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, x2 - x1, y2 - y1);
 
   return;
 }
@@ -338,41 +349,56 @@ render_wind (GDrawable   *drawable,
 	     edge_t       edge)
 {
   GPixelRgn src_region, dest_region;
-  gint width = drawable->width;
-  gint height = drawable->height;
+  gint width;
+  gint height;
   gint bytes = drawable->bpp;
-  gint row_stride = width * bytes;
-  gint comp_stride = bytes * COMPARE_WIDTH;
+  gint row_stride;
+  gint comp_stride;
   gint row;
   guchar *sb;
-  gint lpi = row_stride - comp_stride;
+  gint lpi;
   gint x1, y1, x2, y2;
 
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
-  gimp_pixel_rgn_init(&src_region, drawable, 0, 0, width, height,
-		      FALSE, FALSE);
-  gimp_pixel_rgn_init(&dest_region, drawable, 0, 0, width, height, TRUE, TRUE);
-  sb = g_malloc(row_stride);
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
+  width = x2 - x1;
+  height = y2 - y1;
+  row_stride = width * bytes;
+  comp_stride = bytes * COMPARE_WIDTH;
+  lpi = row_stride - comp_stride;
+
+  gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+
+  sb = g_malloc (row_stride);
   
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row(&src_region, sb, x1, row, width);
+      gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
+
+      if (direction == RIGHT)
+	{
+	  reverse_buffer (sb, row_stride, bytes);
+	}
+
+      render_wind_row (sb, bytes, lpi, threshold, strength, edge);
+
       if (direction == RIGHT)
 	{
 	  reverse_buffer(sb, row_stride, bytes);
 	}
-      render_wind_row(sb, bytes, lpi, threshold, strength, edge);
-      if (direction == RIGHT)
-	{
-	  reverse_buffer(sb, row_stride, bytes);
-	}
-      gimp_pixel_rgn_set_row(&dest_region, sb, x1, row, width);
-      gimp_progress_update((gdouble) row / (gdouble) (y2 - y1));
+
+      gimp_pixel_rgn_set_row (&dest_region, sb, x1, row, width);
+      gimp_progress_update ((double) (row - y1)/ (double) (height));
     }
+
   g_free(sb);
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, x2 - x1, y2 - y1);
+
+  /*  update the region  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, x2 - x1, y2 - y1);
+
   return;
 }
 
