@@ -131,7 +131,7 @@ static PSSaveVals psvals =
   5.0, 5.0,       /* Offset */
   1,              /* Unit is mm */
   1,              /* Keep edge ratio */
-  90,             /* Rotate */
+  0,              /* Rotate */
   2,              /* PostScript Level */
   0,              /* Encapsulated PostScript flag */
   0,              /* Preview flag */
@@ -450,7 +450,7 @@ ps_set_save_size (PSSaveVals *vals,
   GimpUnit unit;
 
   gimp_image_get_resolution (image_ID, &xres, &yres);
-  if ((xres < 1e-5) || (yres < 1e-5))
+  if ((xres < GIMP_MIN_RESOLUTION) || (yres < GIMP_MIN_RESOLUTION))
     {
       xres = yres = 72.0;
     }
@@ -2483,7 +2483,7 @@ save_dialog (void)
   /* Image Size */
   frame = gtk_frame_new (_("Image Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -2549,7 +2549,7 @@ save_dialog (void)
 				  _("Millimeter"), (gpointer) TRUE, NULL,
 
 				  NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
   gtk_widget_show (uframe);
 
   gtk_widget_show (vbox);
