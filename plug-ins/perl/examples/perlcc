@@ -73,9 +73,10 @@ sub gtkview_log {
       $font = load Gtk::Gdk::Font "9x15bold";
       $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
       $font = $b->style->font unless $font;
+      $w->vbox->add($b);
+      $b->realize; # for gtk-1.0
       $b->insert($font,$b->style->fg(-normal),undef,$log);
       $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+1));
-      $w->vbox->add($b);
 
       $b = new Gtk::Button "OK";
       $b->can_default(1);

@@ -103,7 +103,6 @@ register
          [PF_RADIO, "series", "Kind of series", 1, [["Arithmetic",1],["Geometric",0]]]
 	],
         [],
-        ['gtk-1.2'],
 	\&blowinout;
 
 exit main;

@@ -13,13 +13,14 @@ require Exporter;
 
 eval {
    require Data::Dumper;
-   import Data::Dumper;
+   import Data::Dumper 'Dumper';
 };
 if ($@) {
    *Dumper = sub {
       "()";
    };
 }
+
 
 =cut
 
@@ -155,6 +156,19 @@ sub _find_digits {
    my $adj = shift;
    my $digits = log($adj->step_increment || 1)/log(0.1);
    $digits>0 ? int $digits+0.9 : 0;
+}
+
+sub help_window {
+   my($blurb,$help)=@_;
+   my $helpwin = new Gtk::Dialog;
+   set_title $helpwin $0;
+   $helpwin->vbox->add(new Gtk::Label "Blurb:\n".Gimp::wrap_text($blurb,60)
+                                    ."\n\nHelp:\n".Gimp::wrap_text($help,60));
+   my $button = new Gtk::Button "Close";
+   signal_connect $button "clicked",sub { hide $helpwin };
+   $helpwin->action_area->add($button);
+
+   show_all $helpwin;
 }
 
 sub interact($$$@) {
@@ -418,17 +432,7 @@ sub interact($$$@) {
      
      $button = new Gtk::Button "Help";
      $g->attach($button,0,1,$res,$res+1,{},{},4,2);
-     signal_connect $button "clicked", sub {
-        my $helpwin = new Gtk::Dialog;
-        set_title $helpwin $0;
-        $helpwin->vbox->add(new Gtk::Label "Blurb:\n".Gimp::wrap_text($blurb,40)
-                                          ."\n\nHelp:\n".Gimp::wrap_text($help,40));
-        my $button = new Gtk::Button "Close";
-        signal_connect $button "clicked",sub { hide $helpwin };
-        $helpwin->action_area->add($button);
-        
-        show_all $helpwin;
-     };
+     signal_connect $button "clicked", sub { help_window($blurb,$help) };
      
      my $v=new Gtk::HBox 0,5;
      $g->attach($v,1,2,$res,$res+1,{},{},4,2);

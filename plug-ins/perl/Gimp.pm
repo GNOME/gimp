@@ -5,7 +5,8 @@ use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
-            @gimp_gui_functions $function
+            @gimp_gui_functions $function $basename
+            $in_quit $in_run $in_net $in_init $in_query $no_SIG
             $help $verbose $host);
 
 require DynaLoader;
@@ -269,8 +270,6 @@ EOF
 
 my @log;
 my $caller;
-my $ignore_die;
-my $in_quit;
 
 sub format_msg {
    $_=shift;
@@ -292,14 +291,12 @@ sub _initialized_callback {
 # fatal
 sub logger {
    my %args = @_;
-   my $file=$0;
-   $file=~s/^.*[\\\/]//;
    $args{message}  = "unknown message"    unless defined $args{message};
    $args{function} = $function            unless defined $args{function};
    $args{function} = ""                   unless defined $args{function};
    $args{fatal}    = 1                    unless defined $args{fatal};
-   push(@log,[$file,@args{'function','message','fatal'}]);
-   print STDERR format_msg($log[-1]),"\n";
+   push(@log,[$basename,@args{'function','message','fatal'}]);
+   print STDERR format_msg($log[-1]),"\n" if ($in_run || $in_net || $verbose);
    _initialized_callback if initialized();
 }
 
@@ -324,15 +321,17 @@ sub callback {
    return () if $caller eq "Gimp";
    if ($type eq "-run") {
       local $function = shift;
+      local $in_run = 1;
       call_callback 1,$function,@_;
    } elsif ($type eq "-net") {
+      local $in_net = 1;
       call_callback 1,"net";
    } elsif ($type eq "-query") {
+      local $in_query = 1;
       call_callback 1,"query";
    } elsif ($type eq "-quit") {
-      $ignore_die = 1;
+      local $in_quit = 1;
       call_callback 0,"quit";
-      undef $ignore_die;
    }
 }
 
@@ -348,22 +347,24 @@ sub quiet_main {
    main;
 }
 
-$SIG{__DIE__} = sub {
-   if (!$^S && $ignore_die) {
-      die_msg $_[0];
-      initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
-   } else {
-     die $_[0];
-   }
-};
+unless ($no_SIG) {
+   $SIG{__DIE__} = sub {
+      unless ($^S || !defined $^S || $in_quit) {
+         die_msg $_[0];
+         initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
+      } else {
+        die $_[0];
+      }
+   };
 
-$SIG{__WARN__} = sub {
-   if ($ignore_die) {
-     warn $_[0];
-   } else {
-     logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
-   }
-};
+   $SIG{__WARN__} = sub {
+      unless ($in_quit) {
+        warn $_[0];
+      } else {
+        logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
+      }
+   };
+}
 
 ##############################################################################
 
@@ -388,9 +389,14 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace initialized)) {
 *lock  = \&{"${interface_pkg}::lock" };
 *unlock= \&{"${interface_pkg}::unlock" };
 
-@PREFIXES=("gimp_", "");
+($basename = $0) =~ s/^.*[\\\/]//;
+
+$verbose=
+$in_quit=$in_run=$in_net=$in_init=$in_query=0; # perl -w is braindamaged
 
 my %ignore_function = ();
+
+@PREFIXES=("gimp_", "");
 
 @gimp_gui_functions = qw(
    gimp_progress_init

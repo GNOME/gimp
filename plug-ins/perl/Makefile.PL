@@ -59,44 +59,6 @@ Do you want me to make these tests [y]? ";
 require ExtUtils::MakeMaker;
 import ExtUtils::MakeMaker;
 
-eval { require Gimp };
-unless($@) {
-   $old_prefix = eval { Gimp::_gimp_prefix() };
-   if ($@) {
-      print <<EOF;
-
-WARNING: I've detected an old version of Gimp-Perl installed
-         already. Since I cannot detect the prefix used to install
-         it I will just overwrite it.  If you happen to use two
-         different and incompatible versions of the Gimp with differing
-         prefixes you should call configure with the --disable-perl
-         switch to disable the perl extension, or consider installing
-         the perl module elsewhere, using the environment variables
-         PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
-         overwrite the installation directory (PERL_MM_OPTS) and run the
-         Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
-         discussion of your options.
-
-EOF
-   } else {
-      if ($GIMP_PREFIX ne $old_prefix) {
-         print <<EOF;
-
-WARNING: I've detected another installaion of the Gimp-Perl extension.
-            
-         This version uses the prefix '$GIMP_PREFIX'.
-         The already installed version uses the prefix '$old_prefix'.
-
-         They don't match, which indicates that installing Gimp-Perl might
-         overwrite an old but still used installation. Gimp-Perl will
-         therefore be disabled, and not be installed.
-
-EOF
-         not_halt("prefix mismatch");
-      }
-   }
-}
-
 eval "use Gtk;"; $GTK = $@ eq "";
 eval "use PDL;"; $PDL = $@ eq "";
 eval "use Parse::RecDescent;"; $PRD = $@ eq "";
@@ -167,6 +129,44 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 EOF
 }
 
+eval { $Gimp::no_SIG=1; require Gimp };
+unless($@) {
+   $old_prefix = eval { Gimp::_gimp_prefix() };
+   if ($@) {
+      print <<EOF;
+
+WARNING: I've detected an old version of Gimp-Perl installed
+         already. Since I cannot detect the prefix used to install
+         it I will just overwrite it.  If you happen to use two
+         different and incompatible versions of the Gimp with differing
+         prefixes you should call configure with the --disable-perl
+         switch to disable the perl extension, or consider installing
+         the perl module elsewhere, using the environment variables
+         PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
+         overwrite the installation directory (PERL_MM_OPTS) and run the
+         Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
+         discussion of your options.
+
+EOF
+   } else {
+      if ($GIMP_PREFIX ne $old_prefix) {
+         print <<EOF;
+
+WARNING: I've detected another installaion of the Gimp-Perl extension.
+            
+         This version uses the prefix '$GIMP_PREFIX'.
+         The already installed version uses the prefix '$old_prefix'.
+
+         They don't match, which indicates that installing Gimp-Perl might
+         overwrite an old but still used installation. Gimp-Perl will
+         therefore be disabled, and not be installed.
+
+EOF
+         not_halt("prefix mismatch");
+      }
+   }
+}
+
 # wo do no longer do these dirty things
 #for(@shebang) {
 #   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
@@ -195,7 +195,7 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-        $(MAKE) really-install install-plugins
+        $(MAKE) UNINST=1 really-install install-plugins
 
 '.$install;
 }

@@ -17,6 +17,7 @@ t/load.t
 t/loadlib.t
 t/run.t
 extradefs.h
+ppport.h
 Perl-Server
 etc/configure
 etc/configure.in

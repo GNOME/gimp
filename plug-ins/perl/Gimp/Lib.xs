@@ -27,7 +27,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#include "patchlevel.h"
+#include "ppport.h"
 
 /* I actually do care a bit about older perls... */
 #ifndef ERRSV
@@ -36,10 +36,6 @@
 /* And also for newer perls... */
 #ifndef dTHR
 # define dTHR (void)0
-#endif
-#if (PATCHLEVEL < 5)
-# define newSVpvn(data,len) ((len) ? newSVpv ((data), (len)) : newSVpv ("", 0))
-# define PL_sv_undef sv_undef
 #endif
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
@@ -620,7 +616,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 	  av_push (av, newSViv (arg->data.d_color.red));
 	  av_push (av, newSViv (arg->data.d_color.green));
 	  av_push (av, newSViv (arg->data.d_color.blue));
-	  sv = (SV *)av; /* no newRV, since we're getting autoblessed! */
+	  sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
 	}
 	break;
 
@@ -631,7 +627,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 	  av_push (av, neuSVpv (arg->data.d_parasite.name));
 	  av_push (av, newSViv (arg->data.d_parasite.flags));
 	  av_push (av, newSVpv (arg->data.d_parasite.data, arg->data.d_parasite.size));
-	  sv = (SV *)av; /* no newRV, since we're getting autoblessed! */
+	  sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
 	}
 	break;
 #endif

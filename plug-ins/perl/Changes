@@ -12,6 +12,8 @@ Revision history for Gimp-Perl extension.
         - the case when "not enough arguments" were supplied for a function
           was not reliably detected.
         - gimp_progress_init now accepts either one or two arguments.
+        - switched to using Devel::PPPort, which hopefulyl solves all my
+          problems.
 
 1.061 Fri Mar 12 21:27:26 CET 1999
 	- closed big, BIG security hole on password authenticitation
