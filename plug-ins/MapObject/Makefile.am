@@ -38,16 +38,16 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
-	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(top_builddir)/plug-ins/libgck/gck/libgck.la		\
-	$(GTK_LIBS)						\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la		\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la			\
+	$(top_builddir)/plug-ins/libgck/gck/libgck-@LT_RELEASE@.la	\
+	$(GTK_LIBS)							\
 	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
 	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(top_builddir)/plug-ins/libgck/gck/libgck.la
+	$(top_builddir)/plug-ins/libgck/gck/libgck-@LT_RELEASE@.la
 	
 MapObject_DEPENDENCIES = $(DEPS)
 
