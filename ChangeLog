@@ -1,3 +1,16 @@
+2000-04-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c: implemented new argument type
+	SF_OPTION which allows the user to choose from a list of options
+	using a GtkOptionMenu.
+	
+	* plug-ins/script-fu/scripts/alien-glow-arrow.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
+	* plug-ins/script-fu/scripts/erase-rows.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: use SF_OPTION
+
 2000-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_select.c

@@ -59,7 +59,7 @@
 ; Usage:-
 ; SF-PATTERN "Pattern" "Maple Leaves"
 ;
-; The vaule returned when the script is invoked is a string containing the 
+; The value returned when the script is invoked is a string containing the 
 ; pattern name. If the above selection was not altered the string would 
 ; contain "Maple Leaves"
 ; ----------------------------------------------------------------------
@@ -73,7 +73,7 @@
 ; Usage:-
 ; SF-GRADIENT "Gradient" "Deep_Sea"
 ;
-; The vaule returned when the script is invoked is a string containing the 
+; The value returned when the script is invoked is a string containing the 
 ; gradient name. If the above selection was not altered the string would 
 ; contain "Deep_Sea"
 ;
@@ -85,14 +85,40 @@
 ; If the button is pressed a file selection dialog will popup.
 ;
 ; Usage:-
-; SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"
+; SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 ;
-; The vaule returned when the script is invoked is a string containing the 
+; The value returned when the script is invoked is a string containing the 
 ; filename.
+; ----------------------------------------------------------------------
+;
+; SF-OPTION
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget is an option_menu showing the options that are passed
+; as a list. The first option is the default choice. 
+;
+; Usage:-
+; SF-OPTION "Orientation" '("Horzontal" "Vertical")
+;
+; The value returned when the script is invoked is the number of the
+; choosen option, where the option first is counted as 0.
+; ----------------------------------------------------------------------
+;
 
 
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern gradient font size filename)
+(define (script-fu-test-sphere radius 
+			       light 
+			       shadow 
+			       bg-color 
+			       sphere-color 
+			       brush 
+			       text 
+			       pattern 
+			       gradient 
+			       font 
+			       size 
+			       filename
+			       orientation)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -175,6 +201,7 @@
 		    SF-GRADIENT "Gradient" "Deep_Sea"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
-		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
+		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-OPTION "Orientation" '("Horzontal" "Vertical"))
 
 

@@ -100,11 +100,17 @@ typedef struct
 
 typedef struct 
 {
-  gchar    *name;
+  gchar   *name;
   gdouble  opacity;
   gint     spacing;
   gint     paint_mode;
 } SFBrush;
+
+typedef struct 
+{
+  GSList  *list;
+  guint    history;
+} SFOption;
 
 typedef union
 {
@@ -121,6 +127,7 @@ typedef union
   gchar        *sfa_pattern;
   gchar        *sfa_gradient;
   SFBrush       sfa_brush;
+  SFOption      sfa_option;
 } SFArgValue;
 
 typedef struct
@@ -211,7 +218,7 @@ static void       script_fu_gradient_preview       (gchar    *name,
 						    gint      closing,
 						    gpointer  udata);
 
-static void       script_fu_brush_preview          (char *, /* Name */
+static void       script_fu_brush_preview          (gchar *, /* Name */
 						    gdouble, /* opacity */
 						    gint,    /* spacing */
 						    gint,    /* paint_mode */
@@ -233,14 +240,14 @@ static SFInterface sf_interface =
   NULL   /*  active script            */
 };
 
-static struct stat filestat;
-static gint   current_command_enabled = FALSE;
-static gint   command_count = 0;
-static gint   consec_command_count = 0;
-static gchar *last_command = NULL;
-static GList *script_list = NULL;
+static struct stat  filestat;
+static gboolean     current_command_enabled = FALSE;
+static gint         command_count           = 0;
+static gint         consec_command_count    = 0;
+static gchar       *last_command            = NULL;
+static GList       *script_list             = NULL;
 
-extern char   siod_err_msg[];
+extern gchar        siod_err_msg[];
 
 /*
  *  Function definitions
@@ -385,13 +392,15 @@ script_fu_add_script (LISP a)
 {
   SFScript *script;
   GParamDef *args;
-  char *val;
-  int i;
+  gchar *val;
+  gint i;
   guchar color[3];
   LISP color_list;
   LISP adj_list;
   LISP brush_list;
-  gchar *s, *menu_path = NULL;
+  LISP option_list;
+  gchar *s;
+  gchar *menu_path = NULL;
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
@@ -692,6 +701,23 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_OPTION:
+		  if (!TYPEP (car (a), tc_cons))
+		    return my_err ("script-fu-register: option defaults must be a list", NIL);
+		  for (option_list = car (a); option_list; option_list = cdr (option_list))
+		    {
+		      script->arg_defaults[i].sfa_option.list = 
+			g_slist_append (script->arg_defaults[i].sfa_option.list, 
+					g_strdup (get_c_string (car (option_list))));
+		    }
+		  script->arg_defaults[i].sfa_option.history = 0;
+		  script->arg_values[i].sfa_option.history = 0;
+
+		  args[i + 1].type = PARAM_INT32;
+		  args[i + 1].name = "option";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		default:
 		  break;
 		}
@@ -728,7 +754,7 @@ script_fu_report_cc (gchar *command)
 {
   if (last_command && strcmp (last_command, command) == 0)
     {
-      char *new_command;
+      gchar *new_command;
 
       new_command = g_new (gchar, strlen (command) + 10);
       sprintf (new_command, "%s <%d>", command, ++consec_command_count);
@@ -755,18 +781,18 @@ script_fu_report_cc (gchar *command)
 }
 
 static void
-script_fu_script_proc (char     *name,
-		       int       nparams,
+script_fu_script_proc (gchar    *name,
+		       gint      nparams,
 		       GParam   *params,
-		       int      *nreturn_vals,
+		       gint     *nreturn_vals,
 		       GParam  **return_vals)
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   SFScript *script;
-  int min_args;
-  char *escaped;
+  gint min_args;
+  gchar *escaped;
 
   run_mode = params[0].data.d_int32;
 
@@ -784,7 +810,7 @@ script_fu_script_proc (char     *name,
 	  /*  Determine whether the script is image based (runs on an image)  */
 	  if (strncmp (script->description, "<Image>", 7) == 0)
 	    {
-	      script->arg_values[0].sfa_image = params[1].data.d_image;
+	      script->arg_values[0].sfa_image    = params[1].data.d_image;
 	      script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
 	      script->image_based = TRUE;
 	    }
@@ -806,12 +832,13 @@ script_fu_script_proc (char     *name,
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
-	      gint err_msg;
-	      char *text = NULL;
-	      char *command, *c;
-	      char buffer[MAX_STRING_LENGTH];
-	      int length;
-	      int i;
+	      gchar *text = NULL;
+	      gchar *command;
+	      gchar *c;
+	      gchar  buffer[MAX_STRING_LENGTH];
+	      gint   err_msg;
+	      gint   length;
+	      gint   i;
 
 	      length = strlen (script->script_name) + 3;
 
@@ -843,22 +870,19 @@ script_fu_script_proc (char     *name,
 		    length += strlen (params[i + 1].data.d_string) + 1;
 		    break;
 		  case SF_FONT:
-		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;
 		  case SF_PATTERN:
-		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;
 		  case SF_GRADIENT:
-		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;
 		  case SF_BRUSH:
 		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;		    
+		  case SF_OPTION:
+		    length += strlen (params[i + 1].data.d_string) + 1;
 		    break;
 		  default:
 		    break;
 		  }
 
-	      c = command = g_new (char, length);
+	      c = command = g_new (gchar, length);
 
 	      if (script->num_args)
                 {
@@ -901,20 +925,14 @@ script_fu_script_proc (char     *name,
                           text = params[i + 1].data.d_string;
                           break;
                         case SF_FONT:
-                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-                          text = buffer;
-                          break;  
                         case SF_PATTERN:
-                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-                          text = buffer;
-                          break;
                         case SF_GRADIENT:
-                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-                          text = buffer;
-                          break;
                         case SF_BRUSH:
                           g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
                           text = buffer;
+                          break;
+                        case SF_OPTION:
+                          text = params[i + 1].data.d_string;
                           break;
                         default:
                           break;
@@ -971,7 +989,7 @@ script_fu_find_script (gchar *pdb_name)
 static void
 script_fu_free_script (SFScript *script)
 {
-  int i;
+  gint i;
 
   /*  Uninstall the temporary procedure for this script  */
   gimp_uninstall_temp_proc (script->script_name);
@@ -1025,6 +1043,12 @@ script_fu_free_script (SFScript *script)
 	      g_free (script->arg_defaults[i].sfa_brush.name);
 	      g_free (script->arg_values[i].sfa_brush.name);
 	      break;
+	    case SF_OPTION:
+	      g_slist_foreach (script->arg_defaults[i].sfa_option.list, 
+			       (GFunc)g_free, NULL);
+	      if (script->arg_defaults[i].sfa_option.list)
+		g_slist_free (script->arg_defaults[i].sfa_option.list);
+	      break;
 	    default:
 	      break;
 	    }
@@ -1048,10 +1072,7 @@ static void
 script_fu_disable_cc (gint err_msg)
 {
   if (err_msg)
-    g_message ("Script-Fu Error\n%s\n"
-	       "If this happens while running a logo script,\n"
-	       "you might not have the font it wants installed on your system",
-	       siod_err_msg);
+    g_message (_("Script-Fu Error\n%s"), siod_err_msg);
 
   current_command_enabled = FALSE;
 
@@ -1075,10 +1096,13 @@ script_fu_interface (SFScript *script)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *bbox;
+  GtkWidget *menu_item;
+  GSList *list;
   gchar  *title;
   gchar  *buf;
   gint    start_args;
   gint    i;
+  guint   j;
   guchar *color_cube;
 
   static gboolean gtk_initted = FALSE;
@@ -1150,8 +1174,8 @@ script_fu_interface (SFScript *script)
 
   /*  The argument table  */
   table = gtk_table_new (script->num_args + 1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
@@ -1161,9 +1185,10 @@ script_fu_interface (SFScript *script)
 
   for (i = start_args; i < script->num_args; i++)
     {
-      gchar    *label_text = gettext (script->arg_labels[i]);
-      gfloat    label_yalign = 0.5;
-      gboolean  widget_leftalign = TRUE;
+      /*  we add a colon after the label; some languages want an extra space here */
+      gchar     *label_text = g_strdup_printf (_("%s:"), gettext (script->arg_labels[i]));
+      gfloat     label_yalign = 0.5;
+      gboolean   widget_leftalign = TRUE;
 
       switch (script->arg_types[i])
 	{
@@ -1209,7 +1234,8 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_TOGGLE:
-	  label_text = _("Script Toggle");
+	  g_free (label_text);
+	  label_text = NULL;
 	  script->args_widgets[i] =
 	    gtk_check_button_new_with_label (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
@@ -1240,6 +1266,7 @@ script_fu_interface (SFScript *script)
 	    {
 	    case SF_SLIDER:
 	      label_yalign = 1.0;
+	      widget_leftalign = FALSE;
 
 	      script->args_widgets[i] =
 		gtk_hscale_new (script->arg_values[i].sfa_adjustment.adj);
@@ -1327,6 +1354,23 @@ script_fu_interface (SFScript *script)
 				     &script->arg_values[i].sfa_brush);
 	  break;
 
+	case SF_OPTION:
+	  script->args_widgets[i] = gtk_option_menu_new ();
+	  menu = gtk_menu_new ();
+	  for (list = script->arg_defaults[i].sfa_option.list, j = 0; 
+	       list; 
+	       list = g_slist_next (list), j++)
+	    {
+	      menu_item = gtk_menu_item_new_with_label (gettext ((gchar *)list->data));
+	      gtk_object_set_user_data (GTK_OBJECT (menu_item), GUINT_TO_POINTER (j));
+	      gtk_menu_append (GTK_MENU (menu), menu_item);
+	      gtk_widget_show (menu_item);
+	    }
+	  gtk_option_menu_set_menu (GTK_OPTION_MENU (script->args_widgets[i]), menu);
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (script->args_widgets[i]), 
+							script->arg_values[i].sfa_option.history);
+	  break;
+	  
 	default:
 	  break;
 	}
@@ -1334,6 +1378,7 @@ script_fu_interface (SFScript *script)
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 label_text, 1.0, label_yalign,
 				 script->args_widgets[i], 1, widget_leftalign);
+      g_free (label_text);
     }
 
   gtk_widget_show (table);
@@ -1519,10 +1564,6 @@ script_fu_cleanup_widgets (SFScript *script)
   for (i = 0; i < script->num_args; i++)
     switch (script->arg_types[i])
       {
-      case SF_COLOR:
-	break;
-      case SF_FILENAME:
-	break;
       case SF_FONT:
 	if (script->arg_values[i].sfa_font.dialog != NULL)
 	  {
@@ -1548,15 +1589,17 @@ static void
 script_fu_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  SFScript *script;
+  SFScript  *script;
+  GdkFont   *font;
+  GtkWidget *menu_item;
+  gchar *escaped;
+  gchar *text = NULL;
+  gchar *command;
+  gchar *c;
+  gchar  buffer[MAX_STRING_LENGTH];
   gint err_msg;
-  char *text = NULL;
-  char *command, *c;
-  char buffer[MAX_STRING_LENGTH];
-  int length;
-  int i;
-  GdkFont *font;
-  char *escaped;
+  gint length;
+  gint i;
 
   if ((script = sf_interface.script) == NULL)
     return;
@@ -1568,7 +1611,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	font = gdk_font_load (script->arg_values[i].sfa_font.fontname);
 	if (font == NULL)
 	  {
-	    g_message (_("At least one font you've choosen is invalid.\nPlease check your settings.\n"));
+	    g_message (_("At least one font you've choosen is invalid.\n"
+			 "Please check your settings.\n"));
 	    return;
 	  }
 	else
@@ -1621,11 +1665,14 @@ script_fu_ok_callback (GtkWidget *widget,
 	length += strlen (script->arg_values[i].sfa_brush.name) + 3;
 	length += 36; /* Maximum size of three ints for opacity, spacing,mode*/
 	break;
+      case SF_OPTION:
+	length += 12;  /*  Maximum size of integer value will not exceed this many characters  */
+	break;
       default:
 	break;
       }
 
-  c = command = g_new (char, length);
+  c = command = g_new (gchar, length);
 
   sprintf (command, "(%s ", script->script_name);
   c += strlen (script->script_name) + 2;
@@ -1710,6 +1757,14 @@ script_fu_ok_callback (GtkWidget *widget,
 		      script->arg_values[i].sfa_brush.opacity,
 		      script->arg_values[i].sfa_brush.spacing,
 		      script->arg_values[i].sfa_brush.paint_mode);
+	  text = buffer;
+	  break;
+	case SF_OPTION:
+	  menu_item = 
+	    gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (script->args_widgets[i]))));
+	  script->arg_values[i].sfa_option.history = 
+	    GPOINTER_TO_UINT (gtk_object_get_user_data (GTK_OBJECT (menu_item))); 
+	  g_snprintf (buffer, sizeof (buffer), "%d", script->arg_values[i].sfa_option.history);
 	  text = buffer;
 	  break;
 	default:
@@ -1889,7 +1944,7 @@ script_fu_reset_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   SFScript *script;
-  int i,j;
+  gint i, j;
 
   if ((script = sf_interface.script) == NULL)
     return;
@@ -1966,14 +2021,18 @@ script_fu_reset_callback (GtkWidget *widget,
 	   script->arg_defaults[i].sfa_brush.spacing, 
 	   script->arg_defaults[i].sfa_brush.paint_mode);  
 	break;
+      case SF_OPTION:
+	script->arg_values[i].sfa_option.history = script->arg_defaults[i].sfa_option.history;
+	gtk_option_menu_set_history (GTK_OPTION_MENU (script->args_widgets[i]), 
+				     script->arg_values[i].sfa_option.history);
       default:
 	break;
       }
 }
 
 static void
-script_fu_menu_callback  (gint32     id,
-			  gpointer   data)
+script_fu_menu_callback  (gint32   id,
+			  gpointer data)
 {
   *((gint32 *) data) = id;
 }

@@ -56,10 +56,10 @@
   (map (lambda (p)
 	 (let ((px (point-x p))
 	       (py (point-y p)))
-	   (cond ((eq? orientation 'right) (make-point px py))
-		 ((eq? orientation 'left) (make-point (- size px) py))
-		 ((eq? orientation 'up) (make-point py (- size px)))
-		 ((eq? orientation 'down) (make-point py px)))))
+	   (cond ((= orientation 0) (make-point px py))           ; right
+		 ((= orientation 1) (make-point (- size px) py))  ; left
+		 ((= orientation 2) (make-point py (- size px)))  ; up
+		 ((= orientation 3) (make-point py px)))))        ; down
        points))
 
 (define (make-arrow size offset)
@@ -141,5 +141,8 @@
 		    "July 1997"
 		    ""
 		    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
-		    SF-VALUE   _"Orientation" "'right"
-		    SF-PATTERN _"Pattern"     "Wood")
+		    SF-OPTION     _"Orientation" '(_"Right" 
+						    _"Left" 
+						    _"Up" 
+						    _"Down")
+		    SF-PATTERN    _"Pattern"     "Wood")

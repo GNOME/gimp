@@ -5,15 +5,15 @@
     (letrec ((loop (lambda (i max)
 		     (if (< i max)
 			 (begin
-			   (if (eq? orientation 'rows)
+			   (if (= orientation 0)
 			       (gimp-rect-select img 0 i width 1 REPLACE FALSE 0)
 			       (gimp-rect-select img i 0 1 height REPLACE FALSE 0))
 			   (gimp-edit-fill drawable BG-IMAGE-FILL)
 			   (loop (+ i 2) max))))))
-      (loop (if (eq? which 'even)
+      (loop (if (= which 0)
 		0
 		1)
-	    (if (eq? orientation 'rows)
+	    (if (= orientation 0)
 		height
 		width)))
     (gimp-selection-none img)
@@ -29,5 +29,6 @@
 		    "RGB* GRAY* INDEXED*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE _"Rows/Cols" "'rows"
-		    SF-VALUE _"Even/Odd" "'even")
+		    SF-OPTION _"Rows/Cols" '(_"Rows" _"Columns")
+		    SF-OPTION _"Even/Odd"  '(_"Even" _"Odd"))
+

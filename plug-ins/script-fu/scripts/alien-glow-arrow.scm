@@ -64,11 +64,11 @@
       (let* ((p (car points))
 	     (px (point-x p))
 	     (py (point-y p)))
-	(cons (cond ((eq? orientation 'right) (make-point px py))
-		    ((eq? orientation 'left) (make-point (- size px) py))
-		    ((eq? orientation 'up) (make-point py (- size px)))
-		    ((eq? orientation 'down) (make-point py px)))
-	      (rotate-points (cdr points) size orientation)))))
+	(cons (cond (= orientation 0) (make-point px py))           ; right
+	      (= orientation 1) (make-point (- size px) py))  ; left
+		    (= orientation 2) (make-point py (- size px)))  ; up
+		    (= orientation 3) (make-point py px))           ; down
+  (rotate-points (cdr points) size orientation))
 
 
 (define (script-fu-alien-glow-right-arrow size orientation glow-color bg-color flatten)
@@ -127,8 +127,11 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT  _"Size" '(32 5 150 1 10 0 1)
-		    SF-VALUE  _"Orientation" "'right"
-		    SF-COLOR  _"Glow Color" '(63 252 0)
-		    SF-COLOR  _"Background Color" '(0 0 0)
-		    SF-TOGGLE _"Flatten Image" TRUE)
+		    SF-ADJUSTMENT _"Size" '(32 5 150 1 10 0 1)
+		    SF-OPTION     _"Orientation" '(_"Right" 
+						   _"Left" 
+						   _"Up" 
+						   _"Down")
+		    SF-COLOR      _"Glow Color" '(63 252 0)
+		    SF-COLOR      _"Background Color" '(0 0 0)
+		    SF-TOGGLE     _"Flatten Image" TRUE)
