@@ -863,7 +863,10 @@ crop_image (GImage *gimage,
       list = gimage->layers;
       while (list)
       {
+	GSList * next;
+
 	layer = (Layer *) list->data;
+	next = g_slist_next (list);
 
 	layer_translate (layer, -x1, -y1);
 
@@ -888,7 +891,7 @@ crop_image (GImage *gimage,
 	      gimage_remove_layer (gimage, layer);
 	  }
 
-	list = g_slist_next (list);
+	list = next;
       }
 
       /*  Make sure the projection matches the gimage size  */
