@@ -170,7 +170,9 @@ libappgui_a_SOURCES = \
 	session.c			\
 	session.h			\
 	splash.c			\
-	splash.h
+	splash.h			\
+	themes.c			\
+	themes.h
 
 EXTRA_DIST = makefile.msc
 

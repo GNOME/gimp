@@ -1,3 +1,12 @@
+2003-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/themes.[ch]: new files.
+
+	* app/gui/gui.[ch]: code taken from here. It was getting too large.
+
+	* app/gui/preferences-dialog.c; changed accordingly.
+
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/Makefile.am (INCLUDES): replaced GTK_CFLAGS by

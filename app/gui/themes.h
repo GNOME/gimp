@@ -16,21 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GUI_H__
-#define __GUI_H__
+#ifndef __THEMES_H__
+#define __THEMES_H__
 
 
-gboolean   gui_libs_init    (gint      *argc,
-                             gchar   ***argv);
+void          themes_init          (Gimp *gimp);
+void          themes_exit          (Gimp *gimp);
 
-void       gui_environ_init (Gimp      *gimp);
-
-void       gui_themes_init  (Gimp      *gimp);
-
-void       gui_init         (Gimp      *gimp);
-void       gui_restore      (Gimp      *gimp,
-                             gboolean   restore_session);
-void       gui_post_init    (Gimp      *gimp);
+const gchar * themes_get_theme_dir (Gimp *gimp);
 
 
-#endif /* __GUI_H__ */
+#endif /* __THEMES_H__ */

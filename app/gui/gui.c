@@ -30,7 +30,6 @@
 #include "gui-types.h"
 
 #include "config/gimpguiconfig.h"
-#include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -65,6 +64,7 @@
 #include "pattern-select.h"
 #include "plug-in-menus.h"
 #include "session.h"
+#include "themes.h"
 
 #include "app_procs.h" /* FIXME */
 
@@ -73,72 +73,68 @@
 
 /*  local function prototypes  */
 
-static void         gui_help_func               (const gchar      *help_id,
-                                                 gpointer          help_data);
-static gboolean     gui_get_background_func     (GimpRGB          *color);
-static gboolean     gui_get_foreground_func     (GimpRGB          *color);
+static void           gui_help_func            (const gchar   *help_id,
+                                                gpointer       help_data);
+static gboolean       gui_get_background_func  (GimpRGB       *color);
+static gboolean       gui_get_foreground_func  (GimpRGB       *color);
 
-static void         gui_threads_enter           (Gimp             *gimp);
-static void         gui_threads_leave           (Gimp             *gimp);
-static void         gui_set_busy                (Gimp             *gimp);
-static void         gui_unset_busy              (Gimp             *gimp);
-static void         gui_message                 (Gimp             *gimp,
-                                                 const gchar      *domain,
-                                                 const gchar      *message);
-static GimpObject * gui_display_new             (GimpImage        *gimage,
-                                                 guint             scale);
-static void         gui_menus_init              (Gimp             *gimp,
-                                                 GSList           *plug_in_defs,
-                                                 const gchar      *std_plugins_domain);
-static void         gui_menus_create_entry      (Gimp             *gimp,
-                                                 PlugInProcDef    *proc_def,
-                                                 const gchar      *locale_domain,
-                                                 const gchar      *help_domain);
-static void         gui_menus_delete_entry      (Gimp             *gimp,
-                                                 const gchar      *menu_path);
-static GimpProgress * gui_start_progress        (Gimp             *gimp,
-                                                 gint              gdisp_ID,
-                                                 const gchar      *message,
-                                                 GCallback         cancel_cb,
-                                                 gpointer          cancel_data);
-static GimpProgress * gui_restart_progress      (Gimp             *gimp,
-                                                 GimpProgress     *progress,
-                                                 const gchar      *message,
-                                                 GCallback         cancel_cb,
-                                                 gpointer          cancel_data);
-static void         gui_update_progress         (Gimp             *gimp,
-                                                 GimpProgress     *progress,
-                                                 gdouble           percentage);
-static void         gui_end_progress            (Gimp             *gimp,
-                                                 GimpProgress     *progress);
-static void         gui_pdb_dialogs_check       (Gimp             *gimp);
+static void           gui_threads_enter        (Gimp          *gimp);
+static void           gui_threads_leave        (Gimp          *gimp);
+static void           gui_set_busy             (Gimp          *gimp);
+static void           gui_unset_busy           (Gimp          *gimp);
+static void           gui_message              (Gimp          *gimp,
+                                                const gchar   *domain,
+                                                const gchar   *message);
+static GimpObject   * gui_display_new          (GimpImage     *gimage,
+                                                guint          scale);
+static void           gui_menus_init           (Gimp          *gimp,
+                                                GSList        *plug_in_defs,
+                                                const gchar   *plugins_domain);
+static void           gui_menus_create_entry   (Gimp          *gimp,
+                                                PlugInProcDef *proc_def,
+                                                const gchar   *locale_domain,
+                                                const gchar   *help_domain);
+static void           gui_menus_delete_entry   (Gimp          *gimp,
+                                                const gchar   *menu_path);
+static GimpProgress * gui_start_progress       (Gimp          *gimp,
+                                                gint           gdisp_ID,
+                                                const gchar   *message,
+                                                GCallback      cancel_cb,
+                                                gpointer       cancel_data);
+static GimpProgress * gui_restart_progress     (Gimp          *gimp,
+                                                GimpProgress  *progress,
+                                                const gchar   *message,
+                                                GCallback      cancel_cb,
+                                                gpointer       cancel_data);
+static void           gui_update_progress      (Gimp          *gimp,
+                                                GimpProgress  *progress,
+                                                gdouble        percentage);
+static void           gui_end_progress         (Gimp          *gimp,
+                                                GimpProgress  *progress);
+static void           gui_pdb_dialogs_check    (Gimp          *gimp);
 
-static void   gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
-                                           gpointer                user_data);
-static gboolean     gui_exit_callback           (Gimp             *gimp,
-                                                 gboolean          kill_it);
-static gboolean     gui_exit_finish_callback    (Gimp             *gimp,
-                                                 gboolean          kill_it);
-static void         gui_really_quit_callback    (GtkWidget        *button,
-                                                 gboolean          quit,
-                                                 gpointer          data);
-static void         gui_show_tooltips_notify    (GObject          *config,
-                                                 GParamSpec       *param_spec,
-                                                 Gimp             *gimp);
-static void         gui_device_change_notify    (Gimp             *gimp);
+static gboolean       gui_exit_callback        (Gimp          *gimp,
+                                                gboolean       kill_it);
+static gboolean       gui_exit_finish_callback (Gimp          *gimp,
+                                                gboolean       kill_it);
+static void           gui_really_quit_callback (GtkWidget     *button,
+                                                gboolean       quit,
+                                                gpointer       data);
+static void           gui_show_tooltips_notify (GObject       *config,
+                                                GParamSpec    *param_spec,
+                                                Gimp          *gimp);
+static void           gui_device_change_notify (Gimp          *gimp);
 
-static void         gui_display_changed         (GimpContext      *context,
-                                                 GimpDisplay      *display,
-                                                 Gimp             *gimp);
-static void         gui_image_disconnect        (GimpImage        *gimage,
-                                                 Gimp             *gimp);
+static void           gui_display_changed      (GimpContext   *context,
+                                                GimpDisplay   *display,
+                                                Gimp          *gimp);
+static void           gui_image_disconnect     (GimpImage     *gimage,
+                                                Gimp          *gimp);
 
 
 /*  private variables  */
 
 static GQuark image_disconnect_handler_id = 0;
-
-static GHashTable *themes_hash = NULL;
 
 static GimpItemFactory *toolbox_item_factory = NULL;
 static GimpItemFactory *image_item_factory   = NULL;
@@ -159,7 +155,7 @@ gui_libs_init (gint    *argc,
     return FALSE;
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
+  vtable.unit_get_number_of_units          = gimp_unit_get_number_of_units;
   vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
   vtable.unit_get_factor          = gimp_unit_get_factor;
   vtable.unit_get_digits          = gimp_unit_get_digits;
@@ -182,7 +178,9 @@ gui_libs_init (gint    *argc,
 void
 gui_environ_init (Gimp *gimp)
 {
-  gchar *display, *name = NULL;
+  const gchar *name = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
 #if defined (GDK_WINDOWING_X11)
   name = "DISPLAY";
@@ -194,6 +192,8 @@ gui_environ_init (Gimp *gimp)
 
   if (name)
     {
+      gchar *display;
+
       display = gdk_get_display ();
       gimp_environ_table_add (gimp->environ_table, name, display, NULL);
       g_free (display);
@@ -203,65 +203,11 @@ gui_environ_init (Gimp *gimp)
 void
 gui_themes_init (Gimp *gimp)
 {
-  GimpGuiConfig *config;
-  const gchar   *theme_dir;
-  gchar         *gtkrc;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  config = GIMP_GUI_CONFIG (gimp->config);
+  themes_init (gimp);
 
-  themes_hash = g_hash_table_new_full (g_str_hash,
-				       g_str_equal,
-				       g_free,
-				       g_free);
-
-  if (config->theme_path)
-    {
-      gchar *path;
-
-      path = gimp_config_path_expand (config->theme_path, TRUE, NULL);
-
-      gimp_datafiles_read_directories (path,
-				       G_FILE_TEST_IS_DIR,
-				       gui_themes_dir_foreach_func,
-				       gimp);
-
-      g_free (path);
-    }
-
-  theme_dir = gui_themes_get_theme_dir (gimp);
-
-  if (theme_dir)
-    {
-      gtkrc = g_build_filename (theme_dir, "gtkrc", NULL);
-    }
-  else
-    {
-      /*  get the hardcoded default theme gtkrc  */
-
-      gtkrc = g_strdup (gimp_gtkrc ());
-    }
-
-  if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gtkrc);
-
-  gtk_rc_parse (gtkrc);
-
-  g_free (gtkrc);
-
-  /*  parse the user gtkrc  */
-
-  gtkrc = gimp_personal_rc_file ("gtkrc");
-
-  if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gtkrc);
-
-  gtk_rc_parse (gtkrc);
-
-  g_free (gtkrc);
-
-  if (! config->show_tool_tips)
+  if (! GIMP_GUI_CONFIG (gimp->config)->show_tool_tips)
     gimp_help_disable_tooltips ();
 
   g_signal_connect (gimp->config, "notify::show-tool-tips",
@@ -272,17 +218,6 @@ gui_themes_init (Gimp *gimp)
   gdk_rgb_set_install (gimp->config->install_cmap);
 
   gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
-}
-
-const gchar *
-gui_themes_get_theme_dir (Gimp *gimp)
-{
-  GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
-
-  if (config->theme)
-    return g_hash_table_lookup (themes_hash, config->theme);
-
-  return g_hash_table_lookup (themes_hash, "Default");
 }
 
 void
@@ -587,23 +522,6 @@ gui_pdb_dialogs_check (Gimp *gimp)
   pattern_select_dialogs_check ();
 }
 
-static void
-gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
-                             gpointer                user_data)
-{
-  Gimp *gimp;
-
-  gimp = GIMP (user_data);
-
-  if (gimp->be_verbose)
-    g_print (_("Adding theme '%s' (%s)\n"),
-             file_data->basename, file_data->filename);
-
-  g_hash_table_insert (themes_hash,
-		       g_strdup (file_data->basename),
-		       g_strdup (file_data->filename));
-}
-
 static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  kill_it)
@@ -667,11 +585,7 @@ gui_exit_finish_callback (Gimp     *gimp,
   dialogs_exit (gimp);
   gimp_devices_exit (gimp);
 
-  if (themes_hash)
-    {
-      g_hash_table_destroy (themes_hash);
-      themes_hash = NULL;
-    }
+  themes_exit (gimp);
 
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 

@@ -45,10 +45,10 @@
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gui.h"
 #include "menus.h"
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
+#include "themes.h"
 
 #include "gimp-intl.h"
 
@@ -471,10 +471,10 @@ prefs_notebook_append_page (Gimp          *gimp,
                             GtkTreeIter   *iter,
                             gint           page_index)
 {
-  GtkWidget   *event_box;
-  GtkWidget   *vbox;
-  GdkPixbuf   *pixbuf       = NULL;
-  GdkPixbuf   *small_pixbuf = NULL;
+  GtkWidget *event_box;
+  GtkWidget *vbox;
+  GdkPixbuf *pixbuf       = NULL;
+  GdkPixbuf *small_pixbuf = NULL;
 
   event_box = gtk_event_box_new ();
   gtk_notebook_append_page (notebook, event_box, NULL);
@@ -491,10 +491,8 @@ prefs_notebook_append_page (Gimp          *gimp,
     {
       gchar *filename;
 
-      filename = g_build_filename (gui_themes_get_theme_dir (gimp),
-                                   "images",
-                                   "preferences",
-                                   notebook_icon,
+      filename = g_build_filename (themes_get_theme_dir (gimp),
+                                   "images", "preferences", notebook_icon,
                                    NULL);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
@@ -505,11 +503,9 @@ prefs_notebook_append_page (Gimp          *gimp,
       g_free (filename);
 
       if (pixbuf)
-        {
-          small_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                  18, 18,
-                                                  GDK_INTERP_BILINEAR);
-        }
+        small_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                                18, 18,
+                                                GDK_INTERP_BILINEAR);
     }
 
   gtk_tree_store_append (tree, iter, parent);
