@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-29 04:00+0200\n"
-"PO-Revision-Date: 2003-07-29 09:40+0200\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
+"POT-Creation-Date: 2003-08-05 12:01+0200\n"
+"PO-Revision-Date: 2003-08-05 10:56-0300\n"
+"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.0\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:295
 #: plug-ins/FractalExplorer/Dialogs.c:1401 plug-ins/gfig/gfig.c:3216
@@ -52,7 +52,7 @@ msgstr "Vista previa en tiempo real"
 
 #: plug-ins/FractalExplorer/Dialogs.c:371
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Si activa esta opción la vista previsa se re-dibujará automáticamente"
+msgstr "Si activa esta opción la vista previa se re-dibujará automáticamente"
 
 #: plug-ins/FractalExplorer/Dialogs.c:374
 msgid "Redraw"
@@ -392,9 +392,9 @@ msgstr "Fractales"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1595 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
-#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:991
+#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:1014
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
-#: plug-ins/common/jpeg.c:1299 plug-ins/common/pat.c:385
+#: plug-ins/common/jpeg.c:1300 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
 #: plug-ins/common/png.c:936 plug-ins/common/ps.c:995
 #: plug-ins/common/psd_save.c:1527 plug-ins/common/sunras.c:520
@@ -454,7 +454,7 @@ msgstr "Pulse aquí para cancelar procedimiento de guardar"
 #: plug-ins/FractalExplorer/Dialogs.c:2003 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
 #: plug-ins/common/gbr.c:299 plug-ins/common/gih.c:628
-#: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:770
+#: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:771
 #: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:875
@@ -490,8 +490,8 @@ msgstr ""
 "La línea %d en la sección «Option» es incorrecta"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:203
-msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Explorador de fractales..."
+msgid "<Image>/Filters/Render/Pattern/_Fractal Explorer..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/Explorador de _fractales..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:343
 msgid "Rendering Fractal..."
@@ -566,8 +566,8 @@ msgid "Lighting Effects..."
 msgstr "Efectos de iluminación..."
 
 #: plug-ins/Lighting/lighting_main.c:166
-msgid "<Image>/Filters/Light Effects/Lighting Effects..."
-msgstr "<Image>/Filtros/Efectos de Luz/Efectos de iluminación..."
+msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
+msgstr "<Image>/Filtros/Efectos de Luz/Efectos de i_luminación..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:348 plug-ins/MapObject/mapobject_ui.c:530
@@ -829,7 +829,7 @@ msgstr "Logarítmico"
 
 #: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:720
 msgid "Sinusoidal"
-msgstr "Sinusoidal"
+msgstr "Sinuosidal"
 
 #: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:721
 msgid "Spherical"
@@ -922,8 +922,8 @@ msgid "Enable/disable real time preview of changes"
 msgstr "Activar/desactivar la vista previa de los cambios en tiempo real"
 
 #: plug-ins/MapObject/mapobject_main.c:202
-msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filtros/Mapa/Mapear un objeto..."
+msgid "<Image>/Filters/Map/Map _Object..."
+msgstr "<Image>/Filtros/Mapa/Mapear un _objeto..."
 
 #: plug-ins/MapObject/mapobject_ui.c:252
 #: plug-ins/MapObject/mapobject_ui.c:1349
@@ -1049,15 +1049,15 @@ msgstr "Rotación"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 msgid "Rotation angle about X axis"
-msgstr "Ángulo de rotación alrededor del eye X"
+msgstr "Ángulo de rotación alrededor del eje X"
 
 #: plug-ins/MapObject/mapobject_ui.c:1106
 msgid "Rotation angle about Y axis"
-msgstr "Ángulo de rotación alrededor del eye Y"
+msgstr "Ángulo de rotación alrededor del eje Y"
 
 #: plug-ins/MapObject/mapobject_ui.c:1116
 msgid "Rotation angle about Z axis"
-msgstr "Ángulo de rotación alrededor del eye Z"
+msgstr "Ángulo de rotación alrededor del eje Z"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
 msgid "Front:"
@@ -1181,7 +1181,7 @@ msgstr "Mapa de colores malo"
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
 #: plug-ins/common/gbr.c:304 plug-ins/common/gih.c:632
 #: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:341
-#: plug-ins/common/jpeg.c:774 plug-ins/common/pat.c:273
+#: plug-ins/common/jpeg.c:775 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
 #: plug-ins/common/ps.c:881 plug-ins/common/psd.c:1664
@@ -1219,7 +1219,7 @@ msgstr ""
 #: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:617
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:979
 #: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:929 plug-ins/common/pat.c:338
+#: plug-ins/common/jpeg.c:930 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2005
@@ -1239,9 +1239,9 @@ msgstr "No se puede operar en tipos de imagen desconocidos o con imágenes alfa"
 
 #. And let's begin the progress
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:502
-#: plug-ins/common/gif.c:998 plug-ins/common/gih.c:1233
+#: plug-ins/common/gif.c:1021 plug-ins/common/gih.c:1233
 #: plug-ins/common/gtm.c:258 plug-ins/common/hrz.c:470
-#: plug-ins/common/jpeg.c:1255 plug-ins/common/pat.c:390
+#: plug-ins/common/jpeg.c:1256 plug-ins/common/pat.c:390
 #: plug-ins/common/pcx.c:540 plug-ins/common/pix.c:520
 #: plug-ins/common/png.c:943 plug-ins/common/pnm.c:787
 #: plug-ins/common/ps.c:1000 plug-ins/common/psd_save.c:1532
@@ -1702,8 +1702,8 @@ msgid "Value"
 msgstr "Valor"
 
 #: plug-ins/common/CML_explorer.c:475
-msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Explorador CML..."
+msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/_Explorador CML..."
 
 #: plug-ins/common/CML_explorer.c:757
 msgid "CML_explorer: evoluting..."
@@ -1969,8 +1969,8 @@ msgid "Data Formatting"
 msgstr "Formateado de datos"
 
 #: plug-ins/common/align_layers.c:151
-msgid "<Image>/Layer/Align Visible Layers..."
-msgstr "<Image>/Capa/Alinear las capas visibles..."
+msgid "<Image>/Layer/Align _Visible Layers..."
+msgstr "<Image>/Capa/Alinear las capas _visibles..."
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
@@ -1989,11 +1989,11 @@ msgstr "Alinear capas visibles"
 #: plug-ins/common/blinds.c:401 plug-ins/common/blur.c:613
 #: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
-#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:435
+#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:697
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
 #: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
 #: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:699
-#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1723
+#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1724
 #: plug-ins/common/lic.c:771 plug-ins/common/max_rgb.c:287
 #: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:340
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
@@ -2510,7 +2510,7 @@ msgstr "CMY"
 #: plug-ins/common/compose.c:165 plug-ins/common/compose.c:172
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:281
 msgid "Cyan:"
-msgstr "Cian:"
+msgstr "Cían:"
 
 #: plug-ins/common/compose.c:166 plug-ins/common/compose.c:173
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:300
@@ -2579,8 +2579,8 @@ msgid "Redness_cr709f:"
 msgstr "Redness_cr709f:"
 
 #: plug-ins/common/compose.c:301
-msgid "<Image>/Filters/Colors/Compose..."
-msgstr "<Image>/Filtros/Colores/Componer..."
+msgid "<Image>/Filters/Colors/C_ompose..."
+msgstr "<Image>/Filtros/Colores/C_omponer..."
 
 #: plug-ins/common/compose.c:364
 #, c-format
@@ -2650,7 +2650,7 @@ msgid "E_xtend"
 msgstr "E_xtender"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:389
-#: plug-ins/common/edge.c:464 plug-ins/common/ripple.c:566
+#: plug-ins/common/edge.c:726 plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr "A_justar"
 
@@ -2955,7 +2955,7 @@ msgstr "amarillo"
 
 #: plug-ins/common/decompose.c:137
 msgid "Cyan"
-msgstr "Cian"
+msgstr "Cían"
 
 #: plug-ins/common/decompose.c:138
 msgid "Magenta"
@@ -2983,7 +2983,7 @@ msgstr "negro"
 
 #: plug-ins/common/decompose.c:144
 msgid "Cyan_K"
-msgstr "Cian_N"
+msgstr "Cían_N"
 
 #: plug-ins/common/decompose.c:145
 msgid "Magenta_K"
@@ -3288,30 +3288,60 @@ msgstr "Desplazamiento _Y:"
 msgid "On Edges:"
 msgstr "En los bordes:"
 
-#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:474
+#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:736
 #: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:337
 msgid "_Smear"
 msgstr "Mancha_r"
 
-#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:484
+#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:746
 #: plug-ins/common/fractaltrace.c:804 plug-ins/common/newsprint.c:435
 #: plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr "_Negro"
 
-#: plug-ins/common/edge.c:134
+#: plug-ins/common/edge.c:160
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
 msgstr "<Image>/Filtros/Detectar bordes/Bord_e..."
 
-#: plug-ins/common/edge.c:201
+#: plug-ins/common/edge.c:228
 msgid "Edge Detection..."
 msgstr "Detección de bordes..."
 
-#: plug-ins/common/edge.c:418
+#: plug-ins/common/edge.c:651
 msgid "Edge Detection"
 msgstr "Detección de bordes"
 
-#: plug-ins/common/edge.c:448 plug-ins/common/unsharp.c:685
+#. compression
+#: plug-ins/common/edge.c:668
+msgid "Algorithm"
+msgstr "Algoritmo"
+
+#: plug-ins/common/edge.c:673
+msgid "_Sobel"
+msgstr "_Sobel"
+
+# //R ¿Esto existe?
+#: plug-ins/common/edge.c:676
+msgid "_Prewitt"
+msgstr "_Prewitt"
+
+#: plug-ins/common/edge.c:679 plug-ins/common/lic.c:753
+msgid "_Gradient"
+msgstr "_Gradiente"
+
+#: plug-ins/common/edge.c:682
+msgid "_Roberts"
+msgstr "_Roberts"
+
+#: plug-ins/common/edge.c:685
+msgid "_Differential"
+msgstr "_Diferencial"
+
+#: plug-ins/common/edge.c:688
+msgid "_Laplace"
+msgstr "_Laplace"
+
+#: plug-ins/common/edge.c:710 plug-ins/common/unsharp.c:685
 msgid "_Amount:"
 msgstr "C_antidad:"
 
@@ -3499,7 +3529,7 @@ msgstr "Selección de Imagen"
 
 #: plug-ins/common/film.c:1356
 msgid "All Values are Fractions of the Film Heigh"
-msgstr "Todos los valores deben ser fracciones de la altura de la pelicula"
+msgstr "Todos los valores deben ser fracciones de la altura de la película"
 
 #: plug-ins/common/film.c:1359
 msgid "Ad_vanced"
@@ -3718,8 +3748,8 @@ msgstr "<Image>/Filtros/Juguetes/Gee-_Zoom"
 #: plug-ins/common/gee_zoom.c:205
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 msgstr ""
-"GEE-ZOOM: El complemento anteriormente conocido como «El huevo de Pascua de El "
-"GIMP»"
+"GEE-ZOOM: El complemento anteriormente conocido como «El huevo de Pascua de "
+"El GIMP»"
 
 #: plug-ins/common/gee_zoom.c:229
 msgid ""
@@ -3737,7 +3767,7 @@ msgstr "Guardar como GIcono"
 msgid "Icon Name:"
 msgstr "Nombre de icono:"
 
-#: plug-ins/common/gif.c:685
+#: plug-ins/common/gif.c:708
 msgid ""
 "Couldn't simply reduce colors further.\n"
 "Saving as opaque."
@@ -3745,7 +3775,7 @@ msgstr ""
 "Sencillamente no se pueden reducir más los colores.\n"
 "Guardando como opaco."
 
-#: plug-ins/common/gif.c:906
+#: plug-ins/common/gif.c:929
 msgid ""
 "The GIF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -3753,13 +3783,13 @@ msgstr ""
 "El formato GIF sólo soporta comentarios en \n"
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
-#: plug-ins/common/gif.c:967
+#: plug-ins/common/gif.c:990
 msgid "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 "Lo siento, no se pueden guardar imágenes RGB como GIFs - convierta a "
 "INDEXADA o TONOS DE GRIS primero."
 
-#: plug-ins/common/gif.c:1109
+#: plug-ins/common/gif.c:1132
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
@@ -3767,17 +3797,17 @@ msgid ""
 msgstr ""
 "Advertencia:\n"
 "Los colores transparentes guardados en el archivo podrían verse "
-"incorrectamente en los visores que no soportan trasnparencias."
+"incorrectamente en los visores que no soportan transparencias."
 
-#: plug-ins/common/gif.c:1148
+#: plug-ins/common/gif.c:1171
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
 
-#: plug-ins/common/gif.c:1192
+#: plug-ins/common/gif.c:1215
 msgid "GIF Warning"
 msgstr "Aviso GIF"
 
-#: plug-ins/common/gif.c:1218
+#: plug-ins/common/gif.c:1241
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3795,61 +3825,61 @@ msgstr ""
 "Debe elegir entre recortar todas las capas por\n"
 "los bordes de la imagen, o cancelar guardar."
 
-#: plug-ins/common/gif.c:1264
+#: plug-ins/common/gif.c:1287
 msgid "Save as GIF"
 msgstr "Guardar como GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1286
+#: plug-ins/common/gif.c:1309
 msgid "GIF Options"
 msgstr "Opciones de GIF"
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/mng.c:1138
+#: plug-ins/common/gif.c:1317 plug-ins/common/mng.c:1138
 msgid "Interlace"
 msgstr "Entrelazar"
 
-#: plug-ins/common/gif.c:1310
+#: plug-ins/common/gif.c:1333
 msgid "GIF Comment:"
 msgstr "Comentario GIF:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1371
+#: plug-ins/common/gif.c:1394
 msgid "Animated GIF Options"
 msgstr "Opciones de GIF animado"
 
-#: plug-ins/common/gif.c:1379
+#: plug-ins/common/gif.c:1402
 msgid "Loop forever"
 msgstr "Repetir eternamente"
 
-#: plug-ins/common/gif.c:1392
+#: plug-ins/common/gif.c:1415
 msgid "Delay between Frames where Unspecified:"
 msgstr "Pausa entre cuadros cuando no se especifique:"
 
-#: plug-ins/common/gif.c:1405
+#: plug-ins/common/gif.c:1428
 msgid "Milliseconds"
 msgstr "Milisegundos"
 
-#: plug-ins/common/gif.c:1415
+#: plug-ins/common/gif.c:1438
 msgid "Frame Disposal where Unspecified: "
 msgstr "Colocación de cuadros cuando no se especifique:"
 
-#: plug-ins/common/gif.c:1424
+#: plug-ins/common/gif.c:1447
 msgid "I don't Care"
 msgstr "No me importa"
 
-#: plug-ins/common/gif.c:1426
+#: plug-ins/common/gif.c:1449
 msgid "Cumulative Layers (Combine)"
 msgstr "Capas acumulativas (Combinar)"
 
-#: plug-ins/common/gif.c:1428
+#: plug-ins/common/gif.c:1451
 msgid "One Frame per Layer (Replace)"
 msgstr "Un cuadro por capa (reemplazar)"
 
-#: plug-ins/common/gif.c:2393
+#: plug-ins/common/gif.c:2660
 msgid "Error writing output file."
 msgstr "Ocurrió un error al escribir el archivo de salida."
 
-#: plug-ins/common/gif.c:2483
+#: plug-ins/common/gif.c:2750
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "El comentario predeterminado está limitado a %d caracteres."
@@ -4415,87 +4445,87 @@ msgstr "Cada pieza tiene lados rectos"
 msgid "Each piece has curved sides"
 msgstr "Cada pieza tiene lados curvos"
 
-#: plug-ins/common/jpeg.c:431
+#: plug-ins/common/jpeg.c:432
 msgid "Export Preview"
 msgstr "Vista previa de la exportación"
 
-#: plug-ins/common/jpeg.c:922
+#: plug-ins/common/jpeg.c:923
 msgid "JPEG preview"
 msgstr "Vista previa JPEG"
 
-#: plug-ins/common/jpeg.c:1174
+#: plug-ins/common/jpeg.c:1175
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Tamaño: %ld bytes (%02.01f KB)"
 
-#: plug-ins/common/jpeg.c:1605 plug-ins/common/jpeg.c:1713
+#: plug-ins/common/jpeg.c:1606 plug-ins/common/jpeg.c:1714
 msgid "Size: unknown"
 msgstr "Tamaño: desconocido"
 
-#: plug-ins/common/jpeg.c:1668
+#: plug-ins/common/jpeg.c:1669
 msgid "Save as JPEG"
 msgstr "Guardar como JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1691 plug-ins/print/gimp_color_window.c:232
+#: plug-ins/common/jpeg.c:1692 plug-ins/print/gimp_color_window.c:232
 msgid "Image Preview"
 msgstr "Vista previa de la imagen"
 
-#: plug-ins/common/jpeg.c:1700
+#: plug-ins/common/jpeg.c:1701
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr ""
 "Vista previa (en la ventana de la imagen, ¡modificará el historial de "
 "deshacer de la imagen!)"
 
-#: plug-ins/common/jpeg.c:1733 plug-ins/xjt/xjt.c:911
+#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:911
 msgid "Quality:"
 msgstr "Calidad:"
 
-#: plug-ins/common/jpeg.c:1756 plug-ins/xjt/xjt.c:920
+#: plug-ins/common/jpeg.c:1757 plug-ins/xjt/xjt.c:920
 msgid "Smoothing:"
 msgstr "Suavizado:"
 
-#: plug-ins/common/jpeg.c:1784
+#: plug-ins/common/jpeg.c:1785
 msgid "Restart markers"
 msgstr "Reiniciar marcadores"
 
-#: plug-ins/common/jpeg.c:1793
+#: plug-ins/common/jpeg.c:1794
 msgid "Restart frequency (rows):"
 msgstr "Frecuencia de reinicio (Filas:)"
 
-#: plug-ins/common/jpeg.c:1822 plug-ins/xjt/xjt.c:889
+#: plug-ins/common/jpeg.c:1823 plug-ins/xjt/xjt.c:889
 msgid "Optimize"
 msgstr "Optimizar"
 
-#: plug-ins/common/jpeg.c:1836
+#: plug-ins/common/jpeg.c:1837
 msgid "Progressive"
 msgstr "Progresivo"
 
-#: plug-ins/common/jpeg.c:1855
+#: plug-ins/common/jpeg.c:1856
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Forzar JPEG de línea base (legible por todos los descodificadores)"
 
-#: plug-ins/common/jpeg.c:1881
+#: plug-ins/common/jpeg.c:1882
 msgid "Subsampling:"
 msgstr "Submuestreo:"
 
-#: plug-ins/common/jpeg.c:1890
+#: plug-ins/common/jpeg.c:1891
 msgid "Fast Integer"
 msgstr "Entero rápido"
 
-#: plug-ins/common/jpeg.c:1891
+#: plug-ins/common/jpeg.c:1892
 msgid "Integer"
 msgstr "Entero"
 
-#: plug-ins/common/jpeg.c:1892
+#: plug-ins/common/jpeg.c:1893
 msgid "Floating-Point"
 msgstr "Coma flotante"
 
-#: plug-ins/common/jpeg.c:1896
+#: plug-ins/common/jpeg.c:1897
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Método DCT (balance de velocidad/calidad):"
 
-#: plug-ins/common/jpeg.c:1904
+#: plug-ins/common/jpeg.c:1905
 msgid "Image comments"
 msgstr "Comentarios de de la imagen"
 
@@ -4538,10 +4568,6 @@ msgstr "Operador de efecto"
 #: plug-ins/common/lic.c:752
 msgid "_Derivative"
 msgstr "_Derivada"
-
-#: plug-ins/common/lic.c:753
-msgid "_Gradient"
-msgstr "_Gradiente"
 
 #: plug-ins/common/lic.c:759
 msgid "Convolve"
@@ -4616,7 +4642,7 @@ msgstr "Nombre del archivo:"
 #. Encapsulation label
 #: plug-ins/common/mail.c:575
 msgid "Encapsulation:"
-msgstr "Encapsulación"
+msgstr "Encapsulación:"
 
 #: plug-ins/common/mail.c:587
 msgid "Uuencode"
@@ -4651,8 +4677,8 @@ msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
 msgstr "<Image>/Filtros/Colores/Mapa/Ajustar _frente-fondo"
 
 #: plug-ins/common/mapcolor.c:369
-msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Filtros/Colores/Mapa/Mapeo de rango de colores..."
+msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
+msgstr "<Image>/Filtros/Colores/Mapa/_Mapeo de rango de colores..."
 
 #: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:751
 msgid ""
@@ -5419,11 +5445,11 @@ msgstr "El archivo no está en un formato soportado."
 
 #: plug-ins/common/pnm.c:462
 msgid "PNM: Invalid X resolution."
-msgstr "RNM: Resolución X no válida."
+msgstr "PNM: Resolución X no válida."
 
 #: plug-ins/common/pnm.c:469
 msgid "PNM: Invalid Y resolution."
-msgstr "RNM: Resolución Y no válido."
+msgstr "PNM: Resolución Y no válida."
 
 #: plug-ins/common/pnm.c:481
 msgid "PNM: Invalid maximum value."
@@ -5447,7 +5473,7 @@ msgstr "Crudo"
 
 #: plug-ins/common/pnm.c:943
 msgid "Ascii"
-msgstr "Ascii"
+msgstr "ASCII"
 
 #: plug-ins/common/polar.c:184
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
@@ -6997,7 +7023,7 @@ msgstr "<Image>/Filtros/Genérico/Er_osión"
 
 #: plug-ins/common/vpropagate.c:273
 msgid "<Image>/Filters/Generic/_Dilate"
-msgstr "<Image>/Filtros/Genérico/_Distención"
+msgstr "<Image>/Filtros/Genérico/_Distensión"
 
 #: plug-ins/common/vpropagate.c:461
 msgid "Value Propagating..."
@@ -7347,11 +7373,11 @@ msgstr "Imprimiendo..."
 
 #: plug-ins/common/winprint.c:419
 msgid "CreateDIBSection failed"
-msgstr "Falló CreateDIBSection"
+msgstr "CreateDIBSection ha fallado"
 
 #: plug-ins/common/winprint.c:453
 msgid "SetStretchBltMode failed (warning only)"
-msgstr "Falló SetStretchBltMode (Sólo aviso)"
+msgstr "SetStretchBltMode ha fallado (Sólo aviso)"
 
 #: plug-ins/common/winprint.c:516
 #, c-format
@@ -7563,8 +7589,8 @@ msgid "Nothing to crop."
 msgstr "Nada para recortar."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
-msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr "<Toolbox>/Exts/Explorador de procedimientos..."
+msgid "<Toolbox>/Xtns/_DB Browser..."
+msgstr "<Toolbox>/Exts/Explorador de _DB..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:137
@@ -7664,8 +7690,8 @@ msgid "Image Composing"
 msgstr "Composición de imagen"
 
 #: plug-ins/flame/flame.c:141
-msgid "<Image>/Filters/Render/Nature/Flame..."
-msgstr "<Image>/Filtros/Renderizado/Naturaleza/Llama..."
+msgid "<Image>/Filters/Render/Nature/_Flame..."
+msgstr "<Image>/Filtros/Renderizado/Naturaleza/_Llama..."
 
 #: plug-ins/flame/flame.c:226
 msgid "Drawing Flame..."
@@ -7787,8 +7813,8 @@ msgid "_Zoom:"
 msgstr "A_cercamiento:"
 
 #: plug-ins/fp/fp.c:92
-msgid "<Image>/Filters/Colors/Filter Pack..."
-msgstr "<Image>/Filtros/Colores/Empaque de filtro..."
+msgid "<Image>/Filters/Colors/_Filter Pack..."
+msgstr "<Image>/Filtros/Colores/Empaque de _filtro..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -7808,11 +7834,11 @@ msgstr "Más claro:"
 
 #: plug-ins/fp/fp_gtk.c:35
 msgid "More Sat:"
-msgstr "Más Satur.:"
+msgstr "Más satur:"
 
 #: plug-ins/fp/fp_gtk.c:36
 msgid "Less Sat:"
-msgstr "Menos satur.:"
+msgstr "Menos satur:"
 
 #. All the previews
 #: plug-ins/fp/fp_gtk.c:38 plug-ins/fp/fp_gtk.c:96
@@ -7939,8 +7965,8 @@ msgid "Preview Size"
 msgstr "Tamaño de vista previa"
 
 #: plug-ins/gfig/gfig.c:657
-msgid "<Image>/Filters/Render/Gfig..."
-msgstr "<Image>/Filtros/Renderizado/Gfig..."
+msgid "<Image>/Filters/Render/_Gfig..."
+msgstr "<Image>/Filtros/Renderizado/_Gfig..."
 
 #: plug-ins/gfig/gfig.c:938
 msgid "First Gfig"
@@ -8530,8 +8556,8 @@ msgid "Overlay"
 msgstr "Solapar"
 
 #: plug-ins/gflare/gflare.c:834
-msgid "<Image>/Filters/Light Effects/GFlare..."
-msgstr "<Image>/Filtros/Efectos de luz/Destello de El GIMP..."
+msgid "<Image>/Filters/Light Effects/_GFlare..."
+msgstr "<Image>/Filtros/Efectos de luz/Destello de El _GIMP..."
 
 #: plug-ins/gflare/gflare.c:951
 msgid "Gradient Flare..."
@@ -8990,8 +9016,8 @@ msgid "A bailout-value for adaptive selections"
 msgstr "Un valor de fianza para selecciones adaptativas"
 
 #: plug-ins/gimpressionist/gimp.c:106
-msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr "<Image>/Filtros/Artísticos/GIMPresionista..."
+msgid "<Image>/Filters/Artistic/_GIMPressionist..."
+msgstr "<Image>/Filtros/Artísticos/_GIMPresionista..."
 
 #: plug-ins/gimpressionist/gimp.c:298
 msgid "Painting..."
@@ -9340,10 +9366,10 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"Si tienes algunos buenos pre-ajustes\n"
-"(o Brochas, o Papeles) puedes\n"
+"Si tiene algunos buenos preajustes\n"
+"(o brochas y papeles) puedes\n"
 "enviármelos a <vidar@prosalg.no> si\n"
-"quieres para incluirlos en la\n"
+"quiere para incluirlos en la\n"
 "próxima versión. \n"
 
 #: plug-ins/gimpressionist/preview.c:128
@@ -9516,8 +9542,8 @@ msgstr ""
 
 # //R :-?
 #: plug-ins/ifscompose/ifscompose.c:369
-msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr "<Image>/Filtros/Renderizado/Naturaleza/Componer IFS..."
+msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
+msgstr "<Image>/Filtros/Renderizado/Naturaleza/_Componer IFS..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:609
@@ -9950,7 +9976,7 @@ msgstr "_URL a activar cuando se pulse sobre esta área: (requerido)"
 # //R ¿seleccione o seleccionar?
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "Select HTML file"
-msgstr "Selecione un archivo HTML"
+msgstr "Seleccione un archivo HTML"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:263
 msgid "Relati_ve link"
@@ -10066,8 +10092,8 @@ msgid "_Preview"
 msgstr "Vista _previa"
 
 #: plug-ins/imagemap/imap_main.c:128
-msgid "<Image>/Filters/Web/ImageMap..."
-msgstr "<Image>/Filtros/Web/Mapa de imagen..."
+msgid "<Image>/Filters/Web/_ImageMap..."
+msgstr "<Image>/Filtros/Web/Mapa de _imagen..."
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
@@ -10427,8 +10453,8 @@ msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr "Construyendo un laberinto enlosable usando el Algoritmo de Prim..."
 
 #: plug-ins/maze/maze.c:164
-msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Laberinto..."
+msgid "<Image>/Filters/Render/Pattern/_Maze..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/Laber_into..."
 
 #: plug-ins/maze/maze.c:411
 msgid "Drawing Maze..."
@@ -10492,8 +10518,8 @@ msgid "See %s"
 msgstr "Vea %s"
 
 #: plug-ins/mosaic/mosaic.c:325
-msgid "<Image>/Filters/Distorts/Mosaic..."
-msgstr "<Image>/Filtros/Distorsión/Mosaico..."
+msgid "<Image>/Filters/Distorts/_Mosaic..."
+msgstr "<Image>/Filtros/Distorsión/_Mosaico..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:450
@@ -10567,8 +10593,8 @@ msgid "Unable to add additional point.\n"
 msgstr "No se puede añadir un punto adicional.\n"
 
 #: plug-ins/pagecurl/pagecurl.c:216
-msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr "<Image>/Filtros/Distorsiones/Enrollar página..."
+msgid "<Image>/Filters/Distorts/_Pagecurl..."
+msgstr "<Image>/Filtros/Distorsiones/Enrollar _página..."
 
 #: plug-ins/pagecurl/pagecurl.c:501
 msgid "Pagecurl Effect"
@@ -10710,7 +10736,7 @@ msgstr ""
 "resultados.\n"
 "El ordenado es mas rápido y produce una calidad casi tan buena como la "
 "fotográfica.\n"
-"Rápido y Muy Rápido son considerablemente mas rapidos, y funcionan bien con "
+"Rápido y Muy Rápido son considerablemente mas rápidos, y funcionan bien con "
 "texto y arte de línea.\n"
 "El híbrido Floyd-Steinberg generalmente produce una salida de calidad "
 "inferior."
@@ -11093,7 +11119,7 @@ msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
-"Seleccio si el escalado es medido como un porcentaje del tamaño de papel "
+"Seleccione si el escalado es medido como un porcentaje del tamaño de papel "
 "disponible o como un número de salida de puntos por pulgada"
 
 #: plug-ins/print/gimp_main_window.c:1175
@@ -11185,7 +11211,7 @@ msgstr "Colores sólidos"
 
 #: plug-ins/print/gimp_main_window.c:1362
 msgid "Best for images dominated by regions of solid color"
-msgstr "Mejor para imagenes dominadas por regiones de color sólido"
+msgstr "Mejor para imágenes dominadas por regiones de color sólido"
 
 #: plug-ins/print/gimp_main_window.c:1370
 msgid "Photograph"
@@ -11237,8 +11263,8 @@ msgstr ""
 "entramado"
 
 #: plug-ins/print/print.c:170
-msgid "<Image>/File/Print..."
-msgstr "<Image>/Archivo/Imprimir..."
+msgid "<Image>/File/_Print..."
+msgstr "<Image>/Archivo/Im_primir..."
 
 #: plug-ins/print/print.c:736 plug-ins/print/print.c:737
 #: plug-ins/print/print.c:835 plug-ins/print/print.c:1184
@@ -11246,8 +11272,8 @@ msgid "File"
 msgstr "Archivo"
 
 #: plug-ins/rcm/rcm.c:116
-msgid "<Image>/Filters/Colors/Map/Colormap Rotation..."
-msgstr "<Image>/Filtros/Colores/Rotación del mapa de color..."
+msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
+msgstr "<Image>/Filtros/Colores/_Rotación del mapa de color..."
 
 #: plug-ins/rcm/rcm.c:278
 msgid "Rotating the colormap..."
