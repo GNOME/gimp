@@ -2,5 +2,6 @@ Makefile.in
 Makefile
 .deps
 _libs
+.libs
 fs
 fs2pgm
