@@ -115,9 +115,10 @@ EOF
 ($major,$minor,$patch)=split /[._]/,$Gtk::VERSION;
 
 sub MY::install {
+   my $self=shift;
    package MY;
-   my $install = shift->SUPER::install(@_);
-   ($install =~ s/^install\b/really-install/m) or return $install;
+   my $install = $self->SUPER::install(@_);
+   ($install =~ s/^(un)?install\b/really-$1install/gm) or return $install;
    '
 install ::
 	@for dir in \
@@ -144,7 +145,9 @@ install ::
 }
 
 sub MY::postamble {
+   my $self=shift;
    my $GT = $IN_GIMP ? '$(INSTALL_PROGRAM)' : "$GIMPTOOL --install-admin-bin";
+   my $UT = $IN_GIMP ? '$(RM_F)' : "$GIMPTOOL --uninstall-admin-bin";
    my $GT2 = $IN_GIMP ? '$(gimpplugindir)/plug-ins/' : '';
    my $postamble="
 
@@ -175,6 +178,18 @@ install-plugins ::
 	   $GT \"\$\$plugin\" $GT2 ; \\
 	done
 	\$(RM_RF) inst-temp
+
+uninstall :: force_uninstall_from_\$(INSTALLDIRS)dirs
+	for plugin in Perl-Server @examples; do \\
+           $UT $GT2\$\$plugin; \\
+        done
+
+force_uninstall_from_perldirs ::
+	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(PERL_ARCHLIB)','auto','$(FULLEXT)','.packlist')."
+
+force_uninstall_from_sitedirs ::
+	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(SITEARCHEXP)','auto','$(FULLEXT)','.packlist')."
+
 ";
 }
 

@@ -11,9 +11,10 @@ make test TEST_VERBOSE=1
 bugs
 
   * replöace examples/pixemap pod by (.*) and watch it die!
+  * empty desfiption -> no display in PDB?`
   * make uninstall is actually a concern: make it work
 [DONE]  * PF_TEXT has no Load/Save buttons
-  * Christian Soeller told me its easy: apply the affine transformation from C
+[DONE]  * Christian Soeller told me its easy: apply the affine transformation from C
   * podestions are not expanded in dialog help strings etc..
   * Document spawn_options in Gimp::Net.
   * Selection => To Brush.

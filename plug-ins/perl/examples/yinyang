@@ -65,8 +65,8 @@ sub yinyang {
     # Finish up
     gimp_palette_set_foreground($oldcolor);
     gimp_selection_none($img);
-    gimp_display_new($img);
-    gimp_displays_flush();
+
+    $img;
 }
 
 # This subroutine inserts an "eye" (a dot in the center of the cicular
@@ -106,7 +106,7 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 	"Renders a black-and-white Yin/Yang symbol optionally
 	with \"eyes\" that may optionally be images.",
 	"Aaron Sherman", "(c) 1998, Aaron Sherman",
-	"1999a", "<Toolbox>/Xtns/Render/Yin-Yang", "*",
+	"1999b", "<Toolbox>/Xtns/Render/Yin-Yang", "*",
 	[
 		[PF_INT32, "width", "Width", 256],
 		[PF_INT32, "height", "Height", 256],
@@ -116,6 +116,9 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 		[PF_STRING, "aobttom_eye_filename", "eye 2", ""],
 		[PF_TOGGLE, "anti_aliasing", "", 1]
 	],
+        [
+        	[PF_IMAGE, "image", "Resulting Image"],
+        ],
 	\&yinyang);
 
 exit main;

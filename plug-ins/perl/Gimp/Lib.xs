@@ -84,8 +84,6 @@ static void need_pdl (void)
     {
       /* the perl-server can't be bothered to do this itself! */
       perl_require_pv ("PDL::Core");
-      /* required for kludgy redim_pdl */
-      perl_require_pv ("PDL::Slices");
 
       /* Get pointer to structure of core shared C routines */
       if (!(CoreSV = perl_get_sv("PDL::SHARE",FALSE)))
@@ -132,16 +130,26 @@ static void pixel_rgn_pdl_delete_data (pdl *p, int param)
 /* please optimize! */
 static pdl *redim_pdl (pdl *p, int ndim, int newsize)
 {
-  SV *sv;
-  char reslice[512];
+  pdl *r = PDL->null ();
+  AV *dims, *dimincs;
+  int i;
 
-  sprintf (reslice,"$Gimp::_pdl->slice('%s0:%d')",(ndim ? "," : ""),newsize);
+  dims    = newAV ();
+  dimincs = newAV ();
 
-  PDL->SetSV_PDL (perl_get_sv ("Gimp::_pdl", TRUE), p);
-  if (!(sv = perl_eval_pv (reslice,1)))
-    croak ("FATAL: reslicing did not return a value! Please report!");
+  for (i = 0; i < p->ndims; i++)
+    {
+      av_push (dims   , newSViv (p->dims   [i]));
+      av_push (dimincs, newSViv (p->dimincs[i]));
+    }
 
-  return PDL->SvPDLV (sv);
+  sv_setiv (*av_fetch (dims, ndim, 0), newsize);
+
+  PDL->affine_new (p, r, 0, 
+                   sv_2mortal (newRV_noinc ((SV*)dims)),
+                   sv_2mortal (newRV_noinc ((SV*)dimincs)));
+
+  return r;
 }
 
 #endif
