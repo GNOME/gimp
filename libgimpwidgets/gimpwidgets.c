@@ -132,7 +132,7 @@ gimp_radio_group_new (gboolean            in_frame,
 
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
-      frame = gtk_frame_new (frame_title);
+      frame = gimp_frame_new (frame_title);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
@@ -238,7 +238,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
-      frame = gtk_frame_new (frame_title);
+      frame = gimp_frame_new (frame_title);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
@@ -350,7 +350,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
 
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
-      frame = gtk_frame_new (frame_title);
+      frame = gimp_frame_new (frame_title);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 

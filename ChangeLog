@@ -1,5 +1,20 @@
 2004-05-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c: use a GimpFrame for
+	gimp_radio_group_new() and friends.
+
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: set a smaller label_spacing for GimpFrame
+	widgets in GimpDockables. Lame hack to keep the tool options
+	compact.
+
+	* app/actions/image-commands.c: changed spacing.
+
+	* app/gui/offset-dialog.c: merged check and radio buttons into a
+	single radio button group; changed spacing.
+
+2004-05-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpframe.c (gimp_frame_size_allocate): respect
 	the frame's border width.
 

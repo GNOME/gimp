@@ -75,10 +75,11 @@ style "gimp-grid-view-style" = "gimp-default-style"
 widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 
 
-style "gimp-dockable-button-style" = "gimp-default-style"
+style "gimp-dockable-style" = "gimp-default-style"
 {
+  GimpFrame::label_spacing      = 2
   GtkButton::focus_line_width   = 0
   GtkButton::focus_line_padding = 0
 }
 
-widget "*GimpDockable.GtkButton*" style "gimp-dockable-button-style"
+widget "*GimpDockable.*" style "gimp-dockable-style"

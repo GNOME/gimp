@@ -43,6 +43,9 @@
 
 #define ENTRY_WIDTH  60
 
+#define WRAP_AROUND  (1 << 3)
+#define FILL_MASK    (GIMP_OFFSET_BACKGROUND | GIMP_OFFSET_TRANSPARENT)
+
 
 typedef struct _OffsetDialog OffsetDialog;
 
@@ -51,7 +54,6 @@ struct _OffsetDialog
   GtkWidget      *dlg;
   GtkWidget      *off_se;
 
-  gboolean        wrap_around;
   GimpOffsetType  fill_type;
 
   GimpImage      *gimage;
@@ -74,14 +76,14 @@ offset_dialog_new (GimpDrawable *drawable,
                    GtkWidget    *parent)
 {
   OffsetDialog *off_d;
-  GtkWidget    *check;
-  GtkWidget    *button;
+  GtkWidget    *main_vbox;
   GtkWidget    *vbox;
-  GtkWidget    *abox;
-  GtkObject    *adjustment;
+  GtkWidget    *hbox;
+  GtkWidget    *button;
   GtkWidget    *spinbutton;
   GtkWidget    *frame;
   GtkWidget    *radio_button;
+  GtkObject    *adjustment;
   const gchar  *title = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -89,9 +91,8 @@ offset_dialog_new (GimpDrawable *drawable,
 
   off_d = g_new0 (OffsetDialog, 1);
 
-  off_d->wrap_around = TRUE;
-  off_d->fill_type   = gimp_drawable_has_alpha (drawable);
-  off_d->gimage      = gimp_item_get_image (GIMP_ITEM (drawable));
+  off_d->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
+  off_d->gimage    = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -115,21 +116,31 @@ offset_dialog_new (GimpDrawable *drawable,
 
                                          NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (off_d->dlg), FALSE);
+
   g_object_weak_ref (G_OBJECT (off_d->dlg), (GWeakNotify) g_free, off_d);
 
   g_signal_connect (off_d->dlg, "response",
                     G_CALLBACK (offset_response),
                     off_d);
 
-  /*  The vbox for first column of options  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (off_d->dlg)->vbox), vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (off_d->dlg)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  /*  The offset sizeentry  */
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
+  /*  The offset frame  */
+  frame = gimp_frame_new (_("Offset"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (0, FALSE);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (6, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   spinbutton = gimp_spin_button_new (&adjustment,
                                      1, 1, 1, 1, 10, 1,
@@ -150,11 +161,11 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (off_d->off_se),
-                                _("Offset _X:"), 0, 0, 1.0);
+                                _("_X:"), 0, 0, 1.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (off_d->off_se),
                                 _("_Y:"), 1, 0, 1.0);
 
-  gtk_container_add (GTK_CONTAINER (abox), off_d->off_se);
+  gtk_box_pack_start (GTK_BOX (vbox), off_d->off_se, FALSE, FALSE, 0);
   gtk_widget_show (off_d->off_se);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (off_d->off_se), GIMP_UNIT_PIXEL);
@@ -179,7 +190,6 @@ offset_dialog_new (GimpDrawable *drawable,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1, 0);
 
-  /*  The by half height and half width option */
   button = gtk_button_new_with_mnemonic (_("Offset by (x/_2),(y/2)"));
   gtk_container_set_border_width (GTK_CONTAINER (button), 2);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -189,40 +199,26 @@ offset_dialog_new (GimpDrawable *drawable,
 		    G_CALLBACK (offset_halfheight_callback),
 		    off_d);
 
-  /*  The wrap around option  */
-  check = gtk_check_button_new_with_mnemonic (_("_Wrap"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
-  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
-  gtk_widget_show (check);
+  /*  The edge behaviour frame  */
+  frame = gimp_int_radio_group_new (TRUE, _("Edge Behaviour"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &off_d->fill_type, off_d->fill_type,
 
-  g_signal_connect (check, "toggled",
-		    G_CALLBACK (gimp_toggle_button_update),
-		    &off_d->wrap_around);
+                                    _("_Wrap Around"),
+                                    WRAP_AROUND, NULL,
 
-  /*  The fill options  */
-  frame =
-    gimp_int_radio_group_new (TRUE, _("Fill Type"),
-			      G_CALLBACK (gimp_radio_button_update),
-			      &off_d->fill_type, off_d->fill_type,
+                                    _("Fill with _Background Color"),
+                                    GIMP_OFFSET_BACKGROUND, NULL,
 
-			      _("_Background"),
-			      GIMP_OFFSET_BACKGROUND, NULL,
-
-			      _("_Transparent"),
-			      GIMP_OFFSET_TRANSPARENT, &radio_button,
-
-			      NULL);
+                                    _("Make _Transparent"),
+                                    GIMP_OFFSET_TRANSPARENT, &radio_button,
+                                    NULL);
 
   if (! gimp_drawable_has_alpha (drawable))
     gtk_widget_set_sensitive (radio_button, FALSE);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  g_object_set_data (G_OBJECT (check), "inverse_sensitive", frame);
-  gtk_widget_set_sensitive (frame, ! off_d->wrap_around);
-
-  gtk_widget_show (vbox);
 
   return off_d->dlg;
 }
@@ -246,16 +242,17 @@ offset_response (GtkWidget    *widget,
         {
           drawable = gimp_image_active_drawable (gimage);
 
-          offset_x = (gint)
+          offset_x =
             RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se),
                                               0));
-          offset_y = (gint)
+          offset_y =
             RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se),
                                               1));
 
           gimp_drawable_offset (drawable,
                                 gimp_get_user_context (gimage->gimp),
-                                off_d->wrap_around, off_d->fill_type,
+                                off_d->fill_type & WRAP_AROUND ? TRUE : FALSE,
+                                off_d->fill_type & FILL_MASK,
                                 offset_x, offset_y);
           gimp_image_flush (gimage);
         }

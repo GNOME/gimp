@@ -392,7 +392,6 @@ image_layers_merge_query (GimpImage   *gimage,
                           GtkWidget   *parent)
 {
   LayerMergeOptions *options;
-  GtkWidget         *vbox;
   GtkWidget         *frame;
 
   /*  The new options structure  */
@@ -424,12 +423,6 @@ image_layers_merge_query (GimpImage   *gimage,
 		     (GWeakNotify) g_free,
 		     options);
 
-  /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     vbox);
-
   frame =
     gimp_int_radio_group_new (TRUE,
                               merge_visible ?
@@ -449,10 +442,11 @@ image_layers_merge_query (GimpImage   *gimage,
 
                               NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     frame);
   gtk_widget_show (frame);
 
-  gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
 
