@@ -1,3 +1,14 @@
+Fri Jun 16 23:47:00 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* app/edit_selection.c
+
+	A better fix for the problem with the selection outline.
+	It should now cope with offsets in the image as well as 
+	scaling the image while moving the selection.
+
+	These problems occurred both when moving the selection as a layer
+	and just moving the selection outline.
+
 2000-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am

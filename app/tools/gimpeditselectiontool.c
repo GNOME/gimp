@@ -47,8 +47,11 @@ struct _EditSelection
 {
   gint                origx, origy;      /*  last x and y coords             */
   gint                cumlx, cumly;      /*  cumulative changes to x and yed */
-  gint                offset_x,offset_y; /*  Offset of display at start sel  */
   gint                x, y;              /*  current x and y coords          */
+  gint                num_segs_in;       /* Num seg in selection boundary    */
+  gint                num_segs_out;      /* Num seg in selection boundary    */
+  BoundSeg            *segs_in;          /* Pointer to the channel sel. segs */
+  BoundSeg            *segs_out;         /* Pointer to the channel sel. segs */
 
   gint                x1, y1;            /*  bounding box of selection mask  */
   gint                x2, y2;
@@ -133,8 +136,10 @@ init_edit_selection (Tool           *tool,
   edit_select.cumlx = 0;
   edit_select.cumly = 0;
 
-  edit_select.offset_x = gdisp->offset_x;
-  edit_select.offset_y = gdisp->offset_y;
+  gimage_mask_boundary (gdisp->gimage, &edit_select.segs_in, 
+			&edit_select.segs_out,
+			&edit_select.num_segs_in, 
+			&edit_select.num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
   if (edit_type == MaskToLayerTranslate && gimage_floating_sel (gdisp->gimage))
@@ -451,14 +456,38 @@ edit_selection_motion (Tool           *tool,
   draw_core_resume (edit_select.core, tool);
 }
 
+static void
+selection_transform_segs (GDisplay   *gdisp,
+			  BoundSeg   *src_segs,
+			  GdkSegment *dest_segs,
+			  int         num_segs)
+{
+  int x, y;
+  int i;
+
+  for (i = 0; i < num_segs; i++)
+    {
+      gdisplay_transform_coords (gdisp, src_segs[i].x1+edit_select.cumlx, 
+				 src_segs[i].y1+edit_select.cumly,
+				 &x, &y, 0);
+
+      dest_segs[i].x1 = x;
+      dest_segs[i].y1 = y;
+
+      gdisplay_transform_coords (gdisp, src_segs[i].x2+edit_select.cumlx, 
+				 src_segs[i].y2+edit_select.cumly,
+				 &x, &y, 0);
+
+      dest_segs[i].x2 = x;
+      dest_segs[i].y2 = y;
+
+    }
+}
 
 void
 edit_selection_draw (Tool *tool)
 {
-  gint i;
-  gint diff_x, diff_y;
   GDisplay * gdisp;
-  GdkSegment * seg;
   Selection * select;
   Layer *layer;
   GSList *layer_list;
@@ -466,6 +495,7 @@ edit_selection_draw (Tool *tool)
   gint x1, y1, x2, y2;
   gint x3, y3, x4, y4;
   gint off_x, off_y;
+  GdkSegment *segs_copy;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
@@ -476,55 +506,34 @@ edit_selection_draw (Tool *tool)
       layer = gimage_get_active_layer (gdisp->gimage);
       floating_sel = layer_is_floating_sel (layer);
 
-      diff_x = SCALEX (gdisp, edit_select.cumlx);
-      diff_y = SCALEY (gdisp, edit_select.cumly);
+      if (!floating_sel)
+	{
+	   segs_copy = g_new(GdkSegment,edit_select.num_segs_in);
 
-      /*  offset the current selection  */
-      seg = select->segs_in;
-      for (i = 0; i < select->num_segs_in; i++)
-	{
-	  seg->x1 += diff_x;
-	  seg->x2 += diff_x;
-	  seg->y1 += diff_y;
-	  seg->y2 += diff_y;
-	  seg++;
-	}
-      seg = select->segs_out;
-      for (i = 0; i < select->num_segs_out; i++)
-	{
-	  seg->x1 += diff_x;
-	  seg->x2 += diff_x;
-	  seg->y1 += diff_y;
-	  seg->y2 += diff_y;
-	  seg++;
+	   selection_transform_segs(gdisp,
+				    edit_select.segs_in,
+				    segs_copy,
+				    edit_select.num_segs_in);
+      
+	   /*  Draw the items  */
+	   gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
+			      segs_copy, select->num_segs_in);
+	   
+	   g_free(segs_copy);
 	}
 
-      if (! floating_sel)
-	gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
-			   select->segs_in, select->num_segs_in);
-
+      segs_copy = g_new(GdkSegment,edit_select.num_segs_out);
+      
+      selection_transform_segs(gdisp,
+			       edit_select.segs_out,
+			       segs_copy,
+			       edit_select.num_segs_out);
+      
+      /*  Draw the items  */
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
-			 select->segs_out, select->num_segs_out);
+			 segs_copy, select->num_segs_out);
 
-      /*  reset the current selection  */
-      seg = select->segs_in;
-      for (i = 0; i < select->num_segs_in; i++)
-	{
-	  seg->x1 -= diff_x;
-	  seg->x2 -= diff_x;
-	  seg->y1 -= diff_y;
-	  seg->y2 -= diff_y;
-	  seg++;
-	}
-      seg = select->segs_out;
-      for (i = 0; i < select->num_segs_out; i++)
-	{
-	  seg->x1 -= diff_x;
-	  seg->x2 -= diff_x;
-	  seg->y1 -= diff_y;
-	  seg->y2 -= diff_y;
-	  seg++;
-	}
+      g_free(segs_copy);
       break;
 
     case MaskToLayerTranslate:
@@ -575,34 +584,23 @@ edit_selection_draw (Tool *tool)
       break;
 
     case FloatingSelTranslate:
-      diff_x = SCALEX (gdisp, edit_select.cumlx) - gdisp->offset_x + edit_select.offset_x;
-      diff_y = SCALEY (gdisp, edit_select.cumly) - gdisp->offset_y + edit_select.offset_y;
+      segs_copy = g_new(GdkSegment,edit_select.num_segs_in);
 
+      /* The selection segs are in image space convert these 
+       * to display space.
+       * Takes care of offset/zoom etc etc.
+       */
 
-     seg = select->segs_in;
-      for (i = 0; i < select->num_segs_in; i++)
-	{
-	  seg->x1 += diff_x;
-	  seg->x2 += diff_x;
-	  seg->y1 += diff_y;
-	  seg->y2 += diff_y;
-	  seg++;
-	}
-
+      selection_transform_segs(gdisp,
+			       edit_select.segs_in,
+			       segs_copy,
+			       edit_select.num_segs_in);
+      
       /*  Draw the items  */
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
-			 select->segs_in, select->num_segs_in);
+			 segs_copy, select->num_segs_in);
 
-      /*  reset the the current selection  */
-      seg = select->segs_in;
-      for (i = 0; i < select->num_segs_in; i++)
-	{
-	  seg->x1 -= diff_x;
-	  seg->x2 -= diff_x;
-	  seg->y1 -= diff_y;
-	  seg->y2 -= diff_y;
-	  seg++;
-	}
+      g_free(segs_copy);
       break;
     }
 }
