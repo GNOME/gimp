@@ -1,0 +1,81 @@
+#!/usr/bin/perl -w
+
+use Gimp qw(:auto __ N_);
+use Gimp::Fu;
+use Gimp::Util;
+
+#Gimp::set_trace(TRACE_CALL);
+
+sub circular_text {
+        my ($image, $drawable, $choice) = @_;
+        $drawable->has_alpha or die __"You can't run this script without an ALPHA CHANNEL!!";
+        my $test = 0;
+        $test = $drawable->type_with_alpha;
+        if ($test == INDEXEDA_IMAGE) {
+                die __"You can't run this script with an INDEXED image!!";
+        } elsif ($test == GRAYA_IMAGE) {
+                gimp_convert_rgb ($image);
+        }
+        my $img = gimp_image_new (100, 100, RGB_IMAGE);
+        $drawable->image->selection_all;
+        $drawable->edit_copy;
+        gimp_selection_none ($image);
+        my $layer;
+        $layer=$img->layer_new($drawable->width,$drawable->height,$image->layertype(1), __"Text", 100, NORMAL_MODE);
+        $layer->drawable_fill(TRANS_IMAGE_FILL);
+        $img->add_layer($layer,0);
+        $layer->edit_paste(0)->floating_sel_anchor;
+        $img->resize($drawable->width, $drawable->height, 0, 0);
+        $layer->selection_layer_alpha;
+        my ($bool, $x1, $y1, $x2, $y2)=$img->selection_bounds;
+        my $layer1=$layer->selection_float(0, 0);
+        $layer1->floating_sel_to_layer;
+        my $new_width=$x2-$x1;
+        if ($new_width >= 700) {
+                die __"Your text is too long, and would result in a too big layer! Please, shorten it and retry";
+        }
+        my $text_height=$y2-$y1;
+        $img->image_remove_layer($layer);
+        $img->resize($new_width+10, $new_width+10, -$x1, ($new_width-$img->height)/2);
+        $layer1->layer_scale($new_width-10, $text_height*2, 1);
+        $layer1->layer_set_preserve_trans(0);
+        $layer1->resize($img->width, $img->height, $layer1->offsets);
+        if ($choice) {
+                plug_in_polar_coords($img, $layer1, 100, 1, 1, 1, 1);
+        } else {
+                plug_in_polar_coords($img, $layer1, 100, 0, 0, 0, 1);
+        }
+        $img->ellipse_select(0,0,$img->width,$img->height,0,0,0,0);
+        $img->selection_shrink(1);
+        $img->selection_invert;
+        $layer1->edit_clear;
+        $img->selection_none;
+        $img->crop($new_width*3/4, $new_width*3/4, $new_width/8, $new_width/8);
+        return($img);
+}
+
+$help=<<EOF;
+This script produces a RGB alpha image with some
+circular text in it, ready to be further manipulated
+through other scripts. You simply provide an alpha
+RGB image with text of your choice, and it will be
+automatically made into a rounded shape. The length
+of the text cannot exceed 700 pxs, or the script
+will die with an error.
+
+EOF
+
+register "circular_shape",
+         "Circular Shape",
+         "$help",
+         "Michele Gherlone <mikem\@enet.it>",
+         "(c) 2001 M. Gherlone",
+         "20010512",
+         N_"<Image>/Filters/Map/Circular Shape...",
+         "*",
+         [
+         [PF_RADIO, "direction", "the text orientation", 0, [Clockwise => 0, Unclockwise => 1]],
+         ],
+         \&circular_text;
+
+exit main;
