@@ -1,7 +1,8 @@
 %define name     gimp
-%define ver      1.1.14
+%define ver      1.1.15
 %define subver   1.1
-%define rel      1
+%define microver 15
+%define rel      2
 %define prefix	 /usr
 
 Summary: The GNU Image Manipulation Program
@@ -47,6 +48,15 @@ Requires: 	gtk+-devel
 %description devel
 Static libraries and header files for writing GIMP plugins and extensions.
 
+%package perl
+Summary: GIMP perl extensions and plugins.
+Group:		Applications/Graphics
+Requires:	gimp
+Requires:	perl
+
+%description perl
+The gimp-perl package contains all the perl extensions and perl plugins. 
+
 %prep
 %setup -q
 
@@ -89,8 +99,45 @@ fi
 # This perl madness will drive me batty
 #
 eval perl '-V:archname'
-find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" | grep -v perllocal.pod > gimp-perl-filelist
+find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" | grep -v perllocal.pod > gimp-perl
+#
+# Help files appear to be in flux.
+#
+echo "%defattr (0444, bin, man, 0555)" > gimp-help-files
+find $RPM_BUILD_ROOT/usr/share/gimp/help -type f -print | sed "s@^$RPM_BUILD_ROOT@@g"  >>gimp-help-files
+#
+# Plugins and modules change often (grab the executeable ones)
+#
+echo "%defattr (0555, bin, bin)" > gimp-plugin-files
+find $RPM_BUILD_ROOT/usr/lib/gimp/%{subver} -type f -exec file {} \; | grep -v perl | cut -d':' -f 1 | sed "s@^$RPM_BUILD_ROOT@@g"  >>gimp-plugin-files
+#
+# Now pull the perl ones out.
+#
+echo "%defattr (0555, bin, bin)" > gimp-perl-plugin-files
+find $RPM_BUILD_ROOT/usr/lib/gimp/%{subver} -type f -exec file {} \; | grep perl | cut -d':' -f 1 | sed "s@^$RPM_BUILD_ROOT@@g" >>gimp-perl-plugin-files
+#
+# Auto detect the lang files.
+#
+if [ -f /usr/lib/rpm/find-lang.sh ] ; then
+ /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT %name
+ sed "s:(644, root, root, 755):(444, bin, bin, 555):" %{name}.lang >tmp.lang && mv tmp.lang %{name}.lang
+fi
+#
+# Scripts
+#
+echo "%defattr (0444, bin, bin, 0555)" >gimp-script-files
+find $RPM_BUILD_ROOT/usr/share/gimp/scripts -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" >> gimp-script-files
+#
+# Brushes
+#
+echo "%defattr (0444, bin, bin, 0555)" >gimp-brushes-files
+find $RPM_BUILD_ROOT/usr/share/gimp/brushes -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" | sort >>gimp-brushes-files
 
+#
+# Build the master filelists generated from the above mess.
+#
+cat gimp-help-files gimp-plugin-files gimp.lang gimp-script-files gimp-brushes-files >gimp.files
+cat gimp-perl gimp-perl-plugin-files >gimp-perl-files
 
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
@@ -99,7 +146,7 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 
 %postun -p /sbin/ldconfig
 
-%files -f gimp-perl-filelist
+%files -f gimp.files
 %attr (0555, bin, man) %doc AUTHORS COPYING ChangeLog MAINTAINERS NEWS README TODO
 %attr (0555, bin, man) %doc docs/*.txt docs/*.eps ABOUT-NLS README.i18n README.perl README.win32 TODO
 %defattr (0555, bin, bin)
@@ -119,106 +166,6 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %dir /usr/lib/gimp/%{subver}
 %dir /usr/lib/gimp/%{subver}/modules
 %dir /usr/lib/gimp/%{subver}/plug-ins
-
-%defattr (0444, bin, bin, 0555) 
-%{prefix}/share/gimp/scripts/3d-outline.scm
-%{prefix}/share/gimp/scripts/3dTruchet.scm
-%{prefix}/share/gimp/scripts/add-bevel.scm
-%{prefix}/share/gimp/scripts/addborder.scm
-%{prefix}/share/gimp/scripts/alien-glow-arrow.scm
-%{prefix}/share/gimp/scripts/alien-glow-bar.scm
-%{prefix}/share/gimp/scripts/alien-glow-bullet.scm
-%{prefix}/share/gimp/scripts/alien-glow-button.scm
-%{prefix}/share/gimp/scripts/alien-glow-logo.scm
-%{prefix}/share/gimp/scripts/asc2img.scm
-%{prefix}/share/gimp/scripts/basic1-logo.scm
-%{prefix}/share/gimp/scripts/basic2-logo.scm
-%{prefix}/share/gimp/scripts/beavis.jpg
-%{prefix}/share/gimp/scripts/beveled-button.scm
-%{prefix}/share/gimp/scripts/beveled-pattern-arrow.scm
-%{prefix}/share/gimp/scripts/beveled-pattern-bullet.scm
-%{prefix}/share/gimp/scripts/beveled-pattern-button.scm
-%{prefix}/share/gimp/scripts/beveled-pattern-heading.scm
-%{prefix}/share/gimp/scripts/beveled-pattern-hrule.scm
-%{prefix}/share/gimp/scripts/blend-anim.scm
-%{prefix}/share/gimp/scripts/blended-logo.scm
-%{prefix}/share/gimp/scripts/bovinated-logo.scm
-%{prefix}/share/gimp/scripts/camo.scm
-%{prefix}/share/gimp/scripts/carve-it.scm
-%{prefix}/share/gimp/scripts/carved-logo.scm
-%{prefix}/share/gimp/scripts/chalk.scm
-%{prefix}/share/gimp/scripts/chip-away.scm
-%{prefix}/share/gimp/scripts/chrome-it.scm
-%{prefix}/share/gimp/scripts/chrome-logo.scm
-%{prefix}/share/gimp/scripts/circuit.scm
-%{prefix}/share/gimp/scripts/clothify.scm
-%{prefix}/share/gimp/scripts/coffee.scm
-%{prefix}/share/gimp/scripts/color-cycling.scm
-%{prefix}/share/gimp/scripts/comic-logo.scm
-%{prefix}/share/gimp/scripts/coolmetal-logo.scm
-%{prefix}/share/gimp/scripts/copy-visible.scm
-%{prefix}/share/gimp/scripts/crystal-logo.scm
-%{prefix}/share/gimp/scripts/distress_selection.scm
-%{prefix}/share/gimp/scripts/drop-shadow.scm
-%{prefix}/share/gimp/scripts/erase-rows.scm
-%{prefix}/share/gimp/scripts/fade-outline.scm
-%{prefix}/share/gimp/scripts/flatland.scm
-%{prefix}/share/gimp/scripts/font-map.scm
-%{prefix}/share/gimp/scripts/frosty-logo.scm
-%{prefix}/share/gimp/scripts/fuzzyborder.scm
-%{prefix}/share/gimp/scripts/gimp-headers.scm
-%{prefix}/share/gimp/scripts/gimp-labels.scm
-%{prefix}/share/gimp/scripts/glossy.scm
-%{prefix}/share/gimp/scripts/glowing-logo.scm
-%{prefix}/share/gimp/scripts/gradient-bevel-logo.scm
-%{prefix}/share/gimp/scripts/gradient-example.scm
-%{prefix}/share/gimp/scripts/grid-system.scm
-%{prefix}/share/gimp/scripts/hsv-graph.scm
-%{prefix}/share/gimp/scripts/i26-gunya2.scm
-%{prefix}/share/gimp/scripts/image-structure.scm
-%{prefix}/share/gimp/scripts/land.scm
-%{prefix}/share/gimp/scripts/lava.scm
-%{prefix}/share/gimp/scripts/line-nova.scm
-%{prefix}/share/gimp/scripts/old_photo.scm
-%{prefix}/share/gimp/scripts/mkbrush.scm
-%{prefix}/share/gimp/scripts/neon-logo.scm
-%{prefix}/share/gimp/scripts/news-text.scm
-%{prefix}/share/gimp/scripts/perspective-shadow.scm
-%{prefix}/share/gimp/scripts/predator.scm
-%{prefix}/share/gimp/scripts/pupi-button.scm
-%{prefix}/share/gimp/scripts/rendermap.scm
-%{prefix}/share/gimp/scripts/ripply-anim.scm
-%{prefix}/share/gimp/scripts/round-corners.scm
-%{prefix}/share/gimp/scripts/select_to_brush.scm
-%{prefix}/share/gimp/scripts/select_to_image.scm
-%{prefix}/share/gimp/scripts/selection-round.scm
-%{prefix}/share/gimp/scripts/slide.scm
-%{prefix}/share/gimp/scripts/sota-chrome-logo.scm
-%{prefix}/share/gimp/scripts/speed-text.scm
-%{prefix}/share/gimp/scripts/sphere.scm
-%{prefix}/share/gimp/scripts/spinning_globe.scm
-%{prefix}/share/gimp/scripts/starburst-logo.scm
-%{prefix}/share/gimp/scripts/starscape-logo.scm
-%{prefix}/share/gimp/scripts/swirltile.scm
-%{prefix}/share/gimp/scripts/swirly-pattern.scm
-%{prefix}/share/gimp/scripts/t-o-p-logo.scm
-%{prefix}/share/gimp/scripts/text-circle.scm
-%{prefix}/share/gimp/scripts/texture.jpg
-%{prefix}/share/gimp/scripts/texture1.jpg
-%{prefix}/share/gimp/scripts/texture2.jpg
-%{prefix}/share/gimp/scripts/texture3.jpg
-%{prefix}/share/gimp/scripts/textured-logo.scm
-%{prefix}/share/gimp/scripts/title-header.scm
-%{prefix}/share/gimp/scripts/tileblur.scm
-%{prefix}/share/gimp/scripts/trochoid.scm
-%{prefix}/share/gimp/scripts/truchet.scm
-%{prefix}/share/gimp/scripts/unsharp-mask.scm
-%{prefix}/share/gimp/scripts/waves-anim.scm
-%{prefix}/share/gimp/scripts/weave.scm
-%{prefix}/share/gimp/scripts/xach-effect.scm
-%{prefix}/share/gimp/scripts/test-sphere.scm
-%{prefix}/share/gimp/scripts/sel-to-anim-img.scm
-%{prefix}/share/gimp/scripts/web-browser.scm
 
 %{prefix}/share/gimp/fractalexplorer/Asteroid_Field
 %{prefix}/share/gimp/fractalexplorer/Bar_Code_Label
@@ -364,49 +311,6 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %{prefix}/share/gimp/gimpressionist/Presets/Straws
 %{prefix}/share/gimp/gimpressionist/Presets/Weave
 %{prefix}/share/gimp/gimpressionist/Presets/Wormcan
-
-%{prefix}/share/gimp/brushes/10x10square.gbr
-%{prefix}/share/gimp/brushes/10x10squareBlur.gbr
-%{prefix}/share/gimp/brushes/11circle.gbr
-%{prefix}/share/gimp/brushes/11fcircle.gbr
-%{prefix}/share/gimp/brushes/13circle.gbr
-%{prefix}/share/gimp/brushes/13fcircle.gbr
-%{prefix}/share/gimp/brushes/15circle.gbr
-%{prefix}/share/gimp/brushes/15fcircle.gbr
-%{prefix}/share/gimp/brushes/17circle.gbr
-%{prefix}/share/gimp/brushes/17fcircle.gbr
-%{prefix}/share/gimp/brushes/19circle.gbr
-%{prefix}/share/gimp/brushes/19fcircle.gbr
-%{prefix}/share/gimp/brushes/1circle.gbr
-%{prefix}/share/gimp/brushes/20x20square.gbr
-%{prefix}/share/gimp/brushes/20x20squareBlur.gbr
-%{prefix}/share/gimp/brushes/3circle.gbr
-%{prefix}/share/gimp/brushes/3fcircle.gbr
-%{prefix}/share/gimp/brushes/5circle.gbr
-%{prefix}/share/gimp/brushes/5fcircle.gbr
-%{prefix}/share/gimp/brushes/5x5square.gbr
-%{prefix}/share/gimp/brushes/5x5squareBlur.gbr
-%{prefix}/share/gimp/brushes/7circle.gbr
-%{prefix}/share/gimp/brushes/7fcircle.gbr
-%{prefix}/share/gimp/brushes/9circle.gbr
-%{prefix}/share/gimp/brushes/9fcircle.gbr
-%{prefix}/share/gimp/brushes/DStar11.gbr
-%{prefix}/share/gimp/brushes/DStar17.gbr
-%{prefix}/share/gimp/brushes/DStar25.gbr
-%{prefix}/share/gimp/brushes/callig1.gbr
-%{prefix}/share/gimp/brushes/callig2.gbr
-%{prefix}/share/gimp/brushes/callig3.gbr
-%{prefix}/share/gimp/brushes/callig4.gbr
-%{prefix}/share/gimp/brushes/confetti.gbr
-%{prefix}/share/gimp/brushes/dunes.gbr
-%{prefix}/share/gimp/brushes/galaxy.gbr
-%{prefix}/share/gimp/brushes/galaxy_big.gbr
-%{prefix}/share/gimp/brushes/galaxy_small.gbr
-%{prefix}/share/gimp/brushes/pepper.gpb
-%{prefix}/share/gimp/brushes/pixel.gbr
-%{prefix}/share/gimp/brushes/thegimp.gbr
-%{prefix}/share/gimp/brushes/vine.gih
-%{prefix}/share/gimp/brushes/xcf.gbr
 
 %{prefix}/share/gimp/gradients/Abstract_1
 %{prefix}/share/gimp/gradients/Abstract_2
@@ -593,371 +497,7 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %lang(ru)	%{prefix}/share/gimp/tips/gimp_tips.ru.txt
 %lang(pl)	%{prefix}/share/gimp/tips/gimp_tips.pl.txt
 
-%{prefix}/share/gimp/help/C/dialogs/layers/add_mask.html
-%{prefix}/share/gimp/help/C/dialogs/layers/apply_mask.html
-%{prefix}/share/gimp/help/C/dialogs/layers/edit_layer_attributes.html
-%{prefix}/share/gimp/help/C/dialogs/layers/index.html
-%{prefix}/share/gimp/help/C/dialogs/layers/layers.html
-%{prefix}/share/gimp/help/C/dialogs/layers/merge_visible_layers.html
-%{prefix}/share/gimp/help/C/dialogs/layers/new_layer.html
-%{prefix}/share/gimp/help/C/dialogs/layers/resize_layer.html
-%{prefix}/share/gimp/help/C/dialogs/layers/scale_layer.html
-%{prefix}/share/gimp/help/C/dialogs/channels/channels.html
-%{prefix}/share/gimp/help/C/dialogs/channels/edit_channel_attributes.html
-%{prefix}/share/gimp/help/C/dialogs/channels/index.html
-%{prefix}/share/gimp/help/C/dialogs/channels/new_channel.html
-%{prefix}/share/gimp/help/C/dialogs/paths/export_path.html
-%{prefix}/share/gimp/help/C/dialogs/paths/import_path.html
-%{prefix}/share/gimp/help/C/dialogs/paths/index.html
-%{prefix}/share/gimp/help/C/dialogs/paths/paths.html
-%{prefix}/share/gimp/help/C/dialogs/paths/rename_path.html
-%{prefix}/share/gimp/help/C/dialogs/palette_editor/import_palette.html
-%{prefix}/share/gimp/help/C/dialogs/palette_editor/index.html
-%{prefix}/share/gimp/help/C/dialogs/palette_editor/merge_palette.html
-%{prefix}/share/gimp/help/C/dialogs/palette_editor/new_palette.html
-%{prefix}/share/gimp/help/C/dialogs/palette_editor/palette_editor.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/copy_gradient.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/delete_gradient.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/gradient_editor.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/index.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/new_gradient.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/rename_gradient.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/replicate_segment.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/save_as_pov_ray.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_editor/split_segments_uniformly.html
-%{prefix}/share/gimp/help/C/dialogs/display_filters/display_filters.html
-%{prefix}/share/gimp/help/C/dialogs/display_filters/gamma.html
-%{prefix}/share/gimp/help/C/dialogs/display_filters/index.html
-%{prefix}/share/gimp/help/C/dialogs/color_selectors/built_in.html
-%{prefix}/share/gimp/help/C/dialogs/color_selectors/gtk.html
-%{prefix}/share/gimp/help/C/dialogs/color_selectors/index.html
-%{prefix}/share/gimp/help/C/dialogs/color_selectors/triangle.html
-%{prefix}/share/gimp/help/C/dialogs/color_selectors/watercolor.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/directories.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/display.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/environment.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/index.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/interface.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/monitor.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/new_file.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/preferences.html
-%{prefix}/share/gimp/help/C/dialogs/preferences/session.html
-%{prefix}/share/gimp/help/C/dialogs/about.html
-%{prefix}/share/gimp/help/C/dialogs/border_selection.html
-%{prefix}/share/gimp/help/C/dialogs/brush_editor.html
-%{prefix}/share/gimp/help/C/dialogs/brush_selection.html
-%{prefix}/share/gimp/help/C/dialogs/convert_to_indexed.html
-%{prefix}/share/gimp/help/C/dialogs/copy_named.html
-%{prefix}/share/gimp/help/C/dialogs/cut_named.html
-%{prefix}/share/gimp/help/C/dialogs/device_status.html
-%{prefix}/share/gimp/help/C/dialogs/document_index.html
-%{prefix}/share/gimp/help/C/dialogs/edit_qmask_attributes.html
-%{prefix}/share/gimp/help/C/dialogs/error_console.html
-%{prefix}/share/gimp/help/C/dialogs/feather_selection.html
-%{prefix}/share/gimp/help/C/dialogs/file_new.html
-%{prefix}/share/gimp/help/C/dialogs/file_open.html
-%{prefix}/share/gimp/help/C/dialogs/file_save.html
-%{prefix}/share/gimp/help/C/dialogs/gradient_selection.html
-%{prefix}/share/gimp/help/C/dialogs/grow_selection.html
-%{prefix}/share/gimp/help/C/dialogs/help.html
-%{prefix}/share/gimp/help/C/dialogs/index.html
-%{prefix}/share/gimp/help/C/dialogs/indexed_palette.html
-%{prefix}/share/gimp/help/C/dialogs/info_window.html
-%{prefix}/share/gimp/help/C/dialogs/input_devices.html
-%{prefix}/share/gimp/help/C/dialogs/layers_and_channels.html
-%{prefix}/share/gimp/help/C/dialogs/module_browser.html
-%{prefix}/share/gimp/help/C/dialogs/navigation_window.html
-%{prefix}/share/gimp/help/C/dialogs/offset.html
-%{prefix}/share/gimp/help/C/dialogs/palette_selection.html
-%{prefix}/share/gimp/help/C/dialogs/paste_named.html
-%{prefix}/share/gimp/help/C/dialogs/pattern_selection.html
-%{prefix}/share/gimp/help/C/dialogs/really_close.html
-%{prefix}/share/gimp/help/C/dialogs/really_quit.html
-%{prefix}/share/gimp/help/C/dialogs/resize_image.html
-%{prefix}/share/gimp/help/C/dialogs/scale_image.html
-%{prefix}/share/gimp/help/C/dialogs/shrink_selection.html
-%{prefix}/share/gimp/help/C/dialogs/tip_of_the_day.html
-%{prefix}/share/gimp/help/C/dialogs/tool_options.html
-%{prefix}/share/gimp/help/C/dialogs/undo_history.html
-%{prefix}/share/gimp/help/C/tools/airbrush.html
-%{prefix}/share/gimp/help/C/tools/bezier_select.html
-%{prefix}/share/gimp/help/C/tools/blend.html
-%{prefix}/share/gimp/help/C/tools/brightness_contrast.html
-%{prefix}/share/gimp/help/C/tools/bucket_fill.html
-%{prefix}/share/gimp/help/C/tools/by_color_select.html
-%{prefix}/share/gimp/help/C/tools/clone.html
-%{prefix}/share/gimp/help/C/tools/color_balance.html
-%{prefix}/share/gimp/help/C/tools/color_picker.html
-%{prefix}/share/gimp/help/C/tools/convolve.html
-%{prefix}/share/gimp/help/C/tools/crop.html
-%{prefix}/share/gimp/help/C/tools/curves.html
-%{prefix}/share/gimp/help/C/tools/dodgeburn.html
-%{prefix}/share/gimp/help/C/tools/ellipse_select.html
-%{prefix}/share/gimp/help/C/tools/eraser.html
-%{prefix}/share/gimp/help/C/tools/flip.html
-%{prefix}/share/gimp/help/C/tools/free_select.html
-%{prefix}/share/gimp/help/C/tools/fuzzy_select.html
-%{prefix}/share/gimp/help/C/tools/histogram.html
-%{prefix}/share/gimp/help/C/tools/hue_saturation.html
-%{prefix}/share/gimp/help/C/tools/index.html
-%{prefix}/share/gimp/help/C/tools/ink.html
-%{prefix}/share/gimp/help/C/tools/intelligent_scissors.html
-%{prefix}/share/gimp/help/C/tools/levels.html
-%{prefix}/share/gimp/help/C/tools/magnify.html
-%{prefix}/share/gimp/help/C/tools/measure.html
-%{prefix}/share/gimp/help/C/tools/move.html
-%{prefix}/share/gimp/help/C/tools/paintbrush.html
-%{prefix}/share/gimp/help/C/tools/path.html
-%{prefix}/share/gimp/help/C/tools/pencil.html
-%{prefix}/share/gimp/help/C/tools/posterize.html
-%{prefix}/share/gimp/help/C/tools/rect_select.html
-%{prefix}/share/gimp/help/C/tools/smudge.html
-%{prefix}/share/gimp/help/C/tools/text.html
-%{prefix}/share/gimp/help/C/tools/threshold.html
-%{prefix}/share/gimp/help/C/tools/transform.html
-%{prefix}/share/gimp/help/C/tools/transform_perspective.html
-%{prefix}/share/gimp/help/C/tools/transform_rotate.html
-%{prefix}/share/gimp/help/C/tools/transform_scale.html
-%{prefix}/share/gimp/help/C/tools/transform_shear.html
-%{prefix}/share/gimp/help/C/tools/xinput_airbrush.html
-%{prefix}/share/gimp/help/C/layers/stack/index.html
-%{prefix}/share/gimp/help/C/layers/stack/stack.html
-%{prefix}/share/gimp/help/C/layers/add_alpha_channel.html
-%{prefix}/share/gimp/help/C/layers/alpha_to_selection.html
-%{prefix}/share/gimp/help/C/layers/anchor_layer.html
-%{prefix}/share/gimp/help/C/layers/delete_layer.html
-%{prefix}/share/gimp/help/C/layers/duplicate_layer.html
-%{prefix}/share/gimp/help/C/layers/flatten_image.html
-%{prefix}/share/gimp/help/C/layers/index.html
-%{prefix}/share/gimp/help/C/layers/mask_to_selection.html
-%{prefix}/share/gimp/help/C/layers/merge_down.html
-%{prefix}/share/gimp/help/C/channels/channel_to_selection.html
-%{prefix}/share/gimp/help/C/channels/channels.html
-%{prefix}/share/gimp/help/C/channels/delete_channel.html
-%{prefix}/share/gimp/help/C/channels/duplicate_channel.html
-%{prefix}/share/gimp/help/C/channels/index.html
-%{prefix}/share/gimp/help/C/channels/lower_channel.html
-%{prefix}/share/gimp/help/C/channels/raise_channel.html
-%{prefix}/share/gimp/help/C/paths/copy_path.html
-%{prefix}/share/gimp/help/C/paths/delete_path.html
-%{prefix}/share/gimp/help/C/paths/duplicate_path.html
-%{prefix}/share/gimp/help/C/paths/index.html
-%{prefix}/share/gimp/help/C/paths/new_path.html
-%{prefix}/share/gimp/help/C/paths/paste_path.html
-%{prefix}/share/gimp/help/C/paths/path_to_selection.html
-%{prefix}/share/gimp/help/C/paths/stroke_path.html
-%{prefix}/share/gimp/help/C/toolbox/index.html
-%{prefix}/share/gimp/help/C/toolbox/toolbox.html
-%{prefix}/share/gimp/help/C/image/edit/clear.html
-%{prefix}/share/gimp/help/C/image/edit/copy.html
-%{prefix}/share/gimp/help/C/image/edit/cut.html
-%{prefix}/share/gimp/help/C/image/edit/fill.html
-%{prefix}/share/gimp/help/C/image/edit/index.html
-%{prefix}/share/gimp/help/C/image/edit/paste.html
-%{prefix}/share/gimp/help/C/image/edit/paste_as_new.html
-%{prefix}/share/gimp/help/C/image/edit/paste_into.html
-%{prefix}/share/gimp/help/C/image/edit/redo.html
-%{prefix}/share/gimp/help/C/image/edit/stroke.html
-%{prefix}/share/gimp/help/C/image/edit/undo.html
-%{prefix}/share/gimp/help/C/image/select/all.html
-%{prefix}/share/gimp/help/C/image/select/float.html
-%{prefix}/share/gimp/help/C/image/select/index.html
-%{prefix}/share/gimp/help/C/image/select/invert.html
-%{prefix}/share/gimp/help/C/image/select/none.html
-%{prefix}/share/gimp/help/C/image/select/save_to_channel.html
-%{prefix}/share/gimp/help/C/image/select/sharpen.html
-%{prefix}/share/gimp/help/C/image/view/dot_for_dot.html
-%{prefix}/share/gimp/help/C/image/view/index.html
-%{prefix}/share/gimp/help/C/image/view/new_view.html
-%{prefix}/share/gimp/help/C/image/view/shrink_wrap.html
-%{prefix}/share/gimp/help/C/image/view/snap_to_guides.html
-%{prefix}/share/gimp/help/C/image/view/toggle_guides.html
-%{prefix}/share/gimp/help/C/image/view/toggle_rulers.html
-%{prefix}/share/gimp/help/C/image/view/toggle_selection.html
-%{prefix}/share/gimp/help/C/image/view/toggle_statusbar.html
-%{prefix}/share/gimp/help/C/image/view/zoom.html
-%{prefix}/share/gimp/help/C/image/image/transforms/index.html
-%{prefix}/share/gimp/help/C/image/image/colors/desaturate.html
-%{prefix}/share/gimp/help/C/image/image/colors/equalize.html
-%{prefix}/share/gimp/help/C/image/image/colors/index.html
-%{prefix}/share/gimp/help/C/image/image/colors/invert.html
-%{prefix}/share/gimp/help/C/image/image/convert_to_grayscale.html
-%{prefix}/share/gimp/help/C/image/image/convert_to_rgb.html
-%{prefix}/share/gimp/help/C/image/image/duplicate.html
-%{prefix}/share/gimp/help/C/image/image/index.html
-%{prefix}/share/gimp/help/C/image/image_window.html
-%{prefix}/share/gimp/help/C/image/index.html
-%{prefix}/share/gimp/help/C/open/index.html
-%{prefix}/share/gimp/help/C/open/open_by_extension.html
-%{prefix}/share/gimp/help/C/save/index.html
-%{prefix}/share/gimp/help/C/save/save_by_extension.html
-%{prefix}/share/gimp/help/C/filters/alienmap.html
-%{prefix}/share/gimp/help/C/filters/alienmap2.html
-%{prefix}/share/gimp/help/C/filters/align_layers.html
-%{prefix}/share/gimp/help/C/filters/animationplay.html
-%{prefix}/share/gimp/help/C/filters/animoptimize.html
-%{prefix}/share/gimp/help/C/filters/apply_lens.html
-%{prefix}/share/gimp/help/C/filters/autocrop.html
-%{prefix}/share/gimp/help/C/filters/autostretch_hsv.html
-%{prefix}/share/gimp/help/C/filters/blinds.html
-%{prefix}/share/gimp/help/C/filters/blur.html
-%{prefix}/share/gimp/help/C/filters/bmp.html
-%{prefix}/share/gimp/help/C/filters/borderaverage.html
-%{prefix}/share/gimp/help/C/filters/bumpmap.html
-%{prefix}/share/gimp/help/C/filters/bz2.html
-%{prefix}/share/gimp/help/C/filters/c_astretch.html
-%{prefix}/share/gimp/help/C/filters/cel.html
-%{prefix}/share/gimp/help/C/filters/checkerboard.html
-%{prefix}/share/gimp/help/C/filters/cml_explorer.html
-%{prefix}/share/gimp/help/C/filters/color_enhance.html
-%{prefix}/share/gimp/help/C/filters/colorify.html
-%{prefix}/share/gimp/help/C/filters/compose.html
-%{prefix}/share/gimp/help/C/filters/convmatrix.html
-%{prefix}/share/gimp/help/C/filters/csource.html
-%{prefix}/share/gimp/help/C/filters/cubism.html
-%{prefix}/share/gimp/help/C/filters/curve_bend.html
-%{prefix}/share/gimp/help/C/filters/dbbrowser.html
-%{prefix}/share/gimp/help/C/filters/decompose.html
-%{prefix}/share/gimp/help/C/filters/deinterlace.html
-%{prefix}/share/gimp/help/C/filters/depthmerge.html
-%{prefix}/share/gimp/help/C/filters/despeckle.html
-%{prefix}/share/gimp/help/C/filters/destripe.html
-%{prefix}/share/gimp/help/C/filters/diffraction.html
-%{prefix}/share/gimp/help/C/filters/displace.html
-%{prefix}/share/gimp/help/C/filters/edge.html
-%{prefix}/share/gimp/help/C/filters/emboss.html
-%{prefix}/share/gimp/help/C/filters/engrave.html
-%{prefix}/share/gimp/help/C/filters/exchange.html
-%{prefix}/share/gimp/help/C/filters/faxg3.html
-%{prefix}/share/gimp/help/C/filters/film.html
-%{prefix}/share/gimp/help/C/filters/fits.html
-%{prefix}/share/gimp/help/C/filters/flame.html
-%{prefix}/share/gimp/help/C/filters/flarefx.html
-%{prefix}/share/gimp/help/C/filters/fp.html
-%{prefix}/share/gimp/help/C/filters/gap_filter.html
-%{prefix}/share/gimp/help/C/filters/fractalexplorer.html
-%{prefix}/share/gimp/help/C/filters/fractaltrace.html
-%{prefix}/share/gimp/help/C/filters/gap_plugins.html
-%{prefix}/share/gimp/help/C/filters/gauss_iir.html
-%{prefix}/share/gimp/help/C/filters/gauss_rle.html
-%{prefix}/share/gimp/help/C/filters/gbr.html
-%{prefix}/share/gimp/help/C/filters/gdyntext.html
-%{prefix}/share/gimp/help/C/filters/gee.html
-%{prefix}/share/gimp/help/C/filters/gfig.html
-%{prefix}/share/gimp/help/C/filters/gflare.html
-%{prefix}/share/gimp/help/C/filters/gfli.html
-%{prefix}/share/gimp/help/C/filters/gicon.html
-%{prefix}/share/gimp/help/C/filters/gif.html
-%{prefix}/share/gimp/help/C/filters/gifload.html
-%{prefix}/share/gimp/help/C/filters/gimpressionist.html
-%{prefix}/share/gimp/help/C/filters/glasstile.html
-%{prefix}/share/gimp/help/C/filters/gpb.html
-%{prefix}/share/gimp/help/C/filters/gqbist.html
-%{prefix}/share/gimp/help/C/filters/gradmap.html
-%{prefix}/share/gimp/help/C/filters/grid.html
-%{prefix}/share/gimp/help/C/filters/gtm.html
-%{prefix}/share/gimp/help/C/filters/guillotine.html
-%{prefix}/share/gimp/help/C/filters/gz.html
-%{prefix}/share/gimp/help/C/filters/header.html
-%{prefix}/share/gimp/help/C/filters/hot.html
-%{prefix}/share/gimp/help/C/filters/hrz.html
-%{prefix}/share/gimp/help/C/filters/ifscompose.html
-%{prefix}/share/gimp/help/C/filters/illusion.html
-%{prefix}/share/gimp/help/C/filters/imagemap.html
-%{prefix}/share/gimp/help/C/filters/index.html
-%{prefix}/share/gimp/help/C/filters/iwarp.html
-%{prefix}/share/gimp/help/C/filters/jigsaw.html
-%{prefix}/share/gimp/help/C/filters/jpeg.html
-%{prefix}/share/gimp/help/C/filters/laplace.html
-%{prefix}/share/gimp/help/C/filters/lic.html
-%{prefix}/share/gimp/help/C/filters/lighting.html
-%{prefix}/share/gimp/help/C/filters/mail.html
-%{prefix}/share/gimp/help/C/filters/mapcolor.html
-%{prefix}/share/gimp/help/C/filters/mapobject.html
-%{prefix}/share/gimp/help/C/filters/max_rgb.html
-%{prefix}/share/gimp/help/C/filters/maze.html
-%{prefix}/share/gimp/help/C/filters/mblur.html
-%{prefix}/share/gimp/help/C/filters/mosaic.html
-%{prefix}/share/gimp/help/C/filters/newsprint.html
-%{prefix}/share/gimp/help/C/filters/nlfilt.html
-%{prefix}/share/gimp/help/C/filters/noisify.html
-%{prefix}/share/gimp/help/C/filters/normalize.html
-%{prefix}/share/gimp/help/C/filters/nova.html
-%{prefix}/share/gimp/help/C/filters/oilify.html
-%{prefix}/share/gimp/help/C/filters/pagecurl.html
-%{prefix}/share/gimp/help/C/filters/papertile.html
-%{prefix}/share/gimp/help/C/filters/pat.html
-%{prefix}/share/gimp/help/C/filters/pcx.html
-%{prefix}/share/gimp/help/C/filters/pix.html
-%{prefix}/share/gimp/help/C/filters/pixelize.html
-%{prefix}/share/gimp/help/C/filters/plasma.html
-%{prefix}/share/gimp/help/C/filters/plugindetails.html
-%{prefix}/share/gimp/help/C/filters/png.html
-%{prefix}/share/gimp/help/C/filters/pnm.html
-%{prefix}/share/gimp/help/C/filters/polar.html
-%{prefix}/share/gimp/help/C/filters/print.html
-%{prefix}/share/gimp/help/C/filters/ps.html
-%{prefix}/share/gimp/help/C/filters/psd.html
-%{prefix}/share/gimp/help/C/filters/psp.html
-%{prefix}/share/gimp/help/C/filters/randomize.html
-%{prefix}/share/gimp/help/C/filters/rcm.html
-%{prefix}/share/gimp/help/C/filters/repeat_last.html
-%{prefix}/share/gimp/help/C/filters/reshow_last.html
-%{prefix}/share/gimp/help/C/filters/ripple.html
-%{prefix}/share/gimp/help/C/filters/rotate.html
-%{prefix}/share/gimp/help/C/filters/rotators.html
-%{prefix}/share/gimp/help/C/filters/sample_colorize.html
-%{prefix}/share/gimp/help/C/filters/scatter_hsv.html
-%{prefix}/share/gimp/help/C/filters/screenshot.html
-%{prefix}/share/gimp/help/C/filters/script-fu.html
-%{prefix}/share/gimp/help/C/filters/sel2path.html
-%{prefix}/share/gimp/help/C/filters/sel_gauss.html
-%{prefix}/share/gimp/help/C/filters/semiflatten.html
-%{prefix}/share/gimp/help/C/filters/sgi.html
-%{prefix}/share/gimp/help/C/filters/sharpen.html
-%{prefix}/share/gimp/help/C/filters/shift.html
-%{prefix}/share/gimp/help/C/filters/sinus.html
-%{prefix}/share/gimp/help/C/filters/smooth_palette.html
-%{prefix}/share/gimp/help/C/filters/snoise.html
-%{prefix}/share/gimp/help/C/filters/sobel.html
-%{prefix}/share/gimp/help/C/filters/sparkle.html
-%{prefix}/share/gimp/help/C/filters/spheredesigner.html
-%{prefix}/share/gimp/help/C/filters/spread.html
-%{prefix}/share/gimp/help/C/filters/struc.html
-%{prefix}/share/gimp/help/C/filters/sunras.html
-%{prefix}/share/gimp/help/C/filters/tga.html
-%{prefix}/share/gimp/help/C/filters/threshold_alpha.html
-%{prefix}/share/gimp/help/C/filters/tiff.html
-%{prefix}/share/gimp/help/C/filters/tile.html
-%{prefix}/share/gimp/help/C/filters/tileit.html
-%{prefix}/share/gimp/help/C/filters/tiler.html
-%{prefix}/share/gimp/help/C/filters/unsharp.html
-%{prefix}/share/gimp/help/C/filters/url.html
-%{prefix}/share/gimp/help/C/filters/video.html
-%{prefix}/share/gimp/help/C/filters/vinvert.html
-%{prefix}/share/gimp/help/C/filters/vpropagate.html
-%{prefix}/share/gimp/help/C/filters/warp.html
-%{prefix}/share/gimp/help/C/filters/waves.html
-%{prefix}/share/gimp/help/C/filters/webbrowser.html
-%{prefix}/share/gimp/help/C/filters/whirlpinch.html
-%{prefix}/share/gimp/help/C/filters/wind.html
-%{prefix}/share/gimp/help/C/filters/wmf.html
-%{prefix}/share/gimp/help/C/filters/xbm.html
-%{prefix}/share/gimp/help/C/filters/xjt.html
-%{prefix}/share/gimp/help/C/filters/xpm.html
-%{prefix}/share/gimp/help/C/filters/xwd.html
-%{prefix}/share/gimp/help/C/filters/zealouscrop.html
-%{prefix}/share/gimp/help/C/file/close.html
-%{prefix}/share/gimp/help/C/file/index.html
-%{prefix}/share/gimp/help/C/file/last_opened.html
-%{prefix}/share/gimp/help/C/file/quit.html
-%{prefix}/share/gimp/help/C/file/revert.html
-%{prefix}/share/gimp/help/C/contents.html
-%{prefix}/share/gimp/help/C/index.html
-%{prefix}/share/gimp/help/C/welcome.html
-%{prefix}/share/gimp/help/C/modes.html
-%{prefix}/share/gimp/help/images/eek.png
-%{prefix}/share/gimp/help/images/wilber.png
+
 %{prefix}/share/gimp/gimprc
 %{prefix}/share/gimp/gimprc_user
 %{prefix}/share/gimp/gtkrc
@@ -969,32 +509,15 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %{prefix}/share/gimp/gtkrc.forest2
 
 
-%defattr (444, bin, bin, 555)
-%lang(cs)      /usr/share/locale/cs/LC_MESSAGES/gimp.mo
-%lang(da)      /usr/share/locale/da/LC_MESSAGES/gimp.mo
-%lang(de)      /usr/share/locale/de/LC_MESSAGES/gimp.mo
-%lang(fi)      /usr/share/locale/fi/LC_MESSAGES/gimp.mo
-%lang(fr)      /usr/share/locale/fr/LC_MESSAGES/gimp.mo
-%lang(hu)      /usr/share/locale/hu/LC_MESSAGES/gimp.mo
-%lang(it)      /usr/share/locale/it/LC_MESSAGES/gimp.mo
-%lang(ja)      /usr/share/locale/ja/LC_MESSAGES/gimp.mo
-%lang(ko)      /usr/share/locale/ko/LC_MESSAGES/gimp.mo
-%lang(nl)      /usr/share/locale/nl/LC_MESSAGES/gimp.mo
-%lang(no)      /usr/share/locale/no/LC_MESSAGES/gimp.mo
-%lang(pl)      /usr/share/locale/pl/LC_MESSAGES/gimp.mo
-%lang(ru)      /usr/share/locale/ru/LC_MESSAGES/gimp.mo
-%lang(sk)      /usr/share/locale/sk/LC_MESSAGES/gimp.mo
-%lang(sv)      /usr/share/locale/sv/LC_MESSAGES/gimp.mo
-
 %defattr (0555, bin, bin)
 %{prefix}/share/gimp/user_install
 
-%{prefix}/lib/libgimp-%{subver}.so.14.0.0
-%{prefix}/lib/libgimp-%{subver}.so.14
-%{prefix}/lib/libgimpui-%{subver}.so.14.0.0
-%{prefix}/lib/libgimpui-%{subver}.so.14
-%{prefix}/lib/libgck-%{subver}.so.14.0.0
-%{prefix}/lib/libgck-%{subver}.so.14
+%{prefix}/lib/libgimp-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimp-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpui-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpui-%{subver}.so.%{microver}
+%{prefix}/lib/libgck-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgck-%{subver}.so.%{microver}
 
 %{prefix}/bin/gimp
 %{prefix}/bin/scm2scm
@@ -1002,223 +525,6 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %{prefix}/bin/embedxpm
 %{prefix}/bin/gimpdoc
 %{prefix}/bin/xcftopnm
-
-%{prefix}/lib/gimp/%{subver}/plug-ins/dbbrowser
-%{prefix}/lib/gimp/%{subver}/plug-ins/script-fu
-%{prefix}/lib/gimp/%{subver}/plug-ins/PDB
-%{prefix}/lib/gimp/%{subver}/plug-ins/Perl-Server
-%{prefix}/lib/gimp/%{subver}/plug-ins/animate_cells
-%{prefix}/lib/gimp/%{subver}/plug-ins/avi
-%{prefix}/lib/gimp/%{subver}/plug-ins/blowinout.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/border.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/bricks
-%{prefix}/lib/gimp/%{subver}/plug-ins/burst
-%{prefix}/lib/gimp/%{subver}/plug-ins/centerguide
-%{prefix}/lib/gimp/%{subver}/plug-ins/colorhtml
-%{prefix}/lib/gimp/%{subver}/plug-ins/dataurl
-%{prefix}/lib/gimp/%{subver}/plug-ins/ditherize.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/feedback.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/fire
-%{prefix}/lib/gimp/%{subver}/plug-ins/fit-text
-%{prefix}/lib/gimp/%{subver}/plug-ins/font_table
-%{prefix}/lib/gimp/%{subver}/plug-ins/frame_filter
-%{prefix}/lib/gimp/%{subver}/plug-ins/frame_reshuffle
-%{prefix}/lib/gimp/%{subver}/plug-ins/gap-vcr
-%{prefix}/lib/gimp/%{subver}/plug-ins/gimpmagick
-%{prefix}/lib/gimp/%{subver}/plug-ins/glowing_steel
-%{prefix}/lib/gimp/%{subver}/plug-ins/goldenmean
-%{prefix}/lib/gimp/%{subver}/plug-ins/gouge
-%{prefix}/lib/gimp/%{subver}/plug-ins/guide_remove
-%{prefix}/lib/gimp/%{subver}/plug-ins/guidegrid
-%{prefix}/lib/gimp/%{subver}/plug-ins/guides_to_selection
-%{prefix}/lib/gimp/%{subver}/plug-ins/image_tile
-%{prefix}/lib/gimp/%{subver}/plug-ins/innerbevel
-%{prefix}/lib/gimp/%{subver}/plug-ins/layerfuncs
-%{prefix}/lib/gimp/%{subver}/plug-ins/logulator
-%{prefix}/lib/gimp/%{subver}/plug-ins/map_to_gradient
-%{prefix}/lib/gimp/%{subver}/plug-ins/miff
-%{prefix}/lib/gimp/%{subver}/plug-ins/mirrorsplit
-%{prefix}/lib/gimp/%{subver}/plug-ins/parasite-editor
-%{prefix}/lib/gimp/%{subver}/plug-ins/perlcc
-%{prefix}/lib/gimp/%{subver}/plug-ins/perlotine
-%{prefix}/lib/gimp/%{subver}/plug-ins/pixelmap
-%{prefix}/lib/gimp/%{subver}/plug-ins/povray
-%{prefix}/lib/gimp/%{subver}/plug-ins/prep4gif.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/randomart1
-%{prefix}/lib/gimp/%{subver}/plug-ins/randomblends
-%{prefix}/lib/gimp/%{subver}/plug-ins/repdup
-%{prefix}/lib/gimp/%{subver}/plug-ins/roundrectsel
-%{prefix}/lib/gimp/%{subver}/plug-ins/scratches.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/stampify
-%{prefix}/lib/gimp/%{subver}/plug-ins/stamps
-%{prefix}/lib/gimp/%{subver}/plug-ins/terral_text
-%{prefix}/lib/gimp/%{subver}/plug-ins/tex-to-float
-%{prefix}/lib/gimp/%{subver}/plug-ins/triangle
-%{prefix}/lib/gimp/%{subver}/plug-ins/view3d.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/yinyang
-%{prefix}/lib/gimp/%{subver}/plug-ins/webify.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/windify.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/xachlego.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/xachshadow.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/xachvision.pl
-%{prefix}/lib/gimp/%{subver}/plug-ins/AlienMap
-%{prefix}/lib/gimp/%{subver}/plug-ins/AlienMap2
-%{prefix}/lib/gimp/%{subver}/plug-ins/FractalExplorer
-%{prefix}/lib/gimp/%{subver}/plug-ins/Lighting
-%{prefix}/lib/gimp/%{subver}/plug-ins/MapObject
-%{prefix}/lib/gimp/%{subver}/plug-ins/bmp
-%{prefix}/lib/gimp/%{subver}/plug-ins/borderaverage
-%{prefix}/lib/gimp/%{subver}/plug-ins/faxg3
-%{prefix}/lib/gimp/%{subver}/plug-ins/fits
-%{prefix}/lib/gimp/%{subver}/plug-ins/flame
-%{prefix}/lib/gimp/%{subver}/plug-ins/fp
-%{prefix}/lib/gimp/%{subver}/plug-ins/gap_plugins
-%{prefix}/lib/gimp/%{subver}/plug-ins/gap_filter
-%{prefix}/lib/gimp/%{subver}/plug-ins/gap_frontends
-%{prefix}/lib/gimp/%{subver}/plug-ins/gdyntext
-%{prefix}/lib/gimp/%{subver}/plug-ins/gfig
-%{prefix}/lib/gimp/%{subver}/plug-ins/gflare
-%{prefix}/lib/gimp/%{subver}/plug-ins/gfli
-%{prefix}/lib/gimp/%{subver}/plug-ins/gimpressionist
-%{prefix}/lib/gimp/%{subver}/plug-ins/helpbrowser
-%{prefix}/lib/gimp/%{subver}/plug-ins/ifscompose
-%{prefix}/lib/gimp/%{subver}/plug-ins/imagemap
-%{prefix}/lib/gimp/%{subver}/plug-ins/maze
-%{prefix}/lib/gimp/%{subver}/plug-ins/mosaic
-%{prefix}/lib/gimp/%{subver}/plug-ins/pagecurl
-%{prefix}/lib/gimp/%{subver}/plug-ins/print
-%{prefix}/lib/gimp/%{subver}/plug-ins/rcm
-%{prefix}/lib/gimp/%{subver}/plug-ins/sgi
-%{prefix}/lib/gimp/%{subver}/plug-ins/sel2path
-%{prefix}/lib/gimp/%{subver}/plug-ins/sinus
-%{prefix}/lib/gimp/%{subver}/plug-ins/struc
-%{prefix}/lib/gimp/%{subver}/plug-ins/unsharp
-%{prefix}/lib/gimp/%{subver}/plug-ins/webbrowser
-%{prefix}/lib/gimp/%{subver}/plug-ins/xjt
-%{prefix}/lib/gimp/%{subver}/plug-ins/CEL
-%{prefix}/lib/gimp/%{subver}/plug-ins/CML_explorer
-%{prefix}/lib/gimp/%{subver}/plug-ins/align_layers
-%{prefix}/lib/gimp/%{subver}/plug-ins/animationplay
-%{prefix}/lib/gimp/%{subver}/plug-ins/animoptimize
-%{prefix}/lib/gimp/%{subver}/plug-ins/apply_lens
-%{prefix}/lib/gimp/%{subver}/plug-ins/autocrop
-%{prefix}/lib/gimp/%{subver}/plug-ins/autostretch_hsv
-%{prefix}/lib/gimp/%{subver}/plug-ins/blinds
-%{prefix}/lib/gimp/%{subver}/plug-ins/blur
-%{prefix}/lib/gimp/%{subver}/plug-ins/bumpmap
-%{prefix}/lib/gimp/%{subver}/plug-ins/bz2
-%{prefix}/lib/gimp/%{subver}/plug-ins/c_astretch
-%{prefix}/lib/gimp/%{subver}/plug-ins/checkerboard
-%{prefix}/lib/gimp/%{subver}/plug-ins/color_enhance
-%{prefix}/lib/gimp/%{subver}/plug-ins/colorify
-%{prefix}/lib/gimp/%{subver}/plug-ins/colortoalpha
-%{prefix}/lib/gimp/%{subver}/plug-ins/compose
-%{prefix}/lib/gimp/%{subver}/plug-ins/convmatrix
-%{prefix}/lib/gimp/%{subver}/plug-ins/csource
-%{prefix}/lib/gimp/%{subver}/plug-ins/cubism
-%{prefix}/lib/gimp/%{subver}/plug-ins/curve_bend
-%{prefix}/lib/gimp/%{subver}/plug-ins/decompose
-%{prefix}/lib/gimp/%{subver}/plug-ins/deinterlace
-%{prefix}/lib/gimp/%{subver}/plug-ins/depthmerge
-%{prefix}/lib/gimp/%{subver}/plug-ins/despeckle
-%{prefix}/lib/gimp/%{subver}/plug-ins/destripe
-%{prefix}/lib/gimp/%{subver}/plug-ins/diffraction
-%{prefix}/lib/gimp/%{subver}/plug-ins/displace
-%{prefix}/lib/gimp/%{subver}/plug-ins/edge
-%{prefix}/lib/gimp/%{subver}/plug-ins/emboss
-%{prefix}/lib/gimp/%{subver}/plug-ins/engrave
-%{prefix}/lib/gimp/%{subver}/plug-ins/exchange
-%{prefix}/lib/gimp/%{subver}/plug-ins/film
-%{prefix}/lib/gimp/%{subver}/plug-ins/flarefx
-%{prefix}/lib/gimp/%{subver}/plug-ins/fractaltrace
-%{prefix}/lib/gimp/%{subver}/plug-ins/gauss_iir
-%{prefix}/lib/gimp/%{subver}/plug-ins/gauss_rle
-%{prefix}/lib/gimp/%{subver}/plug-ins/gbr
-%{prefix}/lib/gimp/%{subver}/plug-ins/gee
-%{prefix}/lib/gimp/%{subver}/plug-ins/gicon
-%{prefix}/lib/gimp/%{subver}/plug-ins/gif
-%{prefix}/lib/gimp/%{subver}/plug-ins/gifload
-%{prefix}/lib/gimp/%{subver}/plug-ins/glasstile
-%{prefix}/lib/gimp/%{subver}/plug-ins/gpb
-%{prefix}/lib/gimp/%{subver}/plug-ins/gqbist
-%{prefix}/lib/gimp/%{subver}/plug-ins/gradmap
-%{prefix}/lib/gimp/%{subver}/plug-ins/grid
-%{prefix}/lib/gimp/%{subver}/plug-ins/gtm
-%{prefix}/lib/gimp/%{subver}/plug-ins/guillotine
-%{prefix}/lib/gimp/%{subver}/plug-ins/gz
-%{prefix}/lib/gimp/%{subver}/plug-ins/header
-%{prefix}/lib/gimp/%{subver}/plug-ins/hot
-%{prefix}/lib/gimp/%{subver}/plug-ins/hrz
-%{prefix}/lib/gimp/%{subver}/plug-ins/illusion
-%{prefix}/lib/gimp/%{subver}/plug-ins/iwarp
-%{prefix}/lib/gimp/%{subver}/plug-ins/jigsaw
-%{prefix}/lib/gimp/%{subver}/plug-ins/jpeg
-%{prefix}/lib/gimp/%{subver}/plug-ins/laplace
-%{prefix}/lib/gimp/%{subver}/plug-ins/lic
-%{prefix}/lib/gimp/%{subver}/plug-ins/mail
-%{prefix}/lib/gimp/%{subver}/plug-ins/mapcolor
-%{prefix}/lib/gimp/%{subver}/plug-ins/max_rgb
-%{prefix}/lib/gimp/%{subver}/plug-ins/mblur
-%{prefix}/lib/gimp/%{subver}/plug-ins/newsprint
-%{prefix}/lib/gimp/%{subver}/plug-ins/nlfilt
-%{prefix}/lib/gimp/%{subver}/plug-ins/noisify
-%{prefix}/lib/gimp/%{subver}/plug-ins/normalize
-%{prefix}/lib/gimp/%{subver}/plug-ins/nova
-%{prefix}/lib/gimp/%{subver}/plug-ins/oilify
-%{prefix}/lib/gimp/%{subver}/plug-ins/papertile
-%{prefix}/lib/gimp/%{subver}/plug-ins/pat
-%{prefix}/lib/gimp/%{subver}/plug-ins/pcx
-%{prefix}/lib/gimp/%{subver}/plug-ins/pix
-%{prefix}/lib/gimp/%{subver}/plug-ins/pixelize
-%{prefix}/lib/gimp/%{subver}/plug-ins/plasma
-%{prefix}/lib/gimp/%{subver}/plug-ins/plugindetails
-%{prefix}/lib/gimp/%{subver}/plug-ins/png
-%{prefix}/lib/gimp/%{subver}/plug-ins/pnm
-%{prefix}/lib/gimp/%{subver}/plug-ins/polar
-%{prefix}/lib/gimp/%{subver}/plug-ins/ps
-%{prefix}/lib/gimp/%{subver}/plug-ins/psd
-%{prefix}/lib/gimp/%{subver}/plug-ins/psp
-%{prefix}/lib/gimp/%{subver}/plug-ins/randomize
-%{prefix}/lib/gimp/%{subver}/plug-ins/ripple
-%{prefix}/lib/gimp/%{subver}/plug-ins/rotate
-%{prefix}/lib/gimp/%{subver}/plug-ins/sample_colorize
-%{prefix}/lib/gimp/%{subver}/plug-ins/scatter_hsv
-%{prefix}/lib/gimp/%{subver}/plug-ins/screenshot
-%{prefix}/lib/gimp/%{subver}/plug-ins/sel_gauss
-%{prefix}/lib/gimp/%{subver}/plug-ins/semiflatten
-%{prefix}/lib/gimp/%{subver}/plug-ins/sharpen
-%{prefix}/lib/gimp/%{subver}/plug-ins/shift
-%{prefix}/lib/gimp/%{subver}/plug-ins/smooth_palette
-%{prefix}/lib/gimp/%{subver}/plug-ins/snoise
-%{prefix}/lib/gimp/%{subver}/plug-ins/sobel
-%{prefix}/lib/gimp/%{subver}/plug-ins/sparkle
-%{prefix}/lib/gimp/%{subver}/plug-ins/spheredesigner
-%{prefix}/lib/gimp/%{subver}/plug-ins/spread
-%{prefix}/lib/gimp/%{subver}/plug-ins/sunras
-%{prefix}/lib/gimp/%{subver}/plug-ins/tga
-%{prefix}/lib/gimp/%{subver}/plug-ins/threshold_alpha
-%{prefix}/lib/gimp/%{subver}/plug-ins/tiff
-%{prefix}/lib/gimp/%{subver}/plug-ins/tile
-%{prefix}/lib/gimp/%{subver}/plug-ins/tileit
-%{prefix}/lib/gimp/%{subver}/plug-ins/tiler
-%{prefix}/lib/gimp/%{subver}/plug-ins/url
-%{prefix}/lib/gimp/%{subver}/plug-ins/video
-%{prefix}/lib/gimp/%{subver}/plug-ins/vinvert
-%{prefix}/lib/gimp/%{subver}/plug-ins/vpropagate
-%{prefix}/lib/gimp/%{subver}/plug-ins/warp
-%{prefix}/lib/gimp/%{subver}/plug-ins/waves
-%{prefix}/lib/gimp/%{subver}/plug-ins/whirlpinch
-%{prefix}/lib/gimp/%{subver}/plug-ins/wind
-%{prefix}/lib/gimp/%{subver}/plug-ins/wmf
-%{prefix}/lib/gimp/%{subver}/plug-ins/xbm
-%{prefix}/lib/gimp/%{subver}/plug-ins/xpm
-%{prefix}/lib/gimp/%{subver}/plug-ins/xwd
-%{prefix}/lib/gimp/%{subver}/plug-ins/zealouscrop
-
-%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.so
-%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_triangle.so
-%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_water.so
-%{prefix}/lib/gimp/%{subver}/modules/libcdisplay_gamma.so
 
 %defattr (0444, bin, man)
 /usr/man/man1/gimp.1.gz
@@ -1242,7 +548,6 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 %{prefix}/lib/libgck.la
 %{prefix}/lib/libgck.a
 %{prefix}/lib/libmegawidget.a
-%{prefix}/lib/libgpc.a
 
 %{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.la
 %{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.a
@@ -1294,11 +599,16 @@ find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" 
 
 %defattr (0444, bin, man, 0555)
 %{prefix}/man/man1/gimptool.1.gz
-%{prefix}/man/man3/gpc.3.gz
+
+%files perl -f gimp-perl-files
 
 
 %changelog
+* Wed Jan 19 2000 Gregory McLean <gregm@comstar.net>
+- Version 1.1.15
+
 * Wed Dec 22 1999 Gregory McLean <gregm@comstar.net>
 - Version 1.1.14
+- Added some auto %files section generation scriptlets
 
 
