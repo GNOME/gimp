@@ -1,3 +1,24 @@
+2004-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_proc_args_check): changed
+	warnings to include the invalid menu path. Added check that makes
+	sure menu paths are either "<Prefix>" or "<Prefix>/foo" but *not*
+	"<Prefix>foo".
+
+	* app/actions/plug-in-actions.c: added function
+	plug_in_actions_check_translation() which validates both the
+	original and translated menu paths and spits detailed error
+	messages if any of them is broken. Made action creation simpler
+	(?) and more robust.
+
+	* app/menus/plug-in-menus.c: argh, the translated menu path must
+	be a sorting criteria *only*. Fixed the whole stuff to always use
+	the original menu path because translation is done entirely by
+	plug-in-actions.c. Fixes bad crashes for all locales. Added
+	boolean return value to plug_in_menus_build_path() and don't try
+	to create the menu item in an invalid location if creating the
+	submenus failed.
+
 2004-05-14  Sven Neumann  <sven@gimp.org>
 
 	* app/menus/file-dialog-menu.c: check if the file procedure

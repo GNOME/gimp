@@ -39,15 +39,24 @@
 #include "gimp-intl.h"
 
 
+typedef struct _PlugInMenuEntry PlugInMenuEntry;
+
+struct _PlugInMenuEntry
+{
+  PlugInProcDef *proc_def;
+  const gchar   *menu_path;
+};
+
+
 /*  local function prototypes  */
 
-static gboolean plug_in_menus_tree_traverse (gchar         *menu_path,
-                                             PlugInProcDef *proc_def,
-                                             GimpUIManager *manager);
-static void     plug_in_menus_build_path    (GimpUIManager *manager,
-                                             const gchar   *ui_path,
-                                             guint          merge_id,
-                                             const gchar   *path);
+static gboolean plug_in_menus_tree_traverse (gpointer         key,
+                                             PlugInMenuEntry *entry,
+                                             GimpUIManager   *manager);
+static gboolean plug_in_menus_build_path    (GimpUIManager   *manager,
+                                             const gchar     *ui_path,
+                                             guint            merge_id,
+                                             const gchar     *menu_path);
 
 
 /*  public functions  */
@@ -114,7 +123,7 @@ plug_in_menus_setup (GimpUIManager *manager,
   g_return_if_fail (ui_path != NULL);
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
-                                  g_free, NULL);
+                                  g_free, g_free);
 
   for (list = manager->gimp->plug_in_proc_defs;
        list;
@@ -138,10 +147,14 @@ plug_in_menus_setup (GimpUIManager *manager,
                    (! strcmp (ui_path, "/image-menubar") ||
                     ! strcmp (ui_path, "/image-popup"))))
                 {
-                  const gchar *progname;
-                  const gchar *locale_domain;
-                  gchar       *stripped;
-                  gchar       *key;
+                  PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
+                  const gchar     *progname;
+                  const gchar     *locale_domain;
+                  gchar           *stripped;
+                  gchar           *key;
+
+                  entry->proc_def  = proc_def;
+                  entry->menu_path = path->data;
 
                   progname = plug_in_proc_def_get_progname (proc_def);
 
@@ -159,7 +172,7 @@ plug_in_menus_setup (GimpUIManager *manager,
 
                   g_free (stripped);
 
-                  g_tree_insert (menu_entries, key, proc_def);
+                  g_tree_insert (menu_entries, key, entry);
                 }
             }
         }
@@ -183,8 +196,8 @@ plug_in_menus_add_proc (GimpUIManager *manager,
                         const gchar   *menu_path)
 {
   gchar *path;
-  gchar *action_path;
   gchar *merge_key;
+  gchar *action_path;
   guint  merge_id;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
@@ -196,6 +209,13 @@ plug_in_menus_add_proc (GimpUIManager *manager,
   if (! proc_def->menu_label)
     {
       gchar *p = strrchr (path, '/');
+
+      if (! p)
+        {
+          g_free (path);
+          return;
+        }
+
       *p = '\0';
     }
 
@@ -213,12 +233,23 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
   g_free (merge_key);
 
-  plug_in_menus_build_path (manager, ui_path, merge_id, path);
+  if (strchr (path, '/'))
+    {
+      if (! plug_in_menus_build_path (manager, ui_path, merge_id, path))
+        {
+          g_free (path);
+          return;
+        }
 
-  action_path = g_strdup_printf ("%s%s", ui_path, strchr (path, '/'));
+      action_path = g_strdup_printf ("%s%s", ui_path, strchr (path, '/'));
+    }
+  else
+    {
+      action_path = g_strdup (ui_path);
+    }
 
 #if 0
-  g_print ("adding UI for '%s' (@ %s)\n",
+  g_print ("adding menu item for '%s' (@ %s)\n",
            proc_def->db_info.name, action_path);
 #endif
 
@@ -256,66 +287,69 @@ plug_in_menus_remove_proc (GimpUIManager *manager,
 /*  private functions  */
 
 static gboolean
-plug_in_menus_tree_traverse (gchar         *menu_path,
-                             PlugInProcDef *proc_def,
-                             GimpUIManager *manager)
+plug_in_menus_tree_traverse (gpointer         key,
+                             PlugInMenuEntry *entry,
+                             GimpUIManager   *manager)
 {
   const gchar *ui_path = g_object_get_data (G_OBJECT (manager), "ui-path");
 
-  if (proc_def->menu_label)
-    {
-      gchar *p = strrchr (menu_path, '/');
-      *p = '\0';
-    }
-
-  plug_in_menus_add_proc (manager, ui_path, proc_def, menu_path);
+  plug_in_menus_add_proc (manager, ui_path, entry->proc_def, entry->menu_path);
 
   return FALSE;
 }
 
-static void
+static gboolean
 plug_in_menus_build_path (GimpUIManager *manager,
                           const gchar   *ui_path,
                           guint          merge_id,
-                          const gchar   *path)
+                          const gchar   *menu_path)
 {
-  gchar *action_path;
+  gchar    *action_path;
+  gboolean  retval = TRUE;
 
-  action_path = g_strdup_printf ("%s%s", ui_path, strchr (path, '/'));
+  if (! strchr (menu_path, '/'))
+    return TRUE;
+
+  action_path = g_strdup_printf ("%s%s", ui_path, strchr (menu_path, '/'));
 
   if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), action_path))
     {
-      gchar *base_path = g_strdup (path);
+      gchar *parent_menu_path = g_strdup (menu_path);
       gchar *p;
 
-      p = strrchr (base_path, '/');
+      p = strrchr (parent_menu_path, '/');
+      *p = '\0';
 
-      if (p)
+      if (plug_in_menus_build_path (manager, ui_path, merge_id,
+                                    parent_menu_path))
         {
-          gchar *name;
+          gchar *parent_action_path = action_path; /* no strdup() needed */
+          gchar *menu_item_name;
 
+          p = strrchr (parent_action_path, '/');
           *p = '\0';
 
-          plug_in_menus_build_path (manager, ui_path, merge_id, base_path);
-
-          p = strrchr (action_path, '/');
-          *p = '\0';
+          menu_item_name = strrchr (menu_path, '/') + 1;
 
 #if 0
-          g_print ("adding UI for '%s' (@ %s)\n",
-                   path, action_path);
+          g_print ("adding menu '%s' at path '%s' for action '%s'\n",
+                   menu_item_name, action_path, menu_path);
 #endif
 
-          name = strrchr (path, '/') + 1;
-
           gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                 action_path, name, path,
+                                 parent_action_path, menu_item_name, menu_path,
                                  GTK_UI_MANAGER_MENU,
                                  FALSE);
         }
+      else
+        {
+          retval = FALSE;
+        }
 
-      g_free (base_path);
+      g_free (parent_menu_path);
     }
 
   g_free (action_path);
+
+  return retval;
 }

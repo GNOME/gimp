@@ -77,7 +77,7 @@ plug_in_params_to_args (GPParam  *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint32, count);
-	      memcpy (args[i].value.pdb_pointer, 
+	      memcpy (args[i].value.pdb_pointer,
 		      params[i].data.d_int32array, count * 4);
 	    }
 	  else
@@ -90,7 +90,7 @@ plug_in_params_to_args (GPParam  *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint16, count);
-	      memcpy (args[i].value.pdb_pointer, 
+	      memcpy (args[i].value.pdb_pointer,
 		      params[i].data.d_int16array, count * 2);
 	    }
 	  else
@@ -103,7 +103,7 @@ plug_in_params_to_args (GPParam  *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint8, count);
-	      memcpy (args[i].value.pdb_pointer, 
+	      memcpy (args[i].value.pdb_pointer,
 		      params[i].data.d_int8array, count);
 	    }
 	  else
@@ -116,7 +116,7 @@ plug_in_params_to_args (GPParam  *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gdouble, count);
-	      memcpy (args[i].value.pdb_pointer, 
+	      memcpy (args[i].value.pdb_pointer,
 		      params[i].data.d_floatarray, count * 8);
 	    }
 	  else
@@ -127,7 +127,7 @@ plug_in_params_to_args (GPParam  *params,
 	case GIMP_PDB_STRINGARRAY:
 	  if (full_copy)
 	    {
-	      args[i].value.pdb_pointer = g_new (gchar *, 
+	      args[i].value.pdb_pointer = g_new (gchar *,
 						 args[i-1].value.pdb_int);
 	      stringarray = args[i].value.pdb_pointer;
 
@@ -484,6 +484,8 @@ plug_in_proc_args_check (const gchar *plug_in_name,
                          guint32      n_return_vals,
                          GError     **error)
 {
+  gchar *p;
+
   g_return_val_if_fail (plug_in_name != NULL, FALSE);
   g_return_val_if_fail (plug_in_prog != NULL, FALSE);
   g_return_val_if_fail (procedure_name != NULL, FALSE);
@@ -571,14 +573,32 @@ plug_in_proc_args_check (const gchar *plug_in_name,
   else
     {
       g_set_error (error, 0, 0,
-                   "Plug-In \"%s\"\n(%s)\n\n"
+                   "Plug-In \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\" "
-                   "in an invalid menu location.\n"
+                   "in the invalid menu location \"%s\".\n"
                    "Use either \"<Toolbox>\", \"<Image>\", "
                    "\"<Load>\", or \"<Save>\".",
                    gimp_filename_to_utf8 (plug_in_name),
                    gimp_filename_to_utf8 (plug_in_prog),
-                   procedure_name);
+                   procedure_name,
+                   menu_path);
+      return FALSE;
+    }
+
+  p = strchr (menu_path, '>') + 1;
+
+  if (*p != '/' && *p != '\0')
+    {
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n"
+                   "attempted to install procedure \"%s\"\n"
+                   "in the invalid menu location \"%s\".\n"
+                   "The menu path must look like either \"<Prefix>\" "
+                   "or \"<Prefix>/path/to/item\".",
+                   gimp_filename_to_utf8 (plug_in_name),
+                   gimp_filename_to_utf8 (plug_in_prog),
+                   procedure_name,
+                   menu_path);
       return FALSE;
     }
 

@@ -48,9 +48,11 @@
 
 /*  local function prototypes  */
 
-static void   plug_in_actions_build_path (GimpActionGroup *group,
-                                          const gchar     *path_original,
-                                          const gchar     *path_translated);
+static gboolean plug_in_actions_check_translation (const gchar     *original,
+                                                   const gchar     *translated);
+static void     plug_in_actions_build_path        (GimpActionGroup *group,
+                                                   const gchar     *original,
+                                                   const gchar     *translated);
 
 
 /*  private variables  */
@@ -251,13 +253,13 @@ void
 plug_in_actions_add_proc (GimpActionGroup *group,
                           PlugInProcDef   *proc_def)
 {
-  const gchar *progname;
-  const gchar *locale_domain;
-  const gchar *help_domain;
-  gchar       *path_original;
-  gchar       *path_translated;
-  gchar       *help_id;
-  gchar       *p1, *p2;
+  GimpPlugInActionEntry  entry;
+  const gchar           *progname;
+  const gchar           *locale_domain;
+  const gchar           *help_domain;
+  const gchar           *label_translated;
+  gchar                 *path_original    = NULL;
+  gchar                 *path_translated  = NULL;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (proc_def != NULL);
@@ -267,73 +269,70 @@ plug_in_actions_add_proc (GimpActionGroup *group,
   locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
   help_domain   = plug_ins_help_domain (group->gimp, progname, NULL);
 
-  help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
-
   if (proc_def->menu_label)
     {
-      path_original   = g_strdup (proc_def->menu_label);
-      path_translated = g_strdup (dgettext (locale_domain, path_original));
-
-      p1 = path_original;
-      p2 = path_translated;
+      label_translated = dgettext (locale_domain, proc_def->menu_label);
     }
   else
     {
-      path_original   = g_strdup (proc_def->menu_paths->data);
-      path_translated = g_strdup (dgettext (locale_domain, path_original));
+      gchar *p1, *p2;
+
+      path_original   = proc_def->menu_paths->data;
+      path_translated = dgettext (locale_domain, path_original);
+
+      if (! plug_in_actions_check_translation (path_original, path_translated))
+        return;
+
+      path_original   = g_strdup (path_original);
+      path_translated = g_strdup (path_translated);
 
       p1 = strrchr (path_original, '/');
       p2 = strrchr (path_translated, '/');
+
+      *p1 = '\0';
+      *p2 = '\0';
+
+      label_translated = p2 + 1;
     }
 
-  if (p1 && p2)
-    {
-      GimpPlugInActionEntry  entry;
-      gchar                 *label;
-
-      if (proc_def->menu_label)
-        label = proc_def->menu_label;
-      else
-        label = p2 + 1;
-
-      entry.name        = proc_def->db_info.name;
-      entry.stock_id    = NULL;
-      entry.label       = label;
-      entry.accelerator = NULL;
-      entry.tooltip     = NULL;
-      entry.proc_def    = proc_def;
-      entry.help_id     = help_id;
+  entry.name        = proc_def->db_info.name;
+  entry.stock_id    = NULL;
+  entry.label       = label_translated;
+  entry.accelerator = NULL;
+  entry.tooltip     = NULL;
+  entry.proc_def    = proc_def;
+  entry.help_id     = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
 #if 0
-      g_print ("adding plug-in action '%s' (%s)\n",
-               proc_def->db_info.name, label);
+  g_print ("adding plug-in action '%s' (%s)\n",
+           proc_def->db_info.name, label_translated);
 #endif
 
-      gimp_action_group_add_plug_in_actions (group, &entry, 1,
-                                             G_CALLBACK (plug_in_run_cmd_callback));
+  gimp_action_group_add_plug_in_actions (group, &entry, 1,
+                                         G_CALLBACK (plug_in_run_cmd_callback));
 
-      if (proc_def->menu_label)
+  g_free ((gchar *) entry.help_id);
+
+  if (proc_def->menu_label)
+    {
+      GList *list;
+
+      for (list = proc_def->menu_paths; list; list = g_list_next (list))
         {
-          GList *list;
+          const gchar *original   = list->data;
+          const gchar *translated = dgettext (locale_domain, original);
 
-          for (list = proc_def->menu_paths; list; list = g_list_next (list))
-            plug_in_actions_build_path (group,
-                                        list->data,
-                                        dgettext (locale_domain, list->data));
-        }
-      else
-        {
-          *p1 = '\0';
-          *p2 = '\0';
-
-          plug_in_actions_build_path (group, path_original, path_translated);
+          if (plug_in_actions_check_translation (original, translated))
+            plug_in_actions_build_path (group, original, translated);
         }
     }
+  else
+    {
+      plug_in_actions_build_path (group, path_original, path_translated);
 
-  g_free (path_original);
-  g_free (path_translated);
-
-  g_free (help_id);
+      g_free (path_original);
+      g_free (path_translated);
+    }
 }
 
 void
@@ -361,6 +360,64 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
 
 
 /*  private functions  */
+
+static gboolean
+plug_in_actions_check_translation (const gchar *original,
+                                   const gchar *translated)
+{
+  const gchar *p1;
+  const gchar *p2;
+
+  /*  first check if <Prefix> is present and identical in both strings  */
+  p1 = strchr (original, '>');
+  p2 = strchr (translated, '>');
+
+  if (!p1 || !p2                           ||
+      (p1 - original) != (p2 - translated) ||
+      strncmp (original, translated, p1 - original))
+    {
+      g_printerr ("bad translation \"%s\"\n"
+                  "for menu path   \"%s\"\n"
+                  "(<Prefix> must not be translated)\n\n",
+                  translated, original);
+      return FALSE;
+    }
+
+  p1++;
+  p2++;
+
+  /*  then check if either a '/' or nothing follows in *both* strings  */
+  if (! ((*p1 == '/' && *p2 == '/') ||
+         (*p1 == '\0' && *p2 == '\0')))
+    {
+      g_printerr ("bad translation \"%s\"\n"
+                  "for menu path   \"%s\"\n"
+                  "(<Prefix> must be followed by either nothing or '/')\n\n",
+                  translated, original);
+      return FALSE;
+    }
+
+  /*  then check the number of slashes in the remaining string  */
+  while (p1 && p2)
+    {
+      p1 = strchr (p1, '/');
+      p2 = strchr (p2, '/');
+
+      if (p1) p1++;
+      if (p2) p2++;
+    }
+
+  if (p1 || p2)
+    {
+      g_printerr ("bad translation \"%s\"\n"
+                  "for menu path   \"%s\"\n"
+                  "(number of '/' must be the same)\n\n",
+                  translated, original);
+      return FALSE;
+    }
+
+  return TRUE;
+}
 
 static void
 plug_in_actions_build_path (GimpActionGroup *group,
