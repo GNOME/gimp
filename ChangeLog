@@ -1,3 +1,7 @@
+Sat Jan 30 23:47:37 1999  Tor Lillqvist  <tml@iki.fi>
+
+	* app/menus.c (menus_init_mru): Don't g_snprintf into a NULL pointer.
+
 Wed Jan 27 21:52:43 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/scale.c: oops - should use the image resolution, not the

@@ -497,7 +497,8 @@ menus_init_mru (void)
       last_opened_entries[i].item_type = NULL;
 
       g_snprintf (path, MRU_MENU_ENTRY_SIZE, _("/File/MRU%02d"), i + 1);
-      g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
+      if (accelerator != NULL)
+	g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
     }
 
   gtk_item_factory_create_items_ac (toolbox_factory, last_opened_size,
