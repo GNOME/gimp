@@ -1,3 +1,9 @@
+2005-02-16  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c: Added constants MIN-IMAGE-SIZE,
+	MAX-IMAGE-SIZE, MIN-RESOLUTION, and MAX-RESOLUTION for use in Script-Fu
+	scripts. See comment #4 in bug #167529.
+
 2005-02-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainercombobox.c

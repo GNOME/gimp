@@ -428,6 +428,12 @@ init_constants (void)
   setvar (cintern ("BLUE-LUT"),  flocons (GIMP_HISTOGRAM_BLUE),  NIL);
   setvar (cintern ("ALPHA-LUT"), flocons (GIMP_HISTOGRAM_ALPHA), NIL);
 
+  /* Useful values from libgimpbase/gimplimits.h */
+  setvar (cintern ("MIN-IMAGE-SIZE"), flocons (GIMP_MIN_IMAGE_SIZE), NIL);
+  setvar (cintern ("MAX-IMAGE-SIZE"), flocons (GIMP_MAX_IMAGE_SIZE), NIL);
+  setvar (cintern ("MIN-RESOLUTION"), flocons (GIMP_MIN_RESOLUTION), NIL);
+  setvar (cintern ("MAX-RESOLUTION"), flocons (GIMP_MAX_RESOLUTION), NIL);
+
   /* Useful misc stuff */
   setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
   setvar (cintern ("FALSE"),          flocons (FALSE), NIL);
