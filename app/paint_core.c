@@ -592,11 +592,7 @@ paint_core_init (PaintCore    *paint_core,
 		     NULL);
 
   paint_core->spacing = (double) gimp_brush_get_spacing (brush) / 100.0;
-/*  paint_core->spacing =
-    (double) MAXIMUM (brush->mask->width, brush->mask->height) *
-    ((double) gimp_brush_get_spacing (brush) / 100.0);
-  if (paint_core->spacing < 1.0)
-    paint_core->spacing = 1.0; */
+
   paint_core->brush = brush;
 
   /*  free the block structures  */
@@ -718,15 +714,16 @@ paint_core_interpolate (PaintCore    *paint_core,
   dxtilt = paint_core->curxtilt - paint_core->lastxtilt;
   dytilt = paint_core->curytilt - paint_core->lastytilt;
 
+/* return if there has been no motion */
   if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
     return;
 
+/* calculate the distance traveled in the coordinate space of the brush */
   mag = vector2d_magnitude (&(paint_core->brush->x_axis));
   xd = vector2d_dot_product(&delta, &(paint_core->brush->x_axis)) / (mag*mag);
 
   mag = vector2d_magnitude (&(paint_core->brush->y_axis));
-  yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) /
-    SQR(vector2d_magnitude(&(paint_core->brush->y_axis)));
+  yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) / (mag*mag);
 
   dist = .5 * sqrt (xd*xd + yd*yd); 
 
@@ -1055,7 +1052,7 @@ paint_core_subsample_mask (MaskBuf *mask,
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
-		  new_val = *d + ((*m * *k++) >> 8);
+		  new_val = *d + ((*m * *k++) /255);
 		  *d++ = MINIMUM (new_val, 255);
 		}
 	    }

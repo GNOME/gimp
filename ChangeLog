@@ -1,3 +1,8 @@
+Sun Jul 25 23:37:48 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* paint_core.c: fixed longstanding roundoff error in
+	paint_core_subsample_mask.  A couple of minor code cleanups.
+
 1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/errorconsole.[ch]: forgot to checkin this one...
