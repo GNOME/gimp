@@ -1,3 +1,10 @@
+2003-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/animationplay.c (is_ms_tag): more
+	s/toupper/g_ascii_toupper/.
+
+	* plug-ins/common/gee_zoom.c: #include <stdlib.h> for abs().
+
 2003-11-26  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Quieten a couple of harmless

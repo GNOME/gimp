@@ -1493,8 +1493,9 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   while ((offset<length) && (str[offset] == ' '))
     offset++;
 
-  if ((length-offset <= 2) ||
-      (toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
+  if (length-offset <= 2                       ||
+      g_ascii_toupper (str[offset])     != 'M' ||
+      g_ascii_toupper (str[offset + 1]) != 'S')
     return 0;
 
   offset += 2;

@@ -26,8 +26,10 @@
  * Removed possible div-by-0 errors, took the plugin out
  * of hiding (guess we need a new easter-egg for GIMP 1.2!)
  */
+
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
