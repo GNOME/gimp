@@ -20,11 +20,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * BUGS:
- *     Is not undoable when operating on indexed images - GIMP's fault.
- */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -37,19 +32,19 @@
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void   query              (void);
+static void   run                (gchar         *name,
+                                  gint           nparams,
+                                  GimpParam     *param,
+                                  gint          *nreturn_vals,
+                                  GimpParam    **return_vals);
 
-static void      vinvert            (GimpDrawable *drawable);
-static void      indexed_vinvert    (gint32        image_ID);
-static void      vinvert_render_row (guchar     *src,
-				     guchar     *dest,
-				     gint        row_width,
-				     const gint  bpp);
+static void   vinvert            (GimpDrawable  *drawable);
+static void   indexed_vinvert    (gint32         image_ID);
+static void   vinvert_render_row (guchar        *src,
+                                  guchar        *dest,
+                                  gint           row_width,
+                                  gint           bpp);
 
 
 static GimpRunMode run_mode;
@@ -159,7 +154,7 @@ indexed_vinvert (gint32 image_ID)
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
-  if (cmap==NULL)
+  if (cmap == NULL)
     {
       g_print ("vinvert: cmap was NULL!  Quitting...\n");
       gimp_quit ();
@@ -192,12 +187,12 @@ vinvert_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 }
 
 static void
-vinvert_render_row (guchar     *src,
-		    guchar     *dest,
-		    gint       col,       /* row width in pixels */
-		    const gint bpp)
+vinvert_render_row (guchar *src,
+		    guchar *dest,
+		    gint    row_width, /* in pixels */
+		    gint    bpp)
 {
-  while (col--)
+  while (row_width--)
     {
       vinvert_func (src, dest, bpp, NULL);
       src += bpp;
@@ -210,4 +205,3 @@ vinvert (GimpDrawable *drawable)
 {
   gimp_rgn_iterate2 (drawable, run_mode, vinvert_func, NULL);
 }
-

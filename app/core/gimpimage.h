@@ -23,8 +23,6 @@
 #include "gimpviewable.h"
 
 
-#define COLORMAP_SIZE 768
-
 #define GIMP_IMAGE_TYPE_IS_RGB(t)          ((t) == GIMP_RGB_IMAGE ||         \
 				            (t) == GIMP_RGBA_IMAGE)
 #define GIMP_IMAGE_TYPE_IS_GRAY(t)         ((t) == GIMP_GRAY_IMAGE ||        \
@@ -255,10 +253,6 @@ gboolean        gimp_image_is_empty              (const GimpImage    *gimage);
 GimpLayer     * gimp_image_floating_sel          (const GimpImage    *gimage);
 void       gimp_image_floating_selection_changed (GimpImage          *gimage);
 
-guchar        * gimp_image_get_colormap          (const GimpImage    *gimage);
-void		gimp_image_colormap_changed      (GimpImage          *gimage,
-                                                  gint                col);
-
 GimpChannel   * gimp_image_get_mask              (const GimpImage    *gimage);
 void            gimp_image_mask_changed          (GimpImage          *gimage);
 
@@ -286,6 +280,8 @@ void            gimp_image_update                (GimpImage          *gimage,
                                                   gint                height);
 void            gimp_image_update_guide          (GimpImage          *gimage,
                                                   GimpGuide          *guide);
+void		gimp_image_colormap_changed      (GimpImage          *gimage,
+                                                  gint                col);
 void            gimp_image_selection_control     (GimpImage          *gimage,
                                                   GimpSelectionControl  control);
 void            gimp_image_qmask_changed         (GimpImage          *gimage);

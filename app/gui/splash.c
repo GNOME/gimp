@@ -18,15 +18,13 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
  
+#include "libgimpbase/gimpbase.h"
+
 #include "gui-types.h"
 
 #include "splash.h"
-
-#include "libgimpbase/gimpbase.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -47,6 +45,7 @@ static void  splash_map (void);
 void
 splash_create (gboolean show_image)
 {
+  GtkWidget *frame;
   GtkWidget *vbox;
   GdkPixbuf *pixbuf = NULL;
 
@@ -68,8 +67,13 @@ splash_create (gboolean show_image)
                     G_CALLBACK (splash_map),
                     NULL);
 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (win_initstatus), frame);
+  gtk_widget_show (frame);
+
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   if (show_image)

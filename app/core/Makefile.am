@@ -83,6 +83,8 @@ libappcore_a_sources = \
 	gimpimage.h			\
 	gimpimage-colorhash.c		\
 	gimpimage-colorhash.h		\
+	gimpimage-colormap.c		\
+	gimpimage-colormap.h		\
 	gimpimage-contiguous-region.c	\
 	gimpimage-contiguous-region.h	\
 	gimpimage-convert.c		\

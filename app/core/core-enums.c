@@ -461,6 +461,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_IMAGE_RESOLUTION, N_("Resolution Change"), "image-resolution" },
   { GIMP_UNDO_IMAGE_QMASK, N_("QuickMask"), "image-qmask" },
   { GIMP_UNDO_IMAGE_GUIDE, N_("Guide"), "image-guide" },
+  { GIMP_UNDO_IMAGE_COLORMAP, N_("Change Indexed Palette"), "image-colormap" },
   { GIMP_UNDO_MASK, N_("Selection Mask"), "mask" },
   { GIMP_UNDO_ITEM_RENAME, N_("Rename Item"), "item-rename" },
   { GIMP_UNDO_DRAWABLE_VISIBILITY, N_("Drawable Visibility"), "drawable-visibility" },

@@ -41,6 +41,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
+#include "gimpimage-colormap.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
@@ -631,7 +632,7 @@ gimp_image_get_memsize (GimpObject *object)
   gimage = GIMP_IMAGE (object);
 
   if (gimage->cmap)
-    memsize += COLORMAP_SIZE;
+    memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
   if (gimage->shadow)
     memsize += tile_manager_get_memsize (gimage->shadow);
@@ -1081,7 +1082,7 @@ gimp_image_new (Gimp              *gimp,
     case GIMP_INDEXED:
       /* always allocate 256 colors for the colormap */
       gimage->num_cols = 0;
-      gimage->cmap     = (guchar *) g_malloc0 (COLORMAP_SIZE);
+      gimage->cmap     = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
       break;
     default:
       break;
@@ -1380,25 +1381,6 @@ gimp_image_floating_selection_changed (GimpImage *gimage)
   g_signal_emit (gimage, gimp_image_signals[FLOATING_SELECTION_CHANGED], 0);
 }
 
-guchar *
-gimp_image_get_colormap (const GimpImage *gimage)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  return gimage->cmap;
-}
-
-void
-gimp_image_colormap_changed (GimpImage *gimage, 
-			     gint       col)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (col < gimage->num_cols);
-
-  g_signal_emit (gimage, gimp_image_signals[COLORMAP_CHANGED], 0,
-		 col);
-}
-
 GimpChannel *
 gimp_image_get_mask (const GimpImage *gimage)
 {
@@ -1558,6 +1540,17 @@ gimp_image_update_guide (GimpImage *gimage,
   g_return_if_fail (guide != NULL);
 
   g_signal_emit (gimage, gimp_image_signals[UPDATE_GUIDE], 0, guide);
+}
+
+void
+gimp_image_colormap_changed (GimpImage *gimage, 
+			     gint       col)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (col >= -1 && col < gimage->num_cols);
+
+  g_signal_emit (gimage, gimp_image_signals[COLORMAP_CHANGED], 0,
+		 col);
 }
 
 void

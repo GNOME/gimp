@@ -28,6 +28,7 @@
 #include "gui-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 
 #include "widgets/gimpcolormapeditor.h"
 
@@ -39,10 +40,10 @@
 
 /*  local function prototypes  */
 
-static void   colormap_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-                                                       const GimpRGB      *color,
-                                                       ColorNotebookState  state,
-                                                       gpointer            data);
+static void  colormap_editor_color_notebook_callback (ColorNotebook      *cnb,
+                                                      const GimpRGB      *color,
+                                                      ColorNotebookState  state,
+                                                      gpointer            data);
 
 
 /*  public functions  */
@@ -58,15 +59,17 @@ colormap_editor_add_color_cmd_callback (GtkWidget *widget,
   editor = GIMP_COLORMAP_EDITOR (data);
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
-  if (! gimage)
-    return;
+  if (gimage && gimage->num_cols < 256)
+    {
+      GimpRGB color;
 
-  memcpy (&gimage->cmap[gimage->num_cols * 3],
-	  &gimage->cmap[editor->col_index * 3],
-	  3);
-  gimage->num_cols++;
+      gimp_rgb_set_uchar (&color,
+                          gimage->cmap[editor->col_index * 3],
+                          gimage->cmap[editor->col_index * 3 + 1],
+                          gimage->cmap[editor->col_index * 3 + 2]);
 
-  gimp_image_colormap_changed (gimage, -1);
+      gimp_image_add_colormap_entry (gimage, &color);
+    }
 }
 
 void
@@ -130,16 +133,13 @@ colormap_editor_color_notebook_callback (ColorNotebook      *color_notebook,
     {
     case COLOR_NOTEBOOK_UPDATE:
       break;
-    case COLOR_NOTEBOOK_OK:
-      gimp_rgb_get_uchar (color,
-			  &gimage->cmap[editor->col_index * 3 + 0],
-			  &gimage->cmap[editor->col_index * 3 + 1],
-			  &gimage->cmap[editor->col_index * 3 + 2]);
 
-      gimp_image_colormap_changed (gimage, editor->col_index);
+    case COLOR_NOTEBOOK_OK:
+      gimp_image_set_colormap_entry (gimage, editor->col_index, color, TRUE);
       gimp_image_flush (gimage);
       /* Fall through */
     case COLOR_NOTEBOOK_CANCEL:
       color_notebook_hide (editor->color_notebook);
+      break;
     }
 }

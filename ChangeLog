@@ -1,3 +1,37 @@
+2003-03-18  Michael Natterer  <mitch@gimp.org>
+
+	Added an API for image colormap manupulation and made colormap
+	changes undoable (fixes bug #25963).
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-colormap.[ch]: new files implementing
+	colormap getters/setters. The setters push undos using the
+	new function below.
+
+	* app/core/core-enums.[ch]: added GIMP_UNDO_IMAGE_COLORMAP.
+
+	* app/core/gimpimage-undo-push.[ch]: added
+	gimp_image_undo_push_image_colormap(). Use GimpItemUndo even more
+	often. Cleanup.
+
+	* app/core/gimpimage.[ch]: removed gimp_image_get_colormap() here.
+
+	* app/core/gimpimage-convert.c
+	* app/gui/colormap-editor-commands.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/image.pdb: use the new API.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+	* plug-ins/common/vinvert.c: removed the comment about the bug,
+	cosmetic cleanup.
+
+	Unrelated:
+
+	* app/gui/splash.c: added a frame around the splash. Please eek
+	if it doesn't please you.
+
 2003-03-17  Sven Neumann  <sven@gimp.org>
 
 	* data/images/gimp_splash.png: new splash thanks to Jimmac.

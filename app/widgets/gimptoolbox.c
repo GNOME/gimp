@@ -31,6 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
@@ -862,10 +863,10 @@ toolbox_drop_drawable (GtkWidget    *widget,
   gimp_image_undo_disable (new_gimage);
 
   if (type == GIMP_INDEXED) /* copy the colormap */
-    {
-      new_gimage->num_cols = gimage->num_cols;
-      memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);
-    }
+    gimp_image_set_colormap (new_gimage,
+                             gimp_image_get_colormap (gimage),
+                             gimp_image_get_colormap_size (gimage),
+                             FALSE);
 
   gimp_image_set_resolution (new_gimage,
 			     gimage->xresolution, gimage->yresolution);

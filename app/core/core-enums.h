@@ -360,6 +360,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Resolution Change"         >*/
   GIMP_UNDO_IMAGE_QMASK,              /*< desc="QuickMask"                 >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
+  GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection Mask"            >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename Item"               >*/
   GIMP_UNDO_DRAWABLE_VISIBILITY,      /*< desc="Drawable Visibility"       >*/

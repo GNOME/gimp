@@ -36,6 +36,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-merge.h"
@@ -2032,17 +2033,7 @@ image_set_cmap_invoker (Gimp     *gimp,
   cmap = (guint8 *) args[2].value.pdb_pointer;
 
   if (success)
-    {
-      if (gimage->cmap == NULL)
-	gimage->cmap = g_new (guchar, COLORMAP_SIZE);
-    
-      if (num_bytes)
-	memcpy (gimage->cmap, cmap, num_bytes);
-    
-      gimage->num_cols = num_bytes / 3;
-    
-      gimp_image_colormap_changed (gimage, -1);
-    }
+    gimp_image_set_colormap (gimage, cmap, num_bytes / 3, TRUE);
 
   return procedural_db_return_args (&image_set_cmap_proc, success);
 }

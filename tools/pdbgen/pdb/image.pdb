@@ -831,6 +831,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw("core/gimpimage-colormap.h") ],
 	code => <<'CODE'
 {
   num_bytes = gimage->num_cols * 3;
@@ -861,20 +862,9 @@ HELP
 			      %%desc%%' } }
     );
 
-    %invoke = ( code => <<'CODE'
-{
-  if (gimage->cmap == NULL)
-    gimage->cmap = g_new (guchar, COLORMAP_SIZE);
-
-  if (num_bytes)
-    memcpy (gimage->cmap, cmap, num_bytes);
-
-  gimage->num_cols = num_bytes / 3;
-
-  gimp_image_colormap_changed (gimage, -1);
-}
-CODE
-    );
+    %invoke = (
+	headers => [ qw("core/gimpimage-colormap.h") ],
+        code => 'gimp_image_set_colormap (gimage, cmap, num_bytes / 3, TRUE);' );
 }
 
 sub image_undo_is_enabled {

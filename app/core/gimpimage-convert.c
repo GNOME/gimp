@@ -138,6 +138,7 @@
 #include "gimp.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -956,17 +957,17 @@ gimp_image_convert (GimpImage              *gimage,
     {
       if (gimage->cmap)
 	g_free (gimage->cmap);
-      gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
+      gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
       if (remove_dups &&
 	  ((palette_type == GIMP_WEB_PALETTE) || 
            (palette_type == GIMP_CUSTOM_PALETTE)))
 	{
-	  int i,j;
-	  unsigned char old_palette [256 * 3];
-	  unsigned char new_palette [256 * 3];
-	  unsigned char remap_table [256];
-	  int num_entries;
+	  gint   i, j;
+	  guchar old_palette [256 * 3];
+	  guchar new_palette [256 * 3];
+	  guchar remap_table [256];
+	  gint   num_entries;
       
 	  for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
 	    {
@@ -993,7 +994,7 @@ gimp_image_convert (GimpImage              *gimage,
 	      remap_indexed_layer (layer, remap_table, num_entries);
 	    }
 #else
-	  memcpy(new_palette, old_palette, 256*3);
+	  memcpy (new_palette, old_palette, 256*3);
 #endif
 
 	  for (i = 0, j = 0; i < num_entries; i++)
