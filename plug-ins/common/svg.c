@@ -37,22 +37,27 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SVG_VERSION      "2.5.0"
-#define SVG_BUFFER_SIZE  (8 * 1024)
+#define SVG_VERSION             "2.5.0"
+#define SVG_DEFAULT_RESOLUTION  72.0
+#define SVG_BUFFER_SIZE         (8 * 1024)
 
 
 typedef struct
 {
-  gdouble  resolution;
-  gint     width;
-  gint     height;
+  gdouble    resolution;
+  gint       width;
+  gint       height;
+  gboolean   import;
+  gboolean   merge;
 } SvgLoadVals;
 
 static SvgLoadVals load_vals =
 {
-  72.0,  /* resolution */
-  0,     /* width      */
-  0      /* height     */
+  SVG_DEFAULT_RESOLUTION,
+  0,
+  0,
+  FALSE,
+  FALSE
 };
 
 typedef struct
@@ -62,7 +67,7 @@ typedef struct
 
 static SvgLoadInterface load_interface =
 {
-  FALSE  /* run        */
+  FALSE
 };
 
 
@@ -102,11 +107,14 @@ query (void)
     { GIMP_PDB_FLOAT,  "resolution",
       "Resolution to use for rendering the SVG (defaults to 72 dpi"          },
     { GIMP_PDB_INT32,  "width",
-      "Width (in pixels) to load the SVG in."
+      "Width (in pixels) to load the SVG in. "
       "(0 for original width, a negative width to specify a maximum width)"  },
     { GIMP_PDB_INT32,  "height",
-      "Height (in pixels) to load the SVG in."
-      "(0 for original height, a negative width to specify a maximum height)"}
+      "Height (in pixels) to load the SVG in. "
+      "(0 for original height, a negative width to specify a maximum height)"},
+    { GIMP_PDB_INT32,  "paths",
+      "Whether to not import paths (0), import paths individually (1) "
+      "or merge all imported paths (2)"                                      }
   };
   static GimpParamDef load_return_vals[] =
   {
@@ -141,7 +149,6 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -161,9 +168,14 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_NONINTERACTIVE:
-          if (nparams > 2)  load_vals.resolution = param[3].data.d_float;
-          if (nparams > 3)  load_vals.width      = param[4].data.d_int32;
-          if (nparams > 4)  load_vals.height     = param[5].data.d_int32;
+          if (nparams > 3)  load_vals.resolution = param[3].data.d_float;
+          if (nparams > 4)  load_vals.width      = param[4].data.d_int32;
+          if (nparams > 5)  load_vals.height     = param[5].data.d_int32;
+          if (nparams > 6)
+            {
+              load_vals.import = param[6].data.d_int32 != FALSE;
+              load_vals.merge  = param[6].data.d_int32 > TRUE;
+            }
           break;
 
         case GIMP_RUN_INTERACTIVE:
@@ -177,14 +189,20 @@ run (const gchar      *name,
           break;
 	}
 
+      if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
+          load_vals.resolution > GIMP_MAX_RESOLUTION)
+        load_vals.resolution = SVG_DEFAULT_RESOLUTION;
+
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  image_ID = load_image (param[1].data.d_string);
-
-	  gimp_set_data ("file_svg_load", &load_vals, sizeof (load_vals));
+	  gint32  image_ID = load_image (param[1].data.d_string);
 
 	  if (image_ID != -1)
 	    {
+              if (load_vals.import)
+                gimp_path_import (image_ID,
+                                  param[1].data.d_string, load_vals.merge);
+
 	      *nreturn_vals = 2;
 	      values[1].type         = GIMP_PDB_IMAGE;
 	      values[1].data.d_image = image_ID;
@@ -193,6 +211,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+	  gimp_set_data ("file_svg_load", &load_vals, sizeof (load_vals));
         }
     }
   else
@@ -211,7 +231,6 @@ load_image (const gchar *filename)
   GimpDrawable *drawable;
   GimpPixelRgn	rgn;
   GdkPixbuf    *pixbuf;
-  gchar        *status;
   gchar        *pixels;
   gint          width;
   gint          height;
@@ -230,9 +249,7 @@ load_image (const gchar *filename)
       gimp_quit ();
     }
 
-  status = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (status);
-  g_free (status);
+  gimp_progress_init (_("Rendering SVG..."));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
@@ -433,14 +450,16 @@ load_dialog (const gchar *filename)
   GtkWidget *dialog;
   GtkWidget *frame;
   GtkWidget *hbox;
+  GtkWidget *image;
+  GdkPixbuf *preview;
   GtkWidget *table;
   GtkWidget *abox;
   GtkWidget *size;
   GtkWidget *res;
   GtkWidget *label;
   GtkWidget *spinbutton;
-  GtkWidget *image;
-  GdkPixbuf *preview;
+  GtkWidget *toggle;
+  GtkWidget *toggle2;
   GtkObject *adj;
   GError    *error = NULL;
 
@@ -491,22 +510,29 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
+  /*  The SVG preview  */
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
+  gtk_widget_show (abox);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
   image = gtk_image_new_from_pixbuf (preview);
   gtk_container_add (GTK_CONTAINER (frame), image);
   gtk_widget_show (image);
 
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (3, 5, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
+  /*  Width and Height  */
   label = gtk_label_new (_("Width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
@@ -562,6 +588,7 @@ load_dialog (const gchar *filename)
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1,
 				  load_vals.resolution, FALSE);
 
+  /*  Resolution   */
   label = gtk_label_new (_("Resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
@@ -590,6 +617,35 @@ load_dialog (const gchar *filename)
   g_signal_connect (res, "value-changed",
                     G_CALLBACK (load_resolution_callback),
                     size);
+
+  /*  Path Import  */
+  toggle = gtk_check_button_new_with_label (_("Import Paths"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 3, 4,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (toggle);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &load_vals.import);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_sensitive_update),
+                    NULL);
+
+  toggle2 = gtk_check_button_new_with_label (_("Merge Imported Paths"));
+  gtk_table_attach (GTK_TABLE (table), toggle2, 1, 2, 4, 5,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_set_sensitive (toggle2, load_vals.import);
+  gtk_widget_show (toggle2);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle2), load_vals.merge);
+  g_signal_connect (toggle2, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &load_vals.merge);
+
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", toggle2);
+
 
   gtk_widget_show (dialog);
 

@@ -619,6 +619,31 @@ CODE
     );
 }
 
+sub path_import {
+    $blurb = 'Import paths from an SVG file.';
+
+    $help = <<'HELP';
+This procedure imports path from an SVG file. This is a temporary solution
+until the new vectors PDB API is in place. Don't rely on this function
+being available in future GIMP releases.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2003';
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'filename', type => 'string', no_validate => 1,
+	  desc => 'The name of the SVG file to import.' },
+	{ name => 'merge', type => 'boolean',
+	  desc => 'Merge paths into a single vectors object' }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-import.h") ],
+	code    => 'success = gimp_vectors_import (gimage, filename, merge, NULL);'
+    );
+}
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
               "core/gimptoolinfo.h" "core/gimpimage-mask-select.h"
@@ -630,7 +655,8 @@ CODE
 	    path_get_points path_set_points
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
-            path_get_locked path_set_locked path_to_selection);
+            path_get_locked path_set_locked path_to_selection
+	    path_import);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';

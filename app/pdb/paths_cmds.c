@@ -39,6 +39,7 @@
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors-compat.h"
+#include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
 static ProcRecord path_list_proc;
@@ -55,6 +56,7 @@ static ProcRecord get_path_by_tattoo_proc;
 static ProcRecord path_get_locked_proc;
 static ProcRecord path_set_locked_proc;
 static ProcRecord path_to_selection_proc;
+static ProcRecord path_import_proc;
 
 void
 register_paths_procs (Gimp *gimp)
@@ -73,6 +75,7 @@ register_paths_procs (Gimp *gimp)
   procedural_db_register (gimp, &path_get_locked_proc);
   procedural_db_register (gimp, &path_set_locked_proc);
   procedural_db_register (gimp, &path_to_selection_proc);
+  procedural_db_register (gimp, &path_import_proc);
 }
 
 static Argument *
@@ -1192,4 +1195,64 @@ static ProcRecord path_to_selection_proc =
   0,
   NULL,
   { { path_to_selection_invoker } }
+};
+
+static Argument *
+path_import_invoker (Gimp     *gimp,
+                     Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *filename;
+  gboolean merge;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  filename = (gchar *) args[1].value.pdb_pointer;
+  if (filename == NULL)
+    success = FALSE;
+
+  merge = args[2].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    success = gimp_vectors_import (gimage, filename, merge, NULL);
+
+  return procedural_db_return_args (&path_import_proc, success);
+}
+
+static ProcArg path_import_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "filename",
+    "The name of the SVG file to import."
+  },
+  {
+    GIMP_PDB_INT32,
+    "merge",
+    "Merge paths into a single vectors object"
+  }
+};
+
+static ProcRecord path_import_proc =
+{
+  "gimp_path_import",
+  "Import paths from an SVG file.",
+  "This procedure imports path from an SVG file. This is a temporary solution until the new vectors PDB API is in place. Don't rely on this function being available in future GIMP releases.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2003",
+  GIMP_INTERNAL,
+  3,
+  path_import_inargs,
+  0,
+  NULL,
+  { { path_import_invoker } }
 };
