@@ -19,9 +19,9 @@ app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
+app/core/gimpcontainer.c
 app/core/gimpcontext.c
 app/core/gimpdatafactory.c
-app/core/gimpdocumentlist.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-transform.c
@@ -41,7 +41,6 @@ app/core/gimpmoduleinfo.c
 app/core/gimpmodules.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
-app/core/gimpparasitelist.c
 app/core/gimppattern.c
 app/core/gimpunit.c
 app/core/gimpunits.c
