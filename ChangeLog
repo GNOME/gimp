@@ -1,5 +1,21 @@
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcontroller.[ch]: added
+	GimpController::get_event_blurb() which returns the strings that
+	were returned by get_event_name(). The latter returns
+	untranslatable event identifiers now.
+
+	* app/widgets/gimpcontrollerwheel.c
+	* modules/controller_linux_input.c: changed accordingly.
+
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollers.c: changed the event mapping from
+	event-id -> action-name to event-name -> action-name.
+
+	* etc/controllerrc: changed accordingly (finally readable now).
+
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpcontrollerinfo.[ch]: made an object out of

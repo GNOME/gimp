@@ -77,6 +77,7 @@ struct _LinuxInputEvent
   __u16         type;
   __u16         code;
   const gchar  *name;
+  const gchar  *blurb;
 };
 
 
@@ -92,9 +93,11 @@ static void   linux_input_get_property (GObject        *object,
                                         GValue         *value,
                                         GParamSpec     *pspec);
 
-static gint          linux_input_get_n_events   (GimpController *controller);
-static const gchar * linux_input_get_event_name (GimpController *controller,
-                                                 gint            event_id);
+static gint          linux_input_get_n_events    (GimpController *controller);
+static const gchar * linux_input_get_event_name  (GimpController *controller,
+                                                  gint            event_id);
+static const gchar * linux_input_get_event_blurb (GimpController *controller,
+                                                  gint            event_id);
 
 static gboolean      linux_input_set_device (ControllerLinuxInput *controller,
                                              const gchar          *device);
@@ -116,21 +119,21 @@ static const GimpModuleInfo linux_input_info =
 
 static const LinuxInputEvent input_events[] =
 {
-  { EV_KEY, BTN_0,      N_("Button 0")         },
-  { EV_KEY, BTN_1,      N_("Button 1")         },
-  { EV_KEY, BTN_2,      N_("Button 2")         },
-  { EV_KEY, BTN_3,      N_("Button 3")         },
-  { EV_KEY, BTN_4,      N_("Button 4")         },
-  { EV_KEY, BTN_5,      N_("Button 5")         },
-  { EV_KEY, BTN_6,      N_("Button 6")         },
-  { EV_KEY, BTN_7,      N_("Button 7")         },
-  { EV_KEY, BTN_8,      N_("Button 8")         },
-  { EV_KEY, BTN_9,      N_("Button 9")         },
-  { EV_KEY, BTN_LEFT,   N_("Button Left")      },
-  { EV_KEY, BTN_RIGHT,  N_("Button Right")     },
-  { EV_KEY, BTN_MIDDLE, N_("Button Middle")    },
-  { EV_REL, REL_WHEEL,  N_("Wheel Turn Left")  },
-  { EV_REL, REL_WHEEL,  N_("Wheel Turn Right") },
+  { EV_KEY, BTN_0,      "button-0",         N_("Button 0")         },
+  { EV_KEY, BTN_1,      "button-1",         N_("Button 1")         },
+  { EV_KEY, BTN_2,      "button-2",         N_("Button 2")         },
+  { EV_KEY, BTN_3,      "button-3",         N_("Button 3")         },
+  { EV_KEY, BTN_4,      "button-4",         N_("Button 4")         },
+  { EV_KEY, BTN_5,      "button-5",         N_("Button 5")         },
+  { EV_KEY, BTN_6,      "button-6",         N_("Button 6")         },
+  { EV_KEY, BTN_7,      "button-7",         N_("Button 7")         },
+  { EV_KEY, BTN_8,      "button-8",         N_("Button 8")         },
+  { EV_KEY, BTN_9,      "button-9",         N_("Button 9")         },
+  { EV_KEY, BTN_LEFT,   "button-left",      N_("Button Left")      },
+  { EV_KEY, BTN_RIGHT,  "button-right",     N_("Button Right")     },
+  { EV_KEY, BTN_MIDDLE, "button-middle",    N_("Button Middle")    },
+  { EV_REL, REL_WHEEL,  "wheel-turn-left",  N_("Wheel Turn Left")  },
+  { EV_REL, REL_WHEEL,  "wheel-rurn-right", N_("Wheel Turn Right") },
 };
 
 static GType                controller_type = 0;
@@ -197,10 +200,11 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  controller_class->name           = _("Linux Input Events");
+  controller_class->name            = _("Linux Input Events");
 
-  controller_class->get_n_events   = linux_input_get_n_events;
-  controller_class->get_event_name = linux_input_get_event_name;
+  controller_class->get_n_events    = linux_input_get_n_events;
+  controller_class->get_event_name  = linux_input_get_event_name;
+  controller_class->get_event_blurb = linux_input_get_event_blurb;
 }
 
 static void
@@ -267,6 +271,16 @@ linux_input_get_event_name (GimpController *controller,
   return gettext (input_events[event_id].name);
 }
 
+static const gchar *
+linux_input_get_event_blurb (GimpController *controller,
+                             gint            event_id)
+{
+  if (event_id < 0 || event_id >= G_N_ELEMENTS (input_events))
+    return NULL;
+
+  return gettext (input_events[event_id].blurb);
+}
+
 static gboolean
 linux_input_set_device (ControllerLinuxInput *controller,
                         const gchar          *device)
@@ -301,7 +315,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
         }
       else
         {
-          g_printerr ("Cannot open device '%s': %s",
+          g_printerr ("Cannot open device '%s': %s\n",
                       device, g_strerror (errno));
         }
     }
@@ -361,4 +375,3 @@ linux_input_read_event (GIOChannel   *io,
 
   return TRUE;
 }
-

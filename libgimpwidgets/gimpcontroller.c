@@ -228,6 +228,19 @@ gimp_controller_get_event_name (GimpController *controller,
   return NULL;
 }
 
+const gchar *
+gimp_controller_get_event_blurb (GimpController *controller,
+                                 gint            event_id)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), NULL);
+
+  if (GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb)
+    return GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb (controller,
+                                                                    event_id);
+
+  return NULL;
+}
+
 void
 gimp_controller_set_enabled (GimpController *controller,
                              gboolean        enabled)

@@ -95,13 +95,15 @@ struct _GimpControllerClass
   const gchar  *help_id;
 
   /*  virtual functions  */
-  gint          (* get_n_events)   (GimpController            *controller);
-  const gchar * (* get_event_name) (GimpController            *controller,
-                                    gint                       event_id);
+  gint          (* get_n_events)    (GimpController            *controller);
+  const gchar * (* get_event_name)  (GimpController            *controller,
+                                     gint                       event_id);
+  const gchar * (* get_event_blurb) (GimpController            *controller,
+                                     gint                       event_id);
 
   /*  signals  */
-  gboolean      (* event)          (GimpController            *controller,
-                                    const GimpControllerEvent *event);
+  gboolean      (* event)           (GimpController            *controller,
+                                     const GimpControllerEvent *event);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
@@ -111,16 +113,18 @@ struct _GimpControllerClass
 };
 
 
-GType            gimp_controller_get_type       (void) G_GNUC_CONST;
-GimpController * gimp_controller_new            (GType           controller_type);
+GType            gimp_controller_get_type        (void) G_GNUC_CONST;
+GimpController * gimp_controller_new             (GType           controller_type);
 
-gint             gimp_controller_get_n_events   (GimpController *controller);
-const gchar    * gimp_controller_get_event_name (GimpController *controller,
-                                                 gint            event_id);
+gint             gimp_controller_get_n_events    (GimpController *controller);
+const gchar    * gimp_controller_get_event_name  (GimpController *controller,
+                                                  gint            event_id);
+const gchar    * gimp_controller_get_event_blurb (GimpController *controller,
+                                                  gint            event_id);
 
-void             gimp_controller_set_enabled    (GimpController *controller,
-                                                 gboolean        enabled);
-gboolean         gimp_controller_get_enabled    (GimpController *controller);
+void             gimp_controller_set_enabled     (GimpController *controller,
+                                                  gboolean        enabled);
+gboolean         gimp_controller_get_enabled     (GimpController *controller);
 
 
 /*  protected  */

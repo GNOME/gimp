@@ -40,14 +40,17 @@ struct _WheelEvent
   GdkScrollDirection  direction;
   GdkModifierType     modifiers;
   const gchar        *name;
+  const gchar        *blurb;
 };
 
 
-static void          gimp_controller_wheel_class_init     (GimpControllerWheelClass *klass);
+static void          gimp_controller_wheel_class_init      (GimpControllerWheelClass *klass);
 
-static gint          gimp_controller_wheel_get_n_events   (GimpController *controller);
-static const gchar * gimp_controller_wheel_get_event_name (GimpController *controller,
-                                                           gint            event_id);
+static gint          gimp_controller_wheel_get_n_events    (GimpController *controller);
+static const gchar * gimp_controller_wheel_get_event_name  (GimpController *controller,
+                                                            gint            event_id);
+static const gchar * gimp_controller_wheel_get_event_blurb (GimpController *controller,
+                                                            gint            event_id);
 
 
 static GimpControllerClass *parent_class = NULL;
@@ -55,71 +58,103 @@ static GimpControllerClass *parent_class = NULL;
 static const WheelEvent wheel_events[] =
 {
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-up-shift-control-alt",
     N_("Alt + Control + Shift + Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_CONTROL_MASK,
+    "scroll-up-control-alt",
     N_("Alt + Control + Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK | GDK_SHIFT_MASK,
+    "scroll-up-shift-alt",
     N_("Alt + Shift + Scroll Up") },
   { GDK_SCROLL_UP, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-up-shift-control",
     N_("Control + Shift + Scroll Up") },
   { GDK_SCROLL_UP, GDK_MOD1_MASK,
+    "scroll-up-alt",
     N_("Alt + Scroll Up") },
   { GDK_SCROLL_UP, GDK_CONTROL_MASK,
+    "scroll-up-control",
     N_("Control + Scroll Up") },
   { GDK_SCROLL_UP, GDK_SHIFT_MASK,
+    "scroll-up-shift",
     N_("Shift + Scroll Up") },
   { GDK_SCROLL_UP, 0,
+    "scroll-up",
     N_("Scroll Up") },
 
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-down-shift-control-alt",
     N_("Alt + Control + Shift + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_CONTROL_MASK,
+    "scroll-down-control-alt",
     N_("Alt + Control + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK | GDK_SHIFT_MASK,
+    "scroll-down-shift-alt",
     N_("Alt + Shift + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-down-shift-control",
     N_("Control + Shift + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_MOD1_MASK,
+    "scroll-down-alt",
     N_("Alt + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_CONTROL_MASK,
+    "scroll-down-control",
     N_("Control + Scroll Down") },
   { GDK_SCROLL_DOWN, GDK_SHIFT_MASK,
+    "scroll-down-shift",
     N_("Shift + Scroll Down") },
   { GDK_SCROLL_DOWN, 0,
+    "scroll-down",
     N_("Scroll Down") },
 
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-left-shift-control-alt",
     N_("Alt + Control + Shift + Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_CONTROL_MASK,
+    "scroll-left-control-alt",
     N_("Alt + Control + Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK | GDK_SHIFT_MASK,
+    "scroll-left-shift-alt",
     N_("Alt + Shift + Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-left-shift-control",
     N_("Control + Shift + Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_MOD1_MASK,
+    "scroll-left-alt",
     N_("Alt + Scroll Left") },
-  { GDK_SCROLL_LEFT,  GDK_CONTROL_MASK,
+  { GDK_SCROLL_LEFT, GDK_CONTROL_MASK,
+    "scroll-left-control",
     N_("Control + Scroll Left") },
   { GDK_SCROLL_LEFT, GDK_SHIFT_MASK,
+    "scroll-left-shift",
     N_("Shift + Scroll Left") },
-  { GDK_SCROLL_LEFT,  0,
+  { GDK_SCROLL_LEFT, 0,
+    "scroll-left",
     N_("Scroll Left") },
 
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-right-shift-control-alt",
     N_("Alt + Control + Shift + Scroll Right") },
-  { GDK_SCROLL_RIGHT,    GDK_MOD1_MASK | GDK_CONTROL_MASK,
+  { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_CONTROL_MASK,
+    "scroll-right-control-alt",
     N_("Alt + Control + Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK | GDK_SHIFT_MASK,
+    "scroll-right-shift-alt",
     N_("Alt + Shift + Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_CONTROL_MASK | GDK_SHIFT_MASK,
+    "scroll-right-shift-control",
     N_("Control + Shift + Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_MOD1_MASK,
+    "scroll-right-alt",
     N_("Alt + Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_CONTROL_MASK,
+    "scroll-right-control",
     N_("Control + Scroll Right") },
   { GDK_SCROLL_RIGHT, GDK_SHIFT_MASK,
+    "scroll-right-shift",
     N_("Shift + Scroll Right") },
   { GDK_SCROLL_RIGHT, 0,
+    "scroll-right",
     N_("Scroll Right") }
 };
 
@@ -159,10 +194,11 @@ gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  controller_class->name           = _("Mouse Wheel");
+  controller_class->name            = _("Mouse Wheel");
 
-  controller_class->get_n_events   = gimp_controller_wheel_get_n_events;
-  controller_class->get_event_name = gimp_controller_wheel_get_event_name;
+  controller_class->get_n_events    = gimp_controller_wheel_get_n_events;
+  controller_class->get_event_name  = gimp_controller_wheel_get_event_name;
+  controller_class->get_event_blurb = gimp_controller_wheel_get_event_blurb;
 }
 
 static gint
@@ -179,6 +215,16 @@ gimp_controller_wheel_get_event_name (GimpController *controller,
     return NULL;
 
   return gettext (wheel_events[event_id].name);
+}
+
+static const gchar *
+gimp_controller_wheel_get_event_blurb (GimpController *controller,
+                                       gint            event_id)
+{
+  if (event_id < 0 || event_id >= G_N_ELEMENTS (wheel_events))
+    return NULL;
+
+  return gettext (wheel_events[event_id].blurb);
 }
 
 gboolean

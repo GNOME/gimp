@@ -202,7 +202,7 @@ gimp_controllers_restore (Gimp          *gimp,
       g_message (error->message);
       g_clear_error (&error);
 
-      gimp_config_file_backup_on_error (filename, "sessionrc", NULL);
+      gimp_config_file_backup_on_error (filename, "controllerrc", NULL);
     }
 
   gimp_scanner_destroy (scanner);
@@ -335,11 +335,11 @@ gimp_controller_deserialize (GimpControllerManager *manager,
               {
                 GtkAction *action = NULL;
                 GList     *list;
-                gint       event_id;
+                gchar     *event_name;
                 gchar     *action_name;
 
                 token = G_TOKEN_INT;
-                if (! gimp_scanner_parse_int (scanner, &event_id))
+                if (! gimp_scanner_parse_string (scanner, &event_name))
                   goto error;
 
                 token = G_TOKEN_STRING;
@@ -360,15 +360,12 @@ gimp_controller_deserialize (GimpControllerManager *manager,
 
                 if (action)
                   {
-                    gint *key = g_new (gint, 1);
-
-                    *key = event_id;
-
-                    g_hash_table_insert (info->mapping, key,
+                    g_hash_table_insert (info->mapping, event_name,
                                          g_object_ref (action));
                   }
                 else
                   {
+                    g_free (event_name);
                     g_printerr ("%s: action '%s' not found\n",
                                 G_STRFUNC, action_name);
                   }
@@ -429,15 +426,20 @@ gimp_controller_info_event (GimpController            *controller,
 {
   GtkAction   *action;
   const gchar *class_name;
+  const gchar *event_name;
+  const gchar *event_blurb;
 
   class_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
 
-  g_print ("Received '%s' (class '%s')\n"
-           "    controller event '%s'\n",
-           controller->name, class_name,
-           gimp_controller_get_event_name (controller, event->any.event_id));
+  event_name = gimp_controller_get_event_name (controller, event->any.event_id);
+  event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
 
-  action = g_hash_table_lookup (info->mapping, &event->any.event_id);
+  g_print ("Received '%s' (class '%s')\n"
+           "    controller event '%s (%s)'\n",
+           controller->name, class_name,
+           event_name, event_blurb);
+
+  action = g_hash_table_lookup (info->mapping, event_name);
 
   if (action)
     {
