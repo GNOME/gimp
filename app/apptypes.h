@@ -30,16 +30,22 @@
 #include "appenums.h"
 
 
-/*  objects  */
+/*  base objects  */
 
 typedef struct _GimpObject          GimpObject;
 
-typedef struct _GimpSet             GimpSet;
-typedef         guint               GimpSetHandlerId;
-
-typedef struct _GimpList            GimpList;
+typedef struct _GimpContainer       GimpContainer;
 
 typedef struct _GimpContext         GimpContext;
+
+/* TODO: replace these with GimpContainer */
+typedef struct _GimpSet             GimpSet;
+typedef         guint               GimpSetHandlerId;
+typedef struct _GimpList            GimpList;
+typedef struct _GimpBrushList       GimpBrushList;
+
+
+/*  drawable objects  */
 
 typedef struct _GimpDrawable        GimpDrawable;
 
@@ -51,8 +57,10 @@ typedef struct _GimpLayerMask       GimpLayerMask;
 typedef struct _GimpImage           GimpImage;
 typedef         GimpImage           GImage;
 
+
+/*  data objects  */
+
 typedef struct _GimpBrush	    GimpBrush;
-typedef struct _GimpBrushList       GimpBrushList;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;
 

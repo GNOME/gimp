@@ -110,6 +110,8 @@ gimp_SOURCES = \
 	gimpbrushpipe.h		\
 	gimpchannel.c		\
 	gimpchannel.h		\
+	gimpcontainer.c		\
+	gimpcontainer.h		\
 	gimpcontext.c		\
 	gimpcontext.h		\
 	gimpcontextpreview.c	\
