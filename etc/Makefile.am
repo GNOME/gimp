@@ -7,7 +7,5 @@ gimpsysconf_DATA = \
 	ps-menurc
 
 EXTRA_DIST = \
-	gimprc.win32	\
-	gtkrc_user	\
-	unitrc		\
-	ps-menurc
+	$(gimpsysconf_DATA)	\
+	gimprc.win32

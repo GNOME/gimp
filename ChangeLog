@@ -1,5 +1,10 @@
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
+	* data/environ/Makefile.am
+	* etc/Makefile.am: fixed EXTRA_DIST rules.
+
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c (gimp_imagefile_png_thumb_path): use
 	proper defines to specify the permissions when calling mkdir().
 
