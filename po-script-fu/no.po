@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
-"PO-Revision-Date: 2001-01-02 13:39+01:00\n"
+"POT-Creation-Date: 2001-05-22 13:03+0200\n"
+"PO-Revision-Date: 2001-05-22 13:12+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -186,7 +186,7 @@ msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
-msgstr ""
+msgstr "<Image>/Rediger/Kopier synlig"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
@@ -350,11 +350,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Render/Lava..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr ""
+msgstr "<Image>/Scripte-Fu/Render/Linjenova..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
@@ -374,7 +374,7 @@ msgstr "<Image>/Script-Fu/Utvalg/Rund..."
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Utvalg/Til børste..."
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Skygge/Perspektiv..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
@@ -402,7 +402,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Verktøy/ASCII til bildelag..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -410,7 +410,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Verktøy/Vis bildestruktur..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
@@ -671,71 +671,71 @@ msgstr ""
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/Utvikler OBS"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP feilrapporter"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP brukerhåndbok"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP nyheter"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP veiledere"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Dokumentasjon"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Nedlasting"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GIMP kunst"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Lenker"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/E-post lister"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/Ressurser"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/GIMP.ORG/GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/\"Grokking the GIMP\""
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/Tilleggsregister"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr ""
+msgstr "<Toolbox>/Utvd/Nettleser/Bruker OBS"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -1190,11 +1190,11 @@ msgstr "Slett før tegning"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "Slett"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Slett/Fyll"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1370,7 +1370,7 @@ msgstr "Rammer"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "Fra øverst-venstre til nederst-høyre"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1505,11 +1505,11 @@ msgstr "Interpoler"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr "Invertér retning"
+msgstr "Inverter retning"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr "Invertér"
+msgstr "Inverter"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"

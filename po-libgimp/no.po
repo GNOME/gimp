@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-05-22 12:58+0200\n"
 "PO-Revision-Date: 2001-01-02 12:01+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -70,7 +70,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertér til indeksert og bruk standard\n"
+"Konverter til indeksert og bruk standard\n"
 "innstillinger (Gjør det manuelt for å\n"
 "finjustere resultatet)"
 
@@ -101,15 +101,15 @@ msgstr "Legg til alfakanal"
 #. the dialog
 #: libgimp/gimpexport.c:333
 msgid "Export File"
-msgstr "Eksportér fil"
+msgstr "Eksporter fil"
 
 #: libgimp/gimpexport.c:338
 msgid "Export"
-msgstr "Eksportér"
+msgstr "Eksporter"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr "Ignorér"
+msgstr "Ignorer"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
@@ -222,14 +222,14 @@ msgstr ""
 "Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer "
 "en noen lunde tilfeldig verdi"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "MegaBytes"

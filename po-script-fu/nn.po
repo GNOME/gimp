@@ -1,16 +1,17 @@
 # Norwegian (Nynorsk) KDE translation.
 # Copyright (C) 2000 Gaute Hvoslef Kvalnes.
 # Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>, 2000.
-#
+# Kjartan Maraas <kmaraas@gnome.org>, 2001.
+
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE PIM/abbrowser\n"
 "POT-Creation-Date: 2001-01-30 12:44+0100\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
-"Last-Translator: Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian (Nynorsk)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf8\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:156

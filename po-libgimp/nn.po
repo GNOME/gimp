@@ -2,11 +2,10 @@
 # Copyright (C) 2000 Gaute Hvoslef Kvalnes.
 # Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>, 2000.
 # Kjartan Maraas <kmaraas@gnome.org>, 2001.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.2.1\n"
-"POT-Creation-Date: 2001-01-30 11:12+0100\n"
+"POT-Creation-Date: 2001-05-22 12:58+0200\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian (Nynorsk)\n"
@@ -250,4 +249,3 @@ msgstr "Byte"
 #, fuzzy
 msgid "MegaBytes"
 msgstr "Byte"
-
