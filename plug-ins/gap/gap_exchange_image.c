@@ -404,7 +404,6 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
    {
       l_channel_id = l_channels_list[l_idx];
       gimp_image_remove_channel(image_id, l_channel_id);
-      gimp_channel_delete(l_channel_id);
    }
    if(l_channels_list) { g_free (l_channels_list); }
 
@@ -470,7 +469,6 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
      {
         if(gap_debug) printf("GAP-DEBUG: p_replace_img del layer_id=%d \n", (int)l_layer_id);
         gimp_image_remove_layer(image_id, l_layer_id);
-        /* gimp_layer_delete(l_layer_id); */      /* did crash in gimp 1.0.2 ?? and in 1.1 too */
      }
    }
    
@@ -482,7 +480,6 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
       /* now delete the (old) background layer */
       if(gap_debug) printf("GAP-DEBUG: p_replace_img del (old bg) layer_id=%d \n", (int)l_old_bg_layer_id);
       gimp_image_remove_layer(image_id, l_old_bg_layer_id);
-      /* gimp_layer_delete(l_old_bg_layer_id); */      /* did crash in gimp 1.0.2 ?? and in 1.1 too */
    }
 
    if (l_layers_list) { g_free (l_layers_list); }

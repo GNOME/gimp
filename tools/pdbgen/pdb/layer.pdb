@@ -338,8 +338,8 @@ sub layer_delete {
     $blurb = 'Delete a layer.';
 
     $help = <<'HELP';
-This procedure deletes the specified layer. This does not need to be done if
-a gimage containing this layer was already deleted.
+This procedure is obsolete and does nothing. Layers are automatically deleted
+when removed from an image or if the associated image is destroyed. 
 HELP
 
     &std_pdb_misc;
@@ -347,7 +347,7 @@ HELP
     @inargs = ( &layer_arg );
     $inargs[0]->{desc} .= ' to delete';
 
-    %invoke = ( code => 'layer_delete (layer);' );
+    %invoke = ();
 }
 
 sub layer_translate {

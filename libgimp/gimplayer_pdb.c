@@ -247,8 +247,9 @@ gimp_layer_resize (gint32 layer_ID,
  *
  * Delete a layer.
  *
- * This procedure deletes the specified layer. This does not need to be
- * done if a gimage containing this layer was already deleted.
+ * This procedure is obsolete and does nothing. Layers are
+ * automatically deleted when removed from an image or if the
+ * associated image is destroyed.
  *
  * Returns: TRUE on success.
  */

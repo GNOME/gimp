@@ -381,23 +381,12 @@ run (gchar  *name,
 
   values[0].data.d_status = status;
 
-  image_ID = gimp_layer_get_image_id(map_x->id);
-  gimp_image_delete(image_ID);
-  gimp_displays_flush();
-
-  /*
-  if (display_diff_map == FALSE) {
-    gimp_layer_delete(map_x->id);
-    gimp_layer_delete(map_y->id);
-  } else {
-    image_ID = gimp_layer_get_image_id(drawable->id);
-    gimp_image_undo_disable(image_ID);
-    gimp_image_undo_enable(image_ID);
-  }
-  */
+  image_ID = gimp_layer_get_image_id (map_x->id);
 
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);
+
+  gimp_image_delete (image_ID);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
