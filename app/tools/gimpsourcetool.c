@@ -368,7 +368,7 @@ clone_options_new (GimpToolInfo *tool_info)
   GtkWidget        *vbox;
   GtkWidget        *frame;
 
-  options = gimp_clone_options_new ();
+  options = gimp_clone_options_new (tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

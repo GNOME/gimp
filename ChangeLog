@@ -1,3 +1,34 @@
+2002-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpairbrush.[ch]
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintoptions.[ch]
+	* app/paint/gimpsmudge.[ch]: it's hard to paint without a context
+	to get color, brush etc. from. Added "context" parameters to
+	all paint options constructors.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: pass gimp_get_current_context()
+	to the constructors. Fixes bug #99557.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpsmudgetool.c: changed accordingly.
+
+	* app/tools/paint_options.c: ditto. Don't set
+	paint_options->context here because we also need it in the
+	no-interface case above.
+
 2002-11-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/AlienMap.c
@@ -35,7 +66,7 @@
 	calling user_install_dialog_create().
 
 	* app/gui/preferences-dialog.c: ditto. Added the static
-	prefs_dialog pointer again to our local help func finds the
+	prefs_dialog pointer again so our local help func finds the
 	current notebook page.
 
 2002-11-26  Jakub Steiner <jimmac@ximian.com>

@@ -29,6 +29,7 @@
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "paint/gimpairbrush.h"
 #include "paint/gimpclone.h"
@@ -145,7 +146,7 @@ airbrush_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_airbrush_options_new ();
+      options = gimp_airbrush_options_new (gimp_get_current_context (gimp));
     
       options->pressure = pressure;
     
@@ -223,7 +224,7 @@ airbrush_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_airbrush_options_new ();
+      options = gimp_airbrush_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_AIRBRUSH,
@@ -310,7 +311,7 @@ clone_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_clone_options_new ();
+      options = gimp_clone_options_new (gimp_get_current_context (gimp));
     
       options->type = clone_type;
     
@@ -411,7 +412,7 @@ clone_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_clone_options_new ();
+      options = gimp_clone_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CLONE,
@@ -492,7 +493,7 @@ convolve_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_convolve_options_new ();
+      options = gimp_convolve_options_new (gimp_get_current_context (gimp));
     
       options->type = convolve_type;
       options->rate = pressure;
@@ -576,7 +577,7 @@ convolve_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_convolve_options_new ();
+      options = gimp_convolve_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CONVOLVE,
@@ -662,7 +663,7 @@ dodgeburn_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_dodgeburn_options_new ();
+      options = gimp_dodgeburn_options_new (gimp_get_current_context (gimp));
     
       options->exposure = exposure;
       options->type     = dodgeburn_type;
@@ -752,7 +753,7 @@ dodgeburn_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_dodgeburn_options_new ();
+      options = gimp_dodgeburn_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_DODGEBURN,
@@ -833,7 +834,7 @@ eraser_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_eraser_options_new ();
+      options = gimp_eraser_options_new (gimp_get_current_context (gimp));
     
       options->paint_options.incremental = method;
     
@@ -918,7 +919,7 @@ eraser_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_eraser_options_new ();
+      options = gimp_eraser_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_ERASER,
@@ -1004,7 +1005,7 @@ paintbrush_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_paint_options_new ();
+      options = gimp_paint_options_new (gimp_get_current_context (gimp));
     
       options->incremental = method;
     
@@ -1095,7 +1096,7 @@ paintbrush_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_paint_options_new ();
+      options = gimp_paint_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PAINTBRUSH,
@@ -1166,7 +1167,7 @@ pencil_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_paint_options_new ();
+      options = gimp_paint_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PENCIL,
@@ -1242,7 +1243,7 @@ smudge_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_smudge_options_new ();
+      options = gimp_smudge_options_new (gimp_get_current_context (gimp));
     
       options->rate = pressure;
     
@@ -1320,7 +1321,7 @@ smudge_default_invoker (Gimp     *gimp,
 
   if (success)
     {
-      options = gimp_smudge_options_new ();
+      options = gimp_smudge_options_new (gimp_get_current_context (gimp));
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_SMUDGE,

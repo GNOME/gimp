@@ -211,7 +211,7 @@ convolve_options_new (GimpToolInfo *tool_info)
   GtkWidget           *table;
   GtkWidget           *frame;
 
-  options = gimp_convolve_options_new ();
+  options = gimp_convolve_options_new (tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

@@ -497,13 +497,15 @@ gimp_convolve_sum_matrix (gint *matrix,
 #define DEFAULT_CONVOLVE_TYPE  GIMP_BLUR_CONVOLVE
 
 GimpConvolveOptions *
-gimp_convolve_options_new (void)
+gimp_convolve_options_new (GimpContext *context)
 {
   GimpConvolveOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpConvolveOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, context);
 
   options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
   options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;

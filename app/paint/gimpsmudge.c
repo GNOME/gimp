@@ -426,13 +426,15 @@ gimp_smudge_allocate_accum_buffer (GimpSmudge *smudge,
 #define SMUDGE_DEFAULT_RATE 50.0
 
 GimpSmudgeOptions *
-gimp_smudge_options_new (void)
+gimp_smudge_options_new (GimpContext *context)
 {
   GimpSmudgeOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpSmudgeOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, context);
 
   options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
 

@@ -422,13 +422,15 @@ gimp_dodgeburn_shadows_lut_func (gpointer  user_data,
 #define DODGEBURN_DEFAULT_MODE     GIMP_MIDTONES
 
 GimpDodgeBurnOptions *
-gimp_dodgeburn_options_new (void)
+gimp_dodgeburn_options_new (GimpContext *context)
 {
   GimpDodgeBurnOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpDodgeBurnOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, context);
 
   options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
   options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;

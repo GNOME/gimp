@@ -173,7 +173,7 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   GimpEraserOptions *options;
   GtkWidget         *vbox;
 
-  options = gimp_eraser_options_new ();
+  options = gimp_eraser_options_new (tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

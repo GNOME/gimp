@@ -68,7 +68,7 @@ void    gimp_airbrush_register (Gimp                      *gimp,
 GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
 
 
-GimpAirbrushOptions * gimp_airbrush_options_new (void);
+GimpAirbrushOptions * gimp_airbrush_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_AIRBRUSH_H__  */

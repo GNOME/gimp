@@ -125,7 +125,7 @@ smudge_options_new (GimpToolInfo *tool_info)
   GtkWidget         *vbox;
   GtkWidget         *table;
 
-  options = gimp_smudge_options_new ();
+  options = gimp_smudge_options_new (tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

@@ -70,7 +70,7 @@ void    gimp_smudge_register    (Gimp                      *gimp,
 GType   gimp_smudge_get_type    (void) G_GNUC_CONST;
 
 
-GimpSmudgeOptions * gimp_smudge_options_new (void);
+GimpSmudgeOptions * gimp_smudge_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_SMUDGE_H__  */

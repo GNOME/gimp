@@ -327,13 +327,15 @@ gimp_airbrush_timeout (gpointer client_data)
 /*  paint options stuff  */
 
 GimpAirbrushOptions *
-gimp_airbrush_options_new (void)
+gimp_airbrush_options_new (GimpContext *context)
 {
   GimpAirbrushOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpAirbrushOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, context);
 
   options->rate     = options->rate_d     = AIRBRUSH_DEFAULT_RATE;
   options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;

@@ -88,7 +88,7 @@ paint_options_new (GimpToolInfo *tool_info)
 {
   GimpPaintOptions *options;
 
-  options = gimp_paint_options_new ();
+  options = gimp_paint_options_new (tool_info->context);
 
   paint_options_init (options, tool_info);
 
@@ -107,8 +107,6 @@ paint_options_init (GimpPaintOptions *options,
   tool_options_init ((GimpToolOptions *) options, tool_info);
 
   ((GimpToolOptions *) options)->reset_func = paint_options_reset;
-
-  options->context = tool_info->context;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;

@@ -118,9 +118,10 @@ struct _GimpPaintOptions
 
 /*  paint tool options functions  */
 
-GimpPaintOptions * gimp_paint_options_new  (void);
+GimpPaintOptions * gimp_paint_options_new  (GimpContext      *context);
 
-void               gimp_paint_options_init (GimpPaintOptions *options);
+void               gimp_paint_options_init (GimpPaintOptions *options,
+                                            GimpContext      *context);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

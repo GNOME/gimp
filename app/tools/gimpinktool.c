@@ -1387,7 +1387,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   options = g_new0 (InkOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

@@ -68,7 +68,7 @@ void    gimp_convolve_register (Gimp                      *gimp,
 GType   gimp_convolve_get_type (void) G_GNUC_CONST;
 
 
-GimpConvolveOptions * gimp_convolve_options_new (void);
+GimpConvolveOptions * gimp_convolve_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_CONVOLVE_H__  */

@@ -72,7 +72,7 @@ HELP
 	vars => [ "GimpAirbrushOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_airbrush_options_new ();
+  options = gimp_airbrush_options_new (gimp_get_current_context (gimp));
 
   options->pressure = pressure;
 
@@ -111,7 +111,7 @@ HELP
 	vars => [ "GimpAirbrushOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_airbrush_options_new ();
+  options = gimp_airbrush_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_AIRBRUSH,
@@ -162,7 +162,7 @@ HELP
 	vars => [ "GimpCloneOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_clone_options_new ();
+  options = gimp_clone_options_new (gimp_get_current_context (gimp));
 
   options->type = clone_type;
 
@@ -210,7 +210,7 @@ HELP
 	vars => [ "GimpCloneOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_clone_options_new ();
+  options = gimp_clone_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_CLONE,
@@ -247,7 +247,7 @@ HELP
 	vars => [ "GimpConvolveOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_convolve_options_new ();
+  options = gimp_convolve_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_CONVOLVE,
@@ -285,7 +285,7 @@ HELP
 	vars => [ "GimpConvolveOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_convolve_options_new ();
+  options = gimp_convolve_options_new (gimp_get_current_context (gimp));
 
   options->type = convolve_type;
   options->rate = pressure;
@@ -323,7 +323,7 @@ HELP
 	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_eraser_options_new ();
+  options = gimp_eraser_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_ERASER,
@@ -362,7 +362,7 @@ HELP
 	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_eraser_options_new ();
+  options = gimp_eraser_options_new (gimp_get_current_context (gimp));
 
   options->paint_options.incremental = method;
 
@@ -405,7 +405,7 @@ HELP
 	vars => [ "GimpEraserOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_eraser_options_new ();
+  options = gimp_eraser_options_new (gimp_get_current_context (gimp));
 
   options->paint_options.incremental = method;
 
@@ -457,7 +457,7 @@ HELP
 	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new ();
+  options = gimp_paint_options_new (gimp_get_current_context (gimp));
 
   options->incremental = method;
 
@@ -507,7 +507,7 @@ HELP
 	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new ();
+  options = gimp_paint_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_PAINTBRUSH,
@@ -542,7 +542,7 @@ HELP
 	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new ();
+  options = gimp_paint_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_PENCIL,
@@ -578,7 +578,7 @@ HELP
 	vars => [ "GimpSmudgeOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_smudge_options_new ();
+  options = gimp_smudge_options_new (gimp_get_current_context (gimp));
 
   options->rate = pressure;
 
@@ -617,7 +617,7 @@ HELP
 	vars => [ "GimpSmudgeOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_smudge_options_new ();
+  options = gimp_smudge_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_SMUDGE,
@@ -658,7 +658,7 @@ HELP
 	vars => [ "GimpDodgeBurnOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_dodgeburn_options_new ();
+  options = gimp_dodgeburn_options_new (gimp_get_current_context (gimp));
 
   options->exposure = exposure;
   options->type     = dodgeburn_type;
@@ -698,7 +698,7 @@ HELP
 	vars => [ "GimpDodgeBurnOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_dodgeburn_options_new ();
+  options = gimp_dodgeburn_options_new (gimp_get_current_context (gimp));
 
   success = paint_tools_stroke (gimp,
                                 GIMP_TYPE_DODGEBURN,
@@ -727,7 +727,7 @@ sub ink {
 }
 
 @headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h"
-              "paint/gimppaintcore-stroke.h");
+              "paint/gimppaintcore-stroke.h" "core/gimp.h");
 
 $extra{app}->{code} = <<'CODE';
 static gboolean

@@ -444,7 +444,7 @@ blend_options_new (GimpToolInfo *tool_info)
   /*  the new blend tool options structure  */
   options = g_new0 (BlendOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, tool_info->context);
 
   paint_options_init ((GimpPaintOptions *) options, tool_info);
 

@@ -89,7 +89,7 @@ void    gimp_clone_register (Gimp                      *gimp,
 GType   gimp_clone_get_type (void) G_GNUC_CONST;
 
 
-GimpCloneOptions * gimp_clone_options_new (void);
+GimpCloneOptions * gimp_clone_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_CLONE_H__  */

@@ -68,7 +68,7 @@ void    gimp_eraser_register (Gimp                      *gimp,
 GType   gimp_eraser_get_type (void) G_GNUC_CONST;
 
 
-GimpEraserOptions * gimp_eraser_options_new (void);
+GimpEraserOptions * gimp_eraser_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_ERASER_H__  */

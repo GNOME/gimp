@@ -204,13 +204,15 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 #define ERASER_DEFAULT_ANTI_ERASE FALSE
 
 GimpEraserOptions *
-gimp_eraser_options_new (void)
+gimp_eraser_options_new (GimpContext *context)
 {
   GimpEraserOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpEraserOptions, 1);
 
-  gimp_paint_options_init ((GimpPaintOptions *) options);
+  gimp_paint_options_init ((GimpPaintOptions *) options, context);
 
   options->hard       = options->hard_d       = ERASER_DEFAULT_HARD;
   options->anti_erase = options->anti_erase_d = ERASER_DEFAULT_ANTI_ERASE; 

@@ -22,6 +22,8 @@
 
 #include "paint-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimppaintoptions.h"
 
 
@@ -49,25 +51,29 @@ static GimpGradientOptions * gimp_gradient_options_new (void);
 /*  public functions  */
 
 GimpPaintOptions *
-gimp_paint_options_new (void)
+gimp_paint_options_new (GimpContext *context)
 {
   GimpPaintOptions *options;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   options = g_new0 (GimpPaintOptions, 1);
 
-  gimp_paint_options_init (options);
+  gimp_paint_options_init (options, context);
 
   return options;
 }
 
 void
-gimp_paint_options_init (GimpPaintOptions *options)
+gimp_paint_options_init (GimpPaintOptions *options,
+                         GimpContext      *context)
 {
-  g_return_if_fail  (options != NULL);
+  g_return_if_fail (options != NULL);
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   options->opacity_w        = NULL;
   options->paint_mode_w     = NULL;
-  options->context          = NULL;
+  options->context          = context;
   options->incremental_w    = NULL;
 
   options->incremental      = options->incremental_d = DEFAULT_INCREMENTAL;

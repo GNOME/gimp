@@ -73,7 +73,7 @@ void    gimp_dodgeburn_register (Gimp                      *gimp,
 GType   gimp_dodgeburn_get_type (void) G_GNUC_CONST;
 
 
-GimpDodgeBurnOptions * gimp_dodgeburn_options_new (void);
+GimpDodgeBurnOptions * gimp_dodgeburn_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_DODGEBURN_H__  */
