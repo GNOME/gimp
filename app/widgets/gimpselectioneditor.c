@@ -358,7 +358,7 @@ gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
 
       gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
                         gimp_image_active_drawable (gimage),
-                        tool_info->paint_info);
+                        GIMP_OBJECT (tool_info->paint_info));
       gimp_image_flush (gimage);
     }
 }

@@ -199,7 +199,7 @@ vectors_stroke_cmd_callback (GtkWidget *widget,
   tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
 
   gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
-                    tool_info->paint_info);
+                    GIMP_OBJECT (tool_info->paint_info));
   gimp_image_flush (gimage);
 }
 

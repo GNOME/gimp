@@ -40,6 +40,7 @@
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
+#include "gimpstrokeoptions.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -770,18 +771,19 @@ gimp_item_transform (GimpItem               *item,
 gboolean
 gimp_item_stroke (GimpItem      *item,
                   GimpDrawable  *drawable,
-                  GimpPaintInfo *paint_info)
+                  GimpObject    *stroke_desc)
 {
   GimpItemClass *item_class;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
+                        GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   if (item_class->stroke)
-    return item_class->stroke (item, drawable, paint_info);
+    return item_class->stroke (item, drawable, stroke_desc);
 
   return FALSE;
 }

@@ -1,3 +1,28 @@
+2003-09-26  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpstrokeoptions.[ch]: New Object, holding the
+	Options for a Libart-Stroke.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h: Changed accordingly.
+
+	* app/core/gimpitem.[ch]: Changed the Signature of
+	gimp_item_stroke to accept a GimpObject instead of a
+	GimpPaintInfo. This enables us to pass GimpStrokeOptions
+	to it. To be cleaned up for 2.2.
+
+	* app/core/gimpselection.c
+	* app/core/gimpchannel.c
+	* app/vectors/gimpvectors.c: Changed accordingly
+
+	* app/gui/edit-commands.c
+	* app/gui/vectors-commands.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpvectorstreeview.c: Fixed warnings by
+	casting the GimpPaintInfo to GimpObject.
+
 2003-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppaletteeditor.c: removed inclusion of

@@ -276,7 +276,7 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
 
   gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                    active_drawable, tool_info->paint_info);
+                    active_drawable, GIMP_OBJECT (tool_info->paint_info));
   gimp_image_flush (gimage);
 }
 

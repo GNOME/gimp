@@ -104,7 +104,7 @@ struct _GimpItemClass
                             gpointer                progress_data);
   gboolean   (* stroke)    (GimpItem               *item,
                             GimpDrawable           *drawable,
-                            GimpPaintInfo          *paint_info);
+                            GimpObject             *stroke_desc);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -188,7 +188,7 @@ void            gimp_item_transform        (GimpItem       *item,
 
 gboolean        gimp_item_stroke           (GimpItem       *item,
                                             GimpDrawable   *drawable,
-                                            GimpPaintInfo  *paint_info);
+                                            GimpObject     *stroke_desc);
 
 gint            gimp_item_get_ID           (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp           *gimp,

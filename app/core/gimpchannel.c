@@ -97,7 +97,7 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               gpointer          progress_data);
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
-                                              GimpPaintInfo    *paint_info);
+                                              GimpObject       *stroke_desc);
 
 static void gimp_channel_invalidate_boundary (GimpDrawable     *drawable);
 
@@ -579,7 +579,8 @@ gimp_channel_transform (GimpItem               *item,
 static gboolean
 gimp_channel_stroke (GimpItem         *item,
                      GimpDrawable     *drawable,
-                     GimpPaintInfo    *paint_info)
+                     GimpObject       *stroke_desc)
+
 {
   GimpChannel    *channel;
   GimpImage      *gimage;
@@ -588,6 +589,7 @@ gimp_channel_stroke (GimpItem         *item,
   gint            num_segs_in;
   gint            num_segs_out;
   GimpPaintCore  *core;
+  GimpPaintInfo  *paint_info;
   gboolean        retval;
 
   channel = GIMP_CHANNEL (item);
@@ -595,6 +597,8 @@ gimp_channel_stroke (GimpItem         *item,
   gimage = gimp_item_get_image (GIMP_ITEM (channel));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  paint_info = GIMP_PAINT_INFO (stroke_desc);
 
   if (! gimp_channel_boundary (channel, &bs_in, &bs_out,
                                &num_segs_in, &num_segs_out,

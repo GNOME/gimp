@@ -107,7 +107,7 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              gpointer          progress_data);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
-                                             GimpPaintInfo    *paint_info);
+                                             GimpObject       *stroke_desc);
 
 
 #
@@ -543,10 +543,11 @@ gimp_vectors_transform (GimpItem               *item,
 static gboolean
 gimp_vectors_stroke (GimpItem      *item,
                      GimpDrawable  *drawable,
-                     GimpPaintInfo *paint_info)
+                     GimpObject    *stroke_desc)
 {
-  GimpVectors *vectors;
-  gboolean     retval;
+  GimpVectors   *vectors;
+  GimpPaintInfo *paint_info = GIMP_PAINT_INFO (stroke_desc);
+  gboolean       retval;
 
   vectors = GIMP_VECTORS (item);
 
