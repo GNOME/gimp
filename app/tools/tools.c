@@ -713,34 +713,6 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    N_("Eraser"),
-    N_("/Tools/Paint Tools/Eraser"),
-    "<shift>E",
-    (char **) erase_bits,
-    NULL,
-    NULL,
-    N_("Erase to background or transparency"),
-    "tools/eraser.html",
-    ERASER,
-    tools_new_eraser,
-    tools_free_eraser,
-    NULL,
-    NULL,
-    NULL,
-    {
-      eraser_small_bits, eraser_small_mask_bits,
-      eraser_small_width, eraser_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-  
-  { 
-    NULL,
     N_("Airbrush"),
     N_("/Tools/Paint Tools/Airbrush"),
     "A",
@@ -767,6 +739,34 @@ ToolInfo tool_info[] =
     }
   },
   
+  {
+    NULL,
+    N_("Ink"),
+    N_("/Tools/Paint Tools/Ink"),
+    "K",
+    (char **) ink_bits,
+    NULL,
+    NULL,
+    N_("Draw in ink"),
+    "tools/ink.html",
+    INK,
+    tools_new_ink,
+    tools_free_ink,
+    NULL,
+    NULL,
+    NULL,
+    {
+      ink_small_bits, ink_small_mask_bits,
+      ink_small_width, ink_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
+  },
+
   { 
     NULL,
     N_("Clone"),
@@ -786,6 +786,62 @@ ToolInfo tool_info[] =
     {
       clone_small_bits, clone_small_mask_bits,
       clone_small_width, clone_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
+  },
+  
+  { 
+    NULL,
+    N_("Eraser"),
+    N_("/Tools/Paint Tools/Eraser"),
+    "<shift>E",
+    (char **) erase_bits,
+    NULL,
+    NULL,
+    N_("Erase to background or transparency"),
+    "tools/eraser.html",
+    ERASER,
+    tools_new_eraser,
+    tools_free_eraser,
+    NULL,
+    NULL,
+    NULL,
+    {
+      eraser_small_bits, eraser_small_mask_bits,
+      eraser_small_width, eraser_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
+  },
+
+  {
+    NULL,
+    N_("Smudge"),
+    N_("/Tools/Paint Tools/Smudge"),
+    "<shift>S",
+    (char **) smudge_bits,
+    NULL,
+    NULL,
+    N_("Smudge"),
+    "tools/smudge.html",
+    SMUDGE,
+    tools_new_smudge,
+    tools_free_smudge,
+    NULL,
+    NULL,
+    NULL,
+    {
+      smudge_small_bits, smudge_small_mask_bits,
+      smudge_small_width, smudge_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -825,34 +881,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Ink"),
-    N_("/Tools/Paint Tools/Ink"),
-    "K",
-    (char **) ink_bits,
-    NULL,
-    NULL,
-    N_("Draw in ink"),
-    "tools/ink.html",
-    INK,
-    tools_new_ink,
-    tools_free_ink,
-    NULL,
-    NULL,
-    NULL,
-    {
-      ink_small_bits, ink_small_mask_bits,
-      ink_small_width, ink_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
     N_("Dodge or Burn"),
     N_("/Tools/Paint Tools/DodgeBurn"),
     "<shift>D",
@@ -875,34 +903,6 @@ ToolInfo tool_info[] =
     {
       burn_small_bits, burn_small_mask_bits,
       burn_small_width, burn_small_height,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Smudge"),
-    N_("/Tools/Paint Tools/Smudge"),
-    "<shift>S",
-    (char **) smudge_bits,
-    NULL,
-    NULL,
-    N_("Smudge"),
-    "tools/smudge.html",
-    SMUDGE,
-    tools_new_smudge,
-    tools_free_smudge,
-    NULL,
-    NULL,
-    NULL,
-    {
-      smudge_small_bits, smudge_small_mask_bits,
-      smudge_small_width, smudge_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
       0, 0, NULL, NULL, NULL
     }
   },

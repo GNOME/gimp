@@ -1,3 +1,13 @@
+2001-01-14  Simon Budig  <simon@gimp.org>
+
+	* app/tools.c:
+	Reordered some tools. It is IMHO more logical to group the
+	"paint-style" and the "blur/smudge"-Tools together.
+	The Ordering up to now was a "historical" ordering: Not good...
+
+	I am thinking about grouping the "Non-image modifying"-tools
+	(Magnify, Colorpicker, Measure tool) together...
+	
 2001-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/channel.[ch]
