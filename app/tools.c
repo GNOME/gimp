@@ -202,12 +202,12 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Crop"),
+    N_("Crop & Resize"),
     8,
-    N_("/Tools/Crop"),
+    N_("/Tools/Crop & Resize"),
     "<shift>C",
     (char **) crop_bits,
-    N_("Crop the image"),
+    N_("Crop or resize the image"),
     "ContextHelp/crop",
     CROP,
     tools_new_crop,

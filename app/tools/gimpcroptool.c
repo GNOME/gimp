@@ -173,7 +173,7 @@ crop_options_new (void)
   /*  the new crop tool options structure  */
   options = (CropOptions *) g_malloc (sizeof (CropOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Crop Options"),
+		     _("Crop & Resize Options"),
 		     crop_options_reset);
   options->layer_only         = options->layer_only_d         = FALSE;
   options->default_to_enlarge = options->default_to_enlarge_d = TRUE;
@@ -1069,7 +1069,7 @@ crop_info_create (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   /*  create the info dialog  */
-  crop_info = info_dialog_new (_("Crop Information"));
+  crop_info = info_dialog_new (_("Crop & Resize Information"));
 
   /*  add the information fields  */
   spinbutton = info_dialog_add_spinbutton (crop_info, _("Origin X:"), NULL,
@@ -1331,7 +1331,7 @@ crop_automatic_callback (GtkWidget *w,
 
   /* Check how many of the bottom lines are uniform/transparent. */
   abort = FALSE;
-  for (y = height - 1; y > y1 && !abort; y--)
+  for (y = height - 1; y >= y1 && !abort; y--)
     for (x = 0; x < width && !abort; x++)
       { 
 	color = (*get_color_func) (get_color_obj, x, y);
@@ -1353,7 +1353,7 @@ crop_automatic_callback (GtkWidget *w,
  
  /* Check how many of the right lines are uniform/transparent. */
   abort = FALSE;
-  for (x = width - 1; x > x1 && !abort; x--)
+  for (x = width - 1; x >= x1 && !abort; x--)
     for (y = y1; y < y2 && !abort; y++)
       {
 	color = (*get_color_func) (get_color_obj, x, y);	

@@ -1,3 +1,9 @@
+Thu Apr 15 12:14:30 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/crop.c: fixed an off-by-one error and renamed the tool
+	to "Resize & Crop"
+	* app/tools.c: reflect the name change 
+
 Thu Apr 15 01:32:58 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/crop.c: The autocrop mechanism now first checks if there's
