@@ -1,3 +1,6 @@
+2003-08-12  Ville Pätsi  <drc@gimp.org>
+	* gimp.spec.in: Disable separate debug packages
+
 2003-08-12  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/gui/grid-dialog.c (grid_dialog_new): made changes to the

@@ -3,6 +3,7 @@
 %define ver      @VERSION@
 %define prefix	 /usr
 %define sysconfdir	/etc
+%define debug_package %{nil}
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
@@ -79,11 +80,12 @@ MYARCH_FLAGS="--host=alpha-redhat-linux"
 if [ ! -f configure ]; then
   CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --quiet $MYARCH_FLAGS --prefix=%{prefix}
 else
-  CFLAGS="$RPM_OPT_FLAGS" %configure --quiet
+  CFLAGS="$RPM_OPT_FLAGS" %configure --prefix=%{prefix} --quiet
 fi
 make
 
 %install
+export DONT_STRIP=1
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{prefix}/info $RPM_BUILD_ROOT/%{prefix}/include \
 	$RPM_BUILD_ROOT/%{prefix}/lib $RPM_BUILD_ROOT/%{prefix}/bin
@@ -223,6 +225,10 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Tue Aug 12 2003 Ville Pätsi <drc@gimp.org>
+- Remove stripping by defining DONT_STRIP=1 in the install stage
+- Disable building of separate debug packages
+
 * Sun Aug 10 2003 Ville Pätsi <drc@gimp.org>
 - Bring gtk2 package names up to date
 - Change PREFIX to DESTDIR
