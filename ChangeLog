@@ -6,6 +6,7 @@
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/paint/gimppaintcore-stroke.c
 	* app/text/gimptext-vectors.c
+	* app/vectors/gimpvectors-compat.c
 	* tools/pdbgen/pdb/paint_tools.pdb: use them. Fixes lots more
 	buggy default values for tilt (in fact all of them were wrong).
 

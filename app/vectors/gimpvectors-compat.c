@@ -75,10 +75,10 @@ gimp_vectors_compat_new (GimpImage              *gimage,
     {
       curr_coord->x        = points[i].x;
       curr_coord->y        = points[i].y;
-      curr_coord->pressure = 1.0;
-      curr_coord->xtilt    = 0.5;
-      curr_coord->ytilt    = 0.5;
-      curr_coord->wheel    = 0.5;
+      curr_coord->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      curr_coord->xtilt    = GIMP_COORDS_DEFAULT_TILT;
+      curr_coord->ytilt    = GIMP_COORDS_DEFAULT_TILT;
+      curr_coord->wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
       /*  copy the first anchor to be the first control point  */
       if (curr_coord == curr_stroke + 1)
