@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gimp-tips SYSTEM "gimp-tips.dtd">
+
 <gimp-tips>
 
 <!-- This is a list of tips for the GIMP.  Every time the GIMP is          -->
@@ -133,7 +135,7 @@
   </tip>   
   <tip level="intermediate">
     <_thetip>
-    You can drag a layer from the <i>Layers, Channels and Paths</i> 
+    You can drag a layer from the &quot;Layers, Channels and Paths&quot; 
     dialog and drop it onto the toolbox.  This will create a new image
     containing only that layer.
     </_thetip>  

@@ -1,7 +1,13 @@
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
-	* Makefile.am: more voodoo.
+	* gimp-tips.dtd: new file defining the GIMP tips document type.
 
+	* Makefile.am: added a dist-hook that attempts to validate
+	gimp-tips.xml using xmllint when building a tarball.
+
+	* gimp-tips.xml.in: specify the DTD. Removed <i> markup tags I
+	accidentally left in there.
+	
 2002-03-08  Wang Jian  <lark@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation by

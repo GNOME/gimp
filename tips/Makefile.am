@@ -34,6 +34,19 @@ $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot: $(POTFILES)
 
 CLEANFILES = $(GETTEXT_PACKAGE)-tips.po
 
+dist-hook:
+	xmllint=`which xmllint`
+	if test -n "$xmllint" && test -x "$xmllint"; then
+		$xmllint --noout --valid gimp-tips.xml \
+		|| echo "*************************"; \
+		   echo "* gimp-tips.xml INVALID *"; \
+		   echo "*************************"; \
+		   exit 1;
+	else
+		echo "Couldn't find xmllint, cannot validate gimp-tips.xml.";
+		echo "Proceed with fingers crossed...";
+	fi
+
 oldtips = \
 	gimp_tips.cs.txt	\
 	gimp_tips.es.txt 	\
@@ -54,6 +67,7 @@ EXTRA_DIST = \
 	$(tips_in_files)	\
 	$(tipsdata_DATA)	\
 	$(oldtips)		\
+	gimp-tips.dtd		\
 	ChangeLog		\
 	makefile.mingw		\
 	update.sh
