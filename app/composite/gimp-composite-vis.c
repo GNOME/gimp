@@ -40,8 +40,7 @@
 #endif /* defined(sparc) || defined(__sparc__) */
 
 void
-gimp_composite_altivec_init(void)
+gimp_composite_vis_init(void)
 {
 
 }
-
