@@ -1058,7 +1058,10 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
           mask = GIMP_LAYER_MASK (renderer->viewable);
 
           if (gimp_layer_mask_get_edit (mask))
-            gimp_layer_mask_set_edit (mask, FALSE);
+            {
+              gimp_layer_mask_set_edit (mask, FALSE);
+              gimp_image_flush (gimp_item_get_image (GIMP_ITEM (mask)));
+            }
 
           g_object_unref (renderer);
         }
@@ -1103,10 +1106,10 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
           gimp_layer_mask_set_apply (mask, ! gimp_layer_mask_get_apply (mask));
           flush = TRUE;
         }
-      else
+      else if (! gimp_layer_mask_get_edit (mask))
         {
-          if (! gimp_layer_mask_get_edit (mask))
-            gimp_layer_mask_set_edit (mask, TRUE);
+          gimp_layer_mask_set_edit (mask, TRUE);
+          flush = TRUE;
         }
 
       if (flush)

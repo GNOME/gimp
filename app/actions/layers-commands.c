@@ -343,14 +343,8 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
 
   if (gimp_layer_get_mask (active_layer))
     {
-      gboolean flush;
-
-      flush = ! active_layer->mask->apply_mask || active_layer->mask->show_mask;
-
       gimp_layer_apply_mask (active_layer, GIMP_MASK_APPLY, TRUE);
-
-      if (flush)
-        gimp_image_flush (gimage);
+      gimp_image_flush (gimage);
     }
 }
 
@@ -364,14 +358,8 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
 
   if (gimp_layer_get_mask (active_layer))
     {
-      gboolean flush;
-
-      flush = active_layer->mask->apply_mask || active_layer->mask->show_mask;
-
       gimp_layer_apply_mask (active_layer, GIMP_MASK_DISCARD, TRUE);
-
-      if (flush)
-        gimp_image_flush (gimage);
+      gimp_image_flush (gimage);
     }
 }
 

@@ -1,3 +1,12 @@
+2003-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/layers-commands.c: always flush the image when applying
+	or discarding a layer mask. The active drawable may change and
+	make a menu update necessary (fixes bug #108958).
+
+	* app/widgets/gimplayertreeview.c: call gimp_image_flush() when
+	switching between layer and mask editing so the menus get updated.
+
 2003-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainereditor.c: allow to create a
