@@ -1,3 +1,9 @@
+2005-02-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_do): tiny optimization
+	based on a patch by Bill Skaggs. Process up to 16 tiles in one go
+	before updating the display.
+
 2005-01-31  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -524,7 +524,7 @@ gimp_image_map_do (GimpImageMap *image_map)
 {
   GimpImage   *gimage;
   PixelRegion  shadowPR;
-  gint         x, y, w, h;
+  gint         i;
 
   gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
@@ -535,40 +535,48 @@ gimp_image_map_do (GimpImageMap *image_map)
       return FALSE;
     }
 
-  /*  Process the pixel regions and apply the image mapping  */
-  (* image_map->apply_func) (&image_map->srcPR,
+  pixel_region_init (&shadowPR, gimage->shadow, 0, 0, 0, 0, FALSE);
+
+  /*  Process up to 16 tiles in one go. This reduces the overhead
+   *  caused by updating the display while the imagemap is being
+   *  applied and gives us a tiny speedup.
+   */
+  for (i = 0; i < 16; i++)
+    {
+      gint x, y, w, h;
+
+      image_map->apply_func (&image_map->srcPR,
                              &image_map->destPR,
                              image_map->user_data);
 
-  x = image_map->destPR.x;
-  y = image_map->destPR.y;
-  w = image_map->destPR.w;
-  h = image_map->destPR.h;
+      x = image_map->destPR.x;
+      y = image_map->destPR.y;
+      w = image_map->destPR.w;
+      h = image_map->destPR.h;
 
-  /*  apply the results  */
-  pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
+      pixel_region_resize (&shadowPR, x, y, w, h);
 
-  gimp_drawable_apply_region (image_map->drawable, &shadowPR,
-                              FALSE, NULL,
-                              GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                              NULL,
-                              x, y);
+      gimp_drawable_apply_region (image_map->drawable, &shadowPR,
+                                  FALSE, NULL,
+                                  GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                                  NULL,
+                                  x, y);
 
-  /*  display the results  */
-  gimp_drawable_update (image_map->drawable, x, y, w, h);
+      gimp_drawable_update (image_map->drawable, x, y, w, h);
+
+      image_map->PRI = pixel_regions_process (image_map->PRI);
+
+      if (image_map->PRI == NULL)
+        {
+          image_map->idle_id = 0;
+
+          gimp_image_flush (gimage);
+
+          return FALSE;
+        }
+    }
 
   g_signal_emit (image_map, image_map_signals[FLUSH], 0);
-
-  image_map->PRI = pixel_regions_process (image_map->PRI);
-
-  if (image_map->PRI == NULL)
-    {
-      image_map->idle_id = 0;
-
-      gimp_image_flush (gimage);
-
-      return FALSE;
-    }
 
   return TRUE;
 }
