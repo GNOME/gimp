@@ -248,7 +248,7 @@ HELP
           gdk_pixbuf_composite_color (pixbuf, tmp,
                                       0, 0, width, height, 0, 0, 1.0, 1.0,
                                       GDK_INTERP_NEAREST, 255,
-                                      0, 0, GIMP_CHECK_SIZE_SMALL_CHECKS,
+                                      0, 0, GIMP_CHECK_SIZE_SM,
                                       0x66666666, 0x99999999);
 
           g_object_unref (pixbuf);
@@ -532,7 +532,7 @@ CODE
 }
 
 @headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
-              "libgimpthumb/gimpthumb.h" "base/temp-buf.h"
+              "libgimpbase/gimpbase.h" "libgimpthumb/gimpthumb.h"
               "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
               "plug-in/plug-in-proc-def.h"

@@ -338,7 +338,7 @@ gimp_help_call (Gimp        *gimp,
 static gchar *
 gimp_help_get_locales (GimpGuiConfig *config)
 {
-  const gchar *lang;
+  const gchar *language;
   gchar       *locale;
 
   if (config->help_locales && strlen (config->help_locales))
@@ -349,11 +349,11 @@ gimp_help_get_locales (GimpGuiConfig *config)
   /*  Simulate the behaviour of GNU gettext() and look
    *  at LANGUAGE if the locale is not the "C" locale.
    */
-  lang = g_getenv ("LANGUAGE");
-  if (lang && (locale == NULL || strcmp (locale, "C")))
+  language = g_getenv ("LANGUAGE");
+  if (language && (locale == NULL || strcmp (locale, "C")))
     {
       g_free (locale);
-      return g_strdup (lang);
+      locale = language;
     }
 
   return g_strdup (locale);

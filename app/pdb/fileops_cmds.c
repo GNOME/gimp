@@ -38,12 +38,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "base/temp-buf.h"
 #include "config/gimpbaseconfig.h"
 #include "config/gimpconfig-path.h"
 #include "core/gimp.h"
@@ -301,7 +301,7 @@ file_load_thumbnail_invoker (Gimp         *gimp,
               gdk_pixbuf_composite_color (pixbuf, tmp,
                                           0, 0, width, height, 0, 0, 1.0, 1.0,
                                           GDK_INTERP_NEAREST, 255,
-                                          0, 0, GIMP_CHECK_SIZE_SMALL_CHECKS,
+                                          0, 0, GIMP_CHECK_SIZE_SM,
                                           0x66666666, 0x99999999);
 
               g_object_unref (pixbuf);

@@ -1,3 +1,13 @@
+2004-09-27  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail_invoker): use
+	the GIMP_CHECK_SIZE_SM define, not the enum value
+	GIMP_CHECK_SIZE_SMALL_CHECKS which is 0 (eeek!).
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+	* app/widgets/gimphelp.c (gimp_help_get_locales): minor cleanup.
+
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdataeditor.[ch]: added "data" property.
