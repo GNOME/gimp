@@ -197,8 +197,6 @@ static void      find_grid_pos             (GdkPoint  *p,
 					    GdkPoint  *gp,
 					    guint      state);
 
-static void      brush_list_button_callback (GtkWidget *widget,
-					     gpointer   data);
 static gint      calculate_point_to_line_distance (GdkPoint *p,
 						   GdkPoint *A,
 						   GdkPoint *B,
@@ -495,14 +493,18 @@ typedef struct DFigObj
 
 typedef struct BrushDesc
 {
-  gchar  *bname;   /* name of the brush */
-  gint32  width;   /* Width of brush */
-  gint32  height;  /* Height of brush */
-  guchar *pv_buf;  /* Buffer where brush placed */
-  gint16  x_off;
-  gint16  y_off;
-  gint    bpp;     /* Depth - should ALWAYS be the same for all BrushDesc */
+  gchar                *name;
+  gdouble               opacity;
+  gint                  spacing;
+  GimpLayerModeEffects  paint_mode;
+  gint                  width;
+  gint                  height;
+  guchar               *pv_buf;  /* Buffer where brush placed */
+  gint16                x_off;
+  gint16                y_off;
+  gchar                *popup;
 } BrushDesc;
+
 
 static GFigObj  *current_obj;
 static Dobject  *operation_obj;
@@ -613,6 +615,8 @@ static gint       gfig_obj_counts         (DAllObjs * objs);
 
 static void    gfig_brush_fill_preview_xy (GtkWidget *pw, gint x , gint y);
 
+static void      brush_list_button_callback (BrushDesc *bdesc);
+
 
 /* globals */
 
@@ -685,8 +689,7 @@ run (gchar       *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  gfig_select_drawable = drawable =
-    gimp_drawable_get (param[2].data.d_drawable);
+  gfig_select_drawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
@@ -2103,13 +2106,9 @@ static void
 gfig_brush_update_preview (GtkWidget *widget,
 			   gpointer   data)
 {
-  GtkWidget *pw = (GtkWidget *) data;
-  BrushDesc *bdesc;
+  BrushDesc *bdesc = g_object_get_data (G_OBJECT (data), "brush-desc");
 
-  /* Must update the dialog area */
-  /* Use the same brush as already set in the dialog */
-  bdesc = g_object_get_data (G_OBJECT (pw), "user_data");
-  brush_list_button_callback (NULL, bdesc);
+  brush_list_button_callback (bdesc);
 }
 
 static void
@@ -2229,7 +2228,8 @@ gfig_brush_fill_preview_xy (GtkWidget *pw,
 			    gint       y1)
 {
   gint row_count;
-  BrushDesc *bdesc = (BrushDesc*) g_object_get_data (G_OBJECT (pw), "user_data");
+  BrushDesc *bdesc = (BrushDesc *) g_object_get_data (G_OBJECT (pw),
+                                                     "brush-desc");
 
   /* Adjust start position */
   bdesc->x_off += x1;
@@ -2248,10 +2248,9 @@ gfig_brush_fill_preview_xy (GtkWidget *pw,
   /* Given an x and y fill preview in correctly offsetted */
   for (row_count = 0; row_count < BRUSH_PREVIEW_SZ; row_count++)
     gtk_preview_draw_row (GTK_PREVIEW (pw),
-			  &bdesc->pv_buf[bdesc->x_off*bdesc->bpp 
+			  &bdesc->pv_buf[bdesc->x_off * 3
 					+ (bdesc->width
-					   *bdesc->bpp
-					   *(row_count + bdesc->y_off))],
+					   * 3 * (row_count + bdesc->y_off))],
 			  0,
 			  row_count,
 			  BRUSH_PREVIEW_SZ);
@@ -2264,19 +2263,16 @@ gfig_brush_fill_preview (GtkWidget *pw,
 {
   GimpPixelRgn  src_rgn;
   GimpDrawable *brushdrawable;
-  gint          bcount = 3;
 
   g_free (bdesc->pv_buf); /* Free old area */
 
   brushdrawable = gimp_drawable_get (layer_ID);
 
-  bdesc->bpp = bcount;
-
   /* Fill the preview with the current brush name */
   gimp_pixel_rgn_init (&src_rgn, brushdrawable,
 		       0, 0, bdesc->width, bdesc->height, FALSE, FALSE);
 
-  bdesc->pv_buf = g_new (guchar, bdesc->width * bdesc->height * bcount);
+  bdesc->pv_buf = g_new (guchar, bdesc->width * bdesc->height * 3);
   bdesc->x_off = bdesc->y_off = 0; /* Start from top left */
 
   gimp_pixel_rgn_get_rect (&src_rgn, bdesc->pv_buf,
@@ -2287,14 +2283,14 @@ gfig_brush_fill_preview (GtkWidget *pw,
 }
 
 static void
-mygimp_brush_set (gchar *bname)
+mygimp_brush_set (gchar *name)
 {
   GimpParam *return_vals;
   int nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_set_brush",
 				    &nreturn_vals,
-				    GIMP_PDB_STRING, bname,
+				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
@@ -2310,24 +2306,18 @@ mygimp_brush_get (void)
 {
   GimpParam   *return_vals;
   gint         nreturn_vals;
-  static gchar saved_bname[1024]; /* required to be static - returned from proc */
+  gchar       *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
                                     &nreturn_vals,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      strncpy (saved_bname, return_vals[1].data.d_string, sizeof (saved_bname));
-    }
-  else
-    {
-      saved_bname[0] = '\0';
-    }
+    name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return (saved_bname);
+  return name;
 }
 
 static void
@@ -2399,7 +2389,7 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
    * the preview can be got from
    */
   static  gint32 layer_ID = -1;
-  gchar  *saved_bname;
+  gchar  *saved_name;
   gint32  width, height;
   gdouble line_pnts[2];
   GimpRGB foreground;
@@ -2419,9 +2409,9 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
 				      "Brush preview",
 				      48,
 				      48,
-				      0, /* RGB type */
+				      GIMP_RGB_IMAGE,
 				      100.0, /* opacity */
-				      0 /* mode */)) < 0)
+				      GIMP_NORMAL_MODE)) < 0)
 	{
 	  g_message ("Error in creating layer for brush preview");
 	  return -1;
@@ -2439,14 +2429,14 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
   gimp_palette_get_foreground (&foreground);
   gimp_palette_get_background (&background);
 
-  saved_bname = mygimp_brush_get ();
+  saved_name = mygimp_brush_get ();
 
   gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
   gimp_palette_set_background (&color);
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
   gimp_palette_set_foreground (&color);
 
-  mygimp_brush_set (bdesc->bname);
+  mygimp_brush_set (bdesc->name);
 
   mygimp_brush_info (&width, &height);
   bdesc->width = width;
@@ -2457,7 +2447,7 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
   gimp_layer_resize (layer_ID, width, height, 0, 0);
   gimp_image_resize (brush_image_ID, width, height, 0, 0);
 
-  gimp_drawable_fill (layer_ID, 1); /* Clear... Fill with white ... */
+  gimp_drawable_fill (layer_ID, GIMP_BACKGROUND_FILL);
 
   /* Blob of paint */
   gfig_paint (selvals.brshtype,
@@ -2467,21 +2457,21 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
   gimp_palette_set_background (&background);  
   gimp_palette_set_foreground (&foreground);
 
-  mygimp_brush_set (saved_bname);
+  mygimp_brush_set (saved_name);
+
+  g_free (saved_name);
 
   return layer_ID;
 }
 
 static void
-brush_list_button_callback (GtkWidget *widget,
-			    gpointer   data)
+brush_list_button_callback (BrushDesc *bdesc)
 {
   gint32 layer_ID;
 
-  BrushDesc *bdesc = (BrushDesc *) data;
   if ((layer_ID = gfig_gen_brush_preview (bdesc)) != -1)
     {
-      g_object_set_data (G_OBJECT (brush_page_pw), "user_data", bdesc);
+      g_object_set_data (G_OBJECT (brush_page_pw), "brush-desc", bdesc);
       gfig_brush_fill_preview (brush_page_pw, layer_ID, bdesc);
       gtk_widget_queue_draw (brush_page_pw);
     }
@@ -2767,44 +2757,58 @@ paint_page (void)
 }
 
 static void
-gfig_brush_invoker (gchar    *name,
-		    gdouble  opacity,
-		    gint     spacing,
-		    gint     paint_mode,
-		    gint     width,
-		    gint     height,
-		    gchar   *mask_data,
-		    gint     closing,
-		    gpointer udata)
+gfig_brush_invoker (const gchar          *name,
+		    gdouble               opacity,
+		    gint                  spacing,
+		    GimpLayerModeEffects  paint_mode,
+		    gint                  width,
+		    gint                  height,
+		    const guchar         *mask_data,
+		    gboolean              closing,
+		    gpointer              data)
 {
-  BrushDesc *bdesc = g_new0 (BrushDesc, 1); /* Mem leak */
+  BrushDesc *bdesc = (BrushDesc *) data;
 
-  bdesc->bpp = 3;
-  bdesc->width = width;
-  bdesc->height = height;
-  bdesc->bname = g_strdup (name);
+  g_free (bdesc->name);
 
-  brush_list_button_callback (NULL, bdesc);
+  bdesc->name       = g_strdup (name);
+  bdesc->width      = width;
+  bdesc->height     = height;
+  bdesc->opacity    = opacity;
+  bdesc->spacing    = spacing;
+  bdesc->paint_mode = paint_mode;
+
+  brush_list_button_callback (bdesc);
+
+  if (closing)
+    bdesc->popup = NULL;
 }
 
 static void
 select_brush_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  BrushDesc *bdesc = g_new0 (BrushDesc, 1);
+  BrushDesc *bdesc = (BrushDesc *) data;
 
-   bdesc->bpp = 3; 
-   bdesc->bname = mygimp_brush_get ();
-   
-  gimp_interactive_selection_brush (_("Gfig Brush Selection"),
-				    bdesc->bname,
-				    100.0, /* Opacity */
-				    -1,  /* spacing (default)*/
-				    1,   /* Paint mode */
-				    gfig_brush_invoker,
-				    NULL);
+  g_print ("select_brush_callback: %s %s\n", bdesc->popup, bdesc->name);
 
-   brush_list_button_callback (NULL, bdesc); 
+  if (bdesc->popup)
+    /*  calling gimp_brushes_set_popup() raises the dialog  */
+    gimp_brushes_set_popup (bdesc->popup,
+                            bdesc->name,
+                            bdesc->opacity,
+                            bdesc->spacing,
+                            bdesc->paint_mode);
+  else
+    bdesc->popup = gimp_interactive_selection_brush (_("Gfig Brush Selection"),
+                                                     bdesc->name,
+                                                     100.0,  /*  opacity  */
+                                                     -1,     /*  spacing  */
+                                                     GIMP_NORMAL_MODE,
+                                                     gfig_brush_invoker,
+                                                     bdesc);
+
+  brush_list_button_callback (bdesc);
 }
 
 static GtkWidget *
@@ -2914,15 +2918,14 @@ brush_page (void)
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (brush_sel_button)->child), 2, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_brush_callback),
-                    NULL);
+                    bdesc);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     NULL, 0, 0,
 			     button, 1,  TRUE);
 
   /* Setup initial brush settings */
-  bdesc->bpp   = 3;
-  bdesc->bname = mygimp_brush_get ();
-  brush_list_button_callback (NULL, bdesc);
+  bdesc->name = mygimp_brush_get ();
+  brush_list_button_callback (bdesc);
 
   return vbox;
 }
@@ -3422,7 +3425,7 @@ add_objects_list (void)
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Merge"));
+  button = gtk_button_new_with_mnemonic (_("_Merge"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (merge_button_callback),
                     list);
@@ -3471,7 +3474,6 @@ gfig_pos_update_labels (gpointer data)
 {
   static gchar buf[256];
 
-  /*gtk_idle_remove (pos_tag);*/
   pos_tag = -1;
 
   g_snprintf (buf, sizeof (buf), "%d, %d", x_pos_val, y_pos_val);
@@ -3494,7 +3496,6 @@ gfig_pos_update (gint x,
 
   if (update && pos_tag == -1 && selvals.showpos)
     {
-      /*pos_tag = gtk_idle_add ((GtkFunction)gfig_pos_update_labels, NULL);*/
       gfig_pos_update_labels (NULL);
     }
 }
@@ -3514,24 +3515,20 @@ gfig_obj_size_label (void)
 {
   GtkWidget *label;
   GtkWidget *hbox;
-  gchar buf[256];
 
   hbox = gtk_hbox_new (TRUE, 6);
 
   /* Position labels */
-  label = gtk_label_new ("Size: ");
-  gtk_widget_show (label);
+  label = gtk_label_new (_("Size:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  obj_size_label = gtk_label_new ("");
+  obj_size_label = gtk_label_new ("0");
   gtk_misc_set_alignment (GTK_MISC (obj_size_label), 0.5, 0.5);    
-  gtk_widget_show (obj_size_label);
   gtk_box_pack_start (GTK_BOX (hbox), obj_size_label, FALSE, FALSE, 0);
+  gtk_widget_show (obj_size_label);
 
   gtk_widget_show (hbox);
-
-  sprintf (buf, "%6d", 0);
-  gtk_label_set_text (GTK_LABEL (obj_size_label), buf);
 
   return (hbox);
 }
@@ -3713,15 +3710,6 @@ make_preview (void)
   return vbox;
 }
 
-#if 0
-scatch ()
-{
-
-  pause ();
-
-}
-#endif /* 0 */
-
 static void
 gfig_grid_colours (GtkWidget   *widget,
 		   GdkColormap *cmap)
@@ -3875,8 +3863,6 @@ gfig_dialog (void)
   gfig_grid_colours (gfig_preview, xxx);
   /* Popup for list area */
   gfig_op_menu_create (top_level_dlg);
-
-  /* signal (11, scatch); For debugging */
 
   gtk_main ();
 
@@ -4128,6 +4114,7 @@ gfig_preview_events (GtkWidget *widget,
     default:
       break;
     }
+
   return FALSE;
 }
 
@@ -4142,7 +4129,7 @@ typedef struct _GfigListOptions
   GtkWidget *name_entry;
   GtkWidget *list_entry;
   GFigObj   *obj;
-  gint       created;
+  gboolean   created;
 } GfigListOptions;
 
 static GtkWidget *
@@ -4230,7 +4217,7 @@ gfig_list_cancel_callback (GtkWidget *widget,
 static void
 gfig_dialog_edit_list (GtkWidget *lwidget,
 		       GFigObj   *obj,
-		       gint       created)
+		       gboolean   created)
 {
   GfigListOptions *options;
   GtkWidget       *vbox;
@@ -4459,16 +4446,19 @@ paint_layer_copy (gchar *new_name)
 static void
 paint_layer_new (gchar *new_name)
 {
-  gint32 layer_id;
-  gint32 fill_type;
-  int    isgrey = 0;
+  GimpFillType   fill_type;
+  GimpImageType  type;
+  gint32         layer_id;
 
   switch (gimp_drawable_type (gfig_select_drawable->drawable_id))
     {
     case GIMP_GRAYA_IMAGE:
     case GIMP_GRAY_IMAGE:
-      isgrey = 2;
+      type = GIMP_GRAYA_IMAGE;
+      break;
+
     default:
+      type = GIMP_RGBA_IMAGE;
       break;
     }
 
@@ -4476,35 +4466,34 @@ paint_layer_new (gchar *new_name)
 				  new_name,
 				  img_width,
 				  img_height,
-				  1 + isgrey, /* RGBA or GRAYA type */
+				  type,
 				  100.0, /* opacity */
-				  0 /* mode */)) < 0)
-    g_warning (_("Error in creating layer"));
-  else
+				  GIMP_NORMAL_MODE)) < 0)
     {
-      gimp_image_add_layer (gfig_image, layer_id, -1);
-      gimp_drawable_fill (layer_id, 1);
+      g_warning ("Error in creating layer");
+      return;
     }
   
+  gimp_image_add_layer (gfig_image, layer_id, -1);
+
   gfig_drawable = layer_id;
   
   switch (selvals.onlayerbg)
     {
     case LAYER_TRANS_BG:
-      fill_type = 3;
+      fill_type = GIMP_TRANSPARENT_FILL;
       break;
     case LAYER_BG_BG:
-      fill_type = 1;
+      fill_type = GIMP_BACKGROUND_FILL;
       break;
     case LAYER_FG_BG:
-      fill_type = 0;
+      fill_type = GIMP_FOREGROUND_FILL;
       break;
     case LAYER_WHITE_BG:
-      fill_type = 2;
+      fill_type = GIMP_WHITE_FILL;
       break;
-    case LAYER_COPY_BG:
     default:
-      fill_type = 1;
+      fill_type = GIMP_BACKGROUND_FILL;
       g_warning ("Paint layer new internal error %d\n", selvals.onlayerbg);
       break;
     }
@@ -4517,7 +4506,7 @@ paint_layer_new (gchar *new_name)
 }
 
 static void
-paint_layer_fill ()
+paint_layer_fill (void)
 {
   gimp_bucket_fill (gfig_drawable,
 		    selopt.fill_type,    /* Fill mode */
@@ -4545,13 +4534,13 @@ gfig_paint_callback (GtkWidget *widget,
   count = gfig_obj_counts (objs);
 #if 0
   gtk_progress_bar_update (GTK_PROGRESS_BAR (progress_widget), (gfloat) 0.0);
-#endif /* 0 */
+#endif
 
   /* Set the brush up */
-  bdesc = g_object_get_data (G_OBJECT (brush_page_pw), "user_data");
+  bdesc = g_object_get_data (G_OBJECT (brush_page_pw), "brush-desc");
 
   if (bdesc)
-    mygimp_brush_set (bdesc->bname);
+    mygimp_brush_set (bdesc->name);
 
   gimp_undo_push_group_start (gfig_image);
 
@@ -5322,16 +5311,20 @@ dialog_update_preview (void)
 static void
 gfig_new_gc (void)
 {
- GdkColor fg, bg;
+  GdkColor fg, bg;
 
- /*  create a new graphics context  */
- gfig_gc = gdk_gc_new (gfig_preview->window);
- gdk_gc_set_function (gfig_gc, GDK_INVERT);
- fg.pixel = 0xFFFFFFFF;
- bg.pixel = 0x00000000;
- gdk_gc_set_foreground (gfig_gc, &fg);
- gdk_gc_set_background (gfig_gc, &bg);
- gdk_gc_set_line_attributes (gfig_gc, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+  /*  create a new graphics context  */
+  gfig_gc = gdk_gc_new (gfig_preview->window);
+
+  gdk_gc_set_function (gfig_gc, GDK_INVERT);
+
+  fg.pixel = 0xFFFFFFFF;
+  bg.pixel = 0x00000000;
+  gdk_gc_set_foreground (gfig_gc, &fg);
+  gdk_gc_set_background (gfig_gc, &bg);
+
+  gdk_gc_set_line_attributes (gfig_gc, 1,
+                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 
 static gint 
