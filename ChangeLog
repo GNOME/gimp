@@ -1,3 +1,11 @@
+2003-10-26 Simon Budig  <simon@gimp.org>
+
+	* tools/authorsgen/contributors: Fixed/Added some UTF-8 encoded
+	names. Please speak up if I did mess up your name.
+
+	* AUTHORS
+	* app/gui/authors.h: regenerated.
+
 2003-10-25  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c: corrected the source of the
