@@ -98,7 +98,7 @@ compressed images works too.
 
 Pressing and holding the Shift key before making a selection allows
 you to add to the current selection instead of replacing it.  Using
-Ctrl before making a selection substracts from the current one.
+Ctrl before making a selection subtracts from the current one.
 
 You can press or release the Shift and Ctrl keys while you are
 making a selection in order to constrain it to a perfect square 

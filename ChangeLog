@@ -1,3 +1,7 @@
+Fri May 15 03:54:48 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* gimp_tips.txt: fixed typo
+
 Fri May 15 03:03:00 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/iscissors.c: fixed bezierify on offset layers
