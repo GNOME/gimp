@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ unselect_command_execute(Command_t *command)
 {
    UnselectCommand_t *unselect_command = (UnselectCommand_t*) command;
    object_unselect(unselect_command->obj);
+   redraw_preview();		/* Fix me! */
    return CMD_APPEND;
 }
 
@@ -75,4 +76,5 @@ unselect_command_undo(Command_t *command)
 {
    UnselectCommand_t *unselect_command = (UnselectCommand_t*) command;
    object_select(unselect_command->obj);
+   redraw_preview();		/* Fix me! */
 }

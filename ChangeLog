@@ -1,9 +1,16 @@
+2002-06-14  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_cmd_unselect.c
+	* plug-ins/imagemap/imap_cmd_select.c
+	* plug-ins/imagemap/imap_rectangle.c: Fix for #71478 (Imagemap 
+	plug-in does not draw some rectangles correctly)
+
 2002-06-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: made the DBBrowser dialog
 	at least a little bit useable.
 
-2002-06-13  Maurits Rijk  <maurits@linux.local>
+2002-06-13  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/wind.c (dialog_box): enable mnemonics, minor code
 	cleanup.

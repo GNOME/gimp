@@ -486,6 +486,19 @@ rectangle_get_stock_icon_name(void)
    return IMAP_STOCK_RECTANGLE;
 }
 
+static gboolean
+rectangle_factory_finish(Object_t *obj, gint x, gint y)
+{
+   Rectangle_t *rectangle = ObjectToRectangle(obj);
+
+   rectangle->width = x - rectangle->x;
+   rectangle->height = y - rectangle->y;
+
+   rectangle_normalize(obj);
+   
+   return TRUE;
+}
+
 static Object_t*
 rectangle_factory_create_object(gint x, gint y)
 {
@@ -514,7 +527,7 @@ rectangle_factory_set_xy(Object_t *obj, guint state, gint x, gint y)
 
 static ObjectFactory_t rectangle_factory = {
    NULL,			/* Object pointer */
-   NULL,			/* Finish func */
+   rectangle_factory_finish,
    NULL,			/* Cancel func */
    rectangle_factory_create_object,
    rectangle_factory_set_xy
