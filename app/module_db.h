@@ -23,6 +23,9 @@
 /* Load any modules we find on the module-path set in the gimprc */
 void module_db_init (void);
 
+/* Unload all modules, in case a module needs some cleanups */
+void module_db_free (void);
+
 GtkWidget *module_db_browser_new (void);
 
 

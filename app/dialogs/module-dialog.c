@@ -140,7 +140,37 @@ module_db_init (void)
 #endif
 }
 
+/* not closing the module at exit time is safer and faster.  */
+static void
+free_a_single_module_cb (void *data)
+{
+  module_info *mod = data;
 
+  g_return_if_fail (mod->state == ST_UNLOAD_REQUESTED);
+
+  mod->info = NULL;
+  mod->state = ST_UNLOADED_OK;
+}
+
+static void
+free_a_single_module (gpointer data, gpointer user_data)
+{
+  module_info *mod = data;
+
+  if (mod->module && mod->unload && mod->state == ST_LOADED_OK)
+    {
+      mod->state = ST_UNLOAD_REQUESTED;
+
+      gimp_module_ref (mod);
+      mod->unload (mod->info->shutdown_data, free_a_single_module_cb, mod);
+    }
+}
+
+void
+module_db_free (void)
+{
+  gimp_set_foreach (modules, free_a_single_module, NULL);
+}
 
 GtkWidget *
 module_db_browser_new (void)

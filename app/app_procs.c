@@ -613,6 +613,7 @@ app_exit_finish (void)
   message_handler = CONSOLE;
   we_are_exiting = TRUE;
 
+  module_db_free ();
   device_status_free ();
   lc_dialog_free ();
   gdisplays_delete ();

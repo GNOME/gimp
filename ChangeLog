@@ -1,3 +1,8 @@
+Wed Apr 14 14:27:51 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* app/app_procs.c, app/module_db.[ch]: call module_unload functions on all
+	modules when we quit (don't close it, though).
+
 Wed Apr 14 00:27:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-
@@ -57,8 +62,8 @@ Mon Apr 12 21:54:48 PDT 1999 Manish Singh <yosh@gimp.org>
 Tue Apr 13 02:27:26 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/parasite.[ch]: Removed the parasite load/save functions.
-        * app/paraslitelist.[ch]: Same as above, for the list load/save
-        functions.
+	* app/paraslitelist.[ch]: Same as above, for the list load/save
+	functions.
 
 Mon Apr 12 23:44:14 MEST 1999 Sven Neumann <sven@gimp.org>
 
@@ -134,13 +139,13 @@ Mon Apr 12 23:44:14 MEST 1999 Sven Neumann <sven@gimp.org>
 Sun Apr 11 23:35:31 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/general.c: save string token length into "token_int".
-        Fixed parsing of escape sequences, added '\0' and '"' sequences.
+	Fixed parsing of escape sequences, added '\0' and '"' sequences.
 
-        * app/gimprc.c: implement new type "parasite".
+	* app/gimprc.c: implement new type "parasite".
 
-        * app/gimpparasite.c: load and save parasiterc in "semi-ascii".
+	* app/gimpparasite.c: load and save parasiterc in "semi-ascii".
 
-        * libgimp/parasite.[ch]: new function parasite_flags.
+	* libgimp/parasite.[ch]: new function parasite_flags.
 
 Sat Apr 10 23:33:26 PDT 1999 Manish Singh <yosh@gimp.org>
 
@@ -762,7 +767,7 @@ Sat Mar 20 21:55:53 GMT 1999  Adam D. Moss  <adam@gimp.org>
 	on expose.
 
 	* gdisplay.c gdisplay.h: Export a function to idly refresh from
-        the composite buffer without doing a re-render.
+	the composite buffer without doing a re-render.
 
 Sat Mar 20 17:22:56 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
@@ -877,8 +882,8 @@ Tue Mar 16 23:39:26 EST 1999 Adrian Likins <adrian@gimp.org>
 
 Tue Mar 16 19:12:08 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * app/batch.c: make the perl-server independent of script-fu. This
-        also speeds up starup considerably.
+	* app/batch.c: make the perl-server independent of script-fu. This
+	also speeds up starup considerably.
 
 1999-03-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
@@ -1041,7 +1046,7 @@ Sat Mar 13 19:46:54 MET 1999 Sven Neumann <sven@gimp.org>
 
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
-        Moved all pixmaps and bitmaps from app/ and libgimp/ to pixmaps/
+	Moved all pixmaps and bitmaps from app/ and libgimp/ to pixmaps/
 
 	* app/tools/*
 	* libgimp/chain.xpm: removed these files
@@ -1082,9 +1087,9 @@ Fri Mar 12 21:30:57 GMT 1999 Andy Thomas <alt@gimp.org>
 
 Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * libgimp/gimp.c: split gimp_quit into two functions, gimp_quit
-        and gimp_close. Let gimp_main return to the calling function in
-        the common cases (i.e. not in the error case).
+	* libgimp/gimp.c: split gimp_quit into two functions, gimp_quit
+	and gimp_close. Let gimp_main return to the calling function in
+	the common cases (i.e. not in the error case).
 
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
@@ -1100,7 +1105,7 @@ Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
-        This is mostly unit stuff and code cleanup
+	This is mostly unit stuff and code cleanup
 	
 	* libgimp/gimpi.def: add some functions
 
@@ -1129,8 +1134,8 @@ Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 
 Thu Mar 11 19:42:12 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * configure.in, config.h.in: added test for _exit (mirrors the
-        change in plug-ins/perl/etc/configure.frag)
+	* configure.in, config.h.in: added test for _exit (mirrors the
+	change in plug-ins/perl/etc/configure.frag)
 
 1999-03-10  Jay Cox  <jaycox@earthlink.net>
 
@@ -1173,7 +1178,7 @@ Mon Mar  8 16:27:25 PST 1999 Manish Singh <yosh@gimp.org>
 Mon Mar  8 21:23:10 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/layer_cmds.c: updated gimp_layer_new and gimp_layer_set_mode to
-        accept a DIVIDE_MODE argument.
+	accept a DIVIDE_MODE argument.
 
 1999-03-08  Jay Cox  <jaycox@earthlink.net>
 
@@ -1534,8 +1539,8 @@ Wed Feb 24 19:19:07 MET 1999 Sven Neumann <sven@gimp.org>
 
 Tue Feb 23 02:57:16 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * app/drawable_cmds.c: fix documentation for
-        drawable_type_with_alpha.
+	* app/drawable_cmds.c: fix documentation for
+	drawable_type_with_alpha.
 
 Tue Feb 23 00:05:39 GMT 1999 Adam D. Moss <adam@gimp.org>
 
@@ -1556,13 +1561,13 @@ Tue Feb 23 00:05:39 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 Mon Feb 22 14:08:59 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * app/procedural_db.h, app/internal_procs.c, app/procedural_db.c
-        libgimp/gimpfeatures.h.in: "gimp_procedural_db_get_data_size"
-        exists, but has never been registered (of course it was buggy as
-        well). This is especially funny since the function in _gimp-perl_
-        that should be using it since half a year tested the wrong symbol
-        for its presence, so this went undetected. One could argue that
-        this is the least used gimp function ever ;->
+	* app/procedural_db.h, app/internal_procs.c, app/procedural_db.c
+	libgimp/gimpfeatures.h.in: "gimp_procedural_db_get_data_size"
+	exists, but has never been registered (of course it was buggy as
+	well). This is especially funny since the function in _gimp-perl_
+	that should be using it since half a year tested the wrong symbol
+	for its presence, so this went undetected. One could argue that
+	this is the least used gimp function ever ;->
 
 1999-02-22 adam, blah blah
 
@@ -1624,7 +1629,7 @@ Sat Feb 20 16:12:33 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* libgimp/gimpunit.h
 	  libgimp/gimpunit.c: New files from Michael Natterer 
-          <mitschel@cs.tu-berlin.de>, gimp_unit_* routines.
+	  <mitschel@cs.tu-berlin.de>, gimp_unit_* routines.
 
 	* app/gimage.h
 	  app/gimpimage.h
@@ -1792,7 +1797,7 @@ Sun Feb 14 22:16:16 1999  Tor Lillqvist  <tml@iki.fi>
 
 Sun Feb 14 23:27:57 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * docs/parasites.txt: Added some suggestions from Jay Cox.
+	* docs/parasites.txt: Added some suggestions from Jay Cox.
 
 Sun Feb 14 4:28:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* plug-ins/sinus/sinus.c: changed macro definition supplied by
@@ -1800,8 +1805,8 @@ Sun Feb 14 4:28:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 
 Sun Feb 14 23:11:30 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * libgimp/gimptile.c (gimp_tile_cache_ntiles): Round up, not down,
-        when setting the tilecachesize, in case we ever do 63x63 tiles ;)
+	* libgimp/gimptile.c (gimp_tile_cache_ntiles): Round up, not down,
+	when setting the tilecachesize, in case we ever do 63x63 tiles ;)
 
 Sun Feb 14 20:43:55 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
@@ -1827,8 +1832,8 @@ Sun Feb 14 20:43:55 GMT 1999  Austin Donnelly  <austin@gimp.org>
 Sun Feb 14 02:33:42 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/gimage_cmds.c: Corrected argument name.
-        * docs/parasites.txt: Add some thoughts about parasite
-        data formats.
+	* docs/parasites.txt: Add some thoughts about parasite
+	data formats.
 
 1999-02-14  Jay Cox  <jaycox@earthlink.net>
 
@@ -1872,22 +1877,22 @@ Sun Feb 14 01:27:29 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 Sat Feb 13 19:05:16 CET 1999 Marc Lehmann <pcg@goof.com>
 
-        * app/internal_procs.c
-        * app/parasite_cmds.h
-        * app/parasite_cmds.c
-        * app/gimpparasite.h
-        * app/gimpparasite.c
-        * app/gimage_cmds.h
-        * app/gimage_cmds.c
-        * app/gimpimage.h
-        * app/gimpimage.c
-        * app/drawable_cmds.h
-        * app/drawable_cmds.c
-        * app/gimpdrawable.h
-        * app/gimpdrawable.c
-        
-        Added parasite_list functions for global parasites, drawables and
-        images as internal (C) and pdb functions.
+	* app/internal_procs.c
+	* app/parasite_cmds.h
+	* app/parasite_cmds.c
+	* app/gimpparasite.h
+	* app/gimpparasite.c
+	* app/gimage_cmds.h
+	* app/gimage_cmds.c
+	* app/gimpimage.h
+	* app/gimpimage.c
+	* app/drawable_cmds.h
+	* app/drawable_cmds.c
+	* app/gimpdrawable.h
+	* app/gimpdrawable.c
+	
+	Added parasite_list functions for global parasites, drawables and
+	images as internal (C) and pdb functions.
 
 Wed Feb 10 23:44:00 MET 1999 Sven Neumann <sven@gimp.org>
 
@@ -1911,7 +1916,7 @@ Mon Feb  8 19:17:58 GMT 1999 Adam D. Moss <adam@gimp.org>
 Mon Feb  8 12:12:18 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/bezier_select.c: applied patch from Shuji Narazaki 
-          <narazaki@gimp.org> which adds bezier stroke.
+	  <narazaki@gimp.org> which adds bezier stroke.
 
 Sun Feb  7 22:06:04 GMT 1999 Adam D. Moss <adam@gimp.org>
 
@@ -2425,11 +2430,11 @@ Sun Jan 17 18:28:58 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 Sun Jan 17 16:56:25 GMT 1999 Adam D. Moss <adam@gimp.org>
 
-        * app/blend.c app/bucket_fill.c app/convert.c app/crop.c
-        app/cursorutil.c app/cursorutil.h app/dialog_handler.c
-        app/dialog_handler.h app/fuzzy_select.c app/gdisplay.c
-        app/gimage_cmds.c app/gimpimage.c app/scroll.c
-        app/transform_core.c app/xcf.c
+	* app/blend.c app/bucket_fill.c app/convert.c app/crop.c
+	app/cursorutil.c app/cursorutil.h app/dialog_handler.c
+	app/dialog_handler.h app/fuzzy_select.c app/gdisplay.c
+	app/gimage_cmds.c app/gimpimage.c app/scroll.c
+	app/transform_core.c app/xcf.c
 
 	Hourglasses also apply to all registered dialogs.  Hourglasses
 	added in a couple more important places.  New hack lets
@@ -2450,13 +2455,13 @@ Sat Jan 16 18:21:58 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
 
 Wed Jan 13 16:12:35 PST 1999 Manish Singh <yosh@gimp.org>
 
-        * app/colormaps.c
-        * app/devices.h
-        * app/tips_dialog.h: minor cleanups
+	* app/colormaps.c
+	* app/devices.h
+	* app/tips_dialog.h: minor cleanups
 
-        * app/gimpimage.c: the dirty/clean handling seemed weird, and wasn't
-        correct in all cases. Just do a straight increment/decrement to
-        try to fix it.
+	* app/gimpimage.c: the dirty/clean handling seemed weird, and wasn't
+	correct in all cases. Just do a straight increment/decrement to
+	try to fix it.
 
 Thu Jan 14 00:02:56 MET 1999 Sven Neumann <sven@gimp.org>
 
@@ -2657,9 +2662,9 @@ Sun Jan 10 20:44:07 GMT 1999 Adam D. Moss <adam@gimp.org>
 Sun Jan 10 20:13:13 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/psd/psd.c: 
-        Greatly reduced memory requirements for layered image loading -
-        we now do just-in-time channel unpacking.  Some little
-        cleanups too.
+	Greatly reduced memory requirements for layered image loading -
+	we now do just-in-time channel unpacking.  Some little
+	cleanups too.
 
 Sat Jan  9 21:24:20 PST 1999 Manish Singh <yosh@gimp.org>
 
@@ -3063,7 +3068,7 @@ Thu Dec  3 16:51:42 CST 1998 Shawn T. Amundson <amundson@gtk.org>
 	* app/resize.c
 	* app/threshold.c
 	* app/tips_dialog.c: use gtk_container_set_border_width and
-          gtk_window_set_position instead of deprecated versions
+	  gtk_window_set_position instead of deprecated versions
 
 
 Tue Dec  1 22:12:08 CST 1998 Larry Ewing  <lewing@gimp.org>
@@ -3502,11 +3507,11 @@ Sat Oct 31 14:57:40 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 Sat Oct 31 01:37:23 CET 1998 Marc Lehmann <pcg@goof.com>
 
-        * configure.in: make perl use the GLIB_CFLAGS/LIBS vars properly.
+	* configure.in: make perl use the GLIB_CFLAGS/LIBS vars properly.
 
 Tue Oct  6 11:07:56 CEST 1998 Marc Lehmann <pcg@goof.com>
 
-        * app/drawable_cmds.c: corrected documentation for gimp_drawable_fill.
+	* app/drawable_cmds.c: corrected documentation for gimp_drawable_fill.
 
 Fri Oct 30 01:53:56 1998  Jay Cox  (jaycox@earthlink.net)
 
@@ -4070,7 +4075,7 @@ Sat Sep 26 20:46:18 BST 1998  Adam D. Moss <adam@gimp.org>
 Sat Sep 26 00:54:14 EDT 1998   Adrian Likins <adrian@gimp.org>
 
 	*gimptool.1: minor update to add info about -strip
-        build options.
+	build options.
 
 Fri Sep 25 18:05:39 BST 1998  Adam D. Moss <adam@gimp.org>
 
@@ -4472,14 +4477,14 @@ Fri Aug 21 17:25:34 CDT 1998  Larry Ewing  <lewing@gimp.org>
 Wed Aug 19 21:00:00 PDT 1998 Ray Lehtiniemi <rayl@netrover.com>
 
 	* app/airbrush.c gdisplay.c gimage.h gimpimage.c gimpimage.h
-        gimpimageP.h image_render.c indexed_palette.c info_window.c
-        layers_dialog.c:
+	gimpimageP.h image_render.c indexed_palette.c info_window.c
+	layers_dialog.c:
 
-        Remove the distinction between flat and layered gimages.  now
-        gimages always allocate a projection, even if there is only a
-        single layer.
+	Remove the distinction between flat and layered gimages.  now
+	gimages always allocate a projection, even if there is only a
+	single layer.
 
-        Fix some gcc-isms.
+	Fix some gcc-isms.
 
 Tue Aug 18 15:42:44 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -4736,9 +4741,9 @@ Thu Aug  6 15:12:16 PDT 1998 Manish Singh <yosh@gimp.org>
 Thu Aug  6 16:55:45 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-enums.h
-        * plug-ins/script-fu/script-fu.c
-        * plug-ins/script-fu/script-fu-scripts.c: New ScriptFu argument type
-        SF-ADJUSTMENT: You can have sliders and spin-buttons in the dialog.
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-scripts.c: New ScriptFu argument type
+	SF-ADJUSTMENT: You can have sliders and spin-buttons in the dialog.
 
 	* plug-ins/script-fu/scripts/test-sphere.scm: Simple script to show
 	and test the new interface.
@@ -4954,7 +4959,7 @@ Fri Jul 24 12:01:31 CDT 1998  Larry Ewing  <lewing@gimp.org>
 Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/vector2d.[ch] Makefile.am: new files for vector math.
-        Very minimal.
+	Very minimal.
 
 	* gimpbrush.[ch]: added support for brush axis.
 
@@ -4994,10 +4999,10 @@ Thu Jul 23 01:53:09 MEST 1998 Sven Neumann <sven@gimp.org>
 
 Wed Jul 22 23:32:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
-        * docs/quick_reference.ps
-        * docs/quick_reference.tar.gz:
-        Updated the Quick Reference Sheet to the much improved version made
-        by Sven Anders <anderss@fmi.uni-passau.de>.
+	* docs/quick_reference.ps
+	* docs/quick_reference.tar.gz:
+	Updated the Quick Reference Sheet to the much improved version made
+	by Sven Anders <anderss@fmi.uni-passau.de>.
 
 Tue Jul 21 18:32:19 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -5146,7 +5151,7 @@ Thu Jul 16 04:38:19 PDT 1998 Jay Cox  <jaycox@earthlink.net>
 
 	* brush_edit.[ch]: added a zoom indicator on the preview
 
-        * gimpbrushgenerated.[ch] gimpbrushlist.c: added support
+	* gimpbrushgenerated.[ch] gimpbrushlist.c: added support
 	for loading generated brushes.
 
 	* data/brushes/round01.vbr: a sample generated brush
@@ -5203,11 +5208,11 @@ Mon Jul 13 22:00:31 EDT 1998 Adrian Likins <adrian@gimp.org>
 Mon Jul 13 19:07:43 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	* app/drawable.c app/commands.c app/gimpimage.h
-          app/layers_dialog.c: applied gimp-kc-980707-1 from
+	  app/layers_dialog.c: applied gimp-kc-980707-1 from
 	  Kevin Cozens <kcozens@interlog.com>
 
 	* Dialog boxes for creating a new image or a new layer now include
-          as a fill type option.
+	  as a fill type option.
 
 Mon Jul 13 18:08:35 EDT 1998 Adrian Likins <adrian@gimp.org>
 
@@ -5227,12 +5232,12 @@ Mon Jul 13 17:48:21 EDT 1998 Adrian Likins <adrian@gimp.org>
 	Adds fixed size and fixed ratio rectangular selections to the
 	gimp.
 
-        Fixed size is enabled by filling in the height and width boxes in
-        the rectangular selection tool options box and checking the
-        "fixed size" checkbox.
+	Fixed size is enabled by filling in the height and width boxes in
+	the rectangular selection tool options box and checking the
+	"fixed size" checkbox.
 
-        Fixed ratio is enabled by enabling fixed size (set the height and
-        width to the desired ratio values) and holding shift after
+	Fixed ratio is enabled by enabling fixed size (set the height and
+	width to the desired ratio values) and holding shift after
 	starting the selection (holding shift while starting the selection
 	will change the selection operation to add).
 
@@ -5290,11 +5295,11 @@ Sun Jul 12 15:56:01 BST 1998 Adam D. Moss <adam@gimp.org>
 
 Sun Jul 12 04:16:17 PDT 1998 Jay Cox <jaycox@earthlink.net>
 	* gimplist{.c,.h,F.h,P.h}
-        New class for lists
+	New class for lists
 
 	* gimpbrushlist.h gimpbrushlistF.h gimpbrushlistP.h brush_select.c
-        split gimpbrushlist.h into 3 files.  Made gimplist
-        the parent class of GimpBrushList.
+	split gimpbrushlist.h into 3 files.  Made gimplist
+	the parent class of GimpBrushList.
 
 	* gimpbrushlist.c: brushes in the list are once again sorted by name.
 
@@ -5349,7 +5354,7 @@ Sun Jul 12 00:13:02 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/tools.c: More session-managment functionality. Opened dialogs
 	are saved and eventually reopened. Try to use the --restore-session
 	command-line option. The format of gimprc and sessionrc have
-        slightly changed. You should remove your sessionrc and delete the
+	slightly changed. You should remove your sessionrc and delete the
 	line (save-window-positions-on-exit) from your gimprc to avoid
 	warnings.
 
@@ -5422,11 +5427,11 @@ Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@earthlink.net>
 
 	* paint_core.c paint_core.h gimpbrushlist.h gimpbrushlist.c
 	  gimpbrushgenerated.c brush_select.h brush_select.c
-        Signalified brushes.  got rid of some warnings.
-        Fixed a bug that showed up when run --no-data
+	Signalified brushes.  got rid of some warnings.
+	Fixed a bug that showed up when run --no-data
 
-        * paint_funcs.c
-        Minor speed tweak to border_region
+	* paint_funcs.c
+	Minor speed tweak to border_region
 
 Thu Jul 9 21:23:46 1998 Scott Goehring <scott@poverty.bloomington.in.us>
 
@@ -5451,27 +5456,27 @@ Thu Jul  9 22:04:04 EDT 1998  Michael K. Johnson <johnsonm@redhat.com>
 
 Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
-        * app/brushes.c app/brushes.h:  removed files
+	* app/brushes.c app/brushes.h:  removed files
 
-        * app/gimpbrush.c app/gimpbrush.h
-        * app/gimpbrushlist.c app/gimpbrushlist.h
-          the New files replace the functionality of brushes.[ch]
-          and objectify the brushes.  The basic structure is in
-          but signals are not used as much as they should be.
+	* app/gimpbrush.c app/gimpbrush.h
+	* app/gimpbrushlist.c app/gimpbrushlist.h
+	  the New files replace the functionality of brushes.[ch]
+	  and objectify the brushes.  The basic structure is in
+	  but signals are not used as much as they should be.
 
-        * app/gimpbrushgenerated.c app/gimpbrushgenerated.h
-          New type of brush that is can be modified on the fly
+	* app/gimpbrushgenerated.c app/gimpbrushgenerated.h
+	  New type of brush that is can be modified on the fly
 
-        * brush_edit.c brush_edit.h
-          new files that implement a gui for the GimpBrushGenerated class.
-          very basic.
+	* brush_edit.c brush_edit.h
+	  new files that implement a gui for the GimpBrushGenerated class.
+	  very basic.
 
 	* brush_select.c devices.c ink.c gimpobject.h paint_core.c
-          brush_select.h brush_edit.h preferences_dialog.c pencil.c
-          paintbrush.c internal_procs.c gimage_mask.c eraser.c convolve.c
-          commands.c colormaps.c airbrush.c clone.c app_procs.c
-          paint_core.h
-          Minor changes to support above new functionality.
+	  brush_select.h brush_edit.h preferences_dialog.c pencil.c
+	  paintbrush.c internal_procs.c gimage_mask.c eraser.c convolve.c
+	  commands.c colormaps.c airbrush.c clone.c app_procs.c
+	  paint_core.h
+	  Minor changes to support above new functionality.
 
 Wed Jul  8 22:36:12 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
@@ -5565,7 +5570,7 @@ Sun Jul  5 15:49:02 EDT 1998  Adrian Likins <adrian@gimp.org>
 	* applied a patch from Adam D. Moss <adam@gimp.org>
 	* app/convert.c:  Sucked the warning about
 	quantizing to too many colours into a text
-        widget embedded in the dialog, improved intelligence of
+	widget embedded in the dialog, improved intelligence of
 	dialog to default 'custom palette' selection to 'Web'
  	if available, and in this case not bother to present
 	the native WWW-palette radio button. [Adam]
@@ -6432,7 +6437,7 @@ Fri Jun  5 22:37:40 1998  Owen Taylor  <otaylor@gtk.org>
 
 	- Pay attention to pressure and tilt in basic tool support.
 
-        - New paint mode PRESSURE that changes the brush based on
+	- New paint mode PRESSURE that changes the brush based on
 	  the brush pressure
 
 	- Left in a few XInput hacks that should be removed, but I no longer
