@@ -3763,7 +3763,7 @@ gimp_Main(self, args)
     for (i = 0; i < argc; i++)
 	argv[i] = g_strdup(PyString_AsString(PyList_GetItem(av, i)));
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
     {
 	extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);
 	set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);

@@ -36,6 +36,11 @@
 
 	* libgimp/color_display.h: Add G_MODULE_EXPORT declarations.
 
+	* plug-ins/makefile.{cygwin,msc}: Add build setup for modules like
+	Gimp-Python.
+
+	* plug-ins/pygimp/gimpmodule.c: Change NATIVE_WIN32 to G_OS_WIN32.
+	
 Tue Jan  4 18:00:40 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/circuit.scm: someone didn't close a 

@@ -13,6 +13,7 @@ BIN = $(GIMP)/plug-ins
 
 ifndef LIBRARY
 ifndef PLUGIN
+ifndef MODULE
 
 # This part is used when making from the plug-ins directory
 
@@ -133,6 +134,7 @@ gap-data-install:
 	-mkdir $(GIMP)/scripts
 	$(INSTALL) gap/*.scm $(GIMP)/scripts
 	
+endif # ifndef MODULE
 endif # ifndef PLUGIN
 endif # ifndef LIBRARY
 
@@ -358,6 +360,11 @@ OBJECTS = \
 	maze_face.o
 endif
 
+ifdef EXTRA_mpeg
+EXTRACFLAGS = -I$(MPEG)
+EXTRALIBS = -L $(MPEG)/release -lmpeg
+endif
+
 ifdef EXTRA_png
 EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
 EXTRALIBS = -L $(PNG) -lpng -L $(ZLIB) -lz
@@ -523,8 +530,10 @@ PNG = $(TOP)/../libpng-1.0.3
 TIFF = $(TOP)/../tiff-v3.4/libtiff
 # Location of jpeg-6b sources
 JPEG = $(TOP)/../jpeg-6b
-# And zlib
+# and zlib
 ZLIB = $(TOP)/../zlib-1.1.3
+# and libmpeg
+MPEG = $(TOP)/../mpeg_lib-1.3.0
 
 PLUGINDIR = $(TOP)/plug-ins
 
@@ -585,6 +594,29 @@ lib$(LIBRARY).a : $(OBJECTS)
 
 endif
 
+ifdef MODULE
+
+# This part is used when building a module
+
+# (This doesn't work, the only module so far is pygimp, and only Hans Breuer
+# builds it, with MSVC.)
+
+# Allow building libraries with specific extensions
+ifndef MODULE_EXT
+MODULE_EXT = dll
+endif
+
+all : $(MODULE).$(MODULE_EXT)
+
+install : all
+
+ifndef OBJECTS
+OBJECTS = $(MODULE).o
+endif
+
+$(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
+	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)\gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+endif
 
 .c.o :
 	$(CC) $(CFLAGS) -c $<
