@@ -282,7 +282,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   return dialogs_dockable_new (view,
-                               "Tool Options", "Tool Options",
+                               _("Tool Options"), _("Tool Options"),
                                dialogs_tool_options_tab_func,
                                NULL);
 }
@@ -302,7 +302,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   return dialogs_dockable_new (view,
-                               "Error Console", "Errors",
+                               _("Error Console"), _("Errors"),
                                NULL,
                                NULL);
 }
@@ -324,7 +324,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 				       5, 3);
 
   return dialogs_dockable_new (view,
-			       "Image List", "Images",
+			       _("Image List"), _("Images"),
 			       NULL,
 			       dialogs_set_view_context_func);
 }
@@ -346,7 +346,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 				      gimp_item_factory_from_path ("<Brushes>"));
 
   return dialogs_dockable_new (view,
-			       "Brush List", "Brushes",
+			       _("Brush List"), _("Brushes"),
 			       dialogs_brush_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -367,7 +367,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Patterns>"));
 
   return dialogs_dockable_new (view,
-			       "Pattern List", "Patterns",
+			       _("Pattern List"), _("Patterns"),
 			       dialogs_pattern_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -388,7 +388,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
-			       "Gradient List", "Gradients",
+			       _("Gradient List"), _("Gradients"),
 			       dialogs_gradient_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -409,7 +409,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Palettes>"));
 
   return dialogs_dockable_new (view,
-			       "Palette List", "Palettes",
+			       _("Palette List"), _("Palettes"),
 			       dialogs_palette_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -428,7 +428,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 				       5, 3);
 
   return dialogs_dockable_new (view,
-			       "Tool List", "Tools",
+			       _("Tool List"), _("Tools"),
 			       dialogs_tool_tab_func,
 			       dialogs_set_view_context_func);
 }
@@ -448,7 +448,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 			       gimp_item_factory_from_path ("<Buffers>"));
 
   return dialogs_dockable_new (view,
-			       "Buffer List", "Buffers",
+			       _("Buffer List"), _("Buffers"),
 			       NULL,
 			       dialogs_set_editor_context_func);
 }
@@ -470,7 +470,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 				       5, 3);
 
   return dialogs_dockable_new (view,
-			       "Image Grid", "Images",
+			       _("Image Grid"), _("Images"),
 			       NULL,
 			       dialogs_set_view_context_func);
 }
@@ -492,7 +492,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				      gimp_item_factory_from_path ("<Brushes>"));
 
   return dialogs_dockable_new (view,
-			       "Brush Grid", "Brushes",
+			       _("Brush Grid"), _("Brushes"),
 			       dialogs_brush_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -513,7 +513,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Patterns>"));
 
   return dialogs_dockable_new (view,
-			       "Pattern Grid", "Patterns",
+			       _("Pattern Grid"), _("Patterns"),
 			       dialogs_pattern_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -534,7 +534,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
-			       "Gradient Grid", "Gradients",
+			       _("Gradient Grid"), _("Gradients"),
 			       dialogs_gradient_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -555,7 +555,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
-			       "Palette Grid", "Palettes",
+			       _("Palette Grid"), _("Palettes"),
 			       dialogs_palette_tab_func,
 			       dialogs_set_editor_context_func);
 }
@@ -574,7 +574,7 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 				       5, 3);
 
   return dialogs_dockable_new (view,
-			       "Tool Grid", "Tools",
+			       _("Tool Grid"), _("Tools"),
 			       dialogs_tool_tab_func,
 			       dialogs_set_view_context_func);
 }
@@ -594,7 +594,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 			       gimp_item_factory_from_path ("<Buffers>"));
 
   return dialogs_dockable_new (view,
-			       "Buffer Grid", "Buffers",
+			       _("Buffer Grid"), _("Buffers"),
 			       NULL,
 			       dialogs_set_editor_context_func);
 }
@@ -637,7 +637,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
   layer_view->anchor_item_func = layers_anchor_layer;
 
   dockable = dialogs_dockable_new (view,
-				   "Layer List", "Layers",
+				   _("Layer List"), _("Layers"),
 				   NULL,
 				   dialogs_set_image_item_context_func);
 
@@ -676,7 +676,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              gimp_item_factory_from_path ("<Channels>"));
 
   dockable = dialogs_dockable_new (view,
-				   "Channel List", "Channels",
+				   _("Channel List"), _("Channels"),
 				   NULL,
 				   dialogs_set_image_item_context_func);
 
@@ -731,7 +731,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   vectors_view->stroke_item_func = vectors_stroke_vectors;
 
   dockable = dialogs_dockable_new (view,
-				   "Paths List", "Paths",
+				   _("Paths List"), _("Paths"),
 				   NULL,
 				   dialogs_set_image_item_context_func);
 
@@ -757,7 +757,7 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   dockable = dialogs_dockable_new (view,
-				   "Old Path List", "Old Paths",
+				   _("Old Path List"), _("Old Paths"),
 				   NULL,
 				   dialogs_set_path_context_func);
 
@@ -780,7 +780,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
   view = gimp_colormap_editor_new (gimage);
 
   dockable = dialogs_dockable_new (view,
-				   "Indexed Palette", "Colormap",
+				   _("Indexed Palette"), _("Colormap"),
 				   NULL,
 				   dialogs_set_indexed_palette_context_func);
 
@@ -811,7 +811,7 @@ dialogs_document_history_new (GimpDialogFactory *factory,
                                  gimp_item_factory_from_path ("<Documents>"));
 
   return dialogs_dockable_new (view,
-			       "Document History", "History",
+			       _("Document History"), _("History"),
 			       NULL,
 			       dialogs_set_editor_context_func);
 }
@@ -831,7 +831,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
   brush_editor = gimp_brush_editor_new (context->gimp);
 
   return dialogs_dockable_new (GTK_WIDGET (brush_editor),
-                               "Brush Editor", "Brush Editor",
+                               _("Brush Editor"), _("Brush Editor"),
                                NULL, NULL);
 }
 
@@ -858,7 +858,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
   gradient_editor = gimp_gradient_editor_new (context->gimp);
 
   return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
-			       "Gradient Editor", "Gradient Editor",
+			       _("Gradient Editor"), _("Gradient Editor"),
 			       NULL, NULL);
 }
 
@@ -885,7 +885,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
   palette_editor = gimp_palette_editor_new (context->gimp);
 
   return dialogs_dockable_new (GTK_WIDGET (palette_editor),
-			       "Palette Editor", "Palette Editor",
+			       _("Palette Editor"), _("Palette Editor"),
 			       NULL, NULL);
 }
 
