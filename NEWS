@@ -11,7 +11,7 @@ Overview of Changes in GIMP 2.1.7
 
 - Added even more plug-in previews (Value Propagate, Cubism, Colorify)
   and ported existing previews to the new widgets (AlienMap2, FlareFX,
-  Jigsaw, Waves).
+  Jigsaw, NL Filter, Waves).
 
 - More PDB API cleanups.
 
@@ -24,9 +24,13 @@ Overview of Changes in GIMP 2.1.7
 - Updated libgimpthumb to support local thumbnails as introduced by
   version 0.7 of the thumbnail spec.
 
-- Automatically create thumbnails for the Open dialog.
+- Automatically create thumbnails from the Open dialog.
 
 - Added entries next to most viewable buttons.
+
+- Added a bunch of scripts to manipulate guides.
+
+- Improved confirmation and warning dialogs.
 
 - Lots of bug fixes.
 
@@ -71,6 +75,8 @@ Overview of Changes in GIMP 2.1.6
   out common code. Renamed both executables and menu entries.
 
 - Made tools cancelable with <Escape>.
+
+- Dim the outer (to be cropped) area when using the Crop tool.
 
 - Let GimpDialog add a help button to give easier access to the help pages.
 
