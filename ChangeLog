@@ -1,3 +1,34 @@
+2003-10-21  Sven Neumann  <sven@gimp.org>
+
+	* base/base.c (base_init)
+	* app/errors.c (gimp_errors_init): moved the message about
+	possible debug messages to gimp_errors_init() so that it appears
+	before any startup debug output.
+
+	* app/app_procs.c (app_init): register a log handler for the
+	GimpConfig log domain.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_message_box)
+	* app/core/gimp.c (gimp_message): added an extra newline when
+	sending messages to stderr. Don't output the full progname for
+	messages; use a simple "GIMP" like the GUI message handler does.
+
+	* app/gui/user-install-dialog.c: removed function copy_file()...
+
+	* app/config/gimpconfig-utils.[ch]: ... and added it here as
+	gimp_config_file_copy(). Also added utility function
+	gimp_config_file_backup_on_error().
+
+	* app/config/gimprc.c (gimp_rc_load): if the user gimprc can't be
+	parsed, create a backup and if that succeeds unlink the broken one
+	to cure the problem.
+
+	* app/gui/session.c: create a backup if sessionrc can't be parsed.
+
+	* config/gimpconfig-deserialize.c (gimp_config_deserialize_properties):
+	don't set an error when token is G_TOKEN_NONE; it should already
+	be set then.
+
 2003-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdocked.[ch]: added new virtual function

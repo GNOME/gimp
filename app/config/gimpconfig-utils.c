@@ -22,6 +22,8 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdio.h>
+#include <errno.h>
 
 #include <glib-object.h>
 
@@ -32,6 +34,8 @@
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-utils.h"
+
+#include "gimp-intl.h"
 
 
 static void
@@ -415,4 +419,99 @@ gimp_config_build_plug_in_path (const gchar *name)
                       G_SEARCHPATH_SEPARATOR_S,
                       "${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
+}
+
+
+/*
+ * GimpConfig file utilities
+ */
+
+gboolean
+gimp_config_file_copy (const gchar  *source,
+                       const gchar  *dest,
+                       GError      **error)
+{
+  gchar  buffer[4096];
+  FILE  *sfile, *dfile;
+  gint   nbytes;
+
+  sfile = fopen (source, "rb");
+  if (sfile == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot open '%s' for reading: %s"),
+                   source, g_strerror (errno));
+      return FALSE;
+    }
+
+  dfile = fopen (dest, "wb");
+  if (dfile == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot open '%s' for writing: %s"),
+                   dest, g_strerror (errno));
+      fclose (sfile);
+      return FALSE;
+    }
+
+  while ((nbytes = fread (buffer, 1, sizeof (buffer), sfile)) > 0)
+    {
+      if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
+	{
+	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Error while writing '%s': %s"),
+                       dest, g_strerror (errno));
+	  fclose (sfile);
+	  fclose (dfile);
+	  return FALSE;
+	}
+    }
+
+  if (ferror (sfile))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error while reading '%s': %s"),
+                   source, g_strerror (errno));
+      fclose (sfile);
+      fclose (dfile);
+      return FALSE;
+    }
+
+  fclose (sfile);
+
+  if (fclose (dfile) == EOF)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error while writing '%s': %s"),
+                   dest, g_strerror (errno));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_config_file_backup_on_error (const gchar  *filename,
+                                  const gchar  *name,
+                                  GError      **error)
+{
+  gchar    *backup;
+  gboolean  success;
+
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (name != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  backup = g_strconcat (filename, "~", NULL);
+
+  success = gimp_config_file_copy (filename, backup, error);
+
+  if (success)
+    g_message (_("There was an error parsing your %s file.\n"
+                 "Default values will be used. A backup of your configuration has been\n"
+                 "created at '%s'."), name, backup);
+
+  g_free (backup);
+
+  return success;
 }

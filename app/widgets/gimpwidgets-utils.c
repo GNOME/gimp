@@ -90,7 +90,7 @@ gimp_message_box (const gchar *stock_id,
 
   if (g_list_length (message_boxes) > MESSAGE_BOX_MAXIMUM)
     {
-      g_printerr ("%s: %s\n", domain, message);
+      g_printerr ("%s: %s\n\n", domain, message);
       return;
     }
 
@@ -140,7 +140,7 @@ gimp_message_box (const gchar *stock_id,
 
   if (g_list_length (message_boxes) == MESSAGE_BOX_MAXIMUM)
     {
-      g_printerr ("%s: %s\n", domain, message);
+      g_printerr ("%s: %s\n\n", domain, message);
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
 		  "Messages are redirected to stderr.");

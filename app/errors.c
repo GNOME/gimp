@@ -28,6 +28,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpversion.h"
+
 #include "core/core-types.h"
 
 #include "core/gimp.h"
@@ -62,6 +64,15 @@ gimp_errors_init (const gchar        *_full_prog_name,
 {
   g_return_if_fail (_full_prog_name != NULL);
 
+#if (GIMP_MINOR_VERSION % 2) == 1
+  g_printerr ("This is a development version of the GIMP\n"
+	      "Debug messages may appear here.\n\n");
+
+#ifdef G_OS_WIN32
+  g_printerr ("You can minimize this window, but don't close it.\n\n");
+#endif
+#endif /* odd minor version */
+
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
@@ -81,7 +92,7 @@ gimp_message_log_func (const gchar    *log_domain,
       return;
     }
 
-  g_printerr ("%s: %s\n", full_prog_name, message);
+  g_printerr ("%s: %s\n\n", full_prog_name, message);
 }
 
 void

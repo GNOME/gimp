@@ -691,10 +691,12 @@ gimp_real_exit (Gimp     *gimp,
 
   plug_ins_exit (gimp);
   gimp_modules_unload (gimp);
+
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
+
   gimp_fonts_reset (gimp);
   gimp_documents_save (gimp);
   gimp_templates_save (gimp);
@@ -1029,7 +1031,7 @@ gimp_message (Gimp        *gimp,
         }
     }
 
-  g_printerr ("%s: %s\n", domain ? domain : GIMP_OBJECT (gimp)->name, message);
+  g_printerr ("%s: %s\n\n", domain ? domain : _("GIMP"), message);
 }
 
 void

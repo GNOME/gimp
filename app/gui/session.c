@@ -30,12 +30,12 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfig-utils.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpguiconfig.h"
+#include "config/gimpscanner.h"
 
 #include "core/gimp.h"
-
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
@@ -68,14 +68,10 @@ session_init (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("sessionrc");
   scanner = gimp_scanner_new_file (filename, &error);
-  g_free (filename);
 
   if (! scanner)
     {
-      /*  always show L&C&P, Tool Options and Brushes on first invocation  */
-
-      /* TODO */
-
+      g_free (filename);
       return;
     }
 
@@ -155,9 +151,12 @@ session_init (Gimp *gimp)
     {
       g_message (error->message);
       g_clear_error (&error);
+
+      gimp_config_file_backup_on_error (filename, "sessionrc", NULL);
     }
 
   gimp_scanner_destroy (scanner);
+  g_free (filename);
 }
 
 void

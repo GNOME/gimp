@@ -199,6 +199,9 @@ gimp_config_deserialize_properties (GimpConfig *config,
 
   g_object_thaw_notify (G_OBJECT (config));
 
+  if (token == G_TOKEN_NONE)
+    return FALSE;
+
   /* If store_unknown_tokens is TRUE but the unknown token value couldn't
      be parsed the default error message is rather confusing.
      We try to produce something more meaningful here ... */

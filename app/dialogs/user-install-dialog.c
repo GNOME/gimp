@@ -20,7 +20,6 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -41,6 +40,7 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfig-utils.h"
 #include "config/gimprc.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -980,70 +980,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 /*********************/
 /*  Local functions  */
 
-static gboolean
-copy_file (gchar   *source,
-           gchar   *dest,
-           GError **error)
-{
-  gchar  buffer[4096];
-  FILE  *sfile, *dfile;
-  gint   nbytes;
-
-  sfile = fopen (source, "rb");
-  if (sfile == NULL)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot open '%s' for reading: %s"),
-                   source, g_strerror (errno));
-      return FALSE;
-    }
-
-  dfile = fopen (dest, "wb");
-  if (dfile == NULL)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot open '%s' for writing: %s"),
-                   dest, g_strerror (errno));
-      fclose (sfile);
-      return FALSE;
-    }
-
-  while ((nbytes = fread (buffer, 1, sizeof (buffer), sfile)) > 0)
-    {
-      if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
-	{
-	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Error while writing '%s': %s"),
-                       dest, g_strerror (errno));
-	  fclose (sfile);
-	  fclose (dfile);
-	  return FALSE;
-	}
-    }
-
-  if (ferror (sfile))
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error while reading '%s': %s"),
-                   source, g_strerror (errno));
-      fclose (sfile);
-      fclose (dfile);
-      return FALSE;
-    }
-
-  fclose (sfile);
-
-  if (fclose (dfile) == EOF)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error while writing '%s': %s"),
-                   dest, g_strerror (errno));
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
 static void
 print_log (GtkWidget     *view,
            GtkTextBuffer *buffer,
@@ -1187,7 +1123,7 @@ user_install_run (void)
           while (gtk_events_pending ())
             gtk_main_iteration ();
 
-          if (! copy_file (source, dest, &error))
+          if (! gimp_config_file_copy (source, dest, &error))
             goto break_out_of_loop;
 	  break;
 

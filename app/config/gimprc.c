@@ -356,7 +356,13 @@ gimp_rc_load (GimpRc *rc)
 				      rc->user_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-	g_message (error->message);
+        {
+          g_message (error->message);
+
+          if (gimp_config_file_backup_on_error (rc->user_gimprc,
+                                                "gimprc", NULL))
+            unlink (rc->user_gimprc);
+        }
 
       g_clear_error (&error);
     }
