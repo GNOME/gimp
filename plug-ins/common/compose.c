@@ -298,7 +298,7 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("<Image>/Filters/Colors/Compose..."),
+			  N_("<Image>/Filters/Colors/Com_pose..."),
 			  "GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

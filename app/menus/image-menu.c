@@ -1011,6 +1011,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/Filters/_Blur")),
   MENU_BRANCH (N_("/Filters/_Colors")),
+  MENU_BRANCH (N_("/Filters/Colors/_Map")),
   MENU_BRANCH (N_("/Filters/_Noise")),
   MENU_BRANCH (N_("/Filters/Edge-De_tect")),
   MENU_BRANCH (N_("/Filters/En_hance")),
