@@ -34,7 +34,7 @@ register "my_first_gimp_fu",				# fill in name
    my $img=new Image($width,$height,RGB);
    
    my $l=new Layer($img,$width,$height,RGB,"Background",100,NORMAL_MODE);
-   $img->add_layer($l,-1);
+   $l->add_layer(-1);
    
    Palette->set_foreground($fg) unless $ignore;
    Palette->set_background($bg) unless $ignore;

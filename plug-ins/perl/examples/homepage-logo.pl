@@ -4,6 +4,8 @@
 # save it as an indexed gif in /tmp/x.gif
 
 # it works as plug-in as well as standalone!
+# this script is old (its the first script ever written for gimp-perl)
+# and I had no time to fix it yet.
 
 use Gimp;
 
@@ -59,11 +61,11 @@ sub write_logo {
   set_bg($blend2);
   
   # blend the background
-  gimp_blend($img,$bg,FG_BG_HSV,NORMAL_MODE,LINEAR,100,0,
+  gimp_blend($bg,FG_BG_HSV,NORMAL_MODE,LINEAR,100,0,
              REPEAT_NONE,0,0,0,
              0,0,$w*0.9,$h);
   gimp_rect_select ($img,$w*0.92,0,$w,$h,REPLACE, 0, 0);
-  gimp_blend($img,$bg,FG_BG_HSV,NORMAL_MODE,LINEAR,100,0,
+  gimp_blend($bg,FG_BG_HSV,NORMAL_MODE,LINEAR,100,0,
              REPEAT_NONE,0,0,0,
              $w,0,$w*0.92,0);
   gimp_selection_all($img);
@@ -76,19 +78,19 @@ sub write_logo {
   
   my ($shadow) = gimp_layer_copy ($text, 0);
   
-  plug_in_gauss_rle (RUN_NONINTERACTIVE, $img, $text, 1, 1, 1) unless $active;
+  plug_in_gauss_rle ($text, 1, 1, 1) unless $active;
 
   gimp_image_add_layer ($img,$shadow,1);
   
-  gimp_shear ($img,$shadow,1,HORIZONTAL,-$th);
+  gimp_shear ($shadow,1,HORIZONTAL,-$th);
   gimp_layer_scale ($shadow, $tw, $th*0.3, 1);
   gimp_layer_translate ($shadow, $th*0.1, $th*0.3);
-  plug_in_gauss_rle (RUN_NONINTERACTIVE, $img, $shadow, 1, 1, 1);
+  plug_in_gauss_rle ($shadow, 1, 1, 1);
   
   gimp_hue_saturation($img, $bg, ALL_HUES, 0, 0, $active ? 10 : -40);
   
-  plug_in_nova (RUN_NONINTERACTIVE, $img, $bg, $h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
-  plug_in_nova (RUN_NONINTERACTIVE, $img, $bg, $w-$h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
+  plug_in_nova ($bg, $h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
+  plug_in_nova ($bg, $w-$h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
   
   # add an under construction sign
   if ($uc) {

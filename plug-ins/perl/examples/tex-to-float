@@ -3,7 +3,7 @@
 #  A Perl::Fu plugin for converting TeX strings to floating layers.
 #
 #  Author: Dov Grobgeld
-#  Version: 0.11
+#  Version: 0.12
 ######################################################################
 
 use Gimp;
@@ -109,20 +109,20 @@ sub grey_file_to_float {
     # Create an alpha layer and copy image to alpha layer
     gimp_layer_add_alpha($grey_layer);
     $grey_img->selection_all();
-    gimp_edit_copy($grey_img,$grey_layer);
+    gimp_edit_copy($grey_layer);
     $mask = gimp_layer_create_mask($grey_layer, 0);
     gimp_image_add_layer_mask($grey_img, $grey_layer, $mask);
-    my $floating_layer = gimp_edit_paste($grey_img, $mask, 0);
+    my $floating_layer = gimp_edit_paste($mask, 0);
     gimp_floating_sel_anchor($floating_layer);
-    gimp_invert($grey_img, $mask);
+    gimp_invert($mask);
     gimp_palette_set_background(gimp_palette_get_foreground());
-    gimp_edit_fill($grey_img, $grey_layer);
+    gimp_edit_fill($grey_layer);
     gimp_image_remove_layer_mask($grey_img, $grey_layer, 0);
 
     # Now copy this layer to $img 1
-    gimp_edit_copy($grey_img, $grey_layer);
-    $floating_layer = gimp_edit_paste($img1, $drw1, 0);
-    gimp_edit_fill($img1, $floating_layer);
+    gimp_edit_copy($grey_layer);
+    $floating_layer = gimp_edit_paste($drw1, 0);
+    gimp_edit_fill($floating_layer);
 
     print STDERR "Yohoo!\n";
     cleanup();
@@ -162,7 +162,7 @@ sub tex_string_to_float {
 # register the script
 register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes a TeX string as input and creates a floating layer of the rendered string in the current layer in the foreground color.",
     "Dov Grobgeld <dov\@imagic.weizmann.ac.il>", "Dov Grobgeld",
-    "1998-11-02",
+    "1998-11-03",
     "<Image>/Perl-Fu/TeX String", 
     "*",
     [

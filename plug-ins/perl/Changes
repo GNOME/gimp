@@ -1,5 +1,16 @@
 Revision history for Gimp-Perl extension.
 
+1.048 Fri Nov 13 20:39:52 CET 1998
+	- Gimp::Fu::save_image now correctly respects the quality setting
+	- allow layers/channels as drawables in typemap
+	- allow usage of Gimp::PDL via Gimp::Net (this is a hack!)
+	- added optional argument to gimp_init
+	- fixed some of the example scripts for the "mega-api-break-it-all-
+	  patch"
+	- added Gimp::Net::get_connection and set_connection functions
+	- the Perl-Server now respects GIMP_HOST and opens a socket
+	  according to its content.
+
 1.047 Wed Nov 11 02:47:12 CET 1998
 	- passing arguments on the commandline works again
 	  (formerly all arguments were treated as integers)

@@ -61,17 +61,17 @@ sub prep {
 
 	my $layer_mask = gimp_layer_create_mask($foreground,2);
 	gimp_image_add_layer_mask ($out, $foreground, $layer_mask);	
-	gimp_threshold($out,$layer_mask,$threshold,255);
+	gimp_threshold($layer_mask,$threshold,255);
 
 # Transfer layer mask to selection, and grow the selection
-	gimp_selection_layer_alpha($out, $foreground);
+	gimp_selection_layer_alpha($foreground);
 	gimp_selection_grow($out,$growth);
 
 # Apply this selection to the background
 	gimp_layer_set_visible($bottomlayer, 1);
 	gimp_image_set_active_layer($out, $bottomlayer);
 	gimp_selection_invert($out);
-	gimp_edit_cut($out, $bottomlayer);
+	gimp_edit_cut($bottomlayer);
 
 # Clean up after yourself
 	gimp_image_remove_layer_mask($out, $foreground, 1);

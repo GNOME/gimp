@@ -865,7 +865,7 @@ sub save_image($$) {
       $interlace=$1 eq "+", 	next if s/^([-+])[iI]//;
       $flatten=$1 eq "+", 	next if s/^([-+])[fF]//;
       $smooth=$1 eq "+", 	next if s/^([-+])[sS]//;
-      $quality=$1,		next if s/^-[qQ](\d+)//;
+      $quality=$1*0.01,		next if s/^-[qQ](\d+)//;
       $compress=$1,		next if s/^-[cC](\d+)//;
       croak "$_: unknown/illegal file-save option";
    }

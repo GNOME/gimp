@@ -138,6 +138,7 @@ sub start_server {
       return $server_fh;
    } elsif ($gimp_pid == 0) {
       close $server_fh;
+      delete $ENV{GIMP_HOST};
       unless ($Gimp::verbose) {
          open STDOUT,">/dev/null";
          open STDERR,">&1";
@@ -148,6 +149,7 @@ sub start_server {
                  fileno(GIMP_FH);
       exec "gimp","-n","-b","(extension-perl-server $args)",
                             "(extension_perl_server $args)";
+      exit(255);
    } else {
       croak "unable to fork: $!";
    }
@@ -177,7 +179,9 @@ sub try_connect {
 }
 
 sub gimp_init {
-   if (defined($Gimp::host)) {
+   if (@_) {
+      $server_fh = try_connect ($_[0]);
+   } elsif (defined($Gimp::host)) {
       $server_fh = try_connect ($Gimp::host);
    } elsif (defined($ENV{GIMP_HOST})) {
       $server_fh = try_connect ($ENV{GIMP_HOST});
@@ -222,8 +226,26 @@ sub gimp_main {
    return 0;
 }
 
+sub get_connection() {
+   [$server_fh,$gimp_pid];
+}
+
+sub set_connection($) {
+   ($server_fh,$gimp_pid)=@$_;
+}
+
 END {
    gimp_end;
+}
+
+# provide some functions for the Gimp::PDL module to override
+# this is yet another hack (YAH)
+for my $f (qw(gimp_pixel_rgn_get_pixel gimp_pixel_rgn_get_row gimp_pixel_rgn_get_col gimp_pixel_rgn_get_rect
+              gimp_pixel_rgn_set_pixel gimp_pixel_rgn_set_row gimp_pixel_rgn_set_col gimp_pixel_rgn_set_rect)) {
+   no strict;
+   *{$f} = sub {
+      gimp_call_procedure $f,@_;
+   };
 }
 
 1;
@@ -248,11 +270,13 @@ then it is probably installed.
 The Perl-Server can either be started from the C<<Xtns>> menu in Gimp, or automatically
 when a perl script can't find a running Perl-Server.
 
-When started from within The Gimp, the Perl-Server will create a
-unix domain socket to which local clients can connect. If an authorization
-password is given to the Perl-Server (by defining the environment variable
-C<GIMP_HOST> before starting The Gimp), it will also listen on a tcp port
-(default 10009).
+When started from within The Gimp, the Perl-Server will create a unix domain
+socket to which local clients can connect. If an authorization password is
+given to the Perl-Server (by defining the environment variable C<GIMP_HOST>
+before starting The Gimp), it will also listen on a tcp port (default
+10009). Since the password is transmitted in cleartext, using the Perl-Server
+over tcp effectively B<lowers the security of your network to the level of
+telnet>.
 
 =head1 ENVIRONMENT
 
@@ -275,20 +299,37 @@ and spawn/ for a private gimp instance. Examples are:
 
 =head1 CALLBACKS
 
- net()
+=over 4
+
+=item net()
 
 is called after we have succesfully connected to the server. Do your dirty
 work in this function, or see L<Gimp::Fu> for a better solution.
 
+=back
+
 =head1 FUNCTIONS
 
- server_quit()
+=over 4
+
+=item server_quit()
 
 sends the perl server a quit command.
 
+=item get_connection()
+
+return a connection id which uniquely identifies the current connection.
+
+=item set_connection(conn_id)
+
+set the connection to use on subsequent commands. C<conn_id> is the
+connection id as returned by get_connection().
+
+=back
+
 =head1 BUGS
 
-(Ver 0.04..) This module is much faster than it ought to be... Silly that I wondered
+(Ver 0.04) This module is much faster than it ought to be... Silly that I wondered
 wether I should implement it in perl or C, since perl is soo fast.
 
 =head1 AUTHOR

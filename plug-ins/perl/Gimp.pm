@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.047;
+$VERSION = 1.048;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -583,7 +583,7 @@ speak for you), or just plain interesting functions.
 Should be called immediately when perl is initialized. Arguments are not yet
 supported. Initializations can later be done in the init function.
 
-=item init(), end (), gimp_init(), gimp_end()
+=item Gimp::init([connection-argument]), Gimp::end()
 
 These is an alternative and experimental interface that replaces the call to
 gimp_main and the net callback. At the moment it only works for the Net
@@ -594,6 +594,9 @@ interface (L<Gimp::Net>), and not as a native plug-in. Here's an example:
  Gimp::init;
  <do something with the gimp>
  Gimp::end;
+
+The optional argument to init has the same format as the GIMP_HOST variable
+described in L<Gimp::Net>.
 
 =item Gimp::lock(), Gimp::unlock()
 

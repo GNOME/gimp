@@ -24,7 +24,7 @@ IMAGE						T_PREF
 LAYER						T_PREF
 COLOR						T_PREF
 CHANNEL						T_PREF
-DRAWABLE					T_PREF
+DRAWABLE					T_PREF_ANY
 DISPLAY						T_PREF
 REGION						T_PREF
 
@@ -32,6 +32,9 @@ INPUT
 
 T_PREF
 	$var = unbless ($arg, PKG_$ntype, 0)
+
+T_PREF_ANY
+	$var = unbless ($arg, PKG_ANY, 0)
 
 T_GDRAWABLE
 	$var = old_gdrawable ($arg)

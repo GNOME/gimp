@@ -12,13 +12,13 @@ sub net {
   
   $bg=$img->layer_new(30,20,RGB_IMAGE,"Background",100,NORMAL_MODE);
   
-  $img->add_layer($bg,1);
+  $bg->add_layer(1);
   
   new Gimp::Display($img);
   
   for $i (0..255) {
      Palette->set_background([$i,255-$i,$i]);
-     $img->edit_fill ($bg);
+     $bg->edit_fill;
      Display->displays_flush ();
   }
   

@@ -209,7 +209,8 @@ sub extension_perl_server {
      $ps_flags=0;
   }
   
-  $auth = $ENV{'GIMP_HOST'}=~s/^(.*)\@// ? $1 : undef;	# get authorization
+  my $host = $ENV{'GIMP_HOST'};
+  $auth = $host=~s/^(.*)\@// ? $1 : undef;	# get authorization
   
   slog "server version $Gimp::VERSION started".($auth ? ", authorization required" : "");
   
@@ -217,20 +218,39 @@ sub extension_perl_server {
   my($unix_path)=$Gimp::Net::default_unix_dir.$Gimp::Net::default_unix_sock;
   my(%handles,$r,$fh,$f);
   
-  if ($use_unix) {
-    unlink $unix_path;
-    rmdir $Gimp::Net::default_unix_dir;
-    mkdir $Gimp::Net::default_unix_dir,0700 or die "$!";
-    $unix = new IO::Socket::UNIX (Local => $unix_path, Listen => 5) or die "$!";
-    slog "accepting connections on $unix_path";
-    vec($rm,$unix->fileno,1)=1;
+  if ($host ne "") {
+     if ($host=~s{^spawn/}{}) {
+        die "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server";
+     } elsif ($host=~s{^unix/}{/}) {
+        $unix = new IO::Socket::UNIX (Local => $host, Listen => 5) or die "$!";
+        slog "accepting connections in $host";
+        vec($rm,$unix->fileno,1)=1;
+     } else {
+        $host=~s{^tcp/}{};
+        my($host,$port)=split /:/,$host;
+        $port=$Gimp::Net::default_tcp_port unless $port;
+        $tcp = new IO::Socket::INET (LocalPort => $port, Listen => 5, Reuse => 1) or die "$!";
+        slog "accepting connections on port $port";
+        vec($rm,$tcp->fileno,1)=1;
+     };
+  } else {
+     if ($use_unix) {
+        unlink $unix_path;
+        rmdir $Gimp::Net::default_unix_dir;
+        mkdir $Gimp::Net::default_unix_dir,0700 or die "$!";
+        $unix = new IO::Socket::UNIX (Local => $unix_path, Listen => 5) or die "$!";
+        slog "accepting connections on $unix_path";
+        vec($rm,$unix->fileno,1)=1;
+     }
+     if ($use_tcp && $auth) {
+        $tcp = new IO::Socket::INET (LocalPort => $Gimp::Net::default_tcp_port, Listen => 5,
+                                     Reuse => 1) or die "$!";
+        slog "accepting connections on port $Gimp::Net::default_tcp_port";
+        vec($rm,$tcp->fileno,1)=1;
+    }
   }
-  if ($use_tcp && $auth) {
-    $tcp = new IO::Socket::INET (LocalPort => $Gimp::Net::default_tcp_port, Listen => 5,
-                                 Reuse => 1) or die "$!";
-    slog "accepting connections on port $Gimp::Net::default_tcp_port";
-    vec($rm,$tcp->fileno,1)=1;
-  }
+  
+  !$tcp || $auth or die "authorization required for tcp connections";
   
   sub new_connection {
      my $fh = shift;
