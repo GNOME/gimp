@@ -1,3 +1,9 @@
+2003-08-14  Jay Cox  <jaycox@gimp.org>
+
+	* app/paint/gimppaintcore.c: Eliminate the rounding errors that
+	were in gimp_paint_core_subsample_mask.  Fixes bug #118741
+
+
 2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* composite/ modularisation of the automatic compositing function

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <stdio.h>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -71,6 +73,8 @@ static void   gimp_paint_core_calc_brush_size     (GimpPaintCore    *core,
                                                    gdouble           scale,
                                                    gint             *width,
                                                    gint             *height);
+static void   rotate_pointers                     (gpointer         *p,
+						   guint32           n);
 static MaskBuf * gimp_paint_core_subsample_mask   (GimpPaintCore    *core,
                                                    MaskBuf          *mask,
                                                    gdouble           x,
@@ -1070,6 +1074,21 @@ gimp_paint_core_calc_brush_size (GimpPaintCore *core,
     }
 }
 
+static void
+rotate_pointers (gpointer *p,
+		 guint32   n)
+{
+  guint32  i;
+  gpointer tmp;
+
+  tmp = p[0];
+  for (i = 0; i < n-1; i++)
+    {
+      p[i] = p[i+1];
+    }
+  p[i] = tmp;
+}
+
 static MaskBuf *
 gimp_paint_core_subsample_mask (GimpPaintCore *core,
                                 MaskBuf       *mask,
@@ -1086,9 +1105,11 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
   gint        dest_offset_x = 0;
   gint        dest_offset_y = 0;
   const gint *kernel;
-  gint        new_val;
   gint        i, j;
   gint        r, s;
+  gulong      *accum[KERNEL_HEIGHT];
+  gint        offs;
+  gint        kernel_sum;
 
   while (x < 0) x += mask->width;
   left = x - floor (x);
@@ -1146,6 +1167,20 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
   dest = mask_buf_new (mask->width  + 2,
                        mask->height + 2);
 
+  for (i = 0; i < KERNEL_HEIGHT ; i++)
+    { /* Allocate and initialize the accum buffer */
+      accum[i] = (gulong *)g_malloc(sizeof(gulong) * dest->width);
+      memset(accum[i], 0, sizeof(gulong) * dest->width);
+    }
+
+ /* Investigate modifiying kernelgen to make the sum the same
+    for all kernels. That way kernal_sum becomes a constant*/
+  kernel_sum = 0;
+  for (i = 0; i < KERNEL_HEIGHT * KERNEL_WIDTH; i++)
+    {
+      kernel_sum += kernel[i];
+    }
+
   core->kernel_brushes[index2][index1] = dest;
 
   m = mask_buf_data (mask);
@@ -1156,20 +1191,36 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
 	  k = kernel;
 	  for (r = 0; r < KERNEL_HEIGHT; r++)
 	    {
-	      d = (mask_buf_data (dest) +
-                   (i + r + dest_offset_y) * dest->width +
-                   j + dest_offset_x);
-
+	      offs = j + dest_offset_x;
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
-		  new_val = *d + ((*m * *k++ + 128) >> 8);
-		  *d++ = MIN (new_val, 255);
+		  accum[r][offs++] += *m * *k++;
 		}
 	    }
 	  m++;
 	}
+
+      /* store the accum buffer into the destination mask */
+      d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
+      for (j = 0; j < dest->width; j++)
+	*d++ = (accum[0][j] + 127) / kernel_sum;
+      rotate_pointers((void *)accum, KERNEL_HEIGHT);
+      memset(accum[KERNEL_HEIGHT - 1], 0, sizeof(gulong)*(dest->width));
+
     }
+
+  while (i +dest_offset_y < dest->height)
+    {  /* store the rest of the accum buffer into the dest mask */
+      d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
+      for (j = 0; j < dest->width; j++)
+	*d++ = (accum[0][j] + (kernel_sum/2)) / kernel_sum;
+      rotate_pointers((void *)accum, KERNEL_HEIGHT);
+      i++;
+    }
+
+  for (i = 0; i < KERNEL_HEIGHT ; i++)
+    g_free(accum[i]);
 
   return dest;
 }
