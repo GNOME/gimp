@@ -21,11 +21,28 @@
 #include "tools.h"
 #include "paint_core.h"
 #include "procedural_db.h"
+#include "gimpbrush.h"
+#include "gimpbrushpixmap.h"
+#include "temp_buf.h"
 
 void *        pixmap_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_pixmapbrush   (void);
 void          tools_free_pixmapbrush  (Tool *);
 
+void          paint_line_pixmap_mask(GImage *dest, GimpDrawable *drawable,
+				     GimpBrushPixmap *brush,
+				     unsigned char * d,
+				     int            x,
+				     int            offset_x,
+				     int            y,
+				     int            offset_y,
+				     int            bytes,
+				     int            width);			     
+
+void           color_area_with_pixmap (GImage *dest,
+				       GimpDrawable *drawable,
+				       TempBuf *area,
+				       GimpBrush *brush);
 /*  Procedure definition and marshalling function  */
 /* extern ProcRecord pixmapbrush_proc; */
 /* extern ProcRecord pixmapbrush_extended_proc; */

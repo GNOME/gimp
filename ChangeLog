@@ -1,3 +1,30 @@
+Fri Aug 13 16:39:25 1999 Adrian Likins <alikins@redhat.com>
+
+	* app/airbrush.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/pixmapbrush.c
+	* app/pixmapbrush.h
+
+	Added support for pixmap brushes to airbrush, pencil, 
+	and paintbrush. Merging this into paintbrush makes
+	the pixmaptool itself kind of useless at the moment,
+	but that will change ;->
+
+	Still a few rough edges here, but its mostly there. 
+	I still need to make the "incremental" button for
+	the tools to accurately reflect that pixmap always
+	uses this mode. 
+
+	* app/eraser.c
+	* app/eraser.h
+	* app/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb
+
+	Applied patch from  Shuji Narazaki <narazaki@gimp.org>
+	to implement the anti-eraser. Neat.
+
+
 1999-08-13  Kelly Martin  <kelly@poverty.bloomington.in.us>
 
 	* app/brush_select.c: Color brushes now appear in the brush

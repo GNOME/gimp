@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "appenv.h"
 #include "gimpbrushlist.h"
+#include "gimpbrushpixmap.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -25,6 +26,8 @@
 #include "paint_core.h"
 #include "paint_options.h"
 #include "palette.h"
+/* for color_area_with_pixmap */
+#include "pixmapbrush.h"
 #include "airbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
@@ -38,6 +41,7 @@
 
 /* Default pressure setting */
 #define AIRBRUSH_PRESSURE_DEFAULT 10.0
+#define AIRBRUSH_INCREMENTAL_DEFAULT FALSE
 
 #define OFF           0
 #define ON            1
@@ -63,11 +67,15 @@ struct _AirbrushOptions
   double       pressure;
   double       pressure_d;
   GtkObject   *pressure_w;
+
+  gboolean      incremental;
+  gboolean      incremental_d;
+  GtkWidget    *incremental_w;
 };
 
 
 /*  the airbrush tool options  */
-static AirbrushOptions *airbrush_options = NULL;
+static AirbrushOptions *airbrush_options = NULL; 
 
 /*  local variables  */
 static gint             timer;  /*  timer for successive paint applications  */
@@ -75,10 +83,10 @@ static int              timer_state = OFF;       /*  state of airbrush tool  */
 static AirbrushTimeout  airbrush_timeout;
 
 static double           non_gui_pressure;
-
+static gboolean         non_gui_incremental;
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, double);
+static void         airbrush_motion   (PaintCore *, GimpDrawable *, double, gboolean);
 static gint         airbrush_time_out (gpointer);
 
 
@@ -95,6 +103,9 @@ airbrush_options_reset (void)
 			    options->rate_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
 			    options->pressure_d);
+  
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				options->incremental_d);
 }
 
 static AirbrushOptions *
@@ -114,6 +125,8 @@ airbrush_options_new (void)
 		      airbrush_options_reset);
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = AIRBRUSH_PRESSURE_DEFAULT;
+  options->incremental     = 
+    options->incremental_d     = AIRBRUSH_INCREMENTAL_DEFAULT;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -159,6 +172,14 @@ airbrush_options_new (void)
 		      &options->pressure);
   gtk_widget_show (scale);
 
+  
+  /* the incremental toggle */
+  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->incremental);
+  gtk_widget_show (options->incremental_w);
   gtk_widget_show (table);
 
   return options;
@@ -214,7 +235,7 @@ airbrush_paint_func (PaintCore *paint_core,
 	gtk_timeout_remove (timer);
       timer_state = OFF;
 
-      airbrush_motion (paint_core, drawable, airbrush_options->pressure);
+      airbrush_motion (paint_core, drawable, airbrush_options->pressure, airbrush_options->incremental);
 
       if (airbrush_options->rate != 0.0)
       {
@@ -257,7 +278,8 @@ airbrush_time_out (gpointer client_data)
   /*  service the timer  */
   airbrush_motion (airbrush_timeout.paint_core,
 		   airbrush_timeout.drawable,
-		   airbrush_options->pressure);
+		   airbrush_options->pressure,
+		   airbrush_options->incremental);
   gdisplays_flush ();
 
   /*  restart the timer  */
@@ -271,7 +293,8 @@ airbrush_time_out (gpointer client_data)
 static void
 airbrush_motion (PaintCore    *paint_core,
 		 GimpDrawable *drawable,
-		 double        pressure)
+		 double        pressure,
+		 gboolean      mode)
 {
   gint opacity;
   GImage *gimage;
@@ -292,9 +315,18 @@ airbrush_motion (PaintCore    *paint_core,
   /*  color the pixels  */
   col[area->bytes - 1] = OPAQUE_OPACITY;
 
-  /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
+
+  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush))
+    {
+      color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
+      mode = INCREMENTAL;
+    }
+  else
+    {
+      /*  color the pixels  */
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
 
   opacity = pressure * (paint_core->curpressure / 0.5);
   if (opacity > 255)
@@ -305,7 +337,7 @@ airbrush_motion (PaintCore    *paint_core,
 			   opacity,
 			   (gint) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   SOFT, CONSTANT);
+			   SOFT, mode);
 }
 
 
@@ -314,7 +346,7 @@ airbrush_non_gui_paint_func (PaintCore    *paint_core,
 			     GimpDrawable *drawable,
 			     int           state)
 {
-  airbrush_motion (paint_core, drawable, non_gui_pressure);
+  airbrush_motion (paint_core, drawable, non_gui_pressure, non_gui_incremental);
 
   return NULL;
 }

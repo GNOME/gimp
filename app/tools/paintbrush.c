@@ -23,12 +23,14 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimpbrushlist.h"
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "palette.h"
 #include "paint_options.h"
 #include "paintbrush.h"
+#include "pixmapbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
@@ -200,8 +202,8 @@ paintbrush_options_new (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  options->fade_out_w =
-    gtk_adjustment_new (options->fade_out_d, 0.0, 1000.0, 1.0, 1.0, 0.0);
+  options->fade_out_w =  
+    gtk_adjustment_new (options->fade_out_d, 0.0, 50.0, 1.0, 0.1, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->fade_out_w));
   gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -398,6 +400,9 @@ paintbrush_motion (PaintCore    *paint_core,
 
   gimage_get_foreground (gimage, drawable, col);
 
+  /* silly hack to be removed later */
+  /* paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,(rand()% gimp_brush_list_length(brush_list))); */
+  
   /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
@@ -437,12 +442,27 @@ paintbrush_motion (PaintCore    *paint_core,
 	  /* make the gui cool later */
 	  incremental = INCREMENTAL;
 	}
-  /* just leave this because I know as soon as i delete it i'll find a bug */
+      /* just leave this because I know as soon as i delete it i'll find a bug */
       /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
 	
       /*  color the pixels  */
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height, area->bytes);
+
+
+      if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush) && !gradient_length)
+	{
+	  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
+	  mode = INCREMENTAL;
+	}
+      else
+	{
+	  /*  color the pixels  */
+	  color_pixels (temp_buf_data (area), col,
+			area->width * area->height, area->bytes);
+	}
+
+
+ /*      color_pixels (temp_buf_data (area), col, */
+/* 		    area->width * area->height, area->bytes); */
 
       /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, temp_blend,

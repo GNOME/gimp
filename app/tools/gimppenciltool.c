@@ -20,12 +20,15 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimpbrushpixmap.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "palette.h"
 #include "pencil.h"
+/* for color_area_with_pixmap */
+#include "pixmapbrush.h"
 #include "selection.h"
 #include "tools.h"
 
@@ -33,12 +36,25 @@
 
 
 /*  the pencil tool options  */
-static PaintOptions *  pencil_options = NULL;
 
+typedef struct _PencilOptions PencilOptions;
+struct _PencilOptions
+{
+  PaintOptions paint_options;
+
+  gboolean      incremental;
+  gboolean      incremental_d;
+  GtkWidget    *incremental_w;
+};
+
+static PencilOptions *pencil_options = NULL; 
 
 /*  forward function declarations  */
-static void         pencil_motion   (PaintCore *, GimpDrawable *);
+static void         pencil_motion   (PaintCore *, GimpDrawable *, gboolean);
 
+static gboolean     non_gui_incremental = FALSE;
+
+#define PENCIL_INCREMENTAL_DEFAULT FALSE
 
 /*  functions  */
 
@@ -53,7 +69,7 @@ pencil_paint_func (PaintCore    *paint_core,
       break;
 
     case MOTION_PAINT :
-      pencil_motion (paint_core, drawable);
+      pencil_motion (paint_core, drawable, pencil_options->incremental);
       break;
 
     case FINISH_PAINT :
@@ -102,12 +118,14 @@ tools_free_pencil (Tool *tool)
 
 static void
 pencil_motion (PaintCore    *paint_core,
-	       GimpDrawable *drawable)
+	       GimpDrawable *drawable,
+	       gboolean increment)
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
   gint opacity;
+  
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -121,9 +139,19 @@ pencil_motion (PaintCore    *paint_core,
   /*  set the alpha channel  */
   col[area->bytes - 1] = OPAQUE_OPACITY;
 
-  /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
+
+  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush))
+    {
+      /* if its a pixmap, do pixmap stuff */
+      color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
+      increment = INCREMENTAL;
+    }
+  else
+    {
+      /*  color the pixels  */
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
 
   /*Make the opacity dependent on the current pressure 
     This makes a more natural pencil since light pressure
@@ -133,11 +161,13 @@ pencil_motion (PaintCore    *paint_core,
   if (opacity > 255)
     opacity = 255; 
 
+
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   HARD, CONSTANT);
+			   HARD, increment);
 }
 
 static void *
@@ -145,7 +175,7 @@ pencil_non_gui_paint_func (PaintCore    *paint_core,
                           GimpDrawable *drawable,
                           int           state)
 {
-  pencil_motion (paint_core, drawable);
+  pencil_motion (paint_core, drawable, non_gui_incremental );
 
   return NULL;
 }

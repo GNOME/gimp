@@ -42,18 +42,10 @@ static void         pixmapbrush_motion      (PaintCore *, GimpDrawable *);
 /* static Argument *   pixmapbrush_extended_invoker     (Argument *); */
 /* static Argument *   pixmapbrush_extended_gradient_invoker     (Argument *); */
 
-static void   paint_line_pixmap_mask (GImage        *dest,
-				      GimpDrawable  *drawable,
-				      GimpBrushPixmap  *brush,
-				      unsigned char *d,
-				      int            x,
-				      int            offset_x,
-				      int            y,
-				      int            offset_y,
-				      int            bytes,
-				      int            width);
 
 
+					 
+					 
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
 
@@ -207,106 +199,41 @@ pixmapbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable)
 {
   GImage *gimage;
-  GimpBrushPixmap *brush = 0;
-  TempBuf * pixmap_data;
-  TempBuf * area;
-  double position;
-  unsigned char *d;
-  int y;
+  TempBuf * area = NULL;
   /*  unsigned char col[MAX_CHANNELS]; */
   void * pr;
-  PixelRegion destPR;
   int opacity;
-  int offset_x = 0;
-  int offset_y = 0;
 
   pr = NULL;
 
-  /* FIXME: this code doesnt work quite right at the far top and
-     and left sides. need to handle those cases better */
+  /* ttemp hack just for kicks. remove */
+  /*  paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,
+      (rand()% gimp_brush_list_length(brush_list))); */ 
 
-  /* if we dont get a pixmap brush, aieeee!  */
-  /* FIXME */
-  
-
-    if(! (GIMP_IS_BRUSH_PIXMAP(paint_core->brush)))
-     return;
-  
-	 
-  brush = GIMP_BRUSH_PIXMAP(paint_core->brush);
-  pixmap_data = gimp_brush_pixmap_get_pixmap(brush);
-  position = 0.0;
-
-  /*  We always need a destination image */
-  if (! (gimage = drawable_gimage (drawable)))
+  if(! (GIMP_IS_BRUSH_PIXMAP(paint_core->brush)))
     return;
 
+  /* We always need a destination image */ 
+  if (! (gimage = drawable_gimage (drawable))) 
+    return; 
 
-  /*  Get a region which can be used to p\\aint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
-    return;
+ 
+  /*     Get a region which can be used to p\\aint to  */
 
-  /* stolen from clone.c */
-  /* this should be a similar thing to want to do, right? */
-  /* if I understand correctly, this just initilizes the dest
-     pixel region to the same bitdepth, height and width of
-     the drawable (area), then copies the apprriate data
-     from area to destPR.data */
-  destPR.bytes = area->bytes;
-  destPR.x = 0; destPR.y = 0;
-  destPR.w = area->width;
-  destPR.h = area->height;
-  destPR.rowstride = destPR.bytes * area->width;
-  destPR.data = temp_buf_data (area);
-
-  /* register this pixel region */
-  pr = pixel_regions_register (1, &destPR);
-
-
-  /* to handle the case of the left side of the image */
-  if(area->x == 0)
-    offset_x = destPR.w;
-  else
-    offset_x = 0;
-
-  if (area->y == 0)
-    offset_y = brush->pixmap_mask->height - destPR.h;
-  else
-    offset_y = 0;
-
-
-  /* FIXME handle the top of the image properly */
+  if (! (area = paint_core_get_paint_area (paint_core, drawable))) 
+    return; 
   
-  for (; pr != NULL; pr = pixel_regions_process (pr))
-    {
-      d = destPR.data;
-      for(y = 0; y < destPR.h; y++)
-	{
-/* 	  printf(" brush->width: %i offset_x: %i", brush->pixmap_mask->width, offset_x); */
-/* 	  printf(" area->y: %i destPR.h: %i area->x: %i destPR.w: %i ",area->y, destPR.h, area->x, destPR.w);  */
-	  paint_line_pixmap_mask(gimage, drawable, brush,
-				 d, area->x,offset_x, y, offset_y,
-				 destPR.bytes, destPR.w);
-	
-	  d += destPR.rowstride;
-	}
-    }
-
-
-  /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
-  /* remove these once things are stable */
-  /* printf("opacity: %i ", (int) (gimp_context_get_opacity (NULL) * 255)); */
-  /*    printf("r: %i g: %i b: %i a: %i\n", col[0], col[1], col[2], col[3]); */ 
+  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
 
   /* steal the pressure sensiteive code from clone.c */
   opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
   if (opacity > 255)
     opacity = 255;    
-
-      paint_core_paste_canvas (paint_core, drawable, opacity,
-			       (int) (gimp_context_get_opacity (NULL) * 255),
-			       gimp_context_get_paint_mode (NULL), SOFT, 
-			       INCREMENTAL);
+  
+  paint_core_paste_canvas (paint_core, drawable, opacity,
+			   (int) (gimp_context_get_opacity (NULL) * 255),
+			   gimp_context_get_paint_mode (NULL), SOFT, 
+			   INCREMENTAL);
 }
 
 
@@ -321,8 +248,74 @@ pixmapbrush_non_gui_paint_func (PaintCore *paint_core,
   return NULL;
 }
 
+void
+color_area_with_pixmap (GImage *dest,
+			GimpDrawable *drawable,
+			TempBuf *area,
+			GimpBrush *brush)
+{
 
-static void
+  PixelRegion destPR;
+  void * pr;
+  double position;
+  unsigned char *d;
+  int y;
+  int offset_x;
+  int offset_y;
+  GimpBrushPixmap *pixmapbrush = 0;
+  TempBuf *pixmap_data;
+  
+
+  pr = NULL;
+  pixmapbrush = brush;;
+  pixmap_data = gimp_brush_pixmap_get_pixmap(brush);
+  position = 0.0;
+	 /* stolen from clone.c */
+  /* this should be a similar thing to want to do, right? */
+  /* if I understand correctly, this just initilizes the dest
+     pixel region to the same bitdepth, height and width of
+     the drawable (area), then copies the apprriate data
+     from area to destPR.data */
+  destPR.bytes = area->bytes;
+  destPR.x = 0; destPR.y = 0;
+  destPR.w = area->width;
+  destPR.h = area->height;
+  destPR.rowstride = destPR.bytes * area->width;
+  destPR.data = temp_buf_data (area);
+		
+/* register this pixel region */
+  pr = pixel_regions_register (1, &destPR);
+
+
+  /* to handle the case of the left side of the image */
+  if(area->x == 0)
+    offset_x = destPR.w;
+  else
+    offset_x = 0;
+ 
+  if (area->y == 0)
+    offset_y = pixmapbrush->pixmap_mask->height - destPR.h;
+  else
+    offset_y = 0;
+  
+  for (; pr != NULL; pr = pixel_regions_process (pr))
+    {
+      d = destPR.data;
+      for(y = 0; y < destPR.h; y++)
+	{
+/* 	  printf(" brush->width: %i offset_x: %i", brush->pixmap_mask->width, offset_x); */
+/* 	  printf(" area->y: %i destPR.h: %i area->x: %i destPR.w: %i ",area->y, destPR.h, area->x, destPR.w);  */
+	  paint_line_pixmap_mask(dest, drawable, pixmapbrush,
+				 d, area->x,offset_x, y, offset_y,
+				 destPR.bytes, destPR.w);
+	
+	  d += destPR.rowstride;
+	}
+    }
+
+}
+
+void
 paint_line_pixmap_mask (GImage        *dest,
 			GimpDrawable  *drawable,
 			GimpBrushPixmap  *brush,
@@ -342,7 +335,6 @@ paint_line_pixmap_mask (GImage        *dest,
   /* use "pat" here because i'm c&p from pattern clone */
   pat = temp_buf_data (brush->pixmap_mask) +
     (( y + offset_y ) * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
-
     
   /*   dest = d +  (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes); */
   color = RGB;

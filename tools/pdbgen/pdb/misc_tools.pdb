@@ -623,7 +623,37 @@ HELP
     %invoke = (
 	headers => [ qw("eraser.h") ],
 	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method);
+success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
+CODE
+    );
+}
+
+sub anti_eraser {
+    $blurb = 'Anti-erase using the current brush.';
+
+    $help = <<'HELP';
+This tool anti-erases using the current brush mask. If the specified drawable
+contains an alpha channel, then the erased pixels will become opaque.
+Otherwise, the eraser tool replaces the contents of the drawable with the
+background color. Like paintbrush, this tool linearly interpolates between the
+specified stroke coordinates.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg,
+	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
+	  desc => '%%desc%%' },
+	{ name => 'method', type => 'enum PaintApplicationMode',
+	  desc => '%%desc%%' }
+    );
+
+    %invoke = (
+	headers => [ qw("eraser.h") ],
+	code => <<'CODE'
+success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
 CODE
     );
 }

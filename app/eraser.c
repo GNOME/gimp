@@ -16,10 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include "gdk/gdkkeysyms.h"
 #include "appenv.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimage_mask.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
@@ -34,6 +37,7 @@
 /* Defaults */
 #define ERASER_DEFAULT_HARD        FALSE
 #define ERASER_DEFAULT_INCREMENTAL FALSE
+#define ERASER_DEFAULT_ANTI_ERASE  FALSE
 
 /*  the eraser structures  */
 
@@ -49,6 +53,10 @@ struct _EraserOptions
   gboolean      incremental;
   gboolean      incremental_d;
   GtkWidget    *incremental_w;
+
+  gboolean	anti_erase;
+  gboolean	anti_erase_d;
+  GtkWidget    *anti_erase_w;
 };
 
 
@@ -58,11 +66,11 @@ static EraserOptions *eraser_options = NULL;
 /*  local variables  */
 static gboolean       non_gui_hard;
 static gboolean       non_gui_incremental;
-
+static gboolean	      non_gui_anti_erase;
 
 /*  forward function declarations  */
 static void       eraser_motion            (PaintCore *, GimpDrawable *,
-					    gboolean, gboolean);
+					    gboolean, gboolean, gboolean);
 
 
 /*  functions  */
@@ -94,6 +102,7 @@ eraser_options_new (void)
 		      eraser_options_reset);
   options->hard        = options->hard_d        = ERASER_DEFAULT_HARD;
   options->incremental = options->incremental_d = ERASER_DEFAULT_INCREMENTAL;
+  options->anti_erase  = options->anti_erase_d  = ERASER_DEFAULT_ANTI_ERASE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -118,9 +127,38 @@ eraser_options_new (void)
 				options->incremental_d);
   gtk_widget_show (options->incremental_w);
   
+  /* the anti_erase toggle */
+  options->anti_erase_w = gtk_check_button_new_with_label (_("Anti erase"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->anti_erase_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->anti_erase);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
+				options->anti_erase_d);
+  gtk_widget_show (options->anti_erase_w);
+
   return options;
 }
-  
+
+
+static void
+eraser_modifier_key_func (Tool        *tool,
+			  GdkEventKey *kevent,
+			  gpointer     gdisp_ptr)
+{
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      break;
+    case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w), ! eraser_options->anti_erase);
+      break;
+    }
+}
+
+
 void *
 eraser_paint_func (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
@@ -132,7 +170,7 @@ eraser_paint_func (PaintCore    *paint_core,
       break;
 
     case MOTION_PAINT :
-      eraser_motion (paint_core, drawable, eraser_options->hard, eraser_options->incremental);
+      eraser_motion (paint_core, drawable, eraser_options->hard, eraser_options->incremental, eraser_options->anti_erase);
       break;
 
     case FINISH_PAINT :
@@ -143,6 +181,42 @@ eraser_paint_func (PaintCore    *paint_core,
     }
 
   return NULL;
+}
+
+
+static void
+eraser_cursor_update (Tool           *tool,
+		      GdkEventMotion *mevent,
+		      gpointer        gdisp_ptr)
+{
+  GDisplay *gdisp;
+  Layer *layer;
+  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
+  int x, y;
+
+  gdisp = (GDisplay *) gdisp_ptr;
+  
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
+
+  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+    {
+      int off_x, off_y;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+    if (x >= off_x && y >= off_y &&
+	x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+      {
+	if (gimage_mask_is_empty (gdisp->gimage) || gimage_mask_value (gdisp->gimage, x, y))
+	  {
+	    if (eraser_options->anti_erase)
+	      ctype = GDK_PENCIL; 	/* ANTI_ERASER CURSOR */
+	    else
+	      ctype = GDK_PENCIL;	/* ERASER CURSOR */
+	  }
+      }
+    }
+  gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
 
@@ -163,6 +237,8 @@ tools_new_eraser ()
 
   private = (PaintCore *) tool->private;
   private->paint_func = eraser_paint_func;
+  tool->modifier_key_func = eraser_modifier_key_func;
+  tool->cursor_update_func = eraser_cursor_update;
 
   return tool;
 }
@@ -180,7 +256,8 @@ static void
 eraser_motion (PaintCore    *paint_core,
 	       GimpDrawable *drawable,
 	       gboolean      hard,
-	       gboolean      incremental)
+	       gboolean      incremental,
+	       gboolean	     anti_erase)
 {
   GImage *gimage;
   gint opacity;
@@ -207,7 +284,7 @@ eraser_motion (PaintCore    *paint_core,
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
-			   ERASE_MODE,
+			   anti_erase ? ANTI_ERASE_MODE : ERASE_MODE,
 			   hard ? HARD : SOFT,
 			   incremental ? INCREMENTAL : CONSTANT);
 }
@@ -218,7 +295,7 @@ eraser_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
 			   int           state)
 {
-  eraser_motion (paint_core, drawable, non_gui_hard, non_gui_incremental);
+  eraser_motion (paint_core, drawable, non_gui_hard, non_gui_incremental, non_gui_anti_erase);
 
   return NULL;
 }
@@ -230,15 +307,18 @@ eraser_non_gui_default (GimpDrawable *drawable,
 {
   gint   hardness = ERASER_DEFAULT_HARD;
   gint   method   = ERASER_DEFAULT_INCREMENTAL;
+  gint   anti_erase = ERASER_DEFAULT_ANTI_ERASE;
+
   EraserOptions *options = eraser_options;
 
   if(options)
     {
       hardness = options->hard;
       method   = options->incremental;
+      anti_erase = options->anti_erase;
     }
 
-  return eraser_non_gui(drawable,num_strokes,stroke_array,hardness,method);
+  return eraser_non_gui(drawable,num_strokes,stroke_array,hardness,method,anti_erase);
 }
 
 gboolean
@@ -246,7 +326,8 @@ eraser_non_gui (GimpDrawable *drawable,
     		int           num_strokes,
 		double       *stroke_array,
 		int           hardness,
-		int           method)
+		int           method,
+		int	      anti_erase)
 {
   int i;
   
@@ -255,6 +336,7 @@ eraser_non_gui (GimpDrawable *drawable,
     {
       non_gui_hard = hardness;
       non_gui_incremental = method;
+      non_gui_anti_erase = anti_erase;
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = eraser_non_gui_paint_func;
