@@ -1,3 +1,8 @@
+2003-10-13  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/Makefile.am: add $(libgimp) to libgimpui_1_3_la_DEPENDENCIES
+	so -jN builds work better.
+
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am
