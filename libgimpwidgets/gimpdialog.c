@@ -234,9 +234,7 @@ gimp_dialog_close (GtkDialog *dialog)
 
   if (widget->window)
     {
-      GdkEvent *event;
-
-      event = gdk_event_new (GDK_DELETE);
+      GdkEvent *event = gdk_event_new (GDK_DELETE);
 
       event->any.window     = g_object_ref (widget->window);
       event->any.send_event = TRUE;

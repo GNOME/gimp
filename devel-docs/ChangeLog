@@ -1,3 +1,7 @@
+2004-12-15  Simon Budig  <simon@gimp.org>
+
+	* libgimp/tmpl/gimppaths.sgml: regenerated.
+
 2004-12-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt

@@ -30,8 +30,7 @@
 	* tools/pdbgen/pdb/paths.pdb: changed accordingly
 
 	* app/pdb/paths_cmds.c
-	* libgimp/gimppaths_pdb.[ch]
-	* devel-docs/libgimp/tmpl/gimppaths.sgml: regenerated.
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
 
 	Fixes bug #161274.
 
