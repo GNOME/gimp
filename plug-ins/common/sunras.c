@@ -90,10 +90,10 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
 
 static gint32 load_image (gchar   *filename);
@@ -249,17 +249,17 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   l_run_mode = run_mode = param[0].data.d_int32;
@@ -1586,24 +1586,30 @@ save_dialog (void)
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, save_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Formatting"),
                                  G_CALLBACK (gimp_radio_button_update),
-				 &psvals.rle, (gpointer) psvals.rle,
+				 &psvals.rle,
+                                 GINT_TO_POINTER (psvals.rle),
 
-				 _("RunLength Encoded"), (gpointer) TRUE, NULL,
-				 _("Standard"),          (gpointer) FALSE, NULL,
+				 _("RunLength Encoded"),
+                                 GINT_TO_POINTER (TRUE), NULL,
+
+				 _("Standard"),
+                                 GINT_TO_POINTER (FALSE), NULL,
 
 				 NULL);
+
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);

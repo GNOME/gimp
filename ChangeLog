@@ -1,3 +1,14 @@
+2002-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/sinus.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/sunras.c: compile with GTK_DISABLE_DEPRECATED.
+
 2002-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* pixmaps/Makefile.am

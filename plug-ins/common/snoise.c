@@ -105,19 +105,19 @@ typedef struct
 /*---- Prototypes ----*/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static void    solid_noise      (GimpDrawable *drawable);
 static void    solid_noise_init (void);
-static gdouble plain_noise      (gdouble    x,
-				 gdouble    y,
-				 guint      s);
-static gdouble noise            (gdouble    x,
-				 gdouble    y);
+static gdouble plain_noise      (gdouble       x,
+				 gdouble       y,
+				 guint         s);
+static gdouble noise            (gdouble       x,
+				 gdouble       y);
 
 static gint    solid_noise_dialog    (void);
 static void    dialog_ok_callback    (GtkWidget *widget,
@@ -192,27 +192,27 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
-  
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status;
+
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status;
   
   status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
   *nreturn_vals = 1;
   *return_vals  = values;
   
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -518,9 +518,9 @@ solid_noise_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -550,29 +550,31 @@ solid_noise_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Detail:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &snvals.detail);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &snvals.detail);
 
   /*  Turbulent  */
   toggle = gtk_check_button_new_with_label ( _("Turbulent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &snvals.turbulent);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &snvals.turbulent);
 
   /*  Tilable  */
   toggle = gtk_check_button_new_with_label ( _("Tilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &snvals.tilable);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &snvals.tilable);
 
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -580,9 +582,9 @@ solid_noise_dialog (void)
 			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &snvals.xsize);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &snvals.xsize);
 
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
@@ -590,9 +592,9 @@ solid_noise_dialog (void)
 			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &snvals.ysize);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &snvals.ysize);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);

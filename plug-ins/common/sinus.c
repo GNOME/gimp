@@ -1167,19 +1167,19 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunMode run_mode;
+  static GimpParam  values[1];
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   INIT_I18N_UI();
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
 
   switch (run_mode)
     {
@@ -1697,9 +1697,9 @@ sinus_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -1759,27 +1759,27 @@ sinus_dialog (void)
 			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
-		      &svals.scalex);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (sinus_double_adjustment_update),
+                    &svals.scalex);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Y Scale:"), 140, 0,
 			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
-		      &svals.scaley);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (sinus_double_adjustment_update),
+                    &svals.scaley);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Complexity:"), 140, 0,
 			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
-		      &svals.cmplx);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (sinus_double_adjustment_update),
+                    &svals.cmplx);
 
   gtk_widget_show (table);
 
@@ -1806,28 +1806,33 @@ sinus_dialog (void)
 				     0.0, 0.0, 0);
   gtk_widget_set_size_request (spinbutton, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (sinus_int_adjustment_update),
-		      &svals.seed);
   gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (sinus_int_adjustment_update),
+                    &svals.seed);
 
   toggle = gtk_check_button_new_with_label (_("Force Tiling?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (sinus_toggle_button_update),
-		      &svals.tiling);
   gtk_widget_show (toggle);
 
-  vbox2 =
-    gimp_radio_group_new2 (FALSE, NULL,
-			   G_CALLBACK (sinus_radio_button_update),
-			   &svals.perturbation, (gpointer) svals.perturbation,
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (sinus_toggle_button_update),
+                    &svals.tiling);
 
-			   _("Ideal"),     (gpointer) IDEAL, NULL,
-			   _("Distorted"), (gpointer) PERTURBED, NULL,
+  vbox2 = gimp_radio_group_new2 (FALSE, NULL,
+                                 G_CALLBACK (sinus_radio_button_update),
+                                 &svals.perturbation,
+                                 GINT_TO_POINTER (svals.perturbation),
 
-			   NULL);
+                                 _("Ideal"),
+                                 GINT_TO_POINTER (IDEAL), NULL,
+
+                                 _("Distorted"),
+                                 GINT_TO_POINTER (PERTURBED), NULL,
+
+                                 NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 0);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -1888,20 +1893,22 @@ sinus_dialog (void)
       push_col1 = gimp_color_button_new (_("First Color"), 32, 32, 
 					 &svals.col1, 
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
-      gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed", 
-			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-			  &svals.col1);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
+
+      g_signal_connect (G_OBJECT (push_col1), "color_changed", 
+                        G_CALLBACK (gimp_color_button_get_color),
+                        &svals.col1);
 
       push_col2 = gimp_color_button_new (_("Second Color"), 32, 32, 
 					 &svals.col2, 
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
-      gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed", 
-			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-			  &svals.col2);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
+
+      g_signal_connect (G_OBJECT (push_col2), "color_changed", 
+                        G_CALLBACK (gimp_color_button_get_color),
+                        &svals.col2);
 
       gtk_widget_show (hbox);
     }
@@ -1923,14 +1930,14 @@ sinus_dialog (void)
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (alpha_scale_cb),
-                      push_col1);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (alpha_scale_cb),
+                    push_col1);
 
   if (push_col1)
-    gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed",
-			GTK_SIGNAL_FUNC (alpha_scale_update),
-			adj);
+    g_signal_connect (G_OBJECT (push_col1), "color_changed",
+                      G_CALLBACK (alpha_scale_update),
+                      adj);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Second Color:"), 0, 0,
@@ -1938,14 +1945,14 @@ sinus_dialog (void)
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (alpha_scale_cb),
-                      push_col2);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (alpha_scale_cb),
+                    push_col2);
 
   if (push_col2)
-    gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed",
-			GTK_SIGNAL_FUNC (alpha_scale_update),
-			adj);
+    g_signal_connect (G_OBJECT (push_col2), "color_changed",
+                      G_CALLBACK (alpha_scale_update),
+                      adj);
 
   gtk_widget_show (table);
 
@@ -1992,9 +1999,9 @@ sinus_dialog (void)
 			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
-		      &svals.blend_power);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (sinus_double_adjustment_update),
+                    &svals.blend_power);
 
   gtk_widget_show (table);
 
@@ -2054,8 +2061,8 @@ sinus_do_preview (GtkWidget *widget)
 	  buf += rowsize;
 	}
       g_free (savbuf);
-      gtk_widget_draw (theWidget, NULL);
-      gdk_flush ();
+
+      gtk_widget_queue_draw (theWidget);
     }
   else
     {
@@ -2131,11 +2138,12 @@ mw_preview_new (GtkWidget        *parent,
 
   button = gtk_check_button_new_with_label (_("Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
-                      &do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (mw_preview_toggle_callback),
+                    &do_preview);
 
   return preview;
 }

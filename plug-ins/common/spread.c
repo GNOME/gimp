@@ -143,11 +143,11 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  gint32 image_ID;
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  gint32             image_ID;
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -156,9 +156,9 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -240,9 +240,9 @@ spread (GimpDrawable *drawable)
 {
   GimpPixelRgn  dest_rgn;
   GimpTile     *tile = NULL;
-  gint      row = -1;
-  gint      col = -1;
-  gpointer  pr;
+  gint          row = -1;
+  gint          col = -1;
+  gpointer      pr;
 
   gint    width, height;
   gint    bytes;
@@ -385,9 +385,9 @@ spread_dialog (gint32        image_ID,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Spread Amount"));

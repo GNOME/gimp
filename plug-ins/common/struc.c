@@ -1101,8 +1101,8 @@ static void run   (gchar       *name,
 		   GimpParam  **return_vals);
 
 static gint struc_dialog      (void);
-static void struc_ok_callback (GtkWidget *widget,
-			       gpointer   data);
+static void struc_ok_callback (GtkWidget    *widget,
+			       gpointer      data);
 
 static void strucpi           (GimpDrawable *drawable);
 
@@ -1166,17 +1166,17 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -1284,9 +1284,9 @@ struc_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Parameter settings */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -1299,17 +1299,24 @@ struc_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Direction"),
-                           G_CALLBACK (gimp_radio_button_update),
-			   &svals.direction, (gpointer) svals.direction,
+  frame = gimp_radio_group_new2 (TRUE, _("Direction"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &svals.direction,
+                                 GINT_TO_POINTER (svals.direction),
 
-			   _("Top-Right"),    (gpointer) TOP_RIGHT, NULL,
-			   _("Top-Left"),     (gpointer) TOP_LEFT, NULL,
-			   _("Bottom-Left"),  (gpointer) BOTTOM_LEFT, NULL,
-			   _("Bottom-Right"), (gpointer) BOTTOM_RIGHT, NULL,
+                                 _("Top-Right"),
+                                 GINT_TO_POINTER (TOP_RIGHT), NULL,
 
-			   NULL);
+                                 _("Top-Left"),
+                                 GINT_TO_POINTER (TOP_LEFT), NULL,
+
+                                 _("Bottom-Left"),
+                                 GINT_TO_POINTER (BOTTOM_LEFT), NULL,
+
+                                 _("Bottom-Right"),
+                                 GINT_TO_POINTER (BOTTOM_RIGHT), NULL,
+
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1324,9 +1331,9 @@ struc_dialog (void)
 			      svals.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (adj, "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &svals.depth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &svals.depth);
 
   gtk_widget_show (dlg);
 

@@ -59,16 +59,16 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar   *name,
-			 gint     nparams,
+static void      run    (gchar      *name,
+			 gint        nparams,
 			 GimpParam  *param,
-			 gint    *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
 static void      sobel  (GimpDrawable *drawable,
-			 gint       horizontal,
-			 gint       vertical,
-			 gint       keep_sign);
+			 gint          horizontal,
+			 gint          vertical,
+			 gint          keep_sign);
 
 /*
  * Sobel interface
@@ -78,14 +78,14 @@ static gint      sobel_dialog (void);
 /*
  * Sobel helper functions
  */
-static void      sobel_ok_callback     (GtkWidget *widget,
-					gpointer   data);
+static void      sobel_ok_callback (GtkWidget    *widget,
+                                    gpointer      data);
 
-static void      sobel_prepare_row (GimpPixelRgn  *pixel_rgn,
-				    guchar     *data,
-				    gint        x,
-				    gint        y,
-				    gint        w);
+static void      sobel_prepare_row (GimpPixelRgn *pixel_rgn,
+				    guchar       *data,
+				    gint          x,
+				    gint          y,
+				    gint          w);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -146,23 +146,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -249,14 +249,15 @@ sobel_dialog (void)
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, sobel_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
@@ -270,27 +271,30 @@ sobel_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Sobel Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bvals.horizontal);
+
   toggle = gtk_check_button_new_with_label (_("Sobel Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bvals.vertical);
+
   toggle = gtk_check_button_new_with_label (_("Keep Sign of Result (one Direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &bvals.keep_sign);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.keep_sign);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bvals.keep_sign);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);

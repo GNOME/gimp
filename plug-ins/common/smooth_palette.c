@@ -37,16 +37,16 @@
 
 /* Declare local functions. */
 static void query  (void);
-static void run    (gchar   *name,
-		    gint     nparams,
+static void run    (gchar      *name,
+		    gint        nparams,
 		    GimpParam  *param,
-		    gint    *nreturn_vals,
+		    gint       *nreturn_vals,
 		    GimpParam **return_vals);
 
 static gint   dialog (void);
 
 static gint32 doit   (GimpDrawable *drawable,
-		      gint32    *layer_id);
+		      gint32       *layer_id);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -104,26 +104,26 @@ static struct
 };
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[3];
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpDrawable *drawable;
+  static GimpParam   values[3];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *drawable;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 3;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = GIMP_PDB_IMAGE;
-  values[2].type = GIMP_PDB_LAYER;
+  values[1].type          = GIMP_PDB_IMAGE;
+  values[2].type          = GIMP_PDB_LAYER;
 
   switch (run_mode)
     {
@@ -407,9 +407,9 @@ dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -429,27 +429,27 @@ dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Width:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.width);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.width);
 
   spinbutton = gimp_spin_button_new (&adj, config.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Height:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.height);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.height);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Search Time:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.ntries);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.ntries);
 
   gtk_widget_show (dlg);
 
