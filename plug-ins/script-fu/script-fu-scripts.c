@@ -918,90 +918,90 @@ script_fu_free_script (SFScript *script)
 {
   gint i;
 
+  g_return_if_fail (script != NULL);
+
   /*  Uninstall the temporary procedure for this script  */
   gimp_uninstall_temp_proc (script->pdb_name);
 
-  if (script)
+  g_free (script->pdb_name);
+  g_free (script->script_name);
+  g_free (script->menu_path);
+  g_free (script->help);
+  g_free (script->author);
+  g_free (script->copyright);
+  g_free (script->date);
+  g_free (script->img_types);
+
+  for (i = 0; i < script->num_args; i++)
     {
-      g_free (script->script_name);
-      g_free (script->menu_path);
-      g_free (script->help);
-      g_free (script->author);
-      g_free (script->copyright);
-      g_free (script->date);
-      g_free (script->img_types);
+      g_free (script->arg_labels[i]);
+      switch (script->arg_types[i])
+        {
+        case SF_IMAGE:
+        case SF_DRAWABLE:
+        case SF_LAYER:
+        case SF_CHANNEL:
+        case SF_COLOR:
+          break;
 
-      for (i = 0; i < script->num_args; i++)
-	{
-	  g_free (script->arg_labels[i]);
-	  switch (script->arg_types[i])
-	    {
-	    case SF_IMAGE:
-	    case SF_DRAWABLE:
-	    case SF_LAYER:
-	    case SF_CHANNEL:
-	    case SF_COLOR:
-	      break;
+        case SF_VALUE:
+        case SF_STRING:
+        case SF_TEXT:
+          g_free (script->arg_defaults[i].sfa_value);
+          g_free (script->arg_values[i].sfa_value);
+          break;
 
-	    case SF_VALUE:
-	    case SF_STRING:
-            case SF_TEXT:
-	      g_free (script->arg_defaults[i].sfa_value);
-	      g_free (script->arg_values[i].sfa_value);
-	      break;
+        case SF_ADJUSTMENT:
+          break;
 
-	    case SF_ADJUSTMENT:
-	      break;
+        case SF_FILENAME:
+        case SF_DIRNAME:
+          g_free (script->arg_defaults[i].sfa_file.filename);
+          g_free (script->arg_values[i].sfa_file.filename);
+          break;
 
-	    case SF_FILENAME:
-	    case SF_DIRNAME:
-	      g_free (script->arg_defaults[i].sfa_file.filename);
-	      g_free (script->arg_values[i].sfa_file.filename);
-	      break;
+        case SF_FONT:
+          g_free (script->arg_defaults[i].sfa_font);
+          g_free (script->arg_values[i].sfa_font);
+          break;
 
-	    case SF_FONT:
-	      g_free (script->arg_defaults[i].sfa_font);
-	      g_free (script->arg_values[i].sfa_font);
-	      break;
+        case SF_PALETTE:
+          g_free (script->arg_defaults[i].sfa_palette);
+          g_free (script->arg_values[i].sfa_palette);
+          break;
 
-	    case SF_PALETTE:
-	      g_free (script->arg_defaults[i].sfa_palette);
-	      g_free (script->arg_values[i].sfa_palette);
-	      break;
+        case SF_PATTERN:
+          g_free (script->arg_defaults[i].sfa_pattern);
+          g_free (script->arg_values[i].sfa_pattern);
+          break;
 
-	    case SF_PATTERN:
-	      g_free (script->arg_defaults[i].sfa_pattern);
-	      g_free (script->arg_values[i].sfa_pattern);
-	      break;
+        case SF_GRADIENT:
+          g_free (script->arg_defaults[i].sfa_gradient);
+          g_free (script->arg_values[i].sfa_gradient);
+          break;
 
-	    case SF_GRADIENT:
-	      g_free (script->arg_defaults[i].sfa_gradient);
-	      g_free (script->arg_values[i].sfa_gradient);
-	      break;
+        case SF_BRUSH:
+          g_free (script->arg_defaults[i].sfa_brush.name);
+          g_free (script->arg_values[i].sfa_brush.name);
+          break;
 
-	    case SF_BRUSH:
-	      g_free (script->arg_defaults[i].sfa_brush.name);
-	      g_free (script->arg_values[i].sfa_brush.name);
-	      break;
+        case SF_OPTION:
+          g_slist_foreach (script->arg_defaults[i].sfa_option.list,
+                           (GFunc) g_free, NULL);
+          g_slist_free (script->arg_defaults[i].sfa_option.list);
+          break;
 
-	    case SF_OPTION:
-	      g_slist_foreach (script->arg_defaults[i].sfa_option.list,
-			       (GFunc) g_free, NULL);
-              g_slist_free (script->arg_defaults[i].sfa_option.list);
-	      break;
-
-	    default:
-	      break;
-	    }
-	}
-
-      g_free (script->arg_labels);
-      g_free (script->arg_defaults);
-      g_free (script->arg_types);
-      g_free (script->arg_values);
-
-      g_free (script);
+        default:
+          break;
+        }
     }
+
+  g_free (script->arg_labels);
+  g_free (script->arg_defaults);
+  g_free (script->arg_types);
+  g_free (script->arg_values);
+
+  g_free (script);
 }
 
 static gint

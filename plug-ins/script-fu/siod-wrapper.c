@@ -194,8 +194,6 @@ static void
 init_procedures (void)
 {
   gchar          **proc_list;
-  gchar           *proc_name;
-  gchar           *arg_name;
   gchar           *proc_blurb;
   gchar           *proc_help;
   gchar           *proc_author;
@@ -221,10 +219,8 @@ init_procedures (void)
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
     {
-      proc_name = g_strdup (proc_list[i]);
-
       /*  lookup the procedure  */
-      if (gimp_procedural_db_proc_info (proc_name,
+      if (gimp_procedural_db_proc_info (proc_list[i],
                                         &proc_blurb,
                                         &proc_help,
                                         &proc_author,
@@ -234,33 +230,37 @@ init_procedures (void)
                                         &nparams, &nreturn_vals,
                                         &params, &return_vals))
         {
-          LISP args = NIL;
-          LISP code = NIL;
-          gint j;
-
-          /*  convert the names to scheme-like naming conventions  */
-          convert_string (proc_name);
+          LISP   args = NIL;
+          LISP   code = NIL;
+          gchar *proc_name;
+          gint   j;
 
           /*  create a new scheme func that calls gimp-proc-db-call  */
           for (j = 0; j < nparams; j++)
             {
-              arg_name = g_strdup (params[j].name);
+              gchar *arg_name = params[j].name;
+
               convert_string (arg_name);
-              args = cons (cintern (arg_name), args);
-              code = cons (cintern (arg_name), code);
+
+              args = cons (rintern (arg_name), args);
+              code = cons (rintern (arg_name), code);
             }
 
           /*  reverse the list  */
           args = nreverse (args);
           code = nreverse (code);
 
-          /*  set the scheme-based procedure name  */
-          args = cons (cintern (proc_name), args);
+          /*  convert the procedure name to scheme-like naming conventions  */
+          proc_name = g_strdup (proc_list[i]);
+          convert_string (proc_name);
 
-          /*  set the acture pdb procedure name  */
+          /*  set the scheme-based procedure name  */
+          args = cons (rintern (proc_name), args);
+          g_free (proc_name);
+
+          /*  set the actual pdb procedure name  */
           code = cons (cons (cintern ("quote"),
-                             cons (cintern (proc_list[i]), NIL)),
-                       code);
+                             cons (rintern (proc_list[i]), NIL)), code);
           code = cons (cintern ("gimp-proc-db-call"), code);
 
           leval_define (cons (args, cons (code, NIL)), NIL);
@@ -271,9 +271,12 @@ init_procedures (void)
           g_free (proc_author);
           g_free (proc_copyright);
           g_free (proc_date);
+
           gimp_destroy_paramdefs (params, nparams);
           gimp_destroy_paramdefs (return_vals, nreturn_vals);
         }
+
+      g_free (proc_list[i]);
     }
 
   g_free (proc_list);
