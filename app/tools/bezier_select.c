@@ -1081,7 +1081,8 @@ bezier_select_button_press (Tool           *tool,
 	      paths_dialog_set_default_op();
 	      bezier_start_new_segment(bezier_sel,x,y);
 	    }
-	  bezier_sel->draw = BEZIER_DRAW_ALL; 
+ 	  bezier_sel->draw = BEZIER_DRAW_ALL; 
+
 	  draw_core_resume (bezier_sel->core, tool);
 	}
       break;
@@ -1764,6 +1765,7 @@ bezier_add_point (BezierSelect *bezier_sel,
       newpt->type = BEZIER_ANCHOR;
       bezier_sel->last_point->next_curve = newpt;
       bezier_sel->last_point = newpt;
+      bezier_sel->cur_anchor = newpt;
     }
   else
     {

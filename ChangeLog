@@ -1,3 +1,16 @@
+2000-03-26 Garry R. Osgood <gosgood@idt.net>
+
+	* gimp/app/bezier_select.c
+	in bezier_add_point(), when a BEZIER_MOVE type
+	point is being added to a path with at least
+	one extant segment, the point is re-typed
+	to a BEZIER_ANCHOR (which is old behavior)
+	and designated as the current anchor
+	(which is new behaviour). With this change,
+	motion events move the (second) control point
+	and indicia are properly updated. This closes
+	#6225.
+
 2000-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimage_mask.[ch] (gimage_mask_extract): add an "add_alpha"
