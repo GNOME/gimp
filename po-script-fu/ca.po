@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.2\n"
 "POT-Creation-Date: 2001-10-13 01:24+0200\n"
-"PO-Revision-Date: 2001-05-21 22:31+0200\n"
+"PO-Revision-Date: 2001-10-13 20:50+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,6 @@ msgid "Browse..."
 msgstr "Navega..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
-#, fuzzy
 msgid "Unable to open SIOD output pipe"
 msgstr "No es pot obrir el conducte de sortida SIOD"
 
