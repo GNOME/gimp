@@ -45,6 +45,7 @@ struct _PasteNamedDlg
   GtkWidget   *shell;
   GtkWidget   *list;
   int          paste_into;
+  int          paste_as_new;
   GDisplay    *gdisp;
 };
 
@@ -271,10 +272,10 @@ edit_copy (GImage *gimage,
 }
 
 GimpLayer*
-edit_paste (GImage      *gimage,
+edit_paste (GImage       *gimage,
 	    GimpDrawable *drawable,
-	    TileManager *paste,
-	    int          paste_into)
+	    TileManager  *paste,
+	    int           paste_into)
 {
   Layer * float_layer;
   int x1, y1, x2, y2;
@@ -314,6 +315,48 @@ edit_paste (GImage      *gimage,
     }
   else
     return NULL;
+}
+  
+int
+edit_paste_as_new (GImage       *invoke,
+		   TileManager  *paste)
+{
+  GImage       *gimage;
+  GimpDrawable *drawable;
+  Layer        *layer;
+  Layer        *float_layer;
+  GDisplay     *gdisp;
+
+  if (!global_buf)
+    return FALSE;
+
+  /*  create a new image  */
+  gimage = gimage_new (paste->width, paste->height, invoke->base_type);
+  gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
+  gimp_image_set_unit (gimage, invoke->unit);
+
+  layer = layer_new (gimage, gimage->width, gimage->height,
+		     (invoke->base_type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE, 
+		     _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
+
+  /*  add the new layer to the image  */
+  gimage_disable_undo (gimage);
+  gimage_add_layer (gimage, layer, 0);
+  drawable = gimage_active_drawable (gimage);
+  drawable_fill (GIMP_DRAWABLE (drawable), TRANSPARENT_FILL);
+            
+  /*  make a new floating layer  */
+  float_layer = layer_from_tiles (gimage, drawable, paste, 
+				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
+
+  /*  add the new floating selection  */
+  floating_sel_attach (float_layer, drawable);
+  floating_sel_anchor (float_layer);
+  gimage_enable_undo (gimage);
+  gdisp = gdisplay_new (gimage, 0x0101);
+  gimp_context_set_display (gimp_context_get_user (), gdisp);
+
+  return TRUE;			       
 }
 
 gboolean
@@ -434,7 +477,8 @@ global_edit_paste (void *gdisp_ptr,
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  if (!edit_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage), global_buf, paste_into))
+  if (!edit_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage), 
+		   global_buf, paste_into))
     return FALSE;
   else
     {
@@ -442,6 +486,21 @@ global_edit_paste (void *gdisp_ptr,
       gdisplays_flush ();
       return TRUE;
     }
+}
+
+int
+global_edit_paste_as_new (void *gdisp_ptr)
+{
+  GDisplay *gdisp;
+
+  if (!global_buf)
+    return FALSE;
+
+  /*  stop any active tool  */
+  gdisp = (GDisplay *) gdisp_ptr;
+  active_tool_control (HALT, gdisp_ptr);
+
+  return (edit_paste_as_new (gdisp->gimage, global_buf));
 }
 
 void
@@ -489,9 +548,12 @@ named_buffer_paste_foreach (GtkWidget *w,
     {
       pn_dlg = (PasteNamedDlg *) client_data;
       nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
-      edit_paste (pn_dlg->gdisp->gimage,
-		  gimage_active_drawable (pn_dlg->gdisp->gimage),
-		  nb->buf, pn_dlg->paste_into);
+      if (pn_dlg->paste_as_new)
+	edit_paste_as_new (pn_dlg->gdisp->gimage, nb->buf);
+      else
+	edit_paste (pn_dlg->gdisp->gimage,
+		    gimage_active_drawable (pn_dlg->gdisp->gimage),
+		    nb->buf, pn_dlg->paste_into);
     }
 }
 
@@ -578,9 +640,23 @@ named_buffer_paste_into_update (GtkWidget *w,
   pn_dlg = (PasteNamedDlg *) client_data;
 
   if (GTK_TOGGLE_BUTTON (w)->active)
-    pn_dlg->paste_into = FALSE;
-  else
     pn_dlg->paste_into = TRUE;
+  else
+    pn_dlg->paste_into = FALSE;
+}
+
+static void
+named_buffer_paste_as_new_update (GtkWidget *w,
+				  gpointer   client_data)
+{
+  PasteNamedDlg *pn_dlg;
+
+  pn_dlg = (PasteNamedDlg *) client_data;
+
+  if (GTK_TOGGLE_BUTTON (w)->active)
+    pn_dlg->paste_as_new = TRUE;
+  else
+    pn_dlg->paste_as_new = FALSE;
 }
 
 static void
@@ -595,12 +671,14 @@ paste_named_buffer (GDisplay *gdisp)
   PasteNamedDlg *pn_dlg;
   GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *paste_into;
+  GtkWidget *toggle;
   GtkWidget *listbox;
 
   pn_dlg = (PasteNamedDlg *) g_malloc (sizeof (PasteNamedDlg));
   pn_dlg->gdisp = gdisp;
-
+  pn_dlg->paste_into   = FALSE;
+  pn_dlg->paste_as_new = FALSE;
+  
   pn_dlg->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (pn_dlg->shell), "paste_named_buffer", "Gimp");
   gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), _("Paste Named Buffer"));
@@ -634,12 +712,21 @@ paste_named_buffer (GDisplay *gdisp)
   set_list_of_named_buffers (pn_dlg->list);
   gtk_widget_show (pn_dlg->list);
 
-  paste_into = gtk_check_button_new_with_label (_("Replace Current Selection"));
-  gtk_box_pack_start (GTK_BOX (vbox), paste_into, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (paste_into), "toggled",
+  toggle = gtk_check_button_new_with_label (_("Replace Current Selection"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (pn_dlg->paste_into));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) named_buffer_paste_into_update,
 		      pn_dlg);
-  gtk_widget_show (paste_into);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Paste As New"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (pn_dlg->paste_as_new));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      (GtkSignalFunc) named_buffer_paste_as_new_update,
+		      pn_dlg);
+  gtk_widget_show (toggle);
 
   action_items[0].user_data = pn_dlg;
   action_items[1].user_data = pn_dlg;

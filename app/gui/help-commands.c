@@ -184,6 +184,16 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 }
 
 void
+edit_paste_as_new_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  global_edit_paste_as_new (gdisp);
+}
+
+void
 edit_clear_cmd_callback (GtkWidget *widget,
 			 gpointer   client_data)
 {

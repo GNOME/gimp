@@ -21,22 +21,24 @@
 #include "gimage.h"
 
 /*  The interface functions  */
-TileManager *  crop_buffer            (TileManager *, int);
-TileManager *  edit_cut               (GImage *, GimpDrawable *);
-TileManager *  edit_copy              (GImage *, GimpDrawable *);
-GimpLayer*     edit_paste             (GImage *, GimpDrawable *,
-				       TileManager *, int);
-int            edit_clear             (GImage *, GimpDrawable *);
-int            edit_fill              (GImage *, GimpDrawable *);
+TileManager *  crop_buffer              (TileManager *, int);
+TileManager *  edit_cut                 (GImage *, GimpDrawable *);
+TileManager *  edit_copy                (GImage *, GimpDrawable *);
+GimpLayer*     edit_paste               (GImage *, GimpDrawable *,
+				         TileManager *, int);
+int            edit_paste_as_new        (GImage *, TileManager *);
+int            edit_clear               (GImage *, GimpDrawable *);
+int            edit_fill                (GImage *, GimpDrawable *);
 
-int            global_edit_cut        (void *);
-int            global_edit_copy       (void *);
-int            global_edit_paste      (void *, int);
-void           global_edit_free       (void);
+int            global_edit_cut          (void *);
+int            global_edit_copy         (void *);
+int            global_edit_paste        (void *, int);
+int            global_edit_paste_as_new (void *);
+void           global_edit_free         (void);
 
-int            named_edit_cut         (void *);
-int            named_edit_copy        (void *);
-int            named_edit_paste       (void *);
-void           named_buffers_free     (void);
+int            named_edit_cut           (void *);
+int            named_edit_copy          (void *);
+int            named_edit_paste         (void *);
+void           named_buffers_free       (void);
 
 #endif  /*  __GLOBAL_EDIT_H__  */
