@@ -1,3 +1,8 @@
+2005-02-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/unsharp.c:  apply speedup proposed 
+	by Peter Heckert in bug #166406.  
+
 2005-02-06  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed traces of url plug-in.

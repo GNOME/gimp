@@ -338,9 +338,9 @@ blur_line (const gdouble *ctable,
               src_p1 = src_p;
               ctable_p = ctable;
               sum = 0;
-              for (j = cmatrix_length; j > 0; j--)
+              for (j = 0; j < cmatrix_length; j++)
                 {
-                  sum += *(ctable_p + *src_p1);
+                  sum += cmatrix[j] * *src_p1;
                   src_p1 += bytes;
                   ctable_p += 256;
                 }
