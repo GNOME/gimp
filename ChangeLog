@@ -1,3 +1,8 @@
+Wed Nov 17 17:29:35 1999  ape@spacetec.no  (Asbjorn Pettersen)
+
+	* modules/colorsel_triangle.c (module_init):  Removed most of the
+	OS/2 code. 	Include  modregister.h.
+
 Wed Nov 17 15:37:06 MET 1999  Sven Neumann <sven@gimp.org>
 	
 	* app/color_balance.c

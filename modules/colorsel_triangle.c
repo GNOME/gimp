@@ -28,6 +28,7 @@
 #include <libgimp/color_selector.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
+#include "modregister.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -133,33 +134,6 @@ static void update_previews (ColorSelectP, gint);
 static void color_select_update_hsv_values (ColorSelectP);
 
 
-#ifdef __EMX__
-struct main_funcs_struc {
-  gchar *name;
-  void (*func)();
-};
-struct main_funcs_struc *gimp_main_funcs = NULL;
-
-static gpointer
-get_main_func (gchar *name)
-{
-  struct main_funcs_struc *x;
-  if (gimp_main_funcs == NULL)
-    return NULL;
-  for (x = gimp_main_funcs; x->name; x++)
-  {
-    if (!strcmp(x->name, name))
-      return (gpointer) x->func;
-  }
-}
-typedef GimpColorSelectorID (*color_reg_func)(const char *,
-                                              GimpColorSelectorMethods *);
-typedef gboolean (*color_unreg_func) (GimpColorSelectorID,
-                                      void (*)(void *),
-                                      void *);
-#endif
-
-
 /*************************************************************/
 
 /* globaly exported init function */
@@ -170,13 +144,10 @@ module_init (GimpModuleInfo **inforet)
 
 #ifndef __EMX__
   id = gimp_color_selector_register ("Triangle", "triangle.html", &methods);
-
-  if (id)
 #else
-  color_reg_func reg_func;
-  reg_func = (color_reg_func) get_main_func("gimp_color_selector_register");
-  if (reg_func && (id = (*reg_func) ("Triangle", &methods)))
+  id = mod_color_selector_register  ("Triangle", "triangle.html", &methods);
 #endif
+  if (id)
   {
     info.shutdown_data = id;
     *inforet = &info;
@@ -197,11 +168,7 @@ module_unload (void *shutdown_data,
 #ifndef __EMX__
   gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
 #else
-  color_unreg_func unreg_func;
-  unreg_func = (color_unreg_func) get_main_func("gimp_color_selector_unregister"
-);
-  if (unreg_func)
-    (*unreg_func) (shutdown_data, completed_cb, completed_data);
+  mod_color_selector_unregister (shutdown_data, completed_cb, completed_data);
 #endif
 }
 
