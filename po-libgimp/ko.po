@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-25 00:19+0900\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2003-06-05 07:55+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -385,11 +385,11 @@ msgstr "현재:"
 msgid "Old:"
 msgstr "이전:"
 
-#: libgimpwidgets/gimpfileentry.c:351
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "폴더 선택"
 
-#: libgimpwidgets/gimpfileentry.c:353
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "파일 선택"
 

@@ -1,3 +1,7 @@
+2004-04-14  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.0.1 release.
+
 2004-04-13  Raphaël Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/mng.c (query, run): Workaround for bug #139947:

@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"POT-Creation-Date: 2004-04-06 17:32+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-14 00:30+0200\n"
 "PO-Revision-Date: 2004-04-06 19:23+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
@@ -40,6 +40,27 @@ msgid "About"
 msgstr "Honi buruz"
 
 #. Preview
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -66,7 +87,8 @@ msgstr "Aurrebista denbora errealean"
 
 #: plug-ins/FractalExplorer/Dialogs.c:630
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Aukera hau gaitzen baduzu, aurrebista automatikoki berriro marraztuko da"
+msgstr ""
+"Aukera hau gaitzen baduzu, aurrebista automatikoki berriro marraztuko da"
 
 #: plug-ins/FractalExplorer/Dialogs.c:633
 msgid "Redraw"
@@ -285,6 +307,7 @@ msgid "Color Function"
 msgstr "Kolorearen funtzioa"
 
 #. Redmode radio frame
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -351,12 +374,14 @@ msgstr ""
 "trukatuko dira, eta alderantziz"
 
 #. Greenmode radio frame
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Berdea"
 
 #. Bluemode radio frame
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -402,7 +427,7 @@ msgstr "_Fraktalak"
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
-#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1302
+#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
@@ -441,12 +466,13 @@ msgid "Save Fractal Parameters"
 msgstr "Gorde parametro fraktalak"
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
-#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:765
+#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
@@ -618,7 +644,8 @@ msgstr "_Sakonera:"
 
 #: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Antialiasing kalitatea. Kalitate handia hobea da, baina mantsoagoa ere bai"
+msgstr ""
+"Antialiasing kalitatea. Kalitate handia hobea da, baina mantsoagoa ere bai"
 
 #: plug-ins/Lighting/lighting_ui.c:444
 msgid "T_hreshold:"
@@ -761,7 +788,8 @@ msgstr "_Lausoa:"
 
 #: plug-ins/Lighting/lighting_ui.c:750 plug-ins/MapObject/mapobject_ui.c:913
 msgid "Intensity of original color when lit by a light source"
-msgstr "Jatorrizko kolorearen intentsitatea, argi-iturri batek argiztatzen duenean"
+msgstr ""
+"Jatorrizko kolorearen intentsitatea, argi-iturri batek argiztatzen duenean"
 
 #: plug-ins/Lighting/lighting_ui.c:758 plug-ins/MapObject/mapobject_ui.c:921
 msgid "Reflectivity"
@@ -773,7 +801,8 @@ msgstr "_Lausoa:"
 
 #: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "Balio handiekin objektuak argi gehiago islatzen du (argiago ikusten da)"
+msgstr ""
+"Balio handiekin objektuak argi gehiago islatzen du (argiago ikusten da)"
 
 #: plug-ins/Lighting/lighting_ui.c:807
 msgid "_Specular:"
@@ -1147,10 +1176,15 @@ msgid "Bad colormap"
 msgstr "Kolore-mapa okerra"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
-#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:772
+#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:775
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
@@ -1188,7 +1222,7 @@ msgstr "Errorea BMP fitxategi-goiburua '%s'tik irakurtzean"
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:930 plug-ins/common/pcx.c:333
+#: plug-ins/common/jpeg.c:933 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
@@ -1213,10 +1247,12 @@ msgid "Cannot operate on unknown image types."
 msgstr "Ezin izan da irudi-mota ezezagunekin lan egin"
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
-#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1257
+#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
@@ -1323,7 +1359,8 @@ msgid "Use cosine-function for green component."
 msgstr "Erabili kosinu-funtzioa osagai berderako."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr "Kanal berdea: erabili mapatze lineala funtzio trigonometrikoen ordez"
 
 #: plug-ins/common/AlienMap.c:1275
@@ -1335,7 +1372,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Erabili kosinu-funtzioa osagai urdinerako."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr "Kanal urdina: erabili mapatze lineala funtzio trigonometrikoen ordez"
 
 #: plug-ins/common/AlienMap.c:1360
@@ -1897,7 +1935,8 @@ msgstr "Abisua: '%s' ez da formatu zaharreko fitxategia."
 #: plug-ins/common/CML_explorer.c:2373
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Abisua: '%s' ni baino CML _esploradore berriagorako parametro-fitxategia da."
+msgstr ""
+"Abisua: '%s' ni baino CML _esploradore berriagorako parametro-fitxategia da."
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
@@ -1931,6 +1970,35 @@ msgstr "Lerrokatu geruza ikusgaiak"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:326
@@ -1939,7 +2007,7 @@ msgstr "Lerrokatu geruza ikusgaiak"
 #: plug-ins/common/emboss.c:525 plug-ins/common/engrave.c:216
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
-#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1722
+#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1725
 #: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
@@ -2332,7 +2400,8 @@ msgstr "Ez dago luzapen argirik, XCF konprimitu gisa gordeko da."
 
 #: plug-ins/common/bz2.c:301 plug-ins/common/gz.c:393
 msgid "No sensible extension, attempting to load with file magic."
-msgstr "Ez dago luzapen argirik, fitxategi magikoarekin kargatzen saiatuko naiz."
+msgstr ""
+"Ez dago luzapen argirik, fitxategi magikoarekin kargatzen saiatuko naiz."
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -2714,7 +2783,8 @@ msgstr "<Image>/Iragazkiak/Generikoa/_Konboluzio-matrizea..."
 
 #: plug-ins/common/convmatrix.c:226
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
-msgstr "Konboluzio-matrizeak ez du 3 pixel baino txikiagoko geruzetan funtzionatzen."
+msgstr ""
+"Konboluzio-matrizeak ez du 3 pixel baino txikiagoko geruzetan funtzionatzen."
 
 #: plug-ins/common/convmatrix.c:299
 msgid "Applying convolution"
@@ -2829,8 +2899,8 @@ msgstr "<Image>/Iragazkiak/Distortsioak/_Tolestu kurbaren arabera..."
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
-"Geruzetan bakarrik funtzionatzen du (baina "
-"kanalean edo maskaran deitzen zaio)"
+"Geruzetan bakarrik funtzionatzen du (baina kanalean edo maskaran deitzen "
+"zaio)"
 
 #: plug-ins/common/curve_bend.c:734
 msgid "Cannot operate on empty selections."
@@ -2853,6 +2923,8 @@ msgid "Automatic Pre_view"
 msgstr "Au_rrebista automatikoa"
 
 #. Options area, bottom of column
+#. the vertical box and its toggle buttons
+#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
@@ -3829,11 +3901,12 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"GIF formatuak 7 biteko ASCII kodetzea duten "
-"iruzkinak bakarrik onartzen ditu. Ez da iradokizunik gorde."
+"GIF formatuak 7 biteko ASCII kodetzea duten iruzkinak bakarrik onartzen "
+"ditu. Ez da iradokizunik gorde."
 
 #: plug-ins/common/gif.c:971
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Ezin dira RGB irudiak GIF gisa gorde. Bihurtu irudi indexatu edo gris-"
 "eskalara lehenik."
@@ -3850,7 +3923,8 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr "Atzerapena txertatu da, PUZ xurgatzen duen animazio gaizto hori eragozteko."
+msgstr ""
+"Atzerapena txertatu da, PUZ xurgatzen duen animazio gaizto hori eragozteko."
 
 #: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
@@ -4502,85 +4576,86 @@ msgstr "Pieza bakoitzak albo kurbatuak ditu"
 msgid "Export Preview"
 msgstr "Esportatu aurrebista"
 
-#: plug-ins/common/jpeg.c:923
+#: plug-ins/common/jpeg.c:926
 msgid "JPEG preview"
 msgstr "JPEGren aurrebista"
 
-#: plug-ins/common/jpeg.c:1176
+#: plug-ins/common/jpeg.c:1179
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Tamaina: %ld byte (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1610 plug-ins/common/jpeg.c:1712
+#: plug-ins/common/jpeg.c:1613 plug-ins/common/jpeg.c:1715
 msgid "Size: unknown"
 msgstr "Tamaina: ezezaguna"
 
-#: plug-ins/common/jpeg.c:1675
+#: plug-ins/common/jpeg.c:1678
 msgid "Save as JPEG"
 msgstr "Gorde JPEG gisa"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1691 plug-ins/print/gimp_color_window.c:253
+#: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:253
 msgid "Image Preview"
 msgstr "Irudiaren aurrebista"
 
-#: plug-ins/common/jpeg.c:1699
+#: plug-ins/common/jpeg.c:1702
 msgid "Preview (in image window, will modify image's undo history!)"
-msgstr "Aurrebista (irudiaren leihoan, irudiaren desegite-historia aldatuko du!)"
+msgstr ""
+"Aurrebista (irudiaren leihoan, irudiaren desegite-historia aldatuko du!)"
 
-#: plug-ins/common/jpeg.c:1732 plug-ins/xjt/xjt.c:888
+#: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
 msgstr "Kalitatea:"
 
-#: plug-ins/common/jpeg.c:1755 plug-ins/xjt/xjt.c:897
+#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:897
 msgid "Smoothing:"
 msgstr "Leuntzea:"
 
-#: plug-ins/common/jpeg.c:1783
+#: plug-ins/common/jpeg.c:1786
 msgid "Restart markers"
 msgstr "Berrabiarazi markatzaileak"
 
-#: plug-ins/common/jpeg.c:1792
+#: plug-ins/common/jpeg.c:1795
 msgid "Restart frequency (rows):"
 msgstr "Berrabiarazi maiztasuna (errenkadak):"
 
-#: plug-ins/common/jpeg.c:1821 plug-ins/xjt/xjt.c:866
+#: plug-ins/common/jpeg.c:1824 plug-ins/xjt/xjt.c:866
 msgid "Optimize"
 msgstr "Optimizatu"
 
-#: plug-ins/common/jpeg.c:1835
+#: plug-ins/common/jpeg.c:1838
 msgid "Progressive"
 msgstr "Pixkanaka"
 
-#: plug-ins/common/jpeg.c:1854
+#: plug-ins/common/jpeg.c:1857
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Behartu oinarri-lerroko JPEG (dekodetzaile guztiek irakur dezakete)"
 
-#: plug-ins/common/jpeg.c:1870
+#: plug-ins/common/jpeg.c:1873
 msgid "Save EXIF data"
 msgstr "Gorde EXIF datua"
 
-#: plug-ins/common/jpeg.c:1896
+#: plug-ins/common/jpeg.c:1899
 msgid "Subsampling:"
 msgstr "Azpilaginketa:"
 
-#: plug-ins/common/jpeg.c:1910
+#: plug-ins/common/jpeg.c:1913
 msgid "Fast Integer"
 msgstr "Osoko bizkorra"
 
-#: plug-ins/common/jpeg.c:1911
+#: plug-ins/common/jpeg.c:1914
 msgid "Integer"
 msgstr "Osokoa"
 
-#: plug-ins/common/jpeg.c:1912
+#: plug-ins/common/jpeg.c:1915
 msgid "Floating-Point"
 msgstr "Koma mugikorra"
 
-#: plug-ins/common/jpeg.c:1917
+#: plug-ins/common/jpeg.c:1920
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT metodoa (abiadura/kalitatea erlazioa):"
 
-#: plug-ins/common/jpeg.c:1921
+#: plug-ins/common/jpeg.c:1924
 msgid "Image comments"
 msgstr "Irudien iruzkinak"
 
@@ -5104,6 +5179,7 @@ msgid "_Factory Defaults"
 msgstr "_Fabrikako lehenetsiak"
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Antialiasing-a"
@@ -5495,8 +5571,8 @@ msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
-"PNG fitxategiak desplazamendu bat zehazten du, geruza "
-"irudiaren kanpoan kokatu dezakelarik."
+"PNG fitxategiak desplazamendu bat zehazten du, geruza irudiaren kanpoan "
+"kokatu dezakelarik."
 
 #: plug-ins/common/png.c:1153
 #, c-format
@@ -5507,7 +5583,9 @@ msgstr "Errorea '%s' gordetzean. Ezin izan da irudia gorde."
 #. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Ezin izan da gardentasuna galerarik gabe gorde, horren ordez opakutasuna gordeko da."
+msgstr ""
+"Ezin izan da gardentasuna galerarik gabe gorde, horren ordez opakutasuna "
+"gordeko da."
 
 #: plug-ins/common/png.c:1553
 msgid "Save as PNG"
@@ -5640,7 +5718,8 @@ msgstr "_Mapatu atzerantz"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr "Hau hautatuz gero, mapatzea eskuineko aldean hasiko da, eta ez ezkerrekoan."
+msgstr ""
+"Hau hautatuz gero, mapatzea eskuineko aldean hasiko da, eta ez ezkerrekoan."
 
 #: plug-ins/common/polar.c:674
 msgid "Map from _Top"
@@ -6053,6 +6132,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Errorea pantaila-argazkia egitean"
 
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Kapturatu"
@@ -6778,8 +6858,11 @@ msgid "Import _Paths"
 msgstr "Inportatu _bideak"
 
 #: plug-ins/common/svg.c:852
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "Inportatu SVG-ko bide-elementuak, GIMPeko bide-tresnarekin erabil ahal izateko."
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgstr ""
+"Inportatu SVG-ko bide-elementuak, GIMPeko bide-tresnarekin erabil ahal "
+"izateko."
 
 #: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
@@ -6989,7 +7072,8 @@ msgid "ID"
 msgstr "IDa"
 
 #: plug-ins/common/uniteditor.c:85
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Kate hau GIMPen konfigurazio-fitxategietan unitate bat identifikatzeko "
 "erabiliko da."
@@ -7106,7 +7190,8 @@ msgstr "Sortu unitate berria hutsetik."
 
 #: plug-ins/common/uniteditor.c:563
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr "Sortu unitate berria unean hautatutako unitatea txantiloi gisa erabiliz."
+msgstr ""
+"Sortu unitate berria unean hautatutako unitatea txantiloi gisa erabiliz."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7529,6 +7614,7 @@ msgstr "Haizea"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Estiloa"
@@ -8747,6 +8833,7 @@ msgid "(none)"
 msgstr "(bat ere ez)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr "<BAT ERE EZ>"
 
@@ -8833,6 +8920,9 @@ msgstr "Lehenetsia"
 
 #.
 #. *  Scales
+#.
+#.
+#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2671 plug-ins/gflare/gflare.c:3482
 #: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:3728
@@ -9121,7 +9211,8 @@ msgstr "B_rotxaren erdian"
 
 #: plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Kolorea brotxaren azpiko pixel guztien batazbestekoarekin kalkulatzen da"
+msgstr ""
+"Kolorea brotxaren azpiko pixel guztien batazbestekoarekin kalkulatzen da"
 
 #: plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9161,7 +9252,8 @@ msgstr "Kolore lisoko atzeko planoa"
 
 #: plug-ins/gimpressionist/general.c:126
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Erabili atzeko plano gardena; pintatutako trazuak bakarrik ikusiko dira"
+msgstr ""
+"Erabili atzeko plano gardena; pintatutako trazuak bakarrik ikusiko dira"
 
 #: plug-ins/gimpressionist/general.c:141
 msgid "Paint edges"
@@ -9211,8 +9303,10 @@ msgid "Shadow depth:"
 msgstr "Itzalaren sakonera:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "Itzalaren sakonera, hau da, objektutik zein distantziatara egon behar duen"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr ""
+"Itzalaren sakonera, hau da, objektutik zein distantziatara egon behar duen"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9615,11 +9709,13 @@ msgid "The largest brush to create"
 msgstr "Sortu beharreko brotxa handiena"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Eskualdearen balioak (distirak) zehazten du trazuaren tamaina"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Irudiaren erdira dagoen distantziak trazuaren tamaina zehazten du"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -9754,8 +9850,8 @@ msgid ""
 "before reporting this error as a bug."
 msgstr ""
 "Eskatutako dokumentua ezin izan da GIMPen laguntzako bide-izenean aurkitu. "
-"Hau da, gaia oraindik ez dela idatiz edo instalazioa ez dela erabatekoa izan. "
-"Ziurtatu instalazioa osatu dela errore honi buruz berri-eman aurretik."
+"Hau da, gaia oraindik ez dela idatiz edo instalazioa ez dela erabatekoa "
+"izan. Ziurtatu instalazioa osatu dela errore honi buruz berri-eman aurretik."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -10710,9 +10806,9 @@ msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
 msgstr ""
-"Labirinto ba sortzen du lehenbizikoaren bilaketa-sakonaren edo "
-"Prim-en algoritmoa erabiliz. Labirintoa mosaikoan bihur daiteke. "
-"Ikus %s xehetasun gehiagorako."
+"Labirinto ba sortzen du lehenbizikoaren bilaketa-sakonaren edo Prim-en "
+"algoritmoa erabiliz. Labirintoa mosaikoan bihur daiteke. Ikus %s xehetasun "
+"gehiagorako."
 
 #: plug-ins/maze/maze.c:163
 msgid "Draws a maze."
@@ -11427,7 +11523,8 @@ msgid "Adjust Output..."
 msgstr "Doitu irteera..."
 
 #: plug-ins/print/gimp_main_window.c:1470
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Doitu kolore-balantzea, distira, kontrastea, saturazioa eta bilbearen "
 "algoritmoa"
@@ -11873,4 +11970,3 @@ msgstr "Errorea: %s XJT propietate-fitxategia hutsik dago"
 
 #~ msgid "Can't open (read): %s"
 #~ msgstr "Ezin da ireki (irakurri): %s"
-

@@ -161,8 +161,8 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Sua imagem deve ser exportada antes de poder ser salva como %s, pelas "
-"razões a seguir:"
+"Sua imagem deve ser exportada antes de poder ser salva como %s, pelas razões "
+"a seguir:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."

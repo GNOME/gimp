@@ -8,20 +8,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"POT-Creation-Date: 2004-04-06 19:28+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-14 00:30+0200\n"
 "PO-Revision-Date: 2004-04-06 19:42+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu kontsola-moduak deitze interaktiboak bakarrik baimentzen ditu"
+msgstr ""
+"Script-Fu kontsola-moduak deitze interaktiboak bakarrik baimentzen ditu"
 
 #: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
@@ -502,7 +503,8 @@ msgstr "Koloreko delta balioa "
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/_Gezia..."
+msgstr ""
+"<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/_Gezia..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -572,7 +574,8 @@ msgstr "Barraren luzera"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/_Buleta..."
+msgstr ""
+"<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/_Buleta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -591,7 +594,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/Bo_toia..."
+msgstr ""
+"<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Dirdira estralurtarra/Bo_toia..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -872,8 +876,8 @@ msgstr "Erregailua: guztira bi geruza behar dira!"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 msgstr ""
-"Testu-geruza (aurrekoa) batean eta atzeko geruza batean "
-"errauste efektua bezalakoa; V2.1"
+"Testu-geruza (aurrekoa) batean eta atzeko geruza batean errauste efektua "
+"bezalakoa; V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1443,7 +1447,8 @@ msgid "Shadow Color"
 msgstr "Itzalaren kolorea"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Gimp.Org/_Hodiaren azpibotoiko "
 "etiketa..."
@@ -1457,7 +1462,8 @@ msgstr ""
 "etiketa..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 "<Toolbox>/Luzp/Script-Fu/Web orriko gaiak/Gimp.Org/_Hodiaren etiketa "
 "orokorrak..."
@@ -2496,4 +2502,3 @@ msgstr "Nabarmentzearen Y desplazamendua"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 #~ msgstr "<Toolbox>/Luzp/Web arakatzailea/Erabiltzaileen FAQak"
-

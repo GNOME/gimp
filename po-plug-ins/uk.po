@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:11+0100\n"
+"POT-Creation-Date: 2004-04-14 00:30+0200\n"
 "PO-Revision-Date: 2003-02-24 15:30--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -53,7 +53,7 @@ msgstr "Про"
 #. Previews: frame
 #. * Misc: Preview settings *
 #. Misc: Preview settings: Continuous update ?!
-#: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
+#: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
@@ -62,7 +62,7 @@ msgstr "Про"
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
-#: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:665
+#: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2324
 #: plug-ins/gflare/gflare.c:3242 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
@@ -322,7 +322,7 @@ msgstr "Косинус"
 
 #: plug-ins/FractalExplorer/Dialogs.c:998
 #: plug-ins/FractalExplorer/Dialogs.c:1039
-#: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:504
+#: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
 #: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
 #: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
@@ -424,7 +424,7 @@ msgstr "Фрактали"
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
-#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1297
+#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
@@ -434,7 +434,7 @@ msgstr "Фрактали"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -470,7 +470,7 @@ msgstr "Збереження параметрів фрактала"
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
-#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:760
+#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
@@ -641,118 +641,123 @@ msgstr "Високоякісний попередній перегляд"
 msgid "Enable/disable high quality preview"
 msgstr "Увімкнути/вимкнути високоякісний попередній перегляд"
 
-#: plug-ins/Lighting/lighting_ui.c:411
+#: plug-ins/Lighting/lighting_ui.c:413
 #, fuzzy
 msgid "E_nable Antialiasing"
 msgstr "Увімкнути згладжування"
 
-#: plug-ins/Lighting/lighting_ui.c:432 plug-ins/MapObject/mapobject_ui.c:636
+#: plug-ins/Lighting/lighting_ui.c:434 plug-ins/MapObject/mapobject_ui.c:636
 #: plug-ins/common/bumpmap.c:1070 plug-ins/common/emboss.c:554
 #: plug-ins/common/fractaltrace.c:845 plug-ins/common/struc.c:1296
 #, fuzzy
 msgid "_Depth:"
 msgstr "Глибина:"
 
-#: plug-ins/Lighting/lighting_ui.c:435 plug-ins/MapObject/mapobject_ui.c:639
+#: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Якість згладжування. Вища - краща, але повільніше виконується"
 
-#: plug-ins/Lighting/lighting_ui.c:442
+#: plug-ins/Lighting/lighting_ui.c:444
 #, fuzzy
 msgid "T_hreshold:"
 msgstr "Поріг:"
 
-#: plug-ins/Lighting/lighting_ui.c:445 plug-ins/MapObject/mapobject_ui.c:656
+#: plug-ins/Lighting/lighting_ui.c:447 plug-ins/Lighting/lighting_ui.c:463
+#: plug-ins/MapObject/mapobject_ui.c:656
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Зупинятись коли різняця пікселів менша за їхні значення"
 
-#: plug-ins/Lighting/lighting_ui.c:487 plug-ins/MapObject/mapobject_ui.c:682
+#: plug-ins/Lighting/lighting_ui.c:459 plug-ins/common/threshold_alpha.c:244
+msgid "Threshold:"
+msgstr "Поріг:"
+
+#: plug-ins/Lighting/lighting_ui.c:490 plug-ins/MapObject/mapobject_ui.c:682
 msgid "Light Settings"
 msgstr "Установки світла"
 
-#: plug-ins/Lighting/lighting_ui.c:505
+#: plug-ins/Lighting/lighting_ui.c:508
 msgid "Directional"
 msgstr "Напрямлене"
 
-#: plug-ins/Lighting/lighting_ui.c:506
+#: plug-ins/Lighting/lighting_ui.c:509
 msgid "Point"
 msgstr "Точка"
 
-#: plug-ins/Lighting/lighting_ui.c:511
+#: plug-ins/Lighting/lighting_ui.c:514
 #, fuzzy
 msgid "L_ight Type:"
 msgstr "Тип світла:"
 
-#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:707
+#: plug-ins/Lighting/lighting_ui.c:517 plug-ins/MapObject/mapobject_ui.c:707
 msgid "Type of light source to apply"
 msgstr "Тип джерела світла"
 
-#: plug-ins/Lighting/lighting_ui.c:516 plug-ins/MapObject/mapobject_ui.c:709
+#: plug-ins/Lighting/lighting_ui.c:519 plug-ins/MapObject/mapobject_ui.c:709
 msgid "Select Lightsource Color"
 msgstr "Вибір кольору джерела світла"
 
-#: plug-ins/Lighting/lighting_ui.c:527
+#: plug-ins/Lighting/lighting_ui.c:530
 #, fuzzy
 msgid "Lig_ht Color:"
 msgstr "Колір джерела:"
 
-#: plug-ins/Lighting/lighting_ui.c:531 plug-ins/MapObject/mapobject_ui.c:722
+#: plug-ins/Lighting/lighting_ui.c:534 plug-ins/MapObject/mapobject_ui.c:722
 msgid "Set light source color"
 msgstr "Вказати колір джерела світла"
 
-#: plug-ins/Lighting/lighting_ui.c:533 plug-ins/MapObject/mapobject_ui.c:724
+#: plug-ins/Lighting/lighting_ui.c:536 plug-ins/MapObject/mapobject_ui.c:724
 #: plug-ins/MapObject/mapobject_ui.c:1033
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Position"
 msgstr "Позиція"
 
-#: plug-ins/Lighting/lighting_ui.c:551 plug-ins/common/flarefx.c:740
+#: plug-ins/Lighting/lighting_ui.c:554 plug-ins/common/flarefx.c:740
 #: plug-ins/common/nova.c:463 plug-ins/common/papertile.c:270
 #: plug-ins/flame/flame.c:1178 plug-ins/gflare/gflare.c:2650
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/Lighting/lighting_ui.c:562 plug-ins/MapObject/mapobject_ui.c:749
+#: plug-ins/Lighting/lighting_ui.c:565 plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X position in XYZ space"
 msgstr "Позиція джерела світла по X в просторі XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
+#: plug-ins/Lighting/lighting_ui.c:571 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
 #: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2654
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:579 plug-ins/MapObject/mapobject_ui.c:763
+#: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:763
 msgid "Light source Y position in XYZ space"
 msgstr "Позиція джерела світла по Y в просторі XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:585
+#: plug-ins/Lighting/lighting_ui.c:588
 msgid "_Z:"
 msgstr "_Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:777
+#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:777
 msgid "Light source Z position in XYZ space"
 msgstr "Позиція джерела світла по Z в просторі XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:780
+#: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Direction Vector"
 msgstr "Напрямок вектора"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:614 plug-ins/MapObject/mapobject_ui.c:741
+#: plug-ins/Lighting/lighting_ui.c:617 plug-ins/MapObject/mapobject_ui.c:741
 #: plug-ins/MapObject/mapobject_ui.c:796
 #: plug-ins/MapObject/mapobject_ui.c:1045
 #: plug-ins/MapObject/mapobject_ui.c:1092 plug-ins/ifscompose/ifscompose.c:556
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:625 plug-ins/MapObject/mapobject_ui.c:804
+#: plug-ins/Lighting/lighting_ui.c:628 plug-ins/MapObject/mapobject_ui.c:804
 msgid "Light source X direction in XYZ space"
 msgstr "Напрямок джерела світла по X в просторі XYZ"
 
 #. Y
-#: plug-ins/Lighting/lighting_ui.c:630 plug-ins/MapObject/mapobject_ui.c:755
+#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/MapObject/mapobject_ui.c:755
 #: plug-ins/MapObject/mapobject_ui.c:809
 #: plug-ins/MapObject/mapobject_ui.c:1057
 #: plug-ins/MapObject/mapobject_ui.c:1102
@@ -760,11 +765,11 @@ msgstr "Напрямок джерела світла по X в просторі 
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:640 plug-ins/MapObject/mapobject_ui.c:817
+#: plug-ins/Lighting/lighting_ui.c:643 plug-ins/MapObject/mapobject_ui.c:817
 msgid "Light source Y direction in XYZ space"
 msgstr "Напрямок джерела світла по Y в просторі XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:645 plug-ins/MapObject/mapobject_ui.c:769
+#: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:769
 #: plug-ins/MapObject/mapobject_ui.c:822
 #: plug-ins/MapObject/mapobject_ui.c:1069
 #: plug-ins/MapObject/mapobject_ui.c:1112
@@ -772,195 +777,177 @@ msgstr "Напрямок джерела світла по Y в просторі 
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:655 plug-ins/MapObject/mapobject_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:658 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
 msgstr "Напрямок джерела світла по Z в просторі XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:681 plug-ins/MapObject/mapobject_ui.c:855
+#: plug-ins/Lighting/lighting_ui.c:684 plug-ins/MapObject/mapobject_ui.c:855
 msgid "Intensity Levels"
 msgstr "Рівні інтенсивності"
 
-#: plug-ins/Lighting/lighting_ui.c:699
+#: plug-ins/Lighting/lighting_ui.c:702
 #, fuzzy
 msgid "_Ambient:"
 msgstr "Освітлення:"
 
-#: plug-ins/Lighting/lighting_ui.c:717 plug-ins/MapObject/mapobject_ui.c:887
+#: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Степінь замальовування власним кольором там куди не потрапляють прямі промені"
 
-#: plug-ins/Lighting/lighting_ui.c:729
+#: plug-ins/Lighting/lighting_ui.c:732
 #, fuzzy
 msgid "_Diffuse:"
 msgstr "Дифузія:"
 
-#: plug-ins/Lighting/lighting_ui.c:747 plug-ins/MapObject/mapobject_ui.c:913
+#: plug-ins/Lighting/lighting_ui.c:750 plug-ins/MapObject/mapobject_ui.c:913
 msgid "Intensity of original color when lit by a light source"
 msgstr "Інтенсивність початкового кольору при освітленні джерелом світла"
 
-#: plug-ins/Lighting/lighting_ui.c:755 plug-ins/MapObject/mapobject_ui.c:921
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/MapObject/mapobject_ui.c:921
 msgid "Reflectivity"
 msgstr "Рефлексія"
 
-#: plug-ins/Lighting/lighting_ui.c:773
+#: plug-ins/Lighting/lighting_ui.c:776
 #, fuzzy
 msgid "D_iffuse:"
 msgstr "Дифузія:"
 
-#: plug-ins/Lighting/lighting_ui.c:792 plug-ins/MapObject/mapobject_ui.c:953
+#: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
 "Підвищення значень змушує об'єкт відбивати більше світла (здається світлішим)"
 
-#: plug-ins/Lighting/lighting_ui.c:804
+#: plug-ins/Lighting/lighting_ui.c:807
 #, fuzzy
 msgid "_Specular:"
 msgstr "Відбивання:"
 
-#: plug-ins/Lighting/lighting_ui.c:823 plug-ins/MapObject/mapobject_ui.c:979
+#: plug-ins/Lighting/lighting_ui.c:826 plug-ins/MapObject/mapobject_ui.c:979
 msgid "Controls how intense the highlights will be"
 msgstr "Керує інтенсивністю виблисків"
 
-#: plug-ins/Lighting/lighting_ui.c:835
+#: plug-ins/Lighting/lighting_ui.c:838
 #, fuzzy
 msgid "_Highlight:"
 msgstr "Виблиски:"
 
-#: plug-ins/Lighting/lighting_ui.c:853 plug-ins/MapObject/mapobject_ui.c:1005
+#: plug-ins/Lighting/lighting_ui.c:856 plug-ins/MapObject/mapobject_ui.c:1005
 msgid "Higher values makes the highlights more focused"
 msgstr "Підвищення значень робить виблиски різкішими"
 
-#: plug-ins/Lighting/lighting_ui.c:887
+#: plug-ins/Lighting/lighting_ui.c:890
 #, fuzzy
 msgid "E_nable Bump Mapping"
 msgstr "Увімкнути рельєфне перетворення"
 
-#: plug-ins/Lighting/lighting_ui.c:898
+#: plug-ins/Lighting/lighting_ui.c:904
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Увімкнути/вимкнути рельєфне перетворення (глибина зображення)"
 
-#: plug-ins/Lighting/lighting_ui.c:916
+#: plug-ins/Lighting/lighting_ui.c:922
 #, fuzzy
 msgid "Bumpm_ap Image:"
 msgstr "Зображення рельєфу:"
 
-#: plug-ins/Lighting/lighting_ui.c:923 plug-ins/flame/flame.c:706
+#: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:706
 msgid "Linear"
 msgstr "Лінійний"
 
-#: plug-ins/Lighting/lighting_ui.c:924
+#: plug-ins/Lighting/lighting_ui.c:930
 msgid "Logarithmic"
 msgstr "Логарифмічний"
 
-#: plug-ins/Lighting/lighting_ui.c:925 plug-ins/flame/flame.c:707
+#: plug-ins/Lighting/lighting_ui.c:931 plug-ins/flame/flame.c:707
 msgid "Sinusoidal"
 msgstr "Синусоїдальний"
 
-#: plug-ins/Lighting/lighting_ui.c:926 plug-ins/flame/flame.c:708
+#: plug-ins/Lighting/lighting_ui.c:932 plug-ins/flame/flame.c:708
 msgid "Spherical"
 msgstr "Сферичний"
 
-#: plug-ins/Lighting/lighting_ui.c:929
+#: plug-ins/Lighting/lighting_ui.c:935
 #, fuzzy
 msgid "Cu_rve:"
 msgstr "Крива:"
 
-#: plug-ins/Lighting/lighting_ui.c:935
+#: plug-ins/Lighting/lighting_ui.c:941
 #, fuzzy
 msgid "Ma_ximum Height:"
 msgstr "Максимальна висота:"
 
-#: plug-ins/Lighting/lighting_ui.c:942
+#: plug-ins/Lighting/lighting_ui.c:951
 msgid "Maximum height for bumps"
 msgstr "Максимальна висота рельєфу"
 
-#: plug-ins/Lighting/lighting_ui.c:948
-#, fuzzy
-msgid "M_inimum Height:"
-msgstr "Мінімальна висота:"
-
-#: plug-ins/Lighting/lighting_ui.c:955
-msgid "Minimum height for bumps"
-msgstr "Мінімальна висота рельєфу"
-
-#: plug-ins/Lighting/lighting_ui.c:958
-#, fuzzy
-msgid "Auto_stretch to Fit Value Range"
-msgstr "Авторозтягування для заповнення всього діапазону"
-
-#: plug-ins/Lighting/lighting_ui.c:968
-msgid "Fit into value range"
-msgstr "Розмістити в діапазоні значень"
-
-#: plug-ins/Lighting/lighting_ui.c:993
+#: plug-ins/Lighting/lighting_ui.c:976
 #, fuzzy
 msgid "E_nable Environment Mapping"
 msgstr "Увімкнути відображення середовища"
 
-#: plug-ins/Lighting/lighting_ui.c:1004
+#: plug-ins/Lighting/lighting_ui.c:990
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Увімкнути/вимкнути відображення середовища (відбивання)"
 
-#: plug-ins/Lighting/lighting_ui.c:1022
+#: plug-ins/Lighting/lighting_ui.c:1008
 #, fuzzy
 msgid "En_vironment Image:"
 msgstr "Зображення середовища:"
 
-#: plug-ins/Lighting/lighting_ui.c:1026
+#: plug-ins/Lighting/lighting_ui.c:1012
 msgid "Environment image to use"
 msgstr "Зображення середовища"
 
-#: plug-ins/Lighting/lighting_ui.c:1049
+#: plug-ins/Lighting/lighting_ui.c:1035
 #, fuzzy
 msgid "Op_tions"
 msgstr "Параметри"
 
-#: plug-ins/Lighting/lighting_ui.c:1053 plug-ins/MapObject/mapobject_ui.c:1334
+#: plug-ins/Lighting/lighting_ui.c:1039 plug-ins/MapObject/mapobject_ui.c:1334
 #, fuzzy
 msgid "_Light"
 msgstr "Світло"
 
-#: plug-ins/Lighting/lighting_ui.c:1057 plug-ins/MapObject/mapobject_ui.c:1338
+#: plug-ins/Lighting/lighting_ui.c:1043 plug-ins/MapObject/mapobject_ui.c:1338
 #, fuzzy
 msgid "_Material"
 msgstr "Матеріал"
 
-#: plug-ins/Lighting/lighting_ui.c:1061
+#: plug-ins/Lighting/lighting_ui.c:1047
 #, fuzzy
 msgid "_Bump Map"
 msgstr "Рельєф"
 
-#: plug-ins/Lighting/lighting_ui.c:1065
+#: plug-ins/Lighting/lighting_ui.c:1051
 #, fuzzy
 msgid "_Environment Map"
 msgstr "Відображення середовища"
 
-#: plug-ins/Lighting/lighting_ui.c:1108
+#: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Lighting Effects"
 msgstr "Світлові ефекти"
 
-#: plug-ins/Lighting/lighting_ui.c:1162 plug-ins/gimpressionist/preview.c:122
+#: plug-ins/Lighting/lighting_ui.c:1148 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
 #, fuzzy
 msgid "_Update"
 msgstr "Оновити"
 
-#: plug-ins/Lighting/lighting_ui.c:1169 plug-ins/MapObject/mapobject_ui.c:1438
+#: plug-ins/Lighting/lighting_ui.c:1155 plug-ins/MapObject/mapobject_ui.c:1438
 msgid "Recompute preview image"
 msgstr "Перерахувати перегляд зображення"
 
-#: plug-ins/Lighting/lighting_ui.c:1171
+#: plug-ins/Lighting/lighting_ui.c:1157
 #, fuzzy
 msgid "I_nteractive"
 msgstr "Черезрядковість"
 
-#: plug-ins/Lighting/lighting_ui.c:1186
+#: plug-ins/Lighting/lighting_ui.c:1172
 #, fuzzy
 msgid "Enable/disable real time preview of changes"
 msgstr "Увімкнути/вимкнути високоякісний попередній перегляд"
 
-#: plug-ins/Lighting/lighting_ui.c:1189
+#: plug-ins/Lighting/lighting_ui.c:1175
 #, fuzzy
 msgid "Preview Options"
 msgstr "Параметри збереження"
@@ -1237,7 +1224,7 @@ msgstr "%s: погана мапа кольорів"
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
-#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:767
+#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:775
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
@@ -1275,7 +1262,7 @@ msgstr "%s: помилка зчитування заголовку BMP-файл�
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:925 plug-ins/common/pcx.c:333
+#: plug-ins/common/jpeg.c:933 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
@@ -1307,7 +1294,7 @@ msgstr "Неможливо виконувати дії з зображенням
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
-#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1252
+#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
@@ -2087,7 +2074,7 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/emboss.c:525 plug-ins/common/engrave.c:216
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
-#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1717
+#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1725
 #: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
@@ -2101,7 +2088,7 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
 #: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
-#: plug-ins/common/whirlpinch.c:687 plug-ins/common/wind.c:892
+#: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
 msgid "Parameter Settings"
@@ -3509,7 +3496,7 @@ msgstr "Рекурсивне"
 
 #: plug-ins/common/despeckle.c:739 plug-ins/common/nlfilt.c:382
 #: plug-ins/common/nova.c:364 plug-ins/common/unsharp.c:665
-#: plug-ins/common/whirlpinch.c:717 plug-ins/gflare/gflare.c:2685
+#: plug-ins/common/whirlpinch.c:728 plug-ins/gflare/gflare.c:2685
 #: plug-ins/imagemap/imap_circle.c:279
 #, fuzzy
 msgid "_Radius:"
@@ -3829,7 +3816,7 @@ msgstr "<Image>/Фільтри/Об'єднання/Фільм..."
 msgid "Composing Images..."
 msgstr "Збирання зображень..."
 
-#: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:176
+#: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:185
 msgid "Untitled"
 msgstr "Ненайменоване"
 
@@ -4617,7 +4604,7 @@ msgstr "Розмір інтервалу між комірками."
 msgid "<Image>/Image/Transform/_Guillotine"
 msgstr "<Image>/Зображення/Перетворення/Гільйотина"
 
-#: plug-ins/common/guillotine.c:110
+#: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
 msgstr "Гільйотина..."
 
@@ -4866,85 +4853,85 @@ msgstr "Кожен шматок має викривлені сторони"
 msgid "Export Preview"
 msgstr "Перегляд файлу для експорту"
 
-#: plug-ins/common/jpeg.c:918
+#: plug-ins/common/jpeg.c:926
 msgid "JPEG preview"
 msgstr "Перегляд JPEG"
 
-#: plug-ins/common/jpeg.c:1171
+#: plug-ins/common/jpeg.c:1179
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Розмір: %ld б (%02.01f кб)"
 
-#: plug-ins/common/jpeg.c:1605 plug-ins/common/jpeg.c:1707
+#: plug-ins/common/jpeg.c:1613 plug-ins/common/jpeg.c:1715
 msgid "Size: unknown"
 msgstr "Розмір: невідомо"
 
-#: plug-ins/common/jpeg.c:1670
+#: plug-ins/common/jpeg.c:1678
 msgid "Save as JPEG"
 msgstr "Зберегти як JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1686 plug-ins/print/gimp_color_window.c:253
+#: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:253
 msgid "Image Preview"
 msgstr "Перегляд зображення"
 
-#: plug-ins/common/jpeg.c:1694
+#: plug-ins/common/jpeg.c:1702
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1727 plug-ins/xjt/xjt.c:888
+#: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
 msgstr "Якість:"
 
-#: plug-ins/common/jpeg.c:1750 plug-ins/xjt/xjt.c:897
+#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:897
 msgid "Smoothing:"
 msgstr "Згладжування:"
 
-#: plug-ins/common/jpeg.c:1778
+#: plug-ins/common/jpeg.c:1786
 msgid "Restart markers"
 msgstr "Перезапустити маркери"
 
-#: plug-ins/common/jpeg.c:1787
+#: plug-ins/common/jpeg.c:1795
 msgid "Restart frequency (rows):"
 msgstr "Перезапуск частоти (рядки):"
 
-#: plug-ins/common/jpeg.c:1816 plug-ins/xjt/xjt.c:866
+#: plug-ins/common/jpeg.c:1824 plug-ins/xjt/xjt.c:866
 msgid "Optimize"
 msgstr "Оптимізувати"
 
-#: plug-ins/common/jpeg.c:1830
+#: plug-ins/common/jpeg.c:1838
 msgid "Progressive"
 msgstr "Проґресивний"
 
-#: plug-ins/common/jpeg.c:1849
+#: plug-ins/common/jpeg.c:1857
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Робити типовий JPEG (зчитується всіма декодерами)"
 
-#: plug-ins/common/jpeg.c:1865
+#: plug-ins/common/jpeg.c:1873
 msgid "Save EXIF data"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1891
+#: plug-ins/common/jpeg.c:1899
 msgid "Subsampling:"
 msgstr "Підвибірка:"
 
-#: plug-ins/common/jpeg.c:1905
+#: plug-ins/common/jpeg.c:1913
 msgid "Fast Integer"
 msgstr "Швидке ціле"
 
-#: plug-ins/common/jpeg.c:1906
+#: plug-ins/common/jpeg.c:1914
 msgid "Integer"
 msgstr "Ціле"
 
-#: plug-ins/common/jpeg.c:1907
+#: plug-ins/common/jpeg.c:1915
 msgid "Floating-Point"
 msgstr "З плаваючою крапкою"
 
-#: plug-ins/common/jpeg.c:1912
+#: plug-ins/common/jpeg.c:1920
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Метод DCT (компроміс швидкість/якість):"
 
-#: plug-ins/common/jpeg.c:1916
+#: plug-ins/common/jpeg.c:1924
 msgid "Image comments"
 msgstr "Коментарі до зображення"
 
@@ -7433,10 +7420,6 @@ msgstr "Поріг альфа-каналу: Замальовування про�
 msgid "Threshold Alpha"
 msgstr "Поріг альфа-каналу"
 
-#: plug-ins/common/threshold_alpha.c:244
-msgid "Threshold:"
-msgstr "Поріг:"
-
 #: plug-ins/common/tiff.c:831
 #, fuzzy, c-format
 msgid "Page %d"
@@ -7955,7 +7938,7 @@ msgstr "Основні параметри"
 msgid "Step Size:"
 msgstr "Розмір кроку:"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1293
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1295
 msgid "Iterations:"
 msgstr "Ітерацій:"
 
@@ -8117,21 +8100,21 @@ msgstr ""
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
 msgstr "<Image>/Фільтри/Спотворення/Вир і щипок..."
 
-#: plug-ins/common/whirlpinch.c:377
+#: plug-ins/common/whirlpinch.c:388
 #, fuzzy
 msgid "Whirling and Pinching..."
 msgstr "Створення виру і щипка..."
 
-#: plug-ins/common/whirlpinch.c:649
+#: plug-ins/common/whirlpinch.c:660
 msgid "Whirl and Pinch"
 msgstr "Вир і щипок"
 
-#: plug-ins/common/whirlpinch.c:699
+#: plug-ins/common/whirlpinch.c:710
 #, fuzzy
 msgid "_Whirl Angle:"
 msgstr "Кут виру:"
 
-#: plug-ins/common/whirlpinch.c:708
+#: plug-ins/common/whirlpinch.c:719
 #, fuzzy
 msgid "_Pinch Amount:"
 msgstr "Кількість щипків:"
@@ -10596,121 +10579,121 @@ msgstr "Параметри візуалізації"
 msgid "Auto"
 msgstr "Авто"
 
-#: plug-ins/ifscompose/ifscompose.c:985 plug-ins/imagemap/imap_menu.c:270
+#: plug-ins/ifscompose/ifscompose.c:986 plug-ins/imagemap/imap_menu.c:270
 #, fuzzy
 msgid "Select _All"
 msgstr "Вибрати все"
 
-#: plug-ins/ifscompose/ifscompose.c:992
+#: plug-ins/ifscompose/ifscompose.c:993
 #, fuzzy
 msgid "Recompute _Center"
 msgstr "Перерахувати центр"
 
-#: plug-ins/ifscompose/ifscompose.c:1020
+#: plug-ins/ifscompose/ifscompose.c:1021
 msgid "Spatial Transformation"
 msgstr "Просторове перетворення"
 
-#: plug-ins/ifscompose/ifscompose.c:1026
+#: plug-ins/ifscompose/ifscompose.c:1027
 msgid "Color Transformation"
 msgstr "Перетворення кольорів"
 
-#: plug-ins/ifscompose/ifscompose.c:1036
+#: plug-ins/ifscompose/ifscompose.c:1037
 msgid "Relative Probability:"
 msgstr "Відносна вірогідність:"
 
-#: plug-ins/ifscompose/ifscompose.c:1191
+#: plug-ins/ifscompose/ifscompose.c:1192
 #, fuzzy
 msgid "/Move"
 msgstr "Перемістити"
 
-#: plug-ins/ifscompose/ifscompose.c:1193
+#: plug-ins/ifscompose/ifscompose.c:1194
 #, fuzzy
 msgid "/Rotate\\/Scale"
 msgstr "Обертання/масштаб"
 
-#: plug-ins/ifscompose/ifscompose.c:1195
+#: plug-ins/ifscompose/ifscompose.c:1196
 #, fuzzy
 msgid "/Stretch"
 msgstr "Розтягнути"
 
-#: plug-ins/ifscompose/ifscompose.c:1198
+#: plug-ins/ifscompose/ifscompose.c:1199
 #, fuzzy
 msgid "/New"
 msgstr "Новий"
 
-#: plug-ins/ifscompose/ifscompose.c:1200
+#: plug-ins/ifscompose/ifscompose.c:1201
 #, fuzzy
 msgid "/Delete"
 msgstr "Стерти"
 
-#: plug-ins/ifscompose/ifscompose.c:1202
+#: plug-ins/ifscompose/ifscompose.c:1203
 #, fuzzy
 msgid "/Undo"
 msgstr "Відмінити"
 
-#: plug-ins/ifscompose/ifscompose.c:1204
+#: plug-ins/ifscompose/ifscompose.c:1205
 #, fuzzy
 msgid "/Redo"
 msgstr "Повернути"
 
-#: plug-ins/ifscompose/ifscompose.c:1206
+#: plug-ins/ifscompose/ifscompose.c:1207
 #, fuzzy
 msgid "/Select All"
 msgstr "Вибрати все"
 
-#: plug-ins/ifscompose/ifscompose.c:1208
+#: plug-ins/ifscompose/ifscompose.c:1209
 #, fuzzy
 msgid "/Recompute Center"
 msgstr "Перерахувати центр"
 
-#: plug-ins/ifscompose/ifscompose.c:1258
+#: plug-ins/ifscompose/ifscompose.c:1260
 msgid "IfsCompose Options"
 msgstr "Париметри IfsCompose"
 
-#: plug-ins/ifscompose/ifscompose.c:1280
+#: plug-ins/ifscompose/ifscompose.c:1282
 msgid "Max. Memory:"
 msgstr "Макс. пам'ять:"
 
-#: plug-ins/ifscompose/ifscompose.c:1307
+#: plug-ins/ifscompose/ifscompose.c:1309
 msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
-#: plug-ins/ifscompose/ifscompose.c:1320
+#: plug-ins/ifscompose/ifscompose.c:1322
 msgid "Spot Radius:"
 msgstr "Радіус плями:"
 
-#: plug-ins/ifscompose/ifscompose.c:1393
+#: plug-ins/ifscompose/ifscompose.c:1395
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Візуалізація IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1412
+#: plug-ins/ifscompose/ifscompose.c:1414
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Копіювання IFS у зображення (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1551
+#: plug-ins/ifscompose/ifscompose.c:1553
 #, fuzzy, c-format
 msgid "Transformation %s"
 msgstr "Перетворення кольорів"
 
-#: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
+#: plug-ins/ifscompose/ifscompose.c:2684 plug-ins/ifscompose/ifscompose.c:2696
 #, fuzzy
 msgid "Open failed"
 msgstr "Фільм:"
 
-#: plug-ins/ifscompose/ifscompose.c:2685
+#: plug-ins/ifscompose/ifscompose.c:2691
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2721
+#: plug-ins/ifscompose/ifscompose.c:2731
 #, fuzzy
 msgid "Save as IFS file"
 msgstr "Зберегти як GIF"
 
-#: plug-ins/ifscompose/ifscompose.c:2746
+#: plug-ins/ifscompose/ifscompose.c:2756
 #, fuzzy
 msgid "Open IFS file"
 msgstr "Фільм:"
@@ -12465,6 +12448,20 @@ msgstr "Помилка: неможливо зчитати файл власти�
 #, fuzzy, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Помилка: файл властивостей XJT %s порожній"
+
+#, fuzzy
+#~ msgid "M_inimum Height:"
+#~ msgstr "Мінімальна висота:"
+
+#~ msgid "Minimum height for bumps"
+#~ msgstr "Мінімальна висота рельєфу"
+
+#, fuzzy
+#~ msgid "Auto_stretch to Fit Value Range"
+#~ msgstr "Авторозтягування для заповнення всього діапазону"
+
+#~ msgid "Fit into value range"
+#~ msgstr "Розмістити в діапазоні значень"
 
 #, fuzzy
 #~ msgid ""

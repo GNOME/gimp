@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-02 03:41+0100\n"
+"POT-Creation-Date: 2004-04-14 00:30+0200\n"
 "PO-Revision-Date: 2004-03-24 16:24+0100\n"
 "Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -47,7 +47,8 @@ msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
+msgstr ""
+"A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -1447,8 +1448,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_General Tube Labels..."
+msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/_General Tube Labels..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."

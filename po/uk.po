@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-07 09:54+0300\n"
+"POT-Creation-Date: 2004-04-14 00:29+0200\n"
 "PO-Revision-Date: 2004-04-10 19:17+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -33,14 +33,13 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 "Не вдається відкрити тестовий тимчасовий файл. Щоб уникнути встати даних, "
-"перевірте розташування та права тимчасового каталогу, який визначений "
-"у настройках (наразі це \"%s\")."
+"перевірте розташування та права тимчасового каталогу, який визначений у "
+"настройках (наразі це \"%s\")."
 
 #: app/app_procs.c:281
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Не вдається відкрити '%s': %s"
-
 
 #: app/main.c:218
 msgid ""
@@ -108,7 +107,8 @@ msgstr ""
 
 #: app/main.c:519
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-cpu-accel           Не використовувати прискоренні команди CPU.\n"
+msgstr ""
+"  --no-cpu-accel           Не використовувати прискоренні команди CPU.\n"
 
 #: app/main.c:520
 msgid ""
@@ -136,7 +136,8 @@ msgstr "  -s, --no-splash          Не показувати вікно запу
 
 #: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  --session <name>         Використовувати альтернативний файл sessionrc.\n"
+msgstr ""
+"  --session <name>         Використовувати альтернативний файл sessionrc.\n"
 
 #: app/main.c:526
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -431,8 +432,8 @@ msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
-"Визначає колір тла навколо зображення, якщо в режимі заповнення тла "
-"вказано \"Вибраний колір\"."
+"Визначає колір тла навколо зображення, якщо в режимі заповнення тла вказано "
+"\"Вибраний колір\"."
 
 #: app/config/gimprc-blurbs.h:30
 msgid "Ask for confirmation before closing an image without saving."
@@ -447,19 +448,20 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Вигляд вказівника змінюється в залежності від вибраного інструменту. Ця функція початково ввімкнена, "
-"але її можна вимкнути."
+"Вигляд вказівника змінюється в залежності від вибраного інструменту. Ця "
+"функція початково ввімкнена, але її можна вимкнути."
 
 #: app/config/gimprc-blurbs.h:44
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr ""
-"Якщо ввімкнено, кожна точка зображення відповідатиме точці екрану."
+msgstr "Якщо ввімкнено, кожна точка зображення відповідатиме точці екрану."
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Відстань у точках, при наближенні на яку відбувається прив'язування до напрямних чи сітки."
+msgstr ""
+"Відстань у точках, при наближенні на яку відбувається прив'язування до "
+"напрямних чи сітки."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -469,10 +471,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Такі інструменти як \"Заливка\" та \"Вільне виділення\" при роботі користуються "
-"алгоритмом зернового заповнення. Заповнення починається з вибраної початкової "
-"точки та продовжується доти, поки різниця інтенсивності між початковою точкою та "
-"поточною не перевищить певної межі. Тут вказано число, яке визначає цю межу."
+"Такі інструменти як \"Заливка\" та \"Вільне виділення\" при роботі "
+"користуються алгоритмом зернового заповнення. Заповнення починається з "
+"вибраної початкової точки та продовжується доти, поки різниця інтенсивності "
+"між початковою точкою та поточною не перевищить певної межі. Тут вказано "
+"число, яке визначає цю межу."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -488,11 +491,13 @@ msgstr "Якщо ввімкнено, вибраний пензель викор�
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Якщо ввімкнено, вибраний градієнт використовується для всіх інструментів."
+msgstr ""
+"Якщо ввімкнено, вибраний градієнт використовується для всіх інструментів."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Якщо ввімкнено, вибраний візерунок використовується для всіх інструментів."
+msgstr ""
+"Якщо ввімкнено, вибраний візерунок використовується для всіх інструментів."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -508,7 +513,9 @@ msgstr "Визначає форматування тексту, що відоб�
 
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr "Якщо ввімкнено, GIMP буде створювати окреме інформаційне вікно для кожного повідомлення."
+msgstr ""
+"Якщо ввімкнено, GIMP буде створювати окреме інформаційне вікно для кожного "
+"повідомлення."
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
@@ -520,14 +527,16 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr "Встановити власну мапу кольорів; може бути корисно при роботі з псевдокольоровими "
-"зображеннями."
+msgstr ""
+"Встановити власну мапу кольорів; може бути корисно при роботі з "
+"псевдокольоровими зображеннями."
 
 #: app/config/gimprc-blurbs.h:167
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
-"Визначає рівень інтерполяції, що використовується при масштабуванні та інших перетвореннях."
+"Визначає рівень інтерполяції, що використовується при масштабуванні та інших "
+"перетвореннях."
 
 #: app/config/gimprc-blurbs.h:171
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -546,16 +555,16 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"При спробі створення файлу, розмір якого перевищує вказане тут значення, GIMP "
-"буде виводити попередження."
+"При спробі створення файлу, розмір якого перевищує вказане тут значення, "
+"GIMP буде виводити попередження."
 
 #: app/config/gimprc-blurbs.h:182
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
-"Цей параметр для 8-бітних дисплеїв. Він визначає мінімальну кількість системних "
-"кольорів, розподілених для GIMP."
+"Цей параметр для 8-бітних дисплеїв. Він визначає мінімальну кількість "
+"системних кольорів, розподілених для GIMP."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -570,8 +579,9 @@ msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
-"На багатопроцесорних системах, якщо GIMP був зібраний з параметром --enable-mp, "
-"цей параметр визначає кількість процесорів, які GIMP може використовувати одночасно."
+"На багатопроцесорних системах, якщо GIMP був зібраний з параметром --enable-"
+"mp, цей параметр визначає кількість процесорів, які GIMP може "
+"використовувати одночасно."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
@@ -582,8 +592,9 @@ msgid ""
 "painting."
 msgstr ""
 "При ввімкненні цього параметра, X-сервер визначає позицію миші після кожного "
-"руху. Це означає, що малювання великими пензлями буде більш точним, але повільнішим. "
-"Але на деяких X-серверах ввімкнення цього параметра забезпечує більш швидку роботу."
+"руху. Це означає, що малювання великими пензлями буде більш точним, але "
+"повільнішим. Але на деяких X-серверах ввімкнення цього параметра забезпечує "
+"більш швидку роботу."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
@@ -591,9 +602,9 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
-"Вказує, чи потрібно створювати попередній перегляд шарів та каналів. Попередній перегляд "
-"шарів та каналів - корисна річ, але може сповільнювати роботу при роботі з "
-"великими зображеннями."
+"Вказує, чи потрібно створювати попередній перегляд шарів та каналів. "
+"Попередній перегляд шарів та каналів - корисна річ, але може сповільнювати "
+"роботу при роботі з великими зображеннями."
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
@@ -603,15 +614,13 @@ msgstr "Встановлює розмір попереднього перегл�
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr ""
-"Розмір вікна автоматично змінюється при змінах розміру зображення."
+msgstr "Розмір вікна автоматично змінюється при змінах розміру зображення."
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr ""
-"Розмір вікна автоматично змінюється при масштабуванні зображення."
+msgstr "Розмір вікна автоматично змінюється при масштабуванні зображення."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -631,8 +640,7 @@ msgstr "Зберігати позиції та розміри вікон при 
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr ""
-"Всі інструменти малювання будуть показувати контур поточного пензля."
+msgstr "Всі інструменти малювання будуть показувати контур поточного пензля."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
@@ -647,7 +655,6 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-""
 "Якщо ввімкнено, відображаються лінійки. Це також можна зробити командою "
 "\"Вигляд->Показувати лінійки\"."
 
@@ -656,8 +663,8 @@ msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Якщо ввімкнено, відображаються смуги прокрутки. Це також можна зробити командою "
-"\"Вигляд->Показувати смуги прокрутки\"."
+"Якщо ввімкнено, відображаються смуги прокрутки. Це також можна зробити "
+"командою \"Вигляд->Показувати смуги прокрутки\"."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
@@ -672,8 +679,8 @@ msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"Якщо ввімкнено, ввімкнено показ виділеної ділянки. Це також можна зробити командою "
-"\"Вигляд->Показувати виділені ділянки\"."
+"Якщо ввімкнено, ввімкнено показ виділеної ділянки. Це також можна зробити "
+"командою \"Вигляд->Показувати виділені ділянки\"."
 
 #: app/config/gimprc-blurbs.h:287
 msgid ""
@@ -714,8 +721,8 @@ msgid ""
 "to enable this setting."
 msgstr ""
 "Завжди є вибір між швидкодією та використанням пам'яті. У більшості випадків "
-"GIMP вибирає швидкодію. Проте якщо пам'ять для вас має значення, "
-"увімкніть цей параметр."
+"GIMP вибирає швидкодію. Проте якщо пам'ять для вас має значення, увімкніть "
+"цей параметр."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
@@ -726,12 +733,12 @@ msgid ""
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Вказує розташування файлу підкачки. GIMP використовує блочну схему виділення пам'яті. "
-"Файл підкачки використовується для швидкої та простої підкачки блоків з диску. "
-"Зауважте, файл підкачки може швидко досягнути великого розміру, якщо "
-"GIMP обробляє великі зображення. Крім того, робота значно сповільнюється, якщо "
-"файл підкачки створений у каталозі підключеному через NFS. У цьому випадку, "
-"бажано помістити файл підкачки у \"/tmp\"."
+"Вказує розташування файлу підкачки. GIMP використовує блочну схему виділення "
+"пам'яті. Файл підкачки використовується для швидкої та простої підкачки "
+"блоків з диску. Зауважте, файл підкачки може швидко досягнути великого "
+"розміру, якщо GIMP обробляє великі зображення. Крім того, робота значно "
+"сповільнюється, якщо файл підкачки створений у каталозі підключеному через "
+"NFS. У цьому випадку, бажано помістити файл підкачки у \"/tmp\"."
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
@@ -760,10 +767,10 @@ msgid ""
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
 msgstr ""
-"Визначає тимчасовий каталог. Тут зберігатимуться файли, які GIMP "
-"обробляє протягом сеансу. Більшість з них будуть видалені одразу "
-"при завершенні роботи з GIMP, але деякі можуть залишатись, тому бажано, "
-"щоб цей каталог не використовувався спільно з іншими користувачам. "
+"Визначає тимчасовий каталог. Тут зберігатимуться файли, які GIMP обробляє "
+"протягом сеансу. Більшість з них будуть видалені одразу при завершенні "
+"роботи з GIMP, але деякі можуть залишатись, тому бажано, щоб цей каталог не "
+"використовувався спільно з іншими користувачам. "
 
 #: app/config/gimprc-blurbs.h:344
 msgid ""
@@ -782,9 +789,9 @@ msgid ""
 msgstr ""
 "Кеш блоків використовується для забезпечення того, щоб GIMP не займався "
 "інтенсивним копіюванням між пам'яттю та диском. Встановлення більших значень "
-"цього параметра змушує GIMP менше використовувати підкачку, але призводить до "
-"збільшення використання пам'яті. Та навпаки, зменшення значення розміру кешу "
-"сприяє більшому використанню підкачки та зменшенню використання пам'яті."
+"цього параметра змушує GIMP менше використовувати підкачку, але призводить "
+"до збільшення використання пам'яті. Та навпаки, зменшення значення розміру "
+"кешу сприяє більшому використанню підкачки та зменшенню використання пам'яті."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
@@ -807,7 +814,8 @@ msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr ""
-"Якщо ввімкнено, GIMP не буде зберігати не змінені з моменту відкривання файли."
+"Якщо ввімкнено, GIMP не буде зберігати не змінені з моменту відкривання "
+"файли."
 
 #: app/config/gimprc-blurbs.h:369
 msgid ""
@@ -815,7 +823,8 @@ msgid ""
 "are kept available until the undo-size limit is reached."
 msgstr ""
 "Встановлює мінімальне число операцій, які можна скасувати. Більша кількість "
-"скасування операцій доступна доки не вичерпається пам'ять, відведена для скасування операцій."
+"скасування операцій доступна доки не вичерпається пам'ять, відведена для "
+"скасування операцій."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
@@ -824,8 +833,8 @@ msgid ""
 "as configured can be undone."
 msgstr ""
 "Встановлює обмеження пам'яті, яке використовується для скасування у кожному "
-"зображенні. Незалежно від цього параметра, можна зробити принаймні стільки скасувань "
-"операцій, скільки вказано у конфігурації."
+"зображенні. Незалежно від цього параметра, можна зробити принаймні стільки "
+"скасувань операцій, скільки вказано у конфігурації."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -846,7 +855,8 @@ msgstr ""
 "Вказує браузер, який буде використовувати система довідки. Це може бути "
 "абсолютний шлях, чи назва виконуваної програми у одному з каталогів, що "
 "визначаються у PATH. Якщо команда містить '%s', замість цього виразу буде "
-"підставлений URL, якщо ні - тоді URL буде доданий у кінець команди через пробіл."
+"підставлений URL, якщо ні - тоді URL буде доданий у кінець команди через "
+"пробіл."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -1186,13 +1196,13 @@ msgstr "Назад (коригуюче)"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:75
+#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:70
 #: app/gui/image-commands.c:617 app/gui/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Масштабування зображення"
 
-#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:144
-#: app/core/gimpimage-resize.c:66
+#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:125
+#: app/core/gimpimage-resize.c:61
 msgid "Resize Image"
 msgstr "Зміна розміру зображення"
 
@@ -1208,7 +1218,7 @@ msgstr "Обертання зображення"
 msgid "Convert Image"
 msgstr "Перетворення зображення"
 
-#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:141
+#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:122
 msgid "Crop Image"
 msgstr "Кадрування зображення"
 
@@ -1242,45 +1252,43 @@ msgid "Drawable Mod"
 msgstr "Режим малювання"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1636 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
 msgid "Selection Mask"
 msgstr "Маска виділеної ділянки"
 
-#: app/core/core-enums.c:597
-msgid "Item Properties"
-msgstr "Властивості елемента"
-
-#: app/core/core-enums.c:598 app/core/core-enums.c:628
-msgid "Move Item"
-msgstr "Переміщення елемента"
-
-#: app/core/core-enums.c:599 app/core/core-enums.c:629
+#: app/core/core-enums.c:597 app/core/core-enums.c:629
 msgid "Item Visibility"
 msgstr "Видимість елемента"
 
-#: app/core/core-enums.c:600
+#: app/core/core-enums.c:598
 msgid "Linked Item"
 msgstr "Пов'язаний елемент"
 
-#: app/core/core-enums.c:601 app/core/gimplayer.c:253 app/core/gimplayer.c:646
-#: app/gui/layers-commands.c:1187 app/gui/resize-dialog.c:204
-#: app/pdb/layer_cmds.c:453
-msgid "Scale Layer"
-msgstr "Масштабування шару"
+#: app/core/core-enums.c:599
+msgid "Item Properties"
+msgstr "Властивості елемента"
 
-#: app/core/core-enums.c:602 app/core/gimpimage-crop.c:117
-#: app/core/gimplayer.c:254 app/core/gimplayer.c:676
-#: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
-msgid "Resize Layer"
-msgstr "Зміна розміру шару"
+#: app/core/core-enums.c:600 app/core/core-enums.c:628
+msgid "Move Item"
+msgstr "Переміщення елемента"
+
+#: app/core/core-enums.c:601
+#, fuzzy
+msgid "Scale Item"
+msgstr "Масштабування зображення"
+
+#: app/core/core-enums.c:602
+#, fuzzy
+msgid "Resize Item"
+msgstr "Зміна розміру зображення"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
-#: app/gui/layers-commands.c:1094
+#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Додавання маску шару"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1264
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
 msgid "Apply Layer Mask"
 msgstr "Застосування маску шару"
 
@@ -1324,7 +1332,7 @@ msgstr "Перетворення"
 msgid "Paint"
 msgstr "Малювання"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:934
+#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
 msgid "Attach Parasite"
 msgstr "Долучення шуму"
 
@@ -1365,8 +1373,8 @@ msgstr "Перейменування елементу"
 msgid "Set Item Linked"
 msgstr "Встановлення зв'язку з елементом"
 
-#: app/core/core-enums.c:631 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
+#: app/core/core-enums.c:631 app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:739 app/gui/layers-commands.c:773
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Створення шару"
@@ -1375,7 +1383,7 @@ msgstr "Створення шару"
 msgid "Delete Layer"
 msgstr "Видалення шару"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1265
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
 msgid "Delete Layer Mask"
 msgstr "Видалення маску шару"
 
@@ -1583,7 +1591,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі пензля '%s'."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
-#: app/core/gimpitem.c:457 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Неназваний"
@@ -1594,18 +1602,21 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Критична помилка аналізу файла пензля '%s': непідтримуваний глибина кольору %d\n"
+"Критична помилка аналізу файла пензля '%s': непідтримуваний глибина кольору %"
+"d\n"
 "Пензлі GIMP повинні бути RGBA або у відтінках сірого."
 
 #: app/core/gimpbrushgenerated.c:390
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Критична помилка аналізу файла пензля '%s': файл не є файлом пензля GIMP."
+msgstr ""
+"Критична помилка аналізу файла пензля '%s': файл не є файлом пензля GIMP."
 
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Критична помилка аналізу файла пензля '%s': невідома версія пензля GIMP."
+msgstr ""
+"Критична помилка аналізу файла пензля '%s': невідома версія пензля GIMP."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
 #: app/core/gimpbrushpipe.c:490
@@ -1621,72 +1632,72 @@ msgstr "Канал"
 msgid "Rename Channel"
 msgstr "Перейменування каналу"
 
-#: app/core/gimpchannel.c:261
-msgid "Scale Channel"
-msgstr "Масштабування каналу"
-
-#: app/core/gimpchannel.c:262
-msgid "Resize Channel"
-msgstr "Зміна розміру каналу"
-
-#: app/core/gimpchannel.c:277 app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1218
+#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Переміщення каналу"
 
-#: app/core/gimpchannel.c:278
-msgid "Feather Channel"
-msgstr "Розмивання каналу"
+#: app/core/gimpchannel.c:255
+msgid "Scale Channel"
+msgstr "Масштабування каналу"
 
-#: app/core/gimpchannel.c:279
-msgid "Sharpen Channel"
-msgstr "Різкість каналу"
+#: app/core/gimpchannel.c:256
+msgid "Resize Channel"
+msgstr "Зміна розміру каналу"
 
-#: app/core/gimpchannel.c:280
-msgid "Clear Channel"
-msgstr "Очищення каналу"
-
-#: app/core/gimpchannel.c:281
-msgid "Fill Channel"
-msgstr "Заповнення каналу"
-
-#: app/core/gimpchannel.c:282
-msgid "Invert Channel"
-msgstr "Інвертування каналу"
-
-#: app/core/gimpchannel.c:283
-msgid "Border Channel"
-msgstr "Обмеження каналу"
-
-#: app/core/gimpchannel.c:284
-msgid "Grow Channel"
-msgstr "Розширення каналу"
-
-#: app/core/gimpchannel.c:285
-msgid "Shrink Channel"
-msgstr "Стиснення каналу"
-
-#: app/core/gimpchannel.c:525
+#: app/core/gimpchannel.c:257
 msgid "Flip Channel"
 msgstr "Віддзеркалення каналу"
 
-#: app/core/gimpchannel.c:545
+#: app/core/gimpchannel.c:258
 msgid "Rotate Channel"
 msgstr "Обертання каналу"
 
-#: app/core/gimpchannel.c:570 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Перетворення каналу"
 
-#: app/core/gimpchannel.c:603
+#: app/core/gimpchannel.c:281
+msgid "Feather Channel"
+msgstr "Розмивання каналу"
+
+#: app/core/gimpchannel.c:282
+msgid "Sharpen Channel"
+msgstr "Різкість каналу"
+
+#: app/core/gimpchannel.c:283
+msgid "Clear Channel"
+msgstr "Очищення каналу"
+
+#: app/core/gimpchannel.c:284
+msgid "Fill Channel"
+msgstr "Заповнення каналу"
+
+#: app/core/gimpchannel.c:285
+msgid "Invert Channel"
+msgstr "Інвертування каналу"
+
+#: app/core/gimpchannel.c:286
+msgid "Border Channel"
+msgstr "Обмеження каналу"
+
+#: app/core/gimpchannel.c:287
+msgid "Grow Channel"
+msgstr "Розширення каналу"
+
+#: app/core/gimpchannel.c:288
+msgid "Shrink Channel"
+msgstr "Стиснення каналу"
+
+#: app/core/gimpchannel.c:584
 msgid "Cannot stroke empty channel."
 msgstr "Не можна обводити порожній канал."
 
-#: app/core/gimpchannel.c:1518
+#: app/core/gimpchannel.c:1499
 msgid "Set Channel Color"
 msgstr "Встановлення кольору каналу"
 
-#: app/core/gimpchannel.c:1565
+#: app/core/gimpchannel.c:1546
 msgid "Set Channel Opacity"
 msgstr "Встановлення непрозорості каналу"
 
@@ -1730,11 +1741,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:295 app/core/gimpitem.c:298
+#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
 msgid "copy"
 msgstr "копія"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:307
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
 #, c-format
 msgid "%s copy"
 msgstr "копія %s"
@@ -1742,7 +1753,8 @@ msgstr "копія %s"
 #: app/core/gimpdatafactory.c:560
 #, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
-msgstr "Спроба застосувати старий завантажувач до файлу '%s' з невідомим розширенням."
+msgstr ""
+"Спроба застосувати старий завантажувач до файлу '%s' з невідомим розширенням."
 
 #: app/core/gimpdatafactory.c:584
 #, c-format
@@ -1795,7 +1807,7 @@ msgstr "Дзеркало"
 msgid "Rotate"
 msgstr "Обертання"
 
-#: app/core/gimpdrawable-transform.c:1078 app/core/gimplayer.c:750
+#: app/core/gimpdrawable-transform.c:1078 app/core/gimplayer.c:254
 #: app/tools/tools-enums.c:73
 msgid "Transform Layer"
 msgstr "Перетворення шару"
@@ -1817,7 +1829,9 @@ msgstr "Неправильна назва змінної у файлі сере�
 #: app/core/gimpgradient.c:361
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Критична помилка аналізу файла градієнта '%s': файл не є файлом градієнта GIMP."
+msgstr ""
+"Критична помилка аналізу файла градієнта '%s': файл не є файлом градієнта "
+"GIMP."
 
 #: app/core/gimpgradient.c:376
 #, c-format
@@ -1845,8 +1859,7 @@ msgstr "Колір переднього плану."
 #: app/core/gimpgrid.c:139
 msgid ""
 "The background color of the grid; only used in double dashed line style."
-msgstr ""
-"Колір тла сітки; використовується лише для стилю \"Подвійний пунктир\""
+msgstr "Колір тла сітки; використовується лише для стилю \"Подвійний пунктир\""
 
 #: app/core/gimpgrid.c:145
 msgid "Horizontal spacing of grid lines."
@@ -1859,8 +1872,7 @@ msgstr "Відстань між вертикальними лініями."
 #: app/core/gimpgrid.c:159
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
-msgstr ""
-"Горизонтальний зсув першої лінії сітки. Значення може бути від'ємним."
+msgstr "Горизонтальний зсув першої лінії сітки. Значення може бути від'ємним."
 
 #: app/core/gimpgrid.c:166
 msgid "Vertical offset of the first grid line; this may be a negative number."
@@ -1878,15 +1890,15 @@ msgstr "Зміна кольору у палітрі"
 msgid "Add Color to Indexed Palette"
 msgstr "Додавання кольору до індексованої палітри"
 
-#: app/core/gimpimage-convert.c:773
+#: app/core/gimpimage-convert.c:768
 msgid "Convert Image to RGB"
 msgstr "Перетворення зображення у RGB"
 
-#: app/core/gimpimage-convert.c:777
+#: app/core/gimpimage-convert.c:772
 msgid "Convert Image to Grayscale"
 msgstr "Перетворення зображення у відтінки сірого"
 
-#: app/core/gimpimage-convert.c:781
+#: app/core/gimpimage-convert.c:776
 msgid "Convert Image to Indexed"
 msgstr "Перетворення зображення у індексоване"
 
@@ -1932,7 +1944,8 @@ msgstr "Об'єднання видимих контурів"
 
 #: app/core/gimpimage-merge.c:574
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Недостатньо видимих контурів для об'єднання. Необхідно принаймні два контури."
+msgstr ""
+"Недостатньо видимих контурів для об'єднання. Необхідно принаймні два контури."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable QuickMask"
@@ -1947,122 +1960,122 @@ msgstr "Вимкнення швидкої маски"
 msgid "Can't undo %s"
 msgstr "Не вдається скасувати %s"
 
-#: app/core/gimpimage.c:1153 app/core/gimppalette-import.c:205
+#: app/core/gimpimage.c:1154 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:634 app/gui/palette-import-dialog.c:587
 #: app/pdb/image_cmds.c:3528 app/widgets/gimpdatafactoryview.c:307
 msgid "Untitled"
 msgstr "Неназване"
 
-#: app/core/gimpimage.c:1227
+#: app/core/gimpimage.c:1228
 msgid "Change Image Resolution"
 msgstr "Зміна роздільної здатності"
 
-#: app/core/gimpimage.c:1266
+#: app/core/gimpimage.c:1267
 msgid "Change Image Unit"
 msgstr "Зміна одиниць вимірювання"
 
-#: app/core/gimpimage.c:2030
+#: app/core/gimpimage.c:2031
 msgid "Attach Parasite to Image"
 msgstr "Додавання шуму до зображення"
 
-#: app/core/gimpimage.c:2063
+#: app/core/gimpimage.c:2064
 msgid "Remove Parasite from Image"
 msgstr "Видалення шуму із зображення"
 
-#: app/core/gimpimage.c:2535
+#: app/core/gimpimage.c:2536
 msgid "Add Layer"
 msgstr "Додавання шару"
 
-#: app/core/gimpimage.c:2602
+#: app/core/gimpimage.c:2603
 msgid "Remove Layer"
 msgstr "Видалення шару"
 
-#: app/core/gimpimage.c:2673
+#: app/core/gimpimage.c:2674
 msgid "Layer cannot be raised higher."
 msgstr "Шар неможливо підняти ще вище."
 
-#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
+#: app/core/gimpimage.c:2680 app/core/gimpimage.c:2730
 msgid "Cannot raise a layer without alpha."
 msgstr "Не можна піднімати шар, у якого немає альфа-каналу."
 
-#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2685 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "Піднімання шару"
 
-#: app/core/gimpimage.c:2701
+#: app/core/gimpimage.c:2702
 msgid "Layer cannot be lowered more."
 msgstr "Шар неможливо опустити ще нижче."
 
-#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "Опускання шар"
 
-#: app/core/gimpimage.c:2723
+#: app/core/gimpimage.c:2724
 msgid "Layer is already on top."
 msgstr "Шар вже на самій верхівці."
 
-#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:215
 msgid "Raise Layer to Top"
 msgstr "Піднімання шару догори"
 
-#: app/core/gimpimage.c:2754
+#: app/core/gimpimage.c:2755
 msgid "Layer is already on the bottom."
 msgstr "Шар вже у самому низу."
 
-#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:219
 msgid "Lower Layer to Bottom"
 msgstr "Опускання шару додолу"
 
-#: app/core/gimpimage.c:2798
+#: app/core/gimpimage.c:2799
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "Шар '%s' не має альфа-каналу. Цей шар буде розміщено вище."
 
-#: app/core/gimpimage.c:2852
+#: app/core/gimpimage.c:2853
 msgid "Add Channel"
 msgstr "Додавання каналу"
 
-#: app/core/gimpimage.c:2897
+#: app/core/gimpimage.c:2898
 msgid "Remove Channel"
 msgstr "Видалення каналу"
 
-#: app/core/gimpimage.c:2941
+#: app/core/gimpimage.c:2942
 msgid "Channel cannot be raised higher."
 msgstr "Канал не можна підняти ще вище."
 
-#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2947 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Піднімання каналу"
 
-#: app/core/gimpimage.c:2963
+#: app/core/gimpimage.c:2964
 msgid "Channel cannot be lowered more."
 msgstr "Канал не можна опустити ще нижче."
 
-#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2969 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Опускання каналу"
 
-#: app/core/gimpimage.c:3045
+#: app/core/gimpimage.c:3046
 msgid "Add Path"
 msgstr "Додавання контуру"
 
-#: app/core/gimpimage.c:3090
+#: app/core/gimpimage.c:3091
 msgid "Remove Path"
 msgstr "Видалення контуру"
 
-#: app/core/gimpimage.c:3134
+#: app/core/gimpimage.c:3135
 msgid "Path cannot be raised higher."
 msgstr "Контур не можна підняти ще вище."
 
-#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Піднімання контуру"
 
-#: app/core/gimpimage.c:3156
+#: app/core/gimpimage.c:3157
 msgid "Path cannot be lowered more."
 msgstr "Контур не можна опустити ще нижче."
 
-#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3162 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Опускання контуру"
 
@@ -2113,11 +2126,11 @@ msgstr "%d шарів"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдається відкрити файл мініатюри '%s': %s"
 
-#: app/core/gimpitem.c:944
+#: app/core/gimpitem.c:997
 msgid "Attach Parasite to Item"
 msgstr "Долучення шуму до елемента"
 
-#: app/core/gimpitem.c:983 app/core/gimpitem.c:990
+#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
 msgid "Remove Parasite from Item"
 msgstr "Видалення шуму з елемента"
 
@@ -2130,7 +2143,8 @@ msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
-"Не вдається створити новий шар з плаваючого виділення, тому що воно належить масці шару чи каналу."
+"Не вдається створити новий шар з плаваючого виділення, тому що воно належить "
+"масці шару чи каналу."
 
 #: app/core/gimplayer.c:247 app/pdb/internal_procs.c:134
 msgid "Layer"
@@ -2140,51 +2154,60 @@ msgstr "Шар"
 msgid "Rename Layer"
 msgstr "Перейменування шару"
 
-#: app/core/gimplayer.c:331 app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:249 app/pdb/layer_cmds.c:636 app/pdb/layer_cmds.c:712
+#: app/tools/gimpeditselectiontool.c:263
+#: app/tools/gimpeditselectiontool.c:1214
+msgid "Move Layer"
+msgstr "Переміщення шару"
+
+#: app/core/gimplayer.c:250 app/gui/resize-dialog.c:204
+msgid "Scale Layer"
+msgstr "Масштабування шару"
+
+#: app/core/gimplayer.c:251
+msgid "Resize Layer"
+msgstr "Зміна розміру шару"
+
+#: app/core/gimplayer.c:252 app/gui/drawable-commands.c:160
+msgid "Flip Layer"
+msgstr "Віддзеркалення шару"
+
+#: app/core/gimplayer.c:253 app/gui/drawable-commands.c:194
+msgid "Rotate Layer"
+msgstr "Обертання шару"
+
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: app/core/gimplayer.c:607 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
-#: app/tools/gimpeditselectiontool.c:263
-#: app/tools/gimpeditselectiontool.c:1228
-msgid "Move Layer"
-msgstr "Переміщення шару"
-
-#: app/core/gimplayer.c:700 app/gui/drawable-commands.c:160
-msgid "Flip Layer"
-msgstr "Віддзеркалення шару"
-
-#: app/core/gimplayer.c:722 app/gui/drawable-commands.c:194
-msgid "Rotate Layer"
-msgstr "Обертання шару"
-
-#: app/core/gimplayer.c:976
+#: app/core/gimplayer.c:954
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Не можна додавати маску до шару, який не є частиною зображення."
 
-#: app/core/gimplayer.c:983
+#: app/core/gimplayer.c:961
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не вдається додати маску шару, бо шар вже має маску."
 
-#: app/core/gimplayer.c:990
+#: app/core/gimplayer.c:968
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Не можна додавати маску до шару, який не має альфа-каналу."
 
-#: app/core/gimplayer.c:1000
+#: app/core/gimplayer.c:978
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr "Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
+msgstr ""
+"Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
 
-#: app/core/gimplayer.c:1104
+#: app/core/gimplayer.c:1082
 msgid "Transfer Alpha to Mask"
 msgstr "Перетворення альфа-каналу у маску"
 
-#: app/core/gimplayer.c:1370
+#: app/core/gimplayer.c:1348
 msgid "Add Alpha Channel"
 msgstr "Додавання альфа-каналу"
 
-#: app/core/gimplayer.c:1390
+#: app/core/gimplayer.c:1368
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
 
@@ -2206,7 +2229,8 @@ msgstr "Критична помилка аналізу файлу палітри
 #: app/core/gimppalette.c:459 app/core/gimppalette.c:538
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr "Критична помилка аналізу файлу палітри '%s': помилка читання у рядку %d."
+msgstr ""
+"Критична помилка аналізу файлу палітри '%s': помилка читання у рядку %d."
 
 #: app/core/gimppalette.c:419
 #, c-format
@@ -2219,7 +2243,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Читається файл палітри '%s': неправильна кількість стовпчиків у рядку %d. Використовується типове значення."
+"Читається файл палітри '%s': неправильна кількість стовпчиків у рядку %d. "
+"Використовується типове значення."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:493
@@ -2240,7 +2265,9 @@ msgstr "Читається файл палітри '%s': відсутній СИ
 #: app/core/gimppalette.c:519
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "Читається файл палітри '%s': значення RGB поза межами допустимого діапазону у рядку %d."
+msgstr ""
+"Читається файл палітри '%s': значення RGB поза межами допустимого діапазону "
+"у рядку %d."
 
 #: app/core/gimppalette.c:681
 msgid "Black"
@@ -2250,14 +2277,17 @@ msgstr "Чорне"
 #: app/core/gimppattern.c:415
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "Критична помилка при аналізі файлу візерунку '%s': не вдається прочитати пензля %d байт: %s"
+msgstr ""
+"Критична помилка при аналізі файлу візерунку '%s': не вдається прочитати "
+"пензля %d байт: %s"
 
 #: app/core/gimppattern.c:357
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Критична помилка при аналізі файлу візерунку '%s': невідома версія формату %d."
+"Критична помилка при аналізі файлу візерунку '%s': невідома версія формату %"
+"d."
 
 #: app/core/gimppattern.c:367
 #, c-format
@@ -2265,7 +2295,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Критична помилка при аналізі файлу візерунку '%s': непідтримувана глибина %d.\n"
+"Критична помилка при аналізі файлу візерунку '%s': непідтримувана глибина %"
+"d.\n"
 "Шаблони GIMP повинні бути у відтінках сірого або RGB."
 
 #: app/core/gimppattern.c:393
@@ -2273,8 +2304,8 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі візерунку '%s'."
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
-#: app/tools/gimpeditselectiontool.c:1130 app/tools/gimpmoveoptions.c:184
+#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Переміщення виділеного"
@@ -2333,7 +2364,7 @@ msgstr "Не вдається вирізати/скопіювати, тому щ
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Не вдається вирізати/скопіювати, тому що виділена ділянка порожня."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:995
+#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Плаваюче виділення"
 
@@ -2641,7 +2672,8 @@ msgstr "Режим:"
 msgid ""
 "Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Не вдається викликати пензель. Можливо, відповідне доповнення завершилось аварійно."
+"Не вдається викликати пензель. Можливо, відповідне доповнення завершилось "
+"аварійно."
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
@@ -2829,8 +2861,8 @@ msgid ""
 "transparent or animated GIF file."
 msgstr ""
 "Ви намагаєтесь перетворити зображення з альфа-каналом у індексоване.\n"
-"Не слід генерувати палітру більш ніж з 255 кольорів, якщо ви "
-"сподіваєтесь створити прозорий чи анімований GIF-файл з цього зображення."
+"Не слід генерувати палітру більш ніж з 255 кольорів, якщо ви сподіваєтесь "
+"створити прозорий чи анімований GIF-файл з цього зображення."
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -3313,9 +3345,11 @@ msgstr ""
 "Ви намагаєтесь створити зображення, початковий розмір якого дорівнює %s.\n"
 "\n"
 "Виберіть \"Гаразд\", щоб створити його.\n"
-"Виберіть \"Скасувати\", якщо ви не збирались створювати таке велике зображення.\n"
+"Виберіть \"Скасувати\", якщо ви не збирались створювати таке велике "
+"зображення.\n"
 "\n"
-"Щоб запобігти появі цього попередження, збільште значення параметру \"Максимальний розмір зображення\"\n"
+"Щоб запобігти появі цього попередження, збільште значення параметру "
+"\"Максимальний розмір зображення\"\n"
 "(наразі це %s) в діалоговому вікні \"Настройка\"."
 
 #: app/gui/file-new-dialog.c:285
@@ -3359,7 +3393,8 @@ msgstr "/За розширенням"
 msgid ""
 "Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Не вдається викликати шрифт. Можливо, відповідне доповнення завершилось аварійно."
+"Не вдається викликати шрифт. Можливо, відповідне доповнення завершилось "
+"аварійно."
 
 #: app/gui/fonts-menu.c:44
 msgid "/_Rescan Font List"
@@ -3463,7 +3498,8 @@ msgstr "/_Завантажити колір лівої точки з"
 
 #: app/gui/gradient-editor-menu.c:71
 msgid "/Load Left Color From/_Left Neighbor's Right Endpoint"
-msgstr "/Завантажити колір лівої точки з/Сусідньої зл_іва до крайньої правої точки"
+msgstr ""
+"/Завантажити колір лівої точки з/Сусідньої зл_іва до крайньої правої точки"
 
 #: app/gui/gradient-editor-menu.c:75
 msgid "/Load Left Color From/_Right Endpoint"
@@ -3491,7 +3527,8 @@ msgstr "/Завантажити колір правої точки _з"
 
 #: app/gui/gradient-editor-menu.c:123
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr "/Завантажити колір правої точки з/Сусідньої с_права до крайньої лівої точки"
+msgstr ""
+"/Завантажити колір правої точки з/Сусідньої с_права до крайньої лівої точки"
 
 #: app/gui/gradient-editor-menu.c:127
 msgid "/Load Right Color From/_Left Endpoint"
@@ -3633,7 +3670,8 @@ msgstr "Перерозподілити _напрямні у виділеному
 msgid ""
 "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Не вдалось запустити градієнт. Можливо, відповідне доповнення завершилось аварійно."
+"Не вдалось запустити градієнт. Можливо, відповідне доповнення завершилось "
+"аварійно."
 
 #: app/gui/gradients-commands.c:73
 #, c-format
@@ -3744,9 +3782,11 @@ msgstr ""
 "Ви намагаєтесь створити зображення, початковий розмір якого дорівнює %s.\n"
 "\n"
 "Виберіть \"Гаразд\", щоб все ж таки створити його.\n"
-"Виберіть \"Скасувати\", якщо ви не збирались створювати таке велике зображення.\n"
+"Виберіть \"Скасувати\", якщо ви не збирались створювати таке велике "
+"зображення.\n"
 "\n"
-"Щоб запобігти появі цього попередження, збільште значення параметру \"Максимальний розмір зображення\"\n"
+"Щоб запобігти появі цього попередження, збільште значення параметру "
+"\"Максимальний розмір зображення\"\n"
 "(наразі це -- %s) в діалоговому вікні \"Настройка\"."
 
 #: app/gui/image-commands.c:535
@@ -3758,13 +3798,14 @@ msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
 msgstr ""
-"Вибраний вами розмір зображення скоротить деякі шари до зникнення. Продовжити?"
+"Вибраний вами розмір зображення скоротить деякі шари до зникнення. "
+"Продовжити?"
 
 #: app/gui/image-commands.c:547
 msgid "Layer Too Small"
 msgstr "Шар надто малий"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1181
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1170
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Масштабування..."
@@ -3774,12 +3815,12 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Помилка масштабування: ширина і висота повинні бути більшими нуля."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Файл"
 
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:51
-
 msgid "/File/_New..."
 msgstr "/Файл/_Створити..."
 
@@ -3788,6 +3829,7 @@ msgid "/File/_Open..."
 msgstr "/Файл/_Відкрити..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Файл/Відкрити н_едавні"
@@ -4814,28 +4856,28 @@ msgstr "кольорів"
 msgid "Crop Layer"
 msgstr "Кадрування шару"
 
-#: app/gui/layers-commands.c:461
+#: app/gui/layers-commands.c:455
 msgid "Layer Mask to Selection"
 msgstr "Маска шару -> Виділене"
 
-#: app/gui/layers-commands.c:723
+#: app/gui/layers-commands.c:717
 msgid "Empty Layer"
 msgstr "Порожній шар"
 
-#: app/gui/layers-commands.c:747
+#: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
 msgstr "Створення нового шару"
 
-#: app/gui/layers-commands.c:781
+#: app/gui/layers-commands.c:775
 msgid "Layer _Name:"
 msgstr "_Назва шару:"
 
 #. The size labels
-#: app/gui/layers-commands.c:785
+#: app/gui/layers-commands.c:779
 msgid "Layer Width:"
 msgstr "Ширина шару:"
 
-#: app/gui/layers-commands.c:791 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4843,39 +4885,39 @@ msgstr "Ширина шару:"
 msgid "Height:"
 msgstr "Висота:"
 
-#: app/gui/layers-commands.c:850
+#: app/gui/layers-commands.c:844
 msgid "Layer Fill Type"
 msgstr "Тип заповнення шару"
 
-#: app/gui/layers-commands.c:959
+#: app/gui/layers-commands.c:953
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
-#: app/gui/layers-commands.c:961 app/widgets/gimplayertreeview.c:205
+#: app/gui/layers-commands.c:955 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
-#: app/gui/layers-commands.c:998
+#: app/gui/layers-commands.c:992
 msgid "Layer _Name"
 msgstr "_Назва шару"
 
-#: app/gui/layers-commands.c:1009
+#: app/gui/layers-commands.c:1003
 msgid "Set Name from _Text"
 msgstr "Встановити назву з _тексту"
 
-#: app/gui/layers-commands.c:1096
+#: app/gui/layers-commands.c:1090
 msgid "Add a Mask to the Layer"
 msgstr "Додавання маски до шару"
 
-#: app/gui/layers-commands.c:1115
+#: app/gui/layers-commands.c:1109
 msgid "Initialize Layer Mask to:"
 msgstr "Ініціалізувати маску шару з:"
 
-#: app/gui/layers-commands.c:1132
+#: app/gui/layers-commands.c:1126
 msgid "In_vert Mask"
 msgstr "_Інвертувати маску"
 
-#: app/gui/layers-commands.c:1215 app/gui/layers-commands.c:1311
+#: app/gui/layers-commands.c:1188 app/gui/layers-commands.c:1264
 msgid "Invalid width or height. Both must be positive."
 msgstr "Неправильна ширина чи висота. Їх значення повинні бути додатними."
 
@@ -5273,7 +5315,8 @@ msgstr "Попередній перегляд"
 msgid ""
 "Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Не вдається викликати палітру. Можливо, відповідне доповнення завершилось аварійно."
+"Не вдається викликати палітру. Можливо, відповідне доповнення завершилось "
+"аварійно."
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
@@ -5315,7 +5358,8 @@ msgstr "/_Оновити палітри"
 msgid ""
 "Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Не вдається викликати візерунок. Можливо, відповідне доповнення завершилось аварійно."
+"Не вдається викликати візерунок. Можливо, відповідне доповнення завершилось "
+"аварійно."
 
 #. disabled because they are useless now
 #: app/gui/patterns-menu.c:47
@@ -5458,6 +5502,7 @@ msgstr "Поведінка діалогових вікон"
 msgid "_Info Window Per Display"
 msgstr "_Окреме інформаційне вікно для кожного зображення"
 
+#. Menus
 #: app/gui/preferences-dialog.c:1229
 msgid "Menus"
 msgstr "Меню"
@@ -6067,6 +6112,7 @@ msgid "Original Width:"
 msgstr "Оригінальна ширина:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Нова ширина:"
@@ -6483,15 +6529,17 @@ msgid ""
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 msgstr ""
-"gimprc використовується для зберігання особистих установок, які впливають на поведінку GIMP. "
-"Тут також вказуються шляхи пошуку пензлів, палітр, градієнтів, візерунків, доповнень та модулів."
+"gimprc використовується для зберігання особистих установок, які впливають на "
+"поведінку GIMP. Тут також вказуються шляхи пошуку пензлів, палітр, "
+"градієнтів, візерунків, доповнень та модулів."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"GIMP використовує додатковий файл gtkrc, то ж ви можете настроїти його вигляд не впливаючи на інші GTK-програми."
+"GIMP використовує додатковий файл gtkrc, то ж ви можете настроїти його "
+"вигляд не впливаючи на інші GTK-програми."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
@@ -6500,10 +6548,10 @@ msgid ""
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
-"Доповнення та розширення - це зовнішні програми, що запускає GIMP, які надають "
-"додаткові можливості.  Ці програми шукаються на запуску й інформація про їхні "
-"функції та час зміни кешується у цьому файлі. Цей файл призначений лише для "
-"зчитування  програмою GIMP, і не повинен редагуватися."
+"Доповнення та розширення - це зовнішні програми, що запускає GIMP, які "
+"надають додаткові можливості.  Ці програми шукаються на запуску й інформація "
+"про їхні функції та час зміни кешується у цьому файлі. Цей файл призначений "
+"лише для зчитування  програмою GIMP, і не повинен редагуватися."
 
 #: app/gui/user-install-dialog.c:157
 msgid ""
@@ -6512,10 +6560,11 @@ msgid ""
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"Комбінації клавіш можуть бути динамічно перевизначені в GIMP. В menurc міститься "
-"копія вашої конфігурації, тому її можна зберегти для наступних сеансів. При бажанні, можете "
-"змінювати цей файл, але значно простіше перевизначати комбінації клавіш з GIMP. Видалення цього"
-"файлу призводить до відновлення початкових комбінацій клавіш."
+"Комбінації клавіш можуть бути динамічно перевизначені в GIMP. В menurc "
+"міститься копія вашої конфігурації, тому її можна зберегти для наступних "
+"сеансів. При бажанні, можете змінювати цей файл, але значно простіше "
+"перевизначати комбінації клавіш з GIMP. Видалення цьогофайлу призводить до "
+"відновлення початкових комбінацій клавіш."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
@@ -6523,17 +6572,17 @@ msgid ""
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
-"sessionrc використовується для збереження положення діалогових вікон відкритих "
-"під час останнього виходу з GIMP. Можна настроїти GIMP так, щоб вікна відкривались "
-"у їх попередніх позиціях."
+"sessionrc використовується для збереження положення діалогових вікон "
+"відкритих під час останнього виходу з GIMP. Можна настроїти GIMP так, щоб "
+"вікна відкривались у їх попередніх позиціях."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
 msgstr ""
-"Цей файл містить набір стандартних розмірів зображень, які використовуються у "
-"якості шаблонів."
+"Цей файл містить набір стандартних розмірів зображень, які використовуються "
+"у якості шаблонів."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
@@ -6542,10 +6591,10 @@ msgid ""
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
 msgstr ""
-"unitrc використовується для збереження вашої бази даних одиниць виміру. "
-"Ви можете визначити додаткові одиниці та використовувати їх так само, як "
-"і вбудовані одиниці: дюйми, міліметри, пункти і піки. Цей файл перезаписується щоразу, "
-"коли ви виходите з GIMP."
+"unitrc використовується для збереження вашої бази даних одиниць виміру. Ви "
+"можете визначити додаткові одиниці та використовувати їх так само, як і "
+"вбудовані одиниці: дюйми, міліметри, пункти і піки. Цей файл перезаписується "
+"щоразу, коли ви виходите з GIMP."
 
 #: app/gui/user-install-dialog.c:189
 msgid ""
@@ -6553,8 +6602,8 @@ msgid ""
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
-"Ця тека використовується для зберігання створених користувачем пензлів. "
-"Під час пошуку пензлів, GIMP перевіряє цей каталог разом із системним каталогом "
+"Ця тека використовується для зберігання створених користувачем пензлів. Під "
+"час пошуку пензлів, GIMP перевіряє цей каталог разом із системним каталогом "
 "пензлів."
 
 #: app/gui/user-install-dialog.c:197
@@ -6564,10 +6613,11 @@ msgid ""
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
-"Ця тека використовується для зберігання шрифтів, які повинні відображатись у GIMP. "
-"При пошуку шрифтів GIMP перевіряє цей каталог разом із системним каталогом шрифтів."
-"Використовуйте цей каталог, якщо якісь шрифти будете використовувати лише у GIMP. "
-"У всіх інших випадках, розміщайте шрифти у системних каталогах шрифтів."
+"Ця тека використовується для зберігання шрифтів, які повинні відображатись у "
+"GIMP. При пошуку шрифтів GIMP перевіряє цей каталог разом із системним "
+"каталогом шрифтів.Використовуйте цей каталог, якщо якісь шрифти будете "
+"використовувати лише у GIMP. У всіх інших випадках, розміщайте шрифти у "
+"системних каталогах шрифтів."
 
 #: app/gui/user-install-dialog.c:207
 msgid ""
@@ -6576,7 +6626,8 @@ msgid ""
 "searching for gradients."
 msgstr ""
 "Ця тека використовується для зберігання створених користувачем градієнтів. "
-"При пошуку градієнтів, GIMP перевіряє цей каталог разом із системним каталогом градієнтів."
+"При пошуку градієнтів, GIMP перевіряє цей каталог разом із системним "
+"каталогом градієнтів."
 
 #: app/gui/user-install-dialog.c:214
 msgid ""
@@ -6584,8 +6635,9 @@ msgid ""
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
 msgstr ""
-"Ця тека використовується для зберігання створених користувачем палітр. "
-"При пошуку палітр, GIMP перевіряє цей каталог разом із системним каталогом палітр."
+"Ця тека використовується для зберігання створених користувачем палітр. При "
+"пошуку палітр, GIMP перевіряє цей каталог разом із системним каталогом "
+"палітр."
 
 #: app/gui/user-install-dialog.c:221
 msgid ""
@@ -6594,7 +6646,8 @@ msgid ""
 "searching for patterns."
 msgstr ""
 "Ця тека використовується для зберігання створених користувачем візерунків. "
-"Під час пошуку візерунків, GIMP перевіряє цей каталог разом із системним каталогом візерунків."
+"Під час пошуку візерунків, GIMP перевіряє цей каталог разом із системним "
+"каталогом візерунків."
 
 #: app/gui/user-install-dialog.c:228
 msgid ""
@@ -6613,10 +6666,10 @@ msgid ""
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
 msgstr ""
-"Ця тека використовується для зберігання тимчасових, створених користувачем та "
-"інших не підтримуваних системою модулів динамічного завантаження. "
-"Під час пошуку модулі на етапі ініціалізації, GIMP перевіряє цей каталог разом "
-"із системним каталогом модулів."
+"Ця тека використовується для зберігання тимчасових, створених користувачем "
+"та інших не підтримуваних системою модулів динамічного завантаження. Під час "
+"пошуку модулі на етапі ініціалізації, GIMP перевіряє цей каталог разом із "
+"системним каталогом модулів."
 
 #: app/gui/user-install-dialog.c:245
 msgid ""
@@ -6626,8 +6679,9 @@ msgid ""
 "for plug-in environment modification files."
 msgstr ""
 "Ця тека використовується для зберігання тимчасових, створених користувачем "
-"та інших не системних додатків до середовища доповнень. Під час пошуку файлів "
-"змін середовища додатків, GIMP перевіряє цей каталог разом із відповідним системним каталогом."
+"та інших не системних додатків до середовища доповнень. Під час пошуку "
+"файлів змін середовища додатків, GIMP перевіряє цей каталог разом із "
+"відповідним системним каталогом."
 
 #: app/gui/user-install-dialog.c:255
 msgid ""
@@ -6635,8 +6689,9 @@ msgid ""
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 msgstr ""
-"Ця тека використовується для зберігання створених і встановлених користувачем "
-"сценаріїв. Під час пошуку сценаріїв, GIMP перевіряє цей каталог разом із системним каталогом сценаріїв."
+"Ця тека використовується для зберігання створених і встановлених "
+"користувачем сценаріїв. Під час пошуку сценаріїв, GIMP перевіряє цей каталог "
+"разом із системним каталогом сценаріїв."
 
 #: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
@@ -6655,8 +6710,8 @@ msgid ""
 msgstr ""
 "Ця тека використовується для тимчасового зберігання буферів скасування "
 "операцій, для зменшення використання пам'яті. При некоректному завершенні "
-"роботи GIMP, у цій теці можуть залишитися файли з назвами gimp<#>.<#>. "
-"Після завершення сеансу, ці файли непотрібні GIMP, тому їх можна видалити."
+"роботи GIMP, у цій теці можуть залишитися файли з назвами gimp<#>.<#>. Після "
+"завершення сеансу, ці файли непотрібні GIMP, тому їх можна видалити."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
@@ -6664,15 +6719,20 @@ msgstr "Ця тека використовується для збереженн
 
 #: app/gui/user-install-dialog.c:287
 msgid "This folder is used to store parameter files for the Curves tool."
-msgstr "Ця тека використовується для збереження файлів параметрів інструменту \"Криві\"."
+msgstr ""
+"Ця тека використовується для збереження файлів параметрів інструменту \"Криві"
+"\"."
 
 #: app/gui/user-install-dialog.c:292
 msgid "This folder is used to store parameter files for the Levels tool."
-msgstr "Ця тека використовується для збереження файлів параметрів інструменту \"Рівні\"."
+msgstr ""
+"Ця тека використовується для збереження файлів параметрів інструменту \"Рівні"
+"\"."
 
 #: app/gui/user-install-dialog.c:392
 msgid "Installation successful.  Click \"Continue\" to proceed."
-msgstr "Встановлення завершено. Натисніть кнопку \"Продовжить\" для подальшої роботи."
+msgstr ""
+"Встановлення завершено. Натисніть кнопку \"Продовжить\" для подальшої роботи."
 
 #: app/gui/user-install-dialog.c:398
 msgid "Installation failed.  Contact system administrator."
@@ -6716,8 +6776,9 @@ msgid ""
 "any later version."
 msgstr ""
 "Це вільні програма; ви можете розповсюджувати її та/чи змінювати на умовах "
-"ліцензії GNU General Public License, що опублікована Free Software Foundation; "
-"версії 2 цієх ліцензії, чи (на вашу думку) будь-якою більш пізнішої версії."
+"ліцензії GNU General Public License, що опублікована Free Software "
+"Foundation; версії 2 цієх ліцензії, чи (на вашу думку) будь-якою більш "
+"пізнішої версії."
 
 #: app/gui/user-install-dialog.c:773
 msgid ""
@@ -6726,10 +6787,10 @@ msgid ""
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
 msgstr ""
-"Ця програма розповсюджується в сподіванні на те, що вона буде корисною, "
-"але БЕЗ БУДЬ-ЯКИХ ГАРАНТІЙ, в тому числі без неявної гарантії "
-"КОМЕРЦІЙНОЇ ЦІННОСТІ чи ПРИДАТНОСТІ ДЛЯ БУДЬ-ЯКИХ ЦІЛЕЙ. "
-"Докладніше про це дивіться GNU General Public License."
+"Ця програма розповсюджується в сподіванні на те, що вона буде корисною, але "
+"БЕЗ БУДЬ-ЯКИХ ГАРАНТІЙ, в тому числі без неявної гарантії КОМЕРЦІЙНОЇ "
+"ЦІННОСТІ чи ПРИДАТНОСТІ ДЛЯ БУДЬ-ЯКИХ ЦІЛЕЙ. Докладніше про це дивіться GNU "
+"General Public License."
 
 #: app/gui/user-install-dialog.c:779
 msgid ""
@@ -6738,8 +6799,8 @@ msgid ""
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
 "Ви мали отримати копію GNU General Public License разом з цією програмою; "
-"якщо це не так, напишіть у Free Software Foundation, Inc., "
-"59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+"якщо це не так, напишіть у Free Software Foundation, Inc., 59 Temple Place - "
+"Suite 330, Boston, MA 02111-1307, USA."
 
 #: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
@@ -6762,8 +6823,8 @@ msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
-"Ця тека буде містити ряд важливих файлів. Для отримання додаткової інформації про файл "
-"чи підтеку в дереві клацніть на їх назві."
+"Ця тека буде містити ряд важливих файлів. Для отримання додаткової "
+"інформації про файл чи підтеку в дереві клацніть на їх назві."
 
 #: app/gui/user-install-dialog.c:944
 msgid "User Installation Log"
@@ -6785,7 +6846,8 @@ msgstr "Клацніть \"Продовжити\" щоб застосувати 
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Для оптимальної продуктивності GIMP, деякі параметри можуть бути змінені.</b>"
+"<b>Для оптимальної продуктивності GIMP, деякі параметри можуть бути змінені."
+"</b>"
 
 #: app/gui/user-install-dialog.c:965
 msgid "Click \"Continue\" to start The GIMP."
@@ -6796,8 +6858,8 @@ msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
 msgstr ""
-"<b>Щоб відображати зображення у натуральну величину, GIMP повинен знати роздільну "
-"здатність вашого монітора.</b>"
+"<b>Щоб відображати зображення у натуральну величину, GIMP повинен знати "
+"роздільну здатність вашого монітора.</b>"
 
 #: app/gui/user-install-dialog.c:975
 msgid "Aborting Installation..."
@@ -6824,9 +6886,10 @@ msgid ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP використовує обмежений об'єм пам'яті для зберігання даних зображення, так "
-"званий \"Tile кеш\". Вам слід підібрати відведений для кешу розмір пам'яті. "
-"Зважте на кількість пам'яті, що використовується іншими запущеними процесами."
+"GIMP використовує обмежений об'єм пам'яті для зберігання даних зображення, "
+"так званий \"Tile кеш\". Вам слід підібрати відведений для кешу розмір "
+"пам'яті. Зважте на кількість пам'яті, що використовується іншими запущеними "
+"процесами."
 
 #: app/gui/user-install-dialog.c:1190
 msgid ""
@@ -6835,11 +6898,11 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"Всі зображення і дані для скасування дій, котрі не помістяться в \"Tile кеш\", "
-"будуть записані у файл підкачки. Цей файл повинен знаходитись в локальній файловій "
-"системі з достатньою кількістю вільного місця (кілька сот Мб). В системах UNIX "
-"ви можете використовувати системний каталог тимчасових файлів (\"/tmp\" чи "
-"\"/var/tmp\")."
+"Всі зображення і дані для скасування дій, котрі не помістяться в \"Tile кеш"
+"\", будуть записані у файл підкачки. Цей файл повинен знаходитись в "
+"локальній файловій системі з достатньою кількістю вільного місця (кілька сот "
+"Мб). В системах UNIX ви можете використовувати системний каталог тимчасових "
+"файлів (\"/tmp\" чи \"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1206
 msgid "Swap Folder:"
@@ -6850,8 +6913,8 @@ msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
 msgstr ""
-"GIMP може отримувати цю інформацію від вашої віконної системи. "
-"Але звичайно це не дає корисних результатів."
+"GIMP може отримувати цю інформацію від вашої віконної системи. Але звичайно "
+"це не дає корисних результатів."
 
 #: app/gui/user-install-dialog.c:1265
 #, c-format
@@ -6867,8 +6930,8 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
 msgstr ""
-"Ви можете також натиснути кнопку \"Калібрувати\", щоб відкрити вікно "
-"котре дозволить вам інтерактивно визначити роздільну здатність монітора."
+"Ви можете також натиснути кнопку \"Калібрувати\", щоб відкрити вікно котре "
+"дозволить вам інтерактивно визначити роздільну здатність монітора."
 
 #: app/gui/user-install-dialog.c:1337
 msgid "Calibrate"
@@ -6887,6 +6950,7 @@ msgid "New Path Options"
 msgstr "Параметри нового контуру"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Назва контуру:"
@@ -7083,7 +7147,8 @@ msgstr "Поріг"
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Роздільна здатність зображення поза допустимими межами, використовується типове значення."
+"Роздільна здатність зображення поза допустимими межами, використовується "
+"типове значення."
 
 #: app/pdb/internal_procs.c:80
 msgid "Internal Procedures"
@@ -7124,7 +7189,6 @@ msgid "Floating selections"
 msgstr "Плаваючі виділення"
 
 #: app/pdb/internal_procs.c:110
-
 msgid "Font UI"
 msgstr "Шрифт UI"
 
@@ -7328,7 +7392,7 @@ msgstr ""
 "Жебракують філософи при ґанку церкви\n"
 "в Гадячі; ще й шатро їхнє знаємо."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:688
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -7337,7 +7401,6 @@ msgid "(invalid UTF-8 string)"
 msgstr "(неправильна послідовність UTF-8 у рядку)"
 
 #: app/text/gimptextlayer.c:159
-
 msgid "Text Layer"
 msgstr "Текстовий шар"
 
@@ -7373,8 +7436,8 @@ msgstr ""
 "Помилка при аналізі тексту шуму для рівня '%s':\n"
 "%s\n"
 "\n"
-"Деякі властивості тексту будуть неправильні. Можете не перейматись цим, якщо ви "
-"не збираєтесь редагувати текстовий шар."
+"Деякі властивості тексту будуть неправильні. Можете не перейматись цим, якщо "
+"ви не збираєтесь редагувати текстовий шар."
 
 #: app/tools/tools-enums.c:14
 msgid "Pick Only"
@@ -7408,7 +7471,8 @@ msgstr "Фіксоване відношення сторін"
 msgid "Transform Selection"
 msgstr "Перетворення виділеного"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:531
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
+#: app/vectors/gimpvectors.c:537
 msgid "Transform Path"
 msgstr "Перетворення контуру"
 
@@ -7783,6 +7847,7 @@ msgid "Origin X:"
 msgstr "Початкове X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -7870,21 +7935,22 @@ msgid "Exposure:"
 msgstr "Експозиція:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1170 app/vectors/gimpvectors.c:366
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
+#: app/vectors/gimpvectors.c:372
 msgid "Move Path"
 msgstr "Перейменування контуру"
 
 #: app/tools/gimpeditselectiontool.c:255
-#: app/tools/gimpeditselectiontool.c:1213
+#: app/tools/gimpeditselectiontool.c:1199
 msgid "Move Layer Mask"
 msgstr "Переміщення маски шару"
 
 #: app/tools/gimpeditselectiontool.c:267
-#: app/tools/gimpeditselectiontool.c:1223
+#: app/tools/gimpeditselectiontool.c:1209
 msgid "Move Floating Layer"
 msgstr "Переміщення плаваючого виділення"
 
-#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
+#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:763
 msgid "Move: "
 msgstr "Переміщення: "
 
@@ -8468,16 +8534,16 @@ msgstr "/Сервіс/Малювання/П_алець"
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
-"Інструктування змінює кольори символу, щоб видати більш чіткі растри "
-"при маленьких розмірах"
+"Інструктування змінює кольори символу, щоб видати більш чіткі растри при "
+"маленьких розмірах"
 
 #: app/tools/gimptextoptions.c:153
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr ""
-"Якщо доступні, використовуються інструкції зі шрифту, але ви можете надати перевагу "
-"використанню автоінструктування."
+"Якщо доступні, використовуються інструкції зі шрифту, але ви можете надати "
+"перевагу використанню автоінструктування."
 
 #: app/tools/gimptextoptions.c:178
 msgid "Indentation of the first line"
@@ -8543,15 +8609,15 @@ msgstr "Додавання тексту до зображення"
 msgid "/Tools/Te_xt"
 msgstr "/Інструменти/_Текст"
 
-#: app/tools/gimptexttool.c:719
+#: app/tools/gimptexttool.c:724
 msgid "GIMP Text Editor"
 msgstr "Текстовий редактор GIMP"
 
-#: app/tools/gimptexttool.c:829 app/tools/gimptexttool.c:832
+#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: app/tools/gimptexttool.c:853
+#: app/tools/gimptexttool.c:858
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8559,11 +8625,12 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Вибраний вами шар є текстовим шаром, але він був змінений з використанням інших інструментів. "
-"Редагування шару з використанням інструменту \"текстовий редактор\" призведе до "
-"скасування цих змін.\n"
+"Вибраний вами шар є текстовим шаром, але він був змінений з використанням "
+"інших інструментів. Редагування шару з використанням інструменту \"текстовий "
+"редактор\" призведе до скасування цих змін.\n"
 "\n"
-"Ви можете відредагувати шар або створити новий текстовий шар з цими текстовими атрибутами."
+"Ви можете відредагувати шар або створити новий текстовий шар з цими "
+"текстовими атрибутами."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8759,15 +8826,20 @@ msgstr "Натисніть та перетягніть, щоб переміст�
 
 #: app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around. (try SHIFT)"
-msgstr "Натисніть та перетягніть, щоб перемістити важіль. (спробуйте натиснути SHIFT)"
+msgstr ""
+"Натисніть та перетягніть, щоб перемістити важіль. (спробуйте натиснути SHIFT)"
 
 #: app/tools/gimpvectortool.c:1179
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
-msgstr "Натисніть та перетягніть, щоб змінити лінію. З SHIFT важелі переміщаються симетрично."
+msgstr ""
+"Натисніть та перетягніть, щоб змінити лінію. З SHIFT важелі переміщаються "
+"симетрично."
 
 #: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Натисніть та перетягніть, щоб перемістити елемент. (спробуйте натиснути SHIFT)"
+msgstr ""
+"Натисніть та перетягніть, щоб перемістити елемент. (спробуйте натиснути "
+"SHIFT)"
 
 #: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
@@ -8805,23 +8877,23 @@ msgstr "Контур"
 msgid "Rename Path"
 msgstr "Перейменування контуру"
 
-#: app/vectors/gimpvectors.c:395
+#: app/vectors/gimpvectors.c:234
 msgid "Scale Path"
 msgstr "Масштабування контуру"
 
-#: app/vectors/gimpvectors.c:427
+#: app/vectors/gimpvectors.c:235
 msgid "Resize Path"
 msgstr "Зміна розміру контуру"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "Віддзеркалення контуру"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
 msgid "Rotate Path"
 msgstr "Обертання контуру"
 
-#: app/vectors/gimpvectors.c:560
+#: app/vectors/gimpvectors.c:566
 msgid "Cannot stroke empty path."
 msgstr "Неможливо обвести порожній контур."
 
@@ -9334,7 +9406,8 @@ msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
-"Не вдається знайти процедуру перегляду довідки GIMP. Можливо її не було скомпільовано через відсутність GtkHtml2."
+"Не вдається знайти процедуру перегляду довідки GIMP. Можливо її не було "
+"скомпільовано через відсутність GtkHtml2."
 
 #: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
 msgid "Use web browser instead"
@@ -9571,8 +9644,7 @@ msgstr "Видалити вибраний шаблон"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr ""
-"Ви дійсно бажаєте видалити шаблон \"%s\" зі списку та з диску?"
+msgstr "Ви дійсно бажаєте видалити шаблон \"%s\" зі списку та з диску?"
 
 #: app/widgets/gimptemplateview.c:392
 msgid "Delete Template"
@@ -9650,9 +9722,9 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
 msgstr ""
-"Кольори переднього плану та тла. Чорний і білий квадратики скидають "
-"кольори. Стрілки міняють кольори місцями. Подвійне клацання викликає діалог "
-"вибору кольору."
+"Кольори переднього плану та тла. Чорний і білий квадратики скидають кольори. "
+"Стрілки міняють кольори місцями. Подвійне клацання викликає діалог вибору "
+"кольору."
 
 #: app/widgets/gimptooloptionseditor.c:146
 msgid "Save options to..."

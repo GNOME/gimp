@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-29 11:25+0200\n"
+"POT-Creation-Date: 2004-04-14 00:29+0200\n"
 "PO-Revision-Date: 2004-03-29 11:46+0200\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Catalan <xbea@pie.xtec.es>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:183
+#: app/app_procs.c:189
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Per realitzar una instal·lació d'usuari, executeu el GIMP sense el "
 "senyalador '--no-interface'."
 
-#: app/app_procs.c:219
+#: app/app_procs.c:225
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -36,12 +36,12 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 
-#: app/app_procs.c:275
+#: app/app_procs.c:281
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "No s'ha pogut obrir '%s': %s"
 
-#: app/main.c:216
+#: app/main.c:218
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -50,7 +50,7 @@ msgstr ""
 "Assegureu-vos que el  vostre entorn de visualització està configurat "
 "adequadament."
 
-#: app/main.c:223 app/widgets/gimptoolbox.c:439
+#: app/main.c:237 app/widgets/gimptoolbox.c:439
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP"
 msgstr "El GIMP"
@@ -58,7 +58,7 @@ msgstr "El GIMP"
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:402
+#: app/main.c:416
 #, c-format
 msgid ""
 "\n"
@@ -67,11 +67,11 @@ msgstr ""
 "\n"
 "Opció no vàlida \"%s\"\n"
 
-#: app/main.c:490
+#: app/main.c:504
 msgid "GIMP version"
 msgstr "Versió del GIMP"
 
-#: app/main.c:498
+#: app/main.c:512
 #, c-format
 msgid ""
 "\n"
@@ -82,23 +82,23 @@ msgstr ""
 "Forma d'us: %s [opció...] [fitxer...]\n"
 "\n"
 
-#: app/main.c:500
+#: app/main.c:514
 msgid "Options:\n"
 msgstr "Opcions:\n"
 
-#: app/main.c:501
+#: app/main.c:515
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help                Escriu aquesta ajuda.\n"
 
-#: app/main.c:502
+#: app/main.c:516
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Escriu la informació de la versió.\n"
 
-#: app/main.c:503
+#: app/main.c:517
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostra els missatges inicials.\n"
 
-#: app/main.c:504
+#: app/main.c:518
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -106,13 +106,13 @@ msgstr ""
 "  --no-shm                  No utilitzis la memòria compartida entre el GIMP "
 "i els seus connectors.\n"
 
-#: app/main.c:505
+#: app/main.c:519
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
 msgstr ""
 "  --no-cpu-accel       No utilitzis acceleradors espacials per la unitat "
 "central.\n"
 
-#: app/main.c:506
+#: app/main.c:520
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -120,44 +120,44 @@ msgstr ""
 "  -d, --no-data             No carreguis pinzells, degradats, paletes ni "
 "patrons.\n"
 
-#: app/main.c:507
+#: app/main.c:521
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
 msgstr "  -f, --no-fonts           No carreguis cap tipus de lletra.\n"
 
-#: app/main.c:508
+#: app/main.c:522
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface        Execució sense una interfície d'usuari.\n"
 
-#: app/main.c:509
+#: app/main.c:523
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <monitor>       Utilitza la visualització X indicada.\n"
 
-#: app/main.c:510
+#: app/main.c:524
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash           No mostris la finestra inicial.\n"
 
-#: app/main.c:511
+#: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
 msgstr "  --session <name>         Utilitza un fitxer sesionrc alternatiu.\n"
 
-#: app/main.c:512
+#: app/main.c:526
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>     Utilitza un fitxer gimprc alternatiu.\n"
 
-#: app/main.c:513
+#: app/main.c:527
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc>  Utilitza un fitxer gimprc del sistema "
 "alternatiu.\n"
 
-#: app/main.c:514
+#: app/main.c:528
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Surt un fitxer gimprc amb els paràmetres per "
 "defecte.\n"
 
-#: app/main.c:515
+#: app/main.c:529
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -165,14 +165,14 @@ msgstr ""
 "  -c, --console-messages    Mostra els avisos a la consola en comptes d'usar "
 "un quadre de diàleg\n"
 
-#: app/main.c:516
+#: app/main.c:530
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers          Habilita la depuració dels gestors de senyals no "
 "fatals.\n"
 
-#: app/main.c:517
+#: app/main.c:531
 msgid ""
 "  --stack-trace-mode <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -180,7 +180,7 @@ msgstr ""
 "  ---stack-trace-mode <never | query | always>\n"
 "                           Mode de depuració per a senyals fatals.\n"
 
-#: app/main.c:519
+#: app/main.c:533
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
@@ -189,11 +189,11 @@ msgstr ""
 "                           Mode de compatibilitat amb la base de dades de "
 "procediments.\n"
 
-#: app/main.c:521
+#: app/main.c:535
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <commands> Execució en processament per lots.\n"
 
-#: app/main.c:541
+#: app/main.c:555
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Aquesta finestra de consola es tancarà en deu segons)\n"
 
@@ -835,14 +835,19 @@ msgstr ""
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr "Defineix el nombre mínim de operacions que es poden tornar a fer. Es poden mantenir més nivells fins arribar al límit de la mida per tornar a fer."
+msgstr ""
+"Defineix el nombre mínim de operacions que es poden tornar a fer. Es poden "
+"mantenir més nivells fins arribar al límit de la mida per tornar a fer."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "Defineix un  màxim de memòria que es pot usar per imatge per mantenir operacions a la pila de desfer. Sense fer cas d'aquests paràmetres, al menys es poden desfer tants nivells de refer com s'hagin configurat."
+msgstr ""
+"Defineix un  màxim de memòria que es pot usar per imatge per mantenir "
+"operacions a la pila de desfer. Sense fer cas d'aquests paràmetres, al menys "
+"es poden desfer tants nivells de refer com s'hagin configurat."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -1130,12 +1135,12 @@ msgid "Indexed-Alpha"
 msgstr "Indexat-alfa"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1779
-#: app/gui/user-install-dialog.c:1303
+#: app/gui/user-install-dialog.c:1305
 msgid "Horizontal"
 msgstr "Horitzontal"
 
 #: app/core/core-enums.c:392 app/gui/preferences-dialog.c:1781
-#: app/gui/user-install-dialog.c:1305
+#: app/gui/user-install-dialog.c:1307
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -1199,13 +1204,13 @@ msgstr "Endarrere (correctiu)"
 msgid "<<invalid>>"
 msgstr "<<invàlid>>"
 
-#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:75
+#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:70
 #: app/gui/image-commands.c:617 app/gui/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Escala la imatge"
 
-#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:144
-#: app/core/gimpimage-resize.c:66
+#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:125
+#: app/core/gimpimage-resize.c:61
 msgid "Resize Image"
 msgstr "Canvia la mida de la imatge"
 
@@ -1221,7 +1226,7 @@ msgstr "Gira la imatge"
 msgid "Convert Image"
 msgstr "Converteix la imatge"
 
-#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:141
+#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:122
 msgid "Crop Image"
 msgstr "Escapça la imatge"
 
@@ -1237,29 +1242,30 @@ msgstr "Fusiona vectors"
 msgid "QuickMask"
 msgstr "Màscara ràpida"
 
-#: app/core/core-enums.c:592 app/core/core-enums.c:618
-#: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:143
+#: app/core/core-enums.c:592 app/core/core-enums.c:621
+#: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:145
 msgid "Grid"
 msgstr "Graella"
 
-#: app/core/core-enums.c:593 app/core/core-enums.c:619
+#: app/core/core-enums.c:593 app/core/core-enums.c:622
 msgid "Guide"
 msgstr "Guia"
 
-#: app/core/core-enums.c:594 app/core/core-enums.c:623
-#: app/core/gimpchannel.c:1636 app/core/gimpselection.c:570
+#: app/core/core-enums.c:594 app/core/core-enums.c:624
+msgid "Drawable"
+msgstr "Dibuixable"
+
+#: app/core/core-enums.c:595 app/core/core-enums.c:625
+#, fuzzy
+msgid "Drawable Mod"
+msgstr "Procediments dibuixables"
+
+#: app/core/core-enums.c:596 app/core/core-enums.c:626
+#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
-#: app/core/core-enums.c:595
-msgid "Item Properties"
-msgstr "Propietats d'element"
-
-#: app/core/core-enums.c:596 app/core/core-enums.c:625
-msgid "Move Item"
-msgstr "Mou element"
-
-#: app/core/core-enums.c:597 app/core/core-enums.c:626
+#: app/core/core-enums.c:597 app/core/core-enums.c:629
 msgid "Item Visibility"
 msgstr "Visibilitat de l'element"
 
@@ -1267,190 +1273,197 @@ msgstr "Visibilitat de l'element"
 msgid "Linked Item"
 msgstr "Element enllaçat"
 
-#: app/core/core-enums.c:599 app/core/gimplayer.c:253 app/core/gimplayer.c:646
-#: app/gui/layers-commands.c:1187 app/gui/resize-dialog.c:204
-#: app/pdb/layer_cmds.c:453
-msgid "Scale Layer"
-msgstr "Escala la capa"
+#: app/core/core-enums.c:599
+msgid "Item Properties"
+msgstr "Propietats d'element"
 
-#: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
-#: app/core/gimplayer.c:254 app/core/gimplayer.c:676
-#: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
-msgid "Resize Layer"
-msgstr "Canvia la mida de la capa"
+#: app/core/core-enums.c:600 app/core/core-enums.c:628
+msgid "Move Item"
+msgstr "Mou element"
 
-#: app/core/core-enums.c:601 app/core/core-enums.c:630
-#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
-#: app/gui/layers-commands.c:1094
+#: app/core/core-enums.c:601
+#, fuzzy
+msgid "Scale Item"
+msgstr "Escala la imatge"
+
+#: app/core/core-enums.c:602
+#, fuzzy
+msgid "Resize Item"
+msgstr "Canvia la mida de la imatge"
+
+#: app/core/core-enums.c:603 app/core/core-enums.c:633
+#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Afegeix una màscara de capa"
 
-#: app/core/core-enums.c:602 app/core/gimplayer.c:1264
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
 msgid "Apply Layer Mask"
 msgstr "Aplica una màscara de capa"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:229
 msgid "Floating Selection to Layer"
 msgstr "Selecció flotant a la capa"
 
-#: app/core/core-enums.c:604 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:827
 msgid "Float Selection"
 msgstr "Flota selecció"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
+#: app/core/core-enums.c:607 app/core/gimplayer-floating-sel.c:135
 msgid "Anchor Floating Selection"
 msgstr "Ancora selecció flotant"
 
-#: app/core/core-enums.c:606 app/core/gimp-edit.c:126
+#: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
+#, fuzzy
+msgid "Remove Floating Selection"
+msgstr "Sura la selecció"
+
+#: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
 msgid "Paste"
 msgstr "Enganxa"
 
-#: app/core/core-enums.c:607 app/core/gimp-edit.c:321
+#: app/core/core-enums.c:610 app/core/gimp-edit.c:321
 msgid "Cut"
 msgstr "Retalla"
 
-#: app/core/core-enums.c:608 app/core/core-enums.c:636
+#: app/core/core-enums.c:611 app/core/core-enums.c:639
 #: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:609 app/core/core-enums.c:648
-#: app/core/gimpdrawable-transform.c:827
+#: app/core/core-enums.c:612 app/core/core-enums.c:652
+#: app/core/gimpdrawable-transform.c:855
 msgid "Transform"
 msgstr "Transforma"
 
-#: app/core/core-enums.c:610 app/core/core-enums.c:649
+#: app/core/core-enums.c:613 app/core/core-enums.c:653
 #: app/paint/gimppaintcore.c:475
 msgid "Paint"
 msgstr "Pinta"
 
-#: app/core/core-enums.c:611 app/core/core-enums.c:650 app/core/gimpitem.c:934
+#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
 msgid "Attach Parasite"
 msgstr "Adjunta paràsit"
 
-#: app/core/core-enums.c:612 app/core/core-enums.c:651
+#: app/core/core-enums.c:615 app/core/core-enums.c:655
 msgid "Remove Parasite"
 msgstr "Suprimeix el paràsit"
 
-#: app/core/core-enums.c:613 app/vectors/gimpvectors-import.c:257
+#: app/core/core-enums.c:616 app/vectors/gimpvectors-import.c:257
 msgid "Import Paths"
 msgstr "Importa camí"
 
-#: app/core/core-enums.c:614 app/pdb/drawable_cmds.c:1516
+#: app/core/core-enums.c:617 app/pdb/drawable_cmds.c:1516
 msgid "Plug-In"
 msgstr "Connector"
 
-#: app/core/core-enums.c:615 app/widgets/gimptemplateeditor.c:461
+#: app/core/core-enums.c:618 app/widgets/gimptemplateeditor.c:461
 msgid "Image Type"
 msgstr "Tipus d'imatge"
 
 #. Image size frame
-#: app/core/core-enums.c:616 app/widgets/gimptemplateeditor.c:216
+#: app/core/core-enums.c:619 app/widgets/gimptemplateeditor.c:216
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
-#: app/core/core-enums.c:617
+#: app/core/core-enums.c:620
 msgid "Resolution Change"
 msgstr "Canvi de resolució"
 
-#: app/core/core-enums.c:620
+#: app/core/core-enums.c:623
 msgid "Change Indexed Palette"
 msgstr "Canvia paleta indexada"
 
-#: app/core/core-enums.c:621
-msgid "Drawable"
-msgstr "Dibuixable"
-
-#: app/core/core-enums.c:622
-#, fuzzy
-msgid "Drawable Mod"
-msgstr "Procediments dibuixables"
-
-#: app/core/core-enums.c:624
+#: app/core/core-enums.c:627
 msgid "Rename Item"
 msgstr "Canvia el nom de l'element"
 
-#: app/core/core-enums.c:627
+#: app/core/core-enums.c:630
 msgid "Set Item Linked"
 msgstr "Defineix element enllaçat"
 
-#: app/core/core-enums.c:628 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
+#: app/core/core-enums.c:631 app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:739 app/gui/layers-commands.c:773
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Nova capa"
 
-#: app/core/core-enums.c:629 app/widgets/gimplayertreeview.c:211
+#: app/core/core-enums.c:632 app/widgets/gimplayertreeview.c:211
 msgid "Delete Layer"
 msgstr "Suprimeix la capa"
 
-#: app/core/core-enums.c:631 app/core/gimplayer.c:1265
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
 msgid "Delete Layer Mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:635
 msgid "Reposition Layer"
 msgstr "Capa de reposició"
 
-#: app/core/core-enums.c:633
+#: app/core/core-enums.c:636
 msgid "Set Layer Mode"
 msgstr "Defineix el mode de la capa"
 
-#: app/core/core-enums.c:634
+#: app/core/core-enums.c:637
 msgid "Set Layer Opacity"
 msgstr "Defineix opacitat de la capa"
 
-#: app/core/core-enums.c:635
+#: app/core/core-enums.c:638
 msgid "Set Preserve Trans"
 msgstr "Preserva la transparència"
 
-#: app/core/core-enums.c:637 app/gui/channels-commands.c:318
+#: app/core/core-enums.c:640
+#, fuzzy
+msgid "Text Modified"
+msgstr "Només quan s'hagi modificat"
+
+#: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
 msgid "New Channel"
 msgstr "Nou canal"
 
-#: app/core/core-enums.c:638 app/widgets/gimpchanneltreeview.c:125
+#: app/core/core-enums.c:642 app/widgets/gimpchanneltreeview.c:125
 msgid "Delete Channel"
 msgstr "Suprimeix el canal"
 
-#: app/core/core-enums.c:639
+#: app/core/core-enums.c:643
 msgid "Reposition Channel"
 msgstr "Canal de reposició"
 
-#: app/core/core-enums.c:640
+#: app/core/core-enums.c:644
 msgid "Channel Color"
 msgstr "Color del canal"
 
-#: app/core/core-enums.c:641
+#: app/core/core-enums.c:645
 msgid "New Vectors"
 msgstr "Nous vectors"
 
-#: app/core/core-enums.c:642
+#: app/core/core-enums.c:646
 msgid "Delete Vectors"
 msgstr "Suprimeix els vectors"
 
-#: app/core/core-enums.c:643
+#: app/core/core-enums.c:647
 msgid "Vectors Mod"
 msgstr "Vectors Mod"
 
-#: app/core/core-enums.c:644
+#: app/core/core-enums.c:648
 msgid "Reposition Vectors"
 msgstr "Vectors de reposició"
 
-#: app/core/core-enums.c:645
+#: app/core/core-enums.c:649
 msgid "FS to Layer"
 msgstr "FS a la capa"
 
-#: app/core/core-enums.c:646
+#: app/core/core-enums.c:650
 msgid "FS Rigor"
 msgstr "Rigor FS"
 
-#: app/core/core-enums.c:647
+#: app/core/core-enums.c:651
 msgid "FS Relax"
 msgstr "Relax FS"
 
-#: app/core/core-enums.c:652
+#: app/core/core-enums.c:656
 msgid "EEK: can't undo"
 msgstr "S'ha produït un error: No es pot desfer"
 
@@ -1595,7 +1608,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Hi ha una cadena de text UTF-8 invàlida en el fitxer de pinzell '%s'"
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
-#: app/core/gimpitem.c:457 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Sense nom"
@@ -1641,72 +1654,72 @@ msgstr "Canal"
 msgid "Rename Channel"
 msgstr "Canvia el nom del canal"
 
-#: app/core/gimpchannel.c:261
-msgid "Scale Channel"
-msgstr "Escala el canal"
-
-#: app/core/gimpchannel.c:262
-msgid "Resize Channel"
-msgstr "Redimensiona el canal"
-
-#: app/core/gimpchannel.c:277 app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1218
+#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Mou el canal"
 
-#: app/core/gimpchannel.c:278
-msgid "Feather Channel"
-msgstr "Suavitza el canal"
+#: app/core/gimpchannel.c:255
+msgid "Scale Channel"
+msgstr "Escala el canal"
 
-#: app/core/gimpchannel.c:279
-msgid "Sharpen Channel"
-msgstr "Enfosqueix el canal"
+#: app/core/gimpchannel.c:256
+msgid "Resize Channel"
+msgstr "Redimensiona el canal"
 
-#: app/core/gimpchannel.c:280
-msgid "Clear Channel"
-msgstr "Aclareix el canal"
-
-#: app/core/gimpchannel.c:281
-msgid "Fill Channel"
-msgstr "Omple el canal"
-
-#: app/core/gimpchannel.c:282
-msgid "Invert Channel"
-msgstr "Inverteix el canal"
-
-#: app/core/gimpchannel.c:283
-msgid "Border Channel"
-msgstr "Bordeja el canal"
-
-#: app/core/gimpchannel.c:284
-msgid "Grow Channel"
-msgstr "Engrandeix el canal"
-
-#: app/core/gimpchannel.c:285
-msgid "Shrink Channel"
-msgstr "Encongeix el canal"
-
-#: app/core/gimpchannel.c:525
+#: app/core/gimpchannel.c:257
 msgid "Flip Channel"
 msgstr "Volteja el canal"
 
-#: app/core/gimpchannel.c:545
+#: app/core/gimpchannel.c:258
 msgid "Rotate Channel"
 msgstr "Gira el canal"
 
-#: app/core/gimpchannel.c:570 app/core/gimpdrawable-transform.c:1052
+#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Transforma el canal"
 
-#: app/core/gimpchannel.c:603
+#: app/core/gimpchannel.c:281
+msgid "Feather Channel"
+msgstr "Suavitza el canal"
+
+#: app/core/gimpchannel.c:282
+msgid "Sharpen Channel"
+msgstr "Enfosqueix el canal"
+
+#: app/core/gimpchannel.c:283
+msgid "Clear Channel"
+msgstr "Aclareix el canal"
+
+#: app/core/gimpchannel.c:284
+msgid "Fill Channel"
+msgstr "Omple el canal"
+
+#: app/core/gimpchannel.c:285
+msgid "Invert Channel"
+msgstr "Inverteix el canal"
+
+#: app/core/gimpchannel.c:286
+msgid "Border Channel"
+msgstr "Bordeja el canal"
+
+#: app/core/gimpchannel.c:287
+msgid "Grow Channel"
+msgstr "Engrandeix el canal"
+
+#: app/core/gimpchannel.c:288
+msgid "Shrink Channel"
+msgstr "Encongeix el canal"
+
+#: app/core/gimpchannel.c:584
 msgid "Cannot stroke empty channel."
 msgstr "No es pot traçar canal buit."
 
-#: app/core/gimpchannel.c:1518
+#: app/core/gimpchannel.c:1499
 msgid "Set Channel Color"
 msgstr "Defineix el color del canal"
 
-#: app/core/gimpchannel.c:1565
+#: app/core/gimpchannel.c:1546
 msgid "Set Channel Opacity"
 msgstr "Defineix la opacitat del canal"
 
@@ -1750,11 +1763,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:295 app/core/gimpitem.c:298
+#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
 msgid "copy"
 msgstr "còpia"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:307
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
 #, c-format
 msgid "%s copy"
 msgstr "còpia de %s"
@@ -1808,21 +1821,21 @@ msgid "Render Stroke"
 msgstr "Render traçat"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:883 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:911 app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Volteja"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:949 app/tools/gimprotatetool.c:103
+#: app/core/gimpdrawable-transform.c:977 app/tools/gimprotatetool.c:103
 msgid "Rotate"
 msgstr "Gira"
 
-#: app/core/gimpdrawable-transform.c:1050 app/core/gimplayer.c:750
+#: app/core/gimpdrawable-transform.c:1078 app/core/gimplayer.c:254
 #: app/tools/tools-enums.c:73
 msgid "Transform Layer"
 msgstr "Transforma la capa"
 
-#: app/core/gimpdrawable-transform.c:1065
+#: app/core/gimpdrawable-transform.c:1093
 msgid "Transformation"
 msgstr "Transformació"
 
@@ -1908,15 +1921,15 @@ msgstr "Canvia l'entrada de la paleta indexada"
 msgid "Add Color to Indexed Palette"
 msgstr "Afegeix color a la paleta indexada"
 
-#: app/core/gimpimage-convert.c:773
+#: app/core/gimpimage-convert.c:768
 msgid "Convert Image to RGB"
 msgstr "Converteix imatge a RGB"
 
-#: app/core/gimpimage-convert.c:777
+#: app/core/gimpimage-convert.c:772
 msgid "Convert Image to Grayscale"
 msgstr "Converteix imatge a escala de grisos"
 
-#: app/core/gimpimage-convert.c:781
+#: app/core/gimpimage-convert.c:776
 msgid "Convert Image to Indexed"
 msgstr "Converteix imatge a indexat"
 
@@ -1974,129 +1987,129 @@ msgstr "Habilita màscara ràpida"
 msgid "Disable QuickMask"
 msgstr "Inhabilita màscara ràpida"
 
-#: app/core/gimpimage-undo-push.c:2858
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "No es pot desfer %s"
 
-#: app/core/gimpimage.c:1153 app/core/gimppalette-import.c:205
+#: app/core/gimpimage.c:1154 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:634 app/gui/palette-import-dialog.c:587
 #: app/pdb/image_cmds.c:3528 app/widgets/gimpdatafactoryview.c:307
 msgid "Untitled"
 msgstr "Sense títol"
 
-#: app/core/gimpimage.c:1227
+#: app/core/gimpimage.c:1228
 msgid "Change Image Resolution"
 msgstr "Canvia la resolució d'imatge"
 
-#: app/core/gimpimage.c:1266
+#: app/core/gimpimage.c:1267
 msgid "Change Image Unit"
 msgstr "Canvia unitats d'imatge"
 
-#: app/core/gimpimage.c:2030
+#: app/core/gimpimage.c:2031
 msgid "Attach Parasite to Image"
 msgstr "Adjunta paràsit a la imatge"
 
-#: app/core/gimpimage.c:2063
+#: app/core/gimpimage.c:2064
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: app/core/gimpimage.c:2535
+#: app/core/gimpimage.c:2536
 msgid "Add Layer"
 msgstr "Afegeix capa"
 
-#: app/core/gimpimage.c:2602
+#: app/core/gimpimage.c:2603
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: app/core/gimpimage.c:2673
+#: app/core/gimpimage.c:2674
 msgid "Layer cannot be raised higher."
 msgstr "No es pot situar la capa més amunt."
 
-#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
+#: app/core/gimpimage.c:2680 app/core/gimpimage.c:2730
 msgid "Cannot raise a layer without alpha."
 msgstr "No es pot pujar la capa sense informació de transparència"
 
-#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2685 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "Aixeca la capa"
 
-#: app/core/gimpimage.c:2701
+#: app/core/gimpimage.c:2702
 msgid "Layer cannot be lowered more."
 msgstr "No es pot situar la capa més avall."
 
-#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "Abaixa la capa"
 
-#: app/core/gimpimage.c:2723
+#: app/core/gimpimage.c:2724
 msgid "Layer is already on top."
 msgstr "La capa ja és a dalt de tot."
 
-#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:215
 msgid "Raise Layer to Top"
 msgstr "Capa al capdamunt"
 
-#: app/core/gimpimage.c:2754
+#: app/core/gimpimage.c:2755
 msgid "Layer is already on the bottom."
 msgstr "La capa ja és a sota de tot."
 
-#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:219
 msgid "Lower Layer to Bottom"
 msgstr "Capa cap al capdavall"
 
-#: app/core/gimpimage.c:2798
+#: app/core/gimpimage.c:2799
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
 "La capa '%s' no te informació de transparència. La capa s'ha ficat damunt "
 "seu."
 
-#: app/core/gimpimage.c:2852
+#: app/core/gimpimage.c:2853
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: app/core/gimpimage.c:2897
+#: app/core/gimpimage.c:2898
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: app/core/gimpimage.c:2941
+#: app/core/gimpimage.c:2942
 msgid "Channel cannot be raised higher."
 msgstr "El canal no es pot apujar més."
 
-#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2947 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Incrementa el canal"
 
-#: app/core/gimpimage.c:2963
+#: app/core/gimpimage.c:2964
 msgid "Channel cannot be lowered more."
 msgstr "El canal no es pot abaixar més."
 
-#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2969 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Canal més baix"
 
-#: app/core/gimpimage.c:3045
+#: app/core/gimpimage.c:3046
 msgid "Add Path"
 msgstr "Afegeix Camí"
 
-#: app/core/gimpimage.c:3090
+#: app/core/gimpimage.c:3091
 msgid "Remove Path"
 msgstr "Esborra Camí"
 
-#: app/core/gimpimage.c:3134
+#: app/core/gimpimage.c:3135
 msgid "Path cannot be raised higher."
 msgstr "El camí no es pot apujar més."
 
-#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Aixeca el Camí"
 
-#: app/core/gimpimage.c:3156
+#: app/core/gimpimage.c:3157
 msgid "Path cannot be lowered more."
 msgstr "El camí no es pot abaixar més."
 
-#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3162 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Abaixa el camí"
 
@@ -2147,19 +2160,19 @@ msgstr "%d capes"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "No s'ha pogut obrir la miniatura '%s': %s"
 
-#: app/core/gimpitem.c:944
+#: app/core/gimpitem.c:997
 msgid "Attach Parasite to Item"
 msgstr "Adjunta paràsit al element"
 
-#: app/core/gimpitem.c:983 app/core/gimpitem.c:990
+#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
 msgid "Remove Parasite from Item"
 msgstr "Suprimeix paràsit del element"
 
-#: app/core/gimplayer-floating-sel.c:123
+#: app/core/gimplayer-floating-sel.c:128
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "No es pot ancorar aquesta capa perquè no és una selecció flotant."
 
-#: app/core/gimplayer-floating-sel.c:205
+#: app/core/gimplayer-floating-sel.c:210
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2175,54 +2188,62 @@ msgstr "Capa"
 msgid "Rename Layer"
 msgstr "Canvia el nom de la capa"
 
-#: app/core/gimplayer.c:331 app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:249 app/pdb/layer_cmds.c:636 app/pdb/layer_cmds.c:712
+#: app/tools/gimpeditselectiontool.c:263
+#: app/tools/gimpeditselectiontool.c:1214
+msgid "Move Layer"
+msgstr "Mou la Capa"
+
+#: app/core/gimplayer.c:250 app/gui/resize-dialog.c:204
+msgid "Scale Layer"
+msgstr "Escala la capa"
+
+#: app/core/gimplayer.c:251
+msgid "Resize Layer"
+msgstr "Canvia la mida de la capa"
+
+#: app/core/gimplayer.c:252 app/gui/drawable-commands.c:160
+msgid "Flip Layer"
+msgstr "Volteja la Capa"
+
+#: app/core/gimplayer.c:253 app/gui/drawable-commands.c:194
+msgid "Rotate Layer"
+msgstr "Gira la Capa"
+
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "màscara %s"
 
-#: app/core/gimplayer.c:607 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
-#: app/tools/gimpeditselectiontool.c:263
-#: app/tools/gimpeditselectiontool.c:1228
-msgid "Move Layer"
-msgstr "Mou la Capa"
-
-#: app/core/gimplayer.c:700 app/gui/drawable-commands.c:160
-msgid "Flip Layer"
-msgstr "Volteja la Capa"
-
-#: app/core/gimplayer.c:722 app/gui/drawable-commands.c:194
-msgid "Rotate Layer"
-msgstr "Gira la Capa"
-
-#: app/core/gimplayer.c:976
+#: app/core/gimplayer.c:954
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "No es pot afegir una màscara de capa a una capa que no és part d'una imatge."
 
-#: app/core/gimplayer.c:983
+#: app/core/gimplayer.c:961
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No es pot afegir una  màscara de capa ja que la capa ja en té una."
 
-#: app/core/gimplayer.c:990
+#: app/core/gimplayer.c:968
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "No es pot afegir una  màscara de capa a una capa sense un canal alfa."
 
-#: app/core/gimplayer.c:1000
+#: app/core/gimplayer.c:978
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una màscara de capa de dimensions diferents de la capa "
 "especificada"
 
-#: app/core/gimplayer.c:1104
+#: app/core/gimplayer.c:1082
 msgid "Transfer Alpha to Mask"
 msgstr "Transfereix alfa a màscara"
 
-#: app/core/gimplayer.c:1370
+#: app/core/gimplayer.c:1348
 msgid "Add Alpha Channel"
 msgstr "Afegeix canal alfa"
 
-#: app/core/gimplayer.c:1390
+#: app/core/gimplayer.c:1368
 msgid "Layer to Image Size"
 msgstr "Capa a mida de la imatge"
 
@@ -2320,7 +2341,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"S'ha produït un error fatal d'anàlisi en el fitxer de patró '%s': La profunditat de patró %d no és suportada.\n"
+"S'ha produït un error fatal d'anàlisi en el fitxer de patró '%s': La "
+"profunditat de patró %d no és suportada.\n"
 "Els patrons del GIMP han de ser GRIS o RGB."
 
 #: app/core/gimppattern.c:393
@@ -2328,8 +2350,8 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Hi ha una cadena de text UTF-8 invàlida en el fitxer de patró '%s'."
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
-#: app/tools/gimpeditselectiontool.c:1130 app/tools/gimpmoveoptions.c:184
+#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Mou la selecció"
@@ -2389,7 +2411,7 @@ msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "No s'ha pogut flotar la selecció perquè l'àrea seleccionada està buida."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:995
+#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Sura la selecció"
 
@@ -2482,53 +2504,53 @@ msgid "Custom Color"
 msgstr "Color personalitzat"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:796
+#: app/display/gimpdisplayshell.c:797
 msgid "Set Canvas Padding Color"
 msgstr "Defineix el color d'emplenat del llenç"
 
-#: app/display/gimpdisplayshell.c:805
+#: app/display/gimpdisplayshell.c:806
 msgid "Set canvas padding color"
 msgstr "Defineix el color d'emplenat del llenç"
 
-#: app/display/gimpdisplayshell.c:818
+#: app/display/gimpdisplayshell.c:819
 msgid "/From _Theme"
 msgstr "/Des del _tema"
 
-#: app/display/gimpdisplayshell.c:821
+#: app/display/gimpdisplayshell.c:822
 msgid "/_Light Check Color"
 msgstr "/Comprovacions de la _llum"
 
-#: app/display/gimpdisplayshell.c:824
+#: app/display/gimpdisplayshell.c:825
 msgid "/_Dark Check Color"
 msgstr "/Comprovacions de la _foscor"
 
-#: app/display/gimpdisplayshell.c:830
+#: app/display/gimpdisplayshell.c:831
 msgid "/Select _Custom Color..."
 msgstr "/Selecciona un color _personalitzat..."
 
-#: app/display/gimpdisplayshell.c:834
+#: app/display/gimpdisplayshell.c:835
 msgid "/As in _Preferences"
 msgstr "/Com en _preferències"
 
-#: app/display/gimpdisplayshell.c:863
+#: app/display/gimpdisplayshell.c:864
 msgid "Toggle QuickMask"
 msgstr "Commuta mascara ràpida"
 
-#: app/display/gimpdisplayshell.c:1404
+#: app/display/gimpdisplayshell.c:1405
 #, c-format
 msgid "Close %s?"
 msgstr "Tanca %s?"
 
-#: app/display/gimpdisplayshell.c:1414
+#: app/display/gimpdisplayshell.c:1415
 msgid "_Discard changes"
 msgstr "_Descarta els canvis"
 
-#: app/display/gimpdisplayshell.c:1454
+#: app/display/gimpdisplayshell.c:1455
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "S'han efectuat canvis a '%s'."
 
-#: app/display/gimpdisplayshell.c:1468
+#: app/display/gimpdisplayshell.c:1469
 msgid "Unsaved changes will be lost."
 msgstr "Es perdran els canvis no desats."
 
@@ -2895,7 +2917,7 @@ msgstr "No es pot convertir a una paleta amb més de 256 colors."
 msgid "Select Custom Palette"
 msgstr "Selecciona la paleta personalitzada"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:394
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Opcions d'eina"
@@ -3734,11 +3756,11 @@ msgstr "Configura graella"
 msgid "Configure Image Grid"
 msgstr "Configura la graella de la imatge"
 
-#: app/gui/gui.c:453
+#: app/gui/gui.c:383
 msgid "Quit The GIMP?"
 msgstr "Voleu sortir del GIMP?"
 
-#: app/gui/gui.c:458
+#: app/gui/gui.c:388
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -3829,7 +3851,7 @@ msgstr ""
 msgid "Layer Too Small"
 msgstr "Capa massa petita"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1181
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1170
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "S'està escalant..."
@@ -4777,7 +4799,7 @@ msgid "Extended"
 msgstr "Estès"
 
 #: app/gui/info-window.c:147 app/gui/preferences-dialog.c:1761
-#: app/gui/user-install-dialog.c:1288 app/widgets/gimpgrideditor.c:266
+#: app/gui/user-install-dialog.c:1290 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
 msgstr "Píxels"
@@ -4862,7 +4884,7 @@ msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:521 app/gui/preferences-dialog.c:1783
-#: app/gui/user-install-dialog.c:1307
+#: app/gui/user-install-dialog.c:1309
 msgid "dpi"
 msgstr "ppp"
 
@@ -4882,28 +4904,28 @@ msgstr "colors"
 msgid "Crop Layer"
 msgstr "Escapça  la capa"
 
-#: app/gui/layers-commands.c:461
+#: app/gui/layers-commands.c:455
 msgid "Layer Mask to Selection"
 msgstr "Màscara de capa a la selecció"
 
-#: app/gui/layers-commands.c:723
+#: app/gui/layers-commands.c:717
 msgid "Empty Layer"
 msgstr "Capa buida"
 
-#: app/gui/layers-commands.c:747
+#: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
 msgstr "Crea una capa nova"
 
-#: app/gui/layers-commands.c:781
+#: app/gui/layers-commands.c:775
 msgid "Layer _Name:"
 msgstr "_Nom de la capa:"
 
 #. The size labels
-#: app/gui/layers-commands.c:785
+#: app/gui/layers-commands.c:779
 msgid "Layer Width:"
 msgstr "Amplada de la capa:"
 
-#: app/gui/layers-commands.c:791 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4911,39 +4933,39 @@ msgstr "Amplada de la capa:"
 msgid "Height:"
 msgstr "Alçada:"
 
-#: app/gui/layers-commands.c:850
+#: app/gui/layers-commands.c:844
 msgid "Layer Fill Type"
 msgstr "Tipus d'omplert de capa"
 
-#: app/gui/layers-commands.c:959
+#: app/gui/layers-commands.c:953
 msgid "Layer Attributes"
 msgstr "Atributs de la capa"
 
-#: app/gui/layers-commands.c:961 app/widgets/gimplayertreeview.c:205
+#: app/gui/layers-commands.c:955 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
 msgstr "Edició dels atributs de la capa"
 
-#: app/gui/layers-commands.c:998
+#: app/gui/layers-commands.c:992
 msgid "Layer _Name"
 msgstr "Nom de la capa"
 
-#: app/gui/layers-commands.c:1009
+#: app/gui/layers-commands.c:1003
 msgid "Set Name from _Text"
 msgstr "Estableix el nom des de text"
 
-#: app/gui/layers-commands.c:1096
+#: app/gui/layers-commands.c:1090
 msgid "Add a Mask to the Layer"
 msgstr "Afegeix una màscara a la capa"
 
-#: app/gui/layers-commands.c:1115
+#: app/gui/layers-commands.c:1109
 msgid "Initialize Layer Mask to:"
 msgstr "Inicialitza la màscara de la capa a:"
 
-#: app/gui/layers-commands.c:1132
+#: app/gui/layers-commands.c:1126
 msgid "In_vert Mask"
 msgstr "Inverteix màscara"
 
-#: app/gui/layers-commands.c:1215 app/gui/layers-commands.c:1311
+#: app/gui/layers-commands.c:1188 app/gui/layers-commands.c:1264
 msgid "Invalid width or height. Both must be positive."
 msgstr "L'amplada o l'alçada no són vàlides. Totes dues han de ser positives."
 
@@ -5792,7 +5814,7 @@ msgstr "Nombre mínim de colors:"
 msgid "Install Colormap"
 msgstr "Instal·la el mapa de colors"
 
-#: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:962
+#: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:964
 msgid "Monitor Resolution"
 msgstr "Resolució del monitor"
 
@@ -5862,7 +5884,7 @@ msgstr "Nombre mínim de nivells a desfer:"
 msgid "Maximum Undo Memory:"
 msgstr "Memòria màxima per desfer"
 
-#: app/gui/preferences-dialog.c:1911 app/gui/user-install-dialog.c:1176
+#: app/gui/preferences-dialog.c:1911 app/gui/user-install-dialog.c:1178
 msgid "Tile Cache Size:"
 msgstr "Mida de la memòria caché en mosaic:"
 
@@ -5972,7 +5994,7 @@ msgstr "Selecciona el directori temporal"
 msgid "Swap Dir:"
 msgstr "Directori d'intercanvi:"
 
-#: app/gui/preferences-dialog.c:2079 app/gui/user-install-dialog.c:1199
+#: app/gui/preferences-dialog.c:2079 app/gui/user-install-dialog.c:1201
 msgid "Select Swap Dir"
 msgstr "Selecciona el directori d'intercanvi"
 
@@ -6773,15 +6795,15 @@ msgstr ""
 "La instal·lació ha fallat. Poseu-vos en contacte amb l'administrador del "
 "sistema."
 
-#: app/gui/user-install-dialog.c:591
+#: app/gui/user-install-dialog.c:592
 msgid "GIMP User Installation"
 msgstr "Instal·lació d'usuari del GIMP"
 
-#: app/gui/user-install-dialog.c:596
+#: app/gui/user-install-dialog.c:597
 msgid "Continue"
 msgstr "Continua"
 
-#: app/gui/user-install-dialog.c:748
+#: app/gui/user-install-dialog.c:750
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6789,12 +6811,12 @@ msgstr ""
 "Benvingut a\n"
 "la instal·lació de l'usuari del GIMP"
 
-#: app/gui/user-install-dialog.c:750
+#: app/gui/user-install-dialog.c:752
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Feu clic a \"Continua\" per entrar a la instal·lació de l'usuari del GIMP."
 
-#: app/gui/user-install-dialog.c:755
+#: app/gui/user-install-dialog.c:757
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2004\n"
@@ -6804,7 +6826,7 @@ msgstr ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis i l'equip de desenvolupament del GIMP."
 
-#: app/gui/user-install-dialog.c:765
+#: app/gui/user-install-dialog.c:767
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -6816,7 +6838,7 @@ msgstr ""
 "Software Foundation, ja sigui la versió 2 de la Llicència o (com desitgeu) "
 "qualsevol versió posterior."
 
-#: app/gui/user-install-dialog.c:771
+#: app/gui/user-install-dialog.c:773
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -6828,7 +6850,7 @@ msgstr ""
 "l'ADEQUACIÓ A UN ÚS DETERMINAT. Consulteu la llicència pública general de "
 "GNU per a més informació."
 
-#: app/gui/user-install-dialog.c:777
+#: app/gui/user-install-dialog.c:779
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -6838,15 +6860,15 @@ msgstr ""
 "aquest programa; si no és així, demaneu-la a la Free Software Foundation, "
 "Inc. , 59 Temple Place - Suite 330, Boston, MA 02111-1307, EUA."
 
-#: app/gui/user-install-dialog.c:802
+#: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
 msgstr "Carpeta personal del GIMP"
 
-#: app/gui/user-install-dialog.c:803
+#: app/gui/user-install-dialog.c:805
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Feu clic a \"Continua\" per crear la vostra carpeta personal del GIMP."
 
-#: app/gui/user-install-dialog.c:847
+#: app/gui/user-install-dialog.c:849
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
@@ -6855,7 +6877,7 @@ msgstr ""
 "Per instal·lar el GIMP correctament, cal crear una carpeta anomenada '<b>%s</"
 "b>'."
 
-#: app/gui/user-install-dialog.c:854
+#: app/gui/user-install-dialog.c:856
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
@@ -6864,34 +6886,34 @@ msgstr ""
 "d'aquests fitxers o carpetes de l'arbre per aconseguir més informació sobre "
 "l'ítem seleccionat."
 
-#: app/gui/user-install-dialog.c:942
+#: app/gui/user-install-dialog.c:944
 msgid "User Installation Log"
 msgstr "Registre de la instal·lació de l'usuari"
 
-#: app/gui/user-install-dialog.c:943
+#: app/gui/user-install-dialog.c:945
 msgid "Please wait while your personal GIMP folder is being created..."
 msgstr "Espereu mentre es crea la vostra carpeta personal en el GIMP..."
 
-#: app/gui/user-install-dialog.c:950
+#: app/gui/user-install-dialog.c:952
 msgid "GIMP Performance Tuning"
 msgstr "Ajust del rendiment del GIMP"
 
-#: app/gui/user-install-dialog.c:951
+#: app/gui/user-install-dialog.c:953
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Feu un clic a \"Continua\" per acceptar els paràmetres anteriors."
 
-#: app/gui/user-install-dialog.c:956
+#: app/gui/user-install-dialog.c:958
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Perquè el GIMP rendeixi de manera òptima, potser s'han d'ajustar alguns "
 "paràmetres.</b>"
 
-#: app/gui/user-install-dialog.c:963
+#: app/gui/user-install-dialog.c:965
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Feu clic a \"Continua\" per iniciar el GIMP."
 
-#: app/gui/user-install-dialog.c:968
+#: app/gui/user-install-dialog.c:970
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6899,26 +6921,26 @@ msgstr ""
 "<b>Per visualitzar les imatges en mida natural, el GIMP ha de saber quina és "
 "la resolució del monitor.</b>"
 
-#: app/gui/user-install-dialog.c:973
+#: app/gui/user-install-dialog.c:975
 msgid "Aborting Installation..."
 msgstr "S'està cancelant la instal·lació..."
 
-#: app/gui/user-install-dialog.c:1056 app/gui/user-install-dialog.c:1089
+#: app/gui/user-install-dialog.c:1058 app/gui/user-install-dialog.c:1091
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "S'està creant la carpeta '%s'..."
 
-#: app/gui/user-install-dialog.c:1069 app/gui/user-install-dialog.c:1102
+#: app/gui/user-install-dialog.c:1071 app/gui/user-install-dialog.c:1104
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "No es pot crear la carpeta '%s': %s"
 
-#: app/gui/user-install-dialog.c:1115
+#: app/gui/user-install-dialog.c:1117
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "S'està copiant el fitxer %s des de '%s'..."
 
-#: app/gui/user-install-dialog.c:1163
+#: app/gui/user-install-dialog.c:1165
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -6929,7 +6951,7 @@ msgstr ""
 "per encabir-la a la memòria. Tingueu en compte la quantitat de memòria que "
 "utilitzen altres processos en execució."
 
-#: app/gui/user-install-dialog.c:1188
+#: app/gui/user-install-dialog.c:1190
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -6942,11 +6964,11 @@ msgstr ""
 "UNIX, potser voldreu fer servir el directori temporal del sistema (\"/tmp\" "
 "o \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1204
+#: app/gui/user-install-dialog.c:1206
 msgid "Swap Folder:"
 msgstr "Directori d'intercanvi:"
 
-#: app/gui/user-install-dialog.c:1255
+#: app/gui/user-install-dialog.c:1257
 msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
@@ -6954,17 +6976,17 @@ msgstr ""
 "El GIMP pot obtenir aquesta informació del sistema de finestres. De totes "
 "maneres, això no sol proporcionar valors útils."
 
-#: app/gui/user-install-dialog.c:1263
+#: app/gui/user-install-dialog.c:1265
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 "Aconsegueix la resolució del sistema de finestres (actualment, %d x %d ppp)"
 
-#: app/gui/user-install-dialog.c:1282
+#: app/gui/user-install-dialog.c:1284
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Altrament, podeu configurar la resolució del monitor manualment."
 
-#: app/gui/user-install-dialog.c:1331
+#: app/gui/user-install-dialog.c:1333
 msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
@@ -6972,7 +6994,7 @@ msgstr ""
 "També podeu fer un clic al botó \"Calibra\" per obrir una finestra que us "
 "permeti determinar la resolució del vostre monitor interactivament."
 
-#: app/gui/user-install-dialog.c:1335
+#: app/gui/user-install-dialog.c:1337
 msgid "Calibrate"
 msgstr "Calibració"
 
@@ -7436,7 +7458,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
 msgid "Add Text Layer"
 msgstr "Afegeix capa de text"
 
@@ -7444,21 +7466,21 @@ msgstr "Afegeix capa de text"
 msgid "(invalid UTF-8 string)"
 msgstr "(Cadena de text UTF-8 invàlida)"
 
-#: app/text/gimptextlayer.c:175
+#: app/text/gimptextlayer.c:159
 msgid "Text Layer"
 msgstr "Capa de text"
 
-#: app/text/gimptextlayer.c:537
+#: app/text/gimptextlayer.c:520
 msgid "Discard Text Information"
 msgstr "Descarta informació del text"
 
-#: app/text/gimptextlayer.c:587
+#: app/text/gimptextlayer.c:570
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Degut a l'absència d'alguns tipus de lletra, la funcionalitat del text no "
 "està disponible."
 
-#: app/text/gimptextlayer.c:615
+#: app/text/gimptextlayer.c:598
 msgid "Empty Text Layer"
 msgstr "Capa de text buida"
 
@@ -7517,7 +7539,8 @@ msgstr "Ràtio d'aspecte fixat"
 msgid "Transform Selection"
 msgstr "Transforma selecció"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:531
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
+#: app/vectors/gimpvectors.c:537
 msgid "Transform Path"
 msgstr "Transforma camí"
 
@@ -7980,21 +8003,22 @@ msgid "Exposure:"
 msgstr "Exposició:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1170 app/vectors/gimpvectors.c:366
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
+#: app/vectors/gimpvectors.c:372
 msgid "Move Path"
 msgstr "Mou camí"
 
 #: app/tools/gimpeditselectiontool.c:255
-#: app/tools/gimpeditselectiontool.c:1213
+#: app/tools/gimpeditselectiontool.c:1199
 msgid "Move Layer Mask"
 msgstr "Mou la màscara de capa"
 
 #: app/tools/gimpeditselectiontool.c:267
-#: app/tools/gimpeditselectiontool.c:1223
+#: app/tools/gimpeditselectiontool.c:1209
 msgid "Move Floating Layer"
 msgstr "Mou capa flotant"
 
-#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
+#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:763
 msgid "Move: "
 msgstr "Mou: "
 
@@ -8446,23 +8470,23 @@ msgstr "Selecciona regions rectangulars"
 msgid "/Tools/Selection Tools/_Rect Select"
 msgstr "/Eines/Eines de selecció/Selecció de _rectangle"
 
-#: app/tools/gimprectselecttool.c:242
+#: app/tools/gimprectselecttool.c:243
 msgid "Selection: ADD"
 msgstr "Selecció: afegir"
 
-#: app/tools/gimprectselecttool.c:245
+#: app/tools/gimprectselecttool.c:246
 msgid "Selection: SUBTRACT"
 msgstr "Selecció: sostreure"
 
-#: app/tools/gimprectselecttool.c:248
+#: app/tools/gimprectselecttool.c:249
 msgid "Selection: INTERSECT"
 msgstr "Selecció: creuar"
 
-#: app/tools/gimprectselecttool.c:251
+#: app/tools/gimprectselecttool.c:252
 msgid "Selection: REPLACE"
 msgstr "Selecció: reemplaçar"
 
-#: app/tools/gimprectselecttool.c:476
+#: app/tools/gimprectselecttool.c:494
 msgid "Selection: "
 msgstr "Selecció: "
 
@@ -8651,15 +8675,15 @@ msgstr "Afegeix text a la imatge"
 msgid "/Tools/Te_xt"
 msgstr "/Eines/Te_xt"
 
-#: app/tools/gimptexttool.c:718
+#: app/tools/gimptexttool.c:724
 msgid "GIMP Text Editor"
 msgstr "Editor de text del GIMP"
 
-#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
+#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
 msgid "Confirm Text Editing"
 msgstr "Confirma l'edició del text"
 
-#: app/tools/gimptexttool.c:852
+#: app/tools/gimptexttool.c:858
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8912,23 +8936,23 @@ msgstr "Camí"
 msgid "Rename Path"
 msgstr "Canvia el nom del camí"
 
-#: app/vectors/gimpvectors.c:395
+#: app/vectors/gimpvectors.c:234
 msgid "Scale Path"
 msgstr "Escala cami"
 
-#: app/vectors/gimpvectors.c:427
+#: app/vectors/gimpvectors.c:235
 msgid "Resize Path"
 msgstr "Redimensiona camí"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "Volteja Camí"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
 msgid "Rotate Path"
 msgstr "Gira camí"
 
-#: app/vectors/gimpvectors.c:560
+#: app/vectors/gimpvectors.c:566
 msgid "Cannot stroke empty path."
 msgstr "No es pot traçar un camí buit."
 
@@ -9430,11 +9454,11 @@ msgstr "Amplada"
 msgid "Height"
 msgstr "Alçada"
 
-#: app/widgets/gimphelp.c:197
+#: app/widgets/gimphelp.c:193
 msgid "Could not find GIMP Help Browser"
 msgstr "No s'ha pogut trobar el navegador d'ajuda del GIMP"
 
-#: app/widgets/gimphelp.c:199
+#: app/widgets/gimphelp.c:195
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9442,15 +9466,15 @@ msgstr ""
 "No s'ha pogut trobar el procediment per navegar en l'ajuda del GIMP. És "
 "probable que no fos compilat per què no heu instal·lat el GtkHtml2."
 
-#: app/widgets/gimphelp.c:203 app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
 msgid "Use web browser instead"
 msgstr "Utilitza el navegador web per defecte"
 
-#: app/widgets/gimphelp.c:233
+#: app/widgets/gimphelp.c:229
 msgid "Could not start GIMP Help Browser"
 msgstr "No s'ha pogut iniciar el navegador d'ajuda del GIMP"
 
-#: app/widgets/gimphelp.c:235
+#: app/widgets/gimphelp.c:231
 msgid "Could not start the GIMP Help Browser."
 msgstr "No s'ha pogut iniciar el navegador d'ajuda del GIMP."
 
