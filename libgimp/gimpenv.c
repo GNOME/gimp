@@ -360,6 +360,50 @@ gimp_gtkrc (void)
 }
 
 /**
+ * gimp_path_runtime_fix:
+ * @path: A pointer to a string (allocated with g_malloc) that is (or could be) a pathname.
+ *
+ * On Windows, this function checks if the string pointed to by @path
+ * starts with the compile-time prefix, and in that case, replaces the
+ * prefix with the run-time one.  @path should be a pointer to a
+ * dynamically allocated (with g_malloc, g_strconcat, etc) string. If
+ * the replacement takes place, the original string is deallocated,
+ * and *@path is replaced with a pointer to a new string with the
+ * run-time prefix spliced in.
+ */
+
+void
+gimp_path_runtime_fix (gchar **path)
+{
+#if defined (G_OS_WIN32) && defined (PREFIX)
+  gchar *p;
+
+  /* Yes, I do mean forward slashes below */
+  if (strncmp (*path, PREFIX "/", strlen (PREFIX "/")) == 0)
+    {
+      /* This is a compile-time entry. Replace the path with the
+       * real one on this machine. */
+      p = *path;
+      *path = g_strconcat (gimp_toplevel_directory (),
+			   "\\",
+			   *path + strlen (PREFIX "/"),
+			   NULL);
+      g_free (p);
+    }
+  /* Replace forward slashes with backslashes, just for
+   * completeness */
+  p = *path;
+  while ((p = strchr (p, '/')) != NULL)
+    {
+      *p = '\\';
+      p++;
+    }
+#endif
+}
+
+
+
+/**
  * gimp_path_parse:
  * @path: A list of directories separated by #G_SEARCHPATH_SEPARATOR.
  * @max_paths: The maximum number of directories to return.
@@ -409,36 +453,12 @@ gimp_path_parse (gchar     *path,
       else
 #endif
 	{
+	  gimp_path_runtime_fix (&patharray[i]);
 	  dir = g_string_new (patharray[i]);
 	}
 
 #ifdef __EMX__
       _fnslashify (dir);
-#endif
-
-#if defined (G_OS_WIN32) && defined (PREFIX)
-      {
-	gchar *p;
-
-	/* Yes, I do mean forward slashes below */
-	if (strncmp (dir->str, PREFIX "/", strlen (PREFIX "/")) == 0)
-	  {
-	    /* This is a compile-time entry. Replace the path with the
-	     * real one on this machine. */
-	    g_string_assign (dir, g_strconcat (gimp_toplevel_directory (),
-					       "\\",
-					       dir->str + strlen (PREFIX "/"),
-					       NULL));
-	  }
-	/* Replace forward slashes with backslashes, just for
-	 * completeness */
-	p = dir->str;
-	while ((p = strchr (p, '/')) != NULL)
-	  {
-	    *p = '\\';
-	    p++;
-	  }
-      }
 #endif
 
       if (check)

@@ -27,6 +27,7 @@
 #include "gimppatheditor.h"
 
 #include "libgimp/gimpfileselection.h"
+#include "libgimp/gimpenv.h"
 #include "libgimp/gimpwidgets.h"
 
 #include "pixmaps/new.xpm"
@@ -222,6 +223,7 @@ gimp_path_editor_new (const gchar *filesel_title,
 	*next_separator = '\0';
 
       current_dir = g_strdup (directory);
+      gimp_path_runtime_fix (&current_dir);
 
       list_item = gtk_list_item_new_with_label (current_dir);
       gtk_object_set_data_full (GTK_OBJECT (list_item), "gimp_path_editor",

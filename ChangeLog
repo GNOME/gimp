@@ -1,3 +1,34 @@
+2001-11-15  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in: Do build the webbrowser plug-in on Windows. Output
+	gimptool-win32.c
+
+	* Makefile.am: gimptool changes: On Windows, don't install the
+	script, but instead build gimptool-win32.exe, and install that as
+	gimptool.exe.
+
+	* gimptool.1.in: Mention that gimptool is a bit different on
+	Windows.
+
+	* gimp-zip.in: Add gimptool.exe and manual pages.
+
+	* libgimp/gimpenv.h
+	* libgimp/gimpenv.c (gimp_path_runtime_fix): New function, code
+	spliced out of gimp_path_parse(). Does nothing on Unix.
+
+	* libgimp/gimppatheditor.c (gimp_path_editor_new): Call it here,
+	too, so the user sees the run-time paths in the properties dialog.
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):
+	Use gimp_path_parse() instead of scanning the script-fu-path.
+
+	* plug-ins/webbrowser/Makefile.am: Use -mwindows.
+
+2001-11-14  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in: New file. gimptool in C, for Win32, at
+	least here in gimp-1-2.
+
 2001-11-11  Tor Lillqvist  <tml@iki.fi>
 
 	* app/user_install.c: I finally had enough of the ugliness and

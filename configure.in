@@ -272,6 +272,11 @@ dnl Test for Xmu
 	[AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***)], -lXt)], -lXt -lSM -lICE)
   fi
 
+dnl set WEBBROWSER on Win32
+if test x$os_win32 = xyes; then
+  WEBBROWSER=webbrowser
+fi
+
 dnl Test for libaa
   if test -z "$LIBAA"; then
     AC_CHECK_LIB(aa, aa_printf,
@@ -826,6 +831,7 @@ gimptool.1
 gimp-remote.1
 gimp.spec
 gimp-zip
+gimptool-win32.c
 libgimp/gimpfeatures.h
 libgimp/Makefile
 libgimp/makefile.mingw

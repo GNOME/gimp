@@ -253,13 +253,11 @@ extern gchar        siod_err_msg[];
 void
 script_fu_find_scripts (void)
 {
+  GList *path_list;
+  GList *list;
   gchar *path_str;
-  gchar *home;
-  gchar *local_path;
   gchar *path;
   gchar *filename;
-  gchar *token;
-  gchar *next_token;
   gchar *command;
   gint   my_err;
   DIR   *dir;
@@ -286,89 +284,63 @@ script_fu_find_scripts (void)
   if (path_str == NULL)
     return;
 
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = g_get_home_dir ();
-  local_path = g_strdup (path_str);
+  /* Search through all directories in script-fu-path */
   
-  /* Search through all directories in the local path */
-  
-  next_token = local_path;
-  
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
+  g_print ("path_str=%s\n", path_str);
 
-  while (token)
+  path_list = gimp_path_parse (path_str, 16, TRUE, NULL);
+  g_print ("path_list length:%d\n", g_list_length (path_list));
+
+  list = path_list;
+  while (list)
     {
-      if (*token == '~')
-	{
-	  path = g_malloc (strlen (home) + strlen (token) + 2);
-	  sprintf (path, "%s%s", home, token + 1);
-	}
-      else 
-	{
-	  path = g_malloc (strlen (token) + 2);
-	  strcpy (path, token);
-	}
-	      
-      /* Check if directory exists and if it has any items in it */
-      my_err = stat (path, &filestat);
-      
-      if (!my_err && S_ISDIR (filestat.st_mode))
-	{
-	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    strcat (path, G_DIR_SEPARATOR_S);
+      path = list->data;
+      list = list->next;
 
-	  /* Open directory */
-	  dir = opendir (path);
-	  
-	  if (!dir)
-	    g_message ("error reading script directory \"%s\"", path);
-	  else
+      /* Open directory */
+      dir = opendir (path);
+      
+      if (!dir)
+	g_message ("error reading script directory \"%s\"", path);
+      else
+	{
+	  while ((dir_ent = readdir (dir)))
 	    {
-	      while ((dir_ent = readdir (dir)))
+	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
+		  
+	      if (g_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
 		{
-		  filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
+		  /* Check the file and see that it is not a sub-directory */
+		  my_err = stat (filename, &filestat);
 		  
-		  if (g_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
+		  if (!my_err && S_ISREG (filestat.st_mode))
 		    {
-		      /* Check the file and see that it is not a sub-directory */
-		      my_err = stat (filename, &filestat);
-		      
-		      if (!my_err && S_ISREG (filestat.st_mode))
-			{
-			  gchar *qf = ESCAPE (filename);
+		      gchar *qf = ESCAPE (filename);
 #ifdef __EMX__
-			  _fnslashify(qf);
+		      _fnslashify(qf);
 #endif
-			  command = g_strdup_printf ("(load \"%s\")", qf);
-			  g_free (qf);
-
-			  if (repl_c_string (command, 0, 0, 1) != 0)
-			    script_fu_error_msg (command);
+		      command = g_strdup_printf ("(load \"%s\")", qf);
+		      g_free (qf);
+		      
+		      if (repl_c_string (command, 0, 0, 1) != 0)
+			script_fu_error_msg (command);
 #ifdef G_OS_WIN32
-			  /* No, I don't know why, but this is 
-			   * necessary on NT 4.0.
-			   */
-			  Sleep(0);
+		      /* No, I don't know why, but this is 
+		       * necessary on NT 4.0.
+		       */
+		      Sleep(0);
 #endif
-			  g_free (command);
-			}
+		      g_free (command);
 		    }
-		  
-		  g_free (filename);
-		} /* while */
+		}
 	      
-	      closedir (dir);
-	    } /* else */
-	} /* if */
-
-      g_free (path);
-      
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
+	      g_free (filename);
+	    } /* while */
+	  
+	  closedir (dir);
+	} /* else */
     } /* while */
   
-  g_free (local_path);
   g_free (path_str);
 
   /*  now that all scripts are read in and sorted, tell gimp about them  */

@@ -1,6 +1,6 @@
 .TH GIMPTOOL 1 "26 June 2001" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
-gimptool - script to perform various Gimpy functions
+gimptool - perform various Gimpy functions
 .SH SYNOPSIS
 .B gimptool
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
@@ -27,6 +27,10 @@ or scripts and install them if they are distributed in one source file.
 \fIgimptool\fP can also be used by programs that need to know what libraries
 and include-paths \fIGimp\fP was compiled with. This is especially useful
 in Makefiles.
+.PP
+On Unix, \fIgimptool\fP is a script. On Windows, it is a program. They
+should be more or less compatible. This manual page describes the Unix
+script version.
 
 .SH OPTIONS
 .l

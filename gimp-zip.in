@@ -16,6 +16,8 @@ lib/libgimpui-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.d
 lib/libgck-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/gimp/1.2
 share/gimp/1.2
+man/man1/gimp.1
+man/man5/gimprc.5
 EOF
 
 zip -r $ZIP lib/locale/*/LC_MESSAGES/gimp*.mo
@@ -24,6 +26,7 @@ zip -d $ZIP lib/gimp/1.2/plug-ins/gif.exe
 
 rm $DEVZIP
 zip -r $DEVZIP -@ <<EOF
+bin/gimptool.exe
 lib/libgimp.dll.a
 lib/gimp.lib
 lib/libgimpui.dll.a
@@ -31,4 +34,5 @@ lib/gimpui.lib
 lib/libgck.dll.a
 lib/gck.lib
 include/libgimp
+man/man1/gimptool.1
 EOF

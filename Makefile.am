@@ -1,5 +1,15 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+gimptool_win32_program = gimptool-win32
+
+gimptool_win32_CFLAGS = @GLIB_CFLAGS@
+gimptool_win32_LDADD = @GLIB_LIBS@
+else
+gimptool_script = gimptool
+user_install = user_install
+endif
+
 SUBDIRS = \
 	tools		\
 	intl		\
@@ -19,9 +29,13 @@ SUBDIRS = \
 	devel-docs	\
 	build
 
-bin_SCRIPTS = gimptool @GIMPINSTALL@
+bin_SCRIPTS = $(gimptool_script) @GIMPINSTALL@
 
-EXTRA_SCRIPTS = gimpinstall
+noinst_PROGRAMS = $(gimptool_win32_program)
+
+EXTRA_SCRIPTS = gimptool gimpinstall
+
+EXTRA_PROGRAMS = gimptool-win32
 
 EXTRA_DIST = \
 	cursors/mouse.xbm			\
@@ -194,10 +208,6 @@ EXTRA_DIST = \
 	po-plug-ins/makefile.mingw		\
 	po-script-fu/makefile.mingw
 
-if !OS_WIN32
-user_install = user_install
-endif
-
 
 gimpdata_DATA = \
 	gimp_logo.ppm		 \
@@ -224,12 +234,20 @@ gimpinstall:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
 
 install-exec-local:
+if OS_WIN32
+	$(INSTALL) gimptool-win32.exe $(DESTDIR)$(bindir)/gimptool.exe
+else
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp-config \
 	&& $(LN_S) gimptool gimp-config
+endif
 
 uninstall-local:
+if OS_WIN32
+	rm -f $(DESTDIR)$(bindir)/gimptool.exe
+else
 	rm -f $(DESTDIR)$(bindir)/gimp-config
+endif
 
 .PHONY: files populate checkin release
 

@@ -40,6 +40,8 @@ gchar * gimp_data_directory             (void);
 gchar * gimp_sysconf_directory		(void);
 gchar * gimp_gtkrc                      (void);
 
+void    gimp_path_runtime_fix           (gchar **path);
+
 GList * gimp_path_parse                 (gchar     *path,
 					 gint       max_paths,
 					 gboolean   check,
