@@ -1,5 +1,22 @@
 2003-11-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimplimits.h: added GIMP_MAX_MEMSIZE, an arbitrary
+	upper limit for memory sizes. It must be smaller than G_MAXDOUBLE
+	since our memsize entry doesn't handle anything larger.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_memsize_entry_new):
+	check against GIMP_MAX_MEMSIZE, not G_MAXDOUBLE.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c: use GIMP_MAX_MEMSIZE instead of
+	G_MAXULONG. The latter is larger than G_MAXDOUBLE on 64bit
+	machines and caused bug #127908.
+	
+	* libgimpwidgets/gimpmemsizeentry.c: added casts to guint64.
+
+2003-11-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/interp_md5.[ch]: removed these unused files
 	from CVS.
 

@@ -198,7 +198,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                     "max-new-image-size",
                                     MAX_NEW_IMAGE_SIZE_BLURB,
-                                    0, (guint64) 1 << 40, 1 << 26,
+                                    0, GIMP_MAX_MEMSIZE, 1 << 26,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,

@@ -34,15 +34,23 @@
 #define GIMP_MIN_RESOLUTION  5e-3      /*  shouldn't display as 0.000  */
 #define GIMP_MAX_RESOLUTION  65536.0
 
+/*  memory sizes
+ */
+#define GIMP_MAX_MEMSIZE     ((guint64) 1 << 42) /*  4 terabyte;
+                                        *  needs a 64bit variable
+                                        *  and must be < G_MAXDOUBLE
+                                        */
+
+
 /*  the size of the checks which indicate transparency...
  */
-#define GIMP_CHECK_SIZE    8
-#define GIMP_CHECK_SIZE_SM 4
+#define GIMP_CHECK_SIZE      8
+#define GIMP_CHECK_SIZE_SM   4
 
 /*  ...and their colors
  */
-#define GIMP_CHECK_DARK   0.4          /*  corresponds to GRAY_CHECKS as  */
-#define GIMP_CHECK_LIGHT  0.6          /*  defined in app/image_render.c  */
+#define GIMP_CHECK_DARK      0.4
+#define GIMP_CHECK_LIGHT     0.6
 
 
 #endif /* __GIMP_LIMITS_H__ */

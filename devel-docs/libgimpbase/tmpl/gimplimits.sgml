@@ -43,6 +43,13 @@ Boundaries of some GIMP data types and some global constants.
 
 
 
+<!-- ##### MACRO GIMP_MAX_MEMSIZE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_CHECK_SIZE ##### -->
 <para>
 

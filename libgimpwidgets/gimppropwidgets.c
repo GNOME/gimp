@@ -998,14 +998,8 @@ gimp_prop_memsize_entry_new (GObject     *config,
 
   uint64_spec = G_PARAM_SPEC_UINT64 (param_spec);
 
-#ifndef _MSC_VER
-  /* avoid getting gimppropwidgets.c(999) : warning C4056:
-   *   overflow in floating-point constant arithmetic
-   * and runtime failing (the check seems not useful to me anyway)
-   */
-  g_return_val_if_fail (uint64_spec->minimum <= (guint64) G_MAXDOUBLE, NULL);
-  g_return_val_if_fail (uint64_spec->maximum <= (guint64) G_MAXDOUBLE, NULL);
-#endif
+  g_return_val_if_fail (uint64_spec->minimum <= GIMP_MAX_MEMSIZE, NULL);
+  g_return_val_if_fail (uint64_spec->maximum <= GIMP_MAX_MEMSIZE, NULL);
 
   entry = gimp_memsize_entry_new (value,
 				  uint64_spec->minimum,

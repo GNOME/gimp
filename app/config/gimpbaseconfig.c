@@ -122,7 +122,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,
-                                    0, G_MAXULONG, 1 << 26,
+                                    0, GIMP_MAX_MEMSIZE, 1 << 26,
                                     GIMP_PARAM_CONFIRM);
 }
 
