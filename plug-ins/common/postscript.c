@@ -230,7 +230,7 @@ static FILE * ps_open          (const gchar       *filename,
 static void   ps_close         (FILE              *ifp,
                                 gint              ChildPid);
 
-static gint32 skip_ps          (FILE              *ifp);
+static gboolean  skip_ps       (FILE              *ifp);
 
 static gint32 load_ps          (const gchar       *filename,
                                 guint              pagenum,
@@ -807,14 +807,14 @@ run (const gchar      *name,
         }
       else
         {
-          gint size = MAX (32, param[1].data.d_int32);
+          gint size = param[1].data.d_int32;
 
           /*  We should look for an embedded preview but for now we
            *  just load the document at a small resolution and the
            *  first page only.
            */
 
-          plvals.resolution = size / 8;
+          plvals.resolution = size / 4;
           plvals.width      = size;
           plvals.height     = size;
           strcpy (plvals.pages, "1");
@@ -1004,7 +1004,7 @@ load_image (const gchar *filename)
     {
       g_message (_("Could not interpret '%s'"),
                  gimp_filename_to_utf8 (filename));
-      return (-1);
+      return -1;
     }
 
   image_list = g_new (gint32, 10);
@@ -1012,19 +1012,26 @@ load_image (const gchar *filename)
   max_images = 10;
 
   max_pagenum = 9999;  /* Try to get the maximum pagenumber to read */
-  if (is_epsf) max_pagenum = 1;
+  if (is_epsf)
+    max_pagenum = 1;
+
   if (!page_in_list (plvals.pages, max_pagenum)) /* Is there a limit in list ? */
     {
       max_pagenum = -1;
       for (temp = plvals.pages; *temp != '\0'; temp++)
 	{
-	  if ((*temp < '0') || (*temp > '9')) continue; /* Search next digit */
+	  if ((*temp < '0') || (*temp > '9'))
+            continue; /* Search next digit */
 	  sscanf (temp, "%d", &k);
-	  if (k > max_pagenum) max_pagenum = k;
-	  while ((*temp >= '0') && (*temp <= '9')) temp++;
+	  if (k > max_pagenum)
+            max_pagenum = k;
+	  while ((*temp >= '0') && (*temp <= '9'))
+            temp++;
 	  temp--;
 	}
-      if (max_pagenum < 1) max_pagenum = 9999;
+
+      if (max_pagenum < 1)
+        max_pagenum = 9999;
     }
 
   /* Load all images */
@@ -1033,7 +1040,8 @@ load_image (const gchar *filename)
       if (page_in_list (plvals.pages, page_count))
 	{
 	  image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
-	  if (image_ID == -1) break;
+	  if (image_ID == -1)
+            break;
 
 	  gimp_image_set_resolution (image_ID,
 				     (double) plvals.resolution,
@@ -1051,10 +1059,12 @@ load_image (const gchar *filename)
 	}
       else  /* Skip an image */
 	{
-	  image_ID = skip_ps (ifp);
-	  if (image_ID == -1) break;
+          image_ID = -1;
+	  if (! skip_ps (ifp))
+            break;
 	}
     }
+
   ps_close (ifp, ChildPid);
 
   /* Display images in reverse order. The last will be displayed by GIMP itself*/
@@ -1067,7 +1077,7 @@ load_image (const gchar *filename)
   image_ID = (n_images > 0) ? image_list[0] : -1;
   g_free (image_list);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
@@ -1102,7 +1112,7 @@ save_image (const gchar *filename,
       break;
     default:
       g_message (_("Cannot operate on unknown image types."));
-      return (FALSE);
+      return FALSE;
       break;
     }
 
@@ -1112,7 +1122,7 @@ save_image (const gchar *filename,
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return (FALSE);
+      return FALSE;
     }
 
   temp = g_strdup_printf (_("Saving '%s'..."),
@@ -1133,7 +1143,7 @@ save_image (const gchar *filename,
 
   fclose (ofp);
 
-  return (retval);
+  return retval;
 }
 
 
@@ -1192,7 +1202,8 @@ page_in_list (gchar *list,
   if (low>high) {swp=low; low=high; high=swp;} \
   if ((low<=(c))&&(high>=(c))) return (1); } }
 
-  if ((list == NULL) || (*list == '\0')) return (1);
+  if ((list == NULL) || (*list == '\0'))
+    return 1;
 
   strncpy (tmplist, list, STR_LENGTH);
   tmplist[STR_LENGTH-1] = '\0';
@@ -1216,10 +1227,15 @@ page_in_list (gchar *list,
 		*(c0++) = *c1;
 	    }
 	}
-      else break;
+      else
+        break;
+
       c1++;
     }
-  if (c0 == tmplist) return (1);
+
+  if (c0 == tmplist)
+    return 1;
+
   *c0 = '\0';
 
   /* Now we have a comma separated list like 1-4-1,-3,1- */
@@ -1233,7 +1249,8 @@ page_in_list (gchar *list,
 	case READ_STARTNUM:
 	  if (*c0 == ',')
 	    {
-	      if ((start_num > 0) && (start_num == (int)page_num)) return (-1);
+	      if ((start_num > 0) && (start_num == (int)page_num))
+                return -1;
 	      start_num = -1;
 	    }
 	  else if (*c0 == '-')
@@ -1275,14 +1292,15 @@ page_in_list (gchar *list,
   if (state == READ_STARTNUM)
     {
       if (start_num > 0)
-	return (start_num == (int)page_num);
+	return (start_num == (int) page_num);
     }
   else
     {
       if (end_num < 0) end_num = 9999;
       CHK_LIST (start_num, end_num, (int)page_num);
     }
-  return (0);
+
+  return 0;
 #undef CHK_LIST
 }
 
@@ -1291,52 +1309,62 @@ page_in_list (gchar *list,
 /* As a line break the newline-character is returned. */
 static char *psfgets (char *s, int size, FILE *stream)
 
-{int c;
- char *sptr = s;
+{
+  int c;
+  char *sptr = s;
 
- if (size <= 0) return NULL;
- if (size == 1)
- {
-   *s = '\0';
-   return NULL;
- }
- c = getc (stream);
- if (c == EOF) return NULL;
+  if (size <= 0)
+    return NULL;
 
- for (;;)
- {
-   /* At this point we have space in sptr for at least two characters */
-   if (c == '\n')    /* Got end of line (UNIX line end) ? */
-   {
-     *(sptr++) = '\n';
-     break;
-   }
-   else if (c == '\r')  /* Got a carriage return. Check next charcater */
-   {
-     c = getc (stream);
-     if ((c == EOF) || (c == '\n')) /* EOF or DOS line end ? */
-     {
-       *(sptr++) = '\n';  /* Return UNIX line end */
-       break;
-     }
-     else  /* Single carriage return. Return UNIX line end. */
-     {
-       ungetc (c, stream);  /* Save the extra character */
-       *(sptr++) = '\n';
-       break;
-     }
-   }
-   else   /* no line end character */
-   {
-     *(sptr++) = (char)c;
-     size--;
-   }
-   if (size == 1) break;  /* Only space for the nul-character ? */
-   c = getc (stream);
-   if (c == EOF) break;
- }
- *sptr = '\0';
- return s;
+  if (size == 1)
+    {
+      *s = '\0';
+      return NULL;
+    }
+
+  c = getc (stream);
+  if (c == EOF)
+    return NULL;
+
+  for (;;)
+    {
+      /* At this point we have space in sptr for at least two characters */
+      if (c == '\n')    /* Got end of line (UNIX line end) ? */
+        {
+          *(sptr++) = '\n';
+          break;
+        }
+      else if (c == '\r')  /* Got a carriage return. Check next charcater */
+        {
+          c = getc (stream);
+          if ((c == EOF) || (c == '\n')) /* EOF or DOS line end ? */
+            {
+              *(sptr++) = '\n';  /* Return UNIX line end */
+              break;
+            }
+          else  /* Single carriage return. Return UNIX line end. */
+            {
+              ungetc (c, stream);  /* Save the extra character */
+              *(sptr++) = '\n';
+              break;
+            }
+        }
+      else   /* no line end character */
+        {
+          *(sptr++) = (char)c;
+          size--;
+        }
+      if (size == 1)
+        break;  /* Only space for the nul-character ? */
+
+      c = getc (stream);
+      if (c == EOF)
+        break;
+    }
+
+  *sptr = '\0';
+
+  return s;
 }
 
 
@@ -1354,7 +1382,8 @@ get_bbox (const gchar *filename,
   int retval = -1;
 
   ifp = fopen (filename, "rb");
-  if (ifp == NULL) return (-1);
+  if (ifp == NULL)
+    return -1;
 
   for (;;)
     {
@@ -1371,7 +1400,8 @@ get_bbox (const gchar *filename,
       break;
     }
   fclose (ifp);
-  return (retval);
+
+  return retval;
 }
 
 static gchar *pnmfile;
@@ -1646,6 +1676,8 @@ out:
 static void
 ps_close (FILE *ifp, gint ChildPid)
 {
+  guchar buf[8192];
+
 #ifndef USE_REAL_OUTPUTFILE
   int status;
   pid_t RetVal;
@@ -1656,7 +1688,7 @@ ps_close (FILE *ifp, gint ChildPid)
   g_print ("Reading rest from pipe\n");
 #endif
 
-  while (getc (ifp) != EOF) ;
+  while (fread (buf, sizeof (buf), 1, ifp) == 8192);
 
   /* Finish reading from pipe. */
   fclose (ifp);
@@ -1704,7 +1736,7 @@ read_pnmraw_type (FILE *ifp,
   thrd = getc (ifp);
   for (;;)
     {
-      if (thrd == EOF) return (-1);
+      if (thrd == EOF) return -1;
 #if defined (WIN32)
       if (thrd == '\r') thrd = getc (ifp);
 #endif
@@ -1716,27 +1748,36 @@ read_pnmraw_type (FILE *ifp,
     }
   pnmtype = scnd - '0';
   /* We dont use the ASCII-versions */
-  if ((pnmtype >= 1) && (pnmtype <= 3)) return (-1);
+  if ((pnmtype >= 1) && (pnmtype <= 3))
+    return -1;
 
   /* Read width/height */
   for (;;)
     {
-      if (fgets (line, sizeof (line)-1, ifp) == NULL) return (-1);
-      if (line[0] != '#') break;
+      if (fgets (line, sizeof (line)-1, ifp) == NULL)
+        return -1;
+      if (line[0] != '#')
+        break;
     }
-  if (sscanf (line, "%d%d", width, height) != 2) return (-1);
+  if (sscanf (line, "%d%d", width, height) != 2)
+    return -1;
+
   *maxval = 255;
 
   if (pnmtype != 4)  /* Read maxval */
     {
       for (;;)
 	{
-	  if (fgets (line, sizeof (line)-1, ifp) == NULL) return (-1);
-	  if (line[0] != '#') break;
+	  if (fgets (line, sizeof (line)-1, ifp) == NULL)
+            return -1;
+	  if (line[0] != '#')
+            break;
 	}
-      if (sscanf (line, "%d", maxval) != 1) return (-1);
+      if (sscanf (line, "%d", maxval) != 1)
+        return -1;
     }
-  return (pnmtype);
+
+  return pnmtype;
 }
 
 
@@ -1786,35 +1827,37 @@ create_new_image (const gchar        *filename,
 
 
 /* Skip PNM image generated from PostScript file. */
-/* Returns 0 on success, -1 on failure. */
-static gint32
+/* Return TRUE on success, FALSE otherwise.       */
+static gboolean
 skip_ps (FILE *ifp)
 {
-  register int k, c;
-  int i, pnmtype, width, height, maxval, bpl;
+  guchar  buf[8192];
+  gsize   len;
+  gint    pnmtype, width, height, maxval, bpl;
 
   pnmtype = read_pnmraw_type (ifp, &width, &height, &maxval);
 
   if (pnmtype == 4)    /* Portable bitmap */
-    bpl = (width + 7)/8;
+    bpl = (width + 7) / 8;
   else if (pnmtype == 5)
     bpl = width;
   else if (pnmtype == 6)
-    bpl = width*3;
+    bpl = width * 3;
   else
-    return (-1);
+    return FALSE;
 
-  for (i = 0; i < height; i++)
+  len = bpl * height;
+  while (len)
     {
-      k = bpl;  c = EOF;
-      while (k-- > 0) c = getc (ifp);
-      if (c == EOF) return (-1);
+      gsize  bytes = fread (buf, MIN (len, sizeof (buf)), 1, ifp);
 
-      if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+      if (bytes < MIN (len, sizeof (buf)))
+        return FALSE;
+
+      len -= bytes;
     }
 
-  return (0);
+  return TRUE;
 }
 
 
@@ -1883,7 +1926,8 @@ load_ps (const gchar *filename,
       bpp = 3;
       byteline = (guchar *)g_malloc (nread);
     }
-  else return (-1);
+  else
+    return -1;
 
   image_ID = create_new_image (filename, pagenum,
 			       image_width, image_height, imagetype,
@@ -2420,9 +2464,10 @@ save_gray  (FILE   *ofp,
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 #undef GET_GRAY_TILE
 }
 
@@ -2552,9 +2597,10 @@ save_bw (FILE   *ofp,
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 #undef GET_BW_TILE
 }
 
@@ -2601,7 +2647,8 @@ save_index (FILE   *ofp,
 	  *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
 	}
     }
-  if (bw) return (save_bw (ofp, image_ID, drawable_ID));
+  if (bw)
+    return (save_bw (ofp, image_ID, drawable_ID));
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -2702,9 +2749,10 @@ save_index (FILE   *ofp,
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 #undef GET_INDEX_TILE
 }
 
@@ -2830,9 +2878,10 @@ save_rgb (FILE   *ofp,
   if (ferror (ofp))
     {
       g_message (_("Write error occurred"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 #undef GET_RGB_TILE
 }
 

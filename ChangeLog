@@ -1,13 +1,19 @@
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/postscript.c: speed up loading of multi-page
+	documents significantly by skipping in large chunks instead of using
+	fgetc() to crawl through the stream.
+
+2004-11-18  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c (file_open_thumbnail): check the number of
 	return values. Only retrieve width and height if the thumbnail
-	load procedure does actually provide such this information.
+	load procedure does actually provide this information.
 
-	* plug-ins/common/postscript.c: added a procedure to loads
-	thumbnails.  For now it only renders the first page of the
+	* plug-ins/common/postscript.c: added a procedure to load a
+	thumbnail.  For now it only renders the first page of the
 	document at low resolution. It should be extended to load an
-	embedded thumbnail if available.
+	embedded thumbnail if one is available.
 
 	* plug-ins/common/jpeg.c
 	* plug-ins/common/svg.c: no need to register a menu label for the
