@@ -1,3 +1,15 @@
+Tue Aug  3 02:13:57 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/paint_core.c: Improvements to the transform_core_do and cubic
+	 routines by David Hodson <hodsond@acm.org>
+	"This fixes a number of annoying inaccuracies in transform_core.
+	The identity transform now leaves all pixels unchanged; previously
+	it shifted the image by 1/2 pixel left and up. All edges of an
+	image are now correctly antialiased after a transform. The cubic
+	interpolation function has been changed to a slightly smoother one.
+	The code has been tidied and rearranged for some minor improvements
+	in efficiency, but the basic logic and tile handling have not changed."
+
 1999-08-03  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/Makefile.am

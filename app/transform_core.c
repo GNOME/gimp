@@ -48,6 +48,10 @@
 #define M_PI  3.14159265358979323846
 #endif  /*  M_PI  */
 
+#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
+                ((1-dy) * (jk + dx * (j1k - jk)) + \
+                    dy  * (jk1 + dx * (j1k1 - jk1)))
+
 /*  variables  */
 static TranInfo    old_trans_info;
 InfoDialog *       transform_info = NULL;
@@ -64,11 +68,6 @@ static void        transform_core_grid_recalc (TransformCore *);
 /* Hmmm... Should be in a headerfile but which? */
 void               paths_draw_current         (GDisplay *, DrawCore *,
 					       GimpMatrix);
-
-
-#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
-                ((1-dy) * ((1-dx)*jk + dx*j1k) + \
-		    dy  * ((1-dx)*jk1 + dx*j1k1))
 
 #define REF_TILE(i,x,y) \
      tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
@@ -989,12 +988,12 @@ transform_core_recalc (Tool *tool,
 /*  Actually carry out a transformation  */
 TileManager *
 transform_core_do (GImage          *gimage,
-		   GimpDrawable    *drawable,
-		   TileManager     *float_tiles,
-		   int              interpolation,
-		   GimpMatrix       matrix,
-		   progress_func_t  progress_callback,
-		   gpointer         progress_data)
+                   GimpDrawable    *drawable,
+                   TileManager     *float_tiles,
+                   int              interpolation,
+                   GimpMatrix       matrix,
+                   progress_func_t  progress_callback,
+                   gpointer         progress_data)
 {
   PixelRegion destPR;
   TileManager *tiles;
@@ -1007,14 +1006,10 @@ transform_core_do (GImage          *gimage,
   int bytes, b;
   int x, y;
   int sx, sy;
-  int plus_x, plus_y;
-  int plus2_x, plus2_y;
-  int minus_x, minus_y;
   int x1, y1, x2, y2;
   double xinc, yinc, winc;
   double tx, ty, tw;
   double ttx = 0.0, tty = 0.0;
-  double dx = 0.0, dy = 0.0;
   unsigned char * dest, * d;
   unsigned char * src[16];
   double src_a[16][MAX_CHANNELS];
@@ -1026,12 +1021,13 @@ transform_core_do (GImage          *gimage,
   int newval;
 
   alpha = 0;
-  
+
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix_is_simple (matrix))
     interpolation = FALSE;
 
   /*  Get the background color  */
+  /*  Check - background colour only works for non-interpolated transforms? */
   gimage_get_background (gimage, drawable, bg_col);
 
   switch (drawable_type (drawable))
@@ -1055,7 +1051,7 @@ transform_core_do (GImage          *gimage,
   if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
     {
       /*  keep the original matrix here, so we dont need to recalculate 
-	  the inverse later  */   
+          the inverse later  */   
       gimp_matrix_duplicate (matrix, m);
       gimp_matrix_invert (matrix, im);
       matrix = im;
@@ -1066,7 +1062,7 @@ transform_core_do (GImage          *gimage,
       gimp_matrix_invert (matrix, m);
     }
 
-  paths_transform_current_path (gimage, matrix, FALSE);
+  paths_transform_current_path(gimage,matrix,FALSE);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
@@ -1123,229 +1119,330 @@ transform_core_do (GImage          *gimage,
   for (y = ty1; y < ty2; y++)
     {
       if (progress_callback && !(y & 0xf))
-	(*progress_callback)(ty1, ty2, y, progress_data);
+        (*progress_callback)(ty1, ty2, y, progress_data);
 
       /*  When we calculate the inverse transformation, we should transform
        *  the center of each destination pixel...
        */
-      tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
-      ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
-      tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+
+      /* Actually, no. Relabel them in your head, if you must  */
+
+      tx = xinc * tx1 + m[0][1] * y + m[0][2];
+      ty = yinc * tx1 + m[1][1] * y + m[1][2];
+      tw = winc * tx1 + m[2][1] * y + m[2][2];
       d = dest;
-
       for (x = tx1; x < tx2; x++)
-	{
-	  /*  normalize homogeneous coords  */
-	  if (tw == 0.0)
-	    g_message (_("homogeneous coordinate = 0...\n"));
-	  else if (tw != 1.0)
-	    {
-	      ttx = tx / tw;
-	      tty = ty / tw;
-	    }
-	  else
-	    {
-	      ttx = tx;
-	      tty = ty;
-	    }
+        {
+          /*  normalize homogeneous coords  */
+          if (tw == 0.0)
+            g_message (_("homogeneous coordinate = 0...\n"));
+          else if (tw != 1.0)
+            {
+              ttx = tx / tw;
+              tty = ty / tw;
+            }
+          else
+            {
+              ttx = tx;
+              tty = ty;
+            }
 
-	  /*  tx & ty are the coordinates of the point in the original
-	   *  selection's floating buffer.  Make sure they're within bounds
-	   */
-	  if (ttx < 0)
-	    itx = (int) (ttx - 0.999999);
-	  else
-	    itx = (int) ttx;
+          /*  Set the destination pixels  */
 
-	  if (tty < 0)
-	    ity = (int) (tty - 0.999999);
-	  else
-	    ity = (int) tty;
+          if (interpolation)
+            {
+              /*  ttx & tty are the coordinates of the point in the original
+               *  selection's floating buffer.  Make sure they're within bounds
+               */
+              itx = floor(ttx);
+              ity = floor(tty);
 
-	  /*  if interpolation is on, get the fractional error  */
-	  if (interpolation)
-	    {
-	      dx = ttx - itx;
-	      dy = tty - ity;
-	    }
+              if (cubic_interpolation)
+                {
 
-	  if (itx >= x1 && itx < x2 && ity >= y1 && ity < y2)
-	    {
-	      /*  x, y coordinates into source tiles  */
-	      sx = itx - x1;
-	      sy = ity - y1;
+                  /* expand source area to cover interpolation region */
+                  /* (which runs from itx - 1 to itx + 2, same in y) */
+                  if ((itx + 2) >= x1 && (itx - 1) < x2 &&
+                      (ity + 2) >= y1 && (ity - 1) < y2 )
+                    {
+                      /*  to hold clipping info */
+                      int use_x[4], use_y[4];
+                      /* to hold index */
+                      int index_x[4], index_y[4];
+                      int xy_i;
 
-	      /*  Set the destination pixels  */
-	      if (interpolation)
-		{
-		  plus_x = (itx < (x2 - 1)) ? 1 : 0;
-		  plus_y = (ity < (y2 - 1)) ? 1 : 0;
+                      /*  get the fractional error  */
+                      double dx, dy;
+                      dx = ttx - itx;
+                      dy = tty - ity;
 
-		  if (cubic_interpolation)
-		    {
-		      minus_x = (itx > x1) ? -1 : 0;
-		      plus2_x = ((itx + 1) < (x2 - 1)) ? 2 : plus_x;
+                      /* setup indices and clip flags */
+                      /* now correctly handles very small images (why?) */
 
-		      minus_y = (ity > y1) ? -1 : 0;
-		      plus2_y = ((ity + 1) < (y2 - 1)) ? 2 : plus_y;
+                      for (xy_i = 0; xy_i < 4; ++xy_i) 
+                        {
+                          use_x[xy_i] = 1;
+                          use_y[xy_i] = 1;
+                          index_x[xy_i] = (itx - 1) - x1 + xy_i;
+                          index_y[xy_i] = (ity - 1) - y1 + xy_i;
+                        }
 
-		      REF_TILE (0, sx + minus_x, sy + minus_y);
-		      REF_TILE (1, sx, sy + minus_y);
-		      REF_TILE (2, sx + plus_x, sy + minus_y);
-		      REF_TILE (3, sx + plus2_x, sy + minus_y);
-		      REF_TILE (4, sx + minus_x, sy);
-		      REF_TILE (5, sx, sy);
-		      REF_TILE (6, sx + plus_x, sy);
-		      REF_TILE (7, sx + plus2_x, sy);
-		      REF_TILE (8, sx + minus_x, sy + plus_y);
-		      REF_TILE (9, sx, sy + plus_y);
-		      REF_TILE (10, sx + plus_x, sy + plus_y);
-		      REF_TILE (11, sx + plus2_x, sy + plus_y);
-		      REF_TILE (12, sx + minus_x, sy + plus2_y);
-		      REF_TILE (13, sx, sy + plus2_y);
-		      REF_TILE (14, sx + plus_x, sy + plus2_y);
-		      REF_TILE (15, sx + plus2_x, sy + plus2_y);
+                      /* ugly, ugly code */
 
-		      a[0] = (minus_y * minus_x) ? src[0][alpha] : 0;
-		      a[1] = (minus_y) ? src[1][alpha] : 0;
-		      a[2] = (minus_y * plus_x) ? src[2][alpha] : 0;
-		      a[3] = (minus_y * plus2_x) ? src[3][alpha] : 0;
+                      /* clip x to left hand edge */
+                      if ((itx - 1) < x1) {
+                        use_x[0] = 0;
+                        index_x[0] = 0;
+                        if (itx < x1) {
+                          use_x[1] = 0;
+                          index_x[1] = 0;
+                          if ((itx + 1) < x1) {
+                            use_x[2] = 0;
+                            index_x[2] = 0;
+                          }
+                        }
+                      }
+                      /* clip x to right hand edge */
+                      if ((itx + 2) >= x2) {
+                        int xlimit = x2 - 1 - x1;
+                        use_x[3] = 0;
+                        index_x[3] = xlimit;
+                        if ((itx + 1) >= x2) {
+                          use_x[2] = 0;
+                          index_x[2] = xlimit;
+                          if (itx >= x2) {
+                            use_x[1] = 0;
+                            index_x[1] = xlimit;
+                          }
+                        }
+                      }
+                      /* clip y to top edge */
+                      if ((ity - 1) < y1) {
+                        use_y[0] = 0;
+                        index_y[0] = 0;
+                        if (ity < y1) {
+                          use_y[1] = 0;
+                          index_y[1] = 0;
+                          if ((ity + 1) < y1) {
+                            use_y[2] = 0;
+                            index_y[2] = 0;
+                          }
+                        }
+                      }
+                      /* clip y to bottom edge */
+                      if ((ity + 2) >= y2) {
+                        int ylimit = y2 - 1 - y1;
+                        use_y[3] = 0;
+                        index_y[3] = ylimit;
+                        if ((ity + 1) >= y2) {
+                          use_y[2] = 0;
+                          index_y[2] = ylimit;
+                          if (ity >= y2) {
+                            use_y[1] = 0;
+                            index_y[1] = ylimit;
+                          }
+                        }
+                      }
 
-		      a[4] = (minus_x) ? src[4][alpha] : 0;
-		      a[5] = src[5][alpha];
-		      a[6] = (plus_x) ? src[6][alpha] : 0;
-		      a[7] = (plus2_x) ? src[7][alpha] : 0;
 
-		      a[8] = (plus_y * minus_x) ? src[8][alpha] : 0;
-		      a[9] = (plus_y) ? src[9][alpha] : 0;
-		      a[10] = (plus_y * plus_x) ? src[10][alpha] : 0;
-		      a[11] = (plus_y * plus2_x) ? src[11][alpha] : 0;
+                      REF_TILE (0, index_x[0], index_y[0]);
+                      REF_TILE (1, index_x[1], index_y[0]);
+                      REF_TILE (2, index_x[2], index_y[0]);
+                      REF_TILE (3, index_x[3], index_y[0]);
+                      REF_TILE (4, index_x[0], index_y[1]);
+                      REF_TILE (5, index_x[1], index_y[1]);
+                      REF_TILE (6, index_x[2], index_y[1]);
+                      REF_TILE (7, index_x[3], index_y[1]);
+                      REF_TILE (8, index_x[0], index_y[2]);
+                      REF_TILE (9, index_x[1], index_y[2]);
+                      REF_TILE (10, index_x[2], index_y[2]);
+                      REF_TILE (11, index_x[3], index_y[2]);
+                      REF_TILE (12, index_x[0], index_y[3]);
+                      REF_TILE (13, index_x[1], index_y[3]);
+                      REF_TILE (14, index_x[2], index_y[3]);
+                      REF_TILE (15, index_x[3], index_y[3]);
 
-		      a[12] = (plus2_y * minus_x) ? src[12][alpha] : 0;
-		      a[13] = (plus2_y) ? src[13][alpha] : 0;
-		      a[14] = (plus2_y * plus_x) ? src[14][alpha] : 0;
-		      a[15] = (plus2_y * plus2_x) ? src[15][alpha] : 0;
+                      a[0] = (use_x[0] && use_y[0]) ? src[0][alpha] : 0;
+                      a[1] = (use_x[1] && use_y[0]) ? src[1][alpha] : 0;
+                      a[2] = (use_x[2] && use_y[0]) ? src[2][alpha] : 0;
+                      a[3] = (use_x[3] && use_y[0]) ? src[3][alpha] : 0;
 
-		      a_val = cubic (dy,
-				    cubic (dx, a[0], a[1], a[2], a[3]),
-				    cubic (dx, a[4], a[5], a[6], a[7]),
-				    cubic (dx, a[8], a[9], a[10], a[11]),
-				    cubic (dx, a[12], a[13], a[14], a[15]));
+                      a[4] = (use_x[0] && use_y[1]) ? src[4][alpha] : 0;
+                      a[5] = (use_x[1] && use_y[1]) ? src[5][alpha] : 0;
+                      a[6] = (use_x[2] && use_y[1]) ? src[6][alpha] : 0;
+                      a[7] = (use_x[3] && use_y[1]) ? src[7][alpha] : 0;
 
-		      if (a_val != 0)
-			a_recip = 255.0 / a_val;
-		      else
-			a_recip = 0.0;
+                      a[8] = (use_x[0] && use_y[2]) ? src[8][alpha] : 0;
+                      a[9] = (use_x[1] && use_y[2]) ? src[9][alpha] : 0;
+                      a[10] = (use_x[2] && use_y[2]) ? src[10][alpha] : 0;
+                      a[11] = (use_x[3] && use_y[2]) ? src[11][alpha] : 0;
 
-		      /* premultiply the alpha */
-		      for (i = 0; i < 16; i++)
-			{
-			  a_mult = a[i] * (1.0 / 255.0);
-			  for (b = 0; b < alpha; b++)
-			    src_a[i][b] = src[i][b] * a_mult;
-			}
+                      a[12] = (use_x[0] && use_y[3]) ? src[12][alpha] : 0;
+                      a[13] = (use_x[1] && use_y[3]) ? src[13][alpha] : 0;
+                      a[14] = (use_x[2] && use_y[3]) ? src[14][alpha] : 0;
+                      a[15] = (use_x[3] && use_y[3]) ? src[15][alpha] : 0;
 
-		      for (b = 0; b < alpha; b++)
-			{
-			  newval =
-			    a_recip *
-			    cubic (dy,
-				   cubic (dx, src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b]),
-				   cubic (dx, src_a[4][b], src_a[5][b], src_a[6][b], src_a[7][b]),
-				   cubic (dx, src_a[8][b], src_a[9][b], src_a[10][b], src_a[11][b]),
-				   cubic (dx, src_a[12][b], src_a[13][b], src_a[14][b], src_a[15][b]));
-			  if ((newval & 0x100) == 0)
-			    *d++ = newval;
-			  else if (newval < 0)
-			    *d++ = 0;
-			  else
-			    *d++ = 255;
-			}
+                      a_val = cubic (dy,
+                                    cubic (dx, a[0], a[1], a[2], a[3]),
+                                    cubic (dx, a[4], a[5], a[6], a[7]),
+                                    cubic (dx, a[8], a[9], a[10], a[11]),
+                                    cubic (dx, a[12], a[13], a[14], a[15]));
 
-		      *d++ = a_val;
+                      if (a_val != 0)
+                        a_recip = 255.0 / a_val;
+                      else
+                        a_recip = 0.0;
 
-		      for (b = 0; b < 16; b++)
-			tile_release (tile[b], FALSE);
-		    }
-		  else  /*  linear  */
-		    {
-		      REF_TILE (0, sx, sy);
-		      REF_TILE (1, sx + plus_x, sy);
-		      REF_TILE (2, sx, sy + plus_y);
-		      REF_TILE (3, sx + plus_x, sy + plus_y);
+                      /* premultiply the alpha */
+                      for (i = 0; i < 16; i++)
+                        {
+                          a_mult = a[i] * (1.0 / 255.0);
+                          for (b = 0; b < alpha; b++)
+                            src_a[i][b] = src[i][b] * a_mult;
+                        }
 
-		      /*  Need special treatment for the alpha channel  */
-		      if (plus_x == 0 && plus_y == 0)
-			{
-			  a[0] = src[0][alpha];
-			  a[1] = a[2] = a[3] = 0;
-			}
-		      else if (plus_x == 0)
-			{
-			  a[0] = src[0][alpha];
-			  a[2] = src[2][alpha];
-			  a[1] = a[3] = 0;
-			}
-		      else if (plus_y == 0)
-			{
-			  a[0] = src[0][alpha];
-			  a[1] = src[1][alpha];
-			  a[2] = a[3] = 0;
-			}
-		      else
-			{
-			  a[0] = src[0][alpha];
-			  a[1] = src[1][alpha];
-			  a[2] = src[2][alpha];
-			  a[3] = src[3][alpha];
-			}
+                      for (b = 0; b < alpha; b++)
+                        {
+                          newval =
+                            a_recip *
+                            cubic (dy,
+                                   cubic (dx, src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b]),
+                                   cubic (dx, src_a[4][b], src_a[5][b], src_a[6][b], src_a[7][b]),
+                                   cubic (dx, src_a[8][b], src_a[9][b], src_a[10][b], src_a[11][b]),
+                                   cubic (dx, src_a[12][b], src_a[13][b], src_a[14][b], src_a[15][b]));
+                          if ((newval & 0x100) == 0)
+                            *d++ = newval;
+                          else if (newval < 0)
+                            *d++ = 0;
+                          else
+                            *d++ = 255;
+                        }
 
-		      /*  The alpha channel  */
-		      a_val = BILINEAR (a[0], a[1], a[2], a[3], dx, dy);
+                      *d++ = a_val;
 
-		      if (a_val != 0)
-			a_recip = 255.0 / a_val;
-		      else
-			a_recip = 0.0;
+                      for (b = 0; b < 16; b++)
+                        tile_release (tile[b], FALSE);
+                    }
+                  else /* not in source range */
+                    {
+                      /*  increment the destination pointers  */
+                      for (b = 0; b < bytes; b++)
+                        *d++ = bg_col[b];
+                    }
 
-		      /* premultiply the alpha */
-		      for (i = 0; i < 4; i++)
-			{
-			  a_mult = a[i] * (1.0 / 255.0);
-			  for (b = 0; b < alpha; b++)
-			    src_a[i][b] = src[i][b] * a_mult;
-			}
+                }
 
-		      for (b = 0; b < alpha; b++)
-			*d++ = a_recip * BILINEAR (src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b], dx, dy);
+              else  /*  linear  */
+                {
 
-		      *d++ = a_val;
+                  /* expand source area to cover interpolation region */
+                  /* (which runs from itx to itx + 1, same in y) */
+                  if ((itx + 1) >= x1 && itx < x2 &&
+                      (ity + 1) >= y1 && ity < y2 )
+                    {
+                      /*  to hold clipping info */
+                      int use_x[2], use_y[2];
+                      /* to hold index */
+                      int index_x[2], index_y[2];
 
-		      for (b = 0; b < 4; b++)
-			tile_release (tile[b], FALSE);
-		    }
-		}
-	      else  /*  no interpolation  */
-		{
-		  REF_TILE (0, sx, sy);
+                      /*  get the fractional error  */
+                      double dx, dy;
+                      dx = ttx - itx;
+                      dy = tty - ity;
 
-		  for (b = 0; b < bytes; b++)
-		    *d++ = src[0][b];
+                      /* setup indices and clip flags */
+                      /* now correctly handles very small images (why?) */
 
-		  tile_release (tile[0], FALSE);
-		}
-	    }
-	  else
-	    {
-	      /*  increment the destination pointers  */
-	      for (b = 0; b < bytes; b++)
-		*d++ = bg_col[b];
-	    }
-	  /*  increment the transformed coordinates  */
-	  tx += xinc;
-	  ty += yinc;
-	  tw += winc;
-	}
+                      /*  x, y coordinates into source tiles  */
+                      sx = itx - x1;
+                      sy = ity - y1;
+
+                      use_x[0] = (itx >= x1);
+                      index_x[0] = use_x[0] ? sx : 0;
+
+                      use_x[1] = ((itx + 1) < x2);
+                      index_x[1] = use_x[1] ? sx + 1 : x2 - 1 - x1;
+
+                      use_y[0] = (ity >= y1);
+                      index_y[0] = use_y[0] ? sy : 0;
+
+                      use_y[1] = ((ity + 1) < y2);
+                      index_y[1] = use_y[1] ? sy + 1 : y2 - 1 - y1;
+
+                      REF_TILE (0, index_x[0], index_y[0]);
+                      REF_TILE (1, index_x[1], index_y[0]);
+                      REF_TILE (2, index_x[0], index_y[1]);
+                      REF_TILE (3, index_x[1], index_y[1]);
+
+                      /*  Need special treatment for the alpha channel  */
+                      a[0] = (use_x[0] && use_y[0]) ? src[0][alpha] : 0;
+                      a[1] = (use_x[1] && use_y[0]) ? src[1][alpha] : 0;
+                      a[2] = (use_x[0] && use_y[1]) ? src[2][alpha] : 0;
+                      a[3] = (use_x[1] && use_y[1]) ? src[3][alpha] : 0;
+
+                      /*  The alpha channel  */
+                      a_val = BILINEAR (a[0], a[1], a[2], a[3], dx, dy);
+
+                      if (a_val != 0)
+                        a_recip = 255.0 / a_val;
+                      else
+                        a_recip = 0.0;
+
+                      /* premultiply the alpha */
+                      for (i = 0; i < 4; i++)
+                        {
+                          a_mult = a[i] * (1.0 / 255.0);
+                          for (b = 0; b < alpha; b++)
+                            src_a[i][b] = src[i][b] * a_mult;
+                        }
+
+                      for (b = 0; b < alpha; b++)
+                        *d++ = a_recip * BILINEAR (src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b], dx, dy);
+
+                      *d++ = a_val;
+
+                      for (b = 0; b < 4; b++)
+                        tile_release (tile[b], FALSE);
+                    }
+                  else /* not in source range */
+                    {
+                      /*  increment the destination pointers  */
+                      for (b = 0; b < bytes; b++)
+                        *d++ = bg_col[b];
+                    }
+                }
+            }
+          else  /*  no interpolation  */
+            {
+              itx = rint(ttx);
+              ity = rint(tty);
+
+              if (itx >= x1 && itx < x2 &&
+                  ity >= y1 && ity < y2 )
+                {
+                  /*  x, y coordinates into source tiles  */
+                  sx = itx - x1;
+                  sy = ity - y1;
+
+                  REF_TILE (0, sx, sy);
+
+                  for (b = 0; b < bytes; b++)
+                    *d++ = src[0][b];
+
+                  tile_release (tile[0], FALSE);
+                }
+              else /* not in source range */
+                {
+                  /*  increment the destination pointers  */
+                  for (b = 0; b < bytes; b++)
+                    *d++ = bg_col[b];
+                }
+            }
+          /*  increment the transformed coordinates  */
+          tx += xinc;
+          ty += yinc;
+          tw += winc;
+        }
 
       /*  set the pixel region row  */
       pixel_region_set_row (&destPR, 0, (y - ty1), width, dest);
@@ -1354,7 +1451,6 @@ transform_core_do (GImage          *gimage,
   g_free (dest);
   return tiles;
 }
-
 
 TileManager *
 transform_core_cut (GImage       *gimage,
@@ -1464,10 +1560,21 @@ cubic (double dx,
 {
   double result;
 
+#if 0
+  /* Equivalent to Gimp 1.1.1 and earlier - some ringing */
   result = ((( ( - jm1 + j - jp1 + jp2 ) * dx +
                ( jm1 + jm1 - j - j + jp1 - jp2 ) ) * dx +
                ( - jm1 + jp1 ) ) * dx + j );
-
+  /* Recommended by Mitchell and Netravali - too blurred? */
+  result = ((( ( - 7 * jm1 + 21 * j - 21 * jp1 + 7 * jp2 ) * dx +
+               ( 15 * jm1 - 36 * j + 27 * jp1 - 6 * jp2 ) ) * dx +
+               ( - 9 * jm1 + 9 * jp1 ) ) * dx + (jm1 + 16 * j + jp1) ) / 18.0;
+#else
+  /* Catmull-Rom - not bad */
+  result = ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
+               ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
+               ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
+#endif
   if (result < 0.0)
     result = 0.0;
   if (result > 255.0)
