@@ -1,3 +1,9 @@
+2003-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpnavigationpreview.c: set the cursor on
+	preview->event_window, not widget->window. Use
+	preview->renderer->viewable, not preview->viewable.
+
 2003-04-11  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppreview.[ch]: made GimpPreview a NO_WINDOW

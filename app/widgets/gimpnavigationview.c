@@ -260,13 +260,13 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
 
   preview = GIMP_PREVIEW (nav_preview);
 
-  if (! preview->viewable)
+  if (! preview->renderer->viewable)
     return;
 
   tx = CLAMP (tx, 0, preview->renderer->width  - nav_preview->p_width);
   ty = CLAMP (ty, 0, preview->renderer->height - nav_preview->p_height);
 
-  gimage = GIMP_IMAGE (preview->viewable);
+  gimage = GIMP_IMAGE (preview->renderer->viewable);
 
   /*  transform to image coordinates  */
   if (preview->renderer->width != nav_preview->p_width)
@@ -345,7 +345,7 @@ gimp_navigation_preview_button_press (GtkWidget      *widget,
 	  gimp_navigation_preview_move_to (nav_preview, tx, ty);
 
           cursor = gdk_cursor_new (GDK_FLEUR);
-          gdk_window_set_cursor (widget->window, cursor);
+          gdk_window_set_cursor (GIMP_PREVIEW (widget)->event_window, cursor);
           gdk_cursor_unref (cursor);
 	}
       else
@@ -434,10 +434,12 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 				       GdkEventMotion *mevent)
 {
   GimpNavigationPreview *nav_preview;
+  GimpPreview           *preview;
   gint                   tx, ty;
   GdkModifierType        mask;
 
   nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
+  preview     = GIMP_PREVIEW (widget);
 
   if (! nav_preview->has_grab)
     {
@@ -445,10 +447,10 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
 
       if (nav_preview->p_x == 0 &&
           nav_preview->p_y == 0 &&
-          nav_preview->p_width  == GIMP_PREVIEW (widget)->renderer->width &&
-          nav_preview->p_height == GIMP_PREVIEW (widget)->renderer->height)
+          nav_preview->p_width  == preview->renderer->width &&
+          nav_preview->p_height == preview->renderer->height)
         {
-          gdk_window_set_cursor (widget->window, NULL);
+          gdk_window_set_cursor (preview->event_window, NULL);
           return FALSE;
         }
       else if (mevent->x >= nav_preview->p_x &&
@@ -463,14 +465,13 @@ gimp_navigation_preview_motion_notify (GtkWidget      *widget,
           cursor = gdk_cursor_new (GDK_HAND2);
         }
 
-      gdk_window_set_cursor (widget->window, cursor);
+      gdk_window_set_cursor (preview->event_window, cursor);
       gdk_cursor_unref (cursor);
 
       return FALSE;
     }
 
-  gdk_window_get_pointer (GIMP_PREVIEW (nav_preview)->event_window,
-                          &tx, &ty, &mask);
+  gdk_window_get_pointer (preview->event_window, &tx, &ty, &mask);
 
   tx -= nav_preview->motion_offset_x;
   ty -= nav_preview->motion_offset_y;
@@ -532,7 +533,7 @@ gimp_navigation_preview_transform (GimpNavigationPreview *nav_preview)
 
   preview = GIMP_PREVIEW (nav_preview);
 
-  gimage = GIMP_IMAGE (preview->viewable);
+  gimage = GIMP_IMAGE (preview->renderer->viewable);
 
   ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
   ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
@@ -552,13 +553,13 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 
   preview = GIMP_PREVIEW (nav_preview);
 
-  if (preview->viewable  &&
-      nav_preview->width &&
+  if (preview->renderer->viewable  &&
+      nav_preview->width           &&
       nav_preview->height)
     {
       GimpImage *gimage;
 
-      gimage = GIMP_IMAGE (preview->viewable);
+      gimage = GIMP_IMAGE (preview->renderer->viewable);
 
       if (nav_preview->x      > 0             ||
 	  nav_preview->y      > 0             ||
@@ -597,9 +598,9 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
 
   preview = GIMP_PREVIEW (nav_preview);
 
-  g_return_if_fail (preview->viewable);
+  g_return_if_fail (preview->renderer->viewable);
 
-  gimage = GIMP_IMAGE (preview->viewable);
+  gimage = GIMP_IMAGE (preview->renderer->viewable);
 
   /*  remove old marker  */
   if (GTK_WIDGET_DRAWABLE (preview))
