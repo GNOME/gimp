@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- added new convinience functions to Gimp::Util.
+
 1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it
           is the same as the one passed in.

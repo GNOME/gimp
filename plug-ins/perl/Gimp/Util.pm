@@ -46,7 +46,7 @@ require      Exporter;
                );
 #@EXPORT_OK = qw();
 
-$VERSION=1.001;
+$VERSION=1.1;
 
 use Gimp;
 
@@ -241,6 +241,21 @@ sub gimp_text_wh {
 returns the corresponding layer type for an image, alpha controls wether the layer type
 is with alpha or not. Example: imagetype: RGB -> RGB_IMAGE (or RGBA_IMAGE).
 
+=item C<gimp_image_add_new_layer $image,$index,$fill_type,$alpha>
+
+creates a new layer and adds it at position $index (default 0) to the
+image, after filling it with gimp_drawable_fill $fill_type (default
+BG_IMAGE_FILL). If $alpha is non-zero (default 1), the new layer has
+alpha.
+
+=item C<gimp_image_set_visible @layers>, C<gimp_image_set_invisible @layers>
+
+mark the given layers visible (invisible) and all others invisible (visible).
+
+=item C<gimp_layer_get_position $layer>
+
+return the position the layer has in the image layer stack.
+
 =cut
 sub gimp_image_layertype {
    my $type = $_[0]->base_type;
@@ -248,6 +263,41 @@ sub gimp_image_layertype {
    $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE    :
    $type == INDEXED ? $alpha ? INDEXEDA_IMAGE : INDEXED_IMAGE :
    die;
+}
+
+sub gimp_image_add_new_layer {
+   my ($image,$index,$filltype,$alpha)=@_;
+   my $layer = new Layer ($image, $image->width, $image->height, $image->layertype (defined $alpha ? $alpha : 1), join(":",(caller)[1,2]), 100, NORMAL_MODE);
+   $layer->fill (defined $filltype ? $filltype : BG_IMAGE_FILL);
+   $image->add_layer ($layer, $index*1);
+   $layer;
+}
+
+sub gimp_image_set_visible {
+   my $image = shift;
+   my %layers;
+   @layers{map $$_,@_}++;
+   for ($image->get_layers) {
+      $_->set_visible ($layers{$$_});
+   }
+}
+
+sub gimp_image_set_invisible {
+   my $image = shift;
+   my %layers;
+   @layers{map $$_,@_}++;
+   for ($image->get_layers) {
+      $_->set_visible (!$layers{$$_});
+   }
+}
+
+sub gimp_layer_get_position {
+   my $layer = shift;
+   my @layers = $layer->image->get_layers;
+   for (0..$#layers) {
+      return $_ if ${$layers[$_]} == $$layer;
+   }
+   ();
 }
 
 =pod
