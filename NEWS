@@ -10,8 +10,8 @@ checking that it isn't reported already).
 Please follow the installation instructions in INSTALL.
 
 
-Overview of Changes in GIMP 2.2.0-pre2
-======================================
+Overview of Changes in GIMP 2.2-pre2
+====================================
 
 - More work on GFig (still more to come here).
 
@@ -23,24 +23,24 @@ Overview of Changes in GIMP 2.2.0-pre2
 
 - Added new PDB function gimp_layer_from_mask().
 
-- User interface cleanups in IFS Fractal plug-in (former IfsCompose).
+- User interface cleanup in IFS Fractal plug-in (former IfsCompose).
 
-- Allow file plug-ins to provide means to access an image thumbnail if
+- Allow file plug-ins to provide a way to access an image thumbnail if
   the file format provides one or can be rendered at small sizes.
 
-- Lots of bug fixes.
+- Lots of bug fixes and some optimizations.
 
 
 Contributors: 
 
    Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
    Joao S. O. Bueno, Geert Jordaens, David Gowers, Øyvind Kolås, Cai Qian,
-   Simon Budig, Jakub Steiner
+   Simon Budig, Jakub Steiner, Philip Lafleur
 
 
 
-Overview of Changes in GIMP 2.2.0-pre1
-======================================
+Overview of Changes in GIMP 2.2-pre1
+====================================
 
 - Added more plug-in previews (Displace, Color To Alpha, Newsprint)
   and ported existing previews to the new widgets (Glass Tiles).
