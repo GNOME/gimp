@@ -4,8 +4,8 @@
 	tool_manager_arrow_key_active to tool_manager_key_press_active.
 
 	* app/display/gimpdisplayshell-callbacks.c: Also dispatch
-	GDK_Return/KP_Enter/BackSpace/Delete to the tools "arrow_key"
-	member of GimpTool probably should be renamed.
+	GDK_Return/KP_Enter/BackSpace/Delete to the tools, the
+	"arrow_key" member of GimpTool probably should be renamed.
 
 	* app/tools/gimpvectortool.c: Use Enter/Return to convert the
 	current path to a selection, use Backspace/Delete to delete the
