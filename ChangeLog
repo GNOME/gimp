@@ -1,3 +1,8 @@
+Thu Jan 27 16:26:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gifload.c: fixed typo that made gimp crash when
+	loading a gif 
+
 2000-01-27  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/gap/gap_decode_mpeg_main.c: added dummy menus

@@ -202,7 +202,7 @@ run (gchar   *name,
 
       if (image_ID != -1)
         {
-	  *nreturn_vals = 1;
+	  *nreturn_vals = 2;
           values[1].type         = PARAM_IMAGE;
           values[1].data.d_image = image_ID;
         }
