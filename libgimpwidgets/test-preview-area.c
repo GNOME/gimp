@@ -46,7 +46,7 @@ test_run (GtkWidget *area,
 {
   guchar       *buf;
   gint          i, j;
-  gint          offset;
+  gint          offset, offset2, offset3;
   gint          num_iters = NUM_ITERS;
   guchar        val;
   gdouble       start_time, total_time;
@@ -94,11 +94,12 @@ test_run (GtkWidget *area,
 
   for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
     {
+      /* gimp_preview_area_draw */
       start_time = g_timer_elapsed (timer, NULL);
 
       for (i = 0; i < num_iters; i++)
-	{
-	  offset = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+        {
+          offset = (rand () % (WIDTH * HEIGHT * 4)) & -4;
           gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
                                   0, 0, WIDTH, HEIGHT,
                                   enum_value->value,
@@ -111,11 +112,69 @@ test_run (GtkWidget *area,
       gdk_flush ();
       total_time = g_timer_elapsed (timer, NULL) - start_time;
       g_print ("%-16s "
-               "time elapsed: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
-	       enum_value->value_name,
-	       total_time,
-	       num_iters / total_time,
-	       num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+               "time elapsed for draw:  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               enum_value->value_name,
+               total_time,
+               num_iters / total_time,
+               num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+
+      /* gimp_preview_area_blend */
+      start_time = g_timer_elapsed (timer, NULL);
+
+      for (i = 0; i < num_iters; i++)
+        {
+          offset  = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+          offset2 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+          gimp_preview_area_blend (GIMP_PREVIEW_AREA (area),
+                                   0, 0, WIDTH, HEIGHT,
+                                   enum_value->value,
+                                   buf + offset,
+                                   WIDTH * 4,
+                                   buf + offset2,
+                                   WIDTH * 4,
+                                   rand () & 0xFF);
+
+          gdk_window_process_updates (area->window, FALSE);
+        }
+
+      gdk_flush ();
+      total_time = g_timer_elapsed (timer, NULL) - start_time;
+      g_print ("%-16s "
+               "time elapsed for blend: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               enum_value->value_name,
+               total_time,
+               num_iters / total_time,
+               num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+
+      /* gimp_preview_area_mask */
+      start_time = g_timer_elapsed (timer, NULL);
+
+      for (i = 0; i < num_iters; i++)
+        {
+          offset  = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+          offset2 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+          offset3 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
+          gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
+                                  0, 0, WIDTH, HEIGHT,
+                                  enum_value->value,
+                                  buf + offset,
+                                  WIDTH * 4,
+                                  buf + offset2,
+                                  WIDTH * 4,
+                                  buf + offset3,
+                                  WIDTH);
+
+          gdk_window_process_updates (area->window, FALSE);
+        }
+
+      gdk_flush ();
+      total_time = g_timer_elapsed (timer, NULL) - start_time;
+      g_print ("%-16s "
+               "time elapsed for blend: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               enum_value->value_name,
+               total_time,
+               num_iters / total_time,
+               num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
     }
 
   start_time = g_timer_elapsed (timer, NULL);

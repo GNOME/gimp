@@ -1,5 +1,10 @@
 2004-09-07  DindinX  <david@dindinx.org>
 
+	* libgimpwidgets/test-preview-area.c: added some tests for
+	gimp_preview_area_blend() and gimp_preview_area_mask().
+
+2004-09-07  DindinX  <david@dindinx.org>
+
 	* libgimpwidgets/gimppreviewarea.c
 	* libgimpwidgets/gimppreviewarea.h: added two functions:
 	gimp_preview_area_blend() to draw the blending of two buffers with
