@@ -1,5 +1,11 @@
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt: merged update from stable branch.
+
+2004-04-19  Sven Neumann  <sven@gimp.org>
+
 	* app/app-docs.sgml
 	* app/app-sections.txt
 	* app/app.types: updated, added new stuff, still incomplete...
