@@ -6,8 +6,8 @@
 	* app/file/file-open.c (file_open_image)
 	* app/file/file-save.c (file_save_as):
 	* app/file/file-utils.c (file_utils_find_proc)
-	(file_utils_uri_to_utf8_filename): replaced g_filename_from_uri()
-	with file_utils_filename_from_uri().
+	(file_utils_uri_to_utf8_filename): replaced calls to
+	g_filename_from_uri() with file_utils_filename_from_uri().
 
 2005-02-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
