@@ -156,11 +156,23 @@ save_sessionrc (void)
 void
 session_init (void)
 {
-  char *filename;
+  gchar *filename;
 
   filename = gimp_personal_rc_file ("sessionrc");
-  app_init_update_status(NULL, filename, -1);
-  parse_gimprc_file (filename);
+  app_init_update_status (NULL, filename, -1);
+
+  /*  always show L&C and Brushes on first invocation  */
+  if (! parse_gimprc_file (filename) && save_session_info)
+    {
+      lc_dialog_session_info.open = TRUE;
+      session_info_updates =
+	g_list_append (session_info_updates, &lc_dialog_session_info);
+
+      brush_select_session_info.open = TRUE;
+      session_info_updates =
+	g_list_append (session_info_updates, &brush_select_session_info);
+    }
+
   g_free (filename);
 }
 
@@ -207,12 +219,3 @@ session_reset_open_state (SessionInfo *info)
 
   info->open = FALSE;
 }
-
-
-
-
-
-
-
-
-

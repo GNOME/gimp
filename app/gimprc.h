@@ -78,14 +78,14 @@ extern int       max_new_image_size;
 
 
 /*  function prototypes  */
-void    init_parse_buffers (); /* this has to be called before any file
-				* is parsed
-				*/
-void    parse_gimprc (void);
-void    parse_gimprc_file (char *filename);
-void    save_gimprc (GList **updated_options, GList **conflicting_options);
-char *  gimprc_find_token (char *token);
-char *  gimprc_value_to_str (char *name);
-void    save_gimprc_strings (gchar *token, gchar *value);
+void       parse_buffers_init (); /* this has to be called before any file
+				   * is parsed
+				   */
+void       parse_gimprc (void);
+gboolean   parse_gimprc_file (char *filename);
+void       save_gimprc (GList **updated_options, GList **conflicting_options);
+char     * gimprc_find_token (char *token);
+char     * gimprc_value_to_str (char *name);
+void       save_gimprc_strings (gchar *token, gchar *value);
 
 #endif  /*  __GIMPRC_H__  */

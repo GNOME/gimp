@@ -1,3 +1,15 @@
+1999-06-01  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/app_procs.c
+	* app/gimprc.c: renamed init_parse_buffers() to
+	parse_buffers_init().
+
+	* app/gimprc.[ch] (parse_gimprc_file): return a boolean indicating
+	success to find out if sessionrc exists.
+
+	* app/session.c: open L&C and Brushes on first gimp invocation to
+	help first-time users.
+
 Mon May 31 06:48:56 CEST 1999 Marc Lehmann <pcg@goof.com>
 
         * configure.in, README: Set the PREFIX env. var. to the value of

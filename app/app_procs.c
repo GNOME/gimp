@@ -490,7 +490,7 @@ app_init (void)
   internal_procs_init ();
 
   RESET_BAR();
-  init_parse_buffers ();
+  parse_buffers_init ();
   parse_unitrc ();         /*  this needs to be done before gimprc loading */
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
   

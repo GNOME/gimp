@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -220,78 +219,77 @@ static int done;
 
 static ParseFunc funcs[] =
 {
-  { "temp-path",             TT_PATH,       &temp_path, NULL },
-  { "swap-path",             TT_PATH,       &swap_path, NULL },
-  { "brush-path",            TT_PATH,       &brush_path, NULL },
-  { "pattern-path",          TT_PATH,       &pattern_path, NULL },
-  { "plug-in-path",          TT_PATH,       &plug_in_path, NULL },
-  { "palette-path",          TT_PATH,       &palette_path, NULL },
-  { "gradient-path",         TT_PATH,       &gradient_path, NULL },
-  { "pluginrc-path",         TT_PATH,       &pluginrc_path, NULL },
-  { "module-path",           TT_PATH,       &module_path, NULL },
-  { "default-brush",         TT_STRING,     &default_brush, NULL },
-  { "default-pattern",       TT_STRING,     &default_pattern, NULL },
-  { "default-palette",       TT_STRING,     &default_palette, NULL },
-  { "default-gradient",      TT_STRING,     &default_gradient, NULL },
-  { "gamma-correction",      TT_DOUBLE,     &gamma_val, NULL },
-  { "color-cube",            TT_XCOLORCUBE, NULL, NULL },
-  { "tile-cache-size",       TT_MEMSIZE,    &tile_cache_size, NULL },
-  { "marching-ants-speed",   TT_INT,        &marching_speed, NULL },
-  { "last-opened-size",      TT_INT,        &last_opened_size, NULL },
-  { "undo-levels",           TT_INT,        &levels_of_undo, NULL },
-  { "transparency-type",     TT_INT,        &transparency_type, NULL },
-  { "perfect-mouse",         TT_BOOLEAN,    &perfectmouse, NULL },
-  { "transparency-size",     TT_INT,        &transparency_size, NULL },
-  { "install-colormap",      TT_BOOLEAN,    &install_cmap, NULL },
-  { "colormap-cycling",      TT_BOOLEAN,    &cycled_marching_ants, NULL },
-  { "default-threshold",     TT_INT,        &default_threshold, NULL },
-  { "stingy-memory-use",     TT_BOOLEAN,    &stingy_memory_use, NULL },
-  { "allow-resize-windows",  TT_BOOLEAN,    &allow_resize_windows, NULL },
-  { "dont-allow-resize-windows",  
-                             TT_BOOLEAN,    NULL, &allow_resize_windows },
-  { "cursor-updating",       TT_BOOLEAN,    NULL, &no_cursor_updating },
-  { "no-cursor-updating",    TT_BOOLEAN,    &no_cursor_updating, NULL },
-  { "preview-size",          TT_XPREVSIZE,  NULL, NULL },
-  { "show-rulers",           TT_BOOLEAN,    &show_rulers, NULL },
-  { "dont-show-rulers",      TT_BOOLEAN,    NULL, &show_rulers },
-  { "show-statusbar",        TT_BOOLEAN,    &show_statusbar, NULL },
-  { "dont-show-statusbar",   TT_BOOLEAN,    NULL, &show_statusbar },
-  { "default-units",         TT_XUNIT,      &default_units, NULL },
-  { "auto-save",             TT_BOOLEAN,    &auto_save, NULL },
-  { "dont-auto-save",        TT_BOOLEAN,    NULL, &auto_save },
-  { "cubic-interpolation",   TT_BOOLEAN,    &cubic_interpolation, NULL },
-  { "confirm-on-close",      TT_BOOLEAN,    &confirm_on_close, NULL },
-  { "dont-confirm-on-close", TT_BOOLEAN,    NULL, &confirm_on_close },
-  { "save-session-info",     TT_BOOLEAN,    &save_session_info, NULL },
-  { "dont-save-session-info", TT_BOOLEAN,   NULL, &save_session_info},
-  { "save-device-status",     TT_BOOLEAN,    &save_device_status, NULL },
-  { "dont-save-device-status", TT_BOOLEAN,   NULL, &save_device_status},
-  { "always-restore-session", TT_BOOLEAN,   &always_restore_session, NULL },
-  { "show-tips",             TT_BOOLEAN,    &show_tips, NULL },
-  { "dont-show-tips",        TT_BOOLEAN,    NULL, &show_tips },
-  { "last-tip-shown",        TT_INT,        &last_tip, NULL },
-  { "show-tool-tips",        TT_BOOLEAN,    &show_tool_tips, NULL },
-  { "dont-show-tool-tips",   TT_BOOLEAN,    NULL, &show_tool_tips },
-  { "default-image-size",    TT_POSITION,   &default_width, &default_height },
-  { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
-  { "default-xresolution",   TT_DOUBLE,     &default_xresolution, NULL },
-  { "default-yresolution",   TT_DOUBLE,     &default_yresolution, NULL },
-  { "default-resolution-units", TT_XUNIT,   &default_resolution_units, NULL },
-  { "plug-in",               TT_XPLUGIN,    NULL, NULL },
-  { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
-  { "menu-path",             TT_XMENUPATH,  NULL, NULL },
-  { "device",                TT_XDEVICE,    NULL, NULL },
-  { "session-info",          TT_XSESSIONINFO, NULL, NULL },
-  { "unit-info",             TT_XUNITINFO,  NULL, NULL },
-  { "monitor-xresolution",   TT_DOUBLE,     &monitor_xres, NULL },
-  { "monitor-yresolution",   TT_DOUBLE,     &monitor_yres, NULL },
-  { "num-processors",        TT_INT,        &num_processors, NULL },
-  { "image-title-format",    TT_STRING,     &image_title_format, NULL },
-  { "parasite",              TT_XPARASITE,  NULL, NULL },
-  { "global-paint-options",   TT_BOOLEAN,    &global_paint_options, NULL },
-  { "no-global-paint-options",TT_BOOLEAN,    NULL, &global_paint_options },
-  { "module-load-inhibit",   TT_PATH,       &module_db_load_inhibit, NULL },
-  { "max-new-image-size",    TT_MEMSIZE,    &max_new_image_size, NULL }
+  { "temp-path",                 TT_PATH,       &temp_path, NULL },
+  { "swap-path",                 TT_PATH,       &swap_path, NULL },
+  { "brush-path",                TT_PATH,       &brush_path, NULL },
+  { "pattern-path",              TT_PATH,       &pattern_path, NULL },
+  { "plug-in-path",              TT_PATH,       &plug_in_path, NULL },
+  { "palette-path",              TT_PATH,       &palette_path, NULL },
+  { "gradient-path",             TT_PATH,       &gradient_path, NULL },
+  { "pluginrc-path",             TT_PATH,       &pluginrc_path, NULL },
+  { "module-path",               TT_PATH,       &module_path, NULL },
+  { "default-brush",             TT_STRING,     &default_brush, NULL },
+  { "default-pattern",           TT_STRING,     &default_pattern, NULL },
+  { "default-palette",           TT_STRING,     &default_palette, NULL },
+  { "default-gradient",          TT_STRING,     &default_gradient, NULL },
+  { "gamma-correction",          TT_DOUBLE,     &gamma_val, NULL },
+  { "color-cube",                TT_XCOLORCUBE, NULL, NULL },
+  { "tile-cache-size",           TT_MEMSIZE,    &tile_cache_size, NULL },
+  { "marching-ants-speed",       TT_INT,        &marching_speed, NULL },
+  { "last-opened-size",          TT_INT,        &last_opened_size, NULL },
+  { "undo-levels",               TT_INT,        &levels_of_undo, NULL },
+  { "transparency-type",         TT_INT,        &transparency_type, NULL },
+  { "perfect-mouse",             TT_BOOLEAN,    &perfectmouse, NULL },
+  { "transparency-size",         TT_INT,        &transparency_size, NULL },
+  { "install-colormap",          TT_BOOLEAN,    &install_cmap, NULL },
+  { "colormap-cycling",          TT_BOOLEAN,    &cycled_marching_ants, NULL },
+  { "default-threshold",         TT_INT,        &default_threshold, NULL },
+  { "stingy-memory-use",         TT_BOOLEAN,    &stingy_memory_use, NULL },
+  { "allow-resize-windows",      TT_BOOLEAN,    &allow_resize_windows, NULL },
+  { "dont-allow-resize-windows", TT_BOOLEAN,    NULL, &allow_resize_windows },
+  { "cursor-updating",           TT_BOOLEAN,    NULL, &no_cursor_updating },
+  { "no-cursor-updating",        TT_BOOLEAN,    &no_cursor_updating, NULL },
+  { "preview-size",              TT_XPREVSIZE,  NULL, NULL },
+  { "show-rulers",               TT_BOOLEAN,    &show_rulers, NULL },
+  { "dont-show-rulers",          TT_BOOLEAN,    NULL, &show_rulers },
+  { "show-statusbar",            TT_BOOLEAN,    &show_statusbar, NULL },
+  { "dont-show-statusbar",       TT_BOOLEAN,    NULL, &show_statusbar },
+  { "default-units",             TT_XUNIT,      &default_units, NULL },
+  { "auto-save",                 TT_BOOLEAN,    &auto_save, NULL },
+  { "dont-auto-save",            TT_BOOLEAN,    NULL, &auto_save },
+  { "cubic-interpolation",       TT_BOOLEAN,    &cubic_interpolation, NULL },
+  { "confirm-on-close",          TT_BOOLEAN,    &confirm_on_close, NULL },
+  { "dont-confirm-on-close",     TT_BOOLEAN,    NULL, &confirm_on_close },
+  { "save-session-info",         TT_BOOLEAN,    &save_session_info, NULL },
+  { "dont-save-session-info",    TT_BOOLEAN,    NULL, &save_session_info},
+  { "save-device-status",        TT_BOOLEAN,    &save_device_status, NULL },
+  { "dont-save-device-status",   TT_BOOLEAN,    NULL, &save_device_status},
+  { "always-restore-session",    TT_BOOLEAN,    &always_restore_session, NULL },
+  { "show-tips",                 TT_BOOLEAN,    &show_tips, NULL },
+  { "dont-show-tips",            TT_BOOLEAN,    NULL, &show_tips },
+  { "last-tip-shown",            TT_INT,        &last_tip, NULL },
+  { "show-tool-tips",            TT_BOOLEAN,    &show_tool_tips, NULL },
+  { "dont-show-tool-tips",       TT_BOOLEAN,    NULL, &show_tool_tips },
+  { "default-image-size",        TT_POSITION, &default_width, &default_height },
+  { "default-image-type",        TT_IMAGETYPE,  &default_type, NULL },
+  { "default-xresolution",       TT_DOUBLE,     &default_xresolution, NULL },
+  { "default-yresolution",       TT_DOUBLE,     &default_yresolution, NULL },
+  { "default-resolution-units",  TT_XUNIT,    &default_resolution_units, NULL },
+  { "plug-in",                   TT_XPLUGIN,    NULL, NULL },
+  { "plug-in-def",               TT_XPLUGINDEF, NULL, NULL },
+  { "menu-path",                 TT_XMENUPATH,  NULL, NULL },
+  { "device",                    TT_XDEVICE,    NULL, NULL },
+  { "session-info",              TT_XSESSIONINFO, NULL, NULL },
+  { "unit-info",                 TT_XUNITINFO,  NULL, NULL },
+  { "monitor-xresolution",       TT_DOUBLE,     &monitor_xres, NULL },
+  { "monitor-yresolution",       TT_DOUBLE,     &monitor_yres, NULL },
+  { "num-processors",            TT_INT,        &num_processors, NULL },
+  { "image-title-format",        TT_STRING,     &image_title_format, NULL },
+  { "parasite",                  TT_XPARASITE,  NULL, NULL },
+  { "global-paint-options",      TT_BOOLEAN,    &global_paint_options, NULL },
+  { "no-global-paint-options",   TT_BOOLEAN,    NULL, &global_paint_options },
+  { "module-load-inhibit",       TT_PATH,       &module_db_load_inhibit, NULL },
+  { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -328,7 +326,7 @@ gimp_system_rc_file ()
 }
 
 void
-init_parse_buffers ()
+parse_buffers_init ()
 {
   parse_info.buffer = g_new (char, 4096);
   parse_info.tokenbuf = parse_info.buffer + 2048;
@@ -370,7 +368,7 @@ parse_gimprc ()
     image_title_format = g_strdup(DEFAULT_IMAGE_TITLE_FORMAT);
 }
 
-void
+gboolean
 parse_gimprc_file (char *filename)
 {
   int status;
@@ -385,7 +383,7 @@ parse_gimprc_file (char *filename)
 
   parse_info.fp = fopen (filename, "rt");
   if (!parse_info.fp)
-    return;
+    return FALSE;
 
   if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print (_("parsing \"%s\"\n"), filename);
@@ -410,12 +408,16 @@ parse_gimprc_file (char *filename)
       g_print (_("error parsing: \"%s\"\n"), filename);
       g_print (_("  at line %d column %d\n"), parse_info.linenum, parse_info.charnum);
       g_print (_("  unexpected token: %s\n"), token_sym);
+
+      return FALSE;
     }
+
+  return TRUE;
 }
 
 static GList *
 g_list_findstr (GList *list,
-		char *str)
+		char  *str)
 {
   while (list)
     {
@@ -429,7 +431,7 @@ g_list_findstr (GList *list,
 
 void
 save_gimprc_strings (gchar *token,
-	     gchar *value)
+		     gchar *value)
 {
   gchar timestamp[40];  /* variables for parsing and updating gimprc */
   gchar *name;
@@ -1185,11 +1187,11 @@ parse_units (gpointer val1p,
     return ERROR;
   token = get_next_token ();
 
-  *((GUnit*)val1p) = UNIT_INCH;
-  for (i=UNIT_INCH; i<gimp_unit_get_number_of_units (); i++)
+  *((GUnit *) val1p) = UNIT_INCH;
+  for (i = UNIT_INCH; i < gimp_unit_get_number_of_units (); i++)
     if (strcmp (token_sym, gimp_unit_get_identifier (i)) == 0)
       {
-	*((GUnit*)val1p) = i;
+	*((GUnit *) val1p) = i;
 	break;
       }
 
@@ -2558,7 +2560,6 @@ open_backup_file (char *filename,
     g_free (oldfilename);
   return NULL;
 }
-
 
 char*
 gimprc_find_token (char *token)
