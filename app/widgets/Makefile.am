@@ -152,6 +152,8 @@ libappwidgets_a_sources = \
 	gimppreviewrenderergradient.h	\
 	gimppreviewrendererimage.c	\
 	gimppreviewrendererimage.h	\
+	gimppreviewrendererimagefile.c	\
+	gimppreviewrendererimagefile.h	\
 	gimppreviewrendererlayer.c	\
 	gimppreviewrendererlayer.h	\
 	gimppreviewrenderervectors.c	\

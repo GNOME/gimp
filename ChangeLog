@@ -1,3 +1,13 @@
+2004-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppreviewrendererimagefile.[ch]: added new preview
+	renderer class (has some disabled code from my GtkFileChooser tree
+	and behaves exactly as the default implementation).
+
+	* app/widgets/gimppreviewrenderer-utils.c: use it for GimpImagefiles.
+
 2004-03-02  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: Disable PF_*ARRAY for now. Addresses

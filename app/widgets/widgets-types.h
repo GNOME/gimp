@@ -43,6 +43,7 @@ typedef struct _GimpPreviewRendererDrawable  GimpPreviewRendererDrawable;
 typedef struct _GimpPreviewRendererGradient  GimpPreviewRendererGradient;
 typedef struct _GimpPreviewRendererLayer     GimpPreviewRendererLayer;
 typedef struct _GimpPreviewRendererImage     GimpPreviewRendererImage;
+typedef struct _GimpPreviewRendererImagefile GimpPreviewRendererImagefile;
 typedef struct _GimpPreviewRendererVectors   GimpPreviewRendererVectors;
 
 

@@ -30,12 +30,14 @@
 #include "core/gimpgradient.h"
 #include "core/gimplayer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimppreviewrendererbrush.h"
 #include "gimppreviewrendererlayer.h"
 #include "gimppreviewrenderergradient.h"
 #include "gimppreviewrendererimage.h"
+#include "gimppreviewrendererimagefile.h"
 #include "gimppreviewrenderervectors.h"
 
 
@@ -70,6 +72,10 @@ gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_VECTORS))
     {
       type = GIMP_TYPE_PREVIEW_RENDERER_VECTORS;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
+    {
+      type = GIMP_TYPE_PREVIEW_RENDERER_IMAGEFILE;
     }
 
   return type;
