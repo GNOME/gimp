@@ -22,6 +22,10 @@
 
 #include <glib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 #define CAN_HANDLE_RGB                  1 << 0
 #define CAN_HANDLE_GRAY                 1 << 1
 #define CAN_HANDLE_INDEXED              1 << 2
@@ -42,11 +46,8 @@ GimpExportReturnType gimp_export_image (gint32*,  /* image_ID             */
 					gchar*,   /* format name          */
 					gint);    /* plug_in_capabilities */
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #endif
-
-
-
-
-
-
-

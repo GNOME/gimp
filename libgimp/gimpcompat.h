@@ -19,7 +19,13 @@
 #ifndef __GIMPCOMPAT_H__
 #define __GIMPCOMPAT_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* some compatibility defines for older plug-ins */
+
+#ifndef GIMP_DISABLE_COMPAT_H
 
 #define gimp_attach_parasite	gimp_parasite_attach
 #define gimp_detach_parasite	gimp_parasite_detach
@@ -39,5 +45,11 @@
 #define gimp_image_enable_undo	gimp_image_undo_enable
 #define gimp_image_freeze_undo	gimp_image_undo_freeze
 #define gimp_image_thaw_undo	gimp_image_undo_thaw
+
+#endif /* GIMP_DISABLE_COMPAT_H */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMPCOMPAT_H__ */

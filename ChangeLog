@@ -1,3 +1,12 @@
+Sun Oct 24 14:58:25 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimpcompat.h: added GIMP_DISABLE_COMPAT_H test, and C++
+	guards
+
+	* tools/pdbgen/enumcode.pl
+	* libgimp/gimpenums.h
+	* libgimp/gimpexport.h: added C++ guards
+
 Sun Oct 24 23:22:09 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimpcompat.h: New file.

@@ -22,6 +22,9 @@
 #ifndef __GIMP_ENUMS_H__
 #define __GIMP_ENUMS_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 typedef enum
 {
@@ -419,5 +422,9 @@ typedef GimpPDBStatusType GStatusType;
 #define RUN_WITH_LAST_VALS GIMP_RUN_WITH_LAST_VALS
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_ENUMS_H__ */

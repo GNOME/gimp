@@ -117,6 +117,9 @@ print ENUMFILE <<HEADER;
 #ifndef $guard
 #define $guard
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 HEADER
 
@@ -184,6 +187,10 @@ foreach $xform (@xforms) {
 
 print ENUMFILE <<HEADER;
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* $guard */
 HEADER
