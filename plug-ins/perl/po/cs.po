@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.2.0\n"
 "POT-Creation-Date: Thu Dec 28 11:09:11 2000\n"
-"PO-Revision-Date: 2001-05-24 21:08+02:00\n"
+"PO-Revision-Date: 2001-07-21 15:37+0200\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr " = [chyba argumentu]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr "odpovídající funkce"
+msgstr " odpovídajících funkcí"
 
 #: Gimp/Fu.pm:0
 msgid ""
