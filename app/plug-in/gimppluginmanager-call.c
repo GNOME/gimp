@@ -24,10 +24,8 @@
 
 #include <gtk/gtk.h>
 
-#include <errno.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
@@ -162,7 +160,6 @@ static void plug_in_handle_proc_run       (GPProcRun         *proc_run);
 static void plug_in_handle_proc_return    (GPProcReturn      *proc_return);
 static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
-static void plug_in_write_rc              (const gchar       *filename);
 static void plug_in_init_file             (const gchar       *filename,
 					   gpointer           loader_data);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
@@ -415,7 +412,7 @@ plug_in_init (Gimp               *gimp,
       if (gimp->be_verbose)
 	g_print (_("writing \"%s\"\n"), filename);
 
-      plug_in_write_rc (filename);
+      plug_in_rc_write (plug_in_defs, filename);
     }
 
   g_free (filename);
@@ -650,15 +647,9 @@ plug_in_def_new (const gchar *prog)
 
   g_return_val_if_fail (prog != NULL, NULL);
 
-  plug_in_def = g_new (PlugInDef, 1);
+  plug_in_def = g_new0 (PlugInDef, 1);
 
-  plug_in_def->prog          = g_strdup (prog);
-  plug_in_def->proc_defs     = NULL;
-  plug_in_def->locale_domain = NULL;
-  plug_in_def->locale_path   = NULL;
-  plug_in_def->help_path     = NULL;
-  plug_in_def->mtime         = 0;
-  plug_in_def->query         = FALSE;
+  plug_in_def->prog = g_strdup (prog);
   
   return plug_in_def;
 }
@@ -671,12 +662,9 @@ plug_in_def_free (PlugInDef *plug_in_def,
   GSList *list;
 
   g_free (plug_in_def->prog);
-  if (plug_in_def->locale_domain)
-    g_free (plug_in_def->locale_domain);
-  if (plug_in_def->locale_path)
-    g_free (plug_in_def->locale_path);
-  if (plug_in_def->help_path)
-    g_free (plug_in_def->help_path);
+  g_free (plug_in_def->locale_domain);
+  g_free (plug_in_def->locale_path);
+  g_free (plug_in_def->help_path);
 
   if (free_proc_defs)
     {
@@ -2304,156 +2292,6 @@ plug_in_pop (void)
       current_write_buffer_index = 0;
       current_write_buffer        = NULL;
     }
-}
-
-static void
-plug_in_write_rc_string (FILE  *fp,
-			 gchar *str)
-{
-  fputc ('"', fp);
-
-  if (str)
-    while (*str)
-      {
-	if (*str == '\n')
-	  {
-	    fputc ('\\', fp);
-	    fputc ('n', fp);
-	  }
-	else if (*str == '\r')
-	  {
-	    fputc ('\\', fp);
-	    fputc ('r', fp);
-	  }
-	else if (*str == '\032') /* ^Z is problematic on Windows */
-	  {
-	    fputc ('\\', fp);
-	    fputc ('z', fp);
-	  }
-	else
-	  {
-	    if ((*str == '"') || (*str == '\\'))
-	      fputc ('\\', fp);
-	    fputc (*str, fp);
-	  }
-	str += 1;
-      }
-
-  fputc ('"', fp);
-}
-
-static void
-plug_in_write_rc (const gchar *filename)
-{
-  FILE          *fp;
-  PlugInDef     *plug_in_def;
-  PlugInProcDef *proc_def;
-  GSList        *tmp;
-  GSList        *tmp2;
-  gint i;
-
-  fp = fopen (filename, "w");
-  if (!fp)
-    return;
-
-  tmp = plug_in_defs;
-  while (tmp)
-    {
-      plug_in_def = tmp->data;
-      tmp = tmp->next;
-
-      if (plug_in_def->proc_defs)
-	{
-	  fprintf (fp, "(plug-in-def ");
-	  plug_in_write_rc_string (fp, plug_in_def->prog);
-	  fprintf (fp, " %ld", (long) plug_in_def->mtime);
-	  tmp2 = plug_in_def->proc_defs;
-	  if (tmp2)
-	    fprintf (fp, "\n");
-
-	  while (tmp2)
-	    {
-	      proc_def = tmp2->data;
-	      tmp2 = tmp2->next;
-
-	      fprintf (fp, "\t(proc-def \"%s\" %d\n",
-		       proc_def->db_info.name, proc_def->db_info.proc_type);
-	      fprintf (fp, "\t\t");
-	      plug_in_write_rc_string (fp, proc_def->db_info.blurb);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->db_info.help);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->db_info.author);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->db_info.copyright);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->db_info.date);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->menu_path);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->extensions);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->prefixes);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->magics);
-	      fprintf (fp, "\n\t\t");
-	      plug_in_write_rc_string (fp, proc_def->image_types);
-	      fprintf (fp, "\n\t\t%d %d\n",
-		       proc_def->db_info.num_args, proc_def->db_info.num_values);
-
-	      for (i = 0; i < proc_def->db_info.num_args; i++)
-		{
-		  fprintf (fp, "\t\t(proc-arg %d ",
-			   proc_def->db_info.args[i].arg_type);
-
-		  plug_in_write_rc_string (fp, proc_def->db_info.args[i].name);
-		  plug_in_write_rc_string (fp, proc_def->db_info.args[i].description);
-
-		  fprintf (fp, ")%s",
-			   (proc_def->db_info.num_values ||
-			    (i < (proc_def->db_info.num_args - 1))) ? "\n" : "");
-		}
-
-	      for (i = 0; i < proc_def->db_info.num_values; i++)
-		{
-		  fprintf (fp, "\t\t(proc-arg %d ",
-			   proc_def->db_info.values[i].arg_type);
-
-		  plug_in_write_rc_string (fp, proc_def->db_info.values[i].name);
-		  plug_in_write_rc_string (fp, proc_def->db_info.values[i].description);
-
-		  fprintf (fp, ")%s", (i < (proc_def->db_info.num_values - 1)) ? "\n" : "");
-		}
-
-	      fprintf (fp, ")");
-
-	      if (tmp2)
-		fprintf (fp, "\n");
-	    }
-	  
-	  if (plug_in_def->locale_domain)
-	    {
-	      fprintf (fp, "\n\t(locale-def \"%s\"", plug_in_def->locale_domain);
-	      if (plug_in_def->locale_path)
-		fprintf (fp, " \"%s\")", plug_in_def->locale_path);
-	      else
-		fprintf (fp, ")");
-	    }
-
-	  if (plug_in_def->help_path)
-	    {
-	      fprintf (fp, "\n\t(help-def \"%s\")", plug_in_def->help_path);
-	    }
-
-	  fprintf (fp, ")\n");
-
-	  if (tmp)
-	    fprintf (fp, "\n");
-	}
-      
-    }
-
-  fclose (fp);
 }
 
 static void

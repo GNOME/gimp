@@ -1,5 +1,15 @@
 2001-12-28  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc.c: write comment to top of gimprc.
+
+	* app/core/gimpscanconvert.c: removed redundant CLAMP statements.
+	
+	* app/plug-in/plug-in-rc.[ch]
+	* app/plug-in/plug-in.c: rewrote pluginrc scanner and moved the code 
+	that writes the pluginrc into plug-in-rc.c.
+
+2001-12-28  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpmagnifytool.c: calculate mouse movement in screen
 	coordinates. Reset threshold to default value when the Reset button
 	is pressed.

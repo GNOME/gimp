@@ -23,6 +23,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -49,6 +50,7 @@ static gboolean gimp_rc_deserialize                  (GObject      *object,
 static void     gimp_rc_serialize_changed_properties (GimpRc       *new,
                                                       GimpRc       *old,
                                                       gint          fd);
+static void     gimp_rc_write_header                 (gint          fd);
 static gboolean gimp_values_equal                    (const GValue *a,
                                                       const GValue *b);
 
@@ -145,6 +147,7 @@ gimp_rc_write_changes (GimpRc      *new,
       return FALSE;
     }
 
+  gimp_rc_write_header (fd);
   gimp_rc_serialize_changed_properties (new, old, fd);
   gimp_config_serialize_unknown_tokens (G_OBJECT (new), fd);
 
@@ -216,7 +219,31 @@ gimp_rc_serialize_changed_properties (GimpRc *new,
   g_free (property_specs);
   g_string_free (str, TRUE);
 }
-  
+
+static void
+gimp_rc_write_header (gint fd)
+{
+  gchar *filename;
+
+  const gchar *top = 
+    "# This is your personal gimprc file.  Any variable defined in this file\n"
+    "# takes precedence over the value defined in the system-wide gimprc:\n"
+    "# ";
+  const gchar *bottom =
+    "\n"
+    "# Most values can be set automatically within the GIMP, if you press\n"
+    "# the \"Save\" button after changing some options in the Preferences\n"
+    "# dialog.\n\n";
+
+  filename = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
+
+  write (fd, top, strlen (top));
+  write (fd, filename, strlen (filename));
+  write (fd, bottom, strlen (bottom));
+
+  g_free (filename);
+}
+
 static gboolean
 gimp_values_equal (const GValue *a,
                    const GValue *b)

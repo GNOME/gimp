@@ -252,7 +252,7 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
   guchar      *b;
   gint        *vals;
   gint         val;
-  gint         x, x2, w;
+  gint         x, w;
   gint         i, j;
 
   antialias  = sc->antialias;
@@ -312,11 +312,7 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
 	    }
 	  else
 	    {
-	      /*  bounds checking  */
-	      x = CLAMP (x, 0, widtha);
-	      x2 = CLAMP (GPOINTER_TO_INT (list->data), 0, widtha);
-
-	      w = x2 - x;
+	      w = GPOINTER_TO_INT (list->data) - x;
 
 	      if (w > 0)
 		{

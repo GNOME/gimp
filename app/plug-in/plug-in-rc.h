@@ -24,6 +24,8 @@
 
 
 gboolean  plug_in_rc_parse (const gchar *filename);
+gboolean  plug_in_rc_write (GSList      *proc_defs,
+                            const gchar *filename);
 
 
 #endif /* __PLUG_IN_RC_H__ */
