@@ -91,6 +91,7 @@ gimp_1_3_LDADD = \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(LIBART_LIBS)							\
@@ -121,6 +122,7 @@ gimp_console_1_3_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
 	$(GDK_PIXBUF_LIBS)						\
 	$(LIBART_LIBS)							\

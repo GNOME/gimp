@@ -35,6 +35,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
@@ -440,7 +441,7 @@ file_open_create_thumbnail (Gimp              *gimp,
           gimp_imagefile_update (imagefile, size);
           gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile), size, size);
 
-          if (imagefile->state < GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED)
+          if (imagefile->thumbnail->thumb_state < GIMP_THUMB_STATE_FAILED)
             gimp_imagefile_create_thumbnail (imagefile, size);
         }
 

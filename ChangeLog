@@ -1,3 +1,21 @@
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (SUBDIRS): added libgimpthumb.
+
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumbnail.c: basic functionality is implemented
+	and seems to be working.
+
+	* app/Makefile.am: link the application against libgimpthumb.
+
+	* app/core/core-types.h: include libgimpthumb/gimpthumb-types.h.
+
+	* app/core/gimpimagefile.[ch]: removed thumbnail handling routines
+	and use libgimpthumb instead. Fixes bug #127914.
+
+	* app/gui/file-open-dialog.c
+	* app/widgets/gimpdocumentview.c: changed accordingly.
+
 2003-12-07  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Updated.

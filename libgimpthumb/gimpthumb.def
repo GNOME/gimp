@@ -1,1 +1,18 @@
 EXPORTS
+	gimp_thumb_ensure_thumb_dirs
+	gimp_thumb_error_quark
+	gimp_thumb_file_test
+	gimp_thumb_find_thumb
+	gimp_thumb_init
+	gimp_thumb_name_from_uri
+	gimp_thumb_size_get_type
+	gimp_thumb_state_get_type
+	gimp_thumbnail_get_type
+	gimp_thumbnail_load_thumb
+	gimp_thumbnail_new
+	gimp_thumbnail_peek_image
+	gimp_thumbnail_peek_thumb
+	gimp_thumbnail_save_failure
+	gimp_thumbnail_save_thumb
+	gimp_thumbnail_set_filename
+	gimp_thumbnail_set_uri

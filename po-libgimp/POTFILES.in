@@ -14,6 +14,9 @@ libgimpbase/gimputils.c
 
 libgimpmodule/gimpmodule.c
 
+libgimpthumb/gimpthumb-utils.c
+libgimpthumb/gimpthumbnail.c
+
 libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c

@@ -22,6 +22,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmoduletypes.h"
+#include "libgimpthumb/gimpthumb-types.h"
 
 #include "base/base-types.h"
 

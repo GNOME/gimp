@@ -27,23 +27,7 @@
 #define __GIMP_IMAGEFILE_H__
 
 
-#include <time.h> /* time_t */
-
 #include "gimpviewable.h"
-
-
-typedef enum
-{
-  GIMP_IMAGEFILE_STATE_UNKNOWN,
-  GIMP_IMAGEFILE_STATE_REMOTE,
-  GIMP_IMAGEFILE_STATE_NOT_FOUND,
-  GIMP_IMAGEFILE_STATE_EXISTS,
-  GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND,
-  GIMP_IMAGEFILE_STATE_THUMBNAIL_EXISTS,
-  GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD,
-  GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED,
-  GIMP_IMAGEFILE_STATE_THUMBNAIL_OK
-} GimpImagefileState;
 
 
 #define GIMP_TYPE_IMAGEFILE            (gimp_imagefile_get_type ())
@@ -61,17 +45,7 @@ struct _GimpImagefile
   GimpViewable        parent_instance;
 
   Gimp               *gimp;
-
-  GimpImagefileState  state;
-
-  time_t              image_mtime;
-  gssize              image_size;
-
-  gint                width;
-  gint                height;
-  GimpImageType       type;
-  gint                n_layers;
-
+  GimpThumbnail      *thumbnail;
   gchar              *description;
   gboolean            static_desc;
 };

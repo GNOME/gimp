@@ -16,6 +16,7 @@ SUBDIRS = \
 	libgimpcolor		\
 	libgimpmath		\
 	libgimpmodule		\
+	libgimpthumb		\
 	libgimpwidgets		\
 	libgimp			\
 	app			\

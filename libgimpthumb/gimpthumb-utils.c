@@ -81,7 +81,8 @@ gimp_thumb_init (const gchar *creator,
   enum_class = g_type_class_ref (GIMP_TYPE_THUMB_SIZE);
 
   thumb_num_sizes = enum_class->n_values;
-  thumb_subdirs = g_new (gchar *, thumb_num_sizes);
+  thumb_sizes     = g_new (gint, thumb_num_sizes);
+  thumb_subdirs   = g_new (gchar *, thumb_num_sizes);
 
   for (i = 0, enum_value = enum_class->values;
        i < enum_class->n_values;
@@ -167,8 +168,8 @@ gimp_thumb_name_from_uri (const gchar    *uri,
 }
 
 gchar *
-gimp_thumb_find_png_thumb (const gchar   *uri,
-                           GimpThumbSize *size)
+gimp_thumb_find_thumb (const gchar   *uri,
+                       GimpThumbSize *size)
 {
   const gchar *name;
   gchar       *thumb_name;

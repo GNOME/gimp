@@ -1,3 +1,9 @@
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added files from libgimpthumb.
+
+	* de.po: minor updates to the german translation.
+
 2003-12-07  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: Updated italian translation

@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -375,7 +376,7 @@ gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
 {
   gimp_imagefile_update (imagefile, container_view->preview_size);
 
-  if (imagefile->state == GIMP_IMAGEFILE_STATE_NOT_FOUND)
+  if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_NOT_FOUND)
     {
       gimp_container_remove (container_view->container,
                              GIMP_OBJECT (imagefile));
