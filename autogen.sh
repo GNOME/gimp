@@ -54,13 +54,32 @@ case $CC in
 *xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
 esac
 
-aclocal $ACLOCAL_FLAGS
+if test -z "$ACLOCAL_FLAGS"; then
+
+        acdir=`aclocal --print-ac-dir`
+        m4list="gtk.m4 gettext.m4"
+
+        for file in $m4list
+        do
+                if [ ! -f "$acdir/$file" ]; then
+                        echo "WARNING: aclocal's directory is $acdir, but..."
+                        echo "         no file $acdir/$file"
+                        echo "         You may see fatal macro warnings below."
+                        echo "         If these files are installed in /some/dir, set the ACLOCAL_FLAGS "
+                        echo "         environment variable to \"-I /some/dir\", or install"
+                        echo "         $acdir/$file."
+                        echo ""
+                fi
+        done
+fi
 
 echo "Running gettextize...  Ignore non-fatal messages."
 # Hmm, we specify --force here, since otherwise things dont'
 # get added reliably, but we don't want to overwrite intl
 # while making dist.
 echo "no" | gettextize --copy --force
+
+aclocal $ACLOCAL_FLAGS
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
