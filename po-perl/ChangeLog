@@ -1,0 +1,189 @@
+2000-08-27  Sven Neumann  <sven@gimp.org>
+
+	Moved all po-files over to this place and migrated to
+	standard build process.
+
+Fri Aug 25 11:14:07 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+2000-06-04  Valek Filippov  <frob@df.ru>
+
+	* ru.po: Updated russian translation.
+
+Wed May 31 13:38:18 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+2000-05-26  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
+2000-05-23  Kjartan Maraas  <kmaraas@gnu.org>
+
+	* no.po: Updated Norwegian translation.
+	
+2000-05-23  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
+2000-05-22  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
+Mon May 22 11:54:43 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Fri May  5 21:49:29 CEST 2000  Marc Lehmann <pcg@goof.com>
+	
+        * $alltarget was never set (have to have a look at the logs).
+        Probably was responsible for the "gmo's don't build" problem.
+
+Thu Apr  6 22:38:51 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: msgmerge will no longer be called under any
+        circumstances (except for update.sh or make update-po).
+
+Wed Apr  5 06:02:58 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: possible fix for #8148. basically, nothing at all
+        will be done when MSGFMT == "no" or empty. Otherwise, msgmerge is
+        assumed to be in the path somewhere (just like po/Makefile.in.in
+        btw).
+
+2000-04-03  Sven Neumann  <sven@gimp.org>
+
+	* de.po: more updates
+
+2000-04-02  Sven Neumann  <sven@gimp.org>
+
+	* de.po: corrected a few entries
+
+Thu Mar 30 07:11:26 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: implemented Sven's suggestions (well, at least some
+        of them). The default target will invoke pxgettext, merges the .po
+        files and creates the .gmo files.
+
+2000-03-28  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* ja.po: updated Japanese translation.
+
+2000-03-27  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.PL: corrected the path to the example scripts
+	* de.po: msgmerge to uncomment the messages again
+
+2000-03-27  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
+	I've updated the pot-file and it seems that lots of strings have
+	vanished. Looks like something's wrong with my setup. The missing
+	strings are included as comments. Don't remove them!
+
+Wed Mar  8 22:51:30 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* fr.po: s/<Images>/<Image>/   
+		 s/<Boite a utils>/<Toolbox>/
+
+2000-03-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* ja.po: added japanese translation.
+
+Wed Mar  8 15:34:45 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* de.po: updated german translation (not very happy with all
+	translations, but it's a start...)
+
+Mon Mar  6 22:31:58 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Wed Mar  1 21:52:14 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Mon Feb 21 14:40:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* .cvsignore: shut up CVS
+
+Mon Feb 21 13:24:39 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: New file, should support the "standard" targets.
+        * update.sh: Sven wrote this better version.
+
+Mon Feb 21 01:15:28 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* .cvsignore: added a few files that shouldn't be in CVS
+
+Mon Feb 21 02:05:14 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* de.po: Updated translation.
+
+Sat Feb 19 23:39:03 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* update.sh: changed to _not_ update the .po files anymore
+        (as suggested by sven).
+
+Thu Feb 17 00:36:51 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Mon Feb 14 21:23:46 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Fri Feb 11 12:13:41 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Mon Feb  7 13:27:30 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* it.po: Updates from Daniele Medri <madrid@linux.it>
+
+Fri Feb  4 20:40:33 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Fri Jan 28 19:16:43 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Wed Jan 19 16:12:08 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Sun Jan 16 18:08:33 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Completed translation.
+
+Sat Jan 15 12:46:03 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Tue Jan 11 21:00:11 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+2000-01-08
+	* ru.po: Added Russian translation from 
+	Valek Filippov <frob@df.ru>
+
+Fri Jan  7 19:26:06 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+1999-12-08  Kjartan Maraas  <kmaraas@online.no>
+
+	* no.po: Added Norwegian translation.
+	
+Tue Dec  7 15:16:03 CET 1999  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Updated translation.
+
+Fri Dec  3 22:52:38 CET 1999  Stanislav Brabec  <utx@penguin.cz>
+
+	* cs.po: Added translation.
+

@@ -1,3 +1,14 @@
+2000-08-27  Sven Neumann  <sven@gimp.org>
+	
+	* Makefile.am
+	* configure.in
+	* po-perl: added new directory po-perl which takes care of 
+	i18n for gimp-perl the standard way. Tweaked pxgettext a little.
+	
+	* plug-ins/perl/Makefile.PL: disabled use of plug-ins/perl/po. 
+	Marc will take care of either removing the po directory or moving
+	the new stuff there.
+	
 2000-08-27 Alastair McKinstry <mckinstry@computer.org>
 
 	* configure.in: Added Irish (ga) to ALL_LINGUAS.

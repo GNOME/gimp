@@ -1,0 +1,3 @@
+PACKAGE = gimp-perl
+INSTALLSUBDIR = gimp
+include ../../gtk+/po/makefile.cygwin

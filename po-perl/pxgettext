@@ -1,0 +1,63 @@
+#!/usr/bin/perl
+
+# a lame attempt at xgettext for perl
+# no line numbers, yet
+
+# 5.005_02 in particular seems to have a BIG BUG
+# resulting in an endless loop and a memory leak in the 
+# regex machinery :(
+exit 0 unless ( $] >= 5.005_03 || $] <= 5.005 );
+
+undef $/;
+
+print <<'EOF';
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl VERSION\n"
+EOF
+
+print "\"POT-Creation-Date: ", scalar localtime(), "\\n\"\n";
+
+print <<'EOF';
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+EOF
+
+while (<>) {
+    $file = $ARGV;
+    $file =~ s/\.\.\///;
+
+    while (/(?:N|_)_\(?"((?:[^"\\]+|\\.)*)"\)?/sg) {
+       my $s = $1;
+       if ($s =~ /\n/) {
+          $e = "msgid \"\"\n";
+          for (split /\n/, $s) {
+             $e .= "\"$_\\n\"\n";
+          }
+       } else {
+          $e = "msgid \"$s\"\n";
+       }
+       $e .= "msgstr \"\"\n";
+
+       $fileposition = "#: $file:0\n";
+
+       push @{$entry{$e}}, $fileposition;
+    }
+}
+
+foreach $e (sort keys %entry) {
+    print @{$entry{$e}};
+    print $e;
+    print "\n";
+}
+
+

@@ -1,0 +1,1280 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl 1\n"
+"POT-Creation-Date: Sun Aug 27 18:38:09 2000\n"
+"PO-Revision-Date: 2000-02-01 17:32+0100\n"
+"Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
+"Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plug-ins/perl/examples/PDB:0
+msgid " (press Tab to complete)"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid " = [argument error]\n"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid " matching functions"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
+msgstr ""
+"les arguments d'interface sont\n"
+"   -o | --output <fichier>   écrire l'image sur disque, ne pas afficher\n"
+"   -i | --interact           permet à l'utilisateur d'éditer d'abord les "
+"valeurs\n"
+"les arguments de script sont\n"
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n"
+"                                      (for more info, see Gimp::Net(3))\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr "$_ : option incorrecte, essayez $0 --help\n"
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "$_: unknown/illegal file-save option"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
+"a-z and _ allowed"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "$s: not an integer\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "%s arguments for function '%s'"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "%s: procedural database execution failed"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "(UNINITIALIZED)"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "(none)"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ", %d bytes data]"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid ", authorization required"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr ""
+
+#: plug-ins/perl/examples/logulator:0
+#, fuzzy
+msgid "/Filters/Logulator"
+msgstr "<Image>/Filtres/Logomatic/Craie"
+
+#: plug-ins/perl/Perl-Server:0
+msgid "/Xtns/Perl"
+msgstr ""
+
+#: plug-ins/perl/examples/fire:0 plug-ins/perl/examples/glowing_steel:0
+#: plug-ins/perl/examples/innerbevel:0 plug-ins/perl/examples/povray:0
+#: plug-ins/perl/examples/stamps:0
+#, fuzzy
+msgid "/Xtns/Render"
+msgstr "<Toolbox>/Extensions/Synthèse/Briques"
+
+#: plug-ins/perl/examples/fire:0 plug-ins/perl/examples/glowing_steel:0
+#: plug-ins/perl/examples/innerbevel:0 plug-ins/perl/examples/povray:0
+#, fuzzy
+msgid "/Xtns/Render/Logos"
+msgstr "<Toolbox>/Extensions/Synthèse/Logos/Cadre intérieur"
+
+#: plug-ins/perl/examples/povray:0
+#, fuzzy
+msgid "/Xtns/Render/Povray"
+msgstr "<Toolbox>/Extensions/Synthèse/POV-Ray/Texture"
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "9x15bold"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr ""
+
+#: plug-ins/perl/examples/repdup:0
+#, fuzzy
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr "<Image>/Édition/Répéter & dupliquer"
+
+# Not too sure about this one.
+#: plug-ins/perl/examples/animate_cells:0
+#, fuzzy
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Image>/Filtres/Animation/Animer (superposition)"
+
+# Not too sure about this one.
+#: plug-ins/perl/examples/blowinout:0
+#, fuzzy
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Image>/Filtres/Animation/Animer (superposition)"
+
+#: plug-ins/perl/examples/frame_filter:0
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr ""
+
+#: plug-ins/perl/examples/gouge:0
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr ""
+
+#: plug-ins/perl/examples/colourtoalpha:0
+#, fuzzy
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr "<Image>/Filtres/Couleurs/Feu"
+
+#: plug-ins/perl/examples/fire:0
+#, fuzzy
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Image>/Filtres/Couleurs/Feu"
+
+#: plug-ins/perl/examples/map_to_gradient:0
+#, fuzzy
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Image>/Filtres/Couleurs/Feu"
+
+# bof...
+#: plug-ins/perl/examples/mirrorsplit:0
+#, fuzzy
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Image>/Filtres/Distorsions/Égratignures"
+
+# bof...
+#: plug-ins/perl/examples/scratches:0
+#, fuzzy
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr "<Image>/Filtres/Distorsions/Égratignures"
+
+# bof...
+#: plug-ins/perl/examples/windify:0
+#, fuzzy
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Filtres/Distorsions/Égratignures"
+
+#: plug-ins/perl/examples/gouge:0
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr ""
+
+#: plug-ins/perl/examples/gouge:0
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr ""
+
+#: plug-ins/perl/examples/warp-sharp:0
+#, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Filtres/Carte/Ombres (Xach)"
+
+#: plug-ins/perl/examples/blended2:0
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Image>/Filtres/Logomatic/Fondu"
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr ""
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filtres/Logomatic/Cristal"
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr ""
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr ""
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Filtres/Logomatic/Super Chrome"
+
+#: plug-ins/perl/examples/logulator:0
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr ""
+
+#: plug-ins/perl/examples/translogo:0
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<Image>/Filtres/Logomatic/Basique I"
+
+#: plug-ins/perl/examples/logulator:0
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr "<Image>/Filtres/Logomatic/Fondu"
+
+#: plug-ins/perl/examples/image_tile:0
+#, fuzzy
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Image>/Filtres/Carte/Carreler"
+
+#: plug-ins/perl/examples/pixelmap:0
+#, fuzzy
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Filtres/Carte/Ombres (Xach)"
+
+#: plug-ins/perl/examples/xachlego:0
+#, fuzzy
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr "<Image>/Filtres/Carte/Blocs (Xach)"
+
+#: plug-ins/perl/examples/xachshadow:0
+#, fuzzy
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Filtres/Carte/Ombres (Xach)"
+
+#: plug-ins/perl/examples/border:0
+#, fuzzy
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr "<Image>/Filtres/Divers/Moyenne du bord"
+
+#: plug-ins/perl/examples/gimpmagick:0
+#, fuzzy
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Image>/Filtres/Divers/Magique"
+
+#: plug-ins/perl/examples/ditherize:0
+#, fuzzy
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr "<Image>/Filtres/Bruit/Tramer"
+
+#: plug-ins/perl/examples/feedback:0
+#, fuzzy
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Image>/Filtres/Bruit/Feedback"
+
+#: plug-ins/perl/examples/xachvision:0
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filtres/Bruit/Vision (Xach)..."
+
+#: plug-ins/perl/examples/dust:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Filtres/Synthèse/Ajouter lueur"
+
+#: plug-ins/perl/examples/glowing_steel:0
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr "<Image>/Filtres/Synthèse/Ajouter lueur"
+
+#: plug-ins/perl/examples/glowing_steel:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr "<Image>/Filtres/Synthèse/Métal brossé"
+
+#: plug-ins/perl/examples/burst:0
+msgid "<Image>/Filters/Render/Burst..."
+msgstr ""
+
+#: plug-ins/perl/examples/fit-text:0
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr ""
+
+#: plug-ins/perl/examples/glowing_steel:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr "<Image>/Filtres/Synthèse/Souligner les contours"
+
+#: plug-ins/perl/examples/randomblends:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Image>/Filtres/Synthèse/Ajouter lueur"
+
+#: plug-ins/perl/examples/stampify:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Image>/Filtres/Synthèse/Timbre-poste"
+
+#: plug-ins/perl/examples/tex-to-float:0
+#, fuzzy
+msgid "<Image>/Filters/Render/TeX String..."
+msgstr "<Image>/Filtres/Synthèse/Texte TeX"
+
+#: plug-ins/perl/examples/terral_text:0
+#, fuzzy
+msgid "<Image>/Filters/Render/Terral Text..."
+msgstr "<Image>/Filtres/Synthèse/Texte à la Terral"
+
+#: plug-ins/perl/examples/perlotine:0
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filtres/Web/Perl-o-tine..."
+
+#: plug-ins/perl/examples/prep4gif:0
+#, fuzzy
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Filtres/Web/Préparer pour GIF"
+
+#: plug-ins/perl/examples/webify:0
+#, fuzzy
+msgid "<Image>/Filters/Web/Webify..."
+msgstr "<Image>/Filtres/Web/Webifier"
+
+#: plug-ins/perl/examples/centerguide:0
+#, fuzzy
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Image>/Guides/Centrer le guide"
+
+#: plug-ins/perl/examples/guidegrid:0
+#, fuzzy
+msgid "<Image>/Guides/Guide Grid..."
+msgstr "<Image>/Guides/Grille"
+
+#: plug-ins/perl/examples/guide_remove:0
+msgid "<Image>/Guides/Remove Guides"
+msgstr "<Image>/Guides/Supprimer les guides"
+
+#: plug-ins/perl/examples/guides_to_selection:0
+#, fuzzy
+msgid "<Image>/Guides/To Selection..."
+msgstr "<Image>/Filtres/Bruit/Vision (Xach)..."
+
+#: plug-ins/perl/examples/alpha2color:0
+#, fuzzy
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Image/Couleurs/Alpha vers couleur"
+
+#: plug-ins/perl/examples/clear_alpha:0
+#, fuzzy
+msgid "<Image>/Image/Alpha/Clear Alpha..."
+msgstr "<Image>/Image/Couleurs/Alpha vers couleur"
+
+#: plug-ins/perl/examples/layerfuncs:0
+msgid "<Image>/Layers/Center Layer"
+msgstr "<Image>/Calques/Centrer"
+
+#: plug-ins/perl/examples/frame_reshuffle:0
+#, fuzzy
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Calques/Centrer"
+
+#: plug-ins/perl/examples/roundrectsel:0
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr ""
+
+#: plug-ins/perl/examples/roundsel:0
+msgid "<Image>/Select/Round..."
+msgstr ""
+
+#: plug-ins/perl/examples/triangle:0
+#, fuzzy
+msgid "<Image>/Select/Triangle..."
+msgstr "<Image>/Filtres/Web/Perl-o-tine..."
+
+#: plug-ins/perl/examples/gap-vcr:0
+msgid "<Image>/Video/VCR Console..."
+msgstr ""
+
+#: plug-ins/perl/examples/view3d:0
+msgid "<Image>/View/3D Surface..."
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr ""
+
+#: plug-ins/perl/examples/billboard:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Toolbox>/Extensions/Synthèse/Timbres"
+
+#: plug-ins/perl/examples/sethspin:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Extensions/Synthèse/Timbres"
+
+#: plug-ins/perl/examples/Create_Images:0
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr ""
+
+#: plug-ins/perl/examples/example-fu:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr "<Toolbox>/Extensions/Explorateur PDB"
+
+#: plug-ins/perl/examples/homepage-logo:0
+msgid "<Toolbox>/Xtns/Homepage-Logo"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr "<Toolbox>/Extensions/Explorateur PDB"
+
+#: plug-ins/perl/examples/parasite-editor:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr "<Toolbox>/Extensions/Explorateur PDB"
+
+#: plug-ins/perl/examples/example-oo:0
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr ""
+
+#: plug-ins/perl/examples/perlcc:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr "<Toolbox>/Extensions/Perl/Panneau de contrôle"
+
+#: plug-ins/perl/Perl-Server:0
+msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Toolbox>/Extensions/Perl/Serveur"
+
+#: plug-ins/perl/examples/bricks:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr "<Toolbox>/Extensions/Synthèse/Briques"
+
+#: plug-ins/perl/examples/font_table:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr "<Toolbox>/Extensions/Synthèse/Timbres"
+
+#: plug-ins/perl/examples/goldenmean:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
+
+#: plug-ins/perl/examples/fire:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr "<Toolbox>/Extensions/Synthèse/Logos/Cadre intérieur"
+
+#: plug-ins/perl/examples/glowing_steel:0
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Extensions/Synthèse/Logos/Acier et lueur"
+
+#: plug-ins/perl/examples/innerbevel:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Toolbox>/Extensions/Synthèse/Logos/Cadre intérieur"
+
+#: plug-ins/perl/examples/pixelmap:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
+
+#: plug-ins/perl/examples/povray:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr "<Toolbox>/Extensions/Synthèse/POV-Ray/Texture"
+
+#: plug-ins/perl/examples/povray:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr "<Toolbox>/Extensions/Synthèse/POV-Ray/Texture"
+
+#: plug-ins/perl/examples/randomart1:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr "<Toolbox>/Extensions/Synthèse/Art aléatoire n°1"
+
+#: plug-ins/perl/examples/stamps:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Stamps..."
+msgstr "<Toolbox>/Extensions/Synthèse/Timbres"
+
+#: plug-ins/perl/examples/yinyang:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
+
+#: plug-ins/perl/examples/visual:0
+#, fuzzy
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Accelerator"
+msgstr ""
+
+#: plug-ins/perl/examples/sethspin:0
+msgid ""
+"An even number of frames is needed for spin back.\n"
+"Adjusted frames up to $frames"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Author"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "BG"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HELP:\n"
+"\n"
+"$help"
+msgstr ""
+
+#: plug-ins/perl/examples/example-fu:0
+msgid "Background"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Browse"
+msgstr "Parcourir"
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Brush Selection Dialog"
+msgstr "Sélection de pinceau"
+
+#: plug-ins/perl/examples/translogo:0
+msgid "Bumpmap"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Close"
+msgstr "Fermer"
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Color"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Command"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Copyright"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "DESCRIPTION"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Date/Version"
+msgstr "Date / Version"
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Defaults"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Description"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Edit"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
+msgstr ""
+"J'attendais un INT32 mais j'ai reçu \"%s\". Ajoutez '*1\" si vous voulez "
+"vraiment passer une chaîne."
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr "Erreur fatale : impossible de créer $tmp : $!\n"
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "FG"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Fileselector for $name"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Font Selection Dialog ($desc)"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Function Info"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Gradient Selection Dialog"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Help for "
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Help"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Illegal default font description for $function: $val\n"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Image Types"
+msgstr "Types d'images"
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Last Modified"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Load $name"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Load"
+msgstr "Charger"
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Menu Path"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "More..."
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "NAME"
+msgstr ""
+
+#: plug-ins/perl/examples/perlotine:0
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr "Je n'ai trouvé aucun guide horizontal ou vertical. Opération annulée."
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "OK"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Pattern Selection Dialog"
+msgstr "Sélection de motif"
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Plug-In Path"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Previous"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Reset all values to their default"
+msgstr "Remet tous les paramètres à leur valeur par défaut."
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Restore values to the previous ones"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Save $name"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Save"
+msgstr ""
+
+#: plug-ins/perl/examples/colorhtml:0
+msgid "Saving '$filename' as COLORHTML..."
+msgstr ""
+
+#: plug-ins/perl/examples/dataurl:0
+msgid "Saving '$filename' as DATAURL..."
+msgstr ""
+
+#: plug-ins/perl/examples/sethspin:0
+msgid "Seth Spin..."
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Shortcuts"
+msgstr ""
+
+#: plug-ins/perl/examples/sethspin:0
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
+
+#: plug-ins/perl/examples/sethspin:0
+msgid "Spin Layer SRC (250ms)"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Status"
+msgstr "État"
+
+#: plug-ins/perl/examples/PDB:0
+msgid "Synopsis"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "TYPE"
+msgstr ""
+
+#: plug-ins/perl/examples/translogo:0
+msgid "Text"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "This module was built without support for PDL."
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "Unable to convert a reference to type '%s'"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
+
+#: plug-ins/perl/examples/colorhtml:0 plug-ins/perl/examples/dataurl:0
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr ""
+
+#: plug-ins/perl/examples/dataurl:0
+msgid "Unable to read temporary image tile $tmp: $!"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "Unsupported argumenttype $type"
+msgstr ""
+
+#: plug-ins/perl/examples/visual:0
+msgid "Visual Scriptor"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "WARNING"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "WARNING: client tried to unlock without holding a lock"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "WARNING: shared locking requested but not implemented"
+msgstr ""
+
+#: plug-ins/perl/examples/translogo:0
+msgid "You can't run this script with an INDEXED image!!"
+msgstr ""
+
+#: plug-ins/perl/examples/translogo:0
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr ""
+
+#: plug-ins/perl/examples/prep4gif:0
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "[undefined]"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "[unfinished]\n"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "a color must have three components (array elements)"
+msgstr "une couleur doit avoir trois composantes (éléments de tableau)"
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepted tcp connection from "
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepted unix connection"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepting connections in $host"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepting connections on $unix_path"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "accepting connections on port $port"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "argument incompatible with type IMAGE"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "argument is not of type %s"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "argument type %s expected (not %s)"
+msgstr "le type d'argument attendu est %s, pas %s"
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "arguments to main not yet supported!"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "authorization failed: $r[1]\n"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "authorization ok, but: $r[1]\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "authorization required for tcp connections"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "authorization unnecessary"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr "appelé en tant que '%s', mais '%s' n'est pas enregistré dans la PDB"
+
+#: plug-ins/perl/Perl-Server:0
+msgid "closing connection %d (%d requests in %g seconds)"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "dunno how to pass arg type %d"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "dunno how to return param type %d"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+
+#: plug-ins/perl/examples/colorhtml:0 plug-ins/perl/examples/dataurl:0
+msgid "export failed"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "function '$exe' not found in this script (must be one of "
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "function name contains dashes instead of underscores"
+msgstr "le nom de la fonction contient des tirets au lieu de soulignements"
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "function/macro \"$name\" not found in $class"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "get current background colour from the gimp"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "get current foreground colour from the gimp"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "gimp procedure '%s' not found"
+msgstr "procédure Gimp \"%s\" non trouvée"
+
+#: plug-ins/perl/Net/Net.xs:0
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
+"gimp-1.1 and report this error"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "illegal command received, aborting connection"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "illegal parasite specification, arrayref expected"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "illegal parasite specification, expected three array members"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "illegal parasite specification, reference expected"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "illegal type for colour specification"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "interface '$interface_type' unsupported."
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "interface=... tag is no longer supported\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.xs:0
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "no additional information available, use --help\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Util.pm:0
+msgid "no font specified, using default"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "not enough"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "only blessed scalars accepted here"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "pdl height != region height"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "plug-in returned %d more values than expected"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "received QUIT request"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "register called with too many or wrong arguments\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "required callback 'net' not found\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "required callback 'query' not found\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "required callback 'run' not found\n"
+msgstr "le callback \"run\" est obligatoire mais est absent\n"
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "server going down..."
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "server requests authorization, but no authorization available\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "server version $Gimp::VERSION started"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Util.pm:0
+msgid "text string is empty"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Fu.pm:0
+msgid ""
+"the gtk perl module is required to run\n"
+"this plug-in in interactive mode\n"
+msgstr ""
+
+#: plug-ins/perl/examples/PDB:0
+msgid "too many arguments"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "too many"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unable to accept tcp connection: $!\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unable to accept unix connection: $!\n"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "unable to create '$fn': $!"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unable to create listening tcp socket: $!\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unable to create listening unix socket: $!\n"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr ""
+
+#: plug-ins/perl/Net/Net.pm:0
+msgid "unable to fork: $!"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Lib.xs:0
+msgid "unable to grok colour specification"
+msgstr ""
+
+#: plug-ins/perl/Gimp.pm:0 plug-ins/perl/blib/lib/Gimp.pm:0
+msgid "unable to open $rgb_db_path"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "unable to read '$fn': $!"
+msgstr ""
+
+#: plug-ins/perl/UI/UI.pm:0
+msgid "unable to read temporary file $tmp: $!"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "unauthorized command received, aborting connection"
+msgstr ""
+
+#: plug-ins/perl/examples/dataurl:0
+msgid "url size is too large ($max > 1024)\n"
+msgstr ""
+
+#: plug-ins/perl/Perl-Server:0
+msgid "wrong authorization, aborting connection"
+msgstr ""
+
+#: plug-ins/perl/Gimp/Compat.pm:0
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr ""
+
+#~ msgid "<Image>/Filters/Logulator/Bovination"
+#~ msgstr "<Image>/Filtres/Logomatic/Bovin"
+
+#~ msgid "<Image>/Filters/Logulator/Blended"
+#~ msgstr "<Image>/Filtres/Logomatic/Fondu"
+
+#~ msgid "<Image>/Filters/Logulator/Basic I"
+#~ msgstr "<Image>/Filtres/Logomatic/Basique I"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/Filtres/Logomatic/Fondu"
+
+#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
+#~ msgstr "<Image>/Filtres/Logomatic/Chauffé au rouge"
+
+#~ msgid "<Image>/Filters/Logulator/Basic II"
+#~ msgstr "<Image>/Filtres/Logomatic/Basique II"
+
+# BOF
+#~ msgid "<Image>/Filters/Logulator/Starburst"
+#~ msgstr "<Image>/Filtres/Logomatic/Explosion laser"
+
+#~ msgid "<Image>/Filters/Logulator/Comic Book"
+#~ msgstr "<Image>/Filtres/Logomatic/Bande dessinée"
+
+#~ msgid "<Image>/Filters/Logulator/Chalk"
+#~ msgstr "<Image>/Filtres/Logomatic/Craie"
+
+#~ msgid "<Image>/Filters/"
+#~ msgstr "<Image>/Filtres"

@@ -617,7 +617,6 @@ if test "x$enable_perl" != xno; then
       GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui"
       GIMPTOOL="../../gimptool"
       IN_GIMP=1
-      PERL_COMPAT_CRUFT="-DGIMP_ENABLE_COMPAT_CRUFT"
       EXTENSIVE_TESTS=0
 
       dnl include the autoconf fragment from there
@@ -632,8 +631,10 @@ if test "x$enable_perl" != xno; then
       $PERL Makefile.PL --writemakefile $perl_prefix
 EOF
       GIMP_PERL=perl
+      GIMP_PERL_PO=po-perl
    else
       GIMP_PERL=
+      GIMP_PERL_PO=
       AC_MSG_RESULT(no)
       AC_MSG_WARN(*** gimp-perl plug-in won't be build (perl5.004_04 or higher required) ***)
    fi
@@ -740,6 +741,7 @@ AC_SUBST(GIMP_THREAD_LIBS)
 AC_SUBST(GIMP_MP_FLAGS)
 AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
+AC_SUBST(GIMP_PERL_PO)	
 AC_SUBST(GIMPDOCS)
 AC_SUBST(GIMPINSTALL)
 AC_SUBST(HELPBROWSER)
@@ -827,6 +829,7 @@ build/Makefile
 build/win32/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
+po-perl/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 intl/Makefile
@@ -870,6 +873,7 @@ help/images/Makefile],
    chmod +x gimptool
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
+   sed -e "/POTFILES =/r po-perl/POTFILES" po-perl/Makefile.in > po-perl/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
    case "$CONFIG_FILES" in
