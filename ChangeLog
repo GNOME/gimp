@@ -1,3 +1,14 @@
+Sun Jun 14 01:01:49 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gif/gif.c: don't pop up dialog for informational
+	"Too many colors?" message
+
+	* Makefile.am: install gimp.m4 too
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.c: make the plugins aware of $gimpdir for gtkrc
+	parsing
+
 Thu Jun 11 23:37:06 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimp.m4: .m4 file for autoconf gimptool stuff

@@ -796,7 +796,7 @@ gimp_gtkrc ()
   if (!home_dir)
     return NULL;
 
-  sprintf (filename, "%s/.gimp/gtkrc", home_dir);
+  sprintf (filename, "%s/%s/gtkrc", home_dir, GIMPDIR);
 
   return filename;
 }
