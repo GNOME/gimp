@@ -1,5 +1,11 @@
 2004-02-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-undo-push.c (undo_pop_layer) (undo_push_layer)
+	* app/paint-funcs/paint-funcs.c (scale_region): ifdef'ed out debug
+	output.
+
+2004-02-09  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpitem.[ch]: added progress callback pointers to
 	gimp_item_scale() and its variants.
 

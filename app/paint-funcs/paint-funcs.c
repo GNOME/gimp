@@ -3071,8 +3071,10 @@ scale_region (PixelRegion           *srcPR,
   width = destPR->w;
   height = destPR->h;
 
+#if 0
   g_printerr ("scale_region: (%d x %d) -> (%d x %d)\n",
               orig_width, orig_height, width, height);
+#endif
 
   /*  find the ratios of old y to new y  */
   y_rat = (gdouble) orig_height / (gdouble) height;

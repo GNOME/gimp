@@ -1499,9 +1499,11 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  remove layer  */
 
-      g_print ("undo_pop_layer: taking ownership, size += "
-               "%" G_GINT64_FORMAT "\n",
-               gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+#if 0
+      g_printerr ("undo_pop_layer: taking ownership, size += "
+                  "%" G_GINT64_FORMAT "\n",
+                  gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+#endif
 
       undo->size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
 
@@ -1544,9 +1546,11 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  restore layer  */
 
-      g_print ("undo_pop_layer: dropping ownership, size -= "
-               "%" G_GINT64_FORMAT "\n",
-               gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+#if 0
+      g_printerr ("undo_pop_layer: dropping ownership, size -= "
+                  "%" G_GINT64_FORMAT "\n",
+                  gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
+#endif
 
       undo->size -= gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
 
