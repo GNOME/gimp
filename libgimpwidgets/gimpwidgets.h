@@ -36,6 +36,7 @@
 #include <libgimpwidgets/gimpcolorscales.h>
 #include <libgimpwidgets/gimpcolorselector.h>
 #include <libgimpwidgets/gimpcolorselect.h>
+#include <libgimpwidgets/gimpcolorselection.h>
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpfileselection.h>
 #include <libgimpwidgets/gimphelpui.h>

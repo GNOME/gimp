@@ -1,5 +1,19 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpcolorselection.[ch]: new widget derived from
+	GtkVBox. Contains a GimpColorNotebook, GimpColorScales and new/old
+	color areas as known from the app's color_notebook. Will soon be
+	used to replace GtkColorSelection for plug-ins.
+
+	* app/gui/color-notebook.c: removed most code and use a
+	GimpColorSelection widget. Moved the "Reset" button to the
+	action_area. Cleanup.
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/gui-vtable.c: #include "themes.h".
 
 2003-11-10  Michael Natterer  <mitch@gimp.org>
