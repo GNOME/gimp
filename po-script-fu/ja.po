@@ -1,14 +1,15 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (C) 2000,2003 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
-"PO-Revision-Date: 2002-03-13 18:32+0900\n"
-"Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
+"Project-Id-Version: gimp-script-fu HEAD\n"
+"POT-Creation-Date: 2003-04-26 02:20+0900\n"
+"PO-Revision-Date: 2003-04-08 13:11+0900\n"
+"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,9 +82,8 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1374
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu ファイル選択"
+msgstr "Script-Fu フォルダ選択"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu Font Selection"
@@ -101,18 +101,18 @@ msgstr "Script-Fu グラデーション選択"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 msgid "Date:"
 msgstr "日付:"
 
@@ -166,20 +166,17 @@ msgstr "DB ブラウザ"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:134
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
-#, fuzzy
 msgid "Search by _Name"
-msgstr "名前で検索"
+msgstr "名前で検索(_N)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:136
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
-#, fuzzy
 msgid "Search by _Blurb"
-msgstr "説明で検索\""
+msgstr "説明で検索(_B)\""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:216
-#, fuzzy
 msgid "_Search:"
-msgstr "検索:"
+msgstr "検索(_S):"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
@@ -202,22 +199,20 @@ msgid "Help:"
 msgstr "ヘルプ:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:606
-#, fuzzy
 msgid "Searching by name - please wait"
-msgstr "DB ブラウザ (名前で - お待ち下さい)"
+msgstr "名前で検索中 - お待ち下さい"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:629
-#, fuzzy
 msgid "Searching by blurb - please wait"
-msgstr "DB ブラウザ (説明で - お待ち下さい)"
+msgstr "説明で検索中 - お待ち下さい"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
-msgstr ""
+msgstr "検索中 - お待ちください"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
-msgstr ""
+msgstr "該当なし"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -821,11 +816,11 @@ msgstr "斑点密度 Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
-msgstr ""
+msgstr "発光を追加"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
-msgstr ""
+msgstr "発光の残像"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid ""
@@ -833,29 +828,29 @@ msgid ""
 "        A foreground text layer with transparency\n"
 "        and a background layer."
 msgstr ""
+"Burn-In: 全部で 2 つのレイヤーが必要です!\n"
+"         透明度のある前景のテキストレイヤーと\n"
+"         背景レイヤーが必要になります."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-#, fuzzy
 msgid "Corona Width"
-msgstr "帯幅"
+msgstr "コロナの幅"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
-#, fuzzy
 msgid "Fadeout"
-msgstr "縁の幅"
+msgstr "フェイドアウト"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#, fuzzy
 msgid "Fadeout Width"
-msgstr "縁の幅"
+msgstr "フェイドアウトの幅"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "GIF向けに下準備する"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "速さ(ピクセル/フレーム)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -1196,11 +1191,11 @@ msgstr "列"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
-msgstr ""
+msgstr "消す"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/Fill"
-msgstr ""
+msgstr "消す/塗りつぶす"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1236,6 +1231,7 @@ msgstr "生成したレイヤーマスクを適用"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "枠の大きさ"
 
@@ -1296,7 +1292,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/フォントマップ..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "枠"
 
@@ -1588,9 +1583,8 @@ msgid "Land Height"
 msgstr "島の高さ"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
-#, fuzzy
 msgid "Sea Depth"
-msgstr "影の深さ"
+msgstr "海の深さ"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "<Image>/Script-Fu/Render/Lava..."
@@ -1806,12 +1800,11 @@ msgstr "<Image>/Script-Fu/動画/波紋..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "黒くする"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "振るまい"
+msgstr "縁の処理"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -1823,13 +1816,12 @@ msgid "Rippling Strength"
 msgstr "波状強度"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-#, fuzzy
 msgid "Smear"
-msgstr "検索:"
+msgstr "こする"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "折り返す"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
@@ -1853,7 +1845,7 @@ msgstr "<Image>/Script-Fu/選択/ブラシ化..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "ブラシの名前"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -2025,7 +2017,7 @@ msgstr "ブレンド終了色"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr ""
+msgstr "六角形"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
@@ -2033,7 +2025,7 @@ msgstr "モザイクタイル型"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr ""
+msgstr "八角形"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"

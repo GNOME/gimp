@@ -1,36 +1,37 @@
 # GIMP libgimp message translation table
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (C) 2000,2003 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2002-03-13 18:29+0900\n"
-"Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
+"Project-Id-Version: gimp HEAD\n"
+"POT-Creation-Date: 2003-04-26 02:15+0900\n"
+"PO-Revision-Date: 2003-04-14 14:10+0900\n"
+"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "レイヤーを取り扱えません"
+msgstr "%s はレイヤーを取り扱えません"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "可視レイヤーの結合"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "レイヤーを取り扱えません"
+msgstr "%s はレイヤーのオフセット, サイズ, 透明度を扱えません"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "アニメーションフレームとしてしかレイヤーを取り扱えません"
+msgstr "%s はアニメーションフレームとしてのみレイヤーを取り扱えます"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -41,32 +42,32 @@ msgid "Flatten Image"
 msgstr "画像の統合"
 
 #: libgimp/gimpexport.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "透明情報を取り扱えません"
+msgstr "%s は透明情報を取り扱えません"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "RGB 画像しか取り扱えません"
+msgstr "%s は RGB 画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "RGB に変換"
 
 #: libgimp/gimpexport.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "グレースケール画像しか取り扱えません"
+msgstr "%s はグレースケール画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "グレースケールに変換"
 
 #: libgimp/gimpexport.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "インデックス画像しか取り扱えません"
+msgstr "%s はインデックス画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
@@ -77,24 +78,24 @@ msgstr ""
 "(良い結果を得たい場合には手動で行って下さい)"
 
 #: libgimp/gimpexport.c:252
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "RGB もしくはグレースケール画像しか取り扱えません"
+msgstr "%s は RGB もしくはグレースケール画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "RGB もしくはインデックス画像しか取り扱えません"
+msgstr "%s は RGB もしくはインデックス画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "グレースケールもしくはインデックス画像しか取り扱えません"
+msgstr "%s はグレースケールもしくはインデックス画像のみ取り扱えます"
 
 #: libgimp/gimpexport.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "アルファチャンネルが必要です"
+msgstr "%s はアルファチャンネルが必要です"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
@@ -107,15 +108,15 @@ msgstr "アルファチャンネルを追加"
 #. the dialog
 #: libgimp/gimpexport.c:357
 msgid "Confirm Save"
-msgstr ""
+msgstr "保存の確認"
 
 #: libgimp/gimpexport.c:361
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: libgimp/gimpexport.c:363
 msgid "Cancel"
-msgstr "取消"
+msgstr "キャンセル"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -124,7 +125,7 @@ msgstr "取消"
 #. the dialog
 #: libgimp/gimpexport.c:416
 msgid "Export File"
-msgstr "エクスポートファイル"
+msgstr "ファイルのエキスポート"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
@@ -132,18 +133,18 @@ msgstr "無視"
 
 #: libgimp/gimpexport.c:427
 msgid "Export"
-msgstr "エクスポート"
+msgstr "エキスポート"
 
 #: libgimp/gimpexport.c:453
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "以下の理由のため画像のエクスポートを行う必要があります:"
+msgstr "以下の理由のため画像のエキスポートを行う必要があります:"
 
 #. the footline
 #: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
-msgstr "エクスポート変換は元画像には影響を与えません."
+msgstr "エキスポート変換は元画像には影響を与えません."
 
 #: libgimp/gimpexport.c:595
 #, c-format
@@ -151,6 +152,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"レイヤーマスクを %s として保存しようとしています.\n"
+"この操作では, 可視レイヤーは保存されません."
 
 #: libgimp/gimpexport.c:600
 #, c-format
@@ -158,11 +161,13 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"チャンネル (保存済みの選択領域) を %s として保存しようとしています.\n"
+"この操作では, 可視レイヤーは保存されません."
 
 #: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
 #: libgimp/gimpmenu.c:598
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -201,7 +206,7 @@ msgstr ""
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "モジュールの読み込み: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
 #: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
@@ -211,118 +216,117 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
+"モジュール '%s' 読み込みエラー:\n"
+"%s"
 
 #: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "モジュールの読み込みを飛ばします: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
-msgstr ""
+msgstr "モジュールエラー"
 
 #: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
-msgstr ""
+msgstr "読み込み済み"
 
 #: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
-msgstr ""
+msgstr "読み込み失敗"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
-msgstr ""
+msgstr "未読み込み"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/前景色を使用"
+msgstr "/前景色"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
-#, fuzzy
 msgid "/Background Color"
-msgstr "/背景色を使用"
+msgstr "/背景色"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
-msgstr ""
+msgstr "/黒"
 
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
-msgstr ""
+msgstr "/白"
 
 #: libgimpwidgets/gimpcolorscales.c:141
 msgid "Scales"
-msgstr ""
+msgstr "スケール"
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr ""
+msgstr "色相"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
-msgstr ""
+msgstr "彩度"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
-msgstr ""
+msgstr "明度"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
-msgstr ""
+msgstr "赤"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr ""
+msgstr "緑"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
-msgstr ""
+msgstr "青"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
-msgstr ""
+msgstr "アルファ値"
 
 #: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "HTML で使われるような色の 16 進表記"
 
 #: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "16 進数による色表記(_X)"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "ファイル選択"
+msgstr "フォルダ選択"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -330,88 +334,87 @@ msgstr "ファイル選択"
 
 #: libgimpwidgets/gimpmemsizeentry.c:185
 msgid "KiloBytes"
-msgstr "KiloBytes"
+msgstr "キロバイト"
 
 #: libgimpwidgets/gimpmemsizeentry.c:186
 msgid "MegaBytes"
-msgstr "MegaBytes"
+msgstr "メガバイト"
 
 #: libgimpwidgets/gimpmemsizeentry.c:187
-#, fuzzy
 msgid "GigaBytes"
-msgstr "MegaBytes"
+msgstr "ギガバイト"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"eyedropper をクリックし, スクリーン上のどこかをクリックしてその場所の色を選択"
+"します."
 
 #: libgimpwidgets/gimpstock.c:101
-#, fuzzy
 msgid "Anchor"
-msgstr "インチ"
+msgstr "アンカー"
 
 #: libgimpwidgets/gimpstock.c:102
-#, fuzzy
 msgid "_Duplicate"
-msgstr "パイカ"
+msgstr "複製(_D)"
 
 #: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
-msgstr ""
+msgstr "編集(_E)"
 
 #: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
-msgstr ""
+msgstr "リンク済み"
 
 #: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
-msgstr ""
+msgstr "新規にペースト"
 
 #: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
-msgstr ""
+msgstr "選択領域内にペースト"
 
 #: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
-msgstr ""
+msgstr "リセット(_R)"
 
 #: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
-msgstr ""
+msgstr "可視"
 
 #: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "文字間隔(_E)"
 
 #: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "行間隔(_I)"
 
 #: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
-msgstr ""
+msgstr "サイズ変更(_R)"
 
 #: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
-msgstr ""
+msgstr "拡大縮小(_S)"
 
 #: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
-msgstr ""
+msgstr "切り抜き"
 
 #: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
-msgstr ""
+msgstr "変換"
 
 #: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
-msgstr ""
+msgstr "回転(_R)"
 
 #: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
-msgstr ""
+msgstr "せん断変形(_S)"
 
 #: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
@@ -430,96 +433,92 @@ msgid "Factor"
 msgstr "倍率"
 
 #: libgimpwidgets/gimpwidgets.c:977
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"\"時間\" ボタンが押されていない場合には, この値を乱数の種として用います - そ"
-"うすることで, 特定の \"乱数\" 操作を行うことができます"
+"この値を乱数の種として用います - そうすることで, 特定の \"乱数\" 操作を行うこ"
+"とができます"
 
 #: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
-msgstr ""
+msgstr "乱数化(_R)"
 
 #: libgimpwidgets/gimpwidgets.c:992
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"現在時刻をもとにした乱数を生成します - 十分な精度の乱数を得ることができるで"
-"しょう"
+msgstr "生成された乱数で、乱数生成の種を取得します"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "色覚障害シミュレーションフィルタ (Brettel-Vienot-Mollon アルゴリズム)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "色覚障害の視覚"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "色覚障害のタイプ"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "なし (一般的な色覚)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "第一色覚障害 (赤に無感覚)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "第二色覚障害 (緑に無感覚)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "第三色覚障害 (青に無感覚)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "ガンマ値 色表示フィルタ"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "ガンマ値"
 
 #: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
-msgstr ""
+msgstr "ガンマ値:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "ハイコントラスト カラー表示フィルタ"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "コントラスト"
 
 #: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "コントラストサイクル:"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Painter 式の色選択"
 
 #: modules/colorsel_triangle.c:182
 msgid "_Triangle"
-msgstr ""
+msgstr "三角形(_T)"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "水彩色形式の色選択"
 
 #: modules/colorsel_water.c:176
 msgid "_Watercolor"
-msgstr ""
+msgstr "水彩色(_W)"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "圧力"
 
 #, fuzzy
 #~ msgid "_Time"
