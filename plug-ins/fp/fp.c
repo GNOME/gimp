@@ -57,7 +57,7 @@ query ()
   int nargs = sizeof (args) / sizeof (args[0]);
   int nreturn_vals = 0;
   
-  gimp_install_procedure ("Filter Pack Simulation",
+  gimp_install_procedure ("plug_in_filter_pack",
 			  "Allows the user to change H, S, or C with many previews",
 			  "Then something else here",
 			  "Pavel Grinfeld (pavel@ml.com)",

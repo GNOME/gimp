@@ -1,3 +1,7 @@
+Mon Jul 27 12:27:47 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/fp/fp.c: make PDB entry for filter pack saner
+
 Sun Jul 26 23:47:33 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/blend.c
