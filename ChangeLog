@@ -1,3 +1,9 @@
+Tue Jan 27 22:31:00 PST 1998 Raph Levien <raph@acm.org>
+
+	* app/gimage_mask.c: hacked around fractional pixel errors in
+ 	paint_core_subsample_mask, fixing the "Stroked pixel bug" posted
+ 	by Ben Jackson on 14 Jan 1998 to gimp-developer.
+
 Tue Jan 27 10:21:00 PST 1998 Raph Levien <raph@acm.org>
 
 	* app/gimage.c: fixed bug in image display with all channels
