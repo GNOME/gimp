@@ -1403,7 +1403,7 @@ static ProcRecord drawable_thumbnail_proc =
 {
   "gimp_drawable_thumbnail",
   "Get a thumbnail of a drawable.",
-  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixles are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the drawable has one.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the drawable has one.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",
