@@ -166,33 +166,36 @@ run (const gchar      *name,
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS &&
+      gimp_drawable_is_rgb (drawable->drawable_id) &&
+      gimp_drawable_is_layer (drawable->drawable_id))
     {
+      gboolean preserve_trans;
+
       gimp_image_undo_group_start (image_ID);
 
       /*  Add alpha if not present */
       gimp_layer_add_alpha (drawable->drawable_id);
+
+      /*  Reget the drawable, bpp might have changed  */
       drawable = gimp_drawable_get (drawable->drawable_id);
 
-      /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable->drawable_id) &&
-          gimp_drawable_is_layer (drawable->drawable_id))
-        {
-          gimp_progress_init (_("Removing color..."));
-          gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
-        }
+      /*  Unset 'Keep transparency'  */
+      preserve_trans = gimp_layer_get_preserve_trans (drawable->drawable_id);
+      gimp_layer_set_preserve_trans (drawable->drawable_id, FALSE);
 
-      gimp_drawable_detach (drawable);
+      gimp_progress_init (_("Removing color..."));
+      gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
+
+      gimp_layer_set_preserve_trans (drawable->drawable_id, preserve_trans);
 
       gimp_image_undo_group_end (image_ID);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
-  else
-    {
-      gimp_drawable_detach (drawable);
-    }
+
+  gimp_drawable_detach (drawable);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_set_data ("plug_in_colortoalpha", &pvals, sizeof (pvals));
