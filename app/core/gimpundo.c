@@ -163,9 +163,7 @@ gimp_undo_init (GimpUndo *undo)
 static void
 gimp_undo_finalize (GObject *object)
 {
-  GimpUndo *undo;
-
-  undo = GIMP_UNDO (object);
+  GimpUndo *undo = GIMP_UNDO (object);
 
   if (undo->preview_idle_id)
     {
@@ -186,12 +184,8 @@ static gint64
 gimp_undo_get_memsize (GimpObject *object,
                        gint64     *gui_size)
 {
-  GimpUndo *undo;
-  gint64    memsize = 0;
-
-  undo = GIMP_UNDO (object);
-
-  memsize += undo->size;
+  GimpUndo *undo    = GIMP_UNDO (object);
+  gint64    memsize = undo->size;
 
   if (undo->preview)
     *gui_size += temp_buf_get_memsize (undo->preview);
@@ -208,9 +202,7 @@ gimp_undo_get_popup_size (GimpViewable *viewable,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  GimpUndo *undo;
-
-  undo = GIMP_UNDO (viewable);
+  GimpUndo *undo = GIMP_UNDO (viewable);
 
   if (undo->preview &&
       (undo->preview->width > width || undo->preview->height > height))
@@ -229,9 +221,7 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpUndo *undo;
-
-  undo = GIMP_UNDO (viewable);
+  GimpUndo *undo = GIMP_UNDO (viewable);
 
   if (undo->preview)
     {
@@ -359,9 +349,7 @@ gimp_undo_create_preview (GimpUndo  *undo,
 static gboolean
 gimp_undo_create_preview_idle (gpointer data)
 {
-  GimpUndo *undo;
-
-  undo = GIMP_UNDO (data);
+  GimpUndo *undo = GIMP_UNDO (data);
 
   if (undo == gimp_undo_stack_peek (undo->gimage->undo_stack))
     {
