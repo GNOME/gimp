@@ -571,7 +571,7 @@ polygon_write_csim(Object_t *obj, gpointer param, OutputFunc_t output)
    Polygon_t *polygon = ObjectToPolygon(obj);
    GList     *p;
 
-   output(param, "\"POLY\" COORDS=\"");
+   output(param, "\"poly\" coords=\"");
    for (p = polygon->points; p; p = p->next) {
       GdkPoint *point = (GdkPoint*) p->data;
       output(param, "%d,%d", point->x, point->y);

@@ -319,7 +319,7 @@ static void
 circle_write_csim(Object_t *obj, gpointer param, OutputFunc_t output)
 {
    Circle_t *circle = ObjectToCircle(obj);
-   output(param, "\"CIRCLE\" COORDS=\"%d,%d,%d\"", circle->x, circle->y,
+   output(param, "\"circle\" coords=\"%d,%d,%d\"", circle->x, circle->y,
 	  circle->r);
 }
 

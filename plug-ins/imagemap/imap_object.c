@@ -953,22 +953,22 @@ object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
 
-      output(param, "<AREA SHAPE=");
+      output(param, "<area shape=");
       obj->class->write_csim(obj, param, output);
       if (*obj->comment)
-	 output(param, " ALT=\"%s\"", obj->comment);
+	 output(param, " alt=\"%s\"", obj->comment);
       if (*obj->target)
-	 output(param, " TARGET=\"%s\"", obj->target);
+	 output(param, " target=\"%s\"", obj->target);
       if (*obj->mouse_over)
-	 output(param, " onMouseover=\"%s\"", obj->mouse_over);
+	 output(param, " onmouseover=\"%s\"", obj->mouse_over);
       if (*obj->mouse_out)
-	 output(param, " onMouseout=\"%s\"", obj->mouse_out);
+	 output(param, " onmouseout=\"%s\"", obj->mouse_out);
       if (*obj->focus)
-	 output(param, " onFocus=\"%s\"", obj->focus);
+	 output(param, " onfocus=\"%s\"", obj->focus);
       if (*obj->blur)
-	 output(param, " onBlur=\"%s\"", obj->blur);
+	 output(param, " onblur=\"%s\"", obj->blur);
 
-      output(param, " HREF=\"%s\">\n", obj->url);
+      output(param, " href=\"%s\">\n", obj->url);
    }
 }
 

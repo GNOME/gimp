@@ -801,10 +801,10 @@ save_as_csim(gpointer param, OutputFunc_t output)
    char *p;
    gchar *description;
    
-   output(param, "<IMG SRC=\"%s\" WIDTH=%d HEIGHT=%d BORDER=0 "
-	  "USEMAP=\"#%s\">\n\n", _map_info.image_name,
+   output(param, "<img src=\"%s\" width=%d height=%d border=0 "
+	  "usemap=\"#%s\">\n\n", _map_info.image_name,
 	  _image_width, _image_height, _map_info.title);
-   output(param, "<MAP NAME=\"%s\">\n", _map_info.title);
+   output(param, "<map name=\"%s\">\n", _map_info.title);
    output(param, 
 	  "<!-- #$-:Image Map file created by GIMP Imagemap Plugin -->\n");
    output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
@@ -820,9 +820,9 @@ save_as_csim(gpointer param, OutputFunc_t output)
    
    object_list_write_csim(_shapes, param, output);
    if (*_map_info.default_url)
-      output(param, "<AREA SHAPE=\"DEFAULT\" HREF=\"%s\">\n",
+      output(param, "<area shape=\"default\" href=\"%s\">\n",
 	     _map_info.default_url);
-   output(param, "</MAP>\n");
+   output(param, "</map>\n");
 }
 
 static void

@@ -459,7 +459,7 @@ static void
 rectangle_write_csim(Object_t *obj, gpointer param, OutputFunc_t output)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
-   output(param, "\"RECT\" COORDS=\"%d,%d,%d,%d\"", rectangle->x, rectangle->y,
+   output(param, "\"rect\" coords=\"%d,%d,%d,%d\"", rectangle->x, rectangle->y,
 	  rectangle->x + rectangle->width, rectangle->y + rectangle->height);
 }
 
