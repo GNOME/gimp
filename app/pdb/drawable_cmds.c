@@ -29,6 +29,7 @@
 
 #include "channel.h"
 #include "drawable.h"
+#include "gimpdrawablepreview.h"
 #include "gimplayermask.h"
 #include "layer.h"
 #include "pdb_glue.h"
@@ -1406,10 +1407,7 @@ drawable_thumbnail_invoker (Argument *args)
 	  else
 	    req_width = (req_height * dwidth) / dheight;
     
-	  if (GIMP_IS_LAYER (drawable))
-	    buf = gimp_layer_preview (GIMP_LAYER (drawable), req_width, req_height);
-	  else
-	    buf = gimp_channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
+	  buf = gimp_drawable_preview (drawable, req_width, req_height);
     
 	  num_pixels = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_new (guint8, num_pixels);

@@ -482,10 +482,7 @@ HELP
       else
 	req_width = (req_height * dwidth) / dheight;
 
-      if (GIMP_IS_LAYER (drawable))
-	buf = gimp_layer_preview (GIMP_LAYER (drawable), req_width, req_height);
-      else
-	buf = gimp_channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
+      buf = gimp_drawable_preview (drawable, req_width, req_height);
 
       num_pixels = buf->height * buf->width * buf->bytes;
       thumbnail_data = g_new (guint8, num_pixels);
@@ -499,8 +496,8 @@ CODE
     );
 }
 
-@headers = qw("gimplayermask.h" "drawable.h" "pdb_glue.h" "tile.h"
-	      "tile_manager.h" "temp_buf.h");
+@headers = qw("gimpdrawablepreview.h" "gimplayermask.h" "drawable.h"
+	      "pdb_glue.h" "tile.h" "tile_manager.h" "temp_buf.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

@@ -140,12 +140,5 @@ gboolean        gimp_layer_has_alpha           (GimpLayer        *layer);
 gboolean        gimp_layer_is_floating_sel     (GimpLayer        *layer);
 gboolean        gimp_layer_linked              (GimpLayer        *layer);
 
-TempBuf       * gimp_layer_preview             (GimpLayer        *layer, 
-						gint              width, 
-						gint              height);
-TempBuf       * gimp_layer_mask_preview        (GimpLayer        *layer, 
-						gint              width, 
-						gint              height);
-
 
 #endif /* __GIMP_LAYER_H__ */

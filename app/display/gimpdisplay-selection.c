@@ -46,18 +46,23 @@
 
 
 /* static function prototypes */
-static GdkPixmap *create_cycled_ants_pixmap (GdkWindow *, gint);
-static void    cycle_ant_colors            (Selection *);
+static GdkPixmap * create_cycled_ants_pixmap (GdkWindow  *window,
+					      gint        depth);
+static void        cycle_ant_colors          (Selection  *);
 
-static void    selection_draw              (Selection *);
-static void    selection_transform_segs    (Selection *, BoundSeg *, GdkSegment *, int);
-static void    selection_generate_segs     (Selection *);
-static void    selection_free_segs         (Selection *);
-static gint    selection_march_ants        (gpointer);
-static gint    selection_start_marching    (gpointer);
+static void        selection_draw            (Selection  *);
+static void        selection_transform_segs  (Selection  *,
+					      BoundSeg   *,
+					      GdkSegment *,
+					      gint        );
+static void        selection_generate_segs   (Selection  *);
+static void        selection_free_segs       (Selection  *);
+static gint        selection_march_ants      (gpointer    );
+static gint        selection_start_marching  (gpointer    );
 
-GdkPixmap *marching_ants[9] = { NULL };
-GdkPixmap *cycled_ants_pixmap = NULL;
+
+GdkPixmap * marching_ants[9]  = { NULL };
+GdkPixmap * cycled_ants_pixmap = NULL;
 
 
 /*********************************/
@@ -65,16 +70,16 @@ GdkPixmap *cycled_ants_pixmap = NULL;
 /*********************************/
 
 static GdkPixmap *
-create_cycled_ants_pixmap (GdkWindow *win,
+create_cycled_ants_pixmap (GdkWindow *window,
 			   gint       depth)
 {
   GdkPixmap *pixmap;
-  GdkGC *gc;
-  GdkColor col;
-  int i, j;
+  GdkGC     *gc;
+  GdkColor   col;
+  gint       i, j;
 
-  pixmap = gdk_pixmap_new (win, 8, 8, depth);
-  gc = gdk_gc_new (win);
+  pixmap = gdk_pixmap_new (window, 8, 8, depth);
+  gc = gdk_gc_new (window);
 
   for (i = 0; i < 8; i++)
     for (j = 0; j < 8; j++)
@@ -93,8 +98,8 @@ create_cycled_ants_pixmap (GdkWindow *win,
 static void
 cycle_ant_colors (Selection *select)
 {
-  int i;
-  int index;
+  gint i;
+  gint index;
 
   for (i = 0; i < 8; i++)
     {
@@ -110,11 +115,13 @@ cycle_ant_colors (Selection *select)
 
 static void
 selection_add_point (GdkPoint *points[8],
-		     gint max_npoints[8],
-		     gint npoints[8],
-		     gint x, gint y)
+		     gint      max_npoints[8],
+		     gint      npoints[8],
+		     gint      x,
+		     gint      y)
 {
   gint i, j;
+
   j = (x - y) & 7;
 
   i = npoints[j]++;

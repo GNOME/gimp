@@ -26,6 +26,7 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "layer.h"
@@ -59,20 +60,20 @@ struct _LayerSelect
 
 
 /*  layer widget function prototypes  */
-static void layer_select_advance    (LayerSelect *layer_select, 
-				     gint         move);
-static void layer_select_forward    (LayerSelect *layer_select);
-static void layer_select_backward   (LayerSelect *layer_select);
-static void layer_select_end        (LayerSelect *layer_select, 
-				     guint32      time);
-static void layer_select_set_gimage (LayerSelect *layer_select, 
-				     GImage      *gimage);
-static void layer_select_set_layer  (LayerSelect *layer_select);
-static gint layer_select_events     (GtkWidget   *widget, 
-				     GdkEvent    *event);
-static gint preview_events          (GtkWidget   *widget, 
-				     GdkEvent    *event);
-static void preview_redraw          (LayerSelect *layer_select);
+static void   layer_select_advance    (LayerSelect *layer_select, 
+				       gint         move);
+static void   layer_select_forward    (LayerSelect *layer_select);
+static void   layer_select_backward   (LayerSelect *layer_select);
+static void   layer_select_end        (LayerSelect *layer_select, 
+				       guint32      time);
+static void   layer_select_set_gimage (LayerSelect *layer_select, 
+				       GImage      *gimage);
+static void   layer_select_set_layer  (LayerSelect *layer_select);
+static gint   layer_select_events     (GtkWidget   *widget, 
+				       GdkEvent    *event);
+static gint   preview_events          (GtkWidget   *widget, 
+				       GdkEvent    *event);
+static void   preview_redraw          (LayerSelect *layer_select);
 
 
 /*
@@ -457,7 +458,7 @@ preview_redraw (LayerSelect *layer_select)
       offx = (gint) (layer_select->ratio * off_x);
       offy = (gint) (layer_select->ratio * off_y);
 
-      preview_buf = gimp_layer_preview (layer, w, h);
+      preview_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer), w, h);
       preview_buf->x = offx;
       preview_buf->y = offy;
 

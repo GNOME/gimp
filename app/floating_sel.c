@@ -343,7 +343,7 @@ floating_sel_restore (GimpLayer *layer,
 
 void
 floating_sel_rigor (GimpLayer *layer,
-		    gint       undo)
+		    gboolean   undo)
 {
   GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
@@ -361,7 +361,7 @@ floating_sel_rigor (GimpLayer *layer,
 
 void
 floating_sel_relax (GimpLayer *layer,
-		    gint       undo)
+		    gboolean   undo)
 {
   GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
@@ -384,7 +384,7 @@ floating_sel_composite (GimpLayer *layer,
 			gint       y,
 			gint       w,
 			gint       h,
-			gint       undo)
+			gboolean   undo)
 {
   PixelRegion  fsPR;
   GImage      *gimage;
@@ -483,10 +483,10 @@ floating_sel_composite (GimpLayer *layer,
 
 BoundSeg *
 floating_sel_boundary (GimpLayer *layer,
-		       gint      *num_segs)
+		       gint      *n_segs)
 {
   PixelRegion bPR;
-  int i;
+  gint        i;
 
   if (layer->fs.boundary_known == FALSE)
     {
@@ -515,7 +515,8 @@ floating_sel_boundary (GimpLayer *layer,
       layer->fs.boundary_known = TRUE;
     }
 
-  *num_segs = layer->fs.num_segs;
+  *n_segs = layer->fs.num_segs;
+
   return layer->fs.segs;
 }
 

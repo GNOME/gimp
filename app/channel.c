@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
@@ -50,16 +51,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_channel_class_init      (GimpChannelClass *klass);
-static void      gimp_channel_init            (GimpChannel      *channel);
-static void      gimp_channel_destroy         (GtkObject        *object);
-
-static TempBuf * gimp_channel_preview_private (GimpChannel *channel,
-					       gint         width,
-					       gint         height);
+static void   gimp_channel_class_init (GimpChannelClass *klass);
+static void   gimp_channel_init       (GimpChannel      *channel);
+static void   gimp_channel_destroy    (GtkObject        *object);
 
 
-static GimpDrawableClass *parent_class = NULL;
+static GimpDrawableClass * parent_class = NULL;
 
 
 GtkType
@@ -102,11 +99,44 @@ gimp_channel_class_init (GimpChannelClass *klass)
 static void
 gimp_channel_init (GimpChannel *channel)
 {
+  gimp_rgba_set (&channel->color, 0.0, 0.0, 0.0, 1.0);
+
+  channel->show_masked = FALSE;
+
+  /*  Selection mask variables  */
+  channel->boundary_known = TRUE;
+  channel->segs_in        = NULL;
+  channel->segs_out       = NULL;
+  channel->num_segs_in    = 0;
+  channel->num_segs_out   = 0;
+  channel->empty          = TRUE;
+  channel->bounds_known   = TRUE;
+  channel->x1             = 0;
+  channel->y1             = 0;
+  channel->x2             = 0;
+  channel->y2             = 0;
+  
 }
 
-/**************************/
-/*  Function definitions  */
-/**************************/
+static void
+gimp_channel_destroy (GtkObject *object)
+{
+  GimpChannel *channel;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (GIMP_IS_CHANNEL (object));
+
+  channel = GIMP_CHANNEL (object);
+
+  /* free the segments?  */
+  if (channel->segs_in)
+    g_free (channel->segs_in);
+  if (channel->segs_out)
+    g_free (channel->segs_out);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
 static void
 gimp_channel_validate (TileManager *tm,
@@ -139,17 +169,8 @@ gimp_channel_new (GimpImage     *gimage,
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
-  channel->empty          = TRUE;
-  channel->segs_in        = NULL;
-  channel->segs_out       = NULL;
-  channel->num_segs_in    = 0;
-  channel->num_segs_out   = 0;
-  channel->bounds_known   = TRUE;
-  channel->boundary_known = TRUE;
-  channel->x1             = 0;
-  channel->y1             = 0;
-  channel->x2             = width;
-  channel->y2             = height;
+  channel->x2 = width;
+  channel->y2 = height;
 
   return channel;
 }
@@ -227,7 +248,7 @@ gimp_channel_get_color (const GimpChannel *channel)
 
   return &channel->color;
 }
- 
+
 gint
 gimp_channel_get_opacity (const GimpChannel *channel)
 {
@@ -247,26 +268,6 @@ gimp_channel_set_opacity (GimpChannel *channel,
   opacity = CLAMP (opacity, 0, 100);
 
   channel->color.a = opacity / 100.0;
-}
-
-static void
-gimp_channel_destroy (GtkObject *object)
-{
-  GimpChannel *channel;
-
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_CHANNEL (object));
-
-  channel = GIMP_CHANNEL (object);
-
-  /* free the segments?  */
-  if (channel->segs_in)
-    g_free (channel->segs_in);
-  if (channel->segs_out)
-    g_free (channel->segs_out);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 void
@@ -434,92 +435,6 @@ gimp_channel_toggle_visibility (GimpChannel *channel)
   GIMP_DRAWABLE (channel)->visible = !GIMP_DRAWABLE (channel)->visible;
 
   return GIMP_DRAWABLE (channel)->visible;
-}
-
-TempBuf *
-gimp_channel_preview (GimpChannel *channel,
-		      gint         width,
-		      gint         height)
-{
-  /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! GIMP_DRAWABLE (channel)->preview_valid &&
-      width  <= PREVIEW_CACHE_PRIME_WIDTH      &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT     &&
-      GIMP_DRAWABLE (channel)->gimage          &&
-      GIMP_DRAWABLE (channel)->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH   &&
-      GIMP_DRAWABLE (channel)->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
-    {
-      TempBuf * tb = gimp_channel_preview_private (channel,
-						   PREVIEW_CACHE_PRIME_WIDTH,
-						   PREVIEW_CACHE_PRIME_HEIGHT);
-      
-      /* Save the 2nd call */
-      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
-	  height == PREVIEW_CACHE_PRIME_HEIGHT)
-	return tb;
-    }
-
-  /* Second call - should NOT visit the tile cache... */
-  return gimp_channel_preview_private (channel, width, height);
-}
-
-static TempBuf *
-gimp_channel_preview_private (GimpChannel *channel,
-			      gint         width,
-			      gint         height)
-{
-  MaskBuf     *preview_buf;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
-  gint         subsample;
-  TempBuf     *ret_buf;
-
-  g_return_val_if_fail (channel != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
-  
-  /*  The easy way  */
-  if (GIMP_DRAWABLE (channel)->preview_valid &&
-      (ret_buf =
-       gimp_preview_cache_get (& (GIMP_DRAWABLE (channel)->preview_cache),
-			       width, height)))
-    {
-      return ret_buf;
-    }
-  /*  The hard way  */
-  else
-    {
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-      if (width < 1) width = 1;
-      if (height < 1) height = 1;
-      while ((width  * (subsample + 1) * 2 < GIMP_DRAWABLE (channel)->width) &&
-	     (height * (subsample + 1) * 2 < GIMP_DRAWABLE (channel)->height))
-	subsample = subsample + 1;
-
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-			 0, 0,
-			 GIMP_DRAWABLE (channel)->width,
-			 GIMP_DRAWABLE (channel)->height, FALSE);
-
-      preview_buf = mask_buf_new (width, height);
-      destPR.bytes     = 1;
-      destPR.x         = 0;
-      destPR.y         = 0;
-      destPR.w         = width;
-      destPR.h         = height;
-      destPR.rowstride = width;
-      destPR.data      = mask_buf_data (preview_buf);
-
-      subsample_region (&srcPR, &destPR, subsample);
-
-      if (!GIMP_DRAWABLE (channel)->preview_valid)
-	gimp_preview_cache_invalidate (&(GIMP_DRAWABLE(channel)->preview_cache));
-
-      GIMP_DRAWABLE (channel)->preview_valid = TRUE;
-      gimp_preview_cache_add (&(GIMP_DRAWABLE (channel)->preview_cache),
-			      preview_buf);
-      return preview_buf;
-    }
 }
 
 /******************************/

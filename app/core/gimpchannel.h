@@ -110,12 +110,7 @@ void            gimp_channel_resize            (GimpChannel       *channel,
 						gint               offy);
 void            gimp_channel_update            (GimpChannel       *channel);
 
-/*  access functions  */
-
 gboolean        gimp_channel_toggle_visibility (GimpChannel       *channel);
-TempBuf       * gimp_channel_preview           (GimpChannel       *channel, 
-						gint               width,
-						gint               height);
 
 /* selection mask functions  */
 

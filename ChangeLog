@@ -1,3 +1,23 @@
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpdrawablepreview.[ch]: new file with one set of functions...
+
+	* app/channel.[ch]
+	* app/layer.[ch]: ...instead of having everything duplicated three
+	times here.
+
+	* app/channels_dialog.c
+	* app/floating_sel.c
+	* app/floating_sel.h
+	* app/gimpdnd.c
+	* app/gimpimage.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/selection.c
+	* app/pdb/drawable_cmds.c
+	* tools/pdbgen/pdb/drawable.pdb: changed accordingly, cleanup.
+
 2001-01-29  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: defined The GIMP Hackordnung (ACHTUNG!)

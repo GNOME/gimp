@@ -36,6 +36,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpdnd.h"
+#include "gimpdrawablepreview.h"
 #include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -2104,18 +2105,21 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
 
       if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
 	{
-	  preview_buf = gimp_channel_preview (channel_widget->channel,
-					      channelsD->gimage_width,
-					      channelsD->gimage_height);
+	  preview_buf =
+	    gimp_drawable_preview (GIMP_DRAWABLE (channel_widget->channel),
+				   channelsD->gimage_width,
+				   channelsD->gimage_height);
+
 	  preview_buf = gimp_preview_scale (preview_buf,
 					    channel_widget->width,
 					    channel_widget->height);
 	}
       else
 	{
-	  preview_buf = gimp_channel_preview (channel_widget->channel,
-					      channel_widget->width,
-					      channel_widget->height);
+	  preview_buf =
+	    gimp_drawable_preview (GIMP_DRAWABLE (channel_widget->channel),
+				   channel_widget->width,
+				   channel_widget->height);
 	}
       break;
 

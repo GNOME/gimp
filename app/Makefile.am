@@ -119,6 +119,8 @@ gimp_SOURCES = \
 	gimpdnd.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
+	gimpdrawablepreview.c	\
+	gimpdrawablepreview.h	\
 	gimphelp.c		\
 	gimphelp.h		\
 	gimphistogram.c		\

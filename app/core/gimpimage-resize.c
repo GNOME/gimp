@@ -34,6 +34,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
+#include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -3992,7 +3993,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
       src1PR.data      = 
 	temp_buf_data (comp) + y1 * src1PR.rowstride + x1 * src1PR.bytes;
 
-      layer_buf = gimp_layer_preview (layer, w, h);
+      layer_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer), w, h);
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
@@ -4004,7 +4005,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
       if (layer->mask && layer->apply_mask)
 	{
-	  mask_buf = gimp_layer_mask_preview (layer, w, h);
+	  mask_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer->mask), w, h);
 	  maskPR.bytes     = mask_buf->bytes;
 	  maskPR.rowstride = mask_buf->width;
 	  maskPR.data      = mask_buf_data (mask_buf) +
@@ -4012,7 +4013,9 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 	  mask = &maskPR;
 	}
       else
-	mask = NULL;
+	{
+	  mask = NULL;
+	}
 
       /*  Based on the type of the layer, project the layer onto the
        *   composite preview...

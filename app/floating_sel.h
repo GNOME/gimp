@@ -27,32 +27,27 @@ void       floating_sel_anchor       (GimpLayer    *layer);
 void       floating_sel_reset        (GimpLayer    *layer);
 void       floating_sel_to_layer     (GimpLayer    *layer);
 void       floating_sel_store        (GimpLayer    *layer,
-				      gint          ,
-				      gint          ,
-				      gint          ,
-				      gint          );
+				      gint          x,
+				      gint          y,
+				      gint          w,
+				      gint          h);
 void       floating_sel_restore      (GimpLayer    *layer,
-				      gint          ,
-				      gint          ,
-				      gint          ,
-				      gint          );
+				      gint          x,
+				      gint          y,
+				      gint          w,
+				      gint          h);
 void       floating_sel_rigor        (GimpLayer    *layer,
-				      gint          );
+				      gboolean      undo);
 void       floating_sel_relax        (GimpLayer    *layer,
-				      gint          );
+				      gboolean      undo);
 void       floating_sel_composite    (GimpLayer    *layer,
-				      gint          ,
-				      gint          ,
-				      gint          ,
-				      gint          ,
-				      gint          );
+				      gint          x,
+				      gint          y,
+				      gint          w,
+				      gint          h,
+				      gboolean      undo);
 BoundSeg * floating_sel_boundary     (GimpLayer    *layer,
-				      gint         *);
-void       floating_sel_bounds       (GimpLayer    *layer,
-				      gint         *,
-				      gint         *,
-				      gint         *,
-				      gint         *);
+				      gint         *n_segs);
 void       floating_sel_invalidate   (GimpLayer    *layer);
 
 
