@@ -1,4 +1,39 @@
+2001-09-17  Sven Neumann  <sven@gimp.org>
+
+	* app/gimprc.c (gimprc_init): 
+	fixed a typo spotted by Ed Halley <ed@halley.cc>.
+
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgimprc_pdb.[ch]: added new PDB function 
+	gimp_get_default_comment() that allows to access the default image
+	comment as set in the preferences.
+
+	* plug-ins/common/csource.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/tiff.c: use gimp_get_default_comment() instead of 
+	a hardcoded string.
+
+	* plug-ins/common/uniteditor.c: replaced deprecated GDK function
+	gdk_color_alloc().
+
+2001-09-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mail.c: resurrected mail plug-in. Thanks to 
+	David Odin <dindinx@wanadoo.fr> for the patch.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: build mail, nlfilt and plugindetails
+	plug-ins again.
+
+	* tips/Makefile.am
+	* tips/gimp_conseils.fr.txt: removed ...
+	* tips/gimp_tips.fr.txt: ... and readded under this name.
+
 2001-09-11  Nathan Summers <rock@gimp.org>
+
 	* all files: wilber cried.
 
 2001-09-09  Sven Neumann  <sven@gimp.org>

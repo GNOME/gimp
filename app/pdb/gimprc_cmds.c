@@ -28,10 +28,14 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "app_procs.h"
+#include "core/gimp.h"
+#include "core/gimpcoreconfig.h"
 #include "gimprc.h"
 
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
+static ProcRecord get_default_comment_proc;
 static ProcRecord get_monitor_resolution_proc;
 
 void
@@ -39,6 +43,7 @@ register_gimprc_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &gimprc_query_proc);
   procedural_db_register (gimp, &gimprc_set_proc);
+  procedural_db_register (gimp, &get_default_comment_proc);
   procedural_db_register (gimp, &get_monitor_resolution_proc);
 }
 
@@ -93,7 +98,7 @@ static ProcRecord gimprc_query_proc =
 {
   "gimp_gimprc_query",
   "Queries the gimprc file parser for information on a specified token.",
-  "This procedure is used to locate additional information contained in the gimprc file considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can expect it will be stored in the user gimprc file and can use this procedure to retrieve it. This query procedure will return the value associated with the specified token. This corresponds _only_ to entries with the format: (<token> <value>). The value must be a string. Entries not corresponding to this format will cause warnings to be issued on gimprc parsing a nd will not be queryable.",
+  "This procedure is used to locate additional information contained in the gimprc file considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can expect it will be stored in the user gimprc file and can use this procedure to retrieve it. This query procedure will return the value associated with the specified token. This corresponds _only_ to entries with the format: (<token> <value>). The value must be a string. Entries not corresponding to this format will cause warnings to be issued on gimprc parsing and will not be queryable.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -155,6 +160,50 @@ static ProcRecord gimprc_set_proc =
   0,
   NULL,
   { { gimprc_set_invoker } }
+};
+
+static Argument *
+get_default_comment_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *comment;
+
+  comment = the_gimp->config->default_comment;
+  success = TRUE;
+
+  return_args = procedural_db_return_args (&get_default_comment_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = comment;
+
+  return return_args;
+}
+
+static ProcArg get_default_comment_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "comment",
+    "Default Image Comment"
+  }
+};
+
+static ProcRecord get_default_comment_proc =
+{
+  "gimp_get_default_comment",
+  "Get the default image comment as specified in the Preferences.",
+  "Returns a copy of the default image comment.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  get_default_comment_outargs,
+  { { get_default_comment_invoker } }
 };
 
 static Argument *

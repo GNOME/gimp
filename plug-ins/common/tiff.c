@@ -149,7 +149,6 @@ static void   save_ok_callback       (GtkWidget *widget,
 static void   comment_entry_callback (GtkWidget *widget,
 				      gpointer   data);
 
-#define DEFAULT_COMMENT "Created with The GIMP"
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -281,7 +280,7 @@ run (gchar   *name,
       drawable = param[2].data.d_int32;
 
       /* Do this right this time, if POSSIBLE query for parasites, otherwise
-	 or if there isn't one, choose the DEFAULT_COMMENT */
+	 or if there isn't one, choose the default comment from the gimprc. */
 
       /*  eventually export the image */ 
       switch (run_mode)
@@ -311,7 +310,7 @@ run (gchar   *name,
       gimp_parasite_free (parasite);
 
       if (!image_comment)
-	image_comment = g_strdup (DEFAULT_COMMENT);	  
+        image_comment = gimp_get_default_comment ();
 
       switch (run_mode)
 	{
@@ -1440,7 +1439,7 @@ save_image (gchar   *filename,
   /* do we have a comment?  If so, create a new parasite to hold it,
    * and attach it to the image. The attach function automatically
    * detaches a previous incarnation of the parasite. */
-  if (image_comment && *image_comment != '\000')
+  if (image_comment && *image_comment)
     {
       GimpParasite *parasite;
       

@@ -33,8 +33,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define DEFAULT_COMMENT "Created with The GIMP"
-
 typedef struct
 {
   gchar    *file_name;
@@ -167,7 +165,7 @@ run (gchar   *name,
       x = config.comment;
 
       if (!config.comment)
-	config.comment = g_strdup (DEFAULT_COMMENT);     
+	config.comment = gimp_get_default_comment ();   
 
       gimp_ui_init ("csource", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
@@ -377,7 +375,7 @@ save_image (Config *config,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  GimpDrawable *drawable         = gimp_drawable_get (drawable_ID);
+  GimpDrawable *drawable      = gimp_drawable_get (drawable_ID);
   GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
   GimpPixelRgn pixel_rgn;
   gchar *s_uint_8, *s_uint_32, *s_uint, *s_char, *s_null;

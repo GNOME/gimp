@@ -387,7 +387,7 @@ gimprc_init (Gimp *gimp)
       base_funcs[2].val1p  = &base_config->tile_cache_size;
       base_funcs[3].val1p  = &base_config->stingy_memory_use;
       base_funcs[4].val1p  = &base_config->interpolation_type;
-      base_funcs[4].val1p  = &base_config->num_processors;
+      base_funcs[5].val1p  = &base_config->num_processors;
 
       core_funcs[0].val1p  = &gimp->config->plug_in_path;
       core_funcs[1].val1p  = &gimp->config->module_path;

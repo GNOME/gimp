@@ -37,7 +37,7 @@
  * with the specified token. This corresponds _only_ to entries with
  * the format: (<token> <value>). The value must be a string. Entries
  * not corresponding to this format will cause warnings to be issued on
- * gimprc parsing a nd will not be queryable.
+ * gimprc parsing and will not be queryable.
  *
  * Returns: The value associated with the queried token.
  */
@@ -99,6 +99,34 @@ gimp_gimprc_set (gchar *token,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_get_default_comment:
+ *
+ * Get the default image comment as specified in the Preferences.
+ *
+ * Returns a copy of the default image comment.
+ *
+ * Returns: Default Image Comment.
+ */
+gchar *
+gimp_get_default_comment (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *comment = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_get_default_comment",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    comment = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return comment;
 }
 
 /**

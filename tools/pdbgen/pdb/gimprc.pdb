@@ -34,7 +34,7 @@ file and can use this procedure to retrieve it. This query procedure will
 return the value associated with the specified token. This corresponds _only_
 to entries with the format: (<token> <value>). The value must be a string.
 Entries not corresponding to this format will cause warnings to be issued on
-gimprc parsing a nd will not be queryable.
+gimprc parsing and will not be queryable.
 HELP
 
     &std_pdb_misc;
@@ -124,9 +124,34 @@ CODE
     );
 }
 
-@headers = qw("gimprc.h");
+sub get_default_comment {
+    $blurb = 'Get the default image comment as specified in the Preferences.';
 
-@procs = qw(gimprc_query gimprc_set get_monitor_resolution);
+    $help = 'Returns a copy of the default image comment.';
+
+    &std_pdb_misc;
+
+    @inargs = ( );
+
+    @outargs = (
+	{  name => 'comment', type => 'string',
+	   desc => 'Default Image Comment' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  comment = the_gimp->config->default_comment;
+  success = TRUE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h" "core/gimpcoreconfig.h" "app_procs.h" "gimprc.h");
+
+@procs = qw(gimprc_query gimprc_set 
+	    get_default_comment get_monitor_resolution);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';

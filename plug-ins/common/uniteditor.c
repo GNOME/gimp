@@ -609,7 +609,8 @@ unit_editor_dialog (void)
   color.green = 50000;
   color.blue  = 50000;
 
-  gdk_color_alloc (gtk_widget_get_colormap (main_dialog), &color);
+  gdk_colormap_alloc_color (gtk_widget_get_colormap (main_dialog), 
+                            &color, FALSE, TRUE);
 
   clist_init ();
 

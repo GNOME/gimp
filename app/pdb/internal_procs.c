@@ -62,7 +62,7 @@ void register_tools_procs           (Gimp *gimp);
 void register_undo_procs            (Gimp *gimp);
 void register_unit_procs            (Gimp *gimp);
 
-/* 325 procedures registered total */
+/* 326 procedures registered total */
 
 void
 internal_procs_init (Gimp *gimp)
@@ -85,70 +85,70 @@ internal_procs_init (Gimp *gimp)
   app_init_update_status (NULL, _("GDisplay procedures"), 0.138);
   register_display_procs (gimp);
 
-  app_init_update_status (NULL, _("Drawable procedures"), 0.148);
+  app_init_update_status (NULL, _("Drawable procedures"), 0.147);
   register_drawable_procs (gimp);
 
   app_init_update_status (NULL, _("Edit procedures"), 0.218);
   register_edit_procs (gimp);
 
-  app_init_update_status (NULL, _("File Operations"), 0.237);
+  app_init_update_status (NULL, _("File Operations"), 0.236);
   register_fileops_procs (gimp);
 
-  app_init_update_status (NULL, _("Floating selections"), 0.262);
+  app_init_update_status (NULL, _("Floating selections"), 0.261);
   register_floating_sel_procs (gimp);
 
-  app_init_update_status (NULL, _("Gimprc procedures"), 0.28);
+  app_init_update_status (NULL, _("Gimprc procedures"), 0.279);
   register_gimprc_procs (gimp);
 
-  app_init_update_status (NULL, _("Gradients"), 0.289);
+  app_init_update_status (NULL, _("Gradients"), 0.291);
   register_gradients_procs (gimp);
 
-  app_init_update_status (NULL, _("Gradient UI"), 0.305);
+  app_init_update_status (NULL, _("Gradient UI"), 0.307);
   register_gradient_select_procs (gimp);
 
-  app_init_update_status (NULL, _("Guide procedures"), 0.317);
+  app_init_update_status (NULL, _("Guide procedures"), 0.319);
   register_guides_procs (gimp);
 
-  app_init_update_status (NULL, _("Help procedures"), 0.335);
+  app_init_update_status (NULL, _("Help procedures"), 0.337);
   register_help_procs (gimp);
 
-  app_init_update_status (NULL, _("Image"), 0.338);
+  app_init_update_status (NULL, _("Image"), 0.34);
   register_image_procs (gimp);
 
-  app_init_update_status (NULL, _("Layer"), 0.526);
+  app_init_update_status (NULL, _("Layer"), 0.528);
   register_layer_procs (gimp);
 
-  app_init_update_status (NULL, _("Interface"), 0.622);
+  app_init_update_status (NULL, _("Interface"), 0.623);
   register_message_procs (gimp);
 
-  app_init_update_status (NULL, _("Miscellaneous"), 0.631);
+  app_init_update_status (NULL, _("Miscellaneous"), 0.632);
   register_misc_procs (gimp);
 
-  app_init_update_status (NULL, _("Palette"), 0.637);
+  app_init_update_status (NULL, _("Palette"), 0.638);
   register_palette_procs (gimp);
 
-  app_init_update_status (NULL, _("Parasite procedures"), 0.658);
+  app_init_update_status (NULL, _("Parasite procedures"), 0.66);
   register_parasite_procs (gimp);
 
-  app_init_update_status (NULL, _("Paths"), 0.695);
+  app_init_update_status (NULL, _("Paths"), 0.696);
   register_paths_procs (gimp);
 
-  app_init_update_status (NULL, _("Pattern UI"), 0.735);
+  app_init_update_status (NULL, _("Pattern UI"), 0.736);
   register_pattern_select_procs (gimp);
 
   app_init_update_status (NULL, _("Patterns"), 0.745);
   register_patterns_procs (gimp);
 
-  app_init_update_status (NULL, _("Plug-in"), 0.757);
+  app_init_update_status (NULL, _("Plug-in"), 0.758);
   register_plug_in_procs (gimp);
 
-  app_init_update_status (NULL, _("Procedural database"), 0.775);
+  app_init_update_status (NULL, _("Procedural database"), 0.776);
   register_procedural_db_procs (gimp);
 
-  app_init_update_status (NULL, _("Image mask"), 0.8);
+  app_init_update_status (NULL, _("Image mask"), 0.801);
   register_selection_procs (gimp);
 
-  app_init_update_status (NULL, _("Text procedures"), 0.855);
+  app_init_update_status (NULL, _("Text procedures"), 0.856);
   register_text_tool_procs (gimp);
 
   app_init_update_status (NULL, _("Tool procedures"), 0.868);

@@ -997,7 +997,7 @@ save_image (gchar  *filename,
     GIFEncodeLoopExt (outfile, 0);
 
   /* Write comment extension - mustn't be written before the looping ext. */
-  if (gsvals.save_comment)
+  if (gsvals.save_comment && globalcomment)
     {
       GIFEncodeCommentExt (outfile, globalcomment);
     }
@@ -1208,6 +1208,7 @@ save_dialog (gint32 image_ID)
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
+  GtkWidget     *align;
   GtkWidget     *disposal_option_menu;
   GtkWidget     *scrolled_window;
 #ifdef FACEHUGGERS
@@ -1259,8 +1260,12 @@ save_dialog (gint32 image_ID)
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
+  align = gtk_alignment_new (0.0, 0.0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+  gtk_widget_show (align);
+
   toggle = gtk_check_button_new_with_label (_("GIF Comment:"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (align), toggle);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &gsvals.save_comment);
@@ -1300,9 +1305,7 @@ save_dialog (gint32 image_ID)
   else
     {
 #endif
-      /*	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
-		strcpy(globalcomment, _("Made with GIMP")); */
-      globalcomment = NULL;
+      globalcomment = gimp_get_default_comment ();
 #ifdef FACEHUGGERS
     }
   gimp_parasite_free (GIF2_CMNT);
@@ -2450,21 +2453,22 @@ comment_entry_callback (GtkTextBuffer *buffer)
   text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 
   if (strlen (text) > 240)
-  {
-    g_message (_("The default comment is limited to %d characters."), 240);
-
-    gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, 240 - 1);
-    gtk_text_buffer_get_end_iter (buffer, &end_iter);
-
-    /*  this calls us recursivaly, but in the else branch
-     */
-    gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
-  } else
-  {
-    if (globalcomment != NULL) g_free (globalcomment);
-    globalcomment = g_strdup(text);
-    comment_was_edited = TRUE;
-  }
+    {
+      g_message (_("The default comment is limited to %d characters."), 240);
+      
+      gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, 240 - 1);
+      gtk_text_buffer_get_end_iter (buffer, &end_iter);
+      
+      /*  this calls us recursivaly, but in the else branch
+       */
+      gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
+    } 
+  else
+    {
+      g_free (globalcomment);
+      globalcomment = g_strdup (text);
+      comment_was_edited = TRUE;
+    }
 
   g_free (text);
 }
