@@ -311,7 +311,7 @@ def _interact(func_name, start_params):
         def __init__(self, default=0, bounds=(0, 100, 5)):
             self.adj = gtk.Adjustment(default, bounds[0],
                                       bounds[1], bounds[2],
-                                      bounds[2], bounds[2])
+                                      bounds[2], 0)
             gtk.HScale.__init__(self, self.adj)
         def get_value(self):
             return self.adj.value
@@ -320,7 +320,7 @@ def _interact(func_name, start_params):
         def __init__(self, default=0, bounds=(0, 100, 5)):
             self.adj = gtk.Adjustment(default, bounds[0],
                                         bounds[1], bounds[2],
-                                        bounds[2], bounds[2])
+                                        bounds[2], 0)
             gtk.SpinButton.__init__(self, self.adj, 1, 0)
         def get_value(self):
             try:

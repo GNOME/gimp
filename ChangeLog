@@ -1,5 +1,10 @@
 2004-11-16  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/gimpfu.py: Fix -fu slider behavior (bug #155103).
+	Patch by Joao S. O. Bueno.
+	
+2004-11-16  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/glasstile.c: Remove unnecessary G_OBJECT() casts.
 
 2004-11-16  Manish Singh  <yosh@gimp.org>
