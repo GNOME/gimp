@@ -21,7 +21,6 @@
 
 #include "config.h"
 
-#include <locale.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -173,10 +172,8 @@ gimp_main (int   argc,
 	   char *argv[])
 {
 #ifdef G_OS_WIN32
-  int i, j, k;
+  gint i, j, k;
 #endif
-
-  setlocale (LC_NUMERIC, "C");
 
 #ifdef G_OS_WIN32
   g_assert (PLUG_IN_INFO_PTR != NULL);

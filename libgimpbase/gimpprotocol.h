@@ -29,7 +29,7 @@ extern "C" {
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x0008
+#define GP_VERSION 0x0009
 
 
 enum

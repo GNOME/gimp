@@ -124,8 +124,6 @@ main (int    argc,
 
   gtk_init (&argc, &argv);
 
-  setlocale (LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
-
 #ifdef HAVE_PUTENV
   display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
   putenv (display_env);

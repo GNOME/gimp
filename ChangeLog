@@ -1,5 +1,18 @@
 2001-07-15  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpwire.c: remove the usage of printf()/scanf()
+	when sending doubles over the wire. Instead, rely on the memory
+	layout of gdouble being IEEE compliant and transmit 8 bytes in
+	network byte order.
+
+	* libgimpbase/gimpprotocol.h: increase GP_VERSION because this
+	makes the wire protocol binary incompatible.
+
+	* app/main.c
+	* libgimp/gimp.c: removed the setlocate(LC_NUMERIC,"C") workaround.
+
+2001-07-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.c: don't use the global "the_gimp" variable.
 
 	* app/core/gimpimage-convert.c: don't update the display here.

@@ -31,12 +31,12 @@
 #include <unistd.h>
 #endif
 
+#include <glib.h>
+
 #ifdef G_OS_WIN32
 #include <process.h>
 #include <io.h>
 #endif
-
-#include <glib.h>
 
 #include "gimpwire.h"
 
@@ -58,11 +58,11 @@ static gboolean  wire_compare (guint32 *a,
 			       guint32 *b);
 
 
-static GHashTable    *wire_ht = NULL;
-static WireIOFunc     wire_read_func = NULL;
+static GHashTable    *wire_ht         = NULL;
+static WireIOFunc     wire_read_func  = NULL;
 static WireIOFunc     wire_write_func = NULL;
 static WireFlushFunc  wire_flush_func = NULL;
-static gboolean       wire_error_val = FALSE;
+static gboolean       wire_error_val  = FALSE;
 
 
 void
@@ -130,7 +130,7 @@ wire_read (GIOChannel *channel,
 	  do
 	    {
 	      bytes = 0;
-	      error = g_io_channel_read (channel, (char*) buf, count, &bytes);
+	      error = g_io_channel_read (channel, (gchar *) buf, count, &bytes);
 	    }
 	  while ((error == G_IO_ERROR_AGAIN) ||
 		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
@@ -181,7 +181,7 @@ wire_write (GIOChannel *channel,
 	  do
 	    {
 	      bytes = 0;
-	      error = g_io_channel_write (channel, (char*) buf, count, &bytes);
+	      error = g_io_channel_write (channel, (gchar *) buf, count, &bytes);
 	    }
 	  while ((error == G_IO_ERROR_AGAIN) ||
 		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
@@ -231,7 +231,7 @@ wire_read_msg (GIOChannel  *channel,
   if (wire_error_val)
     return !wire_error_val;
 
-  if (!wire_read_int32 (channel, &msg->type, 1))
+  if (! wire_read_int32 (channel, &msg->type, 1))
     return FALSE;
 
   handler = g_hash_table_lookup (wire_ht, &msg->type);
@@ -256,7 +256,7 @@ wire_write_msg (GIOChannel  *channel,
   if (!handler)
     g_error ("could not find handler for message: %d", msg->type);
 
-  if (!wire_write_int32 (channel, &msg->type, 1))
+  if (! wire_write_int32 (channel, &msg->type, 1))
     return FALSE;
 
   (* handler->write_func) (channel, msg);
@@ -283,7 +283,7 @@ wire_read_int32 (GIOChannel *channel,
 {
   if (count > 0)
     {
-      if (!wire_read_int8 (channel, (guint8*) data, count * 4))
+      if (! wire_read_int8 (channel, (guint8 *) data, count * 4))
 	return FALSE;
 
       while (count--)
@@ -303,7 +303,7 @@ wire_read_int16 (GIOChannel *channel,
 {
   if (count > 0)
     {
-      if (!wire_read_int8 (channel, (guint8*) data, count * 2))
+      if (! wire_read_int8 (channel, (guint8 *) data, count * 2))
 	return FALSE;
 
       while (count--)
@@ -329,15 +329,27 @@ wire_read_double (GIOChannel *channel,
 		  gdouble    *data,
 		  gint        count)
 {
-  gchar *str;
-  gint   i;
+  gdouble *t;
+  guint32  tmp[2];
+  gint     i;
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+  guint32  swap;
+#endif
+
+  t = (gdouble *) tmp;
 
   for (i = 0; i < count; i++)
     {
-      if (!wire_read_string (channel, &str, 1))
+      if (! wire_read_int8 (channel, (guint8 *) tmp, 8))
 	return FALSE;
-      sscanf (str, "%le", &data[i]);
-      g_free (str);
+
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+      swap   = g_ntohl (tmp[1]);
+      tmp[1] = g_ntohl (tmp[0]);
+      tmp[0] = swap;
+#endif
+
+      data[i] = *t;
     }
 
   return TRUE;
@@ -359,7 +371,7 @@ wire_read_string (GIOChannel  *channel,
       if (tmp > 0)
 	{
 	  data[i] = g_new (gchar, tmp);
-	  if (!wire_read_int8 (channel, (guint8*) data[i], tmp))
+	  if (! wire_read_int8 (channel, (guint8 *) data[i], tmp))
 	    {
 	      g_free (data[i]);
 	      return FALSE;
@@ -387,7 +399,7 @@ wire_write_int32 (GIOChannel *channel,
       for (i = 0; i < count; i++)
 	{
 	  tmp = g_htonl (data[i]);
-	  if (!wire_write_int8 (channel, (guint8*) &tmp, 4))
+	  if (! wire_write_int8 (channel, (guint8 *) &tmp, 4))
 	    return FALSE;
 	}
     }
@@ -408,7 +420,7 @@ wire_write_int16 (GIOChannel *channel,
       for (i = 0; i < count; i++)
 	{
 	  tmp = g_htons (data[i]);
-	  if (!wire_write_int8 (channel, (guint8*) &tmp, 2))
+	  if (! wire_write_int8 (channel, (guint8 *) &tmp, 2))
 	    return FALSE;
 	}
     }
@@ -429,16 +441,42 @@ wire_write_double (GIOChannel *channel,
 		   gdouble    *data,
 		   gint        count)
 {
-  gchar *t;
-  gchar  buf[128];
-  gint   i;
+  gdouble *t;
+  guint32  tmp[2];
+  gint     i;
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+  guint32  swap;
+#endif
 
-  t = buf;
+  t = (gdouble *) tmp;
+
   for (i = 0; i < count; i++)
     {
-      g_snprintf (buf, sizeof (buf), "%0.50e", data[i]);
-      if (!wire_write_string (channel, &t, 1))
+      *t = data[i];
+
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+      swap   = g_htonl (tmp[1]);
+      tmp[1] = g_htonl (tmp[0]);
+      tmp[0] = swap;
+#endif
+
+      if (! wire_write_int8 (channel, (guint8 *) tmp, 8))
 	return FALSE;
+
+#if 0
+      {
+	gint j;
+
+	g_print ("Wire representation of %f:\t", data[i]);
+
+	for (j = 0; j < 8; j++)
+	  {
+	    g_print ("%02x ", ((guchar *) tmp)[j]);
+	  }
+
+	g_print ("\n");
+      }
+#endif
     }
 
   return TRUE;
@@ -459,10 +497,10 @@ wire_write_string (GIOChannel  *channel,
       else
 	tmp = 0;
 
-      if (!wire_write_int32 (channel, &tmp, 1))
+      if (! wire_write_int32 (channel, &tmp, 1))
 	return FALSE;
       if (tmp > 0)
-	if (!wire_write_int8 (channel, (guint8*) data[i], tmp))
+	if (! wire_write_int8 (channel, (guint8 *) data[i], tmp))
 	  return FALSE;
     }
 
