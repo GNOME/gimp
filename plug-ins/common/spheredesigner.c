@@ -25,15 +25,13 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif
+#include <errno.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <stdlib.h>
-#include <string.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1548,7 +1546,7 @@ char *mklabel(texture *t)
   if(t->majtype == 0) strcpy(tmps, _("Texture"));
   else if(t->majtype == 1) strcpy(tmps, _("Bumpmap"));
   else if(t->majtype == 2) strcpy(tmps, _("Light"));
-  else strcpy(tmps, _("(unknown!?)"));
+  else strcpy(tmps, "(unknown!?)");
   if((t->majtype == 0) || (t->majtype == 1)) {
     strcat(tmps, " / ");
     l = textures;
@@ -1743,27 +1741,67 @@ void deltexture(void)
 
 void loadit(const gchar *fn)
 {
-  FILE *f;
-  char line[1024];
-  int i;
+  FILE    *f;
+  gchar   *end;
+  gchar    line[1024];
+  gint     i;
   texture *t;
 
   s.com.numtexture = 0;
 
   f = fopen(fn, "rt");
   while(!feof(f)) {
-    if(!fgets(line, 1023, f)) break;
+
+    if (!fgets (line, 1023, f))
+      break;
+
     i = s.com.numtexture;
     t = &s.com.texture[i];
     setdefaults(t);
-    sscanf(line, "%d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
-	   &t->majtype, &t->type,
-	   &t->color1.x,&t->color1.y,&t->color1.z,&t->color1.w,
-	   &t->color2.x,&t->color2.y,&t->color2.z,&t->color2.w,
-	   &t->oscale, &t->turbulence.x, &t->amount, &t->exp,
-	   &t->scale.x,&t->scale.y,&t->scale.z,
-	   &t->rotate.x,&t->rotate.y,&t->rotate.z,
-	   &t->translate.x,&t->translate.y,&t->translate.z);
+
+    if (sscanf (line, "%d %d %s", &t->majtype, &t->type, end) != 3)
+      t->color1.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color1.y = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color1.z = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color1.w = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color2.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color2.y = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color2.z = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->color2.w = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->oscale = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->turbulence.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->amount = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->exp = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->scale.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->scale.y = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->scale.z = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->rotate.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->rotate.y = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->rotate.z = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->translate.x = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->translate.y = g_ascii_strtod (end, &end);
+    if (end && errno != ERANGE)
+      t->translate.z = g_ascii_strtod (end, &end);
+
     s.com.numtexture++;
   }
   fclose(f);
@@ -1843,7 +1881,7 @@ void fileselect(int action)
 {
   static GtkWidget *windows[2] = {NULL,NULL};
 
-  char *titles[] = { N_("Open file"), N_("Save file") };
+  char *titles[] = { N_("Open File"), N_("Save File") };
   void *handlers[] = { loadpreset_ok, savepreset_ok };
 
   if(!windows[action]) {

@@ -1,5 +1,14 @@
+2003-01-07  Sven Neumann  <sven@gimp.org>
+
+	* plug_ins/common/Makefile.am
+	* plug_ins/common/plugin_defs.pl: added back spheredesigner so it
+	gets some testing again. Needs a good bunch of UI cleanup.
+
+	* plug-ins/common/spheredesigner.c (loadit): use
+	locale-independent functions to parse doubles.
+
 2003-01-06  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* lots of files in plug-ins: cleanup, removed unecessary
 	G_OBJECT() casts.
 
