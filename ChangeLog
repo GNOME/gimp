@@ -1,4 +1,11 @@
 2000-07-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gdyntext/gdyntext_ui.c: use gimp_ui_init(). This also
+	fixes a bug we had fixed in the latest version but was
+	reintroduced now by upgrading to 1.5.0. This caused empty text
+	layers to be drawn when LANG != C. Seems to work fine now.
+
+2000-07-30  Sven Neumann  <sven@gimp.org>
 	
 	* plug-ins/gdyntext/charmap.c
 	* plug-ins/gdyntext/charmap_window.c
