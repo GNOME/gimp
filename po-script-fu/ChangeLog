@@ -1,5 +1,6 @@
 2001-05-29  Kjartan Maraas  <kmaraas@gnome.org>
 
+	* nl.po: Fill in "charset" field in header.
 	* hr.po: Correct "charset" field in header.
 	
 2001-05-22  Kjartan Maraas  <kmaraas@gnome.org>
