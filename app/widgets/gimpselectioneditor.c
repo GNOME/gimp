@@ -162,14 +162,6 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                            gimp_selection_editor_drop_color,
                            selection_editor);
 
-  selection_editor->invert_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_INVERT,
-                            _("Invert Selection"), NULL,
-                            G_CALLBACK (gimp_selection_editor_invert_clicked),
-                            NULL,
-                            selection_editor);
-
   selection_editor->all_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
                             GIMP_STOCK_SELECTION_ALL,
@@ -183,6 +175,14 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                             GIMP_STOCK_SELECTION_NONE,
                             _("Select None"), NULL,
                             G_CALLBACK (gimp_selection_editor_none_clicked),
+                            NULL,
+                            selection_editor);
+
+  selection_editor->invert_button =
+    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
+                            GIMP_STOCK_INVERT,
+                            _("Invert Selection"), NULL,
+                            G_CALLBACK (gimp_selection_editor_invert_clicked),
                             NULL,
                             selection_editor);
 

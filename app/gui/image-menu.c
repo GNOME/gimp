@@ -75,6 +75,8 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/File  */
 
+  MENU_BRANCH (N_("/_File")),
+
   { { N_("/File/New..."), "<control>N",
       file_new_cmd_callback, 1,
       "<StockItem>", GTK_STOCK_NEW },
@@ -129,6 +131,8 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_SEPARATOR ("/File/---moved"),
 
   /*  <Image>/Edit  */
+
+  MENU_BRANCH (N_("/_Edit")),
 
   { { N_("/Edit/Undo"), "<control>Z",
       edit_undo_cmd_callback, 0,
@@ -214,11 +218,8 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/Select  */
   
-  { { N_("/Select/Invert"), "<control>I",
-      select_invert_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_INVERT },
-    NULL,
-    "select/invert.html", NULL },
+  MENU_BRANCH (N_("/_Select")),
+
   { { N_("/Select/All"), "<control>A",
       select_all_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_ALL },
@@ -229,6 +230,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SELECTION_NONE },
     NULL,
     "select/none.html", NULL },
+  { { N_("/Select/Invert"), "<control>I",
+      select_invert_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_INVERT },
+    NULL,
+    "select/invert.html", NULL },
   { { N_("/Select/Float"), "<control><shift>L",
       select_float_cmd_callback, 0 },
     NULL,
@@ -236,11 +242,11 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Select/---"),
 
-  { { N_("/Select/Feather..."), "<control><shift>F",
+  { { N_("/Select/Feather..."), NULL,
       select_feather_cmd_callback, 0 },
     NULL,
     "select/dialogs/feather_selection.html", NULL },
-  { { N_("/Select/Sharpen"), "<control><shift>H",
+  { { N_("/Select/Sharpen"), NULL,
       select_sharpen_cmd_callback, 0 },
     NULL,
     "select/sharpen.html", NULL },
@@ -273,6 +279,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     "select/save_to_channel.html", NULL },
 
   /*  <Image>/View  */
+
+  MENU_BRANCH (N_("/_View")),
 
   { { N_("/View/Zoom In"), "equal",
       view_zoom_in_cmd_callback, 0,
@@ -406,19 +414,23 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "view/new_view.html", NULL },
 
+  /*  <Image>/Image  */
+
+  MENU_BRANCH (N_("/_Image")),
+
   /*  <Image>/Image/Mode  */
 
-  { { N_("/Image/Mode/RGB"), "<alt>R",
+  { { N_("/Image/Mode/RGB"), NULL,
       image_convert_rgb_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_CONVERT_RGB },
     NULL,
     "image/mode/convert_to_rgb.html", NULL },
-  { { N_("/Image/Mode/Grayscale"), "<alt>G",
+  { { N_("/Image/Mode/Grayscale"), NULL,
       image_convert_grayscale_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_CONVERT_GRAYSCALE },
     NULL,
     "image/mode/convert_to_grayscale.html", NULL },
-  { { N_("/Image/Mode/Indexed..."), "<alt>I",
+  { { N_("/Image/Mode/Indexed..."), NULL,
       image_convert_indexed_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_CONVERT_INDEXED },
     NULL,
@@ -466,7 +478,9 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "layers/flatten_image.html", NULL },
 
- /*  <Image>/Layer  */
+  /*  <Image>/Layer  */
+
+  MENU_BRANCH (N_("/_Layer")),
 
   /*  <Image>/Layer/Stack  */
 
@@ -626,6 +640,8 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/Tools  */
 
+  MENU_BRANCH (N_("/_Tools")),
+
   { { N_("/Tools/Toolbox"), NULL,
       dialogs_show_toolbox_cmd_callback, 0 },
     NULL,
@@ -640,10 +656,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SWAP_COLORS },
     NULL,
     "toolbox/toolbox.html#swap_colors", NULL },
-  { { N_("/Tools/Swap Contexts"), "<alt>X",
-      tools_swap_contexts_cmd_callback, 0 },
-    NULL,
-    "toolbox/toolbox.html#swap_colors", NULL },
 
   MENU_SEPARATOR ("/Tools/---"),
 
@@ -652,6 +664,8 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_BRANCH (N_("/Tools/Transform Tools")),
 
   /*  <Image>/Dialogs  */
+
+  MENU_BRANCH (N_("/_Dialogs")),
 
   { { N_("/Dialogs/Layers, Channels & Paths..."), NULL,
       dialogs_create_lc_cmd_callback, 0 },
@@ -756,16 +770,18 @@ GimpItemFactoryEntry image_menu_entries[] =
     "gimp-error-console",
     "dialogs/error_console.html", NULL },
 
-  MENU_SEPARATOR ("/filters-separator"),
 
   /*  <Image>/Filters  */
 
-  { { N_("/Filters/Repeat Last"), "<alt>F",
+  MENU_SEPARATOR ("/filters-separator"),
+  MENU_BRANCH (N_("/Filte_rs")),
+
+  { { N_("/Filters/Repeat Last"), "<control>F",
       plug_in_repeat_cmd_callback, (guint) FALSE,
       "<StockItem>", GTK_STOCK_EXECUTE },
     NULL,
     "filters/repeat_last.html", NULL },
-  { { N_("/Filters/Re-Show Last"), "<alt><shift>F",
+  { { N_("/Filters/Re-Show Last"), "<control><shift>F",
       plug_in_repeat_cmd_callback, (guint) TRUE,
       "<StockItem>", GIMP_STOCK_RESHOW_FILTER },
     NULL,

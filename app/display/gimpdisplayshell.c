@@ -172,6 +172,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   object_class->destroy      = gimp_display_shell_destroy;
 
   widget_class->delete_event = gimp_display_shell_delete_event;
+  widget_class->popup_menu   = gimp_display_shell_popup_menu;
 
   klass->scaled              = gimp_display_shell_real_scaled;
   klass->scrolled            = NULL;

@@ -26,9 +26,6 @@ void   tools_default_colors_cmd_callback (GtkWidget *widget,
 void   tools_swap_colors_cmd_callback    (GtkWidget *widget,
 					  gpointer   data,
 					  guint      action);
-void   tools_swap_contexts_cmd_callback  (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
 void   tools_select_cmd_callback         (GtkWidget *widget,
 					  gpointer   data,
 					  guint      action);

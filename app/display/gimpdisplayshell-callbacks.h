@@ -46,6 +46,7 @@ gboolean   gimp_display_shell_canvas_configure     (GtkWidget         *widget,
 gboolean   gimp_display_shell_canvas_expose        (GtkWidget         *widget,
                                                     GdkEventExpose    *eevent,
                                                     GimpDisplayShell  *shell);
+gboolean   gimp_display_shell_popup_menu           (GtkWidget         *widget);
 gboolean   gimp_display_shell_canvas_tool_events   (GtkWidget         *widget,
                                                     GdkEvent          *event,
                                                     GimpDisplayShell  *shell);

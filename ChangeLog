@@ -1,3 +1,17 @@
+2003-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.[ch]
+	* app/display/gimpdisplayshell.c: override GtkWidget::popup_menu()
+	so we popup the Image menu on the default shortcut (Shift F10).
+
+	* app/gui/image-menu.c (image_menu_entries): removed or replaced
+	shortcuts that use the Alt key. Added access keys to all toplevel
+	entries of the Image menu (see bug #106991).
+
+	* app/gui/tools-commands.[ch]: removed "Swap Contexts" functionality.
+
+	* app/widgets/gimpselectioneditor.[ch]: moved "Invert" button.
+
 2003-02-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: replaced the "gboolean

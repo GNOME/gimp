@@ -67,36 +67,6 @@ tools_swap_colors_cmd_callback (GtkWidget *widget,
 }
 
 void
-tools_swap_contexts_cmd_callback (GtkWidget *widget,
-				  gpointer   data,
-                                  guint      action)
-{
-  static GimpContext *swap_context = NULL;
-  static GimpContext *temp_context = NULL;
-
-  Gimp *gimp;
-  return_if_no_gimp (gimp, data);
-
-  if (! swap_context)
-    {
-      swap_context = gimp_context_new (gimp, "Swap Context",
-                                       gimp_get_user_context (gimp));
-      temp_context = gimp_context_new (gimp, "Temp Context",
-                                       NULL);
-    }
-
-  gimp_context_copy_properties (gimp_get_user_context (gimp),
-				temp_context,
-				GIMP_CONTEXT_ALL_PROPS_MASK);
-  gimp_context_copy_properties (swap_context,
-				gimp_get_user_context (gimp),
-				GIMP_CONTEXT_ALL_PROPS_MASK);
-  gimp_context_copy_properties (temp_context,
-				swap_context,
-				GIMP_CONTEXT_ALL_PROPS_MASK);
-}
-
-void
 tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   data,
 			   guint      action)

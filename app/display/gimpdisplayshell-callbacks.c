@@ -115,57 +115,19 @@ gimp_display_shell_events (GtkWidget        *widget,
                            GdkEvent         *event,
                            GimpDisplayShell *shell)
 {
-  Gimp     *gimp        = shell->gdisp->gimage->gimp;
-  gboolean  set_display = FALSE;
-  gboolean  popup_menu  = FALSE;
+  Gimp        *gimp        = shell->gdisp->gimage->gimp;
+  gboolean     set_display = FALSE;
+  GdkEventKey *kevent;
 
   switch (event->type)
     {
-      GdkEventKey *kevent;
-
     case GDK_KEY_PRESS:
-      if (! GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget))
-        {
-          gchar *accel = NULL;
-
-          g_object_get (gtk_widget_get_settings (widget),
-                        "gtk-menu-bar-accel", &accel,
-                        NULL);
-
-          if (accel)
-            {
-              guint           keyval = 0;
-              GdkModifierType mods = 0;
-
-              gtk_accelerator_parse (accel, &keyval, &mods);
-
-              if (keyval == 0)
-                g_warning ("Failed to parse menu bar accelerator '%s'\n", accel);
-
-              kevent = (GdkEventKey *) event;
-
-              /* FIXME this is wrong, needs to be in the global accel
-               * resolution thing, to properly consider i18n etc., but
-               * that probably requires AccelGroup changes etc.
-               */
-              if (kevent->keyval == keyval &&
-                  ((kevent->state & gtk_accelerator_get_default_mod_mask ()) ==
-                   (mods & gtk_accelerator_get_default_mod_mask ())))
-                {
-                  popup_menu = TRUE;
-                }
-
-              g_free (accel);
-            }
-        }
-      /* fallthru */
-
     case GDK_KEY_RELEASE:
-      kevent = (GdkEventKey *) event;
-
       if (gimp->busy)
         return TRUE;
 
+      kevent = (GdkEventKey *) event;
+      
       /*  do not process any key events while BUTTON1 is down. We do this
        *  so tools keep the modifier state they were in when BUTTON1 was
        *  pressed and to prevent accelerators from being invoked.
@@ -194,12 +156,12 @@ gimp_display_shell_events (GtkWidget        *widget,
 
       switch (kevent->keyval)
         {
-        case GDK_Left: case GDK_Right:
-        case GDK_Up: case GDK_Down:
+        case GDK_Left:      case GDK_Right:
+        case GDK_Up:        case GDK_Down:
         case GDK_space:
         case GDK_Tab:
-        case GDK_Alt_L: case GDK_Alt_R:
-        case GDK_Shift_L: case GDK_Shift_R:
+        case GDK_Alt_L:     case GDK_Alt_R:
+        case GDK_Shift_L:   case GDK_Shift_R:
         case GDK_Control_L: case GDK_Control_R:
           break;
 
@@ -226,12 +188,6 @@ gimp_display_shell_events (GtkWidget        *widget,
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
 				shell->gdisp);
-    }
-
-  if (popup_menu)
-    {
-      gimp_display_shell_origin_menu_popup (shell, 0, event->key.time);
-      return TRUE;
     }
 
   return FALSE;
@@ -362,6 +318,14 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
   current_device = gimp_devices_get_current (shell->gdisp->gimage->gimp);
 
   shell->draw_cursor = ! current_device->has_cursor;
+}
+
+gboolean
+gimp_display_shell_popup_menu (GtkWidget *widget)
+{
+  gimp_display_shell_origin_menu_popup (GIMP_DISPLAY_SHELL (widget), 0, 0);
+
+  return TRUE;
 }
 
 gboolean

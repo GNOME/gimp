@@ -39,9 +39,9 @@ struct _GimpSelectionEditor
 
   GtkWidget       *preview;
 
-  GtkWidget       *invert_button;
   GtkWidget       *all_button;
   GtkWidget       *none_button;
+  GtkWidget       *invert_button;
   GtkWidget       *save_button;
 };
 
