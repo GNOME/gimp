@@ -475,12 +475,10 @@ gimp_layer_duplicate (GimpItem *item,
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
     {
-      GimpLayerMask *layer_mask =
-        GIMP_LAYER_MASK (gimp_item_duplicate (GIMP_ITEM (layer->mask),
-                                              G_TYPE_FROM_INSTANCE (layer->mask),
-                                              FALSE));
-
-      gimp_layer_add_mask (new_layer, layer_mask, FALSE);
+      GimpItem *dup = gimp_item_duplicate (GIMP_ITEM (layer->mask),
+                                           G_TYPE_FROM_INSTANCE (layer->mask),
+                                           FALSE);
+      gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (dup), FALSE);
     }
 
   return new_item;
@@ -778,30 +776,31 @@ gimp_layer_transform_color (GimpImage         *gimage,
 			    GimpDrawable      *drawable,
 			    GimpImageBaseType  src_type)
 {
-  gint      i;
-  gint      h;
-  guchar   *src;
-  guchar   *dest;
   gpointer  pr;
 
   for (pr = pixel_regions_register (2, layerPR, bufPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      h    = layerPR->h;
-      src  = bufPR->data;
-      dest = layerPR->data;
+      const guchar *src  = bufPR->data;
+      guchar       *dest = layerPR->data;
+      gint          h    = layerPR->h;
 
       while (h--)
 	{
+          const guchar *s = src;
+          guchar       *d = dest;
+          gint i;
+
 	  for (i = 0; i < layerPR->w; i++)
 	    {
-	      gimp_image_transform_color (gimage, drawable,
-					  dest + (i * layerPR->bytes),
-                                          src_type,
-					  src  + (i * bufPR->bytes));
+	      gimp_image_transform_color (gimage, drawable, d, src_type, s);
+
 	      /*  copy alpha channel  */
-	      dest[(i + 1) * layerPR->bytes - 1] = src[(i + 1) * bufPR->bytes - 1];
+	      d[layerPR->bytes - 1] = src[bufPR->bytes - 1];
+
+              s += bufPR->bytes;
+              d += layerPR->bytes;
 	    }
 
 	  src  += bufPR->rowstride;

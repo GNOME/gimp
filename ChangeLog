@@ -1,3 +1,7 @@
+2005-02-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_transform_color): code cleanup.
+
 2005-02-15  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: formatting.
