@@ -585,9 +585,13 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
 {
   GimpImageMapOptions *options;
   GtkFileChooser      *chooser;
+  const gchar         *settings_name;
   gchar               *folder;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
+
+  settings_name = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name;
+  g_return_if_fail (settings_name != NULL);
 
   if (tool->settings_dialog)
     {
@@ -631,13 +635,8 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name)
-    folder = g_build_filename (gimp_directory (),
-                               GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name,
-                               NULL);
-
-  if (folder)
-    gtk_file_chooser_add_shortcut_folder (chooser, folder, NULL);
+  folder = g_build_filename (gimp_directory (), settings_name, NULL);
+  gtk_file_chooser_add_shortcut_folder (chooser, folder, NULL);
 
   options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
