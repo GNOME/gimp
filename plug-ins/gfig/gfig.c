@@ -854,7 +854,7 @@ plug_in_parse_gfig_path()
 	}
       else
 	{
-	  sprintf(buf,"gfig-path miss configured - \nPath `%.100s' not found\n", path);
+	  sprintf(buf,"gfig-path misconfigured - \nPath `%.100s' not found\n", path);
 	  g_warning(buf);
 	  create_warn_dialog(buf);
 	  g_free (path);
