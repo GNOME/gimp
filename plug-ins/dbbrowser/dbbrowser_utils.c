@@ -107,7 +107,7 @@ GtkWidget *
 gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 {
   dbbrowser_t *dbbrowser;
-  GtkWidget   *hbox;
+  GtkWidget   *hpaned;
   GtkWidget   *searchhbox;
   GtkWidget   *vbox;
   GtkWidget   *label;
@@ -159,18 +159,18 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   g_signal_connect (G_OBJECT (dbbrowser->dlg), "destroy",
                     G_CALLBACK (dialog_close_callback), dbbrowser);
   
-  /* hbox : left=list ; right=description */
+  /* hpaned : left=list ; right=description */
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hpaned = gtk_hpaned_new ();
+  /* gtk_container_set_border_width (GTK_CONTAINER (hbox), 4); */
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dbbrowser->dlg)->vbox), 
-		      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+		      hpaned, TRUE, TRUE, 0);
+  gtk_widget_show (hpaned);
 
   /* left = vbox : the list and the search entry */
   
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_paned_pack1 (GTK_PANED (hpaned), vbox, FALSE, TRUE);
   gtk_widget_show (vbox);
 
   /* list : list in a scrolled_win */
@@ -229,7 +229,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC, 
 				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (hbox), scrolled_window, TRUE, TRUE, 0);
+  gtk_paned_pack2 (GTK_PANED (hpaned), scrolled_window, TRUE, TRUE);
   gtk_widget_show (scrolled_window);
 
   dbbrowser->descr_vbox = gtk_vbox_new (FALSE, 0);
