@@ -590,7 +590,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  Horizontal button box for load / save */
-  frame = gtk_frame_new (_("All Channels"));
+  frame = gimp_frame_new (_("All Channels"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -614,7 +614,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (image_map_tool->save_button);
 
   /*  The radio box for selecting the curve type  */
-  frame = gtk_frame_new (_("Curve Type"));
+  frame = gimp_frame_new (_("Curve Type"));
   gtk_box_pack_end (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

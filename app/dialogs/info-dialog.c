@@ -351,8 +351,8 @@ info_dialog_new_extended (GimpViewable *viewable,
                                     help_func, help_data,
                                     NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
   info_table = gtk_table_new (2, 0, FALSE);

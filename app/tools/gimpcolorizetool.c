@@ -232,7 +232,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *vbox;
   GtkObject        *data;
 
-  frame = gtk_frame_new (_("Select Color"));
+  frame = gimp_frame_new (_("Select Color"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);

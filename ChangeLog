@@ -1,3 +1,15 @@
+2004-05-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-dialog.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c: use GimpFrame widgets, changed spacings.
+
+	* app/widgets/gimptexteditor.c: tweaked.
+
 2004-05-05  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp_splash.png: ustable splash

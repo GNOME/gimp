@@ -438,7 +438,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (menu);
 
   /*  Input levels frame  */
-  frame = gtk_frame_new (_("Input Levels"));
+  frame = gimp_frame_new (_("Input Levels"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -563,7 +563,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
 
   /*  Output levels frame  */
-  frame = gtk_frame_new (_("Output Levels"));
+  frame = gimp_frame_new (_("Output Levels"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -635,7 +635,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     tool);
 
 
-  frame = gtk_frame_new (_("All Channels"));
+  frame = gimp_frame_new (_("All Channels"));
   gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -269,7 +269,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
     { N_("_M"),      3, 2, 4, 2 }
   };
 
-  frame = gtk_frame_new (_("Select Primary Color to Modify"));
+  frame = gimp_frame_new (_("Select Primary Color to Modify"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -341,7 +341,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_widget_show (table);
 
-  frame = gtk_frame_new (_("Modify Selected Color"));
+  frame = gimp_frame_new (_("Modify Selected Color"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
