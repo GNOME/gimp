@@ -24,9 +24,11 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
 #include "gimprc.h"
@@ -175,6 +177,7 @@ gimp_rc_query (GimpRc      *rc,
                const gchar *key)
 {
   GObjectClass  *klass;
+  GObject       *rc_object;
   GParamSpec   **property_specs;
   GParamSpec    *prop_spec;
   guint          i, n_property_specs;
@@ -183,6 +186,7 @@ gimp_rc_query (GimpRc      *rc,
   g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
   g_return_val_if_fail (key != NULL, NULL);
 
+  rc_object = G_OBJECT (rc);
   klass = G_OBJECT_GET_CLASS (rc);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -194,7 +198,7 @@ gimp_rc_query (GimpRc      *rc,
     {
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READABLE) ||
+      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE) ||
           strcmp (prop_spec->name, key))
         {
           prop_spec = NULL;
@@ -207,7 +211,7 @@ gimp_rc_query (GimpRc      *rc,
       GValue   value = { 0, };
 
       g_value_init (&value, prop_spec->value_type);
-      g_object_get_property (G_OBJECT (rc), prop_spec->name, &value);
+      g_object_get_property (rc_object, prop_spec->name, &value);
 
       if (gimp_config_serialize_value (&value, str, FALSE))
         retval = g_string_free (str, FALSE);
@@ -218,8 +222,7 @@ gimp_rc_query (GimpRc      *rc,
     }
   else
     {
-      retval = g_strdup (gimp_config_lookup_unknown_token (G_OBJECT (rc),
-                                                           key));
+      retval = g_strdup (gimp_config_lookup_unknown_token (rc_object, key));
     }
 
   g_free (property_specs);
