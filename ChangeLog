@@ -1,3 +1,7 @@
+2004-05-08  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/spread.c: HIGified, simplified and fixes #141733
+	
 2004-05-08  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/screenshot.c (shoot_dialog): HIGify the

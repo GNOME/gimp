@@ -15,18 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * Please direct all comments, questions, bug reports  etc to Brian Degenhardt
- * bdegenha@ucsd.edu
- *
- * You can contact Federico Mena Quintero at quartic@polloux.fciencias.unam.mx
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  */
 
 #include "config.h"
-
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -35,10 +26,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-#define SCALE_WIDTH     200
 #define TILE_CACHE_SIZE  16
-
 
 typedef struct
 {
@@ -77,6 +65,8 @@ static SpreadValues spvals =
   5,  /*  horizontal spread amount  */
   5   /*  vertical spread amount    */
 };
+
+static GimpRunMode        run_mode;
 
 
 /***** Functions *****/
@@ -127,7 +117,6 @@ run (const gchar      *name,
   static GimpParam   values[1];
   gint32             image_ID;
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -215,107 +204,82 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void
-spread (GimpDrawable *drawable)
-{
-  GimpPixelRgn      dest_rgn;
-  gpointer          pr;
-  GimpPixelFetcher *pft;
+typedef struct {
+  GimpPixelFetcher	*pft;
+  GRand   		*gr;
+  gint  		 x_amount;
+  gint		 	 y_amount;
+  gint 			 width;
+  gint			 height;
+} SpreadParam_t;
 
-  gint     width, height;
-  gint     bytes;
-  guchar  *destrow;
-  guchar  *dest;
-  gint     x1, y1, x2, y2;
-  gint     x, y;
-  gint     progress, max_progress;
-  gdouble  x_amount, y_amount;
+/* Spread the image.  This is done by going through every pixel
+   in the source image and swapping it with some other random
+   pixel.  The random pixel is located within an ellipse that is
+   as high as the spread_amount_y parameter and as wide as the
+   spread_amount_x parameter.  This is done by randomly selecting
+   an angle and then multiplying the sine of the angle to a random
+   number whose range is between -spread_amount_x/2 and spread_amount_x/2.
+   The y coordinate is found by multiplying the cosine of the angle
+   to the random value generated from spread_amount_y.  The reason
+   that the spread is done this way is to make the end product more
+   random looking.  To see a result of this, compare spreading a
+   square with gimp 0.54 to spreading a square with this filter.
+   The corners are less sharp with this algorithm.
+*/
+
+static void
+spread_func (gint x, 
+	     gint y, 
+	     guchar *dest, 
+	     gint bpp, 
+	     gpointer data)
+{
+  SpreadParam_t *param = (SpreadParam_t*) data;
   gdouble  angle;
   gint     xdist, ydist;
   gint     xi, yi;
-  GRand   *gr;
 
-  gr = g_rand_new ();
+  /* get random angle, x distance, and y distance */
+  xdist = (param->x_amount > 0 
+	   ? g_rand_int_range (param->gr, -param->x_amount, param->x_amount) 
+	   : 0);
+  ydist = (param->y_amount > 0 
+	   ? g_rand_int_range (param->gr, -param->y_amount, param->y_amount) 
+	   : 0);
+  angle = g_rand_double_range (param->gr, -G_PI, G_PI);
 
-  pft = gimp_pixel_fetcher_new (drawable, FALSE);
+  xi = x + floor (sin (angle) * xdist);
+  yi = y + floor (cos (angle) * ydist);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = drawable->width;
-  height = drawable->height;
-  bytes  = drawable->bpp;
-
-  progress     = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  x_amount = (spvals.spread_amount_x + 1) / 2;
-  y_amount = (spvals.spread_amount_y + 1) / 2;
-
-  /* Spread the image.  This is done by going through every pixel
-     in the source image and swapping it with some other random
-     pixel.  The random pixel is located within an ellipse that is
-     as high as the spread_amount_y parameter and as wide as the
-     spread_amount_x parameter.  This is done by randomly selecting
-     an angle and then multiplying the sine of the angle to a random
-     number whose range is between -spread_amount_x/2 and spread_amount_x/2.
-     The y coordinate is found by multiplying the cosine of the angle
-     to the random value generated from spread_amount_y.  The reason
-     that the spread is done this way is to make the end product more
-     random looking.  To see a result of this, compare spreading a
-     square with gimp 0.54 to spreading a square with this filter.
-     The corners are less sharp with this algorithm.
-  */
-
-  /* Spread the image! */
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  /* Only displace the pixel if it's within the bounds of the
+     image. */
+  if (xi >= 0 && xi < param->width && yi >= 0 && yi < param->height)
     {
-      destrow = dest_rgn.data;
-
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	{
-	  dest = destrow;
-
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-              /* get random angle, x distance, and y distance */
-              xdist = (x_amount > 0 ?
-                       g_rand_int_range (gr, -x_amount, x_amount) : 0);
-              ydist = (y_amount > 0 ?
-                       g_rand_int_range (gr, -y_amount, y_amount) : 0);
-              angle = g_rand_double_range (gr, -G_PI, G_PI);
-
-              xi = x + floor (sin (angle) * xdist);
-              yi = y + floor (cos (angle) * ydist);
-
-              /* Only displace the pixel if it's within the bounds of the
-		 image. */
-              if ((xi >= 0) && (xi < width) && (yi >= 0) && (yi < height))
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, xi, yi, dest);
-		}
-	      else /* Else just copy it */
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, x, y, dest);
-		}
-	      dest += bytes;
-            }
-	  destrow += dest_rgn.rowstride;
-	}
-      progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_pixel_fetcher_get_pixel (param->pft, xi, yi, dest);
     }
+  else /* Else just copy it */
+    {
+      gimp_pixel_fetcher_get_pixel (param->pft, x, y, dest);
+    }
+}
 
-  gimp_pixel_fetcher_destroy (pft);
+static void
+spread (GimpDrawable *drawable)
+{
+  GimpRgnIterator *iter;
+  SpreadParam_t    param;
 
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  param.pft = gimp_pixel_fetcher_new (drawable, FALSE);
+  param.gr = g_rand_new ();
+  param.x_amount = (spvals.spread_amount_x + 1) / 2;
+  param.y_amount = (spvals.spread_amount_y + 1) / 2;
+  param.width     = drawable->width;
+  param.height    = drawable->height;
+
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_dest (iter, spread_func, &param);
+  gimp_rgn_iterator_free (iter);
 }
 
 static gint
@@ -342,7 +306,7 @@ spread_dialog (gint32        image_ID,
                          NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Spread Amount"));
+  frame = gimp_frame_new (_("Spread Amount"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
