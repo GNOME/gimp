@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp-tips\n"
 "POT-Creation-Date: 2002-11-09 19:45+0100\n"
 "PO-Revision-Date: 2002-03-13 13:25+0100\n"
 "Last-Translator: Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>\n"

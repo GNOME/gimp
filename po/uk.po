@@ -1438,7 +1438,7 @@ msgid "1 Layer"
 msgstr "1 шар"
 
 #: app/core/gimpimagefile.c:733
-#, c-format
+#, fuzzy, c-format
 msgid "%d Layers"
 msgstr "Шарів: 2"
 

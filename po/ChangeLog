@@ -1,3 +1,8 @@
+2003-02-05  Abel Cheung  <maddog@linux.org.hk>
+
+	* uk.po: Mark one string as fuzzy, it failed msgfmt checking.
+	* zh_TW.po: Updated traditional Chinese translation.
+
 2003-02-03  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
