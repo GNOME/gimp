@@ -379,11 +379,12 @@ void
 gimp_config_writer_revert (GimpConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (writer->depth > 0);
-  g_return_if_fail (writer->marker != -1);
 
   if (writer->error)
     return;
+
+  g_return_if_fail (writer->depth > 0);
+  g_return_if_fail (writer->marker != -1);
 
   g_string_truncate (writer->buffer, writer->marker);
 
@@ -401,10 +402,11 @@ void
 gimp_config_writer_close (GimpConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (writer->depth > 0);
 
   if (writer->error)
     return;
+
+  g_return_if_fail (writer->depth > 0);
 
   g_string_append_c (writer->buffer, ')');
 
@@ -516,10 +518,11 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
 #define LINE_LENGTH 75
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (writer->depth == 0);
 
   if (writer->error)
     return;
+
+  g_return_if_fail (writer->depth == 0);
 
   if (!comment)
     return;
