@@ -1,3 +1,9 @@
+1999-08-31  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/spheredesigner.c: Minor portability fixes.
+
+	* plug-ins/makefile.{cygwin,msc}: Add spheredesigner.
+
 Tue Aug 31 14:25:50 CET 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/Makefile.am

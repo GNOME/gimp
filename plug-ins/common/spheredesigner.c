@@ -1,12 +1,22 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
 #include <sys/time.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
+
 #include <libgimp/gimp.h>
+
+#ifndef G_PI			/* G_PI will be in GLib eventually */
+#define G_PI    3.14159265358979323846
+#endif
 
 #define PREVIEWSIZE 150
 
@@ -250,11 +260,11 @@ void init(void)
 
 /* Create an array of random gradient vectors uniformly on the unit sphere */
 
-  srandom(1);
+  SRAND_FUNC(time(NULL));
   for (i = 0 ; i < B ; i++) {
     do {                            /* Choose uniformly in a cube */
       for (j=0 ; j<3 ; j++)
-	v[j] = (double)((random() % (B + B)) - B) / B;
+	v[j] = (double)((RAND_FUNC() % (B + B)) - B) / B;
       s = DOT(v,v);
     } while (s > 1.0);              /* If not in sphere try again */
     s = sqrt(s);
@@ -268,7 +278,7 @@ void init(void)
     p[i] = i;
   for (i = B ; i > 0 ; i -= 2) {
     k = p[i];
-    p[i] = p[j = random() % B];
+    p[i] = p[j = RAND_FUNC() % B];
     p[j] = k;
   }
 
@@ -419,7 +429,7 @@ inline void vnorm(vector *a, double v)
 
 inline void vrotate(vector *axis, double ang, vector *vector)
 {
-  double rad = ang / 180.0 * M_PI;
+  double rad = ang / 180.0 * G_PI;
   double ax = vector->x;
   double ay = vector->y;
   double az = vector->z;
@@ -840,7 +850,7 @@ void spiral(vector *q, vector *col, texture *t)
   vcopy(&p, q);
   transformpoint(&p, t);
 
-  f = fabs(atan2(p.x, p.z)/M_PI/2 + p.y + 99999);
+  f = fabs(atan2(p.x, p.z)/G_PI/2 + p.y + 99999);
   f = f - (int)f;
 
   f = pow(f, t->exp);
@@ -865,7 +875,7 @@ void spots(vector *q, vector *col, texture *t)
 
   vset(&r, (int)(p.x+0.5), (int)(p.y+0.5), (int)(p.z+0.5));
   f = vdist(&p,&r);
-  f = cos(f*M_PI);
+  f = cos(f*G_PI);
   if(f < 0.0) f = 0.0;
   else if(f > 1.0) f = 1.0;
   f = pow(f, t->exp);
@@ -919,7 +929,7 @@ void imagepixel(vector *q, vector *col, texture *t)
 
 double frand(double v)
 {
-  return (rand() / (double)RAND_MAX - 0.5) * v;
+  return (RAND_FUNC() / (double)RAND_MAX - 0.5) * v;
 }
 
 int traceray(ray *r, vector *col, int level, double imp);

@@ -541,6 +541,8 @@ gih_save_dialog ()
       gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
       if (gihparms.selection[i])
 	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), gihparms.selection[i]);
+      else
+	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), "random");
       gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (cb)->entry), FALSE);
 
       gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 2);
