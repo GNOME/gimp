@@ -22,7 +22,6 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
 
 #include "text-types.h"
 
@@ -32,16 +31,21 @@
 #include "gimptextlayer.h"
 #include "gimptextlayer-transform.h"
 
-#include "gimp-intl.h"
+
+
+static void  gimp_text_layer_get_trafo (GimpTextLayer *layer,
+                                        GimpMatrix2   *trafo);
 
 
 void
 gimp_text_layer_scale (GimpItem               *item,
-		       gint                    new_width,
-		       gint                    new_height,
-		       gint                    new_offset_x,
-		       gint                    new_offset_y,
-		       GimpInterpolationType   interpolation_type)
+                       gint                    new_width,
+                       gint                    new_height,
+                       gint                    new_offset_x,
+                       gint                    new_offset_y,
+                       GimpInterpolationType   interpolation_type,
+                       GimpProgressFunc        progress_callback,
+                       gpointer                progress_data)
 {
 
 }
@@ -49,40 +53,38 @@ gimp_text_layer_scale (GimpItem               *item,
 void
 gimp_text_layer_flip (GimpItem            *item,
                       GimpContext         *context,
-		      GimpOrientationType  flip_type,
-		      gdouble              axis,
-		      gboolean             clip_result)
+                      GimpOrientationType  flip_type,
+                      gdouble              axis,
+                      gboolean             clip_result)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
+  GimpLayer   *layer = GIMP_LAYER (item);
+  GimpMatrix2  text_trafo;
+  GimpMatrix2  trafo = { { { 1.0, 0.0 }, { 0.0, 1.0 } } };
 
-  {
-    GimpText    *text  = GIMP_TEXT_LAYER (item)->text;
-    GimpMatrix2  trafo = { { { 1.0, 0.0 }, { 0.0, 1.0 } } };
+  switch (flip_type)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      trafo.coeff[0][0] = - 1.0;
+      break;
 
-    switch (flip_type)
-      {
-      case GIMP_ORIENTATION_HORIZONTAL:
-	trafo.coeff[0][0] = - 1.0;
-	break;
+    case GIMP_ORIENTATION_VERTICAL:
+      trafo.coeff[1][1] = - 1.0;
+      break;
 
-      case GIMP_ORIENTATION_VERTICAL:
-	trafo.coeff[1][1] = - 1.0;
-	break;
+    case GIMP_ORIENTATION_UNKNOWN:
+      break;
+    }
 
-      case GIMP_ORIENTATION_UNKNOWN:
-	break;
-      }
+  gimp_text_layer_get_trafo (GIMP_TEXT_LAYER (layer), &text_trafo);
+  gimp_matrix2_mult (&trafo, &text_trafo);
 
-    gimp_matrix2_mult (&trafo, &text->transformation);
-    g_object_notify (G_OBJECT (text), "transformation");
-  }
+  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
+                       "transformation", &text_trafo,
+                       NULL);
 
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask), context,
                     flip_type, axis, clip_result);
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 void
@@ -93,9 +95,11 @@ gimp_text_layer_rotate (GimpItem         *item,
                         gdouble           center_y,
                         gboolean          clip_result)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  gdouble    cos   = 1.0;
-  gdouble    sin   = 0.0;
+  GimpLayer   *layer = GIMP_LAYER (item);
+  GimpMatrix2  text_trafo;
+  GimpMatrix2  trafo;
+  gdouble      cos   = 1.0;
+  gdouble      sin   = 0.0;
 
   switch (rotate_type)
     {
@@ -113,36 +117,41 @@ gimp_text_layer_rotate (GimpItem         *item,
       break;
     }
 
-  {
-    GimpText    *text = GIMP_TEXT_LAYER (item)->text;
-    GimpMatrix2  trafo;
+  trafo.coeff[0][0] = cos;
+  trafo.coeff[0][1] = -sin;
+  trafo.coeff[1][0] = sin;
+  trafo.coeff[1][1] = cos;
 
-    trafo.coeff[0][0] = cos;
-    trafo.coeff[0][1] = -sin;
-    trafo.coeff[1][0] = sin;
-    trafo.coeff[1][1] = cos;
+  gimp_text_layer_get_trafo (GIMP_TEXT_LAYER (layer), &text_trafo);
+  gimp_matrix2_mult (&trafo, &text_trafo);
 
-    gimp_matrix2_mult (&trafo, &text->transformation);
-    g_object_notify (G_OBJECT (text), "transformation");
-  }
+  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
+                       "transformation", &text_trafo,
+                       NULL);
 
   if (layer->mask)
     gimp_item_rotate (GIMP_ITEM (layer->mask), context,
                       rotate_type, center_x, center_y, clip_result);
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 void
 gimp_text_layer_transform (GimpItem               *item,
                            GimpContext            *context,
-			   const GimpMatrix3      *matrix,
-			   GimpTransformDirection  direction,
-			   GimpInterpolationType   interpolation_type,
-			   gboolean                clip_result,
-			   GimpProgressFunc        progress_callback,
-			   gpointer                progress_data)
+                           const GimpMatrix3      *matrix,
+                           GimpTransformDirection  direction,
+                           GimpInterpolationType   interpolation_type,
+                           gboolean                supersample,
+                           gint                    recursion_level,
+                           gboolean                clip_result,
+                           GimpProgressFunc        progress_callback,
+                           gpointer                progress_data)
 {
 
+}
+
+static void
+gimp_text_layer_get_trafo (GimpTextLayer *layer,
+                           GimpMatrix2   *trafo)
+{
+  *trafo = layer->text->transformation;
 }

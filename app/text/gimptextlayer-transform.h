@@ -24,30 +24,34 @@
 
 
 void  gimp_text_layer_scale     (GimpItem               *item,
-				 gint                    new_width,
-				 gint                    new_height,
-				 gint                    new_offset_x,
-				 gint                    new_offset_y,
-				 GimpInterpolationType   interpolation_type);
+                                 gint                    new_width,
+                                 gint                    new_height,
+                                 gint                    new_offset_x,
+                                 gint                    new_offset_y,
+                                 GimpInterpolationType   interpolation_type,
+                                 GimpProgressFunc        progress_callback,
+                                 gpointer                progress_data);
 void  gimp_text_layer_flip      (GimpItem               *item,
                                  GimpContext            *context,
-				 GimpOrientationType     flip_type,
-				 gdouble                 axis,
-				 gboolean                clip_result);
+                                 GimpOrientationType     flip_type,
+                                 gdouble                 axis,
+                                 gboolean                clip_result);
 void  gimp_text_layer_rotate    (GimpItem               *item,
                                  GimpContext            *context,
-				 GimpRotationType        rotate_type,
-				 gdouble                 center_x,
-				 gdouble                 center_y,
-				 gboolean                clip_result);
+                                 GimpRotationType        rotate_type,
+                                 gdouble                 center_x,
+                                 gdouble                 center_y,
+                                 gboolean                clip_result);
 void  gimp_text_layer_transform (GimpItem               *item,
                                  GimpContext            *context,
-				 const GimpMatrix3      *matrix,
-				 GimpTransformDirection  direction,
-				 GimpInterpolationType   interpolation_type,
-				 gboolean                clip_result,
-				 GimpProgressFunc        progress_callback,
-				 gpointer                progress_data);
+                                 const GimpMatrix3      *matrix,
+                                 GimpTransformDirection  direction,
+                                 GimpInterpolationType   interpolation_type,
+                                 gboolean                supersample,
+                                 gint                    recursion_level,
+                                 gboolean                clip_result,
+                                 GimpProgressFunc        progress_callback,
+                                 gpointer                progress_data);
 
 
 #endif /* __GIMP_TEXT_LAYER_TRANSFORM_H__ */

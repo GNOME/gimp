@@ -47,7 +47,6 @@ gimp_text_render_bitmap (PangoFont  *font,
 			 FT_Bitmap  *bitmap)
 {
   FT_Face       face;
-  FT_Vector     pos;
   gint          y_start, y_limit, x_start, x_limit;
   gint          ix, iy;
   const guchar *src;
@@ -62,13 +61,8 @@ gimp_text_render_bitmap (PangoFont  *font,
 		   (flags & FT_LOAD_TARGET_MONO ?
 		    ft_render_mode_mono : ft_render_mode_normal));
 
-  pos.x = x;
-  pos.y = y;
-
-  FT_Vector_Transform (&pos, trafo);
-
-  x = PANGO_PIXELS (pos.x);
-  y = PANGO_PIXELS (pos.y);
+  x = PANGO_PIXELS (x);
+  y = PANGO_PIXELS (y);
 
   x_start = MAX (0, - (x + face->glyph->bitmap_left));
   x_limit = MIN (face->glyph->bitmap.width,
