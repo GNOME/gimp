@@ -61,6 +61,7 @@ struct _GimpContainerTreeView
 
   GQuark             invalidate_preview_handler_id;
 
+  gboolean           dnd_drop_to_empty;
   Gimp              *dnd_gimp; /* eek */
   GimpViewable      *dnd_viewable;
 

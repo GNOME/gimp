@@ -256,20 +256,24 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                  GimpViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *gimage = view->gimage;
-  GError           *error  = NULL;
-  gint              index;
+  GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *image = view->gimage;
+  gint              index = -1;
+  GError           *error = NULL;
 
-  if (gimage->gimp->be_verbose)
+  if (image->gimp->be_verbose)
     g_print ("%s: SVG dropped (len = %d)\n", G_STRFUNC, (gint) svg_data_len);
 
-  index = gimp_image_get_vectors_index (gimage, GIMP_VECTORS (dest_viewable));
+  if (dest_viewable)
+    {
+      index = gimp_image_get_vectors_index (image,
+                                            GIMP_VECTORS (dest_viewable));
 
-  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-    index++;
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        index++;
+    }
 
-  if (! gimp_vectors_import_buffer (gimage, svg_data, svg_data_len,
+  if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
                                     TRUE, TRUE, index, &error))
     {
       g_message (error->message);
@@ -277,7 +281,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
     }
   else
     {
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 }
 

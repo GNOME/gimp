@@ -243,41 +243,40 @@ gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
                                       GimpViewable            *dest_viewable,
                                       GtkTreeViewDropPosition  drop_pos)
 {
-  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tree_view);
-  GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpItemTreeViewClass *item_view_class;
-  GimpContainer         *container;
-
-  container = gimp_container_view_get_container (container_view);
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  if (item_view->gimage != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
-      G_TYPE_FROM_INSTANCE (src_viewable) != item_view_class->item_type)
+  if (GIMP_IS_DRAWABLE (src_viewable) &&
+      (item_view->gimage != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
+       G_TYPE_FROM_INSTANCE (src_viewable) != item_view_class->item_type))
     {
       GimpItem *new_item;
-      gint      dest_index;
+      gint      index = -1;
 
-      dest_index = gimp_container_get_child_index (container,
-                                                   GIMP_OBJECT (dest_viewable));
+      if (dest_viewable)
+        {
+          index = gimp_image_get_channel_index (item_view->gimage,
+                                                GIMP_CHANNEL (dest_viewable));
 
-     if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-        dest_index++;
+          if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+            index++;
+        }
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
                                     item_view->gimage,
                                     item_view_class->item_type, FALSE);
 
-      item_view_class->add_item (item_view->gimage, new_item, dest_index);
+      item_view_class->add_item (item_view->gimage, new_item, index);
       gimp_image_flush (item_view->gimage);
+      return;
     }
-  else
-    {
-      GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewable (tree_view,
-                                                                    src_viewable,
-                                                                    dest_viewable,
-                                                                    drop_pos);
-    }
+
+  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewable (tree_view,
+                                                                src_viewable,
+                                                                dest_viewable,
+                                                                drop_pos);
 }
 
 static void
@@ -287,39 +286,40 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
                                        GimpViewable            *dest_viewable,
                                        GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *view       = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *dest_image = view->gimage;
-  GimpChannel      *new_channel;
-  gint              index;
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpItem         *new_item;
+  gint              index     = -1;
   const gchar      *desc;
   gchar            *name;
 
-  index = gimp_image_get_channel_index (dest_image,
-                                        GIMP_CHANNEL (dest_viewable));
+  if (dest_viewable)
+    {
+      index = gimp_image_get_channel_index (item_view->gimage,
+                                            GIMP_CHANNEL (dest_viewable));
 
-  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-    index++;
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        index++;
+    }
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
   name = g_strdup_printf (_("%s Channel Copy"), desc);
 
-  new_channel = gimp_channel_new_from_component (src_image, component,
-                                                 name, NULL);
+  new_item = GIMP_ITEM (gimp_channel_new_from_component (src_image, component,
+                                                         name, NULL));
 
   /*  copied components are invisible by default so subsequent copies
    *  of components don't affect each other
    */
-  gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
+  gimp_item_set_visible (new_item, FALSE, FALSE);
 
   g_free (name);
 
-  if (src_image != dest_image)
-    GIMP_ITEM_GET_CLASS (new_channel)->convert (GIMP_ITEM (new_channel),
-                                                dest_image);
+  if (src_image != item_view->gimage)
+    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, item_view->gimage);
 
-  gimp_image_add_channel (dest_image, new_channel, index);
-  gimp_image_flush (dest_image);
+  gimp_image_add_channel (item_view->gimage, GIMP_CHANNEL (new_item), index);
+  gimp_image_flush (item_view->gimage);
 }
 
 

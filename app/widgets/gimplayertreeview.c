@@ -32,7 +32,6 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
-#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
@@ -40,7 +39,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
-#include "core/gimppattern.h"
 
 #include "text/gimptextlayer.h"
 
@@ -91,10 +89,6 @@ static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
                                                    GtkTreeViewDropPosition  drop_pos,
                                                    GtkTreeViewDropPosition *return_drop_pos,
                                                    GdkDragAction       *return_drag_action);
-static void    gimp_layer_tree_view_drop_viewable (GimpContainerTreeView *view,
-                                                   GimpViewable        *src_viewable,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreeViewDropPosition  drop_pos);
 static void    gimp_layer_tree_view_drop_color    (GimpContainerTreeView *view,
                                                    const GimpRGB       *color,
                                                    GimpViewable        *dest_viewable,
@@ -227,7 +221,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   widget_class->style_set   = gimp_layer_tree_view_style_set;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
-  tree_view_class->drop_viewable   = gimp_layer_tree_view_drop_viewable;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
   tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
   tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
@@ -414,11 +407,7 @@ gimp_layer_tree_view_constructor (GType                  type,
 
   gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
-  gimp_dnd_color_dest_add     (GTK_WIDGET (tree_view->view),
-                               NULL, tree_view);
   gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
-                               NULL, tree_view);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
                                NULL, tree_view);
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
                                NULL, tree_view);
@@ -671,73 +660,36 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
        GIMP_IS_DRAWABLE (src_viewable))
     {
       GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
-      GimpImage *dest_image = gimp_item_get_image (GIMP_ITEM (dest_layer));
+      GimpImage *dest_image = GIMP_ITEM_TREE_VIEW (tree_view)->gimage;
 
       if (gimp_image_floating_sel (dest_image))
         return FALSE;
 
-      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (dest_layer)) &&
-          drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-        return FALSE;
-
-      if (GIMP_IS_LAYER (src_viewable))
+      if (dest_layer)
         {
-          GimpLayer *src_layer  = GIMP_LAYER (src_viewable);
-          GimpImage *src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
-
-          if (src_image == dest_image &&
-              ! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_layer)))
+          if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (dest_layer)) &&
+              drop_pos == GTK_TREE_VIEW_DROP_AFTER)
             return FALSE;
+
+          if (GIMP_IS_LAYER (src_viewable))
+            {
+              GimpLayer *src_layer  = GIMP_LAYER (src_viewable);
+              GimpImage *src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
+
+              if (src_image == dest_image &&
+                  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_layer)))
+                return FALSE;
+            }
         }
     }
 
-  if (GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
-                                                                    src_type,
-                                                                    src_viewable,
-                                                                    dest_viewable,
-                                                                    drop_pos,
-                                                                    return_drop_pos,
-                                                                    return_drag_action))
-    {
-      if (return_drop_pos &&
-          (src_type == GIMP_DND_TYPE_COLOR ||
-           src_type == GIMP_DND_TYPE_PATTERN))
-        {
-          if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE)
-            *return_drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_BEFORE;
-          else
-            *return_drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_AFTER;
-        }
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-gimp_layer_tree_view_drop_viewable (GimpContainerTreeView   *view,
-                                    GimpViewable            *src_viewable,
-                                    GimpViewable            *dest_viewable,
-                                    GtkTreeViewDropPosition  drop_pos)
-{
-  if (GIMP_IS_PATTERN (src_viewable))
-    {
-      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (dest_viewable),
-                                      GIMP_PATTERN_BUCKET_FILL,
-                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                      FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
-                                      0.0, 0.0,          /* ignored      */
-                                      NULL, GIMP_PATTERN (src_viewable));
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->gimage);
-      return;
-    }
-
-  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewable (view,
-                                                                src_viewable,
-                                                                dest_viewable,
-                                                                drop_pos);
+  return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+                                                                       src_type,
+                                                                       src_viewable,
+                                                                       dest_viewable,
+                                                                       drop_pos,
+                                                                       return_drop_pos,
+                                                                       return_drag_action);
 }
 
 static void
@@ -751,19 +703,13 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
       gimp_text_layer_set (GIMP_TEXT_LAYER (dest_viewable), NULL,
                            "color", color,
                            NULL);
-    }
-  else
-    {
-      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (dest_viewable),
-                                      GIMP_FG_BUCKET_FILL,
-                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                      FALSE,             /* no seed fill */
-                                      FALSE, 0.0, FALSE, /* fill params  */
-                                      0.0, 0.0,          /* ignored      */
-                                      color, NULL);
+      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->gimage);
+      return;
     }
 
-  gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->gimage);
+  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_color (view, color,
+                                                             dest_viewable,
+                                                             drop_pos);
 }
 
 static void
@@ -774,13 +720,16 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpImage        *gimage    = item_view->gimage;
+  gint              index     = -1;
   GList            *list;
-  gint              index;
 
-  index = gimp_image_get_layer_index (gimage, GIMP_LAYER (dest_viewable));
+  if (dest_viewable)
+    {
+      index = gimp_image_get_layer_index (gimage, GIMP_LAYER (dest_viewable));
 
-  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-    index++;
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        index++;
+    }
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -832,34 +781,37 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
                                      GimpViewable            *dest_viewable,
                                      GtkTreeViewDropPosition  drop_pos)
 {
-  GimpItemTreeView *view       = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *dest_image = view->gimage;
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpChannel      *channel;
-  GimpLayer        *layer;
-  gint              index;
+  GimpItem         *new_item;
+  gint              index     = -1;
   const gchar      *desc;
   gchar            *name;
 
-  index = gimp_image_get_layer_index (dest_image, GIMP_LAYER (dest_viewable));
+  if (dest_viewable)
+    {
+      index = gimp_image_get_layer_index (item_view->gimage,
+                                          GIMP_LAYER (dest_viewable));
 
-  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-    index++;
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        index++;
+    }
 
   channel = gimp_channel_new_from_component (src_image, component, NULL, NULL);
 
-  layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (channel), dest_image,
-                                         GIMP_TYPE_LAYER, TRUE));
+  new_item = gimp_item_convert (GIMP_ITEM (channel), item_view->gimage,
+                                GIMP_TYPE_LAYER, TRUE);
 
   g_object_unref (channel);
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
   name = g_strdup_printf (_("%s Channel Copy"), desc);
-  gimp_object_set_name (GIMP_OBJECT (layer), name);
+  gimp_object_set_name (GIMP_OBJECT (new_item), name);
   g_free (name);
 
-  gimp_image_add_layer (dest_image, layer, index);
-  gimp_image_flush (dest_image);
+  gimp_image_add_layer (item_view->gimage, GIMP_LAYER (new_item), index);
+  gimp_image_flush (item_view->gimage);
 }
 
 

@@ -280,6 +280,8 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
   tree_view->n_model_columns++;
 
+  tree_view->dnd_drop_to_empty = TRUE;
+
   view->context = NULL;
   view->gimage  = NULL;
 
@@ -714,8 +716,9 @@ gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                    GdkDragAction           *return_drag_action)
 {
   if (GIMP_IS_ITEM (src_viewable) &&
-      gimp_item_get_image (GIMP_ITEM (src_viewable)) !=
-      gimp_item_get_image (GIMP_ITEM (dest_viewable)))
+      (dest_viewable == NULL ||
+       gimp_item_get_image (GIMP_ITEM (src_viewable)) !=
+       gimp_item_get_image (GIMP_ITEM (dest_viewable))))
     {
       if (return_drop_pos)
         *return_drop_pos = drop_pos;
@@ -745,12 +748,13 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
   GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpItemTreeViewClass *item_view_class;
   GimpContainer         *container;
-  gint                   dest_index;
+  gint                   dest_index     = -1;
 
   container = gimp_container_view_get_container (container_view);
 
-  dest_index = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (dest_viewable));
+  if (dest_viewable)
+    dest_index = gimp_container_get_child_index (container,
+                                                 GIMP_OBJECT (dest_viewable));
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
@@ -764,7 +768,7 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
       if (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable), item_type))
         item_type = G_TYPE_FROM_INSTANCE (src_viewable);
 
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+      if (dest_viewable && drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         dest_index++;
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
@@ -772,7 +776,7 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
       item_view_class->add_item (item_view->gimage, new_item, dest_index);
     }
-  else
+  else if (dest_viewable)
     {
       gint src_index;
 

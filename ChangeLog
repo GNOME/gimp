@@ -1,3 +1,32 @@
+2005-01-17  Michael Natterer  <mitch@gimp.org>
+
+	Allow to drop stuff onto empty layers, channels and paths dialogs
+	to create new items:
+
+	* app/widgets/gimpcontainertreeview.h (struct GimpContainerTreeView):
+	added "gboolean dnd_drop_to_empty".
+
+	* app/widgets/gimpcontainertreeview-dnd.c: if "dnd_drop_to_empty"
+	is TRUE, dispatch drops to empty views and to the empty area below
+	all items.
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_init): set
+	"dnd_drop_to_empty" to TRUE.
+
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: made all drop functions work
+	with "dest_viewable" being NULL and changed drop_possible()
+	implementations accordingly. Cleaned up the whole DND code a bit.
+
+	* app/widgets/gimplayertreeview.c: removed color and pattern
+	drop code...
+
+	* app/widgets/gimpdrawabletreeview.c: and added it here so colors
+	and patterns can be dropped to the channels dialog too.
+
 2005-01-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimppaintoptions-gui.c (pressure_options_gui): added a
