@@ -1,3 +1,8 @@
+2003-11-03  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 1.3.23. Changed the check for
+	GTK+ version 2.3.0 to give a less confusing output.
+
 2003-11-03  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/gui/preferences-dialog.c: reverted Svens change (which
