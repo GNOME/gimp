@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -62,6 +63,8 @@ struct _InfoWinData
   gchar        dimensions_str[MAX_BUF];
   gchar        real_dimensions_str[MAX_BUF];
   gchar        scale_str[MAX_BUF];
+  gchar        num_layers_str[MAX_BUF];
+  gchar        memsize_str[MAX_BUF];
   gchar        color_type_str[MAX_BUF];
   gchar        visual_class_str[MAX_BUF];
   gchar        visual_depth_str[MAX_BUF];
@@ -247,14 +250,18 @@ info_window_create (GimpDisplay *gdisp)
   info_win->user_data = iwd;
 
   /*  add the information fields  */
-  info_dialog_add_label (info_win, _("Dimensions (W x H):"),
+  info_dialog_add_label (info_win, _("Pixel Dimensions:"),
 			 iwd->dimensions_str);
-  info_dialog_add_label (info_win, '\0',
+  info_dialog_add_label (info_win, _("Print Size:"),
 			 iwd->real_dimensions_str);
   info_dialog_add_label (info_win, _("Resolution:"),
 			iwd->resolution_str);
   info_dialog_add_label (info_win, _("Scale Ratio:"),
 			 iwd->scale_str);
+  info_dialog_add_label (info_win, _("Number of Layers:"),
+			 iwd->num_layers_str);
+  info_dialog_add_label (info_win, _("Size in Memory:"),
+			 iwd->memsize_str);
   info_dialog_add_label (info_win, _("Display Type:"),
 			 iwd->color_type_str);
   info_dialog_add_label (info_win, _("Visual Class:"),
@@ -519,6 +526,23 @@ info_window_update (GimpDisplay *gdisp)
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
               SCALEDEST (shell), SCALESRC (shell));
 
+  /*  number of layers  */
+  g_snprintf (iwd->num_layers_str, MAX_BUF, "%d",
+              gimp_container_num_children (gimage->layers));
+
+  /*  size in memory  */
+  {
+    gulong  memsize;
+    gchar  *memsize_str;
+
+    memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
+    memsize_str = gimp_memsize_to_string (memsize);
+
+    g_snprintf (iwd->memsize_str, MAX_BUF, "%s", memsize_str);
+
+    g_free (memsize_str);
+  }
+
   type = gimp_image_base_type (gimage);
 
   /*  color type  */
@@ -539,7 +563,7 @@ info_window_update (GimpDisplay *gdisp)
   {
     GdkScreen *screen;
     GdkVisual *visual;
-   
+
     screen = gtk_widget_get_screen (GTK_WIDGET (shell));
     visual = gdk_screen_get_rgb_visual (screen);
 
