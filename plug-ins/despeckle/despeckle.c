@@ -44,17 +44,19 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:12  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1997/12/09 05:57:27  adrian
+ *   	added glasstile, colorify, papertile, and illusion plugins
  *
- *   Revision 1.1  1997/11/14 20:08:37  nobody
- *   *** empty log message ***
+ *   	updated despeckle, and math map
  *
- *   Revision 1.2  1997/09/27 10:30:27  nobody
- *   Boatload of changes from 0.99.11 to 0.99.12.  For details, see the ChangeLog :-)
+ *   Revision 1.14  1997/11/14  17:17:59  mike
+ *   Updated to dynamically allocate return params in the run() function.
  *
- *   (Now that we are all using cvs (right?), this boatload of changes kind
- *   of commit shouldn't happen...)
+ *   Revision 1.13  1997/11/12  15:53:34  mike
+ *   Added <string.h> header file for Digital UNIX...
+ *
+ *   Revision 1.12  1997/10/17  13:56:54  mike
+ *   Updated author/contact information.
  *
  *   Revision 1.11  1997/06/12  16:58:11  mike
  *   Optimized final despeckle - now grab gimp_tile_height() rows at a time
@@ -101,6 +103,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
@@ -108,11 +111,19 @@
 
 
 /*
+ * Macros...
+ */
+
+#define MIN(a,b)		(((a) < (b)) ? (a) : (b))
+#define MAX(a,b)		(((a) > (b)) ? (a) : (b))
+
+
+/*
  * Constants...
  */
 
 #define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.1"
+#define PLUG_IN_VERSION		"1.1.3 - 14 November 1997"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
@@ -219,8 +230,10 @@ query(void)
   gimp_install_procedure(PLUG_IN_NAME,
       "Despeckle filter, typically used to \'despeckle\' a photographic image.",
       "This plug-in selectively performs a median or adaptive box filter on an image.",
-      "Michael Sweet", "Michael Sweet",
-      PLUG_IN_VERSION, "<Image>/Filters/Image/Despeckle...", "RGB*, GRAY*",
+      "Michael Sweet <mike@easysw.com>",
+      "Michael Sweet <mike@easysw.com>",
+      PLUG_IN_VERSION,
+      "<Image>/Filters/Image/Despeckle...", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 
@@ -238,7 +251,7 @@ run(char   *name,		/* I - Name of filter program. */
 {
   GRunModeType	run_mode;	/* Current run mode */
   GStatusType	status;		/* Return status */
-  static GParam	values[1];	/* Return values */
+  GParam	*values;	/* Return values */
 
 
  /*
@@ -247,6 +260,8 @@ run(char   *name,		/* I - Name of filter program. */
 
   status   = STATUS_SUCCESS;
   run_mode = param[0].data.d_int32;
+
+  values = g_new(GParam, 1);
 
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = status;
@@ -783,7 +798,8 @@ despeckle_dialog(void)
 static void
 preview_init(void)
 {
-  int	size,		/* Size of filter box */
+  int	row,		/* Current row in preview_srcs */
+	size,		/* Size of filter box */
 	width;		/* Byte width of the image */
 
 
@@ -1003,7 +1019,8 @@ preview_update(void)
 static void
 preview_exit(void)
 {
-  int	size;	/* Size of row buffer */
+  int	row,	/* Looping var */
+	size;	/* Size of row buffer */
 
 
   size = MAX_RADIUS * 2 + 1;

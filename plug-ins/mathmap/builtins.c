@@ -18,67 +18,91 @@ extern int stackp;
 double
 color_to_double (int red, int green, int blue)
 {
-    return (red << 16) | (green << 8) | blue;
+    double val;
+
+    *(int*)&val = (red << 16) | (green << 8) | blue;
+
+    return val;
 }
 
 void
 double_to_color (double val, int *red, int *green, int *blue)
 {
-    int color = val;
+    int color = *(int*)&val;
 
     *red = color >> 16;
     *green = (color >> 8) & 0xff;
     *blue = color & 0xff;
 }
 
-void
-builtin_if (double arg)
+int
+red_component (double val)
 {
-    if (stack[stackp - 3] != 0.0)
-	stack[stackp - 3] = stack[stackp - 2];
-    else
-	stack[stackp - 3] = stack[stackp - 1];
-    stackp -= 2;
+    int color = *(int*)&val;
+
+    return color >> 16;
+}
+
+int
+green_component (double val)
+{
+    int color = *(int*)&val;
+
+    return (color >> 8) & 0xff;
+}
+
+int
+blue_component (double val)
+{
+    int color = *(int*)&val;
+
+    return color & 0xff;
 }
 
 void
-builtin_sin (double arg)
+builtin_sin (void *arg)
 {
     stack[stackp - 1] = sin(stack[stackp - 1] * M_PI / 180.0);
 }
 
 void
-builtin_cos (double arg)
+builtin_cos (void *arg)
 {
     stack[stackp - 1] = cos(stack[stackp - 1] * M_PI / 180.0);
 }
 
 void
-builtin_tan (double arg)
+builtin_tan (void *arg)
 {
     stack[stackp - 1] = tan(stack[stackp - 1] * M_PI / 180.0);
 }
 
 void
-builtin_asin (double arg)
+builtin_asin (void *arg)
 {
     stack[stackp - 1] = asin(stack[stackp - 1]) * 180.0 / M_PI;
 }
 
 void
-builtin_acos (double arg)
+builtin_acos (void *arg)
 {
     stack[stackp - 1] = acos(stack[stackp - 1]) * 180.0 / M_PI;
 }
 
 void
-builtin_atan (double arg)
+builtin_atan (void *arg)
 {
     stack[stackp - 1] = atan(stack[stackp - 1]) * 180.0 / M_PI;
 }
 
 void
-builtin_sign (double arg)
+builtin_abs (void *arg)
+{
+    stack[stackp - 1] = fabs(stack[stackp - 1]);
+}
+
+void
+builtin_sign (void *arg)
 {
     if (stack[stackp - 1] < 0)
 	stack[stackp - 1] = -1.0;
@@ -89,7 +113,7 @@ builtin_sign (double arg)
 }
 
 void
-builtin_min (double arg)
+builtin_min (void *arg)
 {
     if (stack[stackp - 2] >= stack[stackp - 1])
 	stack[stackp - 2] = stack[stackp - 1];
@@ -97,7 +121,7 @@ builtin_min (double arg)
 }
 
 void
-builtin_max (double arg)
+builtin_max (void *arg)
 {
     if (stack[stackp - 2] <= stack[stackp - 1])
 	stack[stackp - 2] = stack[stackp - 1];
@@ -105,7 +129,37 @@ builtin_max (double arg)
 }
 
 void
-builtin_inintv (double arg)
+builtin_or (void *arg)
+{
+    if (stack[stackp - 2] || stack[stackp - 1])
+	stack[stackp - 2] = 1.0;
+    else
+	stack[stackp - 2] = 0.0;
+    --stackp;
+}
+
+void
+builtin_and (void *arg)
+{
+    if (stack[stackp - 2] && stack[stackp - 1])
+	stack[stackp - 2] = 1.0;
+    else
+	stack[stackp - 2] = 0.0;
+    --stackp;
+}
+
+void
+builtin_less (void *arg)
+{
+    if (stack[stackp - 2] < stack[stackp - 1])
+	stack[stackp - 2] = 1.0;
+    else
+	stack[stackp - 2] = 0.0;
+    --stackp;
+}
+
+void
+builtin_inintv (void *arg)
 {
     if (stack[stackp - 3] >= stack[stackp - 2] && stack[stackp - 3] <= stack[stackp - 1])
 	stack[stackp - 3] = 1.0;
@@ -115,7 +169,7 @@ builtin_inintv (double arg)
 }
 
 void
-builtin_rand (double arg)
+builtin_rand (void *arg)
 {
     stack[stackp - 2] = (random() / (double)0x7fffffff)
 	* (stack[stackp - 1] - stack[stackp - 2]) + stack[stackp - 2];
@@ -132,20 +186,20 @@ extern int originX,
     wholeImageHeight;
 
 void
-builtin_origValXY (double arg)
+builtin_origValXY (void *arg)
 {
-  int x = stack[stackp - 2],
-    y = stack[stackp - 1];
-  unsigned char pixel[4];
+    int x = stack[stackp - 2],
+	y = stack[stackp - 1];
+    unsigned char pixel[4];
 
-  mathmap_get_pixel(x + originX + middleX, y + originY + middleY, pixel);
+    mathmap_get_pixel(x + originX + middleX, y + originY + middleY, pixel);
 
-  stack[stackp - 2] = color_to_double(pixel[0], pixel[1], pixel[2]);
-  --stackp;
+    stack[stackp - 2] = color_to_double(pixel[0], pixel[1], pixel[2]);
+    --stackp;
 }
 
 void
-builtin_origValXYIntersample (double arg)
+builtin_origValXYIntersample (void *arg)
 {
     double x = stack[stackp - 2] + middleX + originX,
 	y = stack[stackp - 1] + middleY + originY;
@@ -203,7 +257,7 @@ builtin_origValXYIntersample (double arg)
 }
 
 void
-builtin_origValRA (double arg)
+builtin_origValRA (void *arg)
 {
     int x = cos(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleX,
 	y = sin(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleY;
@@ -216,7 +270,7 @@ builtin_origValRA (double arg)
 }
 
 void
-builtin_origValRAIntersample (double arg)
+builtin_origValRAIntersample (void *arg)
 {
     double x = cos(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleX + originX,
 	y = sin(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleY + originY;
@@ -276,7 +330,7 @@ builtin_origValRAIntersample (double arg)
 #else
 
 void
-builtin_origValXY (double arg)
+builtin_origValXY (void *arg)
 {
     int x = stack[stackp - 2] + middleX,
 	y = stack[stackp - 1] + middleY;
@@ -296,7 +350,7 @@ builtin_origValXY (double arg)
 }
 
 void
-builtin_origValXYIntersample (double arg)
+builtin_origValXYIntersample (void *arg)
 {
     double x = stack[stackp - 2] + middleX,
 	y = stack[stackp - 1] + middleY;
@@ -350,7 +404,7 @@ builtin_origValXYIntersample (double arg)
 }
 
 void
-builtin_origValRA (double arg)
+builtin_origValRA (void *arg)
 {
     int x = cos(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleX,
 	y = sin(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleY;
@@ -370,7 +424,7 @@ builtin_origValRA (double arg)
 }
 
 void
-builtin_origValRAIntersample (double arg)
+builtin_origValRAIntersample (void *arg)
 {
     double x = cos(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleX,
 	y = sin(stack[stackp - 1] * M_PI / 180) * stack[stackp - 2] + middleY;
@@ -426,7 +480,52 @@ builtin_origValRAIntersample (double arg)
 #endif /* _GIMP */
 
 void
-builtin_grayColor (double arg)
+builtin_red (void *arg)
+{
+    stack[stackp - 1] = red_component(stack[stackp - 1]) / 255.0;
+}
+
+void
+builtin_green (void *arg)
+{
+    stack[stackp - 1] = green_component(stack[stackp - 1]) / 255.0;
+}
+
+void
+builtin_blue (void *arg)
+{
+    stack[stackp - 1] = blue_component(stack[stackp - 1]) / 255.0;
+}
+
+void
+builtin_rgbColor (void *arg)
+{
+    int redComponent = stack[stackp - 3] * 255,
+	greenComponent = stack[stackp - 2] * 255,
+	blueComponent = stack[stackp - 1] * 255;
+
+    stackp -= 2;
+
+    if (redComponent < 0)
+	redComponent = 0;
+    else if (redComponent > 255)
+	redComponent = 255;
+
+    if (greenComponent < 0)
+	greenComponent = 0;
+    else if (greenComponent > 255)
+	greenComponent = 255;
+
+    if (blueComponent < 0)
+	blueComponent = 0;
+    else if (blueComponent > 255)
+	blueComponent = 255;
+
+    stack[stackp - 1] = color_to_double(redComponent, greenComponent, blueComponent);
+}
+
+void
+builtin_grayColor (void *arg)
 {
     int grayLevel = stack[stackp - 1] * 255;
 

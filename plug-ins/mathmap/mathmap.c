@@ -10,6 +10,8 @@
  *   Copyright (C) 1997 Federico Mena Quintero
  *   federico@nuclecu.unam.mx
  *
+ * Version 0.2
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -29,6 +31,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
@@ -36,6 +39,7 @@
 #include "exprtree.h"
 #include "builtins.h"
 #include "postfix.h"
+#include "scanner.h"
 
 /***** Macros *****/
 
@@ -168,17 +172,37 @@ char *examples[][2] = {
     { "pond", "origValRA(r+sin(r*30)*3,a)" },
     { "enhanced pond", "origValRA(r+(sin(500000/(r+100))*7),a)" },
     { "twirl 90", "origValRA(r,a+(r/R-1)*45)" },
-    { "sphere", "origValRA(r*(1-inintv(r/(X*2),-0.5,0.5))+X/90*asin(inintv(r/(X*2),-0.5,0.5)*r/X),a)" },
+    { "sphere", "p=r/(X*2);origValRA(r*(1-inintv(p,-0.5,0.5))+X/90*asin(inintv(p,-0.5,0.5)*r/X),a)" },
     { "jitter", "origValRA(r,a+a%8-4)" },
     { "radial mosaic", "origValRA(r-r%5,a-a%5)" },
     { "circular slice", "origValRA(r,a+(r%5)-2)" },
     { "fisheye", "origValRA(r*r/R,a)" },
     { "center shake", "origValXY(x+max(0,cos(x*2))*5*max(0,cos(y*2))*cos(y*10),y+max(0,cos(x*2))*5*max(0,cos(y*2))*cos(x*10))" },
     { "scatter", "origValXY(x+rand(-3,3),y+rand(-3,3))" },
+    { "darts", "p=origValXY(x,y);p=if inintv((a-9)%36,0,18) then p else rgbColor(1-red(p),1-green(p),1-blue(p)) end;if inintv(r%80,68,80) then p else rgbColor(1-red(p),1-green(p),1-blue(p)) end" },
     { "?", "origValRA(r,a+sin(a*10)*20)" },
     { "?", "origValRA(r+r%20,a)" },
     { "sine wave", "grayColor(sin(r*10)*0.5+0.5)" },
-    { "grid", "grayColor(if((x%20)*(y%20),1,0))" },
+    { "grid", "grayColor(if (x%20)*(y%20) then 1 else 0 end)" },
+    { "moire1", "rgbColor(abs(sin(15*r)+sin(15*a))*0.5,abs(sin(17*r)+sin(17*a))*0.5,abs(sin(19*r)+sin(19*a))*0.5)" },
+    { "moire2", "grayColor(sin(x*y)*0.5+0.5)" },
+    { "mandelbrot",
+      "tx=1.5*x/X-0.5; "
+      "ty=1.5*y/X-0; "
+      "iter=0; "
+      "xr=0; "
+      "xi=0; "
+      "xrsq=0; "
+      "xisq=0; "
+      "while and(less(xrsq+xisq,4),less(iter,31)) "
+      "do "
+          "xrsq=xr*xr; "
+          "xisq=xi*xi; "
+          "xi=2*xr*xi+ty; "
+          "xr=xrsq-xisq+tx; "
+          "iter=iter+1 "
+      "end; "
+      "grayColor(iter/32)" },
     { 0, 0 }
 };
 
@@ -428,12 +452,15 @@ mathmap(void)
 
     theExprtree = 0;
 
-    yy_scan_string(mmvals.expression);
+    scanFromString(mmvals.expression);
     yyparse();
+    endScanningFromString();
+
     if (theExprtree == 0)
 	return;
 
     make_postfix(theExprtree);
+    /*    output_postfix(); */
 
     /* Initialize pixel region */
 
@@ -562,6 +589,11 @@ mathmap(void)
 		    iy = (int) cy;
 
 		    currentX = col - sel_x1 - middleX; currentY = row - sel_y1 - middleY;
+		    if (!intersamplingEnabled)
+		    {
+			currentX += 0.5;
+			currentY += 0.5;
+		    }
 		    calc_ra(); result = eval_postfix();
 		    double_to_color(result, &red, &green, &blue);
 		    
@@ -623,6 +655,7 @@ mathmap_get_pixel(int x, int y, guchar *pixel)
 	    gimp_tile_unref(the_tile, FALSE);
 
 	the_tile = gimp_drawable_get_tile(drawable, FALSE, newrow, newcol);
+	assert(the_tile != 0);
 	gimp_tile_ref(the_tile);
 
 	col = newcol;
@@ -729,8 +762,6 @@ mathmap_dialog(void)
 
     gtk_widget_set_default_visual(gtk_preview_get_visual());
     gtk_widget_set_default_colormap(gtk_preview_get_cmap());
-
-    fprintf(stderr, "here we are5!\n");
 
     build_preview_source_image();
 
@@ -895,7 +926,6 @@ dialog_update_preview(void)
 {
     double  left, right, bottom, top;
     double  dx, dy;
-    double  px, py;
     double  cx, cy;
     int     ix, iy;
     int     x, y;
@@ -916,18 +946,16 @@ dialog_update_preview(void)
     scale_x = (double) (preview_width - 1) / (right - left);
     scale_y = (double) (preview_height - 1) / (bottom - top);
 
-    py = top;
-
     p_ul = wint.wimage;
     p_lr = wint.wimage + 3 * (preview_width * preview_height - 1);
 
-    theExprtree = 0;
-
-    yy_scan_string(mmvals.expression);
+    scanFromString(mmvals.expression);
     yyparse();
+    endScanningFromString();
+	
     if (theExprtree == 0)
 	return;
-    
+
     make_postfix(theExprtree);
 
     imageWidth = sel_width;
@@ -950,10 +978,8 @@ dialog_update_preview(void)
     
     imageR = sqrt(imageX * imageX + imageY * imageY);
 
-    for (y = 0; y <= preview_height; y++)
+    for (y = 0; y < preview_height; y++)
     {
-	px = left;
-
 	for (x = 0; x < preview_width; x++)
 	{
 	    double result;
@@ -981,7 +1007,7 @@ dialog_update_preview(void)
 	gtk_preview_draw_row(GTK_PREVIEW(wint.preview), p, 0, y, preview_width);
 
 	p += preview_width * 3;
-    } /* for */
+    }
 
     gtk_widget_draw(wint.preview, NULL);
     gdk_flush();

@@ -1,3 +1,10 @@
+Tue Dec  9 00:52:15 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* added illusion, papertile, colorify, and glasstile
+	 plugins
+
+	* updated despeckle, and math map
+
 Mon Dec  8 21:59:03 PST 1997  Manish Singh <yosh@gimp.org>
 
 	* updated CML_explorer

@@ -42,6 +42,7 @@ SUBDIRS = 			\
 	c_astretch		\
 	CEL			\
 	checkerboard		\
+	colorify		\
 	compose			\
 	convmatrix		\
 	coordmap		\
@@ -68,6 +69,7 @@ SUBDIRS = 			\
 	gfli			\
 	gicon			\
 	gif			\
+	glasstile		\
 	gqbist			\
 	gradmap			\
 	grid			\
@@ -77,6 +79,7 @@ SUBDIRS = 			\
 	hot			\
 	hrz			\
 	ifscompose		\
+	illusion		\
 	iwarp			\
 	laplace			\
 	lic			\
@@ -91,6 +94,7 @@ SUBDIRS = 			\
 	normalize		\
 	nova			\
 	oilify			\
+	papertile		\
 	pat			\
 	pcx			\
 	pix			\

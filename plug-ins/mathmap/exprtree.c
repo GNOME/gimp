@@ -57,8 +57,8 @@ make_var (char *name)
 	tree->type = EXPR_VAR_BIG_Y;
     else
     {
-	tree->type = EXPR_NUMBER;
-	tree->val.number = 0.0;
+	tree->type = EXPR_VARIABLE;
+	tree->val.var = register_variable(name);
     }
 
     tree->next = 0;
@@ -85,12 +85,7 @@ make_function (char *name, exprtree *args)
 {
     exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
 
-    if (strcmp(name, "if") == 0)
-    {
-	tree->val.func.routine = builtin_if;
-	tree->val.func.numArgs = 3;
-    }
-    else if (strcmp(name, "sin") == 0)
+    if (strcmp(name, "sin") == 0)
     {
 	tree->val.func.routine = builtin_sin;
 	tree->val.func.numArgs = 1;
@@ -120,6 +115,11 @@ make_function (char *name, exprtree *args)
 	tree->val.func.routine = builtin_atan;
 	tree->val.func.numArgs = 1;
     }
+    else if (strcmp(name, "abs") == 0)
+    {
+	tree->val.func.routine = builtin_abs;
+	tree->val.func.numArgs = 1;
+    }
     else if (strcmp(name, "sign") == 0)
     {
 	tree->val.func.routine = builtin_sign;
@@ -133,6 +133,21 @@ make_function (char *name, exprtree *args)
     else if (strcmp(name, "max") == 0)
     {
 	tree->val.func.routine = builtin_max;
+	tree->val.func.numArgs = 2;
+    }
+    else if (strcmp(name, "or") == 0)
+    {
+	tree->val.func.routine = builtin_or;
+	tree->val.func.numArgs = 2;
+    }
+    else if (strcmp(name, "and") == 0)
+    {
+	tree->val.func.routine = builtin_and;
+	tree->val.func.numArgs = 2;
+    }
+    else if (strcmp(name, "less") == 0)
+    {
+	tree->val.func.routine = builtin_less;
 	tree->val.func.numArgs = 2;
     }
     else if (strcmp(name, "inintv") == 0)
@@ -161,6 +176,26 @@ make_function (char *name, exprtree *args)
 	    tree->val.func.routine = builtin_origValRA;
 	tree->val.func.numArgs = 2;
     }
+    else if (strcmp(name, "red") == 0)
+    {
+	tree->val.func.routine = builtin_red;
+	tree->val.func.numArgs = 1;
+    }
+    else if (strcmp(name, "green") == 0)
+    {
+	tree->val.func.routine = builtin_green;
+	tree->val.func.numArgs = 1;
+    }
+    else if (strcmp(name, "blue") == 0)
+    {
+	tree->val.func.routine = builtin_blue;
+	tree->val.func.numArgs = 1;
+    }
+    else if (strcmp(name, "rgbColor") == 0)
+    {
+	tree->val.func.routine = builtin_rgbColor;
+	tree->val.func.numArgs = 3;
+    }
     else if (strcmp(name, "grayColor") == 0)
     {
 	tree->val.func.routine = builtin_grayColor;
@@ -178,6 +213,92 @@ make_function (char *name, exprtree *args)
     
     tree->type = EXPR_FUNC;
     tree->val.func.args = args;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_sequence (exprtree *left, exprtree *right)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+
+    tree->type = EXPR_SEQUENCE;
+    tree->val.operator.left = left;
+    tree->val.operator.right = right;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_assignment (char *name, exprtree *value)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+    variable *var = register_variable(name);
+
+    tree->type = EXPR_ASSIGNMENT;
+    tree->val.assignment.var = var;
+    tree->val.assignment.value = value;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_if_then (exprtree *condition, exprtree *consequence)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+
+    tree->type = EXPR_IF_THEN;
+    tree->val.ifExpr.condition = condition;
+    tree->val.ifExpr.consequence = consequence;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_if_then_else (exprtree *condition, exprtree *consequence, exprtree *alternative)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+
+    tree->type = EXPR_IF_THEN_ELSE;
+    tree->val.ifExpr.condition = condition;
+    tree->val.ifExpr.consequence = consequence;
+    tree->val.ifExpr.alternative = alternative;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_while (exprtree *invariant, exprtree *body)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+
+    tree->type = EXPR_WHILE;
+    tree->val.whileExpr.invariant = invariant;
+    tree->val.whileExpr.body = body;
+
+    tree->next = 0;
+
+    return tree;
+}
+
+exprtree*
+make_do_while (exprtree *body, exprtree *invariant)
+{
+    exprtree *tree = (exprtree*)malloc(sizeof(exprtree));
+
+    tree->type = EXPR_DO_WHILE;
+    tree->val.whileExpr.invariant = invariant;
+    tree->val.whileExpr.body = body;
 
     tree->next = 0;
 
