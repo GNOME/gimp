@@ -782,28 +782,58 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_SCROLL:
       {
-        GdkEventScroll *sevent;
+        GdkEventScroll     *sevent;
+        GdkScrollDirection  direction;
 
         sevent = (GdkEventScroll *) event;
 
-        if (state & GDK_SHIFT_MASK)
+        direction = sevent->direction;
+
+       if (state & GDK_SHIFT_MASK)
           {
-            if (sevent->direction == GDK_SCROLL_UP)
-              gimp_display_shell_scale (shell, GIMP_ZOOM_IN);
-            else
-              gimp_display_shell_scale (shell, GIMP_ZOOM_OUT);
+            switch (direction)
+              {
+              case GDK_SCROLL_UP:
+                gimp_display_shell_scale (shell, GIMP_ZOOM_IN);
+                break;
+
+              case GDK_SCROLL_DOWN:
+                gimp_display_shell_scale (shell, GIMP_ZOOM_OUT);
+                break;
+
+              default:
+                break;
+              }
           }
         else
           {
-            GtkAdjustment *adj;
+            GtkAdjustment *adj = NULL;
             gdouble        value;
 
             if (state & GDK_CONTROL_MASK)
-              adj = shell->hsbdata;
-            else
-              adj = shell->vsbdata;
+              switch (direction)
+                {
+                case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
+                case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
+                case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
+                case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
+                }
 
-            value = adj->value + ((sevent->direction == GDK_SCROLL_UP) ?
+            switch (direction)
+              {
+              case GDK_SCROLL_LEFT:
+              case GDK_SCROLL_RIGHT:
+                adj = shell->hsbdata;
+                break;
+
+              case GDK_SCROLL_UP:
+              case GDK_SCROLL_DOWN:
+                adj = shell->vsbdata;
+                break;
+              }
+
+            value = adj->value + ((direction == GDK_SCROLL_UP ||
+                                   direction == GDK_SCROLL_LEFT) ?
                                   -adj->page_increment / 2 :
                                   adj->page_increment / 2);
             value = CLAMP (value, adj->lower, adj->upper - adj->page_size);

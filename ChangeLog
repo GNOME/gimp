@@ -1,3 +1,9 @@
+2003-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): use the 2nd mouse wheel
+	for horizontal scrolling. Fixes bug #126288.
+
 2003-11-05  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimpbase/Makefile.am: Move gimpwin32-io.h to
