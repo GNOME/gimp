@@ -1,3 +1,9 @@
+2003-09-11  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/folders-fonts.png:
+	* themes/Default/images/preferences/folders-scripts.png:
+	  proper icons
+	
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
