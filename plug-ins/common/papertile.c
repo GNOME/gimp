@@ -545,7 +545,7 @@ filter (void)
 
   overlap = p.drawable_has_alpha ? overlap_RGBA : overlap_RGB;
 
-  gimp_progress_init ("Paper Tile...");
+  gimp_progress_init (_("Paper Tile..."));
 
   /* TILES */
   srand (0);

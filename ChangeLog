@@ -1,3 +1,13 @@
+2001-06-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/Lighting/lighting_apply.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/script-fu/scripts/textured-logo.scm: applied a patch from
+	"Iccii" <iccii@hotmail.com> that marks a bunch of leftover strings 
+	for translation (bug #56490).
+
 2001-06-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay.c: fixed a longstanding display update bug by

@@ -14,6 +14,9 @@
 #include "lighting_image.h"
 #include "lighting_shade.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /*************/
 /* Main loop */
 /*************/
@@ -115,7 +118,7 @@ compute_image (void)
 
   row = (guchar *)g_malloc(sizeof(guchar)*(size_t)(obpp)*(size_t)(width));
 
-  gimp_progress_init("Lighting Effects");
+  gimp_progress_init(_("Lighting Effects"));
 
 /*  if (mapvals.antialiasing==FALSE)
     { */

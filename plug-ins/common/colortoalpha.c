@@ -193,7 +193,7 @@ run (gchar   *name,
 	  gimp_drawable_is_layer (drawable->id))  
 	{
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_init ("Removing color...");
+	    gimp_progress_init (_("Removing color..."));
              
 	  toalpha (drawable);
 	  gimp_displays_flush ();
