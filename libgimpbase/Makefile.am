@@ -86,6 +86,7 @@ libgimpbase_1_3_la_SOURCES = \
 	gimpsignal.h            \
 	gimputils.c            	\
 	gimputils.h            	\
+	gimpwin32-io.h		\
 	gimpwire.c		\
 	gimpwire.h
 
@@ -102,8 +103,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimpsignal.h
-
-EXTRA_HEADERS = gimpwin32-io.h
 
 libgimpbase_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\

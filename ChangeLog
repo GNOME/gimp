@@ -1,3 +1,11 @@
+2003-11-05  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpbase/Makefile.am: Move gimpwin32-io.h to
+	libgimpbase_1_3_la_SOURCES, so that it gets distributed.
+
+	* libgimpmodule/Makefile.am: Remove empty and meaningless
+	EXTRA_HEADERS.
+
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): use

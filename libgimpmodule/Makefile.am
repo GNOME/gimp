@@ -73,8 +73,6 @@ libgimpmoduleinclude_HEADERS = \
 	gimpmodule.h		\
 	gimpmoduledb.h
 
-EXTRA_HEADERS =
-
 libgimpmodule_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
 	$(no_undefined) 					\
