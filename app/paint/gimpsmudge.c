@@ -215,8 +215,9 @@ gimp_smudge_start (GimpPaintCore *paint_core,
   smudge->accumPR.bytes = gimp_drawable_bytes (drawable);
   smudge->accum_data    = g_malloc (w * h * smudge->accumPR.bytes);
 
-  /*  If clipped, fill the smudge buffer with the color at the brush position.  */
-  if (x != area->x || y != area-> || w != area->widht || h != area->height)
+  /*  If clipped, prefill the smudge buffer
+      with the color at the brush position.  */
+  if (x != area->x || y != area->y || w != area->width || h != area->height)
     {
       guchar *fill;
 
