@@ -153,7 +153,6 @@ Sat Jul  3 16:04:16 PDT 1999 Manish Singh <yosh@gimp.org>
 	* plug-ins/gfig/gfig.c
 	* plug-ins/script-fu/script-fu-scripts.c: Include <glib.h> early.
 
->>>>>>> 1.1251
 1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/dodgeburn.c: changed the tool toggle key to <Ctrl>.
