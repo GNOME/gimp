@@ -1,3 +1,7 @@
+Sat May 29 13:43:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/Makefile.am: $srcdir != $builddir fix
+
 Sat May 29 09:28:40 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in

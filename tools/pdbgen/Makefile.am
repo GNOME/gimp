@@ -81,7 +81,7 @@ pdb_scripts = \
 $(srcdir)/enums.pl: stamp-enums
 	@:
 stamp-enums: $(srcdir)/enumgen.pl $(enum_headers) Makefile.am
-	(srcdir=$(srcdir) && $(PERL) enumgen.pl $(enum_headers)) \
+	(srcdir=$(srcdir) && $(PERL) $(srcdir)/enumgen.pl $(enum_headers)) \
 	&& echo timestamp > stamp-enums
 
 $(srcdir)/groups.pl: stamp-groups
