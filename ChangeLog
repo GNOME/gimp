@@ -1,3 +1,12 @@
+2003-07-26  Adam D. Moss  <adam@gimp.org>
+
+	* LICENSE: (new file) Explain the mix of licenses within
+	the GIMP distribution, and make an explicit statement clarifying
+	our position on invoking methods in GPL-implemented code from
+	non-GPL plugins/extentions via libgimp and/or the pdb (ie. that
+	this does not automatically GPL-infect the program doing the
+	invoking, which is otherwise an ambiguity in the GPL).
+
 2003-07-25  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: slight fix for arg handling, shouldn't
