@@ -635,8 +635,8 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
   gdouble tx, ty;
   gdouble handle_tx, handle_ty;
 
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), 0.0);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), 0.0);
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
   gdisplay_transform_coords_f (gdisp, x, y, &tx, &ty, use_offsets);
   gdisplay_transform_coords_f (gdisp,

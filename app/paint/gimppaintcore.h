@@ -49,11 +49,11 @@ typedef enum /*< pdb-skip >*/
    */
   CORE_HANDLES_CHANGING_BRUSH = 0x1 << 0,
 
-  /* Set for tools that perform
-   * temporary rendering directly to the
-   * window. These require sequencing with
-   * gdisplay_flush() routines.
-   * See gimpclone.c for example.
+  /*  Set for tools that perform
+   *  temporary rendering directly to the
+   *  window. These require sequencing with
+   *  gdisplay_flush() routines.
+   *  See gimpclone.c for example.
    */
   CORE_TRACES_ON_WINDOW       = 0x1 << 1
 } GimpPaintCoreFlags;
@@ -87,9 +87,10 @@ struct _GimpPaintCore
   gint                x1, y1;        /*  undo extents in image coords     */
   gint                x2, y2;        /*  undo extents in image coords     */
 
-  GimpBrush          *brush;         /*  current brush	      */
+  GimpBrush          *brush;         /*  current brush	                  */
 
-  GimpPaintCoreFlags  flags;         /*  tool flags, see ToolFlags above       */
+  GimpPaintCoreFlags  flags;         /*  tool flags, see ToolFlags above  */
+  gboolean            use_pressure;  /*  look at coords->pressure         */
 
   /*  undo blocks variables  */
   TileManager        *undo_tiles;

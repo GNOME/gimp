@@ -29,7 +29,6 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -291,6 +290,16 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       tool->gdisp = gdisp;
     }
 
+  if (gimp_devices_get_current (gdisp->gimage->gimp) ==
+      gdk_device_get_core_pointer ())
+    {
+      core->use_pressure = FALSE;
+    }
+  else
+    {
+      core->use_pressure = TRUE;
+    }
+
   if (! gimp_paint_core_start (core, drawable, &curr_coords))
     return;
 
@@ -363,19 +372,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      /* If we current point == last point, check if the brush
-       * wants to be painted in that case. (Direction dependent
-       * pixmap brush pipes don't, as they don't know which
-       * pixmap to select.)
-       */
-      if (core->last_coords.x != core->cur_coords.x ||
-	  core->last_coords.y != core->cur_coords.y ||
-	  gimp_brush_want_null_motion (core->brush,
-                                       &core->last_coords,
-                                       &core->cur_coords))
-	{
-	  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
-	}
+      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
     }
 
   gimp_display_flush_now (gdisp);

@@ -66,7 +66,8 @@ static void   gimp_paint_core_init                (GimpPaintCore      *core);
 
 static void   gimp_paint_core_finalize            (GObject          *object);
 
-static void   gimp_paint_core_calc_brush_size     (MaskBuf          *mask,
+static void   gimp_paint_core_calc_brush_size     (GimpPaintCore    *core,
+                                                   MaskBuf          *mask,
                                                    gdouble           scale,
                                                    gint             *width,
                                                    gint             *height);
@@ -205,6 +206,7 @@ gimp_paint_core_init (GimpPaintCore *core)
   core->brush                    = NULL;
 
   core->flags                    = 0;
+  core->use_pressure             = FALSE;
 
   core->undo_tiles               = NULL;
   core->canvas_tiles             = NULL;
@@ -303,12 +305,28 @@ gimp_paint_core_paint (GimpPaintCore      *core,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (paint_options != NULL);
 
-  if (paint_state == MOTION_PAINT &&
-      (core->flags & CORE_HANDLES_CHANGING_BRUSH))
+  if (paint_state == MOTION_PAINT)
     {
-      core->brush = gimp_brush_select_brush (core->brush,
-                                             &core->last_coords,
-                                             &core->cur_coords);
+      /* If we current point == last point, check if the brush
+       * wants to be painted in that case. (Direction dependent
+       * pixmap brush pipes don't, as they don't know which
+       * pixmap to select.)
+       */
+      if (core->last_coords.x == core->cur_coords.x &&
+	  core->last_coords.y == core->cur_coords.y &&
+	  ! gimp_brush_want_null_motion (core->brush,
+                                         &core->last_coords,
+                                         &core->cur_coords))
+        {
+          return;
+        }
+
+      if (core->flags & CORE_HANDLES_CHANGING_BRUSH)
+        {
+          core->brush = gimp_brush_select_brush (core->brush,
+                                                 &core->last_coords,
+                                                 &core->cur_coords);
+        }
     }
 
   GIMP_PAINT_CORE_GET_CLASS (core)->paint (core,
@@ -652,7 +670,8 @@ gimp_paint_core_get_paint_area (GimpPaintCore *core,
   bytes = (gimp_drawable_has_alpha (drawable) ?
            gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1);
 
-  gimp_paint_core_calc_brush_size (core->brush->mask,
+  gimp_paint_core_calc_brush_size (core,
+                                   core->brush->mask,
                                    scale,
                                    &bwidth, &bheight);
 
@@ -832,14 +851,15 @@ gimp_paint_core_invalidate_cache (GimpBrush     *brush,
  ************************************************************/
 
 static void
-gimp_paint_core_calc_brush_size (MaskBuf *mask,
-                                 gdouble  scale,
-                                 gint    *width,
-                                 gint    *height)
+gimp_paint_core_calc_brush_size (GimpPaintCore *core,
+                                 MaskBuf       *mask,
+                                 gdouble        scale,
+                                 gint          *width,
+                                 gint          *height)
 {
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (gimp_devices_get_current (the_gimp) == gdk_device_get_core_pointer ())
+  if (! core->use_pressure)
     {
       *width  = mask->width;
       *height = mask->height;
@@ -1099,7 +1119,9 @@ gimp_paint_core_scale_mask (GimpPaintCore *core,
   if (scale == 1.0)
     return brush_mask;
 
-  gimp_paint_core_calc_brush_size (brush_mask, scale,
+  gimp_paint_core_calc_brush_size (core,
+                                   brush_mask,
+                                   scale,
                                    &dest_width, &dest_height);
 
   if (brush_mask == core->last_scale_brush  &&
@@ -1141,7 +1163,9 @@ gimp_paint_core_scale_pixmap (GimpPaintCore *core,
   if (scale == 1.0)
     return brush_mask;
 
-  gimp_paint_core_calc_brush_size (brush_mask, scale,
+  gimp_paint_core_calc_brush_size (core,
+                                   brush_mask,
+                                   scale,
                                    &dest_width, &dest_height);
 
   if (brush_mask == core->last_scale_pixmap        &&
@@ -1174,7 +1198,7 @@ gimp_paint_core_get_brush_mask (GimpPaintCore        *core,
 {
   MaskBuf *mask;
 
-  if (gimp_devices_get_current (the_gimp) == gdk_device_get_core_pointer ())
+  if (! core->use_pressure)
     {
       mask = core->brush->mask;
     }

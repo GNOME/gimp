@@ -1,3 +1,14 @@
+2002-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.c: return the corrent value in
+	g_retuen_val_if_fail().
+
+	* app/tools/gimppainttool.c: removed some more painting logic...
+
+	* app/paint/gimppaintcore.[ch]: ...and added it here so the PDB
+	wrappers can use it too. Added "gboolean use_pressure" which needs
+	to be set by GimpPaintTool so we don't need access to GdkDevices.
+
 2002-02-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/colortoalpha.c: optimization and cleanup based
