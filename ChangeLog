@@ -1,5 +1,10 @@
 2004-12-17  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_pick_color):
+	take drawable offsets into account. Fixes bug #161508.
+
+2004-12-17  Sven Neumann  <sven@gimp.org>
+
 	* docs/gimp-remote.1.in
 	* docs/gimp.1.in
 	* docs/gimptool.1.in: minor tweaks.

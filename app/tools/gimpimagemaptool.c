@@ -410,6 +410,11 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
                                 gint          *color_index)
 {
   GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
+  gint              off_x, off_y;
+
+  gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  x -= off_x;
+  y -= off_y;
 
   *sample_type = gimp_drawable_type (tool->drawable);
 
