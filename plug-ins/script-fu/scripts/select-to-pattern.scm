@@ -1,12 +1,12 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ; 
-; Selection to Image
-; Copyright (c) 1997 Adrian Likins
-; aklikins@eos.ncsu.edu
+; Based on select-to-brush by
+; 	Copyright (c) 1997 Adrian Likins aklikins@eos.ncsu.edu
+; Author Cameron Gregory, http://www.flamingtext.com/
 ;
-; Takes the Current selection and saves it as a seperate image.
-;
+; Takes the current selection, saves it as a pattern and makes it the active
+; pattern
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -23,12 +23,11 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-selection-to-image image drawable)
+(define (script-fu-selection-to-pattern image drawable desc filename)
   (let* (
-	 (draw-type (car (gimp-drawable-type-with-alpha drawable)))
-	 (image-type (car (gimp-image-base-type image)))
+	 (type (car (gimp-drawable-type drawable)))
 	 (old-bg (car (gimp-palette-get-background))))
-
+  
     (set! selection-bounds (gimp-selection-bounds image))
     (set! select-offset-x (cadr selection-bounds))
     (set! select-offset-y (caddr selection-bounds))
@@ -48,27 +47,51 @@
 
     (gimp-edit-copy drawable)
 
-    (set! new-image (car (gimp-image-new selection-width selection-height image-type)))
-    (set! new-draw (car (gimp-layer-new new-image selection-width selection-height draw-type "Selection" 100 NORMAL)))
-    (gimp-image-add-layer new-image new-draw 0)
-    (gimp-drawable-fill new-draw BG-IMAGE-FILL)
+    (set! pattern_draw_type RGB_IMAGE)
 
-    (let ((floating-sel (car (gimp-edit-paste new-draw FALSE))))
-      (gimp-floating-sel-anchor floating-sel)
-      )
+    (set! pattern_image_type RGB)
+
+    (set! pattern-image (car (gimp-image-new selection-width selection-height pattern_image_type)))
+
+    (set! pattern-draw
+          (car (gimp-layer-new pattern-image
+                               selection-width
+                               selection-height pattern_draw_type "Pattern" 100 NORMAL)))
+
+    (gimp-image-add-layer pattern-image pattern-draw 0)
+
+    (gimp-selection-none pattern-image)
+
+    (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
+      (gimp-floating-sel-anchor floating-sel))
+
+    
+    (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
+    (set! filename2 (string-append data-dir
+					 "/patterns/"
+					 filename
+					 (number->string image)
+					 ".pat"))
+
+    (file-pat-save 1 pattern-image pattern-draw filename2 "" desc)
+    (gimp-patterns-refresh)
+    (gimp-patterns-set-pattern desc)
 
     (gimp-palette-set-background old-bg)
+
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
-    (gimp-display-new new-image)
+    (gimp-image-delete pattern-image)
     (gimp-displays-flush)))
 
-(script-fu-register "script-fu-selection-to-image"
-		    _"<Image>/Script-Fu/Selection/To Image"
-		    "Convert a selection to an image"
-		    "Adrian Likins <adrian@gimp.org>"
-		    "Adrian Likins"
-		    "10/07/97"
+(script-fu-register "script-fu-selection-to-pattern"
+		    _"<Image>/Script-Fu/Selection/To Pattern..."
+		    "Convert a selection to a pattern"
+		    "Cameron Gregory <cameron@bloke.com>"
+		    "Cameron Gregory"
+		    "09/02/2003"
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0)
+		    SF-DRAWABLE "Drawable" 0
+		    SF-STRING _"Pattern Name" "My Pattern"
+		    SF-STRING _"Filename" "mypattern")

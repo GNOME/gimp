@@ -61,15 +61,9 @@
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-display-new new-image)
-    (gimp-displays-flush)
-;    (script-fu-export-file 1 img drawable RGB 255 FALSE 2 "-export" "png")
-
-))
+    (gimp-displays-flush)))
 
 (script-fu-register "script-fu-selection-to-image"
-; I prefer this to go under the main selection menu, but this seems more 
-; approriate for mass consumption
-;		    "<Image>/Select/Selection to Image"
 		    _"<Image>/Script-Fu/Selection/To Image"
 		    "Convert a selection to an image"
 		    "Adrian Likins <adrian@gimp.org>"

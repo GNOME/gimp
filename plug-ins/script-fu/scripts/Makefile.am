@@ -74,6 +74,7 @@ scriptdata_DATA = \
 	round-corners.scm			\
 	select_to_brush.scm			\
 	select_to_image.scm			\
+	select-to-pattern.scm			\
 	selection-round.scm			\
 	slide.scm				\
 	sota-chrome-logo.scm			\

@@ -63,14 +63,14 @@
               RGB))
 
     (set! brush-image (car (gimp-image-new selection-width selection-height brush_image_type)))
-    
+
     (set! brush-draw
           (car (gimp-layer-new brush-image
                                selection-width
-                               selection-height brush_draw_type "Sloth" 100 NORMAL)))
-        
+                               selection-height brush_draw_type "Brush" 100 NORMAL)))
+
     (gimp-image-add-layer brush-image brush-draw 0)
-    
+
     (gimp-selection-none brush-image)
 
     (if (= type GRAYA_IMAGE)
@@ -89,24 +89,18 @@
 					 (number->string image)
 					 ".gbr"))
 
-    ; (gimp-invert brush-draw)
     (file-gbr-save 1 brush-image brush-draw filename2 "" spacing desc)
-    (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
+    (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
-    
+
     (gimp-palette-set-background old-bg)
 
-    ;(set! image_test (gimp-procedural-db-get-data image))
-    (print (number->string image))
-    (print "this is a test.......test..")
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-image-delete brush-image)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-selection-to-brush"
- ; I like this script under the main selection menu, but that doesnt seem quite kosher
-;		    "<Image>/Select/Selection To Brush"
 		    _"<Image>/Script-Fu/Selection/To Brush..."
 		    "Convert a selection to a greyscale brush"
 		    "Adrian Likins <adrian@gimp.org>"
@@ -115,9 +109,6 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-;		    SF-STRING "Home directory" "/home/aklikins/"
-		    SF-STRING _"Description" "Brush"
-		    SF-STRING _"Filename" "SlothBrush"
+		    SF-STRING _"Brush Name" "My Brush"
+		    SF-STRING _"Filename" "mybrush"
 		    SF-ADJUSTMENT _"Spacing" '(25 0 1000 1 1 1 0))
-
-
