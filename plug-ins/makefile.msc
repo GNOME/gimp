@@ -369,6 +369,8 @@ OBJECTS = \
 	imap_table.obj \
 	imap_toolbar.obj \
 	imap_tools.obj
+# not changing the source which is lexed
+EXTRACFLAGS = -FIstring.h -FIstdlib.h
 !ENDIF
 
 !IFDEF EXTRA_iwarp
@@ -579,7 +581,8 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) \
+CFLAGS = -FImsvc_recommended_pragmas.h \
+	-DHAVE_CONFIG_H $(EXTRACFLAGS) \
 	-DLOCALEDIR=\"?\" \
 	-I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) $(INTL_CFLAGS)
 

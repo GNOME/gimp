@@ -18,13 +18,15 @@
 */
 
 
+#include "config.h"
+
 #include "cmap.h"
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 
-#include "config.h"
+#include <glib.h>
 
 unsigned char the_cmaps[][256][3] = {
 /* south-sea-bather */
