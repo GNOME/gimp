@@ -1,3 +1,7 @@
+2000-07-11  Jesus Bravo Alvarez  <jba@pobox.com>
+
+	* configure.in: Added 'gl' (Galician) to ALL_LINGUAS.
+
 2000-07-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c: changed default action for multiple 
