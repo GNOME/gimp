@@ -293,7 +293,7 @@ plasma_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
-  GtkWidget *alignment;
+  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *table;
@@ -317,15 +317,15 @@ plasma_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);  
-  
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);  
-  gtk_container_add (GTK_CONTAINER (alignment), frame);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-  
+
   preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (preview, PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), preview);

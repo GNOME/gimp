@@ -613,8 +613,10 @@ dialog (gint32        image_ID,
         GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *vbox2;
+  GtkWidget *hbox;
+  GtkWidget *frame;
 
   GtkSizeGroup *group;
   GtkWidget    *label;
@@ -647,27 +649,30 @@ dialog (gint32        image_ID,
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  /* main hbox: [   ][       ] */
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   preview = gimp_preview_area_new ();
   preview_width  = MIN (PREVIEW_SIZE, drawable->width);
   preview_height = MIN (PREVIEW_SIZE, drawable->height);
   gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  /* right side */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
 
   /*  The width entries  */
   width = gimp_size_entry_new (3,                            /*  number_of_fields  */
@@ -680,7 +685,7 @@ dialog (gint32        image_ID,
                                GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
 
-  gtk_box_pack_start (GTK_BOX (vbox), width, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), width, FALSE, FALSE, 0);
   gtk_widget_show (width);
 
   /*  set the unit back to pixels, since most times we will want pixels */
@@ -751,7 +756,7 @@ dialog (gint32        image_ID,
                                SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
                                GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
-  gtk_box_pack_start (GTK_BOX (vbox), space, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), space, FALSE, FALSE, 0);
   gtk_widget_show (space);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), GIMP_UNIT_PIXEL);
@@ -814,7 +819,7 @@ dialog (gint32        image_ID,
                                 SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
                                 GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
-  gtk_box_pack_start (GTK_BOX (vbox), offset, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), offset, FALSE, FALSE, 0);
   gtk_widget_show (offset);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), GIMP_UNIT_PIXEL);

@@ -1,3 +1,10 @@
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/plasma.c (plasma_dialog): left-align the preview.
+
+	* plug-ins/common/grid.c (dialog): pack the preview as in other
+	plug-in dialogs and embed it into a GtkFrame.
+
 2004-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdevicestatus.c: removed "Configure input
