@@ -1,3 +1,9 @@
+2005-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-convert.c: some simple loop unrolling,
+	converted tabs to spaces and sprinkled the code with const
+	qualifiers.
+
 2005-02-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrenderergradient.c
