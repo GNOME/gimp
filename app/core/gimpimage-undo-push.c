@@ -948,8 +948,8 @@ undo_pop_mask (GimpUndo            *undo,
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
-      channel->x2    = GIMP_DRAWABLE (channel)->width;
-      channel->y2    = GIMP_DRAWABLE (channel)->height;
+      channel->x2    = GIMP_ITEM (channel)->width;
+      channel->y2    = GIMP_ITEM (channel)->height;
     }
 
   /* we know the bounds */
@@ -968,8 +968,8 @@ undo_pop_mask (GimpUndo            *undo,
     {
       gimp_drawable_update (GIMP_DRAWABLE (channel),
                             0, 0,
-                            GIMP_DRAWABLE (channel)->width,
-                            GIMP_DRAWABLE (channel)->height);
+                            GIMP_ITEM (channel)->width,
+                            GIMP_ITEM (channel)->height);
     }
 
   return TRUE;
@@ -1291,8 +1291,8 @@ undo_pop_layer (GimpUndo            *undo,
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
-			    GIMP_DRAWABLE (layer)->width,
-			    GIMP_DRAWABLE (layer)->height);
+			    GIMP_ITEM (layer)->width,
+			    GIMP_ITEM (layer)->height);
 
       if (gimp_container_num_children (undo->gimage->layers) == 1 &&
           ! gimp_drawable_has_alpha (GIMP_LIST (undo->gimage->layers)->list->data))
@@ -1331,8 +1331,8 @@ undo_pop_layer (GimpUndo            *undo,
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
-			    GIMP_DRAWABLE (layer)->width,
-			    GIMP_DRAWABLE (layer)->height);
+			    GIMP_ITEM (layer)->width,
+			    GIMP_ITEM (layer)->height);
     }
 
   return TRUE;
@@ -1395,8 +1395,8 @@ gimp_image_undo_push_layer_mod (GimpImage   *gimage,
 
       lmu->tiles    = tiles;
       lmu->type     = GIMP_DRAWABLE (layer)->type;
-      lmu->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-      lmu->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+      lmu->offset_x = GIMP_ITEM (layer)->offset_x;
+      lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
       return TRUE;
     }
@@ -1423,10 +1423,10 @@ undo_pop_layer_mod (GimpUndo            *undo,
 
   /*  Issue the first update  */
   gimp_image_update (undo->gimage,
-                     GIMP_DRAWABLE (layer)->offset_x,
-                     GIMP_DRAWABLE (layer)->offset_y,
-                     GIMP_DRAWABLE (layer)->width,
-                     GIMP_DRAWABLE (layer)->height);
+                     GIMP_ITEM (layer)->offset_x,
+                     GIMP_ITEM (layer)->offset_y,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height);
 
   tiles      = lmu->tiles;
   layer_type = lmu->type;
@@ -1435,22 +1435,23 @@ undo_pop_layer_mod (GimpUndo            *undo,
 
   lmu->tiles    = GIMP_DRAWABLE (layer)->tiles;
   lmu->type     = GIMP_DRAWABLE (layer)->type;
-  lmu->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-  lmu->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+  lmu->offset_x = GIMP_ITEM (layer)->offset_x;
+  lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
   GIMP_DRAWABLE (layer)->tiles     = tiles;
-  GIMP_DRAWABLE (layer)->width     = tile_manager_width (tiles);
-  GIMP_DRAWABLE (layer)->height    = tile_manager_height (tiles);
   GIMP_DRAWABLE (layer)->bytes     = tile_manager_bpp (tiles);
   GIMP_DRAWABLE (layer)->type      = layer_type;
   GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type);
-  GIMP_DRAWABLE (layer)->offset_x  = offset_x;
-  GIMP_DRAWABLE (layer)->offset_y  = offset_y;
+
+  GIMP_ITEM (layer)->width    = tile_manager_width (tiles);
+  GIMP_ITEM (layer)->height   = tile_manager_height (tiles);
+  GIMP_ITEM (layer)->offset_x = offset_x;
+  GIMP_ITEM (layer)->offset_y = offset_y;
 
   if (layer->mask)
     {
-      GIMP_DRAWABLE (layer->mask)->offset_x = offset_x;
-      GIMP_DRAWABLE (layer->mask)->offset_y = offset_y;
+      GIMP_ITEM (layer->mask)->offset_x = offset_x;
+      GIMP_ITEM (layer->mask)->offset_y = offset_y;
     }
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type) !=
@@ -1460,8 +1461,8 @@ undo_pop_layer_mod (GimpUndo            *undo,
       gimp_image_alpha_changed (undo->gimage);
     }
 
-  if (GIMP_DRAWABLE (layer)->width  != tile_manager_width (lmu->tiles) ||
-      GIMP_DRAWABLE (layer)->height != tile_manager_height (lmu->tiles))
+  if (GIMP_ITEM (layer)->width  != tile_manager_width  (lmu->tiles) ||
+      GIMP_ITEM (layer)->height != tile_manager_height (lmu->tiles))
     {
       gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
     }
@@ -1469,8 +1470,8 @@ undo_pop_layer_mod (GimpUndo            *undo,
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0, 
-			GIMP_DRAWABLE (layer)->width,
-			GIMP_DRAWABLE (layer)->height);
+			GIMP_ITEM (layer)->width,
+			GIMP_ITEM (layer)->height);
 
   return TRUE;
 }
@@ -1729,8 +1730,8 @@ gimp_image_undo_push_layer_displace (GimpImage   *gimage,
 
       ldu = new->data;
 
-      ldu->old_offset_x = GIMP_DRAWABLE (layer)->offset_x;
-      ldu->old_offset_y = GIMP_DRAWABLE (layer)->offset_y;
+      ldu->old_offset_x = GIMP_ITEM (layer)->offset_x;
+      ldu->old_offset_y = GIMP_ITEM (layer)->offset_y;
 
       return TRUE;
     }
@@ -2053,8 +2054,8 @@ undo_pop_channel (GimpUndo            *undo,
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (channel),
 			    0, 0, 
-			    GIMP_DRAWABLE (channel)->width,
-			    GIMP_DRAWABLE (channel)->height);
+			    GIMP_ITEM (channel)->width,
+			    GIMP_ITEM (channel)->height);
     }
   else
     {
@@ -2071,8 +2072,8 @@ undo_pop_channel (GimpUndo            *undo,
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (channel),
 			    0, 0, 
-			    GIMP_DRAWABLE (channel)->width,
-			    GIMP_DRAWABLE (channel)->height);
+			    GIMP_ITEM (channel)->width,
+			    GIMP_ITEM (channel)->height);
     }
 
   return TRUE;
@@ -2156,30 +2157,30 @@ undo_pop_channel_mod (GimpUndo            *undo,
 
   /*  Issue the first update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0, 
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
+			0, 0,
+			GIMP_ITEM (channel)->width,
+			GIMP_ITEM (channel)->height);
 
   tiles = cmu->tiles;
 
   cmu->tiles = GIMP_DRAWABLE (channel)->tiles;
 
   GIMP_DRAWABLE (channel)->tiles       = tiles;
-  GIMP_DRAWABLE (channel)->width       = tile_manager_width (tiles);
-  GIMP_DRAWABLE (channel)->height      = tile_manager_height (tiles);
+  GIMP_ITEM (channel)->width           = tile_manager_width (tiles);
+  GIMP_ITEM (channel)->height          = tile_manager_height (tiles);
   GIMP_CHANNEL (channel)->bounds_known = FALSE; 
 
-  if (GIMP_DRAWABLE (channel)->width  != tile_manager_width (cmu->tiles) ||
-      GIMP_DRAWABLE (channel)->height != tile_manager_height (cmu->tiles))
+  if (GIMP_ITEM (channel)->width  != tile_manager_width  (cmu->tiles) ||
+      GIMP_ITEM (channel)->height != tile_manager_height (cmu->tiles))
     {
       gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
     }
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0, 
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
+			0, 0,
+			GIMP_ITEM (channel)->width,
+			GIMP_ITEM (channel)->height);
 
   return TRUE;
 }
@@ -2745,10 +2746,10 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
 
       /*  restore the contents of the drawable  */
       floating_sel_store (fsu->floating_layer, 
-			  GIMP_DRAWABLE (fsu->floating_layer)->offset_x, 
-			  GIMP_DRAWABLE (fsu->floating_layer)->offset_y,
-			  GIMP_DRAWABLE (fsu->floating_layer)->width, 
-			  GIMP_DRAWABLE (fsu->floating_layer)->height);
+			  GIMP_ITEM (fsu->floating_layer)->offset_x, 
+			  GIMP_ITEM (fsu->floating_layer)->offset_y,
+			  GIMP_ITEM (fsu->floating_layer)->width, 
+			  GIMP_ITEM (fsu->floating_layer)->height);
       fsu->floating_layer->fs.initial = TRUE;
 
       /*  clear the selection  */
@@ -2761,10 +2762,10 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
     case GIMP_UNDO_MODE_REDO:
       /*  restore the contents of the drawable  */
       floating_sel_restore (fsu->floating_layer, 
-			    GIMP_DRAWABLE (fsu->floating_layer)->offset_x, 
-			    GIMP_DRAWABLE (fsu->floating_layer)->offset_y,
-			    GIMP_DRAWABLE (fsu->floating_layer)->width, 
-			    GIMP_DRAWABLE (fsu->floating_layer)->height);
+			    GIMP_ITEM (fsu->floating_layer)->offset_x, 
+			    GIMP_ITEM (fsu->floating_layer)->offset_y,
+			    GIMP_ITEM (fsu->floating_layer)->width, 
+			    GIMP_ITEM (fsu->floating_layer)->height);
 
       /*  Update the preview for the gimage and underlying drawable  */
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));

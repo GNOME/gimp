@@ -464,8 +464,8 @@ xcf_save_layer_props (XcfInfo   *info,
     }
 
   xcf_check_error (xcf_save_prop (info, gimage, PROP_OFFSETS, error,
-		                  GIMP_DRAWABLE (layer)->offset_x,
-		                  GIMP_DRAWABLE (layer)->offset_y));
+		                  GIMP_ITEM (layer)->offset_x,
+		                  GIMP_ITEM (layer)->offset_y));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_MODE, error, 
                                   layer->mode));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
@@ -1040,11 +1040,11 @@ xcf_save_layer (XcfInfo   *info,
 
   /* write out the width, height and image type information for the layer */
   xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &GIMP_DRAWABLE(layer)->width, 1);
+                               (guint32 *) &GIMP_ITEM (layer)->width, 1);
   xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &GIMP_DRAWABLE(layer)->height, 1);
+                               (guint32 *) &GIMP_ITEM (layer)->height, 1);
   xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &GIMP_DRAWABLE(layer)->type, 1);
+                               (guint32 *) &GIMP_DRAWABLE (layer)->type, 1);
 
   /* write out the layers name */
   xcf_write_string_check_error (info->fp, &GIMP_OBJECT (layer)->name, 1);
@@ -1111,9 +1111,9 @@ xcf_save_channel (XcfInfo      *info,
 
   /* write out the width and height information for the channel */
   xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &GIMP_DRAWABLE(channel)->width, 1);
+                               (guint32 *) &GIMP_ITEM (channel)->width, 1);
   xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &GIMP_DRAWABLE(channel)->height, 1);
+                               (guint32 *) &GIMP_ITEM (channel)->height, 1);
 
   /* write out the channels name */
   xcf_write_string_check_error (info->fp, &GIMP_OBJECT (channel)->name, 1); 

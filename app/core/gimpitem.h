@@ -37,12 +37,15 @@ struct _GimpItem
 {
   GimpViewable      parent_instance;
 
-  gint              ID;        /*  provides a unique ID     */
-  guint32           tattoo;    /*  provides a permanent ID  */
+  gint              ID;                 /*  provides a unique ID     */
+  guint32           tattoo;             /*  provides a permanent ID  */
 
-  GimpImage        *gimage;    /*  gimage owner             */
+  GimpImage        *gimage;             /*  gimage owner             */
 
-  GimpParasiteList *parasites; /*  Plug-in parasite data    */
+  GimpParasiteList *parasites;          /*  Plug-in parasite data    */
+
+  gint              width, height;      /*  size in pixels           */
+  gint              offset_x, offset_y; /*  pixel offset in image    */
 };
 
 struct _GimpItemClass

@@ -109,9 +109,9 @@ gimp_image_mask_boundary (GimpImage  *gimage,
       gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
       x1 = CLAMP (off_x, 0, gimage->width);
       y1 = CLAMP (off_y, 0, gimage->height);
-      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE(layer)), 0,
+      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), 0,
 		  gimage->width);
-      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE(layer)), 0,
+      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), 0,
 		  gimage->height);
 
       return gimp_channel_boundary (gimp_image_get_mask (gimage),
@@ -162,8 +162,8 @@ gimp_image_mask_invalidate (GimpImage *gimage)
   if (layer && gimp_layer_is_floating_sel (layer))
     gimp_drawable_update (GIMP_DRAWABLE (layer),
 			  0, 0,
-			  GIMP_DRAWABLE (layer)->width,
-			  GIMP_DRAWABLE (layer)->height);
+			  GIMP_ITEM (layer)->width,
+			  GIMP_ITEM (layer)->height);
 
   /*  invalidate the preview  */
   GIMP_DRAWABLE (mask)->preview_valid = FALSE;
@@ -394,8 +394,8 @@ gimp_image_mask_float (GimpImage    *gimage,
 
   /*  Set the offsets  */
   tile_manager_get_offsets (tiles, &x1, &y1);
-  GIMP_DRAWABLE (layer)->offset_x = x1 + off_x;
-  GIMP_DRAWABLE (layer)->offset_y = y1 + off_y;
+  GIMP_ITEM (layer)->offset_x = x1 + off_x;
+  GIMP_ITEM (layer)->offset_y = y1 + off_y;
 
   /*  Free the temp buffer  */
   tile_manager_destroy (tiles);

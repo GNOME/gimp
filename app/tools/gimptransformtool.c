@@ -640,8 +640,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
             }
           else if (coords->x >= off_x &&
                    coords->y >= off_y &&
-                   coords->x < (off_x + drawable->width) &&
-                   coords->y < (off_y + drawable->height))
+                   coords->x < (off_x + GIMP_ITEM (drawable)->width) &&
+                   coords->y < (off_y + GIMP_ITEM (drawable)->height))
             {
               if (gimp_image_mask_is_empty (gdisp->gimage) ||
                   gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))

@@ -687,10 +687,10 @@ xcf_load_layer_props (XcfInfo   *info,
 	case PROP_OFFSETS:
 	  info->cp += 
             xcf_read_int32 (info->fp, 
-                            (guint32 *) &GIMP_DRAWABLE(layer)->offset_x, 1);
+                            (guint32 *) &GIMP_ITEM (layer)->offset_x, 1);
 	  info->cp += 
             xcf_read_int32 (info->fp, 
-                            (guint32 *) &GIMP_DRAWABLE(layer)->offset_y, 1);
+                            (guint32 *) &GIMP_ITEM (layer)->offset_y, 1);
 	  break;
 	case PROP_MODE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->mode, 1);
@@ -908,8 +908,8 @@ xcf_load_layer (XcfInfo   *info,
 	goto error;
 
       /* set the offsets of the layer_mask */
-      GIMP_DRAWABLE (layer_mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-      GIMP_DRAWABLE (layer_mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+      GIMP_ITEM (layer_mask)->offset_x = GIMP_ITEM (layer)->offset_x;
+      GIMP_ITEM (layer_mask)->offset_y = GIMP_ITEM (layer)->offset_y;
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
       g_object_unref (layer_mask);

@@ -320,8 +320,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	  return NULL;
 	}
 
-      GIMP_DRAWABLE (merge_layer)->offset_x = x1;
-      GIMP_DRAWABLE (merge_layer)->offset_y = y1;
+      GIMP_ITEM (merge_layer)->offset_x = x1;
+      GIMP_ITEM (merge_layer)->offset_y = y1;
 
       /*  get the background for compositing  */
       gimp_image_get_background (gimage, GIMP_DRAWABLE (merge_layer), bg);
@@ -359,8 +359,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	  return NULL;
 	}
 
-      GIMP_DRAWABLE (merge_layer)->offset_x = x1;
-      GIMP_DRAWABLE (merge_layer)->offset_y = y1;
+      GIMP_ITEM (merge_layer)->offset_x = x1;
+      GIMP_ITEM (merge_layer)->offset_y = y1;
 
       /*  Set the layer to transparent  */
       pixel_region_init (&src1PR, 

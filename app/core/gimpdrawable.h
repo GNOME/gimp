@@ -39,8 +39,6 @@ struct _GimpDrawable
 
   TileManager   *tiles;              /* tiles for drawable data        */
   gboolean       visible;            /* controls visibility            */
-  gint           width, height;      /* size of drawable               */
-  gint           offset_x, offset_y; /* offset of layer in image       */
 
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */

@@ -233,11 +233,13 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
   if (drawable && GIMP_IS_TEXT_LAYER (drawable))
     {
-      coords->x -= drawable->offset_x;
-      coords->y -= drawable->offset_y;
+      GimpItem *item = GIMP_ITEM (drawable);
 
-      if (coords->x > 0 && coords->x < drawable->width &&
-          coords->y > 0 && coords->y < drawable->height)
+      coords->x -= item->offset_x;
+      coords->y -= item->offset_y;
+
+      if (coords->x > 0 && coords->x < item->width &&
+          coords->y > 0 && coords->y < item->height)
         {
           text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
         }
@@ -309,8 +311,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
 
-  GIMP_DRAWABLE (layer)->offset_x = text_tool->x1;
-  GIMP_DRAWABLE (layer)->offset_y = text_tool->y1;
+  GIMP_ITEM (layer)->offset_x = text_tool->x1;
+  GIMP_ITEM (layer)->offset_y = text_tool->y1;
 
   gimp_image_add_layer (gimage, layer, -1);
 

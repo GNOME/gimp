@@ -171,8 +171,8 @@ gimp_image_qmask_invert (GimpImage *gimage)
 
           gimp_drawable_update (GIMP_DRAWABLE (qmask),
                                 0, 0,
-                                GIMP_DRAWABLE (qmask)->width,
-                                GIMP_DRAWABLE (qmask)->height);
+                                GIMP_ITEM (qmask)->width,
+                                GIMP_ITEM (qmask)->height);
         }
     }
 

@@ -167,10 +167,6 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->tiles         = NULL;
   drawable->visible       = FALSE;
-  drawable->width         = 0;
-  drawable->height        = 0;
-  drawable->offset_x      = 0;
-  drawable->offset_y      = 0;
   drawable->bytes         = 0;
   drawable->type          = -1;
   drawable->has_alpha     = FALSE;
@@ -268,10 +264,10 @@ gimp_drawable_duplicate (GimpItem *item,
 
   gimp_drawable_configure (new_drawable,
                            gimp_item_get_image (GIMP_ITEM (drawable)),
-                           drawable->offset_x,
-                           drawable->offset_y,
-                           gimp_drawable_width (drawable),
-                           gimp_drawable_height (drawable),
+                           item->offset_x,
+                           item->offset_y,
+                           item->width,
+                           item->height,
                            new_image_type,
                            GIMP_OBJECT (new_drawable)->name);
 
@@ -279,13 +275,13 @@ gimp_drawable_duplicate (GimpItem *item,
 
   pixel_region_init (&srcPR, drawable->tiles, 
                      0, 0, 
-                     gimp_drawable_width (drawable),
-                     gimp_drawable_height (drawable),
+                     item->width,
+                     item->height,
                      FALSE);
   pixel_region_init (&destPR, new_drawable->tiles,
                      0, 0, 
-                     gimp_drawable_width (new_drawable),
-                     gimp_drawable_height (new_drawable),
+                     new_item->width,
+                     new_item->height,
                      TRUE);
 
   if (new_image_type == drawable->type)
@@ -311,7 +307,7 @@ gimp_drawable_scale (GimpItem              *item,
   drawable = GIMP_DRAWABLE (item);
 
   /*  Update the old position  */
-  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 
   /*  Allocate the new channel  */
   new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
@@ -319,8 +315,8 @@ gimp_drawable_scale (GimpItem              *item,
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, drawable->tiles,
 		     0, 0,
-		     drawable->width,
-		     drawable->height,
+		     item->width,
+		     item->height,
                      FALSE);
 
   pixel_region_init (&destPR, new_tiles,
@@ -339,14 +335,14 @@ gimp_drawable_scale (GimpItem              *item,
   scale_region (&srcPR, &destPR, interpolation_type);
 
   /*  Configure the new channel  */
-  drawable->tiles    = new_tiles;
-  drawable->width    = new_width;
-  drawable->height   = new_height;
-  drawable->offset_x = new_offset_x;
-  drawable->offset_y = new_offset_y;
+  drawable->tiles = new_tiles;
+  item->width     = new_width;
+  item->height    = new_height;
+  item->offset_x  = new_offset_x;
+  item->offset_y  = new_offset_y;
 
   /*  Update the new position  */
-  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
 }
@@ -368,8 +364,8 @@ gimp_drawable_resize (GimpItem *item,
 
   x1 = CLAMP (offset_x, 0, new_width);
   y1 = CLAMP (offset_y, 0, new_height);
-  x2 = CLAMP (offset_x + drawable->width,  0, new_width);
-  y2 = CLAMP (offset_y + drawable->height, 0, new_height);
+  x2 = CLAMP (offset_x + item->width,  0, new_width);
+  y2 = CLAMP (offset_y + item->height, 0, new_height);
 
   w = x2 - x1;
   h = y2 - y1;
@@ -397,7 +393,7 @@ gimp_drawable_resize (GimpItem *item,
     }
 
   /*  Update the old position  */
-  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, drawable->tiles,
@@ -410,8 +406,8 @@ gimp_drawable_resize (GimpItem *item,
 				drawable->bytes);
 
   /*  Determine whether the new tiles need to be initially cleared  */
-  if ((new_width  > drawable->width)  ||
-      (new_height > drawable->height) ||
+  if ((new_width  > item->width)  ||
+      (new_height > item->height) ||
       (x2 || y2))
     {
       pixel_region_init (&destPR, new_tiles,
@@ -450,14 +446,14 @@ gimp_drawable_resize (GimpItem *item,
     }
 
   /*  Configure the new drawable  */
-  drawable->tiles    = new_tiles;
-  drawable->offset_x = x1 + drawable->offset_x - x2;
-  drawable->offset_y = y1 + drawable->offset_y - y2;
-  drawable->width    = new_width;
-  drawable->height   = new_height;
+  drawable->tiles = new_tiles;
+  item->offset_x  = x1 + item->offset_x - x2;
+  item->offset_y  = y1 + item->offset_y - y2;
+  item->width     = new_width;
+  item->height    = new_height;
 
   /*  update the new area  */
-  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
 }
@@ -479,13 +475,14 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   if (! GIMP_ITEM (drawable)->ID)
     gimp_item_configure (GIMP_ITEM (drawable), gimage, name);
 
-  drawable->width     = width;
-  drawable->height    = height;
+  GIMP_ITEM (drawable)->width    = width;
+  GIMP_ITEM (drawable)->height   = height;
+  GIMP_ITEM (drawable)->offset_x = offset_x;
+  GIMP_ITEM (drawable)->offset_y = offset_y;
+
   drawable->type      = type;
   drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
-  drawable->offset_x  = offset_x;
-  drawable->offset_y  = offset_y;
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
@@ -784,14 +781,17 @@ gimp_drawable_data (const GimpDrawable *drawable)
 TileManager *
 gimp_drawable_shadow (GimpDrawable *drawable)
 {
+  GimpItem  *item;
   GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+  item = GIMP_ITEM (drawable);
+
+  if (! (gimage = gimp_item_get_image (item)))
     return NULL;
 
-  return gimp_image_shadow (gimage, drawable->width, drawable->height, 
+  return gimp_image_shadow (gimage, item->width, item->height,
 			    drawable->bytes);
 }
 
@@ -820,7 +820,7 @@ gimp_drawable_width (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return drawable->width;
+  return GIMP_ITEM (drawable)->width;
 }
 
 gint
@@ -828,7 +828,7 @@ gimp_drawable_height (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return drawable->height;
+  return GIMP_ITEM (drawable)->height;
 }
 
 gboolean
@@ -848,9 +848,11 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 
   if (drawable->visible != visible)
     {
+      GimpItem *item = GIMP_ITEM (drawable);
+
       if (push_undo)
         {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *gimage = gimp_item_get_image (item);
 
           if (gimage)
             gimp_image_undo_push_drawable_visibility (gimage, NULL, drawable);
@@ -860,10 +862,7 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 
       g_signal_emit (drawable, gimp_drawable_signals[VISIBILITY_CHANGED], 0);
 
-      gimp_drawable_update (drawable,
-			    0, 0,
-			    drawable->width,
-			    drawable->height);
+      gimp_drawable_update (drawable, 0, 0, item->width, item->height);
     }
 }
 
@@ -874,8 +873,8 @@ gimp_drawable_offsets (const GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  *off_x = drawable->offset_x;
-  *off_y = drawable->offset_y;
+  if (off_x) *off_x = GIMP_ITEM (drawable)->offset_x;
+  if (off_y) *off_y = GIMP_ITEM (drawable)->offset_y;
 }
 
 guchar *
@@ -905,7 +904,8 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 			! gimp_drawable_is_indexed (drawable), NULL);
 
   /* do not make this a g_return_if_fail() */
-  if ( !(x >= 0 && x < drawable->width && y >= 0 && y < drawable->height))
+  if (! (x >= 0 && x < GIMP_ITEM (drawable)->width &&
+         y >= 0 && y < GIMP_ITEM (drawable)->height))
     return NULL;
 
   dest = g_new (guchar, 5);

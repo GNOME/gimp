@@ -96,8 +96,8 @@ gimp_drawable_get_preview_size (GimpViewable *viewable,
   else
     {
       gimp_viewable_calc_preview_size (viewable,
-                                       drawable->width,
-                                       drawable->height,
+                                       GIMP_ITEM (drawable)->width,
+                                       GIMP_ITEM (drawable)->height,
                                        size,
                                        size,
                                        dot_for_dot,
@@ -118,21 +118,23 @@ gimp_drawable_get_popup_size (GimpViewable *viewable,
                               gint         *popup_height)
 {
   GimpDrawable *drawable;
+  GimpItem     *item;
   GimpImage    *gimage;
 
   drawable = GIMP_DRAWABLE (viewable);
-  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+  item     = GIMP_ITEM (viewable);
+  gimage   = gimp_item_get_image (item);
 
   if (gimage && ! gimage->gimp->config->layer_previews)
     return FALSE;
 
-  if (drawable->width > width || drawable->height > height)
+  if (item->width > width || item->height > height)
     {
       gboolean scaling_up;
 
       gimp_viewable_calc_preview_size (viewable,
-                                       drawable->width,
-                                       drawable->height,
+                                       item->width,
+                                       item->height,
                                        MIN (width  * 2,
                                             GIMP_VIEWABLE_MAX_POPUP_SIZE),
                                        MIN (height * 2,
@@ -146,8 +148,8 @@ gimp_drawable_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width = drawable->width;
-          *popup_width = drawable->height;
+          *popup_width = item->width;
+          *popup_width = item->height;
         }
 
       return TRUE;

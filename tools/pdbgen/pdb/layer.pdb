@@ -449,7 +449,7 @@ HELP
 
     foreach (qw(x y)) {
 	$invoke{code} =~
-	    s/, (off$_)/,\n\t\t\t    ($1 - GIMP_DRAWABLE (layer)->offset_$_)/;
+	    s/, (off$_)/,\n\t\t\t    ($1 - GIMP_ITEM (layer)->offset_$_)/;
     }
 }
 

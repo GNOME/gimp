@@ -212,8 +212,8 @@ gimp_edit_paste (GimpImage    *gimage,
       cy = gimage->height >> 1;
     }
 
-  GIMP_DRAWABLE (layer)->offset_x = cx - (GIMP_DRAWABLE (layer)->width  >> 1);
-  GIMP_DRAWABLE (layer)->offset_y = cy - (GIMP_DRAWABLE (layer)->height >> 1);
+  GIMP_ITEM (layer)->offset_x = cx - (GIMP_ITEM (layer)->width  >> 1);
+  GIMP_ITEM (layer)->offset_y = cy - (GIMP_ITEM (layer)->height >> 1);
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,

@@ -782,8 +782,8 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	
 	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
 		gimp_layer_translate (tmp_layer,
-				(offx - GIMP_DRAWABLE (layer)->offset_x),
-				(offy - GIMP_DRAWABLE (layer)->offset_y), TRUE);
+				(offx - GIMP_ITEM (layer)->offset_x),
+				(offy - GIMP_ITEM (layer)->offset_y), TRUE);
 	    }
     
 	  if (floating_layer)

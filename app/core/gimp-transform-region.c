@@ -242,7 +242,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   /*  Get the new temporary buffer for the transformed result  */
   tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-                tile_manager_bpp (float_tiles));
+                            tile_manager_bpp (float_tiles));
   pixel_region_init (&destPR, tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   tile_manager_set_offsets (tiles, x1, y1);
 
@@ -661,8 +661,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
         }
 
       tile_manager_get_offsets (tiles, 
-                &(GIMP_DRAWABLE (layer)->offset_x),
-                &(GIMP_DRAWABLE (layer)->offset_y));
+                                &GIMP_ITEM (layer)->offset_x,
+                                &GIMP_ITEM (layer)->offset_y);
 
       /*  Start a group undo  */
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
@@ -696,10 +696,10 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
         floating_sel_relax (floating_layer, TRUE);
 
       gimp_image_update (gimage,
-                         drawable->offset_x,
-                         drawable->offset_y,
-                         drawable->width,
-                         drawable->height);
+                         GIMP_ITEM (drawable)->offset_x,
+                         GIMP_ITEM (drawable)->offset_y,
+                         GIMP_ITEM (drawable)->width,
+                         GIMP_ITEM (drawable)->height);
 
       /*  Push an undo  */
       if (layer)
@@ -713,19 +713,21 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       drawable->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      drawable->width    = tile_manager_width (tiles);
-      drawable->height   = tile_manager_height (tiles);
-      drawable->bytes    = tile_manager_bpp (tiles);
+      GIMP_ITEM (drawable)->width  = tile_manager_width (tiles);
+      GIMP_ITEM (drawable)->height = tile_manager_height (tiles);
       tile_manager_get_offsets (tiles, 
-                &drawable->offset_x, &drawable->offset_y);
+                                &GIMP_ITEM (drawable)->offset_x,
+                                &GIMP_ITEM (drawable)->offset_y);
+
+      drawable->bytes = tile_manager_bpp (tiles);
 
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);
 
       gimp_drawable_update (drawable,
-                0, 0,
-                gimp_drawable_width (drawable),
-                gimp_drawable_height (drawable));
+                            0, 0,
+                            gimp_drawable_width (drawable),
+                            gimp_drawable_height (drawable));
 
       /*  if we were operating on the floating selection, then it's boundary 
        *  and previews need invalidating

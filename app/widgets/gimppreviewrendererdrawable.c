@@ -95,6 +95,7 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
                                        GtkWidget           *widget)
 {
   GimpDrawable *drawable;
+  GimpItem     *item;
   GimpImage    *gimage;
   gint          width;
   gint          height;
@@ -104,7 +105,8 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
   TempBuf      *render_buf = NULL;
 
   drawable = GIMP_DRAWABLE (renderer->viewable);
-  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+  item     = GIMP_ITEM (drawable);
+  gimage   = gimp_item_get_image (item);
 
   width  = renderer->width;
   height = renderer->height;
@@ -112,13 +114,13 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
   if (gimage && ! renderer->is_popup)
     {
       width  = MAX (1, ROUND ((((gdouble) width / (gdouble) gimage->width) *
-			       (gdouble) drawable->width)));
+			       (gdouble) item->width)));
       height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
-			      (gdouble) drawable->height)));
+			      (gdouble) item->height)));
 
       gimp_viewable_calc_preview_size (renderer->viewable,
-                                       drawable->width,
-                                       drawable->height,
+                                       item->width,
+                                       item->height,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
@@ -131,8 +133,8 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
   else
     {
       gimp_viewable_calc_preview_size (renderer->viewable,
-                                       drawable->width,
-                                       drawable->height,
+                                       item->width,
+                                       item->height,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
@@ -148,8 +150,8 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-						drawable->width, 
-						drawable->height);
+                                                item->width, 
+						item->height);
 
       if (temp_buf)
         {
@@ -169,15 +171,15 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
     {
       if (gimage && ! renderer->is_popup)
         {
-          if (drawable->offset_x != 0)
+          if (item->offset_x != 0)
             render_buf->x =
               ROUND ((((gdouble) renderer->width / (gdouble) gimage->width) *
-                      (gdouble) drawable->offset_x));
+                      (gdouble) item->offset_x));
 
-          if (drawable->offset_y != 0)
+          if (item->offset_y != 0)
             render_buf->y =
               ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
-                      (gdouble) drawable->offset_y));
+                      (gdouble) item->offset_y));
         }
       else
         {

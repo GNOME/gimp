@@ -107,8 +107,8 @@ text_render (GimpImage    *gimage,
                                _("Add Text Layer"));
 
   /*  Set the layer offsets  */
-  GIMP_DRAWABLE (layer)->offset_x = text_x;
-  GIMP_DRAWABLE (layer)->offset_y = text_y;
+  GIMP_ITEM (layer)->offset_x = text_x;
+  GIMP_ITEM (layer)->offset_y = text_y;
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,

@@ -400,8 +400,8 @@ gimp_channel_set_color (GimpChannel   *channel,
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
 			    0, 0,
-			    GIMP_DRAWABLE (channel)->width,
-			    GIMP_DRAWABLE (channel)->height);
+			    GIMP_ITEM (channel)->width,
+			    GIMP_ITEM (channel)->height);
     }
 }
 
@@ -449,8 +449,8 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
 			    0, 0,
-			    GIMP_DRAWABLE (channel)->width,
-			    GIMP_DRAWABLE (channel)->height);
+			    GIMP_ITEM (channel)->width,
+			    GIMP_ITEM (channel)->height);
     }
 }
 
@@ -474,8 +474,8 @@ gimp_channel_set_show_masked (GimpChannel *channel,
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),
 			    0, 0,
-			    GIMP_DRAWABLE (channel)->width,
-			    GIMP_DRAWABLE (channel)->height);
+			    GIMP_ITEM (channel)->width,
+			    GIMP_ITEM (channel)->height);
     }
 }
 
@@ -550,8 +550,8 @@ gimp_channel_boundary (GimpChannel  *mask,
 	    {
 	      pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles,
 				 0, 0,
-				 GIMP_DRAWABLE (mask)->width,
-				 GIMP_DRAWABLE (mask)->height, FALSE);
+				 GIMP_ITEM (mask)->width,
+				 GIMP_ITEM (mask)->height, FALSE);
 	      mask->segs_in =  find_mask_boundary (&bPR, &mask->num_segs_in,
 						   WithinBounds,
 						   x1, y1,
@@ -602,8 +602,8 @@ gimp_channel_value (GimpChannel *mask,
     }
   else
     {
-      if (x < 0 || x >= GIMP_DRAWABLE (mask)->width ||
-	  y < 0 || y >= GIMP_DRAWABLE (mask)->height)
+      if (x < 0 || x >= GIMP_ITEM (mask)->width ||
+	  y < 0 || y >= GIMP_ITEM (mask)->height)
 	return 0;
     }
 
@@ -647,15 +647,15 @@ gimp_channel_bounds (GimpChannel *mask,
     }
 
   /*  go through and calculate the bounds  */
-  tx1 = GIMP_DRAWABLE (mask)->width;
-  ty1 = GIMP_DRAWABLE (mask)->height;
+  tx1 = GIMP_ITEM (mask)->width;
+  ty1 = GIMP_ITEM (mask)->height;
   tx2 = 0;
   ty2 = 0;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, FALSE);
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, FALSE);
 
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
@@ -712,16 +712,16 @@ gimp_channel_bounds (GimpChannel *mask,
         }
     }
 
-  tx2 = CLAMP (tx2 + 1, 0, GIMP_DRAWABLE (mask)->width);
-  ty2 = CLAMP (ty2 + 1, 0, GIMP_DRAWABLE (mask)->height);
+  tx2 = CLAMP (tx2 + 1, 0, GIMP_ITEM (mask)->width);
+  ty2 = CLAMP (ty2 + 1, 0, GIMP_ITEM (mask)->height);
 
-  if (tx1 == GIMP_DRAWABLE (mask)->width && ty1 == GIMP_DRAWABLE (mask)->height)
+  if (tx1 == GIMP_ITEM (mask)->width && ty1 == GIMP_ITEM (mask)->height)
     {
       mask->empty = TRUE;
       mask->x1    = 0;
       mask->y1    = 0;
-      mask->x2    = GIMP_DRAWABLE (mask)->width;
-      mask->y2    = GIMP_DRAWABLE (mask)->height;
+      mask->x2    = GIMP_ITEM (mask)->width;
+      mask->y2    = GIMP_ITEM (mask)->height;
     }
   else
     {
@@ -757,8 +757,8 @@ gimp_channel_is_empty (GimpChannel *mask)
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, FALSE);
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, FALSE);
 
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
@@ -791,8 +791,8 @@ gimp_channel_is_empty (GimpChannel *mask)
   mask->boundary_known = TRUE;
   mask->x1             = 0;
   mask->y1             = 0;
-  mask->x2             = GIMP_DRAWABLE (mask)->width;
-  mask->y2             = GIMP_DRAWABLE (mask)->height;
+  mask->x2             = GIMP_ITEM (mask)->width;
+  mask->y2             = GIMP_ITEM (mask)->height;
 
   return TRUE;
 }
@@ -814,13 +814,13 @@ gimp_channel_add_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  x2 = CLAMP (x2, 0, GIMP_DRAWABLE (mask)->width);
-  x  = CLAMP (x,  0, GIMP_DRAWABLE (mask)->width);
+  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
+  x  = CLAMP (x,  0, GIMP_ITEM (mask)->width);
   width = x2 - x;
   if (!width)
     return;
 
-  if (y < 0 || y > GIMP_DRAWABLE (mask)->height)
+  if (y < 0 || y > GIMP_ITEM (mask)->height)
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
@@ -859,14 +859,14 @@ gimp_channel_sub_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  x2 = CLAMP (x2, 0, GIMP_DRAWABLE (mask)->width);
-  x =  CLAMP (x,  0, GIMP_DRAWABLE (mask)->width);
+  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
+  x =  CLAMP (x,  0, GIMP_ITEM (mask)->width);
   width = x2 - x;
 
   if (! width)
     return;
 
-  if (y < 0 || y > GIMP_DRAWABLE (mask)->height)
+  if (y < 0 || y > GIMP_ITEM (mask)->height)
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
@@ -905,10 +905,10 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   y2 = y + h;
   x2 = x + w;
 
-  x  = CLAMP (x,  0, GIMP_DRAWABLE (mask)->width);
-  y  = CLAMP (y,  0, GIMP_DRAWABLE (mask)->height);
-  x2 = CLAMP (x2, 0, GIMP_DRAWABLE (mask)->width);
-  y2 = CLAMP (y2, 0, GIMP_DRAWABLE (mask)->height);
+  x  = CLAMP (x,  0, GIMP_ITEM (mask)->width);
+  y  = CLAMP (y,  0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
+  y2 = CLAMP (y2, 0, GIMP_ITEM (mask)->height);
 
   if (x2 - x <= 0 || y2 - y <= 0)
     return;
@@ -946,10 +946,10 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   else
     mask->bounds_known = FALSE;
 
-  mask->x1 = CLAMP (mask->x1, 0, GIMP_DRAWABLE (mask)->width);
-  mask->y1 = CLAMP (mask->y1, 0, GIMP_DRAWABLE (mask)->height);
-  mask->x2 = CLAMP (mask->x2, 0, GIMP_DRAWABLE (mask)->width);
-  mask->y2 = CLAMP (mask->y2, 0, GIMP_DRAWABLE (mask)->height);
+  mask->x1 = CLAMP (mask->x1, 0, GIMP_ITEM (mask)->width);
+  mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
+  mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
+  mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
 }
 
 void
@@ -987,7 +987,7 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 
   for (i = y; i < (y + h); i++)
     {
-      if (i >= 0 && i < GIMP_DRAWABLE (mask)->height)
+      if (i >= 0 && i < GIMP_ITEM (mask)->height)
 	{
 	  /*  Non-antialiased code  */
 	  if (!antialias)
@@ -1117,10 +1117,10 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
   else
     mask->bounds_known = FALSE;
 
-  mask->x1 = CLAMP (mask->x1, 0, GIMP_DRAWABLE (mask)->width);
-  mask->y1 = CLAMP (mask->y1, 0, GIMP_DRAWABLE (mask)->height);
-  mask->x2 = CLAMP (mask->x2, 0, GIMP_DRAWABLE (mask)->width);
-  mask->y2 = CLAMP (mask->y2, 0, GIMP_DRAWABLE (mask)->height);
+  mask->x1 = CLAMP (mask->x1, 0, GIMP_ITEM (mask)->width);
+  mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
+  mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
+  mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
 }
 
 static void
@@ -1210,12 +1210,12 @@ gimp_channel_combine_mask (GimpChannel    *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
-  x1 = CLAMP (off_x, 0, GIMP_DRAWABLE (mask)->width);
-  y1 = CLAMP (off_y, 0, GIMP_DRAWABLE (mask)->height);
-  x2 = CLAMP (off_x + GIMP_DRAWABLE (add_on)->width, 0,
-	      GIMP_DRAWABLE (mask)->width);
-  y2 = CLAMP (off_y + GIMP_DRAWABLE (add_on)->height, 0,
-	      GIMP_DRAWABLE (mask)->height);
+  x1 = CLAMP (off_x, 0, GIMP_ITEM (mask)->width);
+  y1 = CLAMP (off_y, 0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP (off_x + GIMP_ITEM (add_on)->width, 0,
+	      GIMP_ITEM (mask)->width);
+  y2 = CLAMP (off_y + GIMP_ITEM (add_on)->height, 0,
+	      GIMP_ITEM (mask)->height);
 
   w = (x2 - x1);
   h = (y2 - y1);
@@ -1291,8 +1291,8 @@ gimp_channel_sharpen (GimpChannel *mask,
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, TRUE);
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, TRUE);
   lut = threshold_lut_new (0.5, 1);
 
   pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
@@ -1326,8 +1326,8 @@ gimp_channel_clear (GimpChannel *mask,
       /*  clear the mask  */
       pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 			 0, 0,
-			 GIMP_DRAWABLE (mask)->width,
-			 GIMP_DRAWABLE (mask)->height, TRUE);
+			 GIMP_ITEM (mask)->width,
+			 GIMP_ITEM (mask)->height, TRUE);
       color_region (&maskPR, &bg);
     }
 
@@ -1336,8 +1336,8 @@ gimp_channel_clear (GimpChannel *mask,
   mask->empty        = TRUE;
   mask->x1           = 0;
   mask->y1           = 0;
-  mask->x2           = GIMP_DRAWABLE (mask)->width;
-  mask->y2           = GIMP_DRAWABLE (mask)->height;
+  mask->x2           = GIMP_ITEM (mask)->width;
+  mask->y2           = GIMP_ITEM (mask)->height;
 }
 
 void
@@ -1355,8 +1355,8 @@ gimp_channel_all (GimpChannel *mask,
   /*  clear the mask  */
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, TRUE);
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, TRUE);
   color_region (&maskPR, &bg);
 
   /*  we know the bounds  */
@@ -1364,8 +1364,8 @@ gimp_channel_all (GimpChannel *mask,
   mask->empty        = FALSE;
   mask->x1           = 0;
   mask->y1           = 0;
-  mask->x2           = GIMP_DRAWABLE (mask)->width;
-  mask->y2           = GIMP_DRAWABLE (mask)->height;
+  mask->x2           = GIMP_ITEM (mask)->width;
+  mask->y2           = GIMP_ITEM (mask)->height;
 }
 
 void
@@ -1388,8 +1388,8 @@ gimp_channel_invert (GimpChannel *mask,
 
       pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
                          0, 0,
-                         GIMP_DRAWABLE (mask)->width,
-                         GIMP_DRAWABLE (mask)->height, TRUE);
+                         GIMP_ITEM (mask)->width,
+                         GIMP_ITEM (mask)->height, TRUE);
   
       lut = invert_lut_new (1);
 
@@ -1426,8 +1426,8 @@ gimp_channel_border (GimpChannel *mask,
     x1 = 0;
   else
     x1 -= radius_x;
-  if (x2 + radius_x > GIMP_DRAWABLE (mask)->width)
-    x2 = GIMP_DRAWABLE (mask)->width;
+  if (x2 + radius_x > GIMP_ITEM (mask)->width)
+    x2 = GIMP_ITEM (mask)->width;
   else
     x2 += radius_x;
 
@@ -1435,8 +1435,8 @@ gimp_channel_border (GimpChannel *mask,
     y1 = 0;
   else
     y1 -= radius_y;
-  if (y2 + radius_y > GIMP_DRAWABLE (mask)->height)
-    y2 = GIMP_DRAWABLE (mask)->height;
+  if (y2 + radius_y > GIMP_ITEM (mask)->height)
+    y2 = GIMP_ITEM (mask)->height;
   else
     y2 += radius_y;
 
@@ -1488,14 +1488,14 @@ gimp_channel_grow (GimpChannel *mask,
     y1 = y1 - radius_y;
   else
     y1 = 0;
-  if (x2 + radius_x < GIMP_DRAWABLE (mask)->width)
+  if (x2 + radius_x < GIMP_ITEM (mask)->width)
     x2 = x2 + radius_x;
   else
-    x2 = GIMP_DRAWABLE (mask)->width;
-  if (y2 + radius_y < GIMP_DRAWABLE (mask)->height)
+    x2 = GIMP_ITEM (mask)->width;
+  if (y2 + radius_y < GIMP_ITEM (mask)->height)
     y2 = y2 + radius_y;
   else
-    y2 = GIMP_DRAWABLE (mask)->height;
+    y2 = GIMP_ITEM (mask)->height;
 
   if (push_undo)
     gimp_channel_push_undo (mask, _("Grow Channel"));
@@ -1543,9 +1543,9 @@ gimp_channel_shrink (GimpChannel  *mask,
     x1--;
   if (y1 > 0)
     y1--;
-  if (x2 < GIMP_DRAWABLE (mask)->width)
+  if (x2 < GIMP_ITEM (mask)->width)
     x2++;
-  if (y2 < GIMP_DRAWABLE (mask)->height)
+  if (y2 < GIMP_ITEM (mask)->height)
     y2++;
 
   if (push_undo)
@@ -1577,10 +1577,10 @@ gimp_channel_translate (GimpChannel *mask,
     gimp_channel_push_undo (mask, _("Translate Channel"));
 
   gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
-  x1 = CLAMP ((x1 + off_x), 0, GIMP_DRAWABLE (mask)->width);
-  y1 = CLAMP ((y1 + off_y), 0, GIMP_DRAWABLE (mask)->height);
-  x2 = CLAMP ((x2 + off_x), 0, GIMP_DRAWABLE (mask)->width);
-  y2 = CLAMP ((y2 + off_y), 0, GIMP_DRAWABLE (mask)->height);
+  x1 = CLAMP ((x1 + off_x), 0, GIMP_ITEM (mask)->width);
+  y1 = CLAMP ((y1 + off_y), 0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP ((x2 + off_x), 0, GIMP_ITEM (mask)->width);
+  y2 = CLAMP ((y2 + off_y), 0, GIMP_ITEM (mask)->height);
 
   width  = x2 - x1;
   height = y2 - y1;
@@ -1604,8 +1604,8 @@ gimp_channel_translate (GimpChannel *mask,
   /*  clear the mask  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, TRUE);
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, TRUE);
   color_region (&srcPR, &empty);
 
   if (width != 0 && height != 0)
@@ -1627,8 +1627,8 @@ gimp_channel_translate (GimpChannel *mask,
       mask->empty = TRUE;
       mask->x1    = 0;
       mask->y1    = 0;
-      mask->x2    = GIMP_DRAWABLE (mask)->width;
-      mask->y2    = GIMP_DRAWABLE (mask)->height;
+      mask->x2    = GIMP_ITEM (mask)->width;
+      mask->y2    = GIMP_ITEM (mask)->height;
     }
   else
     {
@@ -1655,12 +1655,12 @@ gimp_channel_load (GimpChannel *mask,
   /*  copy the channel to the mask  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, FALSE);
+		     GIMP_ITEM (channel)->width,
+		     GIMP_ITEM (channel)->height, FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, TRUE);
+		     GIMP_ITEM (channel)->width,
+		     GIMP_ITEM (channel)->height, TRUE);
   copy_region (&srcPR, &destPR);
 
   mask->bounds_known = FALSE;
@@ -1685,16 +1685,16 @@ gimp_channel_layer_alpha (GimpChannel *mask,
   if (! (mask->bounds_known && mask->empty))
     gimp_channel_clear (mask, FALSE);
 
-  x1 = CLAMP (GIMP_DRAWABLE (layer)->offset_x, 0, GIMP_DRAWABLE (mask)->width);
-  y1 = CLAMP (GIMP_DRAWABLE (layer)->offset_y, 0, GIMP_DRAWABLE (mask)->height);
-  x2 = CLAMP (GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width,
-	      0, GIMP_DRAWABLE (mask)->width);
-  y2 = CLAMP (GIMP_DRAWABLE( layer)->offset_y + GIMP_DRAWABLE (layer)->height,
-	      0, GIMP_DRAWABLE (mask)->height);
+  x1 = CLAMP (GIMP_ITEM (layer)->offset_x, 0, GIMP_ITEM (mask)->width);
+  y1 = CLAMP (GIMP_ITEM (layer)->offset_y, 0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP (GIMP_ITEM (layer)->offset_x + GIMP_ITEM (layer)->width,
+	      0, GIMP_ITEM (mask)->width);
+  y2 = CLAMP (GIMP_ITEM (layer)->offset_y + GIMP_ITEM (layer)->height,
+	      0, GIMP_ITEM (mask)->height);
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
-		     (x1 - GIMP_DRAWABLE (layer)->offset_x),
-		     (y1 - GIMP_DRAWABLE (layer)->offset_y),
+		     (x1 - GIMP_ITEM (layer)->offset_x),
+		     (y1 - GIMP_ITEM (layer)->offset_y),
 		     (x2 - x1), (y2 - y1), FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
@@ -1722,16 +1722,16 @@ gimp_channel_layer_mask (GimpChannel *mask,
   if (! (mask->bounds_known && mask->empty))
     gimp_channel_clear (mask, FALSE);
 
-  x1 = CLAMP (GIMP_DRAWABLE (layer)->offset_x, 0, GIMP_DRAWABLE (mask)->width);
-  y1 = CLAMP (GIMP_DRAWABLE (layer)->offset_y, 0, GIMP_DRAWABLE (mask)->height);
-  x2 = CLAMP (GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width, 
-	      0, GIMP_DRAWABLE (mask)->width);
-  y2 = CLAMP (GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height, 
-	      0, GIMP_DRAWABLE (mask)->height);
+  x1 = CLAMP (GIMP_ITEM (layer)->offset_x, 0, GIMP_ITEM (mask)->width);
+  y1 = CLAMP (GIMP_ITEM (layer)->offset_y, 0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP (GIMP_ITEM (layer)->offset_x + GIMP_ITEM (layer)->width, 
+	      0, GIMP_ITEM (mask)->width);
+  y2 = CLAMP (GIMP_ITEM (layer)->offset_y + GIMP_ITEM (layer)->height, 
+	      0, GIMP_ITEM (mask)->height);
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer->mask)->tiles,
-		     (x1 - GIMP_DRAWABLE (layer)->offset_x), 
-		     (y1 - GIMP_DRAWABLE (layer)->offset_y),
+		     (x1 - GIMP_ITEM (layer)->offset_x), 
+		     (y1 - GIMP_ITEM (layer)->offset_y),
 		     (x2 - x1), (y2 - y1), 
 		     FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 

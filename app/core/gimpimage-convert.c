@@ -676,20 +676,23 @@ remap_indexed_layer (GimpLayer     *layer,
 		     int            num_entries)
 {
   PixelRegion srcPR, destPR;
-  void* pr;
-  int has_alpha;
-  int pixels;
-  unsigned char* src;
-  unsigned char* dest;
+  gpointer    pr;
+  gboolean    has_alpha;
+  gint        pixels;
+  guchar     *src;
+  guchar     *dest;
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ? 1 : 0;
-  pixel_region_init (&srcPR,
-		     GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
 		     FALSE);
-  pixel_region_init (&destPR,
-		     GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
+  pixel_region_init (&destPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
 		     TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -894,33 +897,9 @@ gimp_image_convert (GimpImage              *gimage,
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
       
-      new_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
-				    GIMP_DRAWABLE (layer)->height,
+      new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,
+				    GIMP_ITEM (layer)->height,
 				    GIMP_IMAGE_TYPE_BYTES (new_layer_type));
-#if 0
-      has_alpha = gimp_layer_has_alpha (layer);
-      switch (new_type)
-	{
-	case GIMP_RGB:
-	  new_layer_type = (has_alpha) ? RGBA_GIMAGE : RGB_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 4 : 3;
-	  break;
-	case GIMP_GRAY:
-	  new_layer_type = (has_alpha) ? GRAYA_GIMAGE : GRAY_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	case GIMP_INDEXED:
-	  new_layer_type = (has_alpha) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
-	  new_layer_bytes = (has_alpha) ? 2 : 1;
-	  break;
-	default:
-	  break;
-	}
-      new_tiles = tile_manager_new (GIMP_DRAWABLE(layer)->width,
-				    GIMP_DRAWABLE(layer)->height,
-				    new_layer_bytes);
-#endif
-
 
       switch (new_type)
 	{
@@ -1072,13 +1051,13 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
-                     drawable->width,
-                     drawable->height,
+                     GIMP_ITEM (drawable)->width,
+                     GIMP_ITEM (drawable)->height,
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     drawable->width,
-                     drawable->height,
+                     GIMP_ITEM (drawable)->width,
+                     GIMP_ITEM (drawable)->height,
                      TRUE);
 
 
@@ -1165,13 +1144,13 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
-                     drawable->width,
-                     drawable->height,
+                     GIMP_ITEM (drawable)->width,
+                     GIMP_ITEM (drawable)->height,
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     drawable->width,
-                     drawable->height,
+                     GIMP_ITEM (drawable)->width,
+                     GIMP_ITEM (drawable)->height,
                      TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
@@ -1256,17 +1235,18 @@ generate_histogram_gray (CFHistogram  histogram,
 			 GimpLayer   *layer,
 			 int          alpha_dither)
 {
-  PixelRegion srcPR;
-  unsigned char *data;
-  int size;
-  void *pr;
-  gboolean has_alpha;
+  PixelRegion  srcPR;
+  guchar      *data;
+  gint         size;
+  gpointer     pr;
+  gboolean     has_alpha;
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
                      0, 0, 
-                     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
                      FALSE);
 
   for (pr = pixel_regions_register (1, &srcPR);
@@ -1290,26 +1270,28 @@ generate_histogram_rgb (CFHistogram  histogram,
 			int          col_limit,
 			int          alpha_dither)
 {
-  PixelRegion srcPR;
-  unsigned char *data;
-  int size;
-  void *pr;
-  ColorFreq *colfreq;
-  gboolean has_alpha;
-  int nfc_iter;
-  int row, col, coledge;
-  int offsetx, offsety;
+  PixelRegion  srcPR;
+  guchar      *data;
+  gint         size;
+  gpointer     pr;
+  ColorFreq   *colfreq;
+  gboolean     has_alpha;
+  gint         nfc_iter;
+  gint         row, col, coledge;
+  gint         offsetx, offsety;
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
 /*  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width,
-		     GIMP_DRAWABLE(layer)->height,
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+		     GIMP_ITEM (layer)->height,
 		     FALSE);
+
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -2852,32 +2834,40 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 				 GimpLayer   *layer,
 				 TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq * cachep;
-  unsigned char *src, *dest;
-  int row, col;
-  int pixel;
-  int has_alpha;
-  unsigned long* index_used_count = quantobj->index_used_count;
-  int alpha_dither = quantobj->want_alpha_dither;
-  int offsetx, offsety;
-  void *pr;
+  PixelRegion  srcPR, destPR;
+  CFHistogram  histogram = quantobj->histogram;
+  ColorFreq   *cachep;
+  guchar      *src, *dest;
+  gint         row, col;
+  gint         pixel;
+  gint         has_alpha;
+  gulong      *index_used_count = quantobj->index_used_count;
+  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gint         offsetx, offsety;
+  gpointer     pr;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
       for (row = 0; row < srcPR.h; row++)
 	{
 	  for (col = 0; col < srcPR.w; col++)
@@ -2918,34 +2908,42 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 				    GimpLayer   *layer,
 				    TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq* cachep;
-  Color* color;
-  unsigned char *src, *dest;
-  int row, col;
-  int pixel;
-  int re, R;
-  unsigned long* index_used_count = quantobj->index_used_count;
-  int has_alpha;
-  int alpha_dither = quantobj->want_alpha_dither;
-  int offsetx, offsety;
-  void *pr;
+  PixelRegion  srcPR, destPR;
+  CFHistogram  histogram = quantobj->histogram;
+  ColorFreq   *cachep;
+  Color       *color;
+  guchar      *src, *dest;
+  gint         row, col;
+  gint         pixel;
+  gint         re, R;
+  gulong      *index_used_count = quantobj->index_used_count;
+  gboolean     has_alpha;
+  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gint         offsetx, offsety;
+  gpointer     pr;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
       for (row = 0; row < srcPR.h; row++)
 	{
 	  for (col = 0; col < srcPR.w; col++)
@@ -3000,40 +2998,50 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 				GimpLayer   *layer,
 				TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq * cachep;
-  unsigned char *src, *dest;
-  int R, G, B;
-  int row, col;
-  int has_alpha;
-  void *pr;
-  int red_pix = RED_PIX;
-  int green_pix = GREEN_PIX;
-  int blue_pix = BLUE_PIX;
-  int alpha_pix = ALPHA_PIX;
-  int alpha_dither = quantobj->want_alpha_dither;
-  int offsetx, offsety;
-  unsigned long* index_used_count = quantobj->index_used_count;
+  PixelRegion  srcPR, destPR;
+  CFHistogram  histogram = quantobj->histogram;
+  ColorFreq   *cachep;
+  guchar      *src, *dest;
+  gint         R, G, B;
+  gint         row, col;
+  gboolean     has_alpha;
+  gpointer     pr;
+  gint         red_pix          = RED_PIX;
+  gint         green_pix        = GREEN_PIX;
+  gint         blue_pix         = BLUE_PIX;
+  gint         alpha_pix        = ALPHA_PIX;
+  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gint         offsetx, offsety;
+  gulong      *index_used_count = quantobj->index_used_count;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
+  if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
       for (row = 0; row < srcPR.h; row++)
 	{
 	  for (col = 0; col < srcPR.w; col++)
@@ -3077,25 +3085,25 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 				   GimpLayer   *layer,
 				   TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq* cachep;
-  Color* color;
-  unsigned char *src, *dest;
-  int R, G, B;
-  int row, col;
-  int has_alpha;
-  int re, ge, be;
-  void* pr;
-  int red_pix = RED_PIX;
-  int green_pix = GREEN_PIX;
-  int blue_pix = BLUE_PIX;
-  int alpha_pix = ALPHA_PIX;
-  int alpha_dither = quantobj->want_alpha_dither;
-  int offsetx, offsety;
-  unsigned long* index_used_count = quantobj->index_used_count;
+  PixelRegion  srcPR, destPR;
+  CFHistogram  histogram = quantobj->histogram;
+  ColorFreq   *cachep;
+  Color       *color;
+  guchar      *src, *dest;
+  gint         R, G, B;
+  gint         row, col;
+  gboolean     has_alpha;
+  gint         re, ge, be;
+  gpointer     pr;
+  gint         red_pix          = RED_PIX;
+  gint         green_pix        = GREEN_PIX;
+  gint         blue_pix         = BLUE_PIX;
+  gint         alpha_pix        = ALPHA_PIX;
+  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gint         offsetx, offsety;
+  gulong      *index_used_count = quantobj->index_used_count;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
@@ -3105,12 +3113,24 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
       for (row = 0; row < srcPR.h; row++)
 	{
 	  for (col = 0; col < srcPR.w; col++)
@@ -3183,37 +3203,44 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 					GimpLayer   *layer,
 					TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  unsigned char *src, *dest;
-  int row, col;
-  int has_alpha;
-  int alpha_dither = quantobj->want_alpha_dither;
-  void *pr;
-  int red_pix = RED_PIX;
-  int green_pix = GREEN_PIX;
-  int blue_pix = BLUE_PIX;
-  int alpha_pix = ALPHA_PIX;
-  int i;
-  int lastindex = 0;
-  int lastred = -1;
-  int lastgreen = -1;
-  int lastblue = -1;
-  int offsetx, offsety;
+  PixelRegion  srcPR, destPR;
+  guchar      *src, *dest;
+  gint         row, col;
+  gboolean     has_alpha;
+  gint         alpha_dither = quantobj->want_alpha_dither;
+  gpointer     pr;
+  gint         red_pix = RED_PIX;
+  gint         green_pix = GREEN_PIX;
+  gint         blue_pix = BLUE_PIX;
+  gint         alpha_pix = ALPHA_PIX;
+  gint         i;
+  gint         lastindex = 0;
+  gint         lastred = -1;
+  gint         lastgreen = -1;
+  gint         lastblue = -1;
+  gint         offsetx, offsety;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
       for (row = 0; row < srcPR.h; row++)
 	{
 	  for (col = 0; col < srcPR.w; col++)
@@ -3363,52 +3390,58 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 				 GimpLayer   *layer,
 				 TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq *cachep;
-  Color *color;
-  int *error_limiter;
-  const short *fs_err1, *fs_err2;
-  const short *fs_err3, *fs_err4;
-  const short *range_limiter;
-  int src_bytes, dest_bytes;
-  unsigned char *src, *dest;
-  unsigned char *src_buf, *dest_buf;
-  int *next_row, *prev_row;
-  int *nr, *pr;
-  int *tmp;
-  int pixel;
-  int pixele;
-  int row, col;
-  int index;
-  int step_dest, step_src;
-  int odd_row;
-  int has_alpha;
-  int offsetx, offsety;
-  int alpha_dither = quantobj->want_alpha_dither;
-  int width, height;
-  unsigned long* index_used_count = quantobj->index_used_count;
+  PixelRegion   srcPR, destPR;
+  CFHistogram   histogram = quantobj->histogram;
+  ColorFreq    *cachep;
+  Color        *color;
+  gint         *error_limiter;
+  const gshort *fs_err1, *fs_err2;
+  const gshort *fs_err3, *fs_err4;
+  const gshort *range_limiter;
+  gint          src_bytes, dest_bytes;
+  guchar       *src, *dest;
+  guchar       *src_buf, *dest_buf;
+  gint         *next_row, *prev_row;
+  gint         *nr, *pr;
+  gint         *tmp;
+  gint          pixel;
+  gint          pixele;
+  gint          row, col;
+  gint          index;
+  gint          step_dest, step_src;
+  gint          odd_row;
+  gboolean      has_alpha;
+  gint          offsetx, offsety;
+  gint          alpha_dither = quantobj->want_alpha_dither;
+  gint          width, height;
+  gulong       *index_used_count = quantobj->index_used_count;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-  src_bytes = GIMP_DRAWABLE(layer)->bytes;
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
+  src_bytes  = GIMP_DRAWABLE (layer)->bytes;
   dest_bytes = tile_manager_bpp (new_tiles);
-  width = GIMP_DRAWABLE(layer)->width;
-  height = GIMP_DRAWABLE(layer)->height;
+  width      = GIMP_ITEM (layer)->width;
+  height     = GIMP_ITEM (layer)->height;
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
 
-  src_buf = g_malloc (width * src_bytes);
+  src_buf  = g_malloc (width * src_bytes);
   dest_buf = g_malloc (width * dest_bytes);
-  next_row = g_malloc (sizeof (int) * (width + 2));
-  prev_row = g_malloc (sizeof (int) * (width + 2));
+  next_row = g_malloc (sizeof (gint) * (width + 2));
+  prev_row = g_malloc (sizeof (gint) * (width + 2));
 
   memset (prev_row, 0, (width + 2) * sizeof (int));
 
@@ -3575,60 +3608,66 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 				GimpLayer   *layer,
 				TileManager *new_tiles)
 {
-  PixelRegion srcPR, destPR;
-  CFHistogram histogram = quantobj->histogram;
-  ColorFreq *cachep;
-  Color *color;
-  int *error_limiter;
-  const short *fs_err1, *fs_err2;
-  const short *fs_err3, *fs_err4;
-  const short *range_limiter;
-  int src_bytes, dest_bytes;
-  unsigned char *src, *dest;
-  unsigned char *src_buf, *dest_buf;
-  int *red_n_row, *red_p_row;
-  int *grn_n_row, *grn_p_row;
-  int *blu_n_row, *blu_p_row;
-  int *rnr, *rpr;
-  int *gnr, *gpr;
-  int *bnr, *bpr;
-  int *tmp;
-  int re, ge, be;
-  int row, col;
-  int index;
-  int step_dest, step_src;
-  int odd_row;
-  int has_alpha;
-  int width, height;
-  int red_pix = RED_PIX;
-  int green_pix = GREEN_PIX;
-  int blue_pix = BLUE_PIX;
-  int alpha_pix = ALPHA_PIX;
-  int offsetx, offsety;
-  int alpha_dither = quantobj->want_alpha_dither;
-  unsigned long *index_used_count = quantobj->index_used_count;
-  int global_rmax=0, global_rmin=G_MAXINT,
-    global_gmax=0, global_gmin=G_MAXINT,
-    global_bmax=0, global_bmin=G_MAXINT;
+  PixelRegion   srcPR, destPR;
+  CFHistogram   histogram = quantobj->histogram;
+  ColorFreq    *cachep;
+  Color        *color;
+  gint         *error_limiter;
+  const gshort *fs_err1, *fs_err2;
+  const gshort *fs_err3, *fs_err4;
+  const gshort *range_limiter;
+  gint          src_bytes, dest_bytes;
+  guchar       *src, *dest;
+  guchar       *src_buf, *dest_buf;
+  gint         *red_n_row, *red_p_row;
+  gint         *grn_n_row, *grn_p_row;
+  gint         *blu_n_row, *blu_p_row;
+  gint         *rnr, *rpr;
+  gint         *gnr, *gpr;
+  gint         *bnr, *bpr;
+  gint         *tmp;
+  gint          re, ge, be;
+  gint          row, col;
+  gint          index;
+  gint          step_dest, step_src;
+  gint          odd_row;
+  gboolean      has_alpha;
+  gint          width, height;
+  gint          red_pix   = RED_PIX;
+  gint          green_pix = GREEN_PIX;
+  gint          blue_pix  = BLUE_PIX;
+  gint          alpha_pix = ALPHA_PIX;
+  gint          offsetx, offsety;
+  gint          alpha_dither     = quantobj->want_alpha_dither;
+  gulong       *index_used_count = quantobj->index_used_count;
+  gint          global_rmax = 0, global_rmin = G_MAXINT;
+  gint          global_gmax = 0, global_gmin = G_MAXINT;
+  gint          global_bmax = 0, global_bmin = G_MAXINT;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
    */
-  if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
+  if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0,
-		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-  src_bytes = GIMP_DRAWABLE(layer)->bytes;
+		     GIMP_ITEM (layer)->width,
+                     GIMP_ITEM (layer)->height,
+                     TRUE);
+
+  src_bytes  = GIMP_DRAWABLE(layer)->bytes;
   dest_bytes = tile_manager_bpp (new_tiles);
-  width = GIMP_DRAWABLE(layer)->width;
-  height = GIMP_DRAWABLE(layer)->height;
+  width      = GIMP_ITEM (layer)->width;
+  height     = GIMP_ITEM (layer)->height;
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;

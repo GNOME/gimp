@@ -309,8 +309,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
                                 gimp_drawable_width (drawable),
                                 gimp_drawable_height (drawable));
           
-          drawable->width  = width;
-          drawable->height = height;
+          GIMP_ITEM (drawable)->width  = width;
+          GIMP_ITEM (drawable)->height = height;
           
           if (drawable->tiles)
             tile_manager_destroy (drawable->tiles);

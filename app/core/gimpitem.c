@@ -144,6 +144,10 @@ gimp_item_init (GimpItem *item)
   item->tattoo    = 0;
   item->gimage    = NULL;
   item->parasites = gimp_parasite_list_new ();
+  item->width     = 0;
+  item->height    = 0;
+  item->offset_x  = 0;
+  item->offset_y  = 0;
 }
 
 static void
