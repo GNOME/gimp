@@ -3034,7 +3034,7 @@ msgstr "/Bestand/Bewaar als"
 
 #: app/menus.c:210
 msgid "/File/Revert"
-msgstr "/Bestand/Bewaar"
+msgstr "/Bestand/Haal terug"
 
 #: app/menus.c:215
 msgid "/File/Close"

@@ -1,3 +1,12 @@
+2000-10-14  Austin Donnelly <austin@gimp.org>
+
+	* nl.po: changed translation of File/Revert to "Haal terug"
+	    since previously it was exactly the same translation as
+	    File/Save, leading to quite some confusion to Dutch users.
+	    Fixes Bug#15017 "save" becomes "fall back to the old version"
+	    Thanks go to Stefan Rieken <StefanRieken@SoftHome.net> for
+	    tracking this one down and suggesting a better translation.
+
 2000-10-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated japanese translation.
