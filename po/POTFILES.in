@@ -5,6 +5,7 @@ app/about_dialog.c
 app/app_procs.c
 app/brush_edit.c
 app/brush_select.c
+app/brushes.c
 app/channel_ops.c
 app/channels_dialog.c
 app/color_area.c
@@ -26,7 +27,6 @@ app/gdisplay.c
 app/gdisplay_ops.c
 app/gimage_mask.c
 app/gimpbrush.c
-app/gimpbrushlist.c
 app/gimpbrushpipe.c
 app/gimpchannel.c
 app/gimpdrawable.c

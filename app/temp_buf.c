@@ -68,7 +68,7 @@ temp_buf_allocate (guint size)
 /*  The conversion routines  */
 
 static void
-temp_buf_to_color (TempBuf *src_buf, 
+temp_buf_to_color (TempBuf *src_buf,
 		   TempBuf *dest_buf)
 {
   guchar *src;
@@ -92,7 +92,7 @@ temp_buf_to_color (TempBuf *src_buf,
 
 
 static void
-temp_buf_to_gray (TempBuf *src_buf, 
+temp_buf_to_gray (TempBuf *src_buf,
 		  TempBuf *dest_buf)
 {
   guchar *src;
@@ -116,11 +116,11 @@ temp_buf_to_gray (TempBuf *src_buf,
 }
 
 TempBuf *
-temp_buf_new (gint    width, 
-	      gint    height, 
-	      gint    bytes, 
-	      gint    x, 
-	      gint    y, 
+temp_buf_new (gint    width,
+	      gint    height,
+	      gint    bytes,
+	      gint    x,
+	      gint    y,
 	      guchar *col)
 {
   glong    i;
@@ -191,7 +191,7 @@ temp_buf_new (gint    width,
 }
 
 TempBuf *
-temp_buf_copy (TempBuf *src, 
+temp_buf_copy (TempBuf *src,
 	       TempBuf *dest)
 {
   TempBuf *new;
@@ -272,6 +272,53 @@ temp_buf_resize (TempBuf *buf,
     }
 
   return buf;
+}
+
+TempBuf *
+temp_buf_scale (TempBuf *src,
+		gint     new_width, 
+		gint     new_height)
+{
+  gint     loop1;
+  gint     loop2;
+  gdouble  x_ratio;
+  gdouble  y_ratio;
+  guchar  *src_data;
+  guchar  *dest_data;
+  TempBuf *dest;
+
+  dest = temp_buf_new (new_width,
+		       new_height,
+		       src->bytes, 
+		       0, 0, NULL);
+
+  src_data  = temp_buf_data (src);
+  dest_data = temp_buf_data (dest);
+
+  x_ratio = (gdouble) src->width  / (gdouble) new_width;
+  y_ratio = (gdouble) src->height / (gdouble) new_height;
+  
+  for (loop1 = 0 ; loop1 < new_height ; loop1++)
+    {
+      for (loop2 = 0 ; loop2 < new_width ; loop2++)
+	{
+	  gint    i;
+	  guchar *src_pixel;
+	  guchar *dest_pixel;
+
+	  src_pixel = src_data +
+	    (gint) (loop2 * x_ratio) * src->bytes +
+	    (gint) (loop1 * y_ratio) * src->bytes * src->width;
+
+	  dest_pixel = dest_data +
+	    (loop2 + loop1 * new_width) * src->bytes;
+
+	  for (i = 0 ; i < src->bytes; i++)
+	    *dest_pixel++ = *src_pixel++;
+	}
+    }
+
+  return dest;
 }
 
 TempBuf *

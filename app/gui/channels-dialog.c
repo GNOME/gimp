@@ -36,8 +36,6 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdnd.h"
-#include "gimpdrawablepreview.h"
-#include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "layers_dialogP.h"
@@ -45,6 +43,7 @@
 #include "menus.h"
 #include "ops_buttons.h"
 #include "paint_funcs.h"
+#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -2044,8 +2043,7 @@ channel_widget_preview_events (GtkWidget *widget,
 	      valid = GIMP_DRAWABLE (channel_widget->channel)->preview_valid;
 	      break;
 	    default:
-	      valid = gimp_image_preview_valid (channel_widget->gimage,
-						channel_widget->type);
+	      valid = gimp_image_preview_valid (channel_widget->gimage);
 	      break;
 	    }
 
@@ -2108,18 +2106,18 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
       if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
 	{
 	  preview_buf =
-	    gimp_drawable_preview (GIMP_DRAWABLE (channel_widget->channel),
+	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->channel),
 				   channelsD->gimage_width,
 				   channelsD->gimage_height);
 
-	  preview_buf = gimp_preview_scale (preview_buf,
-					    channel_widget->width,
-					    channel_widget->height);
+	  preview_buf = temp_buf_scale (preview_buf,
+					channel_widget->width,
+					channel_widget->height);
 	}
       else
 	{
 	  preview_buf =
-	    gimp_drawable_preview (GIMP_DRAWABLE (channel_widget->channel),
+	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->channel),
 				   channel_widget->width,
 				   channel_widget->height);
 	}
@@ -2133,20 +2131,21 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
 
       if (channelsD->ratio > 1.0) /*  Preview is scaling up!  */
 	{
-	  preview_buf = gimp_image_composite_preview (channel_widget->gimage,
-						      channel_widget->type,
-						      width,
-						      height);
-	  preview_buf = gimp_preview_scale (preview_buf,
-					    channel_widget->width,
-					    channel_widget->height);
+	  preview_buf =
+	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->gimage),
+				   width,
+				   height);
+
+	  preview_buf = temp_buf_scale (preview_buf,
+					channel_widget->width,
+					channel_widget->height);
 	}
       else
 	{
-	  preview_buf = gimp_image_composite_preview (channel_widget->gimage,
-						      channel_widget->type,
-						      channel_widget->width,
-						      channel_widget->height);
+	  preview_buf =
+	    gimp_viewable_preview (GIMP_VIEWABLE (channel_widget->gimage),
+				   channel_widget->width,
+				   channel_widget->height);
 	}
       break;
     }
@@ -2457,11 +2456,10 @@ channel_widget_channel_flush (GtkWidget *widget,
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      update_preview = !GIMP_DRAWABLE (channel_widget->channel)->preview_valid;
+      update_preview = ! GIMP_DRAWABLE (channel_widget->channel)->preview_valid;
       break;
     default:
-      update_preview = !gimp_image_preview_valid (channel_widget->gimage,
-						  channel_widget->type);
+      update_preview = ! gimp_image_preview_valid (channel_widget->gimage);
       break;
     }
 

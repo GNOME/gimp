@@ -34,7 +34,6 @@
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
-#include "gimpdrawablepreview.h"
 #include "gimplist.h"
 #include "gimppattern.h"
 #include "gimprc.h"
@@ -1077,7 +1076,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   width =  (gint) (ratio * gimp_drawable_width (drawable));
   height = (gint) (ratio * gimp_drawable_height (drawable));
 
-  if (width < 1) 
+  if (width < 1)
     width = 1;
   if (height < 1)
     height = 1;
@@ -1085,7 +1084,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), width, height);
 
-  tmpbuf = gimp_drawable_preview (drawable, width, height);
+  tmpbuf = gimp_viewable_preview (GIMP_VIEWABLE (drawable), width, height);
 
   if (! tmpbuf)
     {

@@ -1,6 +1,59 @@
 2001-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpviewable.[ch]: new object. Everything that can have a
+	preview will be a GimpViewable. The virtual functions are
+	"invalidate_preview", "preview" and "preview_new".
+
+	* app/gimpmarshal.[ch]: new marshaller needed for the viewable.
+
+	* app/gimpdrawable.[ch]
+	* app/gimpimage.[ch]: derived from GimpViewable. Removed the
+	preview stuff from the public interface.
+
+	Made a single boolean out of GimpImage's "comp_preview_valid"
+	array because we have only one copposite preview.
+
+	* app/gimplayer.c: made the preview stuff private.
+
+	* app/gimppreviewcache.[ch]: removed gimp_preview_scale()...
+
+	* app/temp_buf.[ch]: ...and added it as temp_buf_scale() here.
+
+	* app/gimpdrawablepreview.[ch]: is a private method of
+	GimpDrawable now.
+
+	* app/channels_dialog.c
+	* app/convert.c
+	* app/drawable.c
+	* app/fileops.c
+	* app/floating_sel.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpchannel.c
+	* app/gimpcontainer.c
+	* app/gimpdnd.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/undo.c
+	* app/undo_history.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/tools/crop.c
+	* app/tools/edit_selection.c
+	* app/tools/ink.c
+	* app/tools/paint_core.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* po/POTFILES.in: changed accordingly.
+
+2001-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/gimppattern.[ch]: new object.
 
 	* app/apptypes.h: added GimpPattern, removed GPattern.

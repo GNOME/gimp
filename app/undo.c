@@ -2015,7 +2015,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
     {
     case UNDO:
       /*  Update the preview for the floating sel  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->layer));
 
       fsu->layer->fs.drawable = fsu->drawable;
       gimage->active_layer = fsu->layer;
@@ -2033,7 +2033,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       gimp_layer_invalidate_boundary (fsu->layer);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->layer));
       break;
 
     case REDO:
@@ -2045,7 +2045,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
 			    GIMP_DRAWABLE (fsu->layer)->height);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->layer));
 
       /*  clear the selection  */
       gimp_layer_invalidate_boundary (fsu->layer);
@@ -2055,7 +2055,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       gimage->floating_sel = NULL;
 
       /*  Update the fs drawable  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->layer));
       break;
     }
 
@@ -2289,7 +2289,7 @@ undo_pop_gimage_mod (GimpImage *gimage,
   gimage_mask_invalidate (gimage);
   gimp_image_invalidate_layer_previews (gimage);
   gimp_image_invalidate_channel_previews (gimage);
-  gimp_image_invalidate_preview (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
   gdisplays_update_full (gimage);
   gdisplays_update_title (gimage);
 

@@ -288,7 +288,8 @@ edit_selection_button_release (Tool           *tool,
       path_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
 
       layer = gimp_image_get_active_layer (gdisp->gimage);
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
+
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
     }
     
   undo_push_group_end (gdisp->gimage);

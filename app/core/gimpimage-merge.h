@@ -20,8 +20,10 @@
 #define __GIMP_IMAGE_H__
 
 
-#include "gimpobject.h"
+#include "gimpviewable.h"
 
+
+#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define MAX_CHANNELS     4
 
@@ -36,6 +38,24 @@
 
 #define COLORMAP_SIZE    768
 
+typedef enum
+{
+  RED_CHANNEL,
+  GREEN_CHANNEL,
+  BLUE_CHANNEL,
+  GRAY_CHANNEL,
+  INDEXED_CHANNEL,
+  AUXILLARY_CHANNEL
+} ChannelType;
+
+typedef enum
+{
+  EXPAND_AS_NECESSARY,
+  CLIP_TO_IMAGE,
+  CLIP_TO_BOTTOM_LAYER,
+  FLATTEN_IMAGE
+} MergeType;
+
 
 #define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
 #define GIMP_IMAGE(obj)            (GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage))
@@ -47,7 +67,7 @@ typedef struct _GimpImageClass GimpImageClass;
 
 struct _GimpImage
 {
-  GimpObject         parent_instance;
+  GimpViewable       parent_instance;
 
   PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
 
@@ -114,12 +134,12 @@ struct _GimpImage
 
                                             /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
-  gboolean           comp_preview_valid[3]; /*  preview valid-1/channel      */
+  gboolean           comp_preview_valid;    /*  preview valid-1/channel      */
 };
 
 struct _GimpImageClass
 {
-  GimpObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 
   void (* clean)            (GimpImage *gimage);
   void (* dirty)            (GimpImage *gimage);
@@ -129,26 +149,6 @@ struct _GimpImageClass
   void (* colormap_changed) (GimpImage *gimage);
   void (* undo_event)       (GimpImage *gimage);
 };
-
-#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
-
-typedef enum
-{
-  RED_CHANNEL,
-  GREEN_CHANNEL,
-  BLUE_CHANNEL,
-  GRAY_CHANNEL,
-  INDEXED_CHANNEL,
-  AUXILLARY_CHANNEL
-} ChannelType;
-
-typedef enum
-{
-  EXPAND_AS_NECESSARY,
-  CLIP_TO_IMAGE,
-  CLIP_TO_BOTTOM_LAYER,
-  FLATTEN_IMAGE
-} MergeType;
 
 
 /* Ugly! Move this someplace else! Prolly to gdisplay.. */
@@ -431,19 +431,10 @@ void            gimp_image_projection_realloc      (GimpImage       *gimage);
 TileManager   * gimp_image_composite               (GimpImage       *gimage);
 GimpImageType	gimp_image_composite_type          (const GimpImage *gimage);
 gint            gimp_image_composite_bytes         (const GimpImage *gimage);
-TempBuf       * gimp_image_composite_preview       (GimpImage       *gimage,
-						    ChannelType      type,
-						    gint             width,
-						    gint             height);
 
-gint            gimp_image_preview_valid           (const GimpImage *gimage,
-						    ChannelType      type);
-void            gimp_image_invalidate_preview      (GimpImage       *gimage);
+gint            gimp_image_preview_valid           (const GimpImage *gimage);
 
 void            gimp_image_invalidate_previews     (void);
 
-TempBuf       * gimp_image_construct_composite_preview (GimpImage *gimage,
-							gint       width,
-							gint       height);
 
 #endif /* __GIMP_IMAGE_H__ */

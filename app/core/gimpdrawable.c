@@ -32,6 +32,7 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
+#include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
@@ -51,22 +52,22 @@
 enum
 {
   REMOVED,
-  INVALIDATE_PREVIEW,
   LAST_SIGNAL
 };
 
 
-static void gimp_drawable_class_init   (GimpDrawableClass *klass);
-static void gimp_drawable_init	       (GimpDrawable      *drawable);
-static void gimp_drawable_destroy      (GtkObject         *object);
-static void gimp_drawable_name_changed (GimpObject        *drawable);
+static void   gimp_drawable_class_init         (GimpDrawableClass *klass);
+static void   gimp_drawable_init               (GimpDrawable      *drawable);
+static void   gimp_drawable_destroy            (GtkObject         *object);
+static void   gimp_drawable_name_changed       (GimpObject        *drawable);
+static void   gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
 
 /*  private variables  */
 
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
-static GimpDrawableClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
 static gint        global_drawable_ID  = 1;
 static GHashTable *gimp_drawable_table = NULL;
@@ -91,7 +92,7 @@ gimp_drawable_get_type (void)
 	(GtkClassInitFunc) NULL,
       };
 
-      drawable_type = gtk_type_unique (GIMP_TYPE_OBJECT, &drawable_info);
+      drawable_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &drawable_info);
     }
 
   return drawable_type;
@@ -100,13 +101,15 @@ gimp_drawable_get_type (void)
 static void
 gimp_drawable_class_init (GimpDrawableClass *klass)
 {
-  GtkObjectClass  *object_class;
-  GimpObjectClass *gimp_object_class;
+  GtkObjectClass    *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
 
   object_class      = (GtkObjectClass *) klass;
   gimp_object_class = (GimpObjectClass *) klass;
+  viewable_class    = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
 
   gimp_drawable_signals[REMOVED] =
     gtk_signal_new ("removed",
@@ -117,15 +120,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
-  gimp_drawable_signals[INVALIDATE_PREVIEW] =
-    gtk_signal_new ("invalidate_preview",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
-				       invalidate_preview),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
   gtk_object_class_add_signals (object_class, gimp_drawable_signals,
 				LAST_SIGNAL);
 
@@ -133,8 +127,10 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   gimp_object_class->name_changed = gimp_drawable_name_changed;
 
-  klass->removed            = NULL;
-  klass->invalidate_preview = NULL;
+  viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
+  viewable_class->preview            = gimp_drawable_preview;
+
+  klass->removed = NULL;
 }
 
 static void
@@ -282,6 +278,22 @@ gimp_drawable_name_changed (GimpObject *object)
           break;
         }
     }
+}
+
+static void
+gimp_drawable_invalidate_preview (GimpViewable *viewable)
+{
+  GimpDrawable *drawable;
+  GimpImage    *gimage;
+
+  drawable = GIMP_DRAWABLE (viewable);
+
+  drawable->preview_valid = FALSE;
+
+  gimage = gimp_drawable_gimage (drawable);
+
+  if (gimage)
+    gimage->comp_preview_valid = FALSE;
 }
 
 void
@@ -509,30 +521,6 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
       *x2 = gimp_drawable_width  (drawable);
       *y2 = gimp_drawable_height (drawable);
       return FALSE;
-    }
-}
-
-void
-gimp_drawable_invalidate_preview (GimpDrawable *drawable,
-				  gboolean      emit_signal)
-{
-  GimpImage *gimage;
-
-  g_return_if_fail (drawable != NULL);
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  drawable->preview_valid = FALSE;
-
-  if (emit_signal)
-    gtk_signal_emit (GTK_OBJECT (drawable),
-		     gimp_drawable_signals[INVALIDATE_PREVIEW]);
-
-  gimage = gimp_drawable_gimage (drawable);
-  if (gimage)
-    {
-      gimage->comp_preview_valid[0] = FALSE;
-      gimage->comp_preview_valid[1] = FALSE;
-      gimage->comp_preview_valid[2] = FALSE;
     }
 }
 

@@ -964,7 +964,7 @@ make_thumb_tempbuf (GimpImage *gimage)
 
   /*printf("tn: %d x %d -> ", w, h);fflush(stdout);*/
 
-  return (gimp_image_composite_preview (gimage, GRAY_CHANNEL, w, h));
+  return gimp_viewable_preview (GIMP_VIEWABLE (gimage), w, h);
 }
 
 static guchar *

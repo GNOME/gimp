@@ -36,11 +36,11 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimage.h"
-#include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"
+#include "temp_buf.h"
 
 #include "pdb/procedural_db.h"
 
@@ -477,19 +477,19 @@ nav_window_update_preview (NavWinData *iwd)
     {
       TempBuf *tmp;
 
-      tmp = gimp_image_construct_composite_preview (gimage,
-						    gimage->width,
-						    gimage->height);
-      preview_buf = gimp_preview_scale (tmp, 
-					pwidth, 
-					pheight);
+      tmp = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
+				       gimage->width,
+				       gimage->height);
+      preview_buf = temp_buf_scale (tmp, 
+				    pwidth, 
+				    pheight);
       temp_buf_free (tmp);
     } 
   else 
     {
-      preview_buf = gimp_image_construct_composite_preview (gimage,
-							    MAX (pwidth, 2),
-							    MAX (pheight, 2));
+      preview_buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
+					       MAX (pwidth, 2),
+					       MAX (pheight, 2));
     }
 
   /* reset & get new preview */

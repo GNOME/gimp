@@ -1000,7 +1000,7 @@ crop_image (GImage   *gimage,
 	  /*  shrink wrap and update all views  */
 	  gimp_image_invalidate_layer_previews (gimage);
 	  gimp_image_invalidate_channel_previews (gimage);
-	  gimp_image_invalidate_preview (gimage);
+	  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 	  gdisplays_update_full (gimage);
 	  gdisplays_shrink_wrap (gimage);
 	}

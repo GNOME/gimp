@@ -1353,9 +1353,9 @@ HELP
       else
 	req_width = (req_height * dwidth) / dheight;
 
-      buf = gimp_image_construct_composite_preview (gimage,
-						    req_width,
-						    req_height);
+      buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
+				       req_width,
+				       req_height);
       num_bytes = buf->height * buf->width * buf->bytes;
       thumbnail_data = g_new (guint8, num_bytes);
       g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);

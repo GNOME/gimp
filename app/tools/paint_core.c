@@ -992,7 +992,7 @@ paint_core_finish (PaintCore    *paint_core,
   /*  invalidate the drawable--have to do it here, because
    *  it is not done during the actual painting.
    */
-  gimp_drawable_invalidate_preview (drawable, TRUE);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
 void

@@ -28,7 +28,6 @@
 #include "procedural_db.h"
 
 #include "drawable.h"
-#include "gimpdrawablepreview.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "pdb_glue.h"
@@ -1406,7 +1405,8 @@ drawable_thumbnail_invoker (Argument *args)
 	  else
 	    req_width = (req_height * dwidth) / dheight;
     
-	  buf = gimp_drawable_preview (drawable, req_width, req_height);
+	  buf = gimp_viewable_preview (GIMP_VIEWABLE (drawable),
+				       req_width, req_height);
     
 	  num_pixels = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_new (guint8, num_pixels);

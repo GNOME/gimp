@@ -302,7 +302,7 @@ gimage_mask_extract (GImage       *gimage,
 				 (x2 - x1), (y2 - y1));
 
 	  /*  Invalidate the preview  */
-	  gimp_drawable_invalidate_preview (drawable, TRUE);
+	  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 	}
     }
   /*  Otherwise, get the entire active layer  */

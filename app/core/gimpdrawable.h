@@ -20,7 +20,7 @@
 #define __GIMP_DRAWABLE_H__
 
 
-#include "gimpobject.h"
+#include "gimpviewable.h"
 
 
 #define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
@@ -34,7 +34,7 @@ typedef struct _GimpDrawableClass GimpDrawableClass;
 
 struct _GimpDrawable
 {
-  GimpObject     parent_instance;
+  GimpViewable   parent_instance;
 
   TileManager   *tiles;                 /* tiles for drawable data        */
   gboolean       visible;               /* controls visibility            */
@@ -57,10 +57,9 @@ struct _GimpDrawable
 
 struct _GimpDrawableClass
 {
-  GimpObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 
-  void (* removed)            (GimpDrawable *drawable);
-  void (* invalidate_preview) (GimpDrawable *drawable);
+  void (* removed) (GimpDrawable *drawable);
 };
 
 
@@ -93,8 +92,6 @@ gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 						  gint               *x2,
 						  gint               *y2);
 
-void            gimp_drawable_invalidate_preview (GimpDrawable       *drawable, 
-						  gboolean            emit_signal);
 void            gimp_drawable_removed            (GimpDrawable       *drawable);
 
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);

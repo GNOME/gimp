@@ -20,7 +20,11 @@
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
 
-TempBuf * gimp_drawable_preview (GimpDrawable *drawable,
+/*
+ *  virtual function of GimpDrawable -- dont't call directly
+ */
+
+TempBuf * gimp_drawable_preview (GimpViewable *viewable,
 				 gint          width, 
 				 gint          height);
 

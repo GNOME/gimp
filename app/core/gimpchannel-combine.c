@@ -35,7 +35,6 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
-#include "gimppreviewcache.h"
 #include "gimplut.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"

@@ -33,7 +33,6 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
-#include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -63,59 +62,68 @@
 
 
 /*  Local function declarations  */
-static void     gimp_image_destroy               (GtkObject    *object);
-static void     gimp_image_name_changed          (GimpObject   *object);
-static void     gimp_image_free_projection       (GimpImage    *gimage);
-static void     gimp_image_allocate_shadow       (GimpImage    *gimage,
-						  gint          width,
-						  gint          height,
-						  gint          bpp);
-static void     gimp_image_allocate_projection   (GimpImage    *gimage);
-static void     gimp_image_free_layers           (GimpImage    *gimage);
-static void     gimp_image_free_channels         (GimpImage    *gimage);
-static void     gimp_image_construct_layers      (GimpImage    *gimage,
-						  gint          x,
-						  gint          y,
-						  gint          w,
-						  gint          h);
-static void     gimp_image_construct_channels    (GimpImage    *gimage,
-						  gint          x,
-						  gint          y,
-						  gint          w,
-						  gint          h);
-static void     gimp_image_initialize_projection (GimpImage    *gimage,
-						  gint          x,
-						  gint          y,
-						  gint          w,
-						  gint          h);
-static void     gimp_image_get_active_channels   (GimpImage    *gimage,
-						  GimpDrawable *drawable,
-						  gint         *active);
+static void     gimp_image_class_init            (GimpImageClass *klass);
+static void     gimp_image_init                  (GimpImage      *gimage);
+static void     gimp_image_destroy               (GtkObject      *object);
+static void     gimp_image_name_changed          (GimpObject     *object);
+static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
+static TempBuf *gimp_image_preview               (GimpViewable   *gimage,
+						  gint            width,
+						  gint            height);
+static TempBuf *gimp_image_preview_new           (GimpViewable   *viewable,
+						  gint            width, 
+						  gint            height);
+static void     gimp_image_free_projection       (GimpImage      *gimage);
+static void     gimp_image_allocate_shadow       (GimpImage      *gimage,
+						  gint            width,
+						  gint            height,
+						  gint            bpp);
+static void     gimp_image_allocate_projection   (GimpImage      *gimage);
+static void     gimp_image_free_layers           (GimpImage      *gimage);
+static void     gimp_image_free_channels         (GimpImage      *gimage);
+static void     gimp_image_construct_layers      (GimpImage      *gimage,
+						  gint            x,
+						  gint            y,
+						  gint            w,
+						  gint            h);
+static void     gimp_image_construct_channels    (GimpImage      *gimage,
+						  gint            x,
+						  gint            y,
+						  gint            w,
+						  gint            h);
+static void     gimp_image_initialize_projection (GimpImage      *gimage,
+						  gint            x,
+						  gint            y,
+						  gint            w,
+						  gint            h);
+static void     gimp_image_get_active_channels   (GimpImage      *gimage,
+						  GimpDrawable   *drawable,
+						  gint           *active);
 
 /*  projection functions  */
-static void     project_intensity                (GimpImage    *gimage,
-						  GimpLayer    *layer,
-						  PixelRegion  *src,
-						  PixelRegion  *dest,
-						  PixelRegion  *mask);
-static void     project_intensity_alpha          (GimpImage    *gimage,
-						  GimpLayer    *layer,
-						  PixelRegion  *src,
-						  PixelRegion  *dest,
-						  PixelRegion  *mask);
-static void     project_indexed                  (GimpImage    *gimage,
-						  GimpLayer    *layer,
-						  PixelRegion  *src,
-						  PixelRegion  *dest);
-static void     project_indexed_alpha            (GimpImage    *gimage, 
-						  GimpLayer    *layer,
-						  PixelRegion  *src, 
-						  PixelRegion  *dest,
-						  PixelRegion  *mask);
-static void     project_channel                  (GimpImage    *gimage,
-						  GimpChannel  *channel,
-						  PixelRegion  *src,
-						  PixelRegion  *src2);
+static void     project_intensity                (GimpImage      *gimage,
+						  GimpLayer      *layer,
+						  PixelRegion    *src,
+						  PixelRegion    *dest,
+						  PixelRegion    *mask);
+static void     project_intensity_alpha          (GimpImage      *gimage,
+						  GimpLayer      *layer,
+						  PixelRegion    *src,
+						  PixelRegion    *dest,
+						  PixelRegion    *mask);
+static void     project_indexed                  (GimpImage      *gimage,
+						  GimpLayer      *layer,
+						  PixelRegion    *src,
+						  PixelRegion    *dest);
+static void     project_indexed_alpha            (GimpImage      *gimage, 
+						  GimpLayer      *layer,
+						  PixelRegion    *src, 
+						  PixelRegion    *dest,
+						  PixelRegion    *mask);
+static void     project_channel                  (GimpImage      *gimage,
+						  GimpChannel    *channel,
+						  PixelRegion    *src,
+						  PixelRegion    *src2);
 
 /*
  *  Global variables
@@ -157,19 +165,46 @@ enum
 
 static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
 
-static GimpObjectClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
+
+GtkType 
+gimp_image_get_type (void) 
+{
+  static GtkType image_type = 0;
+
+  if (! image_type)
+    {
+      GtkTypeInfo image_info =
+      {
+        "GimpImage",
+        sizeof (GimpImage),
+        sizeof (GimpImageClass),
+        (GtkClassInitFunc) gimp_image_class_init,
+        (GtkObjectInitFunc) gimp_image_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      image_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &image_info);
+    }
+
+  return image_type;
+}
 
 static void
 gimp_image_class_init (GimpImageClass *klass)
 {
-  GtkObjectClass  *object_class;
-  GimpObjectClass *gimp_object_class;
+  GtkObjectClass    *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
 
   object_class      = (GtkObjectClass *) klass;
   gimp_object_class = (GimpObjectClass *) klass;
+  viewable_class    = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
 
   gimp_image_signals[CLEAN] =
     gtk_signal_new ("clean",
@@ -246,6 +281,10 @@ gimp_image_class_init (GimpImageClass *klass)
 
   gimp_object_class->name_changed = gimp_image_name_changed;
 
+  viewable_class->invalidate_preview = gimp_image_invalidate_preview;
+  viewable_class->preview            = gimp_image_preview;
+  viewable_class->preview_new        = gimp_image_preview_new;
+
   klass->clean            = NULL;
   klass->dirty            = NULL;
   klass->repaint          = NULL;
@@ -319,34 +358,64 @@ gimp_image_init (GimpImage *gimage)
   gimage->undo_history          = NULL;
 
   gimage->comp_preview          = NULL;
-  gimage->comp_preview_valid[0] = FALSE;
-  gimage->comp_preview_valid[1] = FALSE;
-  gimage->comp_preview_valid[2] = FALSE;
+  gimage->comp_preview_valid    = FALSE;
 }
 
-GtkType 
-gimp_image_get_type (void) 
+static void
+gimp_image_destroy (GtkObject *object)
 {
-  static GtkType image_type = 0;
+  GimpImage *gimage = GIMP_IMAGE (object);
 
-  if (! image_type)
+  gimp_image_free_projection (gimage);
+  gimp_image_free_shadow (gimage);
+  
+  if (gimage->cmap)
+    g_free (gimage->cmap);
+
+  gimp_image_free_layers (gimage);
+  gimp_image_free_channels (gimage);
+
+  gtk_object_unref (GTK_OBJECT (gimage->selection_mask));
+
+  if (gimage->comp_preview)
+    temp_buf_free (gimage->comp_preview);
+
+  if (gimage->parasites)
+    gtk_object_unref (GTK_OBJECT (gimage->parasites));
+}
+
+static void
+gimp_image_name_changed (GimpObject *object)
+{
+  GimpImage   *gimage;
+  const gchar *name;
+
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
+  gimage = GIMP_IMAGE (object);
+  name   = gimp_object_get_name (object);
+
+  if (! (name && strlen (name)))
     {
-      GtkTypeInfo image_info =
-      {
-        "GimpImage",
-        sizeof (GimpImage),
-        sizeof (GimpImageClass),
-        (GtkClassInitFunc) gimp_image_class_init,
-        (GtkObjectInitFunc) gimp_image_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
-      };
-
-      image_type = gtk_type_unique (GIMP_TYPE_OBJECT, &image_info);
+      g_free (object->name);
+      object->name = NULL;
     }
+}
 
-  return image_type;
+static void
+gimp_image_invalidate_preview (GimpViewable *viewable)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+
+  gimage = GIMP_IMAGE (viewable);
+
+  /*  Invalidate the floating sel if it exists  */
+  if ((layer = gimp_image_floating_sel (gimage)))
+    floating_sel_invalidate (layer);
+
+  gimage->comp_preview_valid = FALSE;
 }
 
 static void
@@ -450,25 +519,6 @@ gimp_image_set_filename (GimpImage   *gimage,
 			 const gchar *filename)
 {
   gimp_object_set_name (GIMP_OBJECT (gimage), filename);
-}
-
-static void
-gimp_image_name_changed (GimpObject *object)
-{
-  GimpImage   *gimage;
-  const gchar *name;
-
-  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
-    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
-
-  gimage = GIMP_IMAGE (object);
-  name   = gimp_object_get_name (object);
-
-  if (! (name && strlen (name)))
-    {
-      g_free (object->name);
-      object->name = NULL;
-    }
 }
 
 void
@@ -792,29 +842,6 @@ gimp_image_free_shadow (GimpImage *gimage)
     tile_manager_destroy (gimage->shadow);
 
   gimage->shadow = NULL;
-}
-
-static void
-gimp_image_destroy (GtkObject *object)
-{
-  GimpImage* gimage = GIMP_IMAGE (object);
-
-  gimp_image_free_projection (gimage);
-  gimp_image_free_shadow (gimage);
-  
-  if (gimage->cmap)
-    g_free (gimage->cmap);
-
-  gimp_image_free_layers (gimage);
-  gimp_image_free_channels (gimage);
-
-  gtk_object_unref (GTK_OBJECT (gimage->selection_mask));
-
-  if (gimage->comp_preview)
-    temp_buf_free (gimage->comp_preview);
-
-  if (gimage->parasites)
-    gtk_object_unref (GTK_OBJECT (gimage->parasites));
 }
 
 void
@@ -2116,7 +2143,7 @@ gimp_image_invalidate_layer_previews (GimpImage *gimage)
     {
       layer = (GimpLayer *) tmp->data;
 
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
     }
 }
 
@@ -2133,7 +2160,7 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
     {
       channel = (GimpChannel *) tmp->data;
 
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (channel), TRUE);      
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (channel));
     }
 }
 
@@ -2669,7 +2696,7 @@ gimp_image_position_layer (GimpImage *gimage,
 		   x_min, y_min, x_max, y_max);
 
   /*  invalidate the composite preview  */
-  gimp_image_invalidate_preview (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
   return layer_arg;
 }
@@ -3203,7 +3230,7 @@ gimp_image_add_layer (GimpImage *gimage,
 		   gimp_drawable_height (GIMP_DRAWABLE (float_layer)));
 
   /*  invalidate the composite preview  */
-  gimp_image_invalidate_preview (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
   return float_layer;
 }
@@ -3251,8 +3278,8 @@ gimp_image_remove_layer (GimpImage *gimage,
       undo_push_layer (gimage, LAYER_REMOVE_UNDO, lu);
 
       /*  invalidate the composite preview  */
-      gimp_image_invalidate_preview (gimage);
-      gdisplays_update_full(gimage);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+      gdisplays_update_full (gimage);
 
       return NULL;
     }
@@ -3351,7 +3378,7 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   if ((mode == APPLY   && (!lmu->apply_mask || lmu->show_mask)) ||
       (mode == DISCARD && ( lmu->apply_mask || lmu->show_mask)))
     {
-      gimp_image_invalidate_preview (gimage);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       gtk_signal_emit (GTK_OBJECT (gimage),
@@ -3896,11 +3923,52 @@ gimp_image_composite_bytes (const GimpImage *gimage)
   return gimp_image_projection_bytes (gimage);
 }
 
-TempBuf *
-gimp_image_construct_composite_preview (GimpImage *gimage, 
-					gint       width, 
-					gint       height)
+gboolean
+gimp_image_preview_valid (const GimpImage *gimage)
 {
+  return gimage->comp_preview_valid;
+}
+
+static TempBuf *
+gimp_image_preview (GimpViewable *viewable,
+		    gint          width, 
+		    gint          height)
+{
+  GimpImage *gimage;
+
+  gimage = GIMP_IMAGE (viewable);
+
+  if (gimage->comp_preview_valid            &&
+      gimage->comp_preview->width  == width &&
+      gimage->comp_preview->height == height)
+    {
+      /*  The easy way  */
+      return gimage->comp_preview;
+    }
+  else
+    {
+      /*  The hard way  */
+      if (gimage->comp_preview)
+	temp_buf_free (gimage->comp_preview);
+
+      /*  Actually construct the composite preview from the layer previews!
+       *  This might seem ridiculous, but it's actually the best way, given
+       *  a number of unsavory alternatives.
+       */
+      gimage->comp_preview = gimp_image_preview_new (viewable, width, height);
+
+      gimage->comp_preview_valid = TRUE;
+
+      return gimage->comp_preview;
+    }
+}
+
+static TempBuf *
+gimp_image_preview_new (GimpViewable *viewable,
+			gint          width, 
+			gint          height)
+{
+  GimpImage   *gimage;
   GimpLayer   *layer;
   GimpLayer   *floating_sel;
   PixelRegion  src1PR, src2PR, maskPR;
@@ -3915,10 +3983,10 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   gint         x1, y1, x2, y2;
   gint         bytes;
   gboolean     construct_flag;
-  gint         visible[MAX_CHANNELS] = {1, 1, 1, 1};
+  gint         visible[MAX_CHANNELS] = { 1, 1, 1, 1 };
   gint         off_x, off_y;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  gimage = GIMP_IMAGE (viewable);
 
   ratio = (gdouble) width / (gdouble) gimage->width;
 
@@ -3992,7 +4060,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
       src1PR.data      = 
 	temp_buf_data (comp) + y1 * src1PR.rowstride + x1 * src1PR.bytes;
 
-      layer_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer), w, h);
+      layer_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer), w, h);
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
@@ -4004,7 +4072,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
       if (layer->mask && layer->apply_mask)
 	{
-	  mask_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer->mask), w, h);
+	  mask_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer->mask), w, h);
 	  maskPR.bytes     = mask_buf->bytes;
 	  maskPR.rowstride = mask_buf->width;
 	  maskPR.data      = mask_buf_data (mask_buf) +
@@ -4023,7 +4091,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
        *  Send in all TRUE for visible since that info doesn't matter
        *   for previews
        */
-      switch (gimp_drawable_type (GIMP_DRAWABLE(layer)))
+      switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
 	{
 	case RGB_GIMAGE: case GRAY_GIMAGE: case INDEXED_GIMAGE:
 	  if (! construct_flag)
@@ -4059,78 +4127,4 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   g_slist_free (reverse_list);
 
   return comp;
-}
-
-TempBuf *
-gimp_image_composite_preview (GimpImage   *gimage, 
-			      ChannelType  type,
-			      gint         width, 
-			      gint         height)
-{
-  gint channel;
-
-  switch (type)
-    {
-    case RED_CHANNEL:     channel = RED_PIX; break;
-    case GREEN_CHANNEL:   channel = GREEN_PIX; break;
-    case BLUE_CHANNEL:    channel = BLUE_PIX; break;
-    case GRAY_CHANNEL:    channel = GRAY_PIX; break;
-    case INDEXED_CHANNEL: channel = INDEXED_PIX; break;
-    default: return NULL;
-    }
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  /*  The easy way  */
-  if (gimage->comp_preview_valid[channel] &&
-      gimage->comp_preview->width == width &&
-      gimage->comp_preview->height == height)
-    return gimage->comp_preview;
-  /*  The hard way  */
-  else
-    {
-      if (gimage->comp_preview)
-	temp_buf_free (gimage->comp_preview);
-
-      /*  Actually construct the composite preview from the layer previews!
-       *  This might seem ridiculous, but it's actually the best way, given
-       *  a number of unsavory alternatives.
-       */
-      gimage->comp_preview = 
-	gimp_image_construct_composite_preview (gimage, width, height);
-      gimage->comp_preview_valid[channel] = TRUE;
-
-      return gimage->comp_preview;
-    }
-}
-
-gboolean
-gimp_image_preview_valid (const GimpImage *gimage, 
-			  ChannelType      type)
-{
-  switch (type)
-    {
-    case RED_CHANNEL:     return gimage->comp_preview_valid[RED_PIX];     break;
-    case GREEN_CHANNEL:   return gimage->comp_preview_valid[GREEN_PIX];   break;
-    case BLUE_CHANNEL:    return gimage->comp_preview_valid[BLUE_PIX];    break;
-    case GRAY_CHANNEL:    return gimage->comp_preview_valid[GRAY_PIX];    break;
-    case INDEXED_CHANNEL: return gimage->comp_preview_valid[INDEXED_PIX]; break;
-    default:              return TRUE;
-    }
-}
-
-void
-gimp_image_invalidate_preview (GimpImage *gimage)
-{
-  GimpLayer *layer;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  /*  Invalidate the floating sel if it exists  */
-  if ((layer = gimp_image_floating_sel (gimage)))
-    floating_sel_invalidate (layer);
-
-  gimage->comp_preview_valid[0] = FALSE;
-  gimage->comp_preview_valid[1] = FALSE;
-  gimage->comp_preview_valid[2] = FALSE;
 }

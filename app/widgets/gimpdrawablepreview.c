@@ -41,25 +41,26 @@
 
 /*  local function prototypes  */
 
-static TempBuf * gimp_drawable_preview_private (GimpDrawable       *drawable,
-						gint                width,
-						gint                height);
-static void      gimp_drawable_preview_scale   (GimpImageBaseType   type,
-						guchar             *cmap,
-						PixelRegion        *srcPR,
-						PixelRegion        *destPR,
-						gint                subsample);
+static TempBuf * gimp_drawable_preview_private (GimpDrawable      *drawable,
+						gint               width,
+						gint               height);
+static void      gimp_drawable_preview_scale   (GimpImageBaseType  type,
+						guchar            *cmap,
+						PixelRegion       *srcPR,
+						PixelRegion       *destPR,
+						gint               subsample);
 
 
 /*  public functions  */
 
 TempBuf *
-gimp_drawable_preview (GimpDrawable *drawable,
+gimp_drawable_preview (GimpViewable *viewable,
 		       gint          width,
 		       gint          height)
 {
-  g_return_val_if_fail (drawable != NULL, NULL);
-  g_return_val_if_fail (GIMP_DRAWABLE (drawable), NULL);
+  GimpDrawable *drawable;
+
+  drawable = GIMP_DRAWABLE (viewable);
 
   /* Ok prime the cache with a large preview if the cache is invalid */
   if (! drawable->preview_valid                            &&

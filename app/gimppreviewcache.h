@@ -33,9 +33,6 @@ TempBuf * gimp_preview_cache_get        (GSList  **plist,
 void      gimp_preview_cache_add        (GSList  **plist, 
 					 TempBuf  *buf);
 void      gimp_preview_cache_invalidate (GSList  **plist);
-TempBuf * gimp_preview_scale            (TempBuf  *buf,
-					 gint      width,
-					 gint      height);
 
 
 #endif /* __GIMPPREVIEWCACHE_H__ */

@@ -110,16 +110,18 @@ gimage_delete (GimpImage *gimage)
 }
 
 static void
-invalidate_cb (gpointer image, 
-	       gpointer user_data)
+gimage_invalidate_previews_foreach_func (gpointer image, 
+					 gpointer user_data)
 {
-  gimp_image_invalidate_preview (GIMP_IMAGE (image));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 void
 gimage_invalidate_previews (void)
 {
-  gimp_container_foreach (image_context, invalidate_cb, NULL);
+  gimp_container_foreach (image_context,
+			  gimage_invalidate_previews_foreach_func,
+			  NULL);
 }
 
 static void
@@ -212,7 +214,7 @@ gimage_resize_handler (GimpImage *gimage)
   /*  shrink wrap and update all views  */
   gimp_image_invalidate_layer_previews (gimage);
   gimp_image_invalidate_channel_previews (gimage);
-  gimp_image_invalidate_preview (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
   gdisplays_resize_cursor_label (gimage);
   gdisplays_update_full (gimage);
   gdisplays_shrink_wrap (gimage);

@@ -36,7 +36,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpdnd.h"
-#include "gimpdrawablepreview.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimprc.h"
@@ -2669,7 +2668,9 @@ layer_widget_button_events (GtkWidget *widget,
 	{
 	  if (exclusive)
        	    {
-	      gimp_image_invalidate_preview (layer_widget->gimage);
+	      gimp_viewable_invalidate_preview
+		(GIMP_VIEWABLE (layer_widget->gimage));
+
 	      gdisplays_update_area (layer_widget->gimage, 0, 0,
 				     layer_widget->gimage->width,
 				     layer_widget->gimage->height);
@@ -2678,7 +2679,9 @@ layer_widget_button_events (GtkWidget *widget,
 	  else if (old_state != GIMP_DRAWABLE (layer_widget->layer)->visible)
 	    {
 	      /*  Invalidate the gimage preview  */
-	      gimp_image_invalidate_preview (layer_widget->gimage);
+	      gimp_viewable_invalidate_preview
+		(GIMP_VIEWABLE (layer_widget->gimage));
+
 	      drawable_update (GIMP_DRAWABLE (layer_widget->layer), 0, 0,
 			       GIMP_DRAWABLE (layer_widget->layer)->width,
 			       GIMP_DRAWABLE (layer_widget->layer)->height);
@@ -3039,7 +3042,7 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
       switch (preview_type)
 	{
 	case LAYER_PREVIEW:
-	  preview_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer_widget->layer),
+	  preview_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer_widget->layer),
 					       layer_widget->width,
 					       layer_widget->height);
 	  
@@ -3047,7 +3050,7 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 	  break;
 
 	case MASK_PREVIEW:
-	  preview_buf = gimp_drawable_preview (GIMP_DRAWABLE (layer_widget->layer->mask),
+	  preview_buf = gimp_viewable_preview (GIMP_VIEWABLE (layer_widget->layer->mask),
 					       layer_widget->width,
 					       layer_widget->height);
 	  break;

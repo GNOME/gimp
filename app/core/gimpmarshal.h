@@ -20,20 +20,30 @@
 #define __GIMP_MARSHAL_H__
 
 
-void   gimp_marshal_NONE__INT_INT_INT_INT (GtkObject     *object,
-					   GtkSignalFunc  func,
-					   gpointer       func_data,
-					   GtkArg        *args);
+void   gimp_marshal_NONE__INT_INT_INT_INT    (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
 
-void   gimp_marshal_NONE__INT_INT_INT     (GtkObject     *object,
-					   GtkSignalFunc  func,
-					   gpointer       func_data,
-					   GtkArg        *args);
+void   gimp_marshal_NONE__INT_INT_INT        (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
 
-void   gimp_marshal_NONE__DOUBLE          (GtkObject     *object,
-					   GtkSignalFunc  func,
-					   gpointer       func_data,
-					   GtkArg        *args);
+void   gimp_marshal_NONE__DOUBLE             (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
+
+void   gimp_marshal_POINTER__INT_INT         (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
+
+void   gimp_marshal_POINTER__POINTER_INT_INT (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
 
 
 #endif /* __GIMP_MARSHAL_H__ */

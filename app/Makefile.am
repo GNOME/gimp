@@ -157,6 +157,8 @@ gimp_SOURCES = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpunit.c		\
+	gimpviewable.c		\
+	gimpviewable.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\

@@ -31,13 +31,13 @@
 #include "gimage.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
 #include "layers_dialogP.h"
 #include "session.h"
+#include "temp_buf.h"
 
 #include "pdb/procedural_db.h"
 
@@ -470,17 +470,17 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
     {
       TempBuf *tmp;
 
-      tmp = gimp_image_construct_composite_preview (gimage, 
-						    gimage->width, 
-						    gimage->height);
-      buf = gimp_preview_scale (tmp, width, height);
+      tmp = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
+				       gimage->width, 
+				       gimage->height);
+      buf = temp_buf_scale (tmp, width, height);
       temp_buf_free (tmp);
     }
   else
     {
-      buf = gimp_image_construct_composite_preview (gimage, 
-						    width, 
-						    height);
+      buf = gimp_viewable_preview_new (GIMP_VIEWABLE (gimage),
+				       width,
+				       height);
     }
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);

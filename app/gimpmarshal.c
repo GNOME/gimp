@@ -79,3 +79,43 @@ gimp_marshal_NONE__DOUBLE (GtkObject     *object,
 				      GTK_VALUE_DOUBLE (args[0]),
 				      func_data);
 }
+
+
+typedef gpointer (* GimpSignal_POINTER__INT_INT) (GtkObject *object,
+						  gint       arg1,
+						  gint       arg2,
+						  gpointer   user_data);
+
+void
+gimp_marshal_POINTER__INT_INT (GtkObject     *object,
+			       GtkSignalFunc  func,
+			       gpointer       func_data,
+			       GtkArg        *args)
+{
+  *GTK_RETLOC_POINTER (args[2]) =
+    (* (GimpSignal_POINTER__INT_INT) func) (object,
+					    GTK_VALUE_INT (args[0]),
+					    GTK_VALUE_INT (args[1]),
+					    func_data);
+}
+
+
+typedef gpointer (* GimpSignal_POINTER__POINTER_INT_INT) (GtkObject *object,
+							  gpointer   arg1,
+							  gint       arg2,
+							  gint       arg3,
+							  gpointer   user_data);
+
+void
+gimp_marshal_POINTER__POINTER_INT_INT (GtkObject     *object,
+				       GtkSignalFunc  func,
+				       gpointer       func_data,
+				       GtkArg        *args)
+{
+  *GTK_RETLOC_POINTER (args[3]) =
+    (* (GimpSignal_POINTER__POINTER_INT_INT) func) (object,
+						    GTK_VALUE_POINTER (args[0]),
+						    GTK_VALUE_INT (args[1]),
+						    GTK_VALUE_INT (args[2]),
+						    func_data);
+}

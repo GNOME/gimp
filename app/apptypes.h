@@ -40,6 +40,8 @@ typedef struct _GimpDataList        GimpDataList;
 
 typedef struct _GimpContext         GimpContext;
 
+typedef struct _GimpViewable        GimpViewable;
+
 
 /*  drawable objects  */
 

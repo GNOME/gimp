@@ -37,7 +37,6 @@
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "gimppreviewcache.h"
 #include "parasitelist.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
@@ -54,7 +53,7 @@
 static void      gimp_layer_class_init           (GimpLayerClass     *klass);
 static void      gimp_layer_init                 (GimpLayer          *layer);
 static void      gimp_layer_destroy              (GtkObject          *object);
-static void      gimp_layer_invalidate_preview   (GimpDrawable       *object);
+static void      gimp_layer_invalidate_preview   (GimpViewable       *viewable);
 
 static void      gimp_layer_transform_color      (GimpImage          *gimage,
 						  PixelRegion        *layerPR,
@@ -96,15 +95,17 @@ gimp_layer_class_init (GimpLayerClass *klass)
 {
   GtkObjectClass    *object_class;
   GimpDrawableClass *drawable_class;
+  GimpViewableClass *viewable_class;
 
   object_class   = (GtkObjectClass *) klass;
   drawable_class = (GimpDrawableClass *) klass;
+  viewable_class = (GimpViewableClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
   object_class->destroy = gimp_layer_destroy;
 
-  drawable_class->invalidate_preview = gimp_layer_invalidate_preview;
+  viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 }
 
 static void
@@ -131,17 +132,21 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 static void
-gimp_layer_invalidate_preview (GimpDrawable *drawable)
+gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
   GimpLayer *layer;
 
-  g_return_if_fail (drawable != NULL);
-  g_return_if_fail (GIMP_IS_LAYER (drawable));
-  
-  layer = GIMP_LAYER (drawable);
+  layer = GIMP_LAYER (viewable);
 
   if (gimp_layer_is_floating_sel (layer))
-    floating_sel_invalidate (layer);
+    {
+      floating_sel_invalidate (layer);
+    }
+  else
+    {
+      if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
+	GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+    }
 }
 
 static void
@@ -607,7 +612,7 @@ gimp_layer_translate (GimpLayer *layer,
       GIMP_DRAWABLE (layer->mask)->offset_y += off_y;
 
       /*  invalidate the mask preview  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask), FALSE);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->mask));
     }
 }
 

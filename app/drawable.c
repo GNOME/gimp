@@ -26,6 +26,7 @@
 
 #include "drawable.h"
 #include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gdisplay.h"
 #include "undo.h"
 
@@ -95,8 +96,11 @@ drawable_update (GimpDrawable *drawable,
   y += offset_y;
   gdisplays_update_area (gimage, x, y, w, h);
 
+  drawable->preview_valid = FALSE;
+
   /*  invalidate the preview  */
-  gimp_drawable_invalidate_preview (drawable, FALSE);
+  if (gimage)
+    gimage->comp_preview_valid = FALSE;
 }
 
 void

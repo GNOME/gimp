@@ -323,7 +323,7 @@ gboolean
 gimp_container_have (GimpContainer *container,
 		     GimpObject    *object)
 {
-  gboolean have;
+  gboolean have = FALSE;
 
   g_return_val_if_fail (container != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);

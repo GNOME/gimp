@@ -283,7 +283,9 @@ undo_history_set_pixmap_idle (gpointer data)
   if((utype != MASK_UNDO && utype != QMASK_UNDO) || 
      (mbuf = mask_render_preview (idle->gimage,&width,&height)) == NULL)
     {
-      buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
+      buf = gimp_viewable_preview_new (GIMP_VIEWABLE (idle->gimage),
+				       width,
+				       height);
       bpp = buf->bytes;
       src = temp_buf_data (buf);
     }
@@ -293,7 +295,9 @@ undo_history_set_pixmap_idle (gpointer data)
       bpp = 1; /* Always the case for masks */
     } 
 
-  pixmap = gdk_pixmap_new (GTK_WIDGET (idle->clist)->window, width+2, height+2, -1);
+  pixmap = gdk_pixmap_new (GTK_WIDGET (idle->clist)->window,
+			   width + 2, height + 2,
+			   -1);
   
   gdk_draw_rectangle (pixmap, 
 		      GTK_WIDGET (idle->clist)->style->black_gc,
