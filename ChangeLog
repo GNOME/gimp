@@ -1,3 +1,8 @@
+2005-02-15  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c (gimp_init_malloc): added a comment about the use of
+	mallopt() and what could be done instead.
+
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimphistogram.c: allocate histogram slots in one large

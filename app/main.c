@@ -452,7 +452,15 @@ gimp_init_malloc (void)
 
 #ifdef __GLIBC__
   /* Tweak memory allocation so that memory allocated in chunks >= 4k
-   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
+   * (64x64 pixel 1bpp tile) gets returned to the system when free()'d.
+   *
+   * The default value for M_MMAP_THRESHOLD in glibc-2.3 is 128k.
+   * This is said to be an empirically derived value that works well
+   * in most systems. Lowering it to 4k is thus probably not the ideal
+   * solution.
+   *
+   * An alternative to tuning this parameter would be to use
+   * malloc_trim(), for example after releasing a large tile-manager.
    */
   mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
 #endif
