@@ -15,11 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -30,27 +32,26 @@
 #include "paint_options.h"
 #include "undo.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
-#include "layer_pvt.h"
+#include "channel_pvt.h"
 #include "tile_manager_pvt.h"
-#include "drawable_pvt.h"
 
 /*  local variables  */
 static int gimage_mask_stroking = FALSE;
 
 /*  functions  */
-int
+gboolean
 gimage_mask_boundary (GImage    *gimage,
 		      BoundSeg **segs_in,
 		      BoundSeg **segs_out,
-		      int       *num_segs_in,
-		      int       *num_segs_out)
+		      gint      *num_segs_in,
+		      gint      *num_segs_out)
 {
   GimpDrawable *d;
   Layer *layer;
-  int x1, y1, x2, y2;
+  gint x1, y1;
+  gint x2, y2;
 
   if ((layer = gimage_floating_sel (gimage)))
     {
@@ -86,7 +87,8 @@ gimage_mask_boundary (GImage    *gimage,
   /* if a layer is active, we return multiple boundaries based on the extents */
   else if ((layer = gimage_get_active_layer (gimage)))
     {
-      int off_x, off_y;
+      gint off_x, off_y;
+
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
       x1 = CLAMP (off_x, 0, gimage->width);
       y1 = CLAMP (off_y, 0, gimage->height);
@@ -111,12 +113,12 @@ gimage_mask_boundary (GImage    *gimage,
 }
 
 
-int
+gboolean
 gimage_mask_bounds (GImage *gimage,
-		    int    *x1,
-		    int    *y1,
-		    int    *x2,
-		    int    *y2)
+		    gint   *x1,
+		    gint   *y1,
+		    gint   *x2,
+		    gint   *y2)
 {
   return channel_bounds (gimage_get_mask (gimage), x1, y1, x2, y2);
 }
@@ -145,7 +147,7 @@ gimage_mask_invalidate (GImage *gimage)
 }
 
 
-int
+gint
 gimage_mask_value (GImage *gimage,
 		   int     x,
 		   int     y)
@@ -154,7 +156,7 @@ gimage_mask_value (GImage *gimage,
 }
 
 
-int
+gboolean
 gimage_mask_is_empty (GImage *gimage)
 {
   /*  in order to allow stroking of selections, we need to pretend here
@@ -170,8 +172,8 @@ gimage_mask_is_empty (GImage *gimage)
 
 void
 gimage_mask_translate (GImage *gimage,
-		       int     off_x,
-		       int     off_y)
+		       gint    off_x,
+		       gint    off_y)
 {
   channel_translate (gimage_get_mask (gimage), off_x, off_y);
 }
@@ -180,17 +182,18 @@ gimage_mask_translate (GImage *gimage,
 TileManager *
 gimage_mask_extract (GImage       *gimage,
 		     GimpDrawable *drawable,
-		     int           cut_gimage,
-		     int           keep_indexed)
+		     gboolean      cut_gimage,
+		     gboolean      keep_indexed)
 {
   TileManager * tiles;
   Channel * sel_mask;
   PixelRegion srcPR, destPR, maskPR;
-  unsigned char bg[MAX_CHANNELS];
-  int bytes, type;
-  int x1, y1, x2, y2;
-  int off_x, off_y;
-  int non_empty;
+  guchar bg[MAX_CHANNELS];
+  gint bytes, type;
+  gint x1, y1;
+  gint x2, y2;
+  gint off_x, off_y;
+  gboolean non_empty;
 
   if (!drawable) 
     return NULL;
@@ -204,8 +207,8 @@ gimage_mask_extract (GImage       *gimage,
   non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      g_message (_("Unable to cut/copy because the selected\nregion is "
-		   "empty."));
+      g_message (_("Unable to cut/copy because the selected\n"
+		   "region is empty."));
       return NULL;
     }
 
@@ -307,7 +310,8 @@ gimage_mask_extract (GImage       *gimage,
 	}
       else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
 	{
-	  gimage_remove_layer_mask (gimage, GIMP_LAYER_MASK (drawable)->layer,
+	  gimage_remove_layer_mask (gimage, 
+				    layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
 				    DISCARD);
 	}
       else if (cut_gimage && GIMP_IS_CHANNEL (drawable))
@@ -321,14 +325,15 @@ gimage_mask_extract (GImage       *gimage,
 Layer *
 gimage_mask_float (GImage       *gimage,
 		   GimpDrawable *drawable,
-		   int           off_x,    /* optional offset */
-		   int           off_y)
+		   gint          off_x,    /* optional offset */
+		   gint          off_y)
 {
   Layer *layer;
   Channel *mask = gimage_get_mask (gimage);
   TileManager* tiles;
-  int non_empty;
-  int x1, y1, x2, y2;
+  gboolean non_empty;
+  gint x1, y1;
+  gint x2, y2;
 
   /*  Make sure there is a region to float...  */
   non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
@@ -414,9 +419,9 @@ gimage_mask_none (GImage *gimage)
 
 
 void
-gimage_mask_feather (GImage *gimage,
-		     double  feather_radius_x,
-		     double  feather_radius_y)
+gimage_mask_feather (GImage  *gimage,
+		     gdouble  feather_radius_x,
+		     gdouble  feather_radius_y)
 {
   /*  push the current mask onto the undo stack--need to do this here because
    *  channel_feather doesn't do it
@@ -434,8 +439,8 @@ gimage_mask_feather (GImage *gimage,
 
 void
 gimage_mask_border (GImage *gimage,
-		    int     border_radius_x,
-		    int     border_radius_y)
+		    gint    border_radius_x,
+		    gint    border_radius_y)
 {
   /*  feather the region  */
   channel_border (gimage_get_mask (gimage),
@@ -457,10 +462,10 @@ gimage_mask_grow (GImage *gimage,
 
 
 void
-gimage_mask_shrink (GImage *gimage,
-		    int     shrink_pixels_x,
-		    int     shrink_pixels_y,
-		    int     edge_lock)
+gimage_mask_shrink (GImage   *gimage,
+		    gint      shrink_pixels_x,
+		    gint      shrink_pixels_y,
+		    gboolean  edge_lock)
 {
   /*  feather the region  */
   channel_shrink (gimage_get_mask (gimage),
@@ -482,8 +487,8 @@ gimage_mask_layer_alpha (GImage *gimage,
     }
   else
     {
-      g_message (_("The active layer has no alpha channel\nto convert to a "
-		   "selection."));
+      g_message (_("The active layer has no alpha channel\n"
+		   "to convert to a selection."));
       return;
     }
 }
@@ -494,14 +499,15 @@ gimage_mask_layer_mask (GImage *gimage,
 			Layer  *layer)
 {
   /*  extract the layer's alpha channel  */
-  if (layer->mask)
+  if (layer_get_mask (layer))
     {
       /*  load the mask with the given layer's alpha channel  */
       channel_layer_mask (gimage_get_mask (gimage), layer);
     }
   else
     {
-      g_message (_("The active layer has no mask\nto convert to a selection."));
+      g_message (_("The active layer has no mask\n"
+		   "to convert to a selection."));
       return;
     }
 }
@@ -531,23 +537,23 @@ gimage_mask_save (GImage *gimage)
 }
 
 
-int 
+gboolean
 gimage_mask_stroke (GImage       *gimage,
 		    GimpDrawable *drawable)
 {
   BoundSeg *bs_in;
   BoundSeg *bs_out;
-  int num_segs_in;
-  int num_segs_out;
+  gint num_segs_in;
+  gint num_segs_out;
   BoundSeg *stroke_segs;
-  int num_strokes;
-  int seg;
-  int offx, offy;
-  int i;
+  gint num_strokes;
+  gint seg;
+  gint offx, offy;
+  gint i;
   gdouble *stroke_points;
   gint cpnt;
   Argument *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out,
 			      &num_segs_in, &num_segs_out))
@@ -570,7 +576,7 @@ gimage_mask_stroke (GImage       *gimage,
   seg = 0;
   cpnt = 0;
   /* Largest array required (may be used in segments!) */
-  stroke_points = g_malloc(sizeof(gdouble)*2*(num_segs_in+4));
+  stroke_points = g_malloc (sizeof (gdouble) * 2 * (num_segs_in + 4));
 
   stroke_points[cpnt++] = (gdouble)(stroke_segs[0].x1 - offx);
   stroke_points[cpnt++] = (gdouble)(stroke_segs[0].y1 - offy);

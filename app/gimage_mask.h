@@ -22,39 +22,39 @@
 #include "gimage.h"
 
 /*  mask functions  */
-int             gimage_mask_boundary      (GImage       *gimage,
+gboolean        gimage_mask_boundary      (GImage       *gimage,
 					   BoundSeg    **segs_in,
 					   BoundSeg    **segs_out,
-					   int          *num_segs_in,
-					   int          *num_segs_out);
+					   gint         *num_segs_in,
+					   gint         *num_segs_out);
 
-int             gimage_mask_bounds        (GImage       *gimage,
-					   int          *x1,
-					   int          *y1,
-					   int          *x2,
-					   int          *y2);
+gboolean        gimage_mask_bounds        (GImage       *gimage,
+					   gint         *x1,
+					   gint         *y1,
+					   gint         *x2,
+					   gint         *y2);
 
 void            gimage_mask_invalidate    (GImage       *gimage);
 
-int             gimage_mask_value         (GImage       *gimage,
-					   int           x,
-					   int           y);
+gint            gimage_mask_value         (GImage       *gimage,
+					   gint          x,
+					   gint          y);
 
-int             gimage_mask_is_empty      (GImage       *gimage);
+gboolean        gimage_mask_is_empty      (GImage       *gimage);
 
 void            gimage_mask_translate     (GImage       *gimage,
-					   int           off_x,
-					   int           off_y);
+					   gint          off_x,
+					   gint          off_y);
 
 TileManager *   gimage_mask_extract       (GImage       *gimage,
 					   GimpDrawable *drawable,
-					   int           cut_gimage,
-					   int           keep_indexed);
+					   gboolean      cut_gimage,
+					   gboolean      keep_indexed);
 
 Layer *         gimage_mask_float         (GImage       *gimage,
 					   GimpDrawable *drawable,
-					   int           off_x,
-					   int           off_y);
+					   gint          off_x,
+					   gint          off_y);
 
 void            gimage_mask_clear         (GImage       *gimage);
 void            gimage_mask_undo          (GImage       *gimage);
@@ -64,21 +64,21 @@ void            gimage_mask_all           (GImage       *gimage);
 void            gimage_mask_none          (GImage       *gimage);
 
 void            gimage_mask_feather       (GImage       *gimage,
-					   double        feather_radius_x,
-					   double        feather_radius_y);
+					   gdouble       feather_radius_x,
+					   gdouble       feather_radius_y);
 
 void            gimage_mask_border        (GImage       *gimage,
-					   int           border_radius_x,
-					   int           border_radius_y);
+					   gint          border_radius_x,
+					   gint          border_radius_y);
 
 void            gimage_mask_grow          (GImage       *gimage,
-					   int           grow_pixels_x,
-					   int           grow_pixels_y);
+					   gint           grow_pixels_x,
+					   gint           grow_pixels_y);
 
 void            gimage_mask_shrink        (GImage       *gimage,
-					   int           shrink_pixels_x,
-					   int           shrink_pixels_y,
-					   int           edge_lock);
+					   gint          shrink_pixels_x,
+					   gint          shrink_pixels_y,
+					   gboolean      edge_lock);
 
 void            gimage_mask_layer_alpha   (GImage       *gimage,
 					   Layer        *layer);
@@ -91,7 +91,7 @@ void            gimage_mask_load          (GImage       *gimage,
 
 Channel *       gimage_mask_save          (GImage       *gimage);
 
-int             gimage_mask_stroke        (GImage       *gimage,
+gboolean        gimage_mask_stroke        (GImage       *gimage,
 					   GimpDrawable *drawable);
 
 #endif  /*  __GIMAGE_MASK_H__  */

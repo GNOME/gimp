@@ -118,9 +118,15 @@ flip_modifier_key_func (Tool        *tool,
       break;
     case GDK_Control_L: case GDK_Control_R:
       if (flip_options->type == ORIENTATION_HORIZONTAL)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
+	{
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
+	}
       else
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
+	{
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
+	}
       break;
     }
 }
@@ -167,23 +173,24 @@ flip_cursor_update (Tool           *tool,
 		    gpointer        gdisp_ptr)
 {
   GDisplay      *gdisp;
-  Layer         *layer;
+  Drawable      *drawable;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  if ((layer = gimage_get_active_layer (gdisp->gimage)))
+  if ((drawable = gimage_get_active_drawable (gdisp->gimage)))
     {
-      int x, y, off_x, off_y;
+      gint x, y;
+      gint off_x, off_y;
 
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      gdisplay_untransform_coords (gdisp, (double) mevent->x, 
-				   (double) mevent->y,
+      drawable_offsets (drawable, &off_x, &off_y);
+      gdisplay_untransform_coords (gdisp, 
+				   (double) mevent->x, (double) mevent->y,
 				   &x, &y, TRUE, FALSE);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	  x < (off_x + drawable_width (drawable)) &&
+	  y < (off_y + drawable_height (drawable)))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
 	  if (gimage_mask_is_empty (gdisp->gimage) ||
@@ -234,7 +241,7 @@ TileManager *
 flip_tool_flip (GimpImage               *gimage,
 		GimpDrawable            *drawable,
 		TileManager             *orig,
-		int                      flip,
+		gint                     flip,
 		InternalOrientationType  type)
 {
   TileManager *new;

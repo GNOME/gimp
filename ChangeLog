@@ -1,3 +1,14 @@
+Tue Mar 21 04:11:42 CET 2000  Michael Natterer  <mitch@gimp.org>
+	                      Sven Neumann <sven@gimp.org>
+
+	* app/fileops.c
+	* app/gdisplay.[ch]: when reverting an image, reconnect all 
+	affected views to the reverted version. This fixes one of the
+	bugs Tigert pointed out at GUADEC.
+
+	* app/gimage_mask.[ch]
+	* app/flip_tool.c: cleanups
+
 2000-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/gfig/gfig.c: fixed a SEGV I have introduced by

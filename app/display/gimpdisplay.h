@@ -167,8 +167,8 @@ struct _GDisplay
 GDisplay * gdisplay_new                    (GimpImage *, guint);
 void       gdisplay_reconnect              (GDisplay *, GimpImage *);
 void       gdisplay_remove_and_delete      (GDisplay *);
-int        gdisplay_mask_value             (GDisplay *, gint, gint);
-int        gdisplay_mask_bounds            (GDisplay *, gint *, gint *, gint *, gint *);
+gint       gdisplay_mask_value             (GDisplay *, gint, gint);
+gint       gdisplay_mask_bounds            (GDisplay *, gint *, gint *, gint *, gint *);
 void       gdisplay_transform_coords       (GDisplay *, gint, gint, gint *, gint *, gint);
 void       gdisplay_untransform_coords     (GDisplay *, gint, gint, gint *, gint *, 
 					                gboolean, gboolean);
@@ -187,7 +187,6 @@ void       gdisplay_expose_guide           (GDisplay *, Guide *);
 void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_flush_now              (GDisplay *);
-void       gdisplays_finish_draw           (void);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, gboolean);
 Guide*     gdisplay_find_guide             (GDisplay *, gdouble, double);
@@ -198,28 +197,33 @@ void       gdisplay_snap_rectangle         (GDisplay *, gdouble, gdouble, gdoubl
 void	   gdisplay_update_cursor	   (GDisplay *, gint, gint);
 void	   gdisplay_set_dot_for_dot	   (GDisplay *, gboolean);
 void       gdisplay_resize_cursor_label    (GDisplay *);
-GDisplay * gdisplays_check_valid           (GDisplay *, GimpImage *);
+void       gdisplay_update_title           (GDisplay *);
+void       gdisplay_flush_displays_only    (GDisplay *gdisp); /* no rerender! */
 
-/*  function declarations  */
 
 GDisplay * gdisplay_active                 (void);
 GDisplay * gdisplay_get_ID                 (gint);
-void       gdisplay_update_title           (GDisplay*);
-void       gdisplays_update_title          (GimpImage*);
-void       gdisplays_resize_cursor_label   (GimpImage*);
-void       gdisplays_setup_scale           (GimpImage*);
-void       gdisplays_update_area           (GimpImage*, gint, gint, gint, gint);
-void       gdisplays_expose_guides         (GimpImage*);
-void       gdisplays_expose_guide          (GimpImage*, Guide *);
-void       gdisplays_update_full           (GimpImage*);
-void       gdisplays_shrink_wrap           (GimpImage*);
+
+
+/*  function declarations  */
+
+GDisplay * gdisplays_check_valid           (GDisplay *, GimpImage *);
+void       gdisplays_reconnect             (GimpImage *old, GimpImage *new);
+void       gdisplays_update_title          (GimpImage *);
+void       gdisplays_resize_cursor_label   (GimpImage *);
+void       gdisplays_setup_scale           (GimpImage *);
+void       gdisplays_update_area           (GimpImage *, gint, gint, gint, gint);
+void       gdisplays_expose_guides         (GimpImage *);
+void       gdisplays_expose_guide          (GimpImage *, Guide *);
+void       gdisplays_update_full           (GimpImage *);
+void       gdisplays_shrink_wrap           (GimpImage *);
 void       gdisplays_expose_full           (void);
-void       gdisplays_selection_visibility  (GimpImage*, SelectionControl);
+void       gdisplays_selection_visibility  (GimpImage *, SelectionControl);
 gboolean   gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
 void       gdisplays_flush_now             (void);
-void       gdisplay_flush_displays_only    (GDisplay *gdisp); /* no rerender! */
+void       gdisplays_finish_draw           (void);
 void       gdisplays_nav_preview_resized   (void);
 void       gdisplays_foreach               (GFunc func, gpointer user_data);
 

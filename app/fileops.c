@@ -547,7 +547,7 @@ file_revert_callback (GtkWidget *widget,
   gint       status;
 
   gdisplay = gdisplay_active ();
-  if (!gdisplay)
+  if (!gdisplay || !gdisplay->gimage)
     return;
 
   if (gdisplay->gimage->has_filename == FALSE)
@@ -563,7 +563,7 @@ file_revert_callback (GtkWidget *widget,
       if (gimage != NULL)
 	{
 	  undo_free (gimage);
-	  gdisplay_reconnect (gdisplay, gimage);
+	  gdisplays_reconnect (gdisplay->gimage, gimage);
 	  gimp_image_clean_all (gimage);
 	}
       else if (status != PDB_CANCEL)

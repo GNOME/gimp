@@ -65,16 +65,16 @@ static gint            display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 /*  Local functions  */
-static void       gdisplay_format_title     (GDisplay *, char *, int);
-static void       gdisplay_delete           (GDisplay *);
-static GSList *   gdisplay_free_area_list   (GSList *);
-static GSList *   gdisplay_process_area_list(GSList *, GimpArea *);
-static void       gdisplay_add_update_area  (GDisplay *, int, int, int, int);
-static void       gdisplay_add_display_area (GDisplay *, int, int, int, int);
-static void       gdisplay_paint_area       (GDisplay *, int, int, int, int);
-static void	  gdisplay_draw_cursor	    (GDisplay *);
-static void       gdisplay_display_area     (GDisplay *, int, int, int, int);
-static guint      gdisplay_hash             (GDisplay *);
+static void       gdisplay_format_title       (GDisplay *, char *, int);
+static void       gdisplay_delete             (GDisplay *);
+static GSList *   gdisplay_free_area_list     (GSList *);
+static GSList *   gdisplay_process_area_list  (GSList *, GimpArea *);
+static void       gdisplay_add_update_area    (GDisplay *, int, int, int, int);
+static void       gdisplay_add_display_area   (GDisplay *, int, int, int, int);
+static void       gdisplay_paint_area         (GDisplay *, int, int, int, int);
+static void	  gdisplay_draw_cursor	      (GDisplay *);
+static void       gdisplay_display_area       (GDisplay *, int, int, int, int);
+static guint      gdisplay_hash               (GDisplay *);
 static void       gdisplay_cleandirty_handler (GimpImage *, void *);
 
 
@@ -401,7 +401,7 @@ gdisplay_free_area_list (GSList *list)
 
 
 /*
- * As far as I can tell, this function takes a GimpArea and unifies it with
+ *  As far as I can tell, this function takes a GimpArea and unifies it with
  *  an existing list of GimpAreas, trying to avoid overdraw.  [adam]
  */
 static GSList *
@@ -1005,8 +1005,8 @@ gdisplay_snap_rectangle (GDisplay *gdisp,
 void
 gdisplay_draw_cursor (GDisplay *gdisp)
 {
-  int x = gdisp->cursor_x;
-  int y = gdisp->cursor_y;
+  gint x = gdisp->cursor_x;
+  gint y = gdisp->cursor_y;
   
   gdk_draw_line (gdisp->canvas->window,
 		 gdisp->canvas->style->white_gc,
@@ -1035,7 +1035,8 @@ gdisplay_update_cursor (GDisplay *gdisp,
 {
   gint new_cursor;
   gchar buffer[CURSOR_STR_LENGTH];
-  gint t_x, t_y;
+  gint t_x;
+  gint t_y;
 
   new_cursor = gdisp->draw_cursor && gdisp->proximity;
   
@@ -1197,7 +1198,7 @@ gdisplay_add_display_area (GDisplay *gdisp,
 {
   GimpArea * ga;
 
-  ga = (GimpArea *) g_malloc (sizeof (GimpArea));
+  ga = g_new (GimpArea, 1);
 
   ga->x1 = CLAMP (x, 0, gdisp->disp_width);
   ga->y1 = CLAMP (y, 0, gdisp->disp_height);
@@ -1375,7 +1376,8 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 		      gint     *y2)
 {
   Layer *layer;
-  gint off_x, off_y;
+  gint off_x;
+  gint off_y;
 
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimage_floating_sel (gdisp->gimage)))
@@ -1422,7 +1424,8 @@ gdisplay_transform_coords (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x, offset_y;
+  gint offset_x;
+  gint offset_y;
 
   /*  transform from image coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1454,7 +1457,8 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x, offset_y;
+  gint offset_x;
+  gint offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1493,7 +1497,8 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x, offset_y;
+  gint offset_x;
+  gint offset_y;
 
   /*  transform from gimp coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1524,7 +1529,8 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x, offset_y;
+  gint offset_x;
+  gint offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1550,9 +1556,9 @@ void
 gdisplay_install_tool_cursor (GDisplay      *gdisp,
 			      GdkCursorType  cursor_type)
 {
-  if (gdisp->current_cursor != (int)cursor_type)
+  if (gdisp->current_cursor != (gint)cursor_type)
     {
-      gdisp->current_cursor = (int)cursor_type;
+      gdisp->current_cursor = (gint)cursor_type;
       if (!gdisp->using_override_cursor)
 	{
 	  change_win_cursor (gdisp->canvas->window, cursor_type);
@@ -1607,11 +1613,11 @@ void
 gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 {
   Layer *layer = NULL;
-  gint fs = FALSE;
-  gint aux = FALSE;
-  gint lm = FALSE;
-  gint lp = FALSE;
-  gint alpha = FALSE;
+  gboolean fs  = FALSE;
+  gboolean aux = FALSE;
+  gboolean lm  = FALSE;
+  gboolean lp  = FALSE;
+  gboolean alpha = FALSE;
   GimpDrawable *drawable = NULL;
   GimpImageBaseType base_type = 0;
   GimpImageType type = -1;
@@ -1763,7 +1769,8 @@ void
 gdisplay_expose_guide (GDisplay *gdisp,
 		       Guide    *guide)
 {
-  gint x, y;
+  gint x;
+  gint y;
 
   if (guide->position < 0)
     return;
@@ -1799,6 +1806,9 @@ gdisplay_active (void)
 {
   GdkEvent *event;
 
+  /*  Whoever finds out why we do this (see below) gets a free beer.
+   *  Report back the reason to Sven and Mitch ... 
+   */
   event = gtk_get_current_event ();
   if (event != NULL)
     {
@@ -2073,11 +2083,11 @@ gdisplays_nav_preview_resized (void)
     {
       gdisp = (GDisplay *) list->data;
 
-      if(gdisp->window_nav_dialog)
-	nav_window_preview_resized(gdisp->window_nav_dialog);
+      if (gdisp->window_nav_dialog)
+	nav_window_preview_resized (gdisp->window_nav_dialog);
       
-      if(gdisp->nav_popup)
-	nav_window_popup_preview_resized(&gdisp->nav_popup);
+      if (gdisp->nav_popup)
+	nav_window_popup_preview_resized (&gdisp->nav_popup);
 
       list = g_slist_next (list);
     }
@@ -2244,6 +2254,8 @@ gdisplay_reconnect (GDisplay  *gdisp,
 {
   gint instance;
 
+  g_return_if_fail (gdisp != NULL && gimage != NULL);
+
   if (gdisp->idle_render.active)
     {
       gtk_idle_remove (gdisp->idle_render.idleid);
@@ -2273,6 +2285,24 @@ gdisplay_reconnect (GDisplay  *gdisp,
   gdisplay_flush (gdisp);
 }
 
+
+void
+gdisplays_reconnect (GimpImage *old,
+		     GimpImage *new)
+{
+  GSList   *list;
+  GDisplay *gdisp;
+
+  g_return_if_fail (old != NULL && new != NULL);
+  
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = list->data;
+      
+      if (gdisp->gimage == old)
+	gdisplay_reconnect (gdisp, new);
+    }
+}
 
 /* Called whenever the underlying gimage is dirtied or cleaned */
 static void
