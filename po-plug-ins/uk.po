@@ -10479,11 +10479,11 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:1197 plug-ins/imagemap/imap_toolbar.c:121
 msgid "Undo"
-msgstr ""
+msgstr "В╕дм╕нити"
 
 #: plug-ins/ifscompose/ifscompose.c:1209 plug-ins/imagemap/imap_toolbar.c:124
 msgid "Redo"
-msgstr ""
+msgstr "Повернути"
 
 #: plug-ins/ifscompose/ifscompose.c:1240
 msgid "IfsCompose Options"
@@ -10825,11 +10825,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:214
 msgid "Open..."
-msgstr ""
+msgstr "В╕дкрити..."
 
 #: plug-ins/imagemap/imap_menu.c:220
 msgid "Save As..."
-msgstr ""
+msgstr "Зберегти як..."
 
 #: plug-ins/imagemap/imap_menu.c:223
 msgid "Preferences..."
@@ -10838,12 +10838,12 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:242
 #, c-format
 msgid "Undo %s"
-msgstr ""
+msgstr "В╕дм╕нити %s"
 
 #: plug-ins/imagemap/imap_menu.c:253
 #, c-format
 msgid "Redo %s"
-msgstr ""
+msgstr "Повернути %s"
 
 #: plug-ins/imagemap/imap_menu.c:276
 msgid "Edit"
@@ -10990,11 +10990,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:86
 msgid "Title:"
-msgstr ""
+msgstr "Заголовок:"
 
 #: plug-ins/imagemap/imap_settings.c:88
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: plug-ins/imagemap/imap_settings.c:90
 msgid "Default URL:"
