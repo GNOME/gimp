@@ -1,3 +1,10 @@
+2005-01-07  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback):
+	remember the last plug-in if it has at least 3 args, not 2.
+
 2005-01-07  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

@@ -61,14 +61,13 @@ plug_in_run_cmd_callback (GtkAction     *action,
                           PlugInProcDef *proc_def,
                           gpointer       data)
 {
-  Gimp          *gimp;
-  ProcRecord    *proc_rec;
-  Argument      *args;
-  GimpDisplay   *gdisp    = NULL;
-  gint           gdisp_ID = -1;
-  gint           i;
-  gint           argc;
-  GimpImageType  drawable_type = GIMP_RGB_IMAGE;
+  Gimp        *gimp;
+  ProcRecord  *proc_rec;
+  Argument    *args;
+  GimpDisplay *gdisp    = NULL;
+  gint         gdisp_ID = -1;
+  gint         i;
+  gint         argc;
 
   gimp = action_data_get_gimp (data);
   if (! gimp)
@@ -115,8 +114,6 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
                   if (drawable)
                     {
-                      drawable_type = gimp_drawable_type (drawable);
-
                       args[2].value.pdb_int =
                         gimp_item_get_ID (GIMP_ITEM (drawable));
                       argc++;
@@ -145,7 +142,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   /* remember only "standard" plug-ins */
   if (proc_rec->proc_type == GIMP_PLUGIN           &&
-      proc_rec->num_args >= 2                      &&
+      proc_rec->num_args >= 3                      &&
       proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
       proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
     {
