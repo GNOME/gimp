@@ -45,6 +45,9 @@ typedef struct
   gint  run;
 } TiffSaveInterface;
 
+/* Make sure this is used with a, b, t 32bit unsigned ints */
+#define INT_MULT_16(a,b,t) ((t) = (a) * (b) + 0x8000, ((((t) >> 16) + (t)) >> 16))
+
 /* Declare some local functions.
  */
 static void   query      (void);
@@ -137,7 +140,7 @@ query ()
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996",
                           "<Save>/Tiff",
-			  "RGB*, GRAY*",
+			  "RGB*, GRAY*, U16_RGB*, U16_GRAY*, FLOAT_RGB*, FLOAT_GRAY*",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -252,7 +255,7 @@ load_image (char *filename)
   int row, i;
   guchar *buf, *s;
   guchar *dest, *d;
-  int maxval;
+  int maxval, minval;
   int image_type;
   int layer_type;
   unsigned short bps, spp, photomet;
@@ -268,6 +271,7 @@ load_image (char *filename)
   int tile_height;
   int y, yend;
   char *name;
+  int sampleformat;
 
   typedef struct {
   gint32 ID;
@@ -294,8 +298,26 @@ load_image (char *filename)
 
   if (!TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps))
     bps = 1;
+  if (!TIFFGetField (tif, TIFFTAG_SAMPLEFORMAT, &sampleformat))
+    sampleformat = 1;
+#if 0
+  if (!TIFFGetField (tif, TIFFTAG_SMAXSAMPLEVALUE, &maxval) ||
+      !TIFFGetField (tif, TIFFTAG_SMINSAMPLEVALUE, &minval))
+    {
+      if (sampleformat == 1)
+        {
+	  maxval = (1 << bps) - 1;
+	  minval = 0; 
+        }
+      else if (sampleformat == 2)
+        {
+	  maxval = (1 << (bps-1) - 1
+          minval = - (1 << (bps-1)); 
+	}
+    } 
+#endif
   if (!TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &spp))
-    spp = 1;
+      spp = 1;
   if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &num_extra, &extra_samples))
     alpha = 0;
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
@@ -314,6 +336,7 @@ load_image (char *filename)
   TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows);
 
   maxval = (1 << bps) - 1;
+  minval = 0; 
   if (maxval == 1 && spp == 1)
     {
       grayscale = 1;
@@ -326,53 +349,96 @@ load_image (char *filename)
 	{
 	case PHOTOMETRIC_MINISBLACK:
 	  grayscale = 1;
-	  image_type = GRAY;
-	  layer_type = (alpha) ? GRAYA_IMAGE : GRAY_IMAGE;
+	  if (bps == 8)
+	  {
+	    image_type = GRAY;
+	    layer_type = (alpha) ? GRAYA_IMAGE : GRAY_IMAGE;
+	  }
+          else if (bps == 16)
+          {
+	    image_type = U16_GRAY;
+	    layer_type = (alpha) ? U16_GRAYA_IMAGE : U16_GRAY_IMAGE;
+	  }
+          else if (bps == 32 && sampleformat == 3)  /* floating point data */
+          {
+	    image_type = FLOAT_GRAY;
+	    layer_type = (alpha) ? FLOAT_GRAYA_IMAGE : FLOAT_GRAY_IMAGE;
+	  }
 	  break;
 
 	case PHOTOMETRIC_MINISWHITE:
 	  grayscale = 1;
-	  image_type = GRAY;
-	  layer_type = (alpha) ? GRAYA_IMAGE : GRAY_IMAGE;
+	  if (bps == 8)
+	  {
+	    image_type = GRAY;
+	    layer_type = (alpha) ? GRAYA_IMAGE : GRAY_IMAGE;
+	  }
+          else if (bps == 16)
+          {
+	    image_type = U16_GRAY;
+	    layer_type = (alpha) ? U16_GRAYA_IMAGE : U16_GRAY_IMAGE;
+	  }
+          else if (bps == 32 && sampleformat == 3)  /* floating point data */
+          {
+	    image_type = FLOAT_GRAY;
+	    layer_type = (alpha) ? FLOAT_GRAYA_IMAGE : FLOAT_GRAY_IMAGE;
+	  }
 	  break;
 
 	case PHOTOMETRIC_PALETTE:
 	  if (alpha)
 	    g_print ("ignoring alpha channel on indexed color image\n");
+          if (bps == 8)
+          {
+	    if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redcolormap,
+			       &greencolormap, &bluecolormap))
+	      {
+		g_print ("error getting colormaps\n");
+		gimp_quit ();
+	      }
+	    numcolors = maxval + 1;
+	    maxval = 255;
+	    grayscale = 0;
 
-	  if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redcolormap,
-			     &greencolormap, &bluecolormap))
-	    {
-	      g_print ("error getting colormaps\n");
-	      gimp_quit ();
-	    }
-	  numcolors = maxval + 1;
-	  maxval = 255;
-	  grayscale = 0;
+	    for (i = 0; i < numcolors; i++)
+	      {
+		redcolormap[i] >>= 8;
+		greencolormap[i] >>= 8;
+		bluecolormap[i] >>= 8;
+	      }
 
-	  for (i = 0; i < numcolors; i++)
-	    {
-	      redcolormap[i] >>= 8;
-	      greencolormap[i] >>= 8;
-	      bluecolormap[i] >>= 8;
-	    }
-
-	  if (numcolors > 256)
-	    {
-	      image_type = RGB;
-	      layer_type = (alpha) ? RGBA_IMAGE : RGB_IMAGE;
-	    }
-	  else
-	    {
-	      image_type = INDEXED;
-	      layer_type = (alpha) ? INDEXEDA_IMAGE : INDEXED_IMAGE;
-	    }
+	    if (numcolors > 256)
+	      {
+		image_type = RGB;
+		layer_type = (alpha) ? RGBA_IMAGE : RGB_IMAGE;
+	      }
+	    else
+	      {
+		image_type = INDEXED;
+		layer_type = (alpha) ? INDEXEDA_IMAGE : INDEXED_IMAGE;
+	      }
+          }
+          else if (bps == 16)
+            g_print("16bit indexed color image not implemented yet\n");
 	  break;
 
 	case PHOTOMETRIC_RGB:
 	  grayscale = 0;
-	  image_type = RGB;
-	  layer_type = (alpha) ? RGBA_IMAGE : RGB_IMAGE;
+	  if (bps == 8)
+	  {
+	    image_type = RGB;
+	    layer_type = (alpha) ? RGBA_IMAGE : RGB_IMAGE;
+	  }
+          else if (bps == 16)
+          {
+	    image_type = U16_RGB;
+	    layer_type = (alpha) ? U16_RGBA_IMAGE : U16_RGB_IMAGE;
+	  }
+          else if (bps == 32 && sampleformat == 3)  /* floating point data */
+          {
+	    image_type = FLOAT_RGB;
+	    layer_type = (alpha) ? FLOAT_RGBA_IMAGE : FLOAT_RGB_IMAGE;
+	  }
 	  break;
 
 	case PHOTOMETRIC_MASK:
@@ -471,27 +537,58 @@ load_image (char *filename)
 
 	  switch (photomet)
 	    {
-	    case PHOTOMETRIC_MINISBLACK:
-	      for (col = 0; col < cols; col++)
+	      case PHOTOMETRIC_MINISBLACK:
+		if (bps <=8)
 		{
-		  NEXTSAMPLE;
-		  gray_val = sample;
-		  if (alpha)
+		  for (col = 0; col < cols; col++)
 		    {
 		      NEXTSAMPLE;
-		      alpha_val = sample;
-		      if (alpha_val)
-			*d++ = (gray_val * 255) / alpha_val;
+		      gray_val = sample;
+		      if (alpha)
+			{
+			  NEXTSAMPLE;
+			  alpha_val = sample;
+			  if (alpha_val)
+			    *d++ = (gray_val * 255) / alpha_val;
+			  else
+			    *d++ = 0;
+			  *d++ = alpha_val;
+			}
 		      else
-			*d++ = 0;
-		      *d++ = alpha_val;
+			*d++ = gray_val;
+		      for (k= 0; alpha + k < num_extra; ++k)
+			{
+			  NEXTSAMPLE;
+			  *channel[k].pixel++ = sample;
+			}
 		    }
-		  else
-		    *d++ = gray_val;
-		  for (k= 0; alpha + k < num_extra; ++k)
+		}
+		else if (bps == 16)
+		{
+		  guint16 * s16 = (guint16*)buf;
+                  guint16 * d16 = (guint16*)d;
+                  guint16 gray16_val, alpha16_val;
+
+		  for (col = 0; col < cols; col++)
 		    {
-		      NEXTSAMPLE;
-		      *channel[k].pixel++ = sample;
+		      gray16_val = *s16++;
+		      if (alpha)
+			{
+			  alpha16_val = *s16++;
+			  if (alpha16_val)
+			    *d16++ = (gray16_val * 65535) / alpha16_val;
+			  else
+			    *d16++ = 0;
+			  *d16++ = alpha16_val;
+			}
+		      else
+			*d16++ = gray16_val;
+#if 0
+		      for (k= 0; alpha + k < num_extra; ++k)
+			{
+			  *channel[k].pixel++ = *s16++;
+			}
+#endif
 		    }
 		}
 	      break;
@@ -582,7 +679,9 @@ load_image (char *filename)
 	      break;
 
 	    case PHOTOMETRIC_RGB:
-	      for (col = 0; col < cols; col++)
+	    if (bps <=8 )
+	      {
+		for (col = 0; col < cols; col++)
 		{
 		  NEXTSAMPLE;
 		  red_val = sample;
@@ -591,35 +690,78 @@ load_image (char *filename)
 		  NEXTSAMPLE;
 		  blue_val = sample;
 		  if (alpha)
+		  {
+		    NEXTSAMPLE;
+		    alpha_val = sample;
+		    if (alpha_val)
 		    {
-		      NEXTSAMPLE;
-		      alpha_val = sample;
-		      if (alpha_val)
-			{
-			  *d++ = (red_val * 255) / alpha_val;
-			  *d++ = (green_val * 255) / alpha_val;
-			  *d++ = (blue_val * 255) / alpha_val;
-			}
-		      else
-			{
-			  *d++ = 0;
-			  *d++ = 0;
-			  *d++ = 0;
-			}
-		      *d++ = alpha_val;
+		      *d++ = (red_val * 255) / alpha_val;
+		      *d++ = (green_val * 255) / alpha_val;
+		      *d++ = (blue_val * 255) / alpha_val;
 		    }
+		    else
+		    {
+		      *d++ = 0;
+		      *d++ = 0;
+		      *d++ = 0;
+		    }
+		  *d++ = alpha_val;
+		  }
 		  else
-		    {
-		      *d++ = red_val;
-		      *d++ = green_val;
-		      *d++ = blue_val;
-		    }
+		  {
+		    *d++ = red_val;
+		    *d++ = green_val;
+		    *d++ = blue_val;
+		  }
 		  for (k= 0; alpha + k < num_extra; ++k)
-		    {
-		      NEXTSAMPLE;
-		      *channel[k].pixel++ = sample;
-		    }
+		  {
+		    NEXTSAMPLE;
+		    *channel[k].pixel++ = sample;
+		  }
 		}
+	      }
+	      else if (bps == 16 )
+	      {
+                guint16 red16_val, green16_val, blue16_val, alpha16_val;
+		guint16 *s_16 = (guint16*)buf;
+		guint16 *d_16 = (guint16*)d;
+		for (col = 0; col < cols; col++)
+		{
+		  red16_val = *s_16++;
+		  green16_val = *s_16++;
+		  blue16_val = *s_16++;
+		  if (alpha)
+		  {
+		    alpha16_val = *s_16++;
+		    if (alpha16_val)
+		    {
+		      *d_16++ = (red16_val * 65535) / alpha16_val;
+		      *d_16++ = (green16_val * 65535) / alpha16_val;
+		      *d_16++ = (blue16_val * 65535) / alpha16_val;
+		    }
+		    else
+		    {
+		      *d_16++ = 0;
+		      *d_16++ = 0;
+		      *d_16++ = 0;
+		    }
+		  *d_16++ = alpha16_val;
+		  }
+		  else
+		  {
+		    *d_16++ = red16_val;
+		    *d_16++ = green16_val;
+		    *d_16++ = blue16_val;
+		  }
+#if 0
+		  for (k= 0; alpha + k < num_extra; ++k)
+		  {
+		    NEXTSAMPLE;
+		    *channel[k].pixel++ = sample;
+		  }
+#endif
+		}
+	      }
 	      break;
 
 	    default:
@@ -769,6 +911,90 @@ save_image (char   *filename,
 	}
       break;
     case INDEXEDA_IMAGE:
+      g_print ("tiff save_image: can't save INDEXEDA_IMAGE\n");
+      return 0;
+    case U16_RGB_IMAGE:
+      samplesperpixel = 3;
+      bitspersample = 16;
+      photometric = PHOTOMETRIC_RGB;
+      bytesperrow = cols * 6;
+      alpha = 0;
+      break;
+    case U16_GRAY_IMAGE:
+      samplesperpixel = 1;
+      bitspersample = 16;
+      photometric = PHOTOMETRIC_MINISBLACK;
+      bytesperrow = cols * 2;
+      alpha = 0;
+      break;
+    case U16_RGBA_IMAGE:
+      samplesperpixel = 4;
+      bitspersample = 16;
+      photometric = PHOTOMETRIC_RGB;
+      bytesperrow = cols * 8;
+      alpha = 1;
+      break;
+    case U16_GRAYA_IMAGE:
+      samplesperpixel = 2;
+      bitspersample = 16;
+      photometric = PHOTOMETRIC_MINISBLACK;
+      bytesperrow = cols * 4;
+      alpha = 1;
+      break;
+    case U16_INDEXED_IMAGE:
+      g_print ("tiff save_image: U16_INDEXED_IMAGE save not implemented\n");
+      return 0;
+/* 
+      samplesperpixel = 1;
+      bitspersample = 16;
+      photometric = PHOTOMETRIC_PALETTE;
+      bytesperrow = cols * 2;
+      alpha = 0;
+      cmap = gimp_image_get_cmap (image_ID, &colors);
+
+      for (i = 0; i < colors; i++)
+	{
+	  red[i] = *cmap++ << 8;
+	  grn[i] = *cmap++ << 8;
+	  blu[i] = *cmap++ << 8;
+	}
+*/
+      break;
+    case U16_INDEXEDA_IMAGE:
+      g_print ("tiff save_image: can't save U16_INDEXEDA_IMAGE\n");
+      return 0;
+#if 0
+    case FLOAT_RGB_IMAGE:
+      samplesperpixel = 3;
+      bitspersample = 32;
+      photometric = PHOTOMETRIC_RGB;
+      bytesperrow = cols * 12;
+      alpha = 0;
+      break;
+    case FLOAT_GRAY_IMAGE:
+      samplesperpixel = 1;
+      bitspersample = 32;
+      photometric = PHOTOMETRIC_MINISBLACK;
+      bytesperrow = cols * 4;
+      alpha = 0;
+      break;
+    case FLOAT_RGBA_IMAGE:
+      samplesperpixel = 4;
+      bitspersample = 32;
+      photometric = PHOTOMETRIC_RGB;
+      bytesperrow = cols * 16;
+      alpha = 1;
+      break;
+    case FLOAT_GRAYA_IMAGE:
+      samplesperpixel = 2;
+      bitspersample = 32;
+      photometric = PHOTOMETRIC_MINISBLACK;
+      bytesperrow = cols * 8;
+      alpha = 1;
+      break;
+#endif
+    default:
+      g_print ("Can't save this image type\n");
       return 0;
     }
 
@@ -847,6 +1073,82 @@ save_image (char   *filename,
 		  data[col+1] = t[col + 1] * t[col + 3] / 255;
 		  data[col+2] = t[col + 2] * t[col + 3] / 255;
 		  data[col+3] = t[col + 3];  /* alpha channel */
+		}
+	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+	      break;
+	    case U16_INDEXED_IMAGE:
+	      break;
+	    case U16_GRAY_IMAGE:
+	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+	      break;
+	    case U16_GRAYA_IMAGE:
+		{ 
+		  guint16 * s = (guint16*)t;
+		  guint16 * d = (guint16*)data;
+                  gint32 temp;
+		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+		    {
+		      /* pre-multiply gray by alpha */
+		      /*d[col + 0] = (s[col + 0] * s[col + 1]) / 65535;*/
+		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 0], s[col + 1], temp);
+		      d[col + 1] = s[col + 1];  /* alpha channel */
+		    }
+		}
+	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+	      break;
+	    case U16_RGB_IMAGE:
+	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+	      break;
+	    case U16_RGBA_IMAGE:
+		{
+		  guint16 * s = (guint16*)t;
+		  guint16 * d = (guint16*)data;
+		  gint32 temp;
+		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+		    {
+		      /* pre-multiply rgb by alpha */
+		     /*d[col+0] = s[col + 0] * s[col + 3] / 65535;
+		      d[col+1] = s[col + 1] * s[col + 3] / 65535;
+		      d[col+2] = s[col + 2] * s[col + 3] / 65535;*/
+		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 0], s[col + 3], temp);
+		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 1], s[col + 3], temp);
+		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 2], s[col + 3], temp);
+		      d[col+3] = s[col + 3];  /* alpha channel */
+		    }
+		}
+	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+	      break;
+	    case FLOAT_GRAY_IMAGE:
+	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+	      break;
+	    case FLOAT_GRAYA_IMAGE:
+		{
+		  gfloat *s = (gfloat*)t;
+                  gfloat *d = (gfloat*)data;
+		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+		    {
+		      /* pre-multiply gray by alpha */
+		      d[col + 0] = s[col + 0] * s[col + 1];
+		      d[col + 1] = s[col + 1];  /* alpha channel */
+		    }
+		}
+	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
+	      break;
+	    case FLOAT_RGB_IMAGE:
+	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
+	      break;
+	    case FLOAT_RGBA_IMAGE:
+		{
+		  gfloat *s = (gfloat*)t;
+                  gfloat *d = (gfloat*)data;
+		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
+		    {
+		      /* pre-multiply rgb by alpha */
+		      d[col+0] = s[col + 0] * s[col + 3];
+		      d[col+1] = s[col + 1] * s[col + 3];
+		      d[col+2] = s[col + 2] * s[col + 3];
+		      d[col+3] = s[col + 3];  /* alpha channel */
+		    }
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
