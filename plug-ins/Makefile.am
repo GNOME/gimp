@@ -3,9 +3,32 @@
 EXTRA_DIST = \
 	makefile.msc
 
-if BUILD_PYTHON
-pygimp=pygimp
+if BUILD_PRINT
+print = print
 endif
+
+if BUILD_PYTHON
+pygimp = pygimp
+endif
+
+if BUILD_HELPBROWSER
+helpbrowser = helpbrowser
+endif
+
+if BUILD_WEBBROWSER
+webbrowser = webbrowser
+endif
+
+if BUILD_XJT
+xjt = xjt
+endif
+
+if OS_WIN32
+win32dirs = \
+	twain	\
+	winsnap
+endif
+
 
 SUBDIRS = 			\
 	libgck			\
@@ -23,19 +46,18 @@ SUBDIRS = 			\
 	gflare			\
 	gfli			\
 	gimpressionist		\
-	$(HELPBROWSER)		\
+	$(helpbrowser)		\
 	ifscompose		\
 	imagemap		\
 	maze			\
 	mosaic			\
 	pagecurl		\
-	$(PRINT)		\
+	$(print)		\
 	$(pygimp)		\
 	rcm			\
 	sgi			\
 	sel2path		\
-	$(TWAIN)		\
-	$(WEBBROWSER)		\
-	$(WINSNAP)		\
-	$(XJT)			\
+	$(webbrowser)		\
+	$(win32dirs)		\
+	$(xjt)			\
 	common

@@ -1,5 +1,12 @@
 2003-06-09  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/Makefile.am: use automake conditionals for
+	subdirectories so that they will always be included in the
+	tarball.
+	
+2003-06-09  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpsmudge.c (gimp_smudge_start): now that
 	blend_pixels() behaves correctly, we can simply initialize the
 	smudge buffer with transparent pixels.
