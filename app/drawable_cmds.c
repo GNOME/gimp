@@ -107,10 +107,11 @@ drawable_fill_invoker (Argument *args)
 
       switch (int_value)
 	{
-	case 0: fill_type = BACKGROUND_FILL; break;
-	case 1: fill_type = WHITE_FILL; break;
-	case 2: fill_type = TRANSPARENT_FILL; break;
-	case 3: fill_type = NO_FILL; break;
+	case 0: fill_type = FOREGROUND_FILL; break;
+	case 1: fill_type = BACKGROUND_FILL; break;
+	case 2: fill_type = WHITE_FILL; break;
+	case 3: fill_type = TRANSPARENT_FILL; break;
+	case 4: fill_type = NO_FILL; break;
 	default: success = FALSE;
 	}
     }
@@ -138,7 +139,7 @@ ProcRecord drawable_fill_proc =
 {
   "gimp_drawable_fill",
   "Fill the drawable with the specified fill mode.",
-  "This procedure fills the drawable with the fill mode.  If the fill mode is background, the current background color is used.  If the fill type is white, then white is used.  Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent.  If the drawable has no alpha channel, it is filled to white.  No fill leaves the drawable's contents undefined.  This procedure is unlike the bucket fill tool because it fills regardless of a selection",
+  "This procedure fills the drawable with the fill mode.  If the fill mode is foreground the current foreground color is used.  If the fill mode is background, the current background color is used.  If the fill type is white, then white is used.  Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent.  If the drawable has no alpha channel, it is filled to white.  No fill leaves the drawable's contents undefined.  This procedure is unlike the bucket fill tool because it fills regardless of a selection",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -58,9 +58,11 @@ typedef enum
 
 typedef enum
 {
+  FG_IMAGE_FILL,
   BG_IMAGE_FILL,
   WHITE_IMAGE_FILL,
-  TRANS_IMAGE_FILL
+  TRANS_IMAGE_FILL,
+  NO_IMAGE_FILL
 } GFillType;
 
 typedef enum

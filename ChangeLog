@@ -1,3 +1,13 @@
+Tue Jul 28 15:42:39 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/drawable_cmds.c (drawable_fill_invoker): 
+	* libgimp/gimpenums.h: Changed the libgimp GFillType
+	enums to match the core enums in value, the names still
+	differ. 
+	
+	* plug-ins/script-fu/script-fu.c: changed the fill setvars to use
+	the GFillType enums. 
+	
 Tue Jul 28 14:03:57 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am

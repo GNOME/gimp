@@ -387,10 +387,11 @@ init_constants ()
   setvar (cintern ("BG-BUCKET-FILL"), flocons (1), NIL);
   setvar (cintern ("PATTERN-BUCKET-FILL"), flocons (2), NIL);
 
-  setvar (cintern ("BG-IMAGE-FILL"), flocons (0), NIL);
-  setvar (cintern ("WHITE-IMAGE-FILL"), flocons (1), NIL);
-  setvar (cintern ("TRANS-IMAGE-FILL"), flocons (2), NIL);
-  setvar (cintern ("NO-IMAGE-FILL"), flocons (3), NIL);
+  setvar (cintern ("FG-IMAGE-FILL"), flocons (FG_IMAGE_FILL), NIL);
+  setvar (cintern ("BG-IMAGE-FILL"), flocons (BG_IMAGE_FILL), NIL);
+  setvar (cintern ("WHITE-IMAGE-FILL"), flocons (WHITE_IMAGE_FILL), NIL);
+  setvar (cintern ("TRANS-IMAGE-FILL"), flocons (TRANS_IMAGE_FILL), NIL);
+  setvar (cintern ("NO-IMAGE-FILL"), flocons (NO_IMAGE_FILL), NIL);
 
   setvar (cintern ("RGB"), flocons (0), NIL);
   setvar (cintern ("GRAY"), flocons (1), NIL);
