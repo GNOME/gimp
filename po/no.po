@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 2000-02-02 17:39-0800\n"
-"PO-Revision-Date: 2000-01-27 17:33-05:00\n"
+"POT-Creation-Date: 2000-02-03 09:26-0500\n"
+"PO-Revision-Date: 2000-02-03 08:25-05:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -367,12 +367,12 @@ msgstr "Mellomrom:"
 #. this should never happen
 #: app/brush_select.c:1792
 msgid "Sorry, this brush can't be edited."
-msgstr ""
+msgstr "Beklager, denne penselen kan ikke redigeres."
 
 #. this should never happen
 #: app/brush_select.c:1821
 msgid "Sorry, this brush can't be deleted."
-msgstr ""
+msgstr "Beklager, denne penselen kan ikke slettes."
 
 #: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:247
 msgid "Sample Merged"
@@ -772,12 +772,10 @@ msgid "General Palette Options"
 msgstr "Generelle alternativer for palett"
 
 #: app/convert.c:530
-#, fuzzy
 msgid "Generate Optimal Palette:"
 msgstr "Generér optimal palett:"
 
 #: app/convert.c:563
-#, fuzzy
 msgid "# of Colors:"
 msgstr "antall farger:"
 
@@ -787,22 +785,18 @@ msgid "Custom Palette Options"
 msgstr "Egendefinerte alternativer for palett"
 
 #: app/convert.c:585
-#, fuzzy
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Fjern ubrukte farger fra endelig palett"
 
 #: app/convert.c:597
-#, fuzzy
 msgid "Use Custom Palette:"
-msgstr "Bruk egendefinert palett"
+msgstr "Bruk egendefinert palett:"
 
 #: app/convert.c:631
-#, fuzzy
 msgid "Use WWW-Optimized Palette"
-msgstr "Bruk WWW-optimisert palett"
+msgstr "Bruk WWW-optimert palett"
 
 #: app/convert.c:647
-#, fuzzy
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Bruk sort/hvit (1-bit) palett"
 
@@ -811,27 +805,22 @@ msgid "Dither Options"
 msgstr "Alternativer for dithering"
 
 #: app/convert.c:671
-#, fuzzy
 msgid "No Color Dithering"
 msgstr "Ingen dithering av farger"
 
 #: app/convert.c:685
-#, fuzzy
 msgid "Positioned Color Dithering"
 msgstr "Posisjonert dithering av farger"
 
 #: app/convert.c:699
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg fargedithering (redusert fargelekkasje)"
 
 #: app/convert.c:712
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg dithering (normal)"
 
 #: app/convert.c:726
-#, fuzzy
 msgid "Enable Dithering of Transparency"
 msgstr "Slå på dithering av gjennomsiktighet"
 
@@ -851,9 +840,8 @@ msgstr ""
 "en gjennomsiktig eller animert GIF-fil av dette bildet."
 
 #: app/convert.c:965
-#, fuzzy
 msgid "Select Custom Palette"
-msgstr "Bruk egendefinert palett"
+msgstr "Velg egendefinert palett"
 
 #: app/convolve.c:172
 msgid "Convolve Type"
@@ -1303,9 +1291,8 @@ msgid "No"
 msgstr "Nei"
 
 #: app/flip_tool.c:82
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Alternativer for vendeverktøy"
+msgstr "Verktøy for vending"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1588
 #: app/preferences_dialog.c:2347
@@ -1439,18 +1426,19 @@ msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Rør av pensler må ha minst en pensel."
 
 #: app/gimpbrushpipe.c:396
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Klarte ikke å laste en av\n"
+"penselene i penselrøret."
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Klarte ikke å lese sti fra %s"
+msgstr "Klarte ikke å lese bildebørste."
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1479,6 +1467,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Kunne ikke finne GIMP Hjelpleser prosedyren.\n"
+"Den ble sannsynligvis ikke kompilert fordi\n"
+"du ikke har GtkXmHTML installert."
 
 #: app/gimpimage.c:1135
 msgid "attach parasite to image"
@@ -1627,11 +1618,11 @@ msgstr "Kan ikke skrive til %s; %s"
 #: app/gimpui.c:449
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Melding gjentatt %d ganger"
 
 #: app/gimpui.c:462
 msgid "Message repeated once"
-msgstr ""
+msgstr "Melding gjentatt en gang"
 
 #: app/gimpui.c:476
 msgid ""
@@ -1639,6 +1630,9 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr.\n"
 msgstr ""
+"ADVARSEL:\n"
+"For mange åpne meldingsdialoger.\n"
+"Meldinger dirigeres til stderr.\n"
 
 #: app/gimpui.c:483
 msgid "GIMP Message"
@@ -2647,7 +2641,6 @@ msgstr ""
 "\t\tetter disse.\n"
 
 #: app/install.c:241
-#, fuzzy
 msgid ""
 "\t\tThis subdirectory can be used to store user created,\n"
 "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
@@ -2701,11 +2694,11 @@ msgstr "Ignorer"
 
 #: app/install.c:294 app/install.c:440
 msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-fet-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:296
 msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
 
 #: app/install.c:411
 msgid "Installation Log"
@@ -2717,7 +2710,7 @@ msgstr "Fortsett"
 
 #: app/install.c:441
 msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
@@ -3155,9 +3148,8 @@ msgid "Load/Save Levels"
 msgstr "Laste/Lagre nivåer"
 
 #: app/magnify.c:99
-#, fuzzy
 msgid "Magnify Tool"
-msgstr "Forstørr"
+msgstr "Verktøy for forstørrelse"
 
 #: app/magnify.c:108
 msgid "Allow Window Resizing"
@@ -3882,19 +3874,16 @@ msgid "/Tools/Swap Colors"
 msgstr "/Verktøy/Bytt farger"
 
 #: app/menus.c:543
-#, fuzzy
 msgid "/Tools/Select Tools"
-msgstr "/Verktøy/Rektangelutvalg"
+msgstr "/Verktøy/Utvalgsverktøy"
 
 #: app/menus.c:545
-#, fuzzy
 msgid "/Tools/Transform Tools"
-msgstr "/Verktøy/Transformer"
+msgstr "/Verktøy/Transformasjonsverktøy"
 
 #: app/menus.c:547
-#, fuzzy
 msgid "/Tools/Paint Tools"
-msgstr "/Verktøy/Malerpensel"
+msgstr "/Verktøy/Tegneverktøy"
 
 #. <Image>/Dialogs
 #: app/menus.c:552
@@ -4121,9 +4110,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alfa til utvalg"
 
 #: app/menus.c:749
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Rediger lagets attributter"
+msgstr "/Rediger lagattributter..."
 
 #: app/menus.c:760
 msgid "/New Channel..."
@@ -4162,9 +4150,8 @@ msgid "/Delete Channel"
 msgstr "/Slett kanal"
 
 #: app/menus.c:787
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Rediger attributter for kanal"
+msgstr "/Rediger attributter for kanal..."
 
 #: app/menus.c:798
 msgid "/New Path"
@@ -4207,9 +4194,8 @@ msgid "/Export Path..."
 msgstr "/Eksportsti..."
 
 #: app/menus.c:824
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Rediger lagets attributter"
+msgstr "Rediger attributter for sti..."
 
 #: app/menus.c:1333
 #, c-format
@@ -4308,9 +4294,8 @@ msgid "Autoload during startup"
 msgstr "Autolasting under oppstart"
 
 #: app/move.c:454
-#, fuzzy
 msgid "Move Tool"
-msgstr "Alternativer for flytteverktøy"
+msgstr "Flytteverktøy"
 
 #. create the info dialog
 #: app/nav_window.c:1254
@@ -4531,9 +4516,8 @@ msgid "Palette Selection"
 msgstr "Palettutvalg"
 
 #: app/path_tool.c:1412
-#, fuzzy
 msgid "Path Tool"
-msgstr "Alternativer for stiverktøy"
+msgstr "Stiverktøy"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -4581,9 +4565,8 @@ msgid "Path %d"
 msgstr "Sti %d"
 
 #: app/paths_dialog.c:1242
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Rediger lagets attributter"
+msgstr "Rediger stiattributter"
 
 #: app/paths_dialog.c:1245
 msgid "Enter a new name for the path"
@@ -5482,27 +5465,22 @@ msgid "This tool has no options."
 msgstr "Dette verktøyet har ingen alternativer"
 
 #: app/tool_options.c:119
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Alternativer for rektangulært utvalg"
+msgstr "Rektangulært utvalg"
 
 #: app/tool_options.c:121
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Alternativer for eliptisk utvalg"
+msgstr "Eliptisk utvalg"
 
 #: app/tool_options.c:123
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Alternativer for frihånds-utvalg"
+msgstr "Frihånds-utvalg"
 
 #: app/tool_options.c:125
-#, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Fuzzy utvalg"
 
 #: app/tool_options.c:127
-#, fuzzy
 msgid "Bezier Selection"
 msgstr "Bezierutvalg"
 
@@ -5511,9 +5489,8 @@ msgid "Intelligent Scissors"
 msgstr "Intelligent saks"
 
 #: app/tool_options.c:131
-#, fuzzy
 msgid "By-Color Selection"
-msgstr "Ved fargevalg"
+msgstr "Utvalg etter farge"
 
 #: app/tool_options.c:162
 msgid "Feather"
@@ -5528,9 +5505,8 @@ msgid "Bucket Fill"
 msgstr "Bøttefylling"
 
 #: app/tool_options.c:424
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Bland: "
+msgstr "Blandeverktøy"
 
 #: app/tool_options.c:426 app/tools.c:373
 msgid "Pencil"
@@ -5549,27 +5525,24 @@ msgid "Airbrush"
 msgstr "Luftpensel"
 
 #: app/tool_options.c:434
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Alternativer for kloneverktøy"
+msgstr "Kloneverktøy"
 
 #: app/tool_options.c:436
-#, fuzzy
 msgid "Convolver"
-msgstr "Convolve"
+msgstr "Convolver"
 
 #: app/tool_options.c:438
 msgid "Ink Tool"
-msgstr ""
+msgstr "Blekkverktøy"
 
 #: app/tool_options.c:440 app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
 msgstr "Blek eller brenn"
 
 #: app/tool_options.c:442
-#, fuzzy
 msgid "Smudge Tool"
-msgstr "Tilsmuss"
+msgstr "Tilsmussingsverktøy"
 
 #: app/tool_options.c:444 app/tools.c:517
 msgid "Xinput Airbrush"
@@ -5600,9 +5573,8 @@ msgid "Rect Select"
 msgstr "Rektangelutvalg"
 
 #: app/tools.c:86
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Verktøy/Rektangelutvalg"
+msgstr "/Verktøy/Utvalgsverktøy/Rektangelutvalg"
 
 #: app/tools.c:89
 msgid "Select rectangular regions"
@@ -5613,9 +5585,8 @@ msgid "Ellipse Select"
 msgstr "Elipseutvalg"
 
 #: app/tools.c:102
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Verktøy/Elipseutvalg"
+msgstr "/Verktøy/Utvalgsverktøy/Elipseutvalg"
 
 #: app/tools.c:105
 msgid "Select elliptical regions"
@@ -5626,9 +5597,8 @@ msgid "Free Select"
 msgstr "Fritt utvalg"
 
 #: app/tools.c:118
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Verktøy/Fritt utvalg"
+msgstr "/Verktøy/Utvalgsverktøy/Fritt utvalg"
 
 #: app/tools.c:121
 msgid "Select hand-drawn regions"
@@ -5639,9 +5609,8 @@ msgid "Fuzzy Select"
 msgstr "Fuzzy utvalg"
 
 #: app/tools.c:134
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Verktøy/Fuzzy utvalg"
+msgstr "/Verktøy/Utvalgsverktøy/Fuzzy utvalg"
 
 #: app/tools.c:137
 msgid "Select contiguous regions"
@@ -5652,18 +5621,16 @@ msgid "Bezier Select"
 msgstr "Bezierutvalg"
 
 #: app/tools.c:150
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Verktøy/Bezierutvalg"
+msgstr "/Verktøy/Utvalgsverktøy/Bezierutvalg"
 
 #: app/tools.c:153
 msgid "Select regions using Bezier curves"
 msgstr "Velg områder ved bruk av Bezier kurver"
 
 #: app/tools.c:166
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Verktøy/Intelligent saks"
+msgstr "/Verktøy/Utvalgsverktøy/Intelligent saks"
 
 #: app/tools.c:169
 msgid "Select shapes from image"
@@ -5674,9 +5641,8 @@ msgid "Move"
 msgstr "Flytt"
 
 #: app/tools.c:182
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Verktøy/Transformer"
+msgstr "/Verktøy/Transformeringsverktøy/Transformer"
 
 #: app/tools.c:185
 msgid "Move layers & selections"
@@ -5687,18 +5653,16 @@ msgid "Magnify"
 msgstr "Forstørr"
 
 #: app/tools.c:198
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Verktøy/Transformer"
+msgstr "/Verktøy/Transformasjonsverktøy/cTransformer"
 
 #: app/tools.c:201
 msgid "Zoom in & out"
 msgstr "Zoom inn og ut"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Verktøy/Beskjær og endre størrelse"
+msgstr "/Verktøy/Transformasjonsverktøy/Beskjær og endre størrelse"
 
 #: app/tools.c:217
 msgid "Crop or resize the image"
@@ -5711,9 +5675,8 @@ msgid "Transform"
 msgstr "Transformer"
 
 #: app/tools.c:230
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Verktøy/Transformer"
+msgstr "/Verktøy/Transformasjonsverktøy/Transformer"
 
 #: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Rotation, scaling, shearing, perspective."
@@ -5724,9 +5687,8 @@ msgid "Flip"
 msgstr "Vend"
 
 #: app/tools.c:294
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Verktøy/Transformer"
+msgstr "/Verktøy/Transformasjonsverktøy/Transformer"
 
 #: app/tools.c:297
 msgid "Flip the layer or selection"
@@ -5753,9 +5715,8 @@ msgid "Pick colors from the image"
 msgstr "Plukk farger fra bildet"
 
 #: app/tools.c:342
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Verktøy/Bøttefyll"
+msgstr "/Verktøy/Tegneverktøy/Bøttefyll"
 
 #: app/tools.c:345
 msgid "Fill with a color or pattern"
@@ -5766,45 +5727,40 @@ msgid "Blend"
 msgstr "Fortynn"
 
 #: app/tools.c:358
-#, fuzzy
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/Verktøy/Fortynn"
+msgstr "/Verktøy/Tegneverktøy/Fortynn"
 
 #: app/tools.c:361
 msgid "Fill with a color gradient"
 msgstr "Fyll med en farge eller gradient"
 
 #: app/tools.c:374
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Verktøy/Blyant"
+msgstr "/Verktøy/Tegneverktøy/Blyant"
 
 #: app/tools.c:377
 msgid "Draw sharp pencil strokes"
 msgstr "Tegn skarpe blyantstreker"
 
 #: app/tools.c:390
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Verktøy/Malerpensel"
+msgstr "/Verktøy/Tegneverktøy/Malerpensel"
 
 #: app/tools.c:393
 msgid "Paint fuzzy brush strokes"
 msgstr "Mal fuzzy malerstrøk"
 
 #: app/tools.c:406
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Verktøy/Viskelær"
+msgstr "/Verktøy/Tegneverktøy/Viskelær"
 
 #: app/tools.c:409
 msgid "Erase to background or transparency"
 msgstr "Slett til bakgrunn eller gjennomsiktighet"
 
 #: app/tools.c:422
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Verktøy/Malerpensel"
+msgstr "/Verktøy/Tegneverktøy/Malerpensel"
 
 #: app/tools.c:425
 msgid "Airbrush with variable pressure"
@@ -5815,9 +5771,8 @@ msgid "Clone"
 msgstr "Klone"
 
 #: app/tools.c:438
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Verktøy/Klone"
+msgstr "/Verktøy/Tegneverktøy/Klone"
 
 #: app/tools.c:441
 msgid "Paint using patterns or image regions"
@@ -5828,7 +5783,6 @@ msgid "Convolve"
 msgstr "Convolve"
 
 #: app/tools.c:454
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
 msgstr "/Verktøy/Convolve"
 
@@ -5841,32 +5795,28 @@ msgid "Ink"
 msgstr "Blekk"
 
 #: app/tools.c:470
-#, fuzzy
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Verktøy/Malerpensel"
+msgstr "/Verktøy/Tegneverktøy/Blekk"
 
 #: app/tools.c:473
 msgid "Draw in ink"
 msgstr "Tegn med blekk"
 
 #: app/tools.c:486
-#, fuzzy
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Verktøy/BlekBrenn"
+msgstr "/Verktøy/Tegneverktøy/BlekBrenn"
 
 #: app/tools.c:501 app/tools.c:505
 msgid "Smudge"
 msgstr "Tilsmuss"
 
 #: app/tools.c:502
-#, fuzzy
 msgid "/Tools/Paint Tools/Smudge"
-msgstr "/Verktøy/Tilsmuss"
+msgstr "/Verktøy/Tegneverktøy/Tilsmuss"
 
 #: app/tools.c:518
-#, fuzzy
 msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/Verktøy/XinputAirbrush"
+msgstr "/Verktøy/Tegneverktøy/XinputAirbrush"
 
 #: app/tools.c:521
 msgid "Natural Airbrush"
@@ -5997,9 +5947,8 @@ msgid "Transformation"
 msgstr "Transformasjon"
 
 #: app/transform_tool.c:190
-#, fuzzy
 msgid "Transform Tool"
-msgstr "Transformer"
+msgstr "Transformasjonsverktøy"
 
 #: app/transform_tool.c:213
 msgid "Rotation"
@@ -6314,14 +6263,12 @@ msgid "Gamma:"
 msgstr "Gamma:"
 
 #: modules/colorsel_gtk.c:48
-#, fuzzy
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK fargevelger som en innsettbar fargevelger"
 
 #: modules/colorsel_triangle.c:78
-#, fuzzy
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr "Fargevelger i tegnestil som innsettbar fargevelger"
+msgstr "Fargevelger med tegnet stil som innsettbar fargevelger"
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
@@ -6338,148 +6285,3 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
-
-#~ msgid "Brightness-Contrast Options"
-#~ msgstr "Lysstyrke-kontrast alternativer"
-
-#~ msgid ""
-#~ "We are all fresh out of brush editors today,\n"
-#~ "please write your own or try back tomorrow\n"
-#~ msgstr ""
-#~ "Vi er helt tom for penselredigerere idag,\n"
-#~ "vennligst skriv din egen eller prøv igjen i morgen\n"
-
-#~ msgid "Wilber says: \"I don't know how to delete that brush.\""
-#~ msgstr "Wilber sier: \"Jeg vet ikke hvordan jeg skal slette den penselen.\""
-
-#~ msgid "Color Balance Options"
-#~ msgstr "Alternativer for fargebalanse"
-
-#~ msgid "Color Picker Options"
-#~ msgstr "Alternativer for fargeplukker"
-
-#~ msgid "Crop & Resize Options"
-#~ msgstr "Alternativer for beskjæring og endring av størrelse"
-
-#~ msgid "Curves Options"
-#~ msgstr "Alternativer for kurver"
-
-#~ msgid "Histogram Options"
-#~ msgstr "Alternativer for histogram"
-
-#~ msgid "Hue-Saturation Options"
-#~ msgstr "Alternativer for glød/metning"
-
-#~ msgid "Levels Options"
-#~ msgstr "Alternativer for nivåer"
-
-#~ msgid "Magnify Options"
-#~ msgstr "Alternativer for forstørrelse"
-
-#~ msgid "Measure Options"
-#~ msgstr "Alternativer for mål"
-
-#~ msgid "Rename path"
-#~ msgstr "Omdøp sti"
-
-#~ msgid "New File Settings"
-#~ msgstr "Nye innstillinger for fil"
-
-#~ msgid "Display Settings"
-#~ msgstr "Skjerminnstillinger"
-
-#~ msgid "Interface Settings"
-#~ msgstr "Innstillinger for grensesnitt"
-
-#~ msgid "Help System Settings"
-#~ msgstr "Innstillinger for hjelpesystem"
-
-#~ msgid "Image Windows Settings"
-#~ msgstr "Innstillinger for bildevinduet"
-
-#~ msgid "Tool Options Settings"
-#~ msgstr "Innstillinger for verktøysalternativer"
-
-#~ msgid "Environment Settings"
-#~ msgstr "Innstillinger for miljø"
-
-#~ msgid "Monitor Information"
-#~ msgstr "Monitorinformasjon"
-
-#~ msgid "Directories Settings"
-#~ msgstr "Kataloginnstillinger"
-
-#~ msgid "Text Tool Options"
-#~ msgstr "Alternativer for tekstverktøy"
-
-#~ msgid "Threshold Options"
-#~ msgstr "Alternativer for terskel"
-
-#~ msgid "Fuzzy Selection Options"
-#~ msgstr "Alternativer for \"fuzzy\" utvalg"
-
-#~ msgid "Bezier Selection Options"
-#~ msgstr "Alternativer for \"bezier\" utvalg"
-
-#~ msgid "Intelligent Scissors Options"
-#~ msgstr "Alternativer for intelligent saks"
-
-#~ msgid "By-Color Select Options"
-#~ msgstr "Alternativer for utvalg etter farge"
-
-#~ msgid "Bucket Fill Options"
-#~ msgstr "Alternativer for bøtte-fyll"
-
-#~ msgid "Blend Options"
-#~ msgstr "Alternativer for bland"
-
-#~ msgid "Pencil Options"
-#~ msgstr "Alternativer for blyant"
-
-#~ msgid "Paintbrush Options"
-#~ msgstr "Alternativer for pensel"
-
-#~ msgid "Eraser Options"
-#~ msgstr "Alternativer for viskelær"
-
-#~ msgid "Airbrush Options"
-#~ msgstr "Alternativer for airbrush"
-
-#~ msgid "Convolver Options"
-#~ msgstr "Alternativer for \"Convolver\""
-
-#~ msgid "Ink Options"
-#~ msgstr "Alternativer for blekk"
-
-#~ msgid "Dodge or Burn Options"
-#~ msgstr "Alternativer for Blek og Brenn"
-
-#~ msgid "Smudge Options"
-#~ msgstr "Alternativer for Smudge"
-
-#~ msgid "Xinput Airbrush Options"
-#~ msgstr "Alternativer for Xinput airbrush"
-
-#~ msgid "/Tools/Move"
-#~ msgstr "/Verktøy/Flytt"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Verktøy/Forstørr"
-
-#~ msgid "Transform the layer or selection"
-#~ msgstr "Transformer laget eller utvalget"
-
-#~ msgid "/Tools/Flip"
-#~ msgstr "/Verktøy/Vend"
-
-#~ msgid "/Tools/Airbrush"
-#~ msgstr "/Verktøy/Luftpensel"
-
-#~ msgid "/Tools/Ink"
-#~ msgstr "/Verktøy/Blekk"
-
-#~ msgid "transform_core_paste: layer_new_frome_tiles() failed"
-#~ msgstr "transform_core_paste: layer_new_frome_tiles() feilet"
-
-#~ msgid "Transform Tool Options"
-#~ msgstr "Alternativer for transformeringsverktøy"
