@@ -1,5 +1,16 @@
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
+	* app/base/curves.[ch]
+	* app/tools/gimpcurvestool.c: defined CURVES_NUM_POINTS and use it.
+
+	* tools/pdbgen/pdb/color.pdb (curves_spline_invoker): unset the
+	last control point which got initialized to (255,255) by
+	curves_init(). Fixes bug #153635.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2004-09-24  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-message.c: removed a linebreak from a
 	warning message.
 

@@ -86,7 +86,7 @@ curves_channel_reset (Curves               *curves,
   for (j = 0; j < 256; j++)
     curves->curve[channel][j] = j;
 
-  for (j = 0; j < 17; j++)
+  for (j = 0; j < CURVES_NUM_POINTS; j++)
     {
       curves->points[channel][j][0] = -1;
       curves->points[channel][j][1] = -1;
@@ -94,8 +94,8 @@ curves_channel_reset (Curves               *curves,
 
   curves->points[channel][0][0]  = 0;
   curves->points[channel][0][1]  = 0;
-  curves->points[channel][16][0] = 255;
-  curves->points[channel][16][1] = 255;
+  curves->points[channel][CURVES_NUM_POINTS - 1][0] = 255;
+  curves->points[channel][CURVES_NUM_POINTS - 1][1] = 255;
 }
 
 void
@@ -103,7 +103,7 @@ curves_calculate_curve (Curves               *curves,
                         GimpHistogramChannel  channel)
 {
   gint i;
-  gint points[17];
+  gint points[CURVES_NUM_POINTS];
   gint num_pts;
   gint p1, p2, p3, p4;
 
@@ -117,7 +117,7 @@ curves_calculate_curve (Curves               *curves,
     case GIMP_CURVE_SMOOTH:
       /*  cycle through the curves  */
       num_pts = 0;
-      for (i = 0; i < 17; i++)
+      for (i = 0; i < CURVES_NUM_POINTS; i++)
 	if (curves->points[channel][i][0] != -1)
 	  points[num_pts++] = i;
 

@@ -406,7 +406,7 @@ curves_add_point (GimpCurvesTool *tool,
       curvex   = tool->col_value[cchan];
       distance = G_MAXINT;
 
-      for (i = 0; i < 17; i++)
+      for (i = 0; i < CURVES_NUM_POINTS; i++)
 	{
 	  if (tool->curves->points[cchan][i][0] != -1)
 	    if (abs (curvex - tool->curves->points[cchan][i][0]) < distance)
@@ -663,8 +663,8 @@ gimp_curves_tool_settings_load (GimpImageMapTool *image_map_tool,
   gint            i, j;
   gint            fields;
   gchar           buf[50];
-  gint            index[5][17];
-  gint            value[5][17];
+  gint            index[5][CURVES_NUM_POINTS];
+  gint            value[5][CURVES_NUM_POINTS];
 
   if (! fgets (buf, sizeof (buf), file))
     return FALSE;
@@ -674,7 +674,7 @@ gimp_curves_tool_settings_load (GimpImageMapTool *image_map_tool,
 
   for (i = 0; i < 5; i++)
     {
-      for (j = 0; j < 17; j++)
+      for (j = 0; j < CURVES_NUM_POINTS; j++)
 	{
 	  fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
 	  if (fields != 2)
@@ -690,7 +690,7 @@ gimp_curves_tool_settings_load (GimpImageMapTool *image_map_tool,
     {
       tool->curves->curve_type[i] = GIMP_CURVE_SMOOTH;
 
-      for (j = 0; j < 17; j++)
+      for (j = 0; j < CURVES_NUM_POINTS; j++)
 	{
 	  tool->curves->points[i][j][0] = index[i][j];
 	  tool->curves->points[i][j][1] = value[i][j];
@@ -734,7 +734,7 @@ gimp_curves_tool_settings_save (GimpImageMapTool *image_map_tool,
 
   for (i = 0; i < 5; i++)
     {
-      for (j = 0; j < 17; j++)
+      for (j = 0; j < CURVES_NUM_POINTS; j++)
 	fprintf (file, "%d %d ",
                  tool->curves->points[i][j][0],
                  tool->curves->points[i][j][1]);
@@ -929,7 +929,7 @@ curves_graph_events (GtkWidget      *widget,
   y = CLAMP0255 (y);
 
   distance = G_MAXINT;
-  for (i = 0, closest_point = 0; i < 17; i++)
+  for (i = 0, closest_point = 0; i < CURVES_NUM_POINTS; i++)
     {
       if (tool->curves->points[tool->channel][i][0] != -1)
 	if (abs (x - tool->curves->points[tool->channel][i][0]) < distance)
@@ -964,7 +964,7 @@ curves_graph_events (GtkWidget      *widget,
 		break;
 	      }
 	  tool->rightmost = 256;
-	  for (i = closest_point + 1; i < 17; i++)
+	  for (i = closest_point + 1; i < CURVES_NUM_POINTS; i++)
 	    if (tool->curves->points[tool->channel][i][0] != -1)
 	      {
 		tool->rightmost = tool->curves->points[tool->channel][i][0];
@@ -1211,7 +1211,7 @@ curves_graph_expose (GtkWidget      *widget,
   if (tool->curves->curve_type[tool->channel] == GIMP_CURVE_SMOOTH)
     {
       /*  Draw the points  */
-      for (i = 0; i < 17; i++)
+      for (i = 0; i < CURVES_NUM_POINTS; i++)
         {
           x = tool->curves->points[tool->channel][i][0];
           if (x < 0)

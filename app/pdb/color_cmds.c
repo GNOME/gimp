@@ -707,6 +707,10 @@ curves_spline_invoker (Gimp         *gimp,
 
           curves_init (&c);
 
+          /*  unset the last point  */
+          c.points[channel][CURVES_NUM_POINTS - 1][0] = -1;
+          c.points[channel][CURVES_NUM_POINTS - 1][1] = -1;
+
           for (j = 0; j < num_points / 2; j++)
             {
               c.points[channel][j][0] = control_pts[j * 2];
