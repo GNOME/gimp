@@ -16,9 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <stdio.h>
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "colormaps.h"
+#include "cursorutil.h"
 #include "info_dialog.h"
 #include "info_window.h"
 #include "gdisplay.h"
@@ -33,11 +36,7 @@
 #define MAX_BUF 256
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-                       GDK_MOTION_NOTIFY | \
-                       GDK_POINTER_MOTION_MASK | \
                        GDK_BUTTON_PRESS_MASK | \
-                       GDK_BUTTON_RELEASE_MASK | \
-                       GDK_BUTTON_MOTION_MASK | \
                        GDK_KEY_PRESS_MASK | \
                        GDK_KEY_RELEASE_MASK
                                                           
@@ -51,7 +50,7 @@ struct _NavWinData
 {
   gboolean   showingPreview;
   GtkWidget *preview;
-  void      *gdisp_ptr; /* I'a not happy 'bout this one */
+  void      *gdisp_ptr; /* I'm not happy 'bout this one */
   GtkWidget *previewBox;
   GtkWidget *previewAlign;
   gdouble    ratio;
@@ -59,7 +58,7 @@ struct _NavWinData
   gint       dispx;        /* x pos of top left corner of display area */
   gint       dispy;        /* y pos of top left corner of display area */
   gint       dispwidth;    /* width of display area */
-  gint       dispheight;   /* height left corner of display area */
+  gint       dispheight;   /* height of display area */
   gint       sig_hand_id;
   gboolean   sq_grabbed;   /* In the process of moving the preview square */
   gint       motion_offsetx;
@@ -312,7 +311,6 @@ create_preview_widget(NavWinData *iwd)
 /* 		      iwd); */
 
   gtk_widget_grab_focus(image);
-
 }
 
 #if 0
@@ -370,6 +368,9 @@ nav_window_update_preview(NavWinData *iwd)
   gint x,y,has_alpha;
   gint pwidth, pheight;
   GimpImage *gimage;
+
+  gimp_add_busy_cursors();
+
   gdisp = (GDisplay *) iwd->gdisp_ptr;
 
   /* Calculate preview size */
@@ -412,6 +413,8 @@ nav_window_update_preview(NavWinData *iwd)
   temp_buf_free (preview_buf);
 
   nav_window_disp_area(iwd,gdisp);
+
+  gimp_remove_busy_cursors (NULL);
 }
 
 static gint
@@ -485,7 +488,9 @@ nav_window_preview_events (GtkWidget *widget,
   GDisplay *gdisp;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
+  GdkModifierType mask;
   gint tx,ty;
+  gint mx,my;
 
   iwd = (NavWinData *)data;
 
@@ -519,6 +524,11 @@ nav_window_preview_events (GtkWidget *widget,
 	      iwd->motion_offsety = ty - iwd->dispy;
 	      iwd->sq_grabbed = TRUE;
 	      gtk_grab_add(widget);
+	      gdk_pointer_grab (widget->window, TRUE,
+				GDK_BUTTON_RELEASE_MASK |
+				GDK_POINTER_MOTION_HINT_MASK |
+				GDK_BUTTON_MOTION_MASK,
+				widget->window, NULL, 0);
 	    }
 	  else
 	    {
@@ -563,6 +573,8 @@ nav_window_preview_events (GtkWidget *widget,
 	case 1:
 	  iwd->sq_grabbed = FALSE;
 	  gtk_grab_remove(widget);
+	  gdk_pointer_ungrab (0);
+	  gdk_flush();
 	  break;
 	default:
 	  break;
@@ -575,8 +587,12 @@ nav_window_preview_events (GtkWidget *widget,
       if(!iwd->sq_grabbed)
 	break;
 
-      tx = mevent->x;
-      ty = mevent->y;
+      gdk_window_get_pointer (widget->window, &mx, &my, &mask);
+      tx = mx;
+      ty = my;
+
+      tx = tx - iwd->motion_offsetx;
+      ty = ty - iwd->motion_offsety;
 
       if(tx < 0)
 	{
@@ -598,19 +614,14 @@ nav_window_preview_events (GtkWidget *widget,
 	  ty = iwd->pwidth;
 	}
 
-      tx = tx - iwd->motion_offsetx;
-      ty = ty - iwd->motion_offsety;
-
-     if(tx < 0 || (tx + iwd->dispwidth) >= iwd->pwidth)
+      if((tx + iwd->dispwidth) >= iwd->pwidth)
 	{
-	  iwd->motion_offsetx = mevent->x - iwd->dispx;
-	  tx = iwd->dispx;
+	  tx = iwd->pwidth - iwd->dispwidth;
 	}
 
-     if(ty < 0 || (ty + iwd->dispheight) >= iwd->pheight)
+     if((ty + iwd->dispheight) >= iwd->pheight)
        {
-	 iwd->motion_offsety = mevent->y - iwd->dispy;
-	 ty = iwd->dispy;
+	 ty = iwd->pheight - iwd->dispheight;
        }
      
      /* Update the real display */

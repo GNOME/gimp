@@ -1,3 +1,9 @@
+Sat Aug 21 00:07:37 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/nav_window.c: Improved pointer tracking when
+	dragging navigator rectangle - less lag.  Enabled hourglass
+	when computing first thumbnail.
+
 1999-08-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/Makefile.am
