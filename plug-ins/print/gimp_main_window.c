@@ -287,9 +287,9 @@ set_entry_value (GtkWidget *entry,
 
   if (block)
     {
-      g_signal_handlers_block_by_func (entry, 
+      g_signal_handlers_block_by_func (entry,
                                        gimp_position_callback, NULL);
-      g_signal_handlers_block_by_func (entry, 
+      g_signal_handlers_block_by_func (entry,
                                        gimp_media_size_callback, NULL);
     }
 
@@ -299,7 +299,7 @@ set_entry_value (GtkWidget *entry,
     {
       g_signal_handlers_unblock_by_func (entry,
                                          gimp_position_callback, NULL);
-      g_signal_handlers_unblock_by_func (entry, 
+      g_signal_handlers_unblock_by_func (entry,
                                          gimp_media_size_callback, NULL);
     }
 }
@@ -478,18 +478,15 @@ create_positioning_frame (void)
    */
 
   orientation_menu =
-    gimp_option_menu_new (FALSE,
-			  _("Auto"), gimp_orientation_callback,
-			  GINT_TO_POINTER (ORIENT_AUTO), NULL, NULL, 0,
-			  _("Portrait"), gimp_orientation_callback,
-			  GINT_TO_POINTER (ORIENT_PORTRAIT), NULL, NULL, 0,
-			  _("Landscape"), gimp_orientation_callback,
-			  GINT_TO_POINTER (ORIENT_LANDSCAPE), NULL, NULL, 0,
-			  _("Upside down"), gimp_orientation_callback,
-			  GINT_TO_POINTER (ORIENT_UPSIDEDOWN), NULL, NULL, 0,
-			  _("Seascape"), gimp_orientation_callback,
-			  GINT_TO_POINTER (ORIENT_SEASCAPE), NULL, NULL, 0,
-			  NULL);
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (gimp_orientation_callback), NULL,
+                              ORIENT_AUTO,
+                              _("Auto"),        ORIENT_AUTO,       NULL,
+                              _("Portrait"),    ORIENT_PORTRAIT,   NULL,
+                              _("Landscape"),   ORIENT_LANDSCAPE,  NULL,
+                              _("Upside down"), ORIENT_UPSIDEDOWN, NULL,
+                              _("Seascape"),    ORIENT_SEASCAPE,   NULL,
+                              NULL);
   gimp_help_set_help_data (orientation_menu,
                            _("Select the orientation: portrait, landscape, "
                              "upside down, or seascape (upside down "
@@ -1655,7 +1652,7 @@ gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
 
   for (i = 0; i < num_items; i ++)
     list = g_list_prepend (list, g_strdup (items[i].text));
-  
+
   list = g_list_reverse (list);
 
   gtk_combo_set_popdown_strings (GTK_COMBO (combo), list);
@@ -1749,8 +1746,8 @@ gimp_do_misc_updates (void)
 
   gimp_do_color_updates ();
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (orientation_menu),
-			       stp_get_orientation (*pv) + 1);
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (orientation_menu),
+                                    stp_get_orientation (*pv));
 
   if (stp_get_unit(*pv) == 0)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unit_inch), TRUE);
@@ -2288,15 +2285,20 @@ static void
 gimp_orientation_callback (GtkWidget *widget,
 			   gpointer   data)
 {
+  gint  orientation;
+
+  gimp_menu_item_update (widget, &orientation);
+
   reset_preview ();
 
-  if (stp_get_orientation (*pv) != (gint) data)
+  if (stp_get_orientation (*pv) != orientation)
     {
       gimp_invalidate_preview_thumbnail ();
-      stp_set_orientation (*pv, (gint) data);
+      stp_set_orientation (*pv, orientation);
       stp_set_left (*pv, -1);
       stp_set_top (*pv, -1);
     }
+
   gimp_preview_update ();
 }
 
@@ -2865,7 +2867,7 @@ gimp_do_preview_thumbnail (void)
                       paper_left, paper_top,
                       MAX(2, preview_ppi * paper_width / 72),
                       MAX(2, preview_ppi * paper_height / 72));
-  
+
   /* draw printable frame */
   gdk_draw_rectangle (preview->window, gc, 0,
                       printable_left, printable_top,
