@@ -455,7 +455,7 @@ blur (GimpDrawable *drawable)
        *  prepare the first row and previous row
        */
       blur_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
-      blur_prepare_row (dp, cr, x1, y1, (x2 - x1));
+      blur_prepare_row (sp, cr, x1, y1, (x2 - x1));
       /*
        *  loop through the rows, applying the selected convolution
        */
