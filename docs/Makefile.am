@@ -6,15 +6,14 @@ EXTRA_DIST = \
 	cheat_sheet.txt		keybindings.txt	\
 	texinfo.tex 		script-fu.tex \
 	architecture.eps 	logo.eps \
-	net-fu.eps 		timeline.eps \
-	gimp-white-paper.tex
+	net-fu.eps 		timeline.eps
 
 info_TEXINFOS = pdb.texi
 
 pdb.texi: $(top_srcdir)/docs/pdb_self_doc.el pdb_dump
 	@EMACS@ --batch -l $(top_srcdir)/docs/pdb_self_doc.el -f make-docs-noargs
 
-pdb_dump: $(top_builddir)/app/*.c
+pdb_dump: $(top_srcdir)/app/*.c
 	$(top_builddir)/app/gimp --no-interface --batch '(gimp-procedural-db-dump "pdb_dump")' '(gimp-quit 0)'
 
 script-fu.ps: script-fu.dvi

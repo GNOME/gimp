@@ -85,7 +85,7 @@ gtk_found=no)
 ])
 
 if test -n "$DEBUGFLAG"; then
-  CFLAGS="$DEBUGFLAG"
+  CFLAGS="$DEBUGFLAG $CFLAGS"
 fi
 
 dnl Checks for programs.
