@@ -814,6 +814,9 @@ file_open_ok_callback (GtkWidget *w,
 
   g_assert (filename && raw_filename);
 
+  if (strlen (raw_filename) == 0)
+    return;
+
   err = stat (filename, &buf);
 
   if (err == 0 && (buf.st_mode & S_IFDIR))
