@@ -1,5 +1,18 @@
 2004-05-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/Makefile.am
+	* app/vectors/gimpcoordmath.[ch]: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimpcoords.[ch]: ...and added without the "bezier"
+	namespace.
+
+	* app/vectors/gimpbezierstroke.c: changed accordingly.
+
+	* app/Makefile.am: force it to link gimpcoords.o
+
+2004-05-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfigwriter.c
 	* app/core/gimpstrokeoptions.c
 	* app/widgets/gimpactiongroup.c

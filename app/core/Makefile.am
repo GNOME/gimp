@@ -61,6 +61,8 @@ libappcore_a_sources = \
 	gimpcontainer-filter.h		\
 	gimpcontext.c			\
 	gimpcontext.h			\
+	gimpcoords.c			\
+	gimpcoords.h			\
 	gimpdata.c			\
 	gimpdata.h			\
 	gimpdatafactory.c		\

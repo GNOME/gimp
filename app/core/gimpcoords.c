@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcoordmath.c
+ * gimpcoords.c
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,20 +23,22 @@
 
 #include <glib-object.h>
 
-#include "vectors-types.h"
+#include "core-types.h"
 
-#include "gimpcoordmath.h"
+#include "gimpcoords.h"
+
 
 #define INPUT_RESOLUTION 256
+
 
 /*   amul * a + bmul * b = ret_val  */
 
 void
-gimp_bezier_coords_mix (const gdouble     amul,
-                        const GimpCoords *a,
-                        const gdouble     bmul,
-                        const GimpCoords *b,
-                        GimpCoords       *ret_val)
+gimp_coords_mix (const gdouble     amul,
+                 const GimpCoords *a,
+                 const gdouble     bmul,
+                 const GimpCoords *b,
+                 GimpCoords       *ret_val)
 {
   if (b)
     {
@@ -62,52 +64,52 @@ gimp_bezier_coords_mix (const gdouble     amul,
 /*    (a+b)/2 = ret_average  */
 
 void
-gimp_bezier_coords_average (const GimpCoords *a,
-                            const GimpCoords *b,
-                            GimpCoords       *ret_average)
+gimp_coords_average (const GimpCoords *a,
+                     const GimpCoords *b,
+                     GimpCoords       *ret_average)
 {
-  gimp_bezier_coords_mix (0.5, a, 0.5, b, ret_average);
+  gimp_coords_mix (0.5, a, 0.5, b, ret_average);
 }
 
 
 /* a + b = ret_add  */
 
 void
-gimp_bezier_coords_add (const GimpCoords *a,
-                        const GimpCoords *b,
-                        GimpCoords       *ret_add)
+gimp_coords_add (const GimpCoords *a,
+                 const GimpCoords *b,
+                 GimpCoords       *ret_add)
 {
-  gimp_bezier_coords_mix (1.0, a, 1.0, b, ret_add);
+  gimp_coords_mix (1.0, a, 1.0, b, ret_add);
 }
 
 
 /* a - b = ret_difference */
 
 void
-gimp_bezier_coords_difference (const GimpCoords *a,
-                               const GimpCoords *b,
-                               GimpCoords       *ret_difference)
+gimp_coords_difference (const GimpCoords *a,
+                        const GimpCoords *b,
+                        GimpCoords       *ret_difference)
 {
-  gimp_bezier_coords_mix (1.0, a, -1.0, b, ret_difference);
+  gimp_coords_mix (1.0, a, -1.0, b, ret_difference);
 }
 
 
 /* a * f = ret_product  */
 
 void
-gimp_bezier_coords_scale (const gdouble     f,
-                          const GimpCoords *a,
-                          GimpCoords       *ret_product)
+gimp_coords_scale (const gdouble     f,
+                   const GimpCoords *a,
+                   GimpCoords       *ret_product)
 {
-  gimp_bezier_coords_mix (f, a, 0.0, NULL, ret_product);
+  gimp_coords_mix (f, a, 0.0, NULL, ret_product);
 }
 
 
 /* local helper for measuring the scalarproduct of two gimpcoords. */
 
 gdouble
-gimp_bezier_coords_scalarprod (const GimpCoords *a,
-                               const GimpCoords *b)
+gimp_coords_scalarprod (const GimpCoords *a,
+                        const GimpCoords *b)
 {
   return (a->x        * b->x        +
           a->y        * b->y        +
@@ -125,7 +127,7 @@ gimp_bezier_coords_scalarprod (const GimpCoords *a,
  */
 
 gdouble
-gimp_bezier_coords_length2 (const GimpCoords *a)
+gimp_coords_length2 (const GimpCoords *a)
 {
   GimpCoords upscaled_a;
 
@@ -136,19 +138,19 @@ gimp_bezier_coords_length2 (const GimpCoords *a)
   upscaled_a.ytilt    = a->ytilt    * INPUT_RESOLUTION;
   upscaled_a.wheel    = a->wheel    * INPUT_RESOLUTION;
 
-  return gimp_bezier_coords_scalarprod (&upscaled_a, &upscaled_a);
+  return gimp_coords_scalarprod (&upscaled_a, &upscaled_a);
 }
 
 
 gdouble
-gimp_bezier_coords_length (const GimpCoords *a)
+gimp_coords_length (const GimpCoords *a)
 {
-  return sqrt (gimp_bezier_coords_length2 (a));
+  return sqrt (gimp_coords_length2 (a));
 }
 
 gboolean
-gimp_bezier_coords_equal (const GimpCoords *a,
-                          const GimpCoords *b)
+gimp_coords_equal (const GimpCoords *a,
+                   const GimpCoords *b)
 {
   return (       a->x == b->x        &&
                  a->y == b->y        &&
@@ -157,4 +159,3 @@ gimp_bezier_coords_equal (const GimpCoords *a,
              a->ytilt == b->ytilt    &&
              a->wheel == b->wheel);
 }
-

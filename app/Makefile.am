@@ -81,6 +81,7 @@ gimp_2_1_LDFLAGS = \
 	-u $(SYMPREFIX)gimp_container_filter		\
 	-u $(SYMPREFIX)gimp_xml_parser_new		\
 	-u $(SYMPREFIX)gimp_drawable_stroke_vectors	\
+	-u $(SYMPREFIX)gimp_coords_mix			\
 	\
 	-u $(SYMPREFIX)convert_dialog_new		\
 	-u $(SYMPREFIX)grid_dialog_new			\

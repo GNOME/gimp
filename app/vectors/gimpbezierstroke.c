@@ -27,10 +27,10 @@
 
 #include "vectors-types.h"
 
+#include "core/gimpcoords.h"
+
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
-
-#include "gimpcoordmath.h"
 
 
 /* local prototypes */
@@ -346,29 +346,29 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
 
-  gimp_bezier_coords_mix (1-position, &(beziercoords[0]),
-                          position,   &(beziercoords[1]),
-                          &(subdivided[1]));
+  gimp_coords_mix (1-position, &(beziercoords[0]),
+                   position,   &(beziercoords[1]),
+                   &(subdivided[1]));
 
-  gimp_bezier_coords_mix (1-position, &(beziercoords[1]),
-                          position,   &(beziercoords[2]),
-                          &(subdivided[7]));
+  gimp_coords_mix (1-position, &(beziercoords[1]),
+                   position,   &(beziercoords[2]),
+                   &(subdivided[7]));
 
-  gimp_bezier_coords_mix (1-position, &(beziercoords[2]),
-                          position,   &(beziercoords[3]),
-                          &(subdivided[5]));
+  gimp_coords_mix (1-position, &(beziercoords[2]),
+                   position,   &(beziercoords[3]),
+                   &(subdivided[5]));
 
-  gimp_bezier_coords_mix (1-position, &(subdivided[1]),
-                          position,   &(subdivided[7]),
-                          &(subdivided[2]));
+  gimp_coords_mix (1-position, &(subdivided[1]),
+                   position,   &(subdivided[7]),
+                   &(subdivided[2]));
 
-  gimp_bezier_coords_mix (1-position, &(subdivided[7]),
-                          position,   &(subdivided[5]),
-                          &(subdivided[4]));
+  gimp_coords_mix (1-position, &(subdivided[7]),
+                   position,   &(subdivided[5]),
+                   &(subdivided[4]));
 
-  gimp_bezier_coords_mix (1-position, &(subdivided[2]),
-                          position,   &(subdivided[4]),
-                          &(subdivided[3]));
+  gimp_coords_mix (1-position, &(subdivided[2]),
+                   position,   &(subdivided[4]),
+                   &(subdivided[3]));
 
   /* subdivided 0-6 contains the bezier segement subdivided at <position> */
 
@@ -455,13 +455,13 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
   else
     feel_good = 1;
 
-  gimp_bezier_coords_scale ((1-feel_good)/(3*position*
-                                           (1-position)*(1-position)),
-                            deltacoord,
-                            &(offsetcoords[0]));
-  gimp_bezier_coords_scale (feel_good/(3*position*position*(1-position)),
-                            deltacoord,
-                            &(offsetcoords[1]));
+  gimp_coords_scale ((1-feel_good)/(3*position*
+                                    (1-position)*(1-position)),
+                     deltacoord,
+                     &(offsetcoords[0]));
+  gimp_coords_scale (feel_good/(3*position*position*(1-position)),
+                     deltacoord,
+                     &(offsetcoords[1]));
 
   list = segment_start;
   list = g_list_next (list);
@@ -508,15 +508,15 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
         list = stroke->anchors;
     }
 
-  gimp_bezier_coords_mix ((1-position)*(1-position)*(1-position), &(beziercoords[0]),
-                          3*(1-position)*(1-position)*position, &(beziercoords[1]),
-                          &tmp1);
-  gimp_bezier_coords_mix (3*(1-position)*position*position, &(beziercoords[2]),
-                          position*position*position, &(beziercoords[3]),
-                          &tmp2);
-  gimp_bezier_coords_add (&tmp1, &tmp2, &abs_pos);
+  gimp_coords_mix ((1-position)*(1-position)*(1-position), &(beziercoords[0]),
+                   3*(1-position)*(1-position)*position, &(beziercoords[1]),
+                   &tmp1);
+  gimp_coords_mix (3*(1-position)*position*position, &(beziercoords[2]),
+                   position*position*position, &(beziercoords[3]),
+                   &tmp2);
+  gimp_coords_add (&tmp1, &tmp2, &abs_pos);
 
-  gimp_bezier_coords_difference (coord, &abs_pos, &deltacoord);
+  gimp_coords_difference (coord, &abs_pos, &deltacoord);
 
   gimp_bezier_stroke_point_move_relative (stroke, predec, position,
                                           &deltacoord, feature);
@@ -537,12 +537,12 @@ gimp_bezier_stroke_close (GimpStroke *stroke)
 
   if (start->next != end->prev)
     {
-      if (gimp_bezier_coords_equal (&(GIMP_ANCHOR (start->next->data)->position),
-                                    &(GIMP_ANCHOR (start->data)->position)) &&
-          gimp_bezier_coords_equal (&(GIMP_ANCHOR (start->data)->position),
-                                    &(GIMP_ANCHOR (end->data)->position)) &&
-          gimp_bezier_coords_equal (&(GIMP_ANCHOR (end->data)->position),
-                                    &(GIMP_ANCHOR (end->prev->data)->position)))
+      if (gimp_coords_equal (&(GIMP_ANCHOR (start->next->data)->position),
+                             &(GIMP_ANCHOR (start->data)->position)) &&
+          gimp_coords_equal (&(GIMP_ANCHOR (start->data)->position),
+                             &(GIMP_ANCHOR (end->data)->position)) &&
+          gimp_coords_equal (&(GIMP_ANCHOR (end->data)->position),
+                             &(GIMP_ANCHOR (end->prev->data)->position)))
         {
           /* redundant segment */
 
@@ -690,27 +690,27 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
   GimpCoords point1, point2;
   gdouble pos1, pos2;
 
-  gimp_bezier_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
-  gimp_bezier_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
+  gimp_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
+  gimp_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
 
   if (!depth || (gimp_bezier_coords_is_straight (beziercoords, precision)
-                 && gimp_bezier_coords_length2 (&point1) < precision
-                 && gimp_bezier_coords_length2 (&point2) < precision))
+                 && gimp_coords_length2 (&point1) < precision
+                 && gimp_coords_length2 (&point2) < precision))
     {
       GimpCoords line, dcoord;
       gdouble length2, scalar;
       gint i;
 
-      gimp_bezier_coords_difference (&(beziercoords[3]),
-                                     &(beziercoords[0]),
-                                     &line);
+      gimp_coords_difference (&(beziercoords[3]),
+                              &(beziercoords[0]),
+                              &line);
 
-      gimp_bezier_coords_difference (coord,
-                                     &(beziercoords[0]),
-                                     &dcoord);
+      gimp_coords_difference (coord,
+                              &(beziercoords[0]),
+                              &dcoord);
 
-      length2 = gimp_bezier_coords_scalarprod (&line, &line);
-      scalar = gimp_bezier_coords_scalarprod (&line, &dcoord) / length2;
+      length2 = gimp_coords_scalarprod (&line, &line);
+      scalar = gimp_coords_scalarprod (&line, &dcoord) / length2;
 
       scalar = CLAMP (scalar, 0.0, 1.0);
 
@@ -731,13 +731,13 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
 
       *ret_pos = pos1;
 
-      gimp_bezier_coords_mix (1.0, &(beziercoords[0]),
-                              scalar, &line,
-                              ret_point);
+      gimp_coords_mix (1.0, &(beziercoords[0]),
+                       scalar, &line,
+                       ret_point);
 
-      gimp_bezier_coords_difference (coord, ret_point, &dcoord);
+      gimp_coords_difference (coord, ret_point, &dcoord);
 
-      return gimp_bezier_coords_length (&dcoord);
+      return gimp_coords_length (&dcoord);
     }
 
   /* ok, we have to subdivide */
@@ -747,23 +747,23 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
 
   /* if (!depth) g_printerr ("Hit rekursion depth limit!\n"); */
 
-  gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
-                              &(subdivided[1]));
+  gimp_coords_average (&(beziercoords[0]), &(beziercoords[1]),
+                       &(subdivided[1]));
 
-  gimp_bezier_coords_average (&(beziercoords[1]), &(beziercoords[2]),
-                              &(subdivided[7]));
+  gimp_coords_average (&(beziercoords[1]), &(beziercoords[2]),
+                       &(subdivided[7]));
 
-  gimp_bezier_coords_average (&(beziercoords[2]), &(beziercoords[3]),
-                              &(subdivided[5]));
+  gimp_coords_average (&(beziercoords[2]), &(beziercoords[3]),
+                       &(subdivided[5]));
 
-  gimp_bezier_coords_average (&(subdivided[1]), &(subdivided[7]),
-                              &(subdivided[2]));
+  gimp_coords_average (&(subdivided[1]), &(subdivided[7]),
+                       &(subdivided[2]));
 
-  gimp_bezier_coords_average (&(subdivided[7]), &(subdivided[5]),
-                              &(subdivided[4]));
+  gimp_coords_average (&(subdivided[7]), &(subdivided[5]),
+                       &(subdivided[4]));
 
-  gimp_bezier_coords_average (&(subdivided[2]), &(subdivided[4]),
-                              &(subdivided[3]));
+  gimp_coords_average (&(subdivided[2]), &(subdivided[4]),
+                       &(subdivided[3]));
 
   /*
    * We now have the coordinates of the two bezier segments in
@@ -1160,7 +1160,7 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
   delta.ytilt    = 0;
   delta.wheel    = 0;
 
-  gimp_bezier_coords_add (&(anchor->position), &delta, &coord1);
+  gimp_coords_add (&(anchor->position), &delta, &coord1);
   anchor->position = coord1;
 
   anchor_list = g_list_find (stroke->anchors, anchor);
@@ -1171,14 +1171,14 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
       if (g_list_previous (anchor_list))
         {
           coord2 = GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position;
-          gimp_bezier_coords_add (&coord2, &delta, &coord1);
+          gimp_coords_add (&coord2, &delta, &coord1);
           GIMP_ANCHOR (g_list_previous (anchor_list)->data)->position = coord1;
         }
 
       if (g_list_next (anchor_list))
         {
           coord2 = GIMP_ANCHOR (g_list_next (anchor_list)->data)->position;
-          gimp_bezier_coords_add (&coord2, &delta, &coord1);
+          gimp_coords_add (&coord2, &delta, &coord1);
           GIMP_ANCHOR (g_list_next (anchor_list)->data)->position = coord1;
         }
     }
@@ -1207,10 +1207,10 @@ gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
           if (opposite &&
               GIMP_ANCHOR (opposite->data)->type == GIMP_ANCHOR_CONTROL)
             {
-              gimp_bezier_coords_difference (&(GIMP_ANCHOR (neighbour->data)->position),
-                                             &(anchor->position), &delta);
-              gimp_bezier_coords_add (&(GIMP_ANCHOR (neighbour->data)->position),
-                                      &delta, &coord1);
+              gimp_coords_difference (&(GIMP_ANCHOR (neighbour->data)->position),
+                                      &(anchor->position), &delta);
+              gimp_coords_add (&(GIMP_ANCHOR (neighbour->data)->position),
+                               &delta, &coord1);
               GIMP_ANCHOR (opposite->data)->position = coord1;
             }
         }
@@ -1226,7 +1226,7 @@ gimp_bezier_stroke_anchor_move_absolute (GimpStroke            *stroke,
 {
   GimpCoords deltacoord;
 
-  gimp_bezier_coords_difference (coord, &anchor->position, &deltacoord);
+  gimp_coords_difference (coord, &anchor->position, &deltacoord);
   gimp_bezier_stroke_anchor_move_relative (stroke, anchor,
                                            &deltacoord, feature);
 }
@@ -1403,11 +1403,11 @@ gimp_bezier_stroke_conicto (GimpStroke       *stroke,
 
   start = GIMP_ANCHOR (stroke->anchors->next->data)->position;
 
-  gimp_bezier_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, &start, &coords);
+  gimp_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, &start, &coords);
 
   GIMP_ANCHOR (stroke->anchors->data)->position = coords;
 
-  gimp_bezier_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, end, &coords);
+  gimp_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, end, &coords);
 
   stroke->anchors = g_list_prepend (stroke->anchors,
                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
@@ -1484,12 +1484,12 @@ arcto_subdivide (gdouble t, gint part, GimpCoords *p)
 {
   GimpCoords p01, p12, p23, p012, p123, p0123;
 
-  gimp_bezier_coords_mix (1-t, &(p[0]), t, &(p[1]), &p01  );
-  gimp_bezier_coords_mix (1-t, &(p[1]), t, &(p[2]), &p12  );
-  gimp_bezier_coords_mix (1-t, &(p[2]), t, &(p[3]), &p23  );
-  gimp_bezier_coords_mix (1-t,  &p01  , t,  &p12  , &p012 );
-  gimp_bezier_coords_mix (1-t,  &p12  , t,  &p23  , &p123 );
-  gimp_bezier_coords_mix (1-t,  &p012 , t,  &p123 , &p0123);
+  gimp_coords_mix (1-t, &(p[0]), t, &(p[1]), &p01  );
+  gimp_coords_mix (1-t, &(p[1]), t, &(p[2]), &p12  );
+  gimp_coords_mix (1-t, &(p[2]), t, &(p[3]), &p23  );
+  gimp_coords_mix (1-t,  &p01  , t,  &p12  , &p012 );
+  gimp_coords_mix (1-t,  &p12  , t,  &p23  , &p123 );
+  gimp_coords_mix (1-t,  &p012 , t,  &p123 , &p0123);
 
   if (part == 0)
     {
@@ -1546,10 +1546,10 @@ arcto_ellipsesegment (gdouble radius_x,
 
   ellips[0].x = cos (phi_s); ellips[0].y = sin (phi_s);
   ellips[3].x = cos (phi_e); ellips[3].y = sin (phi_e);
-  gimp_bezier_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]),
-                          &(ellips[1]));
-  gimp_bezier_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]),
-                          &(ellips[2]));
+  gimp_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]),
+                   &(ellips[1]));
+  gimp_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]),
+                   &(ellips[2]));
 
   if (h0 > y[0])
     {
@@ -1609,7 +1609,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   gimp_matrix3_identity (&anglerot);
   gimp_matrix3_rotate (&anglerot, -angle_rad);
 
-  gimp_bezier_coords_mix (0.5, &start, -0.5, end, &trans_delta);
+  gimp_coords_mix (0.5, &start, -0.5, end, &trans_delta);
   gimp_matrix3_transform_point (&anglerot, trans_delta.x, trans_delta.y,
                                 &tmpx, &tmpy);
   trans_delta.x = tmpx;
@@ -1659,8 +1659,8 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   tmp_center.x = tmpx;
   tmp_center.y = tmpy;
 
-  gimp_bezier_coords_mix (0.5, &start, 0.5, end, &middle);
-  gimp_bezier_coords_add (&tmp_center, &middle, &center);
+  gimp_coords_mix (0.5, &start, 0.5, end, &middle);
+  gimp_coords_add (&tmp_center, &middle, &center);
 
   phi1 = atan2 ((trans_delta.y - trans_center.y) / radius_y,
                 (trans_delta.x - trans_center.x) / radius_x);
@@ -1696,9 +1696,9 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
                                         &tmpx, &tmpy);
           ellips[3].x = tmpx; ellips[3].y = tmpy;
 
-          gimp_bezier_coords_add (&center, &(ellips[1]), &(ctrl[1]));
-          gimp_bezier_coords_add (&center, &(ellips[2]), &(ctrl[2]));
-          gimp_bezier_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+          gimp_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          gimp_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          gimp_coords_add (&center, &(ellips[3]), &(ctrl[3]));
 
           gimp_bezier_stroke_cubicto (bez_stroke,
                                       &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
@@ -1730,9 +1730,9 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
                                         &tmpx, &tmpy);
           ellips[3].x = tmpx; ellips[3].y = tmpy;
 
-          gimp_bezier_coords_add (&center, &(ellips[1]), &(ctrl[1]));
-          gimp_bezier_coords_add (&center, &(ellips[2]), &(ctrl[2]));
-          gimp_bezier_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+          gimp_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          gimp_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          gimp_coords_add (&center, &(ellips[3]), &(ctrl[3]));
 
           gimp_bezier_stroke_cubicto (bez_stroke,
                                       &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
@@ -1778,20 +1778,20 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
   GimpCoords line, tan1, tan2, d1, d2;
   gdouble    l2, s1, s2;
 
-  gimp_bezier_coords_difference (&(beziercoords[3]),
-                                 &(beziercoords[0]),
-                                 &line);
+  gimp_coords_difference (&(beziercoords[3]),
+                          &(beziercoords[0]),
+                          &line);
 
-  if (gimp_bezier_coords_length2 (&line) < precision * precision)
+  if (gimp_coords_length2 (&line) < precision * precision)
     {
-      gimp_bezier_coords_difference (&(beziercoords[1]),
-                                     &(beziercoords[0]),
-                                     &tan1);
-      gimp_bezier_coords_difference (&(beziercoords[2]),
-                                     &(beziercoords[3]),
-                                     &tan2);
-      if ((gimp_bezier_coords_length2 (&tan1) < precision * precision) &&
-          (gimp_bezier_coords_length2 (&tan2) < precision * precision))
+      gimp_coords_difference (&(beziercoords[1]),
+                              &(beziercoords[0]),
+                              &tan1);
+      gimp_coords_difference (&(beziercoords[2]),
+                              &(beziercoords[3]),
+                              &tan2);
+      if ((gimp_coords_length2 (&tan1) < precision * precision) &&
+          (gimp_coords_length2 (&tan2) < precision * precision))
         {
           return 1;
         }
@@ -1803,16 +1803,16 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
     }
   else
     {
-      gimp_bezier_coords_difference (&(beziercoords[1]),
-                                     &(beziercoords[0]),
-                                     &tan1);
-      gimp_bezier_coords_difference (&(beziercoords[2]),
-                                     &(beziercoords[0]),
-                                     &tan2);
+      gimp_coords_difference (&(beziercoords[1]),
+                              &(beziercoords[0]),
+                              &tan1);
+      gimp_coords_difference (&(beziercoords[2]),
+                              &(beziercoords[0]),
+                              &tan2);
 
-      l2 = gimp_bezier_coords_scalarprod (&line, &line);
-      s1 = gimp_bezier_coords_scalarprod (&line, &tan1) / l2;
-      s2 = gimp_bezier_coords_scalarprod (&line, &tan2) / l2;
+      l2 = gimp_coords_scalarprod (&line, &line);
+      s1 = gimp_coords_scalarprod (&line, &tan1) / l2;
+      s2 = gimp_coords_scalarprod (&line, &tan2) / l2;
 
       if (s1 < 0 || s1 > 1 || s2 < 0 || s2 > 1 || s2 < s1)
         {
@@ -1820,11 +1820,11 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
           return 0;
         }
 
-      gimp_bezier_coords_mix (1.0, &tan1, - s1, &line, &d1);
-      gimp_bezier_coords_mix (1.0, &tan2, - s2, &line, &d2);
+      gimp_coords_mix (1.0, &tan1, - s1, &line, &d1);
+      gimp_coords_mix (1.0, &tan2, - s2, &line, &d2);
 
-      if ((gimp_bezier_coords_length2 (&d1) > precision * precision) ||
-          (gimp_bezier_coords_length2 (&d2) > precision * precision))
+      if ((gimp_coords_length2 (&d1) > precision * precision) ||
+          (gimp_coords_length2 (&d2) > precision * precision))
         {
           /* The control points are too far away from the baseline */
           return 0;
@@ -1864,23 +1864,23 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
 
   /* if (!depth) g_printerr ("Hit rekursion depth limit!\n"); */
 
-  gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
-                              &(subdivided[1]));
+  gimp_coords_average (&(beziercoords[0]), &(beziercoords[1]),
+                       &(subdivided[1]));
 
-  gimp_bezier_coords_average (&(beziercoords[1]), &(beziercoords[2]),
-                              &(subdivided[7]));
+  gimp_coords_average (&(beziercoords[1]), &(beziercoords[2]),
+                       &(subdivided[7]));
 
-  gimp_bezier_coords_average (&(beziercoords[2]), &(beziercoords[3]),
-                              &(subdivided[5]));
+  gimp_coords_average (&(beziercoords[2]), &(beziercoords[3]),
+                       &(subdivided[5]));
 
-  gimp_bezier_coords_average (&(subdivided[1]), &(subdivided[7]),
-                              &(subdivided[2]));
+  gimp_coords_average (&(subdivided[1]), &(subdivided[7]),
+                       &(subdivided[2]));
 
-  gimp_bezier_coords_average (&(subdivided[7]), &(subdivided[5]),
-                              &(subdivided[4]));
+  gimp_coords_average (&(subdivided[7]), &(subdivided[5]),
+                       &(subdivided[4]));
 
-  gimp_bezier_coords_average (&(subdivided[2]), &(subdivided[4]),
-                              &(subdivided[3]));
+  gimp_coords_average (&(subdivided[2]), &(subdivided[4]),
+                       &(subdivided[3]));
 
   /*
    * We now have the coordinates of the two bezier segments in
