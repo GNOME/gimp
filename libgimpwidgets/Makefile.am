@@ -174,6 +174,8 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorselection.h	\
 	gimpcontroller.h	\
 	gimpdialog.h		\
+	gimpenumcombobox.h	\
+	gimpenumstore.h		\
 	gimpfileentry.h		\
 	gimpframe.h		\
 	gimphelpui.h		\

@@ -69,8 +69,6 @@ lib_LTLIBRARIES = libgimpbase-2.0.la
 libgimpbase_sources = \
 	gimpbase.h		\
 	gimpbaseenums.h		\
-	gimpbaseparams.h	\
-	gimpbaseparams.c	\
 	gimpbasetypes.h		\
 	gimpbasetypes.c		\
 	gimplimits.h		\
@@ -90,6 +88,8 @@ libgimpbase_sources = \
 	gimpparasite.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h	\
+	gimppath.h		\
+	gimppath.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpsignal.c            \
@@ -111,7 +111,6 @@ libgimpbase_2_0_la_SOURCES = $(libgimpbase_sources) $(libgimpbase_built_sources)
 libgimpbaseinclude_HEADERS = \
 	gimpbase.h		\
 	gimpbaseenums.h		\
-	gimpbaseparams.h	\
 	gimpbasetypes.h		\
 	gimplimits.h		\
 	gimpversion.h		\
@@ -122,6 +121,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpmemsize.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
+	gimppath.h		\
 	gimpsignal.h		\
 	gimpunit.h		\
 	gimputils.h

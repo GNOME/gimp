@@ -333,3 +333,130 @@ gimp_unit_get_plural (GimpUnit unit)
 
   return _gimp_unit_vtable.unit_get_plural (unit);
 }
+
+
+/*
+ * GIMP_TYPE_PARAM_UNIT
+ */
+
+#define GIMP_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UNIT, GimpParamSpecUnit))
+
+typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
+
+struct _GimpParamSpecUnit
+{
+  GParamSpecInt parent_instance;
+
+  gboolean      allow_percent;
+};
+
+static void      gimp_param_unit_class_init     (GParamSpecClass *class);
+static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
+                                                 GValue          *value);
+
+/**
+ * gimp_param_unit_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a unit param object
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_param_unit_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_unit_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecUnit),
+        0, NULL, NULL
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_INT,
+                                          "GimpParamUnit",
+                                          &type_info, 0);
+    }
+
+  return spec_type;
+}
+
+static void
+gimp_param_unit_class_init (GParamSpecClass *class)
+{
+  class->value_type     = GIMP_TYPE_UNIT;
+  class->value_validate = gimp_param_unit_value_validate;
+}
+
+static gboolean
+gimp_param_unit_value_validate (GParamSpec *pspec,
+                                GValue     *value)
+{
+  GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
+  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  gint               oval  = value->data[0].v_int;
+
+  if (uspec->allow_percent && value->data[0].v_int == GIMP_UNIT_PERCENT)
+    {
+      value->data[0].v_int = value->data[0].v_int;
+    }
+  else
+    {
+      value->data[0].v_int = CLAMP (value->data[0].v_int,
+                                    ispec->minimum,
+                                    gimp_unit_get_number_of_units () - 1);
+    }
+
+  return value->data[0].v_int != oval;
+}
+
+/**
+ * gimp_param_spec_unit:
+ * @name:          Canonical name of the param
+ * @nick:          Nickname of the param
+ * @blurb:         Brief desciption of param.
+ * @allow_pixels:  Whether "pixels" is an allowed unit.
+ * @allow_percent: Whether "perecent" is an allowed unit.
+ * @default_value: Unit to use if none is assigned.
+ * @flags:         a combination of #GParamFlags
+ *
+ * Creates a param spec to hold a units param.
+ * See g_param_spec_internal() for more information.
+ *
+ * Returns: a newly allocated #GParamSpec instance
+ *
+ * Since: GIMP 2.4
+ **/
+GParamSpec *
+gimp_param_spec_unit (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      gboolean     allow_pixels,
+                      gboolean     allow_percent,
+                      GimpUnit     default_value,
+                      GParamFlags  flags)
+{
+  GimpParamSpecUnit *pspec;
+  GParamSpecInt     *ispec;
+
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_UNIT,
+                                 name, nick, blurb, flags);
+
+  ispec = G_PARAM_SPEC_INT (pspec);
+
+  ispec->default_value = default_value;
+  ispec->minimum       = allow_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
+  ispec->maximum       = GIMP_UNIT_PERCENT - 1;
+
+  pspec->allow_percent = allow_percent;
+
+  return G_PARAM_SPEC (pspec);
+}
+

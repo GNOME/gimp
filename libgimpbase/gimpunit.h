@@ -27,10 +27,33 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+/*
+ * GIMP_TYPE_UNIT
+ */
+
 #define GIMP_TYPE_UNIT               (gimp_unit_get_type ())
 #define GIMP_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
 
-GType         gimp_unit_get_type                     (void) G_GNUC_CONST;
+GType        gimp_unit_get_type      (void) G_GNUC_CONST;
+
+
+/*
+ * GIMP_TYPE_PARAM_UNIT
+ */
+
+#define GIMP_TYPE_PARAM_UNIT              (gimp_param_unit_get_type ())
+#define GIMP_IS_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
+
+GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_unit         (const gchar  *name,
+                                           const gchar  *nick,
+                                           const gchar  *blurb,
+                                           gboolean      allow_pixels,
+                                           gboolean      allow_percent,
+                                           GimpUnit      default_value,
+                                           GParamFlags   flags);
+
 
 
 gint          gimp_unit_get_number_of_units          (void);

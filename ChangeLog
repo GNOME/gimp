@@ -1,5 +1,20 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbaseparams.[ch]: removed this file again.
+
+	* libgimpbase/gimpmemsize.[ch]
+	* libgimpbase/gimppath.[ch]
+	* libgimpbase/gimpunit.[ch]: moved the paramspec definitions to
+	the types they belong to.
+
+	* libgimpbase/gimpbase.h: changed accordingly.
+
+	* libgimpwidgets/Makefile.am (libgimpwidgetsinclude_HEADERS):
+	install the new header files.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/text/text-enums.h
 	* libgimpbase/gimpbaseenums.h: moved enum to libgimpbase (from
 	app/text and libgimp).

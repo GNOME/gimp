@@ -245,3 +245,89 @@ string_to_memsize (const GValue *src_value,
 
   g_value_set_uint64 (dest_value, memsize);
 }
+
+
+/*
+ * GIMP_TYPE_PARAM_MEMSIZE
+ */
+
+static void  gimp_param_memsize_class_init (GParamSpecClass *class);
+
+/**
+ * gimp_param_memsize_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a memsize object
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_param_memsize_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_memsize_class_init,
+        NULL, NULL,
+        sizeof (GParamSpecUInt64),
+        0, NULL, NULL
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_UINT64,
+                                          "GimpParamMemsize",
+                                          &type_info, 0);
+    }
+
+  return spec_type;
+}
+
+static void
+gimp_param_memsize_class_init (GParamSpecClass *class)
+{
+  class->value_type = GIMP_TYPE_MEMSIZE;
+}
+
+/**
+ * gimp_param_spec_memsize:
+ * @name:          Canonical name of the param
+ * @nick:          Nickname of the param
+ * @blurb:         Brief desciption of param.
+ * @minimum:       Smallest allowed value of the parameter.
+ * @maximum:       Largest allowed value of the parameter.
+ * @default_value: Value to use if none is assigned.
+ * @flags:         a combination of #GParamFlags
+ *
+ * Creates a param spec to hold a memory size value.
+ * See g_param_spec_internal() for more information.
+ *
+ * Returns: a newly allocated #GParamSpec instance
+ *
+ * Since: GIMP 2.4
+ **/
+GParamSpec *
+gimp_param_spec_memsize (const gchar *name,
+                         const gchar *nick,
+                         const gchar *blurb,
+                         guint64      minimum,
+                         guint64      maximum,
+                         guint64      default_value,
+                         GParamFlags  flags)
+{
+  GParamSpecUInt64 *pspec;
+
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
+                                 name, nick, blurb, flags);
+
+  pspec->minimum       = minimum;
+  pspec->maximum       = maximum;
+  pspec->default_value = default_value;
+
+  return G_PARAM_SPEC (pspec);
+}
+
