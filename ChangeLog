@@ -1,3 +1,19 @@
+2002-07-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/papertile.c: fixed behaviour when run with
+	GIMP_RUN_WITH_LAST_VALS. Based on a patch from
+	<thlsmith@iprimus.com.au> (bug #86868).
+
+	* plug-ins/common/tileit.c: always initialize global variables,
+	not only when being run interactively. Based on a patch from
+	<thlsmith@iprimus.com.au> (bug #86637).
+
+	* plug-ins/common/xpm.c: check the return value of
+	XpmWriteFileFromXpmImage(). Patch from Raphael Quinet (bug #87588).
+
+	* plug-ins/print/print.c: use g_strdup_printf() instead of asprintf().
+	Patch from Raphael Quinet <quinet@gamers.org> (bug #87428).
+
 2002-06-25  Simon Budig  <simon@gimp.org>
 
 	* docs/Wilber.svg: Fixed the SVG so that the Adobe Plugin

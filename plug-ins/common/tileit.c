@@ -261,9 +261,12 @@ run (gchar    *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  tileitdrawable = 
-    drawable = 
-    gimp_drawable_get (param[2].data.d_drawable);
+  tileitdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+  img_width  = gimp_drawable_width (tileitdrawable->id);
+  img_height = gimp_drawable_height (tileitdrawable->id);
+
+  has_alpha = gimp_drawable_has_alpha (tileitdrawable->id);
 
   tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
@@ -375,7 +378,7 @@ tileit_dialog (void)
 
   gimp_ui_init ("tileit", TRUE);
 
-  cache_preview (); /* Get the preview image and store it also set has_alpha */
+  cache_preview (); /* Get the preview image */
 
   /* Start buildng the dialog up */
   dlg = gimp_dialog_new ( _("TileIt"), "tileit",
@@ -932,16 +935,11 @@ cache_preview (void)
   src_rows = g_new (guchar, sel_width * 4); 
   p = tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  img_width  = gimp_drawable_width (tileitdrawable->id);
-  img_height = gimp_drawable_height (tileitdrawable->id);
-
   tint.img_bpp = gimp_drawable_bpp (tileitdrawable->id);   
-
-  has_alpha = gimp_drawable_has_alpha (tileitdrawable->id);
 
   if (tint.img_bpp < 3)
     {
-      tint.img_bpp = 3 + has_alpha;
+      tint.img_bpp = 3 + (has_alpha ? 1 : 0);
     }
 
   switch (gimp_drawable_type (tileitdrawable->id))
