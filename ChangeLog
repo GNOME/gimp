@@ -1,3 +1,10 @@
+2003-10-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/tool-options-commands.c
+	(tool_options_save_to_cmd_callback): remember the name of the
+	saved options and set it again after gimp_config_copy_properties().
+	Fixes bug #123660.
+
 2003-10-02  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/image-menu.c: added back ellipsis to Display Filters and
