@@ -1,3 +1,8 @@
+2003-03-14  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: added a call to libtoolize to make it work with
+	newer versions of automake.
+
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
 	* app/airbrush.c (airbrush_paint_func): removed a leftover warning
