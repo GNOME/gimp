@@ -617,23 +617,24 @@ server_interface (void)
 
   /*  The table to hold port & logfile entries  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      table, FALSE, FALSE, 0);
 
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Server Port:"), 1.0, 0.5,
-			     sint.port_entry, 1, TRUE);
+			     _("Server Port:"), 0.0, 0.5,
+			     sint.port_entry, 1, FALSE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Server Logfile:"), 1.0, 0.5,
-			     sint.log_entry, 1, TRUE);
+			     _("Server Logfile:"), 0.0, 0.5,
+			     sint.log_entry, 1, FALSE);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);

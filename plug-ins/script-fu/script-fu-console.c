@@ -46,9 +46,8 @@
 #endif
 
 
-#define TEXT_WIDTH  400
+#define TEXT_WIDTH  480
 #define TEXT_HEIGHT 400
-#define ENTRY_WIDTH 400
 
 #define BUFSIZE     256
 
@@ -157,6 +156,7 @@ script_fu_console_interface (void)
 {
   GtkWidget  *dialog;
   GtkWidget  *main_vbox;
+  GtkWidget  *vbox;
   GtkWidget  *button;
   GtkWidget  *label;
   GtkWidget  *scrolled_window;
@@ -182,15 +182,19 @@ script_fu_console_interface (void)
 		    &dialog);
 
   /*  The main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
   label = gtk_label_new (_("SIOD Output"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /*  The output text widget  */
@@ -198,7 +202,7 @@ script_fu_console_interface (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   cint.console = gtk_text_buffer_new (NULL);
@@ -206,6 +210,8 @@ script_fu_console_interface (void)
   g_object_unref (cint.console);
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (cint.text_view), FALSE);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (cint.text_view), 12);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (cint.text_view), 12);
   gtk_widget_set_size_request (cint.text_view, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), cint.text_view);
   gtk_widget_show (cint.text_view);
@@ -225,6 +231,7 @@ script_fu_console_interface (void)
   {
     const gchar *greeting_texts[] =
     {
+      "weak",     "\n",
       "strong",   "The GIMP - GNU Image Manipulation Program\n\n",
       "emphasis", "Copyright (C) 1995-2001\n",
       "emphasis", "Spencer Kimball, Peter Mattis and the GIMP Development Team\n",
@@ -238,7 +245,8 @@ script_fu_console_interface (void)
       "weak",     "See the GNU General Public License for more details.\n\n",
       "weak",     "You should have received a copy of the GNU General Public License\n",
       "weak",     "along with this program; if not, write to the Free Software\n",
-      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n",
+      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n",
+      "weak",     "MA 02111-1307, USA.\n\n",
       "strong",   "Welcome to SIOD, Scheme In One Defun\n",
       "weak",     "(C) Copyright 1988-1994 Paradigm Associates Inc.\n\n\n",
       "strong",   "Script-Fu Console - ",
@@ -261,14 +269,17 @@ script_fu_console_interface (void)
   }
 
   /*  The current command  */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   label = gtk_label_new (_("Current Command"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_size_request (hbox, ENTRY_WIDTH, -1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   cint.cc = gtk_entry_new ();
@@ -295,8 +306,7 @@ script_fu_console_interface (void)
   g_io_channel_set_buffered (input_channel, FALSE);
 
   cint.input_id = g_io_add_watch (input_channel,
-				  G_IO_IN,
-				  script_fu_siod_read,
+				  G_IO_IN, script_fu_siod_read,
 				  NULL);
 
   /*  Initialize the history  */
