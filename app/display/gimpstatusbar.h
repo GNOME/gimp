@@ -43,7 +43,6 @@ struct _GimpStatusbar
   GSList           *messages;
   GSList           *keys;
   guint             seq_context_id;
-  guint             seq_message_id;
 
   GimpDisplayShell *shell;
 
@@ -60,41 +59,33 @@ struct _GimpStatusbar
 
 struct _GimpStatusbarClass
 {
-  GtkHBoxClass      parent_class;
-
-  GMemChunk        *messages_mem_chunk;
-
-  void  (*text_pushed) (GimpStatusbar   *statusbar,
-                        const gchar     *context_id,
-                        const gchar     *text);
-  void  (*text_popped) (GimpStatusbar   *statusbar,
-                        const gchar     *context_id,
-                        const gchar     *text);
+  GtkHBoxClass parent_class;
 };
 
 
-GType       gimp_statusbar_get_type            (void) G_GNUC_CONST;
-GtkWidget * gimp_statusbar_new                 (GimpDisplayShell *shell);
-void        gimp_statusbar_pop                 (GimpStatusbar    *statusbar,
-                                                const gchar      *context);
-void        gimp_statusbar_remove              (GimpStatusbar    *statusbar,
-                                                const gchar      *context,
-                                                guint             message_id);
-guint       gimp_statusbar_push_coords         (GimpStatusbar    *statusbar,
-                                                const gchar      *context,
-                                                const gchar      *title,
-                                                gdouble           x,
-                                                const gchar      *separator,
-                                                gdouble           y);
-guint       gimp_statusbar_push                (GimpStatusbar    *statusbar,
-                                                const gchar      *context,
-                                                const gchar      *message);
-void	    gimp_statusbar_set_cursor          (GimpStatusbar    *statusbar,
-                                                gdouble           x,
-                                                gdouble           y);
-void	    gimp_statusbar_clear_cursor        (GimpStatusbar    *statusbar);
-guint       gimp_statusbar_get_context_id      (GimpStatusbar    *statusbar,
-                                                const gchar      *context_description);
+GType       gimp_statusbar_get_type     (void) G_GNUC_CONST;
+GtkWidget * gimp_statusbar_new          (GimpDisplayShell *shell);
+
+void        gimp_statusbar_push         (GimpStatusbar    *statusbar,
+                                         const gchar      *context,
+                                         const gchar      *message);
+void        gimp_statusbar_push_coords  (GimpStatusbar    *statusbar,
+                                         const gchar      *context,
+                                         const gchar      *title,
+                                         gdouble           x,
+                                         const gchar      *separator,
+                                         gdouble           y);
+void        gimp_statusbar_replace      (GimpStatusbar    *statusbar,
+                                         const gchar      *context,
+                                         const gchar      *message);
+void        gimp_statusbar_pop          (GimpStatusbar    *statusbar,
+                                         const gchar      *context);
+
+void        gimp_statusbar_set_cursor   (GimpStatusbar    *statusbar,
+                                         gdouble           x,
+                                         gdouble           y);
+void        gimp_statusbar_clear_cursor (GimpStatusbar    *statusbar);
+
 
 G_END_DECLS
 

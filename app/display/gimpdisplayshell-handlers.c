@@ -341,7 +341,7 @@ static void
 gimp_display_shell_clean_dirty_handler (GimpImage        *gimage,
                                         GimpDisplayShell *shell)
 {
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 }
 
 static void
@@ -350,7 +350,7 @@ gimp_display_shell_undo_event_handler (GimpImage        *gimage,
                                        GimpUndo         *undo,
                                        GimpDisplayShell *shell)
 {
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 }
 
 static void
@@ -374,7 +374,7 @@ static void
 gimp_display_shell_name_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 }
 
 static void
@@ -520,7 +520,7 @@ gimp_display_shell_title_notify_handler (GObject          *config,
                                          GParamSpec       *param_spec,
                                          GimpDisplayShell *shell)
 {
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 }
 
 static void

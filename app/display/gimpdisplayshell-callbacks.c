@@ -291,7 +291,7 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
   gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
 
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 
   shell->disp_width  = canvas->allocation.width;
   shell->disp_height = canvas->allocation.height;

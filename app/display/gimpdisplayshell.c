@@ -540,7 +540,7 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   if (! shell->gdisp)
     return;
 
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 
   /* update the <Image>/View/Zoom menu */
   gimp_ui_manager_update (shell->menubar_manager, shell);
@@ -967,6 +967,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gimp_display_shell_connect (shell);
 
+  gimp_display_shell_title_init (shell);
+
   return GTK_WIDGET (shell);
 }
 
@@ -1219,7 +1221,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
       return;
     }
 
-  gimp_display_shell_update_title (shell);
+  gimp_display_shell_title_update (shell);
 
   if (now)
     {

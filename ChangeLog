@@ -1,3 +1,24 @@
+2004-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: massively changed: removed
+	message_ids, the message mem chunk and all signals. Added new
+	function gimp_statusbar_replace() which updates a message without
+	moving it to the top of the stack. Fixes bug #120175.
+
+	* app/display/gimpdisplayshell-title.[ch]: renamed
+	gimp_display_shell_update_title() to
+	gimp_display_shell_title_update() and switched from pop()/push()
+	to replace() so the title message keeps its place in the stack.
+	Added new function gimp_display_shell_title_init() which push()es
+	the title message to the stack.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): call
+	gimp_display_shell_title_init() so the "title" message is at the
+	bottom of the stack.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c: changed accordingly.
+
 2004-07-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.[ch]
