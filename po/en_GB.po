@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-18 21:08+0100\n"
-"PO-Revision-Date: 2004-10-18 21:09+0100\n"
+"POT-Creation-Date: 2004-10-20 23:50+0100\n"
+"PO-Revision-Date: 2004-10-20 23:50+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -582,58 +582,55 @@ msgstr "_Intersect with Selection"
 msgid "Intersect"
 msgstr "Intersect"
 
-#: app/actions/channels-commands.c:157
-#: app/actions/channels-commands.c:372
-#: app/actions/channels-commands.c:416
+#: app/actions/channels-commands.c:85
+#: app/actions/channels-commands.c:384
+msgid "Channel Attributes"
+msgstr "Channel Attributes"
+
+#: app/actions/channels-commands.c:88
+msgid "Edit Channel Attributes"
+msgstr "Edit Channel Attributes"
+
+#: app/actions/channels-commands.c:90
+msgid "Edit Channel Color"
+msgstr "Edit Channel Colour"
+
+#: app/actions/channels-commands.c:91
+#: app/actions/channels-commands.c:123
+msgid "Fill Opacity:"
+msgstr "Fill Opacity:"
+
+#: app/actions/channels-commands.c:116
+#: app/actions/channels-commands.c:117
+#: app/actions/channels-commands.c:158
 #: app/widgets/gimpchanneltreeview.c:232
 msgid "New Channel"
 msgstr "New Channel"
 
-#: app/actions/channels-commands.c:160
+#: app/actions/channels-commands.c:120
+msgid "New Channel Options"
+msgstr "New Channel Options"
+
+#: app/actions/channels-commands.c:122
+msgid "New Channel Color"
+msgstr "New Channel Colour"
+
+#: app/actions/channels-commands.c:161
 #: app/widgets/gimpchanneltreeview.c:237
 msgid "Empty Channel"
 msgstr "Empty Channel"
 
-#: app/actions/channels-commands.c:245
+#: app/actions/channels-commands.c:246
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Channel Copy"
 
-#: app/actions/channels-commands.c:311
+#: app/actions/channels-commands.c:312
 #: app/core/gimpselection.c:599
 #: app/pdb/selection_cmds.c:968
 #: app/pdb/selection_cmds.c:1092
 msgid "Channel to Selection"
 msgstr "Channel to Selection"
-
-#: app/actions/channels-commands.c:344
-msgid "Edit Channel Color"
-msgstr "Edit Channel Colour"
-
-#: app/actions/channels-commands.c:345
-msgid "New Channel Color"
-msgstr "New Channel Colour"
-
-#: app/actions/channels-commands.c:356
-#: app/actions/channels-commands.c:501
-msgid "Channel Attributes"
-msgstr "Channel Attributes"
-
-#: app/actions/channels-commands.c:358
-msgid "Edit Channel Attributes"
-msgstr "Edit Channel Attributes"
-
-#: app/actions/channels-commands.c:374
-msgid "New Channel Options"
-msgstr "New Channel Options"
-
-#: app/actions/channels-commands.c:408
-msgid "Channel Name:"
-msgstr "Channel Name:"
-
-#: app/actions/channels-commands.c:419
-msgid "Fill Opacity:"
-msgstr "Fill Opacity:"
 
 #: app/actions/colormap-editor-actions.c:43
 msgid "Indexed Palette Menu"
@@ -1817,7 +1814,7 @@ msgid "Flipping..."
 msgstr "Flipping..."
 
 #: app/actions/image-commands.c:315
-#: app/pdb/transform_tools_cmds.c:336
+#: app/pdb/transform_tools_cmds.c:341
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotating..."
@@ -1886,7 +1883,7 @@ msgstr "Scale Image"
 
 #: app/actions/image-commands.c:652
 #: app/actions/layers-commands.c:1269
-#: app/pdb/transform_tools_cmds.c:454
+#: app/pdb/transform_tools_cmds.c:462
 #: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
@@ -2501,19 +2498,19 @@ msgstr "Mask _Selected Areas"
 msgid "Mask _Unselected Areas"
 msgstr "Mask _Unselected Areas"
 
-#: app/actions/qmask-commands.c:137
-msgid "Edit Quick Mask Color"
-msgstr "Edit Quick Mask Colour"
-
-#: app/actions/qmask-commands.c:147
+#: app/actions/qmask-commands.c:106
 msgid "Quick Mask Attributes"
 msgstr "Quick Mask Attributes"
 
-#: app/actions/qmask-commands.c:149
+#: app/actions/qmask-commands.c:109
 msgid "Edit Quick Mask Attributes"
 msgstr "Edit Quick Mask Attributes"
 
-#: app/actions/qmask-commands.c:192
+#: app/actions/qmask-commands.c:111
+msgid "Edit Quick Mask Color"
+msgstr "Edit Quick Mask Colour"
+
+#: app/actions/qmask-commands.c:112
 msgid "Mask Opacity:"
 msgstr "Mask Opacity:"
 
@@ -2631,7 +2628,7 @@ msgstr "Border selection by"
 
 #: app/actions/select-commands.c:273
 #: app/actions/select-commands.c:300
-#: app/actions/vectors-commands.c:362
+#: app/actions/vectors-commands.c:358
 #: app/dialogs/stroke-dialog.c:291
 msgid "There is no active layer or channel to stroke to."
 msgstr "There is no active layer or channel to stroke to."
@@ -2967,50 +2964,46 @@ msgstr "Selection to Path (_Advanced)"
 msgid "Advanced options"
 msgstr "Advanced options"
 
-#: app/actions/vectors-commands.c:187
+#: app/actions/vectors-commands.c:134
+msgid "Path Attributes"
+msgstr "Path Attributes"
+
+#: app/actions/vectors-commands.c:137
+msgid "Edit Path Attributes"
+msgstr "Edit Path Attributes"
+
+#: app/actions/vectors-commands.c:161
+#: app/actions/vectors-commands.c:162
+msgid "New Path"
+msgstr "New Path"
+
+#: app/actions/vectors-commands.c:165
+msgid "New Path Options"
+msgstr "New Path Options"
+
+#: app/actions/vectors-commands.c:183
 #: app/widgets/gimpvectorstreeview.c:285
 msgid "Empty Path"
 msgstr "Empty Path"
 
-#: app/actions/vectors-commands.c:296
+#: app/actions/vectors-commands.c:292
 #: app/pdb/paths_cmds.c:1210
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: app/actions/vectors-commands.c:499
-msgid "Path Attributes"
-msgstr "Path Attributes"
-
-#: app/actions/vectors-commands.c:501
-msgid "Edit Path Attributes"
-msgstr "Edit Path Attributes"
-
-#: app/actions/vectors-commands.c:515
-#: app/actions/vectors-commands.c:560
-msgid "New Path"
-msgstr "New Path"
-
-#: app/actions/vectors-commands.c:517
-msgid "New Path Options"
-msgstr "New Path Options"
-
-#: app/actions/vectors-commands.c:552
-msgid "Path Name:"
-msgstr "Path Name:"
-
-#: app/actions/vectors-commands.c:619
+#: app/actions/vectors-commands.c:405
 msgid "Import Paths from SVG"
 msgstr "Import Paths from SVG"
 
-#: app/actions/vectors-commands.c:643
+#: app/actions/vectors-commands.c:429
 msgid "All Files (*.*)"
 msgstr "All Files (*.*)"
 
-#: app/actions/vectors-commands.c:648
+#: app/actions/vectors-commands.c:434
 msgid "Scalable SVG image (*.svg)"
 msgstr "Scalable SVG image (*.svg)"
 
-#: app/actions/vectors-commands.c:695
+#: app/actions/vectors-commands.c:457
 msgid "Export Path to SVG"
 msgstr "Export Path to SVG"
 
@@ -4185,7 +4178,7 @@ msgid "Remove floating selection"
 msgstr "Remove floating selection"
 
 #: app/core/core-enums.c:602
-#: app/core/gimp-edit.c:135
+#: app/core/gimp-edit.c:199
 msgid "Paste"
 msgstr "Paste"
 
@@ -4228,7 +4221,7 @@ msgid "Import paths"
 msgstr "Import paths"
 
 #: app/core/core-enums.c:610
-#: app/pdb/drawable_cmds.c:1590
+#: app/pdb/drawable_cmds.c:1683
 msgid "Plug-In"
 msgstr "Plug-In"
 
@@ -4619,7 +4612,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable-blend.c:235
+#: app/core/gimpdrawable-blend.c:236
 #: app/tools/gimpblendtool.c:101
 msgid "Blend"
 msgstr "Blend"
@@ -4629,20 +4622,20 @@ msgstr "Blend"
 msgid "No patterns available for this operation."
 msgstr "No patterns available for this operation."
 
-#: app/core/gimpdrawable-bucket-fill.c:271
+#: app/core/gimpdrawable-bucket-fill.c:274
 #: app/tools/gimpbucketfilltool.c:91
 msgid "Bucket Fill"
 msgstr "Bucket Fill"
 
-#: app/core/gimpdrawable-desaturate.c:95
+#: app/core/gimpdrawable-desaturate.c:97
 msgid "Desaturate"
 msgstr "Desaturate"
 
-#: app/core/gimpdrawable-equalize.c:82
+#: app/core/gimpdrawable-equalize.c:79
 msgid "Equalize"
 msgstr "Equalise"
 
-#: app/core/gimpdrawable-invert.c:56
+#: app/core/gimpdrawable-invert.c:58
 msgid "Invert"
 msgstr "Invert"
 
@@ -4650,7 +4643,7 @@ msgstr "Invert"
 msgid "Offset Drawable"
 msgstr "Offset Drawable"
 
-#: app/core/gimpdrawable-stroke.c:320
+#: app/core/gimpdrawable-stroke.c:317
 msgid "Render Stroke"
 msgstr "Render Stroke"
 
@@ -5287,15 +5280,15 @@ msgstr "No selection to stroke."
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Unable to cut or copy because the selected region is empty."
 
-#: app/core/gimpselection.c:821
+#: app/core/gimpselection.c:820
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Cannot float selection because the selected region is empty."
 
-#: app/core/gimpselection.c:828
+#: app/core/gimpselection.c:827
 msgid "Float Selection"
 msgstr "Float Selection"
 
-#: app/core/gimpselection.c:845
+#: app/core/gimpselection.c:844
 msgid "Floated Layer"
 msgstr "Floated Layer"
 
@@ -5390,6 +5383,10 @@ msgstr "Contributions by"
 #: app/dialogs/about-dialog.c:153
 msgid "About The GIMP"
 msgstr "About The GIMP"
+
+#: app/dialogs/channel-options-dialog.c:138
+msgid "Channel Name:"
+msgstr "Channel Name:"
 
 #: app/dialogs/convert-dialog.c:122
 msgid "Indexed Color Conversion"
@@ -6953,6 +6950,10 @@ msgstr "All image and undo data which doesn't fit into the Tile Cache will be wr
 msgid "Select swap dir"
 msgstr "Select swap dir"
 
+#: app/dialogs/vectors-options-dialog.c:113
+msgid "Path Name:"
+msgstr "Path Name:"
+
 #: app/display/display-enums.c:15
 msgid "Tool icon"
 msgstr "Tool icon"
@@ -7263,44 +7264,44 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: app/pdb/color_cmds.c:137
+#: app/pdb/color_cmds.c:136
 #: app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Brightness-Contrast"
 
-#: app/pdb/color_cmds.c:272
-#: app/pdb/color_cmds.c:393
+#: app/pdb/color_cmds.c:275
+#: app/pdb/color_cmds.c:397
 #: app/tools/gimplevelstool.c:160
 msgid "Levels"
 msgstr "Levels"
 
-#: app/pdb/color_cmds.c:473
+#: app/pdb/color_cmds.c:477
 #: app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterise"
 
-#: app/pdb/color_cmds.c:750
-#: app/pdb/color_cmds.c:870
+#: app/pdb/color_cmds.c:758
+#: app/pdb/color_cmds.c:882
 #: app/tools/gimpcurvestool.c:143
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:991
+#: app/pdb/color_cmds.c:1006
 #: app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Colour Balance"
 
-#: app/pdb/color_cmds.c:1112
+#: app/pdb/color_cmds.c:1130
 #: app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colourise"
 
-#: app/pdb/color_cmds.c:1386
+#: app/pdb/color_cmds.c:1407
 #: app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
-#: app/pdb/color_cmds.c:1488
+#: app/pdb/color_cmds.c:1512
 #: app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Threshold"
@@ -7474,17 +7475,17 @@ msgstr "Temporary Procedure"
 msgid "Free Select"
 msgstr "Free Select"
 
-#: app/pdb/transform_tools_cmds.c:193
+#: app/pdb/transform_tools_cmds.c:194
 #: app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/pdb/transform_tools_cmds.c:583
+#: app/pdb/transform_tools_cmds.c:594
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Shearing..."
 
-#: app/pdb/transform_tools_cmds.c:714
+#: app/pdb/transform_tools_cmds.c:727
 msgid "2D Transform..."
 msgstr "2D Transform..."
 
@@ -8314,6 +8315,7 @@ msgstr "Adjustment"
 
 #: app/tools/gimpinkoptions-gui.c:70
 #: app/tools/gimpinkoptions-gui.c:94
+#: app/tools/gimptextoptions.c:421
 msgid "Size:"
 msgstr "Size:"
 
@@ -8779,16 +8781,12 @@ msgid "Modify line spacing"
 msgstr "Modify line spacing"
 
 #: app/tools/gimptextoptions.c:414
-msgid "_Font:"
-msgstr "_Font:"
-
-#: app/tools/gimptextoptions.c:421
-msgid "_Size:"
-msgstr "_Size:"
+msgid "Font:"
+msgstr "Font:"
 
 #: app/tools/gimptextoptions.c:426
-msgid "_Hinting"
-msgstr "_Hinting"
+msgid "Hinting"
+msgstr "Hinting"
 
 #: app/tools/gimptextoptions.c:433
 msgid "Force auto-hinter"
