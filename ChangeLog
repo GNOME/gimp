@@ -1,4 +1,12 @@
-2002-04-29  Nathan Summers  <rock@gimp.org>
+2002-04-01  Nathan Summers  <rock@gimp.org>
+
+	* pretty much all files: One year of motif hacking has made me agree
+	with Miguel that .NET is the way of the future.  Ported all code to C#.
+	Works great on Mono!
+
+	Still doesn't support CMYK.
+
+2002-03-29  Nathan Summers  <rock@gimp.org>
 
 	* plug-ins/tools/tool-safe-mode.c: fix a segfault
 
