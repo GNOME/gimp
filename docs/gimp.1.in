@@ -1,6 +1,9 @@
 .TH GIMP 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+
 .SH NAME
 gimp - an image manipulation and paint program.
+
+
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
@@ -11,6 +14,7 @@ gimp - an image manipulation and paint program.
 [\-\-console\-messages] [\-\-debug\-handlers]
 [\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<commands>\fP]
 [\fIfilename\fP] ...
+
 
 .SH DESCRIPTION
 .PP
@@ -31,6 +35,7 @@ and many others.
 .PP
 In addition, GIMP has several scripting extension which allow for
 advanced non-interactive processing and creation of images.
+
 
 .SH OPTIONS
 .l 
@@ -110,6 +115,7 @@ can be executed by one of the GIMP scripting extensions. When
 input.
 .TP 8
 
+
 .SH ENVIRONMENT
 .PP
 .TP 8
@@ -119,6 +125,7 @@ to get the default host and display number.
 .B XENVIRONMENT
 to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
+
 
 .SH FILES
 GIMP's data files are stored in @gimpdatadir@, where ${prefix} 
@@ -266,8 +273,8 @@ and version, and any relevant hardware specs. If a bug is causing a
 crash, it is very useful if a stack trace can be provided. And of
 course, patches to rectify the bug are even better.
 
-.SH OTHER INFO
 
+.SH OTHER INFO
 The canonical place to find GIMP info is at http://www.gimp.org/.
 Here you can find links to just about many other GIMP sites,
 tutorials, data sets, mailing list archives, and more.
@@ -279,12 +286,14 @@ about the interactive use of GIMP.
 The latest version of GIMP and the GTK+ libs is always available at 
 ftp://ftp.gimp.org/.
 
+
 .SH AUTHORS
 Spencer Kimball and Peter Mattis.
 
 With patches, fixes, plugins, extensions, scripts,
 translations, documentation, and more from lots 
 and lots of people all over the world.
+
 
 .SH "SEE ALSO"
 .BR gimprc (5), 

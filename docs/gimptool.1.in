@@ -1,8 +1,11 @@
-.TH GIMPTOOL-2.0 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMPTOOL\-2.0 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+
 .SH NAME
-gimptool-2.0 - script to perform various GIMPy functions
+gimptool\-2.0 - script to perform various GIMPy functions
+
+
 .SH SYNOPSIS
-.B gimptool-2.0
+.B gimptool\-2.0
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run]
 [\-\-recon] [\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir]
@@ -25,17 +28,18 @@ gimptool-2.0 - script to perform various GIMPy functions
 
 .SH DESCRIPTION
 .PP
-\fIgimptool-2.0\fP is a tool that can, among other things, build
+\fIgimptool\-2.0\fP is a tool that can, among other things, build
 plug-ins or scripts and install them if they are distributed in one
 source file.
 .PP
-\fIgimptool-2.0\fP can also be used by programs that need to know what
+\fIgimptool\-2.0\fP can also be used by programs that need to know what
 libraries and include-paths \fIGIMP\fP was compiled with. This is
 especially useful in Makefiles.
 
+
 .SH OPTIONS
 .l
-\fIgimptool-2.0\fP accepts the following options:
+\fIgimptool\-2.0\fP accepts the following options:
 .TP 8
 .B  \-\-version
 Print the currently installed version of \fIGIMP\fP on the standard output.
@@ -187,6 +191,7 @@ If specified, use PREFIX instead of the installation exec prefix that
 and \-\-libs options. This option must be specified before any
 \-\-libs or \-\-cflags options.
 
+
 .SH ENVIRONMENT
 .PP
 .TP 8
@@ -210,14 +215,16 @@ LIBS=-lintl .
 to get the location of the pkg-config program used to determine details
 about your glib, pango and gtk+ installation.
 
+
 .SH SEE ALSO
 .BR gimp (1), 
 .BR gimprc (5),
-.BR pkg-config (1)
+.BR pkg\-config (1)
+
 
 .SH AUTHORS
 gimptool was written by Manish Singh (yosh@gimp.org) and is based on
-gtk-config by Owen Taylor (owen@gtk.org).
+gtk\-config by Owen Taylor (owen@gtk.org).
 
 This man page was written by Ben Gertzfield (che@debian.org), and tweaked
 by Manish Singh (yosh@gimp.org), Adrian Likins (adrian@gimp.org) and Marc

@@ -1,4 +1,5 @@
 .TH GIMP-REMOTE 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+
 .SH NAME
 gimp\-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS
@@ -6,6 +7,7 @@ gimp\-remote - tells a running GIMP to open a (local or remote) image file.
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
 [\-e] [\-\-existing] [\-q] [\-\-query]  [\-s] [\-\-no\-splash]
 \fIfilename\fP ...
+
 
 .SH DESCRIPTION
 .PP
@@ -46,6 +48,7 @@ a GIMP toolbox window has been found on this display.
 .B \-s, \-\-no\-splash
 When starting GIMP, do not show the splash screen.
 
+
 .SH EXAMPLES
 .TP
 .BI gimp\-remote\ http://www.gimp.org/images/wilber_the_gimp.png
@@ -56,14 +59,17 @@ a new one.
 Loads the local files wilber.xcf and wilma.xcf into a running GIMP
 or starts a new one. 
 
+
 .SH ENVIRONMENT
 .PP
 .TP 8
 .B DISPLAY
 to get the default host and display number.
 
+
 .SH AUTHORS
 Sven Neumann and Simon Budig.
+
 
 .SH "SEE ALSO"
 .BR gimp (1), 

@@ -1,3 +1,9 @@
+2004-12-17  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp-remote.1.in
+	* docs/gimp.1.in
+	* docs/gimptool.1.in: minor tweaks.
+
 2004-12-17  Simon Budig  <simon@gimp.org>
 
 	* data/images/gimp-splash.png: Added new splash by
