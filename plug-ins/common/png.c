@@ -37,6 +37,11 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1999/01/02 23:47:48  yosh
+ *   Doh, thinko.
+ *
+ *   -Yosh
+ *
  *   Revision 1.11  1999/01/02 23:27:58  yosh
  *   * app/Makefile.am
  *   * plug-ins/script-fu/scripts/Makefile.am: use -DREGEX_MALLOC,
@@ -697,7 +702,7 @@ save_image(char   *filename,	/* I - File to save to */
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
-  info->gamma          = gamma != 1.00 ? gamma : DEFAULT_GAMMA;
+  info->gamma          = 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA);
   info->sig_bit.red    = 8;
   info->sig_bit.green  = 8;
   info->sig_bit.blue   = 8;
