@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-25 13:19-0400\n"
-"PO-Revision-Date: 2004-10-25 14:31-0400\n"
+"POT-Creation-Date: 2004-10-27 16:33-0400\n"
+"PO-Revision-Date: 2004-10-27 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -1222,7 +1222,7 @@ msgstr "Unrecognized or invalid BMP compression format."
 #: plug-ins/common/tiff.c:836 plug-ins/common/tile.c:266
 #: plug-ins/common/winclipboard.c:579 plug-ins/common/xbm.c:871
 #: plug-ins/faxg3/faxg3.c:466 plug-ins/fits/fits.c:510
-#: plug-ins/gfig/gfig-dialog.c:1288 plug-ins/gimpressionist/general.c:121
+#: plug-ins/gfig/gfig-dialog.c:1328 plug-ins/gimpressionist/general.c:121
 #: plug-ins/sgi/sgi.c:380 plug-ins/twain/twain.c:571
 #: plug-ins/winsnap/winsnap.c:1237
 msgid "Background"
@@ -1873,7 +1873,7 @@ msgstr "Fill (right to left)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/common/align_layers.c:420 plug-ins/common/align_layers.c:451
-#: plug-ins/gfig/gfig-dialog.c:500
+#: plug-ins/gfig/gfig-dialog.c:496
 msgid "Snap to grid"
 msgstr "Snap to grid"
 
@@ -2779,7 +2779,7 @@ msgstr "Automatic pre_view"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
-#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1227
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1267
 msgid "Options"
 msgstr "Options"
 
@@ -4169,7 +4169,7 @@ msgstr "_Grid..."
 msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
-#: plug-ins/common/grid.c:619 plug-ins/gfig/gfig-dialog.c:1350
+#: plug-ins/common/grid.c:619 plug-ins/gfig/gfig-dialog.c:1390
 #: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
@@ -5223,7 +5223,7 @@ msgid "_Factory defaults"
 msgstr "_Factory defaults"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1422 plug-ins/gfig/gfig-dialog.c:1262
+#: plug-ins/common/newsprint.c:1422 plug-ins/gfig/gfig-dialog.c:1302
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -6037,6 +6037,54 @@ msgstr "Planar (RRR,GGG,BBB)"
 #: plug-ins/common/raw.c:1107
 msgid "Indexed Palette Type"
 msgstr "Indexed Palette Type"
+
+#: plug-ins/common/retinex.c:167
+msgid "_Retinex..."
+msgstr "_Retinex..."
+
+#: plug-ins/common/retinex.c:250
+msgid "Retinex..."
+msgstr "Retinex..."
+
+#: plug-ins/common/retinex.c:252
+msgid "Retinex (4/4): updated..."
+msgstr "Retinex (4/4): updated..."
+
+#: plug-ins/common/retinex.c:289
+msgid "Retinex Image Enhancement"
+msgstr "Retinex Image Enhancement"
+
+#: plug-ins/common/retinex.c:310
+msgid "Level"
+msgstr "Level"
+
+#: plug-ins/common/retinex.c:314
+msgid "_Uniform"
+msgstr "_Uniform"
+
+#: plug-ins/common/retinex.c:316
+msgid "_Low"
+msgstr "_Low"
+
+#: plug-ins/common/retinex.c:318
+msgid "_High"
+msgstr "_High"
+
+#: plug-ins/common/retinex.c:343
+msgid "_Scale:"
+msgstr "_Scale:"
+
+#: plug-ins/common/retinex.c:358
+msgid "_Scale division:"
+msgstr "_Scale division:"
+
+#: plug-ins/common/retinex.c:373
+msgid "_Dynamic:"
+msgstr "_Dynamic:"
+
+#: plug-ins/common/retinex.c:644
+msgid "Retinex: Filtering..."
+msgstr "Retinex: Filtering..."
 
 #: plug-ins/common/ripple.c:138
 msgid "_Ripple..."
@@ -7531,7 +7579,7 @@ msgid "Smear"
 msgstr "Smear"
 
 #: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:992
-#: plug-ins/flame/flame.c:1135 plug-ins/gfig/gfig-dialog.c:1401
+#: plug-ins/flame/flame.c:1135 plug-ins/gfig/gfig-dialog.c:1441
 msgid "Black"
 msgstr "Black"
 
@@ -8215,8 +8263,8 @@ msgstr "Load FITS File"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "BLANK/NaN Pixel Replacement"
 
-#: plug-ins/fits/fits.c:993 plug-ins/gfig/gfig-dialog.c:1290
-#: plug-ins/gfig/gfig-dialog.c:1402
+#: plug-ins/fits/fits.c:993 plug-ins/gfig/gfig-dialog.c:1330
+#: plug-ins/gfig/gfig-dialog.c:1442
 msgid "White"
 msgstr "White"
 
@@ -8286,7 +8334,7 @@ msgstr "Swirl"
 msgid "Horseshoe"
 msgstr "Horseshoe"
 
-#: plug-ins/flame/flame.c:743 plug-ins/gfig/gfig-dialog.c:1385
+#: plug-ins/flame/flame.c:743 plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar"
 msgstr "Polar"
 
@@ -8379,162 +8427,171 @@ msgstr "Gfig"
 msgid "Paint"
 msgstr "Paint"
 
-#: plug-ins/gfig/gfig-dialog.c:473
+#: plug-ins/gfig/gfig-dialog.c:469
 msgid "No fill"
 msgstr "No fill"
 
-#: plug-ins/gfig/gfig-dialog.c:474
+#: plug-ins/gfig/gfig-dialog.c:470
 msgid "FG fill"
 msgstr "FG fill"
 
-#: plug-ins/gfig/gfig-dialog.c:475
+#: plug-ins/gfig/gfig-dialog.c:471
 msgid "BG fill"
 msgstr "BG fill"
 
-#: plug-ins/gfig/gfig-dialog.c:476
+#: plug-ins/gfig/gfig-dialog.c:472
 msgid "Pattern fill"
 msgstr "Pattern fill"
 
-#: plug-ins/gfig/gfig-dialog.c:477
+#: plug-ins/gfig/gfig-dialog.c:473
 msgid "Gradient fill"
 msgstr "Gradient fill"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:487
+#: plug-ins/gfig/gfig-dialog.c:483
 msgid "Show image"
 msgstr "Show image"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:509
+#: plug-ins/gfig/gfig-dialog.c:505
 msgid "Show grid"
 msgstr "Show grid"
 
 #. Load a single object
-#: plug-ins/gfig/gfig-dialog.c:646
+#: plug-ins/gfig/gfig-dialog.c:642
 msgid "Load Gfig object collection"
 msgstr "Load Gfig object collection"
 
-#: plug-ins/gfig/gfig-dialog.c:758
+#: plug-ins/gfig/gfig-dialog.c:754
 msgid "First Gfig"
 msgstr "First Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:783
+#: plug-ins/gfig/gfig-dialog.c:779
 msgid "Save Gfig Drawing"
 msgstr "Save Gfig Drawing"
 
-#: plug-ins/gfig/gfig-dialog.c:864
+#: plug-ins/gfig/gfig-dialog.c:843
+msgid "This tool has no options"
+msgstr "This tool has no options"
+
+#. Tool options notebook
+#: plug-ins/gfig/gfig-dialog.c:891
+msgid "Tool options"
+msgstr "Tool options"
+
+#: plug-ins/gfig/gfig-dialog.c:903
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig-dialog.c:867
+#: plug-ins/gfig/gfig-dialog.c:907
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig-dialog.c:870
+#: plug-ins/gfig/gfig-dialog.c:911
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:873
+#: plug-ins/gfig/gfig-dialog.c:915
 msgid "Create arc"
 msgstr "Create arc"
 
-#: plug-ins/gfig/gfig-dialog.c:879
+#: plug-ins/gfig/gfig-dialog.c:919
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:885
+#: plug-ins/gfig/gfig-dialog.c:923
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig-dialog.c:891
+#: plug-ins/gfig/gfig-dialog.c:927
 msgid "Create spiral"
 msgstr "Create spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:897
+#: plug-ins/gfig/gfig-dialog.c:934
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig-dialog.c:903
+#: plug-ins/gfig/gfig-dialog.c:940
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig-dialog.c:906
+#: plug-ins/gfig/gfig-dialog.c:944
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig-dialog.c:909
+#: plug-ins/gfig/gfig-dialog.c:948
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig-dialog.c:912
+#: plug-ins/gfig/gfig-dialog.c:952
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig-dialog.c:915
+#: plug-ins/gfig/gfig-dialog.c:956
 msgid "Select an object"
 msgstr "Select an object"
 
-#: plug-ins/gfig/gfig-dialog.c:927
+#: plug-ins/gfig/gfig-dialog.c:969
 msgid "Raise selected object"
 msgstr "Raise selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:937
+#: plug-ins/gfig/gfig-dialog.c:979
 msgid "Lower selected object"
 msgstr "Lower selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:947
+#: plug-ins/gfig/gfig-dialog.c:989
 msgid "Raise selected object to top"
 msgstr "Raise selected object to top"
 
-#: plug-ins/gfig/gfig-dialog.c:957
+#: plug-ins/gfig/gfig-dialog.c:999
 msgid "Lower selected object to bottom"
 msgstr "Lower selected object to bottom"
 
-#: plug-ins/gfig/gfig-dialog.c:967
+#: plug-ins/gfig/gfig-dialog.c:1009
 msgid "Show previous object"
 msgstr "Show previous object"
 
-#: plug-ins/gfig/gfig-dialog.c:977
+#: plug-ins/gfig/gfig-dialog.c:1019
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig-dialog.c:979
+#: plug-ins/gfig/gfig-dialog.c:1021
 msgid "All"
 msgstr "All"
 
-#: plug-ins/gfig/gfig-dialog.c:983
+#: plug-ins/gfig/gfig-dialog.c:1025
 msgid "Show all objects"
 msgstr "Show all objects"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1241
+#: plug-ins/gfig/gfig-dialog.c:1281
 msgid "Show position"
 msgstr "Show position"
 
-#: plug-ins/gfig/gfig-dialog.c:1251
+#: plug-ins/gfig/gfig-dialog.c:1291
 msgid "Hide control points"
 msgstr "Hide control points"
 
-#: plug-ins/gfig/gfig-dialog.c:1279
+#: plug-ins/gfig/gfig-dialog.c:1319
 msgid "Max undo:"
 msgstr "Max undo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1327 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Transparent"
 
-#: plug-ins/gfig/gfig-dialog.c:1289
+#: plug-ins/gfig/gfig-dialog.c:1329
 msgid "Foreground"
 msgstr "Foreground"
 
-#: plug-ins/gfig/gfig-dialog.c:1291 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1331 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr "Copy"
 
-#: plug-ins/gfig/gfig-dialog.c:1300
+#: plug-ins/gfig/gfig-dialog.c:1340
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8542,77 +8599,77 @@ msgstr ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 
-#: plug-ins/gfig/gfig-dialog.c:1305
+#: plug-ins/gfig/gfig-dialog.c:1345
 msgid "Background:"
 msgstr "Background:"
 
-#: plug-ins/gfig/gfig-dialog.c:1309
+#: plug-ins/gfig/gfig-dialog.c:1349
 msgid "Feather"
 msgstr "Feather"
 
-#: plug-ins/gfig/gfig-dialog.c:1332
+#: plug-ins/gfig/gfig-dialog.c:1372
 msgid "Radius:"
 msgstr "Radius:"
 
-#: plug-ins/gfig/gfig-dialog.c:1371
+#: plug-ins/gfig/gfig-dialog.c:1411
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig-dialog.c:1384 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gfig/gfig-dialog.c:1424 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:156
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig-dialog.c:1386
+#: plug-ins/gfig/gfig-dialog.c:1426
 msgid "Isometric"
 msgstr "Isometric"
 
-#: plug-ins/gfig/gfig-dialog.c:1395
+#: plug-ins/gfig/gfig-dialog.c:1435
 msgid "Grid type:"
 msgstr "Grid type:"
 
-#: plug-ins/gfig/gfig-dialog.c:1400 plug-ins/gflare/gflare.c:563
+#: plug-ins/gfig/gfig-dialog.c:1440 plug-ins/gflare/gflare.c:563
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig-dialog.c:1403
+#: plug-ins/gfig/gfig-dialog.c:1443
 msgid "Grey"
 msgstr "Grey"
 
-#: plug-ins/gfig/gfig-dialog.c:1404
+#: plug-ins/gfig/gfig-dialog.c:1444
 msgid "Darker"
 msgstr "Darker"
 
-#: plug-ins/gfig/gfig-dialog.c:1405
+#: plug-ins/gfig/gfig-dialog.c:1445
 msgid "Lighter"
 msgstr "Lighter"
 
-#: plug-ins/gfig/gfig-dialog.c:1406
+#: plug-ins/gfig/gfig-dialog.c:1446
 msgid "Very dark"
 msgstr "Very dark"
 
-#: plug-ins/gfig/gfig-dialog.c:1415
+#: plug-ins/gfig/gfig-dialog.c:1455
 msgid "Grid color:"
 msgstr "Grid colour:"
 
-#: plug-ins/gfig/gfig-dialog.c:1635
-msgid "Number of Sides/Points/Turns:"
-msgstr "Number of Sides/Points/Turns:"
+#: plug-ins/gfig/gfig-dialog.c:1660
+msgid "Sides:"
+msgstr "Sides:"
 
-#: plug-ins/gfig/gfig-dialog.c:1645
+#: plug-ins/gfig/gfig-dialog.c:1670
 msgid "Clockwise"
 msgstr "Clockwise"
 
-#: plug-ins/gfig/gfig-dialog.c:1646
+#: plug-ins/gfig/gfig-dialog.c:1671
 msgid "Anti-Clockwise"
 msgstr "Anti-Clockwise"
 
-#: plug-ins/gfig/gfig-dialog.c:1656 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1681 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: plug-ins/gfig/gfig-dialog.c:1875
+#: plug-ins/gfig/gfig-dialog.c:1899
 #, c-format
 msgid "Gfig layer %d"
 msgstr "Gfig layer %d"
@@ -8629,7 +8686,7 @@ msgstr "Error reading file"
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editing read-only object - you will not be able to save it"
 
-#: plug-ins/gfig/gfig-poly.c:55
+#: plug-ins/gfig/gfig-poly.c:56
 msgid "Regular Polygon Number of Sides"
 msgstr "Regular Polygon Number of Sides"
 
@@ -8642,11 +8699,11 @@ msgstr "Object Details"
 msgid "XY position:"
 msgstr "XY position:"
 
-#: plug-ins/gfig/gfig-spiral.c:56
+#: plug-ins/gfig/gfig-spiral.c:58
 msgid "Spiral Number of Turns"
 msgstr "Spiral Number of Turns"
 
-#: plug-ins/gfig/gfig-star.c:55
+#: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
 msgstr "Star Number of Points"
 
@@ -9935,8 +9992,8 @@ msgid ""
 "suitable for navigation bars."
 msgstr ""
 "Guides are pre-defined rectangles covering the image. You define them by "
-"their width, height, and spacing from each other. This allows you rapidly "
-"to create the most common image map type - image collection of \"thumbnails\", "
+"their width, height, and spacing from each other. This allows you rapidly to "
+"create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:172

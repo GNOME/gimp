@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-23 19:32-0400\n"
-"PO-Revision-Date: 2004-10-23 20:02-0400\n"
+"POT-Creation-Date: 2004-10-27 16:33-0400\n"
+"PO-Revision-Date: 2004-10-27 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,6 +196,10 @@ msgstr "Gradient Selection"
 msgid "(Empty)"
 msgstr "(Empty)"
 
+#: libgimp/gimppalettemenu.c:91
+msgid "Palette Selection"
+msgstr "Palette Selection"
+
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Pattern Selection"
@@ -204,71 +208,71 @@ msgstr "Pattern Selection"
 msgid "percent"
 msgstr "percent"
 
-#: libgimpbase/gimpbaseenums.c:15
+#: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr "Small"
 
-#: libgimpbase/gimpbaseenums.c:16
+#: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr "Medium"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr "Large"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr "Light Checks"
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr "Mid-Tone Checks"
 
-#: libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr "Dark Checks"
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr "White Only"
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr "Gray Only"
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:62
 msgid "Black Only"
 msgstr "Black Only"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr "RGB colour"
 
-#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
 msgstr "Grayscale"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr "Indexed colour"
 
-#: libgimpbase/gimpbaseenums.c:84
+#: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:85
+#: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr "RGB-alpha"
 
-#: libgimpbase/gimpbaseenums.c:87
+#: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr "Grayscale-alpha"
 
-#: libgimpbase/gimpbaseenums.c:88
+#: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr "Indexed"
 
-#: libgimpbase/gimpbaseenums.c:89
+#: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr "Indexed-alpha"
 

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-26 21:15-0400\n"
-"PO-Revision-Date: 2004-10-26 14:29-0400\n"
+"POT-Creation-Date: 2004-10-27 16:30-0400\n"
+"PO-Revision-Date: 2004-10-27 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -892,8 +892,8 @@ msgid "M_ove to Screen..."
 msgstr "M_ove to Screen..."
 
 #: app/actions/dockable-actions.c:76
-msgid "_Show Image Menu"
-msgstr "_Show Image Menu"
+msgid "_Show Image Selection"
+msgstr "_Show Image Selection"
 
 #: app/actions/dockable-actions.c:82
 msgid "Auto _Follow Active Image"
@@ -1819,71 +1819,43 @@ msgstr "_Grayscale"
 msgid "_Indexed..."
 msgstr "_Indexed..."
 
-#: app/actions/image-commands.c:227 app/actions/image-commands.c:439
+#: app/actions/image-commands.c:186 app/dialogs/resize-dialog.c:424
+msgid "Set Image Canvas Size"
+msgstr "Set Image Canvas Size"
+
+#: app/actions/image-commands.c:213 app/actions/image-commands.c:413
 msgid "Resizing..."
 msgstr "Resizing..."
 
-#: app/actions/image-commands.c:289
+#: app/actions/image-commands.c:253
 msgid "Flipping..."
 msgstr "Flipping..."
 
-#: app/actions/image-commands.c:310 app/pdb/drawable_transform_cmds.c:633
-#: app/pdb/transform_tools_cmds.c:342 app/tools/gimprotatetool.c:159
+#: app/actions/image-commands.c:274 app/pdb/drawable_transform_cmds.c:632
+#: app/pdb/transform_tools_cmds.c:340 app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotating..."
 
-#: app/actions/image-commands.c:332 app/actions/layers-commands.c:550
+#: app/actions/image-commands.c:296 app/actions/layers-commands.c:535
 msgid "Cannot crop because the current selection is empty."
 msgstr "Cannot crop because the current selection is empty."
 
-#: app/actions/image-commands.c:456
+#: app/actions/image-commands.c:427
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Resize Error: Both width and height must be greater than zero."
 
-#: app/actions/image-commands.c:505
-msgid "Confirm Scaling"
-msgstr "Confirm Scaling"
-
-#: app/actions/image-commands.c:534 app/dialogs/image-new-dialog.c:282
-#, c-format
-msgid "You are trying to create an image with a size of %s."
-msgstr "You are trying to create an image with a size of %s."
-
-#: app/actions/image-commands.c:540
-#, c-format
-msgid ""
-"Scaling the image to the choosen size will make it use more memory than what "
-"is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
-"%s)."
-msgstr ""
-"Scaling the image to the choosen size will make it use more memory than what "
-"is configured as \"Maximum Image Size\" in the Preferences dialogue "
-"(currently %s)."
-
-#: app/actions/image-commands.c:555
-msgid ""
-"Scaling the image to the choosen size will shrink some layers completely "
-"away."
-msgstr ""
-"Scaling the image to the choosen size will shrink away some layers "
-"completely."
-
-#: app/actions/image-commands.c:559
-msgid "Is this what you want to do?"
-msgstr "Is this what you want to do?"
-
-#: app/actions/image-commands.c:595 app/core/gimpimage-scale.c:71
-#: app/dialogs/resize-dialog.c:212
+#: app/actions/image-commands.c:445 app/core/gimpimage-scale.c:71
+#: app/dialogs/image-scale-dialog.c:91
 msgid "Scale Image"
 msgstr "Scale Image"
 
-#: app/actions/image-commands.c:611 app/actions/layers-commands.c:971
-#: app/pdb/drawable_transform_cmds.c:795 app/pdb/transform_tools_cmds.c:463
+#: app/actions/image-commands.c:458 app/actions/layers-commands.c:956
+#: app/pdb/drawable_transform_cmds.c:795 app/pdb/transform_tools_cmds.c:459
 #: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
 
-#: app/actions/image-commands.c:624
+#: app/actions/image-commands.c:471
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Scale Error: Both width and height must be greater than zero."
 
@@ -2123,43 +2095,46 @@ msgstr "Select _Next Layer"
 msgid "Set Opacity"
 msgstr "Set Opacity"
 
-#: app/actions/layers-commands.c:199
+#: app/actions/layers-commands.c:196
 msgid "Layer Attributes"
 msgstr "Layer Attributes"
 
-#: app/actions/layers-commands.c:202
+#: app/actions/layers-commands.c:199
 msgid "Edit Layer Attributes"
 msgstr "Edit Layer Attributes"
 
-#: app/actions/layers-commands.c:235 app/actions/layers-commands.c:237
-#: app/actions/layers-commands.c:294 app/actions/layers-commands.c:298
+#: app/actions/layers-commands.c:232 app/actions/layers-commands.c:234
+#: app/actions/layers-commands.c:291 app/actions/layers-commands.c:295
 #: app/widgets/gimpdrawabletreeview.c:238 app/widgets/gimplayertreeview.c:840
 msgid "New Layer"
 msgstr "New Layer"
 
-#: app/actions/layers-commands.c:240
+#: app/actions/layers-commands.c:237
 msgid "Create a New Layer"
 msgstr "Create a New Layer"
 
-#: app/actions/layers-commands.c:527 app/core/gimplayer.c:255
-#: app/dialogs/resize-dialog.c:204
+#: app/actions/layers-commands.c:470 app/dialogs/resize-dialog.c:417
+msgid "Set Layer Boundary Size"
+msgstr "Set Layer Boundary Size"
+
+#: app/actions/layers-commands.c:512 app/core/gimplayer.c:255
 msgid "Scale Layer"
 msgstr "Scale Layer"
 
-#: app/actions/layers-commands.c:560
+#: app/actions/layers-commands.c:545
 msgid "Crop Layer"
 msgstr "Crop Layer"
 
-#: app/actions/layers-commands.c:698
+#: app/actions/layers-commands.c:683
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:919 app/core/gimplayer.c:1099
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1099
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
 
-#: app/actions/layers-commands.c:987 app/actions/layers-commands.c:1016
+#: app/actions/layers-commands.c:972 app/actions/layers-commands.c:1004
 msgid "Invalid width or height. Both must be positive."
 msgstr "Invalid width or height. Both must be positive."
 
@@ -4324,7 +4299,7 @@ msgid "Text"
 msgstr "Text"
 
 #: app/core/core-enums.c:1058 app/core/core-enums.c:1098
-#: app/core/gimpdrawable-transform.c:873
+#: app/core/gimpdrawable-transform.c:870
 msgid "Transform"
 msgstr "Transform"
 
@@ -4616,7 +4591,7 @@ msgstr "Flip Channel"
 msgid "Rotate Channel"
 msgstr "Rotate Channel"
 
-#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1112
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1109
 msgid "Transform Channel"
 msgstr "Transform Channel"
 
@@ -4767,20 +4742,20 @@ msgid "Render Stroke"
 msgstr "Render Stroke"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:934 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:931 app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Flip"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:1006 app/tools/gimprotatetool.c:97
+#: app/core/gimpdrawable-transform.c:1003 app/tools/gimprotatetool.c:97
 msgid "Rotate"
 msgstr "Rotate"
 
-#: app/core/gimpdrawable-transform.c:1110 app/core/gimplayer.c:259
+#: app/core/gimpdrawable-transform.c:1107 app/core/gimplayer.c:259
 msgid "Transform Layer"
 msgstr "Transform Layer"
 
-#: app/core/gimpdrawable-transform.c:1125
+#: app/core/gimpdrawable-transform.c:1122
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -4893,6 +4868,7 @@ msgid "Crop Image"
 msgstr "Crop Image"
 
 #: app/core/gimpimage-crop.c:126 app/core/gimpimage-resize.c:67
+#: app/dialogs/resize-dialog.c:401
 msgid "Resize Image"
 msgstr "Resize Image"
 
@@ -5196,7 +5172,7 @@ msgstr "Rename Layer"
 msgid "Move Layer"
 msgstr "Move Layer"
 
-#: app/core/gimplayer.c:256
+#: app/core/gimplayer.c:256 app/dialogs/resize-dialog.c:393
 msgid "Resize Layer"
 msgstr "Resize Layer"
 
@@ -5663,6 +5639,11 @@ msgstr "_Template:"
 msgid "Confirm Image Size"
 msgstr "Confirm Image Size"
 
+#: app/dialogs/image-new-dialog.c:282 app/dialogs/image-scale-dialog.c:192
+#, c-format
+msgid "You are trying to create an image with a size of %s."
+msgstr "You are trying to create an image with a size of %s."
+
 #: app/dialogs/image-new-dialog.c:289
 #, c-format
 msgid ""
@@ -5671,6 +5652,33 @@ msgid ""
 msgstr ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialogue (currently %s)."
+
+#: app/dialogs/image-scale-dialog.c:163
+msgid "Confirm Scaling"
+msgstr "Confirm Scaling"
+
+#: app/dialogs/image-scale-dialog.c:198
+#, c-format
+msgid ""
+"Scaling the image to the choosen size will make it use more memory than what "
+"is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
+"%s)."
+msgstr ""
+"Scaling the image to the choosen size will make it use more memory than what "
+"is configured as \"Maximum Image Size\" in the Preferences dialogue "
+"(currently %s)."
+
+#: app/dialogs/image-scale-dialog.c:213
+msgid ""
+"Scaling the image to the choosen size will shrink some layers completely "
+"away."
+msgstr ""
+"Scaling the image to the choosen size will shrink away some layers "
+"completely."
+
+#: app/dialogs/image-scale-dialog.c:217
+msgid "Is this what you want to do?"
+msgstr "Is this what you want to do?"
 
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1497
@@ -5942,15 +5950,16 @@ msgstr "Offset Channel"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:452 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:160 app/dialogs/resize-dialog.c:641
+#: app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Offset"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:481
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:670
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:483
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:672
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -6667,103 +6676,99 @@ msgstr "There is one image with unsaved changes:"
 msgid "There are %d images with unsaved changes:"
 msgstr "There are %d images with unsaved changes:"
 
-#: app/dialogs/resize-dialog.c:205
-msgid "Scale Layer Options"
-msgstr "Scale Layer Options"
+#: app/dialogs/resize-dialog.c:91 app/dialogs/resize-dialog.c:423
+msgid "Canvas Size"
+msgstr "Canvas Size"
 
-#: app/dialogs/resize-dialog.c:207 app/dialogs/resize-dialog.c:239
+#: app/dialogs/resize-dialog.c:102 app/dialogs/scale-dialog.c:107
+msgid "Layer Size"
+msgstr "Layer Size"
+
+#: app/dialogs/resize-dialog.c:394
+msgid "Resize Layer Options"
+msgstr "Resize Layer Options"
+
+#: app/dialogs/resize-dialog.c:396 app/dialogs/resize-dialog.c:428
 #: app/tools/gimppaintoptions-gui.c:273
 msgid "Size"
 msgstr "Size"
 
-#: app/dialogs/resize-dialog.c:213
-msgid "Scale Image Options"
-msgstr "Scale Image Options"
+#: app/dialogs/resize-dialog.c:402
+msgid "Resize Image Options"
+msgstr "Resize Image Options"
 
-#: app/dialogs/resize-dialog.c:215
+#: app/dialogs/resize-dialog.c:404
 msgid "Pixel Dimensions"
 msgstr "Pixel Dimensions"
 
-#: app/dialogs/resize-dialog.c:227
+#: app/dialogs/resize-dialog.c:416
 msgid "Layer Boundary Size"
 msgstr "Layer Boundary Size"
 
-#: app/dialogs/resize-dialog.c:228
-msgid "Set Layer Boundary Size"
-msgstr "Set Layer Boundary Size"
-
-#: app/dialogs/resize-dialog.c:234
-msgid "Canvas Size"
-msgstr "Canvas Size"
-
-#: app/dialogs/resize-dialog.c:235
-msgid "Set Image Canvas Size"
-msgstr "Set Image Canvas Size"
-
 #. the original width & height labels
-#: app/dialogs/resize-dialog.c:291 app/tools/gimpscaletool.c:170
+#: app/dialogs/resize-dialog.c:480 app/tools/gimpscaletool.c:170
 msgid "Current width:"
 msgstr "Current width:"
 
-#: app/dialogs/resize-dialog.c:297 app/tools/gimpscaletool.c:174
+#: app/dialogs/resize-dialog.c:486 app/tools/gimpscaletool.c:174
 msgid "Current height:"
 msgstr "Current height:"
 
 #. the new size labels
 #. the print size labels
-#: app/dialogs/resize-dialog.c:316 app/dialogs/resize-dialog.c:563
+#: app/dialogs/resize-dialog.c:505 app/dialogs/resize-dialog.c:752
 msgid "New width:"
 msgstr "New width:"
 
-#: app/dialogs/resize-dialog.c:322 app/dialogs/resize-dialog.c:569
+#: app/dialogs/resize-dialog.c:511 app/dialogs/resize-dialog.c:758
 msgid "New height:"
 msgstr "New height:"
 
-#. the scale ratio labels
-#: app/dialogs/resize-dialog.c:379
+#. the resize ratio labels
+#: app/dialogs/resize-dialog.c:568
 msgid "X ratio:"
 msgstr "X ratio:"
 
-#: app/dialogs/resize-dialog.c:385
+#: app/dialogs/resize-dialog.c:574
 msgid "Y ratio:"
 msgstr "Y ratio:"
 
-#: app/dialogs/resize-dialog.c:442
+#: app/dialogs/resize-dialog.c:631
 msgid "Constrain aspect ratio"
 msgstr "Constrain aspect ratio"
 
-#: app/dialogs/resize-dialog.c:504
+#: app/dialogs/resize-dialog.c:693
 msgid "C_enter"
 msgstr "C_entre"
 
-#: app/dialogs/resize-dialog.c:549
+#: app/dialogs/resize-dialog.c:738
 msgid "Print Size & Display Unit"
 msgstr "Print Size & Display Unit"
 
 #. the resolution labels
-#: app/dialogs/resize-dialog.c:630
+#: app/dialogs/resize-dialog.c:819
 msgid "X resolution:"
 msgstr "X resolution:"
 
-#: app/dialogs/resize-dialog.c:636
+#: app/dialogs/resize-dialog.c:825
 msgid "Y resolution:"
 msgstr "Y resolution:"
 
-#: app/dialogs/resize-dialog.c:650 app/widgets/gimptemplateeditor.c:383
+#: app/dialogs/resize-dialog.c:839 app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
-#: app/dialogs/resize-dialog.c:706 app/tools/gimptransformoptions.c:338
+#: app/dialogs/resize-dialog.c:895 app/tools/gimptransformoptions.c:338
 msgid "Interpolation:"
 msgstr "Interpolation:"
 
-#: app/dialogs/resize-dialog.c:725
+#: app/dialogs/resize-dialog.c:914
 msgid ""
-"Indexed color layers are always scaled without interpolation. The chosen "
+"Indexed color layers are always resized without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
-"Indexed colour layers are always scaled without interpolation. The chosen "
+"Indexed colour layers are always resized without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 
 #: app/dialogs/resolution-calibrate-dialog.c:67
@@ -6787,17 +6792,21 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Image Size"
 
-#: app/dialogs/scale-dialog.c:107
-msgid "Layer Size"
-msgstr "Layer Size"
-
-#: app/dialogs/scale-dialog.c:166
+#: app/dialogs/scale-dialog.c:168
 msgid "Quality"
 msgstr "Quality"
 
-#: app/dialogs/scale-dialog.c:174
+#: app/dialogs/scale-dialog.c:180
 msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
+
+#: app/dialogs/scale-dialog.c:194
+msgid ""
+"Indexed color layers are always scaled without interpolation. The chosen "
+"interpolation type will affect channels and masks only."
+msgstr ""
+"Indexed colour layers are always scaled without interpolation. The chosen "
+"interpolation type will affect channels and masks only."
 
 #: app/dialogs/stroke-dialog.c:104
 msgid "Choose Stroke Style"
@@ -7574,21 +7583,22 @@ msgstr "Hue-Saturation"
 msgid "Threshold"
 msgstr "Threshold"
 
-#: app/pdb/drawable_transform_cmds.c:274
+#: app/pdb/drawable_transform_cmds.c:272
 msgid "Flip..."
 msgstr "Flip..."
 
-#: app/pdb/drawable_transform_cmds.c:452 app/pdb/transform_tools_cmds.c:195
+#: app/pdb/drawable_transform_cmds.c:448 app/pdb/transform_tools_cmds.c:197
 #: app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/pdb/drawable_transform_cmds.c:960 app/pdb/transform_tools_cmds.c:595
+#: app/pdb/drawable_transform_cmds.c:958 app/pdb/transform_tools_cmds.c:587
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Shearing..."
 
-#: app/pdb/drawable_transform_cmds.c:1126 app/pdb/transform_tools_cmds.c:728
+#: app/pdb/drawable_transform_cmds.c:1126
+#: app/pdb/drawable_transform_cmds.c:1328 app/pdb/transform_tools_cmds.c:720
 msgid "2D Transform..."
 msgstr "2D Transform..."
 
@@ -10193,11 +10203,6 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Invalid UTF-8"
 
-#: app/widgets/gimpsizebox.c:236 app/widgets/gimptemplateeditor.c:255
-#, c-format
-msgid "%p"
-msgstr "%p"
-
 #. the image size labels
 #: app/widgets/gimpsizebox.c:240 app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
@@ -10252,6 +10257,11 @@ msgstr "Dash preset:"
 #: app/widgets/gimpstrokeeditor.c:300
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
+
+#: app/widgets/gimptemplateeditor.c:255
+#, c-format
+msgid "%p"
+msgstr "%p"
 
 #: app/widgets/gimptemplateeditor.c:330
 msgid "_Advanced Options"
