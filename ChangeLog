@@ -1,5 +1,12 @@
 2003-09-17  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimpvectortool.c: Ok, since the obsolete undo
+	step is invalid the undo_event of the image probably should be
+	GIMP_UNDO_EVENT_UNDO_EXPIRED. This fixes at least the undo
+	history...
+
+2003-09-17  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpvectortool.[ch]: Restored Mitchs favourite
 	feature :-)  (now the cursor indicates if you hover over
 	a vectors object when no other one is active...). Also added

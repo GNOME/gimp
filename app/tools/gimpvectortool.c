@@ -567,7 +567,7 @@ gimp_vector_tool_button_release (GimpTool        *tool,
       undo = gimp_undo_stack_pop_undo (gdisp->gimage->undo_stack,
                                        GIMP_UNDO_MODE_UNDO, &accum);
       
-      gimp_image_undo_event (gdisp->gimage, GIMP_UNDO_EVENT_UNDO, undo);
+      gimp_image_undo_event (gdisp->gimage, GIMP_UNDO_EVENT_UNDO_EXPIRED, undo);
 
       gimp_undo_free (undo, GIMP_UNDO_MODE_UNDO);
     }
