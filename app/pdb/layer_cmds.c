@@ -120,10 +120,9 @@ layer_new_invoker (Gimp     *gimp,
   gint32 height;
   gint32 type;
   gchar *name;
-  gdouble opacity_arg;
+  gdouble opacity;
   gint32 mode;
   GimpLayer *layer = NULL;
-  int opacity;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
@@ -143,8 +142,8 @@ layer_new_invoker (Gimp     *gimp,
 
   name = (gchar *) args[4].value.pdb_pointer;
 
-  opacity_arg = args[5].value.pdb_float;
-  if (opacity_arg < 0.0 || opacity_arg > 100.0)
+  opacity = args[5].value.pdb_float;
+  if (opacity < 0.0 || opacity > 100.0)
     success = FALSE;
 
   mode = args[6].value.pdb_int;
@@ -153,11 +152,12 @@ layer_new_invoker (Gimp     *gimp,
 
   if (success)
     {
-      opacity = (int) ((opacity_arg * 255) / 100);
-      layer = gimp_layer_new (gimage, width, height,
-			      (GimpImageType) type, name,
-			      opacity, (GimpLayerModeEffects) mode);
-      success = layer != NULL;
+      layer = gimp_layer_new (gimage,
+			      width, height,
+			      type,
+			      name,
+			      opacity / 100.0, mode);
+      success = (layer != NULL);
     }
 
   return_args = procedural_db_return_args (&layer_new_proc, success);
@@ -354,7 +354,7 @@ static ProcRecord layer_create_mask_proc =
 {
   "gimp_layer_create_mask",
   "Create a layer mask for the specified specified layer.",
-  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. Three different types of masks are allowed initially: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, and the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask). The layer mask still needs to be added to the layer. This can be done with a call to 'gimage_add_layer_mask'.",
+  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. Three different types of masks are allowed initially: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, and the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask). The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_image_add_layer_mask'.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

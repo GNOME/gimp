@@ -176,12 +176,12 @@ gimp_edit_paste (GimpImage    *gimage,
     layer = gimp_layer_new_from_tiles (paste->tiles,
                                        gimage,
 				       _("Pasted Layer"),
-				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+				       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
   else
     layer = gimp_layer_new_from_tiles (paste->tiles,
                                        gimage,
 				       _("Pasted Layer"),
-				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+				       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (! layer)
     return NULL;
@@ -256,7 +256,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
   layer = gimp_layer_new_from_tiles (paste->tiles,
                                      gimage,
 				     _("Pasted Layer"),
-				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (layer)
     {

@@ -500,12 +500,13 @@ gimp_layer_list_view_update_options (GimpLayerListView *view,
 	       gimp_layer_list_view_preserve_button_toggled);
       }
 
-  if ((gdouble) layer->opacity / 2.55 != view->opacity_adjustment->value)
+  if (layer->opacity * 100.0 != view->opacity_adjustment->value)
     {
       BLOCK (view->opacity_adjustment,
 	     gimp_layer_list_view_opacity_scale_changed);
 
-      gtk_adjustment_set_value (view->opacity_adjustment, layer->opacity / 2.55);
+      gtk_adjustment_set_value (view->opacity_adjustment,
+                                layer->opacity * 100.0);
 
       UNBLOCK (view->opacity_adjustment,
 	       gimp_layer_list_view_opacity_scale_changed);

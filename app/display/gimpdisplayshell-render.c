@@ -795,7 +795,7 @@ render_image_init_info (RenderInfo       *info,
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (shell->gdisp->gimage)))
     {
       info->alpha =
-	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage));
+	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage) * 255.999);
     }
 }
 

@@ -430,9 +430,12 @@ new_layer_query_ok_callback (GtkWidget *widget,
 
   if ((gimage = options->gimage))
     {
-      layer = gimp_layer_new (gimage, options->xsize, options->ysize,
+      layer = gimp_layer_new (gimage,
+                              options->xsize,
+                              options->ysize,
 			      gimp_image_base_type_with_alpha (gimage),
-			      layer_name, OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+			      layer_name,
+                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (layer) 
 	{
 	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
@@ -491,7 +494,9 @@ layers_new_layer_query (GimpImage *gimage,
 
       undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
-      new_layer = gimp_layer_new (gimage, width, height,
+      new_layer = gimp_layer_new (gimage,
+                                  width,
+                                  height,
                                   gimp_image_base_type_with_alpha (gimage),
                                   _("Empty Layer Copy"),
                                   template->opacity,

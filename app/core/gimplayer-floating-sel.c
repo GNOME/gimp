@@ -464,9 +464,8 @@ floating_sel_composite (GimpLayer *layer,
 	  /*  apply the fs with the undo specified by the value
 	   *  passed to this function
 	   */
-	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
-				  undo,
-				  (gdouble) layer->opacity / 255.0,
+	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR, undo,
+				  layer->opacity,
 				  layer->mode,
 				  NULL,
 				  (x1 - offx), (y1 - offy));

@@ -310,7 +310,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
 				    type,
 				    gimp_object_get_name (GIMP_OBJECT (layer)),
-				    OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+				    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (!merge_layer)
 	{
 	  g_warning ("%s: could not allocate merge layer.",
@@ -348,7 +348,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
 			gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
 			"merged layer",
-			OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
       if (!merge_layer)
 	{
@@ -449,7 +449,10 @@ gimp_image_merge_layers (GimpImage *gimage,
 	}
 
       combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
-		       layer->opacity, layer->mode, active, operation);
+		       layer->opacity * 255.999,
+                       layer->mode,
+                       active,
+                       operation);
 
       gimp_image_remove_layer (gimage, layer);
       reverse_list = g_slist_next (reverse_list);

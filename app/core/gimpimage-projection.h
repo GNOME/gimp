@@ -26,7 +26,7 @@ void            gimp_image_projection_free         (GimpImage       *gimage);
 TileManager   * gimp_image_projection              (GimpImage       *gimage);
 GimpImageType	gimp_image_projection_type         (const GimpImage *gimage);
 gint            gimp_image_projection_bytes        (const GimpImage *gimage);
-gint            gimp_image_projection_opacity      (const GimpImage *gimage);
+gdouble         gimp_image_projection_opacity      (const GimpImage *gimage);
 
 guchar        * gimp_image_projection_get_color_at (GimpImage       *gimage,
                                                     gint             x,

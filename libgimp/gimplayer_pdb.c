@@ -129,7 +129,7 @@ _gimp_layer_copy (gint32   layer_ID,
  * layer's already existing alpha channel (which will leave the layer
  * fully visible, but which may be more useful than a white mask). The
  * layer mask still needs to be added to the layer. This can be done
- * with a call to 'gimage_add_layer_mask'.
+ * with a call to 'gimp_image_add_layer_mask'.
  *
  * Returns: The newly created mask.
  */

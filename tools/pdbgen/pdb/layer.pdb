@@ -227,7 +227,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The layer name', no_success => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The layer opacity: (%%desc%%)', alias => 'opacity_arg' },
+	  desc => 'The layer opacity: (%%desc%%)' },
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
 	  desc => 'The layer combination mode: { %%desc%% }' }
     );
@@ -239,14 +239,14 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'int opacity' ],
 	code => <<'CODE'
 {
-  opacity = (int) ((opacity_arg * 255) / 100);
-  layer = gimp_layer_new (gimage, width, height,
-			  (GimpImageType) type, name,
-			  opacity, (GimpLayerModeEffects) mode);
-  success = layer != NULL;
+  layer = gimp_layer_new (gimage,
+                          width, height,
+			  type,
+                          name,
+			  opacity / 100.0, mode);
+  success = (layer != NULL);
 }
 CODE
     );
@@ -293,7 +293,7 @@ visible), completely black masks (which will give the layer complete
 transparency, and the layer's already existing alpha channel (which will leave
 the layer fully visible, but which may be more useful than a white mask). The
 layer mask still needs to be added to the layer. This can be done with a call
-to 'gimage_add_layer_mask'.
+to 'gimp_image_add_layer_mask'.
 HELP
 
     &std_pdb_misc;

@@ -1,8 +1,34 @@
+2002-03-04  Michael Natterer  <mitch@gimp.org>
+
+	Forgot some gint opacity values:
+
+	* app/core/gimplayer.[ch]: layer->opacity, gimp_layer_new(),
+	gimp_layer_new_from_tiles()
+
+	* app/core/gimpimage-projection.[ch]: gimp_image_projection_opacity()
+
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/gui/layers-commands.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimplayerlistview.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: regenerated.
+
 2002-03-03  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-contiguous-region.c: some cleanup, removed 
 	unused parameters and code.
-	
+
 	* app/widgets/gimptoolinfopreview.c: fixed stupid bug I introduced
 	yesterday.
 

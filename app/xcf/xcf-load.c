@@ -644,8 +644,14 @@ xcf_load_layer_props (XcfInfo   *info,
                             (guint32*) &info->floating_sel_offset, 1);
 	  break;
 	case PROP_OPACITY:
-	  info->cp += 
-            xcf_read_int32 (info->fp, (guint32*) &layer->opacity, 1);
+          {
+            guint32 opacity;
+
+            info->cp += xcf_read_int32 (info->fp, &opacity, 1);
+            layer->opacity = CLAMP ((gdouble) opacity / 255.0,
+                                    GIMP_OPACITY_TRANSPARENT,
+                                    GIMP_OPACITY_OPAQUE);
+          }
 	  break;
 	case PROP_VISIBLE:
 	  {

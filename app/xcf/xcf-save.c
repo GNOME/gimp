@@ -340,8 +340,7 @@ xcf_save_channel_props (XcfInfo     *info,
   if (channel == gimage->selection_mask)
     xcf_save_prop (info, gimage, PROP_SELECTION);
 
-  xcf_save_prop (info, gimage, PROP_OPACITY, 
-		 (gint) (channel->color.a * 255.999));
+  xcf_save_prop (info, gimage, PROP_OPACITY, channel->color.a);
   xcf_save_prop (info, gimage, PROP_VISIBLE,
 		 gimp_drawable_get_visible (GIMP_DRAWABLE (channel)));
   xcf_save_prop (info, gimage, PROP_SHOW_MASKED, channel->show_masked);
@@ -500,15 +499,18 @@ xcf_save_prop (XcfInfo   *info,
       break;
     case PROP_OPACITY:
       {
-	gint32 opacity;
+	gdouble opacity;
+        guint32 uint_opacity;
 
-	opacity = va_arg (args, gint32);
+	opacity = va_arg (args, gdouble);
+
+        uint_opacity = opacity * 255.999;
 
 	size = 4;
 
 	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
 	info->cp += xcf_write_int32 (info->fp, &size, 1);
-	info->cp += xcf_write_int32 (info->fp, (guint32*) &opacity, 1);
+	info->cp += xcf_write_int32 (info->fp, &uint_opacity, 1);
       }
       break;
     case PROP_MODE:

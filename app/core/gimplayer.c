@@ -186,7 +186,7 @@ gimp_layer_init (GimpLayer *layer)
 
   layer->mask           = NULL;
 
-  layer->opacity        = OPAQUE_OPACITY;
+  layer->opacity        = GIMP_OPACITY_OPAQUE;
   layer->mode           = GIMP_NORMAL_MODE;
 
   /*  floating selection  */
@@ -310,16 +310,14 @@ gimp_layer_new (GimpImage            *gimage,
 		gint                  height,
 		GimpImageType         type,
 		const gchar          *name,
-		gint                  opacity,
+		gdouble               opacity,
 		GimpLayerModeEffects  mode)
 {
   GimpLayer *layer;
 
-  if (width < 1 || height < 1)
-    {
-      g_message (_("Zero width or height layers not allowed."));
-      return NULL;
-    }
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (width > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
 
   layer = g_object_new (GIMP_TYPE_LAYER, NULL);
 
@@ -329,8 +327,10 @@ gimp_layer_new (GimpImage            *gimage,
                            type,
                            name);
 
-  layer->mode    = mode;
+  opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
+
   layer->opacity = opacity;
+  layer->mode    = mode;
 
   return layer;
 }
@@ -366,35 +366,47 @@ gimp_layer_copy (const GimpLayer *layer,
   return new_layer;
 }
 
+/**
+ * gimp_layer_new_from_tiles:
+ * @tiles:       The buffer to make the new layer from.
+ * @dest_gimage: The image the new layer will be added to.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
+ * 
+ * Copies %tiles to a layer taking into consideration the
+ * possibility of transforming the contents to meet the requirements
+ * of the target image type
+ * 
+ * Return value: The new layer.
+ **/
 GimpLayer *
 gimp_layer_new_from_tiles (TileManager          *tiles,
                            GimpImage            *dest_gimage,
 			   const gchar          *name,
-			   gint                  opacity,
+			   gdouble               opacity,
 			   GimpLayerModeEffects  mode)
 {
   GimpLayer   *new_layer;
   PixelRegion  layerPR;
   PixelRegion  bufPR;
-
-  /*  Function copies buffer to a layer
-   *  taking into consideration the possibility of transforming
-   *  the contents to meet the requirements of the target image type
-   */
+  gint         width, height;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
+
   new_layer = gimp_layer_new (dest_gimage,
-			      tile_manager_width (tiles),
-			      tile_manager_height (tiles),
+                              width, height,
 			      gimp_image_base_type_with_alpha (dest_gimage),
 			      name,
 			      opacity,
 			      mode);
 
-  if (!new_layer)
+  if (! new_layer)
     {
       g_message ("gimp_layer_new_from_tiles: could not allocate new layer");
       return NULL;
@@ -403,13 +415,11 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
   /*  Configure the pixel regions  */
   pixel_region_init (&bufPR, tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (new_layer)->width,
-		     GIMP_DRAWABLE (new_layer)->height,
+		     width, height,
 		     FALSE);
   pixel_region_init (&layerPR, GIMP_DRAWABLE (new_layer)->tiles,
 		     0, 0,
-		     GIMP_DRAWABLE (new_layer)->width,
-		     GIMP_DRAWABLE (new_layer)->height,
+		     width, height,
 		     TRUE);
 
   if ((tile_manager_bpp (tiles) == 4 &&
@@ -1458,15 +1468,13 @@ void
 gimp_layer_set_opacity (GimpLayer *layer,
                         gdouble    opacity)
 {
-  gint layer_opacity;
-
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  layer_opacity = (gint) (opacity * 255.999);
+  opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 
-  if (layer->opacity != layer_opacity)
+  if (layer->opacity != opacity)
     {
-      layer->opacity = layer_opacity;
+      layer->opacity = opacity;
 
       g_signal_emit (G_OBJECT (layer), layer_signals[OPACITY_CHANGED], 0);
 
@@ -1482,7 +1490,7 @@ gimp_layer_get_opacity (const GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_OPACITY_OPAQUE);
 
-  return (gdouble) layer->opacity / 255.0;
+  return (gdouble) layer->opacity;
 }
 
 void

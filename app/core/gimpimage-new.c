@@ -270,7 +270,7 @@ gimp_image_new_create_image (Gimp               *gimp,
 
   layer = gimp_layer_new (gimage, width, height,
 			  type, _("Background"),
-			  OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
  
   if (layer)
     {

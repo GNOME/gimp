@@ -37,7 +37,7 @@ struct _GimpLayer
 {
   GimpDrawable          parent_instance;
 
-  gint                  opacity;          /*  layer opacity              */
+  gdouble               opacity;          /*  layer opacity              */
   GimpLayerModeEffects  mode;             /*  layer combination mode     */
   gboolean              preserve_trans;   /*  preserve transparency      */
 
@@ -79,7 +79,7 @@ GimpLayer     * gimp_layer_new                 (GimpImage            *gimage,
                                                 gint                  height,
                                                 GimpImageType         type,
                                                 const gchar          *name,
-                                                gint                  opacity,
+                                                gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_copy                (const GimpLayer      *layer,
                                                 GType                 new_type,
@@ -88,7 +88,7 @@ GimpLayer     * gimp_layer_copy                (const GimpLayer      *layer,
 GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
                                                 GimpImage            *dest_gimage,
                                                 const gchar          *name,
-                                                gint                  opacity,
+                                                gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_drawable   (GimpDrawable         *drawable,
                                                 GimpImage            *dest_image);

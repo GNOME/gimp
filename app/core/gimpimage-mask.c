@@ -395,7 +395,7 @@ gimp_image_mask_float (GimpImage    *gimage,
   layer = gimp_layer_new_from_tiles (tiles,
                                      gimage,
 				     _("Floating Selection"),
-				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
+				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   /*  Set the offsets  */
   tile_manager_get_offsets (tiles, &x1, &y1);

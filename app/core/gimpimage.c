@@ -837,14 +837,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
 			    mask, NULL,
-                            layer->opacity,
+                            layer->opacity * 255.999,
 			    layer->mode,
                             visible_components,
                             INITIAL_INTENSITY_ALPHA);
 	  else
 	    combine_regions (&src1PR, &src2PR, &src1PR, 
 			     mask, NULL,
-                             layer->opacity,
+                             layer->opacity * 255.999,
 			     layer->mode,
                              visible_components,
                              COMBINE_INTEN_A_INTEN_A);
@@ -854,14 +854,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
 			    mask, NULL,
-                            layer->opacity,
+                            layer->opacity * 255.999,
 			    layer->mode,
                             visible_components,
                             INITIAL_INTENSITY);
 	  else
 	    combine_regions (&src1PR, &src2PR, &src1PR, 
 			     mask, NULL,
-                             layer->opacity,
+                             layer->opacity * 255.999,
 			     layer->mode,
                              visible_components,
                              COMBINE_INTEN_A_INTEN);
@@ -1846,15 +1846,20 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			 mx, my, 
 			 (x2 - x1), (y2 - y1), 
 			 FALSE);
+
       combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity * 255.999, mode,
-                       active_components, operation);
+		       opacity * 255.999,
+                       mode,
+                       active_components,
+                       operation);
     }
   else
     {
       combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		       opacity * 255.999, mode,
-                       active_components, operation);
+		       opacity * 255.999,
+                       mode,
+                       active_components,
+                       operation);
     }
 }
 
@@ -1983,7 +1988,8 @@ gimp_image_replace_image (GimpImage    *gimage,
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
                                opacity * 255.999,
-                               active_components, operation);
+                               active_components,
+                               operation);
 
       g_free (temp_data);
     }
@@ -1991,7 +1997,8 @@ gimp_image_replace_image (GimpImage    *gimage,
     {
       combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
 			       opacity * 255.999,
-                               active_components, operation);
+                               active_components,
+                               operation);
     }
 }
 
