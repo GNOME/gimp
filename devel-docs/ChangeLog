@@ -1,3 +1,9 @@
+2003-10-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt 
+	* libgimp/tmpl/gimplayer.sgml
+	* libgimp/tmpl/gimppaths.sgml: updated.
+
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml

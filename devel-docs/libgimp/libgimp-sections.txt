@@ -385,6 +385,7 @@ gimp_layer_copy
 gimp_layer_create_mask
 gimp_layer_scale
 gimp_layer_resize
+gimp_layer_resize_to_image_size
 gimp_layer_delete
 gimp_layer_translate
 gimp_layer_add_alpha
@@ -464,6 +465,7 @@ gimp_path_get_locked
 gimp_path_set_locked
 gimp_path_set_tattoo
 gimp_path_to_selection
+gimp_path_import
 </SECTION>
 
 <SECTION>

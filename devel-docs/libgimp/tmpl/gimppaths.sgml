@@ -185,3 +185,15 @@ gimppaths
 @pathname: 
 
 
+<!-- ##### FUNCTION gimp_path_import ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@filename: 
+@merge: 
+@scale: 
+@Returns: 
+
+

@@ -77,6 +77,15 @@ Operations on single layers.
 @offset_y: 
 
 
+<!-- ##### FUNCTION gimp_layer_resize_to_image_size ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_delete ##### -->
 <para>
 
