@@ -142,7 +142,9 @@ písma Type1. Nahrajte a nainstalujte je.
 #        In particular, we should try to preserve gimprc.  --Raphael
 
 Pøi instalaci nové verze nezapomeòte nejdøív smazat svùj
-adresáø ~/.gimp.
+adresáø (v Unixu ~/.gimp-1.1, ve Windows _gimp1.1 v domovském
+adresáøi, nebo _gimp1.1.<u¾ivatelské_jméno>  v instalaèním
+adresáøi programu GIMP).
 
 Pou¾ití menu Úpravy->Tahy umo¾òuje kreslit jednoduché ètverce
 a kruhy vykreslením èáry podél hranic aktuálního výbìru.
@@ -154,4 +156,3 @@ ke kruhu, který bude vybrán, a kurzor umístit do prùseèíku vodítek;
 výsledný výbìr se bude vodítek pøesnì dotýkat.
 
 # (end of tips)
-
