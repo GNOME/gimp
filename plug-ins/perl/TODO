@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * MJH: glib-config(!!!)
   * replöace examples/pixemap pod by (.*) and watch it die!
   * empty desfiption -> no display in PDB?`
   * make uninstall is actually a concern: make it work

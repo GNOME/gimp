@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- do not try to compile personal_rc_file without gimp-1.1.
+
 1.097 Wed Jul 14 22:55:24 CEST 1999
 	- updated perlotine.
         - updated pixelmap with stub documentation.

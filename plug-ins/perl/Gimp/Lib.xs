@@ -1741,6 +1741,7 @@ gimp_data_directory()
 char *
 gimp_gtkrc()
 
+#ifdef GIMP11
 SV *
 gimp_personal_rc_file(basename)
 	char *	basename
@@ -1750,6 +1751,7 @@ gimp_personal_rc_file(basename)
         g_free (basename);
         OUTPUT:
         RETVAL
+#endif
 
 guint
 gimp_tile_width()
