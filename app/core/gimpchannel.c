@@ -262,6 +262,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->flip_desc      = _("Flip Channel");
   item_class->rotate_desc    = _("Rotate Channel");
   item_class->transform_desc = _("Transform Channel");
+  item_class->stroke_desc    = _("Stroke Channel");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;

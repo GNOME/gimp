@@ -904,6 +904,7 @@ gimp_item_stroke (GimpItem      *item,
                   gboolean       use_default_values)
 {
   GimpItemClass *item_class;
+  gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -914,10 +915,19 @@ gimp_item_stroke (GimpItem      *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   if (item_class->stroke)
-    return item_class->stroke (item, drawable, context,
-                               stroke_desc, use_default_values);
+    {
+      GimpImage *gimage = gimp_item_get_image (item);
 
-  return FALSE;
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
+                                   item_class->stroke_desc);
+
+      retval = item_class->stroke (item, drawable, context,
+                                   stroke_desc, use_default_values);
+
+      gimp_image_undo_group_end (gimage);
+    }
+
+  return retval;
 }
 
 gint

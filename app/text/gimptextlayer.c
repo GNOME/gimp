@@ -157,7 +157,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   viewable_class->default_stock_id = "gimp-text-layer";
 
-  item_class->default_name         = _("Text Layer");
   item_class->duplicate            = gimp_text_layer_duplicate;
   item_class->rename               = gimp_text_layer_rename;
 
@@ -167,6 +166,15 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate               = gimp_text_layer_rotate;
   item_class->transform            = gimp_text_layer_transform;
 #endif
+
+  item_class->default_name         = _("Text Layer");
+  item_class->rename_desc          = _("Rename Text Layer");
+  item_class->translate_desc       = _("Move Text Layer");
+  item_class->scale_desc           = _("Scale Text Layer");
+  item_class->resize_desc          = _("Resize Text Layer");
+  item_class->flip_desc            = _("Flip Text Layer");
+  item_class->rotate_desc          = _("Rotate Text Layer");
+  item_class->transform_desc       = _("Transform Text Layer");
 
   drawable_class->set_tiles        = gimp_text_layer_set_tiles;
   drawable_class->push_undo        = gimp_text_layer_push_undo;

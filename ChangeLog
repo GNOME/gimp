@@ -1,3 +1,19 @@
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added "const gchar *stroke_desc" to
+	the GimpItemClass struct and always push an undo group
+	around GimpItem::stroke().
+
+	* app/core/gimpchannel.c
+	* app/core/gimpselection.c
+	* app/vectors/gimpvectors.c: set the stroke_desc accordingly
+	and don't push undo groups.
+
+	* app/text/gimptextlayer.c (gimp_text_layer_class_init): set
+	all of GimpItemClass' undo_descs.
+
+	* app/text/gimptextlayer-transform.c: don't push undo groups here.
+
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c (gimp_rgb_to_hsv): applied patch

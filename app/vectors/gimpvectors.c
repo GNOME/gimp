@@ -241,6 +241,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->flip_desc            = _("Flip Path");
   item_class->rotate_desc          = _("Rotate Path");
   item_class->transform_desc       = _("Transform Path");
+  item_class->stroke_desc          = _("Stroke Path");
 
   klass->freeze                    = NULL;
   klass->thaw                      = gimp_vectors_real_thaw;

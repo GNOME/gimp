@@ -128,6 +128,7 @@ struct _GimpItemClass
   const gchar *flip_desc;
   const gchar *rotate_desc;
   const gchar *transform_desc;
+  const gchar *stroke_desc;
 };
 
 

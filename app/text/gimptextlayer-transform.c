@@ -53,11 +53,7 @@ gimp_text_layer_flip (GimpItem            *item,
 		      gdouble              axis,
 		      gboolean             clip_result)
 {
-  GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Flip Text Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
 
   {
     GimpText    *text  = GIMP_TEXT_LAYER (item)->text;
@@ -81,12 +77,9 @@ gimp_text_layer_flip (GimpItem            *item,
     g_object_notify (G_OBJECT (text), "transformation");
   }
 
-  /*  If there is a layer mask, make sure it gets flipped as well  */
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask), context,
                     flip_type, axis, clip_result);
-
-  gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
@@ -100,13 +93,9 @@ gimp_text_layer_rotate (GimpItem         *item,
                         gdouble           center_y,
                         gboolean          clip_result)
 {
-  GimpLayer   *layer  = GIMP_LAYER (item);
-  GimpImage   *gimage = gimp_item_get_image (item);
-  gdouble      cos    = 1.0;
-  gdouble      sin    = 0.0;
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Rotate Text Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
+  gdouble    cos   = 1.0;
+  gdouble    sin   = 0.0;
 
   switch (rotate_type)
     {
@@ -137,12 +126,9 @@ gimp_text_layer_rotate (GimpItem         *item,
     g_object_notify (G_OBJECT (text), "transformation");
   }
 
-  /*  If there is a layer mask, make sure it gets rotates as well  */
   if (layer->mask)
     gimp_item_rotate (GIMP_ITEM (layer->mask), context,
                       rotate_type, center_x, center_y, clip_result);
-
-  gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));

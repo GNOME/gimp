@@ -183,6 +183,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->rotate                  = gimp_selection_rotate;
   item_class->stroke                  = gimp_selection_stroke;
   item_class->translate_desc          = _("Move Selection");
+  item_class->stroke_desc             = _("Stroke Selection");
 
   drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
 
@@ -297,7 +298,6 @@ gimp_selection_stroke (GimpItem     *item,
                        gboolean      use_default_values)
 {
   GimpSelection  *selection = GIMP_SELECTION (item);
-  GimpImage      *gimage;
   const BoundSeg *dummy_in;
   const BoundSeg *dummy_out;
   gint            num_dummy_in;
@@ -313,18 +313,11 @@ gimp_selection_stroke (GimpItem     *item,
       return FALSE;
     }
 
-  gimage = gimp_item_get_image (item);
-
   selection->stroking = TRUE;
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
-                               _("Stroke Selection"));
 
   retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, context,
                                                    stroke_desc,
                                                    use_default_values);
-
-  gimp_image_undo_group_end (gimage);
 
   selection->stroking = FALSE;
 
