@@ -175,18 +175,18 @@ gimp_vector_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpVectorToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_vector_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpVectorTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_vector_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_vector_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpVectorTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_vector_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpVectorTool",
+                                          "GimpVectorTool",
                                           &tool_info, 0);
     }
 
@@ -788,14 +788,16 @@ gimp_vector_tool_key_press (GimpTool     *tool,
                             GdkEventKey  *kevent,
                             GimpDisplay  *gdisp)
 {
-  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpDrawTool     *draw_tool   = GIMP_DRAW_TOOL (tool);
-  GimpDisplayShell *shell;
-  gdouble           xdist, ydist;
-  gdouble           pixels = 1.0;
+  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
+  GimpVectorOptions *options;
+
+  GimpDisplayShell  *shell;
+  gdouble            xdist, ydist;
+  gdouble            pixels = 1.0;
 
   if (! vector_tool->vectors)
-    return TRUE;
+    return FALSE;
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
@@ -856,8 +858,16 @@ gimp_vector_tool_key_press (GimpTool     *tool,
           vector_tool->have_undo = FALSE;
           break;
 
-        default:
+        case GDK_Escape:
+          options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+
+          if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
+            g_object_set (options, "vectors-edit-mode",
+                          GIMP_VECTOR_MODE_DESIGN, NULL);
           break;
+
+        default:
+          return FALSE;
         }
 
       gimp_image_flush (gdisp->gimage);

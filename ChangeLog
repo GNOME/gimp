@@ -1,3 +1,8 @@
+2004-10-25  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: Switch to design mode when
+	Escape gets pressed. Untabbified.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/gradient-editor-commands.c
