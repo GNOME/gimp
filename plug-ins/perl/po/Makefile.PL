@@ -34,8 +34,8 @@ datadir  = $datadir
 	$MSGFMT -o \$*.gmo \$*.po
 
 %.po: gimp-perl.pot
-	msgmerge -w 83 \$*.po gimp-perl.pot >\$*.po~
-	if cmp -s \$*.po~ \$*.po; then : ; else mv \$*.po~ \$*.po; fi
+	-msgmerge -w 83 \$*.po gimp-perl.pot >\$*.po~
+	-if cmp -s \$*.po~ \$*.po; then : ; else mv \$*.po~ \$*.po; fi
 
 all :: update-gmo
 
