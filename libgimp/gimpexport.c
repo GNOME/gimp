@@ -162,19 +162,19 @@ static ExportAction export_action_merge =
 
 static ExportAction export_action_animate_or_merge =
 {
-  NULL,
   export_merge,
+  NULL,
   N_("can only handle layers as animation frames"),
-  { N_("Save as Animation"), N_("Merge Visible Layers") },
+  { N_("Merge Visible Layers"), N_("Save as Animation")},
   0
 };
 
 static ExportAction export_action_animate_or_flatten =
 {
-  NULL,
   export_flatten,
+  NULL,
   N_("can only handle layers as animation frames"),
-  { N_("Save as Animation"), N_("Flatten Image") },
+  { N_("Flatten Image"), N_("Save as Animation") },
   0
 };
 
