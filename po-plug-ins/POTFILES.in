@@ -6,7 +6,6 @@ plug-ins/FractalExplorer/FractalExplorer.c
 plug-ins/Lighting/lighting_apply.c
 plug-ins/Lighting/lighting_main.c
 plug-ins/Lighting/lighting_ui.c
-plug-ins/MapObject/arcball.c
 plug-ins/MapObject/mapobject_apply.c
 plug-ins/MapObject/mapobject_main.c
 plug-ins/MapObject/mapobject_ui.c
@@ -238,6 +237,7 @@ plug-ins/imagemap/imap_settings.c
 plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_stock.c
 plug-ins/jpeg/jpeg.c
+plug-ins/jpeg/jpeg-exif.c
 plug-ins/jpeg/jpeg-load.c
 plug-ins/jpeg/jpeg-save.c
 plug-ins/maze/algorithms.c
