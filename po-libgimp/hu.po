@@ -59,7 +59,7 @@ msgstr "csak szürkeárnyalatos képeket kezel"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr "Átalakítás fekete-fehérbe"
+msgstr "Átalakítás szürkeárnyalatosba"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
