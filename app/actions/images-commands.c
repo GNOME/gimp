@@ -23,9 +23,11 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpimageview.h"
 
 #include "display/gimpdisplay.h"
