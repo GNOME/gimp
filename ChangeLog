@@ -1,3 +1,11 @@
+Mon Apr 13 00:27:45 EDP 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/gdisplay.c: Set the current tool's gdisplay pointer to NULL
+	when destroying a gdisplay
+
+	* app/interface.c: Use "clicked" as the signal to handle for menu
+	based tools.  This lets us pop by_color_select back up.
+
 Sun Apr 12 22:51:31 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimp_tips.txt: added a few more tips

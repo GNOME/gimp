@@ -387,7 +387,7 @@ create_tools (GtkWidget *parent)
       tool_widgets[i] = button = gtk_radio_button_new (group);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) tools_select_update,
 			  tool_data[i].callback_data);
     }

@@ -182,11 +182,21 @@ gdisplay_format_title (GImage *gimage,
 static void
 gdisplay_delete (GDisplay *gdisp)
 {
+  GDisplay *tool_gdisp;
+
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
 
   /*  stop any active tool  */
   active_tool_control (HALT, (void *) gdisp);
+
+  /*  clear out the pointer to this gdisp from the active tool */
+
+  if (active_tool && active_tool->gdisp_ptr) {
+    tool_gdisp = active_tool->gdisp_ptr;
+    if (gdisp->ID == tool_gdisp->ID)
+      active_tool->gdisp_ptr = NULL;
+  }
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
