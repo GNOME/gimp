@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.19\n"
-"POT-Creation-Date: 2000-04-18 14:37+0400\n"
-"PO-Revision-Date: 2000-04-18 16:30+04:00\n"
+"POT-Creation-Date: 2000-04-21 14:00+0400\n"
+"PO-Revision-Date: 2000-04-21 14:07+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "Чужая Карта"
 
 #: plug-ins/AlienMap/AlienMap.c:632 plug-ins/AlienMap2/AlienMap2.c:624
 #: plug-ins/FractalExplorer/Dialogs.c:298
-#: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:602
+#: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:605
 #: plug-ins/gfig/gfig.c:3382 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:287
 msgid "About"
@@ -43,9 +43,9 @@ msgstr "О программе"
 #: plug-ins/bmp/bmpwrite.c:562 plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
-#: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
+#: plug-ins/common/align_layers.c:434 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:622
-#: plug-ins/common/bumpmap.c:868 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/bumpmap.c:874 plug-ins/common/checkerboard.c:359
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:423
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
@@ -96,7 +96,7 @@ msgstr "О программе"
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:215
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:195 plug-ins/gdyntext/gdyntext_ui.c:615
+#: plug-ins/gdyntext/gdyntext_ui.c:198 plug-ins/gdyntext/gdyntext_ui.c:618
 #: plug-ins/gfig/gfig.c:4105 plug-ins/gfig/gfig.c:4450
 #: plug-ins/gfig/gfig.c:4533 plug-ins/gfig/gfig.c:4879
 #: plug-ins/gflare/gflare.c:2491 plug-ins/gflare/gflare.c:3501
@@ -124,9 +124,9 @@ msgstr "Да"
 #: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1384
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
-#: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
+#: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:436
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
-#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:870
+#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:876
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
@@ -268,7 +268,7 @@ msgstr "Косинус"
 #: plug-ins/AlienMap/AlienMap.c:754 plug-ins/FractalExplorer/Dialogs.c:737
 #: plug-ins/FractalExplorer/Dialogs.c:778
 #: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/CML_explorer.c:167
-#: plug-ins/common/align_layers.c:447 plug-ins/common/align_layers.c:480
+#: plug-ins/common/align_layers.c:461 plug-ins/common/align_layers.c:494
 #: plug-ins/common/ps.c:2657 plug-ins/common/ps.c:2670
 #: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1490
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:276
@@ -1023,7 +1023,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1061 plug-ins/common/emboss.c:602
+#: plug-ins/common/bumpmap.c:1067 plug-ins/common/emboss.c:602
 #: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Глубина:"
@@ -1152,7 +1152,7 @@ msgid "Intensity Levels"
 msgstr "Уровни интенсивности"
 
 #: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:1101
+#: plug-ins/common/bumpmap.c:1107
 msgid "Ambient:"
 msgstr "Освещение:"
 
@@ -1338,7 +1338,7 @@ msgstr "Z-координата объекта в XYZ пространстве"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2831
-#: plug-ins/gdyntext/gdyntext_ui.c:494
+#: plug-ins/gdyntext/gdyntext_ui.c:497
 msgid "Rotation"
 msgstr "Вращение"
 
@@ -1461,7 +1461,7 @@ msgstr "Показать скрыть каркас просмотра"
 #: plug-ins/common/pix.c:329 plug-ins/common/png.c:423
 #: plug-ins/common/png.c:425 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
-#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:441
+#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:445
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
 #: plug-ins/common/xwd.c:448 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
@@ -1509,7 +1509,7 @@ msgstr "%s: плохая цветовая карта\n"
 #: plug-ins/common/png.c:571 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
-#: plug-ins/common/tiff.c:651 plug-ins/common/tile.c:264
+#: plug-ins/common/tiff.c:655 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2358
 #: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2867
@@ -1539,7 +1539,7 @@ msgstr "невозможно открыть %s\n"
 #: plug-ins/common/png.c:748 plug-ins/common/png.c:750
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1225 plug-ins/common/xbm.c:959
+#: plug-ins/common/tiff.c:1230 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:654 plug-ins/common/xwd.c:552
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
@@ -2117,7 +2117,7 @@ msgstr "<Image>/Фильтры/Выровнять видимые слои..."
 msgid "Align Visible Layers: there are too few layers."
 msgstr "Выравнивание видимых слоев: слишком мало слоев."
 
-#: plug-ins/common/align_layers.c:415
+#: plug-ins/common/align_layers.c:429
 msgid "Align Visible Layers"
 msgstr "Выровнять видимые слои"
 
@@ -2126,9 +2126,9 @@ msgstr "Выровнять видимые слои"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/common/align_layers.c:431 plug-ins/common/apply_lens.c:415
+#: plug-ins/common/align_layers.c:445 plug-ins/common/apply_lens.c:415
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:640
-#: plug-ins/common/bumpmap.c:1002 plug-ins/common/checkerboard.c:371
+#: plug-ins/common/bumpmap.c:1008 plug-ins/common/checkerboard.c:371
 #: plug-ins/common/cubism.c:328 plug-ins/common/despeckle.c:747
 #: plug-ins/common/destripe.c:658 plug-ins/common/edge.c:668
 #: plug-ins/common/emboss.c:572 plug-ins/common/engrave.c:246
@@ -2154,73 +2154,73 @@ msgstr "Выровнять видимые слои"
 msgid "Parameter Settings"
 msgstr "Настройка параметров"
 
-#: plug-ins/common/align_layers.c:449 plug-ins/common/align_layers.c:482
+#: plug-ins/common/align_layers.c:463 plug-ins/common/align_layers.c:496
 msgid "Collect"
 msgstr "Собрать"
 
-#: plug-ins/common/align_layers.c:451
+#: plug-ins/common/align_layers.c:465
 msgid "Fill (left to right)"
 msgstr "Заполнить (слева на право)"
 
-#: plug-ins/common/align_layers.c:453
+#: plug-ins/common/align_layers.c:467
 msgid "Fill (right to left)"
 msgstr "Заполнить (справа на лево)"
 
-#: plug-ins/common/align_layers.c:455 plug-ins/common/align_layers.c:488
+#: plug-ins/common/align_layers.c:469 plug-ins/common/align_layers.c:502
 #: plug-ins/gfig/gfig.c:3415
 msgid "Snap to Grid"
 msgstr "Выровнять по направляющей"
 
-#: plug-ins/common/align_layers.c:460
+#: plug-ins/common/align_layers.c:474
 msgid "Horizontal Style:"
 msgstr "Горизонтальный стиль:"
 
-#: plug-ins/common/align_layers.c:467
+#: plug-ins/common/align_layers.c:481
 msgid "Left Edge"
 msgstr "Левый край"
 
-#: plug-ins/common/align_layers.c:468 plug-ins/common/align_layers.c:501
+#: plug-ins/common/align_layers.c:482 plug-ins/common/align_layers.c:515
 #: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2888
 msgid "Center"
 msgstr "Центр"
 
-#: plug-ins/common/align_layers.c:469
+#: plug-ins/common/align_layers.c:483
 msgid "Right Edge"
 msgstr "Правый край"
 
-#: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
+#: plug-ins/common/align_layers.c:487 plug-ins/common/align_layers.c:520
 msgid "Horizontal Base:"
 msgstr "Горизонтальное основание:"
 
-#: plug-ins/common/align_layers.c:484
+#: plug-ins/common/align_layers.c:498
 msgid "Fill (top to bottom)"
 msgstr "Заполнить (сверху вниз)"
 
-#: plug-ins/common/align_layers.c:486
+#: plug-ins/common/align_layers.c:500
 msgid "Fill (bottom to top)"
 msgstr "Заполнить (снизу вверх)"
 
-#: plug-ins/common/align_layers.c:493
+#: plug-ins/common/align_layers.c:507
 msgid "Vertical Style:"
 msgstr "Вертикальный стиль:"
 
-#: plug-ins/common/align_layers.c:500
+#: plug-ins/common/align_layers.c:514
 msgid "Top Edge"
 msgstr "Верхний край"
 
-#: plug-ins/common/align_layers.c:502
+#: plug-ins/common/align_layers.c:516
 msgid "Bottom Edge"
 msgstr "Нижний край"
 
-#: plug-ins/common/align_layers.c:511
+#: plug-ins/common/align_layers.c:525
 msgid "Ignore the Bottom Layer even if Visible"
 msgstr "Игнорировать нижний слой даже если он видим"
 
-#: plug-ins/common/align_layers.c:521
+#: plug-ins/common/align_layers.c:535
 msgid "Use the (Invisible) Bottom Layer as the Base"
 msgstr "Использовать (невидимый) нижний слой как основание"
 
-#: plug-ins/common/align_layers.c:531
+#: plug-ins/common/align_layers.c:545
 msgid "Grid Size:"
 msgstr "Размер направляющих:"
 
@@ -2238,7 +2238,7 @@ msgstr "Воспроизведение фильма: "
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:2852
-#: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:630
+#: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:633
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
 #: plug-ins/helpbrowser/helpbrowser.c:800
 #: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
@@ -2401,71 +2401,71 @@ msgstr "Повтор:"
 msgid "Number of times to apply filter"
 msgstr "Число применений фильтра"
 
-#: plug-ins/common/bumpmap.c:363
+#: plug-ins/common/bumpmap.c:369
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Фильтры/Карта/Рельеф..."
 
-#: plug-ins/common/bumpmap.c:518
+#: plug-ins/common/bumpmap.c:524
 msgid "Bump-mapping..."
 msgstr "Создание рельефа..."
 
-#: plug-ins/common/bumpmap.c:863
+#: plug-ins/common/bumpmap.c:869
 msgid "Bump Map"
 msgstr "Рельеф"
 
-#: plug-ins/common/bumpmap.c:954
+#: plug-ins/common/bumpmap.c:960
 msgid "Map Type"
 msgstr "Тип карты"
 
-#: plug-ins/common/bumpmap.c:958
+#: plug-ins/common/bumpmap.c:964
 msgid "Linear Map"
 msgstr "Линейная карта"
 
-#: plug-ins/common/bumpmap.c:959
+#: plug-ins/common/bumpmap.c:965
 msgid "Spherical Map"
 msgstr "Сферическая карта"
 
-#: plug-ins/common/bumpmap.c:960
+#: plug-ins/common/bumpmap.c:966
 msgid "Sinuosidal Map"
 msgstr "Синусоидальная карта"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:973
+#: plug-ins/common/bumpmap.c:979
 msgid "Compensate for Darkening"
 msgstr "Компенсировать затемнение"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:983
+#: plug-ins/common/bumpmap.c:989
 msgid "Invert Bumpmap"
 msgstr "Инвертировать рельеф"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:993
+#: plug-ins/common/bumpmap.c:999
 #, fuzzy
 msgid "Tile Bumpmap"
 msgstr "Рельеф"
 
-#: plug-ins/common/bumpmap.c:1024
+#: plug-ins/common/bumpmap.c:1030
 msgid "Bump Map:"
 msgstr "Рельеф:"
 
-#: plug-ins/common/bumpmap.c:1043 plug-ins/common/emboss.c:584
+#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:584
 msgid "Azimuth:"
 msgstr "Азимут:"
 
-#: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:593
+#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:593
 msgid "Elevation:"
 msgstr "Возвышение:"
 
-#: plug-ins/common/bumpmap.c:1072 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1078 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "Смещение по X:"
 
-#: plug-ins/common/bumpmap.c:1082 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1088 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Смещение по Y:"
 
-#: plug-ins/common/bumpmap.c:1092
+#: plug-ins/common/bumpmap.c:1098
 msgid "Waterlevel:"
 msgstr "Ватерлиния:"
 
@@ -2545,12 +2545,11 @@ msgstr "<Image>/Фильтры/Цвета/Цвет -> Альфа-канал..."
 msgid "Color to Alpha"
 msgstr "Цвет -> Альфа-канал"
 
-#: plug-ins/common/colortoalpha.c:445 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:669 plug-ins/gap/gap_decode_mpeg_main.c:652
-#: plug-ins/gap/gap_decode_xanim.c:223 plug-ins/gap/gap_lib.c:2092
-#: plug-ins/gap/gap_lib.c:2271 plug-ins/gap/gap_range_ops.c:251
-#: plug-ins/gap/gap_range_ops.c:600 plug-ins/gfli/gfli.c:883
-#: plug-ins/gfli/gfli.c:952
+#: plug-ins/common/colortoalpha.c:445 plug-ins/common/mapcolor.c:669
+#: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
+#: plug-ins/gap/gap_lib.c:2092 plug-ins/gap/gap_lib.c:2271
+#: plug-ins/gap/gap_range_ops.c:251 plug-ins/gap/gap_range_ops.c:600
+#: plug-ins/gfli/gfli.c:883 plug-ins/gfli/gfli.c:952
 msgid "From:"
 msgstr "Из:"
 
@@ -2765,7 +2764,7 @@ msgid "Prefixed Name:"
 msgstr "Префиксное имя:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1503 plug-ins/common/xbm.c:1196
+#: plug-ins/common/tiff.c:1505 plug-ins/common/xbm.c:1196
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -4429,13 +4428,13 @@ msgstr "<Image>/Файл/Отправить почтой..."
 msgid "Send to Mail"
 msgstr "Послать по почте"
 
-#: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:669
-#: plug-ins/gap/gap_decode_mpeg_main.c:662 plug-ins/gap/gap_decode_xanim.c:233
-#: plug-ins/gap/gap_lib.c:2100 plug-ins/gap/gap_lib.c:2279
-#: plug-ins/gap/gap_range_ops.c:258 plug-ins/gap/gap_range_ops.c:608
-#: plug-ins/gfli/gfli.c:892 plug-ins/gfli/gfli.c:961
-msgid "To:"
-msgstr "В:"
+#: plug-ins/common/mail.c:530
+msgid "Recipient:"
+msgstr "Получатель:"
+
+#: plug-ins/common/mail.c:542
+msgid "Sender:"
+msgstr "Отправитель:"
 
 #: plug-ins/common/mail.c:554
 msgid "Subject:"
@@ -4514,6 +4513,14 @@ msgstr "Исходный цветовой диапазон"
 #: plug-ins/common/mapcolor.c:623
 msgid "Destination color range"
 msgstr "Итоговый цветовой диапазон"
+
+#: plug-ins/common/mapcolor.c:669 plug-ins/gap/gap_decode_mpeg_main.c:662
+#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2100
+#: plug-ins/gap/gap_lib.c:2279 plug-ins/gap/gap_range_ops.c:258
+#: plug-ins/gap/gap_range_ops.c:608 plug-ins/gfli/gfli.c:892
+#: plug-ins/gfli/gfli.c:961
+msgid "To:"
+msgstr "В:"
 
 #: plug-ins/common/max_rgb.c:114
 msgid "<Image>/Filters/Colors/Max RGB..."
@@ -5394,7 +5401,7 @@ msgstr "Окраска по образцу"
 #. gtk_container_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1384 plug-ins/common/tileit.c:583
 #: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/gdyntext/gdyntext_ui.c:637 plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gdyntext/gdyntext_ui.c:640 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:110
 msgid "Apply"
@@ -6048,7 +6055,7 @@ msgstr "Порог альфа-канала: Окрашивание прозрачности..."
 msgid "Threshold Alpha"
 msgstr "Порог альфа-канала"
 
-#: plug-ins/common/tiff.c:660
+#: plug-ins/common/tiff.c:664
 msgid "TIFF Channel"
 msgstr "Каналы TIFF"
 
@@ -6067,6 +6074,14 @@ msgstr "LZW"
 #: plug-ins/common/tiff.c:1492
 msgid "Pack Bits"
 msgstr "Упакованные биты"
+
+#: plug-ins/common/tiff.c:1493
+msgid "Deflate"
+msgstr "Сдуть"
+
+#: plug-ins/common/tiff.c:1494
+msgid "JPEG"
+msgstr "JPEG"
 
 #: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."
@@ -9485,32 +9500,32 @@ msgstr "Y отношение:"
 msgid "Constrain Ratio"
 msgstr "Сохранять пропорции"
 
-#: plug-ins/gdyntext/charmap.c:116
+#: plug-ins/gdyntext/charmap.c:120
 #, c-format
 msgid "Char: %c, %d, 0x%02x"
 msgstr "Символ: %c, %d, 0x%02x"
 
-#: plug-ins/gdyntext/charmap_window.c:120
+#: plug-ins/gdyntext/charmap_window.c:123
 msgid "Selected char:"
 msgstr "Выбранный символ: "
 
-#: plug-ins/gdyntext/charmap_window.c:134 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:137 plug-ins/imagemap/imap_polygon.c:452
 msgid "Insert"
 msgstr "Вставить"
 
-#: plug-ins/gdyntext/charmap_window.c:137
+#: plug-ins/gdyntext/charmap_window.c:140
 msgid "Insert the selected char at the cursor position"
 msgstr "Вставить выбранный символ в позицию курсора"
 
-#: plug-ins/gdyntext/font_selection.c:140
+#: plug-ins/gdyntext/font_selection.c:138
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr "Превышено значение MAX_FONTS. Некоторые шрифты могут быть некорректны."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: plug-ins/gdyntext/font_selection.c:212
-#: plug-ins/gdyntext/font_selection.c:266
-#: plug-ins/gdyntext/font_selection.c:353
-#: plug-ins/gdyntext/font_selection.c:377 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/gdyntext/font_selection.c:210
+#: plug-ins/gdyntext/font_selection.c:264
+#: plug-ins/gdyntext/font_selection.c:351
+#: plug-ins/gdyntext/font_selection.c:375 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
 #: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
@@ -9521,26 +9536,26 @@ msgstr "Превышено значение MAX_FONTS. Некоторые шрифты могут быть некорректны."
 msgid "pixels"
 msgstr "точки растра"
 
-#: plug-ins/gdyntext/font_selection.c:213
-#: plug-ins/gdyntext/font_selection.c:353
+#: plug-ins/gdyntext/font_selection.c:211
+#: plug-ins/gdyntext/font_selection.c:351
 msgid "points"
 msgstr "пункты"
 
-#: plug-ins/gdyntext/font_selection.c:313
+#: plug-ins/gdyntext/font_selection.c:311
 #, c-format
 msgid "Unknown font family \"%s\".\n"
 msgstr "Неизвестное семейство шрифта \"%s\".\n"
 
-#: plug-ins/gdyntext/font_selection.c:337
+#: plug-ins/gdyntext/font_selection.c:335
 #, c-format
 msgid "Unknown font style \"%s\" for family \"%s\".\n"
 msgstr "Неизвестный стиль шрифта \"%s\" для семейства \"%s\".\n"
 
-#: plug-ins/gdyntext/gdyntext.c:153
+#: plug-ins/gdyntext/gdyntext.c:157
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Фильтры/Визуализация/Динамический текст..."
 
-#: plug-ins/gdyntext/gdyntext.c:303
+#: plug-ins/gdyntext/gdyntext.c:307
 msgid ""
 "Current layer isn't a GDynText layer or it has no alpha channel.\n"
 "  Forcing new layer creation.\n"
@@ -9549,11 +9564,11 @@ msgstr ""
 "альфа-канала.\n"
 "  Запущено создание нового слоя.\n"
 
-#: plug-ins/gdyntext/gdyntext.c:350
+#: plug-ins/gdyntext/gdyntext.c:354
 msgid "Upgrading old GDynText layer to "
 msgstr "Обновление старого слоя GDynText до "
 
-#: plug-ins/gdyntext/gdyntext.c:353
+#: plug-ins/gdyntext/gdyntext.c:357
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
@@ -9566,116 +9581,121 @@ msgstr ""
 "  Получите ее с "
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:531
+#: plug-ins/gdyntext/gdyntext.c:396
 msgid "GDynText Layer "
 msgstr "Слой динамического текста"
 
-#: plug-ins/gdyntext/gdyntext.c:429
+#: plug-ins/gdyntext/gdyntext.c:433
 msgid "GIMP Dynamic Text"
 msgstr "Динамический текст в Gimp"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:123
+#: plug-ins/gdyntext/gdyntext.c:535
+msgid "GDynText Layer"
+msgstr "Слой динамического текста"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:126
 msgid "GDynText Message Window"
 msgstr "Окно сообщений динамического текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:153
+#: plug-ins/gdyntext/gdyntext_ui.c:156
 msgid "About GDynText"
 msgstr "О динамическом тексте"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:181
+#: plug-ins/gdyntext/gdyntext_ui.c:184
 msgid "GIMP Dynamic Text "
 msgstr "Динамический текст в Gimp"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:215
+#: plug-ins/gdyntext/gdyntext_ui.c:218
 msgid "GDynText: Select Color"
 msgstr "Дин.текст: Выбор цвета"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:315
+#: plug-ins/gdyntext/gdyntext_ui.c:318
 msgid "Toggle creation of a new layer"
 msgstr "Переключать создание нового слоя"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:338
+#: plug-ins/gdyntext/gdyntext_ui.c:341
 msgid "Load text from file"
 msgstr "Загрузить текст из файла"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:361
+#: plug-ins/gdyntext/gdyntext_ui.c:364
 msgid "Text color"
 msgstr "Цвет текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:379
+#: plug-ins/gdyntext/gdyntext_ui.c:382
 msgid "Toggle anti-aliased text"
 msgstr "Переключить сглаживание текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:402
+#: plug-ins/gdyntext/gdyntext_ui.c:405
 msgid "Left aligned text"
 msgstr "Выключка текста влево"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:421
+#: plug-ins/gdyntext/gdyntext_ui.c:424
 msgid "Centered text"
 msgstr "Выключка текста по центру"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:440
+#: plug-ins/gdyntext/gdyntext_ui.c:443
 msgid "Right aligned text"
 msgstr "Выключка текста вправо"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:459
+#: plug-ins/gdyntext/gdyntext_ui.c:462
 msgid "Toggle text font preview"
 msgstr "Переключить просмотр шрифта текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:480
+#: plug-ins/gdyntext/gdyntext_ui.c:483
 msgid "Toggle CharMap window"
 msgstr "Переключить окно карты символа"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:490
+#: plug-ins/gdyntext/gdyntext_ui.c:493
 msgid "Set text rotation (degrees)"
 msgstr "Установить поворот теста (в градусах)"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:504
+#: plug-ins/gdyntext/gdyntext_ui.c:507
 msgid "Set line spacing"
 msgstr "Установить междустрочный интервал"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:508
+#: plug-ins/gdyntext/gdyntext_ui.c:511
 msgid "Line Spacing"
 msgstr "Междустрочный интервал"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:537
+#: plug-ins/gdyntext/gdyntext_ui.c:540
 msgid "Editable text sample"
 msgstr "Редактируемый пример текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:555
+#: plug-ins/gdyntext/gdyntext_ui.c:558
 msgid "Clear preview"
 msgstr "Очистить просмотр"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:564
+#: plug-ins/gdyntext/gdyntext_ui.c:567
 msgid "Preview default text sample"
 msgstr "Исходный пример текста просмотра"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:626
+#: plug-ins/gdyntext/gdyntext_ui.c:629
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1033
+#: plug-ins/gdyntext/gdyntext_ui.c:1035
 msgid "GDynText: CharMap"
 msgstr "Дин.текст: Таблица символа"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1106
+#: plug-ins/gdyntext/gdyntext_ui.c:1108
 msgid "GDynText: Load Text"
 msgstr "Дин.текст: Загрузка текста"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1152
+#: plug-ins/gdyntext/gdyntext_ui.c:1154
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d)."
-msgstr "Внимание: файл \"%s\" больше чем максимально допустимая длина текста (%d)."
+msgstr ""
+"Внимание: файл \"%s\" больше чем максимально допустимая длина текста (%d)."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1164
+#: plug-ins/gdyntext/gdyntext_ui.c:1166
 #, c-format
 msgid "Error opening \"%s\"!"
 msgstr "Ошибка при открытии \"%s\"!"
 
-#: plug-ins/gdyntext/message_window.c:110
+#: plug-ins/gdyntext/message_window.c:113
 msgid "Dismiss"
 msgstr "Отказаться"
 
@@ -9728,7 +9748,6 @@ msgid "Merge Gfig Object collection into the current edit session"
 msgstr "Объединить коллекцию объектов GFig в текущем сеансе правки"
 
 #: plug-ins/gfig/gfig.c:2000
-#, fuzzy
 msgid "Number of Sides/Points/Turns:"
 msgstr "Число сторон/точек/поворотов:"
 
