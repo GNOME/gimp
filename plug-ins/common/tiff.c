@@ -674,7 +674,6 @@ load_image (gchar *filename)
   }
 
   if (worst_case) {
-    g_message("TIFF Fell back to RGBA, image may be inverted\n");
     load_rgba (tif, channel);
   } else if (TIFFIsTiled(tif)) {
     load_tiles (tif, channel, bps, photomet, alpha, extra);
@@ -694,6 +693,7 @@ static void
 load_rgba (TIFF *tif, channel_data *channel)
 {
   uint32 imageWidth, imageLength;
+  uint32 row;
   gulong *buffer;
 
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
@@ -708,8 +708,12 @@ load_rgba (TIFF *tif, channel_data *channel)
   if (!TIFFReadRGBAImage(tif, imageWidth, imageLength, buffer, 0))
     g_message("TIFF Unsupported layout, no RGBA loader\n");
 
-  gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn), channel[0].pixels,
-                              0, 0, imageWidth, imageLength);
+  for (row = 0; row < imageLength; ++row) {
+    gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn),
+                              channel[0].pixels + row * imageWidth * 4,
+                              0, imageLength -row -1, imageWidth, 1);
+    gimp_progress_update ((double) row / (double) imageLength);
+  }
 }
 
 static void

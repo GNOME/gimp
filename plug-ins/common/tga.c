@@ -94,11 +94,13 @@
 typedef struct _TgaSaveVals
 {
   gint rle;
+  gint origin;
 } TgaSaveVals;
 
 static TgaSaveVals tsvals =
 {
-  1,    /* rle */
+  1,    /* rle = ON */
+  1, 	/* origin = bottom left */
 };
 
 typedef struct _TgaSaveInterface
@@ -228,7 +230,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
     { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32, "rle", "Use RLE compression" }
+    { GIMP_PDB_INT32, "rle", "Use RLE compression" },
+    { GIMP_PDB_INT32, "origin", "Image origin (0 = top-left, 1 = bottom-left)"}
 
   } ;
 
@@ -349,7 +352,7 @@ run (gchar      *name,
 
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6)
+	  if (nparams != 7)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	    }
@@ -1063,25 +1066,25 @@ save_image (gchar  *filename,
     case GIMP_INDEXEDA_IMAGE:
       out_bpp = 1;
       header[16] = 8; /* bpp */
-      header[17] = 0x20; /* alpha + orientation */
+      header[17] = (tsvals.origin) ? 0 :  0x20; /* alpha + orientation */
       break;
 
     case GIMP_GRAYA_IMAGE:
       out_bpp = 2;
       header[16] = 16; /* bpp */
-      header[17] = 0x28; /* alpha + orientation */
+      header[17] = (tsvals.origin) ? 8 : 0x28; /* alpha + orientation */
       break;
 
     case GIMP_RGB_IMAGE:
       out_bpp = 3;
       header[16] = 24; /* bpp */
-      header[17] = 0x20; /* alpha + orientation */
+      header[17] = (tsvals.origin) ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_RGBA_IMAGE:
       out_bpp = 4;
       header[16] = 32; /* bpp */
-      header[17] = 0x28; /* alpha + orientation */
+      header[17] = (tsvals.origin) ? 8 : 0x28; /* alpha + orientation */
       break;
     }
 
@@ -1109,7 +1112,14 @@ save_image (gchar  *filename,
 
   for (row = 0; row < height; ++row)
     {
-      gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, row, width, 1);
+      if(tsvals.origin)
+        {
+          gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, height-(row+1), width, 1);
+        } 
+      else 
+        {
+          gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, row, width, 1);
+        }
 
       if (dtype == GIMP_RGB_IMAGE)
 	{
@@ -1161,6 +1171,7 @@ save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
+  GtkWidget *origin;
   GtkWidget *frame;
   GtkWidget *vbox;
 
@@ -1195,6 +1206,15 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
   gtk_widget_show (toggle);
+
+  /*  origin  */
+  origin = gtk_check_button_new_with_label (_("Origin at bottom left"));
+  gtk_box_pack_start (GTK_BOX (vbox), origin, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (origin), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &tsvals.origin);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (origin), tsvals.origin);
+  gtk_widget_show (origin);
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

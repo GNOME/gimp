@@ -1,3 +1,9 @@
+2002-01-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tga.c: merged fix for bug #53278 from stable branch.
+	
+	* plug-ins/common/tiff.c: merged fix for bug #69129 from stable branch.
+
 2002-01-23  Simos Xenitellis  <simos@hellug.gr>
 
 	* configure.in: Added "el" (Greek) to ALL_LINGUAS.
