@@ -261,16 +261,16 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (editor->size_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-			     GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width,
-			     0, 1, 0, 1);
-  gtk_widget_show (width);
-
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
 			     GTK_SPIN_BUTTON (height), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height,
 			     0, 1, 1, 2);
   gtk_widget_show (height);
+
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
+			     GTK_SPIN_BUTTON (width), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width,
+			     0, 1, 0, 1);
+  gtk_widget_show (width);
 
   gimp_prop_coordinates_connect (G_OBJECT (editor->template),
                                  "width", "height", "unit",
