@@ -556,6 +556,10 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
+  button = gimp_levels_tool_color_picker_new (l_tool, HIGH_INPUT);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   data = gtk_adjustment_new (255, 0, 255, 1, 10, 10);
   l_tool->high_input = GTK_ADJUSTMENT (data);
 
