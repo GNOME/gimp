@@ -28,6 +28,7 @@
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h"
 #include "libgimp/gimpunit.h"
+#include "libgimp/gimpcompat.h"	/* to be removed in 1.3 */
 
 #ifdef G_OS_WIN32
 #  ifdef LIBGIMP_COMPILATION

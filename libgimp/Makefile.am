@@ -110,6 +110,7 @@ gimpinclude_HEADERS = \
 	color_selector.h	\
 	gimp.h			\
 	gimpchainbutton.h	\
+        gimpcompat.h		\
 	gimpenums.h		\
 	gimpenv.h		\
 	gimpexport.h		\

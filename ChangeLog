@@ -1,3 +1,9 @@
+Sun Oct 24 23:22:09 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* libgimp/gimpcompat.h: New file.
+        * libgimp/gimp.h: Include it.
+        * libgimp/Makefile.am: Add gimpcompat.h.
+
 Sun Oct 24 23:13:26 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimp.h: fixed indentation by special request of Sven.
