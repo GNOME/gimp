@@ -130,8 +130,7 @@ static void	file_cancel_callback  (void);
 static void	preview_update          (void);
 static void	preview_button_callback (GtkWidget *, GdkEventButton *);
 static void	preview_motion_callback (GtkWidget *, GdkEventMotion *);
-static void	top_callback            (GtkWidget *);
-static void	left_callback           (GtkWidget *);
+static void	position_callback       (GtkWidget *);
 
 /*
  * Globals...
@@ -256,6 +255,7 @@ GtkWidget	*print_dialog,		/* Print dialog window */
 		*output_cmd,		/* Output command text entry */
 		*ppd_browser,		/* File selection dialog for PPD files */
 		*file_browser,		/* FSD for print files */
+                *recenter_button,
 		*left_entry,
 		*right_entry,
 		*top_entry,
@@ -354,12 +354,10 @@ query(void)
   };
   static int		nargs = sizeof(args) / sizeof(args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure(
       "file_print",
-      _("This plug-in prints images from The GIMP."),
-      _("Prints images to PostScript, PCL, or ESC/P2 printers."),
+      "This plug-in prints images from The GIMP.",
+      "Prints images to PostScript, PCL, or ESC/P2 printers.",
       "Michael Sweet <mike@easysw.com> and Robert Krawitz <rlk@alum.mit.edu>",
       "Copyright 1997-2000 by Michael Sweet and Robert Krawitz",
       PLUG_IN_VERSION,
@@ -834,19 +832,26 @@ do_print_dialog (void)
 			 GDK_BUTTON_PRESS_MASK |
 			 GDK_BUTTON_RELEASE_MASK);
 
-  table = gtk_table_new (2, 4, FALSE);
+  table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  recenter_button = button = gtk_button_new_with_label(_("Center Image"));
+  gtk_signal_connect(GTK_OBJECT(button), "clicked",
+                     (GtkSignalFunc)position_callback, NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     NULL, 0, 0,
+			     button, 2, TRUE);
+
   left_entry = entry = gtk_entry_new ();
   sprintf (s, "%.3f", fabs (vars.left));
   gtk_entry_set_text (GTK_ENTRY (entry), s);
   gtk_signal_connect (GTK_OBJECT (entry), "activate",
-		      (GtkSignalFunc)left_callback, NULL);
+		      (GtkSignalFunc) position_callback, NULL);
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Left:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
@@ -854,27 +859,29 @@ do_print_dialog (void)
   sprintf (s, "%.3f", fabs (vars.top));
   gtk_entry_set_text (GTK_ENTRY (entry), s);
   gtk_signal_connect (GTK_OBJECT (entry), "activate",
-		      (GtkSignalFunc) top_callback, NULL);
+		      (GtkSignalFunc) position_callback, NULL);
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
 			     _("Top:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
   right_entry = entry = gtk_entry_new ();
   sprintf (s, "%.3f", fabs (vars.left));
   gtk_entry_set_text (GTK_ENTRY (entry), s);
-  gtk_entry_set_editable (GTK_ENTRY (entry), FALSE);
+  gtk_signal_connect (GTK_OBJECT (entry), "activate",
+		      (GtkSignalFunc) position_callback, NULL);
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Right:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
   bottom_entry = entry = gtk_entry_new ();
   sprintf (s, "%.3f", fabs (vars.left));
   gtk_entry_set_text (GTK_ENTRY (entry), s);
-  gtk_entry_set_editable (GTK_ENTRY (entry), FALSE);
+  gtk_signal_connect (GTK_OBJECT (entry), "activate",
+		      (GtkSignalFunc) position_callback, NULL);
   gtk_widget_set_usize (entry, 60, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
 			     _("Bottom:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
@@ -1064,7 +1071,7 @@ do_print_dialog (void)
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  scaling_image = button = gtk_toggle_button_new_with_label (_("Set Image Scale"));
+  scaling_image = button = gtk_button_new_with_label (_("Set Image Scale"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) scaling_callback,
 		      NULL);
@@ -1549,7 +1556,6 @@ scaling_callback (GtkWidget *widget)
       GTK_ADJUSTMENT (scaling_adjustment)->upper = 1201.0;
       GTK_ADJUSTMENT (scaling_adjustment)->value = yres;
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scaling_ppi), TRUE);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scaling_image), FALSE);
       vars.scaling = 0.0;
       plist[plist_current].v.scaling = vars.scaling;
     }
@@ -1559,31 +1565,53 @@ scaling_callback (GtkWidget *widget)
 }
 
 static void
-top_callback(GtkWidget *widget)
+position_callback (GtkWidget *widget)
 {
-  gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-  if (vars.top != new_value)
+  int dontcheck = 0;
+  if (widget == top_entry)
     {
-      vars.top = new_value * 72;
-      if (vars.top < 0)
-      vars.top = 0;
-      plist[plist_current].v.top = vars.top;
-      preview_update();
+      gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+      vars.top = (new_value + 1.0 / 144) * 72;
     }
-}
-  
-static void
-left_callback(GtkWidget *widget)
-{
-  gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-  if (vars.left != new_value)
+  else if (widget == left_entry)
     {
-      vars.left = new_value * 72;
+      gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+      vars.left = (new_value + 1.0 / 144) * 72;
+    }
+  else if (widget == bottom_entry)  
+    {
+      gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+      if (vars.scaling < 0) 
+       vars.top =   
+         (new_value + 1.0 / 144) * 72 - (image_height * -72.0 / vars.scaling);
+      else
+       vars.top = (new_value + 1.0 / 144) * 72 - print_height;
+    }
+  else if (widget == right_entry)
+    {
+      gfloat new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+      if (vars.scaling < 0)
+       vars.left =
+         (new_value + 1.0 / 144) * 72 - (image_width * -72.0 / vars.scaling);
+      else
+       vars.left = (new_value + 1.0 / 144) * 72 - print_width;
+    }
+  else if (widget == recenter_button)
+    {
+      vars.left = -1;
+      vars.top = -1;
+      dontcheck = 1;
+    }
+  if (!dontcheck)
+    {
       if (vars.left < 0)
       vars.left = 0;
-      plist[plist_current].v.left = vars.left;
-      preview_update();
+      if (vars.top < 0)
+       vars.top = 0;
     }
+  plist[plist_current].v.left = vars.left;
+  plist[plist_current].v.top = vars.top;
+  preview_update();
 }
 
 /*
@@ -2064,7 +2092,7 @@ ppd_browse_callback(void)
 
 
 static void
-ppd_ok_callback(void)
+ppd_ok_callback (void)
 {
   gtk_widget_hide(ppd_browser);
   gtk_entry_set_text(GTK_ENTRY(ppd_file),
@@ -2073,7 +2101,7 @@ ppd_ok_callback(void)
 
 
 static void
-file_ok_callback(void)
+file_ok_callback (void)
 {
   gtk_widget_hide(file_browser);
   strcpy(vars.output_to,
@@ -2095,7 +2123,7 @@ file_cancel_callback (void)
 
 
 static void
-preview_update(void)
+preview_update (void)
 {
   int		temp,		/* Swapping variable */
 		orient,		/* True orientation of page */
@@ -2252,29 +2280,33 @@ preview_update(void)
       plist[plist_current].v.top = vars.top;
     }
   
-  sprintf(s, "%.3f", vars.top / 72.0);
+  sprintf(s, "%.2f", vars.top / 72.0);
   gtk_signal_handler_block_by_data(GTK_OBJECT(top_entry), NULL);
   gtk_entry_set_text(GTK_ENTRY(top_entry), s);
   gtk_signal_handler_unblock_by_data(GTK_OBJECT(top_entry), NULL);
 
-  sprintf(s, "%.3f", vars.left / 72.0);
+  sprintf(s, "%.2f", vars.left / 72.0);
   gtk_signal_handler_block_by_data(GTK_OBJECT(left_entry), NULL);
   gtk_entry_set_text(GTK_ENTRY(left_entry), s);
   gtk_signal_handler_unblock_by_data(GTK_OBJECT(left_entry), NULL);
 
   if (vars.scaling < 0)
-    sprintf(s, "%.3f",
+    sprintf(s, "%.2f",
 	    (vars.top + (image_height * -72.0 / vars.scaling)) / 72.0);
   else
-    sprintf(s, "%.3f", (vars.top + print_height) / 72.0);
+    sprintf(s, "%.2f", (vars.top + print_height) / 72.0);
+  gtk_signal_handler_block_by_data(GTK_OBJECT(bottom_entry), NULL);
   gtk_entry_set_text(GTK_ENTRY(bottom_entry), s);
+  gtk_signal_handler_unblock_by_data(GTK_OBJECT(bottom_entry), NULL);
 
   if (vars.scaling < 0)
-    sprintf(s, "%.3f",
+    sprintf(s, "%.2f",
 	    (vars.left + (image_width * -72.0 / vars.scaling)) / 72.0);
   else
-    sprintf(s, "%.3f", (vars.left + print_width) / 72.0);
+    sprintf(s, "%.2f", (vars.left + print_width) / 72.0);
+  gtk_signal_handler_block_by_data(GTK_OBJECT(right_entry), NULL);
   gtk_entry_set_text(GTK_ENTRY(right_entry), s);
+  gtk_signal_handler_unblock_by_data(GTK_OBJECT(right_entry), NULL);
 
   gdk_draw_rectangle(preview->widget.window, gc, 1,
 		     page_left + 10 * left / 72, page_top + 10 * top / 72,

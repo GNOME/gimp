@@ -315,6 +315,8 @@ gimp_file_selection_filesel_ok_callback (GtkWidget *widget,
 
   gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename);
 
+  gtk_widget_hide (gfs->file_selection);
+
   /*  update everything  */
   gimp_file_selection_entry_callback (gfs->entry, data);
 }
@@ -357,9 +359,6 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
       gtk_container_set_border_width (GTK_CONTAINER (gfs->file_selection), 2);
       gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (gfs->file_selection)->button_area), 2);
 
-      gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->ok_button)->child), _("Select"));
-      gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button)->child), _("Close"));
-
       gtk_signal_connect 
 	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->ok_button),
 	 "clicked",
@@ -396,8 +395,8 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 static void
 gimp_file_selection_check_filename (GimpFileSelection *gfs)
 {
-  static struct stat statbuf;
-  gchar* filename;
+  static struct stat  statbuf;
+  gchar              *filename;
 
   if (! gfs->check_valid)
     return;

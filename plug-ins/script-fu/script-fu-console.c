@@ -40,7 +40,8 @@
 
 #include "siod.h"
 #include "script-fu-console.h"
-#include <plug-ins/dbbrowser/dbbrowser.h>
+
+#include <plug-ins/dbbrowser/dbbrowser_utils.h>
 
 #ifdef G_OS_WIN32
 #include <fcntl.h>

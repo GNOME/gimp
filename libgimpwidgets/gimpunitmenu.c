@@ -441,8 +441,8 @@ gimp_unit_menu_build_string (gchar    *format,
 
 /*  private callback of gimp_unit_menu_create_selection ()  */
 static void
-gimp_unit_menu_selection_select_callback (GtkWidget *widget,
-					  gpointer   data)
+gimp_unit_menu_selection_ok_callback (GtkWidget *widget,
+				      gpointer   data)
 {
   GimpUnitMenu *gum;
   GimpUnit      unit;
@@ -460,6 +460,17 @@ gimp_unit_menu_selection_select_callback (GtkWidget *widget,
 
       gtk_widget_destroy (gum->selection);
     }
+}
+
+static void
+gimp_unit_menu_selection_select_row_callback (GtkWidget      *widget,
+					      gint            row, 
+					      gint            column, 
+					      GdkEventButton *bevent,
+					      gpointer        data)
+{
+  if (bevent && bevent->type == GDK_2BUTTON_PRESS)
+    gimp_unit_menu_selection_ok_callback (NULL, data);
 }
 
 /*  private function of gimp_unit_menu_callback ()  */
@@ -481,9 +492,9 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Select"), gimp_unit_menu_selection_select_callback,
+		     _("OK"), gimp_unit_menu_selection_ok_callback,
 		     gum, NULL, NULL, TRUE, FALSE,
-		     _("Close"), gtk_widget_destroy,
+		     _("Cancel"), gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -544,6 +555,9 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
   gtk_widget_set_usize (gum->clist, -1, 150);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), gum->clist);
+  gtk_signal_connect (GTK_OBJECT (gum->clist), "select_row",
+		      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_select_row_callback),
+		      gum);
   gtk_widget_show (gum->clist);
 
   gtk_signal_connect (GTK_OBJECT (gum->clist), "destroy",

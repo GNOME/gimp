@@ -540,6 +540,7 @@ ps_print(int       model,		/* I - Model (Level 1 or 2) */
     for (i = 0; i < num_commands; i ++)
     {
       fputs(commands[i].command, prn);
+      fputs("\n", prn);
       free(commands[i].command);
     }
 

@@ -32,6 +32,7 @@
   			}G_STMT_END
 #else
 #define INIT_I18N()	G_STMT_START{			\
+  bindtextdomain("gimp-libgimp", LOCALEDIR);            \
   bindtextdomain("gimp-script-fu", LOCALEDIR);	        \
   textdomain("gimp-script-fu");                         \
   			}G_STMT_END

@@ -1,3 +1,31 @@
+2000-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpunitmenu.c: behave like other dialogs (close) when
+	pressing "OK" or "Cancel".
+
+	* libgimp/stdplugins-intl.h
+	* plug-ins/script-fu/script-fu-intl.h: bind the "gimp-libgimp"
+	textdomain also if HAVE_LC_MESSAGES is undefined.
+
+	* plug-ins/print/print-ps.c
+	* plug-ins/print/print.c: applied a patch from Robert L Kravitz
+	<rlk@alum.mit.edu> which adds a "Center" button, activates all
+	text entries and corrects the rounding behaviour. And a minor fix
+	for the PS driver.
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/dbbrowser.h: removed.
+
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/dbbrowser/dbbrowser_utils.h
+	* plug-ins/common/plugindetails.c: ui and code cleanup.
+	libgimp ui stuff and a proper include structure for the dbbrowser.
+
+	* plug-ins/script-fu/script-fu-console.c: include
+	"plug-ins/dbbrowser/dbbrowser_utils.h".
+
 Sun Feb 27 21:55:44 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* po-script-fu/Makefile.in.in: forgot to check this in

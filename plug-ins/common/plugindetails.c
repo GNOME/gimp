@@ -30,8 +30,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -39,7 +39,7 @@
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 300)
 #define DBL_HEIGHT      200
 
-static char *proc_type_str[] =
+static gchar *proc_type_str[] =
 {
   N_("Internal GIMP procedure"),
   N_("GIMP Plug-In"),
@@ -51,45 +51,43 @@ static char *proc_type_str[] =
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
 
-static GtkWidget * gimp_plugin_desc();
-static gint procedure_clist_select_callback (GtkWidget *widget,
-					     gint row, 
-					     gint column, 
-					     GdkEventButton * bevent,
-					     gpointer data);
-static gint procedure_ctree_select_callback (GtkWidget *widget,
-					     GtkWidget *row, 
-					     gint column, 
-					     gpointer data);
+static GtkWidget * gimp_plugin_desc (void);
+
+static gint procedure_clist_select_callback (GtkWidget      *widget,
+					     gint            row, 
+					     gint            column, 
+					     GdkEventButton *bevent,
+					     gpointer        data);
+static gint procedure_ctree_select_callback (GtkWidget      *widget,
+					     GtkWidget      *row, 
+					     gint            column, 
+					     gpointer        data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
-
-  static int nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_details",
                           "Displays plugin details",
@@ -105,21 +103,21 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
-  GtkWidget * plugin_dialog;
+  static GParam  values[2];
+  GRunModeType   run_mode;
+  GtkWidget     *plugin_dialog;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
   INIT_I18N_UI();
@@ -130,7 +128,8 @@ run (char    *name,
 
       values[0].data.d_status = STATUS_SUCCESS;
 
-      plugin_dialog = gimp_plugin_desc();
+      plugin_dialog = gimp_plugin_desc ();
+
       gtk_main ();
       gdk_flush ();
     }
@@ -139,24 +138,24 @@ run (char    *name,
 
 typedef struct  
 {
-  GtkWidget * dlg;
-  GtkWidget * clist;
-  GtkWidget * ctree;
-  GtkWidget * search_entry;
-  GtkWidget * descr_scroll;
-  GtkWidget * name_button;
-  GtkWidget * blurb_button;
-  GtkWidget * scrolled_win;
-  GtkWidget * ctree_scrolled_win;
-  GtkWidget * info_table;
-  GtkWidget * paned;
-  GtkWidget * left_paned;
-  GtkWidget * info_align;
-  gint        num_plugins;
-  gint        ctree_row;
-  gint        clist_row;
-  gint        c1size;
-  gboolean    details_showing;
+  GtkWidget *dlg;
+  GtkWidget *clist;
+  GtkWidget *ctree;
+  GtkWidget *search_entry;
+  GtkWidget *descr_scroll;
+  GtkWidget *name_button;
+  GtkWidget *blurb_button;
+  GtkWidget *scrolled_win;
+  GtkWidget *ctree_scrolled_win;
+  GtkWidget *info_table;
+  GtkWidget *paned;
+  GtkWidget *left_paned;
+  GtkWidget *info_align;
+  gint       num_plugins;
+  gint       ctree_row;
+  gint       clist_row;
+  gint       c1size;
+  gboolean   details_showing;
 } PDesc;
 
 PDesc *plugindesc = NULL;
@@ -177,7 +176,7 @@ dialog_close_callback (GtkWidget *widget,
      /* end of the dialog */
 {
   PDesc *pdesc = data;
-  gtk_widget_destroy(pdesc->dlg);
+  gtk_widget_destroy (pdesc->dlg);
   gtk_main_quit ();
 }
 
@@ -189,7 +188,7 @@ details_callback (GtkWidget *widget,
 {
   /* Show or hide the details window */ 
   PDesc *pdesc = data;
-  GtkLabel *lab = GTK_LABEL(GTK_BIN (widget)->child);
+  GtkLabel *lab = GTK_LABEL (GTK_BIN (widget)->child);
 
   /* This is a lame hack: 
      We add the description on the right on the first details_callback.
@@ -199,50 +198,51 @@ details_callback (GtkWidget *widget,
       pdesc->descr_scroll = gtk_scrolled_window_new (NULL, NULL);
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (pdesc->descr_scroll),
 				      GTK_POLICY_ALWAYS, 
-				      GTK_POLICY_ALWAYS
-				      );
+				      GTK_POLICY_ALWAYS);
       gtk_widget_set_usize (pdesc->descr_scroll, DBL_WIDTH - DBL_LIST_WIDTH, -1);
-      gtk_paned_pack2 (GTK_PANED (pdesc->paned), pdesc->descr_scroll, FALSE, TRUE);
+      gtk_paned_pack2 (GTK_PANED (pdesc->paned), pdesc->descr_scroll,
+		       FALSE, TRUE);
       gtk_clist_select_row (GTK_CLIST(pdesc->clist), pdesc->clist_row, -1);
     }
 
-  if(pdesc->details_showing == FALSE)
+  if (pdesc->details_showing == FALSE)
     {
-      GTK_PANED(pdesc->paned)->child1_resize=FALSE;
-      gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),10);
-      gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),6);
-      gtk_label_set_text(lab, _(" Details <<< "));
+      GTK_PANED (pdesc->paned)->child1_resize = FALSE;
+      gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 10);
+      gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 6);
+      gtk_label_set_text (lab, _("Details <<"));
       gtk_widget_show (pdesc->descr_scroll);
       pdesc->details_showing = TRUE;
     }
   else
     {
-      GtkWidget *p = GTK_WIDGET(pdesc->paned)->parent;
-      GTK_PANED(pdesc->paned)->child1_resize=TRUE;
-      GTK_PANED(pdesc->paned)->child2_resize=TRUE;
-      gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),0);
-      gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),0);
-      gtk_label_set_text(lab, _(" Details >>> "));
+      GtkWidget *p = GTK_WIDGET (pdesc->paned)->parent;
+      GTK_PANED (pdesc->paned)->child1_resize = TRUE;
+      GTK_PANED (pdesc->paned)->child2_resize = TRUE;
+      gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 0);
+      gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 0);
+      gtk_label_set_text (lab, _("Details >>"));
       gtk_widget_hide (pdesc->descr_scroll);
-      gtk_paned_set_position(GTK_PANED(pdesc->paned),p->allocation.width);/*plugindesc->c1size);*/
+      gtk_paned_set_position (GTK_PANED (pdesc->paned),
+			      p->allocation.width);/*plugindesc->c1size);*/
       pdesc->details_showing = FALSE;
     }
 }
 
 static gchar *
-format_menu_path(gchar *s)
+format_menu_path (gchar *s)
 {
   gchar ** str_array;
   gchar *newstr = NULL;
 
-  if(!s)
+  if (!s)
     return s;
 
-  str_array = g_strsplit(s,"/",0);
+  str_array = g_strsplit (s,"/",0);
 
-  newstr = g_strjoinv("->",str_array);
+  newstr = g_strjoinv ("->", str_array);
 
-  g_strfreev(str_array);
+  g_strfreev (str_array);
 
   return newstr;
 }
@@ -256,9 +256,9 @@ procedure_general_select_callback (PDesc *pdesc,
   gchar *selected_proc_author;
   gchar *selected_proc_copyright;
   gchar *selected_proc_date;
-  gint  selected_proc_type; 
-  gint  selected_nparams;
-  gint  selected_nreturn_vals;
+  gint   selected_proc_type; 
+  gint   selected_nparams;
+  gint   selected_nreturn_vals;
   GParamDef *selected_params;
   GParamDef *selected_return_vals;
   GtkWidget *label;
@@ -267,10 +267,10 @@ procedure_general_select_callback (PDesc *pdesc,
   GtkWidget *vscrollbar;
   GtkWidget *old_table;
   GtkWidget *old_align;
-  gint table_row = 0;
+  gint       table_row = 0;
+  gchar     *str;
 
   g_return_val_if_fail (pdesc != NULL, FALSE);
-
   g_return_val_if_fail (pinfo != NULL, FALSE);
 
   if (pdesc->descr_scroll == NULL)
@@ -302,100 +302,102 @@ procedure_general_select_callback (PDesc *pdesc,
   old_table = pdesc->info_table;
   old_align = pdesc->info_align;
 
-  pdesc->info_table = gtk_table_new(10 ,5 , FALSE);
+  pdesc->info_table = gtk_table_new (10, 5, FALSE);
   pdesc->info_align = gtk_alignment_new (0.5, 0.5, 0, 0);
 
-  gtk_table_set_col_spacings( GTK_TABLE(pdesc->info_table), 3);
+  gtk_table_set_col_spacings (GTK_TABLE (pdesc->info_table), 3);
 
   /* Number of plugins */
 
-  label = gtk_label_new(g_strdup_printf( _(" Number of plugin interfaces :%d"),pdesc->num_plugins));
+  str = g_strdup_printf (_(" Number of Plugin Interfaces: %d"),
+			 pdesc->num_plugins);
+  label = gtk_label_new (str);
+  g_free (str);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
-  label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
-
 
   /* menu path */
 
-  label = gtk_label_new( _("Menu path :"));
+  label = gtk_label_new (_("Menu Path:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
   gtk_widget_show(label);
 
-  label = gtk_label_new(format_menu_path(pinfo->menu));
+  label = gtk_label_new (format_menu_path (pinfo->menu));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
-  label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
   /* show the name */
 
-  label = gtk_label_new( _("Name :"));
+  label = gtk_label_new (_("Name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
   gtk_widget_show(label);
 
-  label = gtk_entry_new();
-  gtk_entry_set_text(GTK_ENTRY(label),pinfo->realname);
-  gtk_entry_set_editable(GTK_ENTRY(label), FALSE);
+  label = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (label), pinfo->realname);
+  gtk_entry_set_editable (GTK_ENTRY (label), FALSE);
   gtk_table_attach (GTK_TABLE(pdesc->info_table), label,
 		    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
-  label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
   /* show the description */
 
-  label = gtk_label_new( _("Blurb :"));
+  label = gtk_label_new (_("Blurb:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
 
-  label = gtk_label_new(selected_proc_blurb);
+  label = gtk_label_new (selected_proc_blurb);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
   table_row++;
 
-  label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
   /* show the help */
   if ((selected_proc_help) && (strlen(selected_proc_help) > 1))
     {
-      label = gtk_label_new( _("Help :"));
+      label = gtk_label_new (_("Help:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 			0, 1, table_row, table_row+1, 
 			GTK_FILL, GTK_FILL, 3, 0);
-      gtk_widget_show(label);
+      gtk_widget_show (label);
       
       help = gtk_table_new (2, 2, FALSE);
       gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
@@ -419,7 +421,7 @@ procedure_general_select_callback (PDesc *pdesc,
 			GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (vscrollbar);
             
-      label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+      label = gtk_hseparator_new (); /* ok, not really a label ... :) */
       gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 			0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
       gtk_widget_show(label);
@@ -434,56 +436,55 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* show the type */
 
-  label = gtk_label_new( _("Type :"));
+  label = gtk_label_new (_("Type:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
   gtk_widget_show(label);
 
-  label = gtk_label_new( gettext(proc_type_str[selected_proc_type]));
+  label = gtk_label_new (gettext (proc_type_str[selected_proc_type]));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
-  label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+  label = gtk_hseparator_new (); /* ok, not really a label ... :) */
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
   table_row++;
 
   /* Remove old and replace with new */
 
-  if(old_table)
-    gtk_widget_destroy(old_table);
+  if (old_table)
+    gtk_widget_destroy (old_table);
 
-  if(old_align)
-    gtk_widget_destroy(old_align);
+  if (old_align)
+    gtk_widget_destroy (old_align);
 
   gtk_container_add (GTK_CONTAINER (pdesc->info_align),pdesc->info_table);
 
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (pdesc->descr_scroll), 
 					 pdesc->info_align);
 
-  gtk_widget_show(pdesc->info_table);
-  gtk_widget_show(pdesc->info_align);
+  gtk_widget_show (pdesc->info_table);
+  gtk_widget_show (pdesc->info_align);
 
-  if(selected_proc_blurb)
-    g_free(selected_proc_blurb);
-  if(selected_proc_help)
-    g_free(selected_proc_help); 
-  if(selected_proc_author)
-    g_free(selected_proc_author);
-  if(selected_proc_copyright)
-    g_free(selected_proc_copyright);
-  if(selected_proc_date)
-    g_free(selected_proc_date);
-  if(selected_params)
-    g_free(selected_params);
-  if(selected_return_vals)
-    g_free(selected_return_vals);
-
+  if (selected_proc_blurb)
+    g_free (selected_proc_blurb);
+  if (selected_proc_help)
+    g_free (selected_proc_help); 
+  if (selected_proc_author)
+    g_free (selected_proc_author);
+  if (selected_proc_copyright)
+    g_free (selected_proc_copyright);
+  if (selected_proc_date)
+    g_free (selected_proc_date);
+  if (selected_params)
+    g_free (selected_params);
+  if (selected_return_vals)
+    g_free (selected_return_vals);
   
   return FALSE;
 }
@@ -512,55 +513,57 @@ procedure_clist_select_callback (GtkWidget      *widget,
 
   g_return_val_if_fail (pdesc != NULL, FALSE);
 
-  pinfo = (PInfo *)gtk_clist_get_row_data (GTK_CLIST (widget), row);
+  pinfo = (PInfo *) gtk_clist_get_row_data (GTK_CLIST (widget), row);
 
   if(!pinfo)
     return FALSE;
 
   /* Must select the correct one in the ctree structure */
 
-  found_node = gtk_ctree_find_by_row_data(GTK_CTREE(pdesc->ctree),NULL,pinfo);
+  found_node = gtk_ctree_find_by_row_data (GTK_CTREE (pdesc->ctree),
+					   NULL, pinfo);
   
-  if(found_node)
+  if (found_node)
     {
       GtkCTreeRow   *ctr;
       GtkCTreeNode  *parent;
-      int sel_row;
+      gint sel_row;
 
       /* Make sure this is expanded */
 
-      ctr = GTK_CTREE_ROW(found_node);
+      ctr = GTK_CTREE_ROW (found_node);
 
-      parent = GTK_CTREE_NODE(ctr->parent);
+      parent = GTK_CTREE_NODE (ctr->parent);
 
-      expand_to(pdesc,parent);
+      expand_to (pdesc, parent);
 
-      sel_row = gtk_clist_find_row_from_data(GTK_CLIST(pdesc->ctree),pinfo);
+      sel_row = gtk_clist_find_row_from_data (GTK_CLIST (pdesc->ctree), pinfo);
 
-      gtk_widget_hide(pdesc->ctree); 
-      gtk_widget_show(pdesc->ctree); 
-      
-      gtk_signal_handler_block_by_func(GTK_OBJECT(pdesc->ctree),(GtkSignalFunc)procedure_ctree_select_callback,pdesc);
+      gtk_widget_hide (pdesc->ctree); 
+      gtk_widget_show (pdesc->ctree); 
 
+      gtk_signal_handler_block_by_func (GTK_OBJECT(pdesc->ctree),
+					(GtkSignalFunc)procedure_ctree_select_callback, pdesc);
 
-      gtk_clist_select_row(GTK_CLIST(pdesc->ctree),sel_row,-1);  
-      gtk_ctree_select(GTK_CTREE(pdesc->ctree),found_node);
+      gtk_clist_select_row (GTK_CLIST (pdesc->ctree), sel_row, -1);  
+      gtk_ctree_select (GTK_CTREE (pdesc->ctree), found_node);
 
-      gtk_clist_moveto(GTK_CLIST(pdesc->ctree),
-		       sel_row,
-		       0,
-		       0.5,0.5);
+      gtk_clist_moveto (GTK_CLIST (pdesc->ctree),
+			sel_row,
+			0,
+			0.5, 0.5);
 
-      gtk_signal_handler_unblock_by_func(GTK_OBJECT(pdesc->ctree),(GtkSignalFunc)procedure_ctree_select_callback,pdesc);
+      gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->ctree),
+					  (GtkSignalFunc)procedure_ctree_select_callback, pdesc);
 
       pdesc->ctree_row = sel_row;
     }
   else
     {
-      g_warning("Failed to find node in ctree");
+      g_warning ("Failed to find node in ctree");
     }
 
-  return procedure_general_select_callback (pdesc,pinfo);
+  return procedure_general_select_callback (pdesc, pinfo);
 }
 
 /* This was an attempt to get around a problem in gtk 
@@ -580,22 +583,23 @@ page_select_callback (GtkNotebook     *notebook,
 {
   PDesc *pdesc = data;
 
-  if(page_num == 0)
+  if (page_num == 0)
     {
-      gtk_clist_select_row(GTK_CLIST(pdesc->clist),pdesc->clist_row,-1);  
-      gtk_clist_moveto(GTK_CLIST(pdesc->clist),
-		       pdesc->clist_row,
-		       0,
-		       0.5, 0.0);
+      gtk_clist_select_row (GTK_CLIST (pdesc->clist), pdesc->clist_row, -1);  
+      gtk_clist_moveto (GTK_CLIST (pdesc->clist),
+			pdesc->clist_row,
+			0,
+			0.5, 0.0);
     }
   else
     {
-      gtk_clist_select_row(GTK_CLIST(pdesc->ctree),pdesc->ctree_row,-1);  
-      gtk_clist_moveto(GTK_CLIST(pdesc->ctree),
-		       pdesc->ctree_row,
-		       0,
-		       0.5, 0.0);
+      gtk_clist_select_row (GTK_CLIST (pdesc->ctree), pdesc->ctree_row, -1);  
+      gtk_clist_moveto (GTK_CLIST (pdesc->ctree),
+			pdesc->ctree_row,
+			0,
+			0.5, 0.0);
     }
+
   return FALSE;
 }
 
@@ -612,42 +616,44 @@ procedure_ctree_select_callback (GtkWidget *widget,
 
   /* row is not a leaf the we have no interest in it */
 
-  gtk_ctree_get_node_info(GTK_CTREE(widget),
-			  GTK_CTREE_NODE(row),
-			  NULL,
-			  NULL,
-			  NULL,
-			  NULL,
-			  NULL,
-			  NULL,
-			  &is_leaf,
-			  NULL);
+  gtk_ctree_get_node_info (GTK_CTREE (widget),
+			   GTK_CTREE_NODE (row),
+			   NULL,
+			   NULL,
+			   NULL,
+			   NULL,
+			   NULL,
+			   NULL,
+			   &is_leaf,
+			   NULL);
 
   if (!is_leaf)
     return FALSE;
 
   pdesc = data;
 
-  pinfo = (PInfo *)gtk_ctree_node_get_row_data (GTK_CTREE(widget),GTK_CTREE_NODE(row));
-
+  pinfo = (PInfo *) gtk_ctree_node_get_row_data (GTK_CTREE (widget),
+						 GTK_CTREE_NODE (row));
 
   /* Must set clist to this one */
   /* Block signals */
 
-  gtk_signal_handler_block_by_func(GTK_OBJECT(pdesc->clist),(GtkSignalFunc)procedure_clist_select_callback,pdesc);
+  gtk_signal_handler_block_by_func (GTK_OBJECT (pdesc->clist),
+				    (GtkSignalFunc)procedure_clist_select_callback, pdesc);
 
-  sel_row = gtk_clist_find_row_from_data(GTK_CLIST(pdesc->clist),pinfo);
-  gtk_clist_select_row(GTK_CLIST(pdesc->clist),sel_row,-1);  
-  gtk_clist_moveto(GTK_CLIST(pdesc->clist),
-		   sel_row,
-		   0,
-		   0.5,0.5);
+  sel_row = gtk_clist_find_row_from_data (GTK_CLIST (pdesc->clist), pinfo);
+  gtk_clist_select_row (GTK_CLIST (pdesc->clist), sel_row, -1);  
+  gtk_clist_moveto (GTK_CLIST (pdesc->clist),
+		    sel_row,
+		    0,
+		    0.5, 0.5);
 
-  gtk_signal_handler_unblock_by_func(GTK_OBJECT(pdesc->clist),(GtkSignalFunc)procedure_clist_select_callback,pdesc);
+  gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->clist),
+				      (GtkSignalFunc)procedure_clist_select_callback, pdesc);
 
   pdesc->clist_row = sel_row;
   
-  return procedure_general_select_callback (pdesc,pinfo);
+  return procedure_general_select_callback (pdesc, pinfo);
 }
 
 static void
@@ -655,13 +661,12 @@ pinfo_free (gpointer p)
 {
   PInfo *pinfo = p;
 
-  
-  g_free(pinfo->menu);
-  g_free(pinfo->accel);
-  g_free(pinfo->prog);
-  g_free(pinfo->types);
-  g_free(pinfo->realname);
-  g_free(pinfo);
+  g_free (pinfo->menu);
+  g_free (pinfo->accel);
+  g_free (pinfo->prog);
+  g_free (pinfo->types);
+  g_free (pinfo->realname);
+  g_free (pinfo);
 }
 
 static GtkCTreeNode*
@@ -676,23 +681,23 @@ get_parent (PDesc       *pdesc,
   gchar *leaf_ptr;
   gchar *labels[3];
   
-  if(mpath == NULL)
+  if (mpath == NULL)
     return NULL; /* Parent is root */
 
-  parent = g_hash_table_lookup(ghash,mpath);
+  parent = g_hash_table_lookup (ghash, mpath);
 
-  if(parent)
+  if (parent)
     {
       /* found node */
-      return (parent);
+      return parent;
     }
 
   /* Next one up */
-  tmp_ptr = g_strdup(mpath);
+  tmp_ptr = g_strdup (mpath);
 
-  str_ptr = strrchr(tmp_ptr,'/');
+  str_ptr = strrchr (tmp_ptr,'/');
 
-  if(str_ptr == NULL)
+  if (str_ptr == NULL)
     {
       /*       printf("Root node for %s\n",mpath); */
       leaf_ptr = mpath;
@@ -702,31 +707,31 @@ get_parent (PDesc       *pdesc,
   else
     {
       leaf_ptr = g_strdup(str_ptr+1);
-      
+
       *str_ptr = '\000';
-      
-      last_parent = get_parent(pdesc,ghash,tmp_ptr);
+
+      last_parent = get_parent (pdesc, ghash, tmp_ptr);
     }
 
-  labels[0] = g_strdup(leaf_ptr); 
-  labels[1] = g_strdup(""); 
-  labels[2] = g_strdup(""); 
+  labels[0] = g_strdup (leaf_ptr); 
+  labels[1] = g_strdup (""); 
+  labels[2] = g_strdup (""); 
 
   /*   printf("get_parent::creating node %s under %s\n",leaf_ptr,tmp_ptr); */
 
-  parent = gtk_ctree_insert_node(GTK_CTREE(pdesc->ctree), 
-				 last_parent, 
-				 NULL,  
-				 labels,  
-				 4,  
-				 NULL,  
-				 NULL,  
-				 NULL,  
-				 NULL,  
-				 FALSE, 
-				 FALSE); 
-  
-  g_hash_table_insert(ghash,mpath,parent); 
+  parent = gtk_ctree_insert_node (GTK_CTREE (pdesc->ctree),
+				  last_parent,
+				  NULL,
+				  labels,
+				  4,
+				  NULL,
+				  NULL,
+				  NULL,
+				  NULL,
+				  FALSE,
+				  FALSE);
+
+  g_hash_table_insert (ghash, mpath, parent); 
 
   return parent;
 }
@@ -750,41 +755,40 @@ insert_into_ctree (PDesc      *pdesc,
   /* Find all nodes */
   /* Last one is the leaf part */
 
-  tmp_ptr = g_strdup(menu_str);
-  
-  str_ptr = strrchr(tmp_ptr,'/');
- 
-  if(str_ptr == NULL)
+  tmp_ptr = g_strdup (menu_str);
+
+  str_ptr = strrchr (tmp_ptr, '/');
+
+  if (str_ptr == NULL)
     return; /* No node */
 
-  leaf_ptr = g_strdup(str_ptr+1);
+  leaf_ptr = g_strdup (str_ptr + 1);
 
   *str_ptr = '\000';
 
   /*   printf("inserting %s...\n",menu_str); */
 
-  parent = get_parent(pdesc,ghash,tmp_ptr);
+  parent = get_parent (pdesc, ghash, tmp_ptr);
 
   /* Last was a leaf */
   /*   printf("found leaf %s parent = %p\n",leaf_ptr,parent); */
-  labels[0] = g_strdup(name);
-  labels[1] = g_strdup(xtimestr);
-  labels[2] = g_strdup(types_str);
+  labels[0] = g_strdup (name);
+  labels[1] = g_strdup (xtimestr);
+  labels[2] = g_strdup (types_str);
 
-  leaf_node = gtk_ctree_insert_node(GTK_CTREE(pdesc->ctree),
-				    parent,
-				    NULL, 
-				    labels, 
-				    4, 
-				    NULL, 
-				    NULL, 
-				    NULL, 
-				    NULL, 
-				    TRUE, 
-				    FALSE);
+  leaf_node = gtk_ctree_insert_node (GTK_CTREE (pdesc->ctree),
+				     parent,
+				     NULL,
+				     labels,
+				     4,
+				     NULL,
+				     NULL,
+				     NULL,
+				     NULL,
+				     TRUE,
+				     FALSE);
 
-  gtk_ctree_node_set_row_data(GTK_CTREE(pdesc->ctree),leaf_node,pinfo);
-
+  gtk_ctree_node_set_row_data (GTK_CTREE (pdesc->ctree), leaf_node, pinfo);
 }
 
 static void
@@ -792,7 +796,7 @@ get_plugin_info (PDesc *pdesc,
 		 gchar *search_text)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   gint  row_count = 0;
   gchar **menu_strs;
   gchar **accel_strs;
@@ -801,9 +805,9 @@ get_plugin_info (PDesc *pdesc,
   gchar **realname_strs;
   gint  *time_ints;
 
-  GHashTable* ghash = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable* ghash = g_hash_table_new (g_str_hash, g_str_equal);
 
-  if(!search_text)
+  if (!search_text)
     search_text = "";
 
   return_vals = gimp_run_procedure ("gimp_plugins_query",
@@ -842,28 +846,28 @@ get_plugin_info (PDesc *pdesc,
 	  pinfo = g_new0 (PInfo, 1);
 
 	  tx = time_ints[loop];
-	  if(tx)
+	  if (tx)
 	    {
-	      x = localtime(&tx);
-	      ret = strftime(xtimestr,sizeof(xtimestr), "%c",x);
+	      x = localtime (&tx);
+	      ret = strftime (xtimestr, sizeof (xtimestr), "%c", x);
 	      xtimestr[ret] = 0;
 	    }
 	  else
-	    strcpy(xtimestr,"");
+	    strcpy (xtimestr,"");
 
-	  pinfo->menu = g_strdup(menu_strs[loop]);
-	  pinfo->accel = g_strdup(accel_strs[loop]);
-	  pinfo->prog = g_strdup(prog_strs[loop]);
-	  pinfo->types = g_strdup(types_strs[loop]);
+	  pinfo->menu = g_strdup (menu_strs[loop]);
+	  pinfo->accel = g_strdup (accel_strs[loop]);
+	  pinfo->prog = g_strdup (prog_strs[loop]);
+	  pinfo->types = g_strdup (types_strs[loop]);
 	  pinfo->instime = time_ints[loop];
-	  pinfo->realname = g_strdup(realname_strs[loop]);
+	  pinfo->realname = g_strdup (realname_strs[loop]);
 
-	  labels[0] = g_strdup(name);
-	  labels[1] = g_strdup(xtimestr);
-	  labels[2] = g_strdup(menu_strs[loop]);
-	  labels[3] = g_strdup(types_strs[loop]);
+	  labels[0] = g_strdup (name);
+	  labels[1] = g_strdup (xtimestr);
+	  labels[2] = g_strdup (menu_strs[loop]);
+	  labels[3] = g_strdup (types_strs[loop]);
 
-	  gtk_clist_insert (GTK_CLIST(pdesc->clist), row_count, labels);
+	  gtk_clist_insert (GTK_CLIST (pdesc->clist), row_count, labels);
 
 	  gtk_clist_set_row_data_full (GTK_CLIST (pdesc->clist), row_count,
 				       pinfo, pinfo_free);
@@ -871,13 +875,13 @@ get_plugin_info (PDesc *pdesc,
 	  row_count++;
 
 	  /* Now do the tree view.... */
-	  insert_into_ctree(pdesc,
-			    name,
-			    xtimestr,
-			    menu_strs[loop],
-			    types_strs[loop],
-			    ghash,
-			    pinfo);
+	  insert_into_ctree (pdesc,
+			     name,
+			     xtimestr,
+			     menu_strs[loop],
+			     types_strs[loop],
+			     ghash,
+			     pinfo);
 	}
     }
 
@@ -891,25 +895,25 @@ dialog_search_callback (GtkWidget *widget,
   PDesc *pdesc = data;
   gchar *search_text = NULL;
  
-  if(widget != NULL)
+  if (widget != NULL)
     {
       /* The result of a button press... read entry data */
-      search_text = gtk_entry_get_text(GTK_ENTRY(plugindesc->search_entry));
+      search_text = gtk_entry_get_text (GTK_ENTRY (plugindesc->search_entry));
     }
 
-  gtk_clist_freeze(GTK_CLIST(pdesc->ctree));
-  gtk_clist_clear(GTK_CLIST(pdesc->ctree));
-  gtk_clist_freeze(GTK_CLIST(pdesc->clist));
-  gtk_clist_clear(GTK_CLIST(pdesc->clist));
+  gtk_clist_freeze (GTK_CLIST (pdesc->ctree));
+  gtk_clist_clear (GTK_CLIST (pdesc->ctree));
+  gtk_clist_freeze (GTK_CLIST (pdesc->clist));
+  gtk_clist_clear (GTK_CLIST (pdesc->clist));
 
-  get_plugin_info (pdesc,search_text);
+  get_plugin_info (pdesc, search_text);
 
-  gtk_clist_columns_autosize(GTK_CLIST(plugindesc->clist));
+  gtk_clist_columns_autosize (GTK_CLIST (plugindesc->clist));
 
-  gtk_clist_sort(GTK_CLIST(pdesc->clist));
-  gtk_clist_thaw(GTK_CLIST(pdesc->clist));
-  gtk_ctree_sort_recursive(GTK_CTREE(pdesc->ctree),NULL);
-  gtk_clist_thaw(GTK_CLIST(pdesc->ctree));
+  gtk_clist_sort (GTK_CLIST (pdesc->clist));
+  gtk_clist_thaw (GTK_CLIST (pdesc->clist));
+  gtk_ctree_sort_recursive (GTK_CTREE (pdesc->ctree), NULL);
+  gtk_clist_thaw (GTK_CLIST (pdesc->ctree));
 }
 
 static gint
@@ -926,17 +930,17 @@ date_sort (GtkCList      *clist,
 
   /* Want to sort on the date field */
 
-  if(row2_pinfo->instime < row1_pinfo->instime)
+  if (row2_pinfo->instime < row1_pinfo->instime)
     {
-      return(-1);
-    }
-  
-  if(row2_pinfo->instime > row1_pinfo->instime)
-    {
-      return(1);
+      return -1;
     }
 
-  return(0);
+  if (row2_pinfo->instime > row1_pinfo->instime)
+    {
+      return 1;
+    }
+
+  return 0;
 }
 
 static void 
@@ -946,11 +950,11 @@ clist_click_column (GtkCList *clist,
 {
   if (column == 1)
     {
-      gtk_clist_set_compare_func(clist,date_sort);
+      gtk_clist_set_compare_func (clist, date_sort);
     }
   else
     {
-      gtk_clist_set_compare_func(clist,NULL); /* Set back to default */
+      gtk_clist_set_compare_func (clist, NULL); /* Set back to default */
     }
 
   if (column == clist->sort_column)
@@ -968,14 +972,14 @@ clist_click_column (GtkCList *clist,
 
 
 static GtkWidget *
-gimp_plugin_desc ()
+gimp_plugin_desc (void)
 {
-  GtkWidget *button;
-  GtkWidget *hbox,*searchhbox,*vbox;
-  GtkWidget *label,*notebook,*swindow;
+  GtkWidget  *button;
+  GtkWidget  *hbox, *searchhbox, *vbox;
+  GtkWidget  *label, *notebook, *swindow;
   gchar     **argv;
-  gint      argc;
-  gchar     *clabels[4];
+  gint        argc;
+  gchar      *clabels[4];
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -988,7 +992,7 @@ gimp_plugin_desc ()
 
   /* the dialog box */
   plugindesc->dlg =
-    gimp_dialog_new (_("Plugin descriptions"), "plugindetails",
+    gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
 		     gimp_plugin_help_func, "filters/plugindetails.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, TRUE,
@@ -1008,14 +1012,13 @@ gimp_plugin_desc ()
 
   /* hbox : left=notebook ; right=description */
   
-  plugindesc->paned = hbox = gtk_hpaned_new();
+  plugindesc->paned = hbox = gtk_hpaned_new ();
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->vbox), 
 		      hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
-  
-  gtk_paned_set_handle_size(GTK_PANED(hbox),0);
-  gtk_paned_set_gutter_size(GTK_PANED(hbox),0);
 
+  gtk_paned_set_handle_size (GTK_PANED (hbox), 0);
+  gtk_paned_set_gutter_size (GTK_PANED (hbox), 0);
 
   /* left = vbox : the list and the search entry */
   
@@ -1026,20 +1029,20 @@ gimp_plugin_desc ()
 
   /* left = notebook */
 
-  notebook = gtk_notebook_new();
+  notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
   /* list : list in a scrolled_win */
   
-  clabels[0] = g_strdup( _("Name")); 
-  clabels[1] = g_strdup( _("Ins Date")); 
-  clabels[2] = g_strdup( _("Menu Path")); 
-  clabels[3] = g_strdup( _("Image Types")); 
-  plugindesc->clist = gtk_clist_new_with_titles(4,clabels); 
+  clabels[0] = g_strdup (_("Name")); 
+  clabels[1] = g_strdup (_("Ins Date")); 
+  clabels[2] = g_strdup (_("Menu Path")); 
+  clabels[3] = g_strdup (_("Image Types")); 
+  plugindesc->clist = gtk_clist_new_with_titles (4, clabels); 
 
   gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "click_column",
 		      (GtkSignalFunc) clist_click_column, NULL);
-  gtk_clist_column_titles_show(GTK_CLIST(plugindesc->clist));
+  gtk_clist_column_titles_show (GTK_CLIST (plugindesc->clist));
   swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -1051,17 +1054,17 @@ gimp_plugin_desc ()
 		      (GtkSignalFunc) procedure_clist_select_callback,
 		      plugindesc);
   
-  label = gtk_label_new ( _("List view"));
+  label = gtk_label_new (_("List View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), plugindesc->clist);
   gtk_widget_show (plugindesc->clist);
   gtk_widget_show (swindow);
 
   /* notebook->ctree */
-  clabels[0] = g_strdup( _("Menu Path/Name")); 
-  clabels[1] = g_strdup( _("Ins Date")); 
-  clabels[2] = g_strdup( _("Image Types")); 
-  plugindesc->ctree = gtk_ctree_new_with_titles(3,0,clabels);  
+  clabels[0] = g_strdup (_("Menu Path/Name")); 
+  clabels[1] = g_strdup (_("Ins Date")); 
+  clabels[2] = g_strdup (_("Image Types")); 
+  plugindesc->ctree = gtk_ctree_new_with_titles (3, 0, clabels);  
   plugindesc->ctree_scrolled_win =
     swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
@@ -1070,41 +1073,42 @@ gimp_plugin_desc ()
   gtk_signal_connect (GTK_OBJECT (plugindesc->ctree), "tree_select_row",
 		      (GtkSignalFunc) procedure_ctree_select_callback,
 		      plugindesc);
-  label = gtk_label_new( _("Tree view"));
+  label = gtk_label_new (_("Tree View"));
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 0, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 1, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 2, TRUE);
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook),swindow,label);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), plugindesc->ctree);
-  gtk_widget_show(plugindesc->ctree);
-  gtk_widget_show(swindow);
+  gtk_widget_show (plugindesc->ctree);
+  gtk_widget_show (swindow);
 
   gtk_signal_connect_after (GTK_OBJECT (notebook), "switch_page",
 			    (GtkSignalFunc) page_select_callback,
 			    plugindesc);
   
-  gtk_widget_show(notebook);
+  gtk_widget_show (notebook);
 
   /* search entry & details button */
 
-  searchhbox = gtk_hbox_new(FALSE,0);
+  searchhbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox),
 		      searchhbox, FALSE, FALSE, 0);
-  gtk_widget_show(searchhbox);
+  gtk_widget_show (searchhbox);
 
-  label = gtk_label_new( _("Search : "));
-  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5);
+  label = gtk_label_new (_("Search:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      label, FALSE, FALSE, 0);
   gtk_widget_show(label);
 
-  plugindesc->search_entry = gtk_entry_new();
+  plugindesc->search_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      plugindesc->search_entry, TRUE, TRUE, 0);
-  gtk_widget_show(plugindesc->search_entry);
+  gtk_widget_show (plugindesc->search_entry);
 
-  button = gtk_button_new_with_label ( _(" Details >>> "));
-  gtk_widget_show(button);
+  button = gtk_button_new_with_label (_("Details >>"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_widget_show (button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) details_callback, plugindesc);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
@@ -1114,7 +1118,7 @@ gimp_plugin_desc ()
   /* the right description is build on first click of the Details button */
  
   /* now build the list */
-  dialog_search_callback (NULL, (gpointer)plugindesc);
+  dialog_search_callback (NULL, (gpointer) plugindesc);
 
   gtk_widget_show (plugindesc->clist); 
   gtk_widget_show (plugindesc->dlg);
@@ -1122,9 +1126,8 @@ gimp_plugin_desc ()
   gtk_clist_select_row (GTK_CLIST (plugindesc->clist), 0, 0);
   gtk_clist_moveto (GTK_CLIST (plugindesc->clist), 0, 0, 0.0, 0.0);
 
-  plugindesc->c1size = GTK_PANED(plugindesc->paned)->child1_size;
-  GTK_PANED(plugindesc->paned)->child1_resize=TRUE;
+  plugindesc->c1size = GTK_PANED (plugindesc->paned)->child1_size;
+  GTK_PANED (plugindesc->paned)->child1_resize = TRUE;
 
   return plugindesc->dlg;
 }
-

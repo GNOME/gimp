@@ -16,68 +16,69 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 /* 
-   dbbrowser 
-   0.08 26th sept 97  by Thomas NOEL <thomas@minet.net> 
-*/
-
+ * dbbrowser 
+ * 0.08 26th sept 97  by Thomas NOEL <thomas@minet.net> 
+ */
 
 /*
-  This plugin gives you the list of available procedure, with the
-  name, description and parameters for each procedure.
-  You can do regexp search (by name and by description)
-  Useful for scripts development.
-
-  NOTE :
-  this is only a exercice for me (my first "plug-in" (extension))
-  so it's very (very) dirty. 
-  Btw, hope it gives you some ideas about gimp possibilities.
-
-  The core of the plugin is not here. See dbbrowser_utils (shared
-  with script-fu-console).
-
-  TODO
-  - bug fixes... (my method : rewrite from scratch :)
-*/
+ * This plugin gives you the list of available procedure, with the
+ * name, description and parameters for each procedure.
+ * You can do regexp search (by name and by description)
+ * Useful for scripts development.
+ *
+ * NOTE :
+ * this is only a exercice for me (my first "plug-in" (extension))
+ * so it's very (very) dirty. 
+ * Btw, hope it gives you some ideas about gimp possibilities.
+ *
+ * The core of the plugin is not here. See dbbrowser_utils (shared
+ * with script-fu-console).
+ *
+ * TODO
+ * - bug fixes... (my method : rewrite from scratch :)
+ */
 
 #include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "dbbrowser.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "dbbrowser_utils.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
+static void   query (void);
+static void   run   (gchar   *name,
+		     gint     nparams,
+		     GParam  *param,
+		     gint    *nreturn_vals,
+		     GParam **return_vals);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
-
-  static int nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("extension_db_browser",
                           "List available procedures in the PDB",
@@ -93,10 +94,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -105,8 +106,8 @@ run (char    *name,
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = PARAM_STATUS;
+  *return_vals  = values;
+  values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_SUCCESS;
 
   switch (run_mode)
@@ -123,8 +124,8 @@ run (char    *name,
 	argv[0] = g_strdup ("dbbrowser");
 	gtk_init (&argc, &argv);
 	gtk_rc_parse (gimp_gtkrc ());
-	
-	gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (NULL));
+
+	gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));
 
 	gtk_main ();
 	gdk_flush ();
@@ -136,22 +137,8 @@ run (char    *name,
       g_warning ("dbbrowser allows only interactive invocation");
       values[0].data.d_status = STATUS_CALLING_ERROR;
       break;
-      
+
     default:
       break;
     }  
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
