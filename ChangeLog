@@ -1,3 +1,8 @@
+Tue Jan 25 21:58:49 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/layer.c: applied a change suggested by Steinar H. Gunderson.
+	Fixes crashing on empty images (bug #5536).
+
 Tue Jan 25 21:16:57 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.c: disable "Layer to Imagesize" on empty images

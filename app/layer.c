@@ -1099,7 +1099,7 @@ layer_has_alpha (Layer *layer)
 gboolean
 layer_is_floating_sel (Layer *layer)
 {
-  if (layer->fs.drawable != NULL)
+  if (layer != NULL && layer->fs.drawable != NULL)
     return TRUE;
   else
     return FALSE;
