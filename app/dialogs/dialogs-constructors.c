@@ -69,10 +69,6 @@
 
 #include "display/gimpnavigationeditor.h"
 
-#include "actions/channels-commands.h"
-#include "actions/layers-commands.h"
-#include "actions/vectors-commands.h"
-
 #include "about-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -536,9 +532,6 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              gimp_context_get_image (context),
                              GIMP_TYPE_LAYER,
                              "active_layer_changed",
-                             (GimpEditItemFunc)     layers_edit_layer_query,
-                             (GimpNewItemFunc)      layers_new_layer_query,
-                             (GimpActivateItemFunc) layers_text_tool,
                              factory->menu_factory, "<Layers>",
                              "/layers-popup");
 }
@@ -556,9 +549,6 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              gimp_context_get_image (context),
                              GIMP_TYPE_CHANNEL,
                              "active_channel_changed",
-                             (GimpEditItemFunc)     channels_edit_channel_query,
-                             (GimpNewItemFunc)      channels_new_channel_query,
-                             (GimpActivateItemFunc) channels_edit_channel_query,
                              factory->menu_factory, "<Channels>",
                              "/channels-popup");
 }
@@ -576,9 +566,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              gimp_context_get_image (context),
                              GIMP_TYPE_VECTORS,
                              "active_vectors_changed",
-                             (GimpEditItemFunc)     vectors_edit_vectors_query,
-                             (GimpNewItemFunc)      vectors_new_vectors_query,
-                             (GimpActivateItemFunc) vectors_vectors_tool,
                              factory->menu_factory, "<Vectors>",
                              "/vectors-popup");
 }

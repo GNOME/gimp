@@ -125,36 +125,9 @@ static void     gimp_item_tree_view_drop_viewable   (GimpContainerTreeView *view
                                                      GimpViewable      *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos);
 
-static void   gimp_item_tree_view_edit_clicked      (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-
-static void   gimp_item_tree_view_new_clicked       (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_new_extended_clicked
-                                                    (GtkWidget         *widget,
-                                                     guint              state,
-                                                     GimpItemTreeView  *view);
 static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
                                                      GimpViewable      *viewable,
                                                      gpointer           data);
-
-static void   gimp_item_tree_view_raise_clicked     (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_raise_extended_clicked
-                                                    (GtkWidget         *widget,
-                                                     guint              state,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lower_clicked     (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lower_extended_clicked
-                                                    (GtkWidget         *widget,
-                                                     guint              state,
-                                                     GimpItemTreeView  *view);
-
-static void   gimp_item_tree_view_duplicate_clicked (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
-static void   gimp_item_tree_view_delete_clicked    (GtkWidget         *widget,
-                                                     GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_item_changed      (GimpImage         *gimage,
                                                      GimpItemTreeView  *view);
@@ -280,23 +253,19 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->reorder_item            = NULL;
   klass->add_item                = NULL;
   klass->remove_item             = NULL;
+  klass->new_item                = NULL;
 
-  klass->edit_desc               = NULL;
-  klass->edit_help_id            = NULL;
-  klass->new_desc                = NULL;
-  klass->new_help_id             = NULL;
-  klass->duplicate_desc          = NULL;
-  klass->duplicate_help_id       = NULL;
-  klass->delete_desc             = NULL;
-  klass->delete_help_id          = NULL;
-  klass->raise_desc              = NULL;
-  klass->raise_help_id           = NULL;
-  klass->raise_to_top_desc       = NULL;
-  klass->raise_to_top_help_id    = NULL;
-  klass->lower_desc              = NULL;
-  klass->lower_help_id           = NULL;
-  klass->lower_to_bottom_desc    = NULL;
-  klass->lower_to_bottom_help_id = NULL;
+  klass->action_group            = NULL;
+  klass->edit_action             = NULL;
+  klass->new_action              = NULL;
+  klass->new_default_action      = NULL;
+  klass->raise_action            = NULL;
+  klass->raise_top_action        = NULL;
+  klass->lower_action            = NULL;
+  klass->lower_bottom_action     = NULL;
+  klass->duplicate_action        = NULL;
+  klass->delete_action           = NULL;
+  klass->reorder_desc            = NULL;
 
   g_object_class_install_property (object_class, PROP_ITEM_TYPE,
                                    g_param_spec_pointer ("item-type",
@@ -317,8 +286,6 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                           GimpItemTreeViewClass *view_class)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpEditor            *editor    = GIMP_EDITOR (view);
-  gchar                 *str;
 
   /* The following used to read:
    *
@@ -340,77 +307,6 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   view->gimage      = NULL;
   view->item_type   = G_TYPE_NONE;
   view->signal_name = NULL;
-
-  view->edit_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_EDIT, view_class->edit_desc,
-                            view_class->edit_help_id,
-                            G_CALLBACK (gimp_item_tree_view_edit_clicked),
-                            NULL,
-                            view);
-
-  str = g_strdup_printf (view_class->new_desc,
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
-
-  view->new_button =
-    gimp_editor_add_button (editor,
-                            GTK_STOCK_NEW, str, view_class->new_help_id,
-                            G_CALLBACK (gimp_item_tree_view_new_clicked),
-                            G_CALLBACK (gimp_item_tree_view_new_extended_clicked),
-                            view);
-
-  g_free (str);
-
-  str = g_strdup_printf (_("%s\n"
-                           "%s  To Top"),
-                         view_class->raise_desc,
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
-
-  view->raise_button =
-    gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_UP, str, view_class->raise_help_id,
-                            G_CALLBACK (gimp_item_tree_view_raise_clicked),
-                            G_CALLBACK (gimp_item_tree_view_raise_extended_clicked),
-                            view);
-
-  g_free (str);
-
-  str = g_strdup_printf (_("%s\n"
-                           "%s  To Bottom"),
-                         view_class->lower_desc,
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
-
-  view->lower_button =
-    gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_DOWN, str, view_class->lower_help_id,
-                            G_CALLBACK (gimp_item_tree_view_lower_clicked),
-                            G_CALLBACK (gimp_item_tree_view_lower_extended_clicked),
-                            view);
-
-  g_free (str);
-
-  view->duplicate_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_DUPLICATE, view_class->duplicate_desc,
-                            view_class->duplicate_help_id,
-                            G_CALLBACK (gimp_item_tree_view_duplicate_clicked),
-                            NULL,
-                            view);
-
-  view->delete_button =
-    gimp_editor_add_button (editor,
-                            GTK_STOCK_DELETE, view_class->delete_desc,
-                            view_class->delete_help_id,
-                            G_CALLBACK (gimp_item_tree_view_delete_clicked),
-                            NULL,
-                            view);
-
-  gtk_widget_set_sensitive (view->edit_button,      FALSE);
-  gtk_widget_set_sensitive (view->new_button,       FALSE);
-  gtk_widget_set_sensitive (view->raise_button,     FALSE);
-  gtk_widget_set_sensitive (view->lower_button,     FALSE);
-  gtk_widget_set_sensitive (view->duplicate_button, FALSE);
-  gtk_widget_set_sensitive (view->delete_button,    FALSE);
 
   view->visible_changed_handler_id = 0;
   view->linked_changed_handler_id  = 0;
@@ -476,6 +372,8 @@ gimp_item_tree_view_constructor (GType                  type,
                                  guint                  n_params,
                                  GObjectConstructParam *params)
 {
+  GimpItemTreeViewClass *item_view_class;
+  GimpEditor            *editor;
   GimpContainerTreeView *tree_view;
   GimpItemTreeView      *item_view;
   GObject               *object;
@@ -483,6 +381,7 @@ gimp_item_tree_view_constructor (GType                  type,
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
+  editor    = GIMP_EDITOR (object);
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   item_view = GIMP_ITEM_TREE_VIEW (object);
 
@@ -538,6 +437,20 @@ gimp_item_tree_view_constructor (GType                  type,
                                   item_view->item_type,
                                   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
+  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
+
+  item_view->edit_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->edit_action, NULL);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+				  GTK_BUTTON (item_view->edit_button),
+				  item_view->item_type);
+
+  item_view->new_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->new_default_action,
+                                   item_view_class->new_action, GDK_SHIFT_MASK,
+                                   NULL);
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
    */
@@ -546,12 +459,30 @@ gimp_item_tree_view_constructor (GType                  type,
 			      gimp_item_tree_view_new_dropped,
 			      item_view);
 
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-				  GTK_BUTTON (item_view->edit_button),
-				  item_view->item_type);
+  item_view->raise_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->raise_action,
+                                   item_view_class->raise_top_action,
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+
+  item_view->lower_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->lower_action,
+                                   item_view_class->lower_bottom_action,
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+
+  item_view->duplicate_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->duplicate_action, NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
 				  GTK_BUTTON (item_view->duplicate_button),
 				  item_view->item_type);
+
+  item_view->delete_button =
+    gimp_editor_add_action_button (editor, item_view_class->action_group,
+                                   item_view_class->delete_action, NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
 				  GTK_BUTTON (item_view->delete_button),
 				  item_view->item_type);
@@ -621,17 +552,14 @@ gimp_item_tree_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_item_tree_view_new (gint                  preview_size,
-                         gint                  preview_border_width,
-                         GimpImage            *gimage,
-                         GType                 item_type,
-                         const gchar          *signal_name,
-                         GimpEditItemFunc      edit_item_func,
-                         GimpNewItemFunc       new_item_func,
-                         GimpActivateItemFunc  activate_item_func,
-                         GimpMenuFactory      *menu_factory,
-                         const gchar          *menu_identifier,
-                         const gchar          *ui_path)
+gimp_item_tree_view_new (gint             preview_size,
+                         gint             preview_border_width,
+                         GimpImage       *gimage,
+                         GType            item_type,
+                         const gchar     *signal_name,
+                         GimpMenuFactory *menu_factory,
+                         const gchar     *menu_identifier,
+                         const gchar     *ui_path)
 {
   GimpItemTreeView *item_view;
   GType             view_type;
@@ -643,9 +571,6 @@ gimp_item_tree_view_new (gint                  preview_size,
                         NULL);
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
-  g_return_val_if_fail (edit_item_func != NULL, NULL);
-  g_return_val_if_fail (new_item_func != NULL, NULL);
-  g_return_val_if_fail (activate_item_func != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (ui_path != NULL, NULL);
@@ -680,10 +605,6 @@ gimp_item_tree_view_new (gint                  preview_size,
 
   gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (item_view),
                                         preview_size, preview_border_width);
-
-  item_view->edit_item_func     = edit_item_func;
-  item_view->new_item_func      = new_item_func;
-  item_view->activate_item_func = activate_item_func;
 
   gimp_item_tree_view_set_image (item_view, gimage);
 
@@ -749,8 +670,6 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 
       gimp_item_tree_view_item_changed (view->gimage, view);
     }
-
-  gtk_widget_set_sensitive (view->new_button, (view->gimage != NULL));
 }
 
 static void
@@ -825,12 +744,7 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
                                  GimpViewable      *item,
                                  gpointer           insert_data)
 {
-  GimpItemTreeView *tree_view           = GIMP_ITEM_TREE_VIEW (view);
-  gboolean          edit_sensitive      = FALSE;
-  gboolean          raise_sensitive     = FALSE;
-  gboolean          lower_sensitive     = FALSE;
-  gboolean          duplicate_sensitive = FALSE;
-  gboolean          delete_sensitive    = FALSE;
+  GimpItemTreeView *tree_view = GIMP_ITEM_TREE_VIEW (view);
   gboolean          success;
 
   success = parent_view_iface->select_item (view, item, insert_data);
@@ -839,8 +753,6 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
     {
       GimpItemTreeViewClass *item_view_class;
       GimpItem              *active_item;
-      GimpContainer         *container;
-      gint                   index;
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
 
@@ -853,30 +765,7 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
 
 	  gimp_image_flush (tree_view->gimage);
 	}
-
-      container = gimp_container_view_get_container (view);
-
-      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
-
-      if (container->num_children > 1)
-	{
-	  if (index > 0)
-	    raise_sensitive = TRUE;
-
-	  if (index < (container->num_children - 1))
-	    lower_sensitive = TRUE;
-	}
-
-      edit_sensitive      = TRUE;
-      duplicate_sensitive = TRUE;
-      delete_sensitive    = TRUE;
     }
-
-  gtk_widget_set_sensitive (tree_view->edit_button,      edit_sensitive);
-  gtk_widget_set_sensitive (tree_view->raise_button,     raise_sensitive);
-  gtk_widget_set_sensitive (tree_view->lower_button,     lower_sensitive);
-  gtk_widget_set_sensitive (tree_view->duplicate_button, duplicate_sensitive);
-  gtk_widget_set_sensitive (tree_view->delete_button,    delete_sensitive);
 
   gimp_ui_manager_update (GIMP_EDITOR (tree_view)->ui_manager, tree_view);
 
@@ -888,13 +777,29 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
                                    GimpViewable      *item,
                                    gpointer           insert_data)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
 
   if (parent_view_iface->activate_item)
     parent_view_iface->activate_item (view, item, insert_data);
 
-  item_view->activate_item_func (GIMP_ITEM (item), item_view->context,
-                                 GTK_WIDGET (view));
+  if (item_view_class->activate_action)
+    {
+      GimpActionGroup *group;
+
+      group = gimp_ui_manager_get_action_group (GIMP_EDITOR (view)->ui_manager,
+                                                item_view_class->action_group);
+
+      if (group)
+        {
+          GtkAction *action;
+
+          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                item_view_class->activate_action);
+
+          if (action)
+            gtk_action_activate (action);
+        }
+    }
 }
 
 static void
@@ -997,234 +902,43 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 }
 
 
-/*  "Edit" functions  */
-
-static void
-gimp_item_tree_view_edit_clicked (GtkWidget        *widget,
-                                  GimpItemTreeView *view)
-{
-  GimpItem *item;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
-
-  if (item)
-    view->edit_item_func (item, view->context, GTK_WIDGET (view));
-}
-
-
 /*  "New" functions  */
-
-static void
-gimp_item_tree_view_new_clicked (GtkWidget        *widget,
-                                 GimpItemTreeView *view)
-{
-  view->new_item_func (view->gimage, view->context,
-                       NULL, FALSE, GTK_WIDGET (view));
-  gimp_image_flush (view->gimage);
-}
-
-static void
-gimp_item_tree_view_new_extended_clicked (GtkWidget        *widget,
-                                          guint             state,
-                                          GimpItemTreeView *view)
-{
-  view->new_item_func (view->gimage, view->context,
-                       NULL, TRUE, GTK_WIDGET (view));
-}
 
 static void
 gimp_item_tree_view_new_dropped (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
-  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (data);
-  GimpContainer    *container;
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (data);
+  GimpItemTreeView      *view            = GIMP_ITEM_TREE_VIEW (data);
+  GimpContainer         *container;
 
   container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
 
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
+  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)) &&
+      item_view_class->new_default_action)
     {
-      view->new_item_func (view->gimage, view->context,
-                           GIMP_ITEM (viewable), FALSE, GTK_WIDGET (view));
+      GimpActionGroup *group;
 
-      gimp_image_flush (view->gimage);
-    }
-}
+      group = gimp_ui_manager_get_action_group (GIMP_EDITOR (view)->ui_manager,
+                                                item_view_class->action_group);
 
-
-/*  "Duplicate" functions  */
-
-static void
-gimp_item_tree_view_duplicate_clicked (GtkWidget        *widget,
-                                       GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      GimpItem *new_item = gimp_item_duplicate (item,
-                                                G_TYPE_FROM_INSTANCE (item),
-                                                TRUE);
-
-      if (new_item)
+      if (group)
         {
-          item_view_class->add_item (view->gimage, new_item, -1);
+          GtkAction *action;
 
-          gimp_image_flush (view->gimage);
+          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                item_view_class->new_default_action);
+
+          if (action)
+            {
+              g_object_set (action, "viewable", viewable, NULL);
+
+              gtk_action_activate (action);
+
+              g_object_set (action, "viewable", NULL, NULL);
+            }
         }
-    }
-}
-
-
-/*  "Raise/Lower" functions  */
-
-static void
-gimp_item_tree_view_raise_clicked (GtkWidget        *widget,
-                                   GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      GimpContainer *container;
-      gint           index;
-
-      container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
-
-      if (index > 0)
-        {
-          item_view_class->reorder_item (view->gimage, item, index - 1, TRUE,
-                                         item_view_class->raise_desc);
-
-          gimp_image_flush (view->gimage);
-        }
-    }
-}
-
-static void
-gimp_item_tree_view_raise_extended_clicked (GtkWidget        *widget,
-                                            guint             state,
-                                            GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      GimpContainer *container;
-      gint           index;
-
-      container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
-
-      if ((state & GDK_SHIFT_MASK) && (index > 0))
-        {
-          item_view_class->reorder_item (view->gimage, item, 0, TRUE,
-                                         item_view_class->raise_to_top_desc);
-
-          gimp_image_flush (view->gimage);
-        }
-    }
-}
-
-static void
-gimp_item_tree_view_lower_clicked (GtkWidget        *widget,
-                                   GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      GimpContainer *container;
-      gint           index;
-
-      container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
-
-      if (index < container->num_children - 1)
-        {
-          item_view_class->reorder_item (view->gimage, item, index + 1, TRUE,
-                                         item_view_class->lower_desc);
-
-          gimp_image_flush (view->gimage);
-        }
-    }
-}
-
-static void
-gimp_item_tree_view_lower_extended_clicked (GtkWidget        *widget,
-                                            guint             state,
-                                            GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      GimpContainer *container;
-      gint           index;
-
-      container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
-
-      if ((state & GDK_SHIFT_MASK) && (index < container->num_children - 1))
-        {
-          item_view_class->reorder_item (view->gimage, item,
-                                         container->num_children - 1, TRUE,
-                                         item_view_class->lower_to_bottom_desc);
-
-          gimp_image_flush (view->gimage);
-        }
-    }
-}
-
-
-/*  "Delete" functions  */
-
-static void
-gimp_item_tree_view_delete_clicked (GtkWidget        *widget,
-                                    GimpItemTreeView *view)
-{
-  GimpItemTreeViewClass *item_view_class;
-  GimpItem              *item;
-
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
-
-  item = item_view_class->get_active_item (view->gimage);
-
-  if (item)
-    {
-      item_view_class->remove_item (view->gimage, item);
-
-      gimp_image_flush (view->gimage);
     }
 }
 

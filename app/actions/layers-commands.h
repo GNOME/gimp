@@ -26,6 +26,8 @@ void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
                                                gpointer     data);
 void   layers_new_cmd_callback                (GtkAction   *action,
                                                gpointer     data);
+void   layers_new_default_cmd_callback        (GtkAction   *action,
+                                               gpointer     data);
 
 void   layers_select_cmd_callback             (GtkAction   *action,
                                                gint         value,
@@ -90,18 +92,6 @@ void   layers_mode_cmd_callback               (GtkAction   *action,
 
 void   layers_preserve_trans_cmd_callback     (GtkAction   *action,
                                                gpointer     data);
-
-void   layers_text_tool                       (GimpLayer   *layer,
-                                               GimpContext *context,
-                                               GtkWidget   *parent);
-void   layers_new_layer_query                 (GimpImage   *gimage,
-                                               GimpContext *context,
-                                               GimpLayer   *template,
-                                               gboolean     interactive,
-                                               GtkWidget   *parent);
-void   layers_edit_layer_query                (GimpLayer   *layer,
-                                               GimpContext *context,
-                                               GtkWidget   *parent);
 
 
 #endif /* __LAYERS_COMMANDS_H__ */

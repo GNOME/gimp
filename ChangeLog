@@ -1,3 +1,55 @@
+2004-10-16  Michael Natterer  <mitch@gimp.org>
+
+	Ported the layers, channels and paths dialogs from
+	gimp_editor_add_button() to gimp_editor_add_action_button(),
+	removing a massive amount of duplicated code, sensitivity logic
+	and confusing utility functions.
+
+	* app/actions/channels-actions.c
+	* app/actions/channels-commands.[ch]
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: added "foo-new-default"
+	actions and callbacks which create items without a dialog,
+	optionally using default values from a passed template. Removed
+	all public utility function that were passed as function pointers
+	to widget construtors. Added tooltips to all actions which are now
+	used for dialog buttons.
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_action_button):
+	automatically create multi-line tooltips showing the modifiers for
+	extended action buttons. Removes the need for lots of insane
+	format strings that need to be translated correctly.
+
+	* app/widgets/gimpitemtreeview.[ch] (struct GimpItemTreeViewClass):
+	replaced tooltip and help_id strings by action names.
+
+	(struct GimpItemTreeView)
+	(gimp_item_tree_view_new): removed "edit", "new" and "activate"
+	function pointers.
+
+	(gimp_item_tree_view_constructor): create all buttons
+	with gimp_editor_add_action_button(), using the action names
+	from GimpItemTreeViewClass.
+
+	Removed tons of "clicked" callbacks and all code which sets the
+	buttons' sensitivity. They are not needed any longer.
+
+	Require all subclasses to implement GimpItemTreeView::new_item(),
+	a new virtual function which creates a plain new item without
+	showing a dialog.
+
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: fill in the action names and
+	implement GimpItemTreeView::new_item(). Removed all button
+	sensitivity logic.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly. Doesn't
+	include anything from actions/ any more.
+
 2004-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb: fixed parameter descriptions for

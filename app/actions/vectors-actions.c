@@ -49,22 +49,32 @@ static GimpActionEntry vectors_actions[] =
     GIMP_HELP_TOOL_VECTORS },
 
   { "vectors-edit-attributes", GIMP_STOCK_EDIT,
-    N_("_Edit Path Attributes..."), NULL, NULL,
+    N_("_Edit Path Attributes..."), NULL,
+    N_("Edit path attributes"),
     G_CALLBACK (vectors_edit_attributes_cmd_callback),
     GIMP_HELP_PATH_EDIT },
 
   { "vectors-new", GTK_STOCK_NEW,
-    N_("_New Path..."), "", NULL,
+    N_("_New Path..."), "",
+    N_("New path dialog"),
     G_CALLBACK (vectors_new_cmd_callback),
     GIMP_HELP_PATH_NEW },
 
+  { "vectors-new-default", GTK_STOCK_NEW,
+    N_("_New Path"), "",
+    N_("New path"),
+    G_CALLBACK (vectors_new_default_cmd_callback),
+    GIMP_HELP_PATH_NEW },
+
   { "vectors-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Path"), NULL, NULL,
+    N_("D_uplicate Path"), NULL,
+    N_("Duplicate path"),
     G_CALLBACK (vectors_duplicate_cmd_callback),
     GIMP_HELP_PATH_DUPLICATE },
 
   { "vectors-delete", GTK_STOCK_DELETE,
-    N_("_Delete Path"), "", NULL,
+    N_("_Delete Path"), "",
+    N_("Delete path"),
     G_CALLBACK (vectors_delete_cmd_callback),
     GIMP_HELP_PATH_DELETE },
 
@@ -74,22 +84,26 @@ static GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_MERGE_VISIBLE },
 
   { "vectors-raise", GTK_STOCK_GO_UP,
-    N_("_Raise Path"), "", NULL,
+    N_("_Raise Path"), "",
+    N_("Raise path"),
     G_CALLBACK (vectors_raise_cmd_callback),
     GIMP_HELP_PATH_RAISE },
 
   { "vectors-raise-to-top", GTK_STOCK_GOTO_TOP,
-    N_("Raise Path to _Top"), "", NULL,
+    N_("Raise Path to _Top"), "",
+    N_("Raise path to top"),
     G_CALLBACK (vectors_raise_to_top_cmd_callback),
     GIMP_HELP_PATH_RAISE_TO_TOP },
 
   { "vectors-lower", GTK_STOCK_GO_DOWN,
-    N_("_Lower Path"), "", NULL,
+    N_("_Lower Path"), "",
+    N_("Lower path"),
     G_CALLBACK (vectors_lower_cmd_callback),
     GIMP_HELP_PATH_LOWER },
 
   { "vectors-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    N_("Lower Path to _Bottom"), "", NULL,
+    N_("Lower Path to _Bottom"), "",
+    N_("Lower path to bottom"),
     G_CALLBACK (vectors_lower_to_bottom_cmd_callback),
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
@@ -262,6 +276,7 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",           gimage);
+  SET_SENSITIVE ("vectors-new-default",   gimage);
   SET_SENSITIVE ("vectors-duplicate",     vectors);
   SET_SENSITIVE ("vectors-delete",        vectors);
   SET_SENSITIVE ("vectors-merge-visible", n_vectors > 1);

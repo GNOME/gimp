@@ -48,6 +48,7 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
@@ -99,6 +100,12 @@ static const GimpLayerModeEffects layer_modes[] =
 
 /*  local function prototypes  */
 
+static void   layers_new_layer_query    (GimpImage            *gimage,
+                                         GimpContext          *context,
+                                         GtkWidget            *parent);
+static void   layers_edit_layer_query   (GimpLayer            *layer,
+                                         GimpContext          *context,
+                                         GtkWidget            *parent);
 static void   layers_add_mask_query     (GimpLayer            *layer,
                                          GtkWidget            *parent);
 static void   layers_scale_layer_query  (GimpDisplay          *gdisp,
@@ -128,10 +135,35 @@ layers_text_tool_cmd_callback (GtkAction *action,
   GimpImage *gimage;
   GimpLayer *layer;
   GtkWidget *widget;
+  GimpTool  *active_tool;
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_text_tool (layer, action_data_get_context (data), widget);
+  if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+    {
+      layers_edit_layer_query (layer, action_data_get_context (data), widget);
+      return;
+    }
+
+  active_tool = tool_manager_get_active (gimage->gimp);
+
+  if (! GIMP_IS_TEXT_TOOL (active_tool))
+    {
+      GimpToolInfo *tool_info;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
+                                          "gimp-text-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (gimage->gimp);
+        }
+    }
+
+  if (GIMP_IS_TEXT_TOOL (active_tool))
+    gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
 }
 
 void
@@ -153,11 +185,83 @@ layers_new_cmd_callback (GtkAction *action,
 {
   GimpImage *gimage;
   GtkWidget *widget;
+  GimpLayer *floating_sel;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  layers_new_layer_query (gimage, action_data_get_context (data),
-                          NULL, TRUE, widget);
+  /*  If there is a floating selection, the new command transforms
+   *  the current fs into a new layer
+   */
+  if ((floating_sel = gimp_image_floating_sel (gimage)))
+    {
+      floating_sel_to_layer (floating_sel);
+      gimp_image_flush (gimage);
+      return;
+    }
+
+  layers_new_layer_query (gimage, action_data_get_context (data), widget);
+}
+
+void
+layers_new_default_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpImage            *gimage;
+  GimpLayer            *floating_sel;
+  GimpLayer            *new_layer;
+  gint                  width, height;
+  gint                  off_x, off_y;
+  gdouble               opacity;
+  GimpLayerModeEffects  mode;
+  return_if_no_image (gimage, data);
+
+  /*  If there is a floating selection, the new command transforms
+   *  the current fs into a new layer
+   */
+  if ((floating_sel = gimp_image_floating_sel (gimage)))
+    {
+      floating_sel_to_layer (floating_sel);
+      gimp_image_flush (gimage);
+      return;
+    }
+
+  if (GIMP_IS_LAYER (GIMP_ACTION (action)->viewable))
+    {
+      GimpLayer *template = GIMP_LAYER (GIMP_ACTION (action)->viewable);
+
+      gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
+      width   = gimp_item_width  (GIMP_ITEM (template));
+      height  = gimp_item_height (GIMP_ITEM (template));
+      opacity = template->opacity;
+      mode    = template->mode;
+    }
+  else
+    {
+      width   = gimp_image_get_width (gimage);
+      height  = gimp_image_get_height (gimage);
+      off_x   = 0;
+      off_y   = 0;
+      opacity = 1.0;
+      mode    = GIMP_NORMAL_MODE;
+    }
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("New Layer"));
+
+  new_layer = gimp_layer_new (gimage, width, height,
+                              gimp_image_base_type_with_alpha (gimage),
+                              _("Empty Layer"), opacity, mode);
+
+  gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
+                              action_data_get_context (data),
+                              GIMP_TRANSPARENT_FILL);
+  gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
+
+  gimp_image_add_layer (gimage, new_layer, -1);
+
+  gimp_image_undo_group_end (gimage);
+
+  gimp_image_flush (gimage);
 }
 
 void
@@ -622,47 +726,6 @@ layers_preserve_trans_cmd_callback (GtkAction *action,
     }
 }
 
-void
-layers_text_tool (GimpLayer   *layer,
-                  GimpContext *context,
-                  GtkWidget   *parent)
-{
-  GimpImage *gimage;
-  GimpTool  *active_tool;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
-    {
-      layers_edit_layer_query (layer, context, parent);
-      return;
-    }
-
-  gimage = gimp_item_get_image (GIMP_ITEM (layer));
-
-  active_tool = tool_manager_get_active (gimage->gimp);
-
-  if (! GIMP_IS_TEXT_TOOL (active_tool))
-    {
-      GimpContainer *tool_info_list = gimage->gimp->tool_info_list;
-      GimpToolInfo  *tool_info;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (tool_info_list,
-                                          "gimp-text-tool");
-
-      if (GIMP_IS_TOOL_INFO (tool_info))
-        {
-          gimp_context_set_tool (context, tool_info);
-          active_tool = tool_manager_get_active (gimage->gimp);
-        }
-    }
-
-  if (GIMP_IS_TEXT_TOOL (active_tool))
-    gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
-}
-
 
 /********************************/
 /*  The new layer query dialog  */
@@ -684,11 +747,10 @@ struct _NewLayerOptions
   GimpImage    *gimage;
 };
 
-
 static void
-new_layer_query_response (GtkWidget       *widget,
-                          gint             response_id,
-                          NewLayerOptions *options)
+layers_new_layer_response (GtkWidget       *widget,
+                           gint             response_id,
+                           NewLayerOptions *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -734,15 +796,12 @@ new_layer_query_response (GtkWidget       *widget,
   gtk_widget_destroy (options->query_box);
 }
 
-void
+static void
 layers_new_layer_query (GimpImage   *gimage,
                         GimpContext *context,
-                        GimpLayer   *template,
-                        gboolean     interactive,
                         GtkWidget   *parent)
 {
   NewLayerOptions *options;
-  GimpLayer       *floating_sel;
   GtkWidget       *vbox;
   GtkWidget       *table;
   GtkWidget       *label;
@@ -750,63 +809,6 @@ layers_new_layer_query (GimpImage   *gimage,
   GtkWidget       *spinbutton;
   GtkWidget       *frame;
   GtkWidget       *button;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (template == NULL || GIMP_IS_LAYER (template));
-
-  /*  If there is a floating selection, the new command transforms
-   *  the current fs into a new layer
-   */
-  if ((floating_sel = gimp_image_floating_sel (gimage)))
-    {
-      floating_sel_to_layer (floating_sel);
-      gimp_image_flush (gimage);
-      return;
-    }
-
-  if (template || ! interactive)
-    {
-      GimpLayer            *new_layer;
-      gint                  width, height;
-      gint                  off_x, off_y;
-      gdouble               opacity;
-      GimpLayerModeEffects  mode;
-
-      if (template)
-        {
-          gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
-          width   = gimp_item_width  (GIMP_ITEM (template));
-          height  = gimp_item_height (GIMP_ITEM (template));
-          opacity = template->opacity;
-          mode    = template->mode;
-        }
-      else
-        {
-          width   = gimp_image_get_width (gimage);
-          height  = gimp_image_get_height (gimage);
-          off_x   = 0;
-          off_y   = 0;
-          opacity = 1.0;
-          mode    = GIMP_NORMAL_MODE;
-        }
-
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                                   _("New Layer"));
-
-      new_layer = gimp_layer_new (gimage, width, height,
-                                  gimp_image_base_type_with_alpha (gimage),
-                                  _("Empty Layer"), opacity, mode);
-
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer), context,
-                                  GIMP_TRANSPARENT_FILL);
-      gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
-
-      gimp_image_add_layer (gimage, new_layer, -1);
-
-      gimp_image_undo_group_end (gimage);
-      return;
-    }
 
   options = g_new0 (NewLayerOptions, 1);
 
@@ -829,7 +831,7 @@ layers_new_layer_query (GimpImage   *gimage,
                               NULL);
 
   g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (new_layer_query_response),
+                    G_CALLBACK (layers_new_layer_response),
                     options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
@@ -950,9 +952,9 @@ struct _EditLayerOptions
 };
 
 static void
-edit_layer_query_response (GtkWidget        *widget,
-                           gint              response_id,
-                           EditLayerOptions *options)
+layers_edit_layer_response (GtkWidget        *widget,
+                            gint              response_id,
+                            EditLayerOptions *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -981,8 +983,8 @@ edit_layer_query_response (GtkWidget        *widget,
 }
 
 static void
-edit_layer_toggle_rename (GtkWidget        *widget,
-                          EditLayerOptions *options)
+layers_edit_layer_toggle_rename (GtkWidget        *widget,
+                                 EditLayerOptions *options)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active &&
       gimp_drawable_is_text_layer (GIMP_DRAWABLE (options->layer)))
@@ -1001,7 +1003,7 @@ edit_layer_toggle_rename (GtkWidget        *widget,
     }
 }
 
-void
+static void
 layers_edit_layer_query (GimpLayer   *layer,
                          GimpContext *context,
                          GtkWidget   *parent)
@@ -1033,7 +1035,7 @@ layers_edit_layer_query (GimpLayer   *layer,
                               NULL);
 
   g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (edit_layer_query_response),
+                    G_CALLBACK (layers_edit_layer_response),
                     options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
@@ -1074,7 +1076,7 @@ layers_edit_layer_query (GimpLayer   *layer,
       gtk_widget_show (options->toggle);
 
       g_signal_connect (options->toggle, "toggled",
-                        G_CALLBACK (edit_layer_toggle_rename),
+                        G_CALLBACK (layers_edit_layer_toggle_rename),
                         options);
     }
 
@@ -1097,9 +1099,9 @@ struct _AddMaskOptions
 };
 
 static void
-add_mask_query_response (GtkWidget      *widget,
-                         gint            response_id,
-                         AddMaskOptions *options)
+layers_add_mask_response (GtkWidget      *widget,
+                          gint            response_id,
+                          AddMaskOptions *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -1162,7 +1164,7 @@ layers_add_mask_query (GimpLayer *layer,
                               NULL);
 
   g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (add_mask_query_response),
+                    G_CALLBACK (layers_add_mask_response),
                     options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
@@ -1204,13 +1206,13 @@ layers_add_mask_query (GimpLayer *layer,
 /****************************/
 
 static void
-scale_layer_callback (GtkWidget             *dialog,
-                      GimpViewable          *viewable,
-                      gint                   width,
-                      gint                   height,
-                      GimpUnit               unit,
-                      GimpInterpolationType  interpolation,
-                      gpointer               data)
+layers_scale_layer_callback (GtkWidget             *dialog,
+                             GimpViewable          *viewable,
+                             gint                   width,
+                             gint                   height,
+                             GimpUnit               unit,
+                             GimpInterpolationType  interpolation,
+                             gpointer               data)
 {
   GimpDisplay *gdisp = data ? GIMP_DISPLAY (data) : NULL;
 
@@ -1271,7 +1273,7 @@ layers_scale_layer_query (GimpDisplay *gdisp,
                              parent,
                              gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
                              unit, gimage->gimp->config->interpolation_type,
-                             scale_layer_callback,
+                             layers_scale_layer_callback,
                              gdisp);
 
   gtk_widget_show (dialog);
@@ -1292,8 +1294,8 @@ struct _ResizeLayerOptions
 };
 
 static void
-resize_layer_query_ok_callback (GtkWidget *widget,
-				gpointer   data)
+layers_resize_layer_callback (GtkWidget *widget,
+                              gpointer   data)
 {
   ResizeLayerOptions *options = data;
 
@@ -1344,7 +1346,7 @@ layers_resize_layer_query (GimpDisplay *gdisp,
 		       (gdisp ?
                         GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
                         GIMP_UNIT_PIXEL),
-		       G_CALLBACK (resize_layer_query_ok_callback),
+		       G_CALLBACK (layers_resize_layer_callback),
                        options);
 
   g_object_weak_ref (G_OBJECT (options->dialog->shell),

@@ -44,42 +44,56 @@ static GimpActionEntry channels_actions[] =
     GIMP_HELP_CHANNEL_DIALOG },
 
   { "channels-edit-attributes", GIMP_STOCK_EDIT,
-    N_("_Edit Channel Attributes..."), NULL, NULL,
+    N_("_Edit Channel Attributes..."), NULL,
+    N_("Edit channel attributes"),
     G_CALLBACK (channels_edit_attributes_cmd_callback),
     GIMP_HELP_CHANNEL_EDIT },
 
   { "channels-new", GTK_STOCK_NEW,
-    N_("_New Channel..."), "", NULL,
+    N_("_New Channel..."), "",
+    N_("New channel dialog"),
     G_CALLBACK (channels_new_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
+  { "channels-new-default", GTK_STOCK_NEW,
+    N_("_New Channel"), "",
+    N_("New channel"),
+    G_CALLBACK (channels_new_default_cmd_callback),
+    GIMP_HELP_CHANNEL_NEW },
+
   { "channels-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Channel"), NULL, NULL,
+    N_("D_uplicate Channel"), NULL,
+    N_("Duplicate channel"),
     G_CALLBACK (channels_duplicate_cmd_callback),
     GIMP_HELP_CHANNEL_DUPLICATE },
 
   { "channels-delete", GTK_STOCK_DELETE,
-    N_("_Delete Channel"), "", NULL,
+    N_("_Delete Channel"), "",
+    N_("Delete channel"),
     G_CALLBACK (channels_delete_cmd_callback),
     GIMP_HELP_CHANNEL_DELETE },
 
   { "channels-raise", GTK_STOCK_GO_UP,
-    N_("_Raise Channel"), "", NULL,
+    N_("_Raise Channel"), "",
+    N_("Raise channel"),
     G_CALLBACK (channels_raise_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE },
 
   { "channels-raise-to-top", GTK_STOCK_GOTO_TOP,
-    N_("Raise Channel to _Top"), "", NULL,
+    N_("Raise Channel to _Top"), "",
+    N_("Raise channel to top"),
     G_CALLBACK (channels_raise_to_top_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE_TO_TOP },
 
   { "channels-lower", GTK_STOCK_GO_DOWN,
-    N_("_Lower Channel"), "", NULL,
+    N_("_Lower Channel"), "",
+    N_("Lower channel"),
     G_CALLBACK (channels_lower_cmd_callback),
     GIMP_HELP_CHANNEL_LOWER },
 
   { "channels-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    N_("Lower Channel to _Bottom"), "", NULL,
+    N_("Lower Channel to _Bottom"), "",
+    N_("Lower channel to bottom"),
     G_CALLBACK (channels_lower_to_bottom_cmd_callback),
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
@@ -169,6 +183,7 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-edit-attributes", !fs && channel);
 
   SET_SENSITIVE ("channels-new",             !fs && gimage);
+  SET_SENSITIVE ("channels-new-default",     !fs && gimage);
   SET_SENSITIVE ("channels-duplicate",       !fs && (channel || component));
   SET_SENSITIVE ("channels-delete",          !fs && channel);
 

@@ -62,6 +62,7 @@ static void      gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView *tr
                                                        gsize                  svg_data_len,
                                                        GimpViewable          *dest_viewable,
                                                        GtkTreeViewDropPosition  drop_pos);
+static GimpItem * gimp_vectors_tree_view_item_new     (GimpImage             *image);
 static guchar  * gimp_vectors_tree_view_drag_svg      (GtkWidget             *widget,
                                                        gsize                 *svg_data_len,
                                                        gpointer               data);
@@ -132,24 +133,20 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  item_view_class->new_item        = gimp_vectors_tree_view_item_new;
 
-  item_view_class->edit_desc               = _("Edit path attributes");
-  item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
-  item_view_class->new_desc                = _("New path\n%s new path dialog");
-  item_view_class->new_help_id             = GIMP_HELP_PATH_NEW;
-  item_view_class->duplicate_desc          = _("Duplicate path");
-  item_view_class->duplicate_help_id       = GIMP_HELP_PATH_DUPLICATE;
-  item_view_class->delete_desc             = _("Delete path");
-  item_view_class->delete_help_id          = GIMP_HELP_PATH_DELETE;
-  item_view_class->raise_desc              = _("Raise path");
-  item_view_class->raise_help_id           = GIMP_HELP_PATH_RAISE;
-  item_view_class->raise_to_top_desc       = _("Raise path to top");
-  item_view_class->raise_to_top_help_id    = GIMP_HELP_PATH_RAISE_TO_TOP;
-  item_view_class->lower_desc              = _("Lower path");
-  item_view_class->lower_help_id           = GIMP_HELP_PATH_LOWER;
-  item_view_class->lower_to_bottom_desc    = _("Lower path to bottom");
-  item_view_class->lower_to_bottom_help_id = GIMP_HELP_PATH_LOWER_TO_BOTTOM;
-  item_view_class->reorder_desc            = _("Reorder path");
+  item_view_class->action_group        = "vectors";
+  item_view_class->activate_action     = "vectors-vectors-tool";
+  item_view_class->edit_action         = "vectors-edit-attributes";
+  item_view_class->new_action          = "vectors-new";
+  item_view_class->new_default_action  = "vectors-new-default";
+  item_view_class->raise_action        = "vectors-raise";
+  item_view_class->raise_top_action    = "vectors-raise-to-top";
+  item_view_class->lower_action        = "vectors-lower";
+  item_view_class->lower_bottom_action = "vectors-lower-to-bottom";
+  item_view_class->duplicate_action    = "vectors-duplicate";
+  item_view_class->delete_action       = "vectors-delete";
+  item_view_class->reorder_desc        = _("Reorder path");
 }
 
 static void
@@ -303,6 +300,18 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
     {
       gimp_image_flush (gimage);
     }
+}
+
+static GimpItem *
+gimp_vectors_tree_view_item_new (GimpImage *image)
+{
+  GimpVectors *new_vectors;
+
+  new_vectors = gimp_vectors_new (image, _("Empty Path"));
+
+  gimp_image_add_vectors (image, new_vectors, -1);
+
+  return GIMP_ITEM (new_vectors);
 }
 
 static guchar *

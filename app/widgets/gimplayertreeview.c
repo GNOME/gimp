@@ -104,8 +104,7 @@ static void    gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView *view,
 
 static void   gimp_layer_tree_view_set_image      (GimpItemTreeView    *view,
                                                    GimpImage           *gimage);
-static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
-                                                   GimpItem            *layer);
+static GimpItem * gimp_layer_tree_view_item_new   (GimpImage           *image);
 
 static void   gimp_layer_tree_view_floating_selection_changed
                                                   (GimpImage           *gimage,
@@ -231,25 +230,21 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
   item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_layer;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
-  item_view_class->remove_item     = gimp_layer_tree_view_remove_item;
+  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
+  item_view_class->new_item        = gimp_layer_tree_view_item_new;
 
-  item_view_class->edit_desc               = _("Edit Layer Attributes");
-  item_view_class->edit_help_id            = GIMP_HELP_LAYER_EDIT;
-  item_view_class->new_desc                = _("New Layer\n%s  New Layer Dialog");
-  item_view_class->new_help_id             = GIMP_HELP_LAYER_NEW;
-  item_view_class->duplicate_desc          = _("Duplicate Layer");
-  item_view_class->duplicate_help_id       = GIMP_HELP_LAYER_DUPLICATE;
-  item_view_class->delete_desc             = _("Delete Layer");
-  item_view_class->delete_help_id          = GIMP_HELP_LAYER_DELETE;
-  item_view_class->raise_desc              = _("Raise Layer");
-  item_view_class->raise_help_id           = GIMP_HELP_LAYER_RAISE;
-  item_view_class->raise_to_top_desc       = _("Raise Layer to Top");
-  item_view_class->raise_to_top_help_id    = GIMP_HELP_LAYER_RAISE_TO_TOP;
-  item_view_class->lower_desc              = _("Lower Layer");
-  item_view_class->lower_help_id           = GIMP_HELP_LAYER_LOWER;
-  item_view_class->lower_to_bottom_desc    = _("Lower Layer to Bottom");
-  item_view_class->lower_to_bottom_help_id = GIMP_HELP_LAYER_LOWER_TO_BOTTOM;
-  item_view_class->reorder_desc            = _("Reorder Layer");
+  item_view_class->action_group        = "layers";
+  item_view_class->activate_action     = "layers-text-tool";
+  item_view_class->edit_action         = "layers-edit-attributes";
+  item_view_class->new_action          = "layers-new";
+  item_view_class->new_default_action  = "layers-new-default";
+  item_view_class->raise_action        = "layers-raise";
+  item_view_class->raise_top_action    = "layers-raise-to-top";
+  item_view_class->lower_action        = "layers-lower";
+  item_view_class->lower_bottom_action = "layers-lower-to-bottom";
+  item_view_class->duplicate_action    = "layers-duplicate";
+  item_view_class->delete_action       = "layers-delete";
+  item_view_class->reorder_desc        = _("Reorder Layer");
 }
 
 static void
@@ -339,11 +334,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
                     view);
 
-  /*  Hide basically useless Edit button  */
-
-  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
-
-  gtk_widget_set_sensitive (view->options_box,   FALSE);
+  gtk_widget_set_sensitive (view->options_box, FALSE);
 
   view->italic_attrs = pango_attr_list_new ();
   attr = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -416,6 +407,9 @@ gimp_layer_tree_view_constructor (GType                  type,
                            NULL, tree_view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
                               NULL, tree_view);
+
+  /*  Hide basically useless Edit button  */
+  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
 
   layer_view->anchor_button =
     gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
@@ -583,7 +577,6 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   GimpItemTreeView  *item_view         = GIMP_ITEM_TREE_VIEW (view);
   GimpLayerTreeView *layer_view        = GIMP_LAYER_TREE_VIEW (view);
   gboolean           options_sensitive = FALSE;
-  gboolean           raise_sensitive   = FALSE;
   gboolean           success;
 
   success = parent_view_iface->select_item (view, item, insert_data);
@@ -602,26 +595,11 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 
       if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
         {
-          gtk_widget_set_sensitive (item_view->edit_button,      FALSE);
-          gtk_widget_set_sensitive (item_view->lower_button,     FALSE);
-          gtk_widget_set_sensitive (item_view->duplicate_button, FALSE);
-        }
-      else
-        {
-          GimpContainer *container;
-
-          container = gimp_container_view_get_container (view);
-
-          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
-              gimp_container_get_child_index (container, GIMP_OBJECT (item)))
-            {
-              raise_sensitive = TRUE;
-            }
+          gtk_widget_set_sensitive (item_view->edit_button,  FALSE);
         }
     }
 
   gtk_widget_set_sensitive (layer_view->options_box, options_sensitive);
-  gtk_widget_set_sensitive (item_view->raise_button, raise_sensitive);
 
   return success;
 }
@@ -851,14 +829,25 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
                       view);
 }
 
-static void
-gimp_layer_tree_view_remove_item (GimpImage *gimage,
-                                  GimpItem  *item)
+static GimpItem *
+gimp_layer_tree_view_item_new (GimpImage *image)
 {
-  if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
-    floating_sel_remove (GIMP_LAYER (item));
-  else
-    gimp_image_remove_layer (gimage, GIMP_LAYER (item));
+  GimpLayer *new_layer;
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("New Layer"));
+
+  new_layer = gimp_layer_new (image,
+                              gimp_image_get_width (image),
+                              gimp_image_get_height (image),
+                              gimp_image_base_type_with_alpha (image),
+                              _("Empty Layer"), 1.0, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image, new_layer, -1);
+
+  gimp_image_undo_group_end (image);
+
+  return GIMP_ITEM (new_layer);
 }
 
 

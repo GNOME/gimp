@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcomponenteditor.h"
 #include "widgets/gimpdock.h"
@@ -65,9 +66,15 @@ static ChannelOptions * channels_query_new   (GimpImage       *gimage,
                                               GimpContext     *context,
                                               GimpChannel     *channel,
                                               GtkWidget       *parent);
+static void   channels_new_channel_query     (GimpImage       *gimage,
+                                              GimpContext     *context,
+                                              GtkWidget       *parent);
 static void   channels_new_channel_response  (GtkWidget       *widget,
                                               gint             response_id,
                                               ChannelOptions  *options);
+static void   channels_edit_channel_query    (GimpChannel     *channel,
+                                              GimpContext     *context,
+                                              GtkWidget       *parent);
 static void   channels_edit_channel_response (GtkWidget       *widget,
                                               gint             response_id,
                                               ChannelOptions  *options);
@@ -108,8 +115,49 @@ channels_new_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  channels_new_channel_query (gimage, action_data_get_context (data),
-                              NULL, TRUE, widget);
+  channels_new_channel_query (gimage, action_data_get_context (data), widget);
+}
+
+void
+channels_new_default_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpChannel *new_channel;
+  gint         width, height;
+  GimpRGB      color;
+  return_if_no_image (gimage, data);
+
+  if (GIMP_IS_CHANNEL (GIMP_ACTION (action)->viewable))
+    {
+      GimpChannel *template = GIMP_CHANNEL (GIMP_ACTION (action)->viewable);
+
+      width  = gimp_item_width  (GIMP_ITEM (template));
+      height = gimp_item_height (GIMP_ITEM (template));
+      color  = template->color;
+    }
+  else
+    {
+      width  = gimp_image_get_width (gimage);
+      height = gimp_image_get_height (gimage);
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
+    }
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("New Channel"));
+
+  new_channel = gimp_channel_new (gimage, width, height,
+                                  _("Empty Channel"), &color);
+
+  gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                              action_data_get_context (data),
+                              GIMP_TRANSPARENT_FILL);
+
+  gimp_image_add_channel (gimage, new_channel, -1);
+
+  gimp_image_undo_group_end (gimage);
+
+  gimp_image_flush (gimage);
 }
 
 void
@@ -258,82 +306,6 @@ channels_to_selection_cmd_callback (GtkAction *action,
   gimp_image_flush (gimage);
 }
 
-void
-channels_new_channel_query (GimpImage   *gimage,
-                            GimpContext *context,
-                            GimpChannel *template,
-                            gboolean     interactive,
-                            GtkWidget   *parent)
-{
-  ChannelOptions *options;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (template == NULL || GIMP_IS_CHANNEL (template));
-
-  if (template || ! interactive)
-    {
-      GimpChannel *new_channel;
-      gint         width, height;
-      GimpRGB      color;
-
-      if (template)
-        {
-          width  = gimp_item_width  (GIMP_ITEM (template));
-          height = gimp_item_height (GIMP_ITEM (template));
-          color  = template->color;
-        }
-      else
-        {
-          width  = gimp_image_get_width (gimage);
-          height = gimp_image_get_height (gimage);
-          gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
-        }
-
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                                   _("New Channel"));
-
-      new_channel = gimp_channel_new (gimage, width, height,
-                                      _("Empty Channel"), &color);
-
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel), context,
-                                  GIMP_TRANSPARENT_FILL);
-
-      gimp_image_add_channel (gimage, new_channel, -1);
-
-      gimp_image_undo_group_end (gimage);
-      return;
-    }
-
-  options = channels_query_new (gimage, context, NULL, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (channels_new_channel_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
-void
-channels_edit_channel_query (GimpChannel *channel,
-                             GimpContext *context,
-                             GtkWidget   *parent)
-{
-  ChannelOptions *options;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  options = channels_query_new (gimp_item_get_image (GIMP_ITEM (channel)),
-                                context, channel, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (channels_edit_channel_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
 
 /*  private functions  */
 
@@ -456,6 +428,22 @@ channels_query_new (GimpImage   *gimage,
 }
 
 static void
+channels_new_channel_query (GimpImage   *gimage,
+                            GimpContext *context,
+                            GtkWidget   *parent)
+{
+  ChannelOptions *options;
+
+  options = channels_query_new (gimage, context, NULL, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (channels_new_channel_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
+}
+
+static void
 channels_new_channel_response (GtkWidget      *widget,
                                gint            response_id,
                                ChannelOptions *options)
@@ -487,6 +475,26 @@ channels_new_channel_response (GtkWidget      *widget,
     }
 
   gtk_widget_destroy (options->query_box);
+}
+
+static void
+channels_edit_channel_query (GimpChannel *channel,
+                             GimpContext *context,
+                             GtkWidget   *parent)
+{
+  ChannelOptions *options;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  options = channels_query_new (gimp_item_get_image (GIMP_ITEM (channel)),
+                                context, channel, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (channels_edit_channel_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
 }
 
 static void

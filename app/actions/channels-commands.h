@@ -24,6 +24,8 @@ void   channels_edit_attributes_cmd_callback (GtkAction   *action,
                                               gpointer     data);
 void   channels_new_cmd_callback             (GtkAction   *action,
                                               gpointer     data);
+void   channels_new_default_cmd_callback     (GtkAction   *action,
+                                              gpointer     data);
 
 void   channels_raise_cmd_callback           (GtkAction   *action,
                                               gpointer     data);
@@ -41,15 +43,6 @@ void   channels_delete_cmd_callback          (GtkAction   *action,
 void   channels_to_selection_cmd_callback    (GtkAction   *action,
                                               gint         value,
                                               gpointer     data);
-
-void   channels_new_channel_query            (GimpImage   *gimage,
-                                              GimpContext *context,
-                                              GimpChannel *template,
-                                              gboolean     interactive,
-                                              GtkWidget   *parent);
-void   channels_edit_channel_query           (GimpChannel *channel,
-                                              GimpContext *context,
-                                              GtkWidget   *parent);
 
 
 #endif /* __CHANNELS_COMMANDS_H__ */

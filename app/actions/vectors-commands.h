@@ -26,6 +26,8 @@ void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_new_cmd_callback                  (GtkAction   *action,
                                                   gpointer     data);
+void   vectors_new_default_cmd_callback          (GtkAction   *action,
+                                                  gpointer     data);
 
 void   vectors_raise_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
@@ -64,18 +66,6 @@ void   vectors_visible_cmd_callback              (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_linked_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-
-void   vectors_vectors_tool                      (GimpVectors *vectors,
-                                                  GimpContext *context,
-                                                  GtkWidget   *parent);
-void   vectors_new_vectors_query                 (GimpImage   *gimage,
-                                                  GimpContext *context,
-                                                  GimpVectors *template,
-                                                  gboolean     interactive,
-                                                  GtkWidget   *parent);
-void   vectors_edit_vectors_query                (GimpVectors *vectors,
-                                                  GimpContext *context,
-                                                  GtkWidget   *parent);
 
 
 #endif /* __VECTORS_COMMANDS_H__ */

@@ -33,6 +33,7 @@
 #include "gimpenumwidgets.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 
 
 #define DEFAULT_CONTENT_SPACING  2
@@ -587,9 +588,6 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
-  if (tooltip || help_id)
-    gimp_help_set_help_data (button, tooltip, help_id);
-
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
   if (old_child)
@@ -600,7 +598,6 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   gtk_widget_show (image);
 
   g_free (stock_id);
-  g_free (tooltip);
 
   va_start (args, action_name);
 
@@ -623,6 +620,27 @@ gimp_editor_add_action_button (GimpEditor  *editor,
           ext->action   = action;
 
           extended = g_list_append (extended, ext);
+
+          if (tooltip)
+            {
+              gchar *ext_tooltip;
+
+              g_object_get (action, "tooltip", &ext_tooltip, NULL);
+
+              if (ext_tooltip)
+                {
+                  gchar *tmp;
+
+                  tmp = g_strconcat (tooltip, "\n",
+                                     gimp_get_mod_string (mod_mask), "  ",
+                                     ext_tooltip, NULL);
+
+                  g_free (tooltip);
+                  tooltip = tmp;
+
+                  g_print ("created extended tooltip:\n%s\n\n", tooltip);
+                }
+            }
         }
 
       action_name = va_arg (args, const gchar *);
@@ -639,6 +657,11 @@ gimp_editor_add_action_button (GimpEditor  *editor,
                         G_CALLBACK (gimp_editor_button_extended_clicked),
                         NULL);
     }
+
+  if (tooltip || help_id)
+    gimp_help_set_help_data (button, tooltip, help_id);
+
+  g_free (tooltip);
 
   return button;
 }

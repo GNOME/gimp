@@ -46,6 +46,7 @@
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -80,9 +81,15 @@ static VectorsOptions * vectors_query_new   (GimpImage      *gimage,
                                              GimpContext    *context,
                                              GimpVectors    *vectors,
                                              GtkWidget      *parent);
+static void   vectors_new_vectors_query     (GimpImage      *gimage,
+                                             GimpContext    *context,
+                                             GtkWidget      *parent);
 static void   vectors_new_vectors_response  (GtkWidget      *widget,
                                              gint            response_id,
                                              VectorsOptions *options);
+static void   vectors_edit_vectors_query    (GimpVectors    *vectors,
+                                             GimpContext    *context,
+                                             GtkWidget      *parent);
 static void   vectors_edit_vectors_response (GtkWidget      *widget,
                                              gint            response_id,
                                              VectorsOptions *options);
@@ -112,11 +119,28 @@ vectors_vectors_tool_cmd_callback (GtkAction *action,
 {
   GimpImage   *gimage;
   GimpVectors *vectors;
-  GtkWidget   *widget;
+  GimpTool    *active_tool;
   return_if_no_vectors (gimage, vectors, data);
-  return_if_no_widget (widget, data);
 
-  vectors_vectors_tool (vectors, action_data_get_context (data), widget);
+  active_tool = tool_manager_get_active (gimage->gimp);
+
+  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+    {
+      GimpToolInfo  *tool_info;
+
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
+                                          "gimp-vector-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (gimage->gimp);
+        }
+    }
+
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
 }
 
 void
@@ -141,8 +165,22 @@ vectors_new_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  vectors_new_vectors_query (gimage, action_data_get_context (data),
-                             NULL, TRUE, widget);
+  vectors_new_vectors_query (gimage, action_data_get_context (data), widget);
+}
+
+void
+vectors_new_default_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *new_vectors;
+  return_if_no_image (gimage, data);
+
+  new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
+
+  gimp_image_add_vectors (gimage, new_vectors, -1);
+
+  gimp_image_flush (gimage);
 }
 
 void
@@ -292,7 +330,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   plug_in_run (gimage->gimp, action_data_get_context (data),
                gdisp ? GIMP_PROGRESS (gdisp) : NULL,
                proc_rec, args, 3, FALSE, TRUE,
-	       gdisp ? gdisp->ID : 0);
+	       gdisp ? gimp_display_get_ID (gdisp) : 0);
 
   g_free (args);
 }
@@ -428,96 +466,6 @@ vectors_linked_cmd_callback (GtkAction *action,
     }
 }
 
-void
-vectors_vectors_tool (GimpVectors *vectors,
-                      GimpContext *context,
-                      GtkWidget   *parent)
-{
-  GimpImage *gimage;
-  GimpTool  *active_tool;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  gimage = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  active_tool = tool_manager_get_active (gimage->gimp);
-
-  if (! GIMP_IS_VECTOR_TOOL (active_tool))
-    {
-      GimpContainer *tool_info_list;
-      GimpToolInfo  *tool_info;
-
-      tool_info_list = gimage->gimp->tool_info_list;
-
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (tool_info_list,
-                                          "gimp-vector-tool");
-
-      if (GIMP_IS_TOOL_INFO (tool_info))
-        {
-          gimp_context_set_tool (context, tool_info);
-          active_tool = tool_manager_get_active (gimage->gimp);
-        }
-    }
-
-  if (GIMP_IS_VECTOR_TOOL (active_tool))
-    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
-}
-
-void
-vectors_new_vectors_query (GimpImage   *gimage,
-                           GimpContext *context,
-                           GimpVectors *template,
-                           gboolean     interactive,
-                           GtkWidget   *parent)
-{
-  VectorsOptions *options;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (template == NULL || GIMP_IS_VECTORS (template));
-
-  if (template || ! interactive)
-    {
-      GimpVectors *new_vectors;
-
-      new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
-
-      gimp_image_add_vectors (gimage, new_vectors, -1);
-
-      return;
-    }
-
-  options = vectors_query_new (gimage, context, NULL, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (vectors_new_vectors_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
-void
-vectors_edit_vectors_query (GimpVectors *vectors,
-                            GimpContext *context,
-                            GtkWidget   *parent)
-{
-  VectorsOptions *options;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  options = vectors_query_new (gimp_item_get_image (GIMP_ITEM (vectors)),
-                               context, vectors, parent);
-
-  g_signal_connect (options->query_box, "response",
-                    G_CALLBACK (vectors_edit_vectors_response),
-                    options);
-
-  gtk_widget_show (options->query_box);
-}
-
 
 /*  private functions  */
 
@@ -608,6 +556,22 @@ vectors_query_new (GimpImage   *gimage,
 }
 
 static void
+vectors_new_vectors_query (GimpImage   *gimage,
+                           GimpContext *context,
+                           GtkWidget   *parent)
+{
+  VectorsOptions *options;
+
+  options = vectors_query_new (gimage, context, NULL, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_new_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
+}
+
+static void
 vectors_new_vectors_response (GtkWidget      *widget,
                               gint            response_id,
                               VectorsOptions *options)
@@ -632,6 +596,22 @@ vectors_new_vectors_response (GtkWidget      *widget,
   gtk_widget_destroy (options->query_box);
 }
 
+static void
+vectors_edit_vectors_query (GimpVectors *vectors,
+                            GimpContext *context,
+                            GtkWidget   *parent)
+{
+  VectorsOptions *options;
+
+  options = vectors_query_new (gimp_item_get_image (GIMP_ITEM (vectors)),
+                               context, vectors, parent);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (vectors_edit_vectors_response),
+                    options);
+
+  gtk_widget_show (options->query_box);
+}
 static void
 vectors_edit_vectors_response (GtkWidget      *widget,
                                gint            response_id,

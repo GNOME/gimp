@@ -64,42 +64,56 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_TOOL_TEXT },
 
   { "layers-edit-attributes", GIMP_STOCK_EDIT,
-    N_("_Edit Layer Attributes..."), NULL, NULL,
+    N_("_Edit Layer Attributes..."), NULL,
+    N_("Edit layer attributes"),
     G_CALLBACK (layers_edit_attributes_cmd_callback),
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-new", GTK_STOCK_NEW,
-    N_("_New Layer..."), "", NULL,
+    N_("_New Layer..."), "",
+    N_("New layer dialog"),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
 
+  { "layers-new-default", GTK_STOCK_NEW,
+    N_("_New Layer"), "",
+    N_("New layer"),
+    G_CALLBACK (layers_new_default_cmd_callback),
+    GIMP_HELP_LAYER_NEW },
+
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Layer"), NULL, NULL,
+    N_("D_uplicate Layer"), NULL,
+    N_("Duplicate layer"),
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
 
   { "layers-delete", GTK_STOCK_DELETE,
-    N_("_Delete Layer"), "", NULL,
+    N_("_Delete Layer"), "",
+    N_("Delete layer"),
     G_CALLBACK (layers_delete_cmd_callback),
     GIMP_HELP_LAYER_DELETE },
 
   { "layers-raise", GTK_STOCK_GO_UP,
-    N_("_Raise Layer"), "", NULL,
+    N_("_Raise Layer"), "",
+    N_("Raise layer"),
     G_CALLBACK (layers_raise_cmd_callback),
     GIMP_HELP_LAYER_RAISE },
 
   { "layers-raise-to-top", GTK_STOCK_GOTO_TOP,
-    N_("Layer to _Top"), "", NULL,
+    N_("Layer to _Top"), "",
+    N_("Raise layer to top"),
     G_CALLBACK (layers_raise_to_top_cmd_callback),
     GIMP_HELP_LAYER_RAISE_TO_TOP },
 
   { "layers-lower", GTK_STOCK_GO_DOWN,
-    N_("_Lower Layer"), "", NULL,
+    N_("_Lower Layer"), "",
+    N_("Lower layer"),
     G_CALLBACK (layers_lower_cmd_callback),
     GIMP_HELP_LAYER_LOWER },
 
   { "layers-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
-    N_("Layer to _Bottom"), "", NULL,
+    N_("Layer to _Bottom"), "",
+    N_("Lower layer to bottom"),
     G_CALLBACK (layers_lower_to_bottom_cmd_callback),
     GIMP_HELP_LAYER_LOWER_TO_BOTTOM },
 
@@ -437,6 +451,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
   SET_SENSITIVE ("layers-new",          gimage);
+  SET_SENSITIVE ("layers-new-default",  gimage);
   SET_SENSITIVE ("layers-duplicate",    layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",       layer && !ac);
 

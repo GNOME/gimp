@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -30,6 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 
 #include "gimpchanneltreeview.h"
 #include "gimpcomponenteditor.h"
@@ -51,6 +53,7 @@ static GObject * gimp_channel_tree_view_constructor   (GType              type,
                                                        GObjectConstructParam *params);
 static void   gimp_channel_tree_view_set_image        (GimpItemTreeView  *item_view,
                                                        GimpImage         *gimage);
+static GimpItem * gimp_channel_tree_view_item_new     (GimpImage         *image);
 
 static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
 
@@ -115,24 +118,20 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_channel;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_channel;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_channel;
+  item_view_class->new_item        = gimp_channel_tree_view_item_new;
 
-  item_view_class->edit_desc               = _("Edit Channel Attributes");
-  item_view_class->edit_help_id            = GIMP_HELP_CHANNEL_EDIT;
-  item_view_class->new_desc                = _("New Channel\n%s New Channel Dialog");
-  item_view_class->new_help_id             = GIMP_HELP_CHANNEL_NEW;
-  item_view_class->duplicate_desc          = _("Duplicate Channel");
-  item_view_class->duplicate_help_id       =  GIMP_HELP_CHANNEL_DUPLICATE;
-  item_view_class->delete_desc             = _("Delete Channel");
-  item_view_class->delete_help_id          = GIMP_HELP_CHANNEL_DELETE;
-  item_view_class->raise_desc              = _("Raise Channel");
-  item_view_class->raise_help_id           = GIMP_HELP_CHANNEL_RAISE;
-  item_view_class->raise_to_top_desc       = _("Raise Channel to Top");
-  item_view_class->raise_to_top_help_id    = GIMP_HELP_CHANNEL_RAISE_TO_TOP;
-  item_view_class->lower_desc              = _("Lower Channel");
-  item_view_class->lower_help_id           = GIMP_HELP_CHANNEL_LOWER;
-  item_view_class->lower_to_bottom_desc    = _("Lower Channel to Bottom");
-  item_view_class->lower_to_bottom_help_id = GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM;
-  item_view_class->reorder_desc            = _("Reorder Channel");
+  item_view_class->action_group        = "channels";
+  item_view_class->activate_action     = "channels-edit-attributes";
+  item_view_class->edit_action         = "channels-edit-attributes";
+  item_view_class->new_action          = "channels-new";
+  item_view_class->new_default_action  = "channels-new-default";
+  item_view_class->raise_action        = "channels-raise";
+  item_view_class->raise_top_action    = "channels-raise-to-top";
+  item_view_class->lower_action        = "channels-lower";
+  item_view_class->lower_bottom_action = "channels-lower-to-bottom";
+  item_view_class->duplicate_action    = "channels-duplicate";
+  item_view_class->delete_action       = "channels-delete";
+  item_view_class->reorder_desc        = _("Reorder Channel");
 }
 
 static void
@@ -233,6 +232,29 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 
   if (item_view->gimage)
     gtk_widget_show (channel_view->component_editor);
+}
+
+static GimpItem *
+gimp_channel_tree_view_item_new (GimpImage *image)
+{
+  GimpChannel *new_channel;
+  GimpRGB      color;
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("New Channel"));
+
+  new_channel = gimp_channel_new (image,
+                                  gimp_image_get_width (image),
+                                  gimp_image_get_height (image),
+                                  _("Empty Channel"), &color);
+
+  gimp_image_add_channel (image, new_channel, -1);
+
+  gimp_image_undo_group_end (image);
+
+  return GIMP_ITEM (new_channel);
 }
 
 

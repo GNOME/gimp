@@ -40,18 +40,7 @@ typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
                                                   gint             index);
 typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
                                                   GimpItem        *item);
-
-typedef void            (* GimpEditItemFunc)     (GimpItem        *item,
-                                                  GimpContext     *context,
-                                                  GtkWidget       *parent);
-typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
-                                                  GimpContext     *context,
-                                                  GimpItem        *template,
-                                                  gboolean         interactive,
-                                                  GtkWidget       *parent);
-typedef void            (* GimpActivateItemFunc) (GimpItem        *item,
-                                                  GimpContext     *context,
-                                                  GtkWidget       *parent);
+typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage       *gimage);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
@@ -73,10 +62,6 @@ struct _GimpItemTreeView
 
   GType                  item_type;
   gchar                 *signal_name;
-
-  GimpEditItemFunc       edit_item_func;
-  GimpNewItemFunc        new_item_func;
-  GimpActivateItemFunc   activate_item_func;
 
   GtkWidget             *edit_button;
   GtkWidget             *new_button;
@@ -110,44 +95,39 @@ struct _GimpItemTreeViewClass
   GimpReorderItemFunc   reorder_item;
   GimpAddItemFunc       add_item;
   GimpRemoveItemFunc    remove_item;
+  GimpNewItemFunc       new_item;
 
-  /*  various descriptive strings for tooltips and undo steps  */
-  const gchar          *edit_desc;
-  const gchar          *edit_help_id;
-  const gchar          *new_desc;
-  const gchar          *new_help_id;
-  const gchar          *duplicate_desc;
-  const gchar          *duplicate_help_id;
-  const gchar          *delete_desc;
-  const gchar          *delete_help_id;
-  const gchar          *raise_desc;
-  const gchar          *raise_help_id;
-  const gchar          *raise_to_top_desc;
-  const gchar          *raise_to_top_help_id;
-  const gchar          *lower_desc;
-  const gchar          *lower_help_id;
-  const gchar          *lower_to_bottom_desc;
-  const gchar          *lower_to_bottom_help_id;
+  /*  action names  */
+  const gchar          *action_group;
+  const gchar          *activate_action;
+  const gchar          *edit_action;
+  const gchar          *new_action;
+  const gchar          *new_default_action;
+  const gchar          *raise_action;
+  const gchar          *raise_top_action;
+  const gchar          *lower_action;
+  const gchar          *lower_bottom_action;
+  const gchar          *duplicate_action;
+  const gchar          *delete_action;
+
+  /*  undo descriptions  */
   const gchar          *reorder_desc;
 };
 
 
 GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_item_tree_view_new      (gint                  preview_size,
-                                          gint                  preview_border_width,
-                                          GimpImage            *gimage,
-                                          GType                 item_type,
-                                          const gchar          *signal_name,
-                                          GimpEditItemFunc      edit_item_func,
-                                          GimpNewItemFunc       new_item_func,
-                                          GimpActivateItemFunc  activate_item_func,
-                                          GimpMenuFactory      *menu_facotry,
-                                          const gchar          *menu_identifier,
-                                          const gchar          *ui_identifier);
+GtkWidget * gimp_item_tree_view_new      (gint             preview_size,
+                                          gint             preview_border_width,
+                                          GimpImage       *gimage,
+                                          GType            item_type,
+                                          const gchar     *signal_name,
+                                          GimpMenuFactory *menu_facotry,
+                                          const gchar     *menu_identifier,
+                                          const gchar     *ui_identifier);
 
-void       gimp_item_tree_view_set_image (GimpItemTreeView     *view,
-                                          GimpImage            *gimage);
+void       gimp_item_tree_view_set_image (GimpItemTreeView *view,
+                                          GimpImage        *gimage);
 
 
 #endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -45,6 +46,10 @@ static void   gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *kla
 static void   gimp_drawable_tree_view_init       (GimpDrawableTreeView      *view);
 
 static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+
+static GObject * gimp_drawable_tree_view_constructor (GType             type,
+                                                      guint             n_params,
+                                                      GObjectConstructParam *params);
 
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
 						     GimpViewable      *item,
@@ -112,9 +117,12 @@ gimp_drawable_tree_view_get_type (void)
 static void
 gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 {
+  GObjectClass          *object_class    = G_OBJECT_CLASS (klass);
   GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor  = gimp_drawable_tree_view_constructor;
 
   item_view_class->set_image = gimp_drawable_tree_view_set_image;
 }
@@ -122,14 +130,28 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 static void
 gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
-  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+}
+
+static GObject *
+gimp_drawable_tree_view_constructor (GType                  type,
+                                     guint                  n_params,
+                                     GObjectConstructParam *params)
+{
+  GimpItemTreeView *item_view;
+  GObject          *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  item_view = GIMP_ITEM_TREE_VIEW (object);
 
   gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
 			      gimp_drawable_tree_view_new_pattern_dropped,
-                              view);
+                              item_view);
   gimp_dnd_color_dest_add (item_view->new_button,
                            gimp_drawable_tree_view_new_color_dropped,
-                           view);
+                           item_view);
+
+  return object;
 }
 
 static void
@@ -210,35 +232,37 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                      const GimpRGB      *color,
                                      GimpPattern        *pattern)
 {
-  GimpDrawable *drawable;
-  GimpToolInfo *tool_info;
-  GimpContext  *context;
+  GimpItem *item;
 
   gimp_image_undo_group_start (view->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  view->new_item_func (view->gimage, view->context,
-                       NULL, FALSE, GTK_WIDGET (view));
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (view->gimage);
 
-  drawable = gimp_image_active_drawable (view->gimage);
+  if (item)
+    {
+      GimpDrawable *drawable = GIMP_DRAWABLE (item);
+      GimpToolInfo *tool_info;
+      GimpContext  *context;
 
-  /*  Get the bucket fill context  */
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (view->gimage->gimp->tool_info_list,
-                                      "gimp-bucket-fill-tool");
+      /*  Get the bucket fill context  */
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (view->gimage->gimp->tool_info_list,
+                                          "gimp-bucket-fill-tool");
 
-  if (tool_info && tool_info->tool_options)
-    context = GIMP_CONTEXT (tool_info->tool_options);
-  else
-    context = view->context;
+      if (tool_info && tool_info->tool_options)
+        context = GIMP_CONTEXT (tool_info->tool_options);
+      else
+        context = view->context;
 
-  gimp_drawable_bucket_fill_full (drawable,
-                                  fill_mode,
-                                  gimp_context_get_paint_mode (context),
-                                  gimp_context_get_opacity (context),
-                                  FALSE /* no seed fill */,
-                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
-                                  color, pattern);
+      gimp_drawable_bucket_fill_full (drawable,
+                                      fill_mode,
+                                      gimp_context_get_paint_mode (context),
+                                      gimp_context_get_opacity (context),
+                                      FALSE /* no seed fill */,
+                                      FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
+                                      color, pattern);
+    }
 
   gimp_image_undo_group_end (view->gimage);
 
