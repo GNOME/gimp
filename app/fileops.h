@@ -15,8 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __FILE_IO_H__
-#define __FILE_IO_H__
+#ifndef __FILE_OPS_H__
+#define __FILE_OPS_H__
 
 
 #include <gtk/gtk.h>
@@ -49,11 +49,10 @@ int  file_save                       (GimpImage*  gimage,
 				      char      *filename,
 				      char      *raw_filename,
 				      gint      mode);
-
 PlugInProcDef* file_proc_find        (GSList *procs,
 				      char   *filename);
 
 extern GSList *load_procs;
 extern GSList *save_procs;
 
-#endif /* FILE_IO_H */
+#endif /* FILE_OPS_H */

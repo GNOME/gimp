@@ -1,5 +1,5 @@
 /*  
- *  ScreenShot plug-in v0.9.2
+ *  ScreenShot plug-in v0.9.3
  *  Sven Neumann, neumanns@uni-duesseldorf.de  
  *  1999/09/01
  *
@@ -43,6 +43,7 @@
  *  (99/08/12)  v0.9.1 somebody changed the dialog;
  *                     unset the image name and set the resolution
  *  (99/09/01)  v0.9.2 tried to fix a bug 
+ *  (99/12/14)  v0.9.3 another try 
  */
 
 #include <stdio.h>
@@ -153,7 +154,7 @@ static void query (void)
 			    "a parameter."),
 			  "Sven Neumann <sven@gimp.org>",
 			  "1998, 1999",
-			  "v0.9.2 (99/09/01)",
+			  "v0.9.3 (99/12/14)",
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  PROC_EXTENSION,		
@@ -331,34 +332,40 @@ shoot (void)
 			       PARAM_STRING, tmpname,
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
-  image_ID = params[1].data.d_image;
+  if (params[0].data.d_status == STATUS_SUCCESS)
+    {
+      image_ID = params[1].data.d_image;
+    }
   gimp_destroy_params (params, retvals);
- 
+
   /* get rid of the tmpfile */
   unlink (tmpname);
   g_free (tmpname);
 
-  /* figure out the monitor resolution and set the image to it */
-  params = gimp_run_procedure ("gimp_get_monitor_resolution",
-			       &retvals,
-			       PARAM_END);
-  if (params[0].data.d_status == STATUS_SUCCESS)
+  if (image_ID != -1)
     {
-      xres = params[1].data.d_float;
-      yres = params[2].data.d_float;
+      /* figure out the monitor resolution and set the image to it */
+      params = gimp_run_procedure ("gimp_get_monitor_resolution",
+				   &retvals,
+				   PARAM_END);
+      if (params[0].data.d_status == STATUS_SUCCESS)
+	{
+	  xres = params[1].data.d_float;
+	  yres = params[2].data.d_float;
+	}
+      else
+	{ 
+	  xres = 72.0;
+	  yres = 72.0;
+	}
+      gimp_destroy_params (params, retvals);
+  
+      gimp_image_set_resolution (image_ID, xres, yres);
+
+      /* unset the image filename */
+      gimp_image_set_filename (image_ID, "");
     }
-  else
-    { 
-      xres = 72.0;
-      yres = 72.0;
-    }
-  gimp_destroy_params (params, retvals);
-
-  gimp_image_set_resolution (image_ID, xres, yres);
-
-  /* unset the image filename */
-  gimp_image_set_filename (image_ID, "");
-
+  
   return;
 }
 

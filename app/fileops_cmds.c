@@ -29,6 +29,7 @@
 #endif
 
 #include "fileops.h"
+#include "fileopsP.h"
 #include "gimprc.h"
 #include "plug_in.h"
 
@@ -36,6 +37,8 @@
 
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;
+static ProcRecord file_load_thumbnail_proc;
+static ProcRecord file_save_thumbnail_proc;
 static ProcRecord temp_name_proc;
 static ProcRecord register_magic_load_handler_proc;
 static ProcRecord register_load_handler_proc;
@@ -46,6 +49,8 @@ register_fileops_procs (void)
 {
   procedural_db_register (&file_load_proc);
   procedural_db_register (&file_save_proc);
+  procedural_db_register (&file_load_thumbnail_proc);
+  procedural_db_register (&file_save_thumbnail_proc);
   procedural_db_register (&temp_name_proc);
   procedural_db_register (&register_magic_load_handler_proc);
   procedural_db_register (&register_load_handler_proc);
@@ -186,6 +191,166 @@ static ProcRecord file_save_proc =
   0,
   NULL,
   { { file_save_invoker } }
+};
+
+static Argument *
+file_load_thumbnail_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *filename;
+  gint32 width = 0;
+  gint32 height = 0;
+  guint8 *thumb_data = NULL;
+  gchar *pname;
+  gchar *fname;
+  gchar *tname;
+  guchar *raw_thumb;
+  gchar *imginfo = NULL;
+  gint i;
+
+  filename = (gchar *) args[0].value.pdb_pointer;
+  if (filename == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      pname = g_dirname (filename);
+      fname = g_basename (filename);
+      tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
+			   fname,
+			   NULL);
+      g_free (pname);
+      raw_thumb = readXVThumb (tname, &width, &height, &imginfo);
+      g_free (tname);
+    
+      if (raw_thumb)
+	{
+	  thumb_data = g_malloc (3 * width * height);
+	      
+	  for (i=0; i<width*height; i++)
+	    {
+	      thumb_data[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
+	      thumb_data[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
+	      thumb_data[i*3+2] = (((raw_thumb[i])&3)*255)/3;
+	    }
+	  g_free (raw_thumb);
+	  success = TRUE;
+	}
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&file_load_thumbnail_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_pointer = thumb_data;
+    }
+
+  return return_args;
+}
+
+static ProcArg file_load_thumbnail_inargs[] =
+{
+  {
+    PDB_STRING,
+    "filename",
+    "The name of the file that owns the thumbnail to load"
+  }
+};
+
+static ProcArg file_load_thumbnail_outargs[] =
+{
+  {
+    PDB_INT32,
+    "width",
+    "The width of the thumbnail"
+  },
+  {
+    PDB_INT32,
+    "height",
+    "The height of the thumbnail"
+  },
+  {
+    PDB_INT8ARRAY,
+    "thumb_data",
+    "The thumbnail data"
+  }
+};
+
+static ProcRecord file_load_thumbnail_proc =
+{
+  "gimp_file_load_thumbnail",
+  "Loads the thumbnail for a file.",
+  "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
+  "Adam D. Moss, Sven Neumann",
+  "Adam D. Moss, Sven Neumann",
+  "1999",
+  PDB_INTERNAL,
+  1,
+  file_load_thumbnail_inargs,
+  3,
+  file_load_thumbnail_outargs,
+  { { file_load_thumbnail_invoker } }
+};
+
+static Argument *
+file_save_thumbnail_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *filename;
+  TempBuf *thumb;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  filename = (gchar *) args[1].value.pdb_pointer;
+  if (filename == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      thumb = make_thumb_tempbuf (gimage);
+      if (file_save_thumbnail (gimage, filename, thumb))
+	success = TRUE;
+    }
+
+  return procedural_db_return_args (&file_save_thumbnail_proc, success);
+}
+
+static ProcArg file_save_thumbnail_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "filename",
+    "The name of the file the thumbnail belongs to"
+  }
+};
+
+static ProcRecord file_save_thumbnail_proc =
+{
+  "gimp_file_save_thumbnail",
+  "Saves a thumbnail for the given image",
+  "This procedure saves a thumbnail in the .xvpics format for the given image. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitely save a thumbnail with a file.",
+  "Josh MacDonald",
+  "Josh MacDonald",
+  "1997",
+  PDB_INTERNAL,
+  2,
+  file_save_thumbnail_inargs,
+  0,
+  NULL,
+  { { file_save_thumbnail_invoker } }
 };
 
 static Argument *

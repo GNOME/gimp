@@ -1,3 +1,18 @@
+Tue Dec 14 20:37:44 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/fileops.c
+	* app/fileops.h
+	* app/fileopsP.h: new file
+	* app/fileops_cmds.c
+	* app/internal_procs.c: 
+	* tools/pdbgen/pdb/fileops.pdb
+	Added new PDB interfaces file_[load|save]_thumbnail. Wolfgang will
+	need this for the new GAP interface, so better implement them now.
+
+	* plug-ins/common/screenshot.c: try to be more sane when xwd fails
+	to load the temporary file
+
 Tue Dec 14 15:10:16 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/blend.c

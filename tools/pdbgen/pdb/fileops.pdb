@@ -154,6 +154,102 @@ CODE
     );
 }
 
+sub file_load_thumbnail {
+    $blurb = 'Loads the thumbnail for a file.';
+
+    $help = <<'HELP';
+This procedure tries to load a thumbnail that belongs to the file with
+the given filename. This name is a full pathname. The returned data is 
+an array of colordepth 3 (RGB), regardless of the image type. Width and 
+height of the thumbnail are also returned. Don't use this function if 
+you need a thumbnail of an already opened image, use gimp_image_thumbnail 
+instead.
+HELP
+
+    $author = $copyright = 'Adam D. Moss, Sven Neumann';
+    $date = '1999';
+
+    @inargs = (
+	{ name => 'filename', type => 'string',
+	  desc => 'The name of the file that owns the thumbnail to load' },
+    );
+
+    @outargs = ( 
+	{ name => 'width', type => 'int32', init => 1,
+	  desc => 'The width of the thumbnail' },
+	{ name => 'height', type => 'int32', init => 1, 
+	  desc => 'The height of the thumbnail' },
+	{ name => 'thumb_data', type => 'int8array', init => 1,
+	  desc => 'The thumbnail data'},
+    );
+
+    %invoke = (
+        headers => [ qw("fileopsP.h") ],
+	vars => [ 'gchar *pname', 'gchar *fname', 'gchar *tname',
+		  'guchar *raw_thumb', 'gchar *imginfo = NULL', 'gint i' ],
+	code => <<'CODE'
+{
+  pname = g_dirname (filename);
+  fname = g_basename (filename);
+  tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
+		       fname,
+		       NULL);
+  g_free (pname);
+  raw_thumb = readXVThumb (tname, &width, &height, &imginfo);
+  g_free (tname);
+
+  if (raw_thumb)
+    {
+      thumb_data = g_malloc (3 * width * height);
+	  
+      for (i=0; i<width*height; i++)
+        {
+	  thumb_data[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
+	  thumb_data[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
+	  thumb_data[i*3+2] = (((raw_thumb[i])&3)*255)/3;
+	}
+      g_free (raw_thumb);
+      success = TRUE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub file_save_thumbnail {
+    $blurb = 'Saves a thumbnail for the given image';
+
+    $help = <<'HELP';
+This procedure saves a thumbnail in the .xvpics format for the given image.
+The thumbnail is saved so that it belongs to the file with the given
+filename. This means you have to save the image under this name first, 
+otherwise this procedure will fail. This procedure may become useful if
+you want to explicitely save a thumbnail with a file. 
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'filename', type => 'string',
+	  desc => 'The name of the file the thumbnail belongs to' },
+    );
+
+    %invoke = (
+        headers => [ qw("fileopsP.h") ],
+	vars => [ 'TempBuf *thumb' ],
+	code => <<'CODE'
+{
+  thumb = make_thumb_tempbuf (gimage);
+  if (file_save_thumbnail (gimage, filename, thumb))
+    success = TRUE;
+}
+CODE
+    );
+}
+
 sub temp_name {
     $blurb = 'Generates a unique filename.';
 
@@ -313,8 +409,8 @@ CODE
 @headers = qw("fileops.h" "plug_in.h" "config.h" "libgimp/gimpintl.h"
 	      <unistd.h>);
 
-@procs = qw(file_load file_save temp_name register_magic_load_handler
-	    register_load_handler register_save_handler);
+@procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail temp_name 
+	    register_magic_load_handler register_load_handler register_save_handler);
 %exports = (app => [@procs]);
 
 $desc = 'File Operations';

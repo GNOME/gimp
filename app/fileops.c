@@ -49,6 +49,7 @@
 #include "gimpcontext.h"
 #include "gimpui.h"
 #include "fileops.h"
+#include "fileopsP.h"
 #include "menus.h"
 #include "layer.h"
 #include "channel.h"
@@ -729,7 +730,7 @@ file_open (char *filename,
   return FALSE;
 }
 
-static TempBuf *
+TempBuf *
 make_thumb_tempbuf (GimpImage* gimage)
 {  
   gint w,h;
@@ -835,8 +836,8 @@ make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
 }
 
 
-static gboolean
-file_save_thumbnail (GimpImage  * gimage,
+gboolean
+file_save_thumbnail (GimpImage  *gimage,
 		     const char *full_source_filename,
 		     TempBuf    *tempbuf)
 {
@@ -1068,7 +1069,7 @@ file_save (GimpImage *gimage,
 
 /* The readXVThumb function source may be re-used under
    the XFree86-style license. <adam@gimp.org> */
-static guchar*
+guchar*
 readXVThumb (const gchar  *fnam,
 	     gint         *w,
 	     gint         *h,
