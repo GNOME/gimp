@@ -3,34 +3,34 @@
 PACKAGE="gimp14-tips"
 PATH="$PATH:.."
 
+echo -n "Testing intltool version ... "
+VER=`intltool-extract --version | grep intltool | sed "s/.* \([0-9.]*\)/\1/"`
+if expr $VER \>= 0.17 >/dev/null; then
+        echo "looks OK."
+else
+        echo "too old! (Need 0.17, have $VER)"
+        DIE=1
+fi
+
 if [ "x$1" = "x--help" ]; then
 
 echo Usage: ./update.sh langcode
 echo --help                  display this help and exit
 echo
 echo Examples of use:
-echo ./update.sh ----- just creates a new pot file from the source
-echo ./update.sh da -- created new pot file and updated the da.po file 
+echo ./update.sh       just creates a new pot file from the source
+echo ./update.sh da    created new pot file and updated the da.po file 
 
 elif [ "x$1" = "x" ]; then 
 
-echo "Building the $PACKAGE.pot ..."
-
 intltool-extract --type=gettext/xml gimp-tips.xml.in
+echo "Building the $PACKAGE.pot ..."
 intltool-update --gettext-package $PACKAGE --pot
 
 else
 
-echo "Building the $PACKAGE.pot ..."
-
 intltool-extract --type=gettext/xml gimp-tips.xml.in
-intltool-update --gettext-package $PACKAGE --pot
+echo "Building the $PACKAGE.pot, merging and updating ..."
+intltool-update --gettext-package $PACKAGE $1
 
-echo "Now merging $1.po with $PACKAGE.pot, and creating an updated $1.po ..." 
-
-mv $1.po $1.po.old && msgmerge $1.po.old $PACKAGE.pot -o $1.po \
-&& rm $1.po.old;
-
-msgfmt --statistics $1.po
-
-fi;
+fi
