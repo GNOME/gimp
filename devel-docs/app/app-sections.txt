@@ -151,6 +151,7 @@ gimp_get_default_context
 gimp_set_user_context
 gimp_get_user_context
 gimp_set_global_buffer
+gimp_set_last_plug_in
 <SUBSECTION Standard>
 GimpClass
 GIMP
@@ -258,6 +259,7 @@ gimp_unitrc_save
 
 <SECTION>
 <FILE>gimp-utils</FILE>
+gimp_check_glib_version
 gimp_rectangle_intersect
 gimp_g_list_get_memsize
 gimp_g_slist_get_memsize
@@ -332,6 +334,10 @@ gimp_brush_generated_get_radius
 gimp_brush_generated_get_hardness
 gimp_brush_generated_get_angle
 gimp_brush_generated_get_aspect_ratio
+gimp_brush_generated_get_shape
+gimp_brush_generated_set_shape
+gimp_brush_generated_get_spikes
+gimp_brush_generated_set_spikes
 <SUBSECTION Standard>
 GimpBrushGeneratedClass
 GIMP_BRUSH_GENERATED
@@ -863,11 +869,11 @@ gimp_image_colormap_changed
 gimp_image_selection_control
 gimp_image_qmask_changed
 gimp_image_undo_is_enabled
+gimp_image_undo_can_compress
 gimp_image_undo_enable
 gimp_image_undo_disable
 gimp_image_undo_freeze
 gimp_image_undo_thaw
-gimp_image_undo_start
 gimp_image_undo_event
 gimp_image_dirty
 gimp_image_clean
@@ -3239,6 +3245,8 @@ gimp_tool_push_status
 gimp_tool_push_status_coords
 gimp_tool_pop_status
 gimp_tool_set_cursor
+gimp_tool_control_dirty_mask
+gimp_tool_control_set_dirty_mask
 <SUBSECTION Standard>
 GIMP_TOOL
 GIMP_IS_TOOL
@@ -3662,6 +3670,22 @@ gimp_enum_combo_box_get_type
 GIMP_ENUM_COMBO_BOX_CLASS
 GIMP_IS_ENUM_COMBO_BOX_CLASS
 GIMP_ENUM_COMBO_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpblobeditor</FILE>
+<TITLE>GimpBlobEditor</TITLE>
+GimpBlobEditor
+gimp_blob_editor_new
+<SUBSECTION Standard>
+GimpBlobEditorClass
+GIMP_BLOB_EDITOR
+GIMP_IS_BLOB_EDITOR
+GIMP_TYPE_BLOB_EDITOR
+gimp_blob_editor_get_type
+GIMP_BLOB_EDITOR_CLASS
+GIMP_IS_BLOB_EDITOR_CLASS
+GIMP_BLOB_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6028,6 +6052,8 @@ GIMP_TYPE_ADD_MASK_TYPE
 GimpAddMaskType
 GIMP_TYPE_BLEND_MODE
 GimpBlendMode
+GIMP_TYPE_BRUSH_GENERATED_SHAPE
+GimpBrushGeneratedShape
 GIMP_TYPE_BUCKET_FILL_MODE
 GimpBucketFillMode
 GIMP_TYPE_CAP_STYLE
@@ -6042,6 +6068,8 @@ GIMP_TYPE_CONVERT_DITHER_TYPE
 GimpConvertDitherType
 GIMP_TYPE_DASH_PRESET
 GimpDashPreset
+GIMP_TYPE_DIRTY_MASK
+GimpDirtyMask
 GIMP_TYPE_FILL_TYPE
 GimpFillType
 GIMP_TYPE_GRADIENT_TYPE
@@ -6052,10 +6080,6 @@ GIMP_TYPE_GRID_STYLE
 GimpGridStyle
 GIMP_TYPE_ICON_TYPE
 GimpIconType
-GIMP_TYPE_IMAGE_BASE_TYPE
-GimpImageBaseType
-GIMP_TYPE_IMAGE_TYPE
-GimpImageType
 GIMP_TYPE_JOIN_STYLE
 GimpJoinStyle
 GIMP_TYPE_ORIENTATION_TYPE
@@ -6093,6 +6117,7 @@ GimpPDBCompatMode
 <SUBSECTION Standard>
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
+gimp_brush_generated_shape_get_type
 gimp_bucket_fill_mode_get_type
 gimp_cap_style_get_type
 gimp_channel_ops_get_type
@@ -6100,13 +6125,12 @@ gimp_channel_type_get_type
 gimp_container_policy_get_type
 gimp_convert_dither_type_get_type
 gimp_dash_preset_get_type
+gimp_dirty_mask_get_type
 gimp_fill_type_get_type
 gimp_gradient_type_get_type
 gimp_gravity_type_get_type
 gimp_grid_style_get_type
 gimp_icon_type_get_type
-gimp_image_base_type_get_type
-gimp_image_type_get_type
 gimp_join_style_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
@@ -7802,10 +7826,12 @@ context_pattern_select_cmd_callback
 context_palette_select_cmd_callback
 context_gradient_select_cmd_callback
 context_font_select_cmd_callback
-context_brush_radius_cmd_callback
-context_brush_hardness_cmd_callback
-context_brush_aspect_cmd_callback
 context_brush_angle_cmd_callback
+context_brush_aspect_cmd_callback
+context_brush_hardness_cmd_callback
+context_brush_radius_cmd_callback
+context_brush_shape_cmd_callback
+context_brush_spikes_cmd_callback
 </SECTION>
 
 <SECTION>

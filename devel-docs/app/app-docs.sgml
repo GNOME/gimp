@@ -740,6 +740,7 @@
     <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
       <xi:include href="xml/gimpactionview.xml" />
+      <xi:include href="xml/gimpblobeditor.xml" />
       <xi:include href="xml/gimpcolorbar.xml" />
       <xi:include href="xml/gimpcolordisplayeditor.xml" />
       <xi:include href="xml/gimpcolorframe.xml" />

@@ -13,6 +13,7 @@ gimp_base_config_get_type
 gimp_bezier_stroke_get_type
 gimp_blend_options_get_type
 gimp_blend_tool_get_type
+gimp_blob_editor_get_type
 gimp_brightness_contrast_tool_get_type
 gimp_brush_core_get_type
 gimp_brush_editor_get_type
