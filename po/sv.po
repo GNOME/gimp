@@ -4901,7 +4901,7 @@ msgstr "Ogiltig bredd eller höjd. Båda måste vara positiva."
 
 #: app/gui/layers-menu.c:46
 msgid "/Te_xt Tool"
-msgstr "Te_xtverktyg"
+msgstr "/Te_xtverktyg"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
