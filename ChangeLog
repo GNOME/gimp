@@ -1,5 +1,10 @@
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-import.c (parse_svg_viewbox): fixed the
+	direction of the translation applied for viewBox offsets.
+
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-menu-12.png: removed...
 

@@ -598,7 +598,7 @@ parse_svg_viewbox (const gchar *value,
   if (success)
     {
       gimp_matrix3_identity (matrix);
-      gimp_matrix3_translate (matrix, x, y);
+      gimp_matrix3_translate (matrix, -x,  -y);
 
       if (w > 0.0 && h > 0.0)
         {
