@@ -1,6 +1,7 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!entity libgimp-gimp SYSTEM "sgml/gimp.sgml">
 <!entity libgimp-gimpprotocol SYSTEM "sgml/gimpprotocol.sgml">
+<!entity libgimp-gimpsignal SYSTEM "sgml/gimpsignal.sgml">
 <!entity libgimp-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
 <!entity libgimp-gimpenums SYSTEM "sgml/gimpenums.sgml">
 <!entity libgimp-gimpwire SYSTEM "sgml/gimpwire.sgml">
@@ -29,6 +30,7 @@
 <!entity libgimp-gimphelpui SYSTEM "sgml/gimphelpui.sgml">
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity libgimp-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
+<!entity libgimp-gimpui SYSTEM "sgml/gimpui.sgml">
 <!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
 <!entity libgimp-gimputils SYSTEM "sgml/gimputils.sgml">
 <!entity libgimp-gimpvector SYSTEM "sgml/gimpvector.sgml">
@@ -55,6 +57,7 @@
     &libgimp-gimpenv;
     &libgimp-gimpmatrix;
     &libgimp-gimpprotocol;
+    &libgimp-gimpsignal;
     &libgimp-gimpunit;
     &libgimp-gimputils;
     &libgimp-gimpvector;
@@ -79,6 +82,7 @@
     &libgimp-gimphelpui;
     &libgimp-gimpmenu;
     &libgimp-gimpquerybox;
+    &libgimp-gimpui;
     &libgimp-gimpwidgets;
   </chapter>
 
