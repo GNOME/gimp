@@ -1234,7 +1234,7 @@ msgstr "Mida de l'efecte (píxels)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy _Visible"
-msgstr "<Imatge>/Edita/Copia el _visible"
+msgstr "<Image>/Edita/Copia el _visible"
 
 #
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1714,7 +1714,7 @@ msgstr "Divisions d'Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr "<Imatge>/Script-Fu/Utilitats/Dibuixa gràfic _HSV..."
+msgstr "<Image>/Script-Fu/Utilitats/Dibuixa gràfic _HSV..."
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
@@ -1857,7 +1857,7 @@ msgstr "Utilitza el degradat actual"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr "<Imatge>/Script-Fu/Render/_Nova de línies..."
+msgstr "<Image>/Script-Fu/Render/_Nova de línies..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Number of Lines"
@@ -2203,7 +2203,7 @@ msgstr "Radi relatiu"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr "<Imatge>/Script-Fu/Decoració/_Diapositiva..."
+msgstr "<Image>/Script-Fu/Decoració/_Diapositiva..."
 
 #
 #: plug-ins/script-fu/scripts/slide.scm.h:3

@@ -1,3 +1,10 @@
+2004-08-08  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* hr.po: Fixed Croatian file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+	* vi.po: Fixed Vietnamese file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+
 2004-08-08  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
@@ -12,7 +19,7 @@
 
 2004-07-28  David Lodge <dave@cirt.net>
                                                                                 
-        * en_GB.po: Updated British translation.
+	* en_GB.po: Updated British translation.
                                                                                 
 2004-07-20  Miloslav Trmac  <mitr@volny.cz>
 

@@ -490,7 +490,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
 #, fuzzy
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
@@ -567,7 +567,7 @@ msgstr "Tác động chiếu sáng"
 #: plug-ins/Lighting/lighting_main.c:167
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:333 plug-ins/MapObject/mapobject_ui.c:532
@@ -931,7 +931,7 @@ msgstr "Hình trụ"
 #: plug-ins/MapObject/mapobject_main.c:200
 #, fuzzy
 msgid "<Image>/Filters/Map/Map _Object..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/MapObject/mapobject_ui.c:263
 #: plug-ins/MapObject/mapobject_ui.c:1348
@@ -1295,7 +1295,7 @@ msgstr "_RLE mã hóa"
 #: plug-ins/common/AlienMap.c:946
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/AlienMap.c:1076
 msgid "AlienMap: Transforming..."
@@ -1398,7 +1398,7 @@ msgstr "Giới thiệu AlienMap"
 #: plug-ins/common/AlienMap2.c:954
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/AlienMap2.c:1079
 msgid "AlienMap2: Transforming..."
@@ -1722,7 +1722,7 @@ msgstr "Giá trị"
 #: plug-ins/common/CML_explorer.c:461
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/CML_explorer.c:749
 msgid "CML_explorer: evoluting..."
@@ -2121,7 +2121,7 @@ msgstr ""
 #: plug-ins/common/animationplay.c:243
 #, fuzzy
 msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/animationplay.c:479
 msgid "Animation Playback: "
@@ -2151,27 +2151,27 @@ msgstr "Khung %d của %d"
 #: plug-ins/common/animoptimize.c:196
 #, fuzzy
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
 
 #: plug-ins/common/animoptimize.c:214
 #, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize (Difference)"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
 
 #: plug-ins/common/animoptimize.c:231
 #, fuzzy
 msgid "<Image>/Filters/Animation/_UnOptimize"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Thôi tối ưu hoạt cảnh"
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Thôi tối ưu hoạt cảnh"
 
 #: plug-ins/common/animoptimize.c:247
 #, fuzzy
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Tối ưu hoạt cảnh"
 
 #: plug-ins/common/animoptimize.c:263
 #, fuzzy
 msgid "<Image>/Filters/Animation/_Find Backdrop"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/animoptimize.c:473
 msgid "UnOptimizing Animation..."
@@ -2192,7 +2192,7 @@ msgstr "Đang tối ưu hoạt cảnh..."
 #: plug-ins/common/apply_lens.c:122
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/common/apply_lens.c:186
 msgid "Applying lens..."
@@ -2225,7 +2225,7 @@ msgstr ""
 #: plug-ins/common/autocrop.c:75
 #, fuzzy
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Ảnh>/Ảnh/Chuyển dạng/Tự động cắt xén"
+msgstr "<Image>/Ảnh/Chuyển dạng/Tự động cắt xén"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2234,7 +2234,7 @@ msgstr "Đang cắt xén..."
 #: plug-ins/common/autostretch_hsv.c:92
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-msgstr "<Ảnh>/Layer/Màu/Tự động/Kéo giãn HSV"
+msgstr "<Image>/Layer/Màu/Tự động/Kéo giãn HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
@@ -2243,7 +2243,7 @@ msgstr "Đang tự động kéo giãn HSV..."
 #: plug-ins/common/blinds.c:167
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Blinds..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/blinds.c:233
 msgid "Adding Blinds..."
@@ -2285,7 +2285,7 @@ msgstr ""
 #: plug-ins/common/blur.c:188
 #, fuzzy
 msgid "<Image>/Filters/Blur/_Blur..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #.
 #. *  JUST DO IT!
@@ -2323,7 +2323,7 @@ msgstr "Số lần áp dụng trình lọc"
 #: plug-ins/common/borderaverage.c:99
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Border Average..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/borderaverage.c:162
 msgid "Border Average..."
@@ -2356,7 +2356,7 @@ msgstr ""
 #: plug-ins/common/bumpmap.c:372
 #, fuzzy
 msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/bumpmap.c:524
 msgid "Bump-mapping..."
@@ -2436,7 +2436,7 @@ msgstr ""
 #: plug-ins/common/c_astretch.c:88
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-msgstr "<Ảnh>/Layer/Màu/Tự động/Kéo giãn độ tương phản"
+msgstr "<Image>/Layer/Màu/Tự động/Kéo giãn độ tương phản"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
@@ -2445,7 +2445,7 @@ msgstr "Đang tự động kéo giãn độ tương phản..."
 #: plug-ins/common/ccanalyze.c:191
 #, fuzzy
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/ccanalyze.c:278
 msgid "Colorcube Analysis..."
@@ -2504,7 +2504,7 @@ msgstr ""
 #: plug-ins/common/channel_mixer.c:224
 #, fuzzy
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/channel_mixer.c:528
 #, fuzzy
@@ -2555,7 +2555,7 @@ msgstr "Cảnh Báo Hoạt Động của Tập Tin CML"
 #: plug-ins/common/checkerboard.c:94
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/checkerboard.c:158
 msgid "Adding Checkerboard..."
@@ -2577,7 +2577,7 @@ msgstr "_Kích thước:"
 #: plug-ins/common/color_enhance.c:92
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
-msgstr "<Ảnh>/Layer/Màu/Tự động/Cải thiện màu sắc"
+msgstr "<Image>/Layer/Màu/Tự động/Cải thiện màu sắc"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
@@ -2586,7 +2586,7 @@ msgstr "Đang cải thiện màu sắc..."
 #: plug-ins/common/colorify.c:121
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Colorify..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/colorify.c:179
 msgid "Colorifying..."
@@ -2614,7 +2614,7 @@ msgstr ""
 #: plug-ins/common/colortoalpha.c:99
 #, fuzzy
 msgid "<Image>/Filters/Colors/Color to _Alpha..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/colortoalpha.c:173
 msgid "Removing color..."
@@ -2750,7 +2750,7 @@ msgstr "Redness_cr709f:"
 #: plug-ins/common/compose.c:297
 #, fuzzy
 msgid "<Image>/Filters/Colors/C_ompose..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/compose.c:360
 #, fuzzy, c-format
@@ -2834,7 +2834,7 @@ msgstr "C_ắt xén"
 #: plug-ins/common/convmatrix.c:194
 #, fuzzy
 msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/convmatrix.c:226
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
@@ -2925,7 +2925,7 @@ msgstr "Độ đ_ục:"
 #: plug-ins/common/cubism.c:145
 #, fuzzy
 msgid "<Image>/Filters/Artistic/_Cubism..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/cubism.c:253
 msgid "Cubism"
@@ -2950,7 +2950,7 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:577
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -3237,7 +3237,7 @@ msgstr "redness_cr709f"
 #: plug-ins/common/decompose.c:242
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Decompose..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/decompose.c:325
 msgid "Decomposing..."
@@ -3259,7 +3259,7 @@ msgstr ""
 #: plug-ins/common/deinterlace.c:91
 #, fuzzy
 msgid "<Image>/Filters/Enhance/_Deinterlace..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/deinterlace.c:146
 msgid "Deinterlace..."
@@ -3280,7 +3280,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:199
 #, fuzzy
 msgid "<Image>/Filters/Combine/_Depth Merge..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/depthmerge.c:389
 msgid "Depth-merging..."
@@ -3322,7 +3322,7 @@ msgstr "Cân chỉnh 2:"
 #: plug-ins/common/despeckle.c:183
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Des_peckle..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #. Source image region
 #. Destination image region
@@ -3391,7 +3391,7 @@ msgstr "Mức màu t_rắng:"
 #: plug-ins/common/destripe.c:155
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Des_tripe..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/destripe.c:355
 msgid "Destriping..."
@@ -3421,7 +3421,7 @@ msgstr "'%s' không phải là tập tin quy tắc"
 #: plug-ins/common/diffraction.c:184
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/diffraction.c:336
 msgid "Creating diffraction pattern..."
@@ -3463,7 +3463,7 @@ msgstr "Các tùy chọn k_hác"
 #: plug-ins/common/displace.c:155
 #, fuzzy
 msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/displace.c:227
 msgid "Displacing..."
@@ -3508,7 +3508,7 @@ msgstr "Đ_en"
 #: plug-ins/common/edge.c:152
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/edge.c:222
 msgid "Edge Detection..."
@@ -3558,7 +3558,7 @@ msgstr "_Số lượng:"
 #: plug-ins/common/emboss.c:154
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Emboss..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:490
 msgid "Emboss"
@@ -3587,7 +3587,7 @@ msgstr ""
 #: plug-ins/common/engrave.c:106
 #, fuzzy
 msgid "<Image>/Filters/Distorts/En_grave..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/engrave.c:177
 msgid "Engraving..."
@@ -3612,7 +3612,7 @@ msgstr "Chiều _cao:"
 #: plug-ins/common/exchange.c:138
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/exchange.c:240
 msgid "Color Exchange..."
@@ -3666,7 +3666,7 @@ msgstr "Ngưỡng khóa"
 #: plug-ins/common/film.c:247
 #, fuzzy
 msgid "<Image>/Filters/Combine/_Film..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/film.c:333
 msgid "Composing Images..."
@@ -3797,7 +3797,7 @@ msgstr "Chiều cao ảnh:"
 #: plug-ins/common/flarefx.c:191
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/_FlareFX..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/common/flarefx.c:263
 msgid "Render Flare..."
@@ -3820,7 +3820,7 @@ msgstr ""
 #: plug-ins/common/fractaltrace.c:131
 #, fuzzy
 msgid "<Image>/Filters/Map/_Fractal Trace..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/fractaltrace.c:469 plug-ins/common/fractaltrace.c:741
 msgid "Fractal Trace"
@@ -3862,7 +3862,7 @@ msgstr "Y_2:"
 #: plug-ins/common/gauss_iir.c:164
 #, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/gauss_iir.c:236 plug-ins/common/gauss_rle.c:229
 msgid "You must specify either horizontal or vertical (or both)"
@@ -3910,7 +3910,7 @@ msgstr "Theo đường _dọc:"
 #: plug-ins/common/gauss_rle.c:158
 #, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/gauss_rle.c:279 plug-ins/common/gauss_rle.c:337
 #: plug-ins/common/gauss_rle.c:417
@@ -3958,7 +3958,7 @@ msgstr "Mô tả:"
 #: plug-ins/common/gee.c:97
 #, fuzzy
 msgid "<Image>/Filters/Toys/Gee-_Slime"
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/gee.c:166
 msgid "GEE-SLIME"
@@ -3977,7 +3977,7 @@ msgstr ""
 #: plug-ins/common/gee_zoom.c:135
 #, fuzzy
 msgid "<Image>/Filters/Toys/Gee-_Zoom"
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/gee_zoom.c:198
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -4202,7 +4202,7 @@ msgstr "Phần chọn:"
 #: plug-ins/common/glasstile.c:115
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/common/glasstile.c:191
 msgid "Glass Tile..."
@@ -4223,7 +4223,7 @@ msgstr ""
 #: plug-ins/common/gqbist.c:439
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/gqbist.c:536
 msgid "Qbist ..."
@@ -4245,7 +4245,7 @@ msgstr "G-Qbist 1.12"
 #: plug-ins/common/gradmap.c:121
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/gradmap.c:156
 msgid "Gradient Map..."
@@ -4254,7 +4254,7 @@ msgstr ""
 #: plug-ins/common/grid.c:152
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4414,7 +4414,7 @@ msgstr ""
 #: plug-ins/common/guillotine.c:79
 #, fuzzy
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Ảnh>/Ảnh/Chuyển dạng/Tự động cắt xén"
+msgstr "<Image>/Ảnh/Chuyển dạng/Tự động cắt xén"
 
 #: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
@@ -4423,7 +4423,7 @@ msgstr ""
 #: plug-ins/common/hot.c:217
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Hot..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/hot.c:377
 #, fuzzy
@@ -4470,7 +4470,7 @@ msgstr ""
 #: plug-ins/common/illusion.c:105
 #, fuzzy
 msgid "<Image>/Filters/Map/_Illusion..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/illusion.c:176
 msgid "Illusion..."
@@ -4495,7 +4495,7 @@ msgstr "Mode _2"
 #: plug-ins/common/iwarp.c:260
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_IWarp..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/iwarp.c:692
 msgid "Warping..."
@@ -4594,7 +4594,7 @@ msgstr ""
 #: plug-ins/common/jigsaw.c:408
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/jigsaw.c:462
 msgid "Assembling Jigsaw..."
@@ -4751,7 +4751,7 @@ msgstr "Chú giải ảnh"
 #: plug-ins/common/laplace.c:95
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Laplace"
-msgstr "<Ảnh>/Tập tin/Thiết lập trang"
+msgstr "<Image>/Tập tin/Thiết lập trang"
 
 #: plug-ins/common/laplace.c:225
 msgid "Laplace..."
@@ -4834,7 +4834,7 @@ msgstr "Van Gogh (LIC)"
 #: plug-ins/common/mail.c:214
 #, fuzzy
 msgid "<Image>/File/_Mail Image..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/mail.c:431
 msgid "Send to Mail"
@@ -4903,12 +4903,12 @@ msgstr "Màu đích thứ hai"
 #: plug-ins/common/mapcolor.c:335
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/mapcolor.c:350
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/mapcolor.c:397 plug-ins/common/mapcolor.c:712
 #, fuzzy
@@ -4945,7 +4945,7 @@ msgstr "Đến:"
 #: plug-ins/common/max_rgb.c:112
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Max RGB..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/max_rgb.c:148
 msgid "Can only operate on RGB drawables."
@@ -4971,7 +4971,7 @@ msgstr ""
 #: plug-ins/common/mblur.c:153
 #, fuzzy
 msgid "<Image>/Filters/Blur/_Motion Blur..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
@@ -5126,7 +5126,7 @@ msgstr "mili giây"
 #: plug-ins/common/mosaic.c:309
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Mosaic..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #. progress bar for gradient finding
 #: plug-ins/common/mosaic.c:433
@@ -5246,7 +5246,7 @@ msgstr "Cường độ"
 #: plug-ins/common/newsprint.c:539
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Newsprin_t..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/newsprint.c:638
 #, fuzzy
@@ -5324,7 +5324,7 @@ msgstr ""
 #: plug-ins/common/nlfilt.c:128
 #, fuzzy
 msgid "<Image>/Filters/Enhance/_NL Filter..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/nlfilt.c:246
 #, fuzzy
@@ -5362,7 +5362,7 @@ msgstr ""
 #: plug-ins/common/noisify.c:129
 #, fuzzy
 msgid "<Image>/Filters/Noise/_Noisify..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/noisify.c:203
 msgid "Adding Noise..."
@@ -5392,7 +5392,7 @@ msgstr "Kênh #%d:"
 #: plug-ins/common/normalize.c:90
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Normalize"
-msgstr "<Ảnh>/Layer/Màu/Tự động/Cải thiện màu sắc"
+msgstr "<Image>/Layer/Màu/Tự động/Cải thiện màu sắc"
 
 #: plug-ins/common/normalize.c:122
 msgid "Normalizing..."
@@ -5402,7 +5402,7 @@ msgstr "Đang bình thường hóa..."
 #: plug-ins/common/nova.c:196
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/Su_perNova..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/common/nova.c:277
 msgid "Rendering SuperNova..."
@@ -5436,7 +5436,7 @@ msgstr "_Hiện con trỏ"
 #: plug-ins/common/oilify.c:106
 #, fuzzy
 msgid "<Image>/Filters/Artistic/Oili_fy..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/oilify.c:181
 msgid "Oil Painting..."
@@ -5533,7 +5533,7 @@ msgstr "September 31, 1999"
 #: plug-ins/common/papertile.c:824
 #, fuzzy
 msgid "<Image>/Filters/Map/_Paper Tile..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/pat.c:338
 #, c-format
@@ -5561,7 +5561,7 @@ msgstr ""
 #: plug-ins/common/pixelize.c:170
 #, fuzzy
 msgid "<Image>/Filters/Blur/_Pixelize..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/pixelize.c:268
 msgid "Pixelizing..."
@@ -5582,7 +5582,7 @@ msgstr ""
 #: plug-ins/common/plasma.c:184
 #, fuzzy
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/plasma.c:266
 msgid "Plasma..."
@@ -5619,7 +5619,7 @@ msgstr "Thủ tục tạm thời"
 #: plug-ins/common/plugindetails.c:153
 #, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Hộp công cụ>/Xtns/Trình duyệt DB..."
+msgstr "<Toolbox>/Xtns/Trình duyệt DB..."
 
 #: plug-ins/common/plugindetails.c:225
 msgid "Details <<"
@@ -5835,7 +5835,7 @@ msgstr "Ascii"
 #: plug-ins/common/polar.c:175
 #, fuzzy
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/polar.c:358
 msgid "Polarizing..."
@@ -6059,17 +6059,17 @@ msgstr "Random Slur 1.7"
 #: plug-ins/common/randomize.c:236
 #, fuzzy
 msgid "<Image>/Filters/Noise/_Hurl..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/randomize.c:248
 #, fuzzy
 msgid "<Image>/Filters/Noise/_Pick..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/randomize.c:260
 #, fuzzy
 msgid "<Image>/Filters/Noise/_Slur..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/randomize.c:749
 msgid "R_andomization (%):"
@@ -6078,7 +6078,7 @@ msgstr ""
 #: plug-ins/common/ripple.c:137
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Ripple..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/ripple.c:215
 msgid "Rippling..."
@@ -6137,7 +6137,7 @@ msgstr "Đang quay..."
 #: plug-ins/common/sample_colorize.c:309
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/common/sample_colorize.c:1361
 msgid "Sample Colorize"
@@ -6226,7 +6226,7 @@ msgstr ""
 #: plug-ins/common/scatter_hsv.c:138
 #, fuzzy
 msgid "<Image>/Filters/Noise/S_catter HSV..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/scatter_hsv.c:233
 #, fuzzy
@@ -6260,7 +6260,7 @@ msgstr "Gi_á trị:"
 #: plug-ins/common/screenshot.c:139 plug-ins/winsnap/winsnap.c:1073
 #, fuzzy
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-msgstr "<Hộp công cụ>/Tập tin/Yêu cầu/TWAIN..."
+msgstr "<Toolbox>/Tập tin/Yêu cầu/TWAIN..."
 
 #: plug-ins/common/screenshot.c:271
 #, fuzzy
@@ -6319,7 +6319,7 @@ msgstr "sau"
 #: plug-ins/common/sel_gauss.c:114
 #, fuzzy
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/sel_gauss.c:191
 msgid "Selective Gaussian Blur..."
@@ -6340,7 +6340,7 @@ msgstr ""
 #: plug-ins/common/semiflatten.c:79
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Semi-Flatten"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/semiflatten.c:118
 #, fuzzy
@@ -6350,7 +6350,7 @@ msgstr "Đang làm sắc nét..."
 #: plug-ins/common/sharpen.c:148
 #, fuzzy
 msgid "<Image>/Filters/Enhance/_Sharpen..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #.
 #. * Let the user know what we're doing...
@@ -6371,7 +6371,7 @@ msgstr "Độ sắc _nét:"
 #: plug-ins/common/shift.c:107
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Shift..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/shift.c:183
 msgid "Shifting..."
@@ -6396,7 +6396,7 @@ msgstr ""
 #: plug-ins/common/sinus.c:196
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/sinus.c:287
 msgid "Sinus: rendering..."
@@ -6516,7 +6516,7 @@ msgstr ""
 #: plug-ins/common/smooth_palette.c:88
 #, fuzzy
 msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/smooth_palette.c:177
 msgid "Deriving Smooth Palette..."
@@ -6533,7 +6533,7 @@ msgstr ""
 #: plug-ins/common/snoise.c:173
 #, fuzzy
 msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/snoise.c:305
 msgid "Solid Noise..."
@@ -6569,7 +6569,7 @@ msgstr "Kích thước _Y:"
 #: plug-ins/common/sobel.c:128
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/sobel.c:232
 msgid "Sobel Edge Detection"
@@ -6594,7 +6594,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:184
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/_Sparkle..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/common/sparkle.c:287
 msgid "Sparkling..."
@@ -6882,12 +6882,12 @@ msgstr "Đang tạo hiển thị Fractal..."
 #: plug-ins/common/spheredesigner.c:3123
 #, fuzzy
 msgid "<Image>/Filters/Render/Sphere _Designer..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/spread.c:110
 #, fuzzy
 msgid "<Image>/Filters/Noise/Sp_read..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/spread.c:188
 msgid "Spreading..."
@@ -6905,7 +6905,7 @@ msgstr ""
 #: plug-ins/common/struc.c:1142
 #, fuzzy
 msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/common/struc.c:1221
 msgid "Applying Canvas..."
@@ -7160,7 +7160,7 @@ msgstr "Chú giải:"
 #: plug-ins/common/tile.c:112
 #, fuzzy
 msgid "<Image>/Filters/Map/_Tile..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/tile.c:190 plug-ins/common/tileit.c:323
 msgid "Tiling..."
@@ -7182,7 +7182,7 @@ msgstr "Tạ_o ảnh mới"
 #: plug-ins/common/tileit.c:228
 #, fuzzy
 msgid "<Image>/Filters/Map/_Small Tiles..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #. Get the preview image
 #: plug-ins/common/tileit.c:371
@@ -7230,7 +7230,7 @@ msgstr ""
 #: plug-ins/common/tiler.c:65
 #, fuzzy
 msgid "<Image>/Filters/Map/_Make Seamless"
-msgstr "<Ảnh>/Tập tin/Thiết lập trang"
+msgstr "<Image>/Tập tin/Thiết lập trang"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -7311,7 +7311,7 @@ msgstr ""
 #: plug-ins/common/uniteditor.c:117
 #, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Hộp công cụ>/Xtns/Trình duyệt DB..."
+msgstr "<Toolbox>/Xtns/Trình duyệt DB..."
 
 #: plug-ins/common/uniteditor.c:171
 msgid "New Unit"
@@ -7368,7 +7368,7 @@ msgstr ""
 #: plug-ins/common/unsharp.c:149
 #, fuzzy
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/unsharp.c:361
 msgid "Merging..."
@@ -7417,7 +7417,7 @@ msgstr ""
 #: plug-ins/common/video.c:1828
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Vi_deo..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/video.c:1898
 msgid "Video/RGB..."
@@ -7443,7 +7443,7 @@ msgstr ""
 #: plug-ins/common/vinvert.c:85
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Value Invert"
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/vinvert.c:124
 msgid "Value Invert..."
@@ -7484,17 +7484,17 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:243
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Value Propagate..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/vpropagate.c:255
 #, fuzzy
 msgid "<Image>/Filters/Generic/E_rode"
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/vpropagate.c:267
 #, fuzzy
 msgid "<Image>/Filters/Generic/_Dilate"
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/vpropagate.c:455
 #, fuzzy
@@ -7549,7 +7549,7 @@ msgstr ""
 #: plug-ins/common/warp.c:255
 #, fuzzy
 msgid "<Image>/Filters/Map/_Warp..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/warp.c:402
 msgid "Warp"
@@ -7670,7 +7670,7 @@ msgstr ""
 #: plug-ins/common/waves.c:125
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Waves..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/waves.c:294
 msgid "Waves"
@@ -7719,7 +7719,7 @@ msgstr ""
 #: plug-ins/common/whirlpinch.c:185
 #, fuzzy
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/common/whirlpinch.c:388
 msgid "Whirling and Pinching..."
@@ -7775,7 +7775,7 @@ msgstr ""
 #: plug-ins/common/wind.c:190
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Wi_nd..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/common/wind.c:322
 msgid "Rendering Blast..."
@@ -7847,11 +7847,11 @@ msgstr ""
 #: plug-ins/common/winprint.c:224
 #, fuzzy
 msgid "<Image>/File/_Print"
-msgstr "<Ảnh>/Tập tin/In"
+msgstr "<Image>/Tập tin/In"
 
 #: plug-ins/common/winprint.c:236
 msgid "<Image>/File/Page Setup"
-msgstr "<Ảnh>/Tập tin/Thiết lập trang"
+msgstr "<Image>/Tập tin/Thiết lập trang"
 
 #: plug-ins/common/winprint.c:338
 #, c-format
@@ -8061,7 +8061,7 @@ msgstr "Lỗi khi ghi ảnh RGB"
 #: plug-ins/common/zealouscrop.c:69
 #, fuzzy
 msgid "<Image>/Layer/Transform/_Zealous Crop"
-msgstr "<Ảnh>/Ảnh/Chuyển dạng/Tự động cắt xén"
+msgstr "<Image>/Ảnh/Chuyển dạng/Tự động cắt xén"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -8074,7 +8074,7 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser.c:89
 #, fuzzy
 msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Hộp công cụ>/Xtns/Trình duyệt DB..."
+msgstr "<Toolbox>/Xtns/Trình duyệt DB..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -8171,7 +8171,7 @@ msgstr "Biên soạn ảnh"
 #: plug-ins/flame/flame.c:141
 #, fuzzy
 msgid "<Image>/Filters/Render/Nature/_Flame..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/flame/flame.c:228
 msgid "Drawing Flame..."
@@ -8290,7 +8290,7 @@ msgstr "_Zoom:"
 #: plug-ins/fp/fp.c:92
 #, fuzzy
 msgid "<Image>/Filters/Colors/_Filter Pack..."
-msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
+msgstr "<Image>/Trình lọc/Hoạt cảnh/Chơi lùi hoạt cảnh..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -8465,7 +8465,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:347
 #, fuzzy
 msgid "<Image>/Filters/Render/_Gfig..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/gfig/gfig.c:623
 msgid "First Gfig"
@@ -9032,7 +9032,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:831
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/_GFlare..."
-msgstr "<Ảnh>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
+msgstr "<Image>/Trình lọc/Tác động ánh sáng/Các tác động ánh sáng..."
 
 #: plug-ins/gflare/gflare.c:967
 msgid "Gradient Flare..."
@@ -9496,7 +9496,7 @@ msgstr ""
 #: plug-ins/gimpressionist/gimp.c:108
 #, fuzzy
 msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-msgstr "<Ảnh>/Ảnh/Chế độ/Biên soạn..."
+msgstr "<Image>/Ảnh/Chế độ/Biên soạn..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -10009,7 +10009,7 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:372
 #, fuzzy
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:612
@@ -10593,7 +10593,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_main.c:128
 #, fuzzy
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
@@ -10980,7 +10980,7 @@ msgstr "Đang vẽ khung..."
 #: plug-ins/maze/maze.c:168
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/maze/maze.c:454
 msgid "Drawing Maze..."
@@ -11046,7 +11046,7 @@ msgstr "Xem %s"
 #: plug-ins/pagecurl/pagecurl.c:212
 #, fuzzy
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
@@ -11643,7 +11643,7 @@ msgstr ""
 #: plug-ins/print/print.c:164
 #, fuzzy
 msgid "<Image>/File/_Print..."
-msgstr "<Ảnh>/Tập tin/In ra..."
+msgstr "<Image>/Tập tin/In ra..."
 
 #: plug-ins/print/print.c:690 plug-ins/print/print.c:691
 #: plug-ins/print/print.c:781 plug-ins/print/print.c:1120
@@ -11653,7 +11653,7 @@ msgstr "Tập tin"
 #: plug-ins/rcm/rcm.c:106
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-msgstr "<Ảnh>/Layer/Màu/Colormap Rotation..."
+msgstr "<Image>/Layer/Màu/Colormap Rotation..."
 
 #: plug-ins/rcm/rcm.c:267
 msgid "Rotating the colormap..."
@@ -11793,7 +11793,7 @@ msgstr ""
 #: plug-ins/twain/twain.c:532
 #, fuzzy
 msgid "<Toolbox>/File/Acquire/_TWAIN..."
-msgstr "<Hộp công cụ>/Tập tin/Yêu cầu/TWAIN..."
+msgstr "<Toolbox>/Tập tin/Yêu cầu/TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:666
@@ -12031,10 +12031,10 @@ msgstr "Lỗi: XJT propertyfile %s là rỗng"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/_Sinus..."
-#~ msgstr "<Ảnh>/Tập tin/In ra..."
+#~ msgstr "<Image>/Tập tin/In ra..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-#~ msgstr "<Hộp công cụ>/Xtns/Trình duyệt Web/Mở URL..."
+#~ msgstr "<Toolbox>/Xtns/Trình duyệt Web/Mở URL..."
 
 #~ msgid "Open URL"
 #~ msgstr "Mở URL"
@@ -12065,7 +12065,7 @@ msgstr "Lỗi: XJT propertyfile %s là rỗng"
 #~ "(%s)"
 
 #~ msgid "<Image>/Select/To Path"
-#~ msgstr "<Ảnh>/Chọn/Vào đường dẫn"
+#~ msgstr "<Image>/Chọn/Vào đường dẫn"
 
 #~ msgid "Save _background color"
 #~ msgstr "Lưu màu n_ền"
