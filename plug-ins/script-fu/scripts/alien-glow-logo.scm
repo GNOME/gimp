@@ -83,5 +83,5 @@
 		    ""
 		    SF-STRING     _"Text" "ALIEN"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Futura_Poster"
 		    SF-COLOR      _"Glow Color" '(63 252 0))

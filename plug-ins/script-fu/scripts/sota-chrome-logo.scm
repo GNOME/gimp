@@ -193,7 +193,7 @@
 		    SF-ADJUSTMENT _"Chrome Factor" '(.75 0 1 .1 .01 2 0)
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-RoostHeavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "RoostHeavy"
 		    SF-FILENAME   _"Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR      _"Highlight Balance" '(211 95 0)
 		    SF-COLOR      _"Chrome Balance" '(0 0 0))

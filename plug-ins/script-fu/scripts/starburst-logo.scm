@@ -110,7 +110,7 @@
 		    ""
 		    SF-STRING     _"Text" "GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 0 512 1 10 0 1)
-		    SF-FONT       _"Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Blippo"
 		    SF-COLOR      _"Burst Color" '(60 196 33)
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    )

@@ -160,7 +160,7 @@
 		    ""
 		    SF-STRING     _"Text" "Hello world!"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT       _"Font" "-*-helvetica-*-r-*-*-16-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Sans"
 		    SF-COLOR      _"Upper-Left color" '(0 255 127)
 		    SF-COLOR      _"Lower-Right color" '(0 127 255)
 		    SF-COLOR      _"Text Color" '(0 0 0)

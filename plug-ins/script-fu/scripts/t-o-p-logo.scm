@@ -139,9 +139,9 @@
 		    ""
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 1 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-becker-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-ADJUSTMENT _"Hit Rate" '(0.2 0 1 .01 .01 2 0)
-                    SF-ADJUSTMENT _"Edge Width" '(2 0 128 1 1 0 0)
+		    SF-FONT       _"Font" "Becker"
+            SF-ADJUSTMENT _"Hit Rate" '(0.2 0 1 .01 .01 2 0)
+            SF-ADJUSTMENT _"Edge Width" '(2 0 128 1 1 0 0)
 		    SF-TOGGLE     _"Edge Only" FALSE
 		    SF-COLOR      _"Base Color" '(0 40 0)
 		    SF-COLOR      _"Background Color" '(255 255 255)

@@ -117,6 +117,6 @@
 		    ""
 		    SF-STRING _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT   _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT   _"Font" "Becker"
 		    SF-COLOR  _"Background Color" '(255 255 255)
 		    )

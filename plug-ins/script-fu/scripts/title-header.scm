@@ -175,7 +175,7 @@
 		    ""
 		    SF-STRING     _"Text" "Hello world!"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 256 1 10 0 0)
-		    SF-FONT       _"Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*")
+		    SF-FONT       _"Font" "Sans")
 
 
 

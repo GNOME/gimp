@@ -149,6 +149,6 @@
 		    ""
 		    SF-STRING     _"Text" "Nova"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 1 1000 1 10 0 1)
-                    SF-FONT       _"Font" "-*-engraver-*-r-*-*-24-*-*-*-p-*-*-*"
+            SF-FONT       _"Font" "Engraver"
 		    SF-COLOR      _"Glow Color" '(28 65 188)
 		    )

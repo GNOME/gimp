@@ -213,7 +213,7 @@
 		    ""
 		    SF-STRING     _"Text" "NEON"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-Blippo-*-*-*-*-24-*-*-*-*-*-*-*"
+		    SF-FONT       _"Font" "Blippo"
 		    SF-COLOR      _"Background Color" '(0 0 0)
 		    SF-COLOR      _"Glow Color" '(38 211 255)
 		    SF-TOGGLE     _"Create Shadow" FALSE

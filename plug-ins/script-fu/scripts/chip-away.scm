@@ -179,7 +179,7 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "Sloth"
-		    SF-FONT   _"Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT   _"Font" "RoostHeavy"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 2 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"Chip Amount" '(30 0 250 1 10 0 1)
 		    SF-ADJUSTMENT _"Blur Amount" '(3 1 100 1 10 1 0)

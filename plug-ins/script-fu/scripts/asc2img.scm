@@ -215,7 +215,7 @@
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
  SF-FILENAME   _"Filename"               "afile"
- SF-FONT       _"Font"                   "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-FONT       _"Font"                   "Bitstream Charter"
  SF-ADJUSTMENT _"Font Size (pixels)"     '(45 2 1000 1 10 0 1)
  SF-COLOR      _"Text Color"             '(0 0 0)
  SF-TOGGLE     _"Transparent Background" FALSE
@@ -234,7 +234,7 @@
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
  SF-FILENAME _"Filename"             "afile"
- SF-FONT     _"Font"                 "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-FONT     _"Font"                 "Bitstream Charter"
  SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
  SF-COLOR    _"Text Color"           '(0 0 0)
 )

@@ -104,7 +104,7 @@
                     ""
                     SF-STRING     _"Text" "CHALK"
                     SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-                    SF-FONT       _"Font" "-*-Cooper-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-FONT       _"Font" "Cooper"
                     SF-COLOR      _"Background Color" '(0 0 0)
                     SF-COLOR      _"Chalk Color" '(255 255 255)
 		    )

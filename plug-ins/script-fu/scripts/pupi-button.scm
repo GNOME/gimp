@@ -198,7 +198,7 @@
 		    ""
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT       _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Sans"
 		    SF-COLOR      _"Upper Color" '(192 192 0)
 		    SF-COLOR      _"Lower Color" '(128 108 0)
 		    SF-COLOR      _"Text Color" '(0 0 0)

@@ -146,7 +146,7 @@
 		    SF-PATTERN _"Pattern" "Parque #1"
                     SF-STRING  _"Text" "The Gimp"
                     SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-                    SF-FONT    _"Font" "-*-Roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-FONT    _"Font" "RoostHeavy"
                     SF-ADJUSTMENT   _"Outline Blur Radius" '(5 1 200 1 10 0 1)
                     SF-ADJUSTMENT   _"Shadow Blur Radius" '(10 1 200 1 10 0 1)
                     SF-ADJUSTMENT   _"Bumpmap (Alpha Layer) Blur Radius" '(5 1 200 1 10 0 1)

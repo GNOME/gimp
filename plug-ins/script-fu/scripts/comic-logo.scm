@@ -133,7 +133,7 @@
 		    ""
 		    SF-STRING     _"Text" "Moo"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(85 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-tribeca-*-i-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Tribeca"
 		    SF-GRADIENT   _"Gradient" "Incandescent"
 		    SF-ADJUSTMENT _"Outline Size" '(5 1 100 1 10 0 1)
 		    SF-COLOR      _"Outline Color" '(255 255 255)

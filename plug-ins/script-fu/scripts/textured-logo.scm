@@ -136,7 +136,7 @@
 		    ""
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 1 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-cuneifontlight-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "CuneiFont"
 		    SF-PATTERN    _"Text Pattern" "Fibers"
 		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" _"Hexagons" _"Octagons")
 		    SF-COLOR      _"Background Color" '(255 255 255)

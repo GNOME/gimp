@@ -218,7 +218,7 @@
                     ""
                     SF-STRING     _"Text" "Galaxy"
                     SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-                    SF-FONT       _"Font" "-*-Eras-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-FONT       _"Font" "Eras"
                     SF-GRADIENT   _"Blend Gradient (Text)" "Shadows_2"
                     SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows_2"
                     SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)

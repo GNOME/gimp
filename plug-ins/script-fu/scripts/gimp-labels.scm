@@ -95,13 +95,13 @@
 ;;;
 
 (define (script-fu-tube-button-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 14 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
+  (script-fu-labels-gimp-org text "helvetica" 14 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
 
 (define (script-fu-tube-subbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 12 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
+  (script-fu-labels-gimp-org text "helvetica" 12 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
   
 (define (script-fu-tube-subsubbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 10 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
+  (script-fu-labels-gimp-org text "helvetica" 10 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
 
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
@@ -146,7 +146,7 @@
 		    "1997"
 		    ""
 		    SF-STRING _"Text" "Gimp.Org"
-		    SF-FONT   _"Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT   _"Font" "Sans"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(18 2 1000 1 10 0 1)
  		    SF-COLOR  _"Text Color" '(130 165 235)
 	 	    SF-COLOR  _"Shadow Color" '(0 0 0)

@@ -91,6 +91,6 @@
 		    ""
 		    SF-STRING     _"Text" "SCRIPT-FU"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-futura_poster-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Futura_Poster"
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-COLOR      _"Text Color" '(206 6 50))

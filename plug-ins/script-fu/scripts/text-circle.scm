@@ -176,7 +176,7 @@
  SF-ADJUSTMENT _"Fill Angle" '(360 -360 360 1 1 0 1)
  SF-ADJUSTMENT _"Font Size (pixels)" '(18 1 1000 1 1 0 1)
  SF-TOGGLE     _"Antialias" TRUE
- SF-FONT       _"Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*"
+ SF-FONT       _"Font" "Sans"
 )
 
 ;; text-circle.scm ends here

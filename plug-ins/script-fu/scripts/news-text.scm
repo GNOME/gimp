@@ -72,7 +72,7 @@
 		    "1998"
 		    ""
 		    SF-STRING     _"Text" "Newsprint"
-		    SF-FONT       _"Font" "-*-Helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Sans"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"Cell Size (pixels)" '(7 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Density (%)" '(60 0 100 1 10 0 0)

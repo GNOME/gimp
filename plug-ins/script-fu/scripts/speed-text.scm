@@ -85,7 +85,7 @@
 		    "1998"
 		    ""
 		    SF-STRING     _"Text" "Speed!"
-		    SF-FONT       _"Font" "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Charter"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-ADJUSTMENT _"Density (%)" '(80 0 100 1 10 0 0)
                     SF-COLOR      _"Text Color" '(0 0 0)

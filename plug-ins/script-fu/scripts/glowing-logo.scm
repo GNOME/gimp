@@ -97,6 +97,6 @@
 		    ""
 		    SF-STRING     _"Text" "GLOWING"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "-*-Slogan-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-FONT       _"Font" "Slogan"
 		    SF-COLOR      _"Background Color" '(7 0 20)
 		    )
