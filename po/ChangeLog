@@ -1,3 +1,7 @@
+2002-11-25  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/gimprc.c, added new files.
+
 2002-11-24  Daniel Yacob  <locales@geez.org>
 
 	* am.po: Updated Amharic translation, fixed msgfmt breaker.

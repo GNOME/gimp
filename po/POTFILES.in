@@ -2,7 +2,6 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/gimprc.c
 app/main.c
 app/undo.c
 app/undo_history.c
@@ -21,6 +20,7 @@ app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
 app/core/gimpcontext.c
+app/core/gimpdata.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
@@ -174,6 +174,7 @@ app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchannellistview.c
+app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcomponentlistitem.c
 app/widgets/gimpcontainergridview.c
@@ -190,6 +191,7 @@ app/widgets/gimpitemfactory.c
 app/widgets/gimpitemlistview.c
 app/widgets/gimplayerlistview.c
 app/widgets/gimppaletteeditor.c
+app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
