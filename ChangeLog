@@ -1,3 +1,8 @@
+Sun Jul 11 17:35:01 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/unsharp/unsharp.c: rename round to round2int to avoid
+        clashes with the upcoming c9x standard.
+
 Sun Jul 11 15:19:34 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/png.c: add abort() to save_image, as to catch

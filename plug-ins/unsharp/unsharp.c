@@ -68,7 +68,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix, gint cmatrix_len
                              gint y, glong bytes);
 static int gen_convolve_matrix(double std_dev, double** cmatrix);
 static gdouble* gen_lookup_table(gdouble* cmatrix, gint cmatrix_length);
-static inline gint round(gdouble i);
+static inline gint round2int(gdouble i);
 static void unsharp_region (GPixelRgn srcPTR, GPixelRgn dstPTR,
                    gint width, gint height, gint bytes,
 									 gdouble radius, gdouble amount,
@@ -434,7 +434,7 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 	gimp_progress_init("Merging...");
 
 	/* find integer value of threshold */
-	threshold = round( unsharp_params.threshold * 255.0 );
+	threshold = round2int( unsharp_params.threshold * 255.0 );
 	
 	/* merge the source and destination images */
 	for (row = 0; row < y; row++) {
@@ -499,7 +499,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			for (j = cmatrix_length/2 - row; j<cmatrix_length; j++) {
 				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
 			}
-			dest_col[row*bytes + i] = (guchar)round(sum / scale);
+			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 		}
 	}
 	/* go through each pixel in each col */
@@ -509,7 +509,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			for (j = 0; j<cmatrix_length; j++) {
 				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
 			}
-			dest_col[row*bytes + i] = (guchar)round(sum);
+			dest_col[row*bytes + i] = (guchar)round2int(sum);
 		}
 	}
 	/* for the edge condition , we only use available info, and scale to one */
@@ -523,7 +523,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			for (j = 0; j<y-row + cmatrix_length/2; j++) {
 				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
 			}
-			dest_col[row*bytes + i] = (guchar)round(sum / scale);
+			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 		}
 	}
 #endif
@@ -553,7 +553,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			for (j = cmatrix_middle - row; j<cmatrix_length; j++) {
 				sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
 			}
-			dest_col[row*bytes + i] = (guchar)round(sum / scale);
+			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 		}
 	}
 	/* go through each pixel in each col */
@@ -571,7 +571,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 				ctable_p += 256; /* * sizeof(gdouble); */
 			}
 			cur_col_p++;
-			*(dest_col_p++) = round(sum);
+			*(dest_col_p++) = round2int(sum);
 		}
 	}
 
@@ -586,14 +586,14 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 			for (j = 0; j<y-row + cmatrix_middle; j++) {
 				sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
 			}
-			dest_col[row*bytes + i] = (guchar)round(sum / scale);
+			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 		}
 	}
 #endif
 
 }
 
-static inline gint round(gdouble i) {
+static inline gint round2int(gdouble i) {
 	return (gint)(i + 0.5);
 }
 
