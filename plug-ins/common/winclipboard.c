@@ -531,7 +531,7 @@ CB_PasteImage (gboolean interactive,
 
 	    /* following the slow part ... */
 		if (interactive)
-			gimp_progress_init ( _("Pasteing ..."));
+			gimp_progress_init ( _("Pasting ..."));
 
 		pData = GlobalLock(hDIB);
 		if (pData)

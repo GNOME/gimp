@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-13 12:41+0100\n"
-"PO-Revision-Date: 2000-02-13 12:57+0100\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"Project-Id-Version: GIMP 1.1.17\n"
+"POT-Creation-Date: 2000-02-14 18:46+0100\n"
+"PO-Revision-Date: 2000-02-14 18:57+0100\n"
+"Last-Translator: Knut Neumann <knut.neumann@uni-duesseldorf.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -41,8 +41,8 @@ msgstr "Über"
 #: plug-ins/AlienMap2/AlienMap2.c:626 plug-ins/AlienMap2/AlienMap2.c:912
 #: plug-ins/FractalExplorer/Dialogs.c:300
 #: plug-ins/FractalExplorer/Dialogs.c:1393
-#: plug-ins/FractalExplorer/FractalExplorer.c:831
-#: plug-ins/FractalExplorer/FractalExplorer.c:1560 plug-ins/bmp/bmpwrite.c:562
+#: plug-ins/FractalExplorer/FractalExplorer.c:853
+#: plug-ins/FractalExplorer/FractalExplorer.c:1582 plug-ins/bmp/bmpwrite.c:562
 #: plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
@@ -58,7 +58,7 @@ msgstr "Über"
 #: plug-ins/common/diffraction.c:565 plug-ins/common/displace.c:306
 #: plug-ins/common/edge.c:656 plug-ins/common/emboss.c:535
 #: plug-ins/common/engrave.c:234 plug-ins/common/exchange.c:302
-#: plug-ins/common/film.c:1205 plug-ins/common/flarefx.c:338
+#: plug-ins/common/film.c:1206 plug-ins/common/flarefx.c:338
 #: plug-ins/common/fractaltrace.c:738 plug-ins/common/gauss_iir.c:352
 #: plug-ins/common/gauss_iir.c:442 plug-ins/common/gauss_rle.c:349
 #: plug-ins/common/gauss_rle.c:439 plug-ins/common/gbr.c:473
@@ -122,9 +122,9 @@ msgstr "OK"
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
 #: plug-ins/FractalExplorer/Dialogs.c:302
-#: plug-ins/FractalExplorer/FractalExplorer.c:719
-#: plug-ins/FractalExplorer/FractalExplorer.c:840
-#: plug-ins/FractalExplorer/FractalExplorer.c:1594
+#: plug-ins/FractalExplorer/FractalExplorer.c:747
+#: plug-ins/FractalExplorer/FractalExplorer.c:862
+#: plug-ins/FractalExplorer/FractalExplorer.c:1616
 #: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/bmp/bmpwrite.c:564
 #: plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
@@ -140,7 +140,7 @@ msgstr "OK"
 #: plug-ins/common/destripe.c:574 plug-ins/common/diffraction.c:567
 #: plug-ins/common/displace.c:308 plug-ins/common/edge.c:658
 #: plug-ins/common/emboss.c:537 plug-ins/common/engrave.c:236
-#: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1207
+#: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1208
 #: plug-ins/common/flarefx.c:340 plug-ins/common/fractaltrace.c:740
 #: plug-ins/common/gauss_iir.c:354 plug-ins/common/gauss_iir.c:444
 #: plug-ins/common/gauss_rle.c:351 plug-ins/common/gauss_rle.c:441
@@ -634,19 +634,19 @@ msgstr "Mandelbrot"
 
 #: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Julia"
-msgstr ""
+msgstr "Julia"
 
 #: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Barnsley 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Barnsley 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Spider"
@@ -654,7 +654,7 @@ msgstr "Spinne"
 
 #: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Man'o'war"
-msgstr ""
+msgstr "Man'o'war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Lambda"
@@ -690,7 +690,7 @@ msgstr "loglog Glättung benutzen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:671
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Benutze log log Glättung um \"banding\" im Ergebnis zu eliminieren"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:675
@@ -775,6 +775,8 @@ msgstr "Wendet aktiven Farbverlauf auf das endgültige Bild an."
 #: plug-ins/FractalExplorer/Dialogs.c:895
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
+"Erzeuge eine Farb-Tabelle unter Verwendung eines Farbverlaufs aus dem "
+"Farbverlauf-Editor"
 
 #: plug-ins/FractalExplorer/Dialogs.c:900
 msgid "FractalExplorer Gradient"
@@ -827,63 +829,65 @@ msgid "Click here to cancel save procedure"
 msgstr "Hier klicken um den Speichervorgang abzubrechen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1984
-#: plug-ins/FractalExplorer/FractalExplorer.c:1266
+#: plug-ins/FractalExplorer/FractalExplorer.c:1288
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Datei '%s' ist keine FractalExplorer Datei"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1989
-#: plug-ins/FractalExplorer/FractalExplorer.c:1274
+#: plug-ins/FractalExplorer/FractalExplorer.c:1296
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
+"Datei '%s' ist korrupt.\n"
+"Zeile %d Bereich Option nicht korrekt"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:220
+#: plug-ins/FractalExplorer/FractalExplorer.c:221
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filter/Render/Muster/Fraktal Exlorer..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:359
+#: plug-ins/FractalExplorer/FractalExplorer.c:360
 msgid "Rendering Fractal..."
 msgstr "Berechne Fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:681
-msgid "Delete fractal"
+#: plug-ins/FractalExplorer/FractalExplorer.c:738
+#: plug-ins/gflare/gflare.c:3386
+#, c-format
+msgid ""
+"Are you sure you want to delete\n"
+"\"%s\" from the list and from disk?"
+msgstr ""
+"Wollen Sie \"%s\" wirklich\n"
+"aus der Liste und von der Festplatte löschen ?"
+
+#: plug-ins/FractalExplorer/FractalExplorer.c:742
+msgid "Delete Fractal"
 msgstr "Fraktal löschen"
 
-#. Question
-#: plug-ins/FractalExplorer/FractalExplorer.c:693 plug-ins/gfig/gfig.c:6244
-msgid "Are you sure you want to delete"
-msgstr "Wirklich löschen"
-
-#: plug-ins/FractalExplorer/FractalExplorer.c:698
-#, c-format
-msgid "\"%s\" from the list and from disk?"
-msgstr ""
-
 #. Buttons
-#: plug-ins/FractalExplorer/FractalExplorer.c:709
-#: plug-ins/FractalExplorer/FractalExplorer.c:1445 plug-ins/gfig/gfig.c:6261
+#: plug-ins/FractalExplorer/FractalExplorer.c:747
+#: plug-ins/FractalExplorer/FractalExplorer.c:1467 plug-ins/gfig/gfig.c:6261
 #: plug-ins/gflare/gflare.c:3119 plug-ins/gflare/gflare.c:3395
 #: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:802
 #: plug-ins/imagemap/imap_cmd_delete.c:53
 msgid "Delete"
 msgstr "Löschen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:810
+#: plug-ins/FractalExplorer/FractalExplorer.c:832
 msgid "Edit fractal name"
 msgstr "Fraktalnamen bearbeiten"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:821
+#: plug-ins/FractalExplorer/FractalExplorer.c:843
 msgid "Fractal name:"
 msgstr "Fraktalname"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:862
+#: plug-ins/FractalExplorer/FractalExplorer.c:884
 msgid "New Fractal"
 msgstr "Neues Fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1140
+#: plug-ins/FractalExplorer/FractalExplorer.c:1162
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -892,44 +896,44 @@ msgid ""
 "to your ~/.gimp-1.1/gimprc file\n"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1187
+#: plug-ins/FractalExplorer/FractalExplorer.c:1209
 #, c-format
 msgid ""
 "fractalexplorer-path miss-configured - \n"
 "Path `%.100s' not found\n"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1387
+#: plug-ins/FractalExplorer/FractalExplorer.c:1409
 msgid "My first fractal"
 msgstr "Mein erstes Fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1404
+#: plug-ins/FractalExplorer/FractalExplorer.c:1426
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Durch Doppelklick ein Fracktal auswählen"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1435
+#: plug-ins/FractalExplorer/FractalExplorer.c:1457
 msgid "Rescan"
 msgstr "Neuer Scan"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1442
+#: plug-ins/FractalExplorer/FractalExplorer.c:1464
 msgid "Select directory and rescan collection"
 msgstr "Verzeichnis auswählen und erneut scannen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1453
+#: plug-ins/FractalExplorer/FractalExplorer.c:1475
 msgid "Delete currently selected fractal"
 msgstr "Löscht das ausgewählte Fraktal"
 
 #. Call up the file sel dialogue
-#: plug-ins/FractalExplorer/FractalExplorer.c:1490
+#: plug-ins/FractalExplorer/FractalExplorer.c:1512
 msgid "Add FractalExplorer path"
 msgstr "FractalExplorer Pfad hinzufügen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1524
+#: plug-ins/FractalExplorer/FractalExplorer.c:1546
 msgid "Rescan for fractals"
 msgstr "Neuer Scan für Fraktale"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1582
+#: plug-ins/FractalExplorer/FractalExplorer.c:1604
 msgid "Add dir"
 msgstr "Verzeichnis hinzufügen"
 
@@ -1336,7 +1340,7 @@ msgstr "%s: fehlerhafte Palette\n"
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:297
 #: plug-ins/bmp/bmpread.c:304 plug-ins/common/CEL.c:306
 #: plug-ins/common/blinds.c:399 plug-ins/common/compose.c:545
-#: plug-ins/common/decompose.c:446 plug-ins/common/film.c:1006
+#: plug-ins/common/decompose.c:446 plug-ins/common/film.c:1007
 #: plug-ins/common/gbr.c:346 plug-ins/common/gifload.c:848
 #: plug-ins/common/hrz.c:381 plug-ins/common/jpeg.c:901
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
@@ -1419,11 +1423,11 @@ msgstr "Eimergrösse:"
 
 #: plug-ins/borderaverage/borderaverage.c:456
 msgid "1 (nonsense?)"
-msgstr ""
+msgstr "1 (Unsinn?)"
 
 #: plug-ins/borderaverage/borderaverage.c:464
 msgid "256 (nonsense?)"
-msgstr ""
+msgstr "256 (Unsinn?)"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:196
@@ -1596,19 +1600,19 @@ msgstr "Mit gradiertem Exponenten (0,1)"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr "multipl. Zufallswert (0,1)"
+msgstr "Multipl. Zufallswert (0,1)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr "multipl. Zufallswert (0,2)"
+msgstr "Multipl. Zufallswert (0,2)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr "multipl. Gradient (0,1)"
+msgstr "Multipl. Farbverlauf (0,1)"
 
 #: plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
-msgstr "mit p und Zufallszahl (0,1)"
+msgstr "Mit p und Zufallszahl (0,1)"
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "All black"
@@ -1628,16 +1632,16 @@ msgstr "Die erste Zeile des Bildes"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
-msgstr "Fliessender Gradient"
+msgstr "Fliessender Farbverlauf"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr "Fliess. Gradient ohne Lücke"
+msgstr "Fliess. Farbverlauf ohne Lücke"
 
 # kann lang sein, siehe ui
 #: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
-msgstr "Zufällig, Kanalunabhängig"
+msgstr "Zufällig, kanalunabhängig"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
@@ -2692,6 +2696,8 @@ msgstr "<Image>/Filter/Verzerren/Kurve..."
 #: plug-ins/common/curve_bend.c:815
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
+"Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske  "
+"verwendet"
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1367
@@ -3169,7 +3175,7 @@ msgstr "Eingravieren"
 msgid "Limit Line Width"
 msgstr "Beschränke Linienbreite"
 
-#: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1262
+#: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1263
 #: plug-ins/common/gtm.c:545 plug-ins/common/ps.c:2336
 #: plug-ins/common/ps.c:2511 plug-ins/common/smooth_palette.c:440
 #: plug-ins/common/tile.c:424 plug-ins/imagemap/imap_rectangle.c:392
@@ -3234,111 +3240,111 @@ msgid "Untitled"
 msgstr "Unbenannt"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:737
+#: plug-ins/common/film.c:738
 msgid "Temporary"
 msgstr "Temporär"
 
-#: plug-ins/common/film.c:1118
+#: plug-ins/common/film.c:1119
 msgid "Available Images:"
 msgstr "Vorhandene Bilder:"
 
-#: plug-ins/common/film.c:1119
+#: plug-ins/common/film.c:1120
 msgid "On Film:"
 msgstr "Auf dem Film:"
 
-#: plug-ins/common/film.c:1146
+#: plug-ins/common/film.c:1147
 msgid "Add >>"
 msgstr "Hinzufügen"
 
-#: plug-ins/common/film.c:1146 plug-ins/common/iwarp.c:925
+#: plug-ins/common/film.c:1147 plug-ins/common/iwarp.c:925
 #: plug-ins/imagemap/imap_polygon.c:460
 msgid "Remove"
 msgstr "Entfernen"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1200 plug-ins/common/film.c:1233
+#: plug-ins/common/film.c:1201 plug-ins/common/film.c:1234
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1242
+#: plug-ins/common/film.c:1243
 msgid "Fit Height to Images"
 msgstr "Höhe an Bilder anpassen"
 
 #. Film color
-#: plug-ins/common/film.c:1274
+#: plug-ins/common/film.c:1275
 msgid "Select Film Color"
 msgstr "Farbe des Films auswählen"
 
-#: plug-ins/common/film.c:1278 plug-ins/common/film.c:1322
+#: plug-ins/common/film.c:1279 plug-ins/common/film.c:1323
 #: plug-ins/common/nova.c:395 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
 msgstr "Farbe:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1285
+#: plug-ins/common/film.c:1286
 msgid "Numbering"
 msgstr "Nummerierung"
 
-#: plug-ins/common/film.c:1306
+#: plug-ins/common/film.c:1307
 msgid "Start Index:"
 msgstr "Startindex:"
 
-#: plug-ins/common/film.c:1314
+#: plug-ins/common/film.c:1315
 msgid "Font:"
 msgstr "Schrift:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1318
+#: plug-ins/common/film.c:1319
 msgid "Select Number Color"
 msgstr "Farbe der Nummern auswählen"
 
-#: plug-ins/common/film.c:1328
+#: plug-ins/common/film.c:1329
 msgid "At Bottom"
 msgstr "Am Fuß"
 
-#: plug-ins/common/film.c:1328
+#: plug-ins/common/film.c:1329
 msgid "At Top"
 msgstr "Am Kopf"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1343
+#: plug-ins/common/film.c:1344
 msgid "Image Selection"
 msgstr "Bildauswahl"
 
-#: plug-ins/common/film.c:1360
+#: plug-ins/common/film.c:1361
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
 msgstr "Erweiterte Einstellungen (alle Werte relativ zur Filmhöhe)"
 
-#: plug-ins/common/film.c:1376
+#: plug-ins/common/film.c:1377
 msgid "Image Height:"
 msgstr "Bildhöhe:"
 
-#: plug-ins/common/film.c:1387
+#: plug-ins/common/film.c:1394
 msgid "Image Spacing:"
 msgstr "Bildabstand:"
 
-#: plug-ins/common/film.c:1405
+#: plug-ins/common/film.c:1418
 msgid "Hole Offset:"
 msgstr "Lochversatz:"
 
-#: plug-ins/common/film.c:1416
+#: plug-ins/common/film.c:1435
 msgid "Hole Width:"
 msgstr "Lochbreite:"
 
-#: plug-ins/common/film.c:1427
+#: plug-ins/common/film.c:1452
 msgid "Hole Height:"
 msgstr "Lochhöhe:"
 
-#: plug-ins/common/film.c:1438
+#: plug-ins/common/film.c:1469
 msgid "Hole Spacing:"
 msgstr "Lochabstand:"
 
-#: plug-ins/common/film.c:1456
+#: plug-ins/common/film.c:1493
 msgid "Number Height:"
 msgstr "Nummernhöhe:"
 
-#: plug-ins/common/film.c:1478
+#: plug-ins/common/film.c:1521
 msgid "Reset to Defaults"
 msgstr "Auf Standardwerte zurücksetzen"
 
@@ -3465,11 +3471,11 @@ msgstr "Beschreibung:"
 
 #: plug-ins/common/gee.c:140
 msgid "<Image>/Filters/Toys/The Egg..."
-msgstr "<Image>/Filter/Viel Spaß/Das Ei..."
+msgstr "<Image>/Filter/Spielzeug/Das Ei..."
 
 #: plug-ins/common/gee.c:233
 msgid "GEE!  The GIMP E'er Egg!"
-msgstr ""
+msgstr "GOE! Das GIMP Osterei!"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:244
@@ -4127,11 +4133,11 @@ msgstr "Glättung:"
 
 #: plug-ins/common/jpeg.c:1714
 msgid "Restart Markers"
-msgstr ""
+msgstr "Neustart der Markierungen"
 
 #: plug-ins/common/jpeg.c:1722
 msgid "Restart Frequency (Rows):"
-msgstr ""
+msgstr "Neustart der Frequenzen (Zeilen):"
 
 #: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:770
 msgid "Optimize"
@@ -4213,7 +4219,7 @@ msgstr "Ableitung"
 
 #: plug-ins/common/lic.c:1071 plug-ins/sinus/sinus.c:1035
 msgid "Gradient"
-msgstr "Gradient"
+msgstr "Farbverlauf"
 
 # TODO! Zusammenrollen ?
 #: plug-ins/common/lic.c:1077
@@ -4358,21 +4364,24 @@ msgstr "Max RGB"
 
 #: plug-ins/common/max_rgb.c:281
 msgid "Hold the Maximal Channels"
-msgstr ""
+msgstr "Halte die maximalen Kanäle"
 
 #: plug-ins/common/max_rgb.c:283
 msgid "Hold the Minimal Channels"
-msgstr ""
+msgstr "Halte die minimalen Kanäle"
 
 #: plug-ins/common/mblur.c:165
 msgid "Motion blur of image"
-msgstr ""
+msgstr "Bewegungsunschärfe des Bildes"
 
 #: plug-ins/common/mblur.c:166
 msgid ""
 "This plug-in simulates the effect seen when photographing a moving object at "
 "a slow shutter speed. Done by adding multiple displaced copies."
 msgstr ""
+"Dieses plug-in simuliert den Effekt der auftritt wenn man ein Objektbei "
+"niedriger Verschlußzeit photographiert. Erzeugt durch Addition mehrerer "
+"verchobener Kopien"
 
 #: plug-ins/common/mblur.c:170
 msgid "<Image>/Filters/Blur/Motion Blur..."
@@ -5144,15 +5153,15 @@ msgstr "<Image>/Filter/Verzerrung/Ripple..."
 
 #: plug-ins/common/ripple.c:235
 msgid "Rippling..."
-msgstr ""
+msgstr "Erzeuge Zacken..."
 
 #: plug-ins/common/ripple.c:591
 msgid "Ripple"
-msgstr ""
+msgstr "Zacken"
 
 #: plug-ins/common/ripple.c:637
 msgid "Retain Tilability"
-msgstr ""
+msgstr "Erhalte Kachelbarkeit"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:663
@@ -5234,14 +5243,6 @@ msgstr "Ähnlich Einfärben"
 #: plug-ins/common/sample_colorize.c:1301
 msgid "Get Sample Colors"
 msgstr ""
-"Dieses Plug-In erstellt ein Pixel breite Kanten, mit dem Farbwert "
-"proportional\n"
-"zum Gradienten, aus dem Bild. Es benutzt den Laplace-Operator (ein 3x3 "
-"kernel\n"
-"mit -8 in der Mitte). Das Bild muss laplace'd sein damit man ordentliche\n"
-"Ergebnisse erzielt - ein gauss_iir mit 1.5-5.0 (abhängig vom Rauschen im "
-"Bild)\n"
-"funktioniert am Besten."
 
 #. layer optionmenu (Dst)
 #: plug-ins/common/sample_colorize.c:1328
@@ -5256,12 +5257,12 @@ msgstr "Quelle:"
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1366
 msgid "** From GRADIENT **"
-msgstr "** Aus Gradient **"
+msgstr "** Aus Farbverlauf **"
 
 #. Add extra menu items for Inverted Gradient
 #: plug-ins/common/sample_colorize.c:1374
 msgid "** From INVERSE GRADIENT **"
-msgstr "** Aus umgekehrtem Gradienten **"
+msgstr "** Aus umgekehrtem Farbverlauf **"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1389
@@ -5277,11 +5278,11 @@ msgstr "Zeige Farbe"
 
 #: plug-ins/common/sample_colorize.c:1530
 msgid "In Level:"
-msgstr ""
+msgstr "Stufe Innen:"
 
 #: plug-ins/common/sample_colorize.c:1574
 msgid "Out Level:"
-msgstr ""
+msgstr "Stufe Außen:"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1609
@@ -5396,7 +5397,7 @@ msgstr ""
 
 #: plug-ins/common/sel_gauss.c:281
 msgid "Max. Delta:"
-msgstr ""
+msgstr "Max. Delta"
 
 # TODO
 #: plug-ins/common/semiflatten.c:90
@@ -5465,7 +5466,7 @@ msgstr "<Image>/Filter/Farben/Glätte Palette..."
 
 #: plug-ins/common/smooth_palette.c:170
 msgid "Deriving smooth palette..."
-msgstr ""
+msgstr "Erzeuge geglättete Palette..."
 
 #: plug-ins/common/smooth_palette.c:399
 msgid "Smooth Palette"
@@ -5545,7 +5546,7 @@ msgstr "Glitzern..."
 
 #: plug-ins/common/sparkle.c:351
 msgid "Sparkle"
-msgstr "Glizuer"
+msgstr "Glitzer"
 
 #: plug-ins/common/sparkle.c:389
 msgid "Luminosity Threshold:"
@@ -5565,15 +5566,15 @@ msgstr "Flacker Intensität anpassen"
 
 #: plug-ins/common/sparkle.c:409
 msgid "Spike Length:"
-msgstr ""
+msgstr "Strahlenlänge:"
 
 #: plug-ins/common/sparkle.c:412
 msgid "Adjust the Spike Length"
-msgstr ""
+msgstr "Einstellen der Strahlenlänge"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spike Points:"
-msgstr ""
+msgstr "Strahlpunkte:"
 
 #: plug-ins/common/sparkle.c:422
 msgid "Adjust the Number of Spikes"
@@ -5581,19 +5582,21 @@ msgstr "Einstellen der Anzahl der Strahlen"
 
 #: plug-ins/common/sparkle.c:429
 msgid "Spike Angle (-1: Random):"
-msgstr ""
+msgstr "Strahlwinkel (-1: Zufällig)"
 
 #: plug-ins/common/sparkle.c:432
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
 msgstr ""
+"Einstellen des Winkels zwischen den Strahlen (-1 bedeutet einen zufällig "
+"gewählten Winkel"
 
 #: plug-ins/common/sparkle.c:440
 msgid "Spike Density:"
-msgstr ""
+msgstr "Strahlendichte"
 
 #: plug-ins/common/sparkle.c:443
 msgid "Adjust the Spike Density"
-msgstr ""
+msgstr "Einstellen der Strahlendichte"
 
 #: plug-ins/common/sparkle.c:453
 msgid "Adjust the Opacity of the Spikes"
@@ -5605,11 +5608,11 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:471
 msgid "Random Saturation:"
-msgstr ""
+msgstr "Zufällige Sättigung"
 
 #: plug-ins/common/sparkle.c:474
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr ""
+msgstr "Einstellen wie zufällig die Sättigung geändert wird"
 
 #: plug-ins/common/sparkle.c:492
 msgid "Preserve Luminosity"
@@ -5633,7 +5636,7 @@ msgstr "Rand hinzufügen"
 
 #: plug-ins/common/sparkle.c:520
 msgid "Draw a Border of Spikes around the Image"
-msgstr ""
+msgstr "Zeichne einen Rand aus Strahlen um das Bild"
 
 #: plug-ins/common/sparkle.c:533
 msgid "Natural Color"
@@ -5989,7 +5992,7 @@ msgstr "Alle Kacheln"
 
 #: plug-ins/common/tileit.c:517
 msgid "Alternate Tiles"
-msgstr ""
+msgstr "Alternative Kacheln"
 
 #: plug-ins/common/tileit.c:528
 msgid "Explicit Tile"
@@ -6050,11 +6053,11 @@ msgstr ""
 
 #: plug-ins/common/video.c:47
 msgid "3x3"
-msgstr ""
+msgstr "3x3"
 
 #: plug-ins/common/video.c:48
 msgid "Large 3x3"
-msgstr ""
+msgstr "Groß 3x3"
 
 #: plug-ins/common/video.c:49
 msgid "Hex"
@@ -6243,11 +6246,11 @@ msgstr "Andere Einstellungen"
 
 #: plug-ins/common/warp.c:657
 msgid "Gradient Scale:"
-msgstr "Gradienten-Faktor:"
+msgstr "Gradient Skalierung:"
 
 #: plug-ins/common/warp.c:672
 msgid "Gradient map selection menu"
-msgstr "Gradienten-Map Auswahl-Menu"
+msgstr "Gradienten-Map Auswahl-Menü"
 
 #: plug-ins/common/warp.c:682
 msgid "Vector Mag:"
@@ -6280,8 +6283,6 @@ msgstr "Finde XY-Gradient..."
 #, c-format
 msgid "Flow Step %d..."
 msgstr ""
-"von Vidar Madsen\n"
-"September 1999"
 
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
@@ -6346,7 +6347,7 @@ msgid "Pasted"
 msgstr "Eingefügt"
 
 #: plug-ins/common/winclipboard.c:534
-msgid "Pasteing ..."
+msgid "Pasting ..."
 msgstr "Füge Ein..."
 
 #: plug-ins/common/wind.c:163
@@ -6364,7 +6365,7 @@ msgstr ""
 #: plug-ins/common/wind.c:698 plug-ins/common/wind.c:753
 #: plug-ins/common/wind.c:798
 msgid "Wind"
-msgstr ""
+msgstr "Wind"
 
 #: plug-ins/common/wind.c:726
 msgid ""
@@ -6644,11 +6645,11 @@ msgstr "Fanatisch am Zuschneiden(tm)..."
 
 #: plug-ins/dbbrowser/dbbrowser.c:88
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr "<Toolbox>/Xtns/DB Anzeiger..."
+msgstr "<Toolbox>/Xtns/DB Browser..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:65
 msgid "DB Browser (init)"
-msgstr "DB Browser (init)"
+msgstr "DB Browser (Init)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:111
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
@@ -9406,6 +9407,11 @@ msgstr "Neues gfig Objekt"
 msgid "Delete gfig drawing"
 msgstr "Gfig Zeichnung löschen"
 
+#. Question
+#: plug-ins/gfig/gfig.c:6244
+msgid "Are you sure you want to delete"
+msgstr "Wirklich löschen"
+
 #: plug-ins/gfig/gfig.c:6297 plug-ins/gfig/gfig.c:6336
 msgid "<NONE>"
 msgstr ""
@@ -9563,15 +9569,6 @@ msgstr "Namen für das kopierte GFlare eingeben:"
 #: plug-ins/gflare/gflare.c:3380
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
-
-#: plug-ins/gflare/gflare.c:3386
-#, c-format
-msgid ""
-"Are you sure you want to delete\n"
-"\"%s\" from the list and from disk?"
-msgstr ""
-"Wollen Sie \"%s\" wirklich\n" 
-"aus der Liste und von der Festplatte löschen ?"
 
 #: plug-ins/gflare/gflare.c:3390
 msgid "Delete GFlare"
@@ -10690,7 +10687,7 @@ msgstr "Höhe"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "Top Start at"
-msgstr ""
+msgstr "Beginn Oben bei"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:183
 msgid "Horz. Spacing"
@@ -10706,7 +10703,7 @@ msgstr "Vert. Abstand"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:198
 msgid "No. Down"
-msgstr ""
+msgstr "Nein. Runter"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:223
 #, c-format
@@ -10867,6 +10864,8 @@ msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
+"Datei existiert bereits.\n"
+"  Wollen Sie sie wirklich überschreiben?  "
 
 #: plug-ins/imagemap/imap_file.c:115
 msgid "Save Imagemap"
@@ -11892,6 +11891,8 @@ msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
 msgstr ""
+"Agressives RLE\n"
+"(Nicht ünterstützt von SGI)"
 
 #: plug-ins/sinus/sinus.c:197
 msgid "<Image>/Filters/Render/Sinus..."
@@ -12027,7 +12028,7 @@ msgstr "<Toolbox>/Datei/Holen/TWAIN..."
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:645
 msgid "Transferring TWAIN data"
-msgstr ""
+msgstr "Übertrage TWAIN Daten"
 
 #: plug-ins/webbrowser/webbrowser.c:124
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
@@ -12053,7 +12054,7 @@ msgstr "Aktuell"
 
 #: plug-ins/winsnap/winsnap.c:939
 msgid "Grab a single window"
-msgstr ""
+msgstr "Greife einzelnes Fenster"
 
 #: plug-ins/winsnap/winsnap.c:950
 msgid "Include decorations"
@@ -12061,31 +12062,31 @@ msgstr "Mit Fensterrahmen"
 
 #: plug-ins/winsnap/winsnap.c:986
 msgid "Grab the whole screen"
-msgstr ""
+msgstr "Greife ganzen Bildschirm"
 
 #: plug-ins/winsnap/winsnap.c:1188
 msgid "No data captured"
-msgstr ""
+msgstr "Keine Daten"
 
 #: plug-ins/xjt/xjt.c:651
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr ""
+msgstr "XJT Datei enthält unbekannten Ebenenmodus %d"
 
 #: plug-ins/xjt/xjt.c:681
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr ""
+msgstr "Warnung: nicht unterstützter Ebenenmodus %d in XJT gespeichert"
 
 #: plug-ins/xjt/xjt.c:697
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr ""
+msgstr "XJT Datei enthält unbekannten Pfadtyp %d"
 
 #: plug-ins/xjt/xjt.c:713
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr ""
+msgstr "Warnung: nicht unterstützter Pfadtyp %d in XJT gespeichert"
 
 #: plug-ins/xjt/xjt.c:742
 msgid "Save as XJT"
@@ -12111,7 +12112,7 @@ msgstr "xjt: Kann nicht mit unbekanntem Bildtyp arbeiten"
 #: plug-ins/xjt/xjt.c:1581 plug-ins/xjt/xjt.c:3179
 #, c-format
 msgid "Can't create working dir: %s"
-msgstr ""
+msgstr "Kann Arbeitsverzeichnis %s nicht anlegen"
 
 #: plug-ins/xjt/xjt.c:1590
 #, c-format
@@ -12127,164 +12128,9 @@ msgstr "Kann %s nicht öffnen (lesend)"
 #: plug-ins/xjt/xjt.c:3042
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
-msgstr ""
+msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 
 #: plug-ins/xjt/xjt.c:3047
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
-msgstr ""
-
-#~ msgid "Make an image of Coupled-Map Lattice"
-#~ msgstr "Erstelle ein Bild aus dem Doppel-Map Gitter"
-
-#~ msgid ""
-#~ "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula "
-#~ "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
-#~ "prameter file is passed as the 4th arg. You can control CML_explorer via "
-#~ "parameter file."
-#~ msgstr ""
-#~ "Mache ein Bild aus dem Doppel-Map-Gitter (Coupled-Map Lattice, CML). CML "
-#~ "ist\n"
-#~ "eine Art Zellularer Automat basierend auf einer stetigen Definitionsmenge.\n"
-#~ "Im Modus \"RUN_NONINTERACTIVE\" (Batchmodus) ist das 4. Argument der Name\n"
-#~ "einer Parameter-Datei, womit man den CML_explorer steuern kann."
-
-#~ msgid "Combine two images using corresponding depth maps (z-buffers)"
-#~ msgstr ""
-#~ "Kombiniert zwei Bilder mit Hilfe der entsprechenden Tiefenkarte (Z-Buffer)"
-
-#~ msgid ""
-#~ "Taking as input two full-color, full-alpha images and two corresponding "
-#~ "grayscale depth maps, this plug-in combines the images based on which is "
-#~ "closer (has a lower depth map value) at each point."
-#~ msgstr ""
-#~ "Diese Funktion kombiniert zwei Farb+Alpha Bilder mit den entsprechenden "
-#~ "Tiefen-Informationen (in Form von Graustufenbildern) zu einem Bild, wobei es "
-#~ "immer das Pixel ins endgültige Bild schafft, welches einen niedrigeren "
-#~ "Tiefen-Map-Wert an der Stelle hat."
-
-#~ msgid ""
-#~ "Despeckle filter, typically used to 'despeckle' a photographic image."
-#~ msgstr ""
-#~ "Filter zum Entfernen von Flecken, wird normalerweise dazu benutzt,\n"
-#~ "um Flecken von einem Foto zu entfernen."
-
-#~ msgid ""
-#~ "This plug-in selectively performs a median or adaptive box filter on an "
-#~ "image."
-#~ msgstr ""
-#~ "Dieses Plug-In wendet selektiv einen \"median\" oder \"adaptive box\" Filter "
-#~ "auf\n"
-#~ "ein Bild an."
-
-#~ msgid ""
-#~ "Destripe filter, used to remove vertical stripes caused by cheap scanners."
-#~ msgstr ""
-#~ "Streifen entfernen kann dazu benutzt werden, vertikale Streifen, verursacht\n"
-#~ "durch billige Scanner, zu entfernen."
-
-#~ msgid "This plug-in tries to remove vertical stripes from an image."
-#~ msgstr ""
-#~ "Dieses plug-in versucht, vertikale Streifen aus einem Bild zu entfernen."
-
-#~ msgid ""
-#~ " Perform edge detection on the contents of the specified drawable. It "
-#~ "applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary "
-#~ "constant, WRAPMODE is like displace plug-in (useful for tilable image)."
-#~ msgstr ""
-#~ "Wende Kantenerkennung auf den Inhalt des angegebenen Bildes an. Intern\n"
-#~ "wendet es, glaube ich, eine \"Verwicklelungs-Matrix\" mit 3x3 Kernel an. "
-#~ "AMOUNT\n"
-#~ "ist irgendeine Konstante, WRAPMODE ist dem \"Verschieben\"-Plug-In ähnlich\n"
-#~ "(praktisch für gekachelte Bilder)."
-
-#~ msgid "transform image with the Mandelbrot Fractal"
-#~ msgstr "Transformiere ein Bild mit dem Mandelbrot-Fraktral"
-
-#~ msgid "Create images based on a random genetic formula"
-#~ msgstr "Erzeugt Bilder mittels Zufall und einem genetischen Algorithmus"
-
-#~ msgid ""
-#~ "This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
-#~ "10/95, page 326). It generates modern art pictures from a random genetic "
-#~ "formula."
-#~ msgstr ""
-#~ "Dieses Plug-In basiert auf einem Artikel von Jörn Loviscach (erschienen in\n"
-#~ "c't 10/95, Seite 326). Es erstellt moderne Kunstbilder von einer zufälligen\n"
-#~ "genetischen Formel."
-
-#~ msgid "FLI: Sorry, can't save images with Alpha.\n"
-#~ msgstr "FLI: Kann Bilder mit Alpha nicht speichern\n"
-
-#~ msgid "Film color Color Picker"
-#~ msgstr "Film Farbauswahl"
-
-#~ msgid "Number color Color Picker"
-#~ msgstr "Nummerierung Farbauswahl"
-
-#~ msgid "add -->"
-#~ msgstr "Hinzufügen"
-
-#~ msgid "remove"
-#~ msgstr "Entfernen"
-
-#~ msgid "Create an embossing effect using an image as a bump map"
-#~ msgstr ""
-#~ "Erstellt einen Relief-Effekt (aus dem Bild heraus), wobei es ein Bild als\n"
-#~ "Bumpmap benutzt"
-
-#~ msgid ""
-#~ "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing "
-#~ "Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It "
-#~ "takes a grayscale image to be applied as a bump map to another image and "
-#~ "produces a nice embossing effect."
-#~ msgstr ""
-#~ "Dieses plug-in benutzt den Algorithmus von John Schlag, \"Fast Embossing\n"
-#~ "Effects on Raster Image Data\", erschienen in Graphics GEMS IV (ISBN "
-#~ "0-12-336155-9).\n"
-#~ "Als Argument wird ein Graustufenbild angegeben, welches als eine Bump-Map\n"
-#~ "auf ein anderes Bild angewendet wird, und so einen Austanzungs- bzw.\n"
-#~ "Reliefeffekt erzeugt."
-
-#~ msgid "New Image"
-#~ msgstr "Neues Bild"
-
-#~ msgid "Center X:"
-#~ msgstr "Mitte X:"
-
-#~ msgid "Center Y:"
-#~ msgstr "Mitte Y:"
-
-#~ msgid "Max depth:"
-#~ msgstr "Max. Tiefe:"
-
-#~ msgid "Glow Opacity (%):"
-#~ msgstr "Glühen Deckkraft (%): "
-
-#~ msgid "Glow Mode:"
-#~ msgstr "Glühen Modus:"
-
-#~ msgid "Rays Opacity (%):"
-#~ msgstr "Strahlen Deckkraft (%): "
-
-#~ msgid "Rays Mode:"
-#~ msgstr "Strahlen Modus:"
-
-#~ msgid "--------------------------------------------"
-#~ msgstr "--------------------------------------------"
-
-#~ msgid "file alreay exists:"
-#~ msgstr "Datei existiert bereits:"
-
-#~ msgid "Author: "
-#~ msgstr "Author: "
-
-# Urheberrecht ?
-#~ msgid "Copyright: "
-#~ msgstr "Copyright: "
-
-#~ msgid "Date: "
-#~ msgstr "Datum: "
-
-#~ msgid "Image types: "
-#~ msgstr "Bild-Typen: "
+msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
