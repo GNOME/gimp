@@ -79,8 +79,6 @@ gimp_SOURCES = \
 	draw_core.h		\
 	drawable.c		\
 	drawable.h		\
-	edit_selection.c	\
-	edit_selection.h	\
 	errorconsole.c		\
 	errorconsole.h		\
 	errors.c		\

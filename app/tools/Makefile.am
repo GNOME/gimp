@@ -34,6 +34,8 @@ libapptools_la_SOURCES = \
 	curves.h		\
 	dodgeburn.c		\
 	dodgeburn.h		\
+	edit_selection.c	\
+	edit_selection.h	\
 	ellipse_select.c	\
 	ellipse_select.h	\
 	eraser.c		\

@@ -1,5 +1,13 @@
 2001-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/edit_selection.[ch]: removed.
+
+	* app/tools/Makefile.am
+	* app/tools/edit_selection.[ch]: added.
+
+2001-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/Makefile.am
 	* libgimp/gimp.h
 	* libgimp/gimpadaptivesupersample.[ch]
