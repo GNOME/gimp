@@ -16,13 +16,15 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; blend-anim.scm   version 1.01   12/13/97
+; blend-anim.scm   version 1.02   05/28/98
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
+; 1.02 - use gimp-message to output an error message if called
+;        with less than three layers
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
+; Copyright (C) 1997-98 Sven Neumann (neumanns@uni-duesseldorf.de)
 ; 
 ;  
 ; Blends two or more layers over a backgound, so that an animation can
@@ -208,7 +210,8 @@
 	      
 	(gimp-image-enable-undo image)
 	(gimp-display-new image)
-	(gimp-displays-flush)))))
+	(gimp-displays-flush))
+  (gimp-message "Blend Animation needs at least three source layers"))))
 
 (script-fu-register "script-fu-blend-anim" 
 		    "<Image>/Script-Fu/Animators/Blend"
@@ -216,7 +219,7 @@
                      animation can be saved"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "05/28/1998"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
