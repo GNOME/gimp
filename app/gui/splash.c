@@ -45,7 +45,7 @@ void
 splash_create (gboolean show_image)
 {
   GtkWidget *vbox;
-  GdkPixbufAnimation *animation = NULL;
+  GdkPixbuf *pixbuf = NULL;
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
@@ -54,7 +54,7 @@ splash_create (gboolean show_image)
   gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
-  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
@@ -65,17 +65,17 @@ splash_create (gboolean show_image)
       gchar *filename;
 
       filename = g_build_filename (gimp_data_directory (), 
-                                   "images", "gimp_splash.gif", NULL);
-      animation = gdk_pixbuf_animation_new_from_file (filename, NULL);
+                                   "images", "gimp_splash.png", NULL);
+      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
       g_free (filename);
       
-      if (animation)
+      if (pixbuf)
         {
           GtkWidget *align;
           GtkWidget *image;
 
-          image = gtk_image_new_from_animation (animation);
-          g_object_unref (animation);
+          image = gtk_image_new_from_pixbuf (pixbuf);
+          g_object_unref (pixbuf);
 
           align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
           gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, TRUE, 0);
@@ -86,7 +86,7 @@ splash_create (gboolean show_image)
         }
     }
 
-  if (!animation)
+  if (!pixbuf)
     {
       GtkWidget *line;
 
@@ -101,6 +101,8 @@ splash_create (gboolean show_image)
       line = gtk_hseparator_new ();
       gtk_box_pack_start_defaults (GTK_BOX (vbox), line);
       gtk_widget_show (line);      
+
+      gtk_widget_set_size_request (win_initstatus, DEFAULT_WIDTH, -1);
     }
 
   label1 = gtk_label_new ("");
@@ -114,9 +116,6 @@ splash_create (gboolean show_image)
   progress = gtk_progress_bar_new ();
   gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
   gtk_widget_show (progress);
-
-  if (!animation)
-    gtk_widget_set_size_request (win_initstatus, DEFAULT_WIDTH, -1);
 
   gtk_widget_show (win_initstatus);
 }

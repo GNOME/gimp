@@ -1,3 +1,9 @@
+2002-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/splash.c
+	* libgimpproxy/gimpobject.h: reverted stuff someone
+	accidentially checked in...
+
 2002-05-15  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/tool-options.png:
