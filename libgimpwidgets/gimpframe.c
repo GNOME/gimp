@@ -31,9 +31,9 @@
 #include "gimpframe.h"
 
 
-#define DEFAULT_LABEL_SPACING    6
-#define GIMP_FRAME_INDENT_KEY    "gimp-frame-indent"
-#define GIMP_FRAME_EXPANDER_KEY  "gimp-frame-in-expander"
+#define DEFAULT_LABEL_SPACING       6
+#define GIMP_FRAME_INDENT_KEY       "gimp-frame-indent"
+#define GIMP_FRAME_IN_EXPANDER_KEY  "gimp-frame-in-expander"
 
 
 static void      gimp_frame_class_init          (GimpFrameClass *klass);
@@ -174,22 +174,15 @@ gimp_frame_size_allocate (GtkWidget     *widget,
     {
       GtkAllocation   label_allocation;
       GtkRequisition  label_requisition;
-      gint            border_width = GTK_CONTAINER (widget)->border_width;
-      gfloat          xalign;
+      gint            border = GTK_CONTAINER (widget)->border_width;
 
       gtk_widget_get_child_requisition (frame->label_widget,
                                         &label_requisition);
 
-      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
-	xalign = frame->label_xalign;
-      else
-	xalign = 1.0 - frame->label_xalign;
-
-      label_allocation.x      = (allocation->x + border_width +
-                                 xalign * (gfloat) (allocation->width -
-                                                    label_requisition.width));
-      label_allocation.y      = allocation->y + border_width;
-      label_allocation.width  = label_requisition.width;
+      label_allocation.x      = allocation->x + border;
+      label_allocation.y      = allocation->y + border;
+      label_allocation.width  = MAX (label_requisition.width,
+                                     allocation->width - 2 * border);
       label_allocation.height = label_requisition.height;
 
       gtk_widget_size_allocate (frame->label_widget, &label_allocation);
@@ -200,11 +193,11 @@ static void
 gimp_frame_child_allocate (GtkFrame      *frame,
                            GtkAllocation *child_allocation)
 {
-  GtkWidget     *widget       = GTK_WIDGET (frame);
-  GtkAllocation *allocation   = &widget->allocation;
-  gint           border_width = GTK_CONTAINER (frame)->border_width;
-  gint           spacing      = 0;
-  gint           indent       = gimp_frame_get_indent (widget);
+  GtkWidget     *widget     = GTK_WIDGET (frame);
+  GtkAllocation *allocation = &widget->allocation;
+  gint           border     = GTK_CONTAINER (frame)->border_width;
+  gint           spacing    = 0;
+  gint           indent     = gimp_frame_get_indent (widget);
 
   if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
     {
@@ -218,17 +211,16 @@ gimp_frame_child_allocate (GtkFrame      *frame,
   spacing += gimp_frame_get_label_spacing (frame);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
-    child_allocation->x    = border_width + indent;
+    child_allocation->x    = border + indent;
   else
-    child_allocation->x    = border_width;
+    child_allocation->x    = border;
 
-  child_allocation->y      = border_width + spacing;
+  child_allocation->y      = border + spacing;
   child_allocation->width  = MAX (1,
-                                  allocation->width -
-                                  2 * border_width - indent);
+                                  allocation->width - 2 * border - indent);
   child_allocation->height = MAX (1,
                                   allocation->height -
-                                  child_allocation->y - border_width);
+                                  child_allocation->y - border);
 
   child_allocation->x += allocation->x;
   child_allocation->y += allocation->y;
@@ -265,6 +257,9 @@ gimp_frame_label_widget_notify (GtkFrame *frame)
       if (GTK_IS_LABEL (frame->label_widget))
         {
           label = GTK_LABEL (frame->label_widget);
+
+          gtk_misc_set_alignment (GTK_MISC (label),
+                                  frame->label_xalign, frame->label_yalign);
         }
       else if (GTK_IS_BIN (frame->label_widget))
         {
@@ -321,7 +316,7 @@ gimp_frame_get_label_spacing (GtkFrame *frame)
   gint spacing = 0;
 
   if ((frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget)) ||
-      (g_object_get_data (G_OBJECT (frame), GIMP_FRAME_EXPANDER_KEY)))
+      (g_object_get_data (G_OBJECT (frame), GIMP_FRAME_IN_EXPANDER_KEY)))
     {
       gtk_widget_style_get (GTK_WIDGET (frame),
                             "label_spacing", &spacing,
@@ -364,7 +359,7 @@ gimp_frame_new (const gchar *label)
 
   if (expander)
     g_object_set_data (G_OBJECT (frame),
-                       GIMP_FRAME_EXPANDER_KEY, (gpointer) TRUE);
+                       GIMP_FRAME_IN_EXPANDER_KEY, (gpointer) TRUE);
 
   return frame;
 }
