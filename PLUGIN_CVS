@@ -1,0 +1,32 @@
+#
+# this file controls which files get mirrored from/to
+# the sourceforge gimp-plug-ins cvs tree
+#
+# the syntax is easy, below are files/directories, with
+# a prefix character that specifies the action that should be done to it:
+#
+# M	mirror the file/dir from the gimp cvs to the plug-in cvs.
+#       these are the files that go _TO_ the gimp-plug-in server
+#
+# U	update the file/dir from the plug-in cvs to the main gimp cvs.
+#	these are the files that come _FROM_ the plug-in cvs server
+#
+# I	simply ignore the file/dir (it is not moved between the cvs trees)
+#	these are the files that are in only one cvs tree
+#
+# C	a comment for the following line
+#
+# * Later entries in the list take precedence over earlier ones.
+# * File deletes do not get mirrored. Damn!
+# * Directories should end in a trailing slash.
+#
+# NOTE: If anything goes havoc, then just delete this file from cvs
+# the mirror script will NOT try to do anything when this file is missing
+#
+
+C The "default" mode is mirroring of the main tree
+M /
+
+C The plug-in ChangeLog file
+U ChangeLog.plug-ins
+
