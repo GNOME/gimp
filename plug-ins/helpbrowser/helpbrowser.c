@@ -716,7 +716,7 @@ open_browser_dialog (gchar *locale,
   gint     success;
   guint    i;
 
-  gimp_ui_init ("webbrowser", TRUE);
+  gimp_ui_init ("helpbrowser", TRUE);
 
   root_dir = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
 			  GIMP_HELP_PREFIX, NULL);

@@ -20,6 +20,7 @@
 
 #include <locale.h>
 #include <errno.h>
+#include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +31,9 @@
 #endif
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -77,17 +81,24 @@ void gimp_read_expect_msg   (WireMessage *msg, gint type);
 
 
 #ifndef G_OS_WIN32
-static void       gimp_plugin_signalhandler (gint signum);
+static void       gimp_plugin_sigfatal_handler (gint          sig_num);
+static void       gimp_plugin_sigchld_handler  (gint          sig_num);
 #endif
-static int        gimp_write                (GIOChannel *channel , guint8 *buf, gulong count);
-static int        gimp_flush                (GIOChannel *channel);
-static void       gimp_loop                 (void);
-static void       gimp_config               (GPConfig *config);
-static void       gimp_proc_run             (GPProcRun *proc_run);
-static void       gimp_temp_proc_run        (GPProcRun *proc_run);
-static void       gimp_message_func         (gchar *str);
-static void       gimp_process_message      (WireMessage *msg);
-static void       gimp_close                (void);
+static gboolean   gimp_plugin_io_error_handler (GIOChannel   *channel,
+						GIOCondition  cond,
+						gpointer      data);
+
+static gint       gimp_write                   (GIOChannel   *channel,
+						guint8       *buf,
+						gulong        count);
+static gint       gimp_flush                   (GIOChannel   *channel);
+static void       gimp_loop                    (void);
+static void       gimp_config                  (GPConfig     *config);
+static void       gimp_proc_run                (GPProcRun    *proc_run);
+static void       gimp_temp_proc_run           (GPProcRun    *proc_run);
+static void       gimp_message_func            (gchar        *str);
+static void       gimp_process_message         (WireMessage  *msg);
+static void       gimp_close                   (void);
 
 
 GIOChannel *_readchannel  = NULL;
@@ -192,28 +203,27 @@ gimp_main (int   argc,
 
   progname = argv[0];
 
+  g_set_prgname (g_basename (progname));
+
 #ifndef G_OS_WIN32
   /* No use catching these on Win32, the user won't get any meaningful
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging if the plug-in
    * has been built with MSVC, and the user has MSVC installed.
    */
-  gimp_signal_private (SIGHUP,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGINT,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGQUIT, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGBUS,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGSEGV, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGPIPE, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGTERM, gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
-  gimp_signal_private (SIGFPE,  gimp_plugin_signalhandler,
-		       SA_RESETHAND | SA_NODEFER);
+  gimp_signal_private (SIGHUP,  gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGINT,  gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGQUIT, gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGBUS,  gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGSEGV, gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGTERM, gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGFPE,  gimp_plugin_sigfatal_handler, 0);
+
+  /* Ignore SIGPIPE from crashing Gimp */
+  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
+
+  /* Restart syscalls interrupted by SIGCHLD */
+  gimp_signal_private (SIGCHLD, gimp_plugin_sigchld_handler, SA_RESTART);
 #endif
 
 #ifndef G_OS_WIN32
@@ -254,6 +264,11 @@ gimp_main (int   argc,
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
   temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
+
+  g_io_add_watch (_readchannel,
+		  G_IO_ERR | G_IO_HUP,
+		  gimp_plugin_io_error_handler,
+		  NULL);
 
   gimp_loop ();
   return 0;
@@ -1153,38 +1168,62 @@ gimp_request_wakeups (void)
 
 #ifndef G_OS_WIN32
 static void
-gimp_plugin_signalhandler (gint signum)
+gimp_plugin_sigfatal_handler (gint sig_num)
 {
-  static gboolean caught_fatal_sig = FALSE;
-
-  if (caught_fatal_sig)
-    kill (getpid (), signum);
-
-  caught_fatal_sig = TRUE;
-
-  fprintf (stderr, "\n%s: %s caught\n", progname, g_strsignal (signum));
-
-  switch (signum)
+  switch (sig_num)
     {
-#ifdef SIGBUS
-    case SIGBUS:
-#endif
-#ifdef SIGSEGV
-    case SIGSEGV:
-#endif
-#ifdef SIGFPE
-    case SIGFPE:
-#endif
-    case 123456:		/* Must have some case value... */
-      g_on_error_query (progname);
+    case SIGHUP:
+    case SIGINT:
+    case SIGQUIT:
+    case SIGABRT:
+    case SIGTERM:
+      g_print ("%s terminated: %s\n", progname, g_strsignal (sig_num));
       break;
+
+    case SIGBUS:
+    case SIGSEGV:
+    case SIGFPE:
+    case SIGPIPE:
     default:
+      g_print ("%s: fatal error: %s\n", progname, g_strsignal (sig_num));
+      if (TRUE)
+	{
+	  sigset_t sigset;
+
+	  sigemptyset (&sigset);
+	  sigprocmask (SIG_SETMASK, &sigset, NULL);
+	  g_on_error_query (progname);
+	}
       break;
     }
 
   gimp_quit ();
 }
+
+static void
+gimp_plugin_sigchld_handler (gint sig_num)
+{
+  gint pid;
+  gint status;
+
+  while (TRUE)
+    {
+      pid = waitpid (WAIT_ANY, &status, WNOHANG);
+
+      if (pid <= 0)
+        break;
+    }
+}
 #endif
+
+static gboolean
+gimp_plugin_io_error_handler (GIOChannel   *channel,
+			      GIOCondition  cond,
+			      gpointer      data)
+{
+  g_print ("%s: fatal error: GIMP crashed\n", progname);
+  gimp_quit ();
+}
 
 static int
 gimp_write (GIOChannel *channel, 

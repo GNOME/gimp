@@ -78,7 +78,14 @@ gimp_fatal_error (gchar *fmt, ...)
   g_print ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
   va_end (args);
 
-  g_on_error_query (prog_name);
+  if (TRUE)
+    {
+      sigset_t sigset;
+
+      sigemptyset (&sigset);
+      sigprocmask (SIG_SETMASK, &sigset, NULL);
+      g_on_error_query (prog_name);
+    }
 #else
   /* g_on_error_query doesn't do anything reasonable on Win32. */
   va_list args;
@@ -106,7 +113,13 @@ gimp_terminate (gchar *fmt, ...)
   va_end (args);
 
   if (use_debug_handler)
-    g_on_error_query (prog_name);
+    {
+      sigset_t sigset;
+
+      sigemptyset (&sigset);
+      sigprocmask (SIG_SETMASK, &sigset, NULL);
+      g_on_error_query (prog_name);
+    }
 #else
   /* g_on_error_query doesn't do anything reasonable on Win32. */
   va_list args;

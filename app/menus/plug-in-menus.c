@@ -338,13 +338,11 @@ plug_in_init (void)
     }
 
   /* insert the proc defs */
-  tmp = gimprc_proc_defs;
-  while (tmp)
+  for (tmp = gimprc_proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = g_new (PlugInProcDef, 1);
       *proc_def = *((PlugInProcDef*) tmp->data);
       plug_in_proc_def_insert (proc_def, NULL);
-      tmp = tmp->next;
     }
 
   tmp = plug_in_defs;
@@ -408,11 +406,9 @@ plug_in_init (void)
     g_print ("\n");
 
   /* free up stuff */
-  tmp = plug_in_defs;
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
       plug_in_def_free (plug_in_def, FALSE);
     }
@@ -1033,10 +1029,11 @@ plug_in_open (PlugIn *plug_in)
 
       if (!plug_in->synchronous)
 	{
-	  plug_in->input_id = g_io_add_watch (plug_in->my_read,
-					      G_IO_IN | G_IO_PRI,
-					     plug_in_recv_message,
-					     plug_in);
+	  plug_in->input_id =
+	    g_io_add_watch (plug_in->my_read,
+			    G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
+			    plug_in_recv_message,
+			    plug_in);
 
 	  open_plug_ins = g_slist_prepend (open_plug_ins, plug_in);
 	}
@@ -1176,12 +1173,10 @@ plug_in_close (PlugIn   *plug_in,
 	  GSList *list;
 	  PlugInProcDef *proc_def;
 
-	  list = plug_in->temp_proc_defs;
-	  while (list)
+	  for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
 	    {
 	      proc_def = (PlugInProcDef *) list->data;
 	      plug_in_proc_def_remove (proc_def);
-	      list = list->next;
 	    }
 
 	  g_slist_free (plug_in->temp_proc_defs);
@@ -1189,9 +1184,9 @@ plug_in_close (PlugIn   *plug_in,
 	}
 
       /* Close any dialogs that this plugin might have opened */
-      brushes_check_dialogs();
-      patterns_check_dialogs();
-      gradients_check_dialogs();
+      brushes_check_dialogs ();
+      patterns_check_dialogs ();
+      gradients_check_dialogs ();
 
       open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
     }
@@ -1405,25 +1400,51 @@ plug_in_recv_message (GIOChannel  *channel,
 		      GIOCondition cond,
 		      gpointer	   data)
 {
-  WireMessage msg;
+  gboolean got_message = FALSE;
 
-  plug_in_push ((PlugIn*) data);
+  if ((PlugIn *) data != current_plug_in)
+    plug_in_push ((PlugIn *) data);
+
   if (current_readchannel == NULL)
     return TRUE;
 
-  memset (&msg, 0, sizeof (WireMessage));
-  if (!wire_read_msg (current_readchannel, &msg))
-    plug_in_close (current_plug_in, TRUE);
-  else 
+  if (cond & (G_IO_IN | G_IO_PRI))
     {
-      plug_in_handle_message (&msg);
-      wire_destroy (&msg);
+      WireMessage msg;
+
+      memset (&msg, 0, sizeof (WireMessage));
+
+      if (!wire_read_msg (current_readchannel, &msg))
+	{
+	  plug_in_close (current_plug_in, TRUE);
+	}
+      else 
+	{
+	  plug_in_handle_message (&msg);
+	  wire_destroy (&msg);
+	  got_message = TRUE;
+	}
+
     }
+
+  if (cond & (G_IO_ERR | G_IO_HUP))
+    {
+      if (current_plug_in->open)
+	{
+	  plug_in_close (current_plug_in, TRUE);
+	}
+    }
+
+  if (!got_message)
+    g_message (_("Plug-In crashed: %s\n(%s)"),
+	       g_basename (current_plug_in->args[0]),
+	       current_plug_in->args[0]);
 
   if (!current_plug_in->open)
     plug_in_destroy (current_plug_in);
   else
     plug_in_pop ();
+
   return TRUE;
 }
 

@@ -113,7 +113,7 @@ wire_read (GIOChannel *channel,
     {
       if (!(* wire_read_func) (channel, buf, count))
 	{
-	  g_warning ("wire_read: error");
+	  g_warning ("%s: wire_read: error", g_get_prgname ());
 	  wire_error_val = TRUE;
 	  return FALSE;
 	}
@@ -132,14 +132,14 @@ wire_read (GIOChannel *channel,
 
 	  if (error != G_IO_ERROR_NONE)
 	    {
-	      g_warning ("wire_read: error");
+	      g_warning ("%s: wire_read: error", g_get_prgname ());
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }
 
 	  if (bytes == 0) 
 	    {
-	      g_warning ("wire_read: unexpected EOF (plug-in crashed?)");
+	      g_warning ("%s: wire_read: unexpected EOF", g_get_prgname ());
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }
@@ -161,7 +161,7 @@ wire_write (GIOChannel *channel,
     {
       if (!(* wire_write_func) (channel, buf, count))
 	{
-	  g_warning ("wire_write: error");
+	  g_warning ("%s: wire_write: error", g_get_prgname ());
 	  wire_error_val = TRUE;
 	  return FALSE;
 	}
@@ -180,7 +180,7 @@ wire_write (GIOChannel *channel,
 
 	  if (error != G_IO_ERROR_NONE)
 	    {
-	      g_warning ("wire_write: error");
+	      g_warning ("%s: wire_write: error", g_get_prgname ());
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }

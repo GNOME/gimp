@@ -1,3 +1,38 @@
+2000-05-10  Michael Natterer  <mitch@gimp.org>
+
+	Another try to get the signal/dead child recovery stuff right.
+
+	Could the brave signal crew (TM) (Austin, Garry, Raphael, Tim)
+	please do bad tests to the new code? I removed all strange
+	constants (SA_NODEFER etc.) and used only glib and POSIX stuff.
+
+	* app/main.c
+	* libgimp/gimp.c:
+	- Call gimp_signal_private() with no flags to enforce a proper
+	  sigaction() behaviour (block signals while handler is active).
+	- Removed the reentrancy guards from the handlers.
+	- Renamed the handlers.
+	- Ignore SIGPIPE in the app and in plugins.
+	- Re-introduced the SIGCHLD handler because it should work
+	  now. Also added a SIGCHLD handler to libgimp/gimp.c.
+
+	* app/errors.c
+	* libgimp/gimp.c: in the signal handler, unblock all signals
+	with sigprocmask() before calling g_on_error_query() because
+	gdb otherwise inherits the blocked signals and does nothing.
+	Wrapped the statements with "if (TRUE) { }" blocks so it's
+	easy to make the stack trace a command line option.
+
+	* app/plug_in.c
+	* libgimp/gimp.c: listen for G_IO_ERR and G_IO_HUP on the read
+	channels. In the app, pop up an error message and clean up the
+	plugin. In plugins, clean up and exit.
+
+	* libgimp/gimpwire.c: removed the "plug-in chrashed?" message
+	and print the program's name with all error messages.
+
+	* plug-ins/helpbrowser/helpbrowser.c: typo.
+
 2000-05-10  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Clarifications.
