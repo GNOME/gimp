@@ -1,3 +1,17 @@
+2001-08-16  Sven Neumann  <sven@gimp.org>
+
+	* ca.po
+	* en_GB.po
+	* ga.po
+	* gl.po
+	* it.po
+	* ko.po
+	* nl.po
+	* nn.po
+	* sk.po
+	* sv.po: put valid encoding and charset into the headers even though
+	these files are empty. The default values fooled my status script.
+
 2001-07-26  Sven Neumann  <sven@gimp.org>
 
 	* zh_TW.Big5.po: don't translate <Toolbox> and <Image> !!
