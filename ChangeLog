@@ -1,5 +1,13 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
+	Merged from gimp-2-2 branch:
+
+	* app/widgets/gimphistogrameditor.c: change to the Value channel
+	if the current channel becomes invalid due to an image mode change.
+	Fixes bug #170116.
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/layers-commands.c
 	* app/core/core-enums.[ch]
 	* app/core/gimpimage-undo-push.[ch]

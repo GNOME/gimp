@@ -390,12 +390,9 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_menu_sensitivity (gint      value,
-                                 gpointer  data)
+gimp_histogram_editor_channel_valid (GimpHistogramEditor  *editor,
+                                     GimpHistogramChannel  channel)
 {
-  GimpHistogramEditor  *editor  = GIMP_HISTOGRAM_EDITOR (data);
-  GimpHistogramChannel  channel = value;
-
   if (editor->drawable)
     {
       switch (channel)
@@ -414,13 +411,33 @@ gimp_histogram_menu_sensitivity (gint      value,
         }
     }
 
+  return TRUE;
+}
+
+static gboolean
+gimp_histogram_menu_sensitivity (gint      value,
+                                 gpointer  data)
+{
+  GimpHistogramEditor  *editor  = GIMP_HISTOGRAM_EDITOR (data);
+  GimpHistogramChannel  channel = value;
+
+  if (editor->drawable)
+    return gimp_histogram_editor_channel_valid (editor, channel);
+
   return FALSE;
 }
 
 static void
 gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
+  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+
   gtk_widget_queue_draw (editor->menu);
+
+  if (! gimp_histogram_editor_channel_valid (editor, view->channel))
+    {
+      gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+    }
 }
 
 static void
