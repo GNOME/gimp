@@ -58,6 +58,8 @@ static void     gimp_container_tree_view_init         (GimpContainerTreeView    
 static GObject *gimp_container_tree_view_constructor  (GType                   type,
                                                        guint                   n_params,
                                                        GObjectConstructParam  *params);
+
+static void    gimp_container_tree_view_unmap         (GtkWidget              *widget);
 static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *widget);
 static void    gimp_container_tree_view_set_container (GimpContainerView      *view,
                                                        GimpContainer          *container);
@@ -138,6 +140,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   object_class->constructor              = gimp_container_tree_view_constructor;
 
+  widget_class->unmap                    = gimp_container_tree_view_unmap;
   widget_class->popup_menu               = gimp_container_tree_view_popup_menu;
 
   container_view_class->set_container    = gimp_container_tree_view_set_container;
@@ -255,6 +258,20 @@ gimp_container_tree_view_constructor (GType                  type,
   gtk_tree_view_set_enable_search (tree_view->view, TRUE);
 
   return object;
+}
+
+static void
+gimp_container_tree_view_unmap (GtkWidget *widget)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
+
+  if (tree_view->scroll_timeout_id)
+    {
+      g_source_remove (tree_view->scroll_timeout_id);
+      tree_view->scroll_timeout_id = 0;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void

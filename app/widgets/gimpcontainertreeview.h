@@ -63,6 +63,10 @@ struct _GimpContainerTreeView
   GQuark             name_changed_handler_id;
 
   GimpViewable      *dnd_viewable;
+
+  guint              scroll_timeout_id;
+  guint              scroll_timeout_interval;
+  GdkScrollDirection scroll_dir;
 };
 
 struct _GimpContainerTreeViewClass
