@@ -1,3 +1,26 @@
+2003-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c	
+	(gimp_config_deserialize_fundamental): handle negative float and
+	double values similar to how this is done for integers and the
+	like.
+
+	* app/config/gimpconfig-params.h: added two new param flags and
+	documented all flags in the header file (for now).
+
+	* app/config/gimpconfig-serialize.h: handle the new param flags
+	GIMP_PARAM_DEFAULTS and GIMP_PARAM_IGNORE.
+
+	* app/text/text-enums.[ch]
+	* app/text/gimptext.[ch]: added some properties that we will need
+	sooner or later. Mark the new properties and a lot of the existing
+	ones as GIMP_PARAM_DEFAULTS so that their values are not
+	serialized unless changed from the default value.
+
+	* app/text/gimptextlayout.c	
+	* app/tools/gimptextoptions.c: made all length properties in
+	GimpText depend on a single unit.
+
 2003-10-26 Simon Budig  <simon@gimp.org>
 
 	* tools/authorsgen/contributors: Fixed/Added some UTF-8 encoded

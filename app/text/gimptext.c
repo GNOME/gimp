@@ -37,6 +37,8 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
 
+#include "core/gimpstrokeoptions.h"
+
 #include "gimptext.h"
 
 #include "gimp-intl.h"
@@ -48,7 +50,7 @@ enum
   PROP_TEXT,
   PROP_FONT,
   PROP_FONT_SIZE,
-  PROP_FONT_SIZE_UNIT,
+  PROP_UNIT,
   PROP_HINTING,
   PROP_AUTOHINT,
   PROP_ANTIALIAS,
@@ -56,6 +58,7 @@ enum
   PROP_LANGUAGE,
   PROP_BASE_DIR,
   PROP_COLOR,
+  PROP_OUTLINE,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
@@ -65,6 +68,8 @@ enum
   PROP_BOX_HEIGHT,
   PROP_BOX_UNIT,
   PROP_TRANSFORMATION,
+  PROP_OFFSET_X,
+  PROP_OFFSET_Y,
   PROP_BORDER
 };
 
@@ -160,7 +165,11 @@ gimp_text_class_init (GimpTextClass *klass)
 				   "font-size", NULL,
 				   0.0, 8192.0, 18.0,
 				   0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FONT_SIZE_UNIT,
+  /*
+   *  We use the name "font-size-unit" for backward compatibility.
+   *  The unit is used for all lengths in the text object.
+   */
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "font-size-unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
 				 0);
@@ -177,7 +186,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                        "used but you may prefer to always use "
                                        "the automatic hinter"),
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
@@ -185,7 +194,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KERNING,
                                     "kerning", NULL,
                                     FALSE,
-                                    0);
+                                    GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
 				   "language", NULL,
 				   language,
@@ -200,6 +209,11 @@ gimp_text_class_init (GimpTextClass *klass)
 				  "color", NULL,
 				  &black,
 				  0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE,
+                                "outline", NULL,
+                                 GIMP_TYPE_TEXT_OUTLINE,
+                                 GIMP_TEXT_OUTLINE_NONE,
+                                 GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify",
                                  NULL,
@@ -208,20 +222,19 @@ gimp_text_class_init (GimpTextClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
 				   "indent",
-                                   N_("How many pixels the "
-				      "first line should be shorter"),
+                                   N_("Indentation of the first line"),
 				   -8192.0, 8192.0, 0.0,
-				   0);
+				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing",
-                                   N_("Additional line spacing (in pixels)"),
+                                   N_("Modify line spacing"),
 				   -8192.0, 8192.0, 0.0,
-				   0);
+				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing",
-                                   N_("Additional letter spacing (in pixels)"),
+                                   N_("Modify letter spacing"),
 				   -8192.0, 8192.0, 0.0,
-				   0);
+				   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
                                  NULL,
@@ -231,19 +244,29 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
                                    "box-width", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                                   0);
+                                   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
                                    "box-height", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
-                                 "box-unit", NULL,
-                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
-                                 0);
+                                   GIMP_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,
                                     &identity,
-                                    0);
+                                    GIMP_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
+                                   "offset-x", NULL,
+                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                   GIMP_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
+                                   "offset-y", NULL,
+                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                   GIMP_PARAM_DEFAULTS);
+
+  /* "box-unit" existed for a while but was never used; ignore it */
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
+				 "box-unit", NULL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
+				 GIMP_PARAM_IGNORE);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -297,8 +320,8 @@ gimp_text_get_property (GObject      *object,
     case PROP_FONT_SIZE:
       g_value_set_double (value, text->font_size);
       break;
-    case PROP_FONT_SIZE_UNIT:
-      g_value_set_int (value, text->font_size_unit);
+    case PROP_UNIT:
+      g_value_set_int (value, text->unit);
       break;
     case PROP_HINTING:
       g_value_set_boolean (value, text->hinting);
@@ -321,6 +344,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
       break;
+    case PROP_OUTLINE:
+      g_value_set_enum (value, text->outline);
+      break;
     case PROP_JUSTIFICATION:
       g_value_set_enum (value, text->justify);
       break;
@@ -342,11 +368,17 @@ gimp_text_get_property (GObject      *object,
     case PROP_BOX_HEIGHT:
       g_value_set_double (value, text->box_height);
       break;
-    case PROP_BOX_UNIT:
-      g_value_set_int (value, text->box_unit);
+    case PROP_BOX_UNIT:  /* GIMP_PARAM_IGNORE */
+      g_value_set_int (value, text->unit);
       break;
     case PROP_TRANSFORMATION:
       g_value_set_boxed (value, &text->transformation);
+      break;
+    case PROP_OFFSET_X:
+      g_value_set_double (value, text->offset_x);
+      break;
+    case PROP_OFFSET_Y:
+      g_value_set_double (value, text->offset_y);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -377,8 +409,8 @@ gimp_text_set_property (GObject      *object,
     case PROP_FONT_SIZE:
       text->font_size = g_value_get_double (value);
       break;
-    case PROP_FONT_SIZE_UNIT:
-      text->font_size_unit = g_value_get_int (value);
+    case PROP_UNIT:
+      text->unit = g_value_get_int (value);
       break;
     case PROP_HINTING:
       text->hinting = g_value_get_boolean (value);
@@ -403,6 +435,9 @@ gimp_text_set_property (GObject      *object,
       color = g_value_get_boxed (value);
       text->color = *color;
       break;
+    case PROP_OUTLINE:
+      text->outline = g_value_get_enum (value);
+      break;
     case PROP_JUSTIFICATION:
       text->justify = g_value_get_enum (value);
       break;
@@ -425,11 +460,17 @@ gimp_text_set_property (GObject      *object,
       text->box_height = g_value_get_double (value);
       break;
     case PROP_BOX_UNIT:
-      text->box_unit = g_value_get_int (value);
+      /* ignore */
       break;
     case PROP_TRANSFORMATION:
       matrix = g_value_get_boxed (value);
       text->transformation = *matrix;
+      break;
+    case PROP_OFFSET_X:
+      text->offset_x = g_value_get_double (value);
+      break;
+    case PROP_OFFSET_Y:
+      text->offset_y = g_value_get_double (value);
       break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);

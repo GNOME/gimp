@@ -67,5 +67,25 @@ gimp_text_justification_get_type (void)
 }
 
 
+static const GEnumValue gimp_text_outline_enum_values[] =
+{
+  { GIMP_TEXT_OUTLINE_NONE, "GIMP_TEXT_OUTLINE_NONE", "none" },
+  { GIMP_TEXT_OUTLINE_STROKE_ONLY, "GIMP_TEXT_OUTLINE_STROKE_ONLY", "stroke-only" },
+  { GIMP_TEXT_OUTLINE_STROKE_FILL, "GIMP_TEXT_OUTLINE_STROKE_FILL", "stroke-fill" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_text_outline_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTextOutline", gimp_text_outline_enum_values);
+
+  return enum_type;
+}
+
+
 /* Generated data ends here */
 

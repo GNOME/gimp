@@ -23,11 +23,28 @@
 #define __GIMP_CONFIG_PARAMS_H__
 
 
+/*
+ * GIMP_PARAM_SERIALIZE - A property that can and should be
+ *                        serialized and deserialized.
+ * GIMP_PARAM_AGGREGATE - The object property is to be treated as
+ *                        part of the parent object.
+ * GIMP_PARAM_RESTART   - Changes to this property take effect only
+ *                        after a restart.
+ * GIMP_PARAM_CONFIRM   - Changes to this property should be
+ *                        confirmed by the user before being applied.
+ * GIMP_PARAM_DEFAULTS  - Don't serialize this property if it has the
+ *                        default value.
+ * GIMP_PARAM_IGNORE    - This property exists for obscure reasons
+ *                        and is needed for backward compatibility.
+ *                        Ignore the value read and don't serialize it.
+ */
+
 #define GIMP_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
 #define GIMP_PARAM_AGGREGATE    (1 << (1 + G_PARAM_USER_SHIFT))
 #define GIMP_PARAM_RESTART      (1 << (2 + G_PARAM_USER_SHIFT))
 #define GIMP_PARAM_CONFIRM      (1 << (3 + G_PARAM_USER_SHIFT))
-
+#define GIMP_PARAM_DEFAULTS     (1 << (4 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_IGNORE       (1 << (5 + G_PARAM_USER_SHIFT))
 
 #define GIMP_CONFIG_PARAM_FLAGS (G_PARAM_READWRITE | \
                                  G_PARAM_CONSTRUCT | \

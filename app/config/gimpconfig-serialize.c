@@ -212,14 +212,24 @@ gimp_config_serialize_property (GimpConfig       *config,
   if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
     return FALSE;
 
+  if (param_spec->flags & GIMP_PARAM_IGNORE)
+    return TRUE;
+
   g_value_init (&value, param_spec->value_type);
   g_object_get_property (G_OBJECT (config), param_spec->name, &value);
+
+  if (param_spec->flags & GIMP_PARAM_DEFAULTS &&
+      g_param_value_defaults (param_spec, &value))
+    {
+      g_value_unset (&value);
+      return TRUE;
+    }
 
   owner_class = g_type_class_peek (param_spec->owner_type);
 
   config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
 
-  /*  We must call deserialize_property() *only* if the *exact* class
+  /*  We must call serialize_property() *only* if the *exact* class
    *  which implements it is param_spec->owner_type's class.
    *
    *  Therefore, we ask param_spec->owner_type's immediate parent class

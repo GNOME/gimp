@@ -149,7 +149,7 @@ gimp_text_layout_new (GimpText  *text,
 
   size = gimp_text_layout_point_size (image->gimp,
                                       text->font_size,
-                                      text->font_size_unit,
+                                      text->unit,
                                       yres);
 
   pango_font_description_set_size (font_desc, MAX (1, size));
@@ -197,14 +197,21 @@ gimp_text_layout_new (GimpText  *text,
       pango_layout_set_width (layout->layout,
                               gimp_text_layout_pixel_size (image->gimp,
                                                            text->box_width,
-                                                           text->box_unit,
+                                                           text->unit,
                                                            xres));
       break;
     }
 
-  pango_layout_set_indent (layout->layout, text->indent * PANGO_SCALE);
-  pango_layout_set_spacing (layout->layout, text->line_spacing * PANGO_SCALE);
-
+  pango_layout_set_indent (layout->layout,
+                           gimp_text_layout_pixel_size (image->gimp,
+                                                        text->indent,
+                                                        text->unit,
+                                                        xres));
+  pango_layout_set_spacing (layout->layout,
+                            gimp_text_layout_pixel_size (image->gimp,
+                                                         text->line_spacing,
+                                                         text->unit,
+                                                         yres));
   gimp_text_layout_position (layout);
 
   switch (text->box_mode)
@@ -215,7 +222,7 @@ gimp_text_layout_new (GimpText  *text,
       layout->extents.height =
         PANGO_PIXELS (gimp_text_layout_pixel_size (image->gimp,
                                                    text->box_height,
-                                                   text->box_unit,
+                                                   text->unit,
                                                    yres));
       break;
     }
@@ -285,7 +292,6 @@ gimp_text_layout_position (GimpTextLayout *layout)
   layout->extents.width  = x2 - x1;
   layout->extents.height = y2 - y1;
 
-  /* border should only be used by the compatibility API */
   if (layout->text->border > 0)
     {
       gint border = layout->text->border;

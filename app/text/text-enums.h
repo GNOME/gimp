@@ -55,4 +55,16 @@ typedef enum
 } GimpTextJustification;
 
 
+#define GIMP_TYPE_TEXT_OUTLINE (gimp_text_outline_get_type ())
+
+GType gimp_text_outline_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_OUTLINE_NONE,
+  GIMP_TEXT_OUTLINE_STROKE_ONLY,
+  GIMP_TEXT_OUTLINE_STROKE_FILL
+} GimpTextOutline;
+
+
 #endif /* __TEXT_ENUMS_H__ */

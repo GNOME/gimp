@@ -404,6 +404,11 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_FLOAT:
     case G_TYPE_DOUBLE:
+      if (g_scanner_peek_next_token (scanner) == '-')
+        {
+          negate = TRUE;
+          g_scanner_get_next_token (scanner);
+        }
       token = G_TOKEN_FLOAT;
       break;
 
@@ -462,10 +467,12 @@ gimp_config_deserialize_fundamental (GValue     *value,
       g_value_set_ulong (value, scanner->value.v_int);
       break;
     case G_TYPE_FLOAT:
-      g_value_set_float (value, scanner->value.v_float);
+      g_value_set_float (value, negate ?
+                         - scanner->value.v_float : scanner->value.v_float);
       break;
     case G_TYPE_DOUBLE:
-      g_value_set_double (value, scanner->value.v_float);
+      g_value_set_double (value, negate ?
+                          - scanner->value.v_float: scanner->value.v_float);
       break;
 
     default:

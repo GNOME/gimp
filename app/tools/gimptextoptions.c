@@ -298,7 +298,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                              _("Font:"), 1.0, 0.5,
                              font_selection, 2, FALSE);
 
-  digits = gimp_unit_get_digits (options->text->font_size_unit);
+  digits = gimp_unit_get_digits (options->text->unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
