@@ -26,7 +26,6 @@
 #include "gimpdatalist.h"
 #include "gimpgradient.h"
 #include "gimprc.h"
-#include "gradient_select.h"
 #include "gradients.h"
 
 
@@ -39,8 +38,6 @@ gradients_init (gint no_data)
 
   if (gradient_path != NULL && !no_data)
     {
-      gradient_select_freeze_all ();
-
       gimp_data_list_load (GIMP_DATA_LIST (global_gradient_list),
 			   gradient_path,
 
@@ -49,8 +46,6 @@ gradients_init (gint no_data)
 
 			   (GimpDataObjectLoaderFunc) gimp_gradient_load,
 			   NULL /* legacy loader */);
-
-      gradient_select_thaw_all ();
     }
 }
 
@@ -60,13 +55,9 @@ gradients_free (void)
   if (gimp_container_num_children (global_gradient_list) == 0)
     return;
 
-  gradient_select_freeze_all ();
-
   gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_gradient_list),
 				 gradient_path,
 				 GIMP_GRADIENT_FILE_EXTENSION);
-
-  gradient_select_thaw_all ();
 }
 
 GimpGradient *

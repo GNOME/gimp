@@ -60,9 +60,11 @@
 enum
 {
   CLICKED,
+  DOUBLE_CLICKED,
   RENDER,
-  CREATE_POPUP,
+  GET_SIZE,
   NEEDS_POPUP,
+  CREATE_POPUP,
   LAST_SIGNAL
 };
 
@@ -83,10 +85,18 @@ static gint        gimp_preview_leave_notify_event   (GtkWidget        *widget,
 
 static void        gimp_preview_render               (GimpPreview      *preview);
 static void        gimp_preview_real_render          (GimpPreview      *preview);
-static GtkWidget * gimp_preview_create_popup         (GimpPreview      *preview);
-static GtkWidget * gimp_preview_real_create_popup    (GimpPreview      *preview);
+static void        gimp_preview_get_size             (GimpPreview      *preview,
+						      gint              size,
+						      gint             *width,
+						      gint             *height);
+static void        gimp_preview_real_get_size        (GimpPreview      *preview,
+						      gint              size,
+						      gint             *width,
+						      gint             *height);
 static gboolean    gimp_preview_needs_popup          (GimpPreview      *preview);
 static gboolean    gimp_preview_real_needs_popup     (GimpPreview      *preview);
+static GtkWidget * gimp_preview_create_popup         (GimpPreview      *preview);
+static GtkWidget * gimp_preview_real_create_popup    (GimpPreview      *preview);
 
 static void        gimp_preview_popup_show           (GimpPreview      *preview, 
 						      gint              x,
@@ -146,6 +156,15 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                     gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
+  preview_signals[DOUBLE_CLICKED] = 
+    gtk_signal_new ("double_clicked",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       double_clicked),
+                    gtk_signal_default_marshaller,
+		    GTK_TYPE_NONE, 0);
+
   preview_signals[RENDER] = 
     gtk_signal_new ("render",
                     GTK_RUN_LAST,
@@ -155,14 +174,17 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                     gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
-  preview_signals[CREATE_POPUP] = 
-    gtk_signal_new ("create_popup",
+  preview_signals[GET_SIZE] = 
+    gtk_signal_new ("get_size",
                     GTK_RUN_LAST,
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       create_popup),
-                    gimp_marshal_POINTER__NONE,
-		    GTK_TYPE_POINTER, 0);
+				       get_size),
+                    gimp_marshal_NONE__INT_POINTER_POINTER,
+		    GTK_TYPE_NONE, 3,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER);
 
   preview_signals[NEEDS_POPUP] = 
     gtk_signal_new ("needs_popup",
@@ -172,6 +194,15 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 				       needs_popup),
                     gtk_marshal_BOOL__NONE,
 		    GTK_TYPE_BOOL, 0);
+
+  preview_signals[CREATE_POPUP] = 
+    gtk_signal_new ("create_popup",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       create_popup),
+                    gimp_marshal_POINTER__NONE,
+		    GTK_TYPE_POINTER, 0);
 
   gtk_object_class_add_signals (object_class, preview_signals, LAST_SIGNAL);
 
@@ -183,10 +214,12 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   widget_class->enter_notify_event   = gimp_preview_enter_notify_event;
   widget_class->leave_notify_event   = gimp_preview_leave_notify_event;
 
-  klass->clicked      = NULL;
-  klass->render       = gimp_preview_real_render;
-  klass->create_popup = gimp_preview_real_create_popup;
-  klass->needs_popup  = gimp_preview_real_needs_popup;
+  klass->clicked        = NULL;
+  klass->double_clicked = NULL;
+  klass->render         = gimp_preview_real_render;
+  klass->get_size       = gimp_preview_real_get_size;
+  klass->needs_popup    = gimp_preview_real_needs_popup;
+  klass->create_popup   = gimp_preview_real_create_popup;
 }
 
 static void
@@ -244,14 +277,56 @@ gimp_preview_new (GimpViewable *viewable,
 		  gint          size,
 		  gint          border_width)
 {
+  GimpPreview *preview;
+  gint         width, height;
+
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
-  return gimp_preview_new_full (viewable,
-				size, size, border_width,
-				FALSE, FALSE, FALSE);
+  if (GIMP_IS_BRUSH (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_BRUSH_PREVIEW);
+    }
+  else if (GIMP_IS_DRAWABLE (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_DRAWABLE_PREVIEW);
+    }
+  else if (GIMP_IS_IMAGE (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_IMAGE_PREVIEW);
+    }
+  else if (GIMP_IS_PATTERN (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_PATTERN_PREVIEW);
+    }
+  else if (GIMP_IS_GRADIENT (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_GRADIENT_PREVIEW);
+    }
+  else if (GIMP_IS_PALETTE (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
+    }
+  else
+    {
+      preview = gtk_type_new (GIMP_TYPE_PREVIEW);
+    }
+
+  gimp_preview_get_size (preview, size, &width, &height);
+
+  preview->width        = width;
+  preview->height       = height;
+  preview->border_width = border_width;
+
+  gimp_preview_set_viewable (preview, viewable);
+
+  gtk_preview_size (GTK_PREVIEW (preview),
+		    width  + 2 * border_width,
+		    height + 2 * border_width);
+
+  return GTK_WIDGET (preview);
 }
 
 GtkWidget *
@@ -300,7 +375,7 @@ gimp_preview_new_full (GimpViewable *viewable,
       preview = gtk_type_new (GIMP_TYPE_PREVIEW);
     }
 
-  preview->is_popup   = is_popup;
+  preview->is_popup     = is_popup;
 
   preview->width        = width;
   preview->height       = height;
@@ -322,13 +397,17 @@ void
 gimp_preview_set_size (GimpPreview *preview,
 		       gint         preview_size)
 {
+  gint width, height;
+
   g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (preview_size > 0 && preview_size <= 256);
 
+  gimp_preview_get_size (preview, preview_size, &width, &height);
+
   gimp_preview_set_size_full (preview,
-			      preview_size,
-			      preview_size,
+			      width,
+			      height,
 			      preview->border_width);
 }
 
@@ -417,6 +496,13 @@ gimp_preview_button_press_event (GtkWidget      *widget,
       else
 	{
 	  return FALSE;
+	}
+    }
+  else if (bevent->type == GDK_2BUTTON_PRESS)
+    {
+      if (bevent->button == 1)
+	{
+	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[DOUBLE_CLICKED]);
 	}
     }
 
@@ -519,6 +605,48 @@ gimp_preview_real_render (GimpPreview *preview)
 				 -1);
 }
 
+static void
+gimp_preview_get_size (GimpPreview *preview,
+		       gint         size,
+		       gint        *width,
+		       gint        *height)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (width != NULL);
+  g_return_if_fail (height != NULL);
+
+  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[GET_SIZE],
+		   size, width, height);
+}
+
+static void
+gimp_preview_real_get_size (GimpPreview *preview,
+			    gint         size,
+			    gint        *width,
+			    gint        *height)
+{
+  *width  = size;
+  *height = size;
+}
+
+static gboolean
+gimp_preview_needs_popup (GimpPreview *preview)
+{
+  gboolean needs_popup = FALSE;
+
+  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[NEEDS_POPUP],
+		   &needs_popup);
+
+  return needs_popup;
+}
+
+static gboolean
+gimp_preview_real_needs_popup (GimpPreview *preview)
+{
+  return TRUE;
+}
+
 static GtkWidget *
 gimp_preview_create_popup (GimpPreview *preview)
 {
@@ -544,23 +672,6 @@ gimp_preview_real_create_popup (GimpPreview *preview)
 				popup_height,
 				0,
 				TRUE, FALSE, FALSE);
-}
-
-static gboolean
-gimp_preview_needs_popup (GimpPreview *preview)
-{
-  gboolean needs_popup = FALSE;
-
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[NEEDS_POPUP],
-		   &needs_popup);
-
-  return needs_popup;
-}
-
-static gboolean
-gimp_preview_real_needs_popup (GimpPreview *preview)
-{
-  return TRUE;
 }
 
 static gboolean

@@ -48,8 +48,8 @@ static void     gimp_container_list_view_select_item  (GimpContainerView      *v
 static void     gimp_container_list_view_clear_items  (GimpContainerView      *view);
 static void     gimp_container_list_view_set_preview_size (GimpContainerView  *view);
 
-static void     gimp_container_list_view_name_changed (GimpContainerListView  *list_view,
-						       GimpViewable           *viewable);
+static void     gimp_container_list_view_name_changed (GimpViewable           *viewable,
+						       GtkLabel               *label);
 static void    gimp_container_list_view_item_selected (GtkWidget              *widget,
 						       GtkWidget              *child,
 						       gpointer                data);
@@ -183,7 +183,7 @@ gimp_container_list_view_new (GimpContainer *container,
 
   gtk_widget_set_usize (list_view->gtk_list->parent,
 			(preview_size + 2) * min_items_x + window_border,
-			(preview_size + 2) * min_items_y + window_border);
+			(preview_size + 6) * min_items_y + window_border);
 
   gimp_container_view_set_container (view, container);
 
@@ -208,14 +208,8 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 
   list_item = gtk_list_item_new ();
 
-  /*
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (viewable), "name_changed",
-     GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
-     GTK_OBJECT (list_view));
-  */
-
   hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
@@ -230,6 +224,12 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_widget_show (label);
 
   gtk_object_set_data (GTK_OBJECT (list_item), "label", label);
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (viewable), "name_changed",
+     GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
+     label,
+     GTK_OBJECT (list_view));
 
   gtk_widget_show (list_item);
 
@@ -355,26 +355,10 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
 }
 
 static void
-gimp_container_list_view_name_changed (GimpContainerListView *list_view,
-				       GimpViewable          *viewable)
+gimp_container_list_view_name_changed (GimpViewable *viewable,
+				       GtkLabel     *label)
 {
-  GtkWidget *list_item;
-
-  list_item = g_hash_table_lookup (GIMP_CONTAINER_VIEW (list_view)->hash_table,
-				   viewable);
-
-  if (list_item)
-    {
-      GtkWidget *label;
-
-      label = gtk_object_get_data (GTK_OBJECT (list_item), "label");
-
-      if (label)
-	{
-	  gtk_label_set_text (GTK_LABEL (label),
-			      gimp_object_get_name (GIMP_OBJECT (viewable)));
-	}
-    }
+  gtk_label_set_text (label, gimp_object_get_name (GIMP_OBJECT (viewable)));
 }
 
 static void

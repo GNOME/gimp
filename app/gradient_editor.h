@@ -23,21 +23,10 @@
 #define __GRADIENT_EDITOR_H__
 
 
-void      gradient_editor_create       (void);
-void      gradient_editor_free         (void);
+void   gradient_editor_create       (void);
+void   gradient_editor_free         (void);
 
-gboolean  gradient_editor_set_gradient (GimpGradient *gradient);
-
-gint      gradient_clist_init          (GtkWidget    *shell,
-					GdkGC        *gc,
-					GtkWidget    *clist,
-					GimpGradient *active);
-void      gradient_clist_insert        (GtkWidget    *shell,
-					GdkGC        *gc,
-					GtkWidget    *clist,
-					GimpGradient *gradient,
-					gint          pos,
-					gboolean      select);
+void   gradient_editor_set_gradient (GimpGradient *gradient);
 
 
 #endif  /* __GRADIENT_EDITOR_H__ */

@@ -150,16 +150,6 @@ palette_select_new (const gchar *title,
 }
 
 void
-palette_select_freeze_all (void)
-{
-}
-
-void
-palette_select_thaw_all (void)
-{
-}
-
-void
 palette_select_clist_insert_all (GimpPalette *entries)
 {
   PaletteSelect *psp; 

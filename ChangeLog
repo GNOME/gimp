@@ -1,3 +1,28 @@
+2001-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gradient_editor.[ch]
+	* app/gradient_select.[ch]: use GimpContainerListView instead of
+	cooking an own list.
+
+	* app/gimpgradient.[ch]: removed the GdkPixmap from the gradient.
+
+	* app/gimpcontainerlistview.c: connect the viewable's "name_changed"
+	signal to the label.
+
+	* app/gimpmarshal.[ch]
+	* app/gimppreview.[ch]: new virtual function "get_size",
+
+	* app/gimpgradientpreview.c: implement "get_size" and return a 3:1
+	aspect ratio.
+
+	* app/gradients.c
+	* app/palette_select.[ch]
+	* app/palettes.c: removed the dialog freeze/thaw functions.
+
+	* app/brush_select.c
+	* app/pattern_select.c
+	* app/plug_in.c: stuff.
+
 2001-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/brush_select.[ch]
@@ -40,8 +65,8 @@
 	* data/palettes/Visibone.gpl
 	* data/palettes/Visibone_2.gpl
 	* data/palettes/Web.gpl: added the "Columns" parameter where it
-	makes sense and remove those ugly black colors which were hanging
-	around as first color of may palettes.
+	makes sense and removed those ugly black colors which were hanging
+	around as first color of many palettes.
 
 2001-02-12  Michael Natterer  <mitch@gimp.org>
 

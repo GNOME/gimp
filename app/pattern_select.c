@@ -170,14 +170,10 @@ pattern_select_new (gchar *title,
     }
 
   if (!active)
-    {
-      active = gimp_context_get_pattern (gimp_context_get_standard ());
-    }
+    active = gimp_context_get_pattern (gimp_context_get_standard ());
 
   if (title)
-    {
-      gimp_context_set_pattern (psp->context, active);
-    }
+    gimp_context_set_pattern (psp->context, active);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);

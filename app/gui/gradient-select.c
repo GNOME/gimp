@@ -2,9 +2,6 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1998 Andy Thomas.
  *
- * Gradient editor module copyight (C) 1996-1997 Federico Mena Quintero
- * federico@nuclecu.unam.mx
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -18,18 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
-/* This is the popup for the gradient selection stuff..
- * idea is a cut down version of the gradient selection widget 
- * just a clist on which each gradient can be selected. 
- * Of course all the support functions for getting the slected gradient and
- * setting the slection all need to be done as well.
- */
-
-/* Main structure for the dialog. There can be multiple of these 
- * so every thing has to go into the strcuture and we have to have a list 
- * the structures so we can find which one we are taking about.
  */
 
 #include "config.h"
@@ -46,6 +31,7 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimpcontainer.h"
+#include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
@@ -59,40 +45,19 @@
 #include "libgimp/gimpintl.h"
 
 
-static void gradient_change_callbacks            (GradientSelect *gsp,
+static void gradient_select_change_callbacks     (GradientSelect *gsp,
 						  gboolean        closing);
-static GimpGradient* gradient_select_drag_gradient (GtkWidget      *widget,
-					          gpointer        data);
 static void gradient_select_drop_gradient        (GtkWidget      *widget,
-						  GimpGradient   *gradient,
+						  GimpViewable   *viewable,
 						  gpointer        data);
 static void gradient_select_gradient_changed     (GimpContext    *context,
 						  GimpGradient   *gradient,
 						  GradientSelect *gsp);
-static void gradient_select_select               (GradientSelect *gsp,
-						  GimpGradient   *gradient);
-
-static gint gradient_select_button_press         (GtkWidget      *widget,
-						  GdkEventButton *bevent,
-						  gpointer        data);
-static void gradient_select_list_item_update     (GtkWidget      *widget, 
-						  gint            row,
-						  gint            column,
-						  GdkEventButton *event,
-						  gpointer        data);
-
 static void gradient_select_close_callback       (GtkWidget      *widget,
 						  gpointer        data);
 static void gradient_select_edit_callback        (GtkWidget      *widget,
 						  gpointer        data);
 
-/*  dnd stuff  */
-static GtkTargetEntry clist_target_table[] =
-{
-  GIMP_TARGET_GRADIENT
-};
-static guint clist_n_targets = (sizeof (clist_target_table) /
-				sizeof (clist_target_table[0]));
 
 /*  list of active dialogs   */
 GSList         *gradient_active_dialogs = NULL;
@@ -140,19 +105,11 @@ gradient_select_new (gchar *title,
 {
   GradientSelect  *gsp;
   GtkWidget       *vbox;
-  GtkWidget       *scrolled_win;
-  GdkColormap     *colormap;
-  gchar           *titles[2];
-  gint             column_width;
-  gint             select_pos;
-
   GimpGradient    *active = NULL;
 
   static gboolean  first_call = TRUE;
 
-  gsp = g_new (GradientSelect, 1);
-  gsp->callback_name = NULL;
-  gsp->dnd_gradient = NULL;
+  gsp = g_new0 (GradientSelect, 1);
   
   /*  The shell  */
   gsp->shell = gimp_dialog_new (title ? title : _("Gradient Selection"),
@@ -199,85 +156,39 @@ gradient_select_new (gchar *title,
     }
 
   if (!active)
-    {
-      active = gimp_context_get_gradient (gimp_context_get_standard ());
-    }
+    active = gimp_context_get_gradient (gimp_context_get_standard ());
 
   if (title)
-    {
-      gimp_context_set_gradient (gsp->context, active);
-    }
+    gimp_context_set_gradient (gsp->context, active);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), vbox);
 
-  /*  clist preview of gradients  */
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_ALWAYS);
-  gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
-  gtk_widget_show (scrolled_win);
+  /*  The Gradient List  */
+  gsp->view = gimp_container_list_view_new (global_gradient_list,
+					    gsp->context,
+					    16,
+					    10, 10);
+  gtk_box_pack_start (GTK_BOX (vbox), gsp->view, TRUE, TRUE, 0);
+  gtk_widget_show (gsp->view);
 
-  titles[0] = _("Gradient");
-  titles[1] = _("Name");
-  gsp->clist = gtk_clist_new_with_titles (2, titles);
-  gtk_clist_set_shadow_type (GTK_CLIST (gsp->clist), GTK_SHADOW_IN);
-  gtk_clist_set_selection_mode (GTK_CLIST (gsp->clist), GTK_SELECTION_BROWSE);
-  gtk_clist_set_row_height (GTK_CLIST (gsp->clist), 18);
-  gtk_clist_set_use_drag_icons (GTK_CLIST (gsp->clist), FALSE);
-  gtk_clist_column_titles_passive (GTK_CLIST (gsp->clist));
-  gtk_widget_set_usize (gsp->clist, 200, 250);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
+  gimp_gtk_drag_dest_set_by_type (gsp->view,
+                                  GTK_DEST_DEFAULT_ALL,
+                                  GIMP_TYPE_GRADIENT,
+                                  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (gsp->view),
+                              GIMP_TYPE_GRADIENT,
+                              gradient_select_drop_gradient,
+                              gsp);
 
-  column_width =
-    MAX (50, gtk_clist_optimal_column_width (GTK_CLIST (gsp->clist), 0));
-  gtk_clist_set_column_min_width (GTK_CLIST (gsp->clist), 0, 50);
-  gtk_clist_set_column_width (GTK_CLIST (gsp->clist), 0, column_width);
-
-  gtk_widget_show (gsp->clist);
-
-  colormap = gtk_widget_get_colormap (gsp->clist);
-  gdk_color_parse ("black", &gsp->black);
-  gdk_color_alloc (colormap, &gsp->black);
-
-  gtk_widget_realize (gsp->shell);
-  gsp->gc = gdk_gc_new (gsp->shell->window);
-
-  select_pos = gradient_clist_init (gsp->shell, gsp->gc, gsp->clist, active);
-
-  /* Now show the dialog */
   gtk_widget_show (vbox);
+
   gtk_widget_show (gsp->shell);
-
-  gtk_signal_connect (GTK_OBJECT (gsp->clist), "button_press_event",
-		      GTK_SIGNAL_FUNC (gradient_select_button_press),
-		      (gpointer) gsp);
-
-  gtk_signal_connect (GTK_OBJECT (gsp->clist), "select_row",
-		      GTK_SIGNAL_FUNC (gradient_select_list_item_update),
-		      (gpointer) gsp);
 
   gtk_signal_connect (GTK_OBJECT (gsp->context), "gradient_changed",
                       GTK_SIGNAL_FUNC (gradient_select_gradient_changed),
                       (gpointer) gsp);
-
-  /*  dnd stuff  */
-  gtk_drag_source_set (gsp->clist,
-		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-		       clist_target_table, clist_n_targets,
-		       GDK_ACTION_COPY);
-  gimp_dnd_gradient_source_set (gsp->clist, gradient_select_drag_gradient, gsp);
-
-  gtk_drag_dest_set (gsp->clist,
-                     GTK_DEST_DEFAULT_ALL,
-                     clist_target_table, clist_n_targets,
-                     GDK_ACTION_COPY);
-  gimp_dnd_gradient_dest_set (gsp->clist, gradient_select_drop_gradient, gsp);
-
-  if (active)
-    gradient_select_select (gsp, active);
 
   /*  Add to active gradient dialogs list  */
   gradient_active_dialogs = g_slist_append (gradient_active_dialogs, gsp);
@@ -305,21 +216,9 @@ gradient_select_free (GradientSelect *gsp)
    g_free (gsp);
 }
 
-void
-gradient_select_freeze_all (void)
-{
-}
-
-void
-gradient_select_thaw_all (void)
-{
-}
-
-/*  Call this dialog's PDB callback  */
-
 static void
-gradient_change_callbacks (GradientSelect *gsp,
-			   gboolean        closing)
+gradient_select_change_callbacks (GradientSelect *gsp,
+				  gboolean        closing)
 {
   gchar           *name;
   ProcRecord      *prec = NULL;
@@ -334,6 +233,7 @@ gradient_change_callbacks (GradientSelect *gsp,
     return;
 
   busy = TRUE;
+
   name = gsp->callback_name;
   gradient = gimp_context_get_gradient (gsp->context);
 
@@ -380,13 +280,14 @@ gradient_change_callbacks (GradientSelect *gsp,
       else
 	procedural_db_destroy_args (return_vals, nreturn_vals);
     }
+
   busy = FALSE;
 }
 
 /*  Close active dialogs that no longer have PDB registered for them  */
 
 void
-gradients_check_dialogs (void)
+gradient_select_dialogs_check (void)
 {
   GradientSelect *gsp;
   GSList         *list;
@@ -415,135 +316,16 @@ gradients_check_dialogs (void)
     }
 }
 
-void
-gradient_select_rename_all (GimpGradient *gradient)
-{
-  GradientSelect *gsp; 
-  GSList         *list;
-  gint            row;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-
-      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
-      if (row > -1)
-	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1,
-			    GIMP_OBJECT (gradient)->name);  
-    }
-}
-
-void
-gradient_select_insert_all (gint          pos,
-			    GimpGradient *gradient)
-{
-  GradientSelect *gsp; 
-  GSList         *list;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-
-      gtk_clist_freeze (GTK_CLIST (gsp->clist));
-      gradient_clist_insert (gsp->shell, gsp->gc, gsp->clist,
-			     gradient, pos, FALSE);
-      gtk_clist_thaw (GTK_CLIST (gsp->clist));
-    }
-}
-
-void
-gradient_select_delete_all (GimpGradient *gradient)
-{
-  GradientSelect *gsp; 
-  GSList         *list;
-  gint            row;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-      
-      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
-      if (row > -1)
-	gtk_clist_remove (GTK_CLIST (gsp->clist), row);
-    }
-}
-
-void
-gradient_select_free_all (void)
-{
-  GradientSelect *gsp; 
-  GSList *list;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-
-      gtk_clist_clear (GTK_CLIST (gsp->clist));
-    }
-}
-
-void
-gradient_select_refill_all (void)
-{
-  GradientSelect *gsp;
-  GSList         *list;
-  gint            index = -1;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-
-      index = gradient_clist_init (gsp->shell, gsp->gc, gsp->clist, 
-				   gimp_context_get_gradient (gsp->context));
-
-      if (index != -1)
-	gradient_select_select (gsp, gimp_context_get_gradient (gsp->context));
-    }
-}
-
-void
-gradient_select_update_all (GimpGradient *gradient)
-{
-  GSList         *list;
-  GradientSelect *gsp; 
-  gint            row;
-  
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-
-      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
-      if (row > -1)
-	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1,
-			    GIMP_OBJECT (gradient)->name);  
-    }
-}
-
-/*
- *  Local functions
- */
-
-static GimpGradient *
-gradient_select_drag_gradient (GtkWidget  *widget,
-			       gpointer    data)
-{
-  GradientSelect *gsp;
-
-  gsp = (GradientSelect *) data;
-
-  return gsp->dnd_gradient;
-}
-
 static void
 gradient_select_drop_gradient (GtkWidget    *widget,
-			       GimpGradient *gradient,
+			       GimpViewable *viewable,
 			       gpointer      data)
 {
   GradientSelect *gsp;
 
   gsp = (GradientSelect *) data;
 
-  gimp_context_set_gradient (gsp->context, gradient);
+  gimp_context_set_gradient (gsp->context, GIMP_GRADIENT (viewable));
 }
 
 static void
@@ -553,91 +335,9 @@ gradient_select_gradient_changed (GimpContext    *context,
 {
   if (gradient)
     {
-      gradient_select_select (gsp, gradient);
-
       if (gsp->callback_name)
-	gradient_change_callbacks (gsp, FALSE);
-
-      gsp->dnd_gradient = gradient;
+	gradient_select_change_callbacks (gsp, FALSE);
     }
-}
-
-static void
-gradient_select_select (GradientSelect *gsp,
-			GimpGradient   *gradient)
-{
-  gint index;
-
-  index = gimp_container_get_child_index (global_gradient_list,
-					  GIMP_OBJECT (gradient));
-
-  if (index != -1)
-    {
-      gtk_signal_handler_block_by_data (GTK_OBJECT (gsp->clist), gsp);
-
-      gtk_clist_select_row (GTK_CLIST (gsp->clist), index, -1);
-      gtk_clist_moveto (GTK_CLIST (gsp->clist), index, 0, 0.5, 0.0);
-
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (gsp->clist), gsp);
-    }
-}
-
-static gint
-gradient_select_button_press (GtkWidget      *widget,
-			      GdkEventButton *bevent,
-			      gpointer        data)
-{
-  GradientSelect *gsp;
-
-  gsp = (GradientSelect *) data;
-
-  if (bevent->button == 1 && bevent->type == GDK_2BUTTON_PRESS)
-    {
-      gradient_select_edit_callback (widget, data);
-
-      return TRUE;
-    }
-
-  if (bevent->button == 2)
-    {
-      gint row;
-      gint column;
-
-      gtk_clist_get_selection_info (GTK_CLIST (gsp->clist),
-				    bevent->x, bevent->y,
-				    &row, &column);
-
-      gsp->dnd_gradient = (GimpGradient *)
-	gimp_container_get_child_by_index (global_gradient_list, row);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-gradient_select_list_item_update (GtkWidget      *widget, 
-				  gint            row,
-				  gint            column,
-				  GdkEventButton *event,
-				  gpointer        data)
-{
-  GradientSelect *gsp;
-
-  gsp  = (GradientSelect *) data;
-
-  gsp->dnd_gradient = (GimpGradient *)
-    gimp_container_get_child_by_index (global_gradient_list, row);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (gsp->context), gsp);
-
-  gimp_context_set_gradient (gsp->context, gsp->dnd_gradient);
-
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gsp->context), gsp);
-
-  if (gsp->callback_name)
-    gradient_change_callbacks (gsp, FALSE);
 }
 
 static void
@@ -650,8 +350,7 @@ gradient_select_edit_callback (GtkWidget *widget,
 
   gradient_editor_create ();
 
-  if (gsp)
-    gradient_editor_set_gradient (gimp_context_get_gradient (gsp->context));
+  gradient_editor_set_gradient (gimp_context_get_gradient (gsp->context));
 }
 
 static void
@@ -668,7 +367,7 @@ gradient_select_close_callback (GtkWidget *widget,
   /* Free memory if poping down dialog which is not the main one */
   if (gsp != gradient_select_dialog)
     {
-      gradient_change_callbacks (gsp, TRUE);
+      gradient_select_change_callbacks (gsp, TRUE);
       gtk_widget_destroy (gsp->shell);
       gradient_select_free (gsp);
     }

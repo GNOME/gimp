@@ -118,9 +118,7 @@ static void
 gimp_gradient_init (GimpGradient *gradient)
 {
   gradient->segments     = NULL;
-
   gradient->last_visited = NULL;
-  gradient->pixmap       = NULL;
 }
 
 static void
@@ -132,9 +130,6 @@ gimp_gradient_destroy (GtkObject *object)
 
   if (gradient->segments)
     gimp_gradient_segments_free (gradient->segments);
-
-  if (gradient->pixmap)
-    gdk_pixmap_unref (gradient->pixmap);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -216,7 +211,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 }
 
 GimpGradient *
-gimp_gradient_new (const gchar  *name)
+gimp_gradient_new (const gchar *name)
 {
   GimpGradient *gradient;
 
@@ -365,6 +360,7 @@ gimp_gradient_save (GimpData *data)
   /* File format is:
    *
    *   GIMP Gradient
+   *   Name: name
    *   number_of_segments
    *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
    *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring

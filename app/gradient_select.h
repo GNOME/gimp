@@ -22,23 +22,18 @@
 
 #define GRADIENT_SAMPLE_SIZE 40
 
+
 typedef struct _GradientSelect GradientSelect;
 
 struct _GradientSelect
 {
   GtkWidget    *shell;
-  GtkWidget    *frame;
-  GtkWidget    *preview;
-  GtkWidget    *clist;
+
+  GtkWidget    *view;
 
   GimpContext  *context;
   gchar        *callback_name;
   gint          sample_size;
-
-  GimpGradient *dnd_gradient;
-
-  GdkColor      black;
-  GdkGC        *gc;
 };
 
 
@@ -49,27 +44,19 @@ extern GSList *gradient_active_dialogs;
 extern GradientSelect *gradient_select_dialog;
 
 
-GradientSelect * gradient_select_new        (gchar          *title,
-					     gchar          *initial_gradient);
+GradientSelect * gradient_select_new           (gchar          *title,
+						gchar          *initial_gradient);
 
-void             gradient_select_free       (GradientSelect *gsp);
+void             gradient_select_free          (GradientSelect *gsp);
 
-void             gradient_select_freeze_all (void);
-void             gradient_select_thaw_all   (void);
+void             gradient_select_update_all    (GimpGradient   *gradient);
 
-void             gradient_select_rename_all (GimpGradient   *gradient);
-void             gradient_select_insert_all (gint            pos,
-					     GimpGradient   *gradient);
-void             gradient_select_delete_all (GimpGradient   *gradient);
-void             gradient_select_free_all   (void);
-void             gradient_select_refill_all (void);
-void             gradient_select_update_all (GimpGradient   *gradient);
+void             gradient_select_dialogs_check (void);
 
-void             gradients_check_dialogs   (void);
 
 /*  the main gradient selection  */
-void             gradient_dialog_create    (void);
-void             gradient_dialog_free      (void);
+void             gradient_dialog_create        (void);
+void             gradient_dialog_free          (void);
 
 
 #endif  /*  __GRADIENT_SELECT_H__  */

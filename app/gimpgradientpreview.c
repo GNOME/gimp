@@ -35,8 +35,12 @@ static void   gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 static void   gimp_gradient_preview_init       (GimpGradientPreview      *preview);
 
 static void          gimp_gradient_preview_render       (GimpPreview *preview);
-static GtkWidget   * gimp_gradient_preview_create_popup (GimpPreview *preview);
+static void          gimp_gradient_preview_get_size     (GimpPreview *preview,
+							 gint         size,
+							 gint        *width,
+							 gint        *height);
 static gboolean      gimp_gradient_preview_needs_popup  (GimpPreview *preview);
+static GtkWidget   * gimp_gradient_preview_create_popup (GimpPreview *preview);
 
 static GimpGradient * gimp_gradient_preview_drag_gradient (GtkWidget   *widget,
 							   gpointer     data);
@@ -81,9 +85,10 @@ gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
 
+  preview_class->get_size     = gimp_gradient_preview_get_size;
   preview_class->render       = gimp_gradient_preview_render;
-  preview_class->create_popup = gimp_gradient_preview_create_popup;
   preview_class->needs_popup  = gimp_gradient_preview_needs_popup;
+  preview_class->create_popup = gimp_gradient_preview_create_popup;
 }
 
 static void
@@ -103,6 +108,16 @@ gimp_gradient_preview_init (GimpGradientPreview *gradient_preview)
   gimp_dnd_gradient_source_set (GTK_WIDGET (gradient_preview),
 				gimp_gradient_preview_drag_gradient,
 				gradient_preview);
+}
+
+static void
+gimp_gradient_preview_get_size (GimpPreview *preview,
+				gint         size,
+				gint        *width,
+				gint        *height)
+{
+  *width  = size * 3;
+  *height = size;
 }
 
 static void
@@ -128,25 +143,6 @@ gimp_gradient_preview_render (GimpPreview *preview)
   temp_buf_free (temp_buf);
 }
 
-static GtkWidget *
-gimp_gradient_preview_create_popup (GimpPreview *preview)
-{
-  GimpGradient *gradient;
-  gint          popup_width;
-  gint          popup_height;
-
-  gradient = GIMP_GRADIENT (preview->viewable);
-
-  popup_width  = 128;
-  popup_height =  32;
-
-  return gimp_preview_new_full (preview->viewable,
-				popup_width,
-				popup_height,
-				0,
-				TRUE, FALSE, FALSE);
-}
-
 static gboolean
 gimp_gradient_preview_needs_popup (GimpPreview *preview)
 {
@@ -164,6 +160,25 @@ gimp_gradient_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
+}
+
+static GtkWidget *
+gimp_gradient_preview_create_popup (GimpPreview *preview)
+{
+  GimpGradient *gradient;
+  gint          popup_width;
+  gint          popup_height;
+
+  gradient = GIMP_GRADIENT (preview->viewable);
+
+  popup_width  = 128;
+  popup_height =  32;
+
+  return gimp_preview_new_full (preview->viewable,
+				popup_width,
+				popup_height,
+				0,
+				TRUE, FALSE, FALSE);
 }
 
 static GimpGradient *

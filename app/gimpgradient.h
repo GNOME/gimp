@@ -73,9 +73,8 @@ struct _GimpGradient
 
   GimpGradientSegment *segments;
 
-  /* EEK */
+  /*< private >*/
   GimpGradientSegment *last_visited;
-  GdkPixmap           *pixmap;
 };
 
 struct _GimpGradientClass

@@ -214,9 +214,7 @@ brush_select_new (gchar   *title,
     }
 
   if (!active)
-    {
-      active = gimp_context_get_brush (gimp_context_get_standard ());
-    }
+    active = gimp_context_get_brush (gimp_context_get_standard ());
 
   if (title)
     {

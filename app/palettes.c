@@ -27,7 +27,6 @@
 #include "gimppalette.h"
 #include "gimprc.h"
 #include "palette.h"
-#include "palette_select.h"
 #include "palettes.h"
 
 
@@ -40,8 +39,6 @@ palettes_init (gboolean no_data)
 
   if (palette_path != NULL && !no_data)
     {
-      palette_select_freeze_all ();
-
       gimp_data_list_load (GIMP_DATA_LIST (global_palette_list),
 			   palette_path,
 
@@ -50,8 +47,6 @@ palettes_init (gboolean no_data)
 
 			   (GimpDataObjectLoaderFunc) gimp_palette_load,
 			   NULL /* legacy loader */);
-
-      palette_select_thaw_all ();
     }
 }
 
@@ -61,13 +56,9 @@ palettes_free (void)
   if (gimp_container_num_children (global_palette_list) == 0)
     return;
 
-  palette_select_freeze_all ();
-
   gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_palette_list),
 				 palette_path,
 				 GIMP_PALETTE_FILE_EXTENSION);
-
-  palette_select_thaw_all ();
 }
 
 GimpPalette *
