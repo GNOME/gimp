@@ -52,7 +52,7 @@
 					(* (+ (rand 15) 1) (+ (rand 15) 1))
 					(/ theSize 25) 4 2 TRUE TRUE)
 
-	  (gimp-gradients-set-gradient "Coffee")
+	  (gimp-context-set-gradient "Coffee")
 
 	  (gimp-edit-blend theStain CUSTOM-MODE NORMAL-MODE
 			   GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE

@@ -44,7 +44,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 
-    (gimp-gradients-set-gradient gradient)
+    (gimp-context-set-gradient gradient)
 
     (gimp-edit-blend logo-layer CUSTOM-MODE NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse

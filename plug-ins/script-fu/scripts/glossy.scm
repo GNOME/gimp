@@ -68,13 +68,13 @@
 
     (if (= use-pattern-text TRUE)
       (begin
-        (gimp-patterns-set-pattern pattern-text)
+        (gimp-context-set-pattern pattern-text)
         (gimp-edit-bucket-fill logo-layer
 			       PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)))
 
     (if (= use-pattern-text FALSE)
       (begin
-        (gimp-gradients-set-gradient blend-gradient-text)
+        (gimp-context-set-gradient blend-gradient-text)
 
         (gimp-edit-blend logo-layer CUSTOM-MODE NORMAL-MODE
 			 GRADIENT-LINEAR 100 0 REPEAT-NONE
@@ -94,14 +94,14 @@
 
     (if (= use-pattern-outline TRUE)
       (begin
-        (gimp-patterns-set-pattern pattern-outline)
+        (gimp-context-set-pattern pattern-outline)
         (gimp-edit-bucket-fill grow-me
 			       PATTERN-BUCKET-FILL NORMAL-MODE 100
 			       0 FALSE 0 0)))
 
     (if (= use-pattern-outline FALSE)
       (begin
-        (gimp-gradients-set-gradient blend-gradient-outline)
+        (gimp-context-set-gradient blend-gradient-outline)
 
         (gimp-edit-blend grow-me CUSTOM-MODE NORMAL-MODE
 			 GRADIENT-LINEAR 100 0 REPEAT-NONE
@@ -118,7 +118,7 @@
     (if (= use-pattern-overlay TRUE)
       (begin
         (gimp-selection-layer-alpha grow-me)
-        (gimp-patterns-set-pattern pattern-overlay)
+        (gimp-context-set-pattern pattern-overlay)
         (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
 			       OVERLAY-MODE 100 0 FALSE 0 0)
         (gimp-selection-none img)))

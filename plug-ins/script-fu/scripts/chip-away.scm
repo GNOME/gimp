@@ -56,7 +56,7 @@
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-patterns-set-pattern pattern)
+    (gimp-context-set-pattern pattern)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-all img)

@@ -136,7 +136,7 @@
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-add-layer img layer2 0)
-    (gimp-brushes-set-brush (brush brush-size))
+    (gimp-context-set-brush (brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke layer-mask)
 
@@ -146,7 +146,7 @@
     (gimp-edit-fill shadow BACKGROUND-FILL)
 
     (gimp-selection-all img)
-    (gimp-patterns-set-pattern "Marble #1")
+    (gimp-context-set-pattern "Marble #1")
     (gimp-edit-bucket-fill text-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 

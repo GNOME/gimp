@@ -242,9 +242,9 @@
 
     ; Set new color, brush, opacity, paint mode.
     (gimp-context-set-foreground color)
-    (gimp-brushes-set-brush (car brush))
-    (gimp-brushes-set-opacity (* 100 (car (cdr brush))))
-    (gimp-brushes-set-paint-mode (car (cdr (cdr (cdr brush)))))
+    (gimp-context-set-brush (car brush))
+    (gimp-context-set-opacity (* 100 (car (cdr brush))))
+    (gimp-context-set-paint-mode (car (cdr (cdr (cdr brush)))))
 
     (while (< index steps)
 
@@ -265,7 +265,7 @@
                   (* 255 (aref grada (+ 2 grad-index)) )
                 )
               )
-              (gimp-brushes-set-opacity (* 100 (aref grada (+ 3 grad-index) ) )  )
+              (gimp-context-set-opacity (* 100 (aref grada (+ 3 grad-index) ) )  )
               (set! grad-index (+ 4 grad-index))
 
               ; Draw points

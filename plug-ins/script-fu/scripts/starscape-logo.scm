@@ -101,7 +101,7 @@
     (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100 0)
 
     (gimp-selection-all img)
-    (gimp-patterns-set-pattern "Stone")
+    (gimp-context-set-pattern "Stone")
     (gimp-edit-bucket-fill bump-channel PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map 1 img logo-layer bump-channel
 		      135.0 45.0 4 0 0 0 0 FALSE FALSE 0)

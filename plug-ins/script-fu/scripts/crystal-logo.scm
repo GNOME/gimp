@@ -134,7 +134,7 @@
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 
     (set! disp-map (car (gimp-selection-save img)))
-    (gimp-brushes-set-brush (crystal-brush brush-size))
+    (gimp-context-set-brush (crystal-brush brush-size))
     (gimp-context-set-foreground '(0 0 0))
     (gimp-edit-stroke disp-map)
     (gimp-selection-none img)

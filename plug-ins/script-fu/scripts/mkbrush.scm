@@ -54,7 +54,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush name)))
+    (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular"
 		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
@@ -111,7 +111,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush name)))
+    (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
             _"<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
@@ -158,7 +158,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush name)))
+    (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical"
 		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
@@ -217,7 +217,7 @@
     (gimp-context-pop)
     
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush name)))
+    (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
 		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."

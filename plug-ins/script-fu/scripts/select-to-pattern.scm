@@ -66,7 +66,7 @@
 
   (file-pat-save 1 pattern-image pattern-draw filename2 "" desc)
   (gimp-patterns-refresh)
-  (gimp-patterns-set-pattern desc)
+  (gimp-context-set-pattern desc)
 
   (gimp-image-delete pattern-image)
   (gimp-displays-flush))

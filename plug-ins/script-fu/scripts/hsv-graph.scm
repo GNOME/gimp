@@ -273,9 +273,9 @@
     (set! hue-segment (make-segment 64 x-base y-base))
     (set! saturation-segment (make-segment 64 x-base y-base))
     (set! value-segment (make-segment 64 x-base y-base))
-    (gimp-brushes-set-brush "Circle (01)")
-    (gimp-brushes-set-paint-mode NORMAL-MODE)
-    (gimp-brushes-set-opacity 70)
+    (gimp-context-set-brush "Circle (01)")
+    (gimp-context-set-paint-mode NORMAL-MODE)
+    (gimp-context-set-opacity 70)
     (gimp-display-new gimg)
     (while (< index limit)
       (set! rgb (car (gimp-image-pick-color img drawable

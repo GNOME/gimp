@@ -39,7 +39,7 @@
 
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill background BACKGROUND-FILL)
-    (gimp-patterns-set-pattern pattern)
+    (gimp-context-set-pattern pattern)
     (gimp-edit-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer

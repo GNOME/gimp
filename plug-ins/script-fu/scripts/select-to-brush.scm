@@ -109,7 +109,7 @@
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush name)))
+    (gimp-context-set-brush name)))
 
 (script-fu-register "script-fu-selection-to-brush"
 		    _"<Image>/Script-Fu/Selection/To _Brush..."

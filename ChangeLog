@@ -1,3 +1,39 @@
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-bullet.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-heading.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-hrule.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/carve-it.scm
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/hsv-graph.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/mkbrush.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/select-to-brush.scm
+	* plug-ins/script-fu/scripts/select-to-pattern.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/spyrogimp.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm: use the new
+	opacity, paint_mode, brush, pattern, gradient, palette and font
+	accessors.
+
 2004-09-23  Sven Neumann  <sven@gimp.org>
 
 	Converted the last bunch of scripts to the new context API:

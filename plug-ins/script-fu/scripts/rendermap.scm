@@ -62,7 +62,7 @@
 	(set! theLayer (car(gimp-image-flatten theImage)))))
 	
   (gimp-selection-none theImage)
-  (gimp-gradients-set-gradient inGrad)
+  (gimp-context-set-gradient inGrad)
   (plug-in-gradmap TRUE theImage theLayer)
 
   (gimp-display-new theImage)

@@ -74,7 +74,7 @@
     (set! mask-fat (car (gimp-channel-copy mask)))
     (gimp-image-add-channel img mask-fat 0)
     (gimp-selection-load mask-fat)
-    (gimp-brushes-set-brush (carve-brush brush-size))
+    (gimp-context-set-brush (carve-brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke mask-fat)
     (gimp-selection-none img)

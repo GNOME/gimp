@@ -72,7 +72,7 @@
     (plug-in-gauss-rle 1 img black-layer ol-width 1 1)
     (plug-in-threshold-alpha 1 img black-layer 0)
 
-    (gimp-gradients-set-gradient gradient)
+    (gimp-context-set-gradient gradient)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
 

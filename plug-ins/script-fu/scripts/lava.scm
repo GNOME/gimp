@@ -78,7 +78,7 @@
     (set! active-layer (car (gimp-image-get-active-layer image)))
     
     (if (= current-grad FALSE)
-	(gimp-gradients-set-gradient gradient))
+	(gimp-context-set-gradient gradient))
     
     (plug-in-solid-noise 1 image active-layer FALSE TRUE seed 2 2 2)
     (plug-in-cubism 1 image active-layer tile_size 2.5 0)

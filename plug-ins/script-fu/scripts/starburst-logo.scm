@@ -36,7 +36,7 @@
     (gimp-edit-clear burst-layer)
 
     (gimp-selection-all img)
-    (gimp-patterns-set-pattern "Crack")
+    (gimp-context-set-pattern "Crack")
     (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 

@@ -60,7 +60,7 @@
     (plug-in-gauss-iir 1 img layer2 bump-map-blur-radius TRUE TRUE)
 
     (gimp-selection-all img)
-    (gimp-patterns-set-pattern text-pattern)
+    (gimp-context-set-pattern text-pattern)
     (gimp-edit-bucket-fill pattern
 			   PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map noninteractive img pattern layer2

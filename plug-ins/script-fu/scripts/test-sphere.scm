@@ -169,7 +169,7 @@
 
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
 			       CHANNEL-OP-REPLACE TRUE TRUE 7.5)
-	  (gimp-patterns-set-pattern pattern)
+	  (gimp-context-set-pattern pattern)
 	  (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
 			    100 0 FALSE 0 0)))
 
@@ -183,7 +183,7 @@
 
     (gimp-selection-none img)
 
-    (gimp-gradients-set-gradient gradient)
+    (gimp-context-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 CHANNEL-OP-REPLACE TRUE FALSE 0)
 
     (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE

@@ -74,7 +74,7 @@
     (gimp-selection-none img)
     (gimp-context-set-foreground blend-fg)
     (gimp-context-set-background blend-bg)
-    (gimp-gradients-set-gradient blend-gradient)
+    (gimp-context-set-gradient blend-gradient)
 
     (gimp-edit-blend blend-layer blend-mode NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
