@@ -1,3 +1,8 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient-load.c: load all linear gradients from an
+	SVG file, not only the first one.
+
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdatafactory.h: added "gboolean writable" to the

@@ -184,21 +184,11 @@ gimp_gradient_load (const gchar  *filename,
 
 /*  SVG gradient parser  */
 
-typedef enum
-{
-  SVG_STATE_OUT,  /* not inside an <svg />  */
-  SVG_STATE_IN,   /* inside an <svg />      */
-  SVG_STATE_DONE  /* finished, don't care about the rest of the file
-                   *   (this is stupid, we should continue parsing
-                   *    and return multiple gradients if there are any)
-                   */
-} SvgParserState;
-
 typedef struct
 {
-  SvgParserState  state;
-  GimpGradient   *gradient;
-  GList          *stops;
+  GimpGradient *gradient;  /*  current gradient    */
+  GList        *gradients; /*  finished gradients  */
+  GList        *stops;
 } SvgParser;
 
 typedef struct
@@ -241,7 +231,6 @@ gimp_gradient_load_svg (const gchar  *filename,
                         gboolean      stingy_memory_use,
                         GError      **error)
 {
-  GimpData      *data = NULL;
   GimpXmlParser *xml_parser;
   SvgParser      parser;
   gboolean       success;
@@ -250,9 +239,9 @@ gimp_gradient_load_svg (const gchar  *filename,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  parser.state    = SVG_STATE_OUT;
-  parser.gradient = NULL;
-  parser.stops    = NULL;
+  parser.gradient  = NULL;
+  parser.gradients = NULL;
+  parser.stops     = NULL;
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
@@ -260,39 +249,36 @@ gimp_gradient_load_svg (const gchar  *filename,
 
   gimp_xml_parser_free (xml_parser);
 
-  if (success && parser.state == SVG_STATE_DONE)
-    {
-      g_return_val_if_fail (parser.gradient != NULL, FALSE);
-
-      data = g_object_ref (parser.gradient);
-
-      /*  FIXME: this will be overwritten by GimpDataFactory  */
-      data->writable = FALSE;
-    }
-  else if (success)
+  if (success && ! parser.gradients)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("No linear gradient found in '%s'"),
+                   _("No linear gradients found in '%s'"),
                    gimp_filename_to_utf8 (filename));
     }
-  else if (error && *error) /*  parser reported an error  */
+  else
     {
-      gchar *msg = (*error)->message;
+      if (error && *error) /*  parser reported an error  */
+        {
+          gchar *msg = (*error)->message;
 
-      (*error)->message =
-        g_strdup_printf (_("Failed to import gradient from '%s': %s"),
-                         gimp_filename_to_utf8 (filename), msg);
+          (*error)->message =
+            g_strdup_printf (_("Failed to import gradients from '%s': %s"),
+                             gimp_filename_to_utf8 (filename), msg);
 
-      g_free (msg);
+          g_free (msg);
+        }
     }
 
   if (parser.gradient)
     g_object_unref (parser.gradient);
 
-  g_list_foreach (parser.stops, (GFunc) g_free, NULL);
-  g_list_free (parser.stops);
+  if (parser.stops)
+    {
+      g_list_foreach (parser.stops, (GFunc) g_free, NULL);
+      g_list_free (parser.stops);
+    }
 
-  return g_list_prepend (NULL, data);
+  return g_list_reverse (parser.gradients);
 }
 
 static void
@@ -305,50 +291,37 @@ svg_parser_start_element (GMarkupParseContext  *context,
 {
   SvgParser *parser = user_data;
 
-  switch (parser->state)
+  if (! parser->gradient && strcmp (element_name, "linearGradient") == 0)
     {
-    case SVG_STATE_OUT:
-      if (strcmp (element_name, "svg") == 0)
-        parser->state = SVG_STATE_IN;
-      break;
+      const gchar *name = NULL;
 
-    case SVG_STATE_IN:
-      if (! parser->gradient && strcmp (element_name, "linearGradient") == 0)
+      while (*attribute_names && *attribute_values)
         {
-          const gchar *name = NULL;
+          if (strcmp (*attribute_names, "id") == 0 && *attribute_values)
+            name = *attribute_values;
 
-          while (*attribute_names && *attribute_values)
-            {
-              if (strcmp (*attribute_names, "id") == 0 && *attribute_values)
-                name = *attribute_values;
-
-              attribute_names++;
-              attribute_values++;
-            }
-
-          parser->gradient = g_object_new (GIMP_TYPE_GRADIENT,
-                                           "name", name,
-                                           NULL);
+          attribute_names++;
+          attribute_values++;
         }
-      else if (parser->gradient && strcmp (element_name, "stop") == 0)
-        {
-          SvgStop *stop = svg_parse_gradient_stop (attribute_names,
-                                                   attribute_values);
 
-          /*  The spec clearly states that each gradient stop's offset
-           *  value is required to be equal to or greater than the
-           *  previous gradient stop's offset value.
-           */
-          if (parser->stops)
-            stop->offset = MAX (stop->offset,
-                                ((SvgStop *) parser->stops->data)->offset);
+      parser->gradient = g_object_new (GIMP_TYPE_GRADIENT,
+                                       "name", name,
+                                       NULL);
+    }
+  else if (parser->gradient && strcmp (element_name, "stop") == 0)
+    {
+      SvgStop *stop = svg_parse_gradient_stop (attribute_names,
+                                               attribute_values);
 
-          parser->stops = g_list_prepend (parser->stops, stop);
-        }
-      break;
+      /*  The spec clearly states that each gradient stop's offset
+       *  value is required to be equal to or greater than the
+       *  previous gradient stop's offset value.
+       */
+      if (parser->stops)
+        stop->offset = MAX (stop->offset,
+                            ((SvgStop *) parser->stops->data)->offset);
 
-    case SVG_STATE_DONE:
-      break;
+      parser->stops = g_list_prepend (parser->stops, stop);
     }
 }
 
@@ -360,19 +333,19 @@ svg_parser_end_element (GMarkupParseContext  *context,
 {
   SvgParser *parser = user_data;
 
-  if (parser->state != SVG_STATE_IN)
-    return;
-
-  if (strcmp (element_name, "svg") == 0)
-    {
-      parser->state = SVG_STATE_OUT;
-    }
-  else if (parser->gradient && parser->stops &&
-           strcmp (element_name, "linearGradient") == 0)
+  if (parser->gradient &&
+      parser->stops    &&
+      strcmp (element_name, "linearGradient") == 0)
     {
       parser->gradient->segments = svg_parser_gradient_segments (parser->stops);
 
-      parser->state = SVG_STATE_DONE;
+      if (parser->gradient->segments)
+        parser->gradients = g_list_prepend (parser->gradients,
+                                            parser->gradient);
+      else
+        g_object_unref (parser->gradient);
+
+      parser->gradient = NULL;
     }
 }
 
