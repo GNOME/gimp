@@ -191,7 +191,7 @@ brush_area_update ()
 	{
 	  offset_x = CELL_SIZE - brush_scale_indicator_width - 1;
 	  gtk_preview_draw_row (GTK_PREVIEW (brush_preview),
-				brush_scale_indicator_bits[i],
+				brush_scale_indicator_bits[i][0],
 				offset_x, offset_y + i, 
 				brush_scale_indicator_width);
 	}

@@ -165,7 +165,8 @@ gimp_layer_mask_init (GimpLayerMask *layermask)
 /*  static functions  */
 
 static void transform_color     (GImage *, PixelRegion *,
-				 PixelRegion *, GimpDrawable *, int);
+				 PixelRegion *, GimpDrawable *,
+				 GimpImageBaseType);
 static void layer_preview_scale (int, unsigned char *, PixelRegion *,
 				 PixelRegion *, int);
 
@@ -195,12 +196,11 @@ layer_invalidate_preview (GtkObject *object)
 }
 
 static void
-transform_color (gimage, layerPR, bufPR, drawable, type)
-     GImage * gimage;
-     PixelRegion * layerPR;
-     PixelRegion * bufPR;
-     GimpDrawable *drawable;
-     int type;
+transform_color (GImage * gimage,
+		 PixelRegion * layerPR,
+		 PixelRegion * bufPR,
+		 GimpDrawable *drawable,
+		 GimpImageBaseType type)
 {
   int i, h;
   unsigned char * s, * d;
@@ -234,13 +234,13 @@ transform_color (gimage, layerPR, bufPR, drawable, type)
 
 
 Layer *
-layer_new (gimage, width, height, type, name, opacity, mode)
-     GimpImage* gimage;
-     int width, height;
-     int type;
-     char * name;
-     int opacity;
-     int mode;
+layer_new (GimpImage* gimage,
+	   int width,
+	   int height,
+	   GimpImageType type,
+	   char * name,
+	   int opacity,
+	   LayerModeEffects mode)
 {
   Layer * layer;
 
@@ -251,7 +251,7 @@ layer_new (gimage, width, height, type, name, opacity, mode)
 
   layer = gtk_type_new (gimp_layer_get_type ());
 
-  gimp_drawable_configure (GIMP_DRAWABLE(layer), 
+  gimp_drawable_configure (GIMP_DRAWABLE(layer),
 			   gimage, width, height, type, name);
 
   /*  allocate the memory for this layer  */
@@ -303,7 +303,7 @@ layer_copy (layer, add_alpha)
 {
   char * layer_name;
   Layer * new_layer;
-  int new_type;
+  GimpImageType new_type;
   char *ext;
   int number;
   char *name;
@@ -397,17 +397,16 @@ layer_copy (layer, add_alpha)
 
 
 Layer *
-layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
-     void *gimage_ptr;
-     GimpDrawable *drawable;
-     TileManager *tiles;
-     char *name;
-     int opacity;
-     int mode;
+layer_from_tiles (void *gimage_ptr,
+		  GimpDrawable *drawable,
+		  TileManager *tiles,
+		  char *name,
+		  int opacity,
+		  LayerModeEffects mode)
 {
   GImage * gimage;
   Layer * new_layer;
-  int layer_type;
+  GimpImageType layer_type;
   PixelRegion layerPR, bufPR;
 
   /*  Function copies buffer to a layer
@@ -692,7 +691,7 @@ layer_add_alpha (layer)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
-  int type;
+  GimpImageType type;
 
   /*  Don't bother if the layer already has alpha  */
   switch (GIMP_DRAWABLE(layer)->type)
@@ -1062,24 +1061,21 @@ layer_get_name (Layer *layer)
 
 
 unsigned char *
-layer_data (layer)
-     Layer * layer;
+layer_data (Layer * layer)
 {
   return NULL;
 }
 
 
 LayerMask *
-layer_mask (layer)
-     Layer * layer;
+layer_mask (Layer * layer)
 {
   return layer->mask;
 }
 
 
 int
-layer_has_alpha (layer)
-     Layer * layer;
+layer_has_alpha (Layer * layer)
 {
   if (GIMP_DRAWABLE(layer)->type == RGBA_GIMAGE ||
       GIMP_DRAWABLE(layer)->type == GRAYA_GIMAGE ||
@@ -1091,8 +1087,7 @@ layer_has_alpha (layer)
 
 
 int
-layer_is_floating_sel (layer)
-     Layer *layer;
+layer_is_floating_sel (Layer *layer)
 {
   if (layer->fs.drawable != NULL)
     return 1;
@@ -1107,9 +1102,9 @@ layer_linked (Layer *layer)
 }
 
 TempBuf *
-layer_preview (layer, w, h)
-     Layer *layer;
-     int w, h;
+layer_preview (Layer *layer,
+	       int w,
+	       int h)
 {
   GImage *gimage;
   TempBuf *preview_buf;

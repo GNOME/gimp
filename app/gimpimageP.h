@@ -25,7 +25,7 @@ struct _GimpImage
   double xresolution;                 /*  image x-res, in dpi          */
   double yresolution;                 /*  image y-res, in dpi          */
   GUnit unit;                         /*  image unit                   */
-  int base_type;                      /*  base gimp_image type         */
+  GimpImageBaseType base_type;        /*  base gimp_image type         */
 
   unsigned char * cmap;               /*  colormap--for indexed        */
   int num_cols;                       /*  number of cols--for indexed  */
@@ -42,7 +42,7 @@ struct _GimpImage
 
                                       /*  Projection attributes  */
   int construct_flag;                 /*  flag for construction        */
-  int proj_type;                      /*  type of the projection image */
+  GimpImageType proj_type;            /*  type of the projection image */
   int proj_bytes;                     /*  bpp in projection image      */
   int proj_level;                     /*  projection level             */
   TileManager *projection;            /*  The projection--layers &     */

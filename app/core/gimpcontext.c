@@ -428,7 +428,7 @@ gimp_context_define_opacity (GimpContext *context,
 
 /*  paint mode  */
 
-gint
+LayerModeEffects
 gimp_context_get_paint_mode (GimpContext *context)
 {
   context_check_current (context);
@@ -439,8 +439,8 @@ gimp_context_get_paint_mode (GimpContext *context)
 }
 
 void
-gimp_context_set_paint_mode (GimpContext *context,
-			     gint         paint_mode)
+gimp_context_set_paint_mode (GimpContext     *context,
+			     LayerModeEffects paint_mode)
 {
   context_check_current (context);
   context_return_if_fail (context);

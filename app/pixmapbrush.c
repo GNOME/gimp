@@ -218,10 +218,11 @@ pixmapbrush_motion (PaintCore *paint_core,
   if (! (gimage = drawable_gimage (drawable))) 
     return; 
 
-  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush))){
-    g_print("not gimpbrushhose apparently...but why not i have no idea\n");
-    return;
-  } else
+  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush)))
+    {
+      return;
+    }
+  else
     {
       saved_brush = paint_core->brush;
       /* Set paint_core->brush, restore below before returning.

@@ -1,9 +1,9 @@
 #ifndef __GIMPIMAGE_H__
 #define __GIMPIMAGE_H__
 
+#include "apptypes.h"
 #include "procedural_db.h"
 #include "gimpimageF.h"
-
 #include "boundary.h"
 #include "drawable.h"
 #include "channel.h"
@@ -22,20 +22,6 @@
      
 #define GIMP_IS_IMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
      
-
-/* the image types */
-typedef enum
-{
-  RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
-  RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
-  GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/
-  GRAYA_GIMAGE,		/*< nick=GRAYA_IMAGE >*/
-  INDEXED_GIMAGE,	/*< nick=INDEXED_IMAGE >*/
-  INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
-} GimpImageType;
-
-
-
 #define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define GRAY_PIX         0
@@ -46,14 +32,6 @@ typedef enum
 #define ALPHA_PIX        3
 #define INDEXED_PIX      0
 #define ALPHA_I_PIX      1
-
-typedef enum
-{
-  RGB,
-  GRAY,
-  INDEXED
-} GimpImageBaseType;
-
 
 #define COLORMAP_SIZE    768
 
@@ -113,7 +91,8 @@ GtkType gimp_image_get_type(void);
 
 /* function declarations */
 
-GimpImage *     gimp_image_new                    (int, int, int);
+GimpImage *     gimp_image_new                    (int, int,
+						   GimpImageBaseType);
 void            gimp_image_set_filename           (GimpImage *, char *);
 void            gimp_image_set_resolution         (GimpImage *,
 						   double, double);
@@ -122,8 +101,9 @@ void            gimp_image_get_resolution         (GimpImage *,
 						   double *);
 void            gimp_image_set_unit               (GimpImage *, GUnit);
 GUnit           gimp_image_get_unit               (GimpImage *);
-void            gimp_image_set_save_proc    (GimpImage *, PlugInProcDef *);
-PlugInProcDef * gimp_image_get_save_proc    (GimpImage *);
+void            gimp_image_set_save_proc	  (GimpImage *,
+						   PlugInProcDef *);
+PlugInProcDef * gimp_image_get_save_proc	  (GimpImage *);
 void            gimp_image_resize                 (GimpImage *, int, int, int, int);
 void            gimp_image_scale                  (GimpImage *, int, int);
 GimpImage *     gimp_image_get_named              (char *);
@@ -132,7 +112,8 @@ TileManager *   gimp_image_shadow                 (GimpImage *, int, int, int);
 void            gimp_image_free_shadow            (GimpImage *);
 void            gimp_image_apply_image            (GimpImage *, GimpDrawable *,
 						   PixelRegion *, int,
-						   int, int,
+						   int,
+						   LayerModeEffects,
 						   TileManager *, int, int);
 void            gimp_image_replace_image          (GimpImage *, GimpDrawable *,
 						   PixelRegion *, int, int,
@@ -143,12 +124,15 @@ void            gimp_image_get_background         (GimpImage *, GimpDrawable *,
 						   unsigned char *);
 unsigned char * gimp_image_get_color_at           (GimpImage *, int x, int y);
 						   
-void            gimp_image_get_color              (GimpImage *, int,
+void            gimp_image_get_color              (GimpImage *,
+						   GimpImageType,
 						   unsigned char *,
 						   unsigned char *);
-void            gimp_image_transform_color        (GimpImage *, GimpDrawable *,
+void            gimp_image_transform_color        (GimpImage *,
+						   GimpDrawable *,
 						   unsigned char *,
-						   unsigned char *, int);
+						   unsigned char *,
+						   GimpImageBaseType);
 Guide*          gimp_image_add_hguide             (GimpImage *);
 Guide*          gimp_image_add_vguide             (GimpImage *);
 void            gimp_image_add_guide              (GimpImage *, Guide *);
@@ -227,8 +211,8 @@ void            gimp_image_validate               (TileManager *, Tile *);
 
 int             gimp_image_is_empty               (GimpImage *);
 GimpDrawable *  gimp_image_active_drawable        (GimpImage *);
-int             gimp_image_base_type              (GimpImage *);
-int             gimp_image_base_type_with_alpha   (GimpImage *);
+GimpImageBaseType gimp_image_base_type            (GimpImage *);
+GimpImageType	gimp_image_base_type_with_alpha   (GimpImage *);
 char *          gimp_image_filename               (GimpImage *);
 int             gimp_image_enable_undo            (GimpImage *);
 int             gimp_image_disable_undo           (GimpImage *);
@@ -242,7 +226,7 @@ unsigned char * gimp_image_cmap                   (GimpImage *);
 /*  projection access functions  */
 
 TileManager *   gimp_image_projection             (GimpImage *);
-int             gimp_image_projection_type        (GimpImage *);
+GimpImageType	gimp_image_projection_type        (GimpImage *);
 int             gimp_image_projection_bytes       (GimpImage *);
 int             gimp_image_projection_opacity     (GimpImage *);
 void            gimp_image_projection_realloc     (GimpImage *);
@@ -251,7 +235,7 @@ void            gimp_image_projection_realloc     (GimpImage *);
 /*  composite access functions  */
 
 TileManager *   gimp_image_composite              (GimpImage *);
-int             gimp_image_composite_type         (GimpImage *);
+GimpImageType	gimp_image_composite_type         (GimpImage *);
 int             gimp_image_composite_bytes        (GimpImage *);
 TempBuf *       gimp_image_composite_preview      (GimpImage *, ChannelType, int, int);
 int             gimp_image_preview_valid          (GimpImage *, ChannelType);

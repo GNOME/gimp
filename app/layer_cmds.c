@@ -142,7 +142,8 @@ layer_new_invoker (Argument *args)
   if (success)
     {
       opacity = (int) ((opacity_arg * 255) / 100);
-      layer = layer_new (gimage, width, height, type, name, opacity, mode);
+      layer = layer_new (gimage, width, height, (GimpImageType) type,
+			 name, opacity, (LayerModeEffects) mode);
       success = layer != NULL;
     }
 
@@ -301,7 +302,7 @@ layer_create_mask_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = (mask = layer_create_mask (layer, mask_type)) != NULL;
+    success = (mask = layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
 
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 

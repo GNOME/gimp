@@ -549,6 +549,7 @@ nav_window_preview_events (GtkWidget *widget,
 	    }
 	  break;
 	default:
+	  break;
 	}
       break;
 
@@ -564,6 +565,7 @@ nav_window_preview_events (GtkWidget *widget,
 	  gtk_grab_remove(widget);
 	  break;
 	default:
+	  break;
 	}
       break;
 

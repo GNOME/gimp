@@ -139,7 +139,7 @@ drawable_fill_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    drawable_fill (drawable, fill_type);
+    drawable_fill (drawable, (GimpFillType) fill_type);
 
   return procedural_db_return_args (&drawable_fill_proc, success);
 }

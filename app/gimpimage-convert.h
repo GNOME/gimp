@@ -18,6 +18,7 @@
 #ifndef __CONVERT_H__
 #define __CONVERT_H__
 
+#include "apptypes.h"
 #include "procedural_db.h"
 #include "gimpimageF.h"
 #include "palette_entries.h"
@@ -38,7 +39,10 @@ void convert_to_rgb        (GimpImage *);
 void convert_to_grayscale  (GimpImage *);
 void convert_to_indexed    (GimpImage *);
 
-void convert_image         (GimpImage *, int, int, int, int);
+void convert_image         (GimpImage *,
+			    GimpImageBaseType,
+			    int, int,
+			    ConvertPaletteType);
 
 extern PaletteEntriesP theCustomPalette;
 

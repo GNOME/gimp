@@ -337,7 +337,7 @@ convolve_motion (PaintCore    *paint_core,
 
       /*  Convolve the region  */
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
-		       matrix_divisor, NORMAL);
+		       matrix_divisor, NORMAL_CONVOL);
 
       if (drawable_has_alpha (drawable))
 	  separate_alpha_region (&destPR);

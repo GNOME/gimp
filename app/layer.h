@@ -18,17 +18,12 @@
 #ifndef __LAYER_H__
 #define __LAYER_H__
 
+#include "apptypes.h"
 #include "drawable.h"
-
 #include "boundary.h"
 #include "channel.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-
-typedef enum {
-  APPLY,
-  DISCARD
-} MaskApplyMode;
 
 #include "layerF.h"
 
@@ -81,12 +76,17 @@ struct _fs_to_layer_undo
 
 /* function declarations */
 
-Layer *         layer_new (GimpImage*, int, int, int, char *, int, int);
+Layer *         layer_new (GimpImage*, int, int,
+			   GimpImageType,
+			   char *, int,
+			   LayerModeEffects);
 Layer *         layer_copy (Layer *, int);
 Layer *		layer_ref (Layer *);
 void   		layer_unref (Layer *);
 
-Layer *         layer_from_tiles (void *, GimpDrawable *, TileManager *, char *, int, int);
+Layer *         layer_from_tiles (void *, GimpDrawable *, TileManager *,
+				  char *, int,
+				  LayerModeEffects);
 LayerMask *     layer_add_mask (Layer *, LayerMask *);
 LayerMask *     layer_create_mask (Layer *, AddMaskType);
 Layer *         layer_get_ID (int);

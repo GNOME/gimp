@@ -736,18 +736,21 @@ indexed_dither_update (GtkWidget *w,
 }
 
 void
-convert_image (GImage *gimage,
-	       int     new_type,
-	       int     num_cols,     /*  used only for new_type == INDEXED  */
-	       int     dither,       /*  used only for new_type == INDEXED  */
-	       int     palette_type) /*  used only for new_type == INDEXED  */
+convert_image (GImage		 *gimage,
+	       GimpImageBaseType  new_type,
+	       /* The following three params used only for
+		* new_type == INDEXED
+		*/
+	       int		  num_cols,
+	       int		  dither,
+	       ConvertPaletteType palette_type)
 {
   QuantizeObj *quantobj;
   Layer *layer;
   Layer *floating_layer;
-  int old_type;
+  GimpImageBaseType old_type;
   GSList *list;
-  int new_layer_type;
+  GimpImageType new_layer_type;
   int new_layer_bytes;
   int has_alpha;
   TileManager *new_tiles;

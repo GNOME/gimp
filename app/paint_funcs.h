@@ -24,6 +24,7 @@
 #ifndef __PAINT_FUNCS_H__
 #define __PAINT_FUNCS_H__
 
+#include "apptypes.h"
 #include "pixel_region.h"
 #include "gimpimageF.h"
 
@@ -474,13 +475,10 @@ void  extract_from_region                 (PixelRegion *, PixelRegion *,
 					   unsigned char *, int, int, int);
 
 
-/*  The types of convolutions  */
-#define NORMAL     0   /*  Negative numbers truncated  */
-#define ABSOLUTE   1   /*  Absolute value              */
-#define NEGATIVE   2   /*  add 127 to values           */
-
-void  convolve_region                     (PixelRegion *, PixelRegion *,
-					   int *, int, int, int);
+void  convolve_region                     (PixelRegion *,
+					   PixelRegion *,
+					   int *, int, int,
+					   ConvolutionType);
 
 void  multiply_alpha_region               (PixelRegion *);
 
@@ -529,10 +527,6 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
 #define INITIAL_INTENSITY            4
 #define INITIAL_INTENSITY_ALPHA      5
 
-void  initial_region                      (PixelRegion *, PixelRegion *,
-					   PixelRegion *, unsigned char *,
-					   int, int, int *, int);
-
 /*  Combine two source regions with the help of an optional mask
  *  region into a destination region.  This is used for constructing
  *  layer projections, and for applying image patches to an image
@@ -560,17 +554,6 @@ void  initial_region                      (PixelRegion *, PixelRegion *,
 #define NO_COMBINATION                    28
 
 
-void  combine_regions                     (PixelRegion *, PixelRegion *,
-					   PixelRegion *, PixelRegion *,
-					   unsigned char *, int,
-					   int, int *, int);
-
-void  combine_regions_replace             (PixelRegion *, PixelRegion *,
-					   PixelRegion *, PixelRegion *,
-					   unsigned char *,
-					   int, int *, int);
-
-
 /*  Color conversion routines  */
 void  rgb_to_hsv            (int *, int *, int *);
 void  hsv_to_rgb            (int *, int *, int *);
@@ -582,36 +565,32 @@ void  hls_to_rgb            (int *, int *, int *);
 #define TRANSPARENT_OPACITY        0
 #define OPAQUE_OPACITY             255
 
-/*  Layer Modes  */
-typedef enum {
-  NORMAL_MODE,
-  DISSOLVE_MODE,
-  BEHIND_MODE,
-  MULTIPLY_MODE,
-  SCREEN_MODE,
-  OVERLAY_MODE,
-  DIFFERENCE_MODE,
-  ADDITION_MODE,
-  SUBTRACT_MODE,
-  DARKEN_ONLY_MODE,
-  LIGHTEN_ONLY_MODE,
-  HUE_MODE,
-  SATURATION_MODE,
-  COLOR_MODE,
-  VALUE_MODE,
-  DIVIDE_MODE,
-  ERASE_MODE,         /*< skip >*/
-  REPLACE_MODE,       /*< skip >*/
-  ANTI_ERASE_MODE,    /*< skip >*/
-} LayerModeEffects;
+void  initial_region                      (PixelRegion *, PixelRegion *,
+					   PixelRegion *, unsigned char *,
+					   int, LayerModeEffects, int *, int);
+
+void  combine_regions                     (PixelRegion *, PixelRegion *,
+					   PixelRegion *, PixelRegion *,
+					   unsigned char *, int,
+					   LayerModeEffects,
+					   int *, int);
+
+void  combine_regions_replace             (PixelRegion *, PixelRegion *,
+					   PixelRegion *, PixelRegion *,
+					   unsigned char *,
+					   int, int *, int);
+
 
 /*  Applying layer modes...  */
 
 int   apply_layer_mode         (unsigned char *, unsigned char *,
 				unsigned char **, int, int, int,
-				int, int, int, int, int, int, int *);
+				int,
+				LayerModeEffects,
+				int, int, int, int, int *);
 
 int   apply_indexed_layer_mode (unsigned char *, unsigned char *,
-				unsigned char **, int, int, int);
+				unsigned char **,
+				LayerModeEffects, int, int);
 
 #endif  /*  __PAINT_FUNCS_H__  */

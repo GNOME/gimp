@@ -38,7 +38,7 @@ struct _GimpDrawable
   int ID;				/* provides a unique ID */
   guint32 tattoo;			/* provides a perminant ID */
   GimpImage* gimage;			/* gimage owner */
-  int type;				/* type of drawable */
+  GimpImageType type;			/* type of drawable */
   int has_alpha;			/* drawable has alpha */
 
   ParasiteList *parasites;              /* Plug-in parasite data   */
@@ -62,6 +62,6 @@ typedef struct _GimpDrawableClass GimpDrawableClass;
 #define GIMP_IS_DRAWABLE_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
 
 void gimp_drawable_configure (GimpDrawable *, GimpImage*,
-			      gint, gint, gint, gchar*);
+			      gint, gint, GimpImageType, gchar*);
 
 #endif /* __GIMPDRAWABLEP_H__ */

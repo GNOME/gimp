@@ -1240,7 +1240,7 @@ plug_in_repeat (int with_interface)
 }
 
 void
-plug_in_set_menu_sensitivity (int base_type)
+plug_in_set_menu_sensitivity (GimpImageType type)
 {
   PlugInProcDef *proc_def;
   GSList *tmp;
@@ -1254,7 +1254,7 @@ plug_in_set_menu_sensitivity (int base_type)
 
       if (proc_def->image_types_val && proc_def->menu_path)
 	{
-	  switch (base_type)
+	  switch (type)
 	    {
 	    case -1:
 	      sensitive = FALSE;

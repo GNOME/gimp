@@ -901,7 +901,7 @@ display_brush (BrushSelectP bsp,
 	{ 
 	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
 	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-				  brush_scale_indicator_bits[i],
+				  brush_scale_indicator_bits[i][0],
 				  offset_x, offset_y, 
 				  brush_scale_indicator_width);
 	}

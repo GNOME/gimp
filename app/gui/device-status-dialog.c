@@ -1205,7 +1205,7 @@ device_update_brush (GimpBrushP brush,
 	{
 	  offset_x = CELL_SIZE - brush_scale_indicator_width - 1;
 	  gtk_preview_draw_row (GTK_PREVIEW (deviceD->brushes[preview_id]),
-				brush_scale_indicator_bits[i],
+				brush_scale_indicator_bits[i][0],
 				offset_x, offset_y + i, 
 				brush_scale_indicator_width);
 	}

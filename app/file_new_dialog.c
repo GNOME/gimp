@@ -57,8 +57,8 @@ typedef struct
 
   gdouble size;  /* in bytes */
 
-  gint type;
-  gint fill_type;
+  GimpImageBaseType type;
+  GimpFillType fill_type;
 } NewImageValues;
 
 /*  new image local functions  */
@@ -83,8 +83,8 @@ static gdouble  last_xresolution = 72.0;
 static gdouble  last_yresolution = 72.0;
 static GUnit    last_res_unit    = UNIT_INCH;
 
-static gint     last_type        = RGB;
-static gint     last_fill_type   = BACKGROUND_FILL; 
+static GimpImageBaseType last_type = RGB;
+static GimpFillType last_fill_type = BACKGROUND_FILL; 
 
 static gboolean last_new_image   = FALSE;
 static gboolean new_dialog_run   = FALSE;
@@ -98,7 +98,7 @@ file_new_create_image (NewImageValues *vals)
   GImage   *gimage;
   GDisplay *gdisplay;
   Layer    *layer;
-  gint      type;
+  GimpImageType type;
 
   last_width = vals->width;
   last_height = vals->height;
@@ -132,7 +132,7 @@ file_new_create_image (NewImageValues *vals)
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage, gimage->width, gimage->height,
-		     type, _("Background"), OPAQUE_OPACITY, NORMAL);
+		     type, _("Background"), OPAQUE_OPACITY, NORMAL_MODE);
 
   if (layer)
     {

@@ -250,7 +250,7 @@ gimp_image_allocate_shadow (GimpImage *gimage,
 GimpImage *
 gimp_image_new (int width, 
 		int height, 
-		int base_type)
+		GimpImageBaseType base_type)
 {
   GimpImage *gimage=GIMP_IMAGE(gtk_type_new(gimp_image_get_type ()));
   int i;
@@ -621,16 +621,16 @@ gimp_image_destroy (GtkObject *object)
 }
 
 void
-gimp_image_apply_image (GimpImage    *gimage, 
-			GimpDrawable *drawable, 
-			PixelRegion  *src2PR,
-			int           undo, 
-			int           opacity, 
-			int           mode,
+gimp_image_apply_image (GimpImage	*gimage, 
+			GimpDrawable	*drawable, 
+			PixelRegion	*src2PR,
+			int		 undo, 
+			int		 opacity, 
+			LayerModeEffects mode,
 			/*  alternative to using drawable tiles as src1: */
-			TileManager  *src1_tiles,
-			int           x, 
-			int           y)
+			TileManager	*src1_tiles,
+			int		 x, 
+			int		 y)
 {
   Channel *mask;
   int x1, y1, x2, y2;
@@ -893,7 +893,7 @@ gimp_image_get_color_at (GimpImage *gimage,
 
 void
 gimp_image_get_color (GimpImage     *gimage, 
-		      int            d_type,
+		      GimpImageType  d_type,
 		      unsigned char *rgb, 
 		      unsigned char *src)
 {
@@ -913,14 +913,14 @@ gimp_image_get_color (GimpImage     *gimage,
 
 
 void
-gimp_image_transform_color (GimpImage     *gimage, 
-			    GimpDrawable  *drawable,
-			    unsigned char *src, 
-			    unsigned char *dest, 
-			    int            type)
+gimp_image_transform_color (GimpImage        *gimage, 
+			    GimpDrawable     *drawable,
+			    unsigned char    *src, 
+			    unsigned char    *dest, 
+			    GimpImageBaseType type)
 {
 #define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
-  int d_type;
+  GimpImageType d_type;
 
   d_type = (drawable != NULL) ? drawable_type (drawable) :
     gimp_image_base_type_with_alpha (gimage);
@@ -1214,14 +1214,14 @@ project_channel (GimpImage   *gimage,
       type = (channel->show_masked) ?
 	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
       initial_region (src2, src, NULL, channel->col, channel->opacity,
-		      NORMAL, NULL, type);
+		      NORMAL_MODE, NULL, type);
     }
   else
     {
       type = (channel->show_masked) ?
 	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
       combine_regions (src, src2, src, NULL, channel->col, channel->opacity,
-		       NORMAL, NULL, type);
+		       NORMAL_MODE, NULL, type);
     }
 }
 
@@ -2569,7 +2569,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   Layer *layer;
   Layer *bottom;
   unsigned char bg[4] = {0, 0, 0, 0};
-  int type;
+  GimpImageType type;
   int count;
   int x1, y1, x2, y2;
   int x3, y3, x4, y4;
@@ -2721,7 +2721,7 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  Keep a pointer to it so that we can set the mode right after it's been
        *  merged so that undo works correctly.
        */
-      layer -> mode =NORMAL;
+      layer->mode = NORMAL_MODE;
       bottom = layer;
 
     }
@@ -3246,13 +3246,13 @@ gimp_image_active_drawable (GimpImage *gimage)
     return NULL;
 }
 
-int
+GimpImageBaseType
 gimp_image_base_type (GimpImage *gimage)
 {
   return gimage->base_type;
 }
 
-int
+GimpImageType
 gimp_image_base_type_with_alpha (GimpImage *gimage)
 {
   switch (gimage->base_type)
@@ -3352,7 +3352,7 @@ gimp_image_projection (GimpImage *gimage)
   return gimage->projection;
 }
 
-int
+GimpImageType
 gimp_image_projection_type (GimpImage *gimage)
 {
   return gimage->proj_type;
@@ -3386,7 +3386,7 @@ gimp_image_composite (GimpImage *gimage)
   return gimp_image_projection (gimage);
 }
 
-int
+GimpImageType
 gimp_image_composite_type (GimpImage *gimage)
 {
   return gimp_image_projection_type (gimage);

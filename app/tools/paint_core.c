@@ -52,11 +52,14 @@ PaintCore  non_gui_paint_core;
 static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
 static MaskBuf * paint_core_pressurize_mask (MaskBuf *, double, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
-static MaskBuf * paint_core_get_brush_mask  (PaintCore *, int);
+static MaskBuf * paint_core_get_brush_mask  (PaintCore *, BrushApplicationMode);
 static void      paint_core_paste           (PaintCore *, MaskBuf *,
-					     GimpDrawable *, int, int, int, int);
+					     GimpDrawable *, int, int,
+					     LayerModeEffects,
+					     PaintApplicationMode);
 static void      paint_core_replace         (PaintCore *, MaskBuf *,
-					     GimpDrawable *, int, int, int);
+					     GimpDrawable *, int, int,
+					     PaintApplicationMode);
 static void      brush_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
 static void      canvas_tiles_to_canvas_buf (PaintCore *);
 static void      brush_to_canvas_buf        (PaintCore *, MaskBuf *, int);
@@ -941,13 +944,13 @@ paint_core_get_orig_image (PaintCore    *paint_core,
 }
 
 void
-paint_core_paste_canvas (PaintCore    *paint_core, 
-			 GimpDrawable *drawable, 
-			 int brush_opacity, 
-			 int image_opacity, 
-			 int paint_mode,
-			 int brush_hardness, 
-			 int mode)
+paint_core_paste_canvas (PaintCore	     *paint_core, 
+			 GimpDrawable	     *drawable, 
+			 int		      brush_opacity, 
+			 int		      image_opacity, 
+			 LayerModeEffects     paint_mode,
+			 BrushApplicationMode brush_hardness, 
+			 PaintApplicationMode mode)
 {
   MaskBuf *brush_mask;
 
@@ -963,12 +966,12 @@ paint_core_paste_canvas (PaintCore    *paint_core,
    rather than using it to composite (i.e. transparent over opaque
    becomes transparent rather than opauqe. */
 void
-paint_core_replace_canvas (PaintCore    *paint_core, 
-			   GimpDrawable *drawable, 
-			   int brush_opacity, 
-			   int image_opacity, 
-			   int brush_hardness, 
-			   int mode)
+paint_core_replace_canvas (PaintCore	       *paint_core, 
+			   GimpDrawable	       *drawable, 
+			   int			brush_opacity, 
+			   int			image_opacity, 
+			   BrushApplicationMode brush_hardness, 
+			   PaintApplicationMode mode)
 {
   MaskBuf *brush_mask;
 
@@ -1203,8 +1206,8 @@ paint_core_solidify_mask (MaskBuf *brush_mask)
 }
 
 static MaskBuf *
-paint_core_get_brush_mask (PaintCore *paint_core, 
-			   int        brush_hardness)
+paint_core_get_brush_mask (PaintCore	       *paint_core, 
+			   BrushApplicationMode brush_hardness)
 {
   MaskBuf * bm;
 
@@ -1228,13 +1231,13 @@ paint_core_get_brush_mask (PaintCore *paint_core,
 }
 
 static void
-paint_core_paste (PaintCore    *paint_core, 
-		  MaskBuf      *brush_mask, 
-		  GimpDrawable *drawable, 
-		  int           brush_opacity, 
-		  int           image_opacity, 
-		  int           paint_mode, 
-		  int           mode)
+paint_core_paste (PaintCore	      *paint_core, 
+		  MaskBuf	      *brush_mask, 
+		  GimpDrawable	      *drawable, 
+		  int		       brush_opacity, 
+		  int		       image_opacity, 
+		  LayerModeEffects     paint_mode, 
+		  PaintApplicationMode mode)
 {
   GImage *gimage;
   PixelRegion srcPR;
@@ -1306,12 +1309,12 @@ paint_core_paste (PaintCore    *paint_core,
    mode.
 */
 static void
-paint_core_replace (PaintCore    *paint_core, 
-		    MaskBuf      *brush_mask, 
-		    GimpDrawable *drawable, 
-		    int           brush_opacity, 
-		    int           image_opacity, 
-		    int           mode)
+paint_core_replace (PaintCore		*paint_core, 
+		    MaskBuf		*brush_mask, 
+		    GimpDrawable	*drawable, 
+		    int			 brush_opacity, 
+		    int			 image_opacity, 
+		    PaintApplicationMode mode)
 {
   GImage *gimage;
   PixelRegion srcPR, maskPR;

@@ -18,6 +18,7 @@
 #ifndef __PAINT_CORE_H__
 #define __PAINT_CORE_H__
 
+#include "apptypes.h"
 #include "draw_core.h"
 #include "temp_buf.h"
 #include "gimpbrush.h"
@@ -29,21 +30,6 @@
 #define PAUSE_PAINT     2
 #define RESUME_PAINT    3
 #define FINISH_PAINT    4
-
-/* brush application types  */
-typedef enum
-{
-  HARD,     /* pencil */
-  SOFT,     /* paintbrush */
-  PRESSURE  /* paintbrush with variable pressure */
-} BrushApplicationMode;
-
-/* paint application modes  */
-typedef enum
-{
-  CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
-  INCREMENTAL  /* convolve, smudge */
-} PaintApplicationMode;
 
 /* gradient paint modes */
 typedef enum {
@@ -127,9 +113,19 @@ void          paint_core_finish       (PaintCore *, GimpDrawable *, int);
 void          paint_core_cleanup      (void);
 
 /*  paint tool painting functions  */
-TempBuf *     paint_core_get_paint_area    (PaintCore *, GimpDrawable *);
-TempBuf *     paint_core_get_orig_image    (PaintCore *, GimpDrawable *, int, int, int, int);
-void          paint_core_paste_canvas      (PaintCore *, GimpDrawable *, int, int, int, int, int);
-void          paint_core_replace_canvas    (PaintCore *, GimpDrawable *, int, int, int, int);
+TempBuf *     paint_core_get_paint_area    (PaintCore *,
+					    GimpDrawable *);
+TempBuf *     paint_core_get_orig_image    (PaintCore *,
+					    GimpDrawable *,
+					    int, int, int, int);
+void          paint_core_paste_canvas      (PaintCore *,
+					    GimpDrawable *, int, int,
+					    LayerModeEffects,
+					    BrushApplicationMode,
+					    PaintApplicationMode);
+void          paint_core_replace_canvas    (PaintCore *,
+					    GimpDrawable *, int, int,
+					    BrushApplicationMode,
+					    PaintApplicationMode);
 
 #endif  /*  __PAINT_CORE_H__  */

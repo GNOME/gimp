@@ -21,9 +21,10 @@
 
 #include <sys/types.h>
 #include <gtk/gtk.h>
+
 #include "procedural_db.h"
 #include "gimpprogress.h"
-
+#include "drawable.h"
 
 #define WRITE_BUFFER_SIZE  512
 
@@ -43,10 +44,6 @@ typedef enum
   RUN_WITH_LAST_VALS = 2
 } RunModeType;
 
-
-typedef struct _PlugIn             PlugIn;
-typedef struct _PlugInDef          PlugInDef;
-typedef struct _PlugInProcDef      PlugInProcDef;
 
 struct _PlugIn
 {
@@ -171,9 +168,9 @@ Argument* plug_in_run (ProcRecord *proc_rec,
 void plug_in_repeat (int with_interface);
 
 /* Set the sensitivity for plug-in menu items based on the image
- *  base type.
+ * type.
  */
-void plug_in_set_menu_sensitivity (int base_type);
+void plug_in_set_menu_sensitivity (GimpImageType type);
 
 /* Register an internal plug-in.  This is for file load-save
  * handlers, which are organized around the plug-in data structure.

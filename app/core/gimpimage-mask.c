@@ -352,7 +352,7 @@ gimage_mask_float (GImage       *gimage,
 
   /*  Create a new layer from the buffer  */
   layer = layer_from_tiles (gimage, drawable, tiles, _("Floated Layer"),
-			    OPAQUE_OPACITY, NORMAL);
+			    OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;

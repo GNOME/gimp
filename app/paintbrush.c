@@ -394,6 +394,7 @@ paintbrush_motion (PaintCore    *paint_core,
   unsigned char col[MAX_CHANNELS];
   double r,g,b,a;
   int mode;
+  PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   position = 0.0;
   if (! (gimage = drawable_gimage (drawable)))
@@ -443,7 +444,7 @@ paintbrush_motion (PaintCore    *paint_core,
 	  col[2] = (gint)b;
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
-	  incremental = INCREMENTAL;
+	  paint_appl_mode = INCREMENTAL;
 	}
       /* just leave this because I know as soon as i delete it i'll find a bug */
       /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
@@ -453,10 +454,10 @@ paintbrush_motion (PaintCore    *paint_core,
 
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
-      if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush) && !gradient_length)
+      if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
 	{
 	  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
-	  incremental = INCREMENTAL;
+	  paint_appl_mode = INCREMENTAL;
 	}
       else
 	{
@@ -470,7 +471,7 @@ paintbrush_motion (PaintCore    *paint_core,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL),
 			       PRESSURE,
-			       incremental ? INCREMENTAL : CONSTANT);
+			       paint_appl_mode);
     }
 }
 

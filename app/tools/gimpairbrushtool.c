@@ -86,7 +86,7 @@ static double           non_gui_pressure;
 static gboolean         non_gui_incremental;
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, double, gboolean);
+static void         airbrush_motion   (PaintCore *, GimpDrawable *, double, PaintApplicationMode);
 static gint         airbrush_time_out (gpointer);
 
 
@@ -235,7 +235,8 @@ airbrush_paint_func (PaintCore *paint_core,
 	gtk_timeout_remove (timer);
       timer_state = OFF;
 
-      airbrush_motion (paint_core, drawable, airbrush_options->pressure, airbrush_options->incremental);
+      airbrush_motion (paint_core, drawable, airbrush_options->pressure,
+		       airbrush_options->incremental ? INCREMENTAL : CONSTANT);
 
       if (airbrush_options->rate != 0.0)
       {
@@ -279,7 +280,7 @@ airbrush_time_out (gpointer client_data)
   airbrush_motion (airbrush_timeout.paint_core,
 		   airbrush_timeout.drawable,
 		   airbrush_options->pressure,
-		   airbrush_options->incremental);
+		   airbrush_options->incremental ? INCREMENTAL : CONSTANT);
   gdisplays_flush ();
 
   /*  restart the timer  */
@@ -291,10 +292,10 @@ airbrush_time_out (gpointer client_data)
 
 
 static void
-airbrush_motion (PaintCore    *paint_core,
-		 GimpDrawable *drawable,
-		 double        pressure,
-		 gboolean      mode)
+airbrush_motion (PaintCore	     *paint_core,
+		 GimpDrawable	     *drawable,
+		 double		      pressure,
+		 PaintApplicationMode mode)
 {
   gint opacity;
   GImage *gimage;
@@ -316,9 +317,9 @@ airbrush_motion (PaintCore    *paint_core,
   col[area->bytes - 1] = OPAQUE_OPACITY;
 
 
-  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush))
+  if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
-      color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
+      color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
       mode = INCREMENTAL;
     }
   else

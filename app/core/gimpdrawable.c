@@ -274,7 +274,7 @@ gimp_drawable_set_gimage (GimpDrawable *drawable, GimpImage *gimage)
 }
 
 
-int
+GimpImageType
 gimp_drawable_type (GimpDrawable *drawable)
 {
   if (drawable)
@@ -498,7 +498,7 @@ gimp_drawable_get_tattoo(const GimpDrawable *drawable)
 int
 gimp_drawable_type_with_alpha (GimpDrawable *drawable)
 {
-  int type = gimp_drawable_type (drawable);
+  GimpImageType type = gimp_drawable_type (drawable);
   int has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (has_alpha)
@@ -692,7 +692,7 @@ gimp_drawable_destroy (GtkObject *object)
 void
 gimp_drawable_configure (GimpDrawable *drawable,
 			 GimpImage* gimage, int width, int height, 
-			 int type, char *name)
+			 GimpImageType type, char *name)
 {
   int bpp;
   int alpha;
@@ -743,4 +743,3 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
 }
-  

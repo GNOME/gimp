@@ -18,8 +18,8 @@
 #ifndef __CHANNEL_H__
 #define __CHANNEL_H__
 
+#include "apptypes.h"
 #include "drawable.h"
-
 #include "boundary.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
@@ -46,11 +46,6 @@ typedef enum
 #define GIMP_IS_CHANNEL(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL))
 #define GIMP_IS_CHANNEL_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
 
-
-typedef struct _GimpChannel      GimpChannel;
-typedef struct _GimpChannelClass GimpChannelClass;
-
-typedef GimpChannel Channel;		/* convenience */
 
 GtkType gimp_channel_get_type (void);
 

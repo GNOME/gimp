@@ -216,6 +216,5 @@ gimp_brush_pixmap_load (char *file_name)
   /*  Clean up  */
   fclose (fp);
 
-  return GIMP_BRUSH(brush);
-
+  return brush;
 }

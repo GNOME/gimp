@@ -20,8 +20,8 @@
 
 #include "gimpdrawable.h"
 
-int drawable_ID		     (GimpDrawable *);
-void drawable_fill (GimpDrawable *drawable, int fill_type);
+int drawable_ID (GimpDrawable *);
+void drawable_fill (GimpDrawable *drawable, GimpFillType fill_type);
 void drawable_update (GimpDrawable *drawable, int x, int y, int w, int h);
 void drawable_apply_image (GimpDrawable *, int, int, int, int, 
 			   TileManager *, int);

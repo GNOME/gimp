@@ -86,7 +86,7 @@ gimp_brush_hose_load (char *file_name)
   hose = GIMP_BRUSH_HOSE(gimp_type_new(gimp_brush_hose_get_type()));
   GIMP_BRUSH_HOSE(hose)->filename = g_strdup(file_name);
 
-  brush = GIMP_BRUSH (hose);
+  brush = GIMP_BRUSH_PIXMAP (hose);
 
   list = gimp_brush_list_new();
 

@@ -18,6 +18,7 @@
 #ifndef __GIMPDRAWABLE_H__
 #define __GIMPDRAWABLE_H__
 
+#include "apptypes.h"
 #include "gimpobject.h"
 #include "gimpdrawableF.h"
 #include "tile_manager.h"
@@ -30,16 +31,6 @@
 #define GIMP_IS_DRAWABLE(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))
 
 GtkType gimp_drawable_get_type (void);
-
-typedef enum
-{
-	FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
-	BACKGROUND_FILL,	/*< nick=BG_IMAGE_FILL >*/
-	WHITE_FILL,		/*< nick=WHITE_IMAGE_FILL >*/
-	TRANSPARENT_FILL,	/*< nick=TRANS_IMAGE_FILL >*/
-	NO_FILL			/*< nick=NO_IMAGE_FILL >*/
-} GimpFillType;
-
 
 /*  drawable access functions  */
 void             gimp_drawable_merge_shadow       (GimpDrawable *, int);
@@ -54,7 +45,7 @@ int              gimp_drawable_mask_bounds        (GimpDrawable *,
 void             gimp_drawable_invalidate_preview (GimpDrawable *);
 int              gimp_drawable_dirty              (GimpDrawable *);
 int              gimp_drawable_clean              (GimpDrawable *);
-int              gimp_drawable_type               (GimpDrawable *);
+GimpImageType    gimp_drawable_type               (GimpDrawable *);
 int              gimp_drawable_has_alpha          (GimpDrawable *);
 int              gimp_drawable_type_with_alpha    (GimpDrawable *);
 int              gimp_drawable_color              (GimpDrawable *);

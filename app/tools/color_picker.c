@@ -70,7 +70,7 @@ gint col_value[5] = { 0, 0, 0, 0, 0 };
 
 /*  the color picker dialog  */
 static gint           update_type;
-static gint           sample_type;
+static GimpImageType  sample_type;
 static InfoDialog *   color_picker_info = NULL;
 static gchar          red_buf   [MAX_INFO_BUF];
 static gchar          green_buf [MAX_INFO_BUF];

@@ -1566,8 +1566,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint lp = FALSE;
   gint alpha = FALSE;
   GimpDrawable *drawable = NULL;
-  gint base_type = 0;
-  gint type = -1;
+  GimpImageBaseType base_type = 0;
+  GimpImageType type = -1;
   gint lind = -1;
   gint lnum = -1;
 

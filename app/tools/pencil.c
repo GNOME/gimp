@@ -85,7 +85,7 @@ pencil_paint_func (PaintCore    *paint_core,
 void
 pencil_options_reset (void)
 {
-  paint_options_reset (pencil_options);
+  paint_options_reset (&pencil_options->paint_options);
 }
 
 Tool *
@@ -119,13 +119,13 @@ tools_free_pencil (Tool *tool)
 static void
 pencil_motion (PaintCore    *paint_core,
 	       GimpDrawable *drawable,
-	       gboolean increment)
+	       gboolean	     increment)
 {
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
   gint opacity;
-  
+  PaintApplicationMode paint_appl_mode = increment ? INCREMENTAL : CONSTANT;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -140,11 +140,11 @@ pencil_motion (PaintCore    *paint_core,
   col[area->bytes - 1] = OPAQUE_OPACITY;
 
 
-  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush))
+  if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       /* if its a pixmap, do pixmap stuff */
-      color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
-      increment = INCREMENTAL;
+      color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
+      paint_appl_mode = INCREMENTAL;
     }
   else
     {
@@ -167,7 +167,7 @@ pencil_motion (PaintCore    *paint_core,
   paint_core_paste_canvas (paint_core, drawable, opacity,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
-			   HARD, increment);
+			   HARD, paint_appl_mode);
 }
 
 static void *

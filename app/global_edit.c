@@ -285,7 +285,7 @@ edit_paste (GImage       *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   if (float_layer)
     {
@@ -340,7 +340,7 @@ edit_paste_as_new (GImage       *invoke,
 
   layer = layer_new (gimage, gimage->width, gimage->height,
 		     (invoke->base_type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE, 
-		     _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
+		     _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  add the new layer to the image  */
   gimage_disable_undo (gimage);
@@ -350,7 +350,7 @@ edit_paste_as_new (GImage       *invoke,
             
   /*  make a new floating layer  */
   float_layer = layer_from_tiles (gimage, drawable, paste, 
-				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
+				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  add the new floating selection  */
   floating_sel_attach (float_layer, drawable);

@@ -74,7 +74,10 @@ struct _LayerMode
   char *name;           /*  layer mode specification  */
 };
 
-LayerMode layer_modes[] =
+LayerMode layer_modes[] =	/* This must obviously be in the same
+				 * order as the corresponding values
+				 * in the LayerModeEffects enumeration.
+				 */
 {
   { 1, 1, 0, N_("Normal") },
   { 1, 1, 0, N_("Dissolve") },
@@ -3374,12 +3377,12 @@ extract_from_region (PixelRegion   *src,
 
 
 void
-convolve_region (PixelRegion *srcR,
-		 PixelRegion *destR,
-		 int         *matrix,
-		 int          size,
-		 int          divisor,
-		 int          mode)
+convolve_region (PixelRegion	*srcR,
+		 PixelRegion	*destR,
+		 int		*matrix,
+		 int		 size,
+		 int		 divisor,
+		 ConvolutionType mode)
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
@@ -3395,11 +3398,11 @@ convolve_region (PixelRegion *srcR,
   int x, y;
   int offset;
 
-  /*  If the mode is NEGATIVE, the offset should be 128  */
-  if (mode == NEGATIVE)
+  /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
+  if (mode == NEGATIVE_CONVOL)
     {
       offset = 128;
-      mode = 0;
+      mode = NORMAL_CONVOL;
     }
   else
     offset = 0;
@@ -3465,8 +3468,7 @@ convolve_region (PixelRegion *srcR,
 	    {
 	      total [b] = total [b] / divisor + offset;
 
-	      /*  only if mode was ABSOLUTE will mode by non-zero here  */
-	      if (total [b] < 0 && mode)
+	      if (total [b] < 0 && mode != NORMAL_CONVOL)
 		total [b] = - total [b];
 
 	      if (total [b] < 0)
@@ -5049,7 +5051,7 @@ copy_gray_to_region (PixelRegion *src,
 struct initial_regions_struct
 {
   int opacity;
-  int mode;
+  LayerModeEffects mode;
   int *affect;
   int type;
   unsigned char *data;
@@ -5063,12 +5065,12 @@ initial_sub_region(struct initial_regions_struct *st,
 {
   int h;
   unsigned char * s, * d, * m;
-  unsigned char buf[512];
-  unsigned char *data;
-  int            opacity;
-  int            mode;
-  int           *affect;
-  int            type;
+  unsigned char    buf[512];
+  unsigned char   *data;
+  int              opacity;
+  LayerModeEffects mode;
+  int             *affect;
+  int              type;
 
   data = st->data;
   opacity = st->opacity;
@@ -5134,14 +5136,14 @@ initial_sub_region(struct initial_regions_struct *st,
 }
 
 void
-initial_region (PixelRegion   *src,
-		PixelRegion   *dest,
-		PixelRegion   *mask,
-		unsigned char *data,
-		int            opacity,
-		int            mode,
-		int           *affect,
-		int            type)
+initial_region (PixelRegion	*src,
+		PixelRegion	*dest,
+		PixelRegion	*mask,
+		unsigned char	*data,
+		int		 opacity,
+		LayerModeEffects mode,
+		int		*affect,
+		int		 type)
 {
   struct initial_regions_struct st;
 
@@ -5158,7 +5160,7 @@ initial_region (PixelRegion   *src,
 struct combine_regions_struct
 {
   int opacity;
-  int mode;
+  LayerModeEffects mode;
   int *affect;
   int type;
   unsigned char *data;
@@ -5174,11 +5176,11 @@ combine_sub_region(struct combine_regions_struct *st,
 		   PixelRegion *src1, PixelRegion *src2,
 		   PixelRegion *dest, PixelRegion *mask)
 {
-  unsigned char *data;
-  int            opacity;
-  int            mode;
-  int           *affect;
-  int            type;
+  unsigned char   *data;
+  int              opacity;
+  LayerModeEffects mode;
+  int             *affect;
+  int              type;
   int h;
   int has_alpha1, has_alpha2;
   int combine = 0;
@@ -5422,15 +5424,15 @@ combine_sub_region(struct combine_regions_struct *st,
 
 
 void
-combine_regions (PixelRegion   *src1,
-		 PixelRegion   *src2,
-		 PixelRegion   *dest,
-		 PixelRegion   *mask,
-		 unsigned char *data,
-		 int            opacity,
-		 int            mode,
-		 int           *affect,
-		 int            type)
+combine_regions (PixelRegion	 *src1,
+		 PixelRegion	 *src2,
+		 PixelRegion   	 *dest,
+		 PixelRegion  	 *mask,
+		 unsigned char	 *data,
+		 int		  opacity,
+		 LayerModeEffects mode,
+		 int		 *affect,
+		 int		  type)
 {
   int has_alpha1, has_alpha2;
   int i;
@@ -5865,19 +5867,19 @@ hls_to_rgb (int *h,
 /************************************/
 
 int
-apply_layer_mode (unsigned char  *src1,
-		  unsigned char  *src2,
-		  unsigned char **dest,
-		  int             x,
-		  int             y,
-		  int             opacity,
-		  int             length,
-		  int             mode,
-		  int             bytes1,   /* bytes */
-		  int             bytes2,   /* bytes */
-		  int             has_alpha1,  /* has alpha */
-		  int             has_alpha2,  /* has alpha */
-		  int            *mode_affect)
+apply_layer_mode (unsigned char   *src1,
+		  unsigned char   *src2,
+		  unsigned char  **dest,
+		  int              x,
+		  int              y,
+		  int              opacity,
+		  int              length,
+		  LayerModeEffects mode,
+		  int              bytes1,   /* bytes */
+		  int              bytes2,   /* bytes */
+		  int              has_alpha1,  /* has alpha */
+		  int              has_alpha2,  /* has alpha */
+		  int             *mode_affect)
 {
   int combine;
 
@@ -5999,12 +6001,12 @@ apply_layer_mode (unsigned char  *src1,
 
 
 int
-apply_indexed_layer_mode (unsigned char  *src1,
-			  unsigned char  *src2,
-			  unsigned char **dest,
-			  int             mode,
-			  int             has_alpha1, /* has alpha */
-			  int             has_alpha2) /* has alpha */
+apply_indexed_layer_mode (unsigned char   *src1,
+			  unsigned char   *src2,
+			  unsigned char  **dest,
+			  LayerModeEffects mode,
+			  int              has_alpha1, /* has alpha */
+			  int              has_alpha2) /* has alpha */
 {
   int combine;
 

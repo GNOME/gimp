@@ -51,26 +51,26 @@ typedef struct _GimpContextClass GimpContextClass;
 
 struct _GimpContext
 {
-  GimpObject   object;
+  GimpObject	    object;
 
-  gchar       *name;
-  GimpContext *parent;
+  gchar		   *name;
+  GimpContext	   *parent;
 
   /*  FIXME: the solution of having a boolean for each attribute and the
    *         name "defined" need some brainstorming
    */
 
-  gboolean     opacity_defined;
-  gdouble      opacity;
+  gboolean	    opacity_defined;
+  gdouble	    opacity;
 
-  gboolean     paint_mode_defined;
-  gint         paint_mode;
+  gboolean	    paint_mode_defined;
+  LayerModeEffects  paint_mode;
 
-  gboolean     image_defined;
-  GimpImage   *image;
+  gboolean	    image_defined;
+  GimpImage	   *image;
 
-  gboolean     display_defined;
-  GDisplay    *display;
+  gboolean	    display_defined;
+  GDisplay	   *display;
 };
 
 struct _GimpContextClass
@@ -136,9 +136,10 @@ gboolean      gimp_context_opacity_defined    (GimpContext *context);
 void          gimp_context_define_opacity     (GimpContext *context,
 					       gboolean     defined);
 
-gint          gimp_context_get_paint_mode     (GimpContext *context);
+LayerModeEffects
+	      gimp_context_get_paint_mode     (GimpContext *context);
 void          gimp_context_set_paint_mode     (GimpContext *context,
-					       gint         paint_mode);
+					       LayerModeEffects paint_mode);
 gboolean      gimp_context_paint_mode_defined (GimpContext *context);
 void          gimp_context_define_paint_mode  (GimpContext *context,
 					       gboolean     defined);
