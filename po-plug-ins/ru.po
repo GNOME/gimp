@@ -10682,7 +10682,7 @@ msgstr "Удалить рисунок gfig"
 
 #: plug-ins/gfig/gfig.c:5050 plug-ins/gfig/gfig.c:5090
 msgid "<NONE>"
-msgstr "<НЕТЮ"
+msgstr "<НЕТ>"
 
 #: plug-ins/gfig/gfig.c:5128
 msgid "Editing read-only object - you will not be able to save it"
