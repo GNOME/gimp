@@ -6,7 +6,7 @@
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com) and
  *   Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz).
- *   and 1999 Nick Lamb (njl195@zepler.org.uk)
+ *   and 1999-2000 Nick Lamb (njl195@zepler.org.uk)
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.2.1 - 2 April 2000"
+#define PLUG_IN_VERSION  "1.2.2 - 14 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -349,11 +349,11 @@ static gint32
 load_image (gchar *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
-                trns = 0,       /* Transparency present */
-		bpp = 0,	/* Bytes per pixel */
-		image_type = 0,	/* Type of image */
-		layer_type = 0,	/* Type of drawable/layer */
-		empty = 0,	/* Number of fully transparent indices */
+                trns,		/* Transparency present */
+		bpp,		/* Bytes per pixel */
+		image_type,	/* Type of image */
+		layer_type,	/* Type of drawable/layer */
+		empty,		/* Number of fully transparent indices */
 		num_passes,	/* Number of interlace passes in file */
 		pass,		/* Current pass in file */
 		tile_height,	/* Height of tile in GIMP */
@@ -361,7 +361,7 @@ load_image (gchar *filename)	/* I - File to load */
 		end,		/* Ending tile row */
 		num;		/* Number of rows to load */
   FILE		*fp;		/* File pointer */
-  gint32	image = -1,	/* Image */
+  gint32	image,		/* Image */
 		layer;		/* Layer */
   GDrawable	*drawable;	/* Drawable for layer */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
@@ -400,6 +400,10 @@ load_image (gchar *filename)	/* I - File to load */
     g_message (_("%s\nPNG error. File corrupted?"), filename);
     return image;
   }
+
+  /* initialise variables here, thus avoiding compiler warnings */
+
+  image= -1;
 
  /*
   * Open the file and initialize the PNG read "engine"...
@@ -468,6 +472,8 @@ load_image (gchar *filename)	/* I - File to load */
     for (i= num; i < 256; ++i)
       alpha[i]= 255;
     trns= 1;
+  } else {
+    trns= 0;
   }
 
  /*
@@ -507,6 +513,9 @@ load_image (gchar *filename)	/* I - File to load */
         image_type = INDEXED;
         layer_type = INDEXED_IMAGE;
         break;
+    default:				/* Aie! Unknown type */
+        g_message (_("%s\nPNG unknown color model"), filename);
+        return -1;
   };
 
   image = gimp_image_new(info->width, info->height, image_type);
@@ -539,6 +548,8 @@ load_image (gchar *filename)	/* I - File to load */
  /*
   * Load the colormap as necessary...
   */
+
+  empty= 0; /* by default assume no full transparent palette entries */
 
   if (info->color_type & PNG_COLOR_MASK_PALETTE) {
 
@@ -974,13 +985,16 @@ save_ok_callback (GtkWidget *widget,
    tRNS chunk when saving GIF-like transparent images with colormaps */
 
 static guchar* respin_cmap (gint32 image_ID, gint *colors) {
-  static guchar after[3 * 256]= { 0xff, 0, 0xff } ;
+  static guchar after[3 * 256];
   guchar *before;
 
   before= gimp_image_get_cmap(image_ID, colors);
 
   if (*colors != 256) { /* spare space in palette :) */
     memcpy(after + 3, before, *colors * 3);
+    /* Apps with no natural background will use this instead, see
+       elsewhere for the bKGD chunk being written to use index 0 */
+    gimp_palette_get_background(after+0, after+1, after+2);
   } else {
     memcpy(after, before, *colors * 3);
   }

@@ -1,3 +1,9 @@
+2000-04-14  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: Purple is a silly choice of background
+	color for INDEXEDA PNGs, let's use the Gimp's current BG instead.
+	Also moved initialisers to shut up the compiler.
+
 2000-04-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/maze/algorithms.c
