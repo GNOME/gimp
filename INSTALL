@@ -1,15 +1,19 @@
-Installation instructions for GIMP 2.0
+Installation instructions for GIMP 2.1
 --------------------------------------
 
-There are some basic steps to building and installing the GIMP.
+There are some basic steps to building and installing this development
+version of The GIMP.
+
+Since the plug-in API of GIMP 2.2 will be compatible with GIMP 2.0,
+2.2 is supposed to install itself into the gimp-2.0 directories. It is
+thus not possible to install this development version into the same
+prefix with GIMP 2.0. A number of files will clash, so PLEASE USE A
+SEPARATE PREFIX to install this development version!!
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
-
-Please note that GIMP 1.2 and GIMP 2.0 peacefully coexist. You don't
-need to uninstall the 1.2 version.
 
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
@@ -236,6 +240,9 @@ certain place, e.g. if you are working in a bash shell you would say:
       export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
 before you run configure.
 
+* If the check for gimpprint fails even though you have version 4.2.x
+  installed, please try the latest available 4.2 package (which is
+  gimp-print 4.2.7-pre1 at the time of this writing).
 
 
       Generic Instructions for Building Auto-Configured Packages
