@@ -320,12 +320,10 @@ app_exit_after_callback (Gimp     *gimp,
   g_object_unref (gimp);
   the_gimp = NULL;
 
-#if 0
   /*  There used to be foo_main_quit() here, but there's a chance
    *  that foo_main() was never called before we reach this point. --Sven
    */
   exit (0);
-#endif
 
   return FALSE;
 }
