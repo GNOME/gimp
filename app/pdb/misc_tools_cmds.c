@@ -33,6 +33,7 @@
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-mask.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage.h"
 
@@ -279,8 +280,13 @@ bucket_fill_invoker (Gimp     *gimp,
 	}
       else
 	{
+	  gboolean do_seed_fill;
+    
+	  do_seed_fill = gimp_image_mask_is_empty (gimp_item_get_image (GIMP_ITEM (drawable)));
+    
 	  gimp_drawable_bucket_fill (drawable, fill_mode,
 				     paint_mode, opacity / 100.0,
+				     do_seed_fill,
 				     FALSE /* don't fill transparent */,
 				     threshold, sample_merged, x, y);
 	}

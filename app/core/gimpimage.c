@@ -2733,6 +2733,10 @@ gimp_image_add_layer (GimpImage *gimage,
       alpha_changed = TRUE;
     }
 
+  /*  Don't add at a non-existing index  */
+  if (position > gimp_container_num_children (gimage->layers))
+    position = gimp_container_num_children (gimage->layers);
+
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
   g_object_unref (layer);
 
@@ -3025,6 +3029,10 @@ gimp_image_add_channel (GimpImage   *gimage,
 	}
     }
 
+  /*  Don't add at a non-existing index  */
+  if (position > gimp_container_num_children (gimage->channels))
+    position = gimp_container_num_children (gimage->channels);
+
   gimp_container_insert (gimage->channels, GIMP_OBJECT (channel), position);
   g_object_unref (channel);
 
@@ -3215,6 +3223,10 @@ gimp_image_add_vectors (GimpImage   *gimage,
 	  position = 0;
 	}
     }
+
+  /*  Don't add at a non-existing index  */
+  if (position > gimp_container_num_children (gimage->vectors))
+    position = gimp_container_num_children (gimage->vectors);
 
   gimp_container_insert (gimage->vectors, GIMP_OBJECT (vectors), position);
   g_object_unref (vectors);

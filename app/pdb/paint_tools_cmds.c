@@ -99,6 +99,15 @@ paint_tools_stroke (Gimp             *gimp,
   gboolean       retval;
   gint           i;
 
+  /*  undefine the paint-relevant context properties and get them
+   *  from the current context
+   */
+  gimp_context_define_properties (GIMP_CONTEXT (options),
+                                  GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                  FALSE);
+  gimp_context_set_parent (GIMP_CONTEXT (options),
+                           gimp_get_current_context (gimp));
+
   core = g_object_new (core_type, NULL);
 
   coords = g_new (GimpCoords, n_strokes);

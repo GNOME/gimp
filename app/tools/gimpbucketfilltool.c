@@ -201,6 +201,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                  options->fill_mode,
                                  gimp_context_get_paint_mode (context),
                                  gimp_context_get_opacity (context),
+                                 TRUE, /* do seed fill */
                                  options->fill_transparent,
                                  options->threshold,
                                  options->sample_merged,

@@ -76,6 +76,7 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
                            GimpBucketFillMode  fill_mode,
                            gint                paint_mode,
                            gdouble             opacity,
+                           gboolean            do_seed_fill,
                            gboolean            fill_transparent,
                            gdouble             threshold,
                            gboolean            sample_merged,
@@ -121,19 +122,17 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
 
   gimp_drawable_bucket_fill_full (drawable,
                                   fill_mode,
-                                  &color, pattern,
                                   paint_mode, opacity,
-                                  TRUE /* do seed fill */,
+                                  do_seed_fill,
                                   fill_transparent,
                                   threshold, sample_merged,
-                                  x, y);
+                                  x, y,
+                                  &color, pattern);
 }
 
 void
 gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                 GimpBucketFillMode  fill_mode,
-                                const GimpRGB      *color,
-                                GimpPattern        *pattern,
                                 gint                paint_mode,
                                 gdouble             opacity,
                                 gboolean            do_seed_fill,
@@ -141,7 +140,9 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                 gdouble             threshold,
                                 gboolean            sample_merged,
                                 gdouble             x,
-                                gdouble             y)
+                                gdouble             y,
+                                const GimpRGB      *color,
+                                GimpPattern        *pattern)
 {
   GimpImage   *gimage;
   TileManager *buf_tiles;

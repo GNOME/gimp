@@ -24,6 +24,7 @@ void   gimp_drawable_bucket_fill      (GimpDrawable       *drawable,
                                        GimpBucketFillMode  fill_mode,
                                        gint                paint_mode,
                                        gdouble             opacity,
+                                       gboolean            do_seed_fill,
                                        gboolean            fill_transparent,
                                        gdouble             threshold,
                                        gboolean            sample_merged,
@@ -32,8 +33,6 @@ void   gimp_drawable_bucket_fill      (GimpDrawable       *drawable,
 
 void   gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                        GimpBucketFillMode  fill_mode,
-                                       const GimpRGB      *color,
-                                       GimpPattern        *pattern,
                                        gint                paint_mode,
                                        gdouble             opacity,
                                        gboolean            do_seed_fill,
@@ -41,7 +40,9 @@ void   gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                        gdouble             threshold,
                                        gboolean            sample_merged,
                                        gdouble             x,
-                                       gdouble             y);
+                                       gdouble             y,
+                                       const GimpRGB      *color,
+                                       GimpPattern        *pattern);
 
 
 #endif  /*  __GIMP_DRAWABLE_BUCKET_FILL_H__  */

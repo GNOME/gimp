@@ -53,30 +53,39 @@ text_render (GimpImage    *gimage,
 	     const gchar  *fontname,
 	     const gchar  *text,
 	     gint          border,
-	     gint          antialias)
+	     gboolean      antialias)
 {
-  GimpText  *gtext;
-  GimpLayer *layer;
-  GimpRGB    color;
+  PangoFontDescription *desc;
+  GimpText             *gtext;
+  GimpLayer            *layer;
+  GimpRGB               color;
+  gdouble               size;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
   if (border < 0)
     border = 0;
 
+  g_print ("text_render: x = %d, y = %d, fontname = '%s', border = %d\n",
+           text_x, text_y, fontname, border);
+
+  desc = pango_font_description_from_string (fontname);
+  size = PANGO_PIXELS (pango_font_description_get_size (desc));
+  pango_font_description_free (desc);
+
   gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
                                &color);
 
-  gtext = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
-                                   "text",   text,
-                                   "font",   fontname,
-                                   "border", border,
-				   "color",  &color,
-                                   NULL));
-
-  /*  if font-size is < 0, it is taken from the font name */
-  gtext->font_size = -1.0;
+  gtext = g_object_new (GIMP_TYPE_TEXT,
+                        "text",      text,
+                        "font",      fontname,
+                        "font-size", size,
+                        "border",    border,
+                        "color",     &color,
+                        NULL);
 
   layer = gimp_text_layer_new (gimage, gtext);
 
@@ -87,7 +96,7 @@ text_render (GimpImage    *gimage,
 
   /*  Start a group undo  */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
-                               _("Text"));
+                               _("Add Text Layer"));
 
   /*  Set the layer offsets  */
   GIMP_DRAWABLE (layer)->offset_x = text_x;
@@ -124,37 +133,32 @@ text_get_extents (const gchar *fontname,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
-  PangoRectangle        ink_rect;
+  PangoRectangle        logical_rect;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
-  font_desc = pango_font_description_from_string (fontname);
-  if (!font_desc)
-    return FALSE;
-
   /* FIXME: resolution */
   context = pango_ft2_get_context (72.0, 72.0);
-
   layout = pango_layout_new (context);
-
   g_object_unref (context);  
 
+  font_desc = pango_font_description_from_string (fontname);
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (layout, text, -1);
 
-  pango_layout_get_pixel_extents (layout, &ink_rect, NULL);
+  pango_layout_get_pixel_extents (layout, NULL, &logical_rect);
 
   if (width)
-    *width = ink_rect.width;
+    *width = logical_rect.width;
   if (height)
-    *height = ink_rect.height;
+    *height = logical_rect.height;
   if (ascent)
-    *ascent = -ink_rect.y;
+    *ascent = -logical_rect.y;
   if (descent)
-    *descent = ink_rect.height + ink_rect.y;
+    *descent = logical_rect.height + logical_rect.y;
 
   g_object_unref (layout);
 

@@ -225,11 +225,11 @@ gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
 
   gimp_drawable_bucket_fill_full (drawable,
                                   fill_mode,
-                                  color, pattern,
                                   gimp_context_get_paint_mode (context),
                                   gimp_context_get_opacity (context),
                                   FALSE /* no seed fill */,
-                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */);
+                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
+                                  color, pattern);
 
   gimp_image_undo_group_end (view->gimage);
 

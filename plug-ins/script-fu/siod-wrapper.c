@@ -293,7 +293,7 @@ init_constants (void)
   setvar (cintern ("CUSTOM"),    flocons (GIMP_CUSTOM_MODE),         NIL);
 
   setvar (cintern ("FG-IMAGE-FILL"),    flocons (GIMP_FOREGROUND_FILL),  NIL);
-  setvar (cintern ("BG-IMAGE-FILL"),    flocons (GIMP_FOREGROUND_FILL),  NIL);
+  setvar (cintern ("BG-IMAGE-FILL"),    flocons (GIMP_BACKGROUND_FILL),  NIL);
   setvar (cintern ("WHITE-IMAGE-FILL"), flocons (GIMP_WHITE_FILL),       NIL);
   setvar (cintern ("TRANS-IMAGE-FILL"), flocons (GIMP_TRANSPARENT_FILL), NIL);
   setvar (cintern ("NO-IMAGE-FILL"),    flocons (GIMP_NO_FILL),          NIL);
@@ -396,15 +396,14 @@ marshall_proc_db_call (LISP a)
   gint             nreturn_vals;
   GimpParamDef    *params;
   GimpParamDef    *return_vals;
-  gchar  error_str[256];
-  gint   i;
-  gint   success = TRUE;
-  LISP   color_list;
-  LISP   intermediate_val;
-  LISP   return_val = NIL;
-  gchar *string;
-  gint   string_len;
-  LISP   a_saved;
+  gchar            error_str[256];
+  gint             i;
+  gint             success = TRUE;
+  LISP             intermediate_val;
+  LISP             return_val = NIL;
+  gchar           *string;
+  gint             string_len;
+  LISP             a_saved;
 
   /* Save a in case it is needed for an error message. */
   a_saved = a;
@@ -587,6 +586,7 @@ marshall_proc_db_call (LISP a)
 	    success = FALSE;
 	  if (success)
 	    {
+              LISP   color_list;
 	      guchar r, g, b;
 
 	      args[i].type = GIMP_PDB_COLOR;
@@ -597,7 +597,7 @@ marshall_proc_db_call (LISP a)
               color_list = cdr (color_list);
               b = CLAMP (get_c_long (car (color_list)), 0, 255);
 
-	      gimp_rgb_set_uchar (&args[i].data.d_color, r, g, b);
+	      gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
 	    }
 	  break;
 
@@ -730,14 +730,14 @@ marshall_proc_db_call (LISP a)
   switch (values[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-	  strcpy (error_str, "Procedural database execution failed:\n    ");
-	  lprin1s (a_saved, error_str + strlen(error_str));
+      strcpy (error_str, "Procedural database execution failed:\n    ");
+      lprin1s (a_saved, error_str + strlen(error_str));
       return my_err (error_str, NIL);
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-	  strcpy (error_str, "Procedural database execution failed on invalid input arguments:\n    ");
-	  lprin1s (a_saved, error_str + strlen(error_str));
+      strcpy (error_str, "Procedural database execution failed on invalid input arguments:\n    ");
+      lprin1s (a_saved, error_str + strlen(error_str));
       return my_err (error_str, NIL);
       break;
 
@@ -846,11 +846,13 @@ marshall_proc_db_call (LISP a)
 
 	    case GIMP_PDB_COLOR:
 	      {
-		guchar color[3];
-		gimp_rgb_get_uchar (&values[i + 1].data.d_color, color, color + 1, color + 2);
-		intermediate_val = cons (flocons ((int) color[0]),
-					 cons (flocons ((int) color[1]),
-					       cons (flocons ((int) color[2]),
+		guchar r, g, b;
+
+		gimp_rgb_get_uchar (&values[i + 1].data.d_color, &r, &g, &b);
+
+		intermediate_val = cons (flocons (r),
+					 cons (flocons (g),
+					       cons (flocons (b),
 						     NIL)));
 		return_val = cons (intermediate_val, return_val);
 		break;
@@ -993,4 +995,3 @@ script_fu_quit_call (LISP a)
 
   return NIL;
 }
-

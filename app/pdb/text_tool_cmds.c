@@ -52,21 +52,6 @@ register_text_tool_procs (Gimp *gimp)
   procedural_db_register (gimp, &text_get_extents_proc);
 }
 
-
-static gchar *
-text_fontname_create (gchar    *foundry,
-		      gchar    *family,
-		      gchar    *weight,
-		      gchar    *slant,
-		      gchar    *set_width,
-		      gchar    *spacing,
-		      gchar    *registry,
-		      gchar    *encoding)
-{
-  /* create the fontname */
-  return g_strdup_printf ("%s %s", family, weight);
-}
-
 static Argument *
 text_fontname_invoker (Gimp     *gimp,
                        Argument *args)
@@ -342,8 +327,16 @@ text_invoker (Gimp     *gimp,
               Argument *args)
 {
   gboolean success = TRUE;
-  int i;
-  Argument argv[10];
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpDrawable *drawable;
+  gdouble x;
+  gdouble y;
+  gchar *text;
+  gint32 border;
+  gboolean antialias;
+  gdouble size;
+  gint32 size_type;
   gchar *foundry;
   gchar *family;
   gchar *weight;
@@ -352,6 +345,36 @@ text_invoker (Gimp     *gimp,
   gchar *spacing;
   gchar *registry;
   gchar *encoding;
+  GimpLayer *text_layer = NULL;
+  gchar *real_fontname;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+
+  x = args[2].value.pdb_float;
+
+  y = args[3].value.pdb_float;
+
+  text = (gchar *) args[4].value.pdb_pointer;
+  if (text == NULL)
+    success = FALSE;
+
+  border = args[5].value.pdb_int;
+  if (border < -1)
+    success = FALSE;
+
+  antialias = args[6].value.pdb_int ? TRUE : FALSE;
+
+  size = args[7].value.pdb_float;
+  if (size <= 0.0)
+    success = FALSE;
+
+  size_type = args[8].value.pdb_int;
+  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
+    success = FALSE;
 
   foundry = (gchar *) args[9].value.pdb_pointer;
   if (foundry == NULL)
@@ -385,24 +408,24 @@ text_invoker (Gimp     *gimp,
   if (encoding == NULL)
     success = FALSE;
 
-  if (!success)
-    return procedural_db_return_args (&text_proc, FALSE);
+  if (success)
+    {
+      real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+    
+      text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+				border, antialias);
+      if (text_layer == NULL)
+	success = FALSE;
+    
+      g_free (real_fontname);
+    }
 
-  for (i = 0; i < 9; i++)
-    argv[i] = args[i];
+  return_args = procedural_db_return_args (&text_proc, success);
 
-  argv[9].arg_type = GIMP_PDB_STRING;
-  argv[9].value.pdb_pointer =
-    text_fontname_create (foundry,
-		      family,
-		      weight,
-		      slant,
-		      set_width,
-		      spacing,
-		      registry,
-		      encoding);
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (text_layer));
 
-  return text_fontname_invoker (gimp, argv);
+  return return_args;
 }
 
 static ProcArg text_inargs[] =
@@ -525,8 +548,10 @@ text_get_extents_invoker (Gimp     *gimp,
                           Argument *args)
 {
   gboolean success = TRUE;
-  int i;
-  Argument argv[4];
+  Argument *return_args;
+  gchar *text;
+  gdouble size;
+  gint32 size_type;
   gchar *foundry;
   gchar *family;
   gchar *weight;
@@ -535,6 +560,23 @@ text_get_extents_invoker (Gimp     *gimp,
   gchar *spacing;
   gchar *registry;
   gchar *encoding;
+  gint32 width;
+  gint32 height;
+  gint32 ascent;
+  gint32 descent;
+  gchar *real_fontname;
+
+  text = (gchar *) args[0].value.pdb_pointer;
+  if (text == NULL)
+    success = FALSE;
+
+  size = args[1].value.pdb_float;
+  if (size <= 0.0)
+    success = FALSE;
+
+  size_type = args[2].value.pdb_int;
+  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
+    success = FALSE;
 
   foundry = (gchar *) args[3].value.pdb_pointer;
   if (foundry == NULL)
@@ -568,24 +610,28 @@ text_get_extents_invoker (Gimp     *gimp,
   if (encoding == NULL)
     success = FALSE;
 
-  if (!success)
-    return procedural_db_return_args (&text_get_extents_proc, FALSE);
+  if (success)
+    {
+      real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+    
+      success = text_get_extents (real_fontname, text,
+				  &width, &height,
+				  &ascent, &descent);
+    
+      g_free (real_fontname);
+    }
 
-  for (i = 0; i < 3; i++)
-    argv[i] = args[i];
+  return_args = procedural_db_return_args (&text_get_extents_proc, success);
 
-  argv[3].arg_type = GIMP_PDB_STRING;
-  argv[3].value.pdb_pointer =
-    text_fontname_create (foundry,
-		      family,
-		      weight,
-		      slant,
-		      set_width,
-		      spacing,
-		      registry,
-		      encoding);
+  if (success)
+    {
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_int = ascent;
+      return_args[4].value.pdb_int = descent;
+    }
 
-  return text_get_extents_fontname_invoker (gimp, argv);
+  return return_args;
 }
 
 static ProcArg text_get_extents_inargs[] =

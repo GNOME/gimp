@@ -73,14 +73,6 @@ sub font_prop_args {
    @result;
 }
 
-sub fontname_makearg {
-    my $arg = { type => 'string', code => "%%arg%% =\n  text_fontname_create (" };
-    foreach (@props) { $arg->{code} .= "\t\t    $_,\n" }
-    $arg->{code} =~ s/\(\s+/(/;
-    $arg->{code} =~ s/,\n$/);\n/s;
-    $arg;
-}
-
 sub render_outargs {
    @outargs = (
 	{ name => 'text_layer', type => 'layer',
@@ -212,9 +204,19 @@ HELP
     &render_outargs;
 
     %invoke = (
-	pass_through => 'text_fontname',
-	pass_args => [ 0..8 ],
-	make_args => [ &fontname_makearg ]
+	vars => [ 'gchar *real_fontname' ],
+	code => <<'CODE'
+{
+  real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+
+  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+			    border, antialias);
+  if (text_layer == NULL)
+    success = FALSE;
+
+  g_free (real_fontname);
+}
+CODE
    );
 }
 
@@ -239,31 +241,23 @@ HELP
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
-	pass_through => 'text_get_extents_fontname',
-	pass_args => [ 0..2 ],
-	make_args => [ &fontname_makearg ]
+	vars => [ 'gchar *real_fontname' ],
+	code => <<'CODE'
+{
+  real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+
+  success = text_get_extents (real_fontname, text,
+			      &width, &height,
+			      &ascent, &descent);
+
+  g_free (real_fontname);
+}
+CODE
     );
 }
 
 @headers = qw("libgimpbase/gimpbase.h" "text/gimptext-compat.h"
               <stdio.h> <string.h>);
-
-$extra{app}->{code} = <<'CODE';
-
-static gchar *
-text_fontname_create (gchar    *foundry,
-		      gchar    *family,
-		      gchar    *weight,
-		      gchar    *slant,
-		      gchar    *set_width,
-		      gchar    *spacing,
-		      gchar    *registry,
-		      gchar    *encoding)
-{
-  /* create the fontname */
-  return g_strdup_printf ("%s %s", family, weight);
-}
-CODE
 
 @procs = qw(text_fontname text_get_extents_fontname text text_get_extents);
 %exports = (app => [@procs], lib => [@procs]);

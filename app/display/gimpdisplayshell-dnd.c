@@ -112,11 +112,11 @@ gimp_display_shell_bucket_fill (GimpImage          *gimage,
 
   gimp_drawable_bucket_fill_full (drawable,
                                   fill_mode,
-                                  color, pattern,
                                   gimp_context_get_paint_mode (context),
                                   gimp_context_get_opacity (context),
                                   FALSE /* no seed fill */,
-                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */);
+                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
+                                  color, pattern);
 
   gimp_image_flush (gimage);
 }

@@ -117,7 +117,7 @@
                     SF-DRAWABLE   "Drawable" 0
 		    SF-ADJUSTMENT _"Effect Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-GRADIENT   _"Gradient" "Horizon_1"
+		    SF-GRADIENT   _"Gradient" "Horizon 1"
 		    )
 
 
@@ -145,5 +145,5 @@
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "Crillee"
 		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-GRADIENT   _"Gradient" "Horizon_1"
+		    SF-GRADIENT   _"Gradient" "Horizon 1"
 		    )

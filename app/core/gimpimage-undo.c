@@ -153,10 +153,11 @@ gboolean
 gimp_image_undo_group_end (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (gimage->group_count > 0, FALSE);
 
   if (! gimage->undo_on)
     return FALSE;
+
+  g_return_val_if_fail (gimage->group_count > 0, FALSE);
 
   gimage->group_count--;
 

@@ -32,7 +32,7 @@ GimpLayer * text_render      (GimpImage    *gimage,
 			      const gchar  *fontname,
 			      const gchar  *text,
 			      gint          border,
-			      gint          antialias);
+			      gboolean      antialias);
 gboolean    text_get_extents (const gchar  *fontname,
                               const gchar  *text,
                               gint         *width,

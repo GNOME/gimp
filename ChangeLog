@@ -1,5 +1,61 @@
 2003-02-14  Michael Natterer  <mitch@gimp.org>
 
+	Fixed most of the bugs the Script-Fu logo scripts triggered:
+
+	* app/core/gimpdrawable-bucket-fill.[ch]
+	(gimp_drawable_bucket_fill): added "gboolean do_seed_fill"
+	parameter instead of assuming TRUE.
+	(gimp_drawable_bucket_fill_full): moved "color" and "pattern"
+	parameters to the end.
+
+	* app/tools/gimpbucketfilltool.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimpdrawablelistview.c: changed accordingly.
+
+	* tools/pdbgen/pdb/misc_tools.pdb: only pass TRUE if the selection
+	is empty. Restores old PDB behaviour.
+
+	* app/core/gimpimage-undo.c (gimp_image_undo_group_end): return
+	early if gimage->undo_on is FALSE. Fixes bogus criticals.
+
+	* app/core/gimpimage.c (gimp_image_add_[layer|channel|vectors]):
+	clamp the passed position to sane values before calling
+	gimp_container_insert() (Scripts adding layers at wrong indices
+	are broken but should not crash the core).
+
+	* tools/pdbgen/pdb/paint_tools.pdb: need to copy the relevant
+	paint parameters from the current context now that the paint
+	options are contexts themselves.
+
+	* tools/pdbgen/pdb/palette.pdb: removed useless includes.
+
+	(Mostly) fixed text PDB functions:
+
+	* app/text/gimptext-compat.[ch] (text_render): don't set
+	text->font_size = -1 but get the size from the PangoFontDescrition.
+	(text_get_extents): return the logical_rect, not the ink_rect
+	because the size of the created text layer will be the logical_rect.
+
+	* tools/pdbgen/pdb/text_tool.pdb: removed text_fontname_create()
+	utility function and the usage of pass_through and implement all
+	invokers in-place, using the correct parameters.
+
+	* plug-ins/script-fu/siod-wrapper.c: fixed BG-IMAGE-FILL compat
+	define so we can BG fill again. Cleaned up color handling code.
+
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: use new gradient names.
+
+	* app/pdb/misc_tools_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/text_tool_cmds.c: regenerated.
+
+2003-02-14  Michael Natterer  <mitch@gimp.org>
+
 	Moved the undo step implementations to the core and pass around
 	lots of "const gchar *undo_desc". Fixes bug #104367.
 

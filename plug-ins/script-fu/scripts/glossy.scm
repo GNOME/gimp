@@ -161,8 +161,8 @@
 		    "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows_2"
-                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows_2"
+                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows 2"
+                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
                     SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
@@ -219,8 +219,8 @@
                     SF-STRING     _"Text" "Galaxy"
                     SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
                     SF-FONT       _"Font" "Eras"
-                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows_2"
-                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows_2"
+                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows 2"
+                    SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
                     SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE

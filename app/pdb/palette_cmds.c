@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
 
 #include <glib-object.h>
 
@@ -31,9 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
-#include "core/gimppalette.h"
 
 #include "libgimpcolor/gimpcolor.h"
 
