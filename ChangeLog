@@ -1,5 +1,10 @@
 1999-05-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/text_tool.c: made the font selection dialog static again, so
+	the selected font is remembered across text tool invocations.
+
+1999-05-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* libgimp/Makefile.am
 	* libgimp/gimplimits.h: new file. Currently contains constants for
 	image size and resolution.

@@ -74,10 +74,9 @@
 typedef struct _TextTool TextTool;
 struct _TextTool
 {
-  GtkWidget *shell;
-  int        click_x;
-  int        click_y;
-  void      *gdisp_ptr;
+  int   click_x;
+  int   click_y;
+  void *gdisp_ptr;
 };
 
 typedef struct _TextOptions TextOptions;
@@ -103,7 +102,8 @@ struct _TextOptions
 static TextOptions *text_options = NULL;
 
 /*  local variables  */
-static TextTool    *the_text_tool = NULL;
+static TextTool  *the_text_tool   = NULL;
+static GtkWidget *text_tool_shell = NULL;
 
 
 static void       text_button_press       (Tool *, GdkEventButton *, gpointer);
@@ -112,7 +112,7 @@ static void       text_motion             (Tool *, GdkEventMotion *, gpointer);
 static void       text_cursor_update      (Tool *, GdkEventMotion *, gpointer);
 static void       text_control            (Tool *, int, gpointer);
 
-static void       text_create_dialog      (TextTool *);
+static void       text_create_dialog      (void);
 static void       text_ok_callback        (GtkWidget *, gpointer);
 static void       text_cancel_callback    (GtkWidget *, gpointer);
 static gint       text_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
@@ -232,7 +232,7 @@ text_options_new (void)
 Tool*
 tools_new_text ()
 {
-  Tool     * tool;
+  Tool * tool;
 
   /*  The tool options  */
   if (! text_options)
@@ -244,7 +244,6 @@ tools_new_text ()
   /*  the new text tool structure  */
   tool = (Tool *) g_malloc (sizeof (Tool));
   the_text_tool = (TextTool *) g_malloc (sizeof (TextTool));
-  the_text_tool->shell = NULL;
 
   tool->type = TEXT;
   tool->state = INACTIVE;
@@ -255,7 +254,8 @@ tools_new_text ()
   tool->button_press_func = text_button_press;
   tool->button_release_func = text_button_release;
   tool->motion_func = text_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = text_cursor_update;
   tool->control_func = text_control;
   tool->preserve = TRUE;
@@ -267,6 +267,9 @@ void
 tools_free_text (Tool *tool)
 {
   g_free (tool->private);
+
+  if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
+    gtk_widget_hide (text_tool_shell);
 }
 
 static void
@@ -333,11 +336,11 @@ text_button_press (Tool           *tool,
       return;
     }
 
-  if (!text_tool->shell)
-    text_create_dialog (text_tool);
+  if (! text_tool_shell)
+    text_create_dialog ();
 
-  if (!GTK_WIDGET_VISIBLE (text_tool->shell))
-    gtk_widget_show (text_tool->shell);
+  if (!GTK_WIDGET_VISIBLE (text_tool_shell))
+    gtk_widget_show (text_tool_shell);
 }
 
 static void
@@ -391,57 +394,55 @@ text_control (Tool     *tool,
     case RESUME :
       break;
     case HALT :
-      if (the_text_tool->shell && GTK_WIDGET_VISIBLE (the_text_tool->shell))
-	gtk_widget_hide (the_text_tool->shell);
+      if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
+	gtk_widget_hide (text_tool_shell);
+      the_text_tool = NULL;
       break;
     }
 }
 
 static void
-text_create_dialog (TextTool *text_tool)
+text_create_dialog (void)
 {
   /* Create the shell */
-  text_tool->shell = gtk_font_selection_dialog_new (_("Text Tool"));
-  gtk_window_set_wmclass (GTK_WINDOW (text_tool->shell), "text_tool", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (text_tool->shell), _("Text Tool"));
-  gtk_window_set_policy (GTK_WINDOW (text_tool->shell), FALSE, TRUE, TRUE);
-  gtk_window_position (GTK_WINDOW (text_tool->shell), GTK_WIN_POS_MOUSE);
-  gtk_widget_set (GTK_WIDGET (text_tool->shell),
+  text_tool_shell = gtk_font_selection_dialog_new (_("Text Tool"));
+  gtk_window_set_wmclass (GTK_WINDOW (text_tool_shell), "text_tool", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (text_tool_shell), _("Text Tool"));
+  gtk_window_set_policy (GTK_WINDOW (text_tool_shell), FALSE, TRUE, TRUE);
+  gtk_window_position (GTK_WINDOW (text_tool_shell), GTK_WIN_POS_MOUSE);
+  gtk_widget_set (GTK_WIDGET (text_tool_shell),
 		  "GtkWindow::auto_shrink", FALSE,
 		  NULL);
 
   /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (text_tool->shell), "delete_event",
+  gtk_signal_connect (GTK_OBJECT (text_tool_shell), "delete_event",
 		      GTK_SIGNAL_FUNC (text_delete_callback),
-		      text_tool);
+		      NULL);
 
   /* ok and cancel buttons */
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool->shell)->ok_button),
+				  (text_tool_shell)->ok_button),
 		      "clicked", GTK_SIGNAL_FUNC(text_ok_callback),
-		      text_tool);
+		      NULL);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool->shell)->cancel_button),
+				  (text_tool_shell)->cancel_button),
 		      "clicked", GTK_SIGNAL_FUNC(text_cancel_callback),
-		      text_tool);
+		      NULL);
 
   /* Show the shell */
-  gtk_widget_show (text_tool->shell);
+  gtk_widget_show (text_tool_shell);
 }
 
 static void
 text_ok_callback (GtkWidget *w,
 		  gpointer   client_data)
 {
-  TextTool * text_tool;
+  if (GTK_WIDGET_VISIBLE (text_tool_shell))
+    gtk_widget_hide (text_tool_shell);
 
-  text_tool = (TextTool *) client_data;
-
-  if (GTK_WIDGET_VISIBLE (text_tool->shell))
-    gtk_widget_hide (text_tool->shell);
-
-  text_init_render (text_tool);
+  if (the_text_tool)
+    text_init_render (the_text_tool);
 }
 
 static gint
@@ -458,12 +459,8 @@ static void
 text_cancel_callback (GtkWidget *w,
 		      gpointer   client_data)
 {
-  TextTool * text_tool;
-
-  text_tool = (TextTool *) client_data;
-
-  if (GTK_WIDGET_VISIBLE (text_tool->shell))
-    gtk_widget_hide (text_tool->shell);
+  if (GTK_WIDGET_VISIBLE (text_tool_shell))
+    gtk_widget_hide (text_tool_shell);
 }
 
 static void
@@ -474,8 +471,8 @@ text_init_render (TextTool *text_tool)
   char *text;
   int antialias = text_options->antialias;
 
-  fontname = gtk_font_selection_dialog_get_font_name(
-    GTK_FONT_SELECTION_DIALOG( text_tool->shell));
+  fontname = gtk_font_selection_dialog_get_font_name
+    (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
   if (!fontname)
     return;
 
@@ -502,8 +499,8 @@ text_init_render (TextTool *text_tool)
 		       gdisp->gimage->xresolution,
 		       gdisp->gimage->yresolution);
 
-  text = gtk_font_selection_dialog_get_preview_text(
-    GTK_FONT_SELECTION_DIALOG( text_tool->shell));
+  text = gtk_font_selection_dialog_get_preview_text
+    (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
 
   /* strdup it since the render function strtok()s the text */
   text = g_strdup(text);
