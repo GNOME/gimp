@@ -367,7 +367,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
           if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
-              g_message ("WARNING: Plug-In \"%s\"\n(%s)\n\n"
+              g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
                          "called deprecated procedure '%s'.\n"
                          "It should call '%s' instead!",
                          gimp_filename_to_utf8 (plug_in->name),

@@ -1,3 +1,8 @@
+2004-09-24  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-message.c: removed a linebreak from a
+	warning message.
+
 2004-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpairbrushoptions.c
