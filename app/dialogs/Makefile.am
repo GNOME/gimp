@@ -53,7 +53,9 @@ libappdialogs_a_SOURCES = \
 	tips-parser.c			\
 	tips-parser.h			\
 	user-install-dialog.c		\
-	user-install-dialog.h
+	user-install-dialog.h		\
+	vectors-options-dialog.c	\
+	vectors-options-dialog.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"	\

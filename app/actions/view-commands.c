@@ -71,10 +71,10 @@ static void   view_padding_color_dialog_update    (GimpColorDialog      *dialog,
                                                    const GimpRGB        *color,
                                                    GimpColorDialogState  state,
                                                    GimpDisplayShell     *shell);
-static void   view_change_screen_confirm_callback (GtkWidget            *query_box,
+static void   view_change_screen_confirm_callback (GtkWidget            *dialog,
                                                    gint                  value,
                                                    gpointer              data);
-static void   view_change_screen_destroy_callback (GtkWidget            *query_box,
+static void   view_change_screen_destroy_callback (GtkWidget            *dialog,
                                                    GtkWidget            *shell);
 
 
@@ -662,15 +662,15 @@ view_change_screen_cmd_callback (GtkAction *action,
   GdkDisplay  *display;
   gint         cur_screen;
   gint         num_screens;
-  GtkWidget   *qbox;
+  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
 
-  qbox = g_object_get_data (G_OBJECT (gdisp->shell),
-                            "gimp-change-screen-dialog");
+  dialog = g_object_get_data (G_OBJECT (gdisp->shell),
+                              "gimp-change-screen-dialog");
 
-  if (qbox)
+  if (dialog)
     {
-      gtk_window_present (GTK_WINDOW (qbox));
+      gtk_window_present (GTK_WINDOW (dialog));
       return;
     }
 
@@ -680,22 +680,23 @@ view_change_screen_cmd_callback (GtkAction *action,
   cur_screen  = gdk_screen_get_number (screen);
   num_screens = gdk_display_get_n_screens (display);
 
-  qbox = gimp_query_int_box ("Move Display to Screen",
-                             gdisp->shell,
-                             NULL, 0,
-                             "Enter destination screen",
-                             cur_screen, 0, num_screens - 1,
-                             G_OBJECT (gdisp->shell), "destroy",
-                             view_change_screen_confirm_callback,
-                             gdisp->shell);
+  dialog = gimp_query_int_box ("Move Display to Screen",
+                               gdisp->shell,
+                               NULL, 0,
+                               "Enter destination screen",
+                               cur_screen, 0, num_screens - 1,
+                               G_OBJECT (gdisp->shell), "destroy",
+                               view_change_screen_confirm_callback,
+                               gdisp->shell);
 
-  g_object_set_data (G_OBJECT (gdisp->shell), "gimp-change-screen-dialog", qbox);
+  g_object_set_data (G_OBJECT (gdisp->shell), "gimp-change-screen-dialog",
+                     dialog);
 
-  g_signal_connect (qbox, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (view_change_screen_destroy_callback),
                     gdisp->shell);
 
-  gtk_widget_show (qbox);
+  gtk_widget_show (dialog);
 }
 
 
@@ -736,7 +737,7 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
 }
 
 static void
-view_change_screen_confirm_callback (GtkWidget *query_box,
+view_change_screen_confirm_callback (GtkWidget *dialog,
                                      gint       value,
                                      gpointer   data)
 {
@@ -750,7 +751,7 @@ view_change_screen_confirm_callback (GtkWidget *query_box,
 }
 
 static void
-view_change_screen_destroy_callback (GtkWidget *query_box,
+view_change_screen_destroy_callback (GtkWidget *dialog,
                                      GtkWidget *shell)
 {
   g_object_set_data (G_OBJECT (shell), "gimp-change-screen-dialog", NULL);

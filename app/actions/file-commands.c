@@ -252,18 +252,18 @@ file_save_template_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *qbox;
+  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
 
-  qbox = gimp_query_string_box (_("Create New Template"),
-                                gdisp->shell,
-                                gimp_standard_help_func,
-                                GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
-                                _("Enter a name for this template"),
-                                NULL,
-                                G_OBJECT (gdisp->gimage), "disconnect",
-                                file_new_template_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_string_box (_("Create New Template"),
+                                  gdisp->shell,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
+                                  _("Enter a name for this template"),
+                                  NULL,
+                                  G_OBJECT (gdisp->gimage), "disconnect",
+                                  file_new_template_callback, gdisp->gimage);
+  gtk_widget_show (dialog);
 }
 
 void

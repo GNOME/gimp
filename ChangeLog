@@ -1,5 +1,22 @@
 2004-10-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* app/dialogs/vectors-options-dialog.[ch]: one more dialog split
+	out of actions/.
+
+	* app/actions/vectors-commands.c: removed it here. Merged more
+	utility functions into their only callers.
+
+	* app/actions/dockable-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/file-commands.c
+	* app/actions/palettes-commands.c
+	* app/actions/tool-options-commands.c
+	* app/actions/view-commands.c: renamed "qbox" and "query_box"
+	variables to "dialog".
+
+2004-10-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/screenshot.c (shoot_dialog): don't forget to set
 	the mnemonic widgets for the labels. Fixes bug #155811.
 

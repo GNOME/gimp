@@ -65,20 +65,20 @@ tool_options_save_new_cmd_callback (GtkAction *action,
   GimpEditor   *editor    = GIMP_EDITOR (data);
   GimpContext  *context   = gimp_get_user_context (editor->ui_manager->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
-  GtkWidget    *qbox;
+  GtkWidget    *dialog;
 
   context   = gimp_get_user_context (editor->ui_manager->gimp);
   tool_info = gimp_context_get_tool (context);
 
-  qbox = gimp_query_string_box (_("Save Tool Options"),
-                                GTK_WIDGET (editor),
-				gimp_standard_help_func,
-				GIMP_HELP_TOOL_OPTIONS_DIALOG,
-				_("Enter a name for the saved options"),
-				_("Saved Options"),
-				NULL, NULL,
-				tool_options_save_callback, tool_info);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_string_box (_("Save Tool Options"),
+                                  GTK_WIDGET (editor),
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_TOOL_OPTIONS_DIALOG,
+                                  _("Enter a name for the saved options"),
+                                  _("Saved Options"),
+                                  NULL, NULL,
+                                  tool_options_save_callback, tool_info);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -141,17 +141,17 @@ tool_options_rename_saved_cmd_callback (GtkAction *action,
 
   if (options)
     {
-      GtkWidget *qbox;
+      GtkWidget *dialog;
 
-      qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
-                                    NULL /* FIXME */,
-                                    gimp_standard_help_func,
-                                    GIMP_HELP_TOOL_OPTIONS_DIALOG,
-                                    _("Enter a new name for the saved options"),
-                                    GIMP_OBJECT (options)->name,
-                                    NULL, NULL,
-                                    tool_options_rename_callback, options);
-      gtk_widget_show (qbox);
+      dialog = gimp_query_string_box (_("Rename Saved Tool Options"),
+                                      NULL /* FIXME */,
+                                      gimp_standard_help_func,
+                                      GIMP_HELP_TOOL_OPTIONS_DIALOG,
+                                      _("Enter a new name for the saved options"),
+                                      GIMP_OBJECT (options)->name,
+                                      NULL, NULL,
+                                      tool_options_rename_callback, options);
+      gtk_widget_show (dialog);
     }
 }
 

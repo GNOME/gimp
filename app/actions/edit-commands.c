@@ -192,18 +192,18 @@ edit_named_cut_cmd_callback (GtkAction *action,
 {
   GimpImage *gimage;
   GtkWidget *widget;
-  GtkWidget *qbox;
+  GtkWidget *dialog;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  qbox = gimp_query_string_box (_("Cut Named"), widget,
-                                gimp_standard_help_func,
-                                GIMP_HELP_BUFFER_CUT,
-                                _("Enter a name for this buffer"),
-                                NULL,
-                                G_OBJECT (gimage), "disconnect",
-                                cut_named_buffer_callback, gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_string_box (_("Cut Named"), widget,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_BUFFER_CUT,
+                                  _("Enter a name for this buffer"),
+                                  NULL,
+                                  G_OBJECT (gimage), "disconnect",
+                                  cut_named_buffer_callback, gimage);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -212,18 +212,18 @@ edit_named_copy_cmd_callback (GtkAction *action,
 {
   GimpImage *gimage;
   GtkWidget *widget;
-  GtkWidget *qbox;
+  GtkWidget *dialog;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  qbox = gimp_query_string_box (_("Copy Named"), widget,
-                                gimp_standard_help_func,
-                                GIMP_HELP_BUFFER_COPY,
-                                _("Enter a name for this buffer"),
-                                NULL,
-                                G_OBJECT (gimage), "disconnect",
-                                copy_named_buffer_callback, gimage);
-  gtk_widget_show (qbox);
+  dialog = gimp_query_string_box (_("Copy Named"), widget,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_BUFFER_COPY,
+                                  _("Enter a name for this buffer"),
+                                  NULL,
+                                  G_OBJECT (gimage), "disconnect",
+                                  copy_named_buffer_callback, gimage);
+  gtk_widget_show (dialog);
 }
 
 void
