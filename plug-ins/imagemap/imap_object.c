@@ -931,6 +931,30 @@ object_list_send_to_back(ObjectList_t *list)
    }
 }
 
+static gchar *
+str_replace_substring(gchar *src, gchar *oldtext, gchar *newtext)
+{
+   gchar **pieces = g_strsplit(src, oldtext, 0);
+   gchar *result = g_strjoinv(newtext,pieces);
+   g_strfreev(pieces);
+   return result;
+}
+
+static gchar *
+esc_xml(gchar *src)
+{
+   /* http://www.w3.org/TR/2000/REC-xml-20001006#NT-Attribute 
+    */
+   gchar *s1 = str_replace_substring(src, "&", "&amp;");
+   gchar *s2 = str_replace_substring(s1, "\"","&quot;");
+   gchar *s3 = str_replace_substring(s2, "<", "&lt;");
+   gchar *s4 = str_replace_substring(s3, ">", "&gt;"); /* optional for symmetry */
+   g_free(s1);
+   g_free(s2);
+   g_free(s3);
+   return s4;
+}
+
 void
 object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
 {
@@ -941,19 +965,33 @@ object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
       output(param, "<area shape=");
       obj->class->write_csim(obj, param, output);
       if (*obj->comment)
-	 output(param, " alt=\"%s\"", obj->comment);
+         output(param, " alt=\"%s\"", obj->comment);
       if (*obj->target)
-	 output(param, " target=\"%s\"", obj->target);
-      if (*obj->mouse_over)
-	 output(param, " onmouseover=\"%s\"", obj->mouse_over);
-      if (*obj->mouse_out)
-	 output(param, " onmouseout=\"%s\"", obj->mouse_out);
-      if (*obj->focus)
-	 output(param, " onfocus=\"%s\"", obj->focus);
-      if (*obj->blur)
-	 output(param, " onblur=\"%s\"", obj->blur);
-
-      output(param, " href=\"%s\" />\n", obj->url);
+         output(param, " target=\"%s\"", obj->target);
+      if (*obj->mouse_over) {
+         gchar *s = esc_xml(obj->mouse_over);
+         output(param, " onmouseover=\"%s\"", s);
+         g_free(s);
+      }
+      if (*obj->mouse_out) {
+         gchar *s = esc_xml(obj->mouse_out);
+         output(param, " onmouseout=\"%s\"", s);
+         g_free(s);
+      }
+      if (*obj->focus) {
+         gchar *s = esc_xml(obj->focus);
+         output(param, " onfocus=\"%s\"", s);
+         g_free(s);
+      }
+      if (*obj->blur) {
+         gchar *s = esc_xml(obj->blur);
+         output(param, " onblur=\"%s\"", s);
+         g_free(s);
+      }
+      if (*obj->url) 
+         output(param, " href=\"%s\" />\n", obj->url);
+      else
+         output(param, " nohref=\"nohref\" />\n");
    }
 }
 

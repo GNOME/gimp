@@ -1,5 +1,15 @@
 2003-05-26  Raphael Quinet  <quinet@gamers.org>
 
+	* plug-ins/imagemap/imap_csim.y
+	* plug-ins/imagemap/imap_csim_parse.c: Modified the grammar a
+	bit in order to allow the attribute nohref="nohref".  Fixes the
+	last part of bug #87687.
+
+	* plug-ins/imagemap/imap_object.c (object_list_write_csim):
+	Applied a patch from shaneyfelt@juno.com for quoting and escaping
+	attributes correctly.  Fixes most of the remaining issues in bug
+	#87687.
+
 	* plug-ins/imagemap/Makefile.am
 	* plug-ins/imagemap/imap_csim.y
 	* plug-ins/imagemap/imap_csim_parse.c: Applied a (modified) patch
