@@ -661,6 +661,7 @@ gimp_display_paint_area (GimpDisplay *gdisp,
 {
   GimpDisplayShell *shell;
   gint              x1, y1, x2, y2;
+  gdouble           x1_f, y1_f, x2_f, y2_f;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -687,8 +688,16 @@ gimp_display_paint_area (GimpDisplay *gdisp,
   gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
 
   /*  display the area  */
-  gimp_display_shell_transform_xy (shell, x, y, &x1, &y1, FALSE);
-  gimp_display_shell_transform_xy (shell, x + w, y + h, &x2, &y2, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x, y,         &x1_f, &y1_f, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x + w, y + h, &x2_f, &y2_f, FALSE);
 
-  gimp_display_shell_expose_area (shell, x1, y1, (x2 - x1), (y2 - y1));
+  /*  make sure to expose a superset of the transformed sub-pixel expose
+   *  area, not a subset. bug #126942. --mitch
+   */
+  x1 = floor (x1_f);
+  y1 = floor (y1_f);
+  x2 = ceil (x2_f);
+  y2 = ceil (y2_f);
+
+  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
 }
