@@ -1705,11 +1705,11 @@ extract_from_inten_row_float (
 
 #define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
 
-static void 
-copy_row_float_rgb_to_u8_rgb  (
-                               PixelRow * src_row,
-                               PixelRow * dest_row
-                               )
+static void
+copy_row_rgb_to_u8_rgb (
+                        PixelRow * src_row,
+                        PixelRow * dest_row
+                        )
 {
   int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
   Tag stag = pixelrow_tag (src_row);
@@ -1765,10 +1765,10 @@ copy_row_float_rgb_to_u8_rgb  (
 
 
 static void 
-copy_row_float_rgb_to_u8_gray  (
-                                PixelRow * src_row,
-                                PixelRow * dest_row
-                                )
+copy_row_rgb_to_u8_gray  (
+                          PixelRow * src_row,
+                          PixelRow * dest_row
+                          )
 {
   int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
   Tag stag = pixelrow_tag (src_row);
@@ -1781,7 +1781,7 @@ copy_row_float_rgb_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY ((255*s[0]), (255*s[1]), (255*s[2]));
+            d[0] = INTENSITY (s[0]*255, s[1]*255, s[2]*255);
             d[1] = s[3] * 255;
             s += 4;
             d += 2;
@@ -1789,7 +1789,7 @@ copy_row_float_rgb_to_u8_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY ((255*s[0]), (255*s[1]), (255*s[2]));
+            d[0] = INTENSITY (s[0]*255, s[1]*255, s[2]*255);
             s += 4;
             d += 1;
           }
@@ -1799,7 +1799,7 @@ copy_row_float_rgb_to_u8_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY ((255*s[0]), (255*s[1]), (255*s[2]));
+            d[0] = INTENSITY (s[0]*255, s[1]*255, s[2]*255);
             d[1] = 255;
             s += 3;
             d += 2;
@@ -1807,19 +1807,18 @@ copy_row_float_rgb_to_u8_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY ((255*s[0]), (255*s[1]), (255*s[2]));
+            d[0] = INTENSITY (s[0]*255, s[1]*255, s[2]*255);
             s += 3;
             d += 1;
           }
     }
 }
 
-
 static void 
-copy_row_float_rgb_to_u16_rgb  (
-                                PixelRow * src_row,
-                                PixelRow * dest_row
-                                )
+copy_row_rgb_to_u16_rgb  (
+                          PixelRow * src_row,
+                          PixelRow * dest_row
+                          )
 {
   int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
   Tag stag = pixelrow_tag (src_row);
@@ -1875,10 +1874,10 @@ copy_row_float_rgb_to_u16_rgb  (
 
 
 static void 
-copy_row_float_rgb_to_u16_gray  (
-                                 PixelRow * src_row,
-                                 PixelRow * dest_row
-                                 )
+copy_row_rgb_to_u16_gray  (
+                           PixelRow * src_row,
+                           PixelRow * dest_row
+                           )
 {
   int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
   Tag stag = pixelrow_tag (src_row);
@@ -1891,7 +1890,7 @@ copy_row_float_rgb_to_u16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY ((65535*s[0]), (65535*s[1]), (65535*s[2]));
+            d[0] = INTENSITY ((s[0]*65535), (s[1]*65535), (s[2]*65535));
             d[1] = s[3] * 65535;
             s += 4;
             d += 2;
@@ -1899,7 +1898,7 @@ copy_row_float_rgb_to_u16_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY ((65535*s[0]), (65535*s[1]), (65535*s[2]));
+            d[0] = INTENSITY ((s[0]*65535), (s[1]*65535), (s[2]*65535));
             s += 4;
             d += 1;
           }
@@ -1909,7 +1908,7 @@ copy_row_float_rgb_to_u16_gray  (
       if (tag_alpha (dtag) == ALPHA_YES)
         while (w--)
           {
-            d[0] = INTENSITY ((65535*s[0]), (65535*s[1]), (65535*s[2]));
+            d[0] = INTENSITY ((s[0]*65535), (s[1]*65535), (s[2]*65535));
             d[1] = 65535;
             s += 3;
             d += 2;
@@ -1917,18 +1916,19 @@ copy_row_float_rgb_to_u16_gray  (
       else
         while (w--)
           {
-            d[0] = INTENSITY ((65535*s[0]), (65535*s[1]), (65535*s[2]));
+            d[0] = INTENSITY ((s[0]*65535), (s[1]*65535), (s[2]*65535));
             s += 3;
             d += 1;
           }
     }
 }
 
+
 static void 
-copy_row_float_rgb_to_float_rgb  (
-                                  PixelRow * src_row,
-                                  PixelRow * dest_row
-                                  )
+copy_row_rgb_to_float_rgb  (
+                            PixelRow * src_row,
+                            PixelRow * dest_row
+                            )
 {
   int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
   Tag stag = pixelrow_tag (src_row);
@@ -1984,106 +1984,436 @@ copy_row_float_rgb_to_float_rgb  (
 
 
 static void 
-copy_row_float_rgb_to_u8  (
+copy_row_rgb_to_float_gray  (
+                             PixelRow * src_row,
+                             PixelRow * dest_row
+                             )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  gfloat * d = (gfloat*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = INTENSITY (s[0], s[1], s[2]);
+            d[1] = s[3];
+            s += 4;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = INTENSITY (s[0], s[1], s[2]);
+            s += 4;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = INTENSITY (s[0], s[1], s[2]);
+            d[1] = 1.0;
+            s += 3;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = INTENSITY (s[0], s[1], s[2]);
+            s += 3;
+            d += 1;
+          }
+    }
+}
+
+
+static void 
+copy_row_gray_to_u8_rgb  (
+                          PixelRow * src_row,
+                          PixelRow * dest_row
+                          )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint8 * d = (guint8*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 255;
+            d[3] = s[1] * 255;
+            s += 2;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 255;
+            s += 2;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 255;
+            d[3] = 255;
+            s += 1;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 255;
+            s += 1;
+            d += 3;
+          }
+    }
+}
+
+static void 
+copy_row_gray_to_u8_gray  (
                            PixelRow * src_row,
                            PixelRow * dest_row
                            )
 {
-  switch (tag_format (pixelrow_tag (dest_row)))
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint8 * d = (guint8*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
     {
-    case FORMAT_RGB:
-      copy_row_float_rgb_to_u8_rgb (src_row, dest_row);
-      break;
-    case FORMAT_GRAY:
-      copy_row_float_rgb_to_u8_gray (src_row, dest_row);
-      break;
-    case FORMAT_INDEXED:
-    case FORMAT_NONE:
-      g_warning ("doh in copy_row_float_rgb_to_u8()");
-      break;	
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0] * 255;
+            d[1] = s[1] * 255;
+            s += 2;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0] * 255;
+            s += 2;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0] * 255;
+            d[1] = 255;
+            s += 1;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0] * 255;
+            s += 1;
+            d += 1;
+          }
     }
 }
 
 static void 
-copy_row_float_rgb_to_u16  (
-                            PixelRow * src_row,
-                            PixelRow * dest_row
-                            )
+copy_row_gray_to_u16_rgb  (
+                           PixelRow * src_row,
+                           PixelRow * dest_row
+                           )
 {
-  switch (tag_format (pixelrow_tag (dest_row)))
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
     {
-    case FORMAT_RGB:
-      copy_row_float_rgb_to_u16_rgb (src_row, dest_row);
-      break;
-    case FORMAT_GRAY:
-      copy_row_float_rgb_to_u16_gray (src_row, dest_row);
-      break;
-    case FORMAT_INDEXED:
-    case FORMAT_NONE:
-      g_warning ("doh in copy_row_float_rgb_to_u16()");
-      break;	
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 65535;
+            d[3] = s[1] * 65535;
+            s += 2;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 65535;
+            s += 2;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 65535;
+            d[3] = 65535;
+            s += 1;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0] * 65535;
+            s += 1;
+            d += 3;
+          }
+    }
+}
+
+
+static void
+copy_row_gray_to_u16_gray (
+                           PixelRow * src_row,
+                           PixelRow * dest_row
+                           )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  guint16 * d = (guint16*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0] * 65535;
+            d[1] = s[1] * 65535;
+            s += 2;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0] * 65535;
+            s += 2;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0] * 65535;
+            d[1] = 65535;
+            s += 1;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0] * 65535;
+            s += 1;
+            d += 1;
+          }
     }
 }
 
 static void 
-copy_row_float_rgb_to_float  (
+copy_row_gray_to_float_rgb  (
+                             PixelRow * src_row,
+                             PixelRow * dest_row
+                             )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  gfloat * d = (gfloat*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            d[3] = s[1];
+            s += 2;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            s += 2;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            d[3] = 1.0;
+            s += 1;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            s += 1;
+            d += 3;
+          }
+    }
+}
+
+
+static void 
+copy_row_gray_to_float_gray  (
                               PixelRow * src_row,
                               PixelRow * dest_row
                               )
 {
-  switch (tag_format (pixelrow_tag (dest_row)))
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  gfloat * s = (gfloat*) pixelrow_data (src_row);
+  gfloat * d = (gfloat*) pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
     {
-    case FORMAT_RGB:
-      copy_row_float_rgb_to_float_rgb (src_row, dest_row);
-      break;
-    case FORMAT_GRAY:
-    case FORMAT_INDEXED:
-    case FORMAT_NONE:
-      g_warning ("doh in copy_row_float_rgb_to_float()");
-      break;	
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0];
+            d[1] = s[1];
+            s += 2;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0];
+            s += 2;
+            d += 1;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0];
+            d[1] = 1.0;
+            s += 1;
+            d += 2;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0];
+            s += 1;
+            d += 1;
+          }
     }
 }
 
-static void 
-copy_row_float_rgb  (
-                     PixelRow * src_row,
-                     PixelRow * dest_row
-                     )
-{
-  switch (tag_precision (pixelrow_tag (dest_row)))
-    {
-    case PRECISION_U8:
-      copy_row_float_rgb_to_u8(src_row, dest_row);
-      break;	
-    case PRECISION_U16:
-      copy_row_float_rgb_to_u16 (src_row, dest_row);
-      break;	
-    case PRECISION_FLOAT:
-      copy_row_float_rgb_to_float (src_row, dest_row);
-      break;	
-    case PRECISION_NONE:
-      g_warning ("doh in copy_row_float_rgb()");
-      break;	
-    }
-}
 
-void 
-copy_row_float  (
-                 PixelRow * src_row,
-                 PixelRow * dest_row
-                 )
+typedef void (*CopyRowFunc) (PixelRow *, PixelRow *);
+
+static CopyRowFunc funcs[2][3][2] =
 {
+  {
+    {
+      copy_row_rgb_to_u8_rgb,
+      copy_row_rgb_to_u8_gray
+    },
+    {
+      copy_row_rgb_to_u16_rgb,
+      copy_row_rgb_to_u16_gray
+    },
+    {
+      copy_row_rgb_to_float_rgb,
+      copy_row_rgb_to_float_gray
+    }
+  },
+  
+  {
+    {
+      copy_row_gray_to_u8_rgb,
+      copy_row_gray_to_u8_gray
+    },
+    {
+      copy_row_gray_to_u16_rgb,
+      copy_row_gray_to_u16_gray
+    },
+    {
+      copy_row_gray_to_float_rgb,
+      copy_row_gray_to_float_gray
+    }
+  }
+};
+
+
+void
+copy_row_float (
+             PixelRow * src_row,
+             PixelRow * dest_row
+             )
+{
+  int x, y, z;
+  
   switch (tag_format (pixelrow_tag (src_row)))
     {
-    case FORMAT_RGB:
-      copy_row_float_rgb (src_row, dest_row);
-      break;
-    case FORMAT_GRAY:
+    case FORMAT_RGB:      x = 0; break;
+    case FORMAT_GRAY:     x = 1; break;
     case FORMAT_INDEXED:
     case FORMAT_NONE:
-      g_warning ("doh in copy_row_float()");
-      break;	
+    default:
+      g_warning ("unsupported src format in copy_row_float()");
+      return;
     }
-}
 
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:    y = 0; break;
+    case PRECISION_U16:   y = 1; break;
+    case PRECISION_FLOAT: y = 2; break;
+    case PRECISION_NONE:
+    default:
+      g_warning ("unsupported dest precision in copy_row_float()");
+      return;
+    }
+  
+  switch (tag_format (pixelrow_tag (dest_row)))
+    {
+    case FORMAT_RGB:      z = 0; break;
+    case FORMAT_GRAY:     z = 1; break;
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+    default:
+      g_warning ("unsupported dest format in copy_row_float()");
+      return;
+    }
+
+  funcs[x][y][z] (src_row, dest_row);
+}
 

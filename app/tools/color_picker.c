@@ -31,7 +31,7 @@
 
 /* maximum information buffer size */
 
-#define MAX_INFO_BUF    16
+#define MAX_INFO_BUF    32
 
 
 /*  local function prototypes  */
@@ -404,7 +404,7 @@ color_picker_info_update_u16  (
         sprintf (alpha_buf, "%d", src [3]);
       else
         sprintf (alpha_buf, "N/A");
-      sprintf (hex_buf, "#%.4x%.4x%.4x",
+      sprintf (hex_buf, "#%.4x %.4x %.4x",
                src [0], src [1], src [2]);
       break;
 
@@ -426,7 +426,7 @@ color_picker_info_update_u16  (
         sprintf (alpha_buf, "%d", src [1]);
       else
         sprintf (alpha_buf, "N/A");
-      sprintf (hex_buf, "#%.4x%.4x%.4x", src [0],
+      sprintf (hex_buf, "#%.4x %.4x %.4x", src [0],
                src [0], src [0]);
       break;
           
