@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-07 14:51+0100\n"
-"PO-Revision-Date: 2004-01-07 16:58-0300\n"
+"PO-Revision-Date: 2004-01-08 20:33+0100\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3172,11 +3172,11 @@ msgstr "/Estilo de solapa/_Texto"
 
 #: app/gui/dialogs-menu.c:162
 msgid "/Tab Style/I_con & Text"
-msgstr "Estilo de solapa/I_cono y texto"
+msgstr "/Estilo de solapa/I_cono y texto"
 
 #: app/gui/dialogs-menu.c:163
 msgid "/Tab Style/St_atus & Text"
-msgstr "Estilo de solapa/Est_ado y texto"
+msgstr "/Estilo de solapa/Est_ado y texto"
 
 #: app/gui/dialogs-menu.c:165
 msgid "/View as _List"
@@ -6575,8 +6575,8 @@ msgid ""
 "This file holds a collection of standard media sizes that\n"
 "serve as image templates."
 msgstr ""
-"Este archivo guarda una colección de tamaños estándar de medios que sirven "
-"como plantillas de imágenes."
+"Este archivo guarda una colección de tamaños estándar\n"
+"de medios que sirven como plantillas de imágenes."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
@@ -6612,11 +6612,13 @@ msgid ""
 "want to have GIMP-only fonts, otherwise put things\n"
 "in your global font directory."
 msgstr ""
-"Esta carpeta se utiliza para almacenar las tipografías que desea que sean "
-"visibles sólo en El GIMP. El GIMP revisa esta carpeta además de la carpeta "
-"global del sistema de la instalación de tipografías cuando está buscando "
-"tipografías. Sólo utilice esta carpeta si realmente quiere tener tipografías "
-"exclusivas para El GIMP, de otro modo póngalas en su directorio de "
+"Esta carpeta se utiliza para almacenar las tipografías\n"
+"que desea que sean visibles sólo en El GIMP. El GIMP\n"
+"revisa esta carpeta además de la carpeta global del\n"
+"sistema de la instalación de tipografías cuando está\n"
+"buscando tipografías. Sólo utilice esta carpeta si\n"
+"realmente quiere tener tipografías exclusivas para\n"
+"El GIMP, de otro modo póngalas en su directorio de\n"
 "tipografías global."
 
 #: app/gui/user-install-dialog.c:207
