@@ -26,18 +26,22 @@ register "plug_in_ditherize",
          "This script takes the current selection and dithers it just like convert to indexed",
          "Marc Lehmann",
          "Marc Lehmann",
-         "1.1",
+         "1.2",
          __"<Image>/Filters/Noise/Ditherize",
          "RGB*, GRAY*",
          [
-          [PF_SLIDER,		"colours",	"The number of colours to dither to", 10, [0, 256]],
+          [PF_RADIO,		"dither_type",	"The dither type (see gimp_convert_indexed)", 1,
+          					[none => 0, fs => 1, "fs/low-bleed" => 2, ordered => 3]],
+          [PF_SLIDER,		"colours",	"The number of colours to dither to", 10, [0, 256, 1, 1]],
          ],
          sub {
-   my($image,$drawable,$colours)=@_;
+   my($image,$drawable,$dither,$colours)=@_;
 
    $drawable->is_layer or die "this plug-in only works for layers";
 
-   # make sure somehting is selected
+   $image->undo_push_group_start;
+
+   # make sure something is selected
    $drawable->mask_bounds or $image->selection_all;
 
    my ($x1,$y1,$x2,$y2)=($drawable->mask_bounds)[1..4];
@@ -50,16 +54,19 @@ register "plug_in_ditherize",
    $sel->remove_channel;
 
    my $copy = new Image($w, $h, $image->base_type);
+   $copy->undo_disable;
    my $draw = new Layer($copy, $w, $h,
                         $imagetype2layertype{$image->base_type},
-                        "temporary layer",100,NORMAL_MODE);
+                        "temporary layer", 100, NORMAL_MODE);
    $copy->add_layer ($draw, 1);
    $draw->edit_paste(0)->anchor;
-   $copy->convert_indexed (1, $colours);
+   $copy->convert_indexed ($dither, MAKE_PALETTE, $colours, 1, 1, "");
 
    $draw->edit_copy;
    $drawable->edit_paste(1)->anchor;
    $copy->delete;
+
+   $image->undo_push_group_end;
 
    ();
 };

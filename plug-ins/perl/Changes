@@ -1,6 +1,9 @@
 Revision history for Gimp-Perl extension.
 
-1.15
+1.16
+	- removed sethspin.pl & billboard, they are no longer maintained :(
+
+1.15  Fri Nov 19 19:12:16 CET 1999
 	- added italian translations by Daniele Medri (madrid@kjws.com).
         - POINTS really are decipoints: correct xlfd_size to create
           larger (& more correct) fonts.
@@ -16,6 +19,7 @@ Revision history for Gimp-Perl extension.
         - more warnings on people insisting on using broken perls.
         - renamed init_gtk to gtk_init, asdded gtk_init_hook function to
           work around the horrible initialization problems in Gtk.
+        - goto &name is horribly broken somewhere. going back to eval _again_.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -Dt
 
 #
 # you can enable unix sockets, tcp sockets, or both (or neither...)

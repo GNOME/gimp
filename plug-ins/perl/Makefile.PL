@@ -30,9 +30,9 @@ if ($ARGV[0] ne "--writemakefile") {
    qw(windify.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
       feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl perlcc
-      sethspin.pl animate_cells image_tile yinyang stamps font_table
+      animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
-      repdup centerguide stampify goldenmean triangle billboard mirrorsplit
+      repdup centerguide stampify goldenmean triangle mirrorsplit
       layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
       logulator miff gimpmagick guide_remove guides_to_selection burst
       fire povray avi layerfuncs bricks
@@ -249,7 +249,7 @@ msgmerge:
 
 # set \$VERSION in all modules
 setver:
-	\$(PERL) -pi -e 's/^(\\s*\\\$\$VERSION\\s*=\\s*).*\$\$/\$\${1}\$(VERSION);/' *.pm Gimp/*.pm
+	\$(PERL) -pi -e 's/^(\\s*\\\$\$VERSION\\s*=\\s*).*\$\$/\$\${1}\$(VERSION);/' *.pm Gimp/*.pm UI/*.pm Net/*.pm
 
 ";
 

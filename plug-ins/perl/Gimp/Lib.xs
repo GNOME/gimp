@@ -1464,7 +1464,7 @@ gimp_call_procedure (proc_name, ...)
 		GParamDef *params;
 		GParamDef *return_vals;
                 int i=0, j=0; /* work around bogus warning.  */
-		
+
                 if (!gimp_is_initialized)
                   croak ("gimp_call_procedure(%s,...) called without an active connection", proc_name);
 
@@ -1586,6 +1586,7 @@ gimp_call_procedure (proc_name, ...)
                     destroy_paramdefs (params, nparams);
                     destroy_paramdefs (return_vals, nreturn_vals);
                     
+		
                     if (croak_str[0])
                       croak (croak_str);
                   }

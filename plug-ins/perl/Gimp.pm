@@ -12,7 +12,7 @@ use subs qw(init end lock unlock canonicalize_color);
 BEGIN {
    require DynaLoader;
    @ISA=qw(DynaLoader);
-   $VERSION = 1.15;
+   $VERSION = 1.16;
    bootstrap Gimp $VERSION;
 }
 
@@ -353,7 +353,7 @@ sub quiet_die {
    $in_top ? exit(1) : die "IGNORE THIS MESSAGE\n";
 }
 
-unless($no_SIG) {
+unless($no_SIG||1) {
    $SIG{__DIE__} = sub {
       unless ($^S || !defined $^S || $in_quit) {
          die_msg $_[0];
@@ -466,9 +466,9 @@ sub ignore_functions(@) {
    @ignore_function{@_}++;
 }
 
-sub _croak($) {
+sub recroak($) {
   $_[0] =~ s/ at .*? line \d+.*$//s;
-  croak($_[0]);
+  croak $_[0];
 }
 
 sub AUTOLOAD {
@@ -482,30 +482,27 @@ sub AUTOLOAD {
          my $ref = \&{"Gimp::Util::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            goto &$ref; # does not always work, PERLBUG! #FIXME
-            #my @r = eval { &$ref };
-            #_croak $@ if $@;
-            #wantarray ? @r : $r[0];
+            #goto &$ref; # does not work, PERLBUG! #FIXME
+            my @r = eval { &$ref };
+            recroak $@ if $@; wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
          my $ref = \&{"$interface_pkg\::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            goto &$ref;	# does not always work, PERLBUG! #FIXME
-            #my @r = eval { &$ref };
-            #_croak $@ if $@;
-            #wantarray ? @r : $r[0];
+            #goto &$ref; # does not work, PERLBUG! #FIXME
+            my @r = eval { &$ref };
+            recroak $@ if $@; wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       } elsif (_gimp_procedure_available ($sub)) {
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
             unshift @_, $sub;
-            goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
-            #my @r=eval { gimp_call_procedure (@_) };
-            #_croak $@ if $@;
-            #wantarray ? @r : $r[0];
+            #goto &gimp_call_procedure; # does not work, PERLBUG! #FIXME
+            my @r = eval { gimp_call_procedure (@_) };
+            recroak $@ if $@; wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       }
