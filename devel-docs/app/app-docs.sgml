@@ -471,7 +471,6 @@
       <xi:include href="xml/gimpdisplayshell-coords.xml" />
       <xi:include href="xml/gimpdisplayshell-cursor.xml" />
       <xi:include href="xml/gimpdisplayshell-dnd.xml" />
-      <xi:include href="xml/gimpdisplayshell-dnd-xds.xml" />
       <xi:include href="xml/gimpdisplayshell-draw.xml" />
       <xi:include href="xml/gimpdisplayshell-filter-dialog.xml" />
       <xi:include href="xml/gimpdisplayshell-filter.xml" />
@@ -815,6 +814,7 @@
       <xi:include href="xml/gimpcursor.xml" />
       <xi:include href="xml/gimpdialogfactory.xml" />
       <xi:include href="xml/gimpdnd.xml" />
+      <xi:include href="xml/gimpdnd-xds.xml" />
       <xi:include href="xml/gimphelp.xml" />
       <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimpsessioninfo.xml" />
