@@ -50,6 +50,8 @@
  * created and flipped drawable.
  *
  * Returns: The flipped drawable.
+ *
+ * Since: GIMP 2.2
  */
 gint32
 gimp_drawable_transform_flip (gint32                 drawable_ID,
@@ -114,6 +116,8 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  * transform.
  *
  * Returns: The flipped drawable.
+ *
+ * Since: GIMP 2.2
  */
 gint32
 gimp_drawable_transform_flip_free (gint32                 drawable_ID,

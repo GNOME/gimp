@@ -67,13 +67,13 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gint32 flip_type;
-  gboolean center = FALSE;
-  gdouble axis = 0;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gboolean center;
+  gdouble axis;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -186,9 +186,9 @@ static ProcRecord drawable_transform_flip_proc =
   "gimp_drawable_transform_flip",
   "Flip the specified drawable either vertically or horizontally.",
   "This tool flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If center is set to true, the flip is around the image center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
-  "",
-  "",
-  "",
+  "João S. O. Bueno Calligaris",
+  "João S. O. Bueno Calligaris",
+  "2004",
   NULL,
   GIMP_INTERNAL,
   9,
@@ -207,15 +207,15 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gdouble x1 = 0;
-  gdouble y1 = 0;
-  gdouble x2 = 0;
-  gdouble y2 = 0;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gdouble x1;
+  gdouble y1;
+  gdouble x2;
+  gdouble y2;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -364,9 +364,9 @@ static ProcRecord drawable_transform_flip_free_proc =
   "gimp_drawable_transform_flip_free",
   "Flip the specified drawable around a given line.",
   "This tool flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable. The clip results parameter specifies wheter current selection will affect the transform.",
-  "",
-  "",
-  "",
+  "João S. O. Bueno Calligaris",
+  "João S. O. Bueno Calligaris",
+  "2004",
   NULL,
   GIMP_INTERNAL,
   10,
@@ -385,11 +385,11 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
   gdouble trans_info[8];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -586,11 +586,11 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
   gdouble angle;
   gint32 cx;
   gint32 cy;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -736,11 +736,11 @@ drawable_transform_scale_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
   gdouble trans_info[4];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -907,11 +907,11 @@ drawable_transform_shear_invoker (Gimp         *gimp,
   GimpDrawable *drawable;
   gint32 shear_type;
   gdouble magnitude;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1067,11 +1067,11 @@ drawable_transform_2d_invoker (Gimp         *gimp,
   gdouble angle;
   gdouble dest_x;
   gdouble dest_y;
-  gint32 transform_direction = 0;
-  gint32 interpolation = 0;
-  gboolean supersample = FALSE;
-  gint32 recursion_level = 0;
-  gboolean clip_result = FALSE;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))

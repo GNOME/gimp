@@ -1,3 +1,11 @@
+2004-10-26  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/drawable_transform.pdb: removed abuse of init,
+	called pdb_misc in all procedures.
+
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.c: regenerated.
+
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am (PDB_WRAPPERS_H, PDB_WRAPPERS_C): added new

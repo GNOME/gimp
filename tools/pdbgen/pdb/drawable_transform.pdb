@@ -32,37 +32,32 @@ sub pdb_misc {
 sub drawable_arg () {{
     name => 'drawable',
     type => 'drawable',
-    desc => 'The affected drawable',
+    desc => 'The affected drawable'
 }}
 
 sub clip_result_arg () {{
           name => 'clip_result',
           type => 'boolean',
-          desc => 'Whether to clip results',
-          init => False
+          desc => 'Whether to clip results'
 }}
 
 sub transform_options_args ()
   {
     {
       name => 'transform_direction', type => 'enum GimpTransformDirection',
-      desc => 'Direction of Transformation: { %%desc%% } ',
-      init => 1
+      desc => 'Direction of Transformation: { %%desc%% } '
     },
     {
       name => 'interpolation', type => 'enum GimpInterpolationType',
-      desc => 'Type of interpolation: { %%desc%% } ',
-      init => 1
+      desc => 'Type of interpolation: { %%desc%% } '
     },
     {
       name => 'supersample', type => 'boolean',
-      desc => 'Whether to perform supersample',
-      init => 1
+      desc => 'Whether to perform supersample'
     },
     {
       name => 'recursion_level', type => '0 < int32',
-      desc => 'Level of recursion (3 is a nice default)',
-      init => 1
+      desc => 'Level of recursion (3 is a nice default)'
     }
   }
 
@@ -94,16 +89,16 @@ selection, this will be equal to the drawable ID supplied as input.
 Otherwise, this will be the newly created and flipped drawable.
 HELP
 
+    &pdb_misc;
+
     @inargs = (
         &drawable_arg,
         { name => 'flip_type', type => &std_orientation_enum,
           desc => 'Type of flip: %%desc%%' },
         { name => 'center', type => 'boolean',
-          desc => 'Whether to automatically position the axis in the image center',
-          init => True  },
+          desc => 'Whether to automatically position the axis in the image center' },
         { name => 'axis', type => 'float',
-          desc => 'coord. of flip axis',
-          init => 0.0     },
+          desc => 'coord. of flip axis' },
 
          &transform_options_args,
          &clip_result_arg,
@@ -145,20 +140,18 @@ Otherwise, this will be the newly created and flipped drawable. The clip
 results parameter specifies wheter current selection will affect the transform.
 HELP
 
+    &pdb_misc;
+
     @inargs = (
         &drawable_arg,
         { name => 'x1', type => 'float',
-          desc => 'horz. coord. of one end of axis',
-          init => 0.0     },
+          desc => 'horz. coord. of one end of axis' },
         { name => 'y1', type => 'float',
-          desc => 'vert. coord. of one end of axis',
-          init => 0.0     },
+          desc => 'vert. coord. of one end of axis' },
         { name => 'x2', type => 'float',
-          desc => 'horz. coord. of other end of axis',
-          init => 0.0     },
+          desc => 'horz. coord. of other end of axis' },
         { name => 'y2', type => 'float',
-          desc => 'vert. coord. of other end of axis',
-          init => 0.0     },
+          desc => 'vert. coord. of other end of axis' },
 
          &transform_options_args,
          &clip_result_arg,
