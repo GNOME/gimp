@@ -834,8 +834,7 @@ HELP
 	code => <<'CODE'
 {
   num_bytes = gimage->num_cols * 3;
-  cmap = g_new (guint8, num_bytes);
-  memcpy (cmap, gimp_image_get_colormap (gimage), num_bytes);
+  cmap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
 }
 CODE
     );

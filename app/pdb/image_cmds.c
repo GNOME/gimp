@@ -1945,8 +1945,7 @@ image_get_cmap_invoker (Gimp     *gimp,
   if (success)
     {
       num_bytes = gimage->num_cols * 3;
-      cmap = g_new (guint8, num_bytes);
-      memcpy (cmap, gimp_image_get_colormap (gimage), num_bytes);
+      cmap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
     }
 
   return_args = procedural_db_return_args (&image_get_cmap_proc, success);

@@ -1,5 +1,17 @@
 2002-09-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_get_colormap): return
+	gimage->cmap directly instead of calling
+	gimp_drawable_cmap(active_drawable) without checking if there
+	actually is an active_drawable.
+
+	* tools/pdbgen/pdb/image.pdb (image_get_cmap): use g_memdup()
+	instead of g_new() followed by memcpy().
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2002-09-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/color-notebook.[ch]: set the hex entry to 7 chars instead
 	the whole width of the vbox. Added color_notebook_set_title().
 

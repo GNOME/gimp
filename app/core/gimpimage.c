@@ -1232,7 +1232,9 @@ gimp_image_floating_selection_changed (GimpImage *gimage)
 guchar *
 gimp_image_get_colormap (const GimpImage *gimage)
 {
-  return gimp_drawable_cmap (gimp_image_active_drawable (gimage));
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimage->cmap;
 }
 
 void
