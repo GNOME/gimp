@@ -264,7 +264,10 @@ HELP
 CODE
 }
 
-&channel_accessors('name', 'string', 'name', 1, undef,
+&channel_accessors('name', 'string', 'name', 1, [ undef, <<'CODE' ],
+$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
+$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
+CODE
                    'object', 'GIMP_OBJECT (channel)');
 
 &channel_accessors('visible', 'boolean', 'visibility', 1, undef,

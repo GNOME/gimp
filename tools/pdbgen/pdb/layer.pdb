@@ -525,7 +525,10 @@ HELP
 
 }
 
-&layer_accessors('name', 'string', 'name', 1, 0, undef,
+&layer_accessors('name', 'string', 'name', 1, 0, [ undef, <<'CODE' ],
+$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
+$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
+CODE
                  'object', 'GIMP_OBJECT (layer)');
 
 &layer_accessors('visible', 'boolean', 'visibility', 1, 0, undef,

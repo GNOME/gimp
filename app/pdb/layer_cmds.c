@@ -1082,7 +1082,7 @@ layer_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_object_set_name (GIMP_OBJECT (layer), name);
+    gimp_item_rename (GIMP_ITEM (layer), name);
 
   return procedural_db_return_args (&layer_set_name_proc, success);
 }

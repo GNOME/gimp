@@ -442,7 +442,7 @@ channel_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_object_set_name (GIMP_OBJECT (channel), name);
+    gimp_item_rename (GIMP_ITEM (channel), name);
 
   return procedural_db_return_args (&channel_set_name_proc, success);
 }

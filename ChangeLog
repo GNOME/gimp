@@ -1,3 +1,13 @@
+2003-03-17  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: use gimp_item_rename for set_name.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c: regenerated
+
+	* libgimpproxy/Makefile.am: use $(top_srcdir)
+
 2003-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added virtual function rename() which
