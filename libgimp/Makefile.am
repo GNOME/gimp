@@ -226,6 +226,8 @@ libgimpui_2_0_la_SOURCES = \
 	gimpimagecombobox.h	\
 	gimppixbuf.c		\
 	gimppixbuf.h		\
+	gimpprogressbar.c	\
+	gimpprogressbar.h	\
 	gimpexport.c		\
 	gimpexport.h
 
@@ -263,6 +265,7 @@ gimpinclude_HEADERS = \
 	gimppalettemenu.h	\
 	gimppatternmenu.h	\
 	gimppixbuf.h		\
+	gimpprogressbar.h	\
 	gimpdrawablecombobox.h	\
 	gimpimagecombobox.h	\
 	gimpexport.h

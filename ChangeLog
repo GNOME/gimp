@@ -1,3 +1,15 @@
+2004-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h
+	* libgimp/gimpprogressbar.[ch]: new widget GimpProgressBar which
+	automatically redirects any progress calls to itself while
+	it exists.
+
+	* plug-ins/script-fu/script-fu-interface.c: removed all progress
+	callback and simply use a GimpProgressBar.
+
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: set a busy cursor while the

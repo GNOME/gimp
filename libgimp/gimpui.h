@@ -35,6 +35,7 @@
 #include <libgimp/gimppalettemenu.h>
 #include <libgimp/gimppatternmenu.h>
 #include <libgimp/gimppixbuf.h>
+#include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimpdrawablecombobox.h>
 #include <libgimp/gimpimagecombobox.h>
 

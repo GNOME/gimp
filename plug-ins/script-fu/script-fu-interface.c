@@ -54,8 +54,7 @@ typedef struct
   GtkWidget    **args_widgets;
 
   GtkWidget     *progress_label;
-  GtkWidget     *progress;
-  const gchar   *progress_callback;
+  GtkWidget     *progress_bar;
 
   GtkWidget     *about_dialog;
 
@@ -149,63 +148,6 @@ script_fu_interface_report_cc (gchar *command)
     }
 
   while (gtk_main_iteration ());
-}
-
-static void
-script_fu_progress_start (const gchar *message,
-                          gboolean     cancelable,
-                          gpointer     user_data)
-{
-  SFInterface *sf_interface = user_data;
-
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
-                             message ? message : " ");
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
-
-  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
-    while (g_main_context_pending (NULL))
-      g_main_context_iteration (NULL, TRUE);
-}
-
-static void
-script_fu_progress_end (gpointer user_data)
-{
-  SFInterface *sf_interface = user_data;
-
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
-
-  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
-    while (g_main_context_pending (NULL))
-      g_main_context_iteration (NULL, TRUE);
-}
-
-static void
-script_fu_progress_text (const gchar *message,
-                         gpointer     user_data)
-{
-  SFInterface *sf_interface = user_data;
-
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
-                             message ? message : " ");
-
-  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
-    while (g_main_context_pending (NULL))
-      g_main_context_iteration (NULL, TRUE);
-}
-
-static void
-script_fu_progress_value (gdouble  percentage,
-                          gpointer user_data)
-{
-  SFInterface *sf_interface = user_data;
-
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress),
-                                 percentage);
-
-  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
-    while (g_main_context_pending (NULL))
-      g_main_context_iteration (NULL, TRUE);
 }
 
 void
@@ -546,17 +488,10 @@ script_fu_interface (SFScript *script)
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_label);
 
-  sf_interface->progress = gtk_progress_bar_new ();
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
-  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress, FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->progress);
-
-  sf_interface->progress_callback =
-    gimp_progress_install (script_fu_progress_start,
-                           script_fu_progress_end,
-                           script_fu_progress_text,
-                           script_fu_progress_value,
-                           sf_interface);
+  sf_interface->progress_bar = gimp_progress_bar_new ();
+  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_bar,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (sf_interface->progress_bar);
 
   gtk_widget_show (dlg);
 
@@ -724,7 +659,6 @@ script_fu_response (GtkWidget *widget,
       /* fallthru */
 
     default:
-      gimp_progress_uninstall (sf_interface->progress_callback);
       gtk_widget_destroy (sf_interface->dialog);
       break;
     }

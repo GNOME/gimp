@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpDrawablePreview  GimpDrawablePreview;
+typedef struct _GimpProgressBar      GimpProgressBar;
 
 
 G_END_DECLS
