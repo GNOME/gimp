@@ -33,24 +33,17 @@ gui_sources = \
 ## stuff that needs to be split up in core / ui files
 ##
 core_ui_sources = \
-	gimpprogress.c		\
-	gimpprogress.h		\
 	image_map.c		\
 	image_map.h
-
-##
-## config stuff
-##
-config_sources = \
-	general.c		\
-	general.h		\
-	gimprc.c		\
-	gimprc.h
 
 ##
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
+	general.c		\
+	general.h		\
+	gimprc.c		\
+	gimprc.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
 	path.c			\
@@ -85,7 +78,6 @@ stuff_sources = \
 gimp_1_3_SOURCES = @STRIP_BEGIN@ \
 	$(gui_sources)		\
 	$(core_ui_sources)	\
-	$(config_sources)	\
 	$(bye_sources)		\
 	$(stuff_sources)	\
 @STRIP_END@

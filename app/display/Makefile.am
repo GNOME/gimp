@@ -45,6 +45,8 @@ libappdisplay_a_sources = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
 	gimpdisplayshell-selection.h		\
+	gimpprogress.c				\
+	gimpprogress.h				\
 	gimpstatusbar.c				\
 	gimpstatusbar.h				\
 @STRIP_END@

@@ -1,3 +1,7 @@
+2002-02-22  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: gimpprogress.c -> display/gimpprogress.c
+
 2002-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: floating_sel.c -> core/gimplayer-floating-sel.c

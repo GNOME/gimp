@@ -19,28 +19,25 @@
 #ifndef __GIMP_PROGRESS_H__
 #define __GIMP_PROGRESS_H__
 
-/* Progress bars for use internally by the main GIMP application. */
 
+GimpProgress * gimp_progress_start            (GimpDisplay   *gdisp,
+                                               const gchar   *message,
+                                               gboolean       important,
+                                               GCallback      cancel_callback,
+                                               gpointer       cancel_data);
+GimpProgress * gimp_progress_restart          (GimpProgress  *progress,
+                                               const gchar   *message,
+                                               GCallback      cancel_callback,
+                                               gpointer       cancel_data);
+void           gimp_progress_update           (GimpProgress  *progress,
+                                               gdouble        percentage);
+void           gimp_progress_step             (GimpProgress  *progress);
+void           gimp_progress_end              (GimpProgress  *progress);
 
-/* functions */
-GimpProgress * progress_start            (GimpDisplay   *gdisp,
-					  const gchar   *message,
-					  gboolean       important,
-					  GCallback      cancel_callback,
-					  gpointer       cancel_data);
-GimpProgress * progress_restart          (GimpProgress  *progress,
-					  const gchar   *message,
-					  GCallback      cancel_callback,
-					  gpointer       cancel_data);
-void           progress_update           (GimpProgress  *progress,
-					  gdouble        percentage);
-void           progress_step             (GimpProgress  *progress);
-void           progress_end              (GimpProgress  *progress);
-
-void           progress_update_and_flush (gint           ymin,
-					  gint           ymax,
-					  gint           curr_x,
-					  gpointer       data);
+void           gimp_progress_update_and_flush (gint           ymin,
+                                               gint           ymax,
+                                               gint           curr_x,
+                                               gpointer       data);
 
 
 #endif /* __GIMP_PROGRESS_H__ */

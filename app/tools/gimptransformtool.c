@@ -45,12 +45,12 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpprogress.h"
 
 #include "gimptransformtool.h"
 #include "tool_manager.h"
 #include "transform_options.h"
 
-#include "gimpprogress.h"
 #include "undo.h"
 #include "path_transform.h"
 
@@ -818,7 +818,8 @@ gimp_transform_tool_transform_tiles (GimpTransformTool *transform_tool,
 
   options = (TransformOptions *) tool->tool_info->tool_options;
 
-  progress = progress_start (tool->gdisp, progress_text, FALSE, NULL, NULL);
+  progress = gimp_progress_start (tool->gdisp, progress_text, FALSE,
+                                  NULL, NULL);
 
   ret = gimp_drawable_transform_tiles_affine (gimp_image_active_drawable (tool->gdisp->gimage),
                                               transform_tool->original,
@@ -826,12 +827,13 @@ gimp_transform_tool_transform_tiles (GimpTransformTool *transform_tool,
                                               options->clip,
                                               transform_tool->transform,
                                               options->direction,
-                                              progress ? progress_update_and_flush :
-                                              (GimpProgressFunc) NULL,
+                                              progress ?
+                                              gimp_progress_update_and_flush : 
+                                              NULL,
                                               progress);
 
   if (progress)
-    progress_end (progress);
+    gimp_progress_end (progress);
 
   return ret;
 }

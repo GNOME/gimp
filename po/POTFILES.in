@@ -3,7 +3,6 @@
 
 app/app_procs.c
 app/gimphelp.c
-app/gimpprogress.c
 app/gimprc.c
 app/main.c
 app/nav_window.c
@@ -38,6 +37,7 @@ app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-layer-select.c
+app/display/gimpprogress.c
 
 app/file/file-open.c
 app/file/file-save.c

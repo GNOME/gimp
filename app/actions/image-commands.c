@@ -34,12 +34,12 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpprogress.h"
 
 #include "convert-dialog.h"
 #include "image-commands.h"
 #include "resize-dialog.h"
 
-#include "gimpprogress.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -462,17 +462,17 @@ image_scale_implement (ImageResize *image_scale)
 	  if (! display_flush)
 	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
-          progress = progress_start (image_scale->gdisp,
-                                     _("Scaling..."),
-                                     TRUE, NULL, NULL);
+          progress = gimp_progress_start (image_scale->gdisp,
+                                          _("Scaling..."),
+                                          TRUE, NULL, NULL);
 
 	  gimp_image_scale (gimage,
 			    image_scale->resize->width,
 			    image_scale->resize->height,
                             image_scale->resize->interpolation,
-                            progress_update_and_flush, progress);
+                            gimp_progress_update_and_flush, progress);
 
-          progress_end (progress);
+          gimp_progress_end (progress);
 
 	  display_flush = TRUE;
 	}

@@ -98,6 +98,7 @@
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpprogress.h"
 
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
@@ -108,7 +109,6 @@
 #include "plug-in-rc.h"
 
 #include "app_procs.h"
-#include "gimpprogress.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -908,7 +908,7 @@ plug_in_destroy (PlugIn *plug_in)
 	g_free (plug_in->args[5]);
 
       if (plug_in->progress)
-	progress_end (plug_in->progress);
+	gimp_progress_end (plug_in->progress);
       plug_in->progress = NULL;
 
       if (plug_in == current_plug_in)
@@ -1207,7 +1207,7 @@ plug_in_close (PlugIn   *plug_in,
   /* Destroy the progress dialog if it exists. */
   if (plug_in->progress)
     {
-      progress_end (plug_in->progress);
+      gimp_progress_end (plug_in->progress);
       plug_in->progress = NULL;
     }
 
@@ -3493,13 +3493,13 @@ plug_in_progress_init (PlugIn *plug_in,
     gdisp = gimp_display_get_by_ID (the_gimp, gdisp_ID);
 
   if (plug_in->progress)
-    plug_in->progress = progress_restart (plug_in->progress, message,
-					  G_CALLBACK (plug_in_progress_cancel),
-                                          plug_in);
+    plug_in->progress = gimp_progress_restart (plug_in->progress, message,
+                                               G_CALLBACK (plug_in_progress_cancel),
+                                               plug_in);
   else
-    plug_in->progress = progress_start (gdisp, message, TRUE,
-					G_CALLBACK (plug_in_progress_cancel), 
-                                        plug_in);
+    plug_in->progress = gimp_progress_start (gdisp, message, TRUE,
+                                             G_CALLBACK (plug_in_progress_cancel), 
+                                             plug_in);
 }
 
 void
@@ -3508,8 +3508,8 @@ plug_in_progress_update (PlugIn  *plug_in,
 {
   if (!plug_in->progress)
     plug_in_progress_init (plug_in, NULL, -1);
-  
-  progress_update (plug_in->progress, percentage);
+
+  gimp_progress_update (plug_in->progress, percentage);
 }
 
 static gchar *

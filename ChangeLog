@@ -1,5 +1,19 @@
 2002-02-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimpprogress.[ch]: removed...
+
+	* app/display/Makefile.am
+	* app/display/gimpprogress.[ch]: ...and added here. Prefixed
+	everything with "gimp_".
+
+	* app/gui/image-commands.c
+	* app/plug-in/plug-in.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
+2002-02-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/Makefile
 	* app/vectors/Makefile.in: removed.
 

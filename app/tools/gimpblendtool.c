@@ -39,13 +39,12 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpprogress.h"
 
 #include "widgets/gimpdnd.h"
 
 #include "gimpblendtool.h"
 #include "paint_options.h"
-
-#include "gimpprogress.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -326,7 +325,8 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
 #else /* ! BLEND_UI_CALLS_VIA_PDB */
 
-      progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
+      progress = gimp_progress_start (gdisp, _("Blending..."), FALSE,
+                                      NULL, NULL);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
                            options->blend_mode,
@@ -342,11 +342,11 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                            blend_tool->starty,
                            blend_tool->endx,
                            blend_tool->endy,
-                           progress ? progress_update_and_flush : NULL, 
+                           progress ? gimp_progress_update_and_flush : NULL, 
                            progress);
 
       if (progress)
-	progress_end (progress);
+	gimp_progress_end (progress);
 
       gdisplays_flush ();
 #endif /* ! BLEND_UI_CALLS_VIA_PDB */
