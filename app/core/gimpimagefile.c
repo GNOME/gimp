@@ -66,6 +66,8 @@
 #define TAG_THUMB_GIMP_LAYERS  "tEXt::Thumb::X-GIMP::Layers"
 
 
+#define GIMP_IMAGEFILE_THUMB_SIZE_FAIL -1
+
 enum
 {
   INFO_CHANGED,
@@ -78,14 +80,8 @@ typedef struct
   gint         size;
 } ThumbnailSize;
 
-static const ThumbnailSize thumb_sizes[] = 
-{
-  { "normal", 128  },
-  { "large",  256  }
-};
 
-
-static void          gimp_imagefile_class_init (GimpImagefileClass  *klass);
+static void          gimp_imagefile_class_init      (GimpImagefileClass *klass);
 static void          gimp_imagefile_init            (GimpImagefile  *imagefile);
 static void          gimp_imagefile_finalize        (GObject        *object);
 static void          gimp_imagefile_name_changed    (GimpObject     *object);
@@ -108,7 +104,8 @@ static gchar       * gimp_imagefile_png_thumb_path  (const gchar    *uri,
 static gchar       * gimp_imagefile_find_png_thumb  (const gchar    *uri,
                                                      time_t          image_mtime,
                                                      gint            size,
-                                                     time_t         *thumb_mtime);
+                                                     time_t         *thumb_mtime,
+                                                     gint           *thumb_size);
 
 static TempBuf     * gimp_imagefile_read_xv_thumb   (GimpImagefile  *imagefile);
 static guchar      * readXVThumb                    (const gchar    *filename,
@@ -120,6 +117,16 @@ static gboolean      gimp_imagefile_test            (const gchar    *filename,
                                                      time_t         *mtime,
                                                      off_t          *size);
 
+
+static const ThumbnailSize thumb_sizes[] =
+{
+  { "fail",   GIMP_IMAGEFILE_THUMB_SIZE_FAIL   },
+  { "normal", GIMP_IMAGEFILE_THUMB_SIZE_NORMAL },
+  { "large",  GIMP_IMAGEFILE_THUMB_SIZE_LARGE  }
+};
+
+static gchar *thumb_dir                                 = NULL;
+static gchar *thumb_subdirs[G_N_ELEMENTS (thumb_sizes)] = { 0 };
 
 static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
 
@@ -139,7 +146,7 @@ gimp_imagefile_get_type (void)
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
 	(GClassInitFunc) gimp_imagefile_class_init,
-	NULL,		/* class_finalize */
+	NULL,           /* class_finalize */
 	NULL,		/* class_data     */
 	sizeof (GimpImagefile),
 	0,              /* n_preallocs    */
@@ -160,6 +167,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  gint               i;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -181,6 +189,12 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   viewable_class->get_new_preview = gimp_imagefile_get_new_preview;
 
   g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
+
+  thumb_dir = g_build_filename (g_get_home_dir(), ".thumbnails", NULL);
+
+  for (i = 0; i < G_N_ELEMENTS (thumb_sizes); i++)
+    thumb_subdirs[i] = g_build_filename (g_get_home_dir(), ".thumbnails",
+                                         thumb_sizes[i].dirname, NULL);
 }
 
 static void
@@ -233,8 +247,9 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 
   if (uri)
     {
-      gchar *filename  = NULL;
-      gchar *thumbname = NULL;
+      gchar *filename   = NULL;
+      gchar *thumbname  = NULL;
+      gint   thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
 
       filename = g_filename_from_uri (uri, NULL, NULL);
 
@@ -260,10 +275,12 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 
       imagefile->thumb_mtime = 0;
 
-      thumbname = gimp_imagefile_find_png_thumb (uri,
-                                                 imagefile->image_mtime,
-                                                 128,
-                                                 &imagefile->thumb_mtime);
+      thumbname =
+        gimp_imagefile_find_png_thumb (uri,
+                                       imagefile->image_mtime,
+                                       GIMP_IMAGEFILE_THUMB_SIZE_NORMAL,
+                                       &imagefile->thumb_mtime,
+                                       &thumb_size);
 
       if (! thumbname)
         {
@@ -319,7 +336,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
       if (! filename)
         return;
 
-      thumb_name = gimp_imagefile_png_thumb_path (uri, 128);
+      thumb_name =
+        gimp_imagefile_png_thumb_path (uri, GIMP_IMAGEFILE_THUMB_SIZE_NORMAL);
+
       /*  the thumbnail directory doesn't exist and couldn't be created */
       if (! thumb_name)
         return;
@@ -343,22 +362,23 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
           GdkPixbuf *pixbuf;
           gint       width, height;
 
-          if (gimage->width <= 128 && gimage->height <= 128)
+          if (gimage->width  <= GIMP_IMAGEFILE_THUMB_SIZE_NORMAL &&
+              gimage->height <= GIMP_IMAGEFILE_THUMB_SIZE_NORMAL)
             {
-              width = gimage->width;
+              width  = gimage->width;
               height = gimage->height;
             }
           else
             {
               if (gimage->width < gimage->height)
                 {
-                  height = 128;
-                  width = MAX (1, (128 * gimage->width) / gimage->height);
+                  height = GIMP_IMAGEFILE_THUMB_SIZE_NORMAL;
+                  width  = MAX (1, (GIMP_IMAGEFILE_THUMB_SIZE_NORMAL * gimage->width) / gimage->height);
                 }
               else
                 {
-                  width = 128;
-                  height = MAX (1, (128 * gimage->height) / gimage->width);
+                  width  = GIMP_IMAGEFILE_THUMB_SIZE_NORMAL;
+                  height = MAX (1, (GIMP_IMAGEFILE_THUMB_SIZE_NORMAL * gimage->height) / gimage->width);
                 }
             }
 
@@ -673,9 +693,10 @@ static TempBuf *
 gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
                                gint           size)
 {
-  TempBuf     *temp_buf  = NULL;
-  GdkPixbuf   *pixbuf    = NULL;
-  gchar       *thumbname = NULL;
+  TempBuf     *temp_buf   = NULL;
+  GdkPixbuf   *pixbuf     = NULL;
+  gchar       *thumbname  = NULL;
+  gint         thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
   const gchar *option;
   gint         width;
   gint         height;
@@ -695,7 +716,8 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   thumbname = gimp_imagefile_find_png_thumb (GIMP_OBJECT (imagefile)->name,
                                              imagefile->image_mtime,
                                              size,
-                                             &imagefile->thumb_mtime);
+                                             &imagefile->thumb_mtime,
+                                             &thumb_size);
   if (!thumbname)
     goto cleanup;
 
@@ -783,45 +805,35 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
                                gint         size)
 {
   const gchar *name;
-  gchar       *thumb_dir; 
   gchar       *thumb_name = NULL;
   gint         i, n;
 
   name = gimp_imagefile_png_thumb_name (uri);
 
   n = G_N_ELEMENTS (thumb_sizes);
-  for (i = 0; i < n && thumb_sizes[i].size < size; i++)
+  for (i = 1; i < n && thumb_sizes[i].size < size; i++)
     /* nothing */;
 
   if (i == n)
     i--;
 
-  thumb_dir = g_build_filename (g_get_home_dir(), ".thumbnails",
-                                thumb_sizes[i].dirname, NULL);
-
-  if (! g_file_test (thumb_dir, G_FILE_TEST_IS_DIR))
+  if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
     {
-      gchar *parent = g_build_filename (g_get_home_dir(), ".thumbnails", NULL);
-
-      if (g_file_test (parent, G_FILE_TEST_IS_DIR) || 
-          (mkdir (parent, 0700) == 0))
+      if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) || 
+          (mkdir (thumb_dir, 0700) == 0))
         {
-          mkdir (thumb_dir, 0700);
+          mkdir (thumb_subdirs[i], 0700);
         }
 
-      g_free (parent);
-
-      if (! g_file_test (thumb_dir, G_FILE_TEST_IS_DIR))
+      if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
         {
           g_message (_("Couldn't create thumbnail directory '%s'"), 
-                     thumb_dir); 
-          g_free (thumb_dir);
+                     thumb_subdirs[i]);
           return NULL;
         }
     }
 
   thumb_name = g_build_filename (thumb_dir, name, NULL);
-  g_free (thumb_dir);
 
   return thumb_name;
 }
@@ -830,7 +842,8 @@ static gchar *
 gimp_imagefile_find_png_thumb (const gchar *uri,
                                time_t       image_mtime,
                                gint         size,
-                               time_t      *thumb_mtime)
+                               time_t      *thumb_mtime,
+                               gint        *thumb_size)
 {
   const gchar *name;
   gchar       *thumb_name;
@@ -839,32 +852,34 @@ gimp_imagefile_find_png_thumb (const gchar *uri,
   name = gimp_imagefile_png_thumb_name (uri);
 
   n = G_N_ELEMENTS (thumb_sizes);
-  for (i = 0; i < n && thumb_sizes[i].size < size; i++)
+  for (i = 1; i < n && thumb_sizes[i].size < size; i++)
     /* nothing */;
 
   n = i;
   for (; i < G_N_ELEMENTS (thumb_sizes); i++)
     {
-      thumb_name = g_build_filename (g_get_home_dir(), ".thumbnails",
-                                     thumb_sizes[i].dirname, 
-                                     name, NULL);
+      thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
       if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL) &&
-          image_mtime < *thumb_mtime) 
-        return thumb_name;
+          image_mtime <= *thumb_mtime) 
+        {
+          *thumb_size = thumb_sizes[i].size;
+          return thumb_name;
+        }
 
       g_free (thumb_name);
     }
 
   for (i = n - 1; i >= 0; i--)
     {
-      thumb_name = g_build_filename (g_get_home_dir(), ".thumbnails", 
-                                     thumb_sizes[i].dirname, 
-                                     name, NULL);
+      thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
       if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL) &&
-          image_mtime < *thumb_mtime)
-        return thumb_name;
+          image_mtime <= *thumb_mtime)
+        {
+          *thumb_size = thumb_sizes[i].size;
+          return thumb_name;
+        }
 
       g_free (thumb_name);
     }

@@ -28,6 +28,9 @@
 #include "gimpviewable.h"
 
 
+#define GIMP_IMAGEFILE_THUMB_SIZE_NORMAL 128
+#define GIMP_IMAGEFILE_THUMB_SIZE_LARGE  256
+
 typedef enum
 {
   GIMP_IMAGEFILE_STATE_UNKNOWN,
@@ -35,6 +38,7 @@ typedef enum
   GIMP_IMAGEFILE_STATE_NOT_FOUND,
   GIMP_IMAGEFILE_STATE_EXISTS
 } GimpImagefileState;
+
 
 #define GIMP_TYPE_IMAGEFILE            (gimp_imagefile_get_type ())
 #define GIMP_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGEFILE, GimpImagefile))

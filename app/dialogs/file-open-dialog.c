@@ -75,7 +75,10 @@ static void        file_open_selchanged_callback    (GtkTreeSelection *sel,
                                                      GtkWidget        *open_dialog);
 static void        file_open_imagefile_info_changed (GimpImagefile    *imagefile,
                                                      GtkLabel         *label);
-static void        file_open_genbutton_callback     (GtkWidget        *widget,
+static gboolean    file_open_thumbnail_button_press (GtkWidget        *widget,
+                                                     GdkEventButton   *bevent,
+                                                     GtkWidget        *open_dialog);
+static void        file_open_thumbnail_clicked      (GtkWidget        *widget,
                                                      GtkWidget        *open_dialog);
 static void        file_open_ok_callback            (GtkWidget        *widget,
                                                      GtkWidget        *open_dialog);
@@ -223,20 +226,37 @@ file_open_dialog_create (Gimp *gimp)
     gtk_container_add (GTK_CONTAINER (open_options_frame), ebox);
     gtk_widget_show (ebox);
 
+    g_signal_connect (G_OBJECT (ebox), "button_press_event",
+		      G_CALLBACK (file_open_thumbnail_button_press),
+                      open_dialog);
+
+    gimp_help_set_help_data (ebox, _("Click to create preview"), NULL);
+
     vbox = gtk_vbox_new (FALSE, 2);
     gtk_container_add (GTK_CONTAINER (ebox), vbox);
     gtk_widget_show (vbox);
 
-    button = gtk_button_new_with_mnemonic (_("_Preview"));
-    gtk_misc_set_alignment (GTK_MISC (GTK_BIN (button)->child), 0.0, 0.5);
+    button = gtk_button_new ();
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
-    g_signal_connect (G_OBJECT (button), "clicked",
-		      G_CALLBACK (file_open_genbutton_callback),
-                      open_dialog);
+    label = gtk_label_new_with_mnemonic (_("_Preview"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+    gtk_container_add (GTK_CONTAINER (button), label);
+    gtk_widget_show (label);
 
-    gimp_help_set_help_data (button, _("Click to create preview"), NULL);
+    g_signal_connect (G_OBJECT (button), "button_press_event",
+                      G_CALLBACK (gtk_true),
+                      NULL);
+    g_signal_connect (G_OBJECT (button), "button_release_event",
+                      G_CALLBACK (gtk_true),
+                      NULL);
+    g_signal_connect (G_OBJECT (button), "enter_notify_event",
+                      G_CALLBACK (gtk_true),
+                      NULL);
+    g_signal_connect (G_OBJECT (button), "leave_notify_event",
+                      G_CALLBACK (gtk_true),
+                      NULL);
 
     hbox = gtk_hbox_new (TRUE, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -246,7 +266,7 @@ file_open_dialog_create (Gimp *gimp)
 
     open_options_preview =
       gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
-                        128, 0, FALSE);
+                        GIMP_IMAGEFILE_THUMB_SIZE_NORMAL, 0, FALSE);
 
     gtk_widget_ensure_style (open_options_preview);
     style = gtk_widget_get_style (open_options_preview);
@@ -257,6 +277,11 @@ file_open_dialog_create (Gimp *gimp)
 
     gtk_box_pack_start (GTK_BOX (hbox), open_options_preview, TRUE, FALSE, 4);
     gtk_widget_show (open_options_preview);
+
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), open_options_preview);
+    g_signal_connect (G_OBJECT (open_options_preview), "clicked",
+		      G_CALLBACK (file_open_thumbnail_clicked),
+                      open_dialog);
 
     open_options_title = gtk_label_new (_("No Selection"));
     gtk_box_pack_start (GTK_BOX (vbox), open_options_title, FALSE, FALSE, 0);
@@ -380,9 +405,19 @@ file_open_create_thumbnail (const gchar *filename)
     }
 }
 
+static gboolean
+file_open_thumbnail_button_press (GtkWidget      *widget,
+                                  GdkEventButton *bevent,
+                                  GtkWidget      *open_dialog)
+{
+  file_open_thumbnail_clicked (widget, open_dialog);
+
+  return TRUE;
+}
+
 static void
-file_open_genbutton_callback (GtkWidget *widget,
-			      GtkWidget *open_dialog)
+file_open_thumbnail_clicked (GtkWidget *widget,
+                             GtkWidget *open_dialog)
 {
   GtkFileSelection  *fs;
   Gimp              *gimp;

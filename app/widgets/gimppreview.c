@@ -192,6 +192,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   object_class->destroy              = gimp_preview_destroy;
 
+  widget_class->activate_signal      = preview_signals[CLICKED];
   widget_class->size_allocate        = gimp_preview_size_allocate;
   widget_class->expose_event         = gimp_preview_expose_event;
   widget_class->button_press_event   = gimp_preview_button_press_event;

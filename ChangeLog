@@ -1,5 +1,17 @@
 2002-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagefile.[ch]: create the thumbnail subdir strings
+	only once in class_init, minor stuff.
+
+	* app/widgets/gimppreview.c: set widget_class->activate_signal to
+	the preview's "clicked" id so we can create mnemonics for it.
+
+	* app/gui/file-open-dialog.c: make the whole preview area clickable,
+	block some signals of the "Preview" button so it behaves like
+	the tree view headers.
+
+2002-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagefile.[ch]: save the number of layers in the
 	thumbnail and show it in the description.
 
