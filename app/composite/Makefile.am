@@ -20,8 +20,10 @@ INCLUDES = \
 noinst_LIBRARIES = libappcomposite.a
 
 libappcomposite_a_sources = \
-	gimp-composite.c			\
-	gimp-composite.h			\
+	gimp-composite-3dnow.c			\
+	gimp-composite-3dnow.h			\
+	gimp-composite-altivec.c		\
+	gimp-composite-altivec.h		\
 	gimp-composite-generic.c		\
 	gimp-composite-generic.h		\
 	gimp-composite-mmx.c			\
@@ -30,21 +32,20 @@ libappcomposite_a_sources = \
 	gimp-composite-sse.h			\
 	gimp-composite-sse2.c			\
 	gimp-composite-sse2.h			\
-	gimp-composite-3dnow.c			\
-	gimp-composite-3dnow.h			\
-	gimp-composite-altivec.c		\
-	gimp-composite-altivec.h		\
+	gimp-composite-util.h			\
 	gimp-composite-vis.c			\
 	gimp-composite-vis.h			\
-	gimp-composite-util.h
+	gimp-composite-x86.h			\
+	gimp-composite.c			\
+	gimp-composite.h
 
 libappcomposite_a_built_sources = \
+	gimp-composite-3dnow-installer.c	\
+	gimp-composite-altivec-installer.c	\
 	gimp-composite-generic-installer.c	\
 	gimp-composite-mmx-installer.c		\
 	gimp-composite-sse-installer.c		\
 	gimp-composite-sse2-installer.c		\
-	gimp-composite-3dnow-installer.c	\
-	gimp-composite-altivec-installer.c	\
 	gimp-composite-vis-installer.c
 
 libappcomposite_a_SOURCES = \
@@ -71,11 +72,11 @@ EXTRA_DIST = \
 #
 
 TESTS = \
+	gimp-composite-3dnow-test	\
+	gimp-composite-altivec-test	\
 	gimp-composite-mmx-test		\
 	gimp-composite-sse-test		\
 	gimp-composite-sse2-test	\
-	gimp-composite-3dnow-test	\
-	gimp-composite-altivec-test	\
 	gimp-composite-vis-test
 
 test_composite_SOURCES = \
