@@ -1,3 +1,8 @@
+2004-11-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/bmpread.c: Fix cut'n'paste err so grayscale images
+	load again. Fixes bug #157764.
+
 2004-11-02  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0.6 release.
