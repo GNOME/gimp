@@ -1,3 +1,8 @@
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c: construct a case-insensitive glob
+	pattern to use when filtering for file extensions.
+
 2004-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_create_thumbnails):

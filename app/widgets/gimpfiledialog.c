@@ -52,9 +52,8 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_file_dialog_class_init          (GimpFileDialogClass   *klass);
-static void  gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
-
+static void  gimp_file_dialog_class_init            (GimpFileDialogClass   *klass);
+static void  gimp_file_dialog_progress_iface_init   (GimpProgressInterface *progress_iface);
 static gboolean gimp_file_dialog_delete_event       (GtkWidget        *widget,
                                                      GdkEventAny      *event);
 static void     gimp_file_dialog_response           (GtkDialog        *dialog,
@@ -96,6 +95,7 @@ static void     gimp_file_dialog_help_func          (const gchar      *help_id,
 static void     gimp_file_dialog_help_clicked       (GtkWidget        *widget,
                                                      gpointer          dialog);
 
+static gchar  * gimp_file_dialog_pattern_from_extension (const gchar  *extension);
 
 
 GType
@@ -491,10 +491,10 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
   GSList        *list;
 
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files (*.*)"));
-  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_filter_set_name (filter, _("All Files"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+  gtk_file_filter_add_pattern (filter, "*");
 
   for (list = file_procs; list; list = g_slist_next (list))
     {
@@ -516,8 +516,9 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
             {
               const gchar *extension = ext->data;
-              gchar       *pattern   = g_strdup_printf ("*.%s", extension);
+              gchar       *pattern;
 
+              pattern = gimp_file_dialog_pattern_from_extension (extension);
               gtk_file_filter_add_pattern (filter, pattern);
               g_free (pattern);
 
@@ -681,4 +682,37 @@ gimp_file_dialog_help_clicked (GtkWidget *widget,
 {
   gimp_standard_help_func (g_object_get_data (dialog, "gimp-dialog-help-id"),
                            NULL);
+}
+
+static gchar *
+gimp_file_dialog_pattern_from_extension (const gchar *extension)
+{
+  gchar *pattern;
+  gchar *p;
+  gint   len, i;
+
+  g_return_val_if_fail (extension != NULL, NULL);
+
+  /* This function assumes that file extensions are 7bit ASCII.  It
+   * could certainly be rewritten to handle UTF-8 if this assumption
+   * turns out to be incorrect.
+   */
+
+  len = strlen (extension);
+
+  pattern = g_new (gchar, 4 + 4 * len);
+
+  strcpy (pattern, "*.");
+
+  for (i = 0, p = pattern + 2; i < len; i++, p+= 4)
+    {
+      p[0] = '[';
+      p[1] = g_ascii_tolower (extension[i]);
+      p[2] = g_ascii_toupper (extension[i]);
+      p[3] = ']';
+    }
+
+  *p = '\0';
+
+  return pattern;
 }
