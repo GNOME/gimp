@@ -28,11 +28,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -233,8 +228,8 @@ analyze (GimpDrawable *drawable)
                        0, 0, width, height, FALSE, FALSE);
 
   /* allocate row buffer */
-  src_row = g_malloc ((x2 - x1) * bpp);
-  sel = g_malloc (x2 - x1);
+  src_row = g_new (guchar, (x2 - x1) * bpp);
+  sel = g_new (guchar, x2 - x1);
 
   for (y = y1; y < y2; y++)
     {
@@ -319,7 +314,7 @@ insertcolor (guchar  r,
     }
 
   g_hash_table_insert (hash_table, GINT_TO_POINTER (key), 
-		       GINT_TO_POINTER (1));
+                       GINT_TO_POINTER (1));
 
   uniques++;
 }
@@ -384,11 +379,9 @@ doDialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
   /* use preview for histogram window */
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), PREWIDTH, PREHEIGHT);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, PREWIDTH, PREHEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), preview);
-
-  fillPreview (preview);
 
   /* output results */
   doLabel (vbox, _("Image dimensions: %d x %d"), width, height);
@@ -418,6 +411,8 @@ doDialog (void)
 
   /* show stuff */
   gtk_widget_show_all (dialog);
+
+  fillPreview (preview);
 
   gimp_dialog_run (GIMP_DIALOG (dialog));
 
@@ -450,11 +445,11 @@ doLabel (GtkWidget   *vbox,
 static void
 fillPreview (GtkWidget *preview)
 {
-  guchar *image, *pimage, *pixel;
-  gint    x, y, rowstride;
-  gdouble histcount, val;
+  guchar  *image, *pixel;
+  gint     x, y, rowstride;
+  gdouble  histcount, val;
 
-  image = g_malloc0 (PREWIDTH * PREHEIGHT * 3);
+  image = g_new0 (guchar, PREWIDTH * PREHEIGHT * 3);
 
   rowstride = PREWIDTH * 3;
 
@@ -506,11 +501,12 @@ fillPreview (GtkWidget *preview)
     }
 
   /* move our data into the preview image */
-  for (pimage = image, y = 0; y < PREHEIGHT; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), pimage, 0, y, PREWIDTH);
-      pimage += 3 * PREWIDTH;
-    }
-
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, PREWIDTH, PREHEIGHT,
+                          GIMP_RGB_IMAGE,
+                          image,
+                          3 * PREWIDTH);
+                          
   g_free (image);
 }
+

@@ -1,3 +1,8 @@
+2004-07-30  DindinX  <david@dindinx.org>
+
+	* common/ccanalyze.c: converted to use a GimpPreviewArea, and some
+	small cleanups (g_malloc to g_new, removing tabs)
+
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_draw):
