@@ -76,6 +76,8 @@ save/restore state of major dialogs:
 	desktop. Perhaps some of the gnome session management stuff
 	could be useful here. It should be exported to the PDB too.
 
+	Saving of window geometry is now there. --Sven
+
 keybindings for simple "binary" tools:
 
 	(for ex, flip should flip horiz normal, and shift+click to
@@ -106,6 +108,8 @@ paths, and better beziers would be a nice touch:
 	to selection, and selection to bezier would be very
 	benificial. This combined with a working iscissors would make
 	for extremely flexible selection mechanisms.
+
+	Probably integrate the paths into the Layers&Channels dialog?
 
 Macro recording and better scripting support:
 
@@ -162,7 +166,9 @@ status bars on image window:
 
 	(maybe swallow plug-in progress bars, show current x,y, file
 	type, etc...) 
-	( I think snorfle is working on this)
+	
+	This is mostly done.
+
 	- optionally show that information in the toolbar ?
 	- probably dragable to the toolbar and vice versa
 
@@ -184,7 +190,9 @@ more indicators of current status:
 
 	(X,Y position, selection size and placement etc ), maybe in
 	another dialog, maybe a status bar?  Lots of request for
-	this. Think snorfle is working on it.
+	this.
+
+	This is mostly done. --Sven
 
 Clean up swapfiles: 
 
@@ -262,7 +270,7 @@ pixmap brushes:
 Quickmask/paintable selections:
 
 	Any ideas on the best way to do the ui? The fundamentals of
-	beng abl to do this are already there. Just need a good way to
+	beng able to do this are already there. Just need a good way to
 	present it.
 
 let pdb stuff register under the layers_dialog menu:
@@ -293,16 +301,26 @@ dodge/burn/sponge/smudge tools:
 
 session management
 
+	Well, what we have right now is the following:
+	Dialog geometries are always saved and restored. Dialogs that were
+	opened on last save (or last exit if "Save window positions on exit" 
+	is choosen in the Preferences) are reopened on startup if you
+	call the gimp with command-line option -r or if you have 
+	"Always try to resore session" checked in Preferences.
+	This allows to create a preferred gimp desktop, exit to have it 
+	saved. If you toggle "Save window positions on exit" off now, the 
+	settings will stay forever.
+
+	The device status is saved and restored too, with a similar scheme.
+
 Text Tool
 	More complete font selection
 	Multiple lines and alignment
 	Kerning, hints, etc.
 
-
 big cad style cross-hairs cursor:
 	guides come close, but we probabaly dont wont somethign like
 	that again.
-
 
 more info available to the user in general (current brush, etc)
 
@@ -318,19 +336,21 @@ Suggestion from Ville Hautamaki (CW):
 	or even just "set 1" etc.
 
 Overwork the transform tools UI:
-	 It would be nice if the transformation
-	wouldn't automatically start when releasing the mouse. Instead have a window
-	that shows the currently choosen transformation numerically 
-	(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation should be editable
-	there and with handles on the outline. Perform the transformation when "OK" is
-	clicked in the dialog or when you doubleclick(?) into the image. 
+	It would be nice if the transformation
+	wouldn't automatically start when releasing the mouse. Instead have 
+	a window that shows the currently choosen transformation numerically 
+	(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation should be 
+	editable there and with handles on the outline. Perform the 
+	transformation when "OK" is clicked in the dialog or when you 
+	doubleclick(?) into the image. 
+
+	The new transform tool UI is almost there, and it rocks!! --Sven
 
 Probably have a "Preview" button too that performs the transformation 
 without interpolation:
 	As it stands, transforms can be very slow and feedback to the
 	user is smalld. A preiview would save much time and maek the action
 	more accururate.
-
 
 Selections should always be bezierifyable.
 
@@ -341,7 +361,6 @@ Selections should be transformable:
 	for the selection info (usually in TileManager structs) to
 	be passed to the existent image ops. 
 	
-
 Have a possibility to add a text as selection:
 	 If selections would be editable as described above, we'd 
 	then have editable vector-text. Is this possibel with type1 fonts?
@@ -352,7 +371,7 @@ Integrate gimp-16 stuff?
 	Would be difficult, but possibly very useful.
 	see http://www.netrover.com/~rayl/gimp/
 
-A way to define a defualt comment
+A way to define a default comment
 
 	larry is working on named data attachments for images. More
 	or less a generic way to define image comments and other
@@ -419,7 +438,12 @@ script-fu
 	proper font selector instead of typing the silly thing in
 	maybe a color history too...
 
+	Well, the script-fu interface has seen a few extensions and Adrian
+	is working on adapting the scripts to the new interface.
+
 tools
+
 	Make tools listen for gimage dirty signals to fix munging.
 	When a tool caches image data privately, you need to reset
 	when the image gets dirty.
+
