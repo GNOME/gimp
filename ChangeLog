@@ -1,3 +1,8 @@
+Sat Jul 18 20:15:59 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/gee/gee.c: About eight times faster with
+	new GTKs, a little faster without.  Less bugs.  PH34R.
+
 Sat Jul 18 21:22:37 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c

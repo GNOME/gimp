@@ -6,7 +6,12 @@
  */
 
 /*
- *     Version 1.01 : 98.04.19
+ *     Version 1.02 : 98.07.18
+ *
+ * 1.02:
+ * Massive speedup if you have a very recent version of GTK 1.1.
+ * Removed possible div-by-0 errors, took the plugin out
+ * of hiding (guess we need a new easter-egg for GIMP 1.2!)
  */
 
 #include <stdlib.h>
@@ -21,6 +26,13 @@
 #include "gtk/gtk.h"
 
 #include "config.h"
+
+
+
+/* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
+#ifdef __GDK_RGB_H__
+#define RAPH_IS_HOME yep
+#endif
 
 
 
@@ -68,7 +80,11 @@ static const guint height = 256;
 static guchar*    seed_data;
 static guchar*    preview_data1;
 static guchar*    preview_data2;
+#ifdef RAPH_IS_HOME
+static GtkWidget* drawing_area;
+#else
 static GtkPreview* preview = NULL;
+#endif
 static gint32     image_id;
 static gint32     total_frames;
 static gint32*    layers;
@@ -104,8 +120,8 @@ static void query()
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",
-			 /*"<Image>/Filters/Animation/The Egg",*/
-			 NULL,
+			 "<Image>/Filters/Toys/The Egg",
+			 /*NULL,*/
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -169,6 +185,11 @@ build_dialog(GImageType basetype,
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("gee");
   gtk_init (&argc, &argv);
+
+#ifdef RAPH_IS_HOME
+  gdk_rgb_init ();
+#endif
+
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
   gtk_preview_set_gamma (gimp_gamma ());
@@ -236,6 +257,13 @@ build_dialog(GImageType basetype,
 	      gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
 	      
 	      {
+#ifdef RAPH_IS_HOME
+		drawing_area = gtk_drawing_area_new ();
+		gtk_widget_set_usize (drawing_area, width, height);
+		gtk_container_add (GTK_CONTAINER (eventbox),
+				   GTK_WIDGET (drawing_area));
+		gtk_widget_show (drawing_area);
+#else
 		preview =
 		  GTK_PREVIEW (gtk_preview_new (rgb_mode?
 						GTK_PREVIEW_COLOR:
@@ -244,6 +272,7 @@ build_dialog(GImageType basetype,
 		gtk_container_add (GTK_CONTAINER (eventbox),
 				   GTK_WIDGET (preview));
 		gtk_widget_show(GTK_WIDGET (preview));
+#endif /* RAPH_IS_HOME */
 	      }
 	      gtk_widget_show(eventbox);
 	      gtk_widget_set_events (eventbox,
@@ -325,7 +354,16 @@ void domap1(unsigned char *src, unsigned char *dest,
   unsigned int basesy;
 #endif
 
+  if ((cx+bx) == 0)
+    cx++;
+
+  if ((cy+by) == 0)
+    by++;
+
   bycxmcybx = (by*cx-cy*bx);
+
+  if (bycxmcybx == 0)
+    bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
   basesx = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
@@ -394,7 +432,16 @@ void domap3(unsigned char *src, unsigned char *dest,
   unsigned int basesy;
 #endif
 
+  if ((cx+bx) == 0)
+    cx++;
+
+  if ((cy+by) == 0)
+    by++;
+
   bycxmcybx = (by*cx-cy*bx);
+
+  if (bycxmcybx == 0)
+    bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
   basesx = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
@@ -463,7 +510,10 @@ render_frame(void)
 
   pixels = width*height*(rgb_mode?3:1);
 
+#ifdef RAPH_IS_HOME
+#else
   gdk_flush();
+#endif
 
   tmp = preview_data2;
   preview_data2 = preview_data1;
@@ -495,12 +545,20 @@ render_frame(void)
 	     xp+yp, (yp-xp)/2
 	     );
 
+#ifdef RAPH_IS_HOME
+      gdk_draw_rgb_image (drawing_area->window,
+			  drawing_area->style->white_gc,
+			  0, 0, width, height,
+			  GDK_RGB_DITHER_NORMAL,
+			  preview_data1, width * 3);
+#else
       for (i=0;i<height;i++)
 	{
 	  gtk_preview_draw_row (preview,
 				&preview_data1[i*width*3],
 				0, i, width);
 	}
+#endif
 
       if (frame != 0)
 	{
@@ -508,16 +566,30 @@ render_frame(void)
 	    {
 	      for (i=0;i<pixels;i++)
 		{
-		  int t;
+		  gint t;
 		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = CLAMP(t,0,255);
+		  preview_data1[i] = /*CLAMP(t,0,255);*/
+		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
 		}
 	    }
 	  else
 	    {
-	      for (i=0;i<pixels;i++)
+	      gint pixwords = pixels/sizeof(gint32);
+	      gint32* seedwords = (gint32*) seed_data;
+	      gint32* prevwords = (gint32*) preview_data1;
+
+	      for (i=0;i<pixwords;i++)
 		{
-		  preview_data1[i] = (preview_data1[i]*2 + seed_data[i]) /3;
+		  /*preview_data1[i] = (preview_data1[i]*2 +
+		    seed_data[i]) /3;*/
+
+		  /* This is from Raph L... it should be a fast 50%/50%
+		     blend, though I don't know if 50%/50% is as nice as
+		     the old ratio. */
+		   prevwords[i] =
+		     ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		     ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+		     (prevwords[i] & seedwords[i] & 0x01010101);
 		}
 	    }	
 	}
@@ -530,12 +602,20 @@ render_frame(void)
 	     xp+yp, (yp-xp)/2
 	     );
 
+#ifdef RAPH_IS_HOME
+      gdk_draw_gray_image (drawing_area->window,
+			   drawing_area->style->white_gc,
+			   0, 0, width, height,
+			   GDK_RGB_DITHER_NORMAL,
+			   preview_data1, width);
+#else
       for (i=0;i<height;i++)
 	{
 	  gtk_preview_draw_row (preview,
 				&preview_data1[i*width],
 				0, i, width);
 	}
+#endif
 
       if (frame != 0)
 	{
@@ -545,15 +625,31 @@ render_frame(void)
 		{
 		  int t;
 		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = CLAMP(t,0,255);
+		  preview_data1[i] = /*CLAMP(t,0,255);*/
+		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
 		}
 	    }
 	  else
 	    {
-	      for (i=0;i<pixels;i++)
+	      gint pixwords = pixels/sizeof(gint32);
+	      gint32* seedwords = (gint32*) seed_data;
+	      gint32* prevwords = (gint32*) preview_data1;
+
+	      for (i=0;i<pixwords;i++)
+		{
+		  /* This is from Raph L... it should be a fast 50%/50%
+		     blend, though I don't know if 50%/50% is as nice as
+		     the old ratio. */
+		   prevwords[i] =
+		     ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		     ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+		     (prevwords[i] & seedwords[i] & 0x01010101);
+		}
+
+	      /*	      for (i=0;i<pixels;i++)
 		{
 		  preview_data1[i] = (preview_data1[i]*2 + seed_data[i]) /3;
-		}
+		}*/
 	    }	
 	}
     }
@@ -565,8 +661,11 @@ render_frame(void)
 static void
 show_frame(void)
 {
+#ifdef RAPH_IS_HOME
+#else
   /* Tell GTK to physically draw the preview */
   gtk_widget_draw (GTK_WIDGET (preview), NULL);
+#endif /* RAPH_IS_HOME */
 }
 
 

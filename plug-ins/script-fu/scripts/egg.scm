@@ -1,17 +1,39 @@
-; Aspirin and Yosh present: Fun with eggs
-;
 
-(define (script-fu-egg-catcher coolfile)
-  (let* ((image (car (gimp-file-load 1 coolfile coolfile)))
-	 (drawable (car (gimp-image-active-drawable image))))
-    (plug-in-the-egg 1 image drawable)
-    (gimp-display-new image)))
+(define (script-fu-egg-catcher image
+			       drawable)
+(the-egg 1 image drawable)
+)
 
 (script-fu-register "script-fu-egg-catcher" 
-		    "<None>"
+		    "<Image>/Script-Fu/Toys/The Egg"
 		    "Invoke The Egg!"
-		    "Adam D. Moss & Manish Singh"
-		    "Adam D. Moss & Manish Singh"
-		    "1998/04/19"
-		    ""
-		    SF-VALUE "Cool File" "foo.xcf")
+		    "Adam D. Moss <adam@gimp.org>"
+		    "Adam D. Moss <adam@gimp.org>"
+		    "1998/07/18"
+		    "RGB* INDEXED* GRAY*"
+		    SF-IMAGE "Image" 0
+		    SF-DRAWABLE "Drawable" 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
