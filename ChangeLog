@@ -1,3 +1,7 @@
+2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tiff.c (load_image): improved fix for #96611
+
 2003-01-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c
