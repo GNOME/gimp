@@ -1,5 +1,11 @@
 2000-04-28  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.in.in: made the Makefile update the pot-file if a
+	script changes, so hopefully the next release will include
+	a complete pot-file.
+
+2000-04-28  Sven Neumann  <sven@gimp.org>
+
 	* de.po: updated german translation
 
 2000-04-26  Sven Neumann  <sven@gimp.org>

@@ -88,7 +88,7 @@ all: all-@USE_NLS@
 all-yes: cat-id-tbl.c $(CATALOGS)
 all-no:
 
-$(srcdir)/$(PACKAGE).pot: $(POTFILES)
+$(srcdir)/$(PACKAGE).pot: $(POTFILES) $(POTSCRIPTS)
 	$(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
 	  --add-comments --keyword=_ --keyword=N_ \
 	  --files-from=$(srcdir)/POTFILES.in \
