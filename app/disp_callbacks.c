@@ -66,7 +66,7 @@ gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
 {
-  GDisplay *gdisp, *tool_gdisp;
+  GDisplay *gdisp;
   GdkEventExpose *eevent;
   GdkEventMotion *mevent;
   GdkEventButton *bevent;

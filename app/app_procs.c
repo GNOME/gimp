@@ -448,6 +448,17 @@ app_init ()
   char *gimp_dir;
   char *path;
 
+  gimp_dir = gimp_directory ();
+  if (gimp_dir[0] != '\000')
+    {
+      sprintf (filename, "%s/gtkrc", gimp_dir);
+
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print ("parsing \"%s\"\n", filename);
+
+      gtk_rc_parse (filename);
+    }
+
   make_initialization_status_window();
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
     splash_text_draw (logo_area);
@@ -463,18 +474,6 @@ app_init ()
   internal_procs_init ();
   RESET_BAR();
   procedural_db_register (&quit_proc);
-
-  gimp_dir = gimp_directory ();
-  if (gimp_dir[0] != '\000')
-    {
-      sprintf (filename, "%s/gtkrc", gimp_dir);
-
-      if ((be_verbose == TRUE) || (no_splash == TRUE))
-	g_print ("parsing \"%s\"\n", filename);
-      app_init_update_status("Resource configuration", filename, -1);
-
-      gtk_rc_parse (filename);
-    }
 
   RESET_BAR();
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
