@@ -1,20 +1,10 @@
-/*  
- *  Rotate plug-in v0.9 
- *  by Sven Neumann <sven@gimp.org> and Adam D. Moss <adam@gimp.org>
- *
- *  Any suggestions, bug-reports or patches are very welcome.
- * 
- *  A lot of changes in version 0.3 were inspired by (or even simply 
- *  copied from) the similar rotators-plug-in by Adam D. Moss. 
- *
- *  As I still prefer my version I have not stopped developing it.
- *  Probably this will result in one plug-in that includes the advantages 
- *  of both approaches.
- */
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ *  Rotate plug-in v1.0
+ *  Copyright 1997-2000 by Sven Neumann <sven@gimp.org> 
+ *                       & Adam D. Moss <adam@gimp.org>
+ * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -44,6 +34,8 @@
  *  (10/09/99)  v0.8   rotate guides too
  *  (11/13/99)  v0.9   merge rotators and rotate plug-ins 
  *                     -> drop the dialog, register directly into menus instead
+ *  (06/18/00)  v1.0   speed up 180° rotations, 
+ *                     declare version 1.0 for gimp-1.2 release
  */
 
 /* TODO List
@@ -64,7 +56,7 @@
 
 
 /* Defines */
-#define PLUG_IN_VERSION     "v0.9 (1999/11/13)"
+#define PLUG_IN_VERSION     "v1.0 (2000/06/18)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
 #define PLUG_IN_AUTHOR      "Sven Neumann <sven@gimp.org>, Adam D. Moss <adam@gimp.org>"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann, Adam D. Moss"
@@ -91,23 +83,23 @@ static RotateValues rotvals =
 
 
 static void  query   (void);
-static void  run     (gchar   *name,
-		      gint     nparams,	
-		      GParam  *param,	
-		      gint    *nreturn_vals,  
-		      GParam **return_vals);
+static void  run     (gchar      *name,
+		      gint        nparams,	
+		      GimpParam  *param,	
+		      gint       *nreturn_vals,  
+		      GimpParam **return_vals);
  
 static void  rotate                 (void);
-static void  rotate_drawable        (GDrawable *drawable);
-static void  rotate_compute_offsets (gint      *offsetx, 
-				     gint      *offsety, 
-				     gint       image_width, 
-				     gint       image_height,
-				     gint       width, 
-				     gint       height);
+static void  rotate_drawable        (GimpDrawable *drawable);
+static void  rotate_compute_offsets (gint         *offsetx, 
+				     gint         *offsety, 
+				     gint          image_width, 
+				     gint          image_height,
+				     gint          width, 
+				     gint          height);
 
 /* Global Variables */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -116,8 +108,8 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 /* the image and drawable that will be used later */
-static GDrawable *active_drawable = NULL;
-static gint32     image_ID = -1;
+static GimpDrawable *active_drawable = NULL;
+static gint32        image_ID = -1;
 
 /* Functions */
 
@@ -126,7 +118,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
     { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},
     { PARAM_IMAGE,    "image",      "Input image" },
@@ -136,7 +128,7 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef menuargs[] =
+  static GimpParamDef menuargs[] =
   {
     { PARAM_INT32,    "run_mode",   "Interactive, non-interactive" },
     { PARAM_IMAGE,    "image",      "Input image" },
@@ -229,21 +221,21 @@ query (void)
 }
 
 static void 
-run (gchar    *name,
-     gint      nparams,
-     GParam   *param,
-     gint     *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
   /* Get the runmode from the in-parameters */
-  GRunModeType run_mode = param[0].data.d_int32;	
+  GimpRunModeType run_mode = param[0].data.d_int32;	
   
   /* status variable, use it to check for errors in invocation usualy only 
      during non-interactive calling */	
-  GStatusType status = STATUS_SUCCESS;	 
+  GimpPDBStatusType status = STATUS_SUCCESS;	 
   
   /*always return at least the status to the caller. */
-  static GParam values[1];
+  static GimpParam values[1];
   
   /* initialize the return of the status */ 	
   values[0].type = PARAM_STATUS;
@@ -251,7 +243,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N(); 
+  INIT_I18N (); 
 
   /* get image and drawable */
   image_ID = param[1].data.d_int32;
@@ -329,6 +321,7 @@ run (gchar    *name,
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
+
   values[0].data.d_status = status; 
 }
 
@@ -376,12 +369,15 @@ rotate_compute_offsets (gint *offsetx,
 static void
 rotate_drawable (GDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
-  gint width, height, longside, bytes;
-  gint row, col, byte;
-  gint offsetx, offsety;
-  gint was_preserve_transparency = FALSE;
-  guchar *buffer, *src_row, *dest_row;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height;
+  gint          longside;
+  gint          bytes;
+  gint          row, col;
+  gint          offsetx, offsety;
+  gboolean      was_preserve_transparency = FALSE;
+  guchar       *buffer;
+  guchar       *src_row, *dest_row;
 
   /* initialize */
 
@@ -400,7 +396,7 @@ rotate_drawable (GDrawable *drawable)
 
   if (rotvals.angle == 2)  /* we're rotating by 180° */
     {
-      gimp_tile_cache_ntiles (2 * (width / gimp_tile_width()) + 1);
+      gimp_tile_cache_ntiles (2 * (width / gimp_tile_width() + 1));
 
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, 
 			   FALSE, FALSE);
@@ -415,11 +411,9 @@ rotate_drawable (GDrawable *drawable)
 	  gimp_pixel_rgn_get_row (&srcPR, src_row, 0, row, width); 
 	  for (col = 0; col < width; col++) 
 	    { 
-	      for (byte = 0; byte < bytes; byte++)
-		{
-		  dest_row[col * bytes + byte] =  
-		    src_row[(width - col - 1) * bytes + byte];
-		}
+	      memcpy (dest_row + col * bytes, 
+		      src_row + (width - 1 - col) * bytes,
+		      bytes);
 	    } 	    
 	  gimp_pixel_rgn_set_row (&destPR, dest_row, 0, (height - row - 1), 
 				  width);
@@ -444,8 +438,8 @@ rotate_drawable (GDrawable *drawable)
       drawable = gimp_drawable_get (drawable->id);
       gimp_drawable_flush (drawable);
       
-      gimp_tile_cache_ntiles ( ((longside/gimp_tile_width())+1) + 
-			       ((longside/gimp_tile_height())+1) );
+      gimp_tile_cache_ntiles ( (longside / gimp_tile_width () + 1) + 
+			       (longside / gimp_tile_height () + 1) );
 
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, longside, longside, 
 			   FALSE, FALSE);
@@ -511,14 +505,14 @@ rotate_drawable (GDrawable *drawable)
 static void 
 rotate (void)
 {
-  GDrawable *drawable;
-  gint32    *layers;
-  gint       i;
-  gint       nlayers;
-  gint32     guide_ID;
-  GuideInfo *guide;
-  GList     *guides = NULL;
-  GList     *list;
+  GimpDrawable *drawable;
+  gint32       *layers;
+  gint          i;
+  gint          nlayers;
+  gint32        guide_ID;
+  GuideInfo    *guide;
+  GList        *guides = NULL;
+  GList        *list;
 
   if (rotvals.angle == 0) return;  
 
