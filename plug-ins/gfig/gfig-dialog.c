@@ -146,6 +146,7 @@ static GfigOptWidgets gfig_opt_widget;
 static gchar         *gfig_path       = NULL;
 static GtkWidget     *page_menu_bg;
 static GtkWidget     *tool_options_notebook;
+static GtkWidget     *fill_type_notebook;
 
 
 static void       gfig_response             (GtkWidget *widget,
@@ -221,6 +222,7 @@ gfig_dialog (void)
   GtkWidget    *right_vbox;
   GtkWidget    *hbox;
   GtkUIManager *ui_manager;
+  GtkWidget    *empty_label;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -342,7 +344,7 @@ gfig_dialog (void)
 
   gtk_widget_show (gfig_context->preview);
 
-  right_vbox = gtk_vbox_new (FALSE, 0);
+  right_vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
@@ -358,8 +360,8 @@ gfig_dialog (void)
   gtk_widget_show (tool_options_notebook);
   create_notebook_pages (tool_options_notebook);
 
-  /* Style frame on right side */
-  frame = gimp_frame_new ("Style");
+  /* Stroke frame on right side */
+  frame = gimp_frame_new (_("Stroke"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -387,20 +389,6 @@ gfig_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->fg_color_button);
 
-  /* background color button in Style frame */
-  gfig_context->bg_color = (GimpRGB*)g_malloc (sizeof (GimpRGB));
-  gfig_context->bg_color_button = gimp_color_button_new ("Background",
-                                           SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
-                                           gfig_context->bg_color,
-                                           GIMP_COLOR_AREA_SMALL_CHECKS);
-  g_signal_connect (gfig_context->bg_color_button, "color-changed",
-                    G_CALLBACK (set_background_callback),
-                    gfig_context->bg_color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
-                               &gfig_context->current_style->background);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->bg_color_button, FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->bg_color_button);
-
   /* brush selector in Style frame */
   gfig_context->brush_select
     = gimp_brush_select_widget_new ("Brush", gfig_context->current_style->brush_name,
@@ -411,29 +399,23 @@ gfig_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->brush_select);
 
-  /* pattern selector in Style frame */
-  gfig_context->pattern_select
-    = gimp_pattern_select_widget_new ("Pattern", gfig_context->current_style->pattern,
-                                      gfig_pattern_changed_callback,
-                                      NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->pattern_select,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->pattern_select);
+  /* Fill frame on right side */
+  frame = gimp_frame_new (_("Fill"));
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  /* gradient selector in Style frame */
-  gfig_context->gradient_select
-    = gimp_gradient_select_widget_new ("Gradient", gfig_context->current_style->gradient,
-                                       gfig_gradient_changed_callback,
-                                       NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->gradient_select,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->gradient_select);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   /* fill style combo box in Style frame  */
   gfig_context->fillstyle_combo = combo
-    = gimp_int_combo_box_new (_("No fill"),    FILL_NONE,
-                              _("FG fill"),    FILL_FOREGROUND,
-                              _("BG fill"),    FILL_BACKGROUND,
+    = gimp_int_combo_box_new (_("No fill"),       FILL_NONE,
+                              _("Color fill"),    FILL_COLOR,
                               _("Pattern fill"),  FILL_PATTERN,
                               _("Gradient fill"), FILL_GRADIENT,
                               NULL);
@@ -443,6 +425,52 @@ gfig_dialog (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  fill_type_notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), fill_type_notebook, FALSE, FALSE, 0);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (fill_type_notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (fill_type_notebook), FALSE);
+  gtk_widget_show (fill_type_notebook);
+
+  /* An empty page for "No fill" */
+  empty_label = gtk_label_new ("");
+  gtk_widget_show (empty_label);
+  gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
+                            empty_label, NULL);
+
+  /* A page for the fill color button */
+  gfig_context->bg_color = g_new (GimpRGB, 1);
+  gfig_context->bg_color_button = gimp_color_button_new ("Background",
+                                           SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
+                                           gfig_context->bg_color,
+                                           GIMP_COLOR_AREA_SMALL_CHECKS);
+  g_signal_connect (gfig_context->bg_color_button, "color-changed",
+                    G_CALLBACK (set_background_callback),
+                    gfig_context->bg_color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
+                               &gfig_context->current_style->background);
+  gtk_widget_show (gfig_context->bg_color_button);
+  gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
+                            gfig_context->bg_color_button, NULL);
+
+  /* A page for the pattern selector */
+  gfig_context->pattern_select
+    = gimp_pattern_select_widget_new ("Pattern", gfig_context->current_style->pattern,
+                                      gfig_pattern_changed_callback,
+                                      NULL);
+  gtk_widget_show (gfig_context->pattern_select);
+  gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
+                            gfig_context->pattern_select, NULL);
+
+  /* A page for the gradient selector */
+  gfig_context->gradient_select
+    = gimp_gradient_select_widget_new ("Gradient", gfig_context->current_style->gradient,
+                                       gfig_gradient_changed_callback,
+                                       NULL);
+  gtk_widget_show (gfig_context->gradient_select);
+  gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
+                            gfig_context->gradient_select, NULL);
+
 
   /* "show image" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show image"));
@@ -1059,6 +1087,7 @@ select_combo_callback (GtkWidget *widget,
   gint value;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (fill_type_notebook), value);
 
   switch (mtype)
     {
@@ -1663,11 +1692,7 @@ paint_layer_fill (void)
     case FILL_NONE:
       return;
 
-    case FILL_FOREGROUND:
-      fill_mode = GIMP_FG_BUCKET_FILL;
-      break;
-
-    case FILL_BACKGROUND:
+    case FILL_COLOR:
       fill_mode = GIMP_BG_BUCKET_FILL;
       break;
 

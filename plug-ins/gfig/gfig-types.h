@@ -50,8 +50,7 @@ typedef enum
 typedef enum
 {
   FILL_NONE = 0,
-  FILL_FOREGROUND,
-  FILL_BACKGROUND,
+  FILL_COLOR,
   FILL_PATTERN,
   FILL_GRADIENT
 } FillType;

@@ -1,3 +1,9 @@
+2004-11-14  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-types.h: small UI tweaks, suggested by
+	Sven.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
