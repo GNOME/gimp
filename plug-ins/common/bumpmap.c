@@ -1042,9 +1042,10 @@ bumpmap_dialog (void)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  /* Initialise drawable (don't initialise offsets if bumpmap_id is 
-     already known)*/
-  if (bmvals.bumpmap_id == -1) 
+  /* Initialise drawable
+   * (don't initialise offsets if bumpmap_id is already known)
+   */
+  if (bmvals.bumpmap_id == -1)
     dialog_new_bumpmap (TRUE);
   else
     dialog_new_bumpmap (FALSE);
@@ -1159,12 +1160,6 @@ dialog_preview_events (GtkWidget   *area,
 static void
 dialog_new_bumpmap (gboolean init_offsets)
 {
-  GtkAdjustment   *adj;
-  gint             bump_offset_x;
-  gint             bump_offset_y;
-  gint             draw_offset_y;
-  gint             draw_offset_x;
-
   /* Get drawable */
   if (bmint.bm_drawable && (bmint.bm_drawable != drawable))
     gimp_drawable_detach (bmint.bm_drawable);
@@ -1185,6 +1180,12 @@ dialog_new_bumpmap (gboolean init_offsets)
 
   if (init_offsets)
     {
+      GtkAdjustment  *adj;
+      gint            bump_offset_x;
+      gint            bump_offset_y;
+      gint            draw_offset_y;
+      gint            draw_offset_x;
+
       gimp_drawable_offsets (bmint.bm_drawable->drawable_id,
                              &bump_offset_x, &bump_offset_y);
       gimp_drawable_offsets (drawable->drawable_id,
@@ -1192,36 +1193,35 @@ dialog_new_bumpmap (gboolean init_offsets)
 
       bmvals.xofs = draw_offset_x - bump_offset_x;
       bmvals.yofs = draw_offset_y - bump_offset_y;
-    }
 
-  adj = (GtkAdjustment *) bmint.offset_adj_x;
-  if (adj)
-    {
-      adj->value = bmvals.xofs;
-      g_signal_handlers_block_by_func (adj,
-                                       gimp_int_adjustment_update,
-                                       &bmvals.xofs);
-      gtk_adjustment_value_changed (adj);
-      g_signal_handlers_unblock_by_func (adj,
-                                         gimp_int_adjustment_update,
-                                         &bmvals.xofs);
-    }
+      adj = (GtkAdjustment *) bmint.offset_adj_x;
+      if (adj)
+        {
+          adj->value = bmvals.xofs;
+          g_signal_handlers_block_by_func (adj,
+                                           gimp_int_adjustment_update,
+                                           &bmvals.xofs);
+          gtk_adjustment_value_changed (adj);
+          g_signal_handlers_unblock_by_func (adj,
+                                             gimp_int_adjustment_update,
+                                             &bmvals.xofs);
+        }
 
-  adj = (GtkAdjustment *) bmint.offset_adj_y;
-  if (adj)
-    {
-      adj->value = bmvals.yofs;
-      g_signal_handlers_block_by_func (adj,
-                                       gimp_int_adjustment_update,
-                                       &bmvals.yofs);
-      gtk_adjustment_value_changed (adj);
-      g_signal_handlers_unblock_by_func (adj,
-                                         gimp_int_adjustment_update,
-                                         &bmvals.yofs);
+      adj = (GtkAdjustment *) bmint.offset_adj_y;
+      if (adj)
+        {
+          adj->value = bmvals.yofs;
+          g_signal_handlers_block_by_func (adj,
+                                           gimp_int_adjustment_update,
+                                           &bmvals.yofs);
+          gtk_adjustment_value_changed (adj);
+          g_signal_handlers_unblock_by_func (adj,
+                                             gimp_int_adjustment_update,
+                                             &bmvals.yofs);
+        }
     }
 
   /* Initialize pixel region */
-
   gimp_pixel_rgn_init (&bmint.bm_rgn, bmint.bm_drawable,
                        0, 0, bmint.bm_width, bmint.bm_height, FALSE, FALSE);
 }
@@ -1238,7 +1238,7 @@ dialog_update_preview (GimpPreview *preview)
 
   gimp_preview_get_position (preview, &x1, &y1);
   gimp_preview_get_size (preview, &width, &height);
-  bytes =drawable->bpp;
+  bytes = drawable->bpp;
 
   /* Initialize source rows */
   gimp_pixel_rgn_init (&bmint.src_rgn, drawable,
@@ -1284,6 +1284,7 @@ dialog_update_preview (GimpPreview *preview)
                    &bmint.params);
 
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                           0, 0, width, height,
                           GIMP_RGBA_IMAGE,
@@ -1479,5 +1480,9 @@ static void
 dialog_bumpmap_callback (GtkWidget   *widget,
                          GimpPreview *preview)
 {
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &bmvals.bumpmap_id);
+
+  dialog_new_bumpmap (FALSE);
   gimp_preview_invalidate (preview);
 }
