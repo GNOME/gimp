@@ -1441,25 +1441,28 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Tuntematon formaatin versio #%s sivellintiedostossa \"%s\"\n"
 
 #: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
-msgstr "Kuvasiveltimen lataus epäonnostui."
+msgstr "Siveltimen lataus epäonnostui\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
-msgstr "Kuvasiveltimen lataus epäonnostui."
+msgstr "Kuvasiveltimen lataus epäonnostui\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:215
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
-msgstr "Kuvasiveltimen lataus epäonnostui."
+msgstr "Kuvaletkun lataus epäonnostui\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:308
 msgid "Brush pipes should have at least one brush."
@@ -1649,7 +1652,6 @@ msgid "Message repeated once"
 msgstr "Ilmoisut toistui"
 
 #: app/gimpui.c:110
-#, fuzzy
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -1657,7 +1659,7 @@ msgid ""
 msgstr ""
 "VAROITUS:\n"
 "Liian monta avointa virheilmoitusikkunaa.\n"
-"Ilmoitukset menevät tästä lähtien stderr:iin.\n"
+"Ilmoitukset menevät tästä lähtien stderr:iin."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -2327,9 +2329,9 @@ msgstr "%s x %d pikseliä"
 
 #. image resolution
 #: app/info_window.c:520
-#, fuzzy, c-format
+#, c-format
 msgid "%g x %g dpi"
-msgstr "%s x %d pikseliä"
+msgstr "%g x %g dpi"
 
 #: app/info_window.c:532
 msgid "RGB Color"
@@ -3085,9 +3087,8 @@ msgid "Clipped to bottom layer"
 msgstr "rajataan pohjimmaisen tason koon mukaan"
 
 #: app/lc_dialog.c:99
-#, fuzzy
 msgid "Layers, Channels & Paths"
-msgstr "Tasot & Kanavat"
+msgstr "Tasot, kanavat ja polut"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3144,14 +3145,12 @@ msgid "Allow Window Resizing"
 msgstr "Salli ikkunan koon muutosta"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Zoomaa"
+msgstr "Zoomaa sisään"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Zoomaa"
+msgstr "Zoomaa ulos"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3270,9 +3269,8 @@ msgstr "astetta"
 
 #. <Toolbox>/File
 #: app/menus.c:82
-#, fuzzy
 msgid "/_File"
-msgstr "/Tiedosto"
+msgstr "/_Tiedosto"
 
 #: app/menus.c:84 app/menus.c:191
 msgid "/File/New..."
@@ -3295,9 +3293,8 @@ msgid "/File/Dialogs"
 msgstr "/Tiedosto/Dialogit"
 
 #: app/menus.c:107
-#, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/Tiedosto/Dialogit/Tasot & Kanavat..."
+msgstr "/Tiedosto/Dialogit/Tasot, kanavat ja polut..."
 
 #: app/menus.c:109
 msgid "/File/Dialogs/Tool Options..."
@@ -3349,9 +3346,8 @@ msgstr "/Tiedosto/Poistu"
 
 #. <Toolbox>/Xtns
 #: app/menus.c:153
-#, fuzzy
 msgid "/_Xtns"
-msgstr "/Lisäykset"
+msgstr "/_Lisäykset"
 
 #: app/menus.c:155
 msgid "/Xtns/Module Browser..."
@@ -3359,9 +3355,8 @@ msgstr "/Lisäykset/Moduuliselain..."
 
 #. <Toolbox>/Help
 #: app/menus.c:163
-#, fuzzy
 msgid "/_Help"
-msgstr "/Apua"
+msgstr "/_Apua"
 
 #: app/menus.c:165
 msgid "/Help/Help..."
@@ -3693,9 +3688,8 @@ msgid "/Layers"
 msgstr "/Tasot"
 
 #: app/menus.c:433
-#, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Tasot/Tasot & Kanavat..."
+msgstr "/Tasot/Tasot, kanavat & polut..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:438
@@ -3794,9 +3788,8 @@ msgid "/Dialogs"
 msgstr "/Dialogit"
 
 #: app/menus.c:512
-#, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Dialogit/Tasot & Kanavat..."
+msgstr "/Dialogit/Tasot, kanavat & polut..."
 
 #: app/menus.c:514
 msgid "/Dialogs/Tool Options..."
@@ -3998,14 +3991,12 @@ msgid "/Add Layer Mask..."
 msgstr "/Lisää tason maski..."
 
 #: app/menus.c:693
-#, fuzzy
 msgid "/Apply Layer Mask"
-msgstr "/Sovella tason maskia..."
+msgstr "/Sovella tason maskia"
 
 #: app/menus.c:695
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Poista taso"
+msgstr "/Poista tason maski"
 
 #: app/menus.c:697
 msgid "/Mask to Selection"
@@ -4560,9 +4551,8 @@ msgid "Extensions"
 msgstr "Lisäykset"
 
 #: app/plug_in.c:775
-#, fuzzy, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "liitännäistä %s ei lötynyt"
+msgstr "Liitännäistä %s ei lötynyt: \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -5305,7 +5295,7 @@ msgid "Use Dynamic Text"
 msgstr "Käytä dynaamista tekstiä"
 
 #: app/text_tool.c:603
-#, fuzzy, c-format
+#, c-format
 msgid "Font '%s' not found."
 msgstr "Kirjasinleikkausta '%s' ei löytynyt."
 

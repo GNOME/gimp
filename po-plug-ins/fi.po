@@ -843,7 +843,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:739
-#, fuzzy
 msgid "Delete Fractal"
 msgstr "Poista fraktaali"
 
@@ -878,10 +877,10 @@ msgid ""
 msgstr "gimprc-tiedostosta puuttuu fractalexplorer-path.\n"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1169
-#, fuzzy
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
-msgstr "fractalexplorer-path on epäkelpo. Kansiota '%.100s' ei ole\n"
+msgstr ""
+"fractalexplorer-path on epäkelpo - seuraavia kansioita ei löytynyt"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1345
 msgid "My first fractal"
@@ -906,12 +905,10 @@ msgstr "Poista valittu fraktaali"
 
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1463
-#, fuzzy
 msgid "Rescan for Fractals"
 msgstr "Kerää fraktaaleja uudelleen"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1481
-#, fuzzy
 msgid "Add FractalExplorer Path"
 msgstr "Lisää FractalExplorer-polku"
 
@@ -930,12 +927,10 @@ msgstr "env"
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:532
-#, fuzzy
 msgid "General Options"
 msgstr "Yleiset asetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:402
-#, fuzzy
 msgid "Use Bump Mapping"
 msgstr "Käytä kuhmukuvausta"
 
@@ -944,7 +939,6 @@ msgid "Enable/disable bump-mapping (image depth)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:415
-#, fuzzy
 msgid "Use Environment Mapping"
 msgstr "Käytä ympäristökuvausta"
 
@@ -953,7 +947,6 @@ msgid "Enable/disable environment mapping (reflection)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:428
-#, fuzzy
 msgid "Transparent Background"
 msgstr "Läpinäkyvä tausta"
 
@@ -971,7 +964,6 @@ msgid "Create a new image when applying filter"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:453
-#, fuzzy
 msgid "High Preview Quality"
 msgstr "Korkealuokkainen esikatselukuva"
 
@@ -980,7 +972,6 @@ msgid "Enable/disable high quality previews"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:465 plug-ins/MapObject/mapobject_ui.c:602
-#, fuzzy
 msgid "Enable Tooltips"
 msgstr "Näytä vihjeitä"
 
@@ -994,9 +985,8 @@ msgid "Antialiasing Options"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
-#, fuzzy
 msgid "Enable Antialiasing"
-msgstr "Näytä vihjeitä"
+msgstr "Käytä antialiasointia"
 
 #: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
@@ -1025,22 +1015,18 @@ msgid "Light Settings"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
-#, fuzzy
 msgid "Point Light"
 msgstr "pistemäinen valolähde"
 
 #: plug-ins/Lighting/lighting_ui.c:573 plug-ins/MapObject/mapobject_ui.c:708
-#, fuzzy
 msgid "Directional Light"
 msgstr "suunnattu valolähde"
 
 #: plug-ins/Lighting/lighting_ui.c:575
-#, fuzzy
 msgid "Spot Light"
 msgstr "valonheitin"
 
 #: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
-#, fuzzy
 msgid "No Light"
 msgstr "ei valoa"
 
@@ -1115,9 +1101,8 @@ msgid "Light source Z position in XYZ space"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:783
-#, fuzzy
 msgid "Direction Vector"
-msgstr "suunnattu valolähde"
+msgstr "suuntavektori"
 
 #: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
@@ -1220,14 +1205,12 @@ msgid "Autostretch to Fit Value Range"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:974
-#, fuzzy
 msgid "Environment Settings"
-msgstr "Käytä ympäristökuvausta"
+msgstr "Ympäristön asetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:983
-#, fuzzy
 msgid "Environment Image:"
-msgstr "Käytä ympäristökuvausta"
+msgstr "Ympäristökuva:"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1014 plug-ins/MapObject/mapobject_ui.c:1314
@@ -1289,16 +1272,14 @@ msgid "Plane"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:555
-#, fuzzy
 msgid "Sphere"
-msgstr "Hämähäkki"
+msgstr "Pallo"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:565
-#, fuzzy
 msgid "Transpararent Background"
 msgstr "Läpinäkyvä tausta"
 
@@ -4862,9 +4843,8 @@ msgstr ""
 #. show the description
 #: plug-ins/common/plugindetails.c:373
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
-#, fuzzy
 msgid "Blurb:"
-msgstr "Sininen:"
+msgstr "Seloste:"
 
 #: plug-ins/common/plugindetails.c:395
 #: plug-ins/dbbrowser/dbbrowser_utils.c:477
@@ -4914,9 +4894,8 @@ msgid "Menu Path/Name"
 msgstr ""
 
 #: plug-ins/common/plugindetails.c:1076
-#, fuzzy
 msgid "Tree View"
-msgstr "Esikatselu"
+msgstr ""
 
 #: plug-ins/common/plugindetails.c:1098
 #: plug-ins/dbbrowser/dbbrowser_utils.c:224
@@ -6161,9 +6140,8 @@ msgid "Refresh"
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:526
-#, fuzzy
 msgid "Saved"
-msgstr "Tallenna"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:527
 msgid "ID"
@@ -6210,19 +6188,16 @@ msgid "Don't Save Unit"
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:599
-#, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Poista valittu fraktaali"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:604
-#, fuzzy
 msgid "Save Unit"
-msgstr "Tallenna"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:611
-#, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "Poista valittu fraktaali"
+msgstr ""
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -8462,9 +8437,8 @@ msgid "Delete Point"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1771
-#, fuzzy
 msgid "Delete current Controlpoint"
-msgstr "Poista valittu fraktaali"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1777
 msgid "Prev Point"
@@ -8503,11 +8477,10 @@ msgid "Clear Point"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1837
-#, fuzzy
 msgid ""
 "Reset the current Controlpoint\n"
 "to default Values"
-msgstr "Palauta parametrit oletusarvoisiksi"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1841
 msgid "Reset Points"
@@ -9476,9 +9449,8 @@ msgid "First Gfig"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1900
-#, fuzzy
 msgid "Prev"
-msgstr "Esikatselu"
+msgstr ""
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1929 plug-ins/gfig/gfig.c:5362
@@ -9500,9 +9472,8 @@ msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1981
-#, fuzzy
 msgid "Number of Sides/Points/Turns:"
-msgstr "Värien lukumäärä:"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:1997
 msgid "Clockwise"
@@ -9522,9 +9493,8 @@ msgid "Bezier Settings"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2042
-#, fuzzy
 msgid "Closed"
-msgstr "kosini"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2047
 msgid "Close curve on completion"
@@ -9543,33 +9513,28 @@ msgid "Regular Polygon Number of Sides"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2085
-#, fuzzy
 msgid "Star Number of Points"
-msgstr "Värien lukumäärä"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2097
-#, fuzzy
 msgid "Spiral Number of Points"
-msgstr "Värien lukumäärä"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2121
 msgid "Ops"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2134
-#, fuzzy
 msgid "Create line"
-msgstr "Muodosta uusi kuva"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2139
-#, fuzzy
 msgid "Create circle"
-msgstr "Muodosta uusi kuva"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2144
-#, fuzzy
 msgid "Create ellipse"
-msgstr "Muodosta uusi kuva"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2149
 msgid "Create arch"
@@ -9580,9 +9545,8 @@ msgid "Create reg polygon"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2175
-#, fuzzy
 msgid "Create spiral"
-msgstr "Muodosta uusi kuva"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2185
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -9601,9 +9565,8 @@ msgid "Copy an object"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2206
-#, fuzzy
 msgid "Delete an object"
-msgstr "Poista fraktaali"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:2365 plug-ins/gfig/gfig.c:2805
 #: plug-ins/gfig/gfig.c:4023 plug-ins/gimpressionist/brush.c:351
@@ -9718,9 +9681,8 @@ msgid "Pressure:"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3027
-#, fuzzy
 msgid "No Options..."
-msgstr "Zoom-asetukset"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3130
 msgid "Replace"
@@ -9744,9 +9706,8 @@ msgid "Foreground"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3180
-#, fuzzy
 msgid "Fill Type:"
-msgstr "Fraktaalin tyyppi"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3193
 msgid "Fill Opacity:"
@@ -9778,9 +9739,8 @@ msgstr ""
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3272
-#, fuzzy
 msgid "Show Image"
-msgstr "kuvasta"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3283
 msgid "Reload Image"
@@ -9804,9 +9764,8 @@ msgid "Darker"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3313
-#, fuzzy
 msgid "Lighter"
-msgstr "lineaarinen"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3314
 msgid "Very Dark"
@@ -9849,7 +9808,6 @@ msgid "Object"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3531
-#, fuzzy
 msgid "Select directory and rescan Gfig object collection"
 msgstr "Valitse kansio ja kerää sieltä kokoelma uudelleen "
 
@@ -9862,9 +9820,8 @@ msgid "Create a new Gfig object collection for editing"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3561
-#, fuzzy
 msgid "Delete currently selected Gfig Object collection"
-msgstr "Poista valittu fraktaali"
+msgstr ""
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3689
@@ -9880,14 +9837,12 @@ msgid "Collection Details"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3754
-#, fuzzy
 msgid "Draw Name:"
-msgstr "Fraktaalin nimi:"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3766 plug-ins/gfig/gfig.c:3771
-#, fuzzy
 msgid "(none)"
-msgstr "ei mikään"
+msgstr "(ei mikään)"
 
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3944
@@ -9929,9 +9884,8 @@ msgstr ""
 
 #. the dialog
 #: plug-ins/gfig/gfig.c:4529
-#, fuzzy
 msgid "Rescan for Gfig Objects"
-msgstr "Kerää fraktaaleja uudelleen"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:4547
 msgid "Add Gfig Path"
@@ -9959,7 +9913,6 @@ msgid "Gfig Layer %d"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:4875
-#, fuzzy
 msgid "About GFig"
 msgstr "Tietoja"
 
@@ -9984,9 +9937,8 @@ msgid "New gfig obj"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:5083
-#, fuzzy
 msgid "Delete Gfig Drawing"
-msgstr "Poista fraktaali"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:5111 plug-ins/gfig/gfig.c:5150
 msgid "<NONE>"
@@ -10027,9 +9979,8 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:1002
-#, fuzzy
 msgid "gflare-path misconfigured - the following directories were not found"
-msgstr "fractalexplorer-path on epäkelpo. Kansiota '%.100s' ei ole\n"
+msgstr ""
 
 #: plug-ins/gflare/gflare.c:1354
 #, c-format
@@ -11530,9 +11481,8 @@ msgid "Guides..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:204
-#, fuzzy
 msgid "Couldn't save resource file:"
-msgstr "Napsauta tästä tallentaaksesi tiedostoa"
+msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:356
 msgid "Select Color"
@@ -11583,9 +11533,8 @@ msgid "Normal:"
 msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:536
-#, fuzzy
 msgid "Selected:"
-msgstr "Poista"
+msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:564
 msgid "General Preferences"
@@ -12037,9 +11986,8 @@ msgid "Print"
 msgstr ""
 
 #: plug-ins/print/print.c:841
-#, fuzzy
 msgid "Center Image"
-msgstr "Muodosta uusi kuva"
+msgstr ""
 
 #: plug-ins/print/print.c:889
 msgid "Printer Settings"

@@ -1,3 +1,7 @@
+2000-03-04  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Updates.
+
 2000-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: removed app/gimpparasite.c
