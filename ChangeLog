@@ -1,5 +1,21 @@
 2003-09-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpvectortool.c: removed all calls to
+	gimp_tool_control_set_preserve() so the tool doesn't get
+	confused by the image being dirtied.
+
+	Made it aware of visible vectors:
+
+	(gimp_vector_tool_draw): don't draw the stroke itself if the
+	current vectors is visible.
+
+	(gimp_vector_tool_vectors_visible): new callback which just draws
+	the stroke itself when the vectors changes visibility.
+
+	(gimp_vector_tool_set_vectors): connect the new callback.
+
+2003-09-12  Michael Natterer  <mitch@gimp.org>
+
 	Added support for permanently showing the visible vectors, not
 	only when the vectors tool is active:
 
@@ -15,12 +31,12 @@
 	* app/display/gimpdisplayshell-scale.c
 	* app/display/gimpdisplayshell-scroll.c: call the new
 	freeze()/thaw() functions instead of calling the tool_manager
-	directly. Removes the tools/ sependency from the scale and scroll
+	directly. Removes the tools/ dependency from the scale and scroll
 	files. Also draw the vectors once when the canvas is realized so
 	XOR drawing is in the correct state.
 
 	* app/display/gimpdisplayshell-handlers.c: connect to
-	image->vectors' "add" and "remove" signal and to the "freeze",
+	image->vectors' "add" and "remove" signals and to the "freeze",
 	"thaw" and "visibility_changed" signals of all vectors in
 	image->vectors and update vectors drawing accordingly.
 
