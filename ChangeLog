@@ -1,5 +1,14 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-altivec.c: added missing code
+	snippets to make it compile on PPC.
+
+	* plug-ins/common/destripe.c: avoid division by zero (bug #123592).
+	Also made the plug-in remember the state of the history toggle and
+	other cleanup. The filter result still looks wrong though...
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext-compat.c (text_get_extents): set a default
 	resolution on the fontmap since Pango doesn't seem to do this for us.
 

@@ -26,6 +26,7 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-altivec.h"
@@ -39,11 +40,13 @@ int
 gimp_composite_altivec_init (void)
 {
 #ifdef ARCH_PPC
-		if (cpu & CPU_ACCEL_PPC_ALTIVEC)
-				{
-						return (1);
-				}
+  guint32 cpu = cpu_accel ();
+
+  if (cpu & CPU_ACCEL_PPC_ALTIVEC)
+    {
+      return (1);
+    }
 #endif
 
-		return (0);
+  return (0);
 }
