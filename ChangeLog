@@ -1,3 +1,13 @@
+1999-10-04  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* app/tile_swap.c (tile_swap_default_out): don't update a tile's
+	swap file position until the tile's actually been successfully
+	written out
+
+	* app/tile_cache.c (tile_cache_zorch_next): add test to make sure
+	tile was successfully swapped out before dropping it from the
+	cache
+
 1999-10-04  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: set the title when the

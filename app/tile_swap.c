@@ -550,18 +550,20 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
   int nleft;
   off_t offset;
 
+  off_t newpos;
+
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
   rbytes = tile_size (tile);
 
   /*  If there is already a valid swap_offset, use it  */
   if (tile->swap_offset == -1)
-    tile->swap_offset = tile_swap_find_offset (def_swap_file, fd, bytes);
+    newpos = tile_swap_find_offset (def_swap_file, fd, bytes);
+  else 
+    newpos = tile->swap_offset;
 
-  if (def_swap_file->cur_position != tile->swap_offset)
+  if (def_swap_file->cur_position != newpos)
     {
-      def_swap_file->cur_position = tile->swap_offset;
-
-      offset = lseek (fd, tile->swap_offset, SEEK_SET);
+      offset = lseek (fd, newpos, SEEK_SET);
       if (offset == -1)
 	{
 	  if (seek_err_msg)
@@ -569,6 +571,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 	  seek_err_msg = FALSE;
 	  return;
 	}
+      def_swap_file->cur_position = newpos;
     }
 
   nleft = rbytes;
@@ -592,6 +595,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
    * tile->data is freed in tile_cache_zorch_next
    */
   tile->dirty = FALSE;
+  tile->swap_offset = newpos;
 
   write_err_msg = seek_err_msg = TRUE;
 }

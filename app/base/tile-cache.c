@@ -104,7 +104,6 @@ tile_cache_insert (Tile *tile)
        *  if there is room in the cache. If not then we'll have
        *  to make room first. Note: it might be the case that the
        *  cache is smaller than the size of a tile in which case
-
        *  it won't be possible to put it in the cache.
        */
       while ((cur_cache_size + max_tile_size) > max_cache_size)
@@ -249,10 +248,15 @@ tile_cache_zorch_next ()
     {
       tile_swap_out (tile);
     }
-  g_free (tile->data);
-  tile->data = NULL;
+  if (! tile->dirty) {
+    g_free (tile->data);
+    tile->data = NULL;
+    TILE_MUTEX_UNLOCK (tile);
+    return TRUE;
+  }
+  /* unable to swap out tile for some reason */
   TILE_MUTEX_UNLOCK (tile);
-  return TRUE;
+  return FALSE;
 }
 
 #if USE_PTHREADS
