@@ -841,16 +841,19 @@ plug_in_parse_gfig_path (void)
   if (return_vals[0].data.d_status != STATUS_SUCCESS ||
       return_vals[1].data.d_string == NULL)
     {
-#ifndef G_OS_WIN32
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      g_message ("No gfig-path in gimprc:\n\n"
-		 "You need to add an entry like\n"
-		 "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
-		 "to your %s file\n", gimprc);
+      gchar *path = gimp_strescape
+	("${gimp_dir}" G_DIR_SEPARATOR_S "gfig"
+	 G_SEARCHPATH_SEPARATOR_S
+	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gfig",
+	 NULL);
+      g_message (_("No gfig-path in gimprc:\n"
+		   "You need to add an entry like\n"
+		   "(gfig-path \"%s\")\n"
+		   "to your %s file."),
+		   path, gimprc);
       g_free (gimprc);
-#else
-      g_message ("No gfig-path in gimprc???\n");
-#endif
+      g_free (path);
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }

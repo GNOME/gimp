@@ -1,3 +1,25 @@
+2000-04-11  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpenv.c (gimp_path_get_user_writable_dir): The stat()
+	function in the Win32 C runtime doesn't like if directory names
+	have an extra G_DIR_SEPARATOR suffixed. Remove such before calling
+	stat(). Those extra (back)slashes are added by for instance
+	gimp_path_parse(). Document that feature of gimp_path_parse().
+
+	* libgimp/gimputils.c (gimp_strescape): Correct documentation for
+	gimp_strescape(). The semantics of the exceptions parameter was
+	documented backwards. Clarify what the function does.
+
+	* plug-ins/gfig/gfig.c (plug_in_parse_gfig_path)
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	(plug_in_parse_fractalexplorer_path)
+	* plug-ins/gflare/gflare.c (plug_in_parse_gflare_path,
+	gflare_save): Use painstakingly correct platform-specific
+	directory and search path separators, and escaped with
+	gimp_strescape when displayed as part of a gimprc entry.
+
+	* app/gimphelp.c: No debug messages on Win32, thanks.
+
 2000-04-11  Sven Neumann  <sven@gimp.org>
 
 	* PLUGIN_MAINTAINERS: run it through my update-script

@@ -34,7 +34,9 @@
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 
+#ifndef G_OS_WIN32
 #define DEBUG_HELP
+#endif
 
 /*  local function prototypes  */
 static gint gimp_idle_help                       (gpointer        help_data);

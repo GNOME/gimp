@@ -989,11 +989,18 @@ plug_in_parse_gflare_path (void)
   if (return_vals[0].data.d_status != STATUS_SUCCESS ||
       return_vals[1].data.d_string == NULL)
     {
-      g_message (_("No gflare-path in gimprc:\n\n"
+      gchar *gimprc = gimp_personal_rc_file ("gimprc");
+      gchar *path = gimp_strescape
+	("${gimp_dir}" G_DIR_SEPARATOR_S "gflare"
+	 G_SEARCHPATH_SEPARATOR_S
+	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gflare",
+	 NULL);
+      g_message (_("No gflare-path in gimprc:\n"
 		   "You need to add an entry like\n"
-		   "(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
-		   "to your %s/gimprc file."), 
-		 gimp_directory ());
+		   "(gflare-path \"%s\")\n"
+		   "to your %s file."), path, gimprc);
+      g_free (gimprc);
+      g_free (path);
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -1526,13 +1533,24 @@ gflare_save (GFlare *gflare)
       if (gflare_path_list == NULL)
 	{
 	  if (!message_ok)
-	    g_message (_("GFlare `%s' is not saved.\n"
-			 "If you add a new entry in gimprc, like:\n"
-			 "(gflare-path \"${gimp_dir}/gflare\")\n"
-			 "and make a directory %s/gflare,\n"
-			 "then you can save your own GFlare's into that directory."), 
-		       gflare->name, gimp_directory ());
-	  message_ok = TRUE;
+	    {
+	      gchar *gimprc = gimp_personal_rc_file ("gimprc");
+	      gchar *gflare_path = gimp_strescape
+		("${gimp_dir}" G_DIR_SEPARATOR_S "gflare",
+		 NULL);
+	      gchar *dir = gimp_personal_rc_file ("gflare");
+
+	      g_message (_("GFlare `%s' is not saved.\n"
+			   "If you add a new entry in %s, like:\n"
+			   "(gflare-path \"%s\")\n"
+			   "and make a directory %s,\n"
+			   "then you can save your own GFlare's into that directory."), 
+			 gflare->name, gimprc, gflare_path, dir);
+	      g_free (gimprc);
+	      g_free (gflare_path);
+	      g_free (dir);
+	      message_ok = TRUE;
+	    }	      
 	  return;
 	}
 

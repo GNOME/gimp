@@ -268,10 +268,11 @@ gimp_gtkrc (void)
  * @max_paths: The maximum number of directories to return.
  * @check: #TRUE if you want the directories to be checked.
  * @check_failed: Returns a #GList of path elements for which the
- *                check failed.
+ *                check failed. Each list element is guaranteed
+ *		  to end with a #G_PATH_SEPARATOR.
  *
- * Returns: A #GList of all directories in @path.
- *
+ * Returns: A #GList of all directories in @path. Each list element
+ *	    is guaranteed to end with a #G_PATH_SEPARATOR.
  */
 GList *
 gimp_path_parse (gchar     *path,
@@ -434,7 +435,21 @@ gimp_path_get_user_writable_dir (GList *path)
   for (list = path; list; list = g_list_next (list))
     {
       /*  check if directory exists  */
-      err = stat ((gchar *) list->data, &filestat);
+
+      /* ugly hack to handle paths with an extra G_DIR_SEPARATOR
+       * attached. The stat() in MSVCRT doesn't like that.
+       */
+      gchar *dir = g_strdup ((gchar *) list->data);
+      gchar *p = dir;
+      gint pl;
+
+      if (g_path_is_absolute)
+	p = g_path_skip_root (dir);
+      pl = strlen (p);
+      if (pl > 0 && p[pl-1] == G_DIR_SEPARATOR)
+	p[pl-1] = '\0';
+      err = stat (dir, &filestat);
+      g_free (dir);
 
       /*  this is tricky:
        *  if a file is e.g. owned by the current user but not user-writable,

@@ -26,17 +26,22 @@
 /**
  * gimp_strescape:
  * @source: A string to escape special characters in.
- * @exceptions: A string holding all characters that are to be escaped.
+ * @exceptions: A string holding characters not to be escaped.
  * 
- * Escapes special characters in a string, by inserting a '\' before them. 
- * If the list of characters is NULL, a suitable set of exceptions is used. 
+ * Escapes special characters in a string in the same way as in the
+ * C language, i.e. either with one of the sequences \b, \f, \n, \r,
+ * \t, \\, \", or as a three-digit octal escape sequence \nnn.
+ *
+ * If the list of exceptions is NULL, all ASCII control characters,
+ * the backslash character, the double-quote character, and all
+ * non-ASCII characters are escaped.
  *
  * If glib > 1.3 is installed this function is identical to 
  * g_strescape(). For systems using glib-1.2 this function provides the 
  * added functionality from glib-1.3.
  * 
  * Returns: A newly allocated copy of the string, with all special
- * characters escaped using a backslash.  
+ * characters escaped as in the C language.
  */
 #if !(defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
 gchar* 
