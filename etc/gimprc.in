@@ -91,7 +91,7 @@
 # size as being specified in megabytes, kilobytes and bytes
 # respectively. If no suffix is specified the size defaults to
 # being specified in kilobytes.
-(tile-cache-size 10m)
+(tile-cache-size 32m)
 
 # Speed of marching ants in the selection outline
 #  this value is in milliseconds

@@ -1,3 +1,11 @@
+2000-03-15  Sven Neumann <sven@gimp.org>
+	    Michael Natterer <mitch@gimp.org>
+
+	* gimprc.in
+	* app/gimprc.c: increased default tile_cache size to 32MB
+ 	
+	* app/install.c: minor fixes
+
 Tue Mar 14 22:13:35 CET 2000  Sven Neumann <sven@gimp.org>
 	                      Michael Natterer <mitch@gimp.org>
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
-"POT-Creation-Date: 2000-03-14 23:09+0100\n"
+"POT-Creation-Date: 2000-03-15 02:24+0100\n"
 "PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -489,7 +489,7 @@ msgid "Offset X:"
 msgstr "옵셋 X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/install.c:1108 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/install.c:1130 app/resize.c:332 app/resize.c:417 app/resize.c:575
 #: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
@@ -1209,7 +1209,7 @@ msgstr "이미지 크기: %s"
 msgid "New Image"
 msgstr "새 이미지"
 
-#: app/file_new_dialog.c:453 app/install.c:1093 app/preferences_dialog.c:1505
+#: app/file_new_dialog.c:453 app/install.c:1115 app/preferences_dialog.c:1505
 #: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr "픽셀"
@@ -2410,46 +2410,47 @@ msgstr "조절:"
 msgid "Shape"
 msgstr "모양"
 
-#: app/install.c:95
+#: app/install.c:97
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "현재 사용자는 GIMP를 적절하게 설치하지 않았습니다\n"
 
-#: app/install.c:96
+#: app/install.c:98
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr "'--nointerface' 플래그를 만났기 때문에 사용자 설치는 생략되었습니다\n"
 
-#: app/install.c:97
+#: app/install.c:99
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "사용자 설치를 수행하려면 GIMP를 '--nointerface' 플래그 없이 실행하십시오\n"
 
-#: app/install.c:142
+#: app/install.c:144
 #, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
 "Paths to search for brushes, palettes, gradients,\n"
-"patterns, plug-ins and modules can also configured here."
+"patterns, plug-ins and modules can also configured\n"
+"here."
 msgstr ""
 "gimprc는 초기 GIMP 작용들과 플러그인 핫키들와 같은\n"
 "개인 설정을 저장합니다.\n"
 "브러쉬, 패턴, 색감변화도 패턴, 플러그인의 경로 또한\n"
 "여기에 설정되어집니다.\n"
 
-#: app/install.c:149
+#: app/install.c:152
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
 
-#: app/install.c:154
+#: app/install.c:157
 #, fuzzy
 msgid ""
-"Plug-ins and extensions are external programs run by\n"
-"the GIMP which provide additional functionality.\n"
+"Plug-ins and extensions are external programs run\n"
+"by the GIMP which provide additional functionality.\n"
 "These programs are searched for at run-time and\n"
 "information about their functionality and mod-times\n"
 "is cached in this file.  This file is intended to\n"
@@ -2461,30 +2462,30 @@ msgstr ""
 "찾게 됩니다.\t\t이 파일은 GIMP만 읽을 수 있도록 생성되어지고 편집해서는\n"
 "않됩니다.\n"
 
-#: app/install.c:163
+#: app/install.c:166
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
-"be remembered for the next session. You may edit this\n"
+"be remembered for the next session.  You may edit this\n"
 "file if you wish, but it is much easier to define the\n"
-"keys from within The GIMP. Deleting this file will\n"
+"keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
 
-#: app/install.c:172
+#: app/install.c:175
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
-"open the last time you quit The GIMP. You can configure\n"
+"open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 
-#: app/install.c:178
+#: app/install.c:181
 #, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
 "like you use the built-in units inches, millimeters,\n"
-"points and picas. This file is overwritten each time\n"
+"points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
 "unitrc는 당신의 사용자 단위 데이터베이스를 저장합니다.\n"
@@ -2492,39 +2493,39 @@ msgstr ""
 "포인트, 파이카 단위를 사용합니다.\n"
 "이 파일은 당신이 GIMP를 종료할 때 마다 덮어 씌여 집니다.\n"
 
-#: app/install.c:186
+#: app/install.c:189
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
 "checks this subdirectory in addition to the system-\n"
-"wide gimp brushes installation when searching for\n"
+"wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
 "이것은 사용자 정의 브러쉬를 저장할때 사용되는 서브\n"
 "디랙토리입니다. 브러쉬를 찾을때, 전체 시스템\n"
 "gimp 브러쉬 설치된 것 외에 또 이 서브디랙토리를 검사합니다.\n"
 
-#: app/install.c:194
+#: app/install.c:197
 #, fuzzy
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
-"gimprc file checks this subdirectory when searching for\n"
-"generated brushes."
+"gimprc file checks this subdirectory when searching\n"
+"for generated brushes."
 msgstr ""
 "이것은 사용자 정의 브러쉬를 저장할때 사용되는 서브\n"
 "디랙토리입니다. 브러쉬를 찾을때, 전체 시스템\n"
 "gimp 브러쉬 설치된 것 외에 또 이 서브디랙토리를 검사합니다.\n"
 
-#: app/install.c:201
+#: app/install.c:204
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
 "checks this subdirectory in addition to the system-\n"
-"wide gimp gradients installation when searching for\n"
-"gradients."
+"wide GIMP gradients installation when searching\n"
+"for gradients."
 msgstr ""
 "사용자 정의 색감변화도 저장에 사용되는 서브\n"
 "디랙토리입니다. 색감변화도를 찾을때, 초기값 gimprc파일\n"
@@ -2532,7 +2533,7 @@ msgstr ""
 "디랙토리를 검사합니다.\n"
 "\n"
 
-#: app/install.c:209
+#: app/install.c:212
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
@@ -2553,13 +2554,13 @@ msgstr ""
 "합니다.\n"
 "\n"
 
-#: app/install.c:220
+#: app/install.c:223
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
 "checks this subdirectory in addition to the system-\n"
-"wide gimp patterns installation when searching for\n"
+"wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
 "이것은 사용자 정의 패턴들을 저장하는 서브 디랙토리입니다.\n"
@@ -2568,15 +2569,14 @@ msgstr ""
 "\n"
 "\n"
 
-#: app/install.c:228
+#: app/install.c:231
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
-"supported plug-ins.  The default gimprc file\n"
-"checks this subdirectory in addition to the system-\n"
-"wide GIMP plug-in directories when searching for\n"
-"plug-ins."
+"supported plug-ins.  The default gimprc file checks\n"
+"this subdirectory in addition to the systemwide\n"
+"GIMP plug-in directories when searching for plug-ins."
 msgstr ""
 "이것은 사용자가 생성하거나, 임시적, 또는 그 반대로 시스템에서\n"
 "지원되지 않는 플러그인을 저장할때 사용하는 서브\n"
@@ -2585,12 +2585,12 @@ msgstr ""
 "디랙토리를 검사합니다.\n"
 "\n"
 
-#: app/install.c:237
+#: app/install.c:239
 #, fuzzy
 msgid ""
 "This subdirectory can be used to store user created,\n"
-"temporary, or otherwise non-system-supported DLL modules.\n"
-"The default gimprc file checks this subdirectory\n"
+"temporary, or otherwise non-system-supported DLL\n"
+"modules.  The default gimprc file checks this subdirectory\n"
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
@@ -2600,20 +2600,20 @@ msgstr ""
 "초기값 gimprc 파일은 전체 시스템 GIMP 모듈 디랙토리\n"
 "외에 또 이 서브 디랙토리를 검사합니다.\n"
 
-#: app/install.c:245
+#: app/install.c:247
 #, fuzzy
 msgid ""
-"This subdirectory is used by the GIMP to store \n"
-"user created and installed scripts. The default gimprc\n"
-"file checks this subdirectory in addition to the system-\n"
-"wide gimp scripts subdirectory when searching for scripts"
+"This subdirectory is used by the GIMP to store user\n"
+"created and installed scripts.  The default gimprc file\n"
+"checks this subdirectory in addition to the systemwide\n"
+"GIMP scripts subdirectory when searching for scripts"
 msgstr ""
 "이 서브디랙토리는 사용자가 스크립트들을 생성하고 설치할때\n"
 "사용합니다. 스크립트들을 찾을때, 초기값 gimprc 파일은\n"
 "전체 시스템 gimp 스크립트 서브디랙토리 외에 또 이 디랙토리를\n"
 "검사합니다.\n"
 
-#: app/install.c:252
+#: app/install.c:254
 #, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
@@ -2629,26 +2629,26 @@ msgstr ""
 "이 파일들은 GIMP 세션들에서 사용되지 않고 무사히 없어\n"
 "지게 될것이다.\n"
 
-#: app/install.c:260
+#: app/install.c:262
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
 
-#: app/install.c:265
+#: app/install.c:267
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
 
-#: app/install.c:270
+#: app/install.c:272
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
-"plug-in. The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide gimp FractalExplorer installation\n"
-"when searching for fractals."
+"plug-in.  The default gimprc file checks this subdirectory\n"
+"in addition to the systemwide GIMP FractalExplorer\n"
+"installation when searching for fractals."
 msgstr ""
 "이것은 FractalExplorer 플러그인에서 사용하는\n"
 "사용자 정의 프랙탈들을 저장하는데 사용되는\n"
@@ -2656,13 +2656,13 @@ msgstr ""
 "전체 시스템 gimp FractalExplorer 설치된 것 외에 또\n"
 "이 서브디랙토리를 검사합니다.\n"
 
-#: app/install.c:278
+#: app/install.c:280
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
-"user defined figures to be used by the gfig plug-in.\n"
+"user defined figures to be used by the GFig plug-in.\n"
 "The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide gimp gfig installation\n"
+"addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
 "gfig 플러그인에 사용되는 사용자 정의\n"
@@ -2671,13 +2671,13 @@ msgstr ""
 "gimp gfig 설치된 것 외에 또 이 서브디랙토리를 검사합니다.\n"
 "\n"
 
-#: app/install.c:286
+#: app/install.c:288
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
-"user defined gflares to be used by the gflare plug-in.\n"
+"user defined gflares to be used by the GFlare plug-in.\n"
 "The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide gimp gflares installation\n"
+"addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
 "이것은 gflare 플러그인에서 사용하는 사용자 정의 gflare들을\n"
@@ -2686,14 +2686,14 @@ msgstr ""
 "이 서브 디랙토리를 검사합니다.\n"
 "\n"
 
-#: app/install.c:294
+#: app/install.c:296
 #, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
-"plug-in. The default gimprc file checks this subdirectory in\n"
-"addition to the systemwide gimp Gimpressionist installation\n"
-"when searching for data."
+"plug-in.  The default gimprc file checks this subdirectory\n"
+"in addition to the systemwide GIMP Gimpressionist\n"
+"installation when searching for data."
 msgstr ""
 "이것은 gflare 플러그인에서 사용하는 사용자 정의 gflare들을\n"
 "저장하는데 사용되는 서브디랙토리입니다. gflares를 찾을때,\n"
@@ -2711,25 +2711,25 @@ msgid "Continue"
 msgstr "계속"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:560
+#: app/install.c:562
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr ""
 
-#: app/install.c:578
+#: app/install.c:580
 #, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
 msgstr "GIMP 설치"
 
-#: app/install.c:582
+#: app/install.c:584
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 
-#: app/install.c:591
+#: app/install.c:593
 #, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
@@ -2741,7 +2741,7 @@ msgstr ""
 "당신은 FSF에 의해 작성된 GNU GPL에 의거 재 배포하거나 고칠 수 있습니다.;\n"
 "라이센스의 버전 2 나 (당신 마음대로) 그 후 버전 모두 해당합니다.\n"
 
-#: app/install.c:596
+#: app/install.c:598
 #, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
@@ -2754,7 +2754,7 @@ msgstr ""
 "혹은 적당한 보증 조차 없습니다.\n"
 "좀더 자세한 것은 GNU GPL을 보세요.\n"
 
-#: app/install.c:601
+#: app/install.c:603
 #, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
@@ -2767,82 +2767,87 @@ msgstr ""
 "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 에 \n"
 "편지를 쓰세요.\n"
 
-#: app/install.c:607
+#: app/install.c:609
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 
-#: app/install.c:633
+#: app/install.c:636
 #, fuzzy
 msgid "Personal GIMP Directory"
 msgstr "개인 GIMP 설치\n"
 
-#: app/install.c:650
-#, fuzzy
+#: app/install.c:652
+#, fuzzy, c-format
 msgid ""
-"For a proper GIMP installation, a subdirectory needs to be created.\n"
-"This subdirectory will contain a number of important files."
-msgstr ""
-"는 생성되어야 합니다.\n"
-"이 서브 디랙토리는 여러 중요한 파일들을 포함합니다:\n"
-"\n"
+"For a proper GIMP installation, a subdirectory named\n"
+"%s needs to be created."
+msgstr "정확하게 GIMP를 설치하기 위해 서브 디렉토리에 들어갔습니다.\n"
 
-#: app/install.c:653
+#: app/install.c:658
 msgid ""
+"This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
 
-#: app/install.c:656
+#: app/install.c:662
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
 
-#: app/install.c:736
+#: app/install.c:742
 #, fuzzy
 msgid "User Installation Log"
 msgstr ""
 "사용자 설치 로그\n"
 "\n"
 
-#: app/install.c:741
+#: app/install.c:747
 msgid "GIMP Performance Tuning"
 msgstr ""
 
-#: app/install.c:744
+#: app/install.c:750
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
 
-#: app/install.c:751
+#: app/install.c:757
 msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
 
-#: app/install.c:760
+#: app/install.c:766
 #, fuzzy
 msgid "Monitor Resolution"
 msgstr "모니터 해상도 얻기"
 
-#: app/install.c:763
+#: app/install.c:769
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
 
-#: app/install.c:771
+#: app/install.c:777
 msgid "Click \"Continue\" to start The GIMP."
 msgstr ""
 
-#: app/install.c:845
+#: app/install.c:785
+#, fuzzy
+msgid "Aborting Installation..."
+msgstr ""
+"사용자 설치 로그\n"
+"\n"
+
+#: app/install.c:859
 #, fuzzy
 msgid "does not exist.  Cannot install."
 msgstr "는 존재 하지 않습니다. 설치할 수 없습니다.\n"
 
-#: app/install.c:857
+#: app/install.c:871
 #, fuzzy
 msgid "has invalid permissions.  Cannot install."
 msgstr ""
 "는 옳지않은 권한을 갖고 있습니다.\n"
 "설치할 수 없습니다."
 
-#: app/install.c:895
+#: app/install.c:909
 #, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
@@ -2854,7 +2859,7 @@ msgstr ""
 "에러가 났다면, 종료하시고 왜 에러가 났는지를\n"
 "찾아보시기 바랍니다...\n"
 
-#: app/install.c:955
+#: app/install.c:969
 #, fuzzy
 msgid ""
 "Did you notice any error messages in the lines above?\n"
@@ -2866,29 +2871,29 @@ msgstr ""
 "에러가 났다면, 종료하시고 왜 에러가 났는지를\n"
 "찾아보시기 바랍니다...\n"
 
-#: app/install.c:969
+#: app/install.c:983
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr ""
 
-#: app/install.c:978
+#: app/install.c:992
 #, fuzzy
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
 "\n"
 "설치 실패. 시스템 관리자를 만나보십시오.\n"
 
-#: app/install.c:999
+#: app/install.c:1017
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 
-#: app/install.c:1015 app/preferences_dialog.c:2102
+#: app/install.c:1033 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
 msgstr "타일 캐쉬 크기:"
 
-#: app/install.c:1025
+#: app/install.c:1043
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -2896,31 +2901,31 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 
-#: app/install.c:1035 app/preferences_dialog.c:2361
+#: app/install.c:1053 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
 msgstr "스왑 디렉토리 선택"
 
-#: app/install.c:1041
+#: app/install.c:1059
 #, fuzzy
 msgid "Swap Directory:"
 msgstr "스왑 디렉토리:"
 
-#: app/install.c:1063
+#: app/install.c:1085
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
 
-#: app/install.c:1070
+#: app/install.c:1092
 #, fuzzy, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
 msgstr "(현재 %d x %d dpi)"
 
-#: app/install.c:1087
+#: app/install.c:1109
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 
-#: app/install.c:1102
+#: app/install.c:1124
 #, fuzzy
 msgid "Monitor Resolution X:"
 msgstr "모니터 해상도 얻기"
@@ -6287,6 +6292,15 @@ msgid "Color History"
 msgstr "색상 추출"
 
 #, fuzzy
+#~ msgid ""
+#~ "For a proper GIMP installation, a subdirectory needs to be created.\n"
+#~ "This subdirectory will contain a number of important files."
+#~ msgstr ""
+#~ "는 생성되어야 합니다.\n"
+#~ "이 서브 디랙토리는 여러 중요한 파일들을 포함합니다:\n"
+#~ "\n"
+
+#, fuzzy
 #~ msgid "Custom from Editor"
 #~ msgstr "편집기에 맞춰지게"
 
@@ -6296,9 +6310,6 @@ msgstr "색상 추출"
 #~ msgstr ""
 #~ "The GIMP - 그누(GNU) 이미지(Image) 조작(Manipulation) 프로그램(Program)\n"
 #~ "\n"
-
-#~ msgid "For a proper GIMP installation, a subdirectory called\n"
-#~ msgstr "정확하게 GIMP를 설치하기 위해 서브 디렉토리에 들어갔습니다.\n"
 
 #~ msgid "Install"
 #~ msgstr "설치"

@@ -40,9 +40,10 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/wilber.xpm"
-#include "pixmaps/new.xpm"
+#include "pixmaps/eek.xpm"
 #include "pixmaps/folder.xpm"
+#include "pixmaps/new.xpm"
+#include "pixmaps/wilber.xpm"
 
 #ifndef G_OS_WIN32
 #  ifndef __EMX__
@@ -57,7 +58,8 @@
 #  define USER_INSTALL "user_install.bat"
 #endif
 
-#define NUM_PAGES     5
+#define NUM_PAGES    6
+#define EEK_PAGE     (NUM_PAGES - 1)
 #define WILBER_WIDTH 62
 
 static void     install_dialog_create     (InstallCallback);
@@ -142,7 +144,8 @@ tree_items[] =
     N_("The gimprc is used to store personal preferences\n"
        "that affect GIMP's default behavior.\n"
        "Paths to search for brushes, palettes, gradients,\n"
-       "patterns, plug-ins and modules can also configured here.")
+       "patterns, plug-ins and modules can also configured\n"
+       "here.")
   },
   {
     FALSE, "gtkrc",
@@ -151,8 +154,8 @@ tree_items[] =
   },
   {
     FALSE, "pluginrc",
-    N_("Plug-ins and extensions are external programs run by\n"
-       "the GIMP which provide additional functionality.\n"
+    N_("Plug-ins and extensions are external programs run\n"
+       "by the GIMP which provide additional functionality.\n"
        "These programs are searched for at run-time and\n"
        "information about their functionality and mod-times\n"
        "is cached in this file.  This file is intended to\n"
@@ -162,15 +165,15 @@ tree_items[] =
     FALSE, "menurc",
     N_("Key shortcuts can be dynamically redefined in The GIMP.\n"
        "The menurc is a dump of your configuration so it can.\n"
-       "be remembered for the next session. You may edit this\n"
+       "be remembered for the next session.  You may edit this\n"
        "file if you wish, but it is much easier to define the\n"
-       "keys from within The GIMP. Deleting this file will\n"
+       "keys from within The GIMP.  Deleting this file will\n"
        "restore the default shortcuts.")
   },
   {
     FALSE, "sessionrc",
     N_("The sessionrc is used to store what dialog windows were\n"
-       "open the last time you quit The GIMP. You can configure\n"
+       "open the last time you quit The GIMP.  You can configure\n"
        "The GIMP to reopen these dialogs at the saved position.")
   },
   {
@@ -178,7 +181,7 @@ tree_items[] =
     N_("The unitrc is used to store your user units database.\n"
        "You can define additional units and use them just\n"
        "like you use the built-in units inches, millimeters,\n"
-       "points and picas. This file is overwritten each time\n"
+       "points and picas.  This file is overwritten each time\n"
        "you quit the GIMP.")
   },
   {
@@ -186,23 +189,23 @@ tree_items[] =
     N_("This is a subdirectory which can be used to store\n"
        "user defined brushes.  The default gimprc file\n"
        "checks this subdirectory in addition to the system-\n"
-       "wide gimp brushes installation when searching for\n"
+       "wide GIMP brushes installation when searching for\n"
        "brushes.")
   },
   {
     TRUE, "generated_brushes",
     N_("This is a subdirectory which is used to store brushes\n"
        "that are created with the brush editor.  The default\n"
-       "gimprc file checks this subdirectory when searching for\n"
-       "generated brushes.")
+       "gimprc file checks this subdirectory when searching\n"
+       "for generated brushes.")
   },
   {
     TRUE, "gradients",
     N_("This is a subdirectory which can be used to store\n"
        "user defined gradients.  The default gimprc file\n"
        "checks this subdirectory in addition to the system-\n"
-       "wide gimp gradients installation when searching for\n"
-       "gradients.")
+       "wide GIMP gradients installation when searching\n"
+       "for gradients.")
   },
   {
     TRUE, "palettes",
@@ -220,32 +223,31 @@ tree_items[] =
     N_("This is a subdirectory which can be used to store\n"
        "user defined patterns.  The default gimprc file\n"
        "checks this subdirectory in addition to the system-\n"
-       "wide gimp patterns installation when searching for\n"
+       "wide GIMP patterns installation when searching for\n"
        "patterns.")
   },
   {
     TRUE, "plug-ins",
     N_("This is a subdirectory which can be used to store\n"
        "user created, temporary, or otherwise non-system-\n"
-       "supported plug-ins.  The default gimprc file\n"
-       "checks this subdirectory in addition to the system-\n"
-       "wide GIMP plug-in directories when searching for\n"
-       "plug-ins.")
+       "supported plug-ins.  The default gimprc file checks\n"
+       "this subdirectory in addition to the systemwide\n"
+       "GIMP plug-in directories when searching for plug-ins.")
   },
   {
     TRUE, "modules",
     N_("This subdirectory can be used to store user created,\n"
-       "temporary, or otherwise non-system-supported DLL modules.\n"
-       "The default gimprc file checks this subdirectory\n"
+       "temporary, or otherwise non-system-supported DLL\n"
+       "modules.  The default gimprc file checks this subdirectory\n"
        "in addition to the system-wide GIMP module directory\n"
        "when searching for modules to load when initializing.")
   },
   {
     TRUE, "scripts",
-    N_("This subdirectory is used by the GIMP to store \n"
-       "user created and installed scripts. The default gimprc\n"
-       "file checks this subdirectory in addition to the system-\n"
-       "wide gimp scripts subdirectory when searching for scripts")
+    N_("This subdirectory is used by the GIMP to store user\n"
+       "created and installed scripts.  The default gimprc file\n"
+       "checks this subdirectory in addition to the systemwide\n"
+       "GIMP scripts subdirectory when searching for scripts")
   },
   {
     TRUE, "tmp",
@@ -269,33 +271,33 @@ tree_items[] =
     TRUE, "fractalexplorer",
     N_("This is a subdirectory which can be used to store\n"
        "user defined fractals to be used by the FractalExplorer\n"
-       "plug-in. The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide gimp FractalExplorer installation\n"
-       "when searching for fractals.")
+       "plug-in.  The default gimprc file checks this subdirectory\n"
+       "in addition to the systemwide GIMP FractalExplorer\n" 
+       "installation when searching for fractals.")
   },  
   {
     TRUE, "gfig",
     N_("This is a subdirectory which can be used to store\n"
-       "user defined figures to be used by the gfig plug-in.\n"
+       "user defined figures to be used by the GFig plug-in.\n"
        "The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide gimp gfig installation\n"
+       "addition to the systemwide GIMP GFig installation\n"
        "when searching for gfig figures.")
   },
   {
     TRUE, "gflare",
     N_("This is a subdirectory which can be used to store\n"
-       "user defined gflares to be used by the gflare plug-in.\n"
+       "user defined gflares to be used by the GFlare plug-in.\n"
        "The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide gimp gflares installation\n"
+       "addition to the systemwide GIMP GFlares installation\n"
        "when searching for gflares.")
   },
   {
     TRUE, "gimpressionist",
     N_("This is a subdirectory which can be used to store\n"
        "user defined data to be used by the Gimpressionist\n"
-       "plug-in. The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide gimp Gimpressionist installation\n"
-       "when searching for data.")    
+       "plug-in.  The default gimprc file checks this subdirectory\n"
+       "in addition to the systemwide GIMP Gimpressionist\n"
+       "installation when searching for data.")    
   }  
 };
 static gint num_tree_items = sizeof (tree_items) / sizeof (tree_items[0]);
@@ -340,7 +342,12 @@ install_continue_callback (GtkWidget *widget,
       gdk_gc_unref (white_gc);
 
       (* callback) ();
+      return;
       break;
+
+    case EEK_PAGE:
+    default:
+      g_assert_not_reached ();
     }
 
   if (notebook_index < NUM_PAGES - 1)
@@ -352,8 +359,14 @@ static void
 install_cancel_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  gtk_widget_destroy (install_dialog);
-  gtk_exit (0);
+  static gint timeout = 0;
+
+  if (timeout)
+    gtk_exit (0);
+
+  gtk_widget_destroy (continue_button);
+  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
+  timeout = gtk_timeout_add (1024, (GtkFunction)gtk_exit, (gpointer)0);
 }
 
 static gint
@@ -386,6 +399,7 @@ install_notebook_append_page (GtkNotebook *notebook,
   GtkWidget *darea;
   
   page = gtk_vbox_new (FALSE, 0);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
 
   gtk_widget_push_style (title_style);
 
@@ -400,7 +414,11 @@ install_notebook_append_page (GtkNotebook *notebook,
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);
 
-  wilber = gimp_pixmap_new (wilber_xpm);
+  if (gtk_notebook_page_num (GTK_NOTEBOOK (notebook), page) == EEK_PAGE)
+    wilber = gimp_pixmap_new (eek_xpm);
+  else
+    wilber = gimp_pixmap_new (wilber_xpm);
+ 
   gtk_box_pack_start (GTK_BOX (hbox), wilber, FALSE, FALSE, 8);
   gtk_widget_show (wilber);
 
@@ -452,8 +470,6 @@ install_notebook_append_page (GtkNotebook *notebook,
   gtk_widget_show (vbox);
 
   gtk_widget_show (page);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
 
   return vbox;
 }
@@ -517,6 +533,8 @@ install_dialog_create (InstallCallback callback)
 		     callback, 1, NULL, FALSE, TRUE,
 
 		     NULL);
+
+  gimp_dialog_set_icon (GTK_WINDOW (dialog));
 
   gtk_widget_realize (dialog);
 
@@ -608,6 +626,7 @@ install_dialog_create (InstallCallback callback)
     GdkBitmap *file_mask;
     GdkPixmap *folder_pixmap;
     GdkBitmap *folder_mask;
+    gchar     *str;
 
     gint i;
 
@@ -630,11 +649,14 @@ install_dialog_create (InstallCallback callback)
     gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
     gtk_widget_show (vbox);
 
+    str = g_strdup_printf (_("For a proper GIMP installation, a subdirectory named\n"
+			     "%s needs to be created."), gimp_directory ());
+    add_label (GTK_BOX (vbox), FALSE, str);
+    g_free (str);
+
     add_label (GTK_BOX (vbox), FALSE,
-	       _("For a proper GIMP installation, a subdirectory needs to be created.\n"
-		 "This subdirectory will contain a number of important files."));
-    add_label (GTK_BOX (vbox), FALSE,
-	       _("Click on one of the files or subdirectories in the tree\n"
+	       _("This subdirectory will contain a number of important files.\n"
+		 "Click on one of the files or subdirectories in the tree\n"
 		 "to get more information about the selected item."));
     add_label (GTK_BOX (vbox), TRUE,
 	       _("Click \"Continue\" to create your personal GIMP directory."));
@@ -758,6 +780,12 @@ install_dialog_create (InstallCallback callback)
   gtk_box_pack_end (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
+  /*  EEK page  */
+  page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
+				       _("Aborting Installation..."));
+
+  gtk_widget_pop_style ();
+
   gtk_widget_show (dialog);
 
   gtk_style_unref (title_style);
@@ -817,6 +845,8 @@ install_run (void)
   struct stat stat_buf;
   gint err;
   gboolean executable = TRUE;
+
+  gtk_widget_push_style (page_style);
 
   /*  Generate output  */
   g_snprintf (buffer, sizeof (buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
@@ -962,6 +992,8 @@ install_run (void)
 		 _("Installation failed.  Contact system administrator."));
     }
 
+  gtk_widget_pop_style ();
+  
   return executable;
 }
 
@@ -977,6 +1009,8 @@ install_tuning (void)
   GtkWidget *sep;
   GtkWidget *label;
   GtkWidget *memsize;
+
+  gtk_widget_push_style (page_style);
 
   /*  tile cache size  */
   add_label (GTK_BOX (tuning_page), FALSE,
@@ -1025,6 +1059,8 @@ install_tuning (void)
   label = gtk_label_new (_("Swap Directory:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  gtk_widget_pop_style ();
 }
 
 static void
@@ -1042,6 +1078,8 @@ install_resolution (void)
   gchar     *str;
 
   gdisplay_xserver_resolution (&xres, &yres);
+
+  gtk_widget_push_style (page_style);
 
   add_label (GTK_BOX (resolution_page), FALSE,
 	     _("GIMP can obtain this information from your X-server.\n"
