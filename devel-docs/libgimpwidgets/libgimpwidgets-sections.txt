@@ -62,6 +62,24 @@ GIMP_COLOR_BUTTON_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolorhexentry</FILE>
+<TITLE>GimpColorHexEntry</TITLE>
+GimpColorHexEntry
+gimp_color_hex_entry_new
+gimp_color_hex_entry_set_color
+gimp_color_hex_entry_get_color
+<SUBSECTION Standard>
+GimpColorHexEntryClass
+GIMP_COLOR_HEX_ENTRY
+GIMP_IS_COLOR_HEX_ENTRY
+GIMP_TYPE_COLOR_HEX_ENTRY
+gimp_color_hex_entry_get_type
+GIMP_COLOR_HEX_ENTRY_CLASS
+GIMP_IS_COLOR_HEX_ENTRY_CLASS
+GIMP_COLOR_HEX_ENTRY_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcolorscale</FILE>
 <TITLE>GimpColorScale</TITLE>
 GimpColorScale

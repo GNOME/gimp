@@ -74,6 +74,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcolordisplay.h	\
 	gimpcolordisplaystack.c	\
 	gimpcolordisplaystack.h	\
+	gimpcolorhexentry.c	\
+	gimpcolorhexentry.h	\
 	gimpcolornotebook.c	\
 	gimpcolornotebook.h	\
 	gimpcolorscale.c	\

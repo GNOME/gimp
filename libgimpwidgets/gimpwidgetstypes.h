@@ -61,6 +61,7 @@ typedef struct _GimpColorArea         GimpColorArea;
 typedef struct _GimpColorButton       GimpColorButton;
 typedef struct _GimpColorDisplay      GimpColorDisplay;
 typedef struct _GimpColorDisplayStack GimpColorDisplayStack;
+typedef struct _GimpColorHexEntry     GimpColorHexEntry;
 typedef struct _GimpColorNotebook     GimpColorNotebook;
 typedef struct _GimpColorScale        GimpColorScale;
 typedef struct _GimpColorScales       GimpColorScales;

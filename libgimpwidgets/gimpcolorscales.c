@@ -28,7 +28,6 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -37,6 +36,7 @@
 
 #include "gimpcolorscale.h"
 #include "gimpcolorscales.h"
+#include "gimpcolorhexentry.h"
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -87,8 +87,8 @@ static void   gimp_color_scales_toggle_update  (GtkWidget         *widget,
                                                 GimpColorScales   *scales);
 static void   gimp_color_scales_scale_update   (GtkAdjustment     *adjustment,
                                                 GimpColorScales   *scales);
-static gboolean   gimp_color_scales_hex_events (GtkWidget         *widget,
-                                                GdkEvent          *event,
+
+static void   gimp_color_scales_entry_changed  (GimpColorHexEntry *entry,
                                                 GimpColorScales   *scales);
 
 
@@ -234,30 +234,25 @@ gimp_color_scales_init (GimpColorScales *scales)
     }
 
   /* The hex triplet entry */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (scales), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  scales->hex_entry = gtk_entry_new ();
+  scales->hex_entry = gimp_color_hex_entry_new ();
   gimp_help_set_help_data (scales->hex_entry,
-                           _("Hexadecimal color notation as used in HTML"),
-                           NULL);
-  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 8);
-  gtk_entry_set_max_length (GTK_ENTRY (scales->hex_entry), 6);
-  gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, FALSE, FALSE, 0);
+                           _("Hexadecimal color notation "
+                             "as used in HTML and CSS"), NULL);
+  gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, TRUE, TRUE, 0);
   gtk_widget_show (scales->hex_entry);
 
-  g_signal_connect (scales->hex_entry, "focus_out_event",
-		    G_CALLBACK (gimp_color_scales_hex_events),
-		    scales);
-  g_signal_connect (scales->hex_entry, "key_press_event",
-		    G_CALLBACK (gimp_color_scales_hex_events),
-		    scales);
-
-  label = gtk_label_new_with_mnemonic (_("He_x Triplet:"));
+  label = gtk_label_new_with_mnemonic (_("HTML _Notation:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), scales->hex_entry);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  g_signal_connect (scales->hex_entry, "color_changed",
+                    G_CALLBACK (gimp_color_scales_entry_changed),
+                    scales);
 }
 
 static void
@@ -351,7 +346,6 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   gint               values[7];
-  gchar              buffer[8];
   gint               i;
 
   values[GIMP_COLOR_SELECTOR_HUE]        = ROUND (selector->hsv.h * 360.0);
@@ -382,12 +376,8 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                   &selector->rgb, &selector->hsv);
     }
 
-  g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x",
-              values[GIMP_COLOR_SELECTOR_RED],
-              values[GIMP_COLOR_SELECTOR_GREEN],
-              values[GIMP_COLOR_SELECTOR_BLUE]);
-
-  gtk_entry_set_text (GTK_ENTRY (scales->hex_entry), buffer);
+  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (scales->hex_entry),
+                                                        &selector->rgb);
 }
 
 static void
@@ -468,52 +458,14 @@ gimp_color_scales_scale_update (GtkAdjustment   *adjustment,
   gimp_color_selector_color_changed (selector);
 }
 
-static gboolean
-gimp_color_scales_hex_events (GtkWidget       *widget,
-                              GdkEvent        *event,
-                              GimpColorScales *scales)
+static void
+gimp_color_scales_entry_changed (GimpColorHexEntry *entry,
+                                 GimpColorScales   *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  const gchar       *hex_color;
-  gchar              buffer[8];
-  guchar             r, g, b;
 
-  switch (event->type)
-    {
-    case GDK_KEY_PRESS:
-      if (((GdkEventKey *) event)->keyval != GDK_Return)
-        break;
-      /*  else fall through  */
+  gimp_color_hex_entry_get_color (entry, &selector->rgb);
 
-    case GDK_FOCUS_CHANGE:
-      hex_color = gtk_entry_get_text (GTK_ENTRY (scales->hex_entry));
-
-      gimp_rgb_get_uchar (&selector->rgb, &r, &g, &b);
-      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
-
-      if (g_ascii_strcasecmp (buffer, hex_color) != 0)
-        {
-          if ((strlen (hex_color) == 6 &&
-               gimp_rgb_parse_hex (&selector->rgb, hex_color, 6)) ||
-              (gimp_rgb_parse_name (&selector->rgb, hex_color, -1)))
-	    {
-              gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-
-	      gimp_color_scales_update_scales (scales, -1);
-
-              gimp_color_selector_color_changed (selector);
-
-              return FALSE;
-	    }
-
-          gtk_entry_set_text (GTK_ENTRY (widget), buffer);
-        }
-      break;
-
-    default:
-      /*  do nothing  */
-      break;
-    }
-
-  return FALSE;
+  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  gimp_color_scales_update_scales (scales, -1);
 }

@@ -10,6 +10,7 @@ gimp_color_area_get_type
 gimp_color_button_get_type
 gimp_color_display_get_type
 gimp_color_display_stack_get_type
+gimp_color_hex_entry_get_type
 gimp_color_notebook_get_type
 gimp_color_scale_get_type
 gimp_color_scales_get_type

@@ -1,3 +1,12 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimprgb.sgml
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolorhexentry.sgml: updated for new API.
+
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/Makefile.am

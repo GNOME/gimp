@@ -108,6 +108,16 @@ GimpRGB
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_rgb_list_names ##### -->
+<para>
+
+</para>
+
+@names: 
+@colors: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rgb_add ##### -->
 <para>
 

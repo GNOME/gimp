@@ -84,6 +84,10 @@ void      gimp_rgb_composite   (GimpRGB              *color1,
                                 const GimpRGB        *color2,
                                 GimpRGBCompositeMode  mode);
 
+/*  access to the list of color names  */
+gint      gimp_rgb_list_names  (const gchar ***names,
+                                GimpRGB      **colors);
+
 
 void      gimp_rgba_set        (GimpRGB       *rgba,
                                 gdouble        red,
@@ -115,6 +119,7 @@ void      gimp_rgba_multiply   (GimpRGB       *rgba,
 
 gdouble   gimp_rgba_distance   (const GimpRGB *rgba1,
 			        const GimpRGB *rgba2);
+
 
 
 /*  Map RGB to intensity  */

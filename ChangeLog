@@ -1,3 +1,17 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb-parse.c
+	* libgimpcolor/gimprgb.h: added new function gimp_rgb_list_names()
+	that gives access to the list of SVG color keywords.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpcolorhexentry.[ch]: added new widget that
+	allows to enter colors in hex notation or by using color names.
+
+	* libgimpwidgets/gimpcolorscales.c: use a GimpColorHexEntry.
+
 2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: placed all the orientation map-related
