@@ -721,7 +721,15 @@ run (const gchar      *name,
        *   some transitions (especially rotate) cant operate proper on
        *   layers with masks !
        */
-      gimp_layer_remove_mask (l_layer_id, 0 /* 0==APPLY */ );
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
+        {
+          gimp_layer_remove_mask (l_layer_id, 0 /* 0==APPLY */ );
+        }
+      else
+        {
+          g_message (_("Cannot operate on layers with masks."));
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   /* if there is a selection, make it the floating selection layer */

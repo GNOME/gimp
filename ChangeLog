@@ -1,5 +1,12 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/curve_bend.c: applied a patch from Henrik Brix
+	Andersen that tells the user that Curve Bend cannot operate on
+	layers with masks instead of silently applying the mask
+	(bug #134748).
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/gauss_iir.c
