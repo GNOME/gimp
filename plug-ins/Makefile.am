@@ -63,6 +63,7 @@ SUBDIRS = 			\
 	film			\
 	fits			\
 	fp			\
+	fractaltrace		\
 	gauss_iir		\
 	gauss_rle		\
 	gbr			\

@@ -421,6 +421,7 @@ plug-ins/glasstile/Makefile
 plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
+plug-ins/fractaltrace/Makefile
 app/Makefile
 docs/Makefile
 )

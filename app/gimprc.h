@@ -61,6 +61,7 @@ extern int       default_width, default_height;
 extern int       default_type;
 extern int       show_tips;
 extern int       last_tip;
+extern int       show_tool_tips;
 
 /*  function prototypes  */
 char *  gimp_directory (void);

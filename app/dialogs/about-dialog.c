@@ -393,7 +393,7 @@ about_dialog_timer (gpointer data)
 	{
 	  for (i = 0, k = 0; i < dissolve_height; i++)
 	    for (j = 0; j < dissolve_width; j++, k++)
-	      if (frame >= dissolve_map[k])
+	      if (frame == dissolve_map[k])
 		{
 		  gdk_draw_pixmap (logo_area->window,
 				   logo_area->style->black_gc,

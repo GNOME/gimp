@@ -137,6 +137,10 @@
 #  #:       #x#
 (preview-size small)
 
+# Tooltips
+#  Comment this out to disable the tooltips in the toolbox
+(show-tool-tips)
+
 # Controlling ruler visibility
 #  The default behavior is for rulers to be ON
 #  This can also be toggled with the View->Show Rulers command or shift+control+r

@@ -1,3 +1,11 @@
+Wed Dec 10 16:59:56 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* Added gimprc option for enabling/disabling tooltips
+
+	* Fixed up about dialog
+
+	* Added Fractaltrace plugin
+
 Tue Dec  9 15:26:48 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Added Lauri Alanko's tools patch

@@ -525,6 +525,8 @@ create_toolbox ()
   gtk_tooltips_set_colors (tool_tips,
 			   &colors[11],
 			   &main_vbox->style->fg[GTK_STATE_NORMAL]);
+  if (!show_tool_tips)
+    gtk_tooltips_disable (tool_tips);
 
   /*  Build the menu bar with menus  */
   menus_get_toolbox_menubar (&menubar, &table);
