@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:37+0200\n"
-"PO-Revision-Date: 2004-08-10 09:39+0200\n"
+"POT-Creation-Date: 2004-09-05 23:46+0200\n"
+"PO-Revision-Date: 2004-09-05 23:55+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -213,6 +213,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"La codifica del nome del file configurata non può essere convertita in UTF-8: %s\n"
+"\n"
+"Controllare il valore della variabile ambiente G_FILENAME_ENCODING."
 
 #: app/sanity.c:169
 #, c-format
@@ -224,6 +227,9 @@ msgid ""
 "8 and you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
+"Il nome della directory contenente la configurazione utente di GIMP non può essere convertita in UTF-8: %s\n"
+"\n"
+"Molto probabilmente il filesistem in uso non memorizza i file in UTF-8 e non riesce a comunicare questo fatto alle GLib. Impostare la variabile ambiente G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:91 app/core/gimp.c:856
@@ -1176,9 +1182,8 @@ msgid "Save as _Template..."
 msgstr "Salva come _modello..."
 
 #: app/actions/file-actions.c:105
-#, fuzzy
 msgid "Re_vert..."
-msgstr "In_verti"
+msgstr "In_verti..."
 
 #: app/actions/file-actions.c:110
 msgid "_Quit"
@@ -1609,7 +1614,7 @@ msgstr "Dimensione s_uperficie..."
 
 #: app/actions/image-actions.c:76
 msgid "F_it Canvas to Layers"
-msgstr ""
+msgstr "Agg_iusta le superfici ai livelli"
 
 #: app/actions/image-actions.c:81
 msgid "_Scale Image..."
@@ -1873,19 +1878,16 @@ msgid "Add Alpha C_hannel"
 msgstr "Aggiungi _canale alfa"
 
 #: app/actions/layers-actions.c:162
-#, fuzzy
 msgid "Edit Layer Mask"
-msgstr "Aggiungi maschera di livello"
+msgstr "Modifica maschera di livello"
 
 #: app/actions/layers-actions.c:168
-#, fuzzy
 msgid "Show Layer Mask"
-msgstr "Sposta maschera di livello"
+msgstr "Mostra maschera di livello"
 
 #: app/actions/layers-actions.c:174
-#, fuzzy
 msgid "Disable Layer Mask"
-msgstr "Elimina maschera di livello"
+msgstr "Disabilita maschera di livello"
 
 #: app/actions/layers-actions.c:183
 msgid "Apply Layer _Mask"
@@ -4612,14 +4614,12 @@ msgid "Convert Image to Indexed"
 msgstr "Converti in indicizzata"
 
 #: app/core/gimpimage-convert.c:867
-#, fuzzy
 msgid "Converting to indexed (stage 2)..."
-msgstr "Converti in indicizzata"
+msgstr "Conversione in indicizzata (fase 2)..."
 
 #: app/core/gimpimage-convert.c:911
-#, fuzzy
 msgid "Converting to indexed (stage 3)..."
-msgstr "Converti in indicizzata"
+msgstr "Conversione in indicizzata (fase 3)..."
 
 #: app/core/gimpimage-crop.c:123
 msgid "Crop Image"
@@ -5496,9 +5496,8 @@ msgstr ""
 "trasparente o con animazione da questo formato."
 
 #: app/gui/convert-dialog.c:423
-#, fuzzy
 msgid "Converting to indexed..."
-msgstr "Converti in indicizzata"
+msgstr "Conversione in indicizzata..."
 
 #: app/gui/convert-dialog.c:470
 msgid "Select Custom Palette"
@@ -5715,9 +5714,8 @@ msgid "Units"
 msgstr "Unità"
 
 #: app/gui/info-window.c:230
-#, fuzzy
 msgid "Comment"
-msgstr "Com_mento:"
+msgstr "Commento"
 
 #: app/gui/info-window.c:266
 msgid "Info Window"
@@ -9741,12 +9739,11 @@ msgstr ""
 
 #: app/widgets/gimperrordialog.c:221
 msgid "Too many error messages!"
-msgstr ""
+msgstr "Troppi messaggi di errore!"
 
 #: app/widgets/gimperrordialog.c:222
-#, fuzzy
 msgid "Messages are redirected to stderr."
-msgstr "Messaggio ripetuto una volta."
+msgstr "I messaggi sono rediretti su stderr."
 
 #: app/widgets/gimpfiledialog.c:301
 msgid "Automatically Detected"
@@ -9756,11 +9753,11 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: app/widgets/gimpfiledialog.c:486
+#: app/widgets/gimpfiledialog.c:475
 msgid "All Files (*.*)"
 msgstr "Tutti i file (*.*)"
 
-#: app/widgets/gimpfiledialog.c:599
+#: app/widgets/gimpfiledialog.c:588
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -10554,39 +10551,3 @@ msgstr "Crea e modifica immagini o fotografie"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Editor immagine"
-
-#~ msgid "Light Checks"
-#~ msgstr "Scacchi piccoli"
-
-#~ msgid "Mid-Tone Checks"
-#~ msgstr "Scacchi mezze tinte"
-
-#~ msgid "Dark Checks"
-#~ msgstr "Scacchi scuri"
-
-#~ msgid "White Only"
-#~ msgstr "Scacchi bianchi"
-
-#~ msgid "Gray Only"
-#~ msgstr "Scacchi grigi"
-
-#~ msgid "Black Only"
-#~ msgstr "Scacchi neri"
-
-#~ msgid "Stage %d"
-#~ msgstr "Fase %d"
-
-#~ msgid "Stage 1"
-#~ msgstr "Fase 1"
-
-#~ msgid "Configure input devices"
-#~ msgstr "Configura dispositivo di ingresso"
-
-#~ msgid ""
-#~ "WARNING:\n"
-#~ "Too many open message dialogs.\n"
-#~ "Messages are redirected to stderr."
-#~ msgstr ""
-#~ "ATTENZIONE:\n"
-#~ "Troppe finestre di dialogo aperte.\n"
-#~ "I messaggi sono rediretti sullo stderr."
