@@ -126,6 +126,21 @@ typedef enum
 } GimpImageBaseType;
 
 
+#define GIMP_TYPE_IMAGE_TYPE (gimp_image_type_get_type ())
+
+GType gimp_image_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RGB_IMAGE,      /*< desc="RGB"             >*/
+  GIMP_RGBA_IMAGE,     /*< desc="RGB-Alpha"       >*/
+  GIMP_GRAY_IMAGE,     /*< desc="Grayscale"       >*/
+  GIMP_GRAYA_IMAGE,    /*< desc="Grayscale-Alpha" >*/
+  GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
+  GIMP_INDEXEDA_IMAGE  /*< desc="Indexed-Alpha"   >*/
+} GimpImageType;
+
+
 #define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
 
 GType gimp_preview_size_get_type (void) G_GNUC_CONST;
@@ -239,16 +254,6 @@ typedef enum  /*< pdb-skip >*/ /*< skip >*/
   GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
   GIMP_GRAD_HSV_CW    /* clockwise hue        */
 } GimpGradientSegmentColor;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_RGB_IMAGE,
-  GIMP_RGBA_IMAGE,
-  GIMP_GRAY_IMAGE,
-  GIMP_GRAYA_IMAGE,
-  GIMP_INDEXED_IMAGE,
-  GIMP_INDEXEDA_IMAGE
-} GimpImageType;
 
 typedef enum  /*< skip >*/
 {

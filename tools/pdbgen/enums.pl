@@ -231,6 +231,19 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAY => '1',
 		       GIMP_INDEXED => '2' }
 	},
+    GimpImageType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_RGB_IMAGE GIMP_RGBA_IMAGE GIMP_GRAY_IMAGE
+			  GIMP_GRAYA_IMAGE GIMP_INDEXED_IMAGE
+			  GIMP_INDEXEDA_IMAGE) ],
+	  mapping => { GIMP_RGB_IMAGE => '0',
+		       GIMP_RGBA_IMAGE => '1',
+		       GIMP_GRAY_IMAGE => '2',
+		       GIMP_GRAYA_IMAGE => '3',
+		       GIMP_INDEXED_IMAGE => '4',
+		       GIMP_INDEXEDA_IMAGE => '5' }
+	},
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -280,19 +293,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_WHITE_FILL => '2',
 		       GIMP_TRANSPARENT_FILL => '3',
 		       GIMP_NO_FILL => '4' }
-	},
-    GimpImageType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_RGB_IMAGE GIMP_RGBA_IMAGE GIMP_GRAY_IMAGE
-			  GIMP_GRAYA_IMAGE GIMP_INDEXED_IMAGE
-			  GIMP_INDEXEDA_IMAGE) ],
-	  mapping => { GIMP_RGB_IMAGE => '0',
-		       GIMP_RGBA_IMAGE => '1',
-		       GIMP_GRAY_IMAGE => '2',
-		       GIMP_GRAYA_IMAGE => '3',
-		       GIMP_INDEXED_IMAGE => '4',
-		       GIMP_INDEXEDA_IMAGE => '5' }
 	},
     GimpAddMaskType =>
 	{ contig => 1,

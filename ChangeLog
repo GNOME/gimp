@@ -1,3 +1,20 @@
+2002-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: register GimpImageType.
+
+	* app/core/gimpimagefile.[ch]: read and write more image properties
+	in thumbnails.
+
+	* app/gui/file-open-dialog.c: changed accordingly.
+
+	* app/widgets/gimpdialogfactory.c: disabled debugging output.
+
+	* app/widgets/gimpdocumentview.c: changed the "Refresh" button to
+	regenerate the preview on click and reload all previews on
+	shift+click.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
 2002-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_png_thumb_path): create

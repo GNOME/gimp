@@ -175,8 +175,8 @@ gimp_document_view_new (GimpViewType     view_type,
   document_view->refresh_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GTK_STOCK_REFRESH,
-                            _("Refresh preview\n"
-                              "<Shift> Recreate preview"),
+                            _("Recreate preview\n"
+                              "<Shift> Reload all previews"),
                             NULL,
                             G_CALLBACK (gimp_document_view_refresh_clicked),
                             G_CALLBACK (gimp_document_view_refresh_extended_clicked),
@@ -323,7 +323,7 @@ gimp_document_view_refresh_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      gimp_imagefile_update (imagefile);
+      gimp_imagefile_create_thumbnail (imagefile);
     }
 }
 
@@ -333,17 +333,14 @@ gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
                                              GimpDocumentView *view)
 {
   GimpContainerEditor *editor;
-  GimpImagefile       *imagefile;
 
   editor = GIMP_CONTAINER_EDITOR (view);
 
-  imagefile = gimp_context_get_imagefile (editor->view->context);
-
-  if (imagefile && gimp_container_have (editor->view->container,
-                                        GIMP_OBJECT (imagefile)))
+  if (state & GDK_SHIFT_MASK)
     {
-      if (state & GDK_SHIFT_MASK)
-        gimp_imagefile_create_thumbnail (imagefile);
+      gimp_container_foreach (editor->view->container,
+                              (GFunc) gimp_imagefile_update,
+                              NULL);
     }
 }
 

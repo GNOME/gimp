@@ -48,11 +48,12 @@ typedef struct _GimpImagefileClass GimpImagefileClass;
 
 struct _GimpImagefile
 {
-  GimpViewable  parent_instance;
+  GimpViewable        parent_instance;
 
-  gint          width;
-  gint          height;
-  gint          size;
+  gint                width;
+  gint                height;
+  gssize              size;
+  GimpImageType       type;
 
   GimpImagefileState  image_state;
   time_t              image_mtime;

@@ -32,11 +32,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -51,6 +46,7 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-new.h"
 #include "core/gimpimagefile.h"
 
 #include "plug-in/plug-in-types.h"
@@ -353,11 +349,36 @@ file_open_imagefile_info_changed (GimpImagefile *imagefile,
         }
       else
         {
-          gchar *str;
+          GEnumClass *enum_class;
+          GEnumValue *enum_value;
+          gchar      *str;
+          gchar      *size_str;
+          gchar      *type_str;
 
-          str = g_strdup_printf (_("(%d x %d)"),
-                                 imagefile->width,
-                                 imagefile->height);
+          size_str = gimp_image_new_get_memsize_string (imagefile->size);
+
+          enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
+          enum_value = g_enum_get_value (enum_class, imagefile->type);
+
+          if (enum_value)
+            {
+              type_str = gettext (enum_value->value_name);
+
+              str = g_strdup_printf ("%d x %d (%s, %s)",
+                                     imagefile->width,
+                                     imagefile->height,
+                                     size_str,
+                                     type_str);
+            }
+          else
+            {
+              str = g_strdup_printf ("%d x %d (%s)",
+                                     imagefile->width,
+                                     imagefile->height,
+                                     size_str);
+            }
+
+          g_free (size_str);
 
           gtk_label_set_text (GTK_LABEL (open_options_label), str);
           g_free (str);

@@ -141,6 +141,29 @@ gimp_image_base_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_image_type_enum_values[] =
+{
+  { GIMP_RGB_IMAGE, N_("RGB"), "rgb-image" },
+  { GIMP_RGBA_IMAGE, N_("RGB-Alpha"), "rgba-image" },
+  { GIMP_GRAY_IMAGE, N_("Grayscale"), "gray-image" },
+  { GIMP_GRAYA_IMAGE, N_("Grayscale-Alpha"), "graya-image" },
+  { GIMP_INDEXED_IMAGE, N_("Indexed"), "indexed-image" },
+  { GIMP_INDEXEDA_IMAGE, N_("Indexed-Alpha"), "indexeda-image" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_image_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpImageType", gimp_image_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_preview_size_enum_values[] =
 {
   { GIMP_PREVIEW_SIZE_NONE, N_("None"), "none" },
