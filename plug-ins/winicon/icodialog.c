@@ -255,6 +255,8 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
   gint          w, h;
   guchar       *buffer;
   gboolean      result;
+  GimpDrawable *drawable = gimp_drawable_get (layer);
+  GimpDrawable *tmp;
 
   tmp_image = gimp_image_new (gimp_drawable_width (layer),
                               gimp_drawable_height (layer),
@@ -267,14 +269,17 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
                               GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (tmp_image, tmp_layer, 0);
 
-  gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get (layer),
-                       0, 0, w, h, TRUE, FALSE);
-  gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-                       0, 0, w, h, TRUE, FALSE);
+  tmp = gimp_drawable_get (tmp_layer);
+
+  gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
 
   buffer = g_malloc (w * h * 4);
   gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
   gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+
+  gimp_drawable_detach (tmp);
+  gimp_drawable_detach (drawable);
 
   if (bpp < 32)
     {
@@ -287,11 +292,12 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
                                            "dummy");
     }
 
+  gimp_image_delete (tmp_image);
+
   preview = ico_specs_dialog_get_layer_preview (dialog, layer);
   ico_fill_preview_with_thumb (preview, tmp_layer);
   gtk_widget_queue_draw (preview);
 
-  gimp_image_delete (tmp_image);
   g_free (buffer);
 }
 

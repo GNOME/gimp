@@ -1,5 +1,13 @@
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/main.[ch] (ico_image_get_reduced_buf)
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icoload.c
+	* plug-ins/winicon/icosave.c: fixed drawable handling. This
+	plug-in is still a complete mess and needs a lot more work.
+
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): only
 	show the Incremental toggle for tools that use it (bug #159306).
 

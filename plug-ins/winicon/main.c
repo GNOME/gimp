@@ -291,6 +291,9 @@ ico_image_reduce_layer_bpp (guint32 layer,
 
   if (bpp <= 8)
     {
+      GimpDrawable *drawable = gimp_drawable_get (layer);
+      GimpDrawable *tmp;
+
       buffer = g_new (guchar, w * h * 4);
 
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
@@ -299,10 +302,11 @@ ico_image_reduce_layer_bpp (guint32 layer,
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
                                   GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-      gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get (layer),
-                           0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-                           0, 0, w, h, TRUE, FALSE);
+
+      tmp = gimp_drawable_get (tmp_layer);
+
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable,  0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
       gimp_image_add_layer (tmp_image, tmp_layer, 0);
@@ -317,15 +321,15 @@ ico_image_reduce_layer_bpp (guint32 layer,
 
       gimp_image_convert_rgb (tmp_image);
 
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-                           0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_pixel_rgn_set_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_init (&src_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, drawable,  0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
 
+      gimp_drawable_detach (tmp);
       gimp_image_delete (tmp_image);
 
-      gimp_drawable_update (layer, 0, 0, w ,h);
-      /* WTF! What else can I do to make the layer dialog update??? */
+      gimp_drawable_detach (drawable);
 
       g_free (buffer);
     }
@@ -337,8 +341,7 @@ ico_image_get_reduced_buf (guint32   layer,
                            gint      bpp,
                            gint     *num_colors,
                            guchar  **cmap_out,
-                           guchar  **buf_out,
-                           gint     *buf_bpp)
+                           guchar  **buf_out)
 {
   GimpPixelRgn    src_pixel_rgn, dst_pixel_rgn;
   gint32          tmp_image;
@@ -346,8 +349,7 @@ ico_image_get_reduced_buf (guint32   layer,
   gint            w, h;
   guchar         *buffer;
   guchar         *cmap;
-  gboolean        result;
-  GimpDrawable   *drawable;
+  GimpDrawable   *drawable = gimp_drawable_get (layer);
 
   w = gimp_drawable_width (layer);
   h = gimp_drawable_height (layer);
@@ -358,27 +360,33 @@ ico_image_get_reduced_buf (guint32   layer,
 
   if (bpp <= 8)
     {
+      GimpDrawable *tmp;
+
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
                                   gimp_drawable_height (layer),
                                   GIMP_RGB);
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
-                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-      gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get(layer),
-                           0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-                           0, 0, w, h, TRUE, FALSE);
+                                  gimp_drawable_type (layer),
+                                  100, GIMP_NORMAL_MODE);
+
+      tmp = gimp_drawable_get (tmp_layer);
+
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_drawable_flush (tmp);
+
       gimp_image_add_layer (tmp_image, tmp_layer, 0);
 
-      result = gimp_image_convert_indexed (tmp_image,
-                                           GIMP_FS_DITHER,
-                                           GIMP_MAKE_PALETTE,
-                                           1 << bpp,
-                                           TRUE,
-                                           FALSE,
-                                           "dummy");
+      gimp_image_convert_indexed (tmp_image,
+                                  GIMP_FS_DITHER,
+                                  GIMP_MAKE_PALETTE,
+                                  1 << bpp,
+                                  TRUE,
+                                  FALSE,
+                                  "dummy");
 
       cmap = gimp_image_get_colormap (tmp_image, num_colors);
 
@@ -388,44 +396,39 @@ ico_image_get_reduced_buf (guint32   layer,
           /* Damn. Windows icons with color maps need the color black.
              We need to eliminate one more color to make room for black: */
 
-          result = gimp_image_convert_rgb (tmp_image);
+          gimp_image_convert_rgb (tmp_image);
 
-          gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-                               0, 0, w, h, TRUE, FALSE);
+          gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, TRUE, FALSE);
           gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+          gimp_drawable_flush (tmp);
 
-          result = gimp_image_convert_indexed (tmp_image,
-                                               GIMP_FS_DITHER,
-                                               GIMP_MAKE_PALETTE,
-                                               (1 << bpp) - 1,
-                                               TRUE,
-                                               FALSE,
-                                               "dummy");
+          gimp_image_convert_indexed (tmp_image,
+                                      GIMP_FS_DITHER,
+                                      GIMP_MAKE_PALETTE,
+                                      (1 << bpp) - 1,
+                                      TRUE,
+                                      FALSE,
+                                      "dummy");
+
+          cmap = gimp_image_get_colormap (tmp_image, num_colors);
+          *cmap_out = g_memdup (cmap, *num_colors * 3);
+
+          gimp_image_convert_rgb (tmp_image);
         }
 
-      cmap = gimp_image_get_colormap (tmp_image, num_colors);
-      *cmap_out = g_memdup (cmap, *num_colors * 3);
-
-      result = gimp_image_convert_rgb (tmp_image);
-
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
-                           0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
       gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
 
-      drawable = gimp_drawable_get (tmp_layer);
-      *buf_bpp = drawable->bpp;
-
+      gimp_drawable_detach (tmp);
       gimp_image_delete (tmp_image);
     }
   else
     {
-      gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (layer),
-                           0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
       gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-
-      drawable = gimp_drawable_get (layer);
-      *buf_bpp = drawable->bpp;
     }
+
+  gimp_drawable_detach (drawable);
 
   *buf_out = buffer;
 }
@@ -452,14 +455,16 @@ ico_get_layer_num_colors (gint32    layer,
   gint            x, y, w, h, alpha, num_colors = 0;
   guint32        *buffer = NULL, *color;
   GHashTable     *hash;
+  GimpDrawable   *drawable = gimp_drawable_get (layer);
 
   w = gimp_drawable_width (layer);
   h = gimp_drawable_height (layer);
   buffer = g_new (gint32, w * h);
 
-  gimp_pixel_rgn_init (&pixel_rgn, gimp_drawable_get (layer),
-                       0, 0, w, h, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
   gimp_pixel_rgn_get_rect (&pixel_rgn, (guchar*) buffer, 0, 0, w, h);
+
+  gimp_drawable_detach (drawable);
 
   hash = g_hash_table_new (g_int_hash, g_int_equal);
   *uses_alpha_levels = FALSE;

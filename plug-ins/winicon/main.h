@@ -102,8 +102,7 @@ void     ico_image_get_reduced_buf  (guint32    layer,
                                      gint       bpp,
                                      gint      *num_colors,
                                      guchar   **cmap,
-                                     guchar   **buffer,
-                                     gint      *buf_bpp);
+                                     guchar   **buffer);
 gint     ico_get_layer_num_colors   (gint32     layer,
                                      gboolean  *uses_alpha_levels);
 void     ico_cleanup                (MsIcon    *ico);

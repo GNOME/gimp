@@ -453,7 +453,7 @@ ico_init_data (MsIcon *ico,
   MsIconEntry    *entry;
   MsIconData     *data;
   gint            and_len, xor_len, palette_index, x, y;
-  gint            num_colors = 0, num_colors_used = 0, buf_bpp, black_index;
+  gint            num_colors = 0, num_colors_used = 0, black_index;
   guchar         *buffer = NULL, *pixel;
   guint32        *buffer32;
   guchar         *palette;
@@ -479,8 +479,7 @@ ico_init_data (MsIcon *ico,
      data->header_size, data->width, data->height, data->planes, data->bpp));
 
   /* Reduce colors in copy of image */
-  ico_image_get_reduced_buf (layer, bpp, &num_colors_used,
-                             &palette, &buffer, &buf_bpp);
+  ico_image_get_reduced_buf (layer, bpp, &num_colors_used, &palette, &buffer);
   buffer32 = (guint32 *) buffer;
 
   /* Set up colormap and andmap when necessary: */

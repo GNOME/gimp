@@ -483,7 +483,7 @@ ico_to_gimp (MsIcon *ico)
                                0, 0, drawable->width, drawable->height);
 
       g_free(dest_vec);
-      gimp_drawable_flush (drawable);
+
       gimp_drawable_detach (drawable);
     }
 
