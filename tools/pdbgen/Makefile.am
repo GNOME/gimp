@@ -116,7 +116,7 @@ stamp-script-fu: $(srcdir)/script-fu.pl enums.pl util.pl
 	rootme=`pwd`; \
 	destdir=`cd $(top_srcdir)/plug-ins/script-fu && pwd`; export destdir; \
 	cd $(srcdir) && \
-	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \	
+	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \
 	  $(PERL) script-fu.pl \
 	 && echo timestamp > $$rootme/stamp-script-fu
 
