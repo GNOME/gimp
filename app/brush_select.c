@@ -137,6 +137,7 @@ brush_select_new ()
 
   /*  The shell and main vbox  */
   bsp->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
   gtk_window_set_policy(GTK_WINDOW(bsp->shell), TRUE, TRUE, FALSE);
   vbox = gtk_vbox_new (FALSE, 1);

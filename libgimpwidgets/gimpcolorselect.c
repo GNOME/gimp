@@ -175,6 +175,7 @@ color_select_new (int                  r,
   color_select_update_pos (csp);
 
   csp->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (csp->shell), "color_selection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (csp->shell), "Color Selection");
   gtk_window_set_policy (GTK_WINDOW (csp->shell), FALSE, FALSE, FALSE);
   gtk_widget_set_uposition (csp->shell, color_select_x, color_select_y);

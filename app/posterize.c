@@ -285,6 +285,7 @@ posterize_new_dialog ()
 
   /*  The shell and main vbox  */
   pd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (pd->shell), "posterize", "Gimp");
   gtk_window_set_title (GTK_WINDOW (pd->shell), "Posterize");
 
   gtk_signal_connect (GTK_OBJECT (pd->shell), "delete_event",

@@ -326,6 +326,8 @@ gdisplay_close_warning_dialog (char     *image_name,
   menus_set_sensitive ("<Image>/File/Close", FALSE);
 
   warning_dialog = mbox = gtk_dialog_new ();
+  /* should this be imaeg_window or the actual image naem??? */
+  gtk_window_set_wmclass (GTK_WINDOW (mbox), "image_window", "Gimp");
   gtk_window_set_title (GTK_WINDOW (mbox), image_name);
   gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);

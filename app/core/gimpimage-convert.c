@@ -308,6 +308,7 @@ convert_to_indexed (void *gimage_ptr)
   dialog->monopal_flag = FALSE;
   dialog->reusepal_flag = FALSE;
   dialog->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (dialog->shell), "indexed_color_conversion", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog->shell), "Indexed Color Conversion");
   gtk_signal_connect (GTK_OBJECT (dialog->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (indexed_delete_callback),

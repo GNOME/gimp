@@ -1999,6 +1999,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
        */
       layer -> mode =NORMAL;
       bottom = layer;
+
     }
 
   while (reverse_list)

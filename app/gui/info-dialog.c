@@ -83,6 +83,7 @@ info_dialog_new (char *title)
   idialog->field_list = NULL;
 
   shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
   gtk_widget_set_uposition (shell, info_x, info_y);
 

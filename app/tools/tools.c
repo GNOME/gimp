@@ -378,6 +378,7 @@ tools_options_dialog_new ()
 
   /*  The shell and main vbox  */
   options_shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options_shell), "Tool Options");
   gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
   gtk_widget_set_uposition (options_shell, tool_options_x, tool_options_y);

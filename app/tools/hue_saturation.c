@@ -447,6 +447,7 @@ hue_saturation_new_dialog ()
 
   /*  The shell and main vbox  */
   hsd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (hsd->shell), "hue_saturation", "Gimp");
   gtk_window_set_title (GTK_WINDOW (hsd->shell), "Hue-Saturation");
   
   /* handle the wm close signal */

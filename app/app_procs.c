@@ -137,6 +137,7 @@ make_initialization_status_window(void)
       GtkWidget *vbox;
 
       win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+      gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
       gtk_window_set_title(GTK_WINDOW(win_initstatus),
 			   "GIMP Startup");
 
@@ -223,8 +224,11 @@ app_init ()
   if (gimp_dir[0] != '\000')
     {
       sprintf (filename, "%s/gtkrc", gimp_dir);
+
+      if (be_verbose == TRUE)
       g_print ("parsing \"%s\"\n", filename);
       app_init_update_status("Resource configuration", filename, -1);
+
       gtk_rc_parse (filename);
     }
 
@@ -367,6 +371,7 @@ really_quit_dialog ()
   menus_set_sensitive ("<Image>/File/Quit", FALSE);
 
   dialog = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog), "Really Quit?");
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);

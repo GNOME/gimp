@@ -477,6 +477,7 @@ file_open_callback (GtkWidget *w,
     {
       fileload = gtk_file_selection_new ("Load Image");
       gtk_window_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
+      gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button), "clicked",
 			  (GtkSignalFunc) file_cancel_callback, fileload);
       gtk_signal_connect (GTK_OBJECT (fileload), "delete_event",
@@ -561,6 +562,7 @@ file_save_as_callback (GtkWidget *w,
   if (!filesave)
     {
       filesave = gtk_file_selection_new ("Save Image");
+      gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button), "clicked",
 			  (GtkSignalFunc) file_cancel_callback, filesave);
@@ -961,6 +963,7 @@ file_overwrite (char *filename, char* raw_filename)
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
   overwrite_box->obox = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "fiel_exists", "Gimp");
   gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), "File Exists!");
   gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 

@@ -129,6 +129,7 @@ indexed_palette_create (int gimage_id)
 
       /*  The shell and main vbox  */
       indexedP->shell = gtk_dialog_new ();
+      gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
       gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
       gtk_window_add_accelerator_table (GTK_WINDOW (indexedP->shell), table);
 

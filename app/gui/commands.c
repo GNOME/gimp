@@ -312,6 +312,7 @@ file_new_cmd_callback (GtkWidget *widget,
     vals->type = RGB;    /* no indexed images */
 
   vals->dlg = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->dlg), "New Image");
   gtk_window_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
 
@@ -995,6 +996,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
       prefs_dlg = gtk_dialog_new ();
+      gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
       gtk_window_set_title (GTK_WINDOW (prefs_dlg), "Preferences");
 
       /* handle the wm close signal */
@@ -2109,6 +2111,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   /*  the dialog  */
   image_resize->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (image_resize->shell), "image_resize", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_resize->shell), "Image Resize");
   gtk_window_set_policy (GTK_WINDOW (image_resize->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
@@ -2155,6 +2158,7 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   /*  the dialog  */
   image_scale->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (image_scale->shell), "image_scale", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_scale->shell), "Image Scale");
   gtk_window_set_policy (GTK_WINDOW (image_scale->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);

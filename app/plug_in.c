@@ -304,6 +304,7 @@ plug_in_init ()
   g_print ("Starting extensions: ");
   app_init_update_status("Extensions", "", 0);
   nplugins = g_slist_length(tmp); nth = 0;
+
   while (tmp)
     {
       proc_def = tmp->data;
@@ -313,9 +314,11 @@ plug_in_init ()
 	  (proc_def->db_info.num_args == 0) &&
 	  (proc_def->db_info.proc_type == PDB_EXTENSION))
 	{
+
 	  g_print ("%s ", proc_def->db_info.name);
 	  app_init_update_status(NULL, proc_def->db_info.name,
 				 nth/nplugins);
+
 	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE);
 	}
     }
@@ -2861,6 +2864,7 @@ plug_in_progress_init (PlugIn *plug_in,
   if (!plug_in->progress)
     {
       plug_in->progress = gtk_dialog_new ();
+      gtk_window_set_wmclass (GTK_WINDOW (plug_in->progress), "plug_in_progress", "Gimp");
       gtk_window_set_title (GTK_WINDOW (plug_in->progress), prune_filename (plug_in->args[0]));
       gtk_widget_set_uposition (plug_in->progress, progress_x, progress_y);
       gtk_signal_connect (GTK_OBJECT (plug_in->progress), "destroy",

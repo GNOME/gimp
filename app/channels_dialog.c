@@ -518,7 +518,7 @@ channels_dialog_set_menu_sensitivity ()
   /* lower channel */
   gtk_widget_set_sensitive (channels_ops[2].widget, !fs_sensitive && aux_sensitive);
   /* duplicate channel */
-  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive && aux_sensitive);
+  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive );
   /* delete channel */
   gtk_widget_set_sensitive (channels_ops[4].widget, !fs_sensitive && aux_sensitive);
   /* channel to selection */
@@ -1722,6 +1722,7 @@ channels_dialog_new_channel_query (int gimage_id)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "new_channel_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "New Channel Options");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -1895,6 +1896,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_channel_atributes", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), "Edit Channel Attributes");
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 

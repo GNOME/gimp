@@ -440,6 +440,7 @@ curves_new_dialog ()
 
   /*  The shell and main vbox  */
   cd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (cd->shell), "curves", "Gimp");
   gtk_window_set_title (GTK_WINDOW (cd->shell), "Curves");
 
   gtk_signal_connect (GTK_OBJECT (cd->shell), "delete_event",

@@ -383,6 +383,7 @@ color_balance_new_dialog ()
 
   /*  The shell and main vbox  */
   cbd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (cbd->shell), "color_balance", "Gimp");
   gtk_window_set_title (GTK_WINDOW (cbd->shell), "Color Balance");
   
   /* handle the wm close signal */

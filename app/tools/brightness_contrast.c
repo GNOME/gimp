@@ -329,6 +329,7 @@ brightness_contrast_new_dialog ()
 
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bcd->shell), "Brightness-Contrast");
   
   /* handle wm close signal */
