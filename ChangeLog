@@ -1,3 +1,8 @@
+Wed Jul  1 09:59:58 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* fix for properly detecting shared lib support on
+	SunPro cc (taken from libtool 1.2.a)
+
 Sat Jun 27 23:34:00 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gpc/Makefile.am
