@@ -39,7 +39,8 @@
 
 static GimpActionEntry buffers_actions[] =
 {
-  { "buffers-popup", GIMP_STOCK_BUFFER, N_("Buffers Menu") },
+  { "buffers-popup", GIMP_STOCK_BUFFER, N_("Buffers Menu"), NULL, NULL, NULL,
+    GIMP_HELP_BUFFER_DIALOG },
 
   { "buffers-paste", GTK_STOCK_PASTE,
     N_("_Paste Buffer"), "", NULL,

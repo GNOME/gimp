@@ -35,26 +35,23 @@
 
 static GimpActionEntry dialogs_actions[] =
 {
-  { "dialogs-menu", NULL,
-    N_("_Dialogs") },
-
-  { "dialogs-new-dock-menu", NULL,
-    N_("Create New Doc_k") },
+  { "dialogs-menu",          NULL, N_("_Dialogs")         },
+  { "dialogs-new-dock-menu", NULL, N_("Create New Doc_k") },
 
   { "dialogs-new-dock-lcp", NULL,
     N_("_Layers, Channels & Paths"), NULL, NULL,
     G_CALLBACK (dialogs_create_lc_cmd_callback),
-    NULL },
+    GIMP_HELP_DOCK },
 
   { "dialogs-new-dock-data", NULL,
     N_("_Brushes, Patterns & Gradients"), NULL, NULL,
     G_CALLBACK (dialogs_create_data_cmd_callback),
-    NULL },
+    GIMP_HELP_DOCK },
 
   { "dialogs-new-dock-stuff", NULL,
     N_("_Misc. Stuff"), NULL, NULL,
     G_CALLBACK (dialogs_create_stuff_cmd_callback),
-    NULL },
+    GIMP_HELP_DOCK },
 
   { "dialogs-toolbox", NULL,
     N_("Tool_box"), NULL, NULL,

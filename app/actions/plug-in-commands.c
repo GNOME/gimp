@@ -34,7 +34,6 @@
 #include "plug-in/plug-in-proc.h"
 
 #include "widgets/gimpdock.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
 

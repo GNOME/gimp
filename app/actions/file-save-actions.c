@@ -43,7 +43,8 @@
 
 static GimpActionEntry file_save_actions[] =
 {
-  { "file-save-popup", NULL, N_("File Save Menu") },
+  { "file-save-popup", NULL, N_("File Save Menu"), NULL, NULL, NULL,
+    GIMP_HELP_FILE_SAVE },
 
   { "file-save-by-extension", NULL,
     N_("By Extension"), NULL, NULL,

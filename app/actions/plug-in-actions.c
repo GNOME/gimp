@@ -40,7 +40,6 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
-#include "widgets/gimppluginaction.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -287,31 +286,26 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   if (p1 && p2)
     {
-      gchar            *label;
-      GimpPlugInAction *action;
+      GimpPlugInActionEntry  entry;
+      gchar                 *label;
 
       label = p2 + 1;
+
+      entry.name        = proc_def->db_info.name;
+      entry.stock_id    = NULL;
+      entry.label       = label;
+      entry.accelerator = proc_def->accelerator;
+      entry.tooltip     = NULL;
+      entry.proc_def    = proc_def;
+      entry.help_id     = help_id;
 
 #if 0
       g_print ("adding plug-in action '%s' (%s)\n",
                proc_def->db_info.name, label);
 #endif
 
-      action = gimp_plug_in_action_new (proc_def->db_info.name,
-                                        label, NULL, NULL,
-                                        proc_def);
-
-      g_signal_connect (action, "selected",
-                        G_CALLBACK (plug_in_run_cmd_callback),
-                        group->user_data);
-
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              proc_def->accelerator);
-
-      g_object_unref (action);
-
-      g_free (help_id);
+      gimp_action_group_add_plug_in_actions (group, &entry, 1,
+                                             G_CALLBACK (plug_in_run_cmd_callback));
 
       *p1 = '\0';
       *p2 = '\0';
@@ -321,6 +315,8 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       g_free (path_original);
       g_free (path_translated);
     }
+
+  g_free (help_id);
 }
 
 void

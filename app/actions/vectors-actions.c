@@ -40,7 +40,8 @@
 
 static GimpActionEntry vectors_actions[] =
 {
-  { "vectors-popup", GIMP_STOCK_PATHS, N_("Paths Menu") },
+  { "vectors-popup", GIMP_STOCK_PATHS, N_("Paths Menu"), NULL, NULL, NULL,
+    GIMP_HELP_PATH_DIALOG },
 
   { "vectors-path-tool", GIMP_STOCK_TOOL_PATH,
     N_("Path _Tool"), NULL, NULL,

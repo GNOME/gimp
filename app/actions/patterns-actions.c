@@ -41,7 +41,8 @@
 
 static GimpActionEntry patterns_actions[] =
 {
-  { "patterns-popup", GIMP_STOCK_PATTERN, N_("Patterns Menu") },
+  { "patterns-popup", GIMP_STOCK_PATTERN, N_("Patterns Menu"), NULL, NULL, NULL,
+    GIMP_HELP_PATTERN_DIALOG },
 
   { "patterns-edit", GIMP_STOCK_EDIT,
     N_("_Edit Pattern..."), NULL, NULL,

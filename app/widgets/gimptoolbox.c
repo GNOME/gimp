@@ -607,17 +607,13 @@ static void
 toolbox_create_tools (GimpToolbox *toolbox,
                       GimpContext *context)
 {
-#if 0
-  FIXME
-  GimpItemFactory *item_factory;
-#endif
-  GimpToolInfo    *active_tool;
-  GList           *list;
-  GSList          *group = NULL;
+  GimpUIManager *ui_manager;
+  GimpToolInfo  *active_tool;
+  GList         *list;
+  GSList        *group = NULL;
 
-#if 0
-  item_factory = gimp_item_factory_from_path ("<Image>");
-#endif
+  ui_manager = gimp_ui_managers_from_name ("<Image>")->data;
+  gimp_ui_manager_ui_get (ui_manager, "/image-popup");
 
   active_tool = gimp_context_get_tool (context);
 
@@ -667,54 +663,47 @@ toolbox_create_tools (GimpToolbox *toolbox,
                         toolbox);
 
 #if 0
-      if (item_factory)
+      if (ui_manager)
         {
-          GtkWidget *menu_item;
-          gchar     *menu_path;
+          GimpActionGroup *group;
+          GtkAction       *action;
+          const gchar     *identifier;
+          gchar           *tmp;
+          gchar           *name;
+          GClosure        *accel_closure;
+          GtkAccelGroup   *accel_group;
 
-          menu_path = gimp_strip_uline (tool_info->menu_path);
+          identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
-          menu_item =
-            gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
-                                         menu_path);
+          tmp = g_strndup (identifier + strlen ("gimp-"),
+                           strlen (identifier) - strlen ("gimp--tool"));
+          name = g_strdup_printf ("tools-%s", tmp);
+          g_free (tmp);
 
-          g_free (menu_path);
+          group = gimp_ui_manager_get_action_group (ui_manager, "tools");
+          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
 
-          if (menu_item)
-            {
-              GList *accel_closures;
+          g_free (name);
 
-              accel_closures = gtk_widget_list_accel_closures (menu_item);
+          accel_closure = gtk_action_get_accel_closure (action);
 
-              if (g_list_length (accel_closures) != 1)
-                {
-                  g_warning (G_STRLOC ": FIXME: g_list_length (accel_closures) != 1");
-                }
-              else
-                {
-                  GClosure      *accel_closure;
-                  GtkAccelGroup *accel_group;
+          g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
+                             accel_closure);
 
-                  accel_closure = (GClosure *) accel_closures->data;
+          accel_group =
+            gtk_accel_group_from_accel_closure (accel_closure);
 
-                  g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
-                                     accel_closure);
+          g_signal_connect (accel_group, "accel_changed",
+                            G_CALLBACK (gimp_toolbox_button_accel_changed),
+                            button);
 
-                  accel_group = gtk_accel_group_from_accel_closure (accel_closure);
-
-                  g_signal_connect (accel_group, "accel_changed",
-                                    G_CALLBACK (gimp_toolbox_button_accel_changed),
-                                    button);
-
-                  gimp_toolbox_button_accel_changed (accel_group,
-                                                     0, 0,
-                                                     accel_closure,
-                                                     button);
-                }
-
-              g_list_free (accel_closures);
-            }
+          gimp_toolbox_button_accel_changed (accel_group,
+                                             0, 0,
+                                             accel_closure,
+                                             button);
         }
+#else
+      gimp_help_set_help_data (button, tool_info->help, tool_info->help_id);
 #endif
     }
 }

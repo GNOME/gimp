@@ -35,7 +35,6 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
-#include "gimpitemfactory.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 

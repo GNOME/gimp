@@ -26,7 +26,6 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"

@@ -42,7 +42,6 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
 

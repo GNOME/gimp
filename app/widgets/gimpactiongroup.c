@@ -32,6 +32,7 @@
 
 #include "gimpactiongroup.h"
 #include "gimpenumaction.h"
+#include "gimppluginaction.h"
 #include "gimppreview.h"
 #include "gimpstringaction.h"
 
@@ -453,6 +454,38 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
       action = gimp_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].stock_id,
                                        entries[i].value);
+
+      if (callback)
+        g_signal_connect (action, "selected",
+                          callback,
+                          group->user_data);
+
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+					      GTK_ACTION (action),
+					      entries[i].accelerator);
+      g_object_unref (action);
+    }
+}
+
+void
+gimp_action_group_add_plug_in_actions (GimpActionGroup       *group,
+                                       GimpPlugInActionEntry *entries,
+                                       guint                  n_entries,
+                                       GCallback              callback)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+
+  for (i = 0; i < n_entries; i++)
+    {
+      GimpPlugInAction *action;
+
+      action = gimp_plug_in_action_new (entries[i].name,
+                                        entries[i].label,
+                                        entries[i].tooltip,
+                                        entries[i].stock_id,
+                                        entries[i].proc_def);
 
       if (callback)
         g_signal_connect (action, "selected",

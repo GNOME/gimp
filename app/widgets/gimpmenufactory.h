@@ -30,17 +30,9 @@ typedef struct _GimpMenuFactoryEntry GimpMenuFactoryEntry;
 
 struct _GimpMenuFactoryEntry
 {
-  gchar                     *identifier;
-  gchar                     *title;
-  gchar                     *help_id;
-  GimpItemFactorySetupFunc   setup_func;
-  GimpItemFactoryUpdateFunc  update_func;
-  gboolean                   update_on_popup;
-  guint                      n_entries;
-  GimpItemFactoryEntry      *entries;
-
-  GList                     *action_groups;
-  GList                     *managed_uis;
+  gchar *identifier;
+  GList *action_groups;
+  GList *managed_uis;
 };
 
 
@@ -73,23 +65,6 @@ GType             gimp_menu_factory_get_type      (void) G_GNUC_CONST;
 
 GimpMenuFactory * gimp_menu_factory_new           (Gimp              *gimp,
                                                    GimpActionFactory *action_factory);
-
-void              gimp_menu_factory_menu_register (GimpMenuFactory *factory,
-                                                   const gchar     *identifier,
-                                                   const gchar     *title,
-                                                   const gchar     *help_id,
-                                                   GimpItemFactorySetupFunc   setup_func,
-                                                   GimpItemFactoryUpdateFunc  update_func,
-                                                   gboolean                   update_on_popup,
-                                                   guint                 n_entries,
-                                                   GimpItemFactoryEntry *entries);
-
-GimpItemFactory * gimp_menu_factory_menu_new      (GimpMenuFactory *factory,
-                                                   const gchar     *identifier,
-                                                   GType            container_type,
-                                                   gpointer         callback_data,
-                                                   gboolean         create_tearoff);
-
 
 void           gimp_menu_factory_manager_register (GimpMenuFactory *factory,
                                                    const gchar     *identifier,

@@ -30,6 +30,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "images-actions.h"
 #include "images-commands.h"
@@ -39,7 +40,8 @@
 
 static GimpActionEntry images_actions[] =
 {
-  { "images-popup", GIMP_STOCK_IMAGES, N_("Images Menu") },
+  { "images-popup", GIMP_STOCK_IMAGES, N_("Images Menu"), NULL, NULL, NULL,
+    GIMP_HELP_IMAGE_DIALOG },
 
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
     N_("_Raise Views"), "", NULL,
@@ -80,9 +82,9 @@ images_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("images-raise-views",  image);
-  SET_SENSITIVE ("images-new-view",     image);
-  SET_SENSITIVE ("images-delete", image && image->disp_count == 0);
+  SET_SENSITIVE ("images-raise-views", image);
+  SET_SENSITIVE ("images-new-view",    image);
+  SET_SENSITIVE ("images-delete",      image && image->disp_count == 0);
 
 #undef SET_SENSITIVE
 }

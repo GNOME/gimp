@@ -45,7 +45,8 @@
 
 static GimpActionEntry layers_actions[] =
 {
-  { "layers-popup", GIMP_STOCK_LAYERS, N_("Layers Menu")   },
+  { "layers-popup", GIMP_STOCK_LAYERS, N_("Layers Menu"), NULL, NULL, NULL,
+    GIMP_HELP_LAYER_DIALOG },
 
   { "layers-menu",              NULL, N_("_Layer")        },
   { "layers-stack-menu",        NULL, N_("Stac_k")        },

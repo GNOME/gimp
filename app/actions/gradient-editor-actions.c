@@ -42,7 +42,9 @@
 
 static GimpActionEntry gradient_editor_actions[] =
 {
-  { "gradient-editor-popup", GIMP_STOCK_GRADIENT, N_("Gradient Editor Menu") },
+  { "gradient-editor-popup", GIMP_STOCK_GRADIENT, N_("Gradient Editor Menu"),
+    NULL, NULL, NULL,
+    GIMP_HELP_GRADIENT_EDITOR_DIALOG },
 
   { "gradient-editor-load-left-color",  NULL, N_("_Load Left Color From")  },
   { "gradient-editor-save-left-color",  NULL, N_("_Save Left Color To")    },

@@ -33,7 +33,6 @@
 
 #include "gimpactionfactory.h"
 #include "gimpmenufactory.h"
-#include "gimpitemfactory.h"
 #include "gimpuimanager.h"
 
 
@@ -103,8 +102,6 @@ gimp_menu_factory_finalize (GObject *object)
       GList                *uis;
 
       g_free (entry->identifier);
-      g_free (entry->title);
-      g_free (entry->help_id);
 
       g_list_foreach (entry->action_groups, (GFunc) g_free, NULL);
       g_list_free (entry->action_groups);
@@ -147,154 +144,63 @@ gimp_menu_factory_new (Gimp              *gimp,
 }
 
 void
-gimp_menu_factory_menu_register (GimpMenuFactory           *factory,
-                                 const gchar               *identifier,
-                                 const gchar               *title,
-                                 const gchar               *help_id,
-                                 GimpItemFactorySetupFunc   setup_func,
-                                 GimpItemFactoryUpdateFunc  update_func,
-                                 gboolean                   update_on_popup,
-                                 guint                      n_entries,
-                                 GimpItemFactoryEntry      *entries)
-{
-  GimpMenuFactoryEntry *entry;
-
-  g_return_if_fail (GIMP_IS_MENU_FACTORY (factory));
-  g_return_if_fail (identifier != NULL);
-  g_return_if_fail (title != NULL);
-  g_return_if_fail (help_id != NULL);
-  g_return_if_fail (entries == NULL || n_entries > 0);
-
-  entry = g_new0 (GimpMenuFactoryEntry, 1);
-
-  entry->identifier      = g_strdup (identifier);
-  entry->title           = g_strdup (title);
-  entry->help_id         = g_strdup (help_id);
-  entry->setup_func      = setup_func;
-  entry->update_func     = update_func;
-  entry->update_on_popup = update_on_popup ? TRUE : FALSE;
-  entry->n_entries       = n_entries;
-  entry->entries         = entries;
-
-  factory->registered_menus = g_list_prepend (factory->registered_menus, entry);
-}
-
-GimpItemFactory *
-gimp_menu_factory_menu_new (GimpMenuFactory *factory,
-                            const gchar     *identifier,
-                            GType            container_type,
-                            gpointer         callback_data,
-                            gboolean         create_tearoff)
-{
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (factory), NULL);
-  g_return_val_if_fail (identifier != NULL, NULL);
-
-  for (list = factory->registered_menus; list; list = g_list_next (list))
-    {
-      GimpMenuFactoryEntry *entry = list->data;
-
-      if (! strcmp (entry->identifier, identifier))
-        {
-          GimpItemFactory *item_factory;
-
-          item_factory = gimp_item_factory_new (factory->gimp,
-                                                container_type,
-                                                entry->identifier,
-                                                entry->title,
-                                                entry->help_id,
-                                                entry->update_func,
-                                                entry->update_on_popup,
-                                                entry->n_entries,
-                                                entry->entries,
-                                                callback_data,
-                                                create_tearoff);
-
-          if (entry->setup_func)
-            entry->setup_func (item_factory, callback_data);
-
-          return item_factory;
-        }
-    }
-
-  g_warning ("%s: no entry registered for \"%s\"",
-             G_STRFUNC, identifier);
-
-  return NULL;
-}
-
-void
 gimp_menu_factory_manager_register (GimpMenuFactory *factory,
                                     const gchar     *identifier,
                                     const gchar     *first_group,
                                     ...)
 {
-  GList *list;
+  GimpMenuFactoryEntry *entry;
+  const gchar          *group;
+  const gchar          *ui_path;
+  va_list               args;
 
   g_return_if_fail (GIMP_IS_MENU_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (first_group != NULL);
 
-  for (list = factory->registered_menus; list; list = g_list_next (list))
+  entry = g_new0 (GimpMenuFactoryEntry, 1);
+
+  entry->identifier = g_strdup (identifier);
+
+  factory->registered_menus = g_list_prepend (factory->registered_menus, entry);
+
+  va_start (args, first_group);
+
+  for (group = first_group;
+       group;
+       group = va_arg (args, const gchar *))
     {
-      GimpMenuFactoryEntry *entry = list->data;
-
-      if (! strcmp (entry->identifier, identifier))
-        {
-          const gchar            *group;
-          const gchar            *ui_path;
-          const gchar            *ui_basename;
-          GimpUIManagerSetupFunc  setup_func;
-          va_list                 args;
-
-          g_return_if_fail (entry->action_groups == NULL);
-
-          va_start (args, first_group);
-
-          for (group = first_group;
-               group;
-               group = va_arg (args, const gchar *))
-            {
-              entry->action_groups = g_list_prepend (entry->action_groups,
-                                                     g_strdup (group));
-            }
-
-          entry->action_groups = g_list_reverse (entry->action_groups);
-
-          ui_path = va_arg (args, const gchar *);
-
-          while (ui_path)
-            {
-              GimpUIManagerUIEntry *ui_entry;
-
-              ui_basename = va_arg (args, const gchar *);
-              setup_func  = va_arg (args, GimpUIManagerSetupFunc);
-
-              ui_entry = g_new0 (GimpUIManagerUIEntry, 1);
-
-              ui_entry->ui_path    = g_strdup (ui_path);
-              ui_entry->basename   = g_strdup (ui_basename);
-              ui_entry->setup_func = setup_func;
-              ui_entry->merge_id   = 0;
-              ui_entry->widget     = NULL;
-
-              entry->managed_uis = g_list_prepend (entry->managed_uis,
-                                                   ui_entry);
-
-              ui_path = va_arg (args, const gchar *);
-            }
-
-          entry->managed_uis = g_list_reverse (entry->managed_uis);
-
-          va_end (args);
-
-          return;
-        }
+      entry->action_groups = g_list_prepend (entry->action_groups,
+                                             g_strdup (group));
     }
 
-  g_warning ("%s: no entry registered for \"%s\"",
-             G_STRFUNC, identifier);
+  entry->action_groups = g_list_reverse (entry->action_groups);
+
+  ui_path = va_arg (args, const gchar *);
+
+  while (ui_path)
+    {
+      const gchar            *ui_basename;
+      GimpUIManagerSetupFunc  setup_func;
+      GimpUIManagerUIEntry   *ui_entry;
+
+      ui_basename = va_arg (args, const gchar *);
+      setup_func  = va_arg (args, GimpUIManagerSetupFunc);
+
+      ui_entry = g_new0 (GimpUIManagerUIEntry, 1);
+
+      ui_entry->ui_path    = g_strdup (ui_path);
+      ui_entry->basename   = g_strdup (ui_basename);
+      ui_entry->setup_func = setup_func;
+
+      entry->managed_uis = g_list_prepend (entry->managed_uis, ui_entry);
+
+      ui_path = va_arg (args, const gchar *);
+    }
+
+  entry->managed_uis = g_list_reverse (entry->managed_uis);
+
+  va_end (args);
 }
 
 GimpUIManager *

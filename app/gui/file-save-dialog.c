@@ -36,7 +36,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
 #include "dialogs.h"

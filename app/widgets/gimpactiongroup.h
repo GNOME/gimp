@@ -113,6 +113,18 @@ struct _GimpStringActionEntry
   const gchar *help_id;
 };
 
+struct _GimpPlugInActionEntry
+{
+  const gchar   *name;
+  const gchar   *stock_id;
+  const gchar   *label;
+  const gchar   *accelerator;
+  const gchar   *tooltip;
+  PlugInProcDef *proc_def;
+
+  const gchar   *help_id;
+};
+
 
 GType            gimp_action_group_get_type (void);
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
@@ -143,6 +155,10 @@ void   gimp_action_group_add_enum_actions   (GimpActionGroup       *group,
                                              GCallback              callback);
 void   gimp_action_group_add_string_actions (GimpActionGroup       *group,
                                              GimpStringActionEntry *entries,
+                                             guint                  n_entries,
+                                             GCallback              callback);
+void   gimp_action_group_add_plug_in_actions(GimpActionGroup       *group,
+                                             GimpPlugInActionEntry *entries,
                                              guint                  n_entries,
                                              GCallback              callback);
 

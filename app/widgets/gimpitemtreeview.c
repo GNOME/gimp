@@ -45,8 +45,6 @@
 #include "gimpcellrenderertoggle.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
-#include "gimpitemtreeview.h"
-#include "gimpitemfactory.h"
 #include "gimplayertreeview.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrenderer.h"

@@ -38,11 +38,10 @@ typedef struct _GimpDockbookClass  GimpDockbookClass;
 
 struct _GimpDockbook
 {
-  GtkNotebook      parent_instance;
+  GtkNotebook    parent_instance;
 
-  GimpDock        *dock;
-  GimpItemFactory *item_factory;
-  GimpUIManager   *ui_manager;
+  GimpDock      *dock;
+  GimpUIManager *ui_manager;
 };
 
 struct _GimpDockbookClass

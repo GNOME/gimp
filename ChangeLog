@@ -1,3 +1,44 @@
+2004-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/*-actions.c: added help IDs to all actions
+	representing the toplevel popups and menus (as fallbacks for the
+	still-to-be-written help system intrgration of GimpUIManager).
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): removed
+	call to gtk_ui_manager_ensure_update() because that's done by
+	gimp_ui_manager_ui_get() now.
+
+	* app/widgets/gimpmenufactory.[ch]: removed API to register and
+	create item factories.
+
+	* app/gui/menus.c: changed accordingly.
+
+	* app/gui/dialogs.c
+	* app/actions/plug-in-commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-save-dialog.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockbook.[ch]
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpitemtreeview.c: removed leftover item factory
+	cruft.
+
+	* app/widgets/widgets-types.h: removed item factory typedefs...
+
+	* app/widgets/gimpitemfactory.h: ...and added them here.
+
+	* app/widgets/gimpactiongroup.[ch]: added new function
+	gimp_action_group_add_plug_in_actions().
+
+	* app/actions/plug-in-actions.c: use it here instead of adding
+	the actions manually.
+
+	* app/widgets/gimptoolbox.c: ported the code which dynamically
+	updates the tool button tooltips on accelerator changes to
+	GtkAction. Disabled the whole stuff because GTK+ lacks
+	gtk_action_get_accel_closure().
+
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
 	* menus/Makefile.am: added a rule to generate gtkuimanager XML

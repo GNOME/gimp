@@ -22,6 +22,17 @@
 G_BEGIN_DECLS
 
 
+typedef struct _GimpItemFactory GimpItemFactory;
+
+
+typedef void (* GimpItemFactorySetupFunc)  (GimpItemFactory *factory,
+                                            gpointer         callback_data);
+typedef void (* GimpItemFactoryUpdateFunc) (GtkItemFactory  *factory,
+                                            gpointer         update_data);
+
+
+typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
+
 struct _GimpItemFactoryEntry
 {
   GtkItemFactoryEntry  entry;
@@ -41,7 +52,7 @@ struct _GimpItemFactoryEntry
 #define GIMP_ITEM_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_FACTORY, GimpItemFactoryClass))
 
 
-typedef struct _GimpItemFactoryClass  GimpItemFactoryClass;
+typedef struct _GimpItemFactoryClass GimpItemFactoryClass;
 
 struct _GimpItemFactory
 {

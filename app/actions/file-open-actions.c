@@ -43,7 +43,8 @@
 
 static GimpActionEntry file_open_actions[] =
 {
-  { "file-open-popup", NULL, N_("File Open Menu") },
+  { "file-open-popup", NULL, N_("File Open Menu"), NULL, NULL, NULL,
+    GIMP_HELP_FILE_OPEN },
 
   { "file-open-automatic", NULL,
     N_("Automatic"), NULL, NULL,

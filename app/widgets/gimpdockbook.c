@@ -37,7 +37,6 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreview.h"
 
@@ -199,9 +198,8 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
-  dockbook->dock         = NULL;
-  dockbook->item_factory = NULL;
-  dockbook->ui_manager   = NULL;
+  dockbook->dock       = NULL;
+  dockbook->ui_manager = NULL;
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
@@ -216,12 +214,6 @@ static void
 gimp_dockbook_finalize (GObject *object)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
-
-  if (dockbook->item_factory)
-    {
-      g_object_unref (dockbook->item_factory);
-      dockbook->item_factory = NULL;
-    }
 
   if (dockbook->ui_manager)
     {
@@ -321,12 +313,6 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
-
-  dockbook->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                       "<Dialogs>",
-                                                       GTK_TYPE_MENU,
-                                                       dockbook,
-                                                       FALSE);
 
   dockbook->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                         "<Dialogs>",

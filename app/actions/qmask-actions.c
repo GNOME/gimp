@@ -40,7 +40,8 @@
 
 static GimpActionEntry qmask_actions[] =
 {
-  { "qmask-popup", NULL, N_("QMask Menu") },
+  { "qmask-popup", NULL, N_("QMask Menu"), NULL, NULL, NULL,
+    GIMP_HELP_QMASK },
 
   { "qmask-configure", NULL,
     N_("_Configure Color and Opacity..."), NULL, NULL,

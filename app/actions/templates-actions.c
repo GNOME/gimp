@@ -39,7 +39,9 @@
 
 static GimpActionEntry templates_actions[] =
 {
-  { "templates-popup", GIMP_STOCK_TEMPLATE, N_("Templates Menu") },
+  { "templates-popup", GIMP_STOCK_TEMPLATE, N_("Templates Menu"),
+    NULL, NULL, NULL,
+    GIMP_HELP_TEMPLATE_DIALOG },
 
   { "templates-create-image", GIMP_STOCK_IMAGE,
     N_("_Create Image from Template..."), "", NULL,

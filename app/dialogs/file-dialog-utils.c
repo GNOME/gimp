@@ -23,7 +23,7 @@
 
 #include "gui-types.h"
 
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpactiongroup.h"
 
 #include "file-dialog-utils.h"
 
@@ -32,9 +32,18 @@ void
 file_dialog_show (GtkWidget *dialog,
                   GtkWidget *parent)
 {
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save", FALSE);
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
+  GList *list;
+
+  for (list = gimp_action_groups_from_name ("file");
+       list;
+       list = g_list_next (list))
+    {
+      GimpActionGroup *group = list->data;
+
+      gimp_action_group_set_action_sensitive (group, "file-save",        FALSE);
+      gimp_action_group_set_action_sensitive (group, "file-save-as",     FALSE);
+      gimp_action_group_set_action_sensitive (group, "file-save-a-copy", FALSE);
+    }
 
   gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (parent));
   gtk_window_present (GTK_WINDOW (dialog));
@@ -43,9 +52,18 @@ file_dialog_show (GtkWidget *dialog,
 void
 file_dialog_hide (GtkWidget *dialog)
 {
+  GList *list;
+
   gtk_widget_hide (dialog);
 
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save", TRUE);
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", TRUE);
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", TRUE);
+  for (list = gimp_action_groups_from_name ("file");
+       list;
+       list = g_list_next (list))
+    {
+      GimpActionGroup *group = list->data;
+
+      gimp_action_group_set_action_sensitive (group, "file-save",        TRUE);
+      gimp_action_group_set_action_sensitive (group, "file-save-as",     TRUE);
+      gimp_action_group_set_action_sensitive (group, "file-save-a-copy", TRUE);
+    }
 }

@@ -37,7 +37,6 @@
 
 #include "gimpdataeditor.h"
 #include "gimpdocked.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
 
