@@ -42,7 +42,7 @@
  *  (98/06/06)  v0.9   fixed a stupid bug in the dialog
  *  (99/08/12)  v0.9.1 somebody changed the dialog;
  *                     unset the image name and set the resolution
- *  (99/09/01)  v0.9.2 try to fix a bug 
+ *  (99/09/01)  v0.9.2 tried to fix a bug 
  */
 
 #include <stdio.h>
@@ -54,16 +54,10 @@
 #endif
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
-#define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.9.2 (99/09/01)"
-#define PLUG_IN_MENU_PATH   "<Toolbox>/File/Acquire/Screen Shot..."
-#define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
-#define PLUG_IN_COPYRIGHT   "Sven Neumann"
-#define PLUG_IN_DESCRIBTION "Create a screenshot of a single window or the whole screen"
-#define PLUG_IN_HELP        "This extension serves as a simple frontend to the X-window utility xwd and the xwd-file-plug-in. After specifying some options, xwd is called, the user selects a window, and the resulting image is loaded into the gimp. Alternatively the whole screen can be grabbed. When called non-interactively it may grab the root window or use the window-id passed as a parameter."
 
 #define NUMBER_IN_ARGS 3
 #define IN_ARGS { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },\
@@ -149,12 +143,18 @@ static void query (void)
 
   /* the actual installation of the plugin */
   gimp_install_procedure (PLUG_IN_NAME,
-			  PLUG_IN_DESCRIBTION,
-			  PLUG_IN_HELP,
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  PLUG_IN_MENU_PATH,
+			  _("Creates a screenshot of a single window or the whole screen"),
+			  _("This extension serves as a simple frontend to the X-window "
+			    "utility xwd and the xwd-file-plug-in. After specifying some " 
+			    "options, xwd is called, the user selects a window, and the "
+			    "resulting image is loaded into the gimp. Alternatively the "
+			    "whole screen can be grabbed. When called non-interactively "
+			    "it may grab the root window or use the window-id passed as "
+			    "a parameter."),
+			  "Sven Neumann <sven@gimp.org>",
+			  "1998, 1999 Sven Neumann",
+			  "v0.9.2 (99/09/01)",
+			  _("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  PROC_EXTENSION,		
 			  nargs,
@@ -373,6 +373,7 @@ shoot_dialog (void)
   GtkWidget *vbox;
   GtkWidget *button;
   GtkWidget *hbox;
+  GtkWidget *hbbox;
   GtkWidget *label;
   GSList    *radio_group = NULL;
   GtkAdjustment *adj;
@@ -396,29 +397,34 @@ shoot_dialog (void)
 
   /* Main Dialog */
   dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), PLUG_IN_PRINT_NAME);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Screen Shot"));
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
 		      (GtkSignalFunc) shoot_close_callback,
 		      NULL);
   /*  Action area  */
-  button = gtk_button_new_with_label ("Grab");
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
+  button = gtk_button_new_with_label (_("Grab"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) shoot_ok_callback,
                       dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), 
-		      button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), 
-		      button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  Single Window */
@@ -443,7 +449,7 @@ shoot_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.single_button), 
 				   radio_pressed[0]);
   gtk_widget_show (shootint.single_button);
-  label = gtk_label_new ( "Grab a single window" );
+  label = gtk_label_new (_("Grab a single window"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   gtk_widget_show (hbox);
@@ -451,7 +457,7 @@ shoot_dialog (void)
   /* with decorations */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  shootint.decor_button = gtk_check_button_new_with_label ("Include decorations");
+  shootint.decor_button = gtk_check_button_new_with_label (_("Include decorations"));
   gtk_signal_connect (GTK_OBJECT (shootint.decor_button), "toggled",
                       (GtkSignalFunc) shoot_toggle_update,
                       &decorations);
@@ -484,7 +490,7 @@ shoot_dialog (void)
 		       &radio_pressed[1]);
   gtk_widget_show (shootint.root_button);
 
-  label = gtk_label_new ("Grab the whole screen");
+  label = gtk_label_new (_("Grab the whole screen"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -497,7 +503,7 @@ shoot_dialog (void)
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
 		      hbox, TRUE, TRUE, 2);
-  label = gtk_label_new ("after");
+  label = gtk_label_new (_("after"));
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
   gtk_widget_show (label);
  
@@ -506,7 +512,7 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX(hbox), shootint.delay_spinner, FALSE, TRUE, 0);
   gtk_widget_show(shootint.delay_spinner);
 
-  label = gtk_label_new ("seconds delay");
+  label = gtk_label_new (_("seconds delay"));
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
   gtk_widget_show (label);
 

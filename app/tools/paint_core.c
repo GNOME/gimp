@@ -1766,7 +1766,7 @@ set_undo_tiles (GimpDrawable *drawable,
 
   if (undo_tiles == NULL) 
     {
-      g_warning (_("set_undo_tiles: undo_tiles is null"));
+      g_warning ("set_undo_tiles: undo_tiles is null");
       return;
     }
 

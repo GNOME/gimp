@@ -30,6 +30,8 @@
 #include <gtk-xmhtml/gtk-xmhtml.h>
 #include <gdk/gdkkeysyms.h>
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 #include "queue.h"
 
 /*  pixmaps  */
@@ -85,38 +87,38 @@ typedef struct
 /*  constant strings  */
 
 static char *doc_not_found_format_string =
-"<html><head><title>Document not found</title></head>"
-"<body bgcolor=\"#ffffff\">"
-"<center>"
-"<p>"
-"%s"
-"<h3>Couldn't find document</h3>"
-"<tt>%s</tt>"
-"</center>"
-"<p>"
-"<small>This either means that the help for this topic has not been written yet "
-"or that something is wrong with your installation. Please check carefully "
-"before you report this as a bug.</small>" 
-"</body>"
-"</html>";
+_("<html><head><title>Document not found</title></head>"
+  "<body bgcolor=\"#ffffff\">"
+  "<center>"
+  "<p>"
+  "%s"
+  "<h3>Couldn't find document</h3>"
+  "<tt>%s</tt>"
+  "</center>"
+  "<p>"
+  "<small>This either means that the help for this topic has not been written "
+  "yet or that something is wrong with your installation. "
+  "Please check carefully before you report this as a bug.</small>" 
+  "</body>"
+  "</html>");
 
 static char *dir_not_found_format_string =
-"<html><head><title>Directory not found</title></head>"
-"<body bgcolor=\"#ffffff\">"
-"<center>"
-"<p>"
-"%s"
-"<h3>Couldn't change to directory</h3>"
-"<tt>%s</tt>"
-"<h3>while trying to access</h3>"
-"<tt>%s</tt>"
-"</center>"
-"<p>"
-"<small>This either means that the help for this topic has not been written yet "
-"or that something is wrong with your installation. Please check carefully "
-"before you report this as a bug.</small>" 
-"</body>"
-"</html>";
+_("<html><head><title>Directory not found</title></head>"
+  "<body bgcolor=\"#ffffff\">"
+  "<center>"
+  "<p>"
+  "%s"
+  "<h3>Couldn't change to directory</h3>"
+  "<tt>%s</tt>"
+  "<h3>while trying to access</h3>"
+  "<tt>%s</tt>"
+  "</center>"
+  "<p>"
+  "<small>This either means that the help for this topic has not been written "
+  "yet or that something is wrong with your installation. "
+  "Please check carefully before you report this as a bug.</small>" 
+  "</body>"
+  "</html>");
 
 static gchar *eek_png_tag = "<h1>Eeek!</h1>";
 
@@ -127,7 +129,7 @@ static HelpPage pages[] =
 {
   {
     CONTENTS,
-    "Contents",
+    N_("Contents"),
     NULL,
     NULL,
     NULL,
@@ -136,7 +138,7 @@ static HelpPage pages[] =
 
   {
     INDEX,
-    "Index",
+    N_("Index"),
     NULL,
     NULL,
     NULL,
@@ -145,7 +147,7 @@ static HelpPage pages[] =
 
   {
     HELP,
-    "Help",
+    NULL,
     NULL,
     NULL,
     NULL,
@@ -393,7 +395,7 @@ html_source (HelpPage *page,
     {
       title = XmHTMLGetTitle (page->html);
       if (!title)
-	title = ("<Untitled>");
+	title = (_("<Untitled>"));
       
       if (add_to_history)
 	history_add (ref, title);
@@ -730,8 +732,8 @@ open_browser_dialog (gchar *path)
 
   if (chdir (root_dir) == -1)
     {
-      gimp_message ("GIMP Help Browser Error.\n\n"
-		    "Couldn't find my root html directory.");
+      gimp_message (_("GIMP Help Browser Error.\n\n"
+		      "Couldn't find my root html directory."));
       return FALSE;
     }
 
@@ -751,7 +753,7 @@ open_browser_dialog (gchar *path)
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      GTK_SIGNAL_FUNC (close_callback), NULL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "gimp_help_browser", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (window), "GIMP Help Browser");
+  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -763,14 +765,14 @@ open_browser_dialog (gchar *path)
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 0);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
-  back_button = pixmap_button_new (back_xpm, "Back", window);
+  back_button = pixmap_button_new (back_xpm, _("Back"), window);
   gtk_container_add (GTK_CONTAINER (bbox), back_button);
   gtk_widget_set_sensitive (GTK_WIDGET (back_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (back_button), "clicked",
 		      GTK_SIGNAL_FUNC (back_callback), NULL);
   gtk_widget_show (back_button);
 
-  forward_button = pixmap_button_new (forward_xpm, "Forward", window);
+  forward_button = pixmap_button_new (forward_xpm, _("Forward"), window);
   gtk_container_add (GTK_CONTAINER (bbox), forward_button);
   gtk_widget_set_sensitive (GTK_WIDGET (forward_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (forward_button), "clicked",
@@ -782,7 +784,7 @@ open_browser_dialog (gchar *path)
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label (_("Close"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -819,7 +821,7 @@ open_browser_dialog (gchar *path)
 	case CONTENTS:
 	case INDEX:
 	  title = drag_source = gtk_event_box_new ();
-	  label = gtk_label_new (pages[i].label);
+	  label = gtk_label_new (gettext (pages[i].label));
 	  gtk_container_add (GTK_CONTAINER (title), label);
 	  gtk_widget_show (label);
 	  break;
@@ -836,10 +838,11 @@ open_browser_dialog (gchar *path)
 	  gtk_widget_show (combo);
 	  break;
 	default:
+	  title = drag_source = NULL;     /* to please the compiler */
 	  break;
 	}	  
 
-      /*  connect to the button_press signal to make notebook switching working */ 
+      /*  connect to the button_press signal to make notebook switching work */ 
       gtk_signal_connect (GTK_OBJECT (title), "button_press_event",
 			  GTK_SIGNAL_FUNC (notebook_label_button_press_callback), 
 			  GUINT_TO_POINTER (i));
@@ -1055,8 +1058,9 @@ query ()
   static int nreturn_vals = 0;
 
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
-                          "Browse the GIMP help pages.",
-                          "",
+                          _("Browse the GIMP help pages"),
+                          _("A small and simple HTML browser optimzed for "
+			    "browsing the GIMP help pages."),
                           "Sven Neumann <sven@gimp.org>, "
 			  "Michael Natterer <mitschel@cs.tu-berlin.de>",
 			  "Sven Neumann & Michael Natterer",
@@ -1104,14 +1108,16 @@ run (char    *name,
 	    path = g_strdup (param[1].data.d_string);
           break;
         default:
+	  path = NULL;
+	  status = STATUS_CALLING_ERROR;
           break;
         }
 
-      g_strdelimit (path, "/", G_DIR_SEPARATOR);
-
       if (status == STATUS_SUCCESS)
         {
-          if (!open_url (path))
+	  g_strdelimit (path, "/", G_DIR_SEPARATOR);
+
+       	  if (!open_url (path))
             values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	  else
 	    values[0].data.d_status = STATUS_SUCCESS;
@@ -1119,8 +1125,8 @@ run (char    *name,
 	  g_free (path);
         }
       else
-        values[0].data.d_status = STATUS_EXECUTION_ERROR;
+        values[0].data.d_status = status;
     }
   else
-    g_assert_not_reached ();
+    values[0].data.d_status = STATUS_CALLING_ERROR;
 }

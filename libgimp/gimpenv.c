@@ -23,7 +23,6 @@
 #include <glib.h>
 #include <string.h>
 #include "gimpenv.h"
-#include "gimpintl.h"
 
 #ifdef G_OS_WIN32
 #define STRICT
@@ -83,7 +82,7 @@ gimp_directory ()
       else
 	{
 #ifndef G_OS_WIN32
-	  g_message (_("warning: no home directory."));
+	  g_message ("warning: no home directory.");
 #endif
 	  gimp_dir = g_strconcat (gimp_data_directory (),
 				  G_DIR_SEPARATOR_S,

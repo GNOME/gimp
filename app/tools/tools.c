@@ -735,7 +735,7 @@ ToolInfo tool_info[] =
     N_("/Image/Histogram..."),
     NULL,
     NULL,
-    N_("View image historgam"),
+    N_("View image histogram"),
     "tools/histogram.html",
     HISTOGRAM,
     tools_new_histogram_tool,

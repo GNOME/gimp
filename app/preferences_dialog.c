@@ -250,7 +250,7 @@ file_prefs_ok_callback (GtkWidget *widget,
   if (default_xresolution < GIMP_MIN_RESOLUTION ||
       default_yresolution < GIMP_MIN_RESOLUTION)
     {
-      g_message (_("Error: default resolution must not be zero."));
+      g_message (_("Error: Default resolution must not be zero."));
       default_xresolution = old_default_xresolution;
       default_yresolution = old_default_yresolution;
       return;

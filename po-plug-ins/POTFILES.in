@@ -21,8 +21,8 @@ plug-ins/common/bumpmap.c
 plug-ins/common/bz2.c
 plug-ins/common/c_astretch.c
 plug-ins/common/checkerboard.c
-plug-ins/common/colorify.c
 plug-ins/common/color_enhance.c
+plug-ins/common/colorify.c
 plug-ins/common/colortoalpha.c
 plug-ins/common/compose.c
 plug-ins/common/convmatrix.c
@@ -30,10 +30,13 @@ plug-ins/common/cubism.c
 plug-ins/common/decompose.c
 plug-ins/common/depthmerge.c
 plug-ins/common/destripe.c
+plug-ins/common/film.c
 plug-ins/common/gif.c
 plug-ins/common/gifload.c
 plug-ins/common/grid.c
-plug-ins/common/film.c
+plug-ins/common/guillotine.c
+plug-ins/common/jpeg.c
+plug-ins/common/lic.c
 plug-ins/common/mail.c
 plug-ins/common/mapcolor.c
 plug-ins/common/normalize.c
@@ -42,7 +45,9 @@ plug-ins/common/oilify.c
 plug-ins/common/papertile.c
 plug-ins/common/png.c
 plug-ins/common/ps.c
+plug-ins/common/psp.c
 plug-ins/common/rotate.c
+plug-ins/common/screenshot.c
 plug-ins/common/threshold_alpha.c
 plug-ins/common/warp.c
 plug-ins/common/xbm.c
@@ -63,6 +68,10 @@ plug-ins/gap/gap_range_ops.c
 plug-ins/gap/gap_resi_dialog.c
 plug-ins/gap/gap_split.c
 plug-ins/gap/resize.c
+plug-ins/gdyntext/charmap.c
+plug-ins/gdyntext/charmap_window.c
+plug-ins/gdyntext/font_selection.c
+plug-ins/gdyntext/message_window.c
 plug-ins/gimpressionist/brush.c
 plug-ins/gimpressionist/color.c
 plug-ins/gimpressionist/general.c
@@ -78,6 +87,7 @@ plug-ins/gimpressionist/preview.c
 plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
+plug-ins/helpbrowser/helpbrowser.c
 plug-ins/ifscompose/ifscompose.c
 plug-ins/imagemap/imap_about.c
 plug-ins/imagemap/imap_circle.c
@@ -132,7 +142,6 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
 libgimp/gimpcolorbutton.c
-libgimp/gimpenv.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c
 libgimp/gimpunit.c

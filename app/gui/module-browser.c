@@ -607,10 +607,10 @@ mod_load (module_info *mod,
 
       if (mod->last_module_error)
 	g_free (mod->last_module_error);
-      mod->last_module_error = g_strdup (_("missing module_init() symbol"));
+      mod->last_module_error = g_strdup ("missing module_init() symbol");
 
       if (verbose)
-	g_warning (_("%s: module_init() symbol not found"), mod->fullpath);
+	g_warning ("%s: module_init() symbol not found", mod->fullpath);
 
       g_module_close (mod->module);
       mod->module = NULL;

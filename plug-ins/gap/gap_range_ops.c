@@ -326,7 +326,7 @@ p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
 
   p_init_arr_arg(&argv[3], WGT_INT_PAIR);
   argv[3].constraint = TRUE;
-  argv[3].label_txt = _("Number ofColors");
+  argv[3].label_txt = _("Number of Colors");
   argv[3].help_txt  = _("Number of resulting Colors		 \n(ignored if Palette Type is not Generate optimal palette)");
   argv[3].int_min   = 2;
   argv[3].int_max   = 256;

@@ -201,7 +201,7 @@ airbrush_paint_func (PaintCore    *paint_core,
       /* timer_state = OFF; */
       if (timer_state == ON)
       {
-	g_warning (_("killing stray timer, please report to lewing@gimp.org"));
+	g_warning ("killing stray timer, please report to lewing@gimp.org");
 	gtk_timeout_remove (timer);
       }
       timer_state = OFF;

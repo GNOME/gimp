@@ -1,3 +1,9 @@
+Mon Nov 22 23:20:27 MET 1999  Sven Neumann <sven@gimp.org>
+
+        * de.po: updated
+        I have only updated the worst fuzzy translations and tried to make
+        the menu entries consistent. Still much work to do...
+	
 1999-11-19  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

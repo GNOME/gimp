@@ -1,3 +1,23 @@
+Mon Nov 22 23:29:16 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/airbrush.c
+	* app/devices.c
+	* app/menus.c
+	* app/module_db.c
+	* app/paint_core.c
+	* app/preferences_dialog.c
+	* app/tools.c
+	* po-plug-ins/POTFILES.in
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/screenshot.c
+	* libgimp/gimpenv.c
+	* libgimp/gimpunitmenu.c: internationalization stuff:
+	Fixed a few typos, internationalized some plug-ins, removed the
+	_() from a few strings that are only debugging messages. 
+	And the rotate plug-ins are now put into a sane order in the menus.
+
 Mon Nov 22 13:18:40 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/channel_ops.c: Disabled the copy-on-write for gimage

@@ -439,8 +439,8 @@ devices_rc_update (gchar        *name,
 	}
       else
 	{
-	  g_warning (_("devices_rc_update called multiple times "
-		       "for not present device\n"));
+	  g_warning ("devices_rc_update called multiple times "
+		     "for not present device\n");
 	  return;
 	}
     }
