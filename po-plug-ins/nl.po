@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-11-21 20:30+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -1250,7 +1250,7 @@ msgstr "Niet herkend of ongeldig BMP compressieformaat."
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1706,7 +1706,7 @@ msgid "Random seed"
 msgstr "Willekeurige beginwaarde"
 
 # What is the Dutch translation of the term 'Hue'?
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr "_Kleurtoon"
@@ -1717,7 +1717,7 @@ msgid "Sat_uration"
 msgstr "_Verzadiging"
 
 # What is the Dutch translation of the term 'Value'?
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 msgid "_Value"
 msgstr "_Waarde"
 
@@ -3204,18 +3204,18 @@ msgid "Decomposing..."
 msgstr "Bezig met ontleden..."
 
 # What is the Dutch translation of the term 'Decompose'?
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr "Ontleden"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 #, fuzzy
 msgid "Extract Channels"
 msgstr "Verdeel in kanalen:"
 
 # What is the Dutch translation of the term 'Decompose'?
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "Ontleden naar lagen"
@@ -3801,8 +3801,7 @@ msgstr "Meer sat.:"
 msgid "Less Sat:"
 msgstr "Minder sat.:"
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 msgid "Current:"
 msgstr "Huidig:"
 
@@ -3819,123 +3818,119 @@ msgstr "Converteer de afbeelding eerst naar RGB!"
 msgid "Applying the Filter Pack..."
 msgstr "Bezig Filterpak toe te passen..."
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr "Voor en na"
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 msgid "Original:"
 msgstr "Origineel:"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 msgid "Hue Variations"
 msgstr "Hue-variaties"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 msgid "Roughness"
 msgstr "Ruwheid"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 msgid "Affected Range"
 msgstr "Beïnvloed bereik"
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 msgid "Sha_dows"
 msgstr "Schaduwen"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 msgid "_Midtones"
 msgstr "Midtonen"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 msgid "H_ighlights"
 msgstr "Hoge lichten"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 msgid "Windows"
 msgstr "Vensters"
 
 # What is the Dutch translation of the term 'Saturation'?
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 msgid "_Saturation"
 msgstr "Verzadiging:"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 msgid "A_dvanced"
 msgstr "Geavanceerd"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 msgid "Value Variations"
 msgstr "Value-variaties"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 msgid "Saturation Variations"
 msgstr "Saturation-variaties"
 
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 msgid "Select Pixels by"
 msgstr "Selecteer pixels op"
 
 # What is the Dutch translation of this phrase?
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 msgid "H_ue"
 msgstr "Kleurtoon"
 
 # What is the Dutch translation of the term 'Saturation'?
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 msgid "Satu_ration"
 msgstr "Verzadiging"
 
 # What is the Dutch translation of the term 'Value'?
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 msgid "V_alue"
 msgstr "Waarde"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 msgid "Show"
 msgstr "Laat zien"
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 msgid "_Entire Image"
 msgstr "Volledige afbeelding"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 msgid "Se_lection Only"
 msgstr "Alleen selectie"
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 msgid "Selec_tion In Context"
 msgstr "Selectie in context"
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 msgid "Filter Pack Simulation"
 msgstr "Filterpaksimulatie"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 msgid "Shadows:"
 msgstr "Schaduwen:"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 msgid "Midtones:"
 msgstr "Midtonen:"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 msgid "Highlights:"
 msgstr "Hoge lichten:"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 msgid "Advanced Filter Pack Options"
 msgstr "Geavanceerde Filterpakopties"
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr "Gladheid van aliasing"
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 msgid "Preview as You Drag"
 msgstr "Vooruitblik bij slepen"
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 msgid "Preview Size"
 msgstr "Vooruitblikgrootte"
 
@@ -12353,6 +12348,9 @@ msgstr "Fout: kan XJT-eigenschapsbestand '%s' niet lezen."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
+
+#~ msgid "Before and After"
+#~ msgstr "Voor en na"
 
 #, fuzzy
 #~ msgid "Gfig layer %d"

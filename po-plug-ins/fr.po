@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 2.2.0pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-11-13 17:52+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -1227,7 +1227,7 @@ msgstr "Format de compression BMP inconnu ou non valide."
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1641,7 +1641,7 @@ msgstr "Fixer la graine"
 msgid "Random seed"
 msgstr "Graine aléatoire"
 
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr "_Teinte"
@@ -1650,7 +1650,7 @@ msgstr "_Teinte"
 msgid "Sat_uration"
 msgstr "_Saturation"
 
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 msgid "_Value"
 msgstr "Va_leur"
 
@@ -3055,16 +3055,16 @@ msgstr "_Décomposer..."
 msgid "Decomposing..."
 msgstr "Décomposition..."
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr "Décomposer"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 msgid "Extract Channels"
 msgstr "Extraire les canaux :"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 msgid "Decompose to _layers"
 msgstr "Decomposer en ca_lques"
 
@@ -3610,8 +3610,7 @@ msgstr "Plus de saturation :"
 msgid "Less Sat:"
 msgstr "Moins de saturation :"
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 msgid "Current:"
 msgstr "Courant :"
 
@@ -3627,119 +3626,115 @@ msgstr "Veuillez d'abord convertir l'image en RVB."
 msgid "Applying the Filter Pack..."
 msgstr "Application du paquet de filtres..."
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr "Avant et après"
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 msgid "Original:"
 msgstr "Original :"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 msgid "Hue Variations"
 msgstr "Variations de teinte"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 msgid "Roughness"
 msgstr "Rugosité"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 msgid "Affected Range"
 msgstr "Intervalle affecté"
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 msgid "Sha_dows"
 msgstr "Tons _sombres"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 msgid "_Midtones"
 msgstr "Tons _moyens"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 msgid "H_ighlights"
 msgstr "Tons _clairs"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 msgid "Windows"
 msgstr "Fenêtres"
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 msgid "_Saturation"
 msgstr "_Saturation"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 msgid "A_dvanced"
 msgstr "_Avancé"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 msgid "Value Variations"
 msgstr "Variations de valeur"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 msgid "Saturation Variations"
 msgstr "Variations de saturation"
 
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 msgid "Select Pixels by"
 msgstr "Sélection des Pixels par"
 
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 msgid "H_ue"
 msgstr "T_einte"
 
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 msgid "Satu_ration"
 msgstr "Satu_ration"
 
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 msgid "V_alue"
 msgstr "V_aleur"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 msgid "Show"
 msgstr "Afficher"
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 msgid "_Entire Image"
 msgstr "Ima_ge entière"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 msgid "Se_lection Only"
 msgstr "Seu_lement la sélection"
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 msgid "Selec_tion In Context"
 msgstr "Sélection dans le conte_xte"
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 msgid "Filter Pack Simulation"
 msgstr "Paquets de filtres"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 msgid "Shadows:"
 msgstr "Tons sombres :"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 msgid "Midtones:"
 msgstr "Ton moyens :"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 msgid "Highlights:"
 msgstr "Tons clairs :"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 msgid "Advanced Filter Pack Options"
 msgstr "Options avancées"
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr "Force de l'anticrénelage"
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 msgid "Preview as You Drag"
 msgstr "Aperçu lorsque l'on tire la souris"
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 msgid "Preview Size"
 msgstr "Taille de l'aperçu"
 
@@ -11785,6 +11780,9 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
+
+#~ msgid "Before and After"
+#~ msgstr "Avant et après"
 
 #~ msgid "Gfig layer %d"
 #~ msgstr "Calque Gfig %d"

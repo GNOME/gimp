@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-11-29 12:03+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1220,7 +1220,7 @@ msgstr "Oigenkänt eller felaktigt BMP-packningsformat."
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1634,7 +1634,7 @@ msgstr "Fixera frö"
 msgid "Random seed"
 msgstr "Slumpfrö"
 
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr "_Nyans"
@@ -1643,7 +1643,7 @@ msgstr "_Nyans"
 msgid "Sat_uration"
 msgstr "Mä_ttnad"
 
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 msgid "_Value"
 msgstr "_Värde"
 
@@ -3041,16 +3041,16 @@ msgstr "_Separera..."
 msgid "Decomposing..."
 msgstr "Separerar..."
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr "Separera"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 msgid "Extract Channels"
 msgstr "Extrahera kanaler"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 msgid "Decompose to _layers"
 msgstr "Separera till _lager"
 
@@ -3594,8 +3594,7 @@ msgstr "Mer mättnad:"
 msgid "Less Sat:"
 msgstr "Mindre mättnad:"
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 msgid "Current:"
 msgstr "Aktuell:"
 
@@ -3611,119 +3610,115 @@ msgstr "Konvertera bilden till RGB först!"
 msgid "Applying the Filter Pack..."
 msgstr "Applicerar filterpacken..."
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr "Före och efter"
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 msgid "Original:"
 msgstr "Orginal:"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 msgid "Hue Variations"
 msgstr "Nyansvariation"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 msgid "Roughness"
 msgstr "Skrovlighet"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 msgid "Affected Range"
 msgstr "Påverkat område"
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 msgid "Sha_dows"
 msgstr "_Skuggor"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 msgid "_Midtones"
 msgstr "_Mellantoner"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 msgid "H_ighlights"
 msgstr "_Ljuspunkter"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 msgid "Windows"
 msgstr "Fönster"
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 msgid "_Saturation"
 msgstr "_Mättnad"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 msgid "A_dvanced"
 msgstr "_Avancerat"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 msgid "Value Variations"
 msgstr "Värdevariation"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 msgid "Saturation Variations"
 msgstr "Mättnadsvariationer"
 
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 msgid "Select Pixels by"
 msgstr "Välj bildpunkter efter"
 
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 msgid "H_ue"
 msgstr "_N_yans:"
 
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 msgid "Satu_ration"
 msgstr "_Mättnad"
 
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 msgid "V_alue"
 msgstr "_Värde"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 msgid "Show"
 msgstr "Visa"
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 msgid "_Entire Image"
 msgstr "_Hela bilden"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 msgid "Se_lection Only"
 msgstr "_Endast markering"
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 msgid "Selec_tion In Context"
 msgstr "_Kontextuell markering"
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 msgid "Filter Pack Simulation"
 msgstr "Filterpacksimulering"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 msgid "Shadows:"
 msgstr "Skuggor:"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 msgid "Midtones:"
 msgstr "Mellantoner:"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 msgid "Highlights:"
 msgstr "Ljuspunkter:"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 msgid "Advanced Filter Pack Options"
 msgstr "Avancerade Filterpackinställningar"
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr "Jämnhet för aliasing"
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 msgid "Preview as You Drag"
 msgstr "Förhandsgranska medan du drar"
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 msgid "Preview Size"
 msgstr "Förhandsvisningens storlek"
 
@@ -11657,6 +11652,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil \"%s\"."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
+
+#~ msgid "Before and After"
+#~ msgstr "Före och efter"
 
 #~ msgid "Gfig layer %d"
 #~ msgstr "Gfig lager %d"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-08-08 14:19+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -1357,7 +1357,7 @@ msgstr "Непрепознат или неисправан облик компр
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1813,7 +1813,7 @@ msgstr "Поправи семе"
 msgid "Random seed"
 msgstr "Насумично семе"
 
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr "Нијанса"
@@ -1822,7 +1822,7 @@ msgstr "Нијанса"
 msgid "Sat_uration"
 msgstr "Засићење"
 
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 msgid "_Value"
 msgstr "Вредност:"
 
@@ -3377,18 +3377,18 @@ msgstr "Декомпоновање"
 msgid "Decomposing..."
 msgstr "Декомпоновање..."
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr "Декомпоновање"
 
 #
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 #, fuzzy
 msgid "Extract Channels"
 msgstr "Изведи канале:"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "Растави на slojeve"
@@ -4068,8 +4068,7 @@ msgstr "Више Сат:"
 msgid "Less Sat:"
 msgstr "Мање Сат:"
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 msgid "Current:"
 msgstr "Тренутно:"
 
@@ -4086,55 +4085,51 @@ msgstr "Конвертирај слику најприје у РГБ!"
 msgid "Applying the Filter Pack..."
 msgstr "Прихваћам Пакетни Филтер..."
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr "Прије и Касније"
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 msgid "Original:"
 msgstr "Оригинал:"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 msgid "Hue Variations"
 msgstr "Варијације Хуе"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 msgid "Roughness"
 msgstr "Црвенило"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 msgid "Affected Range"
 msgstr "Умјетно Подручје:"
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 msgid "Sha_dows"
 msgstr "Сенке"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 msgid "_Midtones"
 msgstr "Средњи тонови"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 msgid "H_ighlights"
 msgstr "Осветљеност"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 msgid "Windows"
 msgstr "Windows"
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 msgid "_Saturation"
 msgstr "Засићење"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 msgid "A_dvanced"
 msgstr "Напредно"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 msgid "Value Variations"
 msgstr "Варијације вредности"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 msgid "Saturation Variations"
 msgstr "Варијације засићења"
 
@@ -4143,67 +4138,67 @@ msgstr "Варијације засићења"
 # msgid "Select"
 # msgstr "Odabir"
 #
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 msgid "Select Pixels by"
 msgstr "Одабери Пикселе из"
 
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 msgid "H_ue"
 msgstr "Нијанса:"
 
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 msgid "Satu_ration"
 msgstr "Засићење"
 
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 msgid "V_alue"
 msgstr "вредност"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 msgid "Show"
 msgstr "Прикажи"
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 msgid "_Entire Image"
 msgstr "Цела Слика"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 msgid "Se_lection Only"
 msgstr "Само селекција"
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 msgid "Selec_tion In Context"
 msgstr "Селекција у контексту"
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 msgid "Filter Pack Simulation"
 msgstr "Симулација Пакетног Филтера"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 msgid "Shadows:"
 msgstr "Сјене:"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 msgid "Midtones:"
 msgstr "Средњи Тонови:"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 msgid "Highlights:"
 msgstr "Јака свјетла"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 msgid "Advanced Filter Pack Options"
 msgstr "Напредне Могућности Пакетног Филтера"
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr "Углађивање поравнања"
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 msgid "Preview as You Drag"
 msgstr "Преглед док превлачим"
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 msgid "Preview Size"
 msgstr "Величина прегледа"
 
@@ -12997,6 +12992,9 @@ msgstr "Грешка: Не могу прочитати XЈТ датотеку �
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Грешка: XЈТ датотека %s је празна"
+
+#~ msgid "Before and After"
+#~ msgstr "Прије и Касније"
 
 #, fuzzy
 #~ msgid "Gfig layer %d"

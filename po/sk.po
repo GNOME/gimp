@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 16:58+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-11-27 10:27Stedn Evropa (bn as)\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <<sk-i18n@lists.linux.sk>>\n"
@@ -1334,7 +1334,7 @@ msgstr "V_rátiť..."
 msgid "_Quit"
 msgstr "_Koniec"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:249
+#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -2407,29 +2407,29 @@ msgstr "_Hračky"
 msgid "Reset all Filters..."
 msgstr "Prenastaviť všetky filtre..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:363
 msgid "Repeat Last"
 msgstr "Opakovať posledný"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:365
 msgid "Re-Show Last"
 msgstr "Znovu zobraziť posledný"
 
-#: app/actions/plug-in-actions.c:344
+#: app/actions/plug-in-actions.c:349
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "O_pakovať \"%s\""
 
-#: app/actions/plug-in-actions.c:345
+#: app/actions/plug-in-actions.c:350
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "_Znovu zobraziť \"%s\""
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:193
 msgid "Reset all Filters"
 msgstr "Prenastaviť všetky Flore"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:207
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
 "Skutočne chcete anulovať všetky nastavenia nástrojov na štandardné hodnoty?"
@@ -5209,8 +5209,8 @@ msgstr "Nie je možné vytvoriť náhľad"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
-#: app/widgets/gimptemplateeditor.c:673
+#: app/widgets/gimpsizebox.c:432 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:675
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d bodov"
@@ -5687,20 +5687,20 @@ msgstr "Otvoriť umiestnenie"
 msgid "Enter location (URI):"
 msgstr "Vložiť umiestnenie (URI):"
 
-#: app/dialogs/file-save-dialog.c:160
+#: app/dialogs/file-save-dialog.c:163
 msgid "File exists"
 msgstr "Súbor existuje"
 
-#: app/dialogs/file-save-dialog.c:165
+#: app/dialogs/file-save-dialog.c:168
 msgid "_Replace"
 msgstr "Nah_radiť"
 
-#: app/dialogs/file-save-dialog.c:175
+#: app/dialogs/file-save-dialog.c:178
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Súbor s názvom '%s'  už existuje."
 
-#: app/dialogs/file-save-dialog.c:180
+#: app/dialogs/file-save-dialog.c:183
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Chcete ho nahradiť obrázkom, ktorý ukladáte?"
 
@@ -6786,28 +6786,28 @@ msgid "Print Size"
 msgstr "Veľkosť tlače:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "Ší_rka:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:227
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Výška:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_X rozlíšenie:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:279
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_Y rozlíšenie:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:272
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -9533,45 +9533,45 @@ msgstr "Nepodarilo sa načítať cestu z '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Akcia"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 msgid "Shortcut"
 msgstr "Klávesová skratka"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 msgid "Name"
 msgstr "Názov"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr "Zmena klávesovej skraty."
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr "Konflikt klávesovej skratky"
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr "_Zmeniť priradenie skratiek:"
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Skratku \"%s\" už používa \"%s\" zo skupiny \"%s\"."
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Zmena priradenia skratky spôsobí, že bude odobraná z \"%s\"."
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr "Odstránenie klávesových skratiek zlyhalo."
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr "Neplatná klávesová skratka."
 
@@ -10350,12 +10350,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neplatné UTF-8"
 
-#: app/widgets/gimpsizebox.c:451
+#: app/widgets/gimpsizebox.c:456
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:458
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10421,12 +10421,12 @@ msgstr "_Názov:"
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: app/widgets/gimptemplateeditor.c:694
+#: app/widgets/gimptemplateeditor.c:699
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: app/widgets/gimptemplateeditor.c:698
+#: app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"

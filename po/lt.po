@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-01 04:22+0200\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2005-01-01 04:25+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -2462,12 +2462,12 @@ msgstr "Kart_oti %s"
 msgid "R_e-show \"%s\""
 msgstr "Par_odyti iš naujo %s"
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:193
 #, fuzzy
 msgid "Reset all Filters"
 msgstr "Filtrai"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:207
 #, fuzzy
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Atstatyti pasirinktą filtro nustatymus į įprastas vertes"
@@ -5254,8 +5254,8 @@ msgstr "Nepavyko sukurti peržiūros"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
-#: app/widgets/gimptemplateeditor.c:673
+#: app/widgets/gimpsizebox.c:432 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:675
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d taškų"
@@ -6905,30 +6905,30 @@ msgstr "Spausdinimo dydis"
 
 #  the image size labels
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Plotis:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:227
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "Aukštis:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:363
 #, fuzzy
 msgid "_X resolution:"
 msgstr "Raiška:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:279
 #: app/widgets/gimptemplateeditor.c:370
 #, fuzzy
 msgid "_Y resolution:"
 msgstr "Raiška:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:272
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -9781,47 +9781,47 @@ msgstr "Negalima nuskaityti %d baitų iš %s: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 #, fuzzy
 msgid "Action"
 msgstr "Pridėjimas"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 #, fuzzy
 msgid "Shortcut"
 msgstr "Klavišų kombinacijos"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr ""
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr ""
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr ""
 
@@ -10617,12 +10617,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Nekorektiškas UTF-8"
 
-#: app/widgets/gimpsizebox.c:451
+#: app/widgets/gimpsizebox.c:456
 #, fuzzy, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d taškų"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:458
 #, fuzzy, c-format
 msgid "%d dpi"
 msgstr "taškų colyje"
@@ -10696,12 +10696,12 @@ msgstr "Pavadinimas:"
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: app/widgets/gimptemplateeditor.c:694
+#: app/widgets/gimptemplateeditor.c:699
 #, fuzzy, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d taškų"
 
-#: app/widgets/gimptemplateeditor.c:698
+#: app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d dpi, %s"
 msgstr ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -1325,7 +1325,7 @@ msgstr ""
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1771,7 +1771,7 @@ msgstr "씨앗(seed) 고정"
 msgid "Random seed"
 msgstr "씨앗(seed) 랜덤"
 
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 #, fuzzy
 msgid "_Hue"
@@ -1782,7 +1782,7 @@ msgstr "색도"
 msgid "Sat_uration"
 msgstr "채도"
 
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 #, fuzzy
 msgid "_Value"
 msgstr "값:"
@@ -3351,17 +3351,17 @@ msgstr "분해"
 msgid "Decomposing..."
 msgstr "분해 중..."
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr "분해"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 #, fuzzy
 msgid "Extract Channels"
 msgstr "채널 추출"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "분해: 메모리 초과"
@@ -4008,8 +4008,7 @@ msgstr "경로 이동"
 msgid "Less Sat:"
 msgstr ""
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 #, fuzzy
 msgid "Current:"
 msgstr "현재 시간"
@@ -4028,142 +4027,138 @@ msgstr ""
 msgid "Applying the Filter Pack..."
 msgstr "렌즈 적용..."
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr ""
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 #, fuzzy
 msgid "Original:"
 msgstr "원래 환경 유지"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 #, fuzzy
 msgid "Hue Variations"
 msgstr "색상 변화"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 #, fuzzy
 msgid "Roughness"
 msgstr "밝기"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 #, fuzzy
 msgid "Affected Range"
 msgstr "이미지 환경:"
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 #, fuzzy
 msgid "Sha_dows"
 msgstr "그림자 넣기"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 #, fuzzy
 msgid "_Midtones"
 msgstr "주 옵션"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 #, fuzzy
 msgid "H_ighlights"
 msgstr "하이라이트:"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 msgid "Windows"
 msgstr ""
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 #, fuzzy
 msgid "_Saturation"
 msgstr "채도:"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 #, fuzzy
 msgid "A_dvanced"
 msgstr "진보된 기능"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 #, fuzzy
 msgid "Value Variations"
 msgstr "색상 변화"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 #, fuzzy
 msgid "Saturation Variations"
 msgstr "채도 설정"
 
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 msgid "Select Pixels by"
 msgstr ""
 
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 #, fuzzy
 msgid "H_ue"
 msgstr "색조:"
 
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 #, fuzzy
 msgid "Satu_ration"
 msgstr "채도"
 
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 #, fuzzy
 msgid "V_alue"
 msgstr "값"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 msgid "Show"
 msgstr ""
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 #, fuzzy
 msgid "_Entire Image"
 msgstr "이미지 환경:"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 #, fuzzy
 msgid "Se_lection Only"
 msgstr "색상 셀렉션 대화상자"
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 #, fuzzy
 msgid "Selec_tion In Context"
 msgstr "변환할 셀렉션이 없습니다."
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 #, fuzzy
 msgid "Filter Pack Simulation"
 msgstr "필터 옵션"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 #, fuzzy
 msgid "Shadows:"
 msgstr "그림자 흐림:"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 #, fuzzy
 msgid "Midtones:"
 msgstr "방향:"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 #, fuzzy
 msgid "Highlights:"
 msgstr "하이라이트:"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 #, fuzzy
 msgid "Advanced Filter Pack Options"
 msgstr "진보된 설정"
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr ""
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 #, fuzzy
 msgid "Preview as You Drag"
 msgstr "프레임 미리보기:"
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 #, fuzzy
 msgid "Preview Size"
 msgstr "미리보기 크기"

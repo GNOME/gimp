@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 16:58+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2005-01-03 00:27+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
@@ -32,8 +32,10 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"De gebruikersinstallatie was overgeslagen, omdat de optie '--no-interface' gebruikt werd.\n"
-"Om de gebruikersinstallatie uit te voeren, start de u GIMP zonder deze optie '--no-interface'."
+"De gebruikersinstallatie was overgeslagen, omdat de optie '--no-interface' "
+"gebruikt werd.\n"
+"Om de gebruikersinstallatie uit te voeren, start de u GIMP zonder deze optie "
+"'--no-interface'."
 
 #: app/app_procs.c:289
 #, c-format
@@ -41,7 +43,10 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr "Niet in staat een testwisselbestand te openen. Voorkom gegevensverlies en controleer a.u.b. de lokatie en rechten van de wisselmap die in uw Voorkeuren staan ingesteld (op dit moment \"%s\")."
+msgstr ""
+"Niet in staat een testwisselbestand te openen. Voorkom gegevensverlies en "
+"controleer a.u.b. de lokatie en rechten van de wisselmap die in uw "
+"Voorkeuren staan ingesteld (op dit moment \"%s\")."
 
 #: app/app_procs.c:348 app/core/gimppalette-import.c:441
 #, c-format
@@ -1345,7 +1350,7 @@ msgstr "_Terugdraaien..."
 msgid "_Quit"
 msgstr "Sl_uiten"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:249
+#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1392,7 +1397,10 @@ msgstr "'%s' terugzetten naar '%s'?"
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
-msgstr "Door de afbeelding terug te zetten naar de versie die op de schijf is opgeslagen zult u alle wijzigingen verliezen, inclusief alle informatie over ongedaan maken."
+msgstr ""
+"Door de afbeelding terug te zetten naar de versie die op de schijf is "
+"opgeslagen zult u alle wijzigingen verliezen, inclusief alle informatie over "
+"ongedaan maken."
 
 #: app/actions/file-commands.c:372
 msgid "Open Image as Layer"
@@ -2437,29 +2445,29 @@ msgstr "_Speeltjes"
 msgid "Reset all Filters..."
 msgstr "Alle filters herstellen..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:363
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:365
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
-#: app/actions/plug-in-actions.c:344
+#: app/actions/plug-in-actions.c:349
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" _herhalen"
 
-#: app/actions/plug-in-actions.c:345
+#: app/actions/plug-in-actions.c:350
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "\"%s\" opnieu_w tonen"
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:193
 msgid "Reset all Filters"
 msgstr "Alle filters herstellen"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:207
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Wilt u echt alle filters herstellen naar hun standaardwaarden?"
 
@@ -5379,8 +5387,8 @@ msgstr "Kan geen vooruitblik aanmaken"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
-#: app/widgets/gimptemplateeditor.c:673
+#: app/widgets/gimpsizebox.c:432 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:675
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d pixels"
@@ -5874,20 +5882,20 @@ msgstr "Locatie openen"
 msgid "Enter location (URI):"
 msgstr "Locatie invoeren (URI):"
 
-#: app/dialogs/file-save-dialog.c:160
+#: app/dialogs/file-save-dialog.c:163
 msgid "File exists"
 msgstr "Bestand bestaat"
 
-#: app/dialogs/file-save-dialog.c:165
+#: app/dialogs/file-save-dialog.c:168
 msgid "_Replace"
 msgstr "_Vervangen"
 
-#: app/dialogs/file-save-dialog.c:175
+#: app/dialogs/file-save-dialog.c:178
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Een bestand genaamd '%s' bestaat al."
 
-#: app/dialogs/file-save-dialog.c:180
+#: app/dialogs/file-save-dialog.c:183
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Wilt u het vervangen door de afbeelding die u aan het opslaan bent?"
 
@@ -7009,29 +7017,29 @@ msgid "Print Size"
 msgstr "Afdrukgrootte"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Breedte:"
 
 # H, O G en T worden al gebruikt als sneltoets
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:227
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "Hoogt_e: "
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Resolutie _X:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:279
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Resolutie _Y:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:272
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -9832,45 +9840,45 @@ msgstr "Kon paden niet importeren uit '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Actie"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 msgid "Shortcut"
 msgstr "Sneltoets"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 msgid "Name"
 msgstr "Naam"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr "Wijzigen sneltoets mislukt."
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr "Conflicterende sneltoetsen"
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr "_Sneltoetsen opnieuw toewijzen"
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Sneltoets \"%s\" is al in gebruik bij \"%s\" in de groep \"%s\"."
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr "Verwijderen sneltoets mislukt."
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr "Ongeldige sneltoets."
 
@@ -10653,12 +10661,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ongeldige UTF-8"
 
-#: app/widgets/gimpsizebox.c:451
+#: app/widgets/gimpsizebox.c:456
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:458
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10725,12 +10733,12 @@ msgstr "_Naam:"
 msgid "_Icon:"
 msgstr "_Pictogram:"
 
-#: app/widgets/gimptemplateeditor.c:694
+#: app/widgets/gimptemplateeditor.c:699
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: app/widgets/gimptemplateeditor.c:698
+#: app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"

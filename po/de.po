@@ -13,13 +13,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-04 16:57+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2005-01-04 16:59+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -2445,11 +2445,11 @@ msgstr "»%s« _wiederholen"
 msgid "R_e-show \"%s\""
 msgstr "»%s« _nochmal anzeigen"
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:193
 msgid "Reset all Filters"
 msgstr "Alle Filter zurücksetzen"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:207
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
 "Möchten sie alle Filter auf Vorgabeeinstellungen zurücksetzen?Wollen Sie "
@@ -4648,19 +4648,22 @@ msgstr "%d Bytes konnten nicht von »%s« gelesen werden: %s"
 #: app/core/gimpbrush.c:554
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Breite = 0."
+msgstr ""
+"Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Breite = 0."
 
 # CHECK
 #: app/core/gimpbrush.c:563
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Höhe = 0."
+msgstr ""
+"Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Höhe = 0."
 
 # CHECK
 #: app/core/gimpbrush.c:572
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Byte = 0."
+msgstr ""
+"Schwerwiegender Fehler beim Verarbeiten der Pinseldatei »%s«: Byte = 0."
 
 # CHECK
 #: app/core/gimpbrush.c:596
@@ -4745,7 +4748,8 @@ msgstr "Datei ist verkürzt"
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
-"Schwerwiegender Fehler beim Verarbeiten von Pinseldatei »%s«: Datei ist fehlerhaft."
+"Schwerwiegender Fehler beim Verarbeiten von Pinseldatei »%s«: Datei ist "
+"fehlerhaft."
 
 #: app/core/gimpchannel.c:280 app/pdb/internal_procs.c:95
 msgid "Channel"
@@ -9679,46 +9683,46 @@ msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Aktion"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 msgid "Shortcut"
 msgstr "Tastenkürzel"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 msgid "Name"
 msgstr "Name"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr "Wechseln des Tastenkürzels fehlgeschlagen."
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr "Kollidierende Tastenkürzel"
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr "_Tastenkürzel neu zuweisen"
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "Das Tastenkürzel »%s« wird bereits von »%s« aus der Gruppe »%s« verwendet."
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Die Neuzuweisung dieses Tastenkürzels wird es von »%s« entfernen."
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr "Entfernen des Tastenkürzels fehlgeschlagen."
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr "Falscher Tastenkürzel."
 
@@ -10948,4 +10952,3 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Bildeditor"
-

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -1313,7 +1313,7 @@ msgstr ""
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1763,7 +1763,7 @@ msgstr ""
 msgid "Random seed"
 msgstr "Re-Refacere"
 
-#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
+#: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:655
 #: plug-ins/common/lic.c:669
 #, fuzzy
 msgid "_Hue"
@@ -1774,7 +1774,7 @@ msgstr "Nuanţă"
 msgid "Sat_uration"
 msgstr "Saturare"
 
-#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:671
+#: plug-ins/common/CML_explorer.c:1297 plug-ins/common/fp.c:663
 #, fuzzy
 msgid "_Value"
 msgstr "Valoare"
@@ -3344,17 +3344,17 @@ msgstr "Rotesc..."
 msgid "Decomposing..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1199
 msgid "Decompose"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1215
 #, fuzzy
 msgid "Extract Channels"
 msgstr "Canale"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1243
 #, fuzzy
 msgid "Decompose to _layers"
 msgstr "Elimină strat"
@@ -3998,8 +3998,7 @@ msgstr "Memorează traseul"
 msgid "Less Sat:"
 msgstr ""
 
-#. All the previews
-#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:477
+#: plug-ins/common/fp.c:230 plug-ins/common/fp.c:488
 #, fuzzy
 msgid "Current:"
 msgstr "Lăţimea curentă:"
@@ -4017,142 +4016,138 @@ msgstr ""
 msgid "Applying the Filter Pack..."
 msgstr ""
 
-#: plug-ins/common/fp.c:474
-msgid "Before and After"
-msgstr ""
-
-#: plug-ins/common/fp.c:481
+#: plug-ins/common/fp.c:480
 #, fuzzy
 msgid "Original:"
 msgstr "Originea pe X:"
 
-#: plug-ins/common/fp.c:540
+#: plug-ins/common/fp.c:532
 #, fuzzy
 msgid "Hue Variations"
 msgstr "Nuanţa-Saturare"
 
-#: plug-ins/common/fp.c:594
+#: plug-ins/common/fp.c:586
 #, fuzzy
 msgid "Roughness"
 msgstr "Luminozitate:"
 
-#: plug-ins/common/fp.c:637
+#: plug-ins/common/fp.c:629
 msgid "Affected Range"
 msgstr ""
 
-#: plug-ins/common/fp.c:641
+#: plug-ins/common/fp.c:633
 #, fuzzy
 msgid "Sha_dows"
 msgstr "Umbre"
 
-#: plug-ins/common/fp.c:642
+#: plug-ins/common/fp.c:634
 #, fuzzy
 msgid "_Midtones"
 msgstr "Luminozitate:"
 
-#: plug-ins/common/fp.c:643
+#: plug-ins/common/fp.c:635
 #, fuzzy
 msgid "H_ighlights"
 msgstr "Înălţime:"
 
-#: plug-ins/common/fp.c:657
+#: plug-ins/common/fp.c:649
 #, fuzzy
 msgid "Windows"
 msgstr "Ferestre cu imagini"
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
+#: plug-ins/common/fp.c:659 plug-ins/common/lic.c:670
 #, fuzzy
 msgid "_Saturation"
 msgstr "Saturare:"
 
-#: plug-ins/common/fp.c:675
+#: plug-ins/common/fp.c:667
 #, fuzzy
 msgid "A_dvanced"
 msgstr "Adaugă"
 
-#: plug-ins/common/fp.c:695
+#: plug-ins/common/fp.c:687
 #, fuzzy
 msgid "Value Variations"
 msgstr "Operaţii pe fişiere"
 
-#: plug-ins/common/fp.c:739
+#: plug-ins/common/fp.c:731
 #, fuzzy
 msgid "Saturation Variations"
 msgstr "Saturare"
 
-#: plug-ins/common/fp.c:791
+#: plug-ins/common/fp.c:783
 #, fuzzy
 msgid "Select Pixels by"
 msgstr "Alege directorul de module inserabile"
 
-#: plug-ins/common/fp.c:796
+#: plug-ins/common/fp.c:788
 #, fuzzy
 msgid "H_ue"
 msgstr "Noanţă:"
 
-#: plug-ins/common/fp.c:797
+#: plug-ins/common/fp.c:789
 #, fuzzy
 msgid "Satu_ration"
 msgstr "Saturare"
 
-#: plug-ins/common/fp.c:798
+#: plug-ins/common/fp.c:790
 #, fuzzy
 msgid "V_alue"
 msgstr "Valoare"
 
-#: plug-ins/common/fp.c:824
+#: plug-ins/common/fp.c:816
 #, fuzzy
 msgid "Show"
 msgstr "Umbre"
 
-#: plug-ins/common/fp.c:829
+#: plug-ins/common/fp.c:821
 #, fuzzy
 msgid "_Entire Image"
 msgstr "Imagine nouă"
 
-#: plug-ins/common/fp.c:830
+#: plug-ins/common/fp.c:822
 #, fuzzy
 msgid "Se_lection Only"
 msgstr "Selecţie: "
 
-#: plug-ins/common/fp.c:831
+#: plug-ins/common/fp.c:823
 #, fuzzy
 msgid "Selec_tion In Context"
 msgstr "Mod de selecţie"
 
-#: plug-ins/common/fp.c:1143
+#: plug-ins/common/fp.c:1135
 #, fuzzy
 msgid "Filter Pack Simulation"
 msgstr "/Filtre/Animaţie"
 
-#: plug-ins/common/fp.c:1253
+#: plug-ins/common/fp.c:1245
 #, fuzzy
 msgid "Shadows:"
 msgstr "Umbre"
 
-#: plug-ins/common/fp.c:1254
+#: plug-ins/common/fp.c:1246
 #, fuzzy
 msgid "Midtones:"
 msgstr "Luminozitate:"
 
-#: plug-ins/common/fp.c:1255
+#: plug-ins/common/fp.c:1247
 #, fuzzy
 msgid "Highlights:"
 msgstr "Înălţime:"
 
-#: plug-ins/common/fp.c:1267
+#: plug-ins/common/fp.c:1259
 msgid "Advanced Filter Pack Options"
 msgstr ""
 
-#: plug-ins/common/fp.c:1278
+#: plug-ins/common/fp.c:1270
 msgid "Smoothness of Aliasing"
 msgstr ""
 
-#: plug-ins/common/fp.c:1378
+#: plug-ins/common/fp.c:1370
 msgid "Preview as You Drag"
 msgstr ""
 
-#: plug-ins/common/fp.c:1382
+#: plug-ins/common/fp.c:1374
 #, fuzzy
 msgid "Preview Size"
 msgstr "Dimensiune previzualizare:"

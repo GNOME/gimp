@@ -1,5 +1,9 @@
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.2 release.
+
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-mmx-installer.c
 	* app/composite/gimp-composite-mmx-test.c
 	* app/composite/gimp-composite-mmx.[ch]: workaround bug #162778 by

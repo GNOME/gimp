@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 16:58+0100\n"
+"POT-Creation-Date: 2005-01-09 22:36+0100\n"
 "PO-Revision-Date: 2004-07-15 17:40+0300\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Türkçe <kde-i18n-tr@kde.org>\n"
@@ -1356,7 +1356,7 @@ msgstr "_Geri al..."
 msgid "_Quit"
 msgstr "Çı_k"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:249
+#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -2490,31 +2490,31 @@ msgstr "_Araçlar"
 msgid "Reset all Filters..."
 msgstr "Tüm Filtreleri Sıfırla..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:363
 msgid "Repeat Last"
 msgstr "Sonuncuyu Tekrarla"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:365
 #, fuzzy
 msgid "Re-Show Last"
 msgstr "/Filtreler/Sonuncuyu Göster"
 
-#: app/actions/plug-in-actions.c:344
+#: app/actions/plug-in-actions.c:349
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr ""
 
-#: app/actions/plug-in-actions.c:345
+#: app/actions/plug-in-actions.c:350
 #, fuzzy, c-format
 msgid "R_e-show \"%s\""
 msgstr "/Filtreler/Sonuncuyu Göster"
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:193
 #, fuzzy
 msgid "Reset all Filters"
 msgstr "Mevcut Filtreler"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:207
 #, fuzzy
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Seçili filtreleri öntanımlı değerlerine geri al"
@@ -5439,8 +5439,8 @@ msgstr "Önizleme oluşturulamıyor"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:637
-#: app/widgets/gimptemplateeditor.c:673
+#: app/widgets/gimpsizebox.c:432 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:675
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d piksel"
@@ -5948,22 +5948,22 @@ msgstr "Adres:"
 msgid "Enter location (URI):"
 msgstr "Aradeğerleme:"
 
-#: app/dialogs/file-save-dialog.c:160
+#: app/dialogs/file-save-dialog.c:163
 #, fuzzy
 msgid "File exists"
 msgstr "Dosya zaten var!"
 
-#: app/dialogs/file-save-dialog.c:165
+#: app/dialogs/file-save-dialog.c:168
 #, fuzzy
 msgid "_Replace"
 msgstr "Çoğalt"
 
-#: app/dialogs/file-save-dialog.c:175
+#: app/dialogs/file-save-dialog.c:178
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:180
+#: app/dialogs/file-save-dialog.c:183
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -7143,32 +7143,32 @@ msgid "Print Size"
 msgstr "Yazdırma Boyutu:"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
+#: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
 #: app/widgets/gimptemplateeditor.c:236
 #, fuzzy
 msgid "_Width:"
 msgstr "Genişlik:"
 
-#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
+#: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:227
 #: app/widgets/gimptemplateeditor.c:243
 #, fuzzy
 msgid "H_eight:"
 msgstr "Yükseklik:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:273
+#: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:276
 #: app/widgets/gimptemplateeditor.c:363
 #, fuzzy
 msgid "_X resolution:"
 msgstr "Çözünürlük:"
 
-#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:276
+#: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:279
 #: app/widgets/gimptemplateeditor.c:370
 #, fuzzy
 msgid "_Y resolution:"
 msgstr "Çözünürlük:"
 
-#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:269
+#: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:272
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -10095,48 +10095,48 @@ msgstr "%s dosyasından yol okunurken hata"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "KYMA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 #, fuzzy
 msgid "Action"
 msgstr "Toplam"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 #, fuzzy
 msgid "Shortcut"
 msgstr "Klavye Kısayolları"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 #, fuzzy
 msgid "Name"
 msgstr "İsi_m:"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr ""
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr ""
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr ""
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr ""
 
@@ -10947,12 +10947,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Geçersiz UTF-8"
 
-#: app/widgets/gimpsizebox.c:451
+#: app/widgets/gimpsizebox.c:456
 #, fuzzy, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d piksel"
 
-#: app/widgets/gimpsizebox.c:455
+#: app/widgets/gimpsizebox.c:458
 #, fuzzy, c-format
 msgid "%d dpi"
 msgstr "DPI"
@@ -11027,12 +11027,12 @@ msgstr "İsi_m:"
 msgid "_Icon:"
 msgstr "_Simge:"
 
-#: app/widgets/gimptemplateeditor.c:694
+#: app/widgets/gimptemplateeditor.c:699
 #, fuzzy, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d piksel"
 
-#: app/widgets/gimptemplateeditor.c:698
+#: app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d dpi, %s"
 msgstr ""
