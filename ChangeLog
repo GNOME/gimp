@@ -1,3 +1,11 @@
+2003-07-27  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: Move gimp_{brush,font,gradient,pattern}_
+	select_{destroy,new} back to gimp.def (and actually add some of
+	the _destroy entries). The files where these are defined go in
+	libgimp, not libgimpui (see Makefile.am). Sort the .def files.
+
 2003-07-26  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/libgck/gck/Makefile.am: Use -no-undefined on Windows.
