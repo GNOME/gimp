@@ -1,3 +1,7 @@
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollers.c: better debugging output.
+
 2004-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontrollers.c: bug fix.

@@ -455,7 +455,8 @@ gimp_controller_info_event (GimpController            *controller,
 
   class_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
 
-  g_print ("Received '%s' (class '%s') controller event '%s'\n",
+  g_print ("Received '%s' (class '%s')\n"
+           "    controller event '%s'\n",
            controller->name, class_name,
            gimp_controller_get_event_name (controller, event->any.event_id));
 
@@ -463,8 +464,13 @@ gimp_controller_info_event (GimpController            *controller,
 
   if (action)
     {
+      g_print ("    handled by action '%s'\n\n", gtk_action_get_name (action));
       gtk_action_activate (action);
       return TRUE;
+    }
+  else
+    {
+      g_print ("    not handled\n\n");
     }
 
   return FALSE;
