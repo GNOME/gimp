@@ -39,6 +39,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1999/05/01 17:53:52  asbjoer
+ *   os2 printing
+ *
  *   Revision 1.11  1999/01/15 17:34:25  unammx
  *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
  *
@@ -140,6 +143,11 @@
 #include "print.h"
 #include <math.h>
 #include <signal.h>
+#ifdef __EMX__
+#define INCL_DOSDEVICES
+#define INCL_DOSERRORS
+#include <os2.h>
+#endif
 
 
 /*
@@ -375,12 +383,16 @@ printer_t	printers[] =		/* List of supported printer types */
  * 'main()' - Main entry - just call gimp_main()...
  */
 
+#if 0
 int
 main(int  argc,		/* I - Number of command-line args */
      char *argv[])	/* I - Command-line args */
 {
   return (gimp_main(argc, argv));
 }
+#else
+MAIN()
+#endif
 
 
 /*
@@ -429,6 +441,25 @@ query(void)
 }
 
 
+#ifdef __EMX__
+static char *
+get_tmp_filename()
+{
+  char *tmp_path, *s, filename[80];
+
+  tmp_path = getenv("TMP");
+  if (tmp_path == NULL)
+    tmp_path = "";
+
+  sprintf(filename, "gimp_print_tmp.%d", getpid());
+  s = tmp_path = g_strconcat(tmp_path, "\\", filename, NULL);
+  if (!s)
+    return NULL;
+  for ( ; *s; s++)
+    if (*s == '/') *s = '\\';
+  return tmp_path;
+}
+#endif
 /*
  * 'run()' - Run the plug-in...
  */
@@ -453,6 +484,9 @@ run(char   *name,		/* I - Name of print program. */
   guchar	*cmap;		/* Colormap (indexed images only) */
   int		ncolors;	/* Number of colors in colormap */
   GParam	*values;	/* Return values */
+#ifdef __EMX__
+  char		*tmpfile;	/* temp filename */
+#endif
 
 
  /*
@@ -591,7 +625,12 @@ run(char   *name,		/* I - Name of print program. */
     */
 
     if (plist_current > 0)
+#ifndef __EMX__
       prn = popen(vars.output_to, "w");
+#else
+      /* OS/2 PRINT command doesn't support print from stdin, use temp file */
+      prn = (tmpfile = get_tmp_filename()) ? fopen(tmpfile, "w") : NULL;
+#endif
     else
       prn = fopen(vars.output_to, "w");
 
@@ -643,7 +682,20 @@ run(char   *name,		/* I - Name of print program. */
                         vars.left, vars.top, 1, prn, drawable, lut, cmap);
 
       if (plist_current > 0)
+#ifndef __EMX__
         pclose(prn);
+#else
+	{ /* PRINT temp file */
+	  char *s;
+          fclose(prn);
+	  s = g_strconcat(vars.output_to, tmpfile, NULL);
+	  if (system(s) != 0)
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  g_free(s);
+	  remove(tmpfile);
+	  g_free(tmpfile);
+	}
+#endif
       else
         fclose(prn);
     }
@@ -1961,8 +2013,15 @@ printrc_load(void)
     strcpy(line, "/.gimp/printrc");
   else
     sprintf(line, "%s/.gimp/printrc", getenv("HOME"));
+#ifdef __EMX__
+  _fnslashify(line);
+#endif
 
+#ifndef __EMX__
   if ((fp = fopen(line, "r")) != NULL)
+#else
+  if ((fp = fopen(line, "rt")) != NULL)
+#endif
   {
    /*
     * File exists - read the contents and update the printer list...
@@ -2081,8 +2140,15 @@ printrc_save(void)
     strcpy(filename, "/.gimp/printrc");
   else
     sprintf(filename, "%s/.gimp/printrc", getenv("HOME"));
+#ifdef __EMX__
+  _fnslashify(filename);
+#endif
 
+#ifndef __EMX__
   if ((fp = fopen(filename, "w")) != NULL)
+#else
+  if ((fp = fopen(filename, "wt")) != NULL)
+#endif
   {
    /*
     * Write the contents of the printer list...
@@ -2125,6 +2191,9 @@ get_printers(void)
 	line[129],
 	name[17],
 	defname[17];
+#ifdef __EMX__
+  BYTE  pnum;
+#endif
 
 
   defname[0] = '\0';
@@ -2176,6 +2245,20 @@ get_printers(void)
     pclose(pfile);
   };
 #endif /* LPSTAT_COMMAND */
+
+#ifdef __EMX__
+  if (DosDevConfig(&pnum, DEVINFO_PRINTER) == NO_ERROR)
+    {
+      for (i = 1; i <= pnum; i++)
+	{
+	  sprintf(plist[plist_count].name, "LPT%d:", i);
+	  sprintf(plist[plist_count].command, "PRINT /D:LPT%d /B ", i);
+          strcpy(plist[plist_count].driver, "ps2");
+          plist[plist_count].output_type = OUTPUT_COLOR;
+          plist_count ++;
+	}
+    }
+#endif
 
   if (plist_count > 2)
     qsort(plist + 1, plist_count - 1, sizeof(plist_t),

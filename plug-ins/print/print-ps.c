@@ -32,6 +32,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1999/05/01 17:54:09  asbjoer
+ *   os2 printing
+ *
  *   Revision 1.11  1999/04/15 21:49:01  yosh
  *   * applied gimp-lecorfec-99041[02]-0, changes follow
  *
@@ -630,6 +633,9 @@ ps_print(int       model,		/* I - Model (Level 1 or 2) */
   printf("left = %d, top = %d\n", left, top);
 #endif /* DEBUG */
 
+#ifdef __EMX__
+  _fsetmode(prn, "t");
+#endif
   fputs("%!PS-Adobe-3.0\n", prn);
   fputs("%%Creator: " PLUG_IN_NAME " plug-in V" PLUG_IN_VERSION " for GIMP.\n", prn);
   fprintf(prn, "%%%%CreationDate: %s", ctime(&curtime));

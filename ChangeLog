@@ -1,5 +1,7 @@
 Sat May  1 11:05:02 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* plug-ins/print/print.c (get_printers): OS/2 printing.
+	* plug-ins/print/print-ps.c (ps_print): set prn in text mode.
 	* plug-ins/ps/ps.c (read_pnmraw_type): skip '\r';
 	* plug-ins/screenshot/screenshot.c (shoot): Use spawnlp() instead of
  	fork().
