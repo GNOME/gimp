@@ -1,3 +1,7 @@
+Sat Jan  1 16:50:43 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* README.i18n: doc patch by Daniel Egger.
+
 Sat Jan  1 16:34:25 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/dbbrowser/Makefile.am
@@ -114,6 +118,7 @@ Thu Dec 30 15:21:29 GMT 1999  Adam D. Moss <adam@gimp.org>
 	* plug-ins/common/animoptimize.c: PDB interface patch
 	from Andreas Jaekel <jaekel@cablecats.de>
 
+>>>>>>> 1.1987
 Thu Dec 30 02:34:49 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* app/gradient.c: Applied patch by Daniel Egger:
