@@ -123,9 +123,7 @@ gimp_move_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpMoveOptions *options;
-
-  options = GIMP_MOVE_OPTIONS (object);
+  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -147,9 +145,7 @@ gimp_move_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpMoveOptions *options;
-
-  options = GIMP_MOVE_OPTIONS (object);
+  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -165,6 +161,46 @@ gimp_move_options_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_move_options_notify_type (GimpMoveOptions *move_options,
+                               GParamSpec      *pspec,
+                               GtkWidget       *frame)
+{
+  const gchar *false_label = NULL;
+  const gchar *true_label  = NULL;
+  GtkWidget   *button;
+  GSList      *group;
+
+  button = g_object_get_data (G_OBJECT (frame), "radio-button");
+
+  switch (move_options->move_type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      false_label = _("Pick a Layer or Guide to Move");
+      true_label  = _("Move the Active Layer");
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      false_label = _("Move Selection");
+      true_label  = _("Move Selection");
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      false_label = _("Pick a Path to Move");
+      true_label  = _("Move the Active Path");
+     break;
+    }
+
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+  gtk_button_set_label (GTK_BUTTON (group->data), true_label);
+
+  group = g_slist_next (group);
+  gtk_button_set_label (GTK_BUTTON (group->data), false_label);
+
+  gtk_widget_set_sensitive (frame,
+                            move_options->move_type != GIMP_TRANSFORM_TYPE_SELECTION);
+}
+
 GtkWidget *
 gimp_move_options_gui (GimpToolOptions *tool_options)
 {
@@ -173,7 +209,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
-  gchar     *str;
+  gchar     *title;
 
   config = G_OBJECT (tool_options);
 
@@ -189,17 +225,21 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (label);
 
   /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_shift ());
+  title = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_shift ());
 
   frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
-                                             str,
-                                             _("Move Current Layer or Path"),
-                                             _("Pick a Layer, Path\n"
-                                               "or Guide to Move"));
+                                             title, "true", "false");
+
+  gimp_move_options_notify_type (GIMP_MOVE_OPTIONS (config), NULL, frame);
+
+  g_signal_connect_object (config, "notify::move-type",
+                           G_CALLBACK (gimp_move_options_notify_type),
+                           frame, 0);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  g_free (str);
+  g_free (title);
 
   return vbox;
 }

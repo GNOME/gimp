@@ -508,6 +508,8 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
                   G_CALLBACK (gimp_prop_radio_button_notify),
                   button);
 
+  g_object_set_data (G_OBJECT (frame), "radio-button", button);
+
   return frame;
 }
 
@@ -547,6 +549,8 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
                   button);
+
+  g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
   return frame;
 }

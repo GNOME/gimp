@@ -1,3 +1,15 @@
+2003-10-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_enum_radio_frame_new)
+	(gimp_prop_boolean_radio_frame_new): attach the first radio button
+	as object data to the returned frame.
+
+	* app/tools/gimpmoveoptions.c: change labels and sensitivity of
+	the Tool Toggle frame depending on the selected move-type.
+
+	* app/tools/gimpcropoptions.c: use the term "Active Layer" instead
+	of "Current Layer". Please object if you dislike this change.
+
 2003-10-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* Makefile.am
