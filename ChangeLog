@@ -3,7 +3,7 @@
 	* app/tools/gimpscaletool.c
 	* app/tools/gimptransformtool.h: applied patch from Jordi Gay
 	(attached to bug #131111) which adds an aspect ratio spinbutton to
-	the scale dialog and keeps the aspect ratio intact when with or
+	the scale dialog and keeps the aspect ratio intact when width or
 	height are changed using the dialog. Fixes bug #132274.
 
 	* app/tools/gimpcroptool.c
@@ -68,8 +68,8 @@
 
 2004-08-04  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/gimp.[ch]: changed member "ProcRecord last_plug_in" to
-	"PlugInProcDef last_plug_in". Added function
+	* app/core/gimp.[ch]: changed member "ProcRecord *last_plug_in"
+	to "PlugInProcDef *last_plug_in". Added function
 	gimp_set_last_plug_in() and signal Gimp::last-plug-in-changed.
 
 	* app/actions/plug-in-commands.c
