@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h> /* strcmp */
 
 #include <glib-object.h>
@@ -320,5 +321,92 @@ gimp_list_sort (GimpList     *list,
       list->list = g_list_sort (list->list, compare_func);
 
       gimp_container_thaw (GIMP_CONTAINER (list));
+    }
+}
+
+void
+gimp_list_uniquefy_name (GimpList   *gimp_list,
+                         GimpObject *object,
+                         gboolean    use_set_name)
+{
+  GList      *list;
+  GList      *list2;
+  GimpObject *object2;
+  gint        unique_ext = 0;
+  gchar      *new_name   = NULL;
+  gchar      *ext;
+
+  g_return_if_fail (GIMP_IS_LIST (gimp_list));
+  g_return_if_fail (GIMP_IS_OBJECT (object));
+
+  for (list = gimp_list->list; list; list = g_list_next (list))
+    {
+      object2 = GIMP_OBJECT (list->data);
+
+      if (object != object2 &&
+	  strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
+		  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
+	{
+          ext = strrchr (object->name, '#');
+
+          if (ext)
+            {
+              gchar *ext_str;
+
+              unique_ext = atoi (ext + 1);
+
+              ext_str = g_strdup_printf ("%d", unique_ext);
+
+              /*  check if the extension really is of the form "#<n>"  */
+              if (! strcmp (ext_str, ext + 1))
+                {
+                  *ext = '\0';
+                }
+              else
+                {
+                  unique_ext = 0;
+                }
+
+              g_free (ext_str);
+            }
+          else
+            {
+              unique_ext = 0;
+            }
+
+          do
+            {
+              unique_ext++;
+
+              g_free (new_name);
+
+              new_name = g_strdup_printf ("%s#%d", object->name, unique_ext);
+
+              for (list2 = gimp_list->list; list2; list2 = g_list_next (list2))
+                {
+                  object2 = GIMP_OBJECT (list2->data);
+
+                  if (object == object2)
+                    continue;
+
+                  if (! strcmp (object2->name, new_name))
+		    break;
+                }
+            }
+          while (list2);
+
+          if (use_set_name)
+            {
+              gimp_object_set_name (object, new_name);
+              g_free (new_name);
+            }
+          else
+            {
+              g_free (object->name);
+              object->name = new_name;
+            }
+
+	  break;
+	}
     }
 }

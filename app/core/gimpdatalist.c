@@ -43,8 +43,6 @@ static void   gimp_data_list_add                (GimpContainer     *container,
 static void   gimp_data_list_remove             (GimpContainer     *container,
 						 GimpObject        *object);
 
-static void   gimp_data_list_uniquefy_data_name (GimpDataList      *data_list,
-						 GimpObject        *object);
 static void   gimp_data_list_object_renamed_callback (GimpObject   *object,
 						      GimpDataList *data_list);
 static gint   gimp_data_list_data_compare_func  (gconstpointer      first,
@@ -108,7 +106,7 @@ gimp_data_list_add (GimpContainer *container,
 
   list = GIMP_LIST (container);
 
-  gimp_data_list_uniquefy_data_name (GIMP_DATA_LIST (container), object);
+  gimp_list_uniquefy_name (GIMP_LIST (container), object, TRUE);
 
   list->list = g_list_insert_sorted (list->list, object,
 				     gimp_data_list_data_compare_func);
@@ -149,129 +147,43 @@ gimp_data_list_new (GType children_type)
 }
 
 static void
-gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
-				   GimpObject   *object)
-{
-  GList      *base_list;
-  GList      *list;
-  GList      *list2;
-  GimpObject *object2;
-  gint        unique_ext = 0;
-  gchar      *new_name   = NULL;
-  gchar      *ext;
-  gboolean    have;
-
-  g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
-  g_return_if_fail (GIMP_IS_OBJECT (object));
-
-  base_list = GIMP_LIST (data_list)->list;
-
-  have = gimp_container_have (GIMP_CONTAINER (data_list), object);
-
-  for (list = base_list; list; list = g_list_next (list))
-    {
-      object2 = GIMP_OBJECT (list->data);
-
-      if (object != object2 &&
-	  strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
-		  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
-	{
-          ext = strrchr (object->name, '#');
-
-          if (ext)
-            {
-              gchar *ext_str;
-
-              unique_ext = atoi (ext + 1);
-
-              ext_str = g_strdup_printf ("%d", unique_ext);
-
-              /*  check if the extension really is of the form "#<n>"  */
-              if (! strcmp (ext_str, ext + 1))
-                {
-                  *ext = '\0';
-                }
-              else
-                {
-                  unique_ext = 0;
-                }
-
-              g_free (ext_str);
-            }
-          else
-            {
-              unique_ext = 0;
-            }
-
-          do
-            {
-              unique_ext++;
-
-              g_free (new_name);
-
-              new_name = g_strdup_printf ("%s#%d", object->name, unique_ext);
-
-              for (list2 = base_list; list2; list2 = g_list_next (list2))
-                {
-                  object2 = GIMP_OBJECT (list2->data);
-
-                  if (object == object2)
-                    continue;
-
-                  if (! strcmp (object2->name, new_name))
-		    break;
-                }
-            }
-          while (list2);
-
-	  if (have)
-	    g_signal_handlers_block_by_func (object,
-					     gimp_data_list_object_renamed_callback,
-					     data_list);
-
-	  gimp_object_set_name (object, new_name);
-
-	  if (have)
-	    g_signal_handlers_unblock_by_func (object,
-					       gimp_data_list_object_renamed_callback,
-					       data_list);
-
-	  g_free (new_name);
-
-	  break;
-	}
-    }
-
-  if (have)
-    {
-      gint old_index;
-      gint new_index = 0;
-
-      old_index = g_list_index (base_list, object);
-
-      for (list2 = base_list; list2; list2 = g_list_next (list2))
-	{
-	  object2 = GIMP_OBJECT (list2->data);
-
-	  if (object == object2)
-	    continue;
-
-	  if (gimp_data_list_data_compare_func (object, object2) > 0)
-	    new_index++;
-	  else
-	    break;
-	}
-
-      if (new_index != old_index)
-        gimp_container_reorder (GIMP_CONTAINER (data_list), object, new_index);
-    }
-}
-
-static void
 gimp_data_list_object_renamed_callback (GimpObject   *object,
 					GimpDataList *data_list)
 {
-  gimp_data_list_uniquefy_data_name (data_list, object);
+  GimpList *gimp_list;
+  GList    *list;
+  gint      old_index;
+  gint      new_index = 0;
+
+  gimp_list = GIMP_LIST (data_list);
+
+  g_signal_handlers_block_by_func (object,
+                                   gimp_data_list_object_renamed_callback,
+                                   data_list);
+
+  gimp_list_uniquefy_name (gimp_list, object, TRUE);
+
+  g_signal_handlers_unblock_by_func (object,
+                                     gimp_data_list_object_renamed_callback,
+                                     data_list);
+
+  old_index = g_list_index (gimp_list->list, object);
+
+  for (list = gimp_list->list; list; list = g_list_next (list))
+    {
+      GimpObject *object2 = GIMP_OBJECT (list->data);
+
+      if (object == object2)
+        continue;
+
+      if (gimp_data_list_data_compare_func (object, object2) > 0)
+        new_index++;
+      else
+        break;
+    }
+
+  if (new_index != old_index)
+    gimp_container_reorder (GIMP_CONTAINER (data_list), object, new_index);
 }
 
 static gint

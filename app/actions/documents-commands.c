@@ -29,7 +29,7 @@
 #include "documents-commands.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 documents_open_document_cmd_callback (GtkWidget *widget,

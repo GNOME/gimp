@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimptemplate.h"
@@ -397,6 +398,8 @@ file_new_template_callback (GtkWidget *widget,
   template = gimp_template_new (name);
   gimp_template_set_from_image (template, gimage);
 
+  gimp_list_uniquefy_name (GIMP_LIST (gimage->gimp->templates),
+                           GIMP_OBJECT (template), TRUE);
   gimp_container_add (gimage->gimp->templates,
                       GIMP_OBJECT (template));
   g_object_unref (template);

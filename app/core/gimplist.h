@@ -49,13 +49,16 @@ struct _GimpListClass
 };
 
 
-GType           gimp_list_get_type (void) G_GNUC_CONST;
+GType           gimp_list_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_list_new      (GType                children_type,
-				    GimpContainerPolicy  policy);
-void            gimp_list_reverse  (GimpList            *list);
-void            gimp_list_sort     (GimpList            *list,
-                                    GCompareFunc         compare_func);
+GimpContainer * gimp_list_new           (GType                children_type,
+                                         GimpContainerPolicy  policy);
+void            gimp_list_reverse       (GimpList            *list);
+void            gimp_list_sort          (GimpList            *list,
+                                         GCompareFunc         compare_func);
+void            gimp_list_uniquefy_name (GimpList            *gimp_list,
+                                         GimpObject          *object,
+                                         gboolean             use_set_name);
 
 
 #endif  /* __GIMP_LIST_H__ */

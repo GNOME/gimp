@@ -53,6 +53,10 @@ dialogs_sources = \
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
+	templates-commands.c		\
+	templates-commands.h		\
+	templates-menu.c		\
+	templates-menu.h		\
 	tips-dialog.c			\
 	tips-dialog.h			\
 	tips-parser.c			\

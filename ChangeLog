@@ -1,5 +1,33 @@
 2003-04-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplist.[ch]: added gimp_list_uniquefy_name() utility
+	function.
+
+	* app/core/gimpdatalist.c
+	* app/core/gimpitem.c: use it here instead of duplicating almost
+	the same code.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptemplateview.[ch]: new widget for editing the
+	template list.
+
+	* app/gui/dialogs-constructors.c: use it.
+
+	* app/gui/Makefile.am
+	* app/gui/templates-commands.[ch]
+	* app/gui/templates-menu.[ch]: new files implementing the context
+	menu for the template list.
+
+	* app/gui/menus.c: register the new menu with the menu factory.
+
+	* app/gui/file-commands.c (file_new_template_callback): uniquefy
+	the new template's name.
+
+	* app/gui/documents-commands.c: fixed typo.
+
+2003-04-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpgradient.c (gimp_gradient_get_color_at): fixed bug
 	spotted by Pedro Gimeno by moving the alpha calculation to the
 	bottom so it is not affected by rgb->hsv->rgb conversions

@@ -56,6 +56,7 @@
 #include "paths-dialog.h"
 #include "patterns-menu.h"
 #include "qmask-menu.h"
+#include "templates-menu.h"
 #include "toolbox-menu.h"
 #include "vectors-menu.h"
 
@@ -197,6 +198,12 @@ menus_init (Gimp *gimp)
                                    NULL, documents_menu_update, TRUE,
                                    n_documents_menu_entries,
                                    documents_menu_entries);
+
+  gimp_menu_factory_menu_register (global_menu_factory,
+                                   "<Templates>", "templates",
+                                   NULL, templates_menu_update, TRUE,
+                                   n_templates_menu_entries,
+                                   templates_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory,
                                    "<Images>", "images",

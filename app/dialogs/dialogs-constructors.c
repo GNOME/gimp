@@ -58,6 +58,7 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpselectioneditor.h"
+#include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpundoeditor.h"
@@ -908,17 +909,18 @@ dialogs_template_list_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_tree_view_new (context->gimp->templates,
-				       context,
-				       preview_size,
-                                       TRUE,
-				       5, 3);
+  view = gimp_template_view_new (GIMP_VIEW_TYPE_LIST,
+                                 context->gimp->templates,
+                                 context,
+                                 preview_size,
+                                 5, 3,
+                                 factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("List of Templates"), _("Templates"),
                                GIMP_STOCK_TEMPLATE,
 			       dialogs_stock_text_tab_func,
-			       dialogs_set_view_context_func);
+			       dialogs_set_editor_context_func);
 }
 
 

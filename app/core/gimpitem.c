@@ -169,13 +169,7 @@ static void
 gimp_item_name_changed (GimpObject *object)
 {
   GimpItem *item;
-  GimpItem *item2;
-  GList    *list, *list2, *base_list;
-  gint      unique_ext = 0;
-  gchar    *ext;
-  gchar    *new_name = NULL;
-
-  g_return_if_fail (GIMP_IS_ITEM (object));
+  GimpList *list = NULL;
 
   item = GIMP_ITEM (object);
 
@@ -184,83 +178,14 @@ gimp_item_name_changed (GimpObject *object)
     return;
 
   if (GIMP_IS_LAYER (item))
-    base_list = GIMP_LIST (item->gimage->layers)->list;
+    list = GIMP_LIST (item->gimage->layers);
   else if (GIMP_IS_CHANNEL (item))
-    base_list = GIMP_LIST (item->gimage->channels)->list;
+    list = GIMP_LIST (item->gimage->channels);
   else if (GIMP_IS_VECTORS (item))
-    base_list = GIMP_LIST (item->gimage->vectors)->list;
-  else
-    base_list = NULL;
+    list = GIMP_LIST (item->gimage->vectors);
 
-  for (list = base_list; 
-       list; 
-       list = g_list_next (list))
-    {
-      item2 = GIMP_ITEM (list->data);
-
-      if (item != item2 &&
-	  strcmp (gimp_object_get_name (GIMP_OBJECT (item)),
-		  gimp_object_get_name (GIMP_OBJECT (item2))) == 0)
-	{
-          ext = strrchr (GIMP_OBJECT (item)->name, '#');
-
-          if (ext)
-            {
-	      gchar *ext_str;
-
-	      unique_ext = atoi (ext + 1);
-
-	      ext_str = g_strdup_printf ("%d", unique_ext);
-
-	      /*  check if the extension really is of the form "#<n>"  */
-	      if (! strcmp (ext_str, ext + 1))
-		{
-		  *ext = '\0';
-		}
-	      else
-                {
-                  unique_ext = 0;
-                }
-
-              g_free (ext_str);
-            }
-          else
-            {
-              unique_ext = 0;
-            }
-
-	  do
-	    {
-	      unique_ext++;
-
-	      g_free (new_name);
-
-	      new_name = g_strdup_printf ("%s#%d",
-					  GIMP_OBJECT (item)->name,
-					  unique_ext);
-
-              for (list2 = base_list; list2; list2 = g_list_next (list2))
-                {
-		  item2 = GIMP_ITEM (list2->data);
-
-		  if (item == item2)
-		    continue;
-
-                  if (! strcmp (GIMP_OBJECT (item2)->name, new_name))
-                    {
-                      break;
-                    }
-                }
-            }
-          while (list2);
-
-          g_free (GIMP_OBJECT (item)->name);
-
-          GIMP_OBJECT (item)->name = new_name;
-
-          break;
-        }
-    }
+  if (list)
+    gimp_list_uniquefy_name (list, object, FALSE);
 }
 
 static gsize
