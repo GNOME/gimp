@@ -57,6 +57,7 @@
 #include "gfig-line.h"
 #include "gfig-poly.h"
 #include "gfig-preview.h"
+#include "gfig-rectangle.h"
 #include "gfig-spiral.h"
 #include "gfig-star.h"
 #include "gfig-stock.h"
@@ -79,14 +80,8 @@
 #define GRID_HIGHTLIGHT  1
 #define GRID_RESTORE     2
 
-#define PAINT_LAYERS_MENU 1
 #define PAINT_BGS_MENU    2
 #define PAINT_TYPE_MENU   3
-
-#define SELECT_TYPE_MENU      1
-#define SELECT_ARCTYPE_MENU   2
-#define SELECT_TYPE_MENU_FILL 3
-#define SELECT_TYPE_MENU_WHEN 4
 
 #define OBJ_SELECT_GT 1
 #define OBJ_SELECT_LT 2
@@ -160,8 +155,7 @@ static void       gfig_save_action_callback  (GtkAction *action,
 static void       gfig_list_load_all         (const gchar *path);
 static void       gfig_list_free_all         (void);
 static void       create_notebook_pages      (GtkWidget *notebook);
-static void       select_combo_callback      (GtkWidget *widget,
-                                              gpointer   data);
+static void       select_filltype_callback   (GtkWidget *widget);
 static void       gfig_grid_action_callback  (GtkAction *action,
                                               gpointer   data);
 static void       gfig_prefs_action_callback (GtkAction *action,
@@ -416,15 +410,17 @@ gfig_dialog (void)
 
   /* fill style combo box in Style frame  */
   gfig_context->fillstyle_combo = combo
-    = gimp_int_combo_box_new (_("No fill"),       FILL_NONE,
-                              _("Color fill"),    FILL_COLOR,
-                              _("Pattern fill"),  FILL_PATTERN,
-                              _("Gradient fill"), FILL_GRADIENT,
+    = gimp_int_combo_box_new (_("No fill"),             FILL_NONE,
+                              _("Color fill"),          FILL_COLOR,
+                              _("Pattern fill"),        FILL_PATTERN,
+                              _("Shape Gradient"),      FILL_GRADIENT,
+                              _("Vertical Gradient"),   FILL_VERTICAL,
+                              _("Horizontal Gradient"), FILL_HORIZONTAL,
                               NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (select_combo_callback),
-                    GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
+                    G_CALLBACK (select_filltype_callback),
+                    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
@@ -810,7 +806,6 @@ gfig_list_load_all (const gchar *path)
   gfig_context->current_obj = NULL;
   gfig_list_free_all ();
 
-
   if (! gfig_list)
     {
       GFigObj *gfig;
@@ -904,6 +899,9 @@ create_ui_manager (GtkWidget *window)
     { "line", GFIG_STOCK_LINE,
       NULL, "L", N_("Create line"), LINE },
 
+    { "rectangle", GFIG_STOCK_RECTANGLE,
+      NULL, "R", N_("Create rectangle"), RECTANGLE },
+
     { "circle", GFIG_STOCK_CIRCLE,
       NULL, "C", N_("Create circle"), CIRCLE },
 
@@ -987,6 +985,7 @@ create_ui_manager (GtkWidget *window)
                                      "<ui>"
                                      "  <toolbar name=\"gfig-toolbar\">"
                                      "    <toolitem action=\"line\" />"
+                                     "    <toolitem action=\"rectangle\" />"
                                      "    <toolitem action=\"circle\" />"
                                      "    <toolitem action=\"ellipse\" />"
                                      "    <toolitem action=\"arc\" />"
@@ -1029,6 +1028,7 @@ static void
 create_notebook_pages (GtkWidget *notebook)
 {
   tool_option_no_option (notebook);   /* Line          */
+  tool_option_no_option (notebook);   /* Rectangle     */
   tool_option_no_option (notebook);   /* Circle        */
   tool_option_no_option (notebook);   /* Ellipse       */
   tool_option_no_option (notebook);   /* Arc           */
@@ -1160,33 +1160,15 @@ lower_selected_obj (GtkWidget *widget,
 
 
 static void
-select_combo_callback (GtkWidget *widget,
-                       gpointer   data)
+select_filltype_callback (GtkWidget *widget)
 {
-  gint mtype = GPOINTER_TO_INT (data);
   gint value;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (fill_type_notebook), value);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (fill_type_notebook),
+                                 MIN (value, FILL_GRADIENT));
 
-  switch (mtype)
-    {
-    case SELECT_TYPE_MENU:
-      selopt.type = (SelectionType) value;
-      break;
-
-    case SELECT_ARCTYPE_MENU:
-      selopt.as_pie = (ArcType) value;
-      break;
-
-    case SELECT_TYPE_MENU_FILL:
-      gfig_context_get_current_style ()->fill_type = (FillType) value;
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
+  gfig_context_get_current_style ()->fill_type = (FillType) value;
 
   gfig_paint_callback ();
 }
@@ -1806,9 +1788,9 @@ load_file_chooser_response (GtkFileChooser *chooser,
 }
 
 void
-paint_layer_fill (void)
+paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-  GimpBucketFillMode fill_mode;
+  GimpBucketFillMode fill_mode = FILL_NONE;
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
@@ -1842,7 +1824,37 @@ paint_layer_fill (void)
                        0.0, 0.0,          /* (x1, y1) - ignored */
                        0.0, 0.0);         /* (x2, y2) - ignored */
       return;
-    default:
+    case FILL_VERTICAL:
+      gimp_edit_blend (gfig_context->drawable_id,
+                       GIMP_CUSTOM_MODE,
+                       GIMP_NORMAL_MODE,
+                       GIMP_GRADIENT_LINEAR,
+                       100.0,
+                       0.0,
+                       GIMP_REPEAT_NONE,
+                       FALSE,
+                       FALSE,
+                       0,
+                       0.0,
+                       FALSE,
+                       x1, y1,
+                       x1, y2);
+      return;
+    case FILL_HORIZONTAL:
+      gimp_edit_blend (gfig_context->drawable_id,
+                       GIMP_CUSTOM_MODE,
+                       GIMP_NORMAL_MODE,
+                       GIMP_GRADIENT_LINEAR,
+                       100.0,
+                       0.0,
+                       GIMP_REPEAT_NONE,
+                       FALSE,
+                       FALSE,
+                       0,
+                       0.0,
+                       FALSE,
+                       x1, y1,
+                       x2, y1);
       return;
     }
 
@@ -1953,6 +1965,7 @@ toggle_obj_type (GtkRadioAction *action,
   switch (selvals.otype)
     {
     case LINE:
+    case RECTANGLE:
     case CIRCLE:
     case ELLIPSE:
     case ARC:

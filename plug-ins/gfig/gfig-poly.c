@@ -161,6 +161,7 @@ d_paint_poly (GfigObject *obj)
   gint        loop;
   GdkPoint    first_pnt, last_pnt;
   gboolean    first = TRUE;
+  gdouble    *min_max;
 
   g_assert (obj != NULL);
 
@@ -173,6 +174,7 @@ d_paint_poly (GfigObject *obj)
     return; /* no-line */
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
+  min_max   = g_new (gdouble, 4);
 
   /* Go around all the points drawing a line from one to the next */
 
@@ -190,7 +192,7 @@ d_paint_poly (GfigObject *obj)
 
   for (loop = 0 ; loop < obj->type_data ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
@@ -218,6 +220,15 @@ d_paint_poly (GfigObject *obj)
         {
           first_pnt = calc_pnt;
           first = FALSE;
+          min_max[0] = min_max[2] = calc_pnt.x;
+          min_max[1] = min_max[3] = calc_pnt.y;
+        }
+      else
+        {
+          min_max[0] = MIN (min_max[0], calc_pnt.x);
+          min_max[1] = MIN (min_max[1], calc_pnt.y);
+          min_max[2] = MAX (min_max[2], calc_pnt.x);
+          min_max[3] = MAX (min_max[3], calc_pnt.y);
         }
     }
 
@@ -226,9 +237,15 @@ d_paint_poly (GfigObject *obj)
 
   /* Scale before drawing */
   if (selvals.scaletoimage)
-    scale_to_original_xy (&line_pnts[0], i/2);
+    {// FIXME scale xmax and al.
+      scale_to_original_xy (&line_pnts[0], i/2);
+      scale_to_original_xy (min_max, 2);
+    }
   else
-    scale_to_xy (&line_pnts[0], i/2);
+    {
+      scale_to_xy (&line_pnts[0], i/2);
+      scale_to_xy (min_max, 2);
+    }
 
 
   gimp_free_select (gfig_context->image_id,
@@ -238,12 +255,13 @@ d_paint_poly (GfigObject *obj)
                     selopt.feather,
                     selopt.feather_radius);
 
-  paint_layer_fill ();
+  paint_layer_fill (min_max[0], min_max[1], min_max[2], min_max[3]);
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     gimp_edit_stroke (gfig_context->drawable_id);
 
   g_free (line_pnts);
+  g_free (min_max);
 }
 
 void

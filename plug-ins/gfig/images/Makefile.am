@@ -11,6 +11,7 @@ STOCK_IMAGES = \
 	stock-move-object.png	\
 	stock-move-point.png	\
 	stock-polygon.png	\
+	stock-rectangle.png	\
 	stock-select-object.png \
 	stock-show-all.png      \
 	stock-spiral.png	\

@@ -52,7 +52,9 @@ typedef enum
   FILL_NONE = 0,
   FILL_COLOR,
   FILL_PATTERN,
-  FILL_GRADIENT
+  FILL_GRADIENT,
+  FILL_VERTICAL,
+  FILL_HORIZONTAL
 } FillType;
 
 typedef enum
@@ -89,6 +91,7 @@ typedef enum
 {
   OBJ_TYPE_NONE = 0,
   LINE,
+  RECTANGLE,
   CIRCLE,
   ELLIPSE,
   ARC,

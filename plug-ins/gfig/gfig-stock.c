@@ -48,12 +48,12 @@ static GtkStockItem gfig_stock_items[] =
   { GFIG_STOCK_MOVE_OBJECT,   N_("Move an object"),      0, 0, NULL },
   { GFIG_STOCK_MOVE_POINT,    N_("Move a single point"), 0, 0, NULL },
   { GFIG_STOCK_POLYGON,       N_("Create reg polygon"),  0, 0, NULL },
+  { GFIG_STOCK_RECTANGLE,     N_("Create rectangle"),    0, 0, NULL },
   { GFIG_STOCK_SELECT_OBJECT, N_("Select an object"),    0, 0, NULL },
   { GFIG_STOCK_SHOW_ALL,      N_("Show all objects"),    0, 0, NULL },
   { GFIG_STOCK_SPIRAL,        N_("Create spiral"),       0, 0, NULL },
   { GFIG_STOCK_STAR,          N_("Create star"),         0, 0, NULL }
 };
-
 
 static void
 add_stock_icon (const gchar  *stock_id,
@@ -104,12 +104,11 @@ gfig_stock_init (void)
   add_stock_icon (GFIG_STOCK_MOVE_OBJECT,   GTK_ICON_SIZE_BUTTON, stock_move_object);
   add_stock_icon (GFIG_STOCK_MOVE_POINT,    GTK_ICON_SIZE_BUTTON, stock_move_point);
   add_stock_icon (GFIG_STOCK_POLYGON,       GTK_ICON_SIZE_BUTTON, stock_polygon);
+  add_stock_icon (GFIG_STOCK_RECTANGLE,     GTK_ICON_SIZE_BUTTON, stock_rectangle);
   add_stock_icon (GFIG_STOCK_SELECT_OBJECT, GTK_ICON_SIZE_BUTTON, stock_select_object);
   add_stock_icon (GFIG_STOCK_SHOW_ALL,      GTK_ICON_SIZE_BUTTON, stock_show_all);
   add_stock_icon (GFIG_STOCK_SPIRAL,        GTK_ICON_SIZE_BUTTON, stock_spiral);
   add_stock_icon (GFIG_STOCK_STAR,          GTK_ICON_SIZE_BUTTON, stock_star);
-
-  add_stock_icon (GFIG_STOCK_LOGO,          GTK_ICON_SIZE_DIALOG, stock_logo);
 
   gtk_icon_factory_add_default (gfig_icon_factory);
 

@@ -218,7 +218,10 @@ gboolean   gfig_save_as_parasite   (void);
 GFigObj   *gfig_load_from_parasite (void);
 GFigObj   *gfig_new                (void);
 void       gfig_save_callbk        (void);
-void       paint_layer_fill        (void);
+void       paint_layer_fill        (gdouble x1,
+                                    gdouble y1,
+                                    gdouble x2,
+                                    gdouble y2);
 
 
 

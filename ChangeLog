@@ -1,3 +1,25 @@
+2004-12-29  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-rectangle.[ch]
+	* plug-ins/gfig/images/stock-rectangle.png: news files to implement a
+	rectangle tool to gfig.
+
+	* plug-ins/gfig/gfig-stock.c
+	* plug-ins/gfig/gfig-stock.h
+	* plug-ins/gfig/Makefile.am: modified accordingly.
+
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig-types.h
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gfig/gfig.h: modified to support the new shape and
+	implement two new filling types: vertical and horizontal gradients.
+	These gradients are imho much more useful than the shapeburst one.
+
 2004-12-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/compose.c: Recompose did not properly 

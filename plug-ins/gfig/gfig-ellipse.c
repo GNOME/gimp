@@ -149,7 +149,7 @@ d_paint_ellipse (GfigObject *obj)
                        selopt.feather,
                        selopt.feather_radius);
 
-  paint_layer_fill ();
+  paint_layer_fill (top_x, top_y, top_x + bound_wx, top_y + bound_wy);
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     gimp_edit_stroke (gfig_context->drawable_id);

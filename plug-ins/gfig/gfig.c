@@ -77,14 +77,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 
-
 gint line_no;
 
 gint obj_show_single   = -1; /* -1 all >= 0 object number */
 
 /* Structures etc for the objects */
 /* Points used to draw the object  */
-
 
 GfigObject *obj_creating; /* Object we are creating */
 GfigObject *tmp_line;     /* Needed when drawing lines */

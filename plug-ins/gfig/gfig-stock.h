@@ -26,7 +26,6 @@
 #ifndef __GFIG_STOCK_H__
 #define __GFIG_STOCK_H__
 
-
 #define GFIG_STOCK_BEZIER         "gfig-bezier"
 #define GFIG_STOCK_CIRCLE         "gfig-circle"
 #define GFIG_STOCK_COPY_OBJECT    "gfig-copy-object"
@@ -37,15 +36,12 @@
 #define GFIG_STOCK_MOVE_OBJECT    "gfig-move-object"
 #define GFIG_STOCK_MOVE_POINT     "gfig-move-point"
 #define GFIG_STOCK_POLYGON        "gfig-polygon"
+#define GFIG_STOCK_RECTANGLE      "gfig-rectangle"
 #define GFIG_STOCK_SELECT_OBJECT  "gfig-select-object"
 #define GFIG_STOCK_SHOW_ALL       "gfig-show-all"
 #define GFIG_STOCK_SPIRAL         "gfig-spiral"
 #define GFIG_STOCK_STAR           "gfig-star"
 
-#define GFIG_STOCK_LOGO           "gfig-logo"
-
-
 void  gfig_stock_init (void);
-
 
 #endif /* __GFIG_STOCK_H__ */
