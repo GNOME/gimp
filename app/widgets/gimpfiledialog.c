@@ -317,9 +317,10 @@ gimp_file_dialog_new (Gimp                 *gimp,
     }
 
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
-                         "title",  title,
-                         "role",   role,
-                         "action", action,
+                         "title",      title,
+                         "role",       role,
+                         "action",     action,
+                         "local-only", FALSE,
                          NULL);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),

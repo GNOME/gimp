@@ -535,6 +535,9 @@ gimp_thumb_box_thumb_state_notify (GimpThumbnail *thumb,
   if (box->idle_id)
     return;
 
+  if (thumb->image_state == GIMP_THUMB_STATE_REMOTE)
+    return;
+
   switch (thumb->thumb_state)
     {
     case GIMP_THUMB_STATE_NOT_FOUND:

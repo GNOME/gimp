@@ -565,7 +565,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       break;
 
     case GIMP_THUMB_STATE_REMOTE:
-      imagefile->description = _("Remote image");
+      imagefile->description = _("Remote File");
       imagefile->static_desc = TRUE;
       break;
 

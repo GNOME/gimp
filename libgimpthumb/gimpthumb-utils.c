@@ -358,7 +358,7 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
   if (strstr (uri, thumb_dir))
     return NULL;
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
+  filename = _gimp_thumb_filename_from_uri (uri);
 
   if (filename)
     {
@@ -419,7 +419,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
 
   if (! result)
     {
-      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
+      gchar *filename = _gimp_thumb_filename_from_uri (uri);
 
       if (filename)
         {
@@ -574,6 +574,41 @@ _gimp_thumbs_delete_others (const gchar   *uri,
           g_free (filename);
         }
     }
+}
+
+gchar *
+_gimp_thumb_filename_from_uri (const gchar *uri)
+{
+  gchar *filename;
+  gchar *hostname;
+
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  filename = g_filename_from_uri (uri, &hostname, NULL);
+
+  if (!filename)
+    return NULL;
+
+  if (hostname)
+    {
+      /*  we have a file: URI with a hostname                           */
+
+#ifdef G_OS_WIN32
+      /*  on Win32, create a valid UNC path and use it as the filename  */
+      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
+
+      g_free (filename);
+      filename = tmp;
+#else
+      /*  otherwise return NULL, caller should use URI then             */
+      g_free (filename);
+      filename = NULL;
+#endif
+
+      g_free (hostname);
+    }
+
+  return filename;
 }
 
 static void

@@ -1,3 +1,15 @@
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_desc_string):
+	changed "Remote Image" to "Remote File". The state of the
+	thumbnail doesn't tell us if this is an image file at all.
+
+	* app/widgets/gimpthumbbox.c: don't auto-thumbnail remote files.
+
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumbnail.c: do the same workaround for UNC
+	paths as in file_utils_filename_from_uri().
+
 2005-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/uri/uri-backend.h: added backend methods
