@@ -1,3 +1,8 @@
+2001-12-18  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in (find_out_env_flags): Accept empty CFLAGS
+	and LDFLAGS env vars.
+
 2001-12-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/gap_decode_xanim.c (p_xanim_dialog): fixed the last 
