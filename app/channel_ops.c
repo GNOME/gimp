@@ -556,7 +556,7 @@ offset_halfheight_callback (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se),
 			      0, gimage->width / 2);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se),
-			      1, gimage->width / 2);
+			      1, gimage->height / 2);
 }
 
 GimpImage *

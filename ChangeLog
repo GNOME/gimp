@@ -1,3 +1,8 @@
+1999-08-01  Tor Lillqvist  <tml@iki.fi>
+
+	* app/channel_ops.c (offset_halfheight_callback): Fix
+	cut-and-paste error reported by Claes G Lindblad.
+
 Thu Jul 29 22:06:41 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/tools.pdb: revert previous change
