@@ -631,7 +631,6 @@ crop_image (GImage *gimage,
   Layer *layer;
   Layer *floating_layer;
   Channel *channel;
-  GimpDrawable *drawable;
   GList *guide_list_ptr;
   GSList *list;
   int width, height;
