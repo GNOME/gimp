@@ -63,7 +63,7 @@
 #include "gimpsheartool.h"
 #include "gimpsmudgetool.h"
 #include "gimptexttool.h"
-
+#include "gimptoolmodule.h"
 
 void
 tools_init (Gimp *gimp)
@@ -131,6 +131,10 @@ tools_init (Gimp *gimp)
     {
       register_funcs[i] (gimp, tool_manager_register_tool);
     }
+/*  For testing only...
+    {
+      GimpToolModule *m = gimp_tool_module_new("/home/rockwlrs/gimp/app/tools/libtestmodule.so", gimp, tool_manager_register_tool);
+    } */
 }
 
 void

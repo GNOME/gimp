@@ -99,6 +99,8 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimpthresholdtool.h		\
 	gimptool.c			\
 	gimptool.h			\
+	gimptoolmodule.c		\
+	gimptoolmodule.h		\
 	gimptransformtool.c		\
 	gimptransformtool.h		\
 	\
