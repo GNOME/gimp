@@ -89,6 +89,41 @@ struct _GimpStrokeClass
   GimpStroke  * (* duplicate)            (const GimpStroke      *stroke);
   GimpStroke  * (* make_bezier)          (const GimpStroke      *stroke);
 
+  void          (* translate)            (GimpStroke            *stroke,
+                                          gdouble                offset_x,
+                                          gdouble                offset_y);
+
+  void          (* scale)                (GimpStroke            *stroke,
+                                          gdouble                scale_x,
+                                          gdouble                scale_y,
+                                          gint                   offset_x,
+                                          gint                   offset_y);
+
+  void          (* resize)               (GimpStroke            *stroke,
+                                          gint                   new_width,
+                                          gint                   new_heigth,
+                                          gint                   offset_x,
+                                          gint                   offset_y);
+
+  void          (* flip)                 (GimpStroke            *stroke,
+                                          GimpOrientationType    flip_type,
+                                          gdouble                axis,
+                                          gboolean               clip_result);
+
+  void          (* rotate)               (GimpStroke            *stroke,
+                                          GimpRotationType       rotate_type,
+                                          gdouble                center_x,
+                                          gdouble                center_y,
+                                          gboolean               clip_result);
+
+  void          (* transform)            (GimpStroke            *stroke,
+                                          const GimpMatrix3     *matrix,
+                                          GimpTransformDirection direction,
+                                          GimpInterpolationType  interp_type,
+                                          gboolean               clip_result,
+                                          GimpProgressFunc       progress_callback,
+                                          gpointer               progress_data);
+
   GList       * (* get_draw_anchors)     (const GimpStroke      *stroke);
   GList       * (* get_draw_controls)    (const GimpStroke      *stroke);
   GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
@@ -157,6 +192,37 @@ GimpStroke * gimp_stroke_duplicate            (const GimpStroke      *stroke);
 
 /* creates a bezier approximation. */
 GimpStroke * gimp_stroke_make_bezier          (const GimpStroke      *stroke);
+
+void         gimp_stroke_translate   (GimpStroke             *stroke,
+                                      gdouble                 offset_x,
+                                      gdouble                 offset_y);
+void         gimp_stroke_scale       (GimpStroke             *stroke,
+                                      gdouble                 scale_x,
+                                      gdouble                 scale_y,
+                                      gint                    offset_x,
+                                      gint                    offset_y);
+void         gimp_stroke_resize      (GimpStroke             *stroke,
+                                      gint                    new_width,
+                                      gint                    new_height,
+                                      gint                    offset_x,
+                                      gint                    offset_y);
+void         gimp_stroke_flip        (GimpStroke             *stroke,
+                                      GimpOrientationType     flip_type,
+                                      gdouble                 axis,
+                                      gboolean                clip_result);
+void         gimp_stroke_rotate      (GimpStroke             *stroke,
+                                      GimpRotationType        rotate_type,
+                                      gdouble                 center_x,
+                                      gdouble                 center_y,
+                                      gboolean                clip_result);
+void         gimp_stroke_transform   (GimpStroke             *stroke,
+                                      const GimpMatrix3      *matrix,
+                                      GimpTransformDirection  direction,
+                                      GimpInterpolationType   interp_type,
+                                      gboolean                clip_result,
+                                      GimpProgressFunc        progress_callback,
+                                      gpointer                progress_data);
+
 
 GList      * gimp_stroke_get_draw_anchors     (const GimpStroke      *stroke);
 GList      * gimp_stroke_get_draw_controls    (const GimpStroke      *stroke);

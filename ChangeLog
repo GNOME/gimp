@@ -1,3 +1,10 @@
+2003-08-07  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.c: Moved transformations code to
+	gimpstroke, so that the gimpvector no longer fiddles in
+	the stroke internals.
+
 2003-08-07  Raphael Quinet  <quinet@gamers.org>
 
 	* app/composite/Makefile.am (test_composite_SOURCES): added

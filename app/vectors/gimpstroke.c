@@ -25,6 +25,8 @@
 
 #include "vectors-types.h"
 
+#include "core/gimpdrawable-transform-utils.h"
+
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 
@@ -70,6 +72,30 @@ static GimpAnchor * gimp_stroke_real_temp_anchor_set (GimpStroke       *stroke,
 static gboolean     gimp_stroke_real_temp_anchor_fix (GimpStroke       *stroke);
 static GimpStroke * gimp_stroke_real_duplicate       (const GimpStroke *stroke);
 static GimpStroke * gimp_stroke_real_make_bezier     (const GimpStroke *stroke);
+
+static void gimp_stroke_real_translate (GimpStroke *stroke,
+                                        gdouble offset_x, gdouble offset_y);
+static void gimp_stroke_real_scale     (GimpStroke *stroke,
+                                        gdouble scale_x, gdouble scale_y,
+                                        gint offset_x, gint offset_y);
+static void gimp_stroke_real_resize    (GimpStroke *stroke,
+                                        gint new_width, gint new_height,
+                                        gint offset_x, gint offset_y);
+static void gimp_stroke_real_flip      (GimpStroke *stroke,
+                                        GimpOrientationType flip_type,
+                                        gdouble axis, gboolean clip_result);
+static void gimp_stroke_real_rotate    (GimpStroke *stroke,
+                                        GimpRotationType rotate_type,
+                                        gdouble center_x, gdouble center_y,
+                                        gboolean clip_result);
+static void gimp_stroke_real_transform (GimpStroke *stroke,
+                                        const GimpMatrix3 *matrix,
+                                        GimpTransformDirection direction,
+                                        GimpInterpolationType interp_type,
+                                        gboolean clip_result,
+                                        GimpProgressFunc progress_callback,
+                                        gpointer progress_data);
+
 static GList     * gimp_stroke_real_get_draw_anchors (const GimpStroke *stroke);
 static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
 static GArray     * gimp_stroke_real_get_draw_lines  (const GimpStroke *stroke);
@@ -144,6 +170,13 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 
   klass->duplicate               = gimp_stroke_real_duplicate;
   klass->make_bezier             = gimp_stroke_real_make_bezier;
+
+  klass->translate               = gimp_stroke_real_translate;
+  klass->scale                   = gimp_stroke_real_scale;
+  klass->resize                  = gimp_stroke_real_resize;
+  klass->flip                    = gimp_stroke_real_flip;
+  klass->rotate                  = gimp_stroke_real_rotate;
+  klass->transform               = gimp_stroke_real_transform;
 
   klass->get_draw_anchors        = gimp_stroke_real_get_draw_anchors;
   klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
@@ -568,6 +601,239 @@ gimp_stroke_real_make_bezier (const GimpStroke *stroke)
   g_printerr ("gimp_stroke_make_bezier: default implementation\n");
 
   return NULL;
+}
+
+
+void
+gimp_stroke_translate (GimpStroke *stroke,
+                       gdouble     offset_x,
+                       gdouble     offset_y)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->translate (stroke, offset_x, offset_y);
+}
+
+static void
+gimp_stroke_real_translate (GimpStroke *stroke,
+                            gdouble     offset_x,
+                            gdouble     offset_y)
+{
+  GList *list;
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      anchor->position.x += offset_x;
+      anchor->position.y += offset_y;
+    }
+}
+
+
+void
+gimp_stroke_scale (GimpStroke *stroke,
+                   gdouble     scale_x,
+                   gdouble     scale_y,
+                   gint        offset_x,
+                   gint        offset_y)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->scale (stroke,
+                                         scale_x, scale_y,
+                                         offset_x, offset_y);
+}
+
+static void
+gimp_stroke_real_scale (GimpStroke *stroke,
+                        gdouble     scale_x,
+                        gdouble     scale_y,
+                        gint        offset_x,
+                        gint        offset_y)
+{
+  GList *list;
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      anchor->position.x *= scale_x;
+      anchor->position.y *= scale_y;
+    }
+}
+
+
+void
+gimp_stroke_resize (GimpStroke *stroke,
+                    gint        new_width,
+                    gint        new_height,
+                    gint        offset_x,
+                    gint        offset_y)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->resize (stroke,
+                                          new_width, new_height,
+                                          offset_x, offset_y);
+}
+
+static void
+gimp_stroke_real_resize (GimpStroke *stroke,
+                         gint        new_width,
+                         gint        new_height,
+                         gint        offset_x,
+                         gint        offset_y)
+{
+  GList *list;
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      anchor->position.x += offset_x;
+      anchor->position.y += offset_y;
+    }
+}
+
+
+void
+gimp_stroke_flip (GimpStroke          *stroke,
+                  GimpOrientationType  flip_type,
+                  gdouble              axis,
+                  gboolean             clip_result)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->flip (stroke, flip_type,
+                                        axis, clip_result);
+}
+
+static void
+gimp_stroke_real_flip (GimpStroke          *stroke,
+                       GimpOrientationType  flip_type,
+                       gdouble              axis,
+                       gboolean             clip_result)
+{
+  GList *list;
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      switch (flip_type)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          anchor->position.x = -(anchor->position.x - axis) + axis;
+          break;
+
+        case GIMP_ORIENTATION_VERTICAL:
+          anchor->position.y = -(anchor->position.y - axis) + axis;
+          break;
+
+        default:
+          break;
+        }
+    }
+}
+
+
+void
+gimp_stroke_rotate (GimpStroke       *stroke,
+                    GimpRotationType  rotate_type,
+                    gdouble           center_x,
+                    gdouble           center_y,
+                    gboolean          clip_result)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->rotate (stroke, rotate_type,
+                                          center_x, center_y, clip_result);
+}
+
+static void
+gimp_stroke_real_rotate (GimpStroke       *stroke,
+                         GimpRotationType  rotate_type,
+                         gdouble           center_x,
+                         gdouble           center_y,
+                         gboolean          clip_result)
+{
+  GList       *list;
+  GimpMatrix3  matrix; 
+  gdouble      angle = 0.0;
+
+  switch (rotate_type)
+    {
+    case GIMP_ROTATE_90:
+      angle = G_PI_2;
+      break;
+    case GIMP_ROTATE_180:
+      angle = G_PI;
+      break;
+    case GIMP_ROTATE_270:
+      angle = - G_PI_2;
+      break;
+    }
+
+  gimp_drawable_transform_matrix_rotate_center (center_x, center_y, angle,
+                                                &matrix);
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      gimp_matrix3_transform_point (&matrix,
+                                    anchor->position.x,
+                                    anchor->position.y,
+                                    &anchor->position.x,
+                                    &anchor->position.y);
+    }
+}
+
+
+void
+gimp_stroke_transform (GimpStroke            *stroke,
+                       const GimpMatrix3     *matrix,
+                       GimpTransformDirection direction,
+                       GimpInterpolationType  interp_type,
+                       gboolean               clip_result,
+                       GimpProgressFunc       progress_callback,
+                       gpointer               progress_data)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->transform (stroke, matrix, direction,
+                                             interp_type, clip_result,
+                                             progress_callback, progress_data);
+}
+
+static void
+gimp_stroke_real_transform (GimpStroke            *stroke,
+                            const GimpMatrix3     *matrix,
+                            GimpTransformDirection direction,
+                            GimpInterpolationType  interp_type,
+                            gboolean               clip_result,
+                            GimpProgressFunc       progress_callback,
+                            gpointer               progress_data)
+{
+  GimpMatrix3  local_matrix;
+  GList       *list;
+
+  local_matrix = *matrix;
+
+  if (direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&local_matrix);
+
+  for (list = stroke->anchors; list; list = g_list_next (list))
+    {
+      GimpAnchor *anchor = list->data;
+
+      gimp_matrix3_transform_point (&local_matrix,
+                                    anchor->position.x,
+                                    anchor->position.y,
+                                    &anchor->position.x,
+                                    &anchor->position.y);
+    }
 }
 
 

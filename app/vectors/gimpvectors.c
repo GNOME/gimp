@@ -300,15 +300,8 @@ gimp_vectors_translate (GimpItem *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          anchor->position.x += offset_x;
-          anchor->position.y += offset_y;
-        }
+      gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
   gimp_vectors_thaw (vectors);
@@ -336,15 +329,11 @@ gimp_vectors_scale (GimpItem              *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          anchor->position.x *= (gdouble) new_width  / (gdouble) item->width;
-          anchor->position.y *= (gdouble) new_height / (gdouble) item->height;
-        }
+      gimp_stroke_scale (stroke,
+                         (gdouble) new_width  / (gdouble) item->width,
+                         (gdouble) new_height / (gdouble) item->height,
+                         new_offset_x, new_offset_y);
     }
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
@@ -375,15 +364,8 @@ gimp_vectors_resize (GimpItem *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          anchor->position.x += offset_x;
-          anchor->position.y += offset_y;
-        }
+      gimp_stroke_resize (stroke, new_width, new_height, offset_x, offset_y);
     }
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
@@ -412,26 +394,8 @@ gimp_vectors_flip (GimpItem            *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          switch (flip_type)
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              anchor->position.x = -(anchor->position.x - axis) + axis;
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              anchor->position.y = -(anchor->position.y - axis) + axis;
-              break;
-
-            default:
-              break;
-            }
-        }
+      gimp_stroke_flip (stroke, flip_type, axis, clip_result);
     }
 
   gimp_vectors_thaw (vectors);
@@ -476,18 +440,8 @@ gimp_vectors_rotate (GimpItem         *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          gimp_matrix3_transform_point (&matrix,
-                                        anchor->position.x,
-                                        anchor->position.y,
-                                        &anchor->position.x,
-                                        &anchor->position.y);
-        }
+      gimp_stroke_rotate (stroke, rotate_type, center_x, center_y, clip_result);
     }
 
   gimp_vectors_thaw (vectors);
@@ -522,18 +476,9 @@ gimp_vectors_transform (GimpItem               *item,
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
-      GList      *list2;
 
-      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
-        {
-          GimpAnchor *anchor = list2->data;
-
-          gimp_matrix3_transform_point (&local_matrix,
-                                        anchor->position.x,
-                                        anchor->position.y,
-                                        &anchor->position.x,
-                                        &anchor->position.y);
-        }
+      gimp_stroke_transform (stroke, matrix, direction, interpolation_type,
+                             clip_result, progress_callback, progress_data);
     }
 
   gimp_vectors_thaw (vectors);
