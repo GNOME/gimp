@@ -1,3 +1,13 @@
+2001-06-18  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/newsprint.c: Fix from
+	    <warner-gnome.bugzilla@lothar.com> for problem with GREYA
+	    images: it was using the settings from the RGB colourspace
+	    due to testing bpp != 1 rather than colour_bpp != 1
+	    (colour_bpp has alpha taken out of it).  Fixes Bug#52981.
+	    Sven committed the same fix to 1.2 CVS.  This also bumps the
+	    version number to 0.60 to reflect this fixed bug.
+
 2001-06-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/nav_window.[ch]: major cleanup. After being finished, I

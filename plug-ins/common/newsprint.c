@@ -41,6 +41,11 @@
  *
  * 0.52: 10 Jan 1999  <austin@greenend.org.uk>
  *    gtk_label_set() -> gtk_label_set_text()
+ * 0.60: 18 Jun 2001  <austin@gimp.org>
+ *    fixed long-standing bug where newsprint() function in GREYA images
+ *    treated them as RGB (bpp rather than colour_bpp) to select
+ *    colourspace to use.  Thanks to warner-gnome.bugzilla@lothar.com for
+ *    spotting this and providing the patch.  Bug #52981.
  */
 
 #include "config.h"
@@ -61,7 +66,7 @@
 static char rcsid[] = "$Id$";
 #endif
 
-#define VERSION "v0.52"
+#define VERSION "v0.60"
 
 /* Some useful macros */
 #ifdef DEBUG
@@ -1780,7 +1785,7 @@ newsprint (GimpDrawable *drawable)
   has_alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
   colour_bpp = has_alpha ? bpp-1 : bpp;
   colourspace= pvals.colourspace;
-  if (bpp == 1)
+  if (colour_bpp == 1)
     {
       colourspace = CS_GREY;
     }
@@ -1811,7 +1816,7 @@ do {								\
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */
-  if (bpp == 1 || colourspace == CS_INTENSITY)
+  if (colour_bpp == 1 || colourspace == CS_INTENSITY)
     {
       rot[0]    = DEG2RAD (pvals.gry_ang);	
       thresh[0] = spot2thresh (pvals.gry_spotfn, width);
