@@ -36,8 +36,8 @@
 #include "display/gimpdisplay.h"
 
 #include "widgets/gimppaletteeditor.h"
+#include "widgets/gimptoolbox-color-area.h"
 
-#include "gui/color-area.h"
 #include "gui/info-dialog.h"
 
 #include "gimpdrawtool.h"

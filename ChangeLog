@@ -1,5 +1,10 @@
 2002-03-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcolorpickertool.c: oops, including removed files
+	is a bad idea...
+
+2002-03-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptoolinfo.c: g_strdup() the stock_id passed to
 	gimp_tool_info_new() because the caller's memory may disappear
 	after registering the tool (tool modules).
