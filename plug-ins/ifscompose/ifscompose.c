@@ -723,7 +723,7 @@ ifs_compose_color_page (void)
 
   color.vals[0] = 0.0;
   color.vals[1] = 0.0;
-  color.vals[2] = 2.0;
+  color.vals[2] = 1.0;
   ifsD->blue_cmap = color_map_create (_("IfsCompose: Blue"),&color,
 				      &ifsD->current_vals.blue_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,

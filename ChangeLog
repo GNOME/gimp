@@ -1,4 +1,8 @@
-2001-01-10  Szabolcs Ban <sven@gimp.org>
+2001-01-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/ifscompose/ifscompose.c: blue is (0,0,1), not (0,0,2)
+
+2001-01-10  Szabolcs Ban
 
 	* plug-ins/MapObject/mapobject_ui.c: fixed typo. 
 	s/Treshold/Threshold/
