@@ -1,3 +1,10 @@
+2004-02-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): applied
+	patch from Dave Neary that removes gray point pickers for
+	individual channels (bug #125303). Let the levels widgets expand
+	with the dialog.
+
 2004-02-18  Simon Budig  <simon@gimp.org>
 
 	* app/config/gimpguiconfig.[ch]
@@ -20,10 +27,10 @@
 
 2004-02-18  Sven Neumann  <sven@gimp.org>
 
-	* tile-cache.c
-	* tile-private.h
-	* tile.[ch]: removed trailing whitespace, added some newlines,
-	let tile_is_valid() return a gboolean instead of a gint.
+	* app/base/tile-cache.c
+	* app/base/tile-private.h
+	* app/base/tile.[ch]: removed trailing whitespace, added some
+	newlines, let tile_is_valid() return a gboolean instead of a gint.
 
 	* app/core/gimpimage-projection.c
 	* app/core/gimpimage-undo-push.c
