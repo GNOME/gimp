@@ -1392,9 +1392,9 @@ drawable_thumbnail_invoker (Argument *args)
 	  dheight = drawable_height (GIMP_DRAWABLE (drawable));
     
 	  if (dwidth > dheight)
-	    req_height = (req_width * dheight) / dwidth;
+	    req_height = MAX (1, (req_width * dheight) / dwidth);
 	  else
-	    req_width = (req_height * dwidth) / dheight;
+	    req_width = MAX (1, (req_height * dwidth) / dheight);
     
 	  if (GIMP_IS_LAYER (drawable))
 	    buf = layer_preview (GIMP_LAYER (drawable), req_width, req_height);
