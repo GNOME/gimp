@@ -947,6 +947,7 @@ gimp_dnd_open_files (GtkWidget *widget,
       const gchar *dnd_crap = list->data;
       gchar       *filename;
       gchar       *uri = NULL;
+      GError *error = NULL;
 
       if (!dnd_crap)
         continue;
@@ -978,7 +979,7 @@ gimp_dnd_open_files (GtkWidget *widget,
           if (start != dnd_crap)
             {
               /*  try if we got a "file:" uri in the local filename encoding  */
-              gchar *unescaped_filename;
+              gchar  *unescaped_filename;
 
               if (strstr (dnd_crap, "%"))
                 {
@@ -990,7 +991,24 @@ gimp_dnd_open_files (GtkWidget *widget,
                   unescaped_filename = g_strdup (start);
                 }
 
-              uri = g_filename_to_uri (unescaped_filename, NULL, NULL);
+              uri = g_filename_to_uri (unescaped_filename, NULL, &error);
+
+              if (! uri)
+                {
+                  gchar *escaped_filename = g_strescape (unescaped_filename,
+                                                         NULL);
+
+                  g_message (_("The filename '%s' couldn't be converted to a "
+                               "valid URI:\n\n%s"),
+                             escaped_filename,
+                             error->message ? error->message
+                                            : _("Invalid UTF-8"));
+                  g_free (escaped_filename);
+                  g_clear_error (&error);
+
+                  g_free (unescaped_filename);
+                  continue;
+                }
 
               g_free (unescaped_filename);
             }
@@ -1009,7 +1027,6 @@ gimp_dnd_open_files (GtkWidget *widget,
       {
         GimpImage         *gimage;
         GimpPDBStatusType  status;
-        GError            *error = NULL;
 
         gimage = file_open_with_display (the_dnd_gimp, uri, &status, &error);
 
