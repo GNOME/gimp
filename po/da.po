@@ -80,8 +80,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-07-13 15:34+0200\n"
-"PO-Revision-Date: 2002-07-13 15:36+0200\n"
+"POT-Creation-Date: 2002-08-13 21:40+0200\n"
+"PO-Revision-Date: 2002-08-13 21:40+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -703,7 +703,7 @@ msgstr "Gennemsigtig"
 #: app/core/core-enums.c:102 app/core/core-enums.c:191
 #: app/core/core-enums.c:218 app/tools/gimpbycolorselecttool.c:590
 msgid "None"
-msgstr "Ingen"
+msgstr "Intet"
 
 #: app/core/core-enums.c:121
 msgid "Bi-Linear"
@@ -2006,10 +2006,11 @@ msgstr "Visningsnavigering"
 msgid "Navigation"
 msgstr "Navigering"
 
+# det er pløkumuligt at oversætte dette korrekt - %s bliver til navnet på et værktøj, f.eks. "fri markering" eller "spandudfyldning"
 #: app/gui/dialogs-constructors.c:1123 app/gui/dialogs-constructors.c:1167
 #, c-format
 msgid "%s Options"
-msgstr "%s-tilvalg"
+msgstr "%s"
 
 #: app/gui/drawable-commands.c:72
 msgid "Desaturate operates only on RGB color drawables."
@@ -2806,7 +2807,7 @@ msgstr "/Redigér/Omgør"
 
 #: app/gui/menus.c:369
 msgid "/Edit/Cut"
-msgstr "Gentag<"
+msgstr "/Redigér/Klip"
 
 #: app/gui/menus.c:374
 msgid "/Edit/Copy"
@@ -5741,7 +5742,7 @@ msgstr "Blanding: "
 
 #: app/tools/gimpblendtool.c:494
 msgid "Offset:"
-msgstr "Offset:"
+msgstr "Afsæt:"
 
 #: app/tools/gimpblendtool.c:520
 msgid "Gradient:"
@@ -5813,25 +5814,25 @@ msgstr "Udfyldningstype (<Ctrl>)"
 
 #: app/tools/gimpbucketfilltool.c:368 app/tools/selection_options.c:266
 msgid "Finding Similar Colors"
-msgstr "Finder lignende farver"
+msgstr "Finding af ens farver"
 
 #: app/tools/gimpbucketfilltool.c:379
 msgid "Fill Transparent Areas"
-msgstr "Udfylder gennemsigtig områder"
+msgstr "Udfyld gennemsigtige områder"
 
 #: app/tools/gimpbucketfilltool.c:387
 msgid "Allow completely transparent regions to be filled"
-msgstr "Tillad fuldstændigt gennemsigtige område at blive udfyldt"
+msgstr "Tillad fuldstændigt gennemsigtige områder at blive udfyldt"
 
 # mærkelig tekst, men vist nok rigtig
 #: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:714
 #: app/tools/selection_options.c:294 app/tools/selection_options.c:362
 msgid "Sample Merged"
-msgstr "Slå prøver sammen"
+msgstr "Benyt alle lag"
 
 #: app/tools/gimpbucketfilltool.c:402
 msgid "Base filled area on all visible layers"
-msgstr "Basér udfyldt område på alle synlige lag"
+msgstr "Basér udfyldningsområde på alle synlige lag"
 
 #: app/tools/gimpbucketfilltool.c:419 app/tools/selection_options.c:320
 msgid "Maximum color difference"
