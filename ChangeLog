@@ -1,5 +1,10 @@
 2002-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-commands.[ch]: oops, the callback's name has
+	changed too :)
+
+2002-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/menus.c: HIG compliance: changed "Save a Copy as..."
 	to "Save a Copy...".
 

@@ -187,8 +187,8 @@ file_save_as_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_save_a_copy_as_cmd_callback (GtkWidget *widget,
-				  gpointer   data)
+file_save_a_copy_cmd_callback (GtkWidget *widget,
+                               gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);

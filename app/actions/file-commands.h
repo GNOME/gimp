@@ -38,7 +38,7 @@ void   file_save_cmd_callback              (GtkWidget *widget,
 					    gpointer   data);
 void   file_save_as_cmd_callback           (GtkWidget *widget,
 					    gpointer   data);
-void   file_save_a_copy_as_cmd_callback    (GtkWidget *widget,
+void   file_save_a_copy_cmd_callback       (GtkWidget *widget,
 					    gpointer   data);
 
 void   file_revert_cmd_callback            (GtkWidget *widget,
