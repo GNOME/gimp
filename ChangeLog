@@ -1,3 +1,22 @@
+2002-02-10  Adam D. Moss  <adam@gimp.org>
+
+	* app/core/gimpimage-convert.[ch]:
+	RGB->Indexed quantizer version 3.0 (the rest of the commit started
+	a year ago -- whoops).  Divide colours within CIE L*a*b* space using
+	CPercep module (cpercep.[ch]), colour-match and dither likewise,
+	change the underlying box selection criteria and division point
+	logic, bump luminance precision upwards, etc. etc.
+
+	* app/core/cpercep.[ch] (new files): utility module used by
+	quantizer for quantifying perceptual colour distances
+
+	* app/core/gimpimage-convert-data.h (new file): move the big
+	static data arrays out of gimpimage-convert.c
+
+	* app/core/gimpimage-convert-fsdither.h: static-ify data
+
+	* app/core/Makefile.am: add cpercep.[ch] and gimpimage-convert-data.h
+
 2002-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo.c: removed #if 0'ed old display update hackery. Don't

@@ -18,6 +18,8 @@ noinst_LIBRARIES = libappcore.a
 libappcore_a_sources = @STRIP_BEGIN@ \
 	core-enums.h			\
 	core-types.h			\
+	cpercep.c			\
+	cpercep.h			\
 	gimp.c				\
 	gimp.h				\
 	gimpbrush.c			\
@@ -82,6 +84,7 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-convert.c		\
 	gimpimage-convert.h		\
 	gimpimage-convert-fsdither.h	\
+	gimpimage-convert-data.h	\
 	gimpimage-crop.c		\
 	gimpimage-crop.h		\
 	gimpimage-duplicate.c		\

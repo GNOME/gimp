@@ -26,7 +26,7 @@
 void   gimp_image_convert              (GimpImage          *gimage,
                                         GimpImageBaseType   new_type,
                                         /* The following params used only for
-                                         * new_type == INDEXED
+                                         * new_type == GIMP_INDEXED
                                          */
                                         gint                num_cols,
                                         ConvertDitherType   dither,
