@@ -33,7 +33,7 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
@@ -67,8 +67,6 @@
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 #include "display/gimpnavigationeditor.h"
 
 #include "actions/channels-commands.h"
@@ -820,17 +818,9 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
                              GimpContext       *context,
                              gint               preview_size)
 {
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell = NULL;
-  GtkWidget        *view;
+  GtkWidget *view;
 
-  gdisp = gimp_context_get_display (context);
-
-  if (gdisp)
-    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  view = gimp_navigation_editor_new (shell,
-                                     GIMP_DISPLAY_CONFIG (context->gimp->config));
+  view = gimp_navigation_editor_new (factory->menu_factory);
 
   return dialogs_dockable_new (view,
                                _("Navigation"), _("Display Navigation"),

@@ -1,3 +1,34 @@
+2004-09-26  Michael Natterer  <mitch@gimp.org>
+
+	Ported GimpNavigationView to use actions for its buttons:
+
+	* app/menus/menus.c (menus_init): register a <GimpNaviagaionEditor>
+	UI manager containing the "view" action group.
+
+	* app/actions/actions.c (action_data_get_foo): handle "data" being
+	a GimpNavigationEditor.
+
+	* app/actions/view-actions.c (view_actions): added tooltips for
+	the actions used in the editor.
+
+	(view_actions_update): use action_data_get_display() instead of
+	checking the type of "data" manually.
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_action_button): use
+	a GtkToggleButton instead of GimpButton for GtkToggleActions.
+
+	* app/display/gimpnavigationeditor.[ch]: added a GimpMenuFactory
+	parameter to the public constructor and removed all other
+	parameters. Simplified gimp_navigation_editor_new_private() and
+	use gimp_editor_add_action_button() instead of just add_button()
+	for creating the buttons. Made gimp_navigation_view_set_shell()
+	private. Update the UI manager when the shell zooms or scrolls.
+
+	* app/dialogs/dialogs-constructors.c (dialogs_navigation_view_new):
+	pass the menu_factory to gimp_navigation_editor_new().
+
+	Removed #includes which are not needed any more.
+
 2004-09-26  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/exchange.c: use the same preview as in all other

@@ -42,6 +42,7 @@
 #include "display/gimpdisplayshell-render.h"
 #include "display/gimpdisplayshell-selection.h"
 
+#include "actions.h"
 #include "view-actions.h"
 #include "view-commands.h"
 
@@ -74,22 +75,26 @@ static GimpActionEntry view_actions[] =
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
-    N_("Zoom _Out"), "minus", NULL,
+    N_("Zoom _Out"), "minus",
+    N_("Zoom out"),
     G_CALLBACK (view_zoom_out_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in", GTK_STOCK_ZOOM_IN,
-    N_("Zoom _In"), "plus", NULL,
+    N_("Zoom _In"), "plus",
+    N_("Zoom in"),
     G_CALLBACK (view_zoom_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
-    N_("_Fit Image in Window"), "<control><shift>E", NULL,
+    N_("_Fit Image in Window"), "<control><shift>E",
+    N_("Fit image in window"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
   { "view-zoom-fit-to", GTK_STOCK_ZOOM_FIT,
-    N_("Fit Image to Window"), NULL, NULL,
+    N_("Fit Image to Window"), NULL,
+    N_("Fit image to window"),
     G_CALLBACK (view_zoom_fit_to_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_TO },
 
@@ -108,8 +113,9 @@ static GimpActionEntry view_actions[] =
     G_CALLBACK (view_display_filters_cmd_callback),
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
-  { "view-shrink-wrap", NULL,
-    N_("Shrink _Wrap"), "<control>E", NULL,
+  { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
+    N_("Shrink _Wrap"), "<control>E",
+    N_("Shrink wrap"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
     GIMP_HELP_VIEW_SHRINK_WRAP },
 
@@ -217,7 +223,8 @@ static GimpRadioActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-1-1", GTK_STOCK_ZOOM_100,
-    N_("1:1  (100%)"), "1", NULL,
+    N_("1:1  (100%)"), "1",
+    N_("Zoom 1:1"),
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },
 
@@ -401,19 +408,11 @@ view_actions_update (GimpActionGroup *group,
   gboolean            fullscreen = FALSE;
   gint                n_screens  = 1;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
+  gdisp = action_data_get_display (data);
 
   if (gdisp)
     {
+      shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
       gimage = gdisp->gimage;
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);

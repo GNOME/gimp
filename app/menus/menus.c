@@ -255,6 +255,11 @@ menus_init (Gimp              *gimp,
                                       "selection-editor-menu.xml", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<NavigationEditor>",
+                                      "view",
+                                      NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<UndoEditor>",
                                       "edit",
                                       NULL,

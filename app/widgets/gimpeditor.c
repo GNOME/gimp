@@ -566,7 +566,16 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   button_icon_size = gimp_editor_ensure_button_box (editor);
 
-  button = gimp_button_new ();
+  if (GTK_IS_TOGGLE_ACTION (action))
+    {
+      button = gtk_toggle_button_new ();
+      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+    }
+  else
+    {
+      button = gimp_button_new ();
+    }
+
   gtk_action_connect_proxy (action, button);
   gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
