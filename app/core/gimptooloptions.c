@@ -180,17 +180,24 @@ gimp_tool_options_build_filename (GimpToolOptions *tool_options,
   gchar *basename;
   gchar *filename;
 
-  if (! extension)
-    extension = "default";
+  if (extension)
+    {
+      basename = g_strconcat (GIMP_OBJECT (tool_options->tool_info)->name,
+                              ".", extension, NULL);
 
-  basename = g_strconcat (GIMP_OBJECT (tool_options->tool_info)->name,
-                          ".", extension, NULL);
-
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options", basename,
-                               NULL);
-
-  g_free (basename);
+      filename = g_build_filename (gimp_directory (),
+                                   "tool-options",
+                                   basename,
+                                   NULL);
+      g_free (basename);
+    }
+  else
+    {
+      filename = g_build_filename (gimp_directory (),
+                                   "tool-options",
+                                   GIMP_OBJECT (tool_options->tool_info)->name,
+                                   NULL);      
+    }
 
   return filename;
 }

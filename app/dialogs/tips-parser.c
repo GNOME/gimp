@@ -309,7 +309,7 @@ tips_parser_end_element (GMarkupParseContext *context,
       if (parser->markup_depth == 0)
         {
           tips_parser_set_by_locale (parser, &parser->current_tip->welcome);
-          g_string_assign (parser->value, "");
+          g_string_truncate (parser->value, 0);
           parser->state = TIPS_IN_TIP;
         }
       else
@@ -320,7 +320,7 @@ tips_parser_end_element (GMarkupParseContext *context,
       if (parser->markup_depth == 0)
         {
           tips_parser_set_by_locale (parser, &parser->current_tip->thetip);
-          g_string_assign (parser->value, "");
+          g_string_truncate (parser->value, 0);
           parser->state = TIPS_IN_TIP;
         }
       else

@@ -92,10 +92,7 @@ gimp_config_serialize_properties (GObject  *object,
             return FALSE;
         }
 
-      if (indent_level == 0)
-        g_string_assign (str, "\n");
-      else
-        g_string_assign (str, "");
+      g_string_truncate (str, 0);
     }
 
   g_free (property_specs);
@@ -157,7 +154,7 @@ gimp_config_serialize_changed_properties (GObject *new,
       if (property_written)
         g_string_assign (str, "\n");
       else
-        g_string_assign (str, "");
+        g_string_truncate (str, 0);
 
       gimp_config_string_indent (str, indent_level);
 

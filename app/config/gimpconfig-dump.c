@@ -183,7 +183,7 @@ dump_gimprc_system (GObject *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_string_assign (str, "");
+      g_string_truncate (str, 0);
 
       comment = dump_describe_param (prop_spec);
       if (comment)

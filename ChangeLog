@@ -1,5 +1,22 @@
 2003-02-26  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-serialize.c (gimp_config_serialize_properties):
+	don't insert an extra line-break after a serialized property.
+
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-dump.c
+	* app/gui/tips-parser.c: use g_string_truncate (str, 0) instead of
+	assigning an empty string.
+
+	* app/tools/gimptextoptions.c: override the serialize and
+	deserialize methods of the GimpConfig interface and save/restore
+	the associated GimpText object instead of GimpTextOptions.
+
+	* app/tools/tool_options.c (gimp_tool_options_build_filename):
+	don't append ".default" if no extension is given.
+
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: removed debugging output.
 
 2003-02-26  Sven Neumann  <sven@gimp.org>
