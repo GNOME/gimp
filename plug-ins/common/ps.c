@@ -49,8 +49,6 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.04  20-Dec-97";
 #include <time.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-#include "app/gimage.h"
-#include "app/gdisplay.h"
 
 #define STR_LENGTH 64
 
