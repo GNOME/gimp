@@ -570,7 +570,8 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_SEPARATOR ("/Image/---"),
 
   { { N_("/Image/Configure G_rid..."), NULL,
-      image_configure_grid_cmd_callback, 0, NULL },
+      image_configure_grid_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_GRID },
     NULL,
     "image/dialogs/configure_grid.html", NULL },
 
@@ -1486,6 +1487,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Duplicate",               gdisp);
   SET_SENSITIVE ("/Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("/Image/Flatten Image",           gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("/Image/Configure Grid...",       gdisp);
 
   /*  Layer  */
 

@@ -1,5 +1,11 @@
 2003-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): add the
+	GIMP_STOCK_GRID icon to the "Configure Grid..." menu item and set
+	it insensitive if there is no image.
+
+2003-07-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpcompat.h: removed the name from the
 	GimpOrientationType[Compat] enum. The enums in this header are
 	just an anonymous mappings and not types by themselves.
