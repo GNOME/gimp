@@ -38,9 +38,9 @@ struct _GimpConfigInterface
                             GScanner *scanner);
 };
 
-typedef void  (*GimpConfigForeachFunc) (const gchar *key,
-                                        const gchar *value,
-                                        gpointer     user_data);
+typedef void  (* GimpConfigForeachFunc) (const gchar *key,
+                                         const gchar *value,
+                                         gpointer     user_data);
 
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;

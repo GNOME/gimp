@@ -46,8 +46,12 @@ struct _GimpRcClass
 };
 
 
-GType     gimp_rc_get_type (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new      (void);
+GType     gimp_rc_get_type       (void) G_GNUC_CONST;
+GimpRc  * gimp_rc_new            (void);
+
+gboolean  gimp_rc_write_changes  (GimpRc      *new,
+                                  GimpRc      *old,
+                                  const gchar *filename);
 
 
 #endif /* GIMP_RC_H__ */

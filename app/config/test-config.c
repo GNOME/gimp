@@ -45,6 +45,7 @@ main (int   argc,
       char *argv[])
 {
   GimpRc      *gimprc;
+  GimpRc      *gimprc2;
   const gchar *filename = "foorc";
   gchar       *header;
   gint         i;
@@ -83,9 +84,17 @@ main (int   argc,
   gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
                                      output_unknown_token, &header);
 
+  g_print ("\n Testing gimp_rc_write_changes() ... ");
+
+  gimprc2 = gimp_rc_new ();
+  g_object_set (G_OBJECT (gimprc2), "show-tips", FALSE, NULL);
+
+  gimp_rc_write_changes (gimprc2, gimprc, NULL);
+
   g_print ("\n");
 
   g_object_unref (G_OBJECT (gimprc));
+  g_object_unref (G_OBJECT (gimprc2));
   
   g_print ("Done.\n\n");
 

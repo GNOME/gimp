@@ -32,14 +32,6 @@
 #include "gimpconfig-types.h"
 
 
-static gboolean gimpconfig_serialize_value (const GValue *value,
-                                            GString      *str);
-
-static void     serialize_unknown_token    (const gchar  *key,
-                                            const gchar  *value,
-                                            gpointer      data);
-
-
 void
 gimp_config_serialize_properties (GObject *object,
                                   gint     fd)
@@ -77,7 +69,7 @@ gimp_config_serialize_properties (GObject *object,
       g_string_assign (str, "(");
       g_string_append (str, prop_spec->name);
       
-      if (gimpconfig_serialize_value (&value, str))
+      if (gimp_config_serialize_value (&value, str))
         {
           g_string_append (str, ")\n");
           write (fd, str->str, str->len);
@@ -97,9 +89,9 @@ gimp_config_serialize_properties (GObject *object,
   g_string_free (str, TRUE);
 }
 
-static gboolean
-gimpconfig_serialize_value (const GValue *value,
-                            GString      *str)
+gboolean
+gimp_config_serialize_value (const GValue *value,
+                             GString      *str)
 {
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
@@ -163,6 +155,11 @@ gimpconfig_serialize_value (const GValue *value,
   
   return FALSE;
 }
+
+
+static void  serialize_unknown_token  (const gchar  *key,
+                                       const gchar  *value,
+                                       gpointer      data);
 
 
 void
