@@ -1,5 +1,11 @@
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/text/Makefile.am: define PANGO_DISABLE_DEPRECATED.
+
+	* app/text/gimptext-compat.c: avoid deprecated API.
+
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-transform-utils.[ch]: added new function
 	gimp_drawable_transform_matrix_flip().
 
