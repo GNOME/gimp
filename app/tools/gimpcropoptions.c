@@ -218,5 +218,7 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  g_free (str);
+
   return vbox;
 }
