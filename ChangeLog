@@ -1,3 +1,8 @@
+2002-02-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/aa.c: code cleanup based on a patch from 
+	Maurits Rijk <lpeek.mrijk@consunet.nl>.
+
 2001-02-17  Manish Singh  <yosh@gimp.org>
 
 	* app/core/Makefile.am: add a -DGIMP_COMPILATION so cpercep can

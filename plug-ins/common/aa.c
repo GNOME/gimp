@@ -26,26 +26,23 @@
 /* 
  * Declare some local functions.
  */
-static void       query      (void);
-static void       run        (gchar      *name, 
-			      gint        nparams, 
-			      GimpParam  *param, 
-			      gint       *nreturn_vals, 
-			      GimpParam **return_vals);
-static gboolean   aa_savable (gint32      drawable_ID);
-static gboolean   save_aa    (gint        output_type, 
-			      gchar      *filename, 
-			      gint32      image,
-			      gint32      drawable);
-static void       gimp2aa    (gint32      image, 
-			      gint32      drawable_ID, 
-			      aa_context *context);
+static void     query      (void);
+static void     run        (gchar      *name, 
+                            gint        nparams, 
+                            GimpParam  *param, 
+                            gint       *nreturn_vals, 
+                            GimpParam **return_vals);
+static gboolean save_aa    (gint32      drawable_ID,
+                            gchar      *filename, 
+                            gint        output_type);
+static void     gimp2aa    (gint32      drawable_ID, 
+                            aa_context *context);
 
-static gint   type_dialog                 (int        selected);
-static void   type_dialog_toggle_update   (GtkWidget *widget, 
-					   gpointer   data);
-static void   type_dialog_cancel_callback (GtkWidget *widget, 
-					   gpointer   data);
+static gint     type_dialog                 (gint       selected);
+static void     type_dialog_toggle_update   (GtkWidget *widget, 
+                                             gpointer   data);
+static void     type_dialog_cancel_callback (GtkWidget *widget, 
+                                             gpointer   data);
 
 /* 
  * Some global variables.
@@ -81,13 +78,14 @@ query (void)
   };
 
   gimp_install_procedure ("file_aa_save",
-			  "Saves files in various text formats",
-			  "Saves files in various text formats",
+			  "Saves grayscale image in various text formats",
+			  "This plug-in uses aalib to save grayscale image "
+                          "as ascii art into a variety of text formats",
 			  "Tim Newsome <nuisance@cmu.edu>",
 			  "Tim Newsome <nuisance@cmu.edu>",
 			  "1997",
 			  "<Save>/AA",
-			  "GRAY*",		/* support grayscales */
+			  "GRAY",  /* FIXME: add support for other formats ? */
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
@@ -102,8 +100,8 @@ query (void)
  * specified by string.
  * -1 means it wasn't found.
  */
-static int 
-get_type_from_string (gchar *string)
+static gint 
+get_type_from_string (const gchar *string)
 {
   gint type = 0;
   aa_format **p = (aa_format **) aa_formats;
@@ -121,27 +119,25 @@ get_type_from_string (gchar *string)
 }
 
 static void 
-run (gchar   *name, 
-     gint     nparams, 
-     GimpParam  *param, 
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (gchar       *name, 
+     gint         nparams, 
+     GimpParam   *param, 
+     gint        *nreturn_vals,
+     GimpParam  **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint          output_type = 0;
-  static int    last_type = 0;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint                  output_type = 0;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   /* Set us up to return a status. */
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
@@ -167,7 +163,7 @@ run (gchar   *name,
       break;
     }
 
-  if (!aa_savable (drawable_ID)) 
+  if (!gimp_drawable_is_gray (drawable_ID)) 
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
@@ -177,8 +173,8 @@ run (gchar   *name,
       switch (run_mode) 
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data ("file_aa_save", &last_type);
-	  output_type = type_dialog (last_type);
+	  gimp_get_data ("file_aa_save", &output_type);
+	  output_type = type_dialog (output_type);
 	  if (output_type < 0)
 	    status = GIMP_PDB_CANCEL;
 	  break;
@@ -198,8 +194,7 @@ run (gchar   *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_aa_save", &last_type);
-	  output_type = last_type;
+	  gimp_get_data ("file_aa_save", &output_type);
 	  break;
 
 	default:
@@ -209,14 +204,13 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_aa (output_type, param[3].data.d_string, image_ID, drawable_ID))
+      if (save_aa (drawable_ID, param[3].data.d_string, output_type))
 	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
+	  gimp_set_data ("file_aa_save", &output_type, sizeof (output_type));
 	}
       else
 	{
-	  last_type = output_type;
-	  gimp_set_data ("file_aa_save", &last_type, sizeof (last_type));
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -231,94 +225,78 @@ run (gchar   *name,
  * The image type has to be GRAY.
  */
 static gboolean
-save_aa (gint    output_type, 
-	 gchar  *filename, 
-	 gint32  image_ID,
-	 gint32  drawable_ID)
+save_aa (gint32  drawable_ID,
+         gchar  *filename,
+         gint    output_type)
 {
-  aa_savedata savedata = {NULL, NULL};
-  aa_context *context  = NULL;
-  GimpDrawable *drawable  = NULL;
-  aa_format format;
+  aa_savedata  savedata;
+  aa_context  *context;
+  aa_format    format = *aa_formats[output_type];;
 
-  /*fprintf(stderr, "save %s\n", filename); */
-
-  drawable = gimp_drawable_get (drawable_ID);
-  memcpy (&format, aa_formats[output_type], sizeof (format));
-  format.width = drawable->width / 2;
-  format.height = drawable->height / 2;
-
-  /*fprintf(stderr, "save_aa %i x %i\n", format.width, format.height); */
+  format.width  = gimp_drawable_width (drawable_ID)  / 2;
+  format.height = gimp_drawable_height (drawable_ID) / 2;
 
   /* Get a libaa context which will save its output to filename. */
-  savedata.name = filename;
+  savedata.name   = filename;
   savedata.format = &format;
 
   context = aa_init (&save_d, &aa_defparams, &savedata);
-  if (context == NULL)
-    return TRUE;
+  if (!context)
+    return FALSE;
 
-  gimp2aa (image_ID, drawable_ID, context);
+  g_assert (aa_imgwidth  (context) == gimp_drawable_width  (drawable_ID));
+  g_assert (aa_imgheight (context) == gimp_drawable_height (drawable_ID));
+
+  gimp2aa (drawable_ID, context);
   aa_flush (context);
   aa_close (context);
 
-  /*fprintf(stderr, "Success!\n"); */
-
-  return FALSE;
+  return TRUE;
 }
 
 static void
-gimp2aa (gint32      image, 
-	 gint32      drawable_ID, 
+gimp2aa (gint32      drawable_ID, 
 	 aa_context *context)
 {
-  gint width, height, x, y;
-  guchar *buffer;
-  GimpDrawable *drawable = NULL;
-  GimpPixelRgn pixel_rgn;
-  aa_renderparams *renderparams = NULL;
-  gint bpp;
+  GimpDrawable    *drawable;
+  GimpPixelRgn     pixel_rgn;
+  aa_renderparams *renderparams;
 
-  width = aa_imgwidth (context);
-  height = aa_imgheight (context);
-  /*fprintf(stderr, "gimp2aa %i x %i\n", width, height); */
+  gint    width;
+  gint    height;
+  gint    x, y;
+  gint    bpp;
+  guchar *buffer;
 
   drawable = gimp_drawable_get (drawable_ID);
 
-  bpp = drawable->bpp;
-  buffer = g_new (guchar, width * bpp);
+  width  = aa_imgwidth  (context);
+  height = aa_imgheight (context);
+  bpp    = drawable->bpp;
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, 
+                       drawable, 0, 0, width, height, 
+                       FALSE, FALSE);
+
+  buffer = g_new (guchar, width * bpp);
 
   for (y = 0; y < height; y++) 
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, y, width);
       for (x = 0; x < width; x++) 
 	{
-	  /* Just copy one byte. If it's indexed that's all we need. Otherwise
-	   * it'll be the most significant one. */
+          /* FIXME: add support for alpha channel */
 	  aa_putpixel (context, x, y, buffer[x * bpp]);
 	}
     }
 
+  g_free (buffer);
+
   renderparams = aa_getrenderparams ();
   renderparams->dither = AA_FLOYD_S;
+
   aa_render (context, renderparams, 0, 0, 
 	     aa_scrwidth (context), aa_scrheight (context));
-}
-
-static gboolean 
-aa_savable (gint32 drawable_ID)
-{
-  GimpImageType drawable_type;
-
-  drawable_type = gimp_drawable_type (drawable_ID);
-
-  if (drawable_type != GIMP_GRAY_IMAGE && drawable_type != GIMP_GRAYA_IMAGE)
-    return FALSE;
-
-  return TRUE;
 }
 
 /* 
@@ -326,13 +304,13 @@ aa_savable (gint32 drawable_ID)
  */
 
 static gint 
-type_dialog (int selected) 
+type_dialog (gint selected) 
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
-  GSList *group;
+  GSList    *group;
 
   /* Create the actual window. */
   dlg = gimp_dialog_new (_("Save as Text"), "aa",
@@ -371,7 +349,7 @@ type_dialog (int selected)
       {
 	toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
 	group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-	gtk_box_pack_start (GTK_BOX  (toggle_vbox), toggle, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
 	gtk_widget_show (toggle);
 
 	g_signal_connect (G_OBJECT (toggle), "toggled",
@@ -413,5 +391,5 @@ static void
 type_dialog_toggle_update (GtkWidget *widget, 
 			   gpointer   data) 
 {
-  selected_type = get_type_from_string ((char *) data);
+  selected_type = get_type_from_string ((gchar *) data);
 }
