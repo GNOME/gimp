@@ -12,6 +12,10 @@
 	* app/gui/offset-dialog.[ch]: fixed public prototype, include
 	the header in the .c file.
 
+	* app/tools/gimpblendtool.c
+	* app/tools/paint_options.c
+	* app/tools/transform_options.c: removed usage of "the_gimp".
+
 	* app/gui/menus.c: some menu cleanup: moved all functions which
 	operate on the active layer/drawable to <Image>/Layer. Renamed
 	"Layers" to "Layer".
@@ -21,9 +25,8 @@
 
 	* app/gui/image-commands.[ch]
 	* app/gui/layers-commands.[ch]: moved stuff from image-commands.*
-	to layers-commads.*-
+	to layers-commads.*.
 
-	* app/tools/gimpblendtool.c
 	* app/tools/gimpbrightnesscontrasttool.c
 	* app/tools/gimpcolorbalancetool.c
 	* app/tools/gimpcurvestool.c
@@ -32,8 +35,6 @@
 	* app/tools/gimplevelstool.c
 	* app/tools/gimpposterizetool.c
 	* app/tools/gimpthresholdtool.c
-	* app/tools/paint_options.c
-	* app/tools/transform_options.c
 	* plug-ins/common/align_layers.c
 	* plug-ins/common/autocrop.c
 	* plug-ins/common/autostretch_hsv.c
