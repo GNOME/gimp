@@ -1,3 +1,9 @@
+2005-01-02  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/tiff.c: Special case 1-bit black & white indexed
+	images to save out as 1-bit grayscale MINISWHITE tiffs. Also load
+	these images as indexed images into GIMP. Fixes bug #150865.
+
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpdisplayshell-callbacks.c: use a timeout for
