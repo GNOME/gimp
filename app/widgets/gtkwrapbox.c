@@ -256,7 +256,7 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 								    FALSE,
 								    G_PARAM_READWRITE));
   gtk_container_class_install_child_property (container_class,
-					      CHILD_PROP_VFILL,
+					      CHILD_PROP_WRAPPED,
 					      g_param_spec_boolean ("wrapped",
 								    NULL,
 								    NULL,
