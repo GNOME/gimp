@@ -202,15 +202,14 @@ brush_compare_func (gconstpointer first, gconstpointer second)
 void
 brushes_free ()
 {
-  printf("freeing brushes\n");
   if (brush_list)
   {
     while (GIMP_LIST(brush_list)->list)
     {
       GimpBrush * b = GIMP_BRUSH (GIMP_LIST(brush_list)->list->data);
-      char * filename = b->filename;
-	if (GIMP_IS_BRUSH_GENERATED (b))
+      if (GIMP_IS_BRUSH_GENERATED (b))
 	{
+	  char * filename = g_strdup (b->filename);
 	  if (!filename)
 	  {
 	      char *home;
@@ -221,47 +220,44 @@ brushes_free ()
 
 	      if (brush_vbr_path)
 		{
-		  printf("posibly saving %s\n", b->name);
-		  /*  Get the first path specified in the brush vbr path variable */
-		  home = getenv("HOME");
+		  /* Get the first path specified in the
+		   * brush-vbr-path gimprc variable.
+		   */
+		  home = g_get_home_dir ();
 		  local_path = g_strdup (brush_vbr_path);
 		  first_token = local_path;
-		  token = xstrsep(&first_token, ":");
+		  token = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
 
 		  if (token)
 		    {
 		      if (*token == '~')
-			{
-			  path = g_malloc(strlen(home) + strlen(token) + 1);
-			  sprintf(path, "%s%s", home, token + 1);
-			}
+			if (home != NULL)
+			  path = g_strconcat (home, token + 1, NULL);
+			else
+			  path = g_strdup ("");	/* Better than nothing */
 		      else
-			{
-			  path = g_malloc(strlen(token) + 1);
-			  strcpy(path, token);
-			}
+			path = g_strdup (token);
 									 
-		      filename = g_malloc (strlen (path) + strlen (b->name) + 2 + 4);
-		      sprintf (filename, "%s/%s.vbr", path, b->name);
-
+		      filename = g_strconcat (path, G_DIR_SEPARATOR_S, b->name, ".vbr", NULL);
 		      g_free (path);
 		    }
 		  g_free (local_path);
 		}
-	      else
-		filename = NULL;
 	  }
 	  else
 	  {
 	   if (strcmp(&filename[strlen(filename) - 4], ".vbr"))
-		filename = NULL;
+	     {
+	       g_free (filename);
+	       filename = NULL;
+	     }
 	  }
 
 	  /* okay we are ready to try to save the generated file*/
 	  if (filename)
 	    {
-	      printf("saving %s\n", filename);
 	      gimp_brush_generated_save ( GIMP_BRUSH_GENERATED(b), filename);
+	      g_free (filename);
 	    }
 	}
 

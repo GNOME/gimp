@@ -118,10 +118,11 @@ gimp_brush_generated_load (const char *file_name)
     return NULL;
 
 /* make sure the file we are reading is the right type */
-  fscanf(fp, "%8s", string);
-  g_return_val_if_fail(strcmp(string, "GIMP-VBR") == 0, NULL);
+  fgets(string, 255, fp);
+  g_return_val_if_fail(strncmp(string, "GIMP-VBR", 8) == 0, NULL);
 /* make sure we are reading a compatible version */
-  fscanf(fp, "%f", &version);
+  fgets (string, 255, fp);
+  sscanf(string, "%f", &version);
   g_return_val_if_fail(version < 2.0, NULL);
 
 /* create new brush */
@@ -130,7 +131,9 @@ gimp_brush_generated_load (const char *file_name)
   gimp_brush_generated_freeze(brush);
 
 /* read name */
-  fscanf(fp, "%255s", string);
+  fgets(string, 255, fp);
+  if (string[strlen(string)-1] == '\n')
+    string[strlen(string)-1] = 0;
   GIMP_BRUSH(brush)->name = g_strdup (string);
 /* read brush spacing */
   fscanf(fp, "%f", &fl);
@@ -162,7 +165,6 @@ void
 gimp_brush_generated_save (GimpBrushGenerated *brush, 
 			  const char *file_name)
 {
-/* WARNING: untested function */
   FILE *fp;
   if ((fp = fopen(file_name, "wb")) == NULL)
   {
@@ -174,15 +176,15 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
 /* write version */
   fprintf(fp, "1.0\n");
 /* write name */
-  fprintf(fp, "%s", GIMP_BRUSH(brush)->name);
+  fprintf(fp, "%.255s\n", GIMP_BRUSH(brush)->name);
 /* write brush spacing */
-  fprintf(fp, "%f", (float)GIMP_BRUSH(brush)->spacing);
+  fprintf(fp, "%f ", (float)GIMP_BRUSH(brush)->spacing);
 /* write brush radius */
-  fprintf(fp, "%f", brush->radius);
+  fprintf(fp, "%f ", brush->radius);
 /* write brush hardness */
-  fprintf(fp, "%f", brush->hardness);
+  fprintf(fp, "%f ", brush->hardness);
 /* write brush aspect_ratio */
-  fprintf(fp, "%f", brush->aspect_ratio);
+  fprintf(fp, "%f ", brush->aspect_ratio);
 /* write brush angle */
   fprintf(fp, "%f", brush->angle);
 

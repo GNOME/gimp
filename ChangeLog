@@ -1,3 +1,13 @@
+1999-08-30  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimpbrushgenerated.c (gimp_brush_generated_save): Save the
+	name on a line of its own (as it can contain spaces). Print spaces
+	between the floating-point values. (gimp_brush_generated_load)
+	Corrspondingly, read the name from a line of its own.
+	
+	* app/gimpbrushlist.c (brushes_free): Portability fixes. Use
+	g_strconcat. Free allocated strings.
+
 Mon Aug 30 22:15:29 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c: use the new [gimp|pattern]_preview_widgets.
