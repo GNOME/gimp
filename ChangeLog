@@ -1,3 +1,7 @@
+Sat Sep  4 01:04:00 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/Makefile.am, plug.ins/AlienMap2: new plug-in.
+
 Sat Sep  4 00:38:01 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/nova.c,
