@@ -1,5 +1,10 @@
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.c (file_open_thumbnail): fixed check for
+	number of return values.
+
+2004-11-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/postscript.c: speed up loading of multi-page
 	documents significantly by skipping in large chunks instead of using
 	fgetc() to crawl through the stream.
