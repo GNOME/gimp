@@ -268,7 +268,7 @@ gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
  * See Also: gimp_drawable_parasite_attach()
  */
 void
-gimp_drawable_attach_new_parasite (gint32          drawable, 
+gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 				   const gchar    *name, 
 				   gint            flags,
 				   gint            size, 
@@ -276,7 +276,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable,
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
 
-  gimp_drawable_parasite_attach (drawable, parasite);
+  gimp_drawable_parasite_attach (drawable_ID, parasite);
 
   gimp_parasite_free (parasite);
 }
