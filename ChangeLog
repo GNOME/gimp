@@ -1,5 +1,11 @@
 2000-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/preferences_dialog.c: forgot to correctly set the
+	tile_cache_size. Only apply show_tool_tips and tile_cache_size if
+	the prefs settings are not currupt.
+
+2000-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/preferences_dialog.c: made the handling of the values which
 	can't be changed on the fly consistent:
 
