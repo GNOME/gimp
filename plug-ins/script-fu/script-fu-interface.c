@@ -132,6 +132,7 @@ typedef struct
 
 typedef struct
 {
+  GtkWidget     *dialog;
   GtkWidget    **args_widgets;
   GtkWidget     *status;
   GtkWidget     *about_dialog;
@@ -752,18 +753,18 @@ script_fu_report_cc (gchar *command)
 
       new_command = g_strdup_printf ("%s <%d>", 
 				     command, sf_interface->command_count);
-      gtk_entry_set_text (GTK_ENTRY (sf_interface->status), new_command);
+      gtk_label_set_text (GTK_LABEL (sf_interface->status), new_command);
       g_free (new_command);
     }
   else
     {
       sf_interface->command_count = 1;
-      gtk_entry_set_text (GTK_ENTRY (sf_interface->status), command);
+      gtk_label_set_text (GTK_LABEL (sf_interface->status), command);
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
     }
-  
-  gdk_flush ();
+
+  while (gtk_main_iteration ());
 }
 
 
@@ -821,12 +822,12 @@ script_fu_script_proc (gchar       *name,
 		       gint        *nreturn_vals,
 		       GimpParam  **return_vals)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode   run_mode;
-  SFScript         *script;
-  gint              min_args;
-  gchar            *escaped;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
+  SFScript          *script;
+  gint               min_args;
+  gchar             *escaped;
 
   run_mode = params[0].data.d_int32;
 
@@ -1152,15 +1153,12 @@ static void
 script_fu_interface (SFScript *script)
 {
   GtkWidget *dlg;
-  GtkWidget *main_box;
   GtkWidget *frame;
-  GtkWidget *sep;
   GtkWidget *button;
   GtkWidget *menu;
   GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *bbox;
   GtkWidget *menu_item;
   GSList    *list;
   gchar     *buf;
@@ -1197,32 +1195,56 @@ script_fu_interface (SFScript *script)
 						  (buf + strlen (_("/Script-Fu/"))));
   else 
     sf_interface->window_title = g_strdup_printf (_("Script-Fu: %s"), 
-					    gettext (script->description));
+                                                  gettext (script->description));
 
   buf = strstr (sf_interface->window_title, "...");
   if (buf)
     *buf = '\0';
 
-  dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
-  gtk_window_set_title (GTK_WINDOW (dlg), sf_interface->window_title);
-  gtk_window_set_wmclass (GTK_WINDOW (dlg), "script_fu", "Gimp");
+  dlg = gimp_dialog_new (sf_interface->window_title, "script-fu",
+                         gimp_standard_help_func, "filters/script-fu.html",
+                         GTK_WIN_POS_MOUSE,
+			 TRUE, FALSE, TRUE,
 
-  g_signal_connect_swapped (G_OBJECT (dlg), "delete_event",
-			    G_CALLBACK (script_fu_interface_quit),
-			    script);
-			     
-  gimp_help_connect (dlg, gimp_standard_help_func,
-		     "filters/script-fu.html");
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, script_fu_ok_callback,
+			 script, NULL, NULL, TRUE, FALSE,
+
+			 NULL);
   
-  /* the vbox holding all widgets */
-  main_box = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (dlg), main_box);
- 
+  sf_interface->dialog = dlg;
+
+  g_signal_connect_swapped (G_OBJECT (dlg), "destroy",
+                            G_CALLBACK (script_fu_interface_quit),
+                            script);
+
+  gtk_window_set_resizable (GTK_WINDOW (dlg), TRUE);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  sf_interface->status = gtk_label_new (sf_interface->window_title);
+  gtk_label_set_justify (GTK_LABEL (sf_interface->status), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 0);
+  gtk_widget_show (sf_interface->status);
+
+  button = gtk_button_new_with_label (_("About"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (script_fu_about_callback),
+		    script);
+
   /* the script arguments frame */
   frame = gtk_frame_new (_("Script Arguments"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_box_pack_start (GTK_BOX (main_box), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   /* the vbox holding all widgets */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -1472,12 +1494,11 @@ script_fu_interface (SFScript *script)
 
   /*  Reset to defaults */
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("Reset to Defaults"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1488,69 +1509,6 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  /*  Separator  */
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (main_box), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
-
-  /*  Action area  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_box_pack_start (GTK_BOX (main_box), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (bbox), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
-
-  button = gtk_button_new_with_label (_("About"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_container_add (GTK_CONTAINER (bbox), button);  
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (script_fu_about_callback),
-		    script);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (bbox), 4);
-  gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_container_add (GTK_CONTAINER (bbox), button);  
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-			    G_CALLBACK (script_fu_interface_quit),
-			    script);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_OK);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_container_add (GTK_CONTAINER (bbox), button);  
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (script_fu_ok_callback),
-		    script);
-
-
-  /* The statusbar (well it's a faked statusbar...) */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_box), hbox, FALSE, FALSE, 2);
-  gtk_widget_show (hbox);
-
-  sf_interface->status = gtk_entry_new ();
-  gtk_editable_set_editable (GTK_EDITABLE (sf_interface->status), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 2);
-  gtk_entry_set_text (GTK_ENTRY (sf_interface->status), 
-		      sf_interface->window_title);
-  gtk_widget_show (sf_interface->status);
-
-  gtk_widget_show (main_box);
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -1910,7 +1868,7 @@ script_fu_ok_callback (GtkWidget *widget,
 
   g_free (command);
 
-  script_fu_interface_quit (script);
+  gtk_widget_destroy (sf_interface->dialog);
 }
 
 static void
@@ -1920,7 +1878,6 @@ script_fu_about_callback (GtkWidget *widget,
   GtkWidget     *dialog;
   GtkWidget     *frame;
   GtkWidget     *vbox;
-  GtkWidget     *hbox;
   GtkWidget     *label;
   GtkWidget     *scrolled_window;
   GtkWidget     *table;
@@ -1955,19 +1912,19 @@ script_fu_about_callback (GtkWidget *widget,
 			  TRUE, TRUE, 0);
       gtk_widget_show (frame);
       
-      vbox = gtk_vbox_new (FALSE, 2);
+      vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
       gtk_widget_show (vbox);
 
       /* the name */
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-      
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
       label = gtk_label_new (script->script_name);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gtk_misc_set_padding (GTK_MISC (label), 2, 2);
+      gtk_container_add (GTK_CONTAINER (frame), label);
       gtk_widget_show (label);
  
       /* the help display */
@@ -1975,6 +1932,7 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				      GTK_POLICY_AUTOMATIC,
 				      GTK_POLICY_AUTOMATIC);
+      gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
       gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
       gtk_widget_show (scrolled_window);
 
@@ -1984,7 +1942,7 @@ script_fu_about_callback (GtkWidget *widget,
 
       gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-      gtk_widget_set_size_request (text_view, 200, 60);
+      gtk_widget_set_size_request (text_view, 240, 120);
       gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
       gtk_widget_show (text_view);
 
@@ -1992,6 +1950,7 @@ script_fu_about_callback (GtkWidget *widget,
    
       /* author, copyright, etc. */
       table = gtk_table_new (2, 4, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
       gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
@@ -2022,12 +1981,8 @@ script_fu_about_callback (GtkWidget *widget,
 				     _("Image Types:"), 1.0, 0.5,
 				     label, 1, FALSE);
 	}
-
-      gtk_widget_show (frame);
     }
 
-  gtk_window_set_position (GTK_WINDOW (sf_interface->about_dialog),
-			   GTK_WIN_POS_MOUSE);  
   gtk_widget_show (sf_interface->about_dialog);
 }
 

@@ -1,3 +1,8 @@
+2002-05-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: a first start at
+	cleaning up the Script-Fu user interface.
+
 2002-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-deserialize.c: added deserialization of
