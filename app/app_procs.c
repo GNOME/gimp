@@ -698,7 +698,7 @@ app_exit_finish (void)
   if (!no_interface)
     {
       toolbox_free ();
-      close_idea_window ();
+      document_index_free ();
       gximage_free ();
       render_free ();
       tool_options_dialog_free ();

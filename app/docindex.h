@@ -19,36 +19,12 @@
 
 #include <gtk/gtk.h>
 
-typedef struct
-{
-  GtkWidget *window;
-  GtkWidget *tree;
-} IdeaManager;
+void    document_index_create   (void);
+void    document_index_free     (void);
 
-extern IdeaManager *ideas;
-
-void document_index_create (void);
-
-void close_idea_window     (void);
-
-void idea_add              (gchar     *label);
-void idea_add_in_position  (gchar     *label,
-			    gint       position);
-
-void idea_hide_callback    (GtkWidget *widget, gpointer data);
-void idea_up_callback      (GtkWidget *widget, gpointer data);
-void idea_down_callback    (GtkWidget *widget, gpointer data);
-void idea_remove_callback  (GtkWidget *widget, gpointer data);
-
-gboolean idea_window_delete_event_callback (GtkWidget *widget,
-					    GdkEvent  *event,
-					    gpointer   data);
-void docindex_configure_drop_on_widget     (GtkWidget *widget);
+void    idea_add                (gchar *label);
 
 FILE  * idea_manager_parse_init (void);
 gchar * idea_manager_parse_line (FILE  *fp);
-
-void    load_idea_manager       (IdeaManager *);
-void    save_idea_manager       (IdeaManager *);
 
 #endif /* __DOCINDEX_H__ */

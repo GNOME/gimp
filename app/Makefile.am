@@ -123,8 +123,6 @@ gimp_SOURCES = \
 	disp_callbacks.h	\
 	docindex.c		\
 	docindex.h		\
-	docindexif.c		\
-	docindexif.h		\
 	dodgeburn.c		\
 	dodgeburn.h		\
 	draw_core.c		\

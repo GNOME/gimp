@@ -29,7 +29,6 @@ app/desaturate.c
 app/devices.c
 app/disp_callbacks.c
 app/docindex.c
-app/docindexif.c
 app/dodgeburn.c
 app/edit_selection.c
 app/equalize.c
