@@ -1,5 +1,14 @@
 2002-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c: reverted my last change. I changed the
+	function when porting everything to URIs because it was documented
+	to return NULL but didn't behave so.
+
+	We need to add a new PDB function which returns the image's
+	*display* name ("Untitled" for a NULL filename).
+
+2002-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_get_filename): get the image's
 	uri with gimp_image_get_uri(), not gimp_object_get_name(), so it
 	automatically becomes "Unnamed" if it's not set.

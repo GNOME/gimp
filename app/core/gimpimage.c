@@ -1060,9 +1060,10 @@ gimp_image_get_filename (const GimpImage *gimage)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  uri = gimp_image_get_uri (gimage);
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
-  g_return_val_if_fail (uri != NULL, NULL);
+  if (! uri)
+    return NULL;
 
   return g_filename_from_uri (uri, NULL, NULL);
 }
