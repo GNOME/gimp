@@ -23,7 +23,8 @@
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpunit.h"
 
-typedef enum { 
+typedef enum
+{ 
   INFO_LABEL,
   INFO_ENTRY,
   INFO_SCALE,
@@ -53,7 +54,7 @@ struct _InfoDialog
   GtkWidget   *info_notebook;
 
   GSList      *field_list;
-  int          nfields;
+  gint         nfields;
 
   void        *user_data;
 };

@@ -2301,7 +2301,7 @@ palette_drop_color (GtkWidget *widget,
 
   if (palette && palette->entries)
     {
-      name = g_strdup_printf ("#%2x%2x%2x", r, g, b);
+      name = g_strdup_printf ("#%02x%02x%02x", r, g, b);
 
       palette->color =
 	palette_add_entry (palette->entries, name, r, g, b);

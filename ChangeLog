@@ -1,5 +1,20 @@
 1999-08-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/color_panel.[ch]: new function color_panel_set_color().
+
+	* app/color_picker.c: added a color panel to the color picker info
+	dialog and a toggle button to the color picker's tool options
+	which allows color updates to be effective in the info dialog
+	only.
+
+	* app/info_dialog.[ch]: changed the packing parameters of the info
+	table. Small fixes.
+
+	* app/palette.c: the name created for dropped colors contained " "
+	instead of "0".
+
+1999-08-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/channels_dialog.c
 	* app/color_area.c
 	* app/color_panel.c

@@ -82,8 +82,8 @@ static void
 update_field (InfoField *field)
 {
   gchar *old_text;
-  int    num;
-  int    i;
+  gint   num;
+  gint   i;
 
   if (field->value_ptr == NULL)
     return;
@@ -130,17 +130,18 @@ update_field (InfoField *field)
 }
 
 static gint
-info_dialog_delete_callback (GtkWidget *w,
-			     GdkEvent  *e,
-			     gpointer   client_data)
+info_dialog_delete_callback (GtkWidget *widget,
+			     GdkEvent  *event,
+			     gpointer   data)
 {
-  info_dialog_popdown ((InfoDialog *) client_data);
+  info_dialog_popdown ((InfoDialog *) data);
 
   return TRUE;
 }
 
 static InfoDialog *
-info_dialog_new_extended (char *title,gboolean inNotebook)
+info_dialog_new_extended (gchar     *title,
+			  gboolean  in_notebook)
 {
   InfoDialog *idialog;
   GtkWidget  *shell;
@@ -150,7 +151,7 @@ info_dialog_new_extended (char *title,gboolean inNotebook)
 
   idialog = g_new (InfoDialog, 1);
   idialog->field_list = NULL;
-  idialog->nfields = 0;
+  idialog->nfields    = 0;
 
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
@@ -163,30 +164,30 @@ info_dialog_new_extended (char *title,gboolean inNotebook)
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
   info_table = gtk_table_new (2, 0, FALSE);
 
-  if(inNotebook)
+  if( in_notebook)
     {
-      info_notebook = gtk_notebook_new();
-      gtk_notebook_append_page(GTK_NOTEBOOK(info_notebook),
-			       info_table,
-			       gtk_label_new (_("General")));
-      gtk_box_pack_start (GTK_BOX (vbox), info_notebook, TRUE, TRUE, 0);
+      info_notebook = gtk_notebook_new ();
+      gtk_notebook_append_page (GTK_NOTEBOOK (info_notebook),
+				info_table,
+				gtk_label_new (_("General")));
+      gtk_box_pack_start (GTK_BOX (vbox), info_notebook, FALSE, FALSE, 0);
     }
   else
     {
       info_notebook = NULL;
-      gtk_box_pack_start (GTK_BOX (vbox), info_table, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), info_table, FALSE, FALSE, 0);
     }
 
   idialog->shell = shell;
   idialog->vbox = vbox;
   idialog->info_table = info_table;
   idialog->info_notebook = info_notebook;
-  
-  if(inNotebook)
+
+  if (in_notebook)
     gtk_widget_show (idialog->info_notebook);
 
   gtk_widget_show (idialog->info_table);
@@ -198,15 +199,15 @@ info_dialog_new_extended (char *title,gboolean inNotebook)
 /*  public functions  */
 
 InfoDialog *
-info_dialog_notebook_new (char *title)
+info_dialog_notebook_new (gchar *title)
 {
-  return info_dialog_new_extended(title,TRUE);
+  return info_dialog_new_extended (title, TRUE);
 }
 
 InfoDialog *
-info_dialog_new (char *title)
+info_dialog_new (gchar *title)
 {
-  return info_dialog_new_extended(title,FALSE);
+  return info_dialog_new_extended (title, FALSE);
 }
 
 void
@@ -217,13 +218,8 @@ info_dialog_free (InfoDialog *idialog)
   g_return_if_fail (idialog != NULL);
 
   /*  Free each item in the field list  */
-  list = idialog->field_list;
-
-  while (list)
-    {
-      g_free (list->data);
-      list = g_slist_next (list);
-    }
+  for (list = idialog->field_list; list; list = g_slist_next (list))
+    g_free (list->data);
 
   /*  Free the actual field linked list  */
   g_slist_free (idialog->field_list);
@@ -241,10 +237,10 @@ info_dialog_free (InfoDialog *idialog)
 void
 info_dialog_popup (InfoDialog *idialog)
 {
-  if (!idialog)
+  if (! idialog)
     return;
 
-  if (!GTK_WIDGET_VISIBLE (idialog->shell))
+  if (! GTK_WIDGET_VISIBLE (idialog->shell))
     gtk_widget_show (idialog->shell);
 
 }
@@ -252,7 +248,7 @@ info_dialog_popup (InfoDialog *idialog)
 void
 info_dialog_popdown (InfoDialog *idialog)
 {
-  if (!idialog)
+  if (! idialog)
     return;
   
   if (GTK_WIDGET_VISIBLE (idialog->shell))
@@ -264,16 +260,11 @@ info_dialog_update (InfoDialog *idialog)
 {
   GSList *list;
 
-  if (!idialog)
+  if (! idialog)
     return;
 
-  list = idialog->field_list;
-
-  while (list)
-    {
-      update_field ((InfoField *) list->data);
-      list = g_slist_next (list);
-    }
+  for (list = idialog->field_list; list; list = g_slist_next (list))
+    update_field ((InfoField *) list->data);
 }
 
 GtkWidget *
@@ -416,7 +407,7 @@ info_dialog_add_sizeentry (InfoDialog      *idialog,
 {
   GtkWidget *alignment;
   GtkWidget *sizeentry;
-  int        i;
+  gint       i;
 
   g_return_val_if_fail (idialog != NULL, NULL);
 

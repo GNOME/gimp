@@ -32,9 +32,12 @@ struct _ColorPanel
   void      *private_part;
 };
 
-ColorPanel * color_panel_new    (guchar     *initial,
-				 gint        width,
-				 gint        height);
-void         color_panel_free   (ColorPanel *color_panel);
+ColorPanel * color_panel_new       (guchar     *initial,
+				    gint        width,
+				    gint        height);
+void         color_panel_free      (ColorPanel *color_panel);
+
+void         color_panel_set_color (ColorPanel *color_panel,
+				    guchar     *col);
 
 #endif  /*  __COLOR_PANEL_H__  */

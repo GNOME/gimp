@@ -17,6 +17,7 @@
  */
 #include "appenv.h"
 #include "actionarea.h"
+#include "color_panel.h"
 #include "color_picker.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -40,26 +41,30 @@ struct _ColorPickerOptions
 {
   ToolOptions  tool_options;
 
-  gint         sample_merged;
-  gint         sample_merged_d;
+  gboolean     sample_merged;
+  gboolean     sample_merged_d;
   GtkWidget   *sample_merged_w;
   
-  gint         sample_average;
-  gint         sample_average_d;
+  gboolean     sample_average;
+  gboolean     sample_average_d;
   GtkWidget   *sample_average_w;
   
   gdouble      average_radius;
   gdouble      average_radius_d;
   GtkObject   *average_radius_w;
+
+  gboolean     update_active;
+  gboolean     update_active_d;
+  GtkWidget   *update_active_w;
 };
 
 typedef struct _ColorPickerTool ColorPickerTool;
 struct _ColorPickerTool
 {
-  DrawCore *core;       /*  Core select object          */
+  DrawCore *core;       /*  Core select object  */
 
-  gint      centerx;    /*  starting x coord            */
-  gint      centery;    /*  starting y coord            */
+  gint      centerx;    /*  starting x coord    */
+  gint      centery;    /*  starting y coord    */
 };
 
 /*  the color picker tool options  */
@@ -71,7 +76,8 @@ gint col_value[5] = { 0, 0, 0, 0, 0 };
 /*  the color picker dialog  */
 static gint           update_type;
 static GimpImageType  sample_type;
-static InfoDialog *   color_picker_info = NULL;
+static InfoDialog    *color_picker_info = NULL;
+static ColorPanel    *color_panel = NULL;
 static gchar          red_buf   [MAX_INFO_BUF];
 static gchar          green_buf [MAX_INFO_BUF];
 static gchar          blue_buf  [MAX_INFO_BUF];
@@ -83,15 +89,24 @@ static gchar          hex_buf   [MAX_INFO_BUF];
 
 /*  local function prototypes  */
 
-static void   color_picker_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   color_picker_button_release (Tool *, GdkEventButton *, gpointer);
-static void   color_picker_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   color_picker_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   color_picker_control        (Tool *, ToolAction,       gpointer);
+static void  color_picker_button_press   (Tool *, GdkEventButton *, gpointer);
+static void  color_picker_button_release (Tool *, GdkEventButton *, gpointer);
+static void  color_picker_motion         (Tool *, GdkEventMotion *, gpointer);
+static void  color_picker_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void  color_picker_control        (Tool *, ToolAction,       gpointer);
 
-static void   color_picker_info_window_close_callback (GtkWidget *, gpointer);
-static void   color_picker_info_update                (Tool *, gboolean);
+static void  color_picker_info_window_close_callback (GtkWidget *, gpointer);
+static void  color_picker_info_update                (Tool *, gboolean);
 
+static gboolean  pick_color_do (GimpImage    *gimage,
+				GimpDrawable *drawable,
+				gint          x,
+				gint          y,
+				gboolean      sample_merged,
+				gboolean      sample_average,
+				gdouble       average_radius,
+				gboolean      update_active,
+				gint          final);
 
 /*  functions  */
 
@@ -106,6 +121,8 @@ color_picker_options_reset (void)
 				options->sample_average_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
 			    options->average_radius_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
+				options->update_active_d);
 }
 
 static ColorPickerOptions *
@@ -127,6 +144,7 @@ color_picker_options_new (void)
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;
   options->average_radius = options->average_radius_d = 1.0;
+  options->update_active  = options->update_active_d  = TRUE;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -189,6 +207,17 @@ color_picker_options_new (void)
   gtk_widget_show (scale);
   gtk_widget_show (table);
 
+  /*  the update active color toggle button  */
+  options->update_active_w =
+    gtk_check_button_new_with_label (_("Update Active Color"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
+				options->update_active_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->update_active_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->update_active);
+  gtk_widget_show (options->update_active_w);
+
   return options;
 }
 
@@ -217,6 +246,8 @@ color_picker_button_press (Tool           *tool,
   /*  create the info dialog if it doesn't exist  */
   if (! color_picker_info)
     {
+      GtkWidget *hbox;
+
       color_picker_info = info_dialog_new (_("Color Picker"));
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
@@ -249,6 +280,18 @@ color_picker_button_press (Tool           *tool,
 	  break;
 	}
 
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_box_pack_start (GTK_BOX (color_picker_info->vbox), hbox,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      gtk_widget_reparent (color_picker_info->info_table, hbox);
+
+      color_panel = color_panel_new (NULL, 48, 64);
+      gtk_box_pack_start (GTK_BOX (hbox), color_panel->color_panel_widget,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (color_panel->color_panel_widget);
+
       /*  create the action area  */
       action_items[0].user_data = color_picker_info;
       build_action_area (GTK_DIALOG (color_picker_info->shell),
@@ -274,22 +317,24 @@ color_picker_button_press (Tool           *tool,
    */
   if (bevent->state & GDK_SHIFT_MASK)
     {
-      color_picker_info_update (tool,
-				pick_color (gdisp->gimage, tool->drawable, x, y,
-					    color_picker_options->sample_merged,
-					    color_picker_options->sample_average,
-					    color_picker_options->average_radius,
-					    COLOR_NEW));
+      color_picker_info_update
+	(tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+			      color_picker_options->sample_merged,
+			      color_picker_options->sample_average,
+			      color_picker_options->average_radius,
+			      color_picker_options->update_active,
+			      COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
   else
     {
-      color_picker_info_update (tool,
-				pick_color (gdisp->gimage, tool->drawable, x, y,
-					    color_picker_options->sample_merged,
-					    color_picker_options->sample_average,
-					    color_picker_options->average_radius,
-					    COLOR_UPDATE));
+      color_picker_info_update
+	(tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+			      color_picker_options->sample_merged,
+			      color_picker_options->sample_average,
+			      color_picker_options->average_radius,
+			      color_picker_options->update_active,
+			      COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
 
@@ -315,12 +360,13 @@ color_picker_button_release (Tool           *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
 			       FALSE, FALSE);
 
-  color_picker_info_update (tool,
-			    pick_color (gdisp->gimage, tool->drawable, x, y,
-					color_picker_options->sample_merged,
-					color_picker_options->sample_average,
-					color_picker_options->average_radius,
-					update_type));
+  color_picker_info_update
+    (tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+			  color_picker_options->sample_merged,
+			  color_picker_options->sample_average,
+			  color_picker_options->average_radius,
+			  color_picker_options->update_active,
+			  update_type));
 
   draw_core_stop (cp_tool->core, tool);
   tool->state = INACTIVE;
@@ -333,7 +379,7 @@ color_picker_motion (Tool           *tool,
 {
   GDisplay *gdisp;
   ColorPickerTool *cp_tool;
-  int x, y;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   cp_tool = (ColorPickerTool *) tool->private;
@@ -349,12 +395,13 @@ color_picker_motion (Tool           *tool,
 			       &cp_tool->centerx, &cp_tool->centery,
 			       FALSE, TRUE);
 
-  color_picker_info_update (tool,
-			    pick_color (gdisp->gimage, tool->drawable, x, y,
-					color_picker_options->sample_merged,
-					color_picker_options->sample_average,
-					color_picker_options->average_radius,
-					update_type));
+  color_picker_info_update
+    (tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+			  color_picker_options->sample_merged,
+			  color_picker_options->sample_average,
+			  color_picker_options->average_radius,
+			  color_picker_options->update_active,
+			  update_type));
 
   /*  redraw the current tool  */
   draw_core_resume (cp_tool->core, tool);
@@ -366,7 +413,7 @@ color_picker_cursor_update (Tool           *tool,
 			    gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
-  int x, y;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -400,6 +447,7 @@ color_picker_control (Tool       *tool,
 
     case HALT :
       draw_core_stop (cp_tool->core, tool);
+      info_dialog_popdown (color_picker_info);
       break;
 
     default:
@@ -409,15 +457,16 @@ color_picker_control (Tool       *tool,
 
 typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
 
-gboolean
-pick_color (GimpImage    *gimage,
-	    GimpDrawable *drawable,
-	    gint          x,
-	    gint          y,
-	    gboolean      sample_merged,
-	    gboolean      sample_average,
-	    gdouble       average_radius,
-	    gint          final)
+static gboolean
+pick_color_do (GimpImage    *gimage,
+	       GimpDrawable *drawable,
+	       gint          x,
+	       gint          y,
+	       gboolean      sample_merged,
+	       gboolean      sample_average,
+	       gdouble       average_radius,
+	       gboolean      update_active,
+	       gint          final)
 {
   guchar *color;
   gint offx, offy;
@@ -495,10 +544,30 @@ pick_color (GimpImage    *gimage,
   if (is_indexed)
     col_value[4] = color[4];
 
-  palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
-			    col_value [BLUE_PIX], final);
+  if (update_active)
+    palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
+			      col_value [BLUE_PIX], final);
   g_free (color);
   return TRUE;
+}
+
+gboolean
+pick_color (GimpImage    *gimage,
+	    GimpDrawable *drawable,
+	    gint          x,
+	    gint          y,
+	    gboolean      sample_merged,
+	    gboolean      sample_average,
+	    gdouble       average_radius,
+	    gint          final)
+{
+  return pick_color_do (gimage, drawable,
+			x, y,
+			sample_merged,
+			sample_average,
+			average_radius,
+			TRUE,
+			final);
 }
 
 static void
@@ -545,6 +614,9 @@ color_picker_info_update (Tool     *tool,
 {
   if (!valid)
     {
+      if (GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
+	gtk_widget_set_sensitive (color_panel->color_panel_widget, FALSE);
+
       g_snprintf (red_buf,   MAX_INFO_BUF, _("N/A"));
       g_snprintf (green_buf, MAX_INFO_BUF, _("N/A"));
       g_snprintf (blue_buf,  MAX_INFO_BUF, _("N/A"));
@@ -555,6 +627,11 @@ color_picker_info_update (Tool     *tool,
     }
   else
     {
+      guchar col[3];
+
+      if (! GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
+	gtk_widget_set_sensitive (color_panel->color_panel_widget, TRUE);
+
       switch (sample_type)
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
@@ -569,6 +646,9 @@ color_picker_info_update (Tool     *tool,
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],
 		      col_value [BLUE_PIX]);
+	  col[0] = col_value [RED_PIX];
+	  col[1] = col_value [GREEN_PIX];
+	  col[2] = col_value [BLUE_PIX];
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
@@ -584,6 +664,9 @@ color_picker_info_update (Tool     *tool,
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],
 		      col_value [BLUE_PIX]);
+	  col[0] = col_value [RED_PIX];
+	  col[1] = col_value [GREEN_PIX];
+	  col[2] = col_value [BLUE_PIX];
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
@@ -596,8 +679,13 @@ color_picker_info_update (Tool     *tool,
 		      col_value [GRAY_PIX],
 		      col_value [GRAY_PIX],
 		      col_value [GRAY_PIX]);
+	  col[0] = col_value [GRAY_PIX];
+	  col[1] = col_value [GRAY_PIX];
+	  col[2] = col_value [GRAY_PIX];
 	  break;
 	}
+
+      color_panel_set_color (color_panel, col);
     }
 
   info_dialog_update (color_picker_info);
@@ -658,6 +746,7 @@ tools_free_color_picker (Tool *tool)
     {
       info_dialog_free (color_picker_info);
       color_picker_info = NULL;
+      color_panel = NULL;
     }
 
   g_free (cp_tool);

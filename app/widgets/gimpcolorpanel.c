@@ -140,6 +140,24 @@ color_panel_free (ColorPanel *color_panel)
   g_free (color_panel);
 }
 
+void
+color_panel_set_color (ColorPanel *color_panel,
+		       guchar     *col)
+{
+  ColorPanelPrivate *private = color_panel->private_part;
+
+  color_panel->color[0] = col[0];
+  color_panel->color[1] = col[1];
+  color_panel->color[2] = col[2];
+
+  if (private->color_notebook_active)
+    color_notebook_set_color (private->color_notebook,
+			      col[0], col[1], col[2], TRUE);
+
+  if (private->gc)
+    color_panel_draw (color_panel);
+}
+
 /*  private functions  */
 
 static void
