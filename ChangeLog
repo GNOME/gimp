@@ -1,3 +1,8 @@
+2004-10-21 Kevin Cozens <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/script-fu.c: Removed _() tag from two strings
+	that should not have been marked for translation.
+
 2004-10-21  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts-fu.c: Fixed spelling error.

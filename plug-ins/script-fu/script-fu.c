@@ -275,8 +275,8 @@ script_fu_auxillary_init (void)
   };
 
   gimp_install_temp_proc ("script_fu_refresh",
-			  _("Re-read all available scripts"),
-			  _("Re-read all available scripts"),
+			  "Re-read all available scripts",
+			  "Re-read all available scripts",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
