@@ -33,6 +33,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpviewablebox.h"
 #include "widgets/gtkhwrapbox.h"
 
 #include "gimpairbrushtool.h"
@@ -119,7 +120,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type != GIMP_TYPE_BLEND_TOOL       &&
       tool_type != GIMP_TYPE_INK_TOOL)
     {
-      button = gimp_tool_options_brush_box_new (tool_options);
+      button = gimp_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
@@ -127,7 +128,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   if (tool_type == GIMP_TYPE_BLEND_TOOL)
     {
-      button = gimp_tool_options_gradient_box_new (tool_options);
+      button = gimp_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                      "gradient-reverse", 2);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Gradient:"), 0.0, 0.5,
                                  button, 2, TRUE);
@@ -377,7 +379,8 @@ gradient_options_gui (GimpGradientOptions *gradient,
                          incremental_toggle);
 
       /*  the gradient view  */
-      button = gimp_tool_options_gradient_box_new (GIMP_TOOL_OPTIONS (config));
+      button = gimp_gradient_box_new (NULL, GIMP_CONTEXT (config),
+                                      "gradient-reverse", 2);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                  _("Gradient:"), 0.0, 0.5,
                                  button, 2, TRUE);

@@ -1,3 +1,21 @@
+2004-10-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptooloptions-gui.[ch]: removed the recently added
+	utility functions again.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpviewablebox.[ch]
+	* app/widgets/gimpwidgets-utils.[ch]: and added cleaned up
+	versions here.
+
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.c: changed accordingly.
+
+	* app/dialogs/convert-dialog.c: use gimp_palette_box_new() instead
+	of reinventing the wheel.
+
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpaction.c (gimp_action_set_proxy): use a larger

@@ -242,6 +242,8 @@ libappwidgets_a_sources = \
 	gimpview.h			\
 	gimpview-popup.c		\
 	gimpview-popup.h		\
+	gimpviewablebox.c		\
+	gimpviewablebox.h		\
 	gimpviewablebutton.c		\
 	gimpviewablebutton.h		\
 	gimpviewabledialog.c		\

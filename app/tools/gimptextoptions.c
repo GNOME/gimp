@@ -38,6 +38,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
+#include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimptextoptions.h"
@@ -408,7 +409,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  hbox = gimp_tool_options_font_box_new (tool_options);
+  hbox = gimp_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Font:"), 0.0, 0.5,
                              hbox, 2, FALSE);

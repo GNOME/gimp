@@ -33,6 +33,8 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpviewablebox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -256,6 +258,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
+  GtkWidget *hbox;
 
   vbox = gimp_paint_options_gui (tool_options);
 
@@ -264,6 +267,9 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  hbox = gimp_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_PATTERN_CLONE);
 
   frame = gimp_prop_enum_radio_frame_new (config, "align-mode",
                                           _("Alignment"),

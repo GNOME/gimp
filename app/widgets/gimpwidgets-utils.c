@@ -224,6 +224,73 @@ gimp_table_attach_stock (GtkTable    *table,
     }
 }
 
+void
+gimp_enum_radio_frame_add (GtkFrame  *frame,
+                           GtkWidget *widget,
+                           gint       enum_value)
+{
+  GtkWidget *radio;
+  GtkWidget *hbox;
+  GtkWidget *spacer;
+  gint       indicator_size;
+  gint       indicator_spacing;
+  gint       focus_width;
+  gint       focus_padding;
+  GSList    *list;
+
+  g_return_if_fail (GTK_IS_FRAME (frame));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  radio = g_object_get_data (G_OBJECT (frame), "radio-button");
+
+  g_return_if_fail (GTK_IS_RADIO_BUTTON (radio));
+
+  gtk_widget_style_get (radio,
+                        "indicator-size",    &indicator_size,
+                        "indicator-spacing", &indicator_spacing,
+                        "focus-line-width",  &focus_width,
+                        "focus-padding",     &focus_padding,
+                        NULL);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+
+  spacer = gtk_vbox_new (FALSE, 0);
+  gtk_widget_set_size_request (spacer,
+                               indicator_size +
+                               3 * indicator_spacing +
+                               focus_width +
+                               focus_padding +
+                               GTK_CONTAINER (radio)->border_width,
+                               -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
+  gtk_widget_show (spacer);
+
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  for (list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
+       list;
+       list = g_slist_next (list))
+    {
+      if (GPOINTER_TO_INT (g_object_get_data (list->data, "gimp-item-data")) ==
+          enum_value)
+        {
+          g_object_set_data (list->data, "set_sensitive", hbox);
+          g_signal_connect (list->data, "toggled",
+                            G_CALLBACK (gimp_toggle_button_sensitive_update),
+                            NULL);
+
+          gtk_widget_set_sensitive (hbox,
+                                    GTK_TOGGLE_BUTTON (list->data)->active);
+
+          break;
+        }
+    }
+
+  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+}
+
 GtkIconSize
 gimp_get_icon_size (GtkWidget   *widget,
                     const gchar *stock_id,

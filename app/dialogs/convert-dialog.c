@@ -34,11 +34,9 @@
 #include "core/gimppalette.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpcontainerentry.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewablebutton.h"
+#include "widgets/gimpviewablebox.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "gimp-intl.h"
@@ -448,31 +446,7 @@ convert_dialog_palette_box (IndexedDialog *dialog)
                     G_CALLBACK (convert_dialog_palette_changed),
                     dialog);
 
-  {
-    GtkWidget *hbox;
-    GtkWidget *button;
-    GtkWidget *entry;
-
-    hbox = gtk_hbox_new (FALSE, 4);
-
-    button = gimp_viewable_button_new (dialog->container,
-                                       dialog->context,
-                                       GIMP_VIEW_SIZE_MEDIUM, 1,
-                                       gimp_dialog_factory_from_name ("dock"),
-                                       "gimp-palette-list|gimp-palette-grid",
-                                       GIMP_STOCK_PALETTE,
-                                       _("Open the palette selection dialog"));
-    gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-
-    entry = gimp_container_entry_new (dialog->container,
-                                      dialog->context,
-                                      GIMP_VIEW_SIZE_MEDIUM, 1);
-    gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-    gtk_widget_show (entry);
-
-    return hbox;
-  }
+  return gimp_palette_box_new (dialog->container, dialog->context, 4);
 }
 
 static gboolean

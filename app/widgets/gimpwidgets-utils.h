@@ -39,6 +39,9 @@ void          gimp_table_attach_stock    (GtkTable        *table,
 					  GtkWidget       *widget,
 					  gint             colspan,
 					  const gchar     *stock_id);
+void          gimp_enum_radio_frame_add  (GtkFrame        *frame,
+                                          GtkWidget       *widget,
+                                          gint             enum_value);
 
 GtkIconSize   gimp_get_icon_size         (GtkWidget       *widget,
                                           const gchar     *stock_id,
