@@ -1,3 +1,10 @@
+2005-02-03  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am
+	* tools/gimp-remote.c: allow to localize gimp-remote.
+
+	* app/main.c: changed a string so it can be shared with gimp-remote.
+
 2005-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/help-commands.c (help_context_help_cmd_callback):

@@ -30,8 +30,6 @@
  * feature freeze for Gimp 1.2 and adding a completely new communication
  * infrastructure for remote controlling Gimp is definitely a new
  * feature...
- * Think about sockets or Corba when you want to do something similiar.
- * We definitely consider this for Gimp 2.0.
  *                                                Simon
  */
 
@@ -51,6 +49,8 @@
 #include <X11/Xmu/WinUtil.h>
 
 #include "libgimpbase/gimpversion.h"
+
+#include <glib/gi18n.h>
 
 
 #define GIMP_BINARY "gimp-" GIMP_APP_VERSION
@@ -73,22 +73,22 @@ static const GOptionEntry main_entries[] =
 {
   { "version", 'v', 0,
     G_OPTION_ARG_CALLBACK, (GOptionArgFunc) show_version,
-    "Show version information and exit", NULL
+    N_("Show version information and exit"), NULL
   },
   {
     "existing", 'e', 0,
     G_OPTION_ARG_NONE, &existing,
-    "Use a running GIMP only, never start a new one", NULL
+    N_("Use a running GIMP only, never start a new one"), NULL
   },
   {
     "query", 'q', 0,
     G_OPTION_ARG_NONE, &query,
-    "Only check if GIMP is running, then quit", NULL
+    N_("Only check if GIMP is running, then quit"), NULL
   },
   {
     "no-splash", 's', 0,
     G_OPTION_ARG_NONE, &no_splash,
-    "Start GIMP without showing the startup window", NULL
+    N_("Start GIMP without showing the startup window"), NULL
   },
   {
     G_OPTION_REMAINING, 0, 0,
@@ -190,8 +190,9 @@ source_selection_get (GtkWidget        *widget,
 static gboolean
 toolbox_hidden (gpointer data)
 {
-  g_printerr ("Could not connect to GIMP.\n"
-              "Make sure that the Toolbox is visible!\n");
+  g_printerr ("%s\n%s\n",
+              _("Could not connect to GIMP."),
+              _("Make sure that the Toolbox is visible!"));
   gtk_main_quit ();
 
   return FALSE;
@@ -292,8 +293,9 @@ start_new_gimp (GdkScreen   *screen,
       execvp (GIMP_BINARY, argv);
 
       /*  if execv and execvp return, there was an error  */
-      g_printerr ("Couldn't start %s for the following reason: %s\n",
+      g_printerr (_("Couldn't start '%s': %s"),
                   GIMP_BINARY, g_strerror (errno));
+      g_printerr ("\n");
 
       exit (EXIT_FAILURE);
 
@@ -307,8 +309,23 @@ start_new_gimp (GdkScreen   *screen,
 static void
 show_version (void)
 {
-  g_print ("gimp-remote version %s\n", GIMP_VERSION);
+  g_print (_("%s version %s"), "gimp-remote", GIMP_VERSION);
+  g_print ("\n");
+
   exit (EXIT_SUCCESS);
+}
+
+static void
+init_i18n (void)
+{
+  setlocale (LC_ALL, "");
+
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+  textdomain (GETTEXT_PACKAGE);
 }
 
 gint
@@ -323,6 +340,8 @@ main (gint    argc,
   const gchar    *startup_id;
   gchar          *desktop_startup_id = NULL;
   GString        *file_list          = g_string_new (NULL);
+
+  init_i18n ();
 
   /* we save the startup_id before calling gtk_init()
      because GTK+ will unset it  */

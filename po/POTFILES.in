@@ -69,6 +69,7 @@ app/base/tile-swap.c
 
 app/config/gimpconfig-file.c
 app/config/gimprc.c
+app/config/gimprc-blurbs.h
 app/config/gimprc-deserialize.c
 
 app/core/core-enums.c
@@ -364,3 +365,5 @@ app/xcf/xcf-seek.c
 app/xcf/xcf.c
 
 data/misc/gimp.desktop.in.in
+
+tools/gimp-remote.c

@@ -494,7 +494,7 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 static void
 gimp_show_version (void)
 {
-  g_print (_("GIMP version %s"), GIMP_VERSION);
+  g_print (_("%s version %s"), "GIMP", GIMP_VERSION);
   g_print ("\n");
 
   app_exit (EXIT_SUCCESS);

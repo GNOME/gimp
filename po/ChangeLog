@@ -1,3 +1,10 @@
+2005-02-03  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added tools/gimp-remote.c and added back
+	app/config/gimprc-blurbs.h.
+
+	* de.po: some updates, mainly to test things.
+
 2005-02-03  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
