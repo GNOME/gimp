@@ -34,6 +34,7 @@
 #include "appenv.h"
 #include "gimpbrushpixmap.h"
 #include "gimpbrushgenerated.h"
+#include "gimpbrushhose.h"
 #include "brush_header.h"
 #include "brush_select.h"
 #include "colormaps.h"
@@ -105,7 +106,7 @@ gimp_brush_list_init(GimpBrushList *list)
 
 GtkType gimp_brush_list_get_type(void)
 {
-  static GtkType type;
+  static GtkType type=0;
   if(!type)
   {
     GtkTypeInfo info={
@@ -114,8 +115,9 @@ GtkType gimp_brush_list_get_type(void)
       sizeof(GimpBrushListClass),
       (GtkClassInitFunc)gimp_brush_list_class_init,
       (GtkObjectInitFunc)gimp_brush_list_init,
-      NULL,
-      NULL };
+      /* reserved_1 */ NULL,
+      /* reserved_2 */NULL,
+      (GtkClassInitFunc) NULL};
     type=gtk_type_unique(gimp_list_get_type(), &info);
   }
   return type;
@@ -173,6 +175,15 @@ brush_load(char *filename)
     {
       GimpBrushPixmap *brush;
       brush = gimp_brush_pixmap_load(filename);
+      if (brush != NULL)
+	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+      else
+	g_message("Warning: failed to load brush \"%s\"", filename);
+    }
+  else if (strcmp(&filename[strlen(filename) - 4], ".gih") == 0)
+    {
+      GimpBrushHose *brush;
+      brush = gimp_brush_hose_load(filename);
       if (brush != NULL)
 	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
       else

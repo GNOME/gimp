@@ -86,19 +86,24 @@ gimp_brush_init(GimpBrush *brush)
   brush->y_axis.y    = 15.0;
 }
 
-GtkType gimp_brush_get_type(void)
+
+GtkType
+gimp_brush_get_type (void)
 {
-  static GtkType type;
-  if(!type){
-    GtkTypeInfo info={
-      "GimpBrush",
-      sizeof(GimpBrush),
-      sizeof(GimpBrushClass),
-      (GtkClassInitFunc)gimp_brush_class_init,
-      (GtkObjectInitFunc)gimp_brush_init,
-      NULL,
-      NULL };
-    type=gtk_type_unique(gimp_object_get_type(), &info);
+  static GtkType type = 0;
+  if(!type)
+    {
+      static const GtkTypeInfo info = {
+        "GimpBrush",
+        sizeof (GimpBrush),
+        sizeof (GimpBrushClass),
+        (GtkClassInitFunc) gimp_brush_class_init,
+        (GtkObjectInitFunc) gimp_brush_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
+    type = gtk_type_unique (gimp_object_get_type (), &info);
   }
   return type;
 }

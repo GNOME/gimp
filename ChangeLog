@@ -1,3 +1,21 @@
+Mon Aug 16 20:48:33 1999 Adrian Likins <alikins@redhat.com>
+
+	* app/gimpbrushhose.c
+	* app/gimpbrushhose.h: new files to implement a GimpBrushHose
+	type. The idea being its derived from gimpbrushes, so we can
+	make regular tools use it if need be, and fold it into the brushes
+	dialog nice and easy.
+
+	* app/gimpbrush.c
+	* app/gimpbrushgenerated.c
+	* app/gimpbrushpixmap.c:
+	* app/gimpbrushpixmap.h: Modified the *_get_type() functions
+	to behave more correctly. As suggested by Tim Janik <tim@gtk.org>
+
+	* app/pixmapbrush.c: Since pixmapbrush tool wasnt doing anything
+	useful anyway, start using it as a testbed for "image hoses".
+	Right now it doesnt really work correctly. 
+
 1999-08-16  Tor Lillqvist  <tml@iki.fi>
 
 	* app/transform_core.c: Use RINT instead of rint.

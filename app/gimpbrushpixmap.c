@@ -7,6 +7,7 @@
 #include "appenv.h"
 #include "brush_header.h"
 #include "pattern_header.h"
+#include "gimpbrush.h"
 #include "gimpbrushpixmap.h"
 #include "paint_core.h"
 #include "gimprc.h"
@@ -30,7 +31,7 @@ gimp_brush_pixmap_class_init (GimpBrushPixmapClass *klass)
   
   object_class = GTK_OBJECT_CLASS(klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
+  parent_class = gtk_type_class (gimp_brush_get_type());
   object_class->destroy =  gimp_brush_pixmap_destroy;
 }
 
@@ -40,9 +41,9 @@ gimp_brush_pixmap_init(GimpBrushPixmap *brush)
   brush->pixmap_mask      =   NULL;
 }
 
-guint gimp_brush_pixmap_get_type(void)
+GtkType gimp_brush_pixmap_get_type(void)
 {
-  static GtkType type;
+  static GtkType type=0;
   if(!type){
     GtkTypeInfo info={
       "GimpBrushPixmap",
@@ -50,8 +51,9 @@ guint gimp_brush_pixmap_get_type(void)
       sizeof(GimpBrushPixmapClass),
       (GtkClassInitFunc)gimp_brush_pixmap_class_init,
       (GtkObjectInitFunc)gimp_brush_pixmap_init,
-      NULL,
-      NULL };
+     /* reserved_1 */ NULL,
+     /* reserver_2 */ NULL,
+    (GtkClassInitFunc) NULL};
     type=gtk_type_unique(GIMP_TYPE_BRUSH, &info);
   }
   return type;

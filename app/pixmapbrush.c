@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "gimpbrushpixmap.h"
 #include "gimpbrushlist.h"
+#include "gimpbrushhose.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -124,8 +125,8 @@ pixmapbrush_options_new (void)
 
 void *
 pixmap_paint_func (PaintCore *paint_core,
-		       GimpDrawable *drawable,
-		       int        state)
+		   GimpDrawable *drawable,
+		   int        state)
 {
 #if TIMED_BRUSH
   static GTimer *timer;
@@ -203,16 +204,23 @@ pixmapbrush_motion (PaintCore *paint_core,
   /*  unsigned char col[MAX_CHANNELS]; */
   void * pr;
   int opacity;
+  GimpBrushHose *brush;
 
   pr = NULL;
+  
+  if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush)){
+    printf("looks like were a pixmap\n");
+  }
 
-  /* ttemp hack just for kicks. remove */
-  /*  paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,
-      (rand()% gimp_brush_list_length(brush_list))); */ 
+  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush))){
+    printf("not gimpbrushhose apparently...but why not i have no idea\n");
+  }
 
-  if(! (GIMP_IS_BRUSH_PIXMAP(paint_core->brush)))
-    return;
-
+  // brush = GIMP_BRUSH_HOSE(paint_core->brush);
+  
+  
+  //paint_core->brush = gimp_brush_list_get_brush_by_index(&(GIMP_BRUSH_HOSE(brush))->brush_list, 0);
+  
   /* We always need a destination image */ 
   if (! (gimage = drawable_gimage (drawable))) 
     return; 
@@ -267,8 +275,8 @@ color_area_with_pixmap (GImage *dest,
   
 
   pr = NULL;
-  pixmapbrush = brush;;
-  pixmap_data = gimp_brush_pixmap_get_pixmap(brush);
+  pixmapbrush = GIMP_BRUSH_PIXMAP(brush);
+  pixmap_data = gimp_brush_pixmap_get_pixmap(GIMP_BRUSH_PIXMAP(brush));
   position = 0.0;
 	 /* stolen from clone.c */
   /* this should be a similar thing to want to do, right? */

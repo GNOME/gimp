@@ -13,7 +13,7 @@ typedef struct _GimpBrushPixmapClass
 {
   GimpBrushClass parent_class;
   
-   void (* generate)  (GimpBrushPixmap *brush);
+  void (* generate)  (GimpBrushPixmap *brush);
 } GimpBrushPixmapClass;
 
 /* object stuff */
@@ -21,7 +21,7 @@ typedef struct _GimpBrushPixmapClass
 #define GIMP_BRUSH_PIXMAP(obj) (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIXMAP, GimpBrushPixmap))
 #define GIMP_IS_BRUSH_PIXMAP(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIXMAP))
 
-guint gimp_brush_pixmap_get_type (void);
+GtkType gimp_brush_pixmap_get_type (void);
 
 GimpBrushPixmap * gimp_brush_pixmap_new      (char *filename);
 GimpBrushPixmap * gimp_brush_pixmap_load      (char *filename);
