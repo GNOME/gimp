@@ -996,7 +996,7 @@ copy_file (gchar   *source,
   if (fclose (dfile) == EOF)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error while closing '%s': %s"),
+                   _("Error while writing '%s': %s"),
                    dest, g_strerror (errno));
       return FALSE;
     }
