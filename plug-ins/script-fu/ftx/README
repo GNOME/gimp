@@ -1,0 +1,99 @@
+TinyScheme Extensions (TSX) 1.1  [September, 2002]
+(c) 2002 Manuel Heras-Gilsanz (manuel@heras-gilsanz.com)
+
+This software is subject to the license terms contained in the
+LICENSE file.
+
+Changelog:
+1.1 (Sept. 2002) Updated to tinyscheme 1.31
+1.0 (April 2002) First released version
+
+
+WHAT IS TSX?
+
+TinyScheme Extensions is a set of dynamic libraries incorporating
+additional funcionality to TinyScheme, a lightweight
+implementation of the Scheme programming language. TinyScheme
+(http://tinyscheme.sourceforge.net) is maintained by D. Souflis
+(dsouflis@acm.org), and is based on MiniSCHEME version 0.85k4.
+
+Scheme is a very nice and powerful programming language, but the
+basic language is very minimalistic in terms of library functions;
+only basic file input / output functionality is specified.
+Different implementations of the language (MIT Scheme, GUILE,
+Bigloo...) provide their own extension libraries. TSX attempts to
+provide commonly needed functions at a small cost in terms of
+additional program footprint. The library is modularized, so that
+it is possible (and easy!) to select desired functionality via
+#defines in tsx.h.
+
+
+INSTALLATION
+
+TSX has been tested on GNU/Linux 2.4.2 with gcc 2.96 and
+libc-2.2.2, with TinyScheme 1.31.
+
+To install, copy the distribution file to the directory
+where TinyScheme is installed (and where scheme.h lies),
+and run make. If building succeeds, a file called tsx.so
+should be created. This file can be loaded as a TinyScheme
+extension with 
+
+    (load-extension "tsx-1.0/tsx")
+
+After loading TSX, you can make use of its functions.
+To reduce footprint, you can choose the functionality which
+will be included. To do so, have a look at tsx.h and
+comment the #defines for unneeded modules.
+
+If you get compiler errors, make sure you have enabled
+dynamic modules in your tinyscheme runtime (define USE_DL
+somewhere near the top in scheme.h).
+
+
+SAMPLE APPLICATIONS
+
+Three sample applications are distributed with TSX 1.0.
+The code is not particularly elegant, nor written in proper
+functional style, but is provided for illustration of the
+implemented calls.
+
+-smtp.scm
+    Sends an email to the user getting the username from
+    the USER shell variable, connecting to the SMTP port
+    on the local machine.
+
+-listhome.scm
+    Provides a list of all the files on the user's home
+    directory (obtained with the HOME environment variable).
+
+-srepl.scm
+    Provides a socket-based read-eval-print-loop. It listens
+    for connections on the 9000 port of the local machines,
+    and executes the commands received. To test it, run
+
+        telnet localhost 9000
+
+    after starting the sample application, and type Scheme
+    expressions. You will get the evaluations. To exit the
+    session, type "quit" and TinyScheme will exit, closing
+    the socket. The output of some functions will not
+    be the same as you would obtain on TinyScheme's
+    "command line", because standard output is not
+    redirected to the socket, but most commands work ok.
+
+You should copy these applications to the directory where
+TinyScheme is installed (i.e., where the "scheme" binary
+file resides), and can be runned with:
+
+    ./scheme listhome.scm
+    ./scheme smtp.scm
+    ./scheme srepl.scm
+
+
+TSX FUNCTIONS
+
+The extension functions implemented by TinyScheme Extensions are
+documented in the file "tsx-functions.txt".
+
+END
