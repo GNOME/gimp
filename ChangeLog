@@ -1,3 +1,9 @@
+Thu Jun 24 22:34:54 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap: some changes on request by the author Wolfgang Hofer
+        * plug-ins/common/colorify.c: make it work on drawables with alpha 
+	channel  
+
 Wed Jun 23 17:55:58 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* more makefile fixes

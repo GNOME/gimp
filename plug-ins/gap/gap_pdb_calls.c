@@ -531,7 +531,7 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
 
 gint32   p_gimp_image_findnext_guide(gint32 image_id, gint32 guide_id)
 {
-   static char     *l_findnext_guide_proc = "gimp_image_findnext_guide";
+   static char     *l_findnext_guide_proc = "gimp_image_find_next_guide";
    GParam          *return_vals;
    int              nreturn_vals;
 

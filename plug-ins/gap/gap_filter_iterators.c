@@ -64,6 +64,7 @@
  */
 
 /* Change Log:
+ * 1999.06.21 hof: removed Colorify iterator
  * 1999.03.14 hof: added iterators for gimp 1.1.3 prerelease
  *                 iterator code reorganized in _iter_ALT.inc Files
  * 1998.06.12 hof: added p_delta_drawable (Iterate layers in the layerstack)
@@ -214,6 +215,11 @@ static void p_delta_color(t_color *val, t_color *val_from, t_color *val_to, gint
     {
        delta = ((double)(val_to->color[l_idx] - val_from->color[l_idx]) / (double)total_steps) * ((double)total_steps - current_step);
        val->color[l_idx]  = val_from->color[l_idx] + delta; 
+
+       if(gap_debug) fprintf(stderr, "DEBUG: p_delta_color[%d] total: %d  from: %d to: %d curr: %d    delta: %f  current_step: %f\n",
+                                  (int)l_idx, (int)total_steps, 
+                                  (int)val_from->color[l_idx], (int)val_to->color[l_idx], (int)val->color[l_idx],
+                                  delta, current_step);
     }
 }
 static void p_delta_gint_color(t_gint_color *val, t_gint_color *val_from, t_gint_color *val_to, gint32 total_steps, gdouble current_step)
@@ -464,7 +470,7 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
  */
 static t_iter_ALT_tab   g_iter_ALT_tab[] = 
 {
-    { "Colorify",  p_Colorify_iter_ALT }
+/*  { "Colorify",  p_Colorify_iter_ALT }                                          */
 /*, { "perl_fu_blowinout",  p_perl_fu_blowinout_iter_ALT }                        */
 /*, { "perl_fu_feedback",  p_perl_fu_feedback_iter_ALT }                          */
 /*, { "perl_fu_prep4gif",  p_perl_fu_prep4gif_iter_ALT }                          */
@@ -476,7 +482,7 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
 /*, { "perl_fu_xach_blocks",  p_perl_fu_xach_blocks_iter_ALT }                    */
 /*, { "perl_fu_xach_shadows",  p_perl_fu_xach_shadows_iter_ALT }                  */
 /*, { "perl_fu_xachvision",  p_perl_fu_xachvision_iter_ALT }                      */
-  , { "plug_in_CML_explorer",  p_plug_in_CML_explorer_iter_ALT }
+    { "plug_in_CML_explorer",  p_plug_in_CML_explorer_iter_ALT }
   , { "plug_in_CentralReflection",  p_plug_in_CentralReflection_iter_ALT }
   , { "plug_in_Twist",  p_plug_in_Twist_iter_ALT }
   , { "plug_in_alienmap",  p_plug_in_alienmap_iter_ALT }
@@ -500,7 +506,7 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
   , { "plug_in_checkerboard",  p_plug_in_checkerboard_iter_ALT }
 /*, { "plug_in_color_adjust",  p_plug_in_color_adjust_iter_ALT }                  */
   , { "plug_in_color_map",  p_plug_in_color_map_iter_ALT }
-/*, { "plug_in_colorify",  p_plug_in_colorify_iter_ALT }                          */
+  , { "plug_in_colorify",  p_plug_in_colorify_iter_ALT }
 /*, { "plug_in_compose",  p_plug_in_compose_iter_ALT }                            */
   , { "plug_in_convmatrix",  p_plug_in_convmatrix_iter_ALT }
   , { "plug_in_cubism",  p_plug_in_cubism_iter_ALT }

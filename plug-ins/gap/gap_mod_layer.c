@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * gimp   1.1.6;     1999/06/21  hof: bugix: wrong iterator total_steps and direction
  * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GDrawableType with GImageType)
  * version 0.98.00   1998.11.27  hof: - use new module gap_pdb_calls.h
  * version 0.97.00   1998.10.19  hof: - created module
@@ -752,6 +753,7 @@ p_do_2nd_filter_dialogs(char *filter_procname,
   int      l_rc;
   int      l_idx;
   static char l_key_to[512];
+  static char l_key_from[512];
   gint32  l_last_image_id;
   t_LayliElem *l_layli_ptr;
   gint       l_nlayers;
@@ -809,6 +811,10 @@ p_do_2nd_filter_dialogs(char *filter_procname,
    sprintf(l_key_to, "%s_ITER_TO", filter_procname);
    p_set_data(l_key_to, l_plugin_data_len);
 
+   /* get FROM values */
+   sprintf(l_key_from, "%s_ITER_FROM", filter_procname);
+   l_plugin_data_len = p_get_data(l_key_from);
+   p_set_data(filter_procname, l_plugin_data_len);
 
   l_rc = p_pitstop_dialog(1, filter_procname);
   
@@ -882,7 +888,6 @@ p_frames_modify(t_anim_info *ainfo_ptr,
   l_rc = 0;
   l_plugin_iterator = NULL;
   l_plugin_data_len = 0;
-  l_cur_step = 0;
   l_apply_mode = PAPP_CONSTANT;
   l_dpy_id = -1;
   l_last_frame_filename = NULL;
@@ -917,7 +922,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
     l_total_steps = l_end - l_begin;
   }
   
-  l_total_steps--;
+  l_cur_step = l_total_steps;
 
   l_cur_frame_nr = l_begin;
   while(1)              /* loop foreach frame in range */
@@ -1055,7 +1060,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
     if((action_mode == ACM_APPLY_FILTER)
     && (l_plugin_iterator != NULL) && (l_apply_mode == PTYP_VARYING_LINEAR ))
     {
-       l_cur_step += 1.0;
+       l_cur_step -= 1.0;
         /* call plugin-specific iterator, to modify
          * the plugin's last_values
          */

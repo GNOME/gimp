@@ -37,7 +37,7 @@
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
-#define PLUG_IN_NAME "Colorify"
+#define PLUG_IN_NAME "plug_in_colorify"
 #define PLUG_IN_VERSION "1.1"
 
 static void      query (void);
@@ -123,7 +123,7 @@ query ()
 				_("Makes an average of the RGB channels and uses it to set the color"),
 				"Francisco Bustamante", "Francisco Bustamante",
 				"0.0.1",
-				_("<Image>/Filters/Colors/Colorify"), "RGB",
+				_("<Image>/Filters/Colors/Colorify"), "RGB*",
 				PROC_PLUG_IN,
 				nargs, nreturn_vals,
 				args, return_vals);
@@ -207,7 +207,8 @@ run (char    *name,
 }
 
 static void colorify_row (guchar *row,
-			  gint width);
+			  gint width,
+			  gint bpp);
 static void close_callback (GtkWidget *widget,
 			    gpointer data);
 static void colorify_ok_callback (GtkWidget *widget,
@@ -224,6 +225,7 @@ colorify (GDrawable *drawable)
 {
 	GPixelRgn source_region, dest_region;
 	guchar *row;
+	gint bpp;
 	gint y = 0;
 	gint progress = 0;
 	gint i = 0;
@@ -237,7 +239,8 @@ colorify (GDrawable *drawable)
 		final_blue_lookup[i] = i * cvals.color[2] / 255;
 	}
 
-	row = g_malloc (sel_width * 3 * sizeof(guchar));
+        bpp = gimp_drawable_bpp(drawable->id);
+	row = g_malloc (sel_width * bpp * sizeof(guchar));
 
 	gimp_pixel_rgn_init (&source_region, drawable, sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 	gimp_pixel_rgn_init (&dest_region, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
@@ -245,7 +248,7 @@ colorify (GDrawable *drawable)
 	for (y = sel_y1; y < sel_y2; y++) {
 		gimp_pixel_rgn_get_row (&source_region, row, sel_x1, y, sel_width);
 
-		colorify_row (row, sel_width);
+		colorify_row (row, sel_width, bpp);
 
 		gimp_pixel_rgn_set_row (&dest_region, row, sel_x1, y, sel_width);
 		gimp_progress_update ((double) ++progress / sel_height);
@@ -261,7 +264,8 @@ colorify (GDrawable *drawable)
 
 static void
 colorify_row (guchar *row,
-	      gint width)
+	      gint width,
+	      gint bpp)
 {
 	gint cur_x;
 	gint lum; /* luminosity */
@@ -274,7 +278,7 @@ colorify_row (guchar *row,
 		current[1] = final_green_lookup[lum];
 		current[2] = final_blue_lookup[lum];
 		
-		current += 3;
+		current += bpp;
 	}
 }
 		
