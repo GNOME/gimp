@@ -78,7 +78,7 @@ flip_options_new (void)
   /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Flip Tool Options"),
+		     _("Flip Tool Options"),
 		     flip_options_reset);
   options->type = options->type_d = ORIENTATION_HORIZONTAL;
 

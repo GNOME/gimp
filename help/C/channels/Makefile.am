@@ -13,9 +13,13 @@ helpdata_DATA = \
 
 EXTRA_DIST = $(helpdata_DATA)
 
-.PHONY: files
+.PHONY: files install-data-local
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
 	done
+
+install-data-local:
+	rm -f $(helpdatadir)/dialogs
+	ln -sf ../dialogs/channels $(helpdatadir)/dialogs

@@ -4551,7 +4551,7 @@ cpopup_create_color_dialog (gchar         *title,
   gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
 		      cancel_callback, window);
 
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
   gtk_widget_show (window);
 }
 

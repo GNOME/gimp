@@ -10,7 +10,7 @@ helpdata_DATA = \
 
 EXTRA_DIST = $(helpdata_DATA)
 
-.PHONY: files
+.PHONY: files install-data-local
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
@@ -22,3 +22,17 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+install-data-local:
+	rm -f $(helpdatadir)/dialogs
+	ln -sf ../dialogs $(helpdatadir)/dialogs
+	rm -f $(helpdatadir)/file
+	ln -sf ../file $(helpdatadir)/file
+	rm -f $(helpdatadir)/filters
+	ln -sf ../filters $(helpdatadir)/filters
+	rm -f $(helpdatadir)/layers
+	ln -sf ../layers $(helpdatadir)/layers
+	rm -f $(helpdatadir)/toolbox
+	ln -sf ../toolbox $(helpdatadir)/toolbox
+	rm -f $(helpdatadir)/tools
+	ln -sf ../tools $(helpdatadir)/tools

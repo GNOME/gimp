@@ -466,7 +466,7 @@ static GimpItemFactoryEntry image_entries[] =
   { { "/Image/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Image/Canvas Size..."), NULL, image_resize_cmd_callback, 0 },
-    "image/dialogs/canvas_size.html", NULL },
+    "image/dialogs/set_canvas_size.html", NULL },
   { { N_("/Image/Scale Image..."), NULL, image_scale_cmd_callback, 0 },
     "image/dialogs/scale_image.html", NULL },
   { { N_("/Image/Duplicate"), "<control>D", image_duplicate_cmd_callback, 0 },
@@ -507,7 +507,7 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
 
   { { N_("/Layers/Layer to Imagesize"), NULL, layers_resize_to_image_cmd_callback, 0 },
-    "layers/resize_to_image.html", NULL },
+    "layers/layer_to_image_size.html", NULL },
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
@@ -716,7 +716,7 @@ static GimpItemFactoryEntry layers_entries[] =
   { { N_("/Layer Boundary Size..."), "<control>R", layers_dialog_resize_layer_callback, 0 },
     "dialogs/resize_layer.html", NULL },
   { { N_("/Layer to Imagesize"), NULL, layers_dialog_resize_to_image_callback, 0 },
-    "resize_to_image.html", NULL },
+    "layer_to_image_size.html", NULL },
   { { N_("/Scale Layer..."), "<control>S", layers_dialog_scale_layer_callback, 0 },
     "dialogs/scale_layer.html", NULL },
       
@@ -793,7 +793,7 @@ static GimpItemFactoryEntry paths_entries[] =
   { { N_("/Path to Selection"), "<control>S", paths_dialog_path_to_sel_callback, 0 },
     "path_to_selection.html", NULL },
   { { N_("/Selection to Path"), "<control>P", paths_dialog_sel_to_path_callback, 0 },
-    "selection_to_path.html", NULL },
+    "filters/sel2path.html", NULL },
   { { N_("/Stroke Path"), "<control>T", paths_dialog_stroke_path_callback, 0 },
     "stroke_path.html", NULL },
   { { N_("/Delete Path"), "<control>X", paths_dialog_delete_path_callback, 0 },

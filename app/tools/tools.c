@@ -1001,7 +1001,7 @@ tools_register (ToolType     tool_type,
       gtk_widget_show (tool_options->main_vbox);
     }
 
-  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
+  gtk_label_set_text (GTK_LABEL (options_label), tool_options->title);
 }
 
 /*  Tool options function  */
@@ -1101,7 +1101,7 @@ tool_options_show (ToolType tool_type)
 
   if (tool_info[tool_type].tool_options->title)
     gtk_label_set_text (GTK_LABEL (options_label),
-			_(tool_info[tool_type].tool_options->title));
+			tool_info[tool_type].tool_options->title);
 
   if (tool_info[tool_type].tool_options->reset_func)
     gtk_widget_set_sensitive (options_reset_button, TRUE);

@@ -30,16 +30,12 @@
 #endif
 
 #include "appenv.h"
-#include "buildmenu.h"
-#include "colormaps.h"
 #include "drawable.h"
 #include "edit_selection.h"
 #include "errors.h"
 #include "floating_sel.h"
 #include "gimage_mask.h"
-#include "gdisplay.h"
 #include "global_edit.h"
-#include "interface.h"
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
@@ -69,28 +65,30 @@
 /*  the text tool structures  */
 
 typedef struct _TextTool TextTool;
+
 struct _TextTool
 {
-  int   click_x;
-  int   click_y;
+  gint  click_x;
+  gint  click_y;
   void *gdisp_ptr;
 };
 
 typedef struct _TextOptions TextOptions;
+
 struct _TextOptions
 {
   ToolOptions  tool_options;
 
-  int          antialias;
-  int          antialias_d;
+  gboolean     antialias;
+  gboolean     antialias_d;
   GtkWidget   *antialias_w;
 
-  int          border;
-  int          border_d;
+  gint         border;
+  gint         border_d;
   GtkObject   *border_w;
 
-  int          use_dyntext;
-  int          use_dyntext_d;
+  gboolean     use_dyntext;
+  gboolean     use_dyntext_d;
   GtkWidget   *use_dyntext_w;
 };
 
@@ -108,18 +106,18 @@ static void   text_button_release (Tool *, GdkEventButton *, gpointer);
 static void   text_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   text_control        (Tool *, ToolAction,       gpointer);
 
-static void   text_create_dialog   (void);
-static void   text_ok_callback     (GtkWidget *, gpointer);
-static void   text_cancel_callback (GtkWidget *, gpointer);
-static gint   text_delete_callback (GtkWidget *, GdkEvent *, gpointer);
+static void   text_dialog_create          (void);
+static void   text_dialog_ok_callback     (GtkWidget *, gpointer);
+static void   text_dialog_cancel_callback (GtkWidget *, gpointer);
+static gint   text_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 
 static void   text_init_render         (TextTool *);
-static void   text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
-static void   text_size_multiply       (char **fontname, int);
-static void   text_set_resolution      (char **fontname, double, double);
+static void   text_gdk_image_to_region (GdkImage *, gint, PixelRegion *);
+static void   text_size_multiply       (gchar **fontname, gint);
+static void   text_set_resolution      (gchar **fontname, gdouble, gdouble);
 
 Layer       * text_render (GImage *, GimpDrawable *,
-			   int, int, char *, char *, int, int);
+			   gint, gint, gchar *, gchar *, gint, gint);
 
 
 /*  functions  */
@@ -151,7 +149,7 @@ text_options_new (void)
   /*  the new text tool options structure  */
   options = (TextOptions *) g_malloc (sizeof (TextOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Text Tool Options"),
+		     _("Text Tool Options"),
 		     text_options_reset);
   options->antialias   = options->antialias_d   = TRUE;
   options->border      = options->border_d      = 0;
@@ -226,7 +224,7 @@ text_options_new (void)
 }
 
 Tool*
-tools_new_text ()
+tools_new_text (void)
 {
   Tool * tool;
 
@@ -328,7 +326,7 @@ text_button_press (Tool           *tool,
     }
 
   if (! text_tool_shell)
-    text_create_dialog ();
+    text_dialog_create ();
 
   if (!GTK_WIDGET_VISIBLE (text_tool_shell))
     gtk_widget_show (text_tool_shell);
@@ -349,7 +347,7 @@ text_cursor_update (Tool           *tool,
 {
   GDisplay *gdisp;
   Layer *layer;
-  int x, y;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -390,32 +388,28 @@ text_control (Tool       *tool,
 }
 
 static void
-text_create_dialog (void)
+text_dialog_create (void)
 {
   /* Create the shell */
   text_tool_shell = gtk_font_selection_dialog_new (_("Text Tool"));
   gtk_window_set_wmclass (GTK_WINDOW (text_tool_shell), "text_tool", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (text_tool_shell), _("Text Tool"));
-  gtk_window_set_policy (GTK_WINDOW (text_tool_shell), FALSE, TRUE, TRUE);
-  gtk_window_position (GTK_WINDOW (text_tool_shell), GTK_WIN_POS_MOUSE);
-  gtk_widget_set (GTK_WIDGET (text_tool_shell),
-		  "GtkWindow::auto_shrink", FALSE,
-		  NULL);
+  gtk_window_set_policy (GTK_WINDOW (text_tool_shell), FALSE, TRUE, FALSE);
+  gtk_window_set_position (GTK_WINDOW (text_tool_shell), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (text_tool_shell), "delete_event",
-		      GTK_SIGNAL_FUNC (text_delete_callback),
+		      GTK_SIGNAL_FUNC (text_dialog_delete_callback),
 		      NULL);
 
   /* ok and cancel buttons */
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool_shell)->ok_button),
-		      "clicked", GTK_SIGNAL_FUNC(text_ok_callback),
+				  (text_tool_shell)->ok_button), "clicked",
+		      GTK_SIGNAL_FUNC (text_dialog_ok_callback),
 		      NULL);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool_shell)->cancel_button),
-		      "clicked", GTK_SIGNAL_FUNC(text_cancel_callback),
+				  (text_tool_shell)->cancel_button), "clicked",
+		      GTK_SIGNAL_FUNC (text_dialog_cancel_callback),
 		      NULL);
 
   /* Show the shell */
@@ -423,8 +417,8 @@ text_create_dialog (void)
 }
 
 static void
-text_ok_callback (GtkWidget *w,
-		  gpointer   client_data)
+text_dialog_ok_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   if (GTK_WIDGET_VISIBLE (text_tool_shell))
     gtk_widget_hide (text_tool_shell);
@@ -434,18 +428,18 @@ text_ok_callback (GtkWidget *w,
 }
 
 static gint
-text_delete_callback (GtkWidget *w,
-		      GdkEvent  *e,
-		      gpointer   client_data)
+text_dialog_delete_callback (GtkWidget *widget,
+			     GdkEvent  *event,
+			     gpointer   data)
 {
-  text_cancel_callback (w, client_data);
+  text_dialog_cancel_callback (widget, data);
   
   return TRUE;
 }
 
 static void
-text_cancel_callback (GtkWidget *w,
-		      gpointer   client_data)
+text_dialog_cancel_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   if (GTK_WIDGET_VISIBLE (text_tool_shell))
     gtk_widget_hide (text_tool_shell);
@@ -455,9 +449,9 @@ static void
 text_init_render (TextTool *text_tool)
 {
   GDisplay *gdisp;
-  char *fontname;
-  char *text;
-  int antialias = text_options->antialias;
+  gchar *fontname;
+  gchar *text;
+  gboolean antialias = text_options->antialias;
 
   fontname = gtk_font_selection_dialog_get_font_name
     (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
@@ -475,7 +469,7 @@ text_init_render (TextTool *text_tool)
    * are not scalable on this particular X server.  TODO: Ideally, should
    * grey out anti-alias on these kinds of servers. */
   if (antialias)
-    text_size_multiply(&fontname, SUPERSAMPLE);
+    text_size_multiply (&fontname, SUPERSAMPLE);
 
   /*  If the text size is specified in points, it's size will be scaled
    *  correctly according to the image's resolution.
@@ -491,7 +485,7 @@ text_init_render (TextTool *text_tool)
     (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
 
   /* strdup it since the render function strtok()s the text */
-  text = g_strdup(text);
+  text = g_strdup (text);
 
   text_render (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
@@ -499,8 +493,8 @@ text_init_render (TextTool *text_tool)
 
   gdisplays_flush ();
 
-  g_free(fontname);
-  g_free(text);
+  g_free (fontname);
+  g_free (text);
 }
 
 static void
@@ -509,14 +503,14 @@ text_gdk_image_to_region (GdkImage    *image,
 			  PixelRegion *textPR)
 {
   GdkColor black;
-  int black_pixel;
-  int pixel;
-  int value;
-  int scalex, scaley;
-  int scale2;
-  int x, y;
-  int i, j;
-  unsigned char * data;
+  gint black_pixel;
+  gint pixel;
+  gint value;
+  gint scalex, scaley;
+  gint scale2;
+  gint x, y;
+  gint i, j;
+  guchar * data;
 
   scale2 = scale * scale;
 /* GDK_WINDOWING is defined only with GTk+ 1.3 */
@@ -544,21 +538,21 @@ text_gdk_image_to_region (GdkImage    *image,
 	      }
 
 	  /*  store the alpha value in the data  */
-	  *data++= (unsigned char) ((value * 255) / scale2);
+	  *data++= (guchar) ((value * 255) / scale2);
 
 	}
     }
 }
 
 GimpLayer *
-text_render (GimpImage *gimage,
+text_render (GimpImage    *gimage,
 	     GimpDrawable *drawable,
-	     int     text_x,
-	     int     text_y,
-	     char   *fontname,
-	     char   *text,
-	     int     border,
-	     int     antialias)
+	     int           text_x,
+	     int           text_y,
+	     char         *fontname,
+	     char         *text,
+	     int           border,
+	     int           antialias)
 {
   GdkFont *font;
   GdkPixmap *pixmap;
@@ -568,16 +562,16 @@ text_render (GimpImage *gimage,
   Layer *layer;
   TileManager *mask, *newmask;
   PixelRegion textPR, maskPR;
-  int layer_type;
-  unsigned char color[MAX_CHANNELS];
-  char *str;
-  int nstrs;
-  int crop;
-  int line_width, line_height;
-  int pixmap_width, pixmap_height;
-  int text_width, text_height;
-  int width, height;
-  int x, y, k;
+  gint layer_type;
+  guchar color[MAX_CHANNELS];
+  gchar *str;
+  gint nstrs;
+  gint crop;
+  gint line_width, line_height;
+  gint pixmap_width, pixmap_height;
+  gint text_width, text_height;
+  gint width, height;
+  gint x, y, k;
   void * pr;
 
   /*  determine the layer type  */
@@ -590,7 +584,7 @@ text_render (GimpImage *gimage,
   if (antialias)
     antialias = SUPERSAMPLE;
   else
-    antialias = 1;
+    antialias = TRUE;
 
   /* Dont crop the text if border is negative */
   crop = (border >= 0);
@@ -602,13 +596,14 @@ text_render (GimpImage *gimage,
   font = gdk_font_load (fontname);
   gdk_error_warnings = 1;
   if (!font || (gdk_error_code == -1))
-  {
-      g_message(_("Font '%s' not found.%s"),
-		fontname,
-		antialias? _("\nIf you don't have scalable fonts, "
-		"try turning off antialiasing in the tool options.") : "");
+    {
+      g_message (_("Font '%s' not found.%s"),
+		 fontname,
+		 antialias ?
+		 _("\nIf you don't have scalable fonts, "
+		   "try turning off antialiasing in the tool options.") : "");
       return NULL;
-  }
+    }
 
   /* determine the bounding box of the text */
   width = -1;
@@ -720,21 +715,30 @@ text_render (GimpImage *gimage,
     {
       /*  color the layer buffer  */
       gimage_get_foreground (gimage, drawable, color);
-      color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE_OPACITY;
-      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
+      color[GIMP_DRAWABLE (layer)->bytes - 1] = OPAQUE_OPACITY;
+      pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
+			 0, 0,
+			 GIMP_DRAWABLE (layer)->width,
+			 GIMP_DRAWABLE (layer)->height, TRUE);
       color_region (&textPR, color);
 
       /*  apply the text mask  */
-      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      pixel_region_init (&maskPR, newmask, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+      pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
+			 0, 0,
+			 GIMP_DRAWABLE (layer)->width,
+			 GIMP_DRAWABLE (layer)->height, TRUE);
+      pixel_region_init (&maskPR, newmask,
+			 0, 0,
+			 GIMP_DRAWABLE (layer)->width,
+			 GIMP_DRAWABLE (layer)->height, FALSE);
       apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, TEXT_UNDO);
 
       /*  Set the layer offsets  */
-      GIMP_DRAWABLE(layer)->offset_x = text_x;
-      GIMP_DRAWABLE(layer)->offset_y = text_y;
+      GIMP_DRAWABLE (layer)->offset_x = text_x;
+      GIMP_DRAWABLE (layer)->offset_y = text_y;
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -777,7 +781,6 @@ text_render (GimpImage *gimage,
   return layer;
 }
 
-
 int
 text_get_extents (char *fontname,
 		  char *text,
@@ -787,9 +790,9 @@ text_get_extents (char *fontname,
 		  int  *descent)
 {
   GdkFont *font;
-  char *str;
-  int nstrs;
-  int line_width, line_height;
+  gchar *str;
+  gint   nstrs;
+  gint   line_width, line_height;
 
   /* load the font in */
   gdk_error_warnings = 0;
@@ -830,15 +833,14 @@ text_get_extents (char *fontname,
     return TRUE;
 }
 
-
 static void
-text_field_edges(char  *fontname,
-		 int    field_num,
-		 /* RETURNS: */
-		 char **start,
-		 char **end)
+text_field_edges (gchar  *fontname,
+		  gint    field_num,
+		  /* RETURNS: */
+		  gchar **start,
+		  gchar **end)
 {
-  char *t1, *t2;
+  gchar *t1, *t2;
 
   t1 = fontname;
 
@@ -869,63 +871,63 @@ text_field_edges(char  *fontname,
  * *fontname is replaced by a fresh allocation of the correct size.
  */
 static void
-text_size_multiply (char **fontname,
-		    int    mul)
+text_size_multiply (gchar **fontname,
+		    gint    mul)
 {
-  char *pixel_str;
-  char *point_str;
-  char *newfont;
-  char *end;
-  int pixel = -1;
-  int point = -1;
-  char new_pixel[16];
-  char new_point[16];
+  gchar *pixel_str;
+  gchar *point_str;
+  gchar *newfont;
+  gchar *end;
+  gint pixel = -1;
+  gint point = -1;
+  gchar new_pixel[16];
+  gchar new_point[16];
 
   /* slice the font spec around the size fields */
-  text_field_edges(*fontname, PIXEL_SIZE, &pixel_str, &end);
-  text_field_edges(*fontname, POINT_SIZE, &point_str, &end);
+  text_field_edges (*fontname, PIXEL_SIZE, &pixel_str, &end);
+  text_field_edges (*fontname, POINT_SIZE, &point_str, &end);
 
   *(pixel_str - 1) = 0;
   *(point_str - 1) = 0;
 
   if (*pixel_str != '*')
-    pixel = atoi(pixel_str);
+    pixel = atoi (pixel_str);
 
   if (*point_str != '*')
-    point = atoi(point_str);
+    point = atoi (point_str);
 
   pixel *= mul;
   point *= mul;
 
   /* convert the pixel and point sizes back to text */
-  TO_TXT(pixel);
-  TO_TXT(point);
+  TO_TXT (pixel);
+  TO_TXT (point);
 
-  newfont = g_strdup_printf("%s-%s-%s%s", *fontname, new_pixel, new_point, end);
+  newfont = g_strdup_printf ("%s-%s-%s%s", *fontname, new_pixel, new_point, end);
 
-  g_free(*fontname);
+  g_free (*fontname);
 
   *fontname = newfont;
 }
 
 static void
-text_set_resolution (char   **fontname,
-		     double   xresolution,
-		     double   yresolution)
+text_set_resolution (gchar   **fontname,
+		     gdouble   xresolution,
+		     gdouble   yresolution)
 {
-  char *size_str;
-  char *xres_str;
-  char *yres_str;
-  char *newfont;
-  char *end;
-  char new_size[16];
-  char new_xres[16];
-  char new_yres[16];
-  double points;
+  gchar *size_str;
+  gchar *xres_str;
+  gchar *yres_str;
+  gchar *newfont;
+  gchar *end;
+  gchar new_size[16];
+  gchar new_xres[16];
+  gchar new_yres[16];
+  gdouble points;
 
-  int size;
-  int xres;
-  int yres;
+  gint size;
+  gint xres;
+  gint yres;
 
   /* get the point size string */
   text_field_edges (*fontname, POINT_SIZE, &size_str, &end);
@@ -967,9 +969,9 @@ text_set_resolution (char   **fontname,
   *(yres_str - 1) = 0;
 
   /* convert the resolutions to text */
-  size = (int) points;
-  xres = (int) xresolution;
-  yres = (int) yresolution;
+  size = (gint) points;
+  xres = (gint) xresolution;
+  yres = (gint) yresolution;
 
   TO_TXT (size);
   TO_TXT (xres);

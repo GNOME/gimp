@@ -1,3 +1,24 @@
+1999-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* C/*/Makefile.am: automatically create the symbolic links e.g. to
+	"../dialogs".
+
+	* C/*: changed some help file names to match the new menu structure.
+
+	* C/image/mode/*
+	* C/image/colors/auto/*: new directories. Moved some files there
+	according to the menu structure. Removed these files from their
+	old places.
+
+	* dir-template.sh
+	* make-help-stubs.sh
+	* makefile-am.sh
+	* makelinks.sh: removed because we no longer need them.
+
+	* makedummyhelpfile.sh
+	* makeindex.sh: new specialized scripts doing the same job
+	formerly done by the removed dir-template.sh
+
 Thu Dec 16 19:04:04 CET 1999 Olof S Kylander <olof@gimp.org>
 
 	Please see main Changelog for more details. 

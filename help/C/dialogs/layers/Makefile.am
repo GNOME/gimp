@@ -8,9 +8,9 @@ helpdata_DATA = \
         edit_layer_attributes.html \
         index.html \
         layers.html \
+	layer_boundary_size.html \
         merge_visible_layers.html \
         new_layer.html \
-        resize_layer.html \
         scale_layer.html 
 
 EXTRA_DIST = $(helpdata_DATA)

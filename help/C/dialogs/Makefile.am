@@ -36,8 +36,8 @@ helpdata_DATA = \
         pattern_selection.html \
         really_close.html \
         really_quit.html \
-        resize_image.html \
         scale_image.html \
+	set_canvas_size.html \
         shrink_selection.html \
         tip_of_the_day.html \
         tool_options.html \

@@ -68,8 +68,8 @@ struct _MeasureOptions
 {
   ToolOptions  tool_options;
 
-  gint         use_info_window;
-  gint         use_info_window_d;
+  gboolean     use_info_window;
+  gboolean     use_info_window_d;
   GtkWidget   *use_info_window_w;
 };
 

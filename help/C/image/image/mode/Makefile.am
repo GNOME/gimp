@@ -1,10 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-helpdatadir = $(gimpdatadir)/help/C/save
+helpdatadir = $(gimpdatadir)/help/C/image/image/mode
 
 helpdata_DATA = \
-        index.html \
-        save_by_extension.html 
+        convert_to_grayscale.html \
+        convert_to_rgb.html \
+        index.html 
 
 EXTRA_DIST = $(helpdata_DATA)
 
@@ -17,6 +18,4 @@ files:
 
 install-data-local:
 	rm -f $(helpdatadir)/dialogs
-	ln -sf ../dialogs $(helpdatadir)/dialogs
-	rm -f $(helpdatadir)/filters
-	ln -sf ../filters $(helpdatadir)/filters
+	ln -sf ../../../dialogs $(helpdatadir)/dialogs

@@ -770,6 +770,8 @@ help/C/image/Makefile
 help/C/image/edit/Makefile
 help/C/image/image/Makefile
 help/C/image/image/colors/Makefile
+help/C/image/image/colors/auto/Makefile
+help/C/image/image/mode/Makefile
 help/C/image/image/transforms/Makefile
 help/C/image/select/Makefile
 help/C/image/view/Makefile

@@ -99,30 +99,39 @@
 
 #include "pixmaps/eek.xpm"
 
-#define LOGO_WIDTH_MIN 300
+#define LOGO_WIDTH_MIN  300
 #define LOGO_HEIGHT_MIN 110
-#define NAME _("The GIMP")
+#define NAME    _("The GIMP")
 #define BROUGHT _("brought to you by")
 #define AUTHORS "Spencer Kimball and Peter Mattis"
 
 #define SHOW_NEVER 0
 #define SHOW_LATER 1
-#define SHOW_NOW 2
+#define SHOW_NOW   2
 
 /*  Function prototype for affirmation dialog when exiting application  */
-static void really_quit_dialog                   (void);
-static void make_initialization_status_window    (void);
-static void destroy_initialization_status_window (void);
-static int  splash_logo_load                     (GtkWidget *window);
-static int  splash_logo_load_size                (GtkWidget *window);
-static void splash_logo_draw                     (GtkWidget *widget);
-static void splash_text_draw                     (GtkWidget *widget);
-static void splash_logo_expose                   (GtkWidget *widget);
-static void toast_old_temp_files                 (void);
+static void      really_quit_dialog                   (void);
+static void      make_initialization_status_window    (void);
+static void      destroy_initialization_status_window (void);
+static gboolean  splash_logo_load                     (GtkWidget *window);
+static gboolean  splash_logo_load_size                (GtkWidget *window);
+static void      splash_logo_draw                     (GtkWidget *widget);
+static void      splash_text_draw                     (GtkWidget *widget);
+static void      splash_logo_expose                   (GtkWidget *widget);
+static void      toast_old_temp_files                 (void);
 
 
 static gint is_app_exit_finish_done = FALSE;
-int we_are_exiting = FALSE;
+int we_are_exiting                  = FALSE;
+
+static GtkWidget *logo_area   = NULL;
+static GdkPixmap *logo_pixmap = NULL;
+static gint logo_width        = 0;
+static gint logo_height       = 0;
+static gint logo_area_width   = 0;
+static gint logo_area_height  = 0;
+static gint show_logo         = SHOW_NEVER;
+static gint max_label_length  = MAXPATHLEN;
 
 
 void
@@ -148,20 +157,10 @@ gimp_init (int    gimp_argc,
     tips_dialog_create ();
 }
 
-
-static GtkWidget *logo_area = NULL;
-static GdkPixmap *logo_pixmap = NULL;
-static int logo_width = 0;
-static int logo_height = 0;
-static int logo_area_width = 0;
-static int logo_area_height = 0;
-static int show_logo = SHOW_NEVER;
-static int max_label_length = MAXPATHLEN;
-
-static int
+static gboolean
 splash_logo_load_size (GtkWidget *window)
 {
-  char buf[1024];
+  gchar buf[1024];
   FILE *fp;
 
   if (logo_pixmap)
@@ -172,13 +171,13 @@ splash_logo_load_size (GtkWidget *window)
 
   fp = fopen (buf, "rb");
   if (!fp)
-    return 0;
+    return FALSE;
 
   fgets (buf, sizeof (buf), fp);
   if (strcmp (buf, "P6\n") != 0)
     {
       fclose (fp);
-      return 0;
+      return FALSE;
     }
 
   fgets (buf, sizeof (buf), fp);
@@ -186,19 +185,20 @@ splash_logo_load_size (GtkWidget *window)
   sscanf (buf, "%d %d", &logo_width, &logo_height);
 
   fclose (fp);
+
   return TRUE;
 }
 
-static int
+static gboolean
 splash_logo_load (GtkWidget *window)
 {
   GtkWidget *preview;
   GdkGC *gc;
-  char buf[1024];
-  unsigned char *pixelrow;
+  gchar   buf[1024];
+  guchar *pixelrow;
   FILE *fp;
-  int count;
-  int i;
+  gint count;
+  gint i;
 
   if (logo_pixmap)
     return TRUE;
@@ -208,13 +208,13 @@ splash_logo_load (GtkWidget *window)
 
   fp = fopen (buf, "rb");
   if (!fp)
-    return 0;
+    return FALSE;
 
   fgets (buf, sizeof (buf), fp);
   if (strcmp (buf, "P6\n") != 0)
     {
       fclose (fp);
-      return 0;
+      return FALSE;
     }
 
   fgets (buf, sizeof (buf), fp);
@@ -225,7 +225,7 @@ splash_logo_load (GtkWidget *window)
   if (strcmp (buf, "255\n") != 0)
     {
       fclose (fp);
-      return 0;
+      return FALSE;
     }
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -240,7 +240,7 @@ splash_logo_load (GtkWidget *window)
 	  gtk_widget_destroy (preview);
 	  g_free (pixelrow);
 	  fclose (fp);
-	  return 0;
+	  return FALSE;
 	}
       gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
     }
@@ -258,6 +258,7 @@ splash_logo_load (GtkWidget *window)
   g_free (pixelrow);
 
   fclose (fp);
+
   return TRUE;
 }
 
@@ -327,16 +328,17 @@ splash_logo_expose (GtkWidget *widget)
 static GtkWidget *win_initstatus = NULL;
 static GtkWidget *label1 = NULL;
 static GtkWidget *label2 = NULL;
-static GtkWidget *pbar = NULL;
+static GtkWidget *pbar   = NULL;
 
 static void
 destroy_initialization_status_window (void)
 {
   if (win_initstatus)
     {
-      gtk_widget_destroy(win_initstatus);
+      gtk_widget_destroy (win_initstatus);
       if (logo_pixmap != NULL)
-	gdk_pixmap_unref(logo_pixmap);
+	gdk_pixmap_unref (logo_pixmap);
+
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
     }
@@ -345,86 +347,81 @@ destroy_initialization_status_window (void)
 static void
 make_initialization_status_window (void)
 {
-  if (no_interface == FALSE)
+  if (!no_interface && !no_splash)
     {
-      if (no_splash == FALSE)
+      GtkWidget *vbox;
+      GtkWidget *logo_hbox;
+      GtkStyle  *style;
+
+      win_initstatus = gtk_window_new (GTK_WINDOW_POPUP);
+
+      gtk_window_set_wmclass (GTK_WINDOW (win_initstatus),
+			      "gimp_startup", "Gimp");
+      gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
+      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
+
+      if (no_splash_image == FALSE &&
+	  splash_logo_load_size (win_initstatus))
 	{
-	  GtkWidget *vbox;
-	  GtkWidget *logo_hbox;
-	  GtkStyle *style;
-
-	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
-
-	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
-			      GTK_SIGNAL_FUNC (gtk_true),
-			      NULL);
-	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup",
-	      			  "Gimp");
-	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
-		               _("GIMP Startup"));
-
-	  if (no_splash_image == FALSE &&
-	      splash_logo_load_size (win_initstatus))
-	    {
-	      show_logo = SHOW_LATER;
-	    }
-
-	  vbox = gtk_vbox_new(FALSE, 4);
-	  gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
-	  
-	  logo_hbox = gtk_hbox_new (FALSE, 0);
-	  gtk_box_pack_start (GTK_BOX(vbox), logo_hbox, FALSE, TRUE, 0);
-
-	  logo_area = gtk_drawing_area_new ();
-
-	  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-			      (GtkSignalFunc) splash_logo_expose, NULL);
-	  logo_area_width = MAX (logo_width, LOGO_WIDTH_MIN);
-	  logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
-	  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
-	      			 logo_area_width, logo_area_height);
-	  gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
-
-	  label1 = gtk_label_new ("");
-	  gtk_box_pack_start_defaults (GTK_BOX(vbox), label1);
-	  label2 = gtk_label_new ("");
-	  gtk_box_pack_start_defaults (GTK_BOX(vbox), label2);
-
-	  pbar = gtk_progress_bar_new ();
-	  gtk_box_pack_start_defaults (GTK_BOX(vbox), pbar);
-
-	  gtk_widget_show (vbox);
-	  gtk_widget_show (logo_hbox);
-	  gtk_widget_show (logo_area);
-	  gtk_widget_show (label1);
-	  gtk_widget_show (label2);
-	  gtk_widget_show (pbar);
-
-	  gtk_window_position (GTK_WINDOW(win_initstatus), GTK_WIN_POS_CENTER);
-
-	  gtk_widget_show (win_initstatus);
-
-	  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
-	  /*
-	   *  This is a hack: we try to compute a good guess for the maximum 
-	   *  number of charcters that will fit into the splash-screen using 
-	   *  the default_font
-	   */
-	  style = gtk_widget_get_style (win_initstatus);
-	  max_label_length = 0.95 * (float)strlen (AUTHORS) *
-	    ( (float)logo_area_width / (float)gdk_string_width (style->font, AUTHORS) );
+	  show_logo = SHOW_LATER;
 	}
+
+      vbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
+
+      logo_hbox = gtk_hbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX(vbox), logo_hbox, FALSE, TRUE, 0);
+
+      logo_area = gtk_drawing_area_new ();
+
+      gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
+			  GTK_SIGNAL_FUNC (splash_logo_expose),
+			  NULL);
+
+      logo_area_width  = MAX (logo_width, LOGO_WIDTH_MIN);
+      logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
+
+      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
+			     logo_area_width, logo_area_height);
+      gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
+
+      label1 = gtk_label_new ("");
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
+      label2 = gtk_label_new ("");
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
+
+      pbar = gtk_progress_bar_new ();
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), pbar);
+
+      gtk_widget_show (vbox);
+      gtk_widget_show (logo_hbox);
+      gtk_widget_show (logo_area);
+      gtk_widget_show (label1);
+      gtk_widget_show (label2);
+      gtk_widget_show (pbar);
+
+      gtk_widget_show (win_initstatus);
+
+      /*  This is a hack: we try to compute a good guess for the maximum 
+       *  number of charcters that will fit into the splash-screen using 
+       *  the default_font
+       */
+      style = gtk_widget_get_style (win_initstatus);
+      max_label_length =
+	0.95 * (float)strlen (AUTHORS) *
+	((float)logo_area_width /
+	 (float)gdk_string_width (style->font, AUTHORS));
     }
 }
 
 void
-app_init_update_status (char  *label1val,
-		        char  *label2val,
+app_init_update_status (gchar *label1val,
+		        gchar *label2val,
 		        float  pct_progress)
 {
-  char *temp;
+  gchar *temp;
 
-  if (no_interface == FALSE && no_splash == FALSE && win_initstatus)
+  if (!no_interface && !no_splash && win_initstatus)
     {
       if (label1val && strcmp (label1val, GTK_LABEL (label1)->label))
 	gtk_label_set (GTK_LABEL (label1), label1val);
@@ -440,7 +437,7 @@ app_init_update_status (char  *label1val,
 	      label2val = temp;
 	    }
 
-	  gtk_label_set (GTK_LABEL (label2), label2val);
+	  gtk_label_set_text (GTK_LABEL (label2), label2val);
 	}
 
       if (pct_progress >= 0.0 && pct_progress <= 1.0 && 
@@ -473,17 +470,17 @@ app_init (void)
 
   filename = gimp_gtkrc ();
 
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
+  if (be_verbose || no_splash)
     g_print (_("parsing \"%s\"\n"), filename);
 
   gtk_rc_parse (filename);
 
-  if (no_interface == FALSE)
+  if (!no_interface)
     get_standard_colormaps ();
 
   make_initialization_status_window ();
 
-  if (no_interface == FALSE && no_splash == FALSE && win_initstatus)
+  if (!no_interface && !no_splash && win_initstatus)
     splash_text_draw (logo_area);
 
   /* Create the context of all existing images */
@@ -577,8 +574,8 @@ app_init (void)
        */
       {
 	FILE *fp;
-	gchar **filenames = g_malloc (sizeof (gchar *) * last_opened_size);
-	int dummy, i;
+	gchar **filenames = g_new (gchar *, last_opened_size);
+	gint dummy, i;
 
 	if ((fp = idea_manager_parse_init (&dummy, &dummy, &dummy, &dummy)))
 	  {
@@ -586,7 +583,7 @@ app_init (void)
 	    for (i = 0; i < last_opened_size; i++)
 	      if ((filenames[i] = idea_manager_parse_line (fp)) == NULL)
 		break;
-	    
+
 	    /*  ...and add them in reverse order  */
 	    for (--i; i >= 0; i--)
 	      {
@@ -697,15 +694,15 @@ void
 app_exit (gboolean kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
-  if (!kill_it && gdisplays_dirty () && no_interface == FALSE)
+  if (!kill_it && gdisplays_dirty () && !no_interface)
     really_quit_dialog ();
   else
     app_exit_finish ();
 }
 
-/********************************************************
- *   Routines to query exiting the application          *
- ********************************************************/
+/*************************************************
+ *   Routines to query exiting the application   *
+ *************************************************/
 
 static void
 really_quit_callback (GtkButton *button,
@@ -785,10 +782,10 @@ toast_old_temp_files (void)
   GString *filename = g_string_new ("");
 
   dir = opendir (swap_path);
-  
+
   if (!dir)
     return;
-  
+
   while ((entry = readdir (dir)) != NULL)
     if (!strncmp (entry->d_name, "gimpswap.", 9))
       {
@@ -800,16 +797,14 @@ toast_old_temp_files (void)
          * we'll probably get it the next time around
          */
 
-	int pid = atoi (entry->d_name + 9);
+	gint pid = atoi (entry->d_name + 9);
 #ifndef G_OS_WIN32
 	if (kill (pid, 0))
-#else
-	/* On Windows, you can't remove open files anyhow,
-	 * so no harm trying.
-	 */
 #endif
-
 	  {
+	    /*  On Windows, you can't remove open files anyhow,
+	     *  so no harm trying.
+	     */
 	    g_string_sprintf (filename, "%s" G_DIR_SEPARATOR_S "%s",
 			      swap_path, entry->d_name);
 	    unlink (filename->str);

@@ -12,12 +12,13 @@ helpdata_DATA = \
         duplicate_layer.html \
         flatten_image.html \
         index.html \
+	layer_to_image_size.html \
         mask_to_selection.html \
         merge_down.html 
 
 EXTRA_DIST = $(helpdata_DATA)
 
-.PHONY: files
+.PHONY: files install-data-local
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
@@ -29,3 +30,7 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+install-data-local:
+	rm -f $(helpdatadir)/dialogs
+	ln -sf ../dialogs/layers $(helpdatadir)/dialogs

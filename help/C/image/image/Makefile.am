@@ -1,18 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = transforms colors 
+SUBDIRS = colors mode transforms
 
 helpdatadir = $(gimpdatadir)/help/C/image/image
 
 helpdata_DATA = \
-        convert_to_grayscale.html \
-        convert_to_rgb.html \
         duplicate.html \
         index.html 
 
 EXTRA_DIST = $(helpdata_DATA)
 
-.PHONY: files
+.PHONY: files install-data-local
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
@@ -24,3 +22,7 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+install-data-local:
+	rm -f $(helpdatadir)/dialogs
+	ln -sf ../../dialogs $(helpdatadir)/dialogs

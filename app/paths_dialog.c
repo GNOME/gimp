@@ -179,7 +179,7 @@ static OpsButton paths_ops_buttons[] =
     NULL, 0 },
   { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks,
     N_("Selection to Path"),
-    "paths/selection_to_path.html",
+    "filters/sel2path.html",
     NULL, 0 },
   { penstroke_xpm, paths_dialog_stroke_path_callback, NULL,
     N_("Stroke Path"),

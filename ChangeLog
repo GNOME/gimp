@@ -1,10 +1,30 @@
+1999-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/menus.c
+	* app/paths_dialog.c: Minor help system fixes.
+
+	* app/app_procs.c: I thought we should have a real splash (without
+	decoration). Like it???
+
+	* app/about_dialog.c
+	* app/flip_tool.c
+	* app/gradient.c
+	* app/levels.c
+	* app/measure.c
+	* app/text_tool.c
+	* app/tools.c
+	* app/transform_tool.c: Did some code browsing: I18N fixes,
+	s/gtk_window_position/gtk_window_set_position/g, indentation
+	paranoia, some g/<type>/g<type>/, various stuff (didn't change any
+	logic).
+
 1999-12-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* po/POTFILES.in: Added missing app/xinput_airbrush.c.
 
 	* app/perspective_tool.c: Added _() tag.
 
-Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
+Thu Dec 16 20:15:25 CET 1999  Olof S Kylander <olof@gimp.org>
 
 	Fix of KDE/Kwm  selection add/sub/inter problem  
 	NOTE: This is a workaround, not a real fix. 
@@ -106,7 +126,7 @@ Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
 	* help/C/dialogs/palette_editor/import_palette.html
 	* help/C/dialogs/palette_editor/merge_palette.html
 	* help/C/dialogs/palette_editor/new_palette.html
-	* help/C/dialogs/palette_editor/palette_editor.html˜
+	* help/C/dialogs/palette_editor/palette_editor.html
 	* help/C/dialogs/paths/export_path.html
 	* help/C/dialogs/paths/import_path.html
 	* help/C/dialogs/paths/paths.html
