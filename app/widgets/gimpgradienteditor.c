@@ -222,6 +222,8 @@ static void      seg_get_closest_handle           (GimpGradient         *grad,
                                                    GimpGradientSegment **seg,
                                                    GradientEditorDragMode *handle);
 
+static GtkWidget * gradient_hint_label_add        (GtkBox *box);
+
 
 static GimpDataEditorClass *parent_class = NULL;
 
@@ -372,25 +374,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     editor);
 
   /* Hint bar */
-  editor->hint_label1 = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->hint_label1), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label1, FALSE, FALSE, 0);
-  gtk_widget_show (editor->hint_label1);
-
-  editor->hint_label2 = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->hint_label2), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label2, FALSE, FALSE, 0);
-  gtk_widget_show (editor->hint_label2);
-
-  editor->hint_label3 = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->hint_label3), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label3, FALSE, FALSE, 0);
-  gtk_widget_show (editor->hint_label3);
-
-  editor->hint_label4= gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->hint_label4), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label4, FALSE, FALSE, 0);
-  gtk_widget_show (editor->hint_label4);
+  editor->hint_label1 = gradient_hint_label_add (GTK_BOX (editor));
+  editor->hint_label2 = gradient_hint_label_add (GTK_BOX (editor));
+  editor->hint_label3 = gradient_hint_label_add (GTK_BOX (editor));
+  editor->hint_label4 = gradient_hint_label_add (GTK_BOX (editor));
 
   /* Initialize other data */
   editor->left_saved_segments = NULL;
@@ -1805,4 +1792,18 @@ seg_get_closest_handle (GimpGradient            *grad,
           *handle = GRAD_DRAG_LEFT;
         }
     }
+}
+
+static GtkWidget *
+gradient_hint_label_add (GtkBox *box)
+{
+  GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
+                                   "xalign",           0.0,
+                                   "yalign",           0.5,
+                                   "single-line-mode", TRUE,
+                                   NULL);
+  gtk_box_pack_start (box, label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return label;
 }
