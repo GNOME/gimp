@@ -51,7 +51,7 @@ enum
   PROP_SUPERSAMPLE,
   PROP_RECURSION_LEVEL,
   PROP_CLIP,
-  PROP_SHOW_PREVIEW,
+  PROP_PREVIEW_TYPE,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
   PROP_CONSTRAIN_1,
@@ -62,20 +62,21 @@ enum
 static void   gimp_transform_options_init       (GimpTransformOptions      *options);
 static void   gimp_transform_options_class_init (GimpTransformOptionsClass *options_class);
 
-static void   gimp_transform_options_set_property (GObject         *object,
-                                                   guint            property_id,
-                                                   const GValue    *value,
-                                                   GParamSpec      *pspec);
-static void   gimp_transform_options_get_property (GObject         *object,
-                                                   guint            property_id,
-                                                   GValue          *value,
-                                                   GParamSpec      *pspec);
+static void   gimp_transform_options_set_property   (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
+static void   gimp_transform_options_get_property   (GObject         *object,
+                                                     guint            property_id,
+                                                     GValue          *value,
+                                                     GParamSpec      *pspec);
 
-static void   gimp_transform_options_reset        (GimpToolOptions *tool_options);static void   gimp_transform_options_set_defaults (GimpToolOptions *tool_options);
+static void   gimp_transform_options_reset          (GimpToolOptions *tool_options);
+static void   gimp_transform_options_set_defaults   (GimpToolOptions *tool_options);
 
-static void   gimp_transform_options_grid_notify  (GimpTransformOptions *options,
-                                                   GParamSpec           *pspec,
-                                                   GtkWidget            *density_box);
+static void   gimp_transform_options_preview_notify (GimpTransformOptions *options,
+                                                     GParamSpec           *pspec,
+                                                     GtkWidget            *density_box);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -163,10 +164,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     "clip", NULL,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
-                                    "show-preview", NULL,
-                                    FALSE,
-                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_TYPE,
+                                 "preview-type", NULL,
+                                 GIMP_TYPE_TRANSFORM_PREVIEW_TYPE,
+                                 GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
                                  "grid-type", NULL,
                                  GIMP_TYPE_TRANSFORM_GRID_TYPE,
@@ -221,8 +223,8 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_CLIP:
       options->clip = g_value_get_boolean (value);
       break;
-    case PROP_SHOW_PREVIEW:
-      options->show_preview = g_value_get_boolean (value);
+    case PROP_PREVIEW_TYPE:
+      options->preview_type = g_value_get_enum (value);
       break;
     case PROP_GRID_TYPE:
       options->grid_type = g_value_get_enum (value);
@@ -272,8 +274,8 @@ gimp_transform_options_get_property (GObject    *object,
     case PROP_CLIP:
       g_value_set_boolean (value, options->clip);
       break;
-    case PROP_SHOW_PREVIEW:
-      g_value_set_boolean (value, options->show_preview);
+    case PROP_PREVIEW_TYPE:
+      g_value_set_enum (value, options->preview_type);
       break;
     case PROP_GRID_TYPE:
       g_value_set_enum (value, options->grid_type);
@@ -394,31 +396,49 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /* the preview toggle button */
-  button = gimp_prop_check_button_new (config, "show-preview", _("Preview"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  the grid frame  */
+  /*  the preview frame  */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  /*  the preview type menu  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Preview:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  combo = gimp_prop_enum_combo_box_new (config, "preview-type", 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
   /*  the grid type menu  */
+  button = gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (frame), button);
+  gtk_widget_show (button);
+
   combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
+  gtk_box_pack_start (GTK_BOX (button), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the grid density scale  */
   table = gtk_table_new (1, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_signal_connect (config, "notify::grid-type",
-                    G_CALLBACK (gimp_transform_options_grid_notify),
-                    table);
+  gtk_widget_set_sensitive (button,
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+
+  g_signal_connect (config, "notify::preview-type",
+                    G_CALLBACK (gimp_transform_options_preview_notify),
+                    button);
 
   gimp_prop_scale_entry_new (config, "grid-size",
                              GTK_TABLE (table), 0, 0,
@@ -503,11 +523,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 /*  private functions  */
 
 static void
-gimp_transform_options_grid_notify (GimpTransformOptions *options,
-                                    GParamSpec           *pspec,
-                                    GtkWidget            *density_box)
+gimp_transform_options_preview_notify (GimpTransformOptions *options,
+                                       GParamSpec           *pspec,
+                                       GtkWidget            *density_box)
 {
   gtk_widget_set_sensitive (density_box,
-                            options->grid_type !=
-                            GIMP_TRANSFORM_GRID_TYPE_NONE);
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
 }

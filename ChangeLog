@@ -1,3 +1,11 @@
+2004-07-02  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/tools/gimptransformoptions.[ch]:
+	* app/tools/gimptransformtool.c:
+	* app/tools/tools-enums.[ch]: Replaced "Preview" checkbutton with
+	a combobox with options "Outline", "Grid", "Image", and
+	"Image + Grid".
+
 2004-07-02  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-actions.c: don't let the Paste menu items
@@ -50,7 +58,7 @@
 	* plug-ins/script-fu/scripts/blend-anim.scm
 	* plug-ins/script-fu/scripts/glossy.scm
 	* plug-ins/script-fu/scripts/test-sphere.scm: fixed typos
-        
+
 2004-07-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpselectiondata.[ch]: added (yet unused) functions

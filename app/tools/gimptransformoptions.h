@@ -36,19 +36,19 @@ typedef struct _GimpToolOptionsClass GimpTransformOptionsClass;
 
 struct _GimpTransformOptions
 {
-  GimpToolOptions         parent_instance;
+  GimpToolOptions           parent_instance;
 
-  GimpTransformType       type;
-  GimpTransformDirection  direction;
-  GimpInterpolationType   interpolation;
-  gboolean                supersample;
-  gint                    recursion_level;
-  gboolean                clip;
-  gboolean                show_preview;
-  GimpTransformGridType   grid_type;
-  gint                    grid_size;
-  gboolean                constrain_1;
-  gboolean                constrain_2;
+  GimpTransformType         type;
+  GimpTransformDirection    direction;
+  GimpInterpolationType     interpolation;
+  gboolean                  supersample;
+  gint                      recursion_level;
+  gboolean                  clip;
+  GimpTransformPreviewType  preview_type;
+  GimpTransformGridType     grid_type;
+  gint                      grid_size;
+  gboolean                  constrain_1;
+  gboolean                  constrain_2;
 };
 
 

@@ -108,9 +108,29 @@ gimp_vector_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_transform_preview_type_enum_values[] =
+{
+  { GIMP_TRANSFORM_PREVIEW_TYPE_OUTLINE, N_("Outline"), "outline" },
+  { GIMP_TRANSFORM_PREVIEW_TYPE_GRID, N_("Grid"), "grid" },
+  { GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE, N_("Image"), "image" },
+  { GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID, N_("Image + Grid"), "image-grid" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_transform_preview_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTransformPreviewType", gimp_transform_preview_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_transform_grid_type_enum_values[] =
 {
-  { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't show grid"), "none" },
   { GIMP_TRANSFORM_GRID_TYPE_N_LINES, N_("Number of grid lines"), "n-lines" },
   { GIMP_TRANSFORM_GRID_TYPE_SPACING, N_("Grid line spacing"), "spacing" },
   { 0, NULL, NULL }
