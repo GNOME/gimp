@@ -151,7 +151,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    NULL);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
                                    "default-comment",
-                                   NULL);
+                                   "Created with The GIMP");
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
                                  "default-image-type",
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB);

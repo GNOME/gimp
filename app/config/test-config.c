@@ -30,7 +30,7 @@
 #include "core/core-enums.h"
 
 #include "gimpconfig.h"
-#include "gimpcoreconfig.h"
+#include "gimpguiconfig.h"
 
 
 static void  notify_callback      (GObject     *object,
@@ -65,7 +65,7 @@ main (int   argc,
 
   g_print ("Testing GimpConfig ...\n\n");
 
-  config = g_object_new (GIMP_TYPE_CORE_CONFIG, NULL);
+  config = g_object_new (GIMP_TYPE_GUI_CONFIG, NULL);
 
   g_print (" Serializing %s to '%s' ... ", 
            g_type_name (G_TYPE_FROM_INSTANCE (config)), filename);
