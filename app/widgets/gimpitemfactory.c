@@ -546,6 +546,47 @@ static GimpItemFactoryEntry image_entries[] =
   { { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
     NULL, NULL },
 
+  /*  <Image>/Dialogs  */
+
+  { { N_("/Dialogs"), NULL, NULL, 0, "<Branch>" },
+    NULL, NULL },
+  { { N_("/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
+    "dialogs/layers_and_channels.html", NULL },
+  { { N_("/Dialogs/Tool Options..."), NULL, dialogs_tool_options_cmd_callback, 0 },
+    "dialogs/tool_options.html", NULL },
+
+  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
+    "dialogs/brush_selection.html", NULL },
+  { { N_("/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
+    "dialogs/pattern_selection.html", NULL },
+  { { N_("/Dialogs/Gradients..."), "<control>G", dialogs_gradients_cmd_callback, 0 },
+    "dialogs/gradient_selection.html", NULL },
+  { { N_("/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
+    "dialogs/palette_selection.html", NULL },
+  { { N_("/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
+    "dialogs/indexed_palette.html", NULL },
+
+  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
+    "dialogs/input_devices.html", NULL },
+  { { N_("/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
+    "dialogs/device_status.html", NULL },
+
+  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
+    "dialogs/document_index.html", NULL },
+  { { N_("/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
+    "dialogs/error_console.html", NULL },
+  { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
+    "dialogs/display_filters/display_filters.html", NULL },
+
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
   /*  <Image>/Filters  */
 
   { { N_("/Filters"), NULL, NULL, 0, "<Branch>" },
@@ -603,49 +644,11 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Filters/Toys"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  
+
   /*  <Image>/Script-Fu  */
 
   { { N_("/Script-Fu"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-
-  /*  <Image>/Dialogs  */
-
-  { { N_("/Dialogs"), NULL, NULL, 0, "<Branch>" },
-    NULL, NULL },
-  { { N_("/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
-    "dialogs/layers_and_channels.html", NULL },
-  { { N_("/Dialogs/Tool Options..."), NULL, dialogs_tool_options_cmd_callback, 0 },
-    "dialogs/tool_options.html", NULL },
-
-  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-  { { N_("/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
-    "dialogs/brush_selection.html", NULL },
-  { { N_("/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
-    "dialogs/pattern_selection.html", NULL },
-  { { N_("/Dialogs/Gradients..."), "<control>G", dialogs_gradients_cmd_callback, 0 },
-    "dialogs/gradient_selection.html", NULL },
-  { { N_("/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
-    "dialogs/palette_selection.html", NULL },
-  { { N_("/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
-    "dialogs/indexed_palette.html", NULL },
-
-  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-  { { N_("/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
-    "dialogs/input_devices.html", NULL },
-  { { N_("/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
-    "dialogs/device_status.html", NULL },
-
-  { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-  { { N_("/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
-    "dialogs/document_index.html", NULL },
-  { { N_("/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
-    "dialogs/error_console.html", NULL },
-  { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
-    "dialogs/display_filters/display_filters.html", NULL },
 };
 static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
