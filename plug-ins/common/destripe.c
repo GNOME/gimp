@@ -549,7 +549,6 @@ destripe_dialog (void)
   GtkWidget *table;
   GtkWidget *ptable;
   GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
@@ -633,7 +632,8 @@ destripe_dialog (void)
    */
 
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
