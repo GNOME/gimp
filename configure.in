@@ -529,9 +529,9 @@ fi
 dnl This is for the gimp-perl plug-in
 AC_ARG_ENABLE(perl, [  --disable-perl          do not build perl extension [by default enabled]])
 if eval "test x$enable_perl != xno"; then
-   AC_CHECK_PROGS(PERL,perl perl5.005,perl)
-   AC_MSG_CHECKING(for perl version >= 5.005)
-   if test "`$PERL -e 'print $]>=5.005'`" = "1"; then
+   AC_CHECK_PROGS(PERL,perl perl5.004,perl)
+   AC_MSG_CHECKING(for perl version >= 5.004)
+   if test "`$PERL -e 'print $]>=5.004'`" = "1"; then
       AC_MSG_RESULT(yes)
       
       dnl perl does not allow VPATH builds (yet)
@@ -592,7 +592,7 @@ EOF
    else
       GIMP_PERL=
       AC_MSG_RESULT(no)
-      AC_MSG_WARN(*** gimp-perl plug-in won't be build (perl5.005 or higher required) ***)
+      AC_MSG_WARN(*** gimp-perl plug-in won't be build (perl5.004 or higher required) ***)
    fi
 fi
 
