@@ -226,7 +226,6 @@ gimp_image_dock_constructor (GType                  type,
   GimpMenuFactory *menu_factory;
   GtkUIManager    *ui_manager;
   GtkAccelGroup   *accel_group;
-  GList           *groups;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -240,26 +239,6 @@ gimp_image_dock_constructor (GType                  type,
   ui_manager = GTK_UI_MANAGER (dock->ui_manager);
 
   accel_group = gtk_ui_manager_get_accel_group (ui_manager);
-
-  for (groups = gtk_ui_manager_get_action_groups (ui_manager);
-       groups;
-       groups = g_list_next (groups))
-    {
-      GList *actions;
-      GList *list;
-
-      actions = gtk_action_group_list_actions (groups->data);
-
-      for (list = actions; list; list = g_list_next (list))
-        {
-          GtkAction *action = list->data;
-
-          gtk_action_set_accel_group (action, accel_group);
-          gtk_action_connect_accelerator (action);
-        }
-
-      g_list_free (actions);
-    }
 
   gtk_window_add_accel_group (GTK_WINDOW (object), accel_group);
 

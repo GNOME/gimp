@@ -38,7 +38,10 @@ typedef struct _GimpActionViewClass GimpActionViewClass;
 
 struct _GimpActionView
 {
-  GtkTreeView  parent_instance;
+  GtkTreeView    parent_instance;
+
+  GimpUIManager *manager;
+  gboolean       show_shortcuts;
 };
 
 struct _GimpActionViewClass

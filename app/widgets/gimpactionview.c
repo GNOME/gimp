@@ -58,6 +58,8 @@ enum
 static void     gimp_action_view_class_init  (GimpActionViewClass *klass);
 static void     gimp_action_view_init        (GimpActionView      *view);
 
+static void     gimp_action_view_dispose         (GObject         *object);
+
 static gboolean gimp_action_view_accel_find_func (GtkAccelKey     *key,
                                                   GClosure        *closure,
                                                   gpointer         data);
@@ -73,6 +75,8 @@ static void     gimp_action_view_accel_edited    (GimpCellRendererAccel *accel,
                                                   GdkModifierType  accel_mask,
                                                   GimpActionView  *view);
 
+
+static GtkTreeViewClass *parent_class = NULL;
 
 
 GType
@@ -106,11 +110,41 @@ gimp_action_view_get_type (void)
 static void
 gimp_action_view_class_init (GimpActionViewClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->dispose = gimp_action_view_dispose;
 }
 
 static void
 gimp_action_view_init (GimpActionView *view)
 {
+}
+
+static void
+gimp_action_view_dispose (GObject *object)
+{
+  GimpActionView *view = GIMP_ACTION_VIEW (object);
+
+  if (view->manager)
+    {
+      if (view->show_shortcuts)
+        {
+          GtkAccelGroup *group;
+
+          group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (view->manager));
+
+          g_signal_handlers_disconnect_by_func (group,
+                                                gimp_action_view_accel_changed,
+                                                view);
+        }
+
+      g_object_unref (view->manager);
+      view->manager = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *
@@ -182,8 +216,6 @@ gimp_action_view_new (GimpUIManager *manager,
 
               if (show_shortcuts)
                 {
-                  gtk_action_set_accel_group (action, accel_group);
-
                   menu_item = gtk_action_create_menu_item (action);
 
                   if (GTK_IS_MENU_ITEM (menu_item) &&
@@ -211,6 +243,8 @@ gimp_action_view_new (GimpUIManager *manager,
                               accel_key  = key->accel_key;
                               accel_mask = key->accel_mods;
                             }
+
+                          g_closure_unref (accel_closure);
                         }
 
                       g_object_ref (menu_item);
@@ -254,6 +288,9 @@ gimp_action_view_new (GimpUIManager *manager,
 
   g_object_unref (store);
 
+  GIMP_ACTION_VIEW (view)->manager        = g_object_ref (manager);
+  GIMP_ACTION_VIEW (view)->show_shortcuts = show_shortcuts;
+
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("Action"));
 
@@ -273,9 +310,9 @@ gimp_action_view_new (GimpUIManager *manager,
 
   if (show_shortcuts)
     {
-      g_signal_connect_object (accel_group, "accel-changed",
-                               G_CALLBACK (gimp_action_view_accel_changed),
-                               view, 0);
+      g_signal_connect (accel_group, "accel-changed",
+                        G_CALLBACK (gimp_action_view_accel_changed),
+                        view);
 
       column = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_title (column, _("Shortcut"));
@@ -529,7 +566,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                     break;
                 }
 
-              if (conflict_action)
+              if (conflict_action && conflict_action != action)
                 {
                   GimpActionGroup *conflict_group;
                   gchar           *label;
@@ -595,7 +632,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
 
                   gtk_widget_show (query_box);
                 }
-              else
+              else if (conflict_action != action)
                 {
                   g_message (_("Changing shortcut failed."));
                 }

@@ -1,3 +1,26 @@
+2004-08-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpmenufactory.c (gimp_menu_factory_manager_new):
+	make sure that all actions, even if they have no menu proxy, can
+	be invoked by their accelerators. Fixes bug #149938.
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_constructor):
+	removed the same code here.
+
+	* app/widgets/gimpactionview.[ch] (gimp_action_view_dispose): new
+	function which disconnects from "accel_changed" of the accel_group
+	before upchaining (== before emitting "destroy").
+
+	The above changes make this one redundant, but since the crash in
+	bug #149938 was triggered by "accel_changed" emitted in the middle
+	of g_object_unref(tree_model), it feels better to be paranoic here
+	(fiddling with objects in destruction is no fun).
+
+	(gimp_action_view_accel_edited): don't warn if assigning the same
+	accel to the same action again.
+
+	(gimp_action_view_new): don't leak all accel_closures.
+
 2004-08-12  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/edge.c: added a preview.

@@ -221,22 +221,41 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
       if (! strcmp (entry->identifier, identifier))
         {
           GimpUIManager *manager;
+          GtkAccelGroup *accel_group;
           GList         *list;
 
           manager = gimp_ui_manager_new (factory->gimp, entry->identifier);
           gtk_ui_manager_set_add_tearoffs (GTK_UI_MANAGER (manager),
                                            create_tearoff);
 
+          accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
+
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
               GimpActionGroup *group;
+              GList           *actions;
+              GList           *list2;
 
               group = gimp_action_factory_group_new (factory->action_factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
+
+              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+
+              for (list2 = actions; list2; list2 = g_list_next (list2))
+                {
+                  GtkAction *action = list2->data;
+
+                  gtk_action_set_accel_group (action, accel_group);
+                  gtk_action_connect_accelerator (action);
+                }
+
+              g_list_free (actions);
+
               gtk_ui_manager_insert_action_group (GTK_UI_MANAGER (manager),
                                                   GTK_ACTION_GROUP (group),
                                                   -1);
+
               g_object_unref (group);
             }
 
