@@ -1,3 +1,8 @@
+2005-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/resize-dialog.c (resize_dialog_new): handle
+	gimp_viewable_get_pixbuf() returning NULL. Fixes bug #171827.
+
 2005-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):
