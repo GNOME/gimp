@@ -1,3 +1,9 @@
+Thu Sep 10 13:26:51 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* po/ja.po: added a preliminary Japanese translation from
+	Yasuhiro SHIRASAKI <joke@awa.tohoku.ac.jp>
+
 Thu Sep 10 12:00:55 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/script-fu/script-fu.c
