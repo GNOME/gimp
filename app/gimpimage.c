@@ -1540,9 +1540,11 @@ gimp_image_construct_layers (GimpImage *gimage,
 	reverse_list = g_slist_prepend (reverse_list, layer);
     }
 
-  while (reverse_list)
+  list = reverse_list;
+
+  while (list)
     {
-      layer = (Layer *) reverse_list->data;
+      layer = (Layer *) list->data;
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
@@ -1613,7 +1615,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 	}
       gimage->construct_flag = 1;  /*  something was projected  */
 
-      reverse_list = g_slist_next (reverse_list);
+      list = g_slist_next (list);
     }
 
   g_slist_free (reverse_list);
@@ -1635,9 +1637,11 @@ gimp_image_construct_channels (GimpImage *gimage,
   for (list = gimage->channels; list; list = g_slist_next (list))
     reverse_list = g_slist_prepend (reverse_list, list->data);
 
-  while (reverse_list)
+  list = reverse_list;
+
+  while (list)
     {
-      channel = (Channel *) reverse_list->data;
+      channel = (Channel *) list->data;
 
       if (drawable_visible (GIMP_DRAWABLE (channel)))
 	{
@@ -1654,7 +1658,7 @@ gimp_image_construct_channels (GimpImage *gimage,
 	  gimage->construct_flag = 1;
 	}
 
-      reverse_list = g_slist_next (reverse_list);
+      list = g_slist_next (list);
     }
 
   g_slist_free (reverse_list);
