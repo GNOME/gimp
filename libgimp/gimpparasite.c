@@ -75,65 +75,6 @@ parasite_new (const char *name, guint32 flags,
   return p;
 }
 
-Parasite *
-parasite_load(FILE *fp)
-{
-  guint32 tmp;
-  Parasite *p;
-
-  p = g_new(Parasite, 1);
-  tmp = 0;
-  fread(&tmp, 4, 1, fp);
-  tmp = GUINT32_FROM_BE(tmp);
-  if (tmp > 0)
-  {
-    p->name = g_malloc(tmp);
-    fread(p->name, tmp, 1, fp);
-  }
-  else
-  {
-    g_free (p);
-    return NULL;
-  }
-  fread(&tmp, 4, 1, fp);
-  p->flags = GUINT32_FROM_BE(tmp);
-  tmp = 0;
-  fread(&tmp, 4, 1, fp);
-  p->size = GUINT32_FROM_BE(tmp);
-  if (p->size > 0)
-  {
-    p->data = g_malloc(p->size);
-    fread(p->data, p->size, 1, fp);
-  }
-  else
-    p->data = NULL;
-  return p;
-}
-
-int
-parasite_save(const Parasite *p, FILE *fp)
-{
-  gint32 len, bytes = 0;
-  guint32 tmp;
-  len = strlen(p->name) + 1;
-  tmp = GUINT32_TO_BE(len);
-  fwrite(&tmp, 4, 1, fp);
-  bytes += 4;
-  if (len > 0)
-    fwrite(p->name, len, 1, fp);
-  bytes += len;
-  tmp = GUINT32_TO_BE(p->flags);
-  fwrite(&tmp, 4, 1, fp);
-  bytes += 4;
-  tmp = GUINT32_TO_BE(p->size);
-  fwrite(&tmp, 4, 1, fp);
-  bytes += 4;
-  if (p->size > 0)
-    fwrite(p->data, 1, p->size, fp);
-  bytes += p->size;
-  return bytes;
-}
-
 void
 parasite_free (Parasite *parasite)
 {

@@ -47,8 +47,6 @@ void          parasite_list_foreach  (ParasiteList *list, GHFunc function,
 				      gpointer user_data);
 Parasite     *parasite_list_find     (ParasiteList *list, const char *name);
 
-int           parasite_list_save     (ParasiteList *list, FILE *fp);
-void          parasite_list_load     (ParasiteList *list, FILE *fp);
 void          parasite_shift_parent  (Parasite *p);
 
 #endif  /*  __GIMP_PARASITE_H__  */

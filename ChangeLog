@@ -1,3 +1,9 @@
+Tue Apr 13 02:27:26 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* libgimp/parasite.[ch]: Removed the parasite load/save functions.
+        * app/paraslitelist.[ch]: Same as above, for the list load/save
+        functions.
+
 Mon Apr 12 23:44:14 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/crop.c: The "From Selection" functionality is back and works 

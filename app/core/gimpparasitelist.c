@@ -216,41 +216,6 @@ parasite_list_find(ParasiteList *list, const char *name)
 
 static int saved_bytes;
 
-static void
-save_a_parasite(char *key, Parasite *p, FILE *fp)
-{
-  if (parasite_is_persistent(p))
-    saved_bytes += parasite_save(p, fp);
-}
-
-int
-parasite_list_save(ParasiteList *list, FILE *fp)
-{
-  guint32 num;
-  num = parasite_list_persistent_length (list);
-  num = GINT32_TO_BE(num);
-  fwrite(&num, 4, 1, fp);
-  saved_bytes = 4;
-  parasite_list_foreach(list, (GHFunc)save_a_parasite, fp);
-  return saved_bytes;
-}
-
-void
-parasite_list_load(ParasiteList *list, FILE *fp)
-{
-  Parasite *p;
-  guint32 num;
-  num = 0;
-  fread(&num, 4, 1, fp);
-  num = GINT32_FROM_BE(num);
-  while (num--)
-  {
-    p = parasite_load(fp);
-    parasite_list_add(list, p);
-    parasite_free(p);
-  }
-}
-
 void
 parasite_shift_parent(Parasite *p)
 {

@@ -38,8 +38,6 @@ extern "C" {
 
 Parasite   *parasite_new      (const char *name, guint32 flags,
 			       guint32 size, const void *data);
-Parasite   *parasite_load     (FILE *fp);
-int         parasite_save     (const Parasite *p, FILE *fp);
 void        parasite_free     (Parasite *parasite);
 
 Parasite   *parasite_copy     (const Parasite *parasite);
