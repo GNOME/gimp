@@ -1,3 +1,7 @@
+2000-12-29  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* app/module_db.c: OS/2 fix. remove gimp_color_display_register(),,
+
 2000-12-29  Simon Budig  <simon@gimp.org>
 
 	* modules/colorsel_triangle.c   Fixed the same 16->8bit conversion
