@@ -72,17 +72,21 @@ libgimpconfig_sources = 		\
 	gimpconfig-path.h		\
 	gimpconfig-serialize.c		\
 	gimpconfig-serialize.h		\
+	gimpconfig-utils.c		\
+	gimpconfig-utils.h		\
 	gimpconfigwriter.c		\
 	gimpconfigwriter.h		\
 	gimpscanner.c			\
 	gimpscanner.h			\
-	gimpconfig-utils.c		\
-	gimpconfig-utils.h
+	gimpcolorconfig.c		\
+	gimpcolorconfig.h		\
+	gimpcolorconfig-enums.h
 
+libgimpconfig_built_sources = \
+	gimpcolorconfig-enums.c
 
-libgimpconfig_built_sources =
-
-libgimpconfig_2_0_la_SOURCES = $(libgimpconfig_sources) $(libgimpconfig_built_sources)
+libgimpconfig_2_0_la_SOURCES = \
+	$(libgimpconfig_sources) $(libgimpconfig_built_sources)
 
 
 libgimpconfiginclude_HEADERS = \
@@ -94,9 +98,9 @@ libgimpconfiginclude_HEADERS = \
 	gimpconfig-params.h		\
 	gimpconfig-path.h		\
 	gimpconfig-serialize.h		\
+	gimpconfig-utils.h		\
 	gimpconfigwriter.h		\
-	gimpscanner.h			\
-	gimpconfig-utils.h
+	gimpscanner.h
 
 
 libgimpconfig_2_0_la_LDFLAGS = \
@@ -122,6 +126,19 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 # rules to generate built sources
 #
 
-gen_sources = xgen-bec
+gen_sources = xgen-cec
 CLEANFILES = $(gen_sources)
 
+$(srcdir)/gimpcolorconfig-enums.c: $(srcdir)/gimpcolorconfig-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbasetypes.h\"\n#include \"gimpcolorconfig-enums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n" \
+		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		$(srcdir)/gimpcolorconfig-enums.h > xgen-cec \
+	&& cp xgen-cec $(@F) \
+	&& rm -f xgen-cec

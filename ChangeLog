@@ -1,3 +1,11 @@
+2005-02-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/Makefile.am
+	* libgimpconfig/gimpcolorconfig-enums.[ch]
+	* libgimpconfig/gimpcolorconfig.[ch]: added a first draft of a
+	color management configuration object. Not yet installed nor used
+	by anything. This is based on an older patch by Stefan Döhla.
+
 2005-02-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/unsharp.c:  apply speedup proposed 
