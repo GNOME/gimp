@@ -239,7 +239,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
       D (g_print ("%s: trying to convert \"%s\" to an uri.\n",
                   G_STRFUNC, dnd_crap));
 
-      filename = g_filename_from_uri (dnd_crap, hostname, NULL);
+      filename = g_filename_from_uri (dnd_crap, &hostname, NULL);
 
       if (filename)
         {

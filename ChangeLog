@@ -1,3 +1,9 @@
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpselectiondata.c
+	* plug-ins/help/domain.c
+	* plug-ins/helpbrowser/dialog.c: fixed my latest changes.
+
 2005-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-open-location-dialog.c

@@ -105,7 +105,7 @@ static void       history_add        (GtkComboBox      *combo,
 static gboolean   has_case_prefix    (const gchar      *haystack,
                                       const gchar      *needle);
 
-static gchar      filename_from_uri  (const gchar      *uri);
+static gchar    * filename_from_uri  (const gchar      *uri);
 
 
 /*  private variables  */
@@ -705,7 +705,7 @@ has_case_prefix (const gchar *haystack, const gchar *needle)
   return (*n == '\0');
 }
 
-static gchar
+static gchar *
 filename_from_uri (const gchar *uri)
 {
   gchar *filename;

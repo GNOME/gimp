@@ -81,7 +81,7 @@ static void          domain_error_set_message (GError      **error,
                                                const gchar  *format,
                                                const gchar  *filename);
 
-static gchar         help_filename_from_uri   (const gchar  *uri);
+static gchar        * filename_from_uri       (const gchar  *uri);
 
 
 /*  private variables  */
@@ -394,7 +394,7 @@ domain_locale_parse (HelpDomain  *domain,
     }
 
   if (! domain->help_root)
-    domain->help_root = help_filename_from_uri (domain->help_uri);
+    domain->help_root = filename_from_uri (domain->help_uri);
 
   if (! domain->help_root)
     {
@@ -693,8 +693,8 @@ domain_error_set_message (GError      **error,
     }
 }
 
-static gchar
-help_filename_from_uri (const gchar *uri)
+static gchar *
+filename_from_uri (const gchar *uri)
 {
   gchar *filename;
   gchar *hostname;
