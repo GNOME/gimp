@@ -358,6 +358,7 @@ EXPORTS
 	gimp_rgn_iterator_dest
 	gimp_rgn_iterator_free
 	gimp_rgn_iterator_new
+	gimp_rgn_iterator_src_dest
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2

@@ -1,3 +1,9 @@
+2003-10-09  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpmath/gimpmath.def: Fix typo.
+
+	* libgimp/gimp.def: Add gimp_rgn_iterator_src_dest.
+
 2003-10-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpobject.[ch]: added new function

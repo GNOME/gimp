@@ -56,7 +56,7 @@ EXPORTS
 	gimp_vector3_rotate_val
 	gimp_vector3_set
 	gimp_vector3_sub
-	gimp_vector3_subval
+	gimp_vector3_sub_val
 	gimp_vector_2d_to_3d
 	gimp_vector_2d_to_3d_val
 	gimp_vector_3d_to_2d
