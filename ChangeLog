@@ -21,6 +21,7 @@
 	* app/tools/gimpcroptool.c
 	* app/tools/gimpmeasuretool.c
 	* app/tools/gimpmovetool.[ch]
+	* app/pdb/guides_cmds.c
 	* tools/pdbgen/pdb/guides.pdb: s/Guide/GimpGuide/, cleanup.
 
 2001-05-15  Michael Natterer  <mitch@gimp.org>
