@@ -92,5 +92,5 @@ extern void gimp_composite_regression_print_rgba8(gimp_rgba8_t *);
 extern void gimp_composite_regression_print_va8(gimp_va8_t *);
 extern void gimp_composite_regression_timer_report(char *, double, double);
 
-
-
+extern gimp_rgba8_t *gimp_composite_regression_random_rgba8(unsigned long);
+extern gimp_rgba8_t *gimp_composite_regression_fixed_rgba8(unsigned long);

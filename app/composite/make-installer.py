@@ -247,7 +247,7 @@ def merge_function_tables(tables):
   return (main_table)
 
 
-def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
+def gimp_composite_regression(fpout, function_tables, options):
 
   # XXX move all this out to C code, instead of here.
   print >>fpout, '#include "config.h"'
@@ -267,10 +267,10 @@ def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
   print >>fpout, '#include "gimp-composite-regression.h"'
   print >>fpout, '#include "gimp-composite-util.h"'
   print >>fpout, '#include "gimp-composite-generic.h"'
-  print >>fpout, '#include "%s.h"' % (filenameify(name))
+  print >>fpout, '#include "%s.h"' % (filenameify(options.file))
   print >>fpout, ''
   print >>fpout, 'int'
-  print >>fpout, '%s_test(int iterations, int n_pixels)' % (functionnameify(name))
+  print >>fpout, '%s_test(int iterations, int n_pixels)' % (functionnameify(options.file))
   print >>fpout, '{'
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
@@ -288,9 +288,9 @@ def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
   print >>fpout, '  gimp_va8_t *va8D2;'
   print >>fpout, '  int i;'
   print >>fpout, ''
-  print >>fpout, '  rgba8A =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
-  print >>fpout, '  rgba8B =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
-  print >>fpout, '  rgba8M =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  rgba8A =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
+  print >>fpout, '  rgba8B =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
+  print >>fpout, '  rgba8M =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
   print >>fpout, '  rgba8D1 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
   print >>fpout, '  rgba8D2 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
   print >>fpout, '  va8A =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
@@ -300,21 +300,6 @@ def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
   print >>fpout, '  va8D2 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
   print >>fpout, ''
   print >>fpout, '  for (i = 0; i < n_pixels; i++) {'
-  print >>fpout, '    rgba8A[i].r = 255-i;'
-  print >>fpout, '    rgba8A[i].g = 255-i;'
-  print >>fpout, '    rgba8A[i].b = 255-i;'
-  print >>fpout, '    rgba8A[i].a = 255-i;'
-  print >>fpout, ''
-  print >>fpout, '    rgba8B[i].r = i;'
-  print >>fpout, '    rgba8B[i].g = i;'
-  print >>fpout, '    rgba8B[i].b = i;'
-  print >>fpout, '    rgba8B[i].a = i;'
-  print >>fpout, ''
-  print >>fpout, '    rgba8M[i].r = i;'
-  print >>fpout, '    rgba8M[i].g = i;'
-  print >>fpout, '    rgba8M[i].b = i;'
-  print >>fpout, '    rgba8M[i].a = i;'
-  print >>fpout, ''
   print >>fpout, '    va8A[i].v = i;'
   print >>fpout, '    va8A[i].a = 255-i;'
   print >>fpout, '    va8B[i].v = i;'
@@ -392,12 +377,12 @@ def gimp_composite_regression(fpout, name, function_tables, requirements=[]):
   print >>fpout, ''
   print >>fpout, '  putenv("GIMP_COMPOSITE=0x1");'
   print >>fpout, ''
-  print >>fpout, '  iterations = 1;'
-  print >>fpout, '  n_pixels = 512*512;'
+  print >>fpout, '  iterations = %d;' % options.iterations
+  print >>fpout, '  n_pixels = %d;' % options.n_pixels
   print >>fpout, ''
   print >>fpout, '  gimp_composite_generic_install();'
   print >>fpout, ''
-  print >>fpout, '  return (%s_test(iterations, n_pixels));' % (functionnameify(name))
+  print >>fpout, '  return (%s_test(iterations, n_pixels));' % (functionnameify(options.file))
   print >>fpout, '}'
 
   return
@@ -495,9 +480,16 @@ def gimp_composite_cfile(fpout, name, function_table, requirements=[]):
 ###########################################
 
 op = optparse.OptionParser(version="$Revision$")
-op.add_option('-f', '--file', action='store',      type='string', dest='file',     default=None,  help='the input object file')
-op.add_option('-t', '--test', action='store_true',                dest='test',     default=False, help='generate regression testing code')
-op.add_option('-r', '--requires', action='append', type='string', dest='requires', default=[],    help='cpp #if conditionals')
+op.add_option('-f', '--file', action='store',      type='string', dest='file',        default=None,
+              help='the input object file')
+op.add_option('-t', '--test', action='store_true',                 dest='test',       default=False,
+              help='generate regression testing code')
+op.add_option('-i', '--iterations', action='store', type='int',    dest='iterations', default=1,
+              help='number of iterations in regression tests')
+op.add_option('-n', '--n_pixels', action='store',  type="int",     dest='n_pixels',   default=512*512+1,
+              help='number of pixels in each regression test iteration')
+op.add_option('-r', '--requires', action='append', type='string',  dest='requires',   default=[],
+              help='cpp #if conditionals')
 options, args = op.parse_args()
 
 table = load_function_table(options.file)
@@ -505,7 +497,7 @@ table = load_function_table(options.file)
 gimp_composite_cfile(open(filenameify(options.file) + "-installer.c", "w"), options.file, table, options.requires)
 
 if options.test == True:
-  gimp_composite_regression(open(filenameify(options.file) + "-test.c", "w"), options.file, table, options.requires)
+  gimp_composite_regression(open(filenameify(options.file) + "-test.c", "w"), table, options)
   pass
 
 sys.exit(0)

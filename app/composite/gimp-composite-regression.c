@@ -201,13 +201,13 @@ gimp_composite_regression_comp_va8(char *str, gimp_va8_t *va8A, gimp_va8_t *va8B
 }
 
 void
-gimp_composite_regression_dump_rgba8(char *str, gimp_rgba8_t *rgba, u_long length)
+gimp_composite_regression_dump_rgba8(char *str, gimp_rgba8_t *rgba, u_long n_pixels)
 {
   int i;
 
   printf("%s\n", str);
 
-  for (i = 0; i < length; i++) {
+  for (i = 0; i < n_pixels; i++) {
     printf("%5d: ", i);
     gimp_composite_regression_print_rgba8(&rgba[i]);
     printf("\n");
@@ -238,4 +238,42 @@ gimp_composite_regression_time_function(int iterations, void (*func)(), GimpComp
   timersub(&t1, &t0, &tv_elapsed);
 
 		return (tv_to_secs(tv_elapsed));
+}
+
+gimp_rgba8_t *
+gimp_composite_regression_random_rgba8(unsigned long n_pixels)
+{
+		gimp_rgba8_t *rgba8;
+		int i;
+
+		if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
+				for (i = 0; i < n_pixels; i++) {
+						rgba8[i].r = rand() % 256;
+						rgba8[i].g = rand() % 256;
+						rgba8[i].b = rand() % 256;
+						rgba8[i].a = rand() % 256;
+				}
+		}
+
+		return (rgba8);
+}
+
+gimp_rgba8_t *
+gimp_composite_regression_fixed_rgba8(unsigned long n_pixels)
+{
+		gimp_rgba8_t *rgba8;
+		int i;
+		int v;
+
+		if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
+				for (i = 0; i < n_pixels; i++) {
+						v = i % 256;
+						rgba8[i].r = v+8;
+						rgba8[i].g = v+8;
+						rgba8[i].b = v+8;
+						rgba8[i].a = v+8;
+				}
+		}
+
+		return (rgba8);
 }

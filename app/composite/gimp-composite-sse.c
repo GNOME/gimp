@@ -53,6 +53,23 @@
 #define pmaxub(a,b,tmp)      "movq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b
 #endif
 
+/* a = INT_MULT(a,b) */
+#define mmx_int_mult(a,b,w128) \
+                  "\tpmullw    %%"#b",    %%"#a"; " \
+                  "\tpaddw     %%"#w128", %%"#a"; " \
+                  "\tmovq      %%"#a",    %%"#b"; " \
+                  "\tpsrlw     $8,        %%"#b"; " \
+                  "\tpaddw     %%"#a",    %%"#b"; " \
+                  "\tpsrlw     $8,        %%"#b"\n"
+
+#define mmx_low_bytes_to_words(src,dst,zero) \
+									"\tmovq      %%"#src", %%"#dst"; " \
+		       "\tpunpcklbw %%"#zero", %%"#dst"\n"
+
+#define mmx_high_bytes_to_words(src,dst,zero) \
+									"\tmovq      %%"#src", %%"#dst"; " \
+		       "\tpunpckhbw %%"#zero", %%"#dst"\n"
+
 
 /*
  * Clobbers eax, ecx edx
@@ -137,7 +154,8 @@
 const static unsigned long rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
 const static unsigned long rgba8_b1[2] = { 0x01010101, 0x01010101 };
 const static unsigned long rgba8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
-const static unsigned long rgba8_w1[2] = { 0x00010001, 0x00010001 };
+const static unsigned long rgba8_w1[2] =         { 0x00010001, 0x00010001 };
+const static unsigned long rgba8_w2[2] =         { 0x00020002, 0x00020002 };
 const static unsigned long rgba8_w128[2] = { 0x00800080, 0x00800080 };
 const static unsigned long rgba8_w256[2] = { 0x01000100, 0x01000100 };
 const static unsigned long rgba8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
@@ -960,102 +978,54 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
   asm("emms");
 }
 
-const static unsigned long rgba8_lower_ff[2] = {  0x00FF00FF, 0x00FF00FF };
-
 static void
-op_overlay(void)
+sse_op_overlay(void)
 {
-  asm("movq      %mm2, %mm1");
-  asm("punpcklbw %mm6, %mm1");
-  asm("movq      %mm3, %mm5");
-  asm("punpcklbw %mm6, %mm5");
-  asm("pmullw    %mm5, %mm1");
-  asm("paddw     %mm7, %mm1");
-  asm("movq      %mm1, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm5, %mm1");
-  asm("psrlw     $8, %mm1");
+		asm volatile (
+																/* low bytes */
+																mmx_low_bytes_to_words(mm3,mm5,mm0)
+																"\tpcmpeqb   %%mm4, %%mm4\n"
+																"\tpsubb     %%mm2, %%mm4\n"	/* mm4 = 255 - A */
+																"\tpunpcklbw %%mm0, %%mm4\n"	/* mm4 = (low bytes as word) mm4 */
+																"\tmovq      (%0), %%mm6\n"	 /* mm6 = words of value 2 */
+																"\tpmullw    %%mm5, %%mm6\n"	/* mm6 = 2 * low bytes of B */
+																mmx_int_mult(mm6,mm4,mm7)	   /* mm4 = INT_MULT(mm6, mm4) */
 
-  asm("pcmpeqb   %mm4, %mm4");
-  asm("psubb     %mm2, %mm4");
-  asm("punpcklbw %mm6, %mm4");
-  asm("pcmpeqb   %mm5, %mm5");
-  asm("psubb     %mm3, %mm5");
-  asm("punpcklbw %mm6, %mm5");
-  asm("pmullw    %mm5, %mm4");
-  asm("paddw     %mm7, %mm4");
-  asm("movq      %mm4, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm5, %mm4");
-  asm("psrlw     $8, %mm4");
+																/* high bytes */
+																mmx_high_bytes_to_words(mm3,mm5,mm0)
+																"\tpcmpeqb   %%mm1, %%mm1\n"
+																"\tpsubb     %%mm2, %%mm1\n"	/* mm1 = 255 - A */
+																"\tpunpckhbw %%mm0, %%mm1\n"	/* mm1 = (high bytes as word) mm1 */
+																"\tmovq      (%0), %%mm6\n"	 /* mm6 = words of value 2 */
+																"\tpmullw    %%mm5, %%mm6\n"	/* mm6 = 2 * high bytes of B */
+																mmx_int_mult(mm6,mm1,mm7)	   /* mm1 = INT_MULT(mm6, mm1) */
 
-  asm("movq      rgba8_lower_ff, %mm5");
-  asm("psubw     %mm4, %mm5");
+																"\tpackuswb  %%mm1,%%mm4\n"	 /* mm4 = intermediate value */
 
-  asm("psubw     %mm1, %mm5");
-  asm("movq      %mm2, %mm4");
-  asm("punpcklbw %mm6, %mm4");
-  asm("pmullw    %mm4, %mm5");
-  asm("paddw     %mm7, %mm5");
-  asm("movq      %mm5, %mm4");
-  asm("psrlw     $8, %mm4");
-  asm("paddw     %mm4, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm1, %mm5");
+																mmx_low_bytes_to_words(mm4,mm5,mm0)
+																mmx_low_bytes_to_words(mm2,mm6,mm0)
+																"\tpaddw     %%mm6,%%mm5\n"
+																mmx_int_mult(mm6,mm5,mm7)	  /* mm5 = INT_MULT(mm6, mm5) low bytes */
 
-  asm("subl      $8, %esp");
-  asm("movq      %mm5, (%esp)");
+																mmx_high_bytes_to_words(mm4,mm1,mm0)
+																mmx_high_bytes_to_words(mm2,mm6,mm0)
+																"\tpaddw     %%mm6,%%mm1\n"
+																mmx_int_mult(mm6,mm1,mm7)	  /* mm1 = INT_MULT(mm6, mm1) high bytes */
 
-  asm("movq      %mm2, %mm1");
-  asm("punpckhbw %mm6, %mm1");
-  asm("movq      %mm3, %mm5");
-  asm("punpckhbw %mm6, %mm5");
-  asm("pmullw    %mm5, %mm1");
-  asm("paddw     %mm7, %mm1");
-  asm("movq      %mm1, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm5, %mm1");
-  asm("psrlw     $8, %mm1");
+																"\tpackuswb  %%mm1,%%mm5\n"
 
-  asm("pcmpeqb   %mm4, %mm4");
-  asm("psubb     %mm2, %mm4");
-  asm("punpckhbw %mm6, %mm4");
-  asm("pcmpeqb   %mm5, %mm5");
-  asm("psubb     %mm3, %mm5");
-  asm("punpckhbw %mm6, %mm5");
-  asm("pmullw    %mm5, %mm4");
-  asm("paddw     %mm7, %mm4");
-  asm("movq      %mm4, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm5, %mm4");
-  asm("psrlw     $8, %mm4");
+																"\tmovq      %1, %%mm0\n"
+																"\tmovq      %%mm0, %%mm1\n"
+																"\tpandn     %%mm5, %%mm1\n"
 
-  asm("movq      rgba8_lower_ff, %mm5");
-  asm("psubw     %mm4, %mm5");
+																"\t" pminub(mm2,mm3,mm4) "\n"
+																"\tpand      %%mm0, %%mm3\n"
 
-  asm("psubw     %mm1, %mm5");
-  asm("movq      %mm2, %mm4");
-  asm("punpckhbw %mm6, %mm4");
-  asm("pmullw    %mm4, %mm5");
-  asm("paddw     %mm7, %mm5");
-  asm("movq      %mm5, %mm4");
-  asm("psrlw     $8, %mm4");
-  asm("paddw     %mm4, %mm5");
-  asm("psrlw     $8, %mm5");
-  asm("paddw     %mm1, %mm5");
+																"\tpor       %%mm3, %%mm1\n"
 
-  asm("movq      (%esp), %mm4");
-  asm("addl      $8, %esp");
-
-  asm("packuswb  %mm5, %mm4");
-  asm("movq      %mm0, %mm1");
-  asm("pandn     %mm4, %mm1");
-
-  asm("movq      %mm2, %mm4");
-  asm("psubusb   %mm3, %mm4");
-  asm("psubb     %mm4, %mm2");
-  asm("pand      %mm0, %mm2");
-  asm("por       %mm2, %mm1");
+																: /* empty */
+																: "m" (*rgba8_w2), "m" (*rgba8_alpha_mask)
+																);
 }
 
 void
@@ -1063,25 +1033,27 @@ gimp_composite_overlay_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+  asm volatile ("pxor    %%mm0,%%mm0\n"
+																"movq    (%0),%%mm7"
+																:  : "m" (*rgba8_w128) : "%mm0");
 
   for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq    (%0), %%mm2; addl  $8, %0\n"
-                  "\tmovq    (%1), %%mm3; addl  $8, %1\n"
+    asm ("  movq    (%0), %%mm2; addl  $8, %0\n"
+									"\tmovq    (%1), %%mm3; addl  $8, %1\n"
 
-                  "\tcall op_overlay\n"
+									"\tcall sse_op_overlay\n"
 
-                  "\tmovq    %%mm1, (%2); addl  $8, %2\n"
-                  : "+r" (op.A), "+S" (op.B), "+D" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+									"\tmovq    %%mm1, (%2); addl  $8, %2\n"
+									: "+r" (op.A), "+S" (op.B), "+D" (op.D)
+									: /* empty */
+									: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
   if (op.n_pixels) {
     asm volatile ("  movd    (%0), %%mm2;\n"
                   "\tmovd    (%1), %%mm3;\n"
 
-                  "\tcall op_overlay\n"
+                  "\tcall sse_op_overlay\n"
 
                   "\tmovd    %%mm1, (%2);\n"
                   : /* empty */
