@@ -58,7 +58,7 @@ msgstr "Режим виконання Скрипт-Фу дозволя╓ лише не╕нтерактивну роботу"
 msgid ""
 "Script-Fu Error\n"
 "%s"
-msgstr "
+msgstr ""
 "Помилка Скрипт-Фу\n"
 "%s"
 
@@ -201,7 +201,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Алх╕м╕я/Хижак..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
@@ -493,7 +493,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Кристал..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
@@ -529,7 +529,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/SOTA Хром..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
@@ -785,11 +785,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
-msgstr ""
+msgstr "Ампл╕туда"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
-msgstr ""
+msgstr "Кут"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Anim-Filter for all Copies"
@@ -859,13 +859,12 @@ msgid "Background Image"
 msgstr "Зображення на тл╕"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#, fuzzy
 msgid "Bar Height"
-msgstr "Висота"
+msgstr "Висота рядка"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Length"
-msgstr ""
+msgstr "Довжина рядка"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
@@ -1217,11 +1216,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
-msgstr ""
+msgstr "К╕нець X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End Y"
-msgstr ""
+msgstr "К╕нець Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
@@ -1239,24 +1238,23 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
-msgstr ""
+msgstr "Парн╕"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even/Odd"
-msgstr ""
+msgstr "Парн╕/непарн╕"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
-msgstr ""
+msgstr "План-Тло-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-RGB"
-msgstr ""
+msgstr "План-Тло-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "FG-Transparent"
-msgstr "Прозоре тло"
+msgstr "План-Прозоре"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
@@ -1406,7 +1404,7 @@ msgstr "Розм╕р зображення"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr ""
+msgstr "Кадри"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
@@ -1424,14 +1422,12 @@ msgid "Glow Color"
 msgstr "Кол╕р сяйва"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#, fuzzy
 msgid "Glow Radius"
-msgstr "Рад╕ус"
+msgstr "Рад╕ус сяйва"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#, fuzzy
 msgid "Glow Size (pixels * 4)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr "Розм╕р сяйва (п╕ксел╕ * 4)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1539,7 +1535,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
-msgstr ""
+msgstr "Пром╕жков╕ кадри"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
@@ -1655,14 +1651,12 @@ msgstr "К╕льк╕сть коп╕й"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
-#, fuzzy
 msgid "Number of Frames"
-msgstr "К╕льк╕сть кольор╕в"
+msgstr "К╕льк╕сть кадр╕в"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
 msgid "Number of Lines"
-msgstr "К╕льк╕сть коп╕й"
+msgstr "К╕льк╕сть рядк╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
@@ -1683,11 +1677,11 @@ msgstr "К╕льк╕сть коп╕й"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "К╕льк╕сть"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
-msgstr ""
+msgstr "Непарн╕"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
@@ -1892,11 +1886,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "Рядки"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
-msgstr ""
+msgstr "Рядки/Стовпчики"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
