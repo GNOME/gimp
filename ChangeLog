@@ -1,3 +1,8 @@
+2005-03-05  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/siod/sliba.c: Oops...one 'case tc_string:' was
+	lost while fixing handling of string arrays.
+
 2005-03-05  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-generic.c

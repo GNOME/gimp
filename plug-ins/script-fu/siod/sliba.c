@@ -484,6 +484,7 @@ arcons (long typecode, long n, long initp)
 	a->storage_as.lisp_array.data[j] = NIL;
       break;
     default:
+fprintf(stderr, "arcons");	/* ~~~~~ */
       errswitch ();
     }
   a->type = typecode;
@@ -907,6 +908,7 @@ array_equal (LISP a, LISP b)
   long j, len;
   switch (TYPE (a))
     {
+    case tc_string:
     case tc_byte_array:
       len = a->storage_as.string.dim;
       if (len != b->storage_as.string.dim)
@@ -954,6 +956,7 @@ array_equal (LISP a, LISP b)
 	    return (NIL);
       return (sym_t);
     default:
+fprintf(stderr, "arrayequal");	/* ~~~~~ */
       return (errswitch ());
     }
 }
@@ -1010,6 +1013,7 @@ array_sxhash (LISP a, long n)
 			     n);
       return (hash);
     default:
+fprintf(stderr, "array_sxhash");	/* ~~~~~ */
       errswitch ();
       return (0);
     }
@@ -1322,6 +1326,7 @@ array_fast_print (LISP ptr, LISP table)
 	fast_print (ptr->storage_as.lisp_array.data[j], table);
       return (NIL);
     default:
+fprintf(stderr, "array_fast_print");	/* ~~~~~ */
       return (errswitch ());
     }
 }
@@ -1394,6 +1399,7 @@ array_fast_read (int code, LISP table)
 	ptr->storage_as.lisp_array.data[j] = fast_read (table);
       return (ptr);
     default:
+fprintf(stderr, "array_fast_read");	/* ~~~~~ */
       return (errswitch ());
     }
 }
@@ -1817,6 +1823,7 @@ base64encode (LISP in)
       *p2++ = base64_encode_table[64];
       break;
     default:
+fprintf(stderr, "base64encode");	/* ~~~~~ */
       errswitch ();
     }
   return (out);
@@ -1884,6 +1891,7 @@ base64decode (LISP in)
       *p2++ = (item2 << 4) | (item3 >> 2);
       break;
     default:
+fprintf(stderr, "base64decode");	/* ~~~~~ */
       errswitch ();
     }
   return (out);
