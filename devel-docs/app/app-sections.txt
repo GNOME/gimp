@@ -3529,10 +3529,27 @@ GIMP_ACTION_GROUP_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpactionview</FILE>
+<TITLE>GimpActionView</TITLE>
+GimpActionView
+gimp_action_view_new
+<SUBSECTION Standard>
+GimpActionViewClass
+GIMP_ACTION_VIEW
+GIMP_IS_ACTION_VIEW
+GIMP_TYPE_ACTION_VIEW
+gimp_action_view_get_type
+GIMP_ACTION_VIEW_CLASS
+GIMP_IS_ACTION_VIEW_CLASS
+GIMP_ACTION_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpaction</FILE>
 <TITLE>GimpAction</TITLE>
 GimpAction
 gimp_action_new
+gimp_action_name_compare
 <SUBSECTION Standard>
 GimpActionClass
 GIMP_ACTION
@@ -3679,6 +3696,24 @@ gimp_buffer_view_get_type
 GIMP_BUFFER_VIEW_CLASS
 GIMP_IS_BUFFER_VIEW_CLASS
 GIMP_BUFFER_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcellrendereraccel</FILE>
+<TITLE>GimpCellRendererAccel</TITLE>
+GimpCellRendererAccel
+gimp_cell_renderer_accel_new
+gimp_cell_renderer_accel_set_accelerator
+gimp_cell_renderer_accel_get_accelerator
+<SUBSECTION Standard>
+GimpCellRendererAccelClass
+GIMP_CELL_RENDERER_ACCEL
+GIMP_IS_CELL_RENDERER_ACCEL
+GIMP_TYPE_CELL_RENDERER_ACCEL
+gimp_cell_renderer_accel_get_type
+GIMP_CELL_RENDERER_ACCEL_CLASS
+GIMP_IS_CELL_RENDERER_ACCEL_CLASS
+GIMP_CELL_RENDERER_ACCEL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4107,6 +4142,7 @@ gimp_controllers_exit
 gimp_controllers_restore
 gimp_controllers_save
 gimp_controllers_get_list
+gimp_controllers_get_ui_manager
 gimp_controllers_get_wheel
 gimp_controllers_get_keyboard
 </SECTION>
@@ -6531,6 +6567,7 @@ gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
 gimp_marshal_VOID__STRING
 gimp_marshal_VOID__STRING_FLAGS
+gimp_marshal_VOID__STRING_UINT_FLAGS
 gimp_marshal_VOID__UINT_STRING
 gimp_marshal_VOID__VOID
 </SECTION>
@@ -7412,6 +7449,7 @@ gimp_get_mod_name_control
 gimp_get_mod_name_alt
 gimp_get_mod_separator
 gimp_get_mod_string
+gimp_get_accel_string
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color

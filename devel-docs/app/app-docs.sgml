@@ -737,6 +737,7 @@
 
     <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
+      <xi:include href="xml/gimpactionview.xml" />
       <xi:include href="xml/gimpcolorbar.xml" />
       <xi:include href="xml/gimpcolordisplayeditor.xml" />
       <xi:include href="xml/gimpcolorframe.xml" />
@@ -774,6 +775,7 @@
 
     <chapter id="app-widgets-cell-renderers">
       <title>Cell Renderers for GtkTreeView</title>
+      <xi:include href="xml/gimpcellrendereraccel.xml" />
       <xi:include href="xml/gimpcellrenderertoggle.xml" />
       <xi:include href="xml/gimpcellrendererviewable.xml" />
     </chapter>
