@@ -1,3 +1,23 @@
+2004-05-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpframe.c: if the label_widget is a button, set
+	the button label as bold. Cache the indentation instead of
+	calculating it over and over again.
+
+	* themes/Default/gtkrc: set HIG-compliant spacing for the
+	action_area.
+
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_enum_radio_box_new() for a radio group that is no
+	embedded in a frame.
+
+	* app/widgets/gimpstrokeeditor.c: use a frame-less radio box for
+	the Stroke style.
+
+	* app/gui/file-new-dialog.c
+	* app/gui/grid-dialog.c
+	* app/gui/stroke-dialog.c: HIG-compliant spacings.
+
 2004-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_key_press_event): new function

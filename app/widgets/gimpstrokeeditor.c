@@ -261,6 +261,7 @@ gimp_stroke_editor_constructor (GType                   type,
                              _("Dash Pattern:"), 1.0, 0.5, frame, 2, FALSE);
 
   box = gimp_enum_combo_box_new (GIMP_TYPE_DASH_PRESET);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
@@ -280,8 +281,8 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_widget_show (button);
   row++;
 
-  box = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->options), "style",
-                                        _("Style"), 0, 0);
+  box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
+                                      0, 0);
   gtk_table_attach (GTK_TABLE (table), box, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (box);

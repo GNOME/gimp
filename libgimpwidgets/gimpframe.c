@@ -30,20 +30,24 @@
 
 
 #define DEFAULT_LABEL_SPACING  6
+#define GIMP_FRAME_INDENT_KEY  "gimp-frame-indent"
 
 
 static void      gimp_frame_class_init          (GimpFrameClass *klass);
 static void      gimp_frame_init                (GimpFrame      *frame);
+
 static void      gimp_frame_size_request        (GtkWidget      *widget,
                                                  GtkRequisition *requisition);
 static void      gimp_frame_size_allocate       (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 static void      gimp_frame_child_allocate      (GtkFrame       *frame,
                                                  GtkAllocation  *allocation);
-static gboolean  gimp_frame_expose              (GtkWidget      *widget,
+static void      gimp_frame_style_set           (GtkWidget      *widget,
+                                                 GtkStyle       *previous);
+static gboolean  gimp_frame_expose_event        (GtkWidget      *widget,
                                                  GdkEventExpose *event);
 static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
-static gint      gimp_frame_left_margin         (GtkWidget      *widget);
+static gint      gimp_frame_get_indent          (GtkWidget      *widget);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -90,7 +94,8 @@ gimp_frame_class_init (GimpFrameClass *klass)
 
   widget_class->size_request  = gimp_frame_size_request;
   widget_class->size_allocate = gimp_frame_size_allocate;
-  widget_class->expose_event  = gimp_frame_expose;
+  widget_class->style_set     = gimp_frame_style_set;
+  widget_class->expose_event  = gimp_frame_expose_event;
 
   frame_class->compute_child_allocation = gimp_frame_child_allocate;
 
@@ -122,7 +127,7 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
     {
-      gint  spacing;
+      gint spacing;
 
       gtk_widget_size_request (frame->label_widget, requisition);
 
@@ -140,12 +145,12 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
     {
-      gint left_margin = gimp_frame_left_margin (widget);
+      gint indent = gimp_frame_get_indent (widget);
 
       gtk_widget_size_request (bin->child, &child_requisition);
 
       requisition->width = MAX (requisition->width,
-                                child_requisition.width + left_margin);
+                                child_requisition.width + indent);
       requisition->height += child_requisition.height;
     }
 
@@ -200,8 +205,8 @@ gimp_frame_child_allocate (GtkFrame      *frame,
   GtkWidget     *widget       = GTK_WIDGET (frame);
   GtkAllocation *allocation   = &widget->allocation;
   gint           border_width = GTK_CONTAINER (frame)->border_width;
-  gint           top_margin   = 0;
-  gint           left_margin  = gimp_frame_left_margin (widget);
+  gint           spacing      = 0;
+  gint           indent       = gimp_frame_get_indent (widget);
 
   if (frame->label_widget)
     {
@@ -211,21 +216,21 @@ gimp_frame_child_allocate (GtkFrame      *frame,
                                         &child_requisition);
 
       gtk_widget_style_get (widget,
-                            "label_spacing", &top_margin,
+                            "label_spacing", &spacing,
                             NULL);
 
-      top_margin += child_requisition.height;
+      spacing += child_requisition.height;
     }
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
-    child_allocation->x    = border_width + left_margin;
+    child_allocation->x    = border_width + indent;
   else
     child_allocation->x    = border_width;
 
-  child_allocation->y      = border_width + top_margin;
+  child_allocation->y      = border_width + spacing;
   child_allocation->width  = MAX (1,
                                   allocation->width -
-                                  2 * border_width - left_margin);
+                                  2 * border_width - indent);
   child_allocation->height = MAX (1,
                                   allocation->height -
                                   child_allocation->y - border_width);
@@ -234,9 +239,16 @@ gimp_frame_child_allocate (GtkFrame      *frame,
   child_allocation->y += allocation->y;
 }
 
+static void
+gimp_frame_style_set (GtkWidget *widget,
+                      GtkStyle  *previous)
+{
+  g_object_set_data (G_OBJECT (widget), GIMP_FRAME_INDENT_KEY, NULL);
+}
+
 static gboolean
-gimp_frame_expose (GtkWidget      *widget,
-                   GdkEventExpose *event)
+gimp_frame_expose_event (GtkWidget      *widget,
+                         GdkEventExpose *event)
 {
   if (GTK_WIDGET_DRAWABLE (widget))
     {
@@ -251,34 +263,59 @@ gimp_frame_expose (GtkWidget      *widget,
 static void
 gimp_frame_label_widget_notify (GtkFrame *frame)
 {
-  if (frame->label_widget && GTK_IS_LABEL (frame->label_widget))
+  if (frame->label_widget)
     {
-      PangoAttrList  *attrs;
-      PangoAttribute *attr;
+      GtkLabel *label = NULL;
 
-      attrs = pango_attr_list_new ();
+      if (GTK_IS_LABEL (frame->label_widget))
+        {
+          label = GTK_LABEL (frame->label_widget);
+        }
+      else if (GTK_IS_BIN (frame->label_widget))
+        {
+          GtkWidget *child = gtk_bin_get_child (GTK_BIN (frame->label_widget));
 
-      attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-      attr->start_index = 0;
-      attr->end_index   = -1;
-      pango_attr_list_insert (attrs, attr);
+          if (GTK_IS_LABEL (child))
+            label = GTK_LABEL (child);
+        }
 
-      gtk_label_set_attributes (GTK_LABEL (frame->label_widget), attrs);
+      if (label)
+        {
+          PangoAttrList  *attrs;
+          PangoAttribute *attr;
 
-      pango_attr_list_unref (attrs);
+          attrs = pango_attr_list_new ();
+
+          attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+          attr->start_index = 0;
+          attr->end_index   = -1;
+          pango_attr_list_insert (attrs, attr);
+
+          gtk_label_set_attributes (label, attrs);
+
+          pango_attr_list_unref (attrs);
+        }
     }
 }
 
 static gint
-gimp_frame_left_margin (GtkWidget *widget)
+gimp_frame_get_indent (GtkWidget *widget)
 {
-  PangoLayout   *layout;
-  gint           width;
+  gint width = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                   GIMP_FRAME_INDENT_KEY));
 
-  /*  the HIG suggests to use four spaces so do just that  */
-  layout = gtk_widget_create_pango_layout (widget, "    ");
-  pango_layout_get_pixel_size (layout, &width, NULL);
-  g_object_unref (layout);
+  if (! width)
+    {
+      PangoLayout *layout;
+
+      /*  the HIG suggests to use four spaces so do just that  */
+      layout = gtk_widget_create_pango_layout (widget, "    ");
+      pango_layout_get_pixel_size (layout, &width, NULL);
+      g_object_unref (layout);
+
+      g_object_set_data (G_OBJECT (widget),
+                         GIMP_FRAME_INDENT_KEY, GINT_TO_POINTER (width));
+    }
 
   return width;
 }

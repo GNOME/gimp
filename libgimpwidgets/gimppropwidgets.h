@@ -61,6 +61,10 @@ GtkWidget     * gimp_prop_enum_radio_frame_new    (GObject     *config,
                                                    const gchar *title,
                                                    gint         minimum,
                                                    gint         maximum);
+GtkWidget     * gimp_prop_enum_radio_box_new      (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gint         minimum,
+                                                   gint         maximum);
 GtkWidget     * gimp_prop_enum_stock_box_new      (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *stock_prefix,

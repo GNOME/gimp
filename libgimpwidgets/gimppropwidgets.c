@@ -617,6 +617,55 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
 }
 
 GtkWidget *
+gimp_prop_enum_radio_box_new (GObject     *config,
+                              const gchar *property_name,
+                              gint         minimum,
+                              gint         maximum)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *vbox;
+  GtkWidget  *button;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  if (minimum != maximum)
+    {
+      vbox = gimp_enum_radio_box_new_with_range (param_spec->value_type,
+                                                 minimum, maximum,
+                                                 G_CALLBACK (gimp_prop_radio_button_callback),
+                                                 config,
+                                                 &button);
+    }
+  else
+    {
+      vbox = gimp_enum_radio_box_new (param_spec->value_type,
+                                      G_CALLBACK (gimp_prop_radio_button_callback),
+                                      config,
+                                      &button);
+    }
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+
+  set_param_spec (G_OBJECT (vbox), NULL, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  button);
+
+  g_object_set_data (G_OBJECT (vbox), "radio-button", button);
+
+  return vbox;
+}
+
+GtkWidget *
 gimp_prop_boolean_radio_frame_new (GObject     *config,
                                    const gchar *property_name,
                                    const gchar *title,
