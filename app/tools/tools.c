@@ -86,6 +86,12 @@
 #include "cursors/crop_small_mask.xbm"
 #include "cursors/resize_small.xbm"
 #include "cursors/resize_small_mask.xbm"
+#include "cursors/rotate_small.xbm"
+#include "cursors/rotate_small_mask.xbm"
+#include "cursors/shear_small.xbm"
+#include "cursors/shear_small_mask.xbm"
+#include "cursors/perspective_small.xbm"
+#include "cursors/perspective_small_mask.xbm"
 #include "cursors/flip_horizontal_small.xbm"
 #include "cursors/flip_horizontal_small_mask.xbm"
 #include "cursors/flip_vertical_small.xbm"
@@ -406,8 +412,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      rotate_small_bits, rotate_small_mask_bits,
+      rotate_small_width, rotate_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -434,8 +440,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      resize_small_bits, resize_small_mask_bits,
+      resize_small_width, resize_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -462,8 +468,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      shear_small_bits, shear_small_mask_bits,
+      shear_small_width, shear_small_height,
       0, 0, NULL, NULL, NULL
     },
     {
@@ -490,8 +496,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     {
-      NULL, NULL,
-      0, 0,
+      perspective_small_bits, perspective_small_mask_bits,
+      perspective_small_width, perspective_small_height,
       0, 0, NULL, NULL, NULL
     },
     {

@@ -1,3 +1,17 @@
+2000-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/perspective_small.xbm
+	* cursors/perspective_small_mask.xbm
+	* cursors/rotate_small.xbm
+	* cursors/rotate_small_mask.xbm
+	* cursors/shear_small.xbm
+	* cursors/shear_small_mask.xbm: new cursors.
+
+	* app/tools.c
+	* app/transform_core.c: use them.
+
 2000-06-16  Sven Neumann  <sven@gimp.org>
 	
 	* app/dodgeburn.c (tools_new_dodgeburn): Dodge/Burn

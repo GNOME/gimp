@@ -72,6 +72,12 @@ EXTRA_DIST = \
 	cursors/crop_small_mask.xbm		\
 	cursors/resize_small.xbm		\
 	cursors/resize_small_mask.xbm		\
+	cursors/rotate_small.xbm		\
+	cursors/rotate_small_mask.xbm		\
+	cursors/shear_small.xbm			\
+	cursors/shear_small_mask.xbm		\
+	cursors/perspective_small.xbm		\
+	cursors/perspective_small_mask.xbm	\
 	cursors/flip_horizontal_small.xbm	\
 	cursors/flip_horizontal_small_mask.xbm	\
 	cursors/flip_vertical_small.xbm		\

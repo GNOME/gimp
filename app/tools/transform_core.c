@@ -650,8 +650,6 @@ transform_core_cursor_update (Tool           *tool,
   GDisplay      *gdisp;
   TransformCore *transform_core;
   GimpDrawable  *drawable;
-  gboolean       use_transform_cursor = FALSE;
-  gboolean       use_bad_cursor       = FALSE;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
   gint           x, y;
 
@@ -666,7 +664,7 @@ transform_core_cursor_update (Tool           *tool,
       if (GIMP_IS_LAYER (drawable) &&
 	  layer_get_mask (GIMP_LAYER (drawable)))
 	{
-	  use_bad_cursor = TRUE;
+	  ctype = GIMP_BAD_CURSOR;
 	}
       else if (x >= drawable->offset_x &&
 	       y >= drawable->offset_y &&
@@ -676,26 +674,13 @@ transform_core_cursor_update (Tool           *tool,
 	  if (gimage_mask_is_empty (gdisp->gimage) ||
 	      gimage_mask_value (gdisp->gimage, x, y))
 	    {
-	      use_transform_cursor = TRUE;
+	      ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}
     }
 
-  if (use_transform_cursor)
-    /*  ctype based on transform tool type  */
-    switch (tool->type)
-      {
-      case ROTATE:      ctype = GDK_EXCHANGE; break;
-      case SCALE:       ctype = GDK_SIZING;   break;
-      case SHEAR:       ctype = GDK_TCROSS;   break;
-      case PERSPECTIVE: ctype = GDK_TCROSS;   break;
-      default: break;
-      }
-  else if (use_bad_cursor)
-    ctype = GIMP_BAD_CURSOR;
-
   gdisplay_install_tool_cursor (gdisp, ctype,
-				TOOL_TYPE_NONE,
+				tool->type,
 				CURSOR_MODIFIER_NONE,
 				FALSE);
 }
