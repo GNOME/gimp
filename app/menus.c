@@ -1267,7 +1267,8 @@ static void
 menus_last_opened_update_labels (void)
 {
   GSList    *filename_slist;
-  GString   *entry_filename, *path;
+  GString   *entry_filename;
+  GString   *path;
   GtkWidget *widget;
   gint	     i;
   guint      num_entries;
@@ -1292,6 +1293,8 @@ menus_last_opened_update_labels (void)
 
 	  gtk_label_set (GTK_LABEL (GTK_BIN (widget)->child),
 			 entry_filename->str);
+	  gimp_help_set_help_data (widget, 
+				   ((GString *) filename_slist->data)->str, NULL);
 	}
       filename_slist = filename_slist->next;
     }
@@ -1308,21 +1311,34 @@ menus_last_opened_add (gchar *filename)
   GtkWidget *menu_item;
   guint      num_entries;
 
-  /* ignore the add if we've already got the filename on the list */
+  /*  do nothing if we've already got the filename on the list  */
   for (list = last_opened_raw_filenames; list; list = g_slist_next (list))
     {
       raw_filename = list->data;
 
-      if (!strcmp (raw_filename->str, filename))
-	return;
+      if (strcmp (raw_filename->str, filename) == 0)
+	{
+	  /* the following lines would move the entry to the top
+           *
+	   * last_opened_raw_filenames = g_slist_remove_link (last_opened_raw_filenames, list);
+	   * last_opened_raw_filenames = g_slist_concat (list, last_opened_raw_filenames);
+	   * menus_last_opened_update_labels ();
+	   */
+	  return;
+	}
     }
 
   num_entries = g_slist_length (last_opened_raw_filenames);
 
   if (num_entries == last_opened_size)
     {
-      g_slist_remove_link (last_opened_raw_filenames, 
-			   g_slist_last (last_opened_raw_filenames));
+      list = g_slist_last (last_opened_raw_filenames);
+      if (list)
+	{
+	  last_opened_raw_filenames = g_slist_remove_link (last_opened_raw_filenames, list);
+	  g_string_free ((GString *)list->data, TRUE);
+	  g_slist_free (list);
+	}
     }
 
   raw_filename = g_string_new (filename);

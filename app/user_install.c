@@ -62,22 +62,22 @@
 #define EEK_PAGE     (NUM_PAGES - 1)
 #define WILBER_WIDTH 62
 
-#define PAGE_STYLE(widget) gtk_widget_set_style (widget, page_style)
+#define PAGE_STYLE(widget)  gtk_widget_set_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_set_style (widget, title_style)
 
-static void     install_dialog_create     (InstallCallback);
-static void     install_continue_callback (GtkWidget *widget, gpointer data);
-static void     install_cancel_callback   (GtkWidget *widget, gpointer data);
+static void     user_install_dialog_create     (UserInstallCallback);
+static void     user_install_continue_callback (GtkWidget *widget, gpointer data);
+static void     user_install_cancel_callback   (GtkWidget *widget, gpointer data);
 
-static gboolean install_run               (void);
-static void     install_tuning            (void);
-static void     install_tuning_done       (void);
-static void     install_resolution        (void);
-static void     install_resolution_done   (void);
+static gboolean user_install_run               (void);
+static void     user_install_tuning            (void);
+static void     user_install_tuning_done       (void);
+static void     user_install_resolution        (void);
+static void     user_install_resolution_done   (void);
 
 
 void
-install_verify (InstallCallback install_callback)
+user_install_verify (UserInstallCallback user_install_callback)
 {
   gboolean properly_installed = TRUE;
   gchar *filename;
@@ -92,7 +92,7 @@ install_verify (InstallCallback install_callback)
   /*  If there is already a proper installation, invoke the callback  */
   if (properly_installed)
     {
-      (* install_callback) ();
+      (* user_install_callback) ();
     }
   /*  Otherwise, prepare for installation  */
   else if (no_interface)
@@ -101,17 +101,17 @@ install_verify (InstallCallback install_callback)
       g_print (_("User installation was skipped because the '--nointerface' flag was encountered\n"));
       g_print (_("To perform user installation, run the GIMP without the '--nointerface' flag\n"));
 
-      (* install_callback) ();
+      (* user_install_callback) ();
     }
   else
     {
-      install_dialog_create (install_callback);
+      user_install_dialog_create (user_install_callback);
     }
 }
 
 /*  private stuff  */
 
-static GtkWidget *install_dialog = NULL;
+static GtkWidget *user_install_dialog = NULL;
 
 static GtkWidget *notebook       = NULL;
 
@@ -309,7 +309,7 @@ tree_items[] =
 static gint num_tree_items = sizeof (tree_items) / sizeof (tree_items[0]);
 
 static void
-install_notebook_set_page (GtkNotebook *notebook,
+user_install_notebook_set_page (GtkNotebook *notebook,
 			   gint         index)
 {
   gchar *title;
@@ -336,13 +336,13 @@ install_notebook_set_page (GtkNotebook *notebook,
 }
 
 static void
-install_continue_callback (GtkWidget *widget,
+user_install_continue_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   static gint notebook_index = 0;
-  InstallCallback callback;
+  UserInstallCallback callback;
 
-  callback = (InstallCallback) data;
+  callback = (UserInstallCallback) data;
 
   switch (notebook_index)
     {
@@ -350,7 +350,7 @@ install_continue_callback (GtkWidget *widget,
       break;
       
     case 1:
-      if (!install_run ())
+      if (!user_install_run ())
 	gtk_widget_set_sensitive (continue_button, FALSE);
       break;
 
@@ -361,18 +361,18 @@ install_continue_callback (GtkWidget *widget,
       parse_buffers_init ();
       parse_unitrc ();
       parse_gimprc ();
-      install_tuning ();
+      user_install_tuning ();
       break;
 
     case 3:
-      install_tuning_done ();
-      install_resolution ();
+      user_install_tuning_done ();
+      user_install_resolution ();
       break;
 
     case 4:
-      install_resolution_done ();
+      user_install_resolution_done ();
 
-      gtk_widget_destroy (install_dialog);
+      gtk_widget_destroy (user_install_dialog);
       gdk_gc_unref (white_gc);
       gtk_style_unref (title_style);
       gtk_style_unref (page_style);
@@ -387,12 +387,12 @@ install_continue_callback (GtkWidget *widget,
     }
 
   if (notebook_index < NUM_PAGES - 1)
-    install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
+    user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
 }
 
 
 static void
-install_cancel_callback (GtkWidget *widget,
+user_install_cancel_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   static gint timeout = 0;
@@ -401,12 +401,12 @@ install_cancel_callback (GtkWidget *widget,
     gtk_exit (0);
 
   gtk_widget_destroy (continue_button);
-  install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
+  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
   timeout = gtk_timeout_add (1024, (GtkFunction)gtk_exit, (gpointer)0);
 }
 
 static gint
-install_corner_expose (GtkWidget      *widget,
+user_install_corner_expose (GtkWidget      *widget,
 		       GdkEventExpose *eevent,
 		       gpointer        data)
 {
@@ -464,7 +464,7 @@ install_corner_expose (GtkWidget      *widget,
 }
 
 static GtkWidget *
-install_notebook_append_page (GtkNotebook *notebook,
+user_install_notebook_append_page (GtkNotebook *notebook,
 			      gchar       *title,
 			      gchar       *footer)
 {
@@ -496,7 +496,7 @@ add_label (GtkBox   *box,
 }
 
 static void
-install_ctree_select_row (GtkWidget      *widget,
+user_install_ctree_select_row (GtkWidget      *widget,
 			  gint            row, 
 			  gint            column, 
 			  GdkEventButton *bevent,
@@ -510,7 +510,7 @@ install_ctree_select_row (GtkWidget      *widget,
 }
 
 void
-install_dialog_create (InstallCallback callback)
+user_install_dialog_create (UserInstallCallback callback)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -522,15 +522,15 @@ install_dialog_create (InstallCallback callback)
   GtkWidget *sep;
   GdkFont   *large_font;
 
-  dialog = install_dialog =
+  dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
 		     NULL, NULL,
 		     GTK_WIN_POS_CENTER,
 		     FALSE, FALSE, FALSE,
 
-		     _("Continue"), install_continue_callback,
+		     _("Continue"), user_install_continue_callback,
 		     callback, NULL, &continue_button, TRUE, FALSE,
-		     _("Cancel"), install_cancel_callback,
+		     _("Cancel"), user_install_cancel_callback,
 		     callback, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -640,7 +640,7 @@ install_dialog_create (InstallCallback callback)
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_TOP_LEFT);
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -650,7 +650,7 @@ install_dialog_create (InstallCallback callback)
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_BOTTOM_LEFT);
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -665,7 +665,7 @@ install_dialog_create (InstallCallback callback)
   gtk_widget_show (vbox);
 
   /*  Page 1  */
-  page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
+  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				       _("Welcome to\n"
 					 "The GIMP User Installation"),
 				       _("Click \"Continue\" to enter the GIMP user installation."));
@@ -715,7 +715,7 @@ install_dialog_create (InstallCallback callback)
 
     gchar *node[1];
     
-    page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
+    page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 					 _("Personal GIMP Directory"),
 					 _("Click \"Continue\" to create your personal GIMP directory."));
 
@@ -764,7 +764,7 @@ install_dialog_create (InstallCallback callback)
 				       FALSE, TRUE);	  
 
     gtk_signal_connect (GTK_OBJECT (ctree), "select_row",
-			GTK_SIGNAL_FUNC (install_ctree_select_row),
+			GTK_SIGNAL_FUNC (user_install_ctree_select_row),
 			notebook2);
 
     file_pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
@@ -823,13 +823,13 @@ install_dialog_create (InstallCallback callback)
   
   /*  Page 3  */
   page = log_page =
-    install_notebook_append_page (GTK_NOTEBOOK (notebook),
+    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				  _("User Installation Log"),
 				  NULL);
 
   /*  Page 4  */
   page = tuning_page = 
-    install_notebook_append_page (GTK_NOTEBOOK (notebook),
+    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				  _("GIMP Performance Tuning"),
 				  _("Click \"Continue\" to accept the settings above."));
   
@@ -842,7 +842,7 @@ install_dialog_create (InstallCallback callback)
 
   /*  Page 5  */
   page = resolution_page = 
-    install_notebook_append_page (GTK_NOTEBOOK (notebook),
+    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				  _("Monitor Resolution"),
 				  _("Click \"Continue\" to start The GIMP."));
   
@@ -855,11 +855,11 @@ install_dialog_create (InstallCallback callback)
   gtk_widget_show (sep);
 
   /*  EEK page  */
-  page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
+  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				       _("Aborting Installation..."),
 				       NULL);
 
-  install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
   gtk_widget_show (dialog);
 }
@@ -910,7 +910,7 @@ quote_spaces (char *string)
 #endif
 
 static gboolean
-install_run (void)
+user_install_run (void)
 {
   FILE *pfp;
   gchar buffer[2048];
@@ -1061,7 +1061,7 @@ static GtkWidget *xserver_toggle    = NULL;
 static GtkWidget *resolution_entry  = NULL;
 
 static void
-install_tuning (void)
+user_install_tuning (void)
 {
   GtkWidget *hbox;
   GtkWidget *sep;
@@ -1116,7 +1116,7 @@ install_tuning (void)
 }
 
 static void
-install_tuning_done (void)
+user_install_tuning_done (void)
 {
 }
 
@@ -1127,7 +1127,7 @@ static gint       ruler_width     = 1;
 static gint       ruler_height    = 1;
 
 static void
-install_resolution_calibrate_ok (GtkWidget *button,
+user_install_resolution_calibrate_ok (GtkWidget *button,
 				 gpointer   data)
 {
   gdouble x, y;
@@ -1148,7 +1148,7 @@ install_resolution_calibrate_ok (GtkWidget *button,
 }
 
 static void
-install_resolution_calibrate (GtkWidget *button,
+user_install_resolution_calibrate (GtkWidget *button,
 			      gpointer   data)
 {
   GtkWidget *dialog;
@@ -1160,7 +1160,7 @@ install_resolution_calibrate (GtkWidget *button,
   GtkWidget *ruler;
   GList     *list;
 
-  gtk_widget_hide (install_dialog);
+  gtk_widget_hide (user_install_dialog);
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
 			    "calibrate_resolution",
@@ -1168,7 +1168,7 @@ install_resolution_calibrate (GtkWidget *button,
 			    GTK_WIN_POS_CENTER,
 			    FALSE, FALSE, FALSE,
 
-			    _("OK"), install_resolution_calibrate_ok,
+			    _("OK"), user_install_resolution_calibrate_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
 			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
@@ -1229,7 +1229,7 @@ install_resolution_calibrate (GtkWidget *button,
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_TOP_LEFT);
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -1239,7 +1239,7 @@ install_resolution_calibrate (GtkWidget *button,
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_BOTTOM_LEFT);
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -1249,7 +1249,7 @@ install_resolution_calibrate (GtkWidget *button,
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_TOP_RIGHT);
   gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -1259,7 +1259,7 @@ install_resolution_calibrate (GtkWidget *button,
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    GTK_SIGNAL_FUNC (user_install_corner_expose),
 			    (gpointer) GTK_CORNER_BOTTOM_RIGHT);
   gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 2, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -1313,11 +1313,11 @@ install_resolution_calibrate (GtkWidget *button,
   gtk_widget_show (dialog);
 
   gtk_main ();
-  gtk_widget_show (install_dialog);
+  gtk_widget_show (user_install_dialog);
 }
 
 static void
-install_resolution (void)
+user_install_resolution (void)
 {
   GtkWidget *hbox;
   GtkWidget *sep;
@@ -1412,7 +1412,7 @@ install_resolution (void)
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (install_resolution_calibrate),
+		      GTK_SIGNAL_FUNC (user_install_resolution_calibrate),
 		      NULL);
   gtk_widget_show (button);
   
@@ -1428,7 +1428,7 @@ install_resolution (void)
 }
 
 static void
-install_resolution_done (void)
+user_install_resolution_done (void)
 {
   GList *update = NULL;
   GList *remove = NULL;

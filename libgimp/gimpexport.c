@@ -169,9 +169,18 @@ static ExportAction export_action_animate_or_merge =
   0
 };
 
+static ExportAction export_action_animate_or_flatten =
+{
+  NULL,
+  export_flatten,
+  N_("can only Handle Layers as Animation Frames"),
+  { N_("Save as Animation"), N_("Flatten") },
+  0
+};
+
 static ExportAction export_action_flatten =
 {
-  &export_flatten,
+  export_flatten,
   NULL,
   N_("can't Handle Transparency"),
   { N_("Flatten Image"), NULL },
@@ -180,7 +189,7 @@ static ExportAction export_action_flatten =
 
 static ExportAction export_action_convert_rgb =
 {
-  &export_convert_rgb,
+  export_convert_rgb,
   NULL,
   N_("can only Handle RGB Images"),
   { N_("Convert to RGB"), NULL },
@@ -189,7 +198,7 @@ static ExportAction export_action_convert_rgb =
 
 static ExportAction export_action_convert_grayscale =
 {
-  &export_convert_grayscale,
+  export_convert_grayscale,
   NULL,
   N_("can only Handle Grayscale Images"),
   { N_("Convert to Grayscale"), NULL },
@@ -198,7 +207,7 @@ static ExportAction export_action_convert_grayscale =
 
 static ExportAction export_action_convert_indexed =
 {
-  &export_convert_indexed,
+  export_convert_indexed,
   NULL,
   N_("can only Handle Indexed Images"),
   { N_("Convert to indexed using default settings\n"
@@ -208,8 +217,8 @@ static ExportAction export_action_convert_indexed =
 
 static ExportAction export_action_convert_rgb_or_grayscale =
 {
-  &export_convert_rgb,
-  &export_convert_grayscale,
+  export_convert_rgb,
+  export_convert_grayscale,
   N_("can only Handle RGB or Grayscale Images"),
   { N_("Convert to RGB"), N_("Convert to Grayscale")},
   0
@@ -217,8 +226,8 @@ static ExportAction export_action_convert_rgb_or_grayscale =
 
 static ExportAction export_action_convert_rgb_or_indexed =
 {
-  &export_convert_rgb,
-  &export_convert_indexed,
+  export_convert_rgb,
+  export_convert_indexed,
   N_("can only Handle RGB or Indexed Images"),
   { N_("Convert to RGB"), N_("Convert to indexed using default settings\n"
 			     "(Do it manually to tune the result)")},
@@ -227,8 +236,8 @@ static ExportAction export_action_convert_rgb_or_indexed =
 
 static ExportAction export_action_convert_indexed_or_grayscale =
 {
-  &export_convert_indexed,
-  &export_convert_grayscale,
+  export_convert_indexed,
+  export_convert_grayscale,
   N_("can only Handle Grayscale or Indexed Images"),
   { N_("Convert to indexed using default settings\n"
        "(Do it manually to tune the result)"), 
@@ -238,7 +247,7 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 
 static ExportAction export_action_add_alpha =
 {
-  &export_add_alpha,
+  export_add_alpha,
   NULL,
   N_("needs an Alpha Channel"),
   { N_("Add Alpha Channel"), NULL},
@@ -447,7 +456,7 @@ gimp_export_image (gint32                 *image_ID,
   gint32  nlayers;
   gint32* layers;
   gboolean added_flatten = FALSE;
-
+  gboolean background_has_alpha = FALSE;
   ExportAction *action;
 
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
@@ -464,6 +473,10 @@ gimp_export_image (gint32                 *image_ID,
     {
       if (gimp_drawable_has_alpha (layers[i]))
 	{
+      	  if (i == nlayers - 1) 
+	    background_has_alpha = TRUE;
+
+
 	  if ( !(capabilities & CAN_HANDLE_ALPHA) )
 	    {
 	      actions = g_slist_prepend (actions, &export_action_flatten);
@@ -486,9 +499,19 @@ gimp_export_image (gint32                 *image_ID,
   if (!added_flatten && nlayers > 1)
     {
       if (capabilities & CAN_HANDLE_LAYERS_AS_ANIMATION)
-	actions = g_slist_prepend (actions, &export_action_animate_or_merge);
+	{
+	  if (background_has_alpha || capabilities & NEEDS_ALPHA)
+	    actions = g_slist_prepend (actions, &export_action_animate_or_merge);
+	  else
+	    actions = g_slist_prepend (actions, &export_action_animate_or_flatten);
+	}
       else if ( !(capabilities & CAN_HANDLE_LAYERS))
-	actions = g_slist_prepend (actions, &export_action_merge);
+	{
+	  if (background_has_alpha || capabilities & NEEDS_ALPHA)
+	    actions = g_slist_prepend (actions, &export_action_merge);
+	  else
+	    actions = g_slist_prepend (actions, &export_action_flatten);
+	}
     }
 
   /* check the image type */	  

@@ -1,3 +1,21 @@
+2000-04-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c: implemented the changes Nick Lamb
+	suggested:  If the background layer has no alpha channel, 
+	suggest "Flatten" instead of "Merge Visible Layers".
+
+	* app/fileops.c: In the MRU list and the doc_index always store
+	the absolute path to images, so you can open files from the
+	command-line and gimp will find them later if started from another
+	dir. Added tooltips that show the full path.
+	
+	* app/menus.c: fixed a memleak (list entries were not freed on
+	removal from the MRU list).
+	
+	* app/main.c
+	* app/user_install.[ch]: renamed functions and variables to match
+	the new filename.
+
 Fri Apr  7 11:54:25 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am

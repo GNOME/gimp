@@ -19,9 +19,9 @@
 #define __INSTALL_H__
 
 /*  Install callback function  */
-typedef void (* InstallCallback) (void);
+typedef void (* UserInstallCallback) (void);
 
 /*  Function declarations  */
-void install_verify (InstallCallback install_callback);
+void user_install_verify (UserInstallCallback user_install_callback);
 
 #endif /* INSTALL_H */

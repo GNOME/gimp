@@ -366,8 +366,8 @@ main (int    argc,
   gimp_argc = argc - 1;
   gimp_argv = argv + 1;
 
-  /* Check the installation */
-  install_verify (init);
+  /* Check the user_installation */
+  user_install_verify (init);
 
   /* Main application loop */
   if (!app_exit_finish_done ())

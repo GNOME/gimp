@@ -110,6 +110,8 @@ static void file_convert_string (gchar *instr,
                                  gint   maxmem,
                                  gint  *nmem);
 
+static gchar * file_absolute_filename (gchar *name);
+
 static int  file_check_single_magic (gchar  *offset,
                                      gchar  *type,
                                      gchar  *value,
@@ -225,7 +227,8 @@ file_open_callback (GtkWidget *widget,
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
 
       gtk_container_set_border_width (GTK_CONTAINER (fileload), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (fileload)->button_area), 2);
+      gtk_container_set_border_width 
+	(GTK_CONTAINER (GTK_FILE_SELECTION (fileload)->button_area), 2);
 
       dialog_register_fileload (fileload);
 
@@ -440,7 +443,8 @@ file_save_as_callback (GtkWidget *widget,
       gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
 
       gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (filesave)->button_area), 2);
+      gtk_container_set_border_width 
+	(GTK_CONTAINER (GTK_FILE_SELECTION (filesave)->button_area), 2);
 
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
 				 "clicked",
@@ -593,9 +597,12 @@ file_update_name (PlugInProcDef *proc,
 {
   if (proc->extensions_list)
     {
-      gchar *text = gtk_entry_get_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry));
-      gchar *last_dot = strrchr (text, '.');
+      gchar *text;
+      gchar *last_dot;
       GString *s;
+
+      text = gtk_entry_get_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry));
+      last_dot = strrchr (text, '.');
 
       if (last_dot == text || !text[0])
 	return;
@@ -695,6 +702,7 @@ file_open (gchar *filename,
 {
   GimpImage *gimage;
   GDisplay  *gdisplay;
+  gchar     *absolute;
   gint       status;
 
   if ((gimage = file_open_image (filename,
@@ -715,8 +723,10 @@ file_open (gchar *filename,
       if (g_slist_length (display_list) == 1)
 	gimp_context_set_display (gimp_context_get_user (), gdisplay);
 
-      idea_add (filename);
-      menus_last_opened_add (filename);
+      absolute = file_absolute_filename (filename);
+      idea_add (absolute);
+      menus_last_opened_add (absolute);
+      g_free (absolute);
     }
 
   return status;
@@ -1761,9 +1771,9 @@ file_overwrite_no_callback (GtkWidget *widget,
 }
 
 static PlugInProcDef *
-file_proc_find_by_name(GSList *procs,
-		       gchar *filename,
-		       gboolean skip_magic)
+file_proc_find_by_name (GSList   *procs,
+		        gchar    *filename,
+		        gboolean  skip_magic)
 {
   GSList *p;
   gchar *ext = strrchr(filename, '.');
@@ -1779,7 +1789,7 @@ file_proc_find_by_name(GSList *procs,
 	continue;
       for (prefixes = proc->prefixes_list; prefixes; prefixes = prefixes->next)
 	{
-	  if (strncmp(filename, prefixes->data, strlen(prefixes->data)) == 0)
+	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
 	    return proc;
 	}
      }
@@ -1825,7 +1835,7 @@ file_proc_find (GSList *procs,
   size_matched_proc = NULL;
 
   /* First, check magicless prefixes/suffixes */
-  if ( (file_proc = file_proc_find_by_name(all_procs, filename, TRUE)) != NULL)
+  if ( (file_proc = file_proc_find_by_name (all_procs, filename, TRUE)) != NULL)
     return file_proc;
 
   /* Then look for magics */
@@ -1864,7 +1874,7 @@ file_proc_find (GSList *procs,
     return (size_matched_proc);
 
   /* As a last ditch, try matching by name */
-  return file_proc_find_by_name(all_procs, filename, FALSE);
+  return file_proc_find_by_name (all_procs, filename, FALSE);
 }
 
 static void
@@ -1918,6 +1928,39 @@ file_convert_string (gchar *instr,
         }
     }
   *nmem = ((gchar *) uout) - outmem;
+}
+
+static gchar *
+file_absolute_filename (gchar *name)
+{
+  PlugInProcDef *proc;
+  GSList *procs;
+  GSList *prefixes;
+  gchar  *absolute;
+  gchar  *current;
+
+  g_return_val_if_fail (name != NULL, NULL);
+  
+  /*  check for prefixes like http or ftp  */
+  for (procs = load_procs; procs; procs = procs->next)
+    {
+      proc = (PlugInProcDef *)procs->data;
+
+      for (prefixes = proc->prefixes_list; prefixes; prefixes = prefixes->next)
+	{
+	  if (strncmp (name, prefixes->data, strlen (prefixes->data)) == 0)
+	    return g_strdup (name);
+	}
+     }
+ 
+  if (g_path_is_absolute (name))
+    return g_strdup (name);
+  
+  current = g_get_current_dir ();
+  absolute = g_strconcat (current, G_DIR_SEPARATOR_S, name, NULL);
+  g_free (current);
+
+  return absolute;
 }
 
 static gint
