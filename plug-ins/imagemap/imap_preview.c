@@ -38,16 +38,15 @@
 #include "imap_popup.h"
 #include "imap_preview.h"
 
-#define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-                       GDK_MOTION_NOTIFY | \
+#define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
 		       GDK_POINTER_MOTION_MASK | \
-                       GDK_BUTTON_PRESS_MASK | \
+                       GDK_BUTTON_PRESS_MASK   | \
 		       GDK_BUTTON_RELEASE_MASK | \
-		       GDK_BUTTON_MOTION_MASK | \
-		       GDK_KEY_PRESS_MASK | \
-		       GDK_KEY_RELEASE_MASK | \
-		       GDK_ENTER_NOTIFY_MASK | \
-		       GDK_LEAVE_NOTIFY_MASK
+		       GDK_BUTTON_MOTION_MASK  | \
+		       GDK_KEY_PRESS_MASK      | \
+		       GDK_KEY_RELEASE_MASK    | \
+		       GDK_ENTER_NOTIFY_MASK   | \
+		       GDK_LEAVE_NOTIFY_MASK)
 
 #define PREVIEW_SIZE 400
 

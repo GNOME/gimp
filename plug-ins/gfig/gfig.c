@@ -110,14 +110,13 @@ extern void * gdk_root_parent;
 #define BRUSH_PREVIEW_SZ 32
 #define GFIG_HEADER "GFIG Version 0.1\n"
 
-#define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-                       GDK_MOTION_NOTIFY | \
+#define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
 		       GDK_POINTER_MOTION_MASK | \
-                       GDK_BUTTON_PRESS_MASK | \
+                       GDK_BUTTON_PRESS_MASK   | \
 		       GDK_BUTTON_RELEASE_MASK | \
-		       GDK_BUTTON_MOTION_MASK | \
-		       GDK_KEY_PRESS_MASK | \
-		       GDK_KEY_RELEASE_MASK 
+		       GDK_BUTTON_MOTION_MASK  | \
+		       GDK_KEY_PRESS_MASK      | \
+		       GDK_KEY_RELEASE_MASK)
 
 static GimpDrawable *gfig_select_drawable;
 static GtkWidget *gfig_preview;
