@@ -16,8 +16,48 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
+#   Added a PDB entry for writing a gimprc entry, by 
+#  Seth Burgess <sjburges@gimp.org> 15/04/99
 
 # The defs
+
+sub gimprc_set {
+    $blurb = <<'BLURB';
+Sets a gimprc token to a value and saves it in the gimprc.
+BLURB
+
+    $help = <<'HELP';
+This procedure is used to add or change additional information in the gimprc
+file that is considered extraneous to the operation of the GIMP.  Plug-ins
+that need configuration information can use this function to store it, and
+gimp_gimprc_query to retrieve it.  This will accept _only_ parameters in
+the format of (<token> <value>), where <token> and <value> must be strings.
+Entrys not corresponding to this format will be eaten and no action will
+be performed.  If the gimprc can not be written for whatever reason, gimp
+will complain loudly and the old gimprc will be saved in gimprc.old.
+HELP
+
+    $author = $copyright = 'Seth Burgess';
+	$date = '1999';
+	
+    @inargs = (
+	{ name => 'token', type => 'string',
+	  desc => 'The token to modify' },
+    { name => 'value', type => 'string',
+      desc => 'The value to set the token to' }
+    );
+
+	%invoke = ( 
+	headers => [ qw("gimprc.h") ],
+	code => <<'CODE'
+{
+save_gimprc_strings(token, value);
+success = TRUE;
+}	
+CODE
+	);
+}
+
 
 sub gimprc_query {
     $blurb = <<'BLURB';
@@ -27,7 +67,7 @@ BLURB
     $help = <<'HELP';
 This procedure is used to locate additional information contained in the gimprc
 file considered extraneous to the operation of the GIMP. Plug-ins that need
-configuration information can expect it will be stored in the user's gimprc
+configuration information can expect it will be stored in the user gimprc
 file and can use this procedure to retrieve it. This query procedure will
 return the value associated with the specified token. This corresponds _only_
 to entries with the format: (<token> <value>). The value must be a string.
@@ -56,7 +96,7 @@ HELP
     );
 }
 
-@procs = qw(gimprc_query);
+@procs = qw(gimprc_query gimprc_set);
 %exports = (app => [@procs]);
 
 $desc = 'Gimprc procedures';
