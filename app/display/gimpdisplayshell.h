@@ -166,6 +166,8 @@ struct _GimpDisplayShell
   gint              scroll_start_y;
   gboolean          button_press_before_focus;
   guint32           last_motion_time;
+
+  GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
 };
 
 struct _GimpDisplayShellClass
@@ -229,6 +231,8 @@ void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
                                                       GimpSelectionControl  control);
+void        gimp_display_shell_set_highlight         (GimpDisplayShell *shell,
+                                                      const GdkRectangle *highlight);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

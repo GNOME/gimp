@@ -31,7 +31,8 @@ void   gimp_display_shell_render (GimpDisplayShell *shell,
                                   gint              x,
                                   gint              y,
                                   gint              w,
-                                  gint              h);
+                                  gint              h,
+                                  GdkRectangle     *highlight);
 
 /*
  *  Extern variables

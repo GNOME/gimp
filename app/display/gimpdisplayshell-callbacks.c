@@ -65,7 +65,6 @@
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-preview.h"
-#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"

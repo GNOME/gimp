@@ -1,3 +1,18 @@
+2004-10-01  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: no need to include
+	gimpdisplayshell-render.h here.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-render.[ch]
+
+	* app/display/gimpdisplayshell.[ch]: added an API to highlight a
+	rectangle (specified in image coordinates). Actually it doesn't
+	highlight but dims the area outside the rectangle.
+
+	* app/tools/gimpcroptool.c: use the new functionality to show the
+	area to be cropped. Fixes bug #93360.
+
 2004-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-types.h (struct SFScript): renamed

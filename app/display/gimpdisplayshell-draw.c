@@ -399,11 +399,20 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                 sx, sy, sw, sh,
                                 &x, &y, &w, &h))
     {
-      gint x2, y2;
-      gint i, j;
+      GdkRectangle  rect;
+      gint          x2, y2;
+      gint          i, j;
 
       x2 = x + w;
       y2 = y + h;
+
+      if (shell->highlight)
+        {
+          rect.x      = SCALEX (shell, shell->highlight->x);
+          rect.y      = SCALEY (shell, shell->highlight->y);
+          rect.width  = SCALEX (shell, shell->highlight->width);
+          rect.height = SCALEY (shell, shell->highlight->height);
+        }
 
       /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
        *  sized chunks
@@ -420,7 +429,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
               gimp_display_shell_render (shell,
                                          j - shell->disp_xoffset,
                                          i - shell->disp_yoffset,
-                                         dx, dy);
+                                         dx, dy,
+                                         shell->highlight ? &rect : NULL);
 
 #ifdef STRESS_TEST
               /* Invalidate the projection just after we render it! */

@@ -297,6 +297,14 @@ static RenderFunc render_funcs[6] =
 };
 
 
+static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
+                                                  gint              x,
+                                                  gint              y,
+                                                  gint              w,
+                                                  gint              h,
+                                                  GdkRectangle     *highlight);
+
+
 /*****************************************************************/
 /*  This function is the core of the display--it offsets and     */
 /*  scales the image according to the current parameters in the  */
@@ -309,7 +317,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              x,
                            gint              y,
                            gint              w,
-                           gint              h)
+                           gint              h,
+                           GdkRectangle     *highlight)
 {
   RenderInfo     info;
   GimpImageType  image_type;
@@ -346,6 +355,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                       3,
                                       3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
 
+  /*  dim pixels outside the highlighted rectangle  */
+  if (highlight)
+    gimp_display_shell_render_highlight (shell, x, y, w, h, highlight);
+
   /*  put it to the screen  */
   gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
                         x + shell->disp_xoffset, y + shell->disp_yoffset,
@@ -353,6 +366,76 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                         shell->render_buf,
                         3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH,
                         shell->offset_x, shell->offset_y);
+}
+
+
+#define GIMP_DISPLAY_SHELL_DIM_PIXEL(buf,x) \
+{ \
+  buf[3 * (x) + 0] >>= 1; \
+  buf[3 * (x) + 1] >>= 1; \
+  buf[3 * (x) + 2] >>= 1; \
+}
+
+/*  This function highlights the given area by dimming all pixels outside. */
+
+static void
+gimp_display_shell_render_highlight (GimpDisplayShell *shell,
+                                     gint              x,
+                                     gint              y,
+                                     gint              w,
+                                     gint              h,
+                                     GdkRectangle     *highlight)
+{
+  guchar       *buf  = shell->render_buf;
+  GdkRectangle  rect;
+
+  rect.x      = shell->offset_x + x;
+  rect.y      = shell->offset_y + y;
+  rect.width  = w;
+  rect.height = h;
+
+  if (gdk_rectangle_intersect (highlight, &rect, &rect))
+    {
+      rect.x -= shell->offset_x + x;
+      rect.y -= shell->offset_y + y;
+
+      for (y = 0; y < rect.y; y++)
+        {
+          for (x = 0; x < w; x++)
+            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
+
+          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+        }
+
+      for ( ; y < rect.y + rect.height; y++)
+        {
+          for (x = 0; x < rect.x; x++)
+            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
+
+          for (x += rect.width; x < w; x++)
+            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
+
+          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+        }
+
+      for ( ; y < h; y++)
+        {
+          for (x = 0; x < w; x++)
+            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
+
+          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+        }
+    }
+  else
+    {
+      for (y = 0; y < h; y++)
+        {
+          for (x = 0; x < w; x++)
+            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
+
+          buf += 3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
+        }
+    }
 }
 
 

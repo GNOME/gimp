@@ -247,19 +247,18 @@ gimp_crop_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *gdisp)
 {
-  GimpCropTool *crop = GIMP_CROP_TOOL (tool);
-
   switch (action)
     {
     case PAUSE:
       break;
 
     case RESUME:
-      crop_recalc (crop);
       break;
 
     case HALT:
-      crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
+      gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                        NULL);
+      crop_response (NULL, GTK_RESPONSE_CANCEL, GIMP_CROP_TOOL (tool));
       break;
 
     default:
@@ -854,16 +853,25 @@ crop_tool_crop_image (GimpImage    *gimage,
 static void
 crop_recalc (GimpCropTool *crop)
 {
-  GimpTool *tool = GIMP_TOOL (crop);
+  GimpTool         *tool  = GIMP_TOOL (crop);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GdkRectangle      rect;
 
   if (! tool->gdisp)
     return;
 
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+  rect.x      = crop->x1;
+  rect.y      = crop->y1;
+  rect.width  = crop->x2 - crop->x1;
+  rect.height = crop->y2 - crop->y1;
+
+  gimp_display_shell_set_highlight (shell, &rect);
+
+  gimp_display_shell_transform_xy (shell,
                                    crop->x1, crop->y1,
                                    &crop->dx1, &crop->dy1,
                                    FALSE);
-  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+  gimp_display_shell_transform_xy (shell,
                                    crop->x2, crop->y2,
                                    &crop->dx2, &crop->dy2,
                                    FALSE);
@@ -1116,12 +1124,16 @@ crop_response (GtkWidget    *widget,
                                              GIMP_CROP_MODE_RESIZE, FALSE);
         }
 
+      gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+                                        NULL);
+
       crop_tool_crop_image (tool->gdisp->gimage,
                             GIMP_CONTEXT (options),
                             crop->x1, crop->y1,
                             crop->x2, crop->y2,
                             options->layer_only,
                             (GimpCropMode) response_id);
+
       break;
 
     default:

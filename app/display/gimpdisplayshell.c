@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -311,6 +313,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
 
+  shell->highlight              = NULL;
+
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
@@ -418,6 +422,12 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_free (shell->render_buf);
       shell->render_buf = NULL;
+    }
+
+  if (shell->highlight)
+    {
+      g_free (shell->highlight);
+      shell->highlight = NULL;
     }
 
   if (shell->title_idle_id)
@@ -1416,5 +1426,66 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
           gimp_display_shell_selection_resume (shell->select);
           break;
         }
+    }
+}
+
+/**
+ * gimp_display_shell_set_highlight:
+ * @shell:     a #GimpDisplayShell
+ * @highlight: a rectangle in image coordinates that should be brought out
+ *
+ * This function allows to set an area of the image that should be
+ * accentuated. The actual implementation is to dim all pixels outside
+ * this rectangle. Passing %NULL for @highlight unsets the rectangle.
+ **/
+void
+gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
+                                  const GdkRectangle *highlight)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->highlight)
+    {
+      if (highlight)
+        {
+          GdkRectangle *rects;
+          GdkRegion    *old;
+          GdkRegion    *new;
+          gint          num_rects, i;
+
+          if (memcmp (shell->highlight, highlight, sizeof (GdkRectangle)) == 0)
+            return;
+
+          old = gdk_region_rectangle (shell->highlight);
+
+          *shell->highlight = *highlight;
+
+          new = gdk_region_rectangle (shell->highlight);
+
+          gdk_region_xor (old, new);
+
+          gdk_region_get_rectangles (old, &rects, &num_rects);
+
+          for (i = 0; i < num_rects; i++)
+            gimp_display_update_area (shell->gdisp, TRUE,
+                                      rects[i].x,
+                                      rects[i].y,
+                                      rects[i].width,
+                                      rects[i].height);
+          g_free (rects);
+        }
+      else
+        {
+          g_free (shell->highlight);
+          shell->highlight = NULL;
+
+          gimp_display_shell_expose_full (shell);
+        }
+    }
+  else if (highlight)
+    {
+      shell->highlight = g_memdup (highlight, sizeof (GdkRectangle));
+
+      gimp_display_shell_expose_full (shell);
     }
 }
