@@ -454,7 +454,7 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
 
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
-  if (enum_desc->value_desc)
+  if (enum_desc && enum_desc->value_desc)
     return dgettext (gimp_type_get_translation_domain (type),
                      enum_desc->value_desc);
 

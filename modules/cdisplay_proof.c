@@ -39,16 +39,25 @@
 #define CDISPLAY_TYPE_PROOF_INTENT (cdisplay_proof_intent_type)
 static GType  cdisplay_proof_intent_get_type (GTypeModule *module);
 
-static const GEnumValue cdisplay_proof_intent_enum_values[] =
+static const GEnumValue enum_values[] =
 {
   { INTENT_PERCEPTUAL,
-    N_("Perceptual"),            "perceptual"            },
+    "INTENT_PERCEPTUAL",            "perceptual    "        },
   { INTENT_RELATIVE_COLORIMETRIC,
-    N_("Relative Colorimetric"), "relative-colorimetric" },
+    "INTENT_RELATIVE_COLORIMETRIC", "relative-colorimetric" },
   { INTENT_SATURATION,
-    N_("Saturation"),            "saturation"            },
+    "INTENT_SATURATION",            "saturation"            },
   { INTENT_ABSOLUTE_COLORIMETRIC,
-    N_("Absolute Colorimetric"), "absolute-colorimetric" },
+    "INTENT_ABSOLUTE_COLORIMETRIC"  "absolute-colorimetric" },
+  { 0, NULL, NULL }
+};
+
+static const GimpEnumDesc enum_descs[] =
+{
+  { INTENT_PERCEPTUAL,             N_("Perceptual"),            NULL },
+  { INTENT_RELATIVE_COLORIMETRIC,  N_("Relative Colorimetric"), NULL },
+  { INTENT_SATURATION,             N_("Saturation"),            NULL },
+  { INTENT_ABSOLUTE_COLORIMETRIC,  N_("Absolute Colorimetric"), NULL },
   { 0, NULL, NULL }
 };
 
@@ -192,10 +201,14 @@ static GType
 cdisplay_proof_intent_get_type (GTypeModule *module)
 {
   if (! cdisplay_proof_intent_type)
-    cdisplay_proof_intent_type =
-      gimp_module_register_enum (module,
-                                 "CDisplayProofIntent",
-                                 cdisplay_proof_intent_enum_values);
+    {
+      cdisplay_proof_intent_type =
+        gimp_module_register_enum (module,
+                                   "CDisplayProofIntent", enum_values);
+
+      gimp_enum_set_value_descriptions (cdisplay_proof_intent_type,
+                                        enum_descs);
+    }
 
   return cdisplay_proof_intent_type;
 }
@@ -437,15 +450,7 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                     G_CALLBACK (gtk_widget_destroyed),
                     &proof->table);
 
-  proof->combo = gimp_int_combo_box_new (_("Perceptual"),
-                                         INTENT_PERCEPTUAL,
-                                         _("Relative Colorimetric"),
-                                         INTENT_RELATIVE_COLORIMETRIC,
-                                         _("Saturation"),
-                                         INTENT_SATURATION,
-                                         _("Absolute Colorimetric"),
-                                         INTENT_ABSOLUTE_COLORIMETRIC,
-                                         NULL);
+  proof->combo = gimp_enum_combo_box_new (CDISPLAY_TYPE_PROOF_INTENT);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (proof->combo),
                                  proof->intent);
 

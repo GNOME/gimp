@@ -1,3 +1,12 @@
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_enum_value_get_desc): no point in
+	crashing if gimp_enum_get_desc() returns NULL.
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_proof.c: register enum descriptions, use
+	GimpEnumComboBox.
+
 2005-01-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreviewarea.c: improved docs.

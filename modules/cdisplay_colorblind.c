@@ -51,17 +51,27 @@ typedef enum
 #define CDISPLAY_TYPE_COLORBLIND_DEFICIENCY (cdisplay_colorblind_deficiency_type)
 static GType  cdisplay_colorblind_deficiency_get_type (GTypeModule *module);
 
-static const GEnumValue cdisplay_colorblind_deficiency_enum_values[] =
+static const GEnumValue enum_values[] =
 {
   { COLORBLIND_DEFICIENCY_PROTANOPIA,
-    N_("Protanopia (insensitivity to red)"),     "protanopia"   },
+    "COLORBLIND_DEFICIENCY_PROTANOPIA", "protanopia"   },
   { COLORBLIND_DEFICIENCY_DEUTERANOPIA,
-    N_("Deuteranopia (insensitivity to green)"), "deuteranopia" },
+    "COLORBLIND_DEFICIENCY_DEUTERANOPIA", "deuteranopia" },
   { COLORBLIND_DEFICIENCY_TRITANOPIA,
-    N_("Tritanopia (insensitivity to blue)"),    "tritanopia"   },
+    "COLORBLIND_DEFICIENCY_TRITANOPIA", "tritanopia"   },
   { 0, NULL, NULL }
 };
 
+static const GimpEnumDesc enum_descs[] =
+  {
+    { COLORBLIND_DEFICIENCY_PROTANOPIA,
+      N_("Protanopia (insensitivity to red"), NULL },
+    { COLORBLIND_DEFICIENCY_DEUTERANOPIA,
+      N_("Deuteranopia (insensitivity to green)"), NULL },
+    { COLORBLIND_DEFICIENCY_TRITANOPIA,
+      N_("Tritanopia (insensitivity to blue)"), NULL },
+    { 0, NULL, NULL }
+  };
 
 #define DEFAULT_DEFICIENCY  COLORBLIND_DEFICIENCY_DEUTERANOPIA
 #define COLOR_CACHE_SIZE    1021
@@ -211,10 +221,14 @@ static GType
 cdisplay_colorblind_deficiency_get_type (GTypeModule *module)
 {
   if (! cdisplay_colorblind_deficiency_type)
-    cdisplay_colorblind_deficiency_type =
-      gimp_module_register_enum (module,
-                                 "CDisplayColorblindDeficiency",
-                                 cdisplay_colorblind_deficiency_enum_values);
+    {
+      cdisplay_colorblind_deficiency_type =
+        gimp_module_register_enum (module,
+                                   "CDisplayColorblindDeficiency", enum_values);
+
+      gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type,
+                                        enum_descs);
+    }
 
   return cdisplay_colorblind_deficiency_type;
 }
@@ -542,14 +556,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   gtk_widget_show (label);
 
   colorblind->combo =
-    gimp_int_combo_box_new (_("Protanopia (insensitivity to red)"),
-                            COLORBLIND_DEFICIENCY_PROTANOPIA,
-                            _("Deuteranopia (insensitivity to green)"),
-                            COLORBLIND_DEFICIENCY_DEUTERANOPIA,
-                            _("Tritanopia (insensitivity to blue)"),
-                            COLORBLIND_DEFICIENCY_TRITANOPIA,
-                            NULL);
-
+    gimp_enum_combo_box_new (CDISPLAY_TYPE_COLORBLIND_DEFICIENCY);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (colorblind->combo),
                                  colorblind->deficiency);
 
