@@ -117,16 +117,20 @@ gimp_init (Gimp *gimp)
 {
   gimp_core_config_init (gimp);
 
-  gimp->be_verbose          = FALSE;
-  gimp->no_data             = FALSE;
-  gimp->no_interface        = FALSE;
+  gimp->be_verbose              = FALSE;
+  gimp->no_data                 = FALSE;
+  gimp->no_interface            = FALSE;
 
-  gimp->create_display_func = NULL;
-  gimp->gui_set_busy_func   = NULL;
-  gimp->gui_unset_busy_func = NULL;
+  gimp->main_loops              = NULL;
 
-  gimp->busy                = 0;
-  gimp->busy_idle_id        = 0;
+  gimp->gui_main_loop_func      = NULL;
+  gimp->gui_main_loop_quit_func = NULL;
+  gimp->gui_create_display_func = NULL;
+  gimp->gui_set_busy_func       = NULL;
+  gimp->gui_unset_busy_func     = NULL;
+
+  gimp->busy                    = 0;
+  gimp->busy_idle_id            = 0;
 
   gimp_units_init (gimp);
 
@@ -475,6 +479,50 @@ gimp_shutdown (Gimp *gimp)
 }
 
 void
+gimp_main_loop (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_main_loop_func)
+    {
+      gimp->gui_main_loop_func (gimp);
+    }
+  else
+    {
+      GMainLoop *loop;
+
+      loop = g_main_loop_new (NULL, TRUE);
+
+      gimp->main_loops = g_list_prepend (gimp->main_loops, loop);
+
+      g_main_loop_run (loop);
+
+      gimp->main_loops = g_list_remove (gimp->main_loops, loop);
+
+      g_main_loop_unref (loop);
+    }
+}
+
+void
+gimp_main_loop_quit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_main_loop_func)
+    {
+      gimp->gui_main_loop_quit_func (gimp);
+    }
+  else
+    {
+      GMainLoop *loop;
+
+      loop = (GMainLoop *) gimp->main_loops->data;
+
+      g_main_loop_quit (loop);
+    }
+}
+
+void
 gimp_set_busy (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -572,9 +620,9 @@ gimp_create_display (Gimp      *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  if (gimp->create_display_func)
+  if (gimp->gui_create_display_func)
     {
-      return gimp->create_display_func (gimage, scale);
+      return gimp->gui_create_display_func (gimage, scale);
     }
 
   return NULL;

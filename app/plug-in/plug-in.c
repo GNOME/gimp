@@ -195,6 +195,7 @@ static void       plug_in_init_shm       (void);
 static gchar    * plug_in_search_in_path (gchar      *search_path,
 					  gchar      *filename);
 
+
 PlugIn *current_plug_in = NULL;
 GSList *proc_defs       = NULL;
 
@@ -416,8 +417,11 @@ plug_in_init (Gimp               *gimp,
   /* add the plug-in procs to the procedure database */
   plug_in_add_to_db ();
 
-  /* make the menu */
-  plug_in_make_menu ();
+  if (! gimp->no_interface)
+    {
+      /* make the menu */
+      plug_in_make_menu ();
+    }
 
   /* run the available extensions */
   if (be_verbose)
@@ -1232,7 +1236,8 @@ plug_in_close (PlugIn   *plug_in,
 
   if (plug_in->recurse)
     {
-      gtk_main_quit ();
+      gimp_main_loop_quit (the_gimp);
+
       plug_in->recurse = FALSE;
     }
 
@@ -1357,11 +1362,14 @@ plug_in_run (ProcRecord *proc_rec,
 	   */
 	  if ((proc_rec->proc_type == GIMP_EXTENSION) &&
 	      (proc_rec->num_args == 0))
-	    gtk_main ();
+            {
+              gimp_main_loop (the_gimp);
+            }
 
 	  if (plug_in->recurse)
 	    {
-	      gtk_main ();
+              gimp_main_loop (the_gimp);
+
 	      return_vals = plug_in_get_current_return_vals (proc_rec);
 	    }
 	}
@@ -1386,7 +1394,9 @@ plug_in_repeat (gboolean with_interface)
   if (last_plug_in)
     {
       gdisplay = gimp_context_get_display (gimp_get_user_context (the_gimp));
-      if (!gdisplay) return;
+
+      if (! gdisplay)
+        return;
 
       /* construct the procedures arguments */
       args = g_new (Argument, 3);
@@ -1558,7 +1568,7 @@ plug_in_handle_message (WireMessage *msg)
       break;
     case GP_TEMP_PROC_RETURN:
       plug_in_handle_proc_return (msg->data);
-      gtk_main_quit ();
+      gimp_main_loop_quit (the_gimp);
       break;
     case GP_PROC_INSTALL:
       plug_in_handle_proc_install (msg->data);
@@ -1567,7 +1577,7 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_proc_uninstall (msg->data);
       break;
     case GP_EXTENSION_ACK:
-      gtk_main_quit ();
+      gimp_main_loop_quit (the_gimp);
       break;
     }
 }
@@ -2091,31 +2101,34 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       proc->exec_method.temporary.plug_in = (void *) current_plug_in;
       procedural_db_register (the_gimp, proc);
 
-      /*  If there is a menu path specified, create a menu entry  */
-      if (proc_install->menu_path)
-	{
-	  menu_entry = g_new (PlugInMenuEntry, 1);
-	  menu_entry->proc_def = proc_def;
+      if (! the_gimp->no_interface)
+        {
+          /*  If there is a menu path specified, create a menu entry  */
+          if (proc_install->menu_path)
+            {
+              menu_entry = g_new (PlugInMenuEntry, 1);
+              menu_entry->proc_def = proc_def;
 
-	  /*  Below we use a hack to allow translations of Script-Fu paths.
-           *  Would be nice if we could solve this properly, but I haven't 
-           *  found a way yet ...  (Sven)
-	   */
-	  if (plug_in_def && plug_in_def->locale_domain)
-	    menu_entry->domain = plug_in_def->locale_domain;
-	  else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
-	    menu_entry->domain = "gimp-script-fu";
-	  else
-	    menu_entry->domain = std_plugins_domain;
+              /*  Below we use a hack to allow translations of Script-Fu paths.
+               *  Would be nice if we could solve this properly, but I haven't 
+               *  found a way yet ...  (Sven)
+               */
+              if (plug_in_def && plug_in_def->locale_domain)
+                menu_entry->domain = plug_in_def->locale_domain;
+              else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
+                menu_entry->domain = "gimp-script-fu";
+              else
+                menu_entry->domain = std_plugins_domain;
 
-	  if (plug_in_def)
-	    menu_entry->help_path = plug_in_def->help_path;
-	  else
-	    menu_entry->help_path = NULL;
+              if (plug_in_def)
+                menu_entry->help_path = plug_in_def->help_path;
+              else
+                menu_entry->help_path = NULL;
 
-	  /* plug_in_make_menu_entry frees the menu_entry for us */
-	  plug_in_make_menu_entry (NULL, menu_entry, NULL);  
-	}
+              /* plug_in_make_menu_entry frees the menu_entry for us */
+              plug_in_make_menu_entry (NULL, menu_entry, NULL);  
+            }
+        }
       break;
     }
 }
@@ -2635,9 +2648,9 @@ plug_in_make_menu (void)
 #endif
 
 #ifdef ENABLE_NLS
-  menu_entries = g_tree_new ((GCompareFunc)strcoll);
+  menu_entries = g_tree_new ((GCompareFunc) strcoll);
 #else
-  menu_entries = g_tree_new ((GCompareFunc)strcmp);
+  menu_entries = g_tree_new ((GCompareFunc) strcmp);
 #endif
 
   tmp = plug_in_defs;
@@ -2701,7 +2714,7 @@ plug_in_make_menu (void)
     }
 
   g_tree_traverse (menu_entries, 
-		   (GTraverseFunc)plug_in_make_menu_entry, G_IN_ORDER, NULL);
+		   (GTraverseFunc) plug_in_make_menu_entry, G_IN_ORDER, NULL);
   g_tree_destroy (menu_entries);
 
   g_slist_free (domains);
@@ -2884,9 +2897,12 @@ plug_in_proc_def_dead (void *freed_proc_def)
 static void
 plug_in_proc_def_remove (PlugInProcDef *proc_def)
 {
-  /*  Destroy the menu item  */
-  if (proc_def->menu_path)
-    menus_destroy (proc_def->menu_path);
+  if (! the_gimp->no_interface)
+    {
+      /*  Destroy the menu item  */
+      if (proc_def->menu_path)
+        menus_destroy (proc_def->menu_path);
+    }
 
   /*  Unregister the procedural database entry  */
   procedural_db_unregister (the_gimp, proc_def->db_info.name);

@@ -256,7 +256,7 @@ gimp_tool_info_new (Gimp         *gimp,
   g_return_val_if_fail (help != NULL, NULL);
   g_return_val_if_fail (menu_path != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
-  g_return_val_if_fail (GDK_IS_PIXBUF (stock_pixbuf), NULL);
+  g_return_val_if_fail (! stock_pixbuf || GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
   tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
                             "name", identifier,
@@ -287,7 +287,8 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->stock_id      = stock_id;
   tool_info->stock_pixbuf  = stock_pixbuf;
 
-  g_object_ref (G_OBJECT (stock_pixbuf));
+  if (stock_pixbuf)
+    g_object_ref (G_OBJECT (stock_pixbuf));
 
   return tool_info;
 }

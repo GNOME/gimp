@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 
 #include <gtk/gtk.h>
@@ -66,6 +67,8 @@
 
 /*  local function prototypes  */
 
+static void         gui_main                        (Gimp        *gimp);
+static void         gui_main_quit                   (Gimp        *gimp);
 static void         gui_set_busy                    (Gimp        *gimp);
 static void         gui_unset_busy                  (Gimp        *gimp);
 static GimpObject * gui_display_new                 (GimpImage   *gimage,
@@ -117,16 +120,31 @@ gui_themes_dir_foreach_func (const gchar *filename,
 }
 
 void
-gui_libs_init (Gimp    *gimp,
-               gint    *argc,
+gui_libs_init (gint    *argc,
 	       gchar ***argv)
+{
+#ifdef HAVE_PUTENV
+  gchar *display_env;
+#endif
+
+  g_return_if_fail (argc != NULL);
+  g_return_if_fail (argv != NULL);
+
+  gtk_init (argc, argv);
+
+#ifdef HAVE_PUTENV
+  display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
+  putenv (display_env);
+#endif
+}
+
+void
+gui_themes_init (Gimp *gimp)
 {
   gchar *theme_dir;
   gchar *gtkrc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (argc != NULL);
-  g_return_if_fail (argv != NULL);
 
   gimp_stock_init ();
 
@@ -183,9 +201,11 @@ gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->create_display_func = gui_display_new;
-  gimp->gui_set_busy_func   = gui_set_busy;
-  gimp->gui_unset_busy_func = gui_unset_busy;
+  gimp->gui_main_loop_func      = gui_main;
+  gimp->gui_main_loop_quit_func = gui_main_quit;
+  gimp->gui_create_display_func = gui_display_new;
+  gimp->gui_set_busy_func       = gui_set_busy;
+  gimp->gui_unset_busy_func     = gui_unset_busy;
 
   image_disconnect_handler_id =
     gimp_container_add_handler (gimp->images, "disconnect",
@@ -217,12 +237,16 @@ gui_init (Gimp *gimp)
 
   menus_init (gimp);
 
+#ifdef DISPLAY_FILTERS
+  color_display_init ();
+#endif /* DISPLAY_FILTERS */
+
   gximage_init ();
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
   dialogs_init (gimp);
 
-  devices_init ();
+  devices_init (gimp);
   session_init (gimp);
 }
 
@@ -241,7 +265,7 @@ gui_restore (Gimp     *gimp,
 
   color_select_init ();
 
-  devices_restore ();
+  devices_restore (gimp);
 
   if (gimprc.always_restore_session || restore_session)
     session_restore (gimp);
@@ -357,6 +381,18 @@ gui_really_quit_dialog (GCallback quit_func)
 
 
 /*  private functions  */
+
+static void
+gui_main (Gimp *gimp)
+{
+  gtk_main ();
+}
+
+static void
+gui_main_quit (Gimp *gimp)
+{
+  gtk_main_quit ();
+}
 
 gboolean double_speed = FALSE;
 

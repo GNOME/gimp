@@ -130,7 +130,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-      gui_libs_init (the_gimp, &gimp_argc, &gimp_argv);
+      gui_themes_init (the_gimp);
 
       get_standard_colormaps ();
 
@@ -146,14 +146,17 @@ app_init (gint    gimp_argc,
    */
   gimp_initialize (the_gimp, app_init_update_status);
 
-  tool_manager_init (the_gimp);
-
-  /*  Now we are ready to draw the splash-screen-image
-   *  to the start-up window
-   */
-  if (! no_interface && ! no_splash && ! no_splash_image)
+  if (! no_interface)
     {
-      splash_logo_load ();
+      tool_manager_init (the_gimp);
+
+      /*  Now we are ready to draw the splash-screen-image
+       *  to the start-up window
+       */
+      if (! no_splash && ! no_splash_image)
+        {
+          splash_logo_load ();
+        }
     }
 
   /*  Load all data files
@@ -162,10 +165,6 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-#ifdef DISPLAY_FILTERS
-      color_display_init ();
-#endif /* DISPLAY_FILTERS */
-
       gui_init (the_gimp);
     }
 
@@ -206,7 +205,7 @@ app_init (gint    gimp_argc,
       gui_post_init (the_gimp);
     }
 
-  gtk_main ();
+  gimp_main_loop (the_gimp);
 }
 
 void
@@ -245,10 +244,10 @@ app_exit_finish (void)
 
   plug_in_kill ();
 
-  tool_manager_exit (the_gimp);
-
   if (! no_interface)
     {
+      tool_manager_exit (the_gimp);
+
       gui_exit (the_gimp);
     }
 
@@ -259,8 +258,8 @@ app_exit_finish (void)
 
   base_exit ();
 
-  /*  There used to be gtk_main_quit() here, but there's a chance 
-   *  that gtk_main() was never called before we reach this point. --Sven  
+  /*  There used to be foo_main_quit() here, but there's a chance 
+   *  that foo_main() was never called before we reach this point. --Sven  
    */
-  gtk_exit (0);
+  exit (0);
 }

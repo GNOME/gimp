@@ -36,11 +36,13 @@
 #define  WAIT_ANY -1
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
+
+#include "gui/gui.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -104,9 +106,6 @@ main (int    argc,
   gboolean  show_version = FALSE;
   gboolean  show_help    = FALSE;
   gint      i, j;
-#ifdef HAVE_PUTENV
-  gchar    *display_env;
-#endif
 
 #if 0
   g_mem_set_vtable (glib_mem_profiler_table);
@@ -124,12 +123,25 @@ main (int    argc,
   bindtextdomain ("gimp-libgimp", LOCALEDIR);
 #endif
 
-  gtk_init (&argc, &argv);
+  /*  check argv[] for "--no-interface" before trying to initialize gtk+  */
+  for (i = 1; i < argc; i++)
+    {
+      if ((strcmp (argv[i], "--no-interface") == 0) ||
+	  (strcmp (argv[i], "-i") == 0))
+	{
+	  no_interface = TRUE;
+	}
+    }
 
-#ifdef HAVE_PUTENV
-  display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
-  putenv (display_env);
-#endif
+  if (no_interface)
+    {
+      setlocale (LC_ALL, "");
+      g_type_init ();
+    }
+  else
+    {
+      gui_libs_init (&argc, &argv);
+    }
 
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
@@ -140,8 +152,17 @@ main (int    argc,
 
   for (i = 1; i < argc; i++)
     {
-      if ((strcmp (argv[i], "--no-interface") == 0) ||
-	  (strcmp (argv[i], "-i") == 0))
+      if (strcmp (argv[i], "--g-fatal-warnings") == 0)
+	{
+          GLogLevelFlags fatal_mask;
+
+          fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+          fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+          g_log_set_always_fatal (fatal_mask);
+ 	  argv[i] = NULL;
+	}
+      else if ((strcmp (argv[i], "--no-interface") == 0) ||
+               (strcmp (argv[i], "-i") == 0))
 	{
 	  no_interface = TRUE;
  	  argv[i] = NULL;
@@ -265,11 +286,19 @@ main (int    argc,
 	      argv[i] = NULL;
             }
 	}
-      /*
-       *    ANYTHING ELSE starting with a '-' is an error.
-       */
+      else if (strcmp (argv[i], "--") == 0)
+        {
+          /*
+           *  everything after "--" is a parameter (i.e. image to load)
+           */
+          argv[i] = NULL;
+          break;
+        }
       else if (argv[i][0] == '-')
 	{
+          /*
+           *  anything else starting with a '-' is an error.
+           */
 	  g_print (_("\nInvalid option \"%s\"\n"), argv[i]);
 	  show_help = TRUE;
 	}

@@ -34,10 +34,10 @@ typedef enum
 } DeviceValues;
 
 /*  Initialize the input devices  */
-void   devices_init         (void);
+void   devices_init         (Gimp *gimp);
 
 /*  Restores device settings from rc file  */
-void   devices_restore      (void);
+void   devices_restore      (Gimp *gimp);
 
 /*  Create device info dialog  */
 GtkWidget * input_dialog_create  (void);

@@ -238,11 +238,13 @@ input_dialog_able_callback (GtkWidget *widget,
 }
 
 void 
-devices_init (void)
+devices_init (Gimp *gimp)
 {
   GdkDevice  *device;
   DeviceInfo *device_info;
   GList      *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   current_device = gdk_device_get_core_pointer ();
 
@@ -265,12 +267,12 @@ devices_init (void)
       device_info->num_keys   = device->num_keys;
       device_info->keys       = NULL;
 
-      device_info->context    = gimp_create_context (the_gimp,
+      device_info->context    = gimp_create_context (gimp,
 						     device_info->name, NULL);
       gimp_context_define_properties (device_info->context,
 				      DEVICE_CONTEXT_MASK,
 				      FALSE);
-      gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+      gimp_context_copy_properties (gimp_get_user_context (gimp),
 				    device_info->context,
 				    DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context,
@@ -281,11 +283,13 @@ devices_init (void)
 }
 
 void
-devices_restore (void)
+devices_restore (Gimp *gimp)
 {
   DeviceInfo  *device_info;
   GimpContext *context;
   gchar       *filename;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /* Augment with information from rc file */
   filename = gimp_personal_rc_file ("devicerc");
@@ -297,7 +301,7 @@ devices_restore (void)
 
   suppress_update = TRUE;
 
-  context = gimp_get_user_context (the_gimp);
+  context = gimp_get_user_context (gimp);
 
   gimp_context_copy_properties (device_info->context, context,
 				DEVICE_CONTEXT_MASK);

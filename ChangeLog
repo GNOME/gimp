@@ -1,3 +1,33 @@
+2001-11-17  Michael Natterer  <mitch@gimp.org>
+
+	Made --no-interface not calling gtk_init() (and thus not
+	contacting the X server) any more. (Fixes #58961).
+
+	* app/core/gimp.[ch]: added two new function pointers
+	"gui_main_loop_func" and "gui_main_loop_quit_func" and an own
+	stack of GMainLoops which is used if they are not set.
+
+	* app/gui/gui.[ch]: added main loop functions here and set them as
+	pointers in the Gimp instance. Separated gui_libs_init() from
+	gui_themes_init() so it can be used as replacement for gtk_init()
+	and be called before command line parsing.
+
+	* app/main.c: check for "--no-interface" before initializing
+	anything. Added a "--g-fatal-warnings" option (cut'n'paste from
+	gtkmain.c). Added a check for "--" (end of options).
+
+	* app/app_procs.c: call the new gimp_main_loop() functions,
+	call gui_themes_init().
+
+	* app/devices.[ch]: reduce usage of "the_gimp" by passing "Gimp"
+	pointers to some functions.
+
+	* app/plug_in.c: some ugly checks for the_gimp->no_interface which
+	will go away once this file is core/ui chopped. Call
+	gimp_main_loop() stuff instead of gtk_main().
+
+	* app/core/gimptoolinfo.c: allow passing a NUL GdkPixbuf pointer.
+
 2001-11-17  Wang Jian  <lark@linux.net.cn>
 
 	* configure.in(ALL_LINGUAS): Added zh_CN for Simplified Chinese.
@@ -47,7 +77,7 @@
 2001-11-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorbutton.[ch]: added Black and White to popup
-	menu. Take widget->allocation into account when calculation popup 
+	menu. Take widget->allocation into account when calculating popup 
 	position since GtkButton is a NO_WINDOW widget now.
 
 2001-11-16  Sven Neumann  <sven@gimp.org>
