@@ -22,6 +22,9 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include "libgimpcolor/gimpcolortypes.h"
+#include "libgimpcolor/gimprgb.h"
+
 #include "base-types.h"
 
 #include "gimphistogram.h"
@@ -185,6 +188,11 @@ levels_adjust_by_colors (Levels               *levels,
       gint    input;
       gint    range;
       gdouble inten;
+      gdouble out_light;
+      guchar lightness;
+
+      /* Calculate lightness value */
+      lightness = GIMP_RGB_INTENSITY (gray[0], gray[1], gray[2]);
 
       input = levels_input_from_color (channel, gray);
 
@@ -196,9 +204,15 @@ levels_adjust_by_colors (Levels               *levels,
       if (input < 0)
 	return;
 
+      /* Normalize input and lightness */
       inten = (gdouble) input / (gdouble) range;
+      out_light = (gdouble) lightness/ (gdouble) range;
 
-      levels->gamma[channel] = log (inten) / log (0.5); 
+      if (out_light <= 0)
+        return;
+
+      /* Map selected color to corresponding lightness */
+      levels->gamma[channel] = log (inten) / log (out_light); 
     }
 }
 

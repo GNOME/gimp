@@ -1,3 +1,8 @@
+2003-12-26  Dave Neary  <bolsh@gimp.org>
+
+	* app/base/levels.c: Modify behaviour of levels tool to 
+	conserve lightness when using the grey-point color-picker.
+
 2003-12-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/edge.c: forgot to change
