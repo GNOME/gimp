@@ -1,17 +1,17 @@
 # gimp-perl fr.po
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
+# maintainer: Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.2.0\n"
-"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
-"PO-Revision-Date: 2001-01-02 16:55+0100\n"
+"Project-Id-Version: gimp-perl 1.2.3\n"
+"POT-Creation-Date: 2001-10-24 10:43:23+0200\n"
+"PO-Revision-Date: 2001-10-24 10:43:23+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
-"Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: examples/PDB:0

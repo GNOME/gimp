@@ -1,15 +1,15 @@
 # gimp-script-fu fr.po
 # Copyright (C) 2000-2001 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
+# maintainer: Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-06-26 11:25+0200\n"
+"Project-Id-Version: gimp-script-fu 1.2.3\n"
+"POT-Creation-Date: 2001-10-24 10:40+0200\n"
+"PO-Revision-Date: 2001-10-24 10:40+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
-"Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
+"Language-Team: Gnome French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,12 +106,12 @@ msgid "About"
 msgstr "À propos"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:545
 msgid "OK"
 msgstr "Valider"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -158,15 +158,15 @@ msgstr ""
 "de %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:540
 msgid "Script-Fu Server Options"
 msgstr "Options du serveur du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:567
 msgid "Server Port:"
 msgstr "Port du serveur :"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:573
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 
@@ -852,7 +852,7 @@ msgid "Base Color"
 msgstr "Couleur de base"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+msgid "Base Radius (pixels)"
 msgstr "Rayon de base (pixels)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
