@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-03-15 12:35-0800\n"
+"POT-Creation-Date: 2000-03-26 12:26+0200\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -227,15 +227,15 @@ msgstr ""
 
 #: libgimp/gimpwidgets.c:1030
 msgid "Bytes"
-msgstr ""
+msgstr "Byte"
 
 #: libgimp/gimpwidgets.c:1031
 msgid "KiloBytes"
-msgstr ""
+msgstr "KByte"
 
 #: libgimp/gimpwidgets.c:1032
 msgid "MegaBytes"
-msgstr ""
+msgstr "MByte"
 
 #~ msgid "Select"
 #~ msgstr "Seleziona"
