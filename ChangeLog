@@ -1,3 +1,37 @@
+2003-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: added new functions
+	color_region_mask() which works like color_region() but takes an
+	additional maskPR parameters and pattern_region() which fills
+	destPR with a TempBuf of *matching color depth*.
+
+	* app/paint-funcs/paint-funcs-generic.h: added corresponding
+	color_pixels_mask() and pattern_pixels().
+
+	* app/core/gimpimage.[ch] (gimp_image_transform_temp_buf): new
+	function which transforms a TempBuf to a specified drawable's
+	color space.
+
+	* app/core/gimpdrawable-bucket-fill.c: the functions were factored
+	out here. Removed them and use the new stuff.
+
+	* app/core/core-enums.[ch]: added enum GimpStrokeStyle which can
+	be one of { SOLID, PATTERN }.
+
+	* app/core/gimpstrokeoptions.[ch]: added "GimpStrokeStyle style"
+	property, cleanup.
+
+	* app/core/gimpdrawable-stroke.c: honor the new "style" property
+	and call the new color_region_mask() and pattern_region()
+	functions accordingly, cleanup.
+
+	* app/widgets/gimpstrokeeditor.c: added a GUI for the stroke
+	style. Ugly but works.
+
+	* app/gui/stroke-dialog.c: undefine "foreground" and "pattern" and
+	set the user context as parent context so we get these properties
+	from the global settings.
+
 2003-09-27  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -164,6 +164,118 @@ color_pixels (guchar       *dest,
     }
 }
 
+void
+color_pixels_mask (guchar       *dest,
+                   guchar       *mask,
+                   const guchar *color,
+                   guint         w,
+                   guint         bytes)
+{
+  guchar c0, c1, c2;
+  gint   alpha;
+
+  alpha = HAS_ALPHA (bytes) ? bytes - 1 : bytes;
+
+  switch (bytes)
+    {
+    case 1:
+      memset (dest, *color, w);
+      break;
+
+    case 2:
+      c0 = color[0];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = *mask++;
+	  dest += 2;
+	}
+      break;
+
+    case 3:
+      c0 = color[0];
+      c1 = color[1];
+      c2 = color[2];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = c1;
+	  dest[2] = c2;
+	  dest += 3;
+	}
+      break;
+
+    case 4:
+      c0 = color[0];
+      c1 = color[1];
+      c2 = color[2];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = c1;
+	  dest[2] = c2;
+	  dest[3] = *mask++;
+	  dest += 4;
+	}
+      break;
+    }
+}
+
+void
+pattern_pixels_mask (guchar  *dest,
+                     guchar  *mask,
+                     TempBuf *pattern,
+                     guint    w,
+                     guint    bytes,
+                     gint     x,
+                     gint     y)
+{
+  guchar *pat, *p;
+  gint    alpha, b;
+  gint    i;
+
+  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
+  pat = (temp_buf_data (pattern) +
+         (y % pattern->height) * pattern->width * pattern->bytes);
+
+  alpha = HAS_ALPHA (bytes) ? bytes - 1 : bytes;
+
+  /*
+   * image data = pattern data for all but alpha
+   *
+   * If (image has alpha)
+   *   if (there's a mask)
+   *     image data = mask for alpha;
+   *   else
+   *     image data = opaque for alpha.
+   *
+   *   if (pattern has alpha)
+   *     multiply existing alpha channel by pattern alpha
+   *     (normalised to (0..1))
+   */
+
+  for (i = 0; i < w; i++)
+    {
+      p = pat + ((i + x) % pattern->width) * pattern->bytes;
+
+      for (b = 0; b < alpha; b++)
+	dest[b] = p[b];
+
+      if (HAS_ALPHA (bytes))
+	{
+          if (mask)
+	    dest[alpha] = *mask++;
+          else
+	    dest[alpha] = OPAQUE_OPACITY;
+
+          if (HAS_ALPHA (pattern->bytes))
+            dest[alpha] = (guchar) (dest[alpha] *
+                                    p[alpha] / (gdouble) OPAQUE_OPACITY);
+        }
+
+      dest += bytes;
+    }
+}
 
 inline void
 blend_pixels (const guchar *src1,

@@ -195,6 +195,17 @@ typedef enum  /*< pdb-skip >*/
 } GimpGridStyle;
 
 
+#define GIMP_TYPE_STROKE_STYLE (gimp_stroke_style_get_type ())
+
+GType gimp_stroke_style_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_STROKE_STYLE_SOLID,  /*< desc="Solid"   >*/
+  GIMP_STROKE_STYLE_PATTERN /*< desc="Pattern" >*/
+} GimpStrokeStyle;
+
+
 #define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
 
 GType gimp_join_style_get_type (void) G_GNUC_CONST;

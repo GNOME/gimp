@@ -81,6 +81,13 @@ stroke_dialog_new (GimpItem    *item,
                           "gimp", image->gimp,
                           NULL);
 
+  gimp_context_set_parent (GIMP_CONTEXT (options),
+                           gimp_get_user_context (image->gimp));
+  gimp_context_define_properties (GIMP_CONTEXT (options),
+                                  GIMP_CONTEXT_FOREGROUND_MASK |
+                                  GIMP_CONTEXT_PATTERN_MASK,
+                                  FALSE);
+
   /* the dialog */
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (item),

@@ -331,6 +331,10 @@ void            gimp_image_transform_color       (const GimpImage    *dest_gimag
                                                   guchar             *dest,
                                                   GimpImageBaseType   src_type,
                                                   const guchar       *src);
+TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_gimage,
+                                                  const GimpDrawable *dest_drawable,
+                                                  TempBuf            *temp_buf,
+                                                  gboolean           *new_buf);
 
 
 /*  shadow tiles  */

@@ -34,6 +34,7 @@
 enum
 {
   PROP_0,
+  PROP_STYLE,
   PROP_WIDTH,
   PROP_WIDTH_UNIT,
   PROP_CAP_STYLE,
@@ -46,7 +47,7 @@ enum
 };
 
 
-static void   gimp_stroke_options_class_init (GimpStrokeOptionsClass *options_class);
+static void   gimp_stroke_options_class_init   (GimpStrokeOptionsClass *klass);
 
 static void   gimp_stroke_options_set_property (GObject         *object,
                                                 guint            property_id,
@@ -102,6 +103,11 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   object_class->set_property = gimp_stroke_options_set_property;
   object_class->get_property = gimp_stroke_options_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
+                                 "style", NULL,
+                                 GIMP_TYPE_STROKE_STYLE,
+                                 GIMP_STROKE_STYLE_SOLID,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
                                    "width", NULL,
                                    0.0, 2000.0, 5.0,
@@ -151,16 +157,13 @@ gimp_stroke_options_set_property (GObject      *object,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpStrokeOptions *options;
-  GValueArray       *val_array;
-  GValue            *item;
-  gint               i;
-  gdouble            val;
-
-  options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
 
   switch (property_id)
     {
+    case PROP_STYLE:
+      options->style = g_value_get_enum (value);
+      break;
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
       break;
@@ -186,32 +189,39 @@ gimp_stroke_options_set_property (GObject      *object,
       options->dash_offset = g_value_get_double (value);
       break;
     case PROP_DASH_INFO:
-      if (options->dash_info)
-        g_array_free (options->dash_info, TRUE);
+      {
+        GValueArray *val_array;
+        GValue      *item;
+        gint         i;
+        gdouble      val;
 
-      val_array = g_value_get_boxed (value);
-      if (val_array == NULL || val_array->n_values == 0)
-        {
-          options->dash_info = NULL;
-        }
-      else
-        {
-          options->dash_info = g_array_sized_new (FALSE, FALSE,
-                                                  sizeof (gdouble),
-                                                  val_array->n_values);
+        if (options->dash_info)
+          g_array_free (options->dash_info, TRUE);
 
+        val_array = g_value_get_boxed (value);
+        if (val_array == NULL || val_array->n_values == 0)
+          {
+            options->dash_info = NULL;
+          }
+        else
+          {
+            options->dash_info = g_array_sized_new (FALSE, FALSE,
+                                                    sizeof (gdouble),
+                                                    val_array->n_values);
 
-          for (i=0; i < val_array->n_values; i++)
-            {
-              item = g_value_array_get_nth (val_array, i);
+            for (i=0; i < val_array->n_values; i++)
+              {
+                item = g_value_array_get_nth (val_array, i);
 
-              g_return_if_fail (G_VALUE_HOLDS_DOUBLE (item));
+                g_return_if_fail (G_VALUE_HOLDS_DOUBLE (item));
 
-              val = g_value_get_double (item);
+                val = g_value_get_double (item);
 
-              options->dash_info = g_array_append_val (options->dash_info, val);
-            }
-        }
+                options->dash_info = g_array_append_val (options->dash_info,
+                                                         val);
+              }
+          }
+      }
       break;
 
     default:
@@ -226,15 +236,13 @@ gimp_stroke_options_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpStrokeOptions *options;
-  GValueArray       *val_array;
-  GValue             item;
-  gint               i;
-
-  options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
 
   switch (property_id)
     {
+    case PROP_STYLE:
+      g_value_set_enum (value, options->style);
+      break;
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
       break;
@@ -260,27 +268,34 @@ gimp_stroke_options_get_property (GObject    *object,
       g_value_set_double (value, options->dash_offset);
       break;
     case PROP_DASH_INFO:
-      if (options->dash_info)
-        g_array_free (options->dash_info, TRUE);
+      {
+        GValueArray *val_array;
+        GValue       item;
+        gint         i;
 
-      if (options->dash_info == NULL || options->dash_info->len == 0)
-        {
-          g_value_set_boxed (value, NULL);
-        }
-      else
-        {
-          val_array = g_value_array_new (options->dash_info->len);
+        if (options->dash_info)
+          g_array_free (options->dash_info, TRUE);
 
-          for (i=0; i < options->dash_info->len; i++)
-            {
-              g_value_set_double (&item, g_array_index (options->dash_info,
-                                                        gdouble,
-                                                        i));
+        if (options->dash_info == NULL || options->dash_info->len == 0)
+          {
+            g_value_set_boxed (value, NULL);
+          }
+        else
+          {
+            val_array = g_value_array_new (options->dash_info->len);
 
-              g_value_array_append (val_array, &item);
-            }
-          g_value_set_boxed (value, val_array);
-        }
+            for (i=0; i < options->dash_info->len; i++)
+              {
+                g_value_set_double (&item, g_array_index (options->dash_info,
+                                                          gdouble,
+                                                          i));
+
+                g_value_array_append (val_array, &item);
+              }
+
+            g_value_set_boxed (value, val_array);
+          }
+      }
       break;
 
     default:
@@ -288,6 +303,3 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     }
 }
-
-
-

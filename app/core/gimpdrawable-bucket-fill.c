@@ -44,32 +44,6 @@
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
-
-static void   gimp_drawable_bucket_fill_region   (GimpBucketFillMode  fill_mode,
-                                                      PixelRegion     *bufPR,
-                                                      PixelRegion     *maskPR,
-                                                      guchar          *col,
-                                                      TempBuf         *pattern,
-                                                      gint             off_x,
-                                                      gint             off_y,
-                                                      gboolean         has_alpha);
-static void   gimp_drawable_bucket_fill_line_color   (guchar          *buf,
-                                                      guchar          *mask,
-                                                      guchar          *col,
-                                                      gboolean         has_alpha,
-                                                      gint             bytes,
-                                                      gint             width);
-static void   gimp_drawable_bucket_fill_line_pattern (guchar          *buf,
-                                                      guchar          *mask,
-                                                      TempBuf         *pattern,
-                                                      gboolean         has_alpha,
-                                                      gint             bytes,
-                                                      gint             x,
-                                                      gint             y,
-                                                      gint             width);
-
-
 /*  public functions  */
 
 void
@@ -178,59 +152,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
-      /*  If the pattern doesn't match the image in terms of color type,
-       *  transform it.  (ie  pattern is RGB, image is indexed)
-       */
-      if (((pattern->mask->bytes == 3 || pattern->mask->bytes == 4 ) && ! gimp_drawable_is_rgb  (drawable)) ||
-	  ((pattern->mask->bytes == 1 || pattern->mask->bytes == 2 ) && ! gimp_drawable_is_gray (drawable)))
-	{
-          guchar *d1, *d2;
-	  gint    size, in_bytes, out_bytes;
-
-	  if ((pattern->mask->bytes == 2) && gimp_drawable_is_rgb (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width,
-                                    pattern->mask->height,
-				    4, 0, 0, NULL);
-	  else if ((pattern->mask->bytes == 1) && gimp_drawable_is_rgb (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width,
-                                    pattern->mask->height,
-				    3, 0, 0, NULL);
-	  else if ((pattern->mask->bytes == 4) && gimp_drawable_is_gray (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width,
-                                    pattern->mask->height,
-				    2, 0, 0, NULL);
-          else
-	    pat_buf = temp_buf_new (pattern->mask->width,
-                                    pattern->mask->height,
-				    1, 0, 0, NULL);
-
-	  d1 = temp_buf_data (pattern->mask);
-	  d2 = temp_buf_data (pat_buf);
-
-	  size = pattern->mask->width * pattern->mask->height;
-          in_bytes = pattern->mask->bytes;
-          out_bytes = pat_buf->bytes;
-	  while (size--)
-	    {
-	      gimp_image_transform_color (gimage, drawable, d2,
-					  (in_bytes == 3 || 
-                                           in_bytes == 4) ? 
-                                          GIMP_RGB : GIMP_GRAY, d1);
-              /* Handle alpha */
-              if (in_bytes == 4 || 
-                  in_bytes == 2 )
-                d2[out_bytes - 1] = d1[in_bytes - 1];
-
-	      d1 += in_bytes;
-	      d2 += out_bytes;
-	    }
-
-	  new_buf = TRUE;
-	}
-      else
-        {
-          pat_buf = pattern->mask;
-        }
+      pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+                                               pattern->mask, &new_buf);
     }
   else
     {
@@ -244,8 +167,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   has_alpha = gimp_drawable_has_alpha (drawable);
   selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  /*  Do a seed bucket fill...To do this, calculate a new 
-   *  contiguous region. If there is a selection, calculate the 
+  /*  Do a seed bucket fill...To do this, calculate a new
+   *  contiguous region. If there is a selection, calculate the
    *  intersection of this region with the existing selection.
    */
   if (do_seed_fill)
@@ -289,7 +212,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	  x2 = CLAMP (x2, off_x, (off_x + gimp_item_width (item)));
 	  y2 = CLAMP (y2, off_y, (off_y + gimp_item_height (item)));
 
-	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
+	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
@@ -300,7 +223,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	}
       else
         {
-          pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
+          pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
                              x1, y1, (x2 - x1), (y2 - y1), TRUE);
         }
 
@@ -317,7 +240,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL &&
            (pat_buf->bytes == 2 || pat_buf->bytes == 4))
     {
-      /* If pattern being applied has an alpha channel, 
+      /* If pattern being applied has an alpha channel,
        * add one to the temp buffer from the image too.
        */
       if (! has_alpha)
@@ -330,18 +253,20 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
-  if (mask)
-    gimp_drawable_bucket_fill_region (fill_mode,
-                                      &bufPR, &maskPR,
-                                      col, pat_buf,
-                                      x1, y1,
-                                      has_alpha);
-  else
-    gimp_drawable_bucket_fill_region (fill_mode,
-                                      &bufPR, NULL,
-                                      col, pat_buf,
-                                      x1, y1,
-                                      has_alpha);
+  switch (fill_mode)
+    {
+    case GIMP_FG_BUCKET_FILL:
+    case GIMP_BG_BUCKET_FILL:
+      if (mask)
+        color_region_mask (&bufPR, &maskPR, col);
+      else
+        color_region (&bufPR, col);
+      break;
+
+    case GIMP_PATTERN_BUCKET_FILL:
+      pattern_region (&bufPR, mask ? &maskPR : NULL, pat_buf, x1, y1);
+      break;
+    }
 
   /*  Apply it to the image  */
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
@@ -362,147 +287,4 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
     temp_buf_free (pat_buf);
 
   gimp_unset_busy (gimage->gimp);
-}
-
-
-/*  private functions  */
-
-static void
-gimp_drawable_bucket_fill_region (GimpBucketFillMode  fill_mode,
-                                  PixelRegion        *bufPR,
-                                  PixelRegion        *maskPR,
-                                  guchar             *col,
-                                  TempBuf            *pattern,
-                                  gint                off_x,
-                                  gint                off_y,
-                                  gboolean            has_alpha)
-{
-  guchar *s, *m;
-  gint    y;
-  void   *pr;
-
-  for (pr = pixel_regions_register (2, bufPR, maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      s = bufPR->data;
-      if (maskPR)
-	m = maskPR->data;
-      else
-	m = NULL;
-
-      for (y = 0; y < bufPR->h; y++)
-	{
-	  switch (fill_mode)
-	    {
-	    case GIMP_FG_BUCKET_FILL:
-	    case GIMP_BG_BUCKET_FILL:
-	      gimp_drawable_bucket_fill_line_color (s, m,
-                                                    col,
-                                                    has_alpha,
-                                                    bufPR->bytes, bufPR->w);
-	      break;
-	    case GIMP_PATTERN_BUCKET_FILL:
-	      gimp_drawable_bucket_fill_line_pattern (s, m,
-                                                      pattern,
-                                                      has_alpha,
-                                                      bufPR->bytes,
-                                                      off_x + bufPR->x,
-                                                      off_y + y + bufPR->y,
-                                                      bufPR->w);
-	      break;
-	    }
-	  s += bufPR->rowstride;
-
-	  if (maskPR)
-	    m += maskPR->rowstride;
-	}
-    }
-}
-
-static void
-gimp_drawable_bucket_fill_line_color (guchar   *buf,
-                                      guchar   *mask,
-                                      guchar   *col,
-                                      gboolean  has_alpha,
-                                      gint      bytes,
-                                      gint      width)
-{
-  gint alpha, b;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  while (width--)
-    {
-      for (b = 0; b < alpha; b++)
-	buf[b] = col[b];
-
-      if (has_alpha)
-	{
-	  if (mask)
-	    buf[alpha] = *mask++;
-	  else
-	    buf[alpha] = OPAQUE_OPACITY;
-	}
-
-      buf += bytes;
-    }
-}
-
-static void
-gimp_drawable_bucket_fill_line_pattern (guchar   *buf,
-                                        guchar   *mask,
-                                        TempBuf  *pattern,
-                                        gboolean  has_alpha,
-                                        gint      bytes,
-                                        gint      x,
-                                        gint      y,
-                                        gint      width)
-{
-  guchar *pat, *p;
-  gint    alpha, b;
-  gint    i;
-
-  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = temp_buf_data (pattern) +
-    (y % pattern->height) * pattern->width * pattern->bytes;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  /*
-   * image data = pattern data for all but alpha
-   * 
-   * If (image has alpha)
-   *   if (there's a mask)
-   *     image data = mask for alpha;
-   *   else
-   *     image data = opaque for alpha.
-   *
-   *   if (pattern has alpha)
-   *     multiply existing alpha channel by pattern alpha 
-   *     (normalised to (0..1))
-   */
-
-  for (i = 0; i < width; i++)
-    {
-      p = pat + ((i + x) % pattern->width) * pattern->bytes;
-
-      for (b = 0; b < alpha; b++)
-	buf[b] = p[b];
-
-      if (has_alpha)
-	{
-          if (mask)
-	    buf[alpha] = *mask++;
-          else
-	    buf[alpha] = OPAQUE_OPACITY;
-
-          if (pattern->bytes == 2 || pattern->bytes == 4)
-            {
-	      buf[alpha] = 
-                (guchar)(buf[alpha] * 
-                          (p[alpha]/(gdouble)OPAQUE_OPACITY));
-            }
-	}
-
-      buf += bytes;
-    }
 }

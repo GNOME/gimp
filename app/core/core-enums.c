@@ -254,6 +254,25 @@ gimp_grid_style_get_type (void)
 }
 
 
+static const GEnumValue gimp_stroke_style_enum_values[] =
+{
+  { GIMP_STROKE_STYLE_SOLID, N_("Solid"), "solid" },
+  { GIMP_STROKE_STYLE_PATTERN, N_("Pattern"), "pattern" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_stroke_style_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpStrokeStyle", gimp_stroke_style_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_join_style_enum_values[] =
 {
   { GIMP_JOIN_MITER, N_("Miter"), "miter" },

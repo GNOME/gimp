@@ -268,9 +268,17 @@ void  extract_from_indexed_pixels         (guchar       *src,
 
 
 /*  Region functions  */
-void  color_region                        (PixelRegion *dest, 
+void  color_region                        (PixelRegion  *dest,
+					   const guchar *color);
+void  color_region_mask                   (PixelRegion  *dest,
+                                           PixelRegion  *mask,
 					   const guchar *color);
 
+void  pattern_region                      (PixelRegion  *dest,
+                                           PixelRegion  *mask,
+					   TempBuf      *pattern,
+                                           gint          off_x,
+                                           gint          off_y);
 
 void  blend_region                        (PixelRegion *, PixelRegion *,
 					   PixelRegion *, int);

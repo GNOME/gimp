@@ -1762,6 +1762,88 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
     }
 }
 
+TempBuf *
+gimp_image_transform_temp_buf (const GimpImage    *dest_image,
+                               const GimpDrawable *dest_drawable,
+                               TempBuf            *temp_buf,
+                               gboolean           *new_buf)
+{
+  TempBuf *ret_buf;
+
+  g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (GIMP_DRAWABLE (dest_drawable), NULL);
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+  g_return_val_if_fail (new_buf != NULL, NULL);
+
+  /*  If the pattern doesn't match the image in terms of color type,
+   *  transform it.  (ie  pattern is RGB, image is indexed)
+   */
+  if (((temp_buf->bytes == 3 || temp_buf->bytes == 4) &&
+       ! gimp_drawable_is_rgb  (dest_drawable)) ||
+      ((temp_buf->bytes == 1 || temp_buf->bytes == 2) &&
+       ! gimp_drawable_is_gray (dest_drawable)))
+    {
+      guchar *d1, *d2;
+      gint    size, in_bytes, out_bytes;
+
+      if (temp_buf->bytes == 2 && gimp_drawable_is_rgb (dest_drawable))
+        {
+          ret_buf = temp_buf_new (temp_buf->width,
+                                  temp_buf->height,
+                                  4, 0, 0, NULL);
+        }
+      else if (temp_buf->bytes == 1 && gimp_drawable_is_rgb (dest_drawable))
+        {
+          ret_buf = temp_buf_new (temp_buf->width,
+                                  temp_buf->height,
+                                  3, 0, 0, NULL);
+        }
+      else if (temp_buf->bytes == 4 && gimp_drawable_is_gray (dest_drawable))
+        {
+          ret_buf = temp_buf_new (temp_buf->width,
+                                  temp_buf->height,
+                                  2, 0, 0, NULL);
+        }
+      else
+        {
+          ret_buf = temp_buf_new (temp_buf->width,
+                                  temp_buf->height,
+                                  1, 0, 0, NULL);
+        }
+
+      d1 = temp_buf_data (temp_buf);
+      d2 = temp_buf_data (ret_buf);
+
+      size = temp_buf->width * temp_buf->height;
+
+      in_bytes  = temp_buf->bytes;
+      out_bytes = ret_buf->bytes;
+
+      while (size--)
+        {
+          gimp_image_transform_color (dest_image, dest_drawable, d2,
+                                      (in_bytes == 3 || in_bytes == 4) ?
+                                      GIMP_RGB : GIMP_GRAY, d1);
+
+          /* Handle alpha */
+          if (in_bytes == 4 || in_bytes == 2 )
+            d2[out_bytes - 1] = d1[in_bytes - 1];
+
+          d1 += in_bytes;
+          d2 += out_bytes;
+        }
+
+      *new_buf = TRUE;
+    }
+  else
+    {
+      ret_buf = temp_buf;
+      *new_buf = FALSE;
+    }
+
+  return ret_buf;
+}
+
 
 /*  shadow tiles  */
 

@@ -167,11 +167,19 @@ gimp_stroke_editor_constructor (GType                   type,
 
   g_assert (editor->options != NULL);
 
-  table = gtk_table_new (4, 3, FALSE);
+  table = gtk_table_new (5, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
+
+  box = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->options), "style",
+                                        _("Style"), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), box, 0, 3, row, row + 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (box);
+
+  row++;
 
   digits = gimp_unit_get_digits (editor->options->width_unit);
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (editor->options), "width",

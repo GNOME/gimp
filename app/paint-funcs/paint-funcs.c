@@ -31,6 +31,7 @@
 
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
+#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
@@ -2017,24 +2018,97 @@ color_region (PixelRegion  *dest,
       h = dest->h;
       s = dest->data;
 
-      if (dest->w*dest->bytes == dest->rowstride)
+      if (dest->w * dest->bytes == dest->rowstride)
 	{
-	  /* do it all in one function call if we can */
-	  /* this hasn't been tested to see if it is a
-	     signifigant speed gain yet */
-	  color_pixels (s, col, dest->w*h, dest->bytes);
+	  /* do it all in one function call if we can
+           * this hasn't been tested to see if it is a
+           * signifigant speed gain yet
+           */
+          color_pixels (s, col, dest->w * h, dest->bytes);
 	}
       else
 	{
 	  while (h--)
 	    {
-	      color_pixels (s, col, dest->w, dest->bytes);
+              color_pixels (s, col, dest->w, dest->bytes);
 	      s += dest->rowstride;
 	    }
 	}
     }
 }
 
+void
+color_region_mask (PixelRegion  *dest,
+                   PixelRegion  *mask,
+                   const guchar *col)
+{
+  gint    h;
+  guchar *d;
+  guchar *m;
+  void   *pr;
+
+  for (pr = pixel_regions_register (2, dest, mask);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      h = dest->h;
+      d = dest->data;
+      m = mask->data;
+
+      if (dest->w * dest->bytes == dest->rowstride &&
+          mask->w * mask->bytes == mask->rowstride)
+	{
+	  /* do it all in one function call if we can
+           * this hasn't been tested to see if it is a
+           * signifigant speed gain yet
+           */
+          color_pixels_mask (d, m, col, dest->w * h, dest->bytes);
+	}
+      else
+	{
+	  while (h--)
+	    {
+              color_pixels_mask (d, m, col, dest->w, dest->bytes);
+	      d += dest->rowstride;
+              m += mask->rowstride;
+	    }
+	}
+    }
+}
+
+void
+pattern_region (PixelRegion  *dest,
+                PixelRegion  *mask,
+                TempBuf      *pattern,
+                gint          off_x,
+                gint          off_y)
+{
+  gint    y;
+  guchar *d;
+  guchar *m = NULL;
+  void   *pr;
+
+  for (pr = pixel_regions_register (2, dest, mask);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      d = dest->data;
+
+      if (mask)
+        m = mask->data;
+
+      for (y = 0; y < dest->h; y++)
+        {
+          pattern_pixels_mask (d, m, pattern, dest->w, dest->bytes,
+                               off_x + dest->x,
+                               off_y + dest->y + y);
+          d += dest->rowstride;
+
+          if (mask)
+            m += mask->rowstride;
+        }
+    }
+}
 
 void
 blend_region (PixelRegion *src1,
@@ -3846,7 +3920,7 @@ border_region (PixelRegion *src,
     {
       guchar color[] = "\0\0\0\0";
 
-      color_region(src, color);
+      color_region (src, color);
       return;
     }
 

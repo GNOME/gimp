@@ -38,21 +38,23 @@ typedef struct _GimpStrokeOptionsClass GimpStrokeOptionsClass;
 
 struct _GimpStrokeOptions
 {
-  GimpContext    parent_instance;
+  GimpContext      parent_instance;
 
-  gdouble        width;
-  GimpUnit       width_unit;
+  GimpStrokeStyle  style;
 
-  GimpCapStyle   cap_style;
-  GimpJoinStyle  join_style;
+  gdouble          width;
+  GimpUnit         width_unit;
 
-  gdouble        miter;
+  GimpCapStyle     cap_style;
+  GimpJoinStyle    join_style;
 
-  gboolean       antialias;
+  gdouble          miter;
 
-  GimpUnit       dash_unit;
-  gdouble        dash_offset;
-  GArray        *dash_info;
+  gboolean         antialias;
+
+  GimpUnit         dash_unit;
+  gdouble          dash_offset;
+  GArray          *dash_info;
 };
 
 struct _GimpStrokeOptionsClass
@@ -61,6 +63,7 @@ struct _GimpStrokeOptionsClass
 };
 
 
-GType      gimp_stroke_options_get_type    (void) G_GNUC_CONST;
+GType  gimp_stroke_options_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_STROKE_OPTIONS_H__  */
