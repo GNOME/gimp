@@ -7407,6 +7407,7 @@ msgid ""
 "Warning: xanim 2.80 has just limited MPEG support\n"
 "most of the frames (type P and B) will be skipped"
 msgstr ""
+"\n"
 "Avertissement: XAnim 2.80 est limité dans son support\n"
 "MPEG ; la plupart des trames (types P et B) seront\n"
 "sautées."
@@ -7495,7 +7496,7 @@ msgid "videofile %s not existent or empty\n"
 msgstr ""
 "Fichier vidéo\n"
 "%s\n"
-"inexistent ou vide."
+"inexistent ou vide.\n"
 
 #: plug-ins/gap/gap_decode_xanim.c:1067
 #, c-format
@@ -7623,21 +7624,21 @@ msgstr "SAUVER tel que"
 
 #: plug-ins/gap/gap_lib.c:1593
 msgid "Duplicating frames .."
-msgstr "Duplication de calques..."
+msgstr "Duplication de trames..."
 
 #: plug-ins/gap/gap_lib.c:1762
 msgid "Renumber Framesequence .."
-msgstr "Renumérotation de la séquence de calques..."
+msgstr "Renumérotation de la séquence de trames..."
 
 #: plug-ins/gap/gap_lib.c:1946
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
-msgstr "Aller à l'image (%ld/%ld)"
+msgstr "Aller à la trame (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:1949
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
-msgstr "Numéro de l'image de destination (%ld - %ld)"
+msgstr "Numéro de la trame de destination (%ld - %ld)"
 
 #: plug-ins/gap/gap_lib.c:1953 plug-ins/gap/gap_lib.c:2030
 #: plug-ins/gap/gap_lib.c:2214
@@ -7647,25 +7648,25 @@ msgstr "Numéro :"
 #: plug-ins/gap/gap_lib.c:2014
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
-msgstr "Supprimer des calques (%ld/%ld)"
+msgstr "Supprimer des trames (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2017
 #, c-format
 msgid "Delete Frames from %ld to (Number)"
-msgstr "Supprimer les calques de %ld à (Numéro)c"
+msgstr "Supprimer les trames de %ld à (Numéro)c"
 
 #: plug-ins/gap/gap_lib.c:2080
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
-msgstr "Dupliquer des calques (%ld/%ld)"
+msgstr "Dupliquer des trames (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2090
 msgid "Source Range starts at this framenumber"
-msgstr "La séquence de calques commence à ce numéro"
+msgstr "La séquence de trames commence à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2098
 msgid "Source Range ends at this framenumber"
-msgstr "La séquence de calques s'arrête à ce numéro"
+msgstr "La séquence de trames s'arrête à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2101
 msgid "N-Times :"
@@ -7686,7 +7687,7 @@ msgstr "Dupliquer l'intervalle"
 #: plug-ins/gap/gap_lib.c:2211
 #, c-format
 msgid "Exchange current Frame (%ld)"
-msgstr "Échanger le calque courant (%ld)"
+msgstr "Échanger la trame courante (%ld)"
 
 #: plug-ins/gap/gap_lib.c:2214
 msgid "With Frame (Number)"
@@ -7695,15 +7696,15 @@ msgstr "Avec calque (numéro)"
 #: plug-ins/gap/gap_lib.c:2255
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
-msgstr "Décalage de séquence calques (%ld/%ld)"
+msgstr "Décalage de séquence de trames (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2265
 msgid "Affected Range starts at this framenumber"
-msgstr "La séquence de calques commence à ce numéro"
+msgstr "La séquence de trames commence à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2273
 msgid "Affected Range ends at this framenumber"
-msgstr "La séquence de calques s'arrête à ce numéro"
+msgstr "La séquence de trames s'arrête à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2276
 msgid "N-Shift :"
@@ -7714,34 +7715,36 @@ msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
 msgstr ""
+"Renumérote la séquence de trames concernée\n"
+"(les numéros sont décalés de n circulairement)"
 
 #: plug-ins/gap/gap_lib.c:2283
 msgid "Framesequence shift"
-msgstr "Décalage de séquence calques (%ld/%ld)"
+msgstr "Décalage de séquence de trames (%ld/%ld)"
 
 #: plug-ins/gap/gap_main.c:343
 msgid "<Image>/Video/Goto Next"
-msgstr ""
+msgstr "<Image>/Vidéo/Trame suivante"
 
 #: plug-ins/gap/gap_main.c:355
 msgid "<Image>/Video/Goto Prev"
-msgstr ""
+msgstr "<Image>/Vidéo/Trame précédente"
 
 #: plug-ins/gap/gap_main.c:367
 msgid "<Image>/Video/Goto First"
-msgstr ""
+msgstr "<Image>/Vidéo/Première trame"
 
 #: plug-ins/gap/gap_main.c:379
 msgid "<Image>/Video/Goto Last"
-msgstr ""
+msgstr "<Image>/Vidéo/Dernière trame"
 
 #: plug-ins/gap/gap_main.c:391
 msgid "<Image>/Video/Goto Any"
-msgstr ""
+msgstr "<Image>/Vidéo/Trame n°xx"
 
 #: plug-ins/gap/gap_main.c:403
 msgid "<Image>/Video/Delete Frames"
-msgstr ""
+msgstr "<Image>/Vidéo/Effacer trames"
 
 #: plug-ins/gap/gap_main.c:415
 msgid "<Image>/Video/Duplicate Frames..."
