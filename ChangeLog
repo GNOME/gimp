@@ -1,5 +1,10 @@
 2002-10-14  Dave Neary  <bolsh@gimp.org>
 
+	* plug-ins/common/png.c: Corrected coding standard issues
+	(indentation & bracketting).
+
+2002-10-14  Dave Neary  <bolsh@gimp.org>
+
 	* plug-ins/common/png.c: Fix bug #55700 properly. Handles
 	INDEXEDA images correctly.
 
