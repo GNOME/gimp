@@ -1,3 +1,7 @@
+2000-05-08  Sven Neumann  <sven@gimp.org>
+
+        * libgimp/gimpmenu.[ch]: code review, no real changes
+
 2000-05-08  Sven Neumann  <neo@wintermute.ochsenblut.de>
 
 	* plug-ins/script-fu/scripts/tileblur.scm
