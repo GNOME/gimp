@@ -1,3 +1,8 @@
+2000-04-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/align_layers.c: applied patch provided by
+	KANDA Toshihiro <candy@ops.dti.ne.jp>. Should fix bug #7329.
+
 2000-04-20  Sven Neumann <sven@gimp.org>
 	
 	* plug-ins/common/bumpmap.c: correctly initialize the bumpmap 

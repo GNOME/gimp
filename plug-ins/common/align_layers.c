@@ -217,34 +217,41 @@ static GStatusType
 align_layers (gint32 image_id)
 {
   gint	layer_num = 0;
-  gint	visible_layer_num = 1;
-  gint	*layers = NULL;
-  gint	index, vindex;
-  gint	step_x = 0;
-  gint	step_y = 0;
-  gint	x = 0;
-  gint	y = 0;
-  gint	orig_x = 0;
-  gint	orig_y = 0;
+  gint	visible_layer_num = 0;
+  gint *layers = NULL;
+  gint	index;
+  gint  vindex;
+  gint	step_x   = 0;
+  gint	step_y   = 0;
+  gint	x        = 0;
+  gint	y        = 0;
+  gint	orig_x   = 0;
+  gint	orig_y   = 0;
   gint	offset_x = 0;
   gint	offset_y = 0;
-  gint	base_x = 0;
-  gint	base_y =0;
-
+  gint	base_x   = 0;
+  gint	base_y   = 0;
+  gint  bg_index = 0;
+ 
   layers = gimp_image_get_layers (image_id, &layer_num);
+  bg_index = layer_num - 1;
+
   for (index = 0; index < layer_num; index++)
-    if (gimp_layer_get_visible (layers[index]))
-      visible_layer_num++;
+    {
+      if (gimp_layer_get_visible (layers[index]))
+	visible_layer_num++;
+    }
 
   if (VALS.ignore_bottom)
     {
       layer_num--;
-      visible_layer_num--;
+      if (gimp_layer_get_visible (layers[bg_index]))
+	visible_layer_num--;
     }
 
   if (0 < visible_layer_num)
     {
-      gint	unintialzied = 1;
+      gboolean	uninitialized = TRUE;
       gint	min_x = 0;
       gint	min_y = 0;
       gint	max_x = 0;
@@ -252,49 +259,56 @@ align_layers (gint32 image_id)
       
       /* 0 is the top layer */
       for (index = 0; index < layer_num; index++)
-	if (gimp_layer_get_visible (layers[index]))
-	  {
-	    gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
-	    align_layers_get_align_offsets (layers[index], &offset_x, &offset_y);
-	    orig_x += offset_x;
-	    orig_y += offset_y;
+	{
+	  if (gimp_layer_get_visible (layers[index]))
+	    {
+	      gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
+	      align_layers_get_align_offsets (layers[index], &offset_x, &offset_y);
+	      orig_x += offset_x;
+	      orig_y += offset_y;
+	      
+	      if (uninitialized)
+		{
+		  base_x = min_x = max_x = orig_x;
+		  base_y = min_y = max_y = orig_y;
 
-	    if (unintialzied)
-	      {
-		base_x = min_x = max_y = orig_x;
-		base_y = min_y = max_y = orig_y;
-		unintialzied = 0;
-	      }
-	    else
-	      {
-		if ( orig_x < min_x ) min_x = orig_x;
-		if ( max_x < orig_x ) max_x = orig_x;
-		if ( orig_y < min_y ) min_y = orig_y;
-		if ( max_y < orig_y ) max_y = orig_y;
-	      }
-	  }
+		  uninitialized = FALSE;
+		}
+	      else
+		{
+		  if ( orig_x < min_x ) min_x = orig_x;
+		  if ( max_x < orig_x ) max_x = orig_x;
+		  if ( orig_y < min_y ) min_y = orig_y;
+		  if ( max_y < orig_y ) max_y = orig_y;
+		}
+	    }
+	}
+
       if (VALS.base_is_bottom_layer)
 	{
-	  gimp_drawable_offsets (layers[layer_num], &orig_x, &orig_y);
-	  align_layers_get_align_offsets (layers[layer_num], &offset_x, &offset_y);
+	  gimp_drawable_offsets (layers[bg_index], &orig_x, &orig_y);
+	  align_layers_get_align_offsets (layers[bg_index], &offset_x, &offset_y);
 	  orig_x += offset_x;
 	  orig_y += offset_y;
-	  base_x = min_x = max_y = orig_x;
-	  base_y = min_y = max_y = orig_y;
+	  base_x = min_x = orig_x;
+	  base_y = min_y = orig_y;
 	}
-      if (1 < visible_layer_num)
+
+      if (visible_layer_num > 1)
 	{
 	  step_x = (max_x - min_x) / (visible_layer_num - 1);
 	  step_y = (max_y - min_y) / (visible_layer_num - 1);
 	}
+
       if ( (VALS.h_style == LEFT2RIGHT) || (VALS.h_style == RIGHT2LEFT))
 	base_x = min_x;
+
       if ( (VALS.v_style == TOP2BOTTOM) || (VALS.v_style == BOTTOM2TOP))
 	base_y = min_y;
     }
-
+  
   gimp_undo_push_group_start (image_id);
-
+  
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
       if (gimp_layer_get_visible (layers[index])) 
@@ -317,7 +331,7 @@ align_layers (gint32 image_id)
 	  x = (base_x + vindex * step_x) - offset_x;
 	  break;
 	case RIGHT2LEFT:
-	  x = (base_x + (visible_layer_num - vindex) * step_x) - offset_x;
+	  x = (base_x + (visible_layer_num - vindex - 1) * step_x) - offset_x;
 	  break;
 	case SNAP2HGRID:
 	  x = VALS.grid_size
@@ -337,7 +351,7 @@ align_layers (gint32 image_id)
 	  y = (base_y + vindex * step_y) - offset_y;
 	  break;
 	case BOTTOM2TOP:
-	  y = (base_y + (visible_layer_num - vindex) * step_y) - offset_y;
+	  y = (base_y + (visible_layer_num - vindex - 1) * step_y) - offset_y;
 	  break;
 	case SNAP2VGRID:
 	  y = VALS.grid_size 
