@@ -3,10 +3,10 @@
 	* plug-ins/common/papertile.c: applied a patch from Toby Smith
 	that moves the call to gimp_drawable_mask_bounds() to the filter()
 	function so that the filter is applied to the correct selection
-	even if it changed after the plug-in dialog was opened.
+	even if it changed after the plug-in dialog was opened (#83971).
 
 	* plug-ins/common/unsharp.c (unsharp_mask_dialog): allow larger
-	values for the radius (as suggested #92250).
+	values for the radius (as suggested in #92250).
 
 	* plug-ins/common/png.c: applied patch from Raphael Quinet that
 	untoggles the "Save background color" option for images w/o an
