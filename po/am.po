@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-10-31 05:33+0100\n"
-"PO-Revision-Date: 2002-12-12 15:52+EDT\n"
+"PO-Revision-Date: 2002-12-21 22:37+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -718,11 +718,11 @@ msgstr ""
 
 #: app/core/core-enums.c:261
 msgid "Normal (128x128)"
-msgstr "የተለመደ (128x128)"
+msgstr "የተለመደ (128በ128)"
 
 #: app/core/core-enums.c:262
 msgid "Large (256x256)"
-msgstr "ትልቅ (256x256)"
+msgstr "ትልቅ (256በ256)"
 
 #: app/core/core-enums.c:280
 msgid "Forward (Traditional)"
@@ -1721,7 +1721,7 @@ msgstr ""
 
 #: app/gui/dialogs-constructors.c:664
 msgid "Layers"
-msgstr ""
+msgstr "ደረጃዎች"
 
 #: app/gui/dialogs-constructors.c:703
 msgid "Channel List"
@@ -1737,7 +1737,7 @@ msgstr ""
 
 #: app/gui/dialogs-constructors.c:758 app/pdb/internal_procs.c:154
 msgid "Paths"
-msgstr ""
+msgstr "መንገዶች"
 
 #: app/gui/dialogs-constructors.c:784
 msgid "Old Path List"
@@ -1999,7 +1999,7 @@ msgstr ""
 
 #: app/gui/file-save-dialog.c:374
 msgid "File Exists!"
-msgstr ""
+msgstr "ፋይሉ በፊትም ነበር!"
 
 #: app/gui/gradient-editor-commands.c:88
 msgid "Left Endpoint Color"
@@ -2288,36 +2288,36 @@ msgstr "N/A"
 #. Red
 #: app/gui/info-window.c:218
 msgid "R:"
-msgstr ""
+msgstr "R፦"
 
 #. Green
 #: app/gui/info-window.c:225
 msgid "G:"
-msgstr ""
+msgstr "G፦"
 
 #. Blue
 #: app/gui/info-window.c:232
 msgid "B:"
-msgstr ""
+msgstr "B፦"
 
 #. Hue
 #: app/gui/info-window.c:260
 msgid "H:"
-msgstr ""
+msgstr "H፦"
 
 #. Saturation
 #: app/gui/info-window.c:267
 msgid "S:"
-msgstr ""
+msgstr "S፦"
 
 #. Value
 #: app/gui/info-window.c:274
 msgid "V:"
-msgstr ""
+msgstr "V፦"
 
 #: app/gui/info-window.c:295
 msgid "A:"
-msgstr ""
+msgstr "A፦"
 
 #: app/gui/info-window.c:306
 msgid "Extended"
@@ -2372,7 +2372,7 @@ msgstr ""
 
 #: app/gui/info-window.c:671
 msgid "colors"
-msgstr "ቀለማት"
+msgstr "ቀለሞች"
 
 #: app/gui/layers-commands.c:575
 msgid "Empty Layer Copy"
@@ -2457,7 +2457,7 @@ msgstr "/ፋይል/አዲስ..."
 
 #: app/gui/menus.c:125 app/gui/menus.c:310
 msgid "/File/Open..."
-msgstr "/ፋይል/ክፍት..."
+msgstr "/ፋይል/ክፈት..."
 
 #. <Toolbox>/File/Open Recent
 #: app/gui/menus.c:133 app/gui/menus.c:318
@@ -3117,7 +3117,7 @@ msgstr ""
 
 #: app/gui/menus.c:1040
 msgid "/New Layer..."
-msgstr ""
+msgstr "/አዲስ ደረጃ..."
 
 #: app/gui/menus.c:1046
 msgid "/Raise Layer"
@@ -3149,7 +3149,7 @@ msgstr ""
 
 #: app/gui/menus.c:1082
 msgid "/Delete Layer"
-msgstr ""
+msgstr "/ደረጃ ሰረዝ"
 
 #: app/gui/menus.c:1090
 msgid "/Layer Boundary Size..."
@@ -3277,11 +3277,11 @@ msgstr ""
 
 #: app/gui/menus.c:1299 app/gui/menus.c:1349
 msgid "/Delete Path"
-msgstr ""
+msgstr "/መንገድ ሰረዝ"
 
 #: app/gui/menus.c:1307
 msgid "/Path Tool"
-msgstr ""
+msgstr "/የመንገድ መሣሪያዎች"
 
 #: app/gui/menus.c:1312 app/gui/menus.c:1380
 msgid "/Edit Path Attributes..."
@@ -3289,7 +3289,7 @@ msgstr ""
 
 #: app/gui/menus.c:1324
 msgid "/New Path"
-msgstr ""
+msgstr "/አዲስ መንገድ"
 
 #: app/gui/menus.c:1399
 msgid "/Select Tab"
@@ -3405,7 +3405,7 @@ msgstr ""
 
 #: app/gui/menus.c:1462
 msgid "/View as List"
-msgstr ""
+msgstr "/እንደ ዝርዝር አሳይ"
 
 #: app/gui/menus.c:1465
 msgid "/View as Grid"
@@ -3835,7 +3835,7 @@ msgstr ""
 
 #: app/gui/palette-import-dialog.c:175
 msgid "_Import"
-msgstr ""
+msgstr "ከውጭ አስገባ (_I)"
 
 #. The "Source" frame
 #: app/gui/palette-import-dialog.c:201
@@ -4189,7 +4189,7 @@ msgstr "የምስ መስኮቶች"
 
 #: app/gui/preferences-dialog.c:2303
 msgid "Appearance"
-msgstr ""
+msgstr "አቀራረብ"
 
 #: app/gui/preferences-dialog.c:2305
 msgid "Use \"Dot for Dot\" by default"
@@ -4433,7 +4433,7 @@ msgstr "የተጨማሪው ፕሮግራም ዶሴዎች "
 
 #: app/gui/preferences-dialog.c:2789
 msgid "Select Plug-In Folders"
-msgstr "የተጨማሪው ፕሮግራም ዶሴዎች ምረጥ"
+msgstr "የተጨማሪው ፕሮግራም ዶሴዎች ምረጡ"
 
 #: app/gui/preferences-dialog.c:2791
 msgid "Tool Plug-Ins"
@@ -4461,7 +4461,7 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:2799
 msgid "Themes"
-msgstr ""
+msgstr "ጭብጦች"
 
 #: app/gui/preferences-dialog.c:2799
 msgid "Theme Folders"
@@ -4838,7 +4838,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:543
 msgid "Continue"
-msgstr ""
+msgstr "ቀጥል"
 
 #: app/gui/user-install-dialog.c:683
 msgid ""
@@ -5168,7 +5168,7 @@ msgstr ""
 
 #: app/pdb/internal_procs.c:142
 msgid "Palette"
-msgstr ""
+msgstr "መደርደሪያ"
 
 #: app/pdb/internal_procs.c:145
 msgid "Palette UI"
@@ -5719,7 +5719,7 @@ msgstr ""
 
 #: app/tools/gimpcurvestool.c:641
 msgid "Free"
-msgstr ""
+msgstr "ነፃ"
 
 #: app/tools/gimpcurvestool.c:647
 msgid "Curve Type:"
@@ -5773,11 +5773,11 @@ msgstr ""
 #. initialize the statusbar display
 #: app/tools/gimpeditselectiontool.c:303
 msgid "Move: 0, 0"
-msgstr ""
+msgstr "ምንቀሳቅስ፦ 0, 0"
 
 #: app/tools/gimpeditselectiontool.c:553
 msgid "Move: "
-msgstr ""
+msgstr "ምንቀሳቅስ፦ "
 
 #: app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
@@ -5926,27 +5926,27 @@ msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:266
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: app/tools/gimphuesaturationtool.c:267
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: app/tools/gimphuesaturationtool.c:268
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: app/tools/gimphuesaturationtool.c:271
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
@@ -6013,7 +6013,7 @@ msgstr ""
 
 #: app/tools/gimpinktool.c:1486
 msgid "Speed:"
-msgstr ""
+msgstr "ፍጥነት፦"
 
 #. Brush type radiobuttons
 #: app/tools/gimpinktool.c:1502
@@ -6039,7 +6039,7 @@ msgstr ""
 
 #: app/tools/gimplevelstool.c:156
 msgid "Levels"
-msgstr ""
+msgstr "ደረጃዎች"
 
 #: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
@@ -6311,7 +6311,7 @@ msgstr "ምርጫ፦ "
 
 #: app/tools/gimprotatetool.c:102 app/tools/gimprotatetool.c:182
 msgid "Rotate"
-msgstr ""
+msgstr "ያሽከርክሩ"
 
 #: app/tools/gimprotatetool.c:103
 msgid "Rotate the layer or selection"
@@ -6327,7 +6327,7 @@ msgstr ""
 
 #: app/tools/gimprotatetool.c:209
 msgid "Center X:"
-msgstr ""
+msgstr "መሀከል X፦"
 
 #: app/tools/gimprotatetool.c:288
 msgid "Rotating..."
@@ -6655,7 +6655,7 @@ msgstr ""
 
 #: app/widgets/widgets-enums.c:14
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/widgets/gimpbrusheditor.c:162
 msgid "Hardness:"
@@ -6717,7 +6717,7 @@ msgstr "አዲስ"
 
 #: app/widgets/gimpdatafactoryview.c:203 app/widgets/gimpitemlistview.c:215
 msgid "Duplicate"
-msgstr ""
+msgstr "አባዛ"
 
 #: app/widgets/gimpdatafactoryview.c:211 app/widgets/gimpitemlistview.c:223
 msgid "Edit"
@@ -6725,7 +6725,7 @@ msgstr "አስተካክል"
 
 #: app/widgets/gimpdatafactoryview.c:227
 msgid "Refresh"
-msgstr ""
+msgstr "አድስ"
 
 #: app/widgets/gimpdatafactoryview.c:410
 #, c-format
@@ -6937,11 +6937,11 @@ msgstr ""
 
 #: app/widgets/gimpselectioneditor.c:186
 msgid "Select All"
-msgstr "ሁሉንም ምረጥ"
+msgstr "ሁሉንም ምረጡ"
 
 #: app/widgets/gimpselectioneditor.c:194
 msgid "Select None"
-msgstr ""
+msgstr "ምረጥ ምንም"
 
 #: app/widgets/gimpselectioneditor.c:202
 msgid "Save Selection to Channel"
@@ -7043,7 +7043,7 @@ msgstr ""
 #: app/widgets/gimpwidgets-constructors.c:61
 #: app/widgets/gimpwidgets-constructors.c:91
 msgid "Subtract"
-msgstr ""
+msgstr "መቀነስ"
 
 #: app/widgets/gimpwidgets-constructors.c:62
 #: app/widgets/gimpwidgets-constructors.c:92
