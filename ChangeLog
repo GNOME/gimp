@@ -1,3 +1,16 @@
+Fri May  1 13:22:21 1998  Tim Janik  <timj@gtk.org>
+
+	* app/channels_dialog.c: keep the channel list uptodate
+	on position changes. unref list items on destruction.
+
+	the app/channels_dialog.c app/layers_dialog.c code for dealing
+	with GtkList is a MESS, it needs to be completely reworked
+ 	somewhen. this is *no* fun: the selection is changed so update
+	the list (causing the selection to change again: the selection
+ 	is changed so update the list (causing the selection to change
+ 	again: the selection is changed so update the list (.... oops,
+	sorry got caught in a recursive loop there ;) ))).
+
 Thu Apr 30 16:49:41 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/channels_dialog.c: fix for off-by-one error in channel

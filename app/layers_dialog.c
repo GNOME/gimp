@@ -531,6 +531,7 @@ layers_dialog_flush ()
     {
       lw = (LayerWidget *) list->data;
       list = g_slist_next (list);
+
       if ((gimage_pos = gimage_get_layer_index (gimage, lw->layer)) != pos)
 	layers_dialog_position_layer ((lw->layer), gimage_pos);
 
@@ -2034,7 +2035,7 @@ layer_widget_delete (LayerWidget *layer_widget)
   /*  Remove the layer widget from the list  */
   layersD->layer_widgets = g_slist_remove (layersD->layer_widgets, layer_widget);
 
-  /*  Free the widget  */
+  /*  Release the widget  */
   gtk_widget_unref (layer_widget->list_item);
   g_free (layer_widget);
 }

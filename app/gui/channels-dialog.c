@@ -690,12 +690,13 @@ channels_dialog_position_channel (ChannelWidget *channel_widget,
   /*  Remove the channel from the dialog  */
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
-
+  channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
+  
   suspend_gimage_notify--;
 
   /*  Add it back at the proper index  */
   gtk_list_insert_items (GTK_LIST (channelsD->channel_list), list, new_index + channelsD->num_components);
-
+  channelsD->channel_widgets = g_slist_insert (channelsD->channel_widgets, channel_widget, new_index + channelsD->num_components);
 }
 
 
@@ -1070,7 +1071,7 @@ create_channel_widget (GImage      *gimage,
   gtk_widget_show (vbox);
   gtk_widget_show (list_item);
 
-  gtk_widget_ref (GTK_WIDGET (channel_widget->list_item));
+  gtk_widget_ref (channel_widget->list_item);
 
   return channel_widget;
 }
@@ -1085,7 +1086,7 @@ channel_widget_delete (ChannelWidget *channel_widget)
   /*  Remove the channel widget from the list  */
   channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
 
-  /*  Free the widget  */
+  /*  Release the widget  */
   gtk_widget_unref (channel_widget->list_item);
   g_free (channel_widget);
 }
