@@ -1,3 +1,8 @@
+2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/dialogs/info-dialog.c: disconnect callbacks to prevent crash
+	when destroying dialog, fixes bug #163617.
+	
 2005-01-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockable.[ch]: added new function
