@@ -142,7 +142,7 @@ preferences_dialog_create (Gimp *gimp)
   prefs_dialog = prefs_dialog_new (gimp, config_copy);
 
   g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
-                             &prefs_dialog);
+                             (gpointer *) &prefs_dialog);
 
   g_object_weak_ref (G_OBJECT (prefs_dialog),
                      (GWeakNotify) g_object_unref,
