@@ -1252,9 +1252,8 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
       width  = MAX (shell->icon_size, 1);
     }
 
-  pixbuf =
-    gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
-                                          width, height);
+  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                         width, height);
 
   gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 

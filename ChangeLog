@@ -1,3 +1,24 @@
+2004-05-13  Michael Natterer  <mitch@gimp.org>
+
+	Added GimpViewable infrastructure which enables migrating from
+	TempBuf to GdkPixbuf for both providing and getting previews:
+
+	* app/core/gimpviewable.[ch]: added new virtual functions
+	GimpViewable::get_pixbuf() and GimpViewable::get_new_pixbuf()
+	which are implemented exactly as get_preview() and
+	get_new_preview() except that get_new_pixbuf() has a default
+	implementation which creates the pixbuf from a TempBuf.
+
+	Renamed public functions _get_preview_pixbuf() and
+	_get_new_preview_pixbuf() to _get_pixbuf() and _get_new_pixbuf().
+
+	Added gimp_viewable_get_dummy_pixbuf() and use it from
+	gimp_viewable_get_dummy_preview().
+
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb)
+	* app/display/gimpdisplayshell.c (gimp_display_shell_update_icon)
+	* app/gui/resize-dialog.c (resize_dialog_new): changed accordingly.
+
 2004-05-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.[ch]: added mime-type support.
