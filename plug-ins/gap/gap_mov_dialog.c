@@ -30,6 +30,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.15a; 2000/01/26  hof: removed gimp 1.0.x support
  * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
  *                                   changed border_width spacing and Buttons in action area
  *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
@@ -2267,7 +2268,7 @@ int p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
     l_interpolation = 1;  /* rotate always with smoothing option turned on */
 
     /* have to rotate the layer (rotation also changes size as needed) */
-    p_gimp_rotate(image_id, l_cp_layer_id, l_interpolation, cur_ptr->currRotation);
+    p_gimp_rotate(l_cp_layer_id, l_interpolation, cur_ptr->currRotation);
 
     
     l_new_width  = gimp_layer_width(l_cp_layer_id);

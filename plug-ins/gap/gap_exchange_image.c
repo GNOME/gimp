@@ -6,7 +6,7 @@
  * basic anim functions:
  *   This Plugin drops the content of the destination
  *   image (all layers,channels & guides)
- *   and then copies the content of a source image to dst. image
+ *   and then moves (steal) the content of a source image to dst. image
  *
  */
 /* The GIMP -- an image manipulation program
@@ -28,6 +28,8 @@
  */
 
 /* revision history:
+ * 1.1.15a  2000/01/25   hof: stopped gimp 1.0.x support (removed p_copy_content)
+ *                            handle pathes
  * 0.98.00; 1998/11/30   hof: 1.st release
  *                             (substitute for the procedure "gimp_duplicate_into"
  *                              that was never part of the GIMP core)
@@ -56,7 +58,12 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 /* ============================================================================
  * p_steal_content
  *   
- *   steal all elements (layers, channels, selections, guides, colormap)
+ *   steal or copy all elements
+ *     - layers, 
+ *     - channels, selections, 
+ *     - pathes,
+ *     - guides, 
+ *     - colormap
  *     from src_image and add them to dst_image.
  * ============================================================================
  */
@@ -85,6 +92,13 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    gint32  l_x1, l_x2, l_y1, l_y2;
    guchar *l_cmap;
    gint    l_ncolors;
+   char   **l_path_names;
+   char    *l_current_pathname;
+   gint32   l_num_paths;
+   gdouble *l_path_points;
+   gint32   l_path_type;
+   gint32   l_path_closed;
+   gint32   l_num_points;
    
    l_rc = -1;  /* init retcode to Errorstate */
    l_layers_list = NULL;
@@ -211,7 +225,7 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
        if(gap_debug) printf("GAP-DEBUG: START p_steal_content selection_channel_id=%d\n", (int)l_channel_id);
               
        p_gimp_drawable_set_image(l_channel_id, dst_image_id);
-       p_gimp_selection_load (dst_image_id, l_channel_id);
+       p_gimp_selection_load (l_channel_id);
 	
    }
 
@@ -268,6 +282,33 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
                              );
       l_guide_id = p_gimp_image_findnext_guide(src_image_id, l_guide_id);
    }
+
+   /* copy paths */
+   l_path_names = p_gimp_path_list(src_image_id, &l_num_paths);
+   if((l_path_names != NULL) && (l_num_paths > 0))
+   {
+      l_current_pathname = p_gimp_path_get_current(src_image_id);
+      for(l_idx=l_num_paths-1; l_idx >= 0; l_idx--)
+      {
+	 l_path_points = p_gimp_path_get_points(src_image_id, l_path_names[l_idx],
+	                           &l_path_type, &l_path_closed, &l_num_points);
+         if((l_path_points != NULL) && (l_num_points > 0))
+	 {
+	    p_gimp_path_set_points(dst_image_id, l_path_names[l_idx],
+	                           l_path_type, l_num_points, l_path_points);
+ 	 }
+                  
+         if(l_path_points)  g_free(l_path_points);         
+	 
+	 g_free(l_path_names[l_idx]);
+      }
+      if(l_current_pathname)
+      {
+         p_gimp_path_set_current(dst_image_id, l_current_pathname);
+         g_free(l_current_pathname);
+      }
+   }
+   if(l_path_names) g_free(l_path_names);
 
    l_rc = 0;
    
@@ -281,253 +322,6 @@ cleanup:
 
    return (l_rc);            /* 0 .. OK, or -1 on error */
 }   /* end p_steal_content */
-
-
-
-/* ============================================================================
- * p_copy_content
- *   
- *   copy all elements (layers, channels, selections, guides, colormap) from src_image
- *   to dst_image.
- * ============================================================================
- */
-
-static int
-p_copy_content(gint32 dst_image_id, gint32 src_image_id)
-{
-   int     l_rc;
-   int     l_idx;
-   
-   gint    l_nlayers;
-   gint    l_nchannels;
-   gint32 *l_layers_list;
-   gint32 *l_channels_list;
-   gint32  l_layer_id;
-   gint32  l_channel_id;
-   gint32  l_new_layer_id;
-   gint32  l_new_channel_id;
-   gint32  l_layer_mask_id;
-   gint32  l_new_layer_mask_id;
-   gint32  l_guide_id;
-   gint32  l_src_fsel_id;                 /* floating selection (in the src_image) */
-   gint32  l_src_fsel_attached_to_id;     /* the drawable where floating selection is attached to (in the src_image) */
-   gint32  l_fsel_attached_to_id;         /* the drawable id where to attach the floating selection (dst) */
-   gint32  l_fsel_id;                     /* the drawable id of the floating selection itself (dst)  */
-   gint32  l_active_layer_id;
-   gint32  l_active_channel_id;
-   gint    l_offset_x;
-   gint    l_offset_y;
-   gint32  l_x1, l_x2, l_y1, l_y2;
-   guchar *l_cmap;
-   gint    l_ncolors;
-   
-   l_rc = -1;  /* init retcode to Errorstate */
-   l_layers_list = NULL;
-   l_channels_list = NULL;
-   l_active_layer_id = -1;
-   l_active_channel_id = -1;
-   l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
-   l_fsel_id = -1;                /* -1  assume there is no floating selection */
-
-
-   if(gap_debug) printf("GAP-DEBUG: START p_copy_content dst_id=%d src_id=%d\n", (int)dst_image_id, (int)src_image_id);
-   
-   /* check for floating selection */
-   l_src_fsel_attached_to_id = -1;
-   l_src_fsel_id = gimp_image_floating_selection(src_image_id);
-   if(l_src_fsel_id >= 0)
-   {
-       if(gap_debug) printf("GAP-DEBUG: call floating_sel_relax fsel_id=%d\n",
-                           (int)l_src_fsel_id);
-       
-       p_gimp_floating_sel_relax (l_src_fsel_id, FALSE);
-       l_src_fsel_attached_to_id = p_gimp_image_floating_sel_attached_to(src_image_id);
-   }
-  
-   /* copy all layers */
-   l_layers_list = gimp_image_get_layers(src_image_id, &l_nlayers);
-
-   /* foreach layer do */
-   for(l_idx = l_nlayers -1; l_idx >= 0; l_idx--)
-   {
-     l_layer_id = l_layers_list[l_idx];
-     if(gap_debug) printf("GAP-DEBUG: START p_copy_content layer_id=%d\n", (int)l_layer_id);
-
-
-     /* copy the layer (including its layermask) */
-     l_new_layer_id = p_my_layer_copy(dst_image_id, l_layer_id,
-                                      gimp_layer_get_opacity(l_layer_id),
-                                      gimp_layer_get_mode(l_layer_id),
-                                      &l_offset_x,
-                                      &l_offset_y
-                                      );
-     if (l_new_layer_id < 0)  { goto cleanup; }
-
-     if(l_layer_id == l_src_fsel_id)
-     {
-        l_fsel_id = l_new_layer_id;    /* this layer is the floating selection */
-     }
-     else
-     {
-        if(gap_debug) printf("GAP-DEBUG: START p_copy_content add_layer_id=%d\n", (int)l_new_layer_id);
-        /* add the layer on top of the images layerstak */
-        gimp_image_add_layer (dst_image_id, l_new_layer_id, 0);
-        
-        if(l_layer_id == l_src_fsel_attached_to_id)
-        {
-           l_fsel_attached_to_id = l_new_layer_id;    /* the floating selection is attached to this layer */
-        }
-     }
-
-     /* adjust offsets and other layerproperties */
-     gimp_layer_set_offsets(l_new_layer_id, l_offset_x, l_offset_y);
-     gimp_layer_set_visible (l_new_layer_id, gimp_layer_get_visible(l_layer_id));
-        p_layer_set_linked (l_new_layer_id, p_layer_get_linked(l_layer_id));
-     gimp_layer_set_preserve_transparency (l_new_layer_id, gimp_layer_get_preserve_transparency(l_layer_id));
-
-     if(l_layer_id  == gimp_image_get_active_layer(src_image_id))
-     {
-        l_active_layer_id = l_new_layer_id;
-     }
-
-     l_layer_mask_id = gimp_layer_get_mask_id(l_layer_id);
-     if(l_layer_mask_id >= 0)
-     {
-        /* layer has layermask */
-        l_new_layer_mask_id = gimp_layer_get_mask_id(l_new_layer_id);
- 
-        if(gap_debug) printf("GAP-DEBUG: START p_copy_content layer_mask_id=%d\n", (int)l_layer_mask_id);
-       
-        /* check for floating selection */
-        if(l_layer_mask_id == l_src_fsel_attached_to_id)
-        {
-           l_fsel_attached_to_id = l_new_layer_mask_id;   /* the floating selection is attached to this layer_mask */
-        }
-
-        gimp_layer_set_apply_mask (l_new_layer_id, gimp_layer_get_apply_mask(l_layer_id));
-        gimp_layer_set_edit_mask  (l_new_layer_id, gimp_layer_get_edit_mask(l_layer_id));
-        gimp_layer_set_show_mask  (l_new_layer_id, gimp_layer_get_show_mask(l_layer_id));
-
-     }
-
-   }  /* end foreach layer */
-   
-   /* copy all channels */ 
-   
-   l_channels_list = gimp_image_get_channels(src_image_id, &l_nchannels);
-   
-   /* foreach channel do */
-   for(l_idx = l_nchannels -1; l_idx >= 0; l_idx--)
-   {
-      l_channel_id = l_channels_list[l_idx];
-      if(gap_debug) printf("GAP-DEBUG: START p_copy_content channel_id=%d\n", (int)l_channel_id);
-
-      l_new_channel_id = p_my_channel_copy(dst_image_id, l_channel_id);
-                       
-      if (l_new_channel_id < 0)  { goto cleanup; }
-                      
-
-       /* add channel on top of the channelstack */
-       gimp_image_add_channel (dst_image_id, l_new_channel_id, 0);
-
-       /* adjust channelproperties */
-       gimp_channel_set_visible (l_new_channel_id, gimp_channel_get_visible(l_channel_id));
-       gimp_channel_set_show_masked (l_new_channel_id, gimp_channel_get_show_masked(l_channel_id));
-
-       if(l_channel_id == l_src_fsel_attached_to_id)
-       {
-          l_fsel_attached_to_id = l_new_channel_id;    /* the floating_selection is attached to this channel */
-       }
-
-       if(l_channel_id == gimp_image_get_active_channel(src_image_id))
-       {
-          l_active_channel_id = l_new_channel_id;
-       }
-   }      /* end foreach channel */
-
-   /* check and see if we have to copy the selection */
-   l_channel_id = gimp_image_get_selection(src_image_id);
-   if((p_get_gimp_selection_bounds(src_image_id, &l_x1, &l_y1, &l_x2, &l_y2))
-   && (l_channel_id >= 0))
-   {
-       if(gap_debug) printf("GAP-DEBUG: START p_copy_content selection_channel_id=%d\n", (int)l_channel_id);
-       
-       l_new_channel_id = p_my_channel_copy(dst_image_id, l_channel_id);
-
-       if (l_new_channel_id < 0)  { goto cleanup; }
-       
-       p_gimp_selection_load (dst_image_id, l_new_channel_id);
-	
-       /* delete the channel after load into selection */
-       gimp_channel_delete(l_new_channel_id);
-   }
-
-
-   /* attach the floating selection... */
-   if((l_fsel_id >= 0) && (l_fsel_attached_to_id >= 0))
-   {
-      if(gap_debug) printf("GAP-DEBUG: attaching floating_selection id=%d to id %d\n",
-                    (int)l_fsel_id, (int)l_fsel_attached_to_id);
-      if(p_gimp_floating_sel_attach (l_fsel_id, l_fsel_attached_to_id) < 0)
-      {
-         /* in case of error add floating_selection like an ordinary layer
-	  * (if patches are not installed you'll get the error for sure)
-	  */
-         printf("GAP: floating_selection is added as top-layer (attach failed)\n");
-         gimp_image_add_layer (dst_image_id, l_fsel_id, 0);
-
-      }
-   }
-
-   /* set active layer/channel */
-   if(l_active_channel_id >= 0)
-   {
-       if(gap_debug) printf("GAP-DEBUG: SET active channel %d\n", (int)l_active_channel_id);     
-       gimp_image_set_active_channel(dst_image_id, l_active_channel_id);
-   }
-   if(l_active_layer_id >= 0)
-   {
-       if(gap_debug) printf("GAP-DEBUG: SET active layer %d\n", (int)l_active_layer_id);     
-       gimp_image_set_active_layer(dst_image_id, l_active_layer_id);
-   }
-
-   /*  Copy the colormap if necessary  */
-   if(gimp_image_base_type(src_image_id) == INDEXED)
-   {
-       l_cmap = gimp_image_get_cmap (src_image_id, &l_ncolors);
-
-       if(gap_debug) printf("GAP-DEBUG: copy colormap ncolors %d\n", (int)l_ncolors);
-       gimp_image_set_cmap(dst_image_id, l_cmap, l_ncolors);
-   }
-
-   /* copy guides
-    * You need GIMP 1.1 or higher for that feature
-    * (in GIMP 1.0.2 there is no interface for that job
-    * and guides will be ignored.)
-    */
-   l_guide_id = p_gimp_image_findnext_guide(src_image_id, 0);  /* get 1.st guide */
-   while(l_guide_id > 0)
-   {
-      /* get position and orientation for the current guide ID */
-      p_gimp_image_add_guide(dst_image_id, 
-                             p_gimp_image_get_guide_position(src_image_id, l_guide_id),
-                             p_gimp_image_get_guide_orientation(src_image_id, l_guide_id)
-                             );
-      l_guide_id = p_gimp_image_findnext_guide(src_image_id, l_guide_id);
-   }
-
-   l_rc = 0;
-   
-cleanup:
-
-   if(l_layers_list) g_free (l_layers_list);
-   if(l_channels_list) g_free (l_channels_list);
-   
-   if(gap_debug) printf("GAP-DEBUG: END p_copy_content dst_id=%d src_id=%d  rc=%d\n",
-                 (int)dst_image_id, (int)src_image_id, l_rc);
-
-   return (l_rc);            /* 0 .. OK, or -1 on error */
-}   /* end p_copy_content */
 
 
 
@@ -554,6 +348,8 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
    gint32  l_channel_id;
    gint32  l_guide_id;
    gint32  l_old_bg_layer_id;
+   char   **l_path_names;
+   gint32   l_num_paths;
 
    if(gap_debug) printf("\nGAP-DEBUG: START p_replace_img img_id=%d \n", (int)image_id);
 
@@ -587,6 +383,18 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
       l_guide_id = p_gimp_image_findnext_guide(image_id, 0); 
    }
 
+   /* delete paths */
+   l_path_names = p_gimp_path_list(image_id, &l_num_paths);
+   if((l_path_names != NULL) && (l_num_paths > 0))
+   {
+      for(l_idx=0; l_idx < l_num_paths; l_idx++)
+      {
+	 p_gimp_path_delete(image_id, l_path_names[l_idx]);
+	 g_free(l_path_names[l_idx]);
+      }
+   }
+   if(l_path_names) g_free(l_path_names);
+
    /* get list of all (old) dst_layers to delete */
    l_layers_list = gimp_image_get_layers(image_id, &l_nlayers);
 
@@ -617,19 +425,8 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
    }
    
 
-   /* copy (or steal) all layers, channels and guides from src_image */
-   if (p_pdb_procedure_available("gimp_drawable_set_image") >= 0)
-   {
-      /* if the Procedure "gimp_drawable_set_image" is available
-       * we can steal the layers and channels instead of copying them
-       * (that gives faster performance)
-       */
-      l_rc = p_steal_content(image_id, src_image_id);
-   }
-   else
-   {
-      l_rc = p_copy_content(image_id, src_image_id);
-   }
+   /* steal all layers, channels and guides from src_image */
+   l_rc = p_steal_content(image_id, src_image_id);
 
    if(l_old_bg_layer_id >= 0)
    {

@@ -21,6 +21,7 @@
  */
 
 /* revision history:
+ * version 1.1.15a; 2000/01/26  hof: pathes, removed gimp 1.0.x support
  * version 1.1.14a; 2000/01/06  hof: thumbnail save/load,
  *                              Procedures for video_info file
  * version 0.98.00; 1998/11/30  hof: all PDB-calls of GIMP PDB-Procedures
@@ -39,7 +40,7 @@ typedef struct t_video_info {
 
 gint p_pdb_procedure_available(char *proc_name);
 gint p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2);
-gint p_gimp_selection_load (gint32 image_id, gint32 channel_id);
+gint p_gimp_selection_load (gint32 channel_id);
 int  p_layer_set_linked (gint32 layer_id, gint32 new_state);
 gint p_layer_get_linked(gint32 layer_id);
 
@@ -55,7 +56,7 @@ gint32 p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id);
 gint32 p_gimp_image_delete_guide(gint32 image_id, gint32 guide_id);
 gint   p_gimp_selection_none(gint32 image_id);
 
-gint   p_gimp_rotate(gint32 image_id, gint32 drawable_id, gint32 interpolation, gdouble angle_deg);
+gint   p_gimp_rotate(gint32 drawable_id, gint32 interpolation, gdouble angle_deg);
 gint32 p_gimp_channel_ops_duplicate  (gint32     image_ID);
 
 
@@ -71,6 +72,17 @@ gint   p_gimp_image_thumbnail(gint32 image_id, gint32 width, gint32 height,
 			      gint32 *th_data_count, unsigned char **th_data);
 
 
+gint     p_gimp_path_set_points(gint32 image_id, char *name,
+                              gint32 path_type, gint32 num_points, 
+                              gdouble *path_points);                              
+gdouble *p_gimp_path_get_points(gint32 image_id, char *name,
+                              gint32 *path_type, gint32 *path_closed,
+                              gint32 *num_points);
+gint     p_gimp_path_delete(gint32 image_id, char *name);
+                              
+char   **p_gimp_path_list(gint32 image_id, gint32 *num_paths);
+gint     p_gimp_path_set_current(gint32 image_id, char *name);
+char    *p_gimp_path_get_current(gint32 image_id);
 
 
 char *p_alloc_video_info_name(char *basename);
