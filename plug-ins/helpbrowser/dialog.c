@@ -62,7 +62,7 @@ enum
 
 static void       browser_dialog_404 (HtmlDocument     *doc,
                                       const gchar      *url,
-                                      GError           *error);
+                                      const gchar      *message);
 
 static void       button_callback    (GtkWidget        *widget,
                                       gpointer          data);
@@ -343,7 +343,7 @@ browser_dialog_load (const gchar *ref,
 
       if (! request_url (doc, abs, doc->current_stream, &error))
         {
-          browser_dialog_404 (doc, abs, error);
+          browser_dialog_404 (doc, abs, error->message);
           g_error_free (error);
         }
     }
@@ -372,7 +372,7 @@ browser_dialog_load (const gchar *ref,
 static void
 browser_dialog_404 (HtmlDocument *doc,
                     const gchar  *url,
-                    GError       *error)
+                    const gchar  *message)
 {
   gchar *msg = g_strdup_printf
     ("<html>"
@@ -391,7 +391,7 @@ browser_dialog_404 (HtmlDocument *doc,
      eek_png_tag,
      _("The requested URL could not be loaded:"),
      url,
-     error->message);
+     message);
 
   html_document_write_stream (doc, msg, strlen (msg));
 
