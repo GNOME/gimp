@@ -513,7 +513,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'merge_type', type => 'enum MergeType (no FLATTEN_IMAGE)',
+	{ name => 'merge_type',
+	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
 	  desc => 'The type of merge: { %%desc%% }' }
     );
 
@@ -552,7 +553,8 @@ HELP
 	&std_image_arg,
 	{ name => 'merge_layer', type => 'layer',
 	  desc => 'The layer to merge down from' },
-	{ name => 'merge_type', type => 'enum MergeType (no FLATTEN_IMAGE)',
+	{ name => 'merge_type', 
+	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
 	  desc => 'The type of merge: { %%desc%% }' }
     );
 

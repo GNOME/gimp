@@ -56,8 +56,8 @@
 /*  public functions  */
 
 GimpLayer *
-gimp_image_merge_visible_layers (GimpImage *gimage, 
-				 MergeType  merge_type)
+gimp_image_merge_visible_layers (GimpImage     *gimage, 
+				 GimpMergeType  merge_type)
 {
   GList     *list;
   GSList    *merge_list       = NULL;
@@ -135,7 +135,7 @@ gimp_image_flatten (GimpImage *gimage)
 	merge_list = g_slist_append (merge_list, layer);
     }
 
-  layer = gimp_image_merge_layers (gimage, merge_list, FLATTEN_IMAGE);
+  layer = gimp_image_merge_layers (gimage, merge_list, GIMP_FLATTEN_IMAGE);
   g_slist_free (merge_list);
 
   gimp_image_alpha_changed (gimage);
@@ -146,9 +146,9 @@ gimp_image_flatten (GimpImage *gimage)
 }
 
 GimpLayer *
-gimp_image_merge_down (GimpImage *gimage,
-		       GimpLayer *current_layer,
-		       MergeType  merge_type)
+gimp_image_merge_down (GimpImage     *gimage,
+		       GimpLayer     *current_layer,
+		       GimpMergeType  merge_type)
 {
   GimpLayer *layer;
   GList     *list;
@@ -198,9 +198,9 @@ gimp_image_merge_down (GimpImage *gimage,
 }
 
 GimpLayer *
-gimp_image_merge_layers (GimpImage *gimage, 
-			 GSList    *merge_list, 
-			 MergeType  merge_type)
+gimp_image_merge_layers (GimpImage     *gimage, 
+			 GSList        *merge_list, 
+			 GimpMergeType  merge_type)
 {
   GList                *list;
   GSList               *reverse_list = NULL;
@@ -239,8 +239,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       switch (merge_type)
 	{
-	case EXPAND_AS_NECESSARY:
-	case CLIP_TO_IMAGE:
+	case GIMP_EXPAND_AS_NECESSARY:
+	case GIMP_CLIP_TO_IMAGE:
 	  if (!count)
 	    {
 	      x1 = off_x;
@@ -259,7 +259,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	      if ((off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))) > y2)
 		y2 = (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)));
 	    }
-	  if (merge_type == CLIP_TO_IMAGE)
+	  if (merge_type == GIMP_CLIP_TO_IMAGE)
 	    {
 	      x1 = CLAMP (x1, 0, gimage->width);
 	      y1 = CLAMP (y1, 0, gimage->height);
@@ -268,7 +268,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    }
 	  break;
 
-	case CLIP_TO_BOTTOM_LAYER:
+	case GIMP_CLIP_TO_BOTTOM_LAYER:
 	  if (merge_list->next == NULL)
 	    {
 	      x1 = off_x;
@@ -278,7 +278,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    }
 	  break;
 
-	case FLATTEN_IMAGE:
+	case GIMP_FLATTEN_IMAGE:
 	  if (merge_list->next == NULL)
 	    {
 	      x1 = 0;
@@ -302,7 +302,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  if (merge_type == FLATTEN_IMAGE ||
+  if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
       type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
@@ -465,7 +465,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   g_slist_free (reverse_list);
 
   /*  if the type is flatten, remove all the remaining layers  */
-  if (merge_type == FLATTEN_IMAGE)
+  if (merge_type == GIMP_FLATTEN_IMAGE)
     {
       list = GIMP_LIST (gimage->layers)->list;
       while (list)

@@ -201,6 +201,14 @@ typedef enum
 
 typedef enum
 {
+  GIMP_EXPAND_AS_NECESSARY,
+  GIMP_CLIP_TO_IMAGE,
+  GIMP_CLIP_TO_BOTTOM_LAYER,
+  GIMP_FLATTEN_IMAGE
+} GimpMergeType;
+
+typedef enum
+{
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
@@ -245,14 +253,6 @@ typedef enum
   GIMP_BLUE_HUES,
   GIMP_MAGENTA_HUES
 } GimpHueRange;
-
-typedef enum
-{
-  GIMP_EXPAND_AS_NECESSARY,
-  GIMP_CLIP_TO_IMAGE,
-  GIMP_CLIP_TO_BOTTOM_LAYER,
-  GIMP_FLATTEN_IMAGE
-} GimpMergeType;
 
 typedef enum
 {

@@ -220,7 +220,7 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer);
 
-  gimp_image_merge_down (gimage, active_layer, EXPAND_AS_NECESSARY);
+  gimp_image_merge_down (gimage, active_layer, GIMP_EXPAND_AS_NECESSARY);
   gdisplays_flush ();
 }
 

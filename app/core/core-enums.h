@@ -243,6 +243,20 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_EXPAND_AS_NECESSARY,
+  GIMP_CLIP_TO_IMAGE,
+  GIMP_CLIP_TO_BOTTOM_LAYER,
+  GIMP_FLATTEN_IMAGE
+} GimpMergeType;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_OFFSET_BACKGROUND,
+  GIMP_OFFSET_TRANSPARENT
+} GimpOffsetType;
+
+typedef enum  /*< skip >*/
+{
   GIMP_SHADOWS,
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS

@@ -194,9 +194,11 @@ offset_dialog_create (GimpDrawable *drawable)
 			   GINT_TO_POINTER (off_d->fill_type),
 
 			   _("Background"),
-			   GINT_TO_POINTER (OFFSET_BACKGROUND), NULL,
+			   GINT_TO_POINTER (GIMP_OFFSET_BACKGROUND), NULL,
+
 			   _("Transparent"),
-			   GINT_TO_POINTER (OFFSET_TRANSPARENT), &radio_button,
+			   GINT_TO_POINTER (GIMP_OFFSET_TRANSPARENT), 
+                           &radio_button,
 
 			   NULL);
 

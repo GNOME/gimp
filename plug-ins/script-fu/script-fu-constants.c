@@ -141,6 +141,11 @@ init_generated_constants (void)
   setvar (cintern ("MASK-APPLY"), flocons (0), NIL);
   setvar (cintern ("MASK-DISCARD"), flocons (1), NIL);
 
+  setvar (cintern ("EXPAND-AS-NECESSARY"), flocons (0), NIL);
+  setvar (cintern ("CLIP-TO-IMAGE"), flocons (1), NIL);
+  setvar (cintern ("CLIP-TO-BOTTOM-LAYER"), flocons (2), NIL);
+  setvar (cintern ("FLATTEN-IMAGE"), flocons (3), NIL);
+
   setvar (cintern ("MESSAGE-BOX"), flocons (0), NIL);
   setvar (cintern ("CONSOLE"), flocons (1), NIL);
   setvar (cintern ("ERROR-CONSOLE"), flocons (2), NIL);
@@ -219,11 +224,6 @@ init_generated_constants (void)
   setvar (cintern ("CYAN-HUES"), flocons (4), NIL);
   setvar (cintern ("BLUE-HUES"), flocons (5), NIL);
   setvar (cintern ("MAGENTA-HUES"), flocons (6), NIL);
-
-  setvar (cintern ("EXPAND-AS-NECESSARY"), flocons (0), NIL);
-  setvar (cintern ("CLIP-TO-IMAGE"), flocons (1), NIL);
-  setvar (cintern ("CLIP-TO-BOTTOM-LAYER"), flocons (2), NIL);
-  setvar (cintern ("FLATTEN-IMAGE"), flocons (3), NIL);
 
   setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
   setvar (cintern ("VERTICAL"), flocons (1), NIL);

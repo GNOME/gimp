@@ -33,7 +33,6 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 #include "core/core-enums.h"
-#include "core/core-types.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"
@@ -1545,7 +1544,7 @@ drawable_offset_invoker (Gimp     *gimp,
   wrap_around = args[1].value.pdb_int ? TRUE : FALSE;
 
   fill_type = args[2].value.pdb_int;
-  if (fill_type < OFFSET_BACKGROUND || fill_type > OFFSET_TRANSPARENT)
+  if (fill_type < GIMP_OFFSET_BACKGROUND || fill_type > GIMP_OFFSET_TRANSPARENT)
     success = FALSE;
 
   offset_x = args[3].value.pdb_int;
@@ -1575,7 +1574,7 @@ static ProcArg drawable_offset_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill_type",
-    "fill vacated regions of drawable with background or transparent: OFFSET_BACKGROUND (0) or OFFSET_TRANSPARENT (1)"
+    "fill vacated regions of drawable with background or transparent: GIMP_OFFSET_BACKGROUND (0) or GIMP_OFFSET_TRANSPARENT (1)"
   },
   {
     GIMP_PDB_INT32,

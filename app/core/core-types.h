@@ -50,20 +50,6 @@ typedef enum /*< pdb-skip >*/
   ORIENTATION_VERTICAL
 } InternalOrientationType;
 
-typedef enum
-{
-  OFFSET_BACKGROUND,
-  OFFSET_TRANSPARENT
-} GimpOffsetType;
-
-typedef enum
-{
-  EXPAND_AS_NECESSARY,
-  CLIP_TO_IMAGE,
-  CLIP_TO_BOTTOM_LAYER,
-  FLATTEN_IMAGE
-} MergeType;
-
 
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {

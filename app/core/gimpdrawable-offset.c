@@ -222,7 +222,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   /*  Otherwise, fill the vacated regions  */
   else
     {
-      if (fill_type == OFFSET_BACKGROUND)
+      if (fill_type == GIMP_OFFSET_BACKGROUND)
 	{
 	  Gimp    *gimp;
 	  GimpRGB  color;

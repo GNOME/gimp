@@ -1,6 +1,24 @@
 2002-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h
+	* app/core/core-types.h: more enum cleanup (GimpOffsetType, MergeType).
+
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpimage-merge.[ch]
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+	
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+	
+2002-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h
 	* app/core/core-types.h: more enum cleanup (ChannelOps this time).
 
 	* app/core/gimpchannel.[ch]

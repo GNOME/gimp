@@ -244,10 +244,10 @@ typedef struct _LayerMergeOptions LayerMergeOptions;
 
 struct _LayerMergeOptions
 {
-  GtkWidget *query_box;
-  GimpImage *gimage;
-  gboolean   merge_visible;
-  MergeType  merge_type;
+  GtkWidget     *query_box;
+  GimpImage     *gimage;
+  gboolean       merge_visible;
+  GimpMergeType  merge_type;
 };
 
 static void
@@ -282,7 +282,7 @@ image_layers_merge_query (GimpImage   *gimage,
   options = g_new (LayerMergeOptions, 1);
   options->gimage        = gimage;
   options->merge_visible = merge_visible;
-  options->merge_type    = EXPAND_AS_NECESSARY;
+  options->merge_type    = GIMP_EXPAND_AS_NECESSARY;
 
   /* The dialog  */
   options->query_box =
@@ -319,11 +319,11 @@ image_layers_merge_query (GimpImage   *gimage,
 				 GINT_TO_POINTER (options->merge_type),
 
 				 _("Expanded as necessary"),
-				 GINT_TO_POINTER (EXPAND_AS_NECESSARY), NULL,
+				 GINT_TO_POINTER (GIMP_EXPAND_AS_NECESSARY), NULL,
 				 _("Clipped to image"),
-				 GINT_TO_POINTER (CLIP_TO_IMAGE), NULL,
+				 GINT_TO_POINTER (GIMP_CLIP_TO_IMAGE), NULL,
 				 _("Clipped to bottom layer"),
-				 GINT_TO_POINTER (CLIP_TO_BOTTOM_LAYER), NULL,
+				 GINT_TO_POINTER (GIMP_CLIP_TO_BOTTOM_LAYER), NULL,
 
 				 NULL);
 

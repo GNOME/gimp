@@ -169,23 +169,6 @@ package Gimp::CodeGen::enums;
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
 	},
-    GimpOffsetType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
-	  mapping => { OFFSET_BACKGROUND => '0',
-		       OFFSET_TRANSPARENT => '1' }
-	},
-    MergeType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(EXPAND_AS_NECESSARY CLIP_TO_IMAGE
-			  CLIP_TO_BOTTOM_LAYER FLATTEN_IMAGE) ],
-	  mapping => { EXPAND_AS_NECESSARY => '0',
-		       CLIP_TO_IMAGE => '1',
-		       CLIP_TO_BOTTOM_LAYER => '2',
-		       FLATTEN_IMAGE => '3' }
-	},
     GimpImageBaseType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -334,6 +317,23 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_MASK_APPLY GIMP_MASK_DISCARD) ],
 	  mapping => { GIMP_MASK_APPLY => '0',
 		       GIMP_MASK_DISCARD => '1' }
+	},
+    GimpMergeType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_EXPAND_AS_NECESSARY GIMP_CLIP_TO_IMAGE
+			  GIMP_CLIP_TO_BOTTOM_LAYER GIMP_FLATTEN_IMAGE) ],
+	  mapping => { GIMP_EXPAND_AS_NECESSARY => '0',
+		       GIMP_CLIP_TO_IMAGE => '1',
+		       GIMP_CLIP_TO_BOTTOM_LAYER => '2',
+		       GIMP_FLATTEN_IMAGE => '3' }
+	},
+    GimpOffsetType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
+	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
+		       GIMP_OFFSET_TRANSPARENT => '1' }
 	},
     GimpTransferMode =>
 	{ contig => 1,

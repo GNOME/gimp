@@ -31,7 +31,6 @@
 
 #include "base/temp-buf.h"
 #include "core/core-enums.h"
-#include "core/core-types.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -1265,7 +1264,7 @@ image_merge_visible_layers_invoker (Gimp     *gimp,
     success = FALSE;
 
   merge_type = args[1].value.pdb_int;
-  if (merge_type < EXPAND_AS_NECESSARY || merge_type > CLIP_TO_BOTTOM_LAYER)
+  if (merge_type < GIMP_EXPAND_AS_NECESSARY || merge_type > GIMP_CLIP_TO_BOTTOM_LAYER)
     success = FALSE;
 
   if (success)
@@ -1292,7 +1291,7 @@ static ProcArg image_merge_visible_layers_inargs[] =
   {
     GIMP_PDB_INT32,
     "merge_type",
-    "The type of merge: { EXPAND_AS_NECESSARY (0), CLIP_TO_IMAGE (1), CLIP_TO_BOTTOM_LAYER (2) }"
+    "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }"
   }
 };
 
@@ -1341,7 +1340,7 @@ image_merge_down_invoker (Gimp     *gimp,
     success = FALSE;
 
   merge_type = args[2].value.pdb_int;
-  if (merge_type < EXPAND_AS_NECESSARY || merge_type > CLIP_TO_BOTTOM_LAYER)
+  if (merge_type < GIMP_EXPAND_AS_NECESSARY || merge_type > GIMP_CLIP_TO_BOTTOM_LAYER)
     success = FALSE;
 
   if (success)
@@ -1373,7 +1372,7 @@ static ProcArg image_merge_down_inargs[] =
   {
     GIMP_PDB_INT32,
     "merge_type",
-    "The type of merge: { EXPAND_AS_NECESSARY (0), CLIP_TO_IMAGE (1), CLIP_TO_BOTTOM_LAYER (2) }"
+    "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }"
   }
 };
 
