@@ -1,5 +1,27 @@
 1998-07-08  Chris Lahey  <clahey@umich.edu>
 
+	* app/menus.c (toolbox_entries): Made it so that you won't get two
+	document indexes open at the same time.  (docindex.c assumes that
+	you only have one open.)
+
+	* app/docindex.h: Added a function to close the document index
+	from outside docindex.c.
+
+	* app/docindex.c: Got rid of warnings about isspace().
+	(create_idea_toolbar): Got rid of the warnings about pixmaps.
+	(close_idea_window): Added a function to close the document index
+	from outside docindex.c.
+	(idea_hide_callback): Made this function work correctly if called
+	when ideas is NULL.
+
+	* app/app_procs.c (really_quit_callback):
+	(app_exit): Made it so that the document index saves even if you
+	quit without closing it.
+
+	* app/fileops.c (file_save): Made Save As add to the document index.
+
+1998-07-08  Chris Lahey  <clahey@umich.edu>
+
 	* app/docindex.h: 
 	* app/docindex.c: New files containing the document index.
 

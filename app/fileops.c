@@ -808,6 +808,8 @@ file_save (GimpImage* gimage,
   g_free (return_vals);
   g_free (args);
 
+  idea_add( filename );
+
   return return_val;
 }
 

@@ -43,6 +43,7 @@ typedef struct idea_manager
 
 void make_idea_window( gint x, gint y );
 void open_idea_window();
+void close_idea_window();
 void idea_add( gchar *label );
 void idea_add_in_position( gchar *label, gint position );
 void raise_idea_callback( GtkWidget *widget, gpointer data );

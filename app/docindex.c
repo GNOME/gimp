@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <gdk/gdkprivate.h>
 
 #include "gimage.h"
@@ -38,53 +39,30 @@ static char *image_drop_types[] = {"url:ALL"};
 
 GtkWidget *create_idea_toolbar()
 {
-  GtkWidget *wpixmap;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
   GtkWidget *toolbar;
 
   toolbar = gtk_toolbar_new( GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
   gtk_widget_show( toolbar );
   gtk_toolbar_set_button_relief( GTK_TOOLBAR( toolbar ), GTK_RELIEF_NONE );
   
-  pixmap = gdk_pixmap_create_from_xpm( (GdkWindow *)&gdk_root_parent, &mask,
-				       &toolbar->style->bg[GTK_STATE_NORMAL],
-				       DATADIR "/go/tb_up_arrow.xpm" );
-  wpixmap = gtk_pixmap_new( pixmap, mask );
-  
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
 			   "Up", "Move the selected entry up in the index", "Toolbar/Up",
-			   wpixmap,
+			   NULL,
 			   (GtkSignalFunc) idea_up_callback, NULL);
-  
-  pixmap = gdk_pixmap_create_from_xpm( (GdkWindow *)&gdk_root_parent, &mask,
-				       &toolbar->style->bg[GTK_STATE_NORMAL],
-				       DATADIR "/go/tb_down_arrow.xpm" );
-  wpixmap = gtk_pixmap_new( pixmap, mask );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
 			   "Down", "Move the selected entry down in the index", "Toolbar/Down",
-			   wpixmap,
+			   NULL,
 			   (GtkSignalFunc) idea_down_callback, NULL );
-  
-  pixmap = gdk_pixmap_create_from_xpm( (GdkWindow *)&gdk_root_parent, &mask,
-				       &toolbar->style->bg[GTK_STATE_NORMAL],
-				       DATADIR "/go/cancel.xpm" );
-  wpixmap = gtk_pixmap_new( pixmap, mask );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
 			   "Remove", "Remove the selected entry from the index", "Toolbar/Remove",
-			   wpixmap,
+			   NULL,
 			   (GtkSignalFunc) idea_remove_callback, NULL );
-  
-  pixmap = gdk_pixmap_create_from_xpm( (GdkWindow *)&gdk_root_parent, &mask,
-				       &toolbar->style->bg[GTK_STATE_NORMAL],
-				       DATADIR "/go/tb_exit.xpm" );
-  wpixmap = gtk_pixmap_new( pixmap, mask );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
 			   "Hide", "Hide the Document Index", "Toolbar/Hide",
-			   wpixmap,
+			   NULL,
 			   (GtkSignalFunc) idea_hide_callback, NULL );
   return toolbar;
 }
@@ -226,16 +204,25 @@ idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer 
 static void
 idea_hide_callback( GtkWidget *widget, gpointer data )
 {
-  save_idea_manager( ideas );
-  gtk_widget_destroy( ideas->window );
-  free( ideas );
-  ideas = 0;
+  if ( ideas )
+    {
+      save_idea_manager( ideas );
+      gtk_widget_destroy( ideas->window );
+      free( ideas );
+      ideas = 0;
+    }
 }
 
 void
 open_idea_window()
 {
   make_idea_window( -1, -1 );
+}
+
+void
+close_idea_window()
+{
+  idea_hide_callback( NULL, NULL );
 }
 
 void

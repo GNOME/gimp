@@ -59,6 +59,7 @@
 #include "undo.h"
 #include "xcf.h"
 #include "errors.h"
+#include "docindex.h"
 
 #include "config.h"
 
@@ -592,7 +593,10 @@ app_exit (int kill_it)
   if (kill_it == 0 && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
   else if (no_interface == FALSE)
-    toolbox_free ();
+    {
+      toolbox_free ();
+      close_idea_window(); 
+   }
   else
     app_exit_finish ();
 }
@@ -607,6 +611,7 @@ really_quit_callback (GtkButton *button,
 {
   gtk_widget_destroy (dialog);
   toolbox_free ();
+  close_idea_window();
 }
 
 static void
