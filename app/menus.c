@@ -863,8 +863,8 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 }
 
 static void
-menus_create_branches (GtkItemFactory		*item_factory,
-		       GimpItemFactoryEntry	*entry)
+menus_create_branches (GtkItemFactory       *item_factory,
+		       GimpItemFactoryEntry *entry)
 {
   GString *tearoff_path;
   gint factory_length;
@@ -888,9 +888,9 @@ menus_create_branches (GtkItemFactory		*item_factory,
 
       if (!gtk_item_factory_get_widget (item_factory, tearoff_path->str))
 	{
-	  GimpItemFactoryEntry branch_entry = {
-	    {NULL, NULL, NULL, 0, "<Branch>"}
-	    ,
+	  GimpItemFactoryEntry branch_entry =
+	  {
+	    { NULL, NULL, NULL, 0, "<Branch>" },
 	    NULL,
 	    NULL
 	  };
@@ -905,9 +905,9 @@ menus_create_branches (GtkItemFactory		*item_factory,
 
       if (!gtk_item_factory_get_widget (item_factory, tearoff_path->str))
 	{
-	  GimpItemFactoryEntry tearoff_entry = {
-	    {NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>"}
-	    ,
+	  GimpItemFactoryEntry tearoff_entry =
+	  {
+	    { NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
 	    NULL,
 	    NULL
 	  };
@@ -1452,8 +1452,9 @@ menus_item_key_press (GtkWidget   *widget,
 {
   GtkItemFactory *item_factory = NULL;
   GtkWidget      *active_menu_item = NULL;
-  gchar *help_path = NULL;
-  gchar *help_page = NULL;
+  gchar *factory_path = NULL;
+  gchar *help_path    = NULL;
+  gchar *help_page    = NULL;
 
   item_factory = (GtkItemFactory *) data;
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
@@ -1487,24 +1488,41 @@ menus_item_key_press (GtkWidget   *widget,
    */
   gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
 
-  help_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
-					     "help_path");
+  factory_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
+					     "factory_path");
 
   if (! help_page ||
       ! *help_page)
     help_page = "index.html";
 
-  if (help_path && help_page)
+  if (factory_path && help_page)
     {
       gchar *help_string;
+      gchar *at;
 
-      help_string = g_strdup_printf ("%s/%s", help_path, help_page);
-      gimp_help (help_string);
+      help_page = g_strdup (help_page);
+
+      at = strchr (help_page, '@');  /* HACK: locale subdir */
+
+      if (at)
+	{
+	  *at = '\0';
+	  help_path   = g_strdup (help_page);
+	  help_string = g_strdup (at + 1);
+	}
+      else
+	{
+	  help_string = g_strdup_printf ("%s/%s", factory_path, help_page);
+	}
+
+      gimp_help (help_path, help_string);
+
       g_free (help_string);
+      g_free (help_page);
     }
   else
     {
-      gimp_help (NULL);
+      gimp_standard_help_func (NULL);
     }
 
   return TRUE;
@@ -1593,7 +1611,7 @@ menus_init (void)
 
   toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>",
 					  NULL);
-  gtk_object_set_data (GTK_OBJECT (toolbox_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (toolbox_factory), "factory_path",
 		       (gpointer) "toolbox");
   gtk_item_factory_set_translate_func (toolbox_factory, menu_translate,
 				       "<Toolbox>", NULL);
@@ -1605,7 +1623,7 @@ menus_init (void)
   menus_init_mru ();
 
   image_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Image>", NULL);
-  gtk_object_set_data (GTK_OBJECT (image_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (image_factory), "factory_path",
 		       (gpointer) "image");
   gtk_item_factory_set_translate_func (image_factory, menu_translate,
 				       "<Image>", NULL);
@@ -1615,7 +1633,7 @@ menus_init (void)
 		      NULL, 2);
 
   load_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Load>", NULL);
-  gtk_object_set_data (GTK_OBJECT (load_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (load_factory), "factory_path",
 		       (gpointer) "open");
   gtk_item_factory_set_translate_func (load_factory, menu_translate,
 				       "<Load>", NULL);
@@ -1625,7 +1643,7 @@ menus_init (void)
 		      NULL, 2);
 
   save_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Save>", NULL);
-  gtk_object_set_data (GTK_OBJECT (save_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (save_factory), "factory_path",
 		       (gpointer) "save");
   gtk_item_factory_set_translate_func (save_factory, menu_translate,
 				       "<Save>", NULL);
@@ -1635,7 +1653,7 @@ menus_init (void)
 		      NULL, 2);
 
   layers_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Layers>", NULL);
-  gtk_object_set_data (GTK_OBJECT (layers_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (layers_factory), "factory_path",
 		       (gpointer) "layers");
   gtk_item_factory_set_translate_func (layers_factory, menu_translate,
 				       "<Layers>", NULL);
@@ -1645,7 +1663,7 @@ menus_init (void)
 		      NULL, 2);
 
   channels_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Channels>", NULL);
-  gtk_object_set_data (GTK_OBJECT (channels_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (channels_factory), "factory_path",
 		       (gpointer) "channels");
   gtk_item_factory_set_translate_func (channels_factory, menu_translate,
 				       "<Channels>", NULL);
@@ -1655,7 +1673,7 @@ menus_init (void)
 		      NULL, 2);
 
   paths_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Paths>", NULL);
-  gtk_object_set_data (GTK_OBJECT (paths_factory), "help_path",
+  gtk_object_set_data (GTK_OBJECT (paths_factory), "factory_path",
 		       (gpointer) "paths");
   gtk_item_factory_set_translate_func (paths_factory, menu_translate,
 				       "<Paths>", NULL);

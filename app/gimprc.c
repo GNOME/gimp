@@ -53,10 +53,11 @@
 #include "libgimp/gimpintl.h"
 
 
-#define ERROR  0
-#define DONE   1
-#define OK     2
+#define ERROR      0
+#define DONE       1
+#define OK         2
 #define LOCALE_DEF 3
+#define HELP_DEF   4
 
 typedef enum
 {
@@ -199,6 +200,7 @@ static gint parse_parasite           (gpointer val1p, gpointer val2p);
 static gint parse_help_browser       (gpointer val1p, gpointer val2p);
 
 static gint parse_locale_def (PlugInDef      *plug_in_def);
+static gint parse_help_def   (PlugInDef      *plug_in_def);
 static gint parse_proc_def   (PlugInProcDef **proc_def);
 static gint parse_proc_arg   (ProcArg        *arg);
 static gint parse_unknown    (gchar          *token_sym);
@@ -1415,6 +1417,8 @@ parse_plug_in_def (gpointer val1p,
 	}
       else if (success == LOCALE_DEF)
 	success = parse_locale_def (plug_in_def);
+      else if (success == HELP_DEF)
+	success = parse_help_def (plug_in_def);
     }
 
   token = peek_next_token ();
@@ -1473,6 +1477,34 @@ parse_locale_def (PlugInDef *plug_in_def)
   return ERROR;
 }
 
+static gint
+parse_help_def (PlugInDef *plug_in_def)
+{
+  gint token;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    return ERROR;
+  token = get_next_token ();
+
+  if (plug_in_def->help_path)
+    g_free (plug_in_def->help_path);
+  plug_in_def->help_path = g_strdup (token_str);
+
+  token = peek_next_token ();
+  if (!token || token != TOKEN_RIGHT_PAREN)
+    goto error;
+  token = get_next_token ();
+
+  return OK;
+
+ error:
+  g_free (plug_in_def->help_path);
+  plug_in_def->help_path = NULL;
+
+  return ERROR;
+}
+
 
 static gint
 parse_proc_def (PlugInProcDef **proc_def)
@@ -1494,6 +1526,11 @@ parse_proc_def (PlugInProcDef **proc_def)
     {
       token = get_next_token ();
       return LOCALE_DEF;  /* it's a locale_def, let parse_locale_def do the rest */
+    }
+  if ((strcmp ("help-def", token_sym) == 0))
+    {
+      token = get_next_token ();
+      return HELP_DEF;  /* it's a help_def, let parse_help_def do the rest */
     }
   else if (strcmp ("proc-def", token_sym) != 0)
     return ERROR;

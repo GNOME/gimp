@@ -1175,6 +1175,12 @@ gimp_request_wakeups (void)
     gimp_quit ();
 }
 
+gchar *
+gimp_get_progname (void)
+{
+  return progname;
+}
+
 #ifndef G_OS_WIN32
 static void
 gimp_plugin_sigfatal_handler (gint sig_num)

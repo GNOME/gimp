@@ -1032,7 +1032,7 @@ tools_new_tool (ToolType tool_type)
 void
 tools_help_func (gchar *help_data)
 {
-  gimp_help (tool_info[(gint) active_tool->type].private_tip);
+  gimp_standard_help_func (tool_info[(gint) active_tool->type].private_tip);
 }
 
 void

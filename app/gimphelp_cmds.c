@@ -21,27 +21,35 @@
 #include "procedural_db.h"
 
 #include "gimphelp.h"
+#include "plug_in.h"
 
 static ProcRecord help_proc;
+static ProcRecord plugin_help_register_proc;
 
 void
 register_gimphelp_procs (void)
 {
   procedural_db_register (&help_proc);
+  procedural_db_register (&plugin_help_register_proc);
 }
 
 static Argument *
 help_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  gchar *path;
+  gchar *prog_name;
+  gchar *help_page;
 
-  path = (gchar *) args[0].value.pdb_pointer;
-  if (path == NULL)
+  prog_name = (gchar *) args[0].value.pdb_pointer;
+  if (prog_name == NULL)
+    success = FALSE;
+
+  help_page = (gchar *) args[1].value.pdb_pointer;
+  if (help_page == NULL)
     success = FALSE;
 
   if (success)
-    gimp_help (path);
+    gimp_help (plug_in_help_path (prog_name), help_page);
 
   return procedural_db_return_args (&help_proc, success);
 }
@@ -50,7 +58,12 @@ static ProcArg help_inargs[] =
 {
   {
     PDB_STRING,
-    "path",
+    "prog_name",
+    "The plug-in's executable name or an empty string"
+  },
+  {
+    PDB_STRING,
+    "help_page",
     "The location of the help page"
   }
 };
@@ -59,14 +72,65 @@ static ProcRecord help_proc =
 {
   "gimp_help",
   "Load a help page.",
-  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The location of the jelp page is given relative to the help rootdir.",
+  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The location of the help page is given relative to the help rootdir. The help rootdir is determined from the prog_name: if prog_name is NULL, we use the help rootdir of the main GIMP installation, if the plug-in's full executable name is passed as prog_name, the GIMP will use this information to look up the help path the plug-in has registered before with gimp-plugin-help-register.",
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
-  "1999",
+  "2000",
   PDB_INTERNAL,
-  1,
+  2,
   help_inargs,
   0,
   NULL,
   { { help_invoker } }
+};
+
+static Argument *
+plugin_help_register_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  gchar *help_path;
+  PlugInDef *plug_in_def;
+
+  help_path = (gchar *) args[0].value.pdb_pointer;
+  if (help_path == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      if (current_plug_in && current_plug_in->query)
+	{
+	  plug_in_def = current_plug_in->user_data;
+    
+	  if (plug_in_def->help_path)
+	    g_free (plug_in_def->help_path);
+	  plug_in_def->help_path = g_strdup (help_path);
+	}
+    }
+
+  return procedural_db_return_args (&plugin_help_register_proc, success);
+}
+
+static ProcArg plugin_help_register_inargs[] =
+{
+  {
+    PDB_STRING,
+    "help_path",
+    "The rootdir of the plug-in's help pages"
+  }
+};
+
+static ProcRecord plugin_help_register_proc =
+{
+  "gimp_plugin_help_register",
+  "Register a help path for a plug-in.",
+  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2000",
+  PDB_INTERNAL,
+  1,
+  plugin_help_register_inargs,
+  0,
+  NULL,
+  { { plugin_help_register_invoker } }
 };

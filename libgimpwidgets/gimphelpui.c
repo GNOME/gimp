@@ -25,8 +25,6 @@
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 
-/*  external functions  */
-void        gimp_help                            (gchar          *help_data);
 
 /*  local function prototypes  */
 static void gimp_help_callback                   (GtkWidget      *widget,
@@ -361,13 +359,13 @@ gimp_help_tips_query_idle_show_help (gpointer data)
 	  gchar *help_text;
 
 	  help_text = g_strconcat (help_data, help_index, NULL);
-	  gimp_help (help_text);
+	  gimp_standard_help_func (help_text);
 	  g_free (help_text);
 	}
     }
   else
     {
-      gimp_help (help_data);
+      gimp_standard_help_func (help_data);
     }
 
   return FALSE;

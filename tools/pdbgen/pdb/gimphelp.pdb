@@ -19,35 +19,74 @@
 
 sub pdb_misc {
     $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '1999';
+    $date = '2000';
 }
 
 sub help {
-    my $path = $_;
-
     $blurb = "Load a help page.";
 
     $help = <<HELP;
 This procedure loads the specified help page into the helpbrowser or what ever
-is configured as help viewer. The location of the jelp page is given relative 
-to the help rootdir.
+is configured as help viewer. The location of the help page is given relative 
+to the help rootdir. The help rootdir is determined from the prog_name: if
+prog_name is NULL, we use the help rootdir of the main GIMP installation,
+if the plug-in's full executable name is passed as prog_name, the GIMP
+will use this information to look up the help path the plug-in has registered
+before with gimp-plugin-help-register.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-	{ name => 'path', type => 'string',
+	{ name => 'prog_name', type => 'string',
+	  desc => 'The plug-in\'s executable name or an empty string' },
+	{ name => 'help_page', type => 'string',
 	  desc => 'The location of the help page' }
     );
 
     %invoke = (
-	code => 'gimp_help (path);'
+        success => 'TRUE',
+	code => 'gimp_help (plug_in_help_path (prog_name), help_page);'
     );
 }
 
-@headers = qw("gimphelp.h");
+sub plugin_help_register {
+    $blurb = "Register a help path for a plug-in.";
 
-@procs = qw(help);
+    $help = <<HELP;
+This procedure changes the help rootdir for the plug-in which calls it. All
+subsequent calls of gimp_help from this plug-in will be interpreted relative
+to this rootdir.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'help_path', type => 'string',
+	  desc => 'The rootdir of the plug-in\'s help pages' }
+    );
+
+    %invoke = (
+        success => 'TRUE',
+        vars => [ 'PlugInDef *plug_in_def' ],
+        code => <<'CODE',
+{
+  if (current_plug_in && current_plug_in->query)
+    {
+      plug_in_def = current_plug_in->user_data;
+
+      if (plug_in_def->help_path)
+        g_free (plug_in_def->help_path);
+      plug_in_def->help_path = g_strdup (help_path);
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("gimphelp.h" "plug_in.h");
+
+@procs = qw(help plugin_help_register);
 %exports = (app => [@procs]);
 
 $desc = 'Help procedures';

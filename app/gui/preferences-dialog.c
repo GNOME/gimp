@@ -1298,7 +1298,7 @@ file_prefs_help_func (gchar *help_data)
   event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
   help_data = gtk_object_get_data (GTK_OBJECT (event_box), "gimp_help_data");
-  gimp_help (help_data);
+  gimp_standard_help_func (help_data);
 }
 
 /************************************************************************

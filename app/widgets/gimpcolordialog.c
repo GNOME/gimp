@@ -361,7 +361,7 @@ color_notebook_help_func (gchar *data)
   help_path = g_strconcat ("dialogs/color_selectors/",
 			   cnp->cur_page->info->help_page,
 			   NULL);
-  gimp_help (help_path);
+  gimp_standard_help_func (help_path);
   g_free (help_path);
 }
 

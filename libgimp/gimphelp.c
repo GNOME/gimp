@@ -26,24 +26,34 @@
 void
 gimp_standard_help_func (gchar *help_data)
 {
-  gimp_help (help_data);
+  gimp_help (gimp_get_progname (), help_data);
 }
 
 void
-gimp_plugin_help_func (gchar *help_data)
-{
-  gimp_help (help_data);
-}
-
-void
-gimp_help (gchar *help_data)
+gimp_help (gchar *prog_name,
+	   gchar *help_data)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint    nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_help",
                                     &nreturn_vals,
+				    PARAM_STRING, prog_name,
                                     PARAM_STRING, help_data,
+                                    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_plugin_help_register (gchar *help_path)
+{
+  GParam *return_vals;
+  gint    nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_help_register",
+                                    &nreturn_vals,
+                                    PARAM_STRING, help_path,
                                     PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

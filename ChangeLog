@@ -1,5 +1,76 @@
+2000-05-21  Michael Natterer  <mitch@gimp.org>
+
+	These changes enable help support for 3rd party plug-ins which
+	install their help files outside GIMP's main help dir.
+
+	Instead of calling gimp_help(), gimp_plugin_help_func() etc.,
+	all help callbacks now have to call gimp_standard_help_func()
+	which has different implementations in the app and in libgimp.
+
+	There is a new function gimp_plugin_help_register() which can
+	be called during plug-in query. plug_in.c keeps a list of
+	executable_name/help_path pairs. Plug-ins have to pass their
+	exec. name to gimp_help() which uses the list to find the plug-in's
+	help directory.
+
+	* app/gimphelp.[ch]: gimp_help() now takes a help_path parameter.
+	help_path == NULL means the standard help directory. Various
+	changes to pass the help_path to the help browser.
+
+	* app/gimprc.c: save the plug-in's help_path in the pluginrc file.
+
+	* app/menus.c: ugly hack to enable help_paths in the "F1" callback.
+
+	* app/plug_in.[ch]: many help_path related changes. Use g_basename()
+	instead of strrchr(str,G_DIR_SEPARATOR), cosmetic cleanups.
+
+	* app/internal_procs.c
+	* app/gimphelp_cmds.c
+	* tools/pdbgen/pdb/gimphelp.pdb: new procedure
+	gimp_plugin_help_register(). gimp_help() takes a second parameter
+	which is the executable name (not the help_path).
+
+	* app/color_notebook.c
+	* app/commands.c
+	* app/lc_dialog.c
+	* app/preferences_dialog.c
+	* app/tools.c: call gimp_standard_help_func() instead of gimp_help().
+
+	* libgimp/gimp.c: new function gimp_get_progname() which returns
+	the full path of the plug-in's executable.
+
+	* libgimp/gimp.h: export the new function,
+	removed gimp_plugin_help_func(), gimp_help() takes the executable
+	name as second parameter.
+
+	* libgimp/gimpcompat.h: added gimp_plugin_help_func().
+
+	* libgimp/gimphelp.c: a wrapper for gimp_plugin_help_register(),
+	changed the calls to gimp_help.
+
+	* libgimp/gimphelpui.[ch]: call gimp_standard_help_func() instead
+	of gimp_help().
+
+	* plug-ins/helpbrowser/helpbrowser.c: now called with an additional
+	help_path parameter. Various changes to enable
+	help_path != gimp_standard_help_path.
+
+	Unrelated stuff:
+
+	* app/batch.h: added missing GPL header.
+
+	* app/gimpunit.c: had a LGPL header, merged some fprintf's into
+	one call.
+
+	* app/procedural_db.[ch]: cosmetic: g* types, s/g_malloc/g_new/,
+	prototypes, indentation.
+
+	* app/resize.c: use less packing widgets. didn't find the "offset"
+	redraw bug :(
+
 2000-05-20  Garry R. Osgood <gosgood@idt.net>
-	*app/docindex.c
+
+	* app/docindex.c
 	Beware "int a; a = fgetc(fp); ... if(a == EOF)." for fgetc()
 	is advertised to get the next "unsigned character converted 
 	to an integer..." a non-negative on SGI, in particular the end-of-file
@@ -68,7 +139,7 @@
 
 2000-05-17  Sven Neumann  <sven@gimp.org>
 
-        * app/menus.c: rewrote the "Help/Dump Items" function. Now it
+	* app/menus.c: rewrote the "Help/Dump Items" function. Now it
 	outputs the accelerator keys too. Unfortunately this does only
 	work with LANG=C yet.
 

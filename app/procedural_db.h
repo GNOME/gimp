@@ -92,11 +92,11 @@ typedef Argument * (* ArgMarshal) (Argument *);
 
 
 /*  Execution types  */
-typedef struct _IntExec IntExec;
+typedef struct _IntExec    IntExec;
 typedef struct _PlugInExec PlugInExec;
-typedef struct _ExtExec ExtExec;
-typedef struct _TempExec TempExec;
-typedef struct _NetExec NetExec;
+typedef struct _ExtExec    ExtExec;
+typedef struct _TempExec   TempExec;
+typedef struct _NetExec    NetExec;
 
 struct _IntExec
 {
@@ -105,22 +105,22 @@ struct _IntExec
 
 struct _PlugInExec
 {
-  gchar *     filename;       /*  Where is the executable on disk?  */
+  gchar      *filename;       /*  Where is the executable on disk?  */
 };
 
 struct _ExtExec
 {
-  gchar *     filename;       /*  Where is the executable on disk?  */
+  gchar      *filename;       /*  Where is the executable on disk?  */
 };
 
 struct _TempExec
 {
-  void *      plug_in;        /*  Plug-in that registered this temp proc  */
+  void       *plug_in;        /*  Plug-in that registered this temp proc  */
 };
 
 struct _NetExec
 {
-  gchar *     host;           /*  Host responsible for procedure execution  */
+  gchar      *host;           /*  Host responsible for procedure execution  */
   gint32      port;           /*  Port on host to send data to  */
 };
 
@@ -131,8 +131,8 @@ typedef struct _ProcArg ProcArg;
 struct _ProcArg
 {
   PDBArgType  arg_type;       /*  Argument type (int, char, char *, etc)  */
-  char *      name;           /*  Argument name  */
-  char *      description;    /*  Argument description  */
+  gchar      *name;           /*  Argument name  */
+  gchar      *description;    /*  Argument description  */
 };
 
 
@@ -143,23 +143,23 @@ typedef struct _ProcRecord ProcRecord;
 struct _ProcRecord
 {
   /*  Procedure information  */
-  gchar *     name;           /*  Procedure name  */
-  gchar *     blurb;          /*  Short procedure description  */
-  gchar *     help;           /*  Detailed help instructions  */
-  gchar *     author;         /*  Author field  */
-  gchar *     copyright;      /*  Copyright field  */
-  gchar *     date;           /*  Date field  */
+  gchar       *name;          /*  Procedure name  */
+  gchar       *blurb;         /*  Short procedure description  */
+  gchar       *help;          /*  Detailed help instructions  */
+  gchar       *author;        /*  Author field  */
+  gchar       *copyright;     /*  Copyright field  */
+  gchar       *date;          /*  Date field  */
 
   /*  Procedure type  */
-  PDBProcType proc_type;      /*  Type of procedure--Internal, Plug-In, Extension  */
+  PDBProcType  proc_type;     /*  Type of procedure--Internal, Plug-In, Extension  */
 
   /*  Input arguments  */
-  gint32      num_args;       /*  Number of procedure arguments  */
-  ProcArg *   args;           /*  Array of procedure arguments  */
+  gint32       num_args;      /*  Number of procedure arguments  */
+  ProcArg     *args;          /*  Array of procedure arguments  */
 
   /*  Output values  */
-  gint32      num_values;     /*  Number of return values  */
-  ProcArg *   values;         /*  Array of return values  */
+  gint32       num_values;    /*  Number of return values  */
+  ProcArg     *values;        /*  Array of return values  */
 
   /*  Method of procedure execution  */
   union _ExecMethod
@@ -171,31 +171,32 @@ struct _ProcRecord
   } exec_method;
 };
 
+/*  Variables  */
+extern GHashTable *procedural_ht;
+
 /*  Functions  */
 void          procedural_db_init         (void);
 void          procedural_db_free         (void);
-void          procedural_db_register     (ProcRecord *);
-void          procedural_db_unregister   (gchar      *);
-ProcRecord *  procedural_db_lookup       (gchar      *);
-Argument *    procedural_db_execute      (gchar      *,
-					  Argument   *);
-Argument *    procedural_db_run_proc     (gchar      *,
-					  gint       *,
+void          procedural_db_register     (ProcRecord *procedure);
+void          procedural_db_unregister   (gchar      *name);
+ProcRecord  * procedural_db_lookup       (gchar      *name);
+Argument    * procedural_db_execute      (gchar      *name,
+					  Argument   *args);
+Argument    * procedural_db_run_proc     (gchar      *name,
+					  gint       *nreturn_vals,
 					  ...);
-Argument *    procedural_db_return_args  (ProcRecord *,
-					  int);
-void          procedural_db_destroy_args (Argument   *,
-					  int);
+Argument    * procedural_db_return_args  (ProcRecord *procedure,
+					  gboolean    success);
+void          procedural_db_destroy_args (Argument   *args,
+					  gint        nargs);
 void          pdb_add_image              (GimpImage  *gimage);
 gint          pdb_image_to_id            (GimpImage  *gimage);
-GimpImage *   pdb_id_to_image            (gint id);
+GimpImage   * pdb_id_to_image            (gint        id);
 void          pdb_remove_image           (GimpImage  *image);
 
 /* "type" should really be a PDBArgType, but we can cope with
  *  out-of-range values.
  */
-const char *  pdb_type_name (gint type); /* really exists in _cmds.c file */
-
-extern GHashTable *procedural_ht;
+const gchar * pdb_type_name (gint type); /* really exists in _cmds.c file */
 
 #endif  /*  __PROCEDURAL_DB_H__  */

@@ -1267,7 +1267,7 @@ void
 help_help_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
-  gimp_help (NULL);
+  gimp_standard_help_func (NULL);
 }
 
 void

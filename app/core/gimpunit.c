@@ -2,22 +2,21 @@
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * gimpunit.c
- * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -298,12 +297,13 @@ save_unitrc (void)
   if (!fp)
     return;
 
-  fprintf (fp, "# GIMP unitrc\n" 
-               "# This file contains your user unit database. You can\n"
-	       "# modify this list with the unit editor. You are not\n"
-	       "# supposed to edit it manually, but of course you can do.\n"
-	       "# This file will be entirely rewritten every time you\n"
-	       "# quit the gimp.\n\n");
+  fprintf (fp,
+	   "# GIMP unitrc\n" 
+	   "# This file contains your user unit database. You can\n"
+	   "# modify this list with the unit editor. You are not\n"
+	   "# supposed to edit it manually, but of course you can do.\n"
+	   "# This file will be entirely rewritten every time you\n"
+	   "# quit the gimp.\n\n");
 
   /*  save user defined units  */
   for (i = gimp_unit_get_number_of_built_in_units ();
@@ -311,13 +311,21 @@ save_unitrc (void)
        i++)
     if (gimp_unit_get_deletion_flag (i) == FALSE)
       {
-	fprintf (fp,"(unit-info \"%s\"\n", gimp_unit_get_identifier (i));
-	fprintf (fp,"   (factor %f)\n", gimp_unit_get_factor (i));
-	fprintf (fp,"   (digits %d)\n", gimp_unit_get_digits (i));
-	fprintf (fp,"   (symbol \"%s\")\n", gimp_unit_get_symbol (i));
-	fprintf (fp,"   (abbreviation \"%s\")\n", gimp_unit_get_abbreviation (i));
-	fprintf (fp,"   (singular \"%s\")\n", gimp_unit_get_singular (i));
-	fprintf (fp,"   (plural \"%s\"))\n\n", gimp_unit_get_plural (i));
+	fprintf (fp,
+		 "(unit-info \"%s\"\n"
+		 "   (factor %f)\n"
+		 "   (digits %d)\n"
+		 "   (symbol \"%s\")\n"
+		 "   (abbreviation \"%s\")\n"
+		 "   (singular \"%s\")\n"
+		 "   (plural \"%s\"))\n\n",
+		 gimp_unit_get_identifier (i),
+		 gimp_unit_get_factor (i),
+		 gimp_unit_get_digits (i),
+		 gimp_unit_get_symbol (i),
+		 gimp_unit_get_abbreviation (i),
+		 gimp_unit_get_singular (i),
+		 gimp_unit_get_plural (i));
       }
 
   fclose (fp);

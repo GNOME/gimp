@@ -178,24 +178,30 @@ static guint n_help_dnd_targets = (sizeof (help_dnd_target_table) /
 /*  GIMP plugin stuff  */
 
 static void query (void);
-static void run   (char *name, int nparams, GParam *param,
-		   int *nreturn_vals, GParam **return_vals);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /*  init_proc   */
-  NULL,   /*  quit_proc   */
-  query,  /*  query_proc  */
-  run,    /*  run_proc    */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static gboolean temp_proc_installed = FALSE;
 
 /*  forward declaration  */
 
-static gint load_page (HelpPage *source_page, HelpPage *dest_page,
-		       gchar *ref, gint pos, 
-		       gboolean add_to_queue, gboolean add_to_history);
+static gint load_page (HelpPage *source_page,
+		       HelpPage *dest_page,
+		       gchar    *ref,
+		       gint      pos, 
+		       gboolean  add_to_queue,
+		       gboolean  add_to_history);
 
 /*  functions  */
 
@@ -699,8 +705,9 @@ set_initial_history (gpointer data)
 }
 
 gboolean
-open_browser_dialog (gchar *locale,
-		     gchar *path)
+open_browser_dialog (gchar *help_path,
+		     gchar *locale,
+		     gchar *help_file)
 {
   GtkWidget *window;
   GtkWidget *vbox, *hbox, *bbox, *html_box;
@@ -724,7 +731,8 @@ open_browser_dialog (gchar *locale,
   if (chdir (root_dir) == -1)
     {
       gimp_message (_("GIMP Help Browser Error.\n\n"
-		      "Couldn't find my root html directory."));
+		      "Couldn't find my root html directory.\n"
+		      "(%s)"));
       return FALSE;
     }
 
@@ -735,7 +743,15 @@ open_browser_dialog (gchar *locale,
     eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
 
   g_free (eek_png_path);
-  g_free (root_dir);
+
+  if (chdir (help_path) == -1)
+    {
+      gimp_message (_("GIMP Help Browser Error.\n\n"
+		      "Couldn't find my root html directory.\n"
+		      "(%s)"));
+      return FALSE;
+    }
+
   initial_dir = g_get_current_dir ();
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -748,7 +764,7 @@ open_browser_dialog (gchar *locale,
   gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
-  gimp_help_connect_help_accel (window, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (window, gimp_standard_help_func,
 				"dialogs/help.html");
 
   vbox = gtk_vbox_new (FALSE, 0);
@@ -805,12 +821,9 @@ open_browser_dialog (gchar *locale,
       static guint page_up_signal = 0;
       static guint page_down_signal = 0;
 
-      pages[i].index = i;
-      pages[i].html = gtk_xmhtml_new ();
-      pages[i].queue = queue_new ();
-      pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-					  locale, G_DIR_SEPARATOR_S,
-					  ".", NULL);
+      pages[i].index       = i;
+      pages[i].html        = gtk_xmhtml_new ();
+      pages[i].queue       = queue_new ();
 
       gtk_xmhtml_set_anchor_underline_type (GTK_XMHTML (pages[i].html),
 					    GTK_ANCHOR_SINGLE_LINE);
@@ -821,12 +834,20 @@ open_browser_dialog (gchar *locale,
 	{
 	case CONTENTS:
 	case INDEX:
+	  pages[i].current_ref = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
+					      locale, G_DIR_SEPARATOR_S,
+					      ".", NULL);
+
 	  title = drag_source = gtk_event_box_new ();
 	  label = gtk_label_new (gettext (pages[i].label));
 	  gtk_container_add (GTK_CONTAINER (title), label);
 	  gtk_widget_show (label);
 	  break;
 	case HELP:
+	  pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
+					      locale, G_DIR_SEPARATOR_S,
+					      ".", NULL);
+
 	  title = combo = gtk_combo_new ();
 	  drag_source = GTK_COMBO (combo)->entry;
 	  gtk_widget_set_usize (GTK_WIDGET (combo), 300, -1);
@@ -866,19 +887,18 @@ open_browser_dialog (gchar *locale,
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), html_box, title);
       gtk_widget_show (title);
 
-      if (i == HELP && path)
+      if (i == HELP && help_file)
 	{
-	  if (g_path_is_absolute (path))
-	    initial_ref = g_strdup (path);
-	  else
-	    initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-				       locale, G_DIR_SEPARATOR_S,
-				       path, NULL);
+	  initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
+				     locale, G_DIR_SEPARATOR_S,
+				     help_file, NULL);
 	}
       else
-	initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-				   locale, G_DIR_SEPARATOR_S,
-				   pages[i].home, NULL);
+	{
+	  initial_ref = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
+				     locale, G_DIR_SEPARATOR_S,
+				     pages[i].home, NULL);
+	}
 
       success = load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
       g_free (initial_ref);
@@ -920,6 +940,8 @@ open_browser_dialog (gchar *locale,
 			  pages[i].html);
     }
 
+  g_free (root_dir);
+
   gtk_signal_connect (GTK_OBJECT (notebook), "switch-page",
 		      GTK_SIGNAL_FUNC (notebook_switch_callback),
 		      NULL);
@@ -960,34 +982,54 @@ run_temp_proc (gchar   *name,
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
-  gchar *locale;
+  gchar *help_path = NULL;
+  gchar *locale    = NULL;
+  gchar *help_file = NULL;
   gchar *path;
 
   /*  Make sure all the arguments are there!  */
-  if ((nparams != 2) ||
-      !param[0].data.d_string ||
-      !strlen (param[0].data.d_string) ||
+  if ((nparams != 3) ||
       !param[1].data.d_string ||
-      !strlen (param[1].data.d_string))
+      !strlen (param[1].data.d_string) ||
+      !param[2].data.d_string ||
+      !strlen (param[2].data.d_string))
     {
-      locale = "C";
-      path   = "welcome.html";
-    }
-  else
-    {
-      locale = param[0].data.d_string;
-      path   = param[1].data.d_string;
+      help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
+			       GIMP_HELP_PREFIX, NULL);
+      locale    = g_strdup ("C");
+      help_file = g_strdup ("welcome.html");
     }
 
-  g_strdelimit (path, "/", G_DIR_SEPARATOR);
+  if (nparams == 3)
+    {
+      if (!param[0].data.d_string ||
+	  !strlen (param[0].data.d_string))
+	{
+	  help_path = g_strconcat (gimp_data_directory(),
+				   G_DIR_SEPARATOR_S, 
+				   GIMP_HELP_PREFIX, NULL);
+	  locale    = g_strdup (param[1].data.d_string);
+	  help_file = g_strdup (param[2].data.d_string);
+	}
+      else
+	{
+	  help_path = g_strdup (param[0].data.d_string);
+	  locale    = g_strdup (param[1].data.d_string);
+	  help_file = g_strdup (param[2].data.d_string);
 
-  if (g_path_is_absolute (path))
-    path = g_strdup (path);
-  else
-    path = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
-			GIMP_HELP_PREFIX, G_DIR_SEPARATOR_S,
-			locale, G_DIR_SEPARATOR_S,
-			path, NULL);
+	  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
+	}
+    }
+
+  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
+
+  path = g_strconcat (help_path, G_DIR_SEPARATOR_S, 
+		      locale, G_DIR_SEPARATOR_S,
+		      help_file, NULL);
+
+  g_free (help_path);
+  g_free (locale);
+  g_free (help_file);
 
   gtk_idle_add (idle_load_page, path);
 
@@ -1019,14 +1061,12 @@ install_temp_proc (void)
 {
   static GParamDef args[] =
   {
-    { PARAM_STRING, "locale", "Langusge to use" },
-    { PARAM_STRING, "path",   "Path of a local document to open. "
-                              "Can be relative to GIMP_HELP_PATH." }
+    { PARAM_STRING, "help_path", "" },
+    { PARAM_STRING, "locale",    "Langusge to use" },
+    { PARAM_STRING, "help_file", "Path of a local document to open. "
+                                 "Can be relative to GIMP_HELP_PATH." }
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-
-  static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
 			  "DON'T USE THIS ONE",
@@ -1038,8 +1078,8 @@ install_temp_proc (void)
 			  NULL,
 			  "",
 			  PROC_TEMPORARY,
-			  nargs, nreturn_vals,
-			  args, return_vals,
+			  nargs, 0,
+			  args, NULL,
 			  run_temp_proc);
 
   /* Tie into the gdk input function */
@@ -1052,10 +1092,11 @@ install_temp_proc (void)
 }
 
 static gboolean
-open_url (gchar *locale,
-	  gchar *path)
+open_url (gchar *help_path,
+	  gchar *locale,
+	  gchar *help_file)
 {
-  if (! open_browser_dialog (locale, path))
+  if (! open_browser_dialog (help_path, locale, help_file))
     return FALSE;
 
   install_temp_proc ();
@@ -1071,44 +1112,42 @@ query (void)
 {
   static GParamDef args[] =
   {
-    { PARAM_INT32,  "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "locale"  , "Language to use" },
-    { PARAM_STRING, "path",     "Path of a local document to open. "
-                                "Can be relative to GIMP_HELP_PATH." }
+    { PARAM_INT32,  "run_mode",  "Interactive" },
+    { PARAM_STRING, "help_path", "" },
+    { PARAM_STRING, "locale",    "Language to use" },
+    { PARAM_STRING, "help_file", "Path of a local document to open. "
+                                 "Can be relative to GIMP_HELP_PATH." }
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
                           "Browse the GIMP help pages",
                           "A small and simple HTML browser optimzed for "
-			    "browsing the GIMP help pages.",
+			  "browsing the GIMP help pages.",
                           "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitschel@cs.tu-berlin.de>",
+			  "Michael Natterer <mitch@gimp.org>",
 			  "Sven Neumann & Michael Natterer",
                           "1999",
                           NULL,
                           "",
                           PROC_EXTENSION,
-                          nargs, nreturn_vals,
-                          args, return_vals);
+                          nargs, 0,
+                          args, NULL);
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
-  gchar *locale;
-  gchar *path;
+  gchar *help_path = NULL;
+  gchar *locale    = NULL;
+  gchar *help_file = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -1127,39 +1166,58 @@ run (char    *name,
         case RUN_INTERACTIVE:
         case RUN_NONINTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-         /*  Make sure all the arguments are there!  */
-          if ((nparams != 3) ||
-	      !param[1].data.d_string ||
-	      !strlen (param[1].data.d_string) ||
+	  /*  Make sure all the arguments are there!  */
+          if ((nparams != 4) ||
 	      !param[2].data.d_string ||
-	      !strlen (param[2].data.d_string))
+	      !strlen (param[2].data.d_string) ||
+	      !param[3].data.d_string ||
+	      !strlen (param[3].data.d_string))
 	    {
-	      locale = "C";
-	      path   = g_strdup ("welcome.html");
+	      help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
+				       GIMP_HELP_PREFIX, NULL);
+	      locale    = g_strdup ("C");
+	      help_file = g_strdup ("welcome.html");
 	    }
-	  else
+
+	  if (nparams == 4)
 	    {
-	      locale = g_strdup (param[1].data.d_string);
-	      path   = g_strdup (param[2].data.d_string);
+	      if (!param[1].data.d_string ||
+		  !strlen (param[1].data.d_string))
+		{
+		  help_path = g_strconcat (gimp_data_directory(),
+					   G_DIR_SEPARATOR_S, 
+					   GIMP_HELP_PREFIX, NULL);
+		  locale    = g_strdup (param[2].data.d_string);
+		  help_file = g_strdup (param[3].data.d_string);
+		}
+	      else
+		{
+		  help_path = g_strdup (param[1].data.d_string);
+		  locale    = g_strdup (param[2].data.d_string);
+		  help_file = g_strdup (param[3].data.d_string);
+
+		  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
+		}
 	    }
           break;
+
         default:
-	  locale = NULL;
-	  path   = NULL;
 	  status = STATUS_CALLING_ERROR;
           break;
         }
 
       if (status == STATUS_SUCCESS)
         {
-	  g_strdelimit (path, "/", G_DIR_SEPARATOR);
+	  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
 
-       	  if (!open_url (locale, path))
+       	  if (!open_url (help_path, locale, help_file))
             values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	  else
 	    values[0].data.d_status = STATUS_SUCCESS;
 
-	  g_free (path);
+	  g_free (help_path);
+	  g_free (locale);
+	  g_free (help_file);
         }
       else
         values[0].data.d_status = status;

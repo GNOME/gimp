@@ -727,6 +727,6 @@ lc_dialog_help_func (gchar *help_data)
 			   "dialogs/",
 			   dialog_names[page_num], ".html",
 			   NULL);
-  gimp_help (help_page);
+  gimp_standard_help_func (help_page);
   g_free (help_page);
 }

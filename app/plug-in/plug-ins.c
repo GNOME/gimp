@@ -115,6 +115,16 @@ struct _PlugInMenuEntry
 {
   PlugInProcDef *proc_def;
   gchar         *domain;
+  gchar         *help_path;
+};
+
+
+typedef struct _PlugInHelpPathDef PlugInHelpPathDef;
+
+struct _PlugInHelpPathDef
+{
+  gchar *prog_name;
+  gchar *help_path;
 };
 
 
@@ -136,8 +146,7 @@ static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
 static void plug_in_write_rc              (gchar             *filename);
 static void plug_in_init_file             (gchar             *filename);
-static void plug_in_query                 (gchar             *filename,
-				           PlugInDef         *plug_in_def);
+static void plug_in_query                 (PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
 static gint plug_in_make_menu_entry       (gpointer           foo,
@@ -170,20 +179,22 @@ static void      plug_in_args_destroy   (Argument   *args,
 static void      plug_in_init_shm       (void);
 
 PlugIn *current_plug_in = NULL;
-GSList *proc_defs = NULL;
+GSList *proc_defs       = NULL;
 
-static GSList *plug_in_defs = NULL;
+static GSList *plug_in_defs     = NULL;
 static GSList *gimprc_proc_defs = NULL;
-static GSList *open_plug_ins = NULL;
+static GSList *open_plug_ins    = NULL;
 static GSList *blocked_plug_ins = NULL;
 
-static GSList     *plug_in_stack = NULL;
-static GIOChannel *current_readchannel = NULL;
-static GIOChannel *current_writechannel = NULL;
+static GSList *help_path_defs = NULL;
+
+static GSList     *plug_in_stack              = NULL;
+static GIOChannel *current_readchannel        = NULL;
+static GIOChannel *current_writechannel       = NULL;
 static gint        current_write_buffer_index = 0;
-static gchar      *current_write_buffer = NULL;
-static Argument   *current_return_vals = NULL;
-static gint        current_return_nvals = 0;
+static gchar      *current_write_buffer       = NULL;
+static Argument   *current_return_vals        = NULL;
+static gint        current_return_nvals       = 0;
 
 static ProcRecord *last_plug_in = NULL;
 
@@ -331,7 +342,7 @@ plug_in_init (void)
 	  write_pluginrc = TRUE;
 	  if ((be_verbose == TRUE) || (no_splash == TRUE))
 	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
-	  plug_in_query (plug_in_def->prog, plug_in_def);
+	  plug_in_query (plug_in_def);
 	}
       app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
@@ -405,14 +416,28 @@ plug_in_init (void)
   if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print ("\n");
 
-  /* free up stuff */
+  /* create help path list and free up stuff */
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
 
+      if (plug_in_def->help_path)
+	{
+	  PlugInHelpPathDef *help_path_def;
+
+	  help_path_def = g_new (PlugInHelpPathDef, 1);
+
+	  help_path_def->prog_name = g_strdup (plug_in_def->prog);
+	  help_path_def->help_path = g_strdup (plug_in_def->help_path);
+
+	  help_path_defs = g_slist_prepend (help_path_defs, help_path_def);
+	}
+
       plug_in_def_free (plug_in_def, FALSE);
     }
+
   g_slist_free (plug_in_defs);
+  plug_in_defs = NULL;
 }
 
 
@@ -637,12 +662,13 @@ plug_in_def_new (gchar *prog)
 
   plug_in_def = g_new (PlugInDef, 1);
 
-  plug_in_def->prog = g_strdup (prog);
-  plug_in_def->proc_defs = NULL;
+  plug_in_def->prog          = g_strdup (prog);
+  plug_in_def->proc_defs     = NULL;
   plug_in_def->locale_domain = NULL;
-  plug_in_def->locale_path = NULL;
-  plug_in_def->mtime = 0;
-  plug_in_def->query = FALSE;
+  plug_in_def->locale_path   = NULL;
+  plug_in_def->help_path     = NULL;
+  plug_in_def->mtime         = 0;
+  plug_in_def->query         = FALSE;
   
   return plug_in_def;
 }
@@ -655,8 +681,9 @@ plug_in_def_free (PlugInDef *plug_in_def,
   GSList *list;
 
   g_free (plug_in_def->prog);
-  if (plug_in_def->locale_domain)  g_free (plug_in_def->locale_domain);
-  if (plug_in_def->locale_path)    g_free (plug_in_def->locale_path);
+  if (plug_in_def->locale_domain) g_free (plug_in_def->locale_domain);
+  if (plug_in_def->locale_path)   g_free (plug_in_def->locale_path);
+  if (plug_in_def->help_path)     g_free (plug_in_def->help_path);
 
   if (free_proc_defs)
     {
@@ -679,11 +706,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
   GSList *tmp;
   gchar  *t1, *t2;
 
-  t1 = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
-  if (t1)
-    t1 = t1 + 1;
-  else
-    t1 = plug_in_def->prog;
+  t1 = g_basename (plug_in_def->prog);
 
   /* If this is a file load or save plugin, make sure we have
    * something for one of the extensions, prefixes, or magic number.
@@ -700,7 +723,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
 	  (!strncmp (proc_def->menu_path, "<Load>", 6) ||
 	   !strncmp (proc_def->menu_path, "<Save>", 6)))
 	{
-	  proc_def->extensions = g_strdup("");
+	  proc_def->extensions = g_strdup ("");
 	}
     }
 
@@ -708,11 +731,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
     {
       tplug_in_def = tmp->data;
 
-      t2 = strrchr (tplug_in_def->prog, G_DIR_SEPARATOR);
-      if (t2)
-	t2 = t2 + 1;
-      else
-	t2 = tplug_in_def->prog;
+      t2 = g_basename (tplug_in_def->prog);
 
       if (strcmp (t1, t2) == 0)
 	{
@@ -736,7 +755,6 @@ plug_in_def_add (PlugInDef *plug_in_def)
   g_print ("\"%s\" executable not found\n", plug_in_def->prog);
   plug_in_def_free (plug_in_def, FALSE);
 }
-
 
 gchar *
 plug_in_menu_path (gchar *name)
@@ -769,6 +787,28 @@ plug_in_menu_path (gchar *name)
   return NULL;
 }
 
+gchar *
+plug_in_help_path (gchar *prog_name)
+{
+  PlugInHelpPathDef *help_path_def;
+  GSList *list;
+
+  if (!prog_name || !strlen (prog_name))
+    return NULL;
+
+  for (list = help_path_defs; list; list = g_slist_next (list))
+    {
+      help_path_def = (PlugInHelpPathDef *) list->data;
+
+      if (help_path_def &&
+	  help_path_def->prog_name &&
+	  strcmp (help_path_def->prog_name, prog_name) == 0)
+	return help_path_def->help_path;
+    }
+
+  return NULL;
+}
+
 PlugIn *
 plug_in_new (gchar *name)
 {
@@ -791,29 +831,29 @@ plug_in_new (gchar *name)
 
   plug_in = g_new (PlugIn, 1);
 
-  plug_in->open = FALSE;
-  plug_in->destroy = FALSE;
-  plug_in->query = FALSE;
-  plug_in->synchronous = FALSE;
-  plug_in->recurse = FALSE;
-  plug_in->busy = FALSE;
-  plug_in->pid = 0;
-  plug_in->args[0] = g_strdup (path);
-  plug_in->args[1] = g_strdup ("-gimp");
-  plug_in->args[2] = g_new (gchar, 32);
-  plug_in->args[3] = g_new (gchar, 32);
-  plug_in->args[4] = NULL;
-  plug_in->args[5] = NULL;
-  plug_in->args[6] = NULL;
-  plug_in->my_read = NULL;
-  plug_in->my_write = NULL;
-  plug_in->his_read = NULL;
-  plug_in->his_write = NULL;
-  plug_in->input_id = 0;
+  plug_in->open               = FALSE;
+  plug_in->destroy            = FALSE;
+  plug_in->query              = FALSE;
+  plug_in->synchronous        = FALSE;
+  plug_in->recurse            = FALSE;
+  plug_in->busy               = FALSE;
+  plug_in->pid                = 0;
+  plug_in->args[0]            = g_strdup (path);
+  plug_in->args[1]            = g_strdup ("-gimp");
+  plug_in->args[2]            = g_new (gchar, 32);
+  plug_in->args[3]            = g_new (gchar, 32);
+  plug_in->args[4]            = NULL;
+  plug_in->args[5]            = NULL;
+  plug_in->args[6]            = NULL;
+  plug_in->my_read            = NULL;
+  plug_in->my_write           = NULL;
+  plug_in->his_read           = NULL;
+  plug_in->his_write          = NULL;
+  plug_in->input_id           = 0;
   plug_in->write_buffer_index = 0;
-  plug_in->temp_proc_defs = NULL;
-  plug_in->progress = NULL;
-  plug_in->user_data = NULL;
+  plug_in->temp_proc_defs     = NULL;
+  plug_in->progress           = NULL;
+  plug_in->user_data          = NULL;
 
   return plug_in;
 }
@@ -869,31 +909,31 @@ xspawnv (gint                mode,
   gint pid;
 
   /* only use it if _spawnv fails */
-  pid = _spawnv(mode, cmdname, argv);
+  pid = _spawnv (mode, cmdname, argv);
   if (pid != -1) return pid;
 
   /* stuff parameters into one cmndline */
   sCmndLine[0] = 0;
   for (i = 1; argv[i] != NULL; i++)
     {
-       strcat(sCmndLine, argv[i]);
-       strcat(sCmndLine, " ");
+       strcat (sCmndLine, argv[i]);
+       strcat (sCmndLine, " ");
     }
   /* remove last blank */
-  sCmndLine[strlen(sCmndLine)-1] = 0;
+  sCmndLine[strlen (sCmndLine)-1] = 0;
 
   /* do we really need _spawnv (ShelExecute seems not to do it)*/
-  if (32 <= (int)FindExecutable (cmdname, 
-				 gimp_directory (),
-				 sExecutable))
+  if (32 <= (int) FindExecutable (cmdname, 
+				  gimp_directory (),
+				  sExecutable))
     {
-      //g_print("_spawnlp %s %s %s", sExecutable, cmdname, sCmndLine);
+      /* g_print("_spawnlp %s %s %s", sExecutable, cmdname, sCmndLine); */
       
-      pid = _spawnlp(mode, sExecutable, "-c", cmdname, sCmndLine, NULL);
+      pid = _spawnlp (mode, sExecutable, "-c", cmdname, sCmndLine, NULL);
     }
   else
     {
-      g_warning("Execution error for: %s", cmdname);
+      g_warning ("Execution error for: %s", cmdname);
       return -1;
     }
   return pid;
@@ -922,23 +962,23 @@ plug_in_open (PlugIn *plug_in)
 
 #if defined(G_WITH_CYGWIN) || defined(__EMX__)
       /* Set to binary mode */
-      setmode(my_read[0], _O_BINARY);
-      setmode(my_write[0], _O_BINARY);
-      setmode(my_read[1], _O_BINARY);
-      setmode(my_write[1], _O_BINARY);
+      setmode (my_read[0], _O_BINARY);
+      setmode (my_write[0], _O_BINARY);
+      setmode (my_read[1], _O_BINARY);
+      setmode (my_write[1], _O_BINARY);
 #endif
 
 #ifndef G_OS_WIN32
-      plug_in->my_read = g_io_channel_unix_new (my_read[0]);
-      plug_in->my_write = g_io_channel_unix_new (my_write[1]);
-      plug_in->his_read = g_io_channel_unix_new (my_write[0]);
+      plug_in->my_read   = g_io_channel_unix_new (my_read[0]);
+      plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
+      plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
       plug_in->his_write = g_io_channel_unix_new (my_read[1]);
 #else
-      plug_in->my_read = g_io_channel_win32_new_pipe (my_read[0]);
-      plug_in->his_read = g_io_channel_win32_new_pipe (my_write[0]);
+      plug_in->my_read     = g_io_channel_win32_new_pipe (my_read[0]);
+      plug_in->his_read    = g_io_channel_win32_new_pipe (my_write[0]);
       plug_in->his_read_fd = my_write[0];
-      plug_in->my_write = g_io_channel_win32_new_pipe (my_write[1]);
-      plug_in->his_write = g_io_channel_win32_new_pipe (my_read[1]);
+      plug_in->my_write    = g_io_channel_win32_new_pipe (my_write[1]);
+      plug_in->his_write   = g_io_channel_win32_new_pipe (my_read[1]);
 #endif
 
       /* Remember the file descriptors for the pipes.
@@ -1310,7 +1350,7 @@ plug_in_run (ProcRecord *proc_rec,
 	    }
 	}
     }
-  
+
  done:
   if (return_vals && destroy_values)
     {
@@ -1937,46 +1977,46 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   proc_def->prog = g_strdup (prog);
 
-  proc_def->menu_path = g_strdup (proc_install->menu_path);
-  proc_def->accelerator = NULL;
-  proc_def->extensions = NULL;
-  proc_def->prefixes = NULL;
-  proc_def->magics = NULL;
-  proc_def->image_types = g_strdup (proc_install->image_types);
+  proc_def->menu_path       = g_strdup (proc_install->menu_path);
+  proc_def->accelerator     = NULL;
+  proc_def->extensions      = NULL;
+  proc_def->prefixes        = NULL;
+  proc_def->magics          = NULL;
+  proc_def->image_types     = g_strdup (proc_install->image_types);
   proc_def->image_types_val = plug_in_image_types_parse (proc_def->image_types);
   /* Install temp one use todays time */
-  proc_def->mtime = time (NULL);
+  proc_def->mtime           = time (NULL);
 
   proc = &proc_def->db_info;
 
   /*
    *  The procedural database procedure
    */
-  proc->name = g_strdup (proc_install->name);
-  proc->blurb = g_strdup (proc_install->blurb);
-  proc->help = g_strdup (proc_install->help);
-  proc->author = g_strdup (proc_install->author);
+  proc->name      = g_strdup (proc_install->name);
+  proc->blurb     = g_strdup (proc_install->blurb);
+  proc->help      = g_strdup (proc_install->help);
+  proc->author    = g_strdup (proc_install->author);
   proc->copyright = g_strdup (proc_install->copyright);
-  proc->date = g_strdup (proc_install->date);
+  proc->date      = g_strdup (proc_install->date);
   proc->proc_type = proc_install->type;
 
-  proc->num_args = proc_install->nparams;
+  proc->num_args   = proc_install->nparams;
   proc->num_values = proc_install->nreturn_vals;
 
-  proc->args = g_new (ProcArg, proc->num_args);
+  proc->args   = g_new (ProcArg, proc->num_args);
   proc->values = g_new (ProcArg, proc->num_values);
 
   for (i = 0; i < proc->num_args; i++)
     {
-      proc->args[i].arg_type = proc_install->params[i].type;
-      proc->args[i].name = g_strdup (proc_install->params[i].name);
+      proc->args[i].arg_type    = proc_install->params[i].type;
+      proc->args[i].name        = g_strdup (proc_install->params[i].name);
       proc->args[i].description = g_strdup (proc_install->params[i].description);
     }
 
   for (i = 0; i < proc->num_values; i++)
     {
-      proc->values[i].arg_type = proc_install->return_vals[i].type;
-      proc->values[i].name = g_strdup (proc_install->return_vals[i].name);
+      proc->values[i].arg_type    = proc_install->return_vals[i].type;
+      proc->values[i].name        = g_strdup (proc_install->return_vals[i].name);
       proc->values[i].description = g_strdup (proc_install->return_vals[i].description);
     }
 
@@ -2012,6 +2052,11 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	    menu_entry->domain = "gimp-script-fu";
 	  else
 	    menu_entry->domain = std_plugins_domain;
+
+	  if (plug_in_def)
+	    menu_entry->help_path = plug_in_def->help_path;
+	  else
+	    menu_entry->help_path = NULL;
 
 	  /* plug_in_make_menu_entry frees the menu_entry for us */
 	  plug_in_make_menu_entry (NULL, menu_entry, NULL);  
@@ -2291,6 +2336,11 @@ plug_in_write_rc (gchar *filename)
 		fprintf (fp, ")");
 	    }
 
+	  if (plug_in_def->help_path)
+	    {
+	      fprintf (fp, "\n\t(help-def \"%s\")", plug_in_def->help_path);
+	    }
+
 	  fprintf (fp, ")\n");
 
 	  if (tmp)
@@ -2310,11 +2360,7 @@ plug_in_init_file (gchar *filename)
   gchar *plug_in_name;
   gchar *name;
 
-  name = strrchr (filename, G_DIR_SEPARATOR);
-  if (name)
-    name = name + 1;
-  else
-    name = filename;
+  name = g_basename (filename);
 
   plug_in_def = NULL;
   tmp = plug_in_defs;
@@ -2324,11 +2370,7 @@ plug_in_init_file (gchar *filename)
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      plug_in_name = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
-      if (plug_in_name)
-	plug_in_name = plug_in_name + 1;
-      else
-	plug_in_name = plug_in_def->prog;
+      plug_in_name = g_basename (plug_in_def->prog);
 
       if (g_strcasecmp (name, plug_in_name) == 0)
 	{
@@ -2347,13 +2389,12 @@ plug_in_init_file (gchar *filename)
 }
 
 static void
-plug_in_query (gchar     *filename,
-	       PlugInDef *plug_in_def)
+plug_in_query (PlugInDef *plug_in_def)
 {
   PlugIn *plug_in;
   WireMessage msg;
 
-  plug_in = plug_in_new (filename);
+  plug_in = plug_in_new (plug_in_def->prog);
   if (plug_in)
     {
       plug_in->query = TRUE;
@@ -2448,10 +2489,22 @@ plug_in_make_menu_entry (gpointer         foo,
   GimpItemFactoryEntry  entry;
   gchar                *help_page;
   
-  help_page = g_strconcat ("filters/",
-			   g_basename (menu_entry->proc_def->prog),
-			   ".html",
-			   NULL);
+  if (menu_entry->help_path)
+    {
+      help_page = g_strconcat (menu_entry->help_path,
+			       "@",   /* HACK: locale subdir */
+			       g_basename (menu_entry->proc_def->prog),
+			       ".html",
+			       NULL);
+    }
+  else
+    {
+      help_page = g_strconcat ("filters/",  /* _not_ G_DIR_SEPARATOR_S */
+			       g_basename (menu_entry->proc_def->prog),
+			       ".html",
+			       NULL);
+    }
+
   g_strdown (help_page);
   
   entry.entry.path            = menu_entry->proc_def->menu_path;
@@ -2542,6 +2595,7 @@ plug_in_make_menu (void)
 	      menu_entry->proc_def = proc_def;
 	      menu_entry->domain   = plug_in_def->locale_domain ? 
 		plug_in_def->locale_domain : std_plugins_domain;
+	      menu_entry->help_path = plug_in_def->help_path;
 
 	      g_tree_insert (menu_entries, 
 			     dgettext (menu_entry->domain, proc_def->menu_path),

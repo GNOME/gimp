@@ -46,6 +46,7 @@ extern "C" {
 #define gimp_image_enable_undo		gimp_image_undo_enable
 #define gimp_image_freeze_undo		gimp_image_undo_freeze
 #define gimp_image_thaw_undo		gimp_image_undo_thaw
+#define gimp_plugin_help_func           gimp_standard_help_func
 
 #endif /* GIMP_DISABLE_COMPAT_H */
 

@@ -420,13 +420,14 @@ void gimp_destroy_params (GParam *params,
 void gimp_destroy_paramdefs (GParamDef *paramdefs,
 			     gint       nparams);
 
-gdouble  gimp_gamma           (void);
-gboolean gimp_install_cmap    (void);
-gboolean gimp_use_xshm        (void);
-guchar*  gimp_color_cube      (void);
-gint     gimp_min_colors      (void);
-void     gimp_request_wakeups (void);
+gdouble    gimp_gamma           (void);
+gboolean   gimp_install_cmap    (void);
+gboolean   gimp_use_xshm        (void);
+guchar   * gimp_color_cube      (void);
+gint       gimp_min_colors      (void);
+void       gimp_request_wakeups (void);
 
+gchar    * gimp_get_progname    (void);
 
 /****************************************
  *              Images                  *
@@ -892,8 +893,10 @@ void      gimp_parasite_detach     (const gchar    *name);
  *                Help                  *
  ****************************************/
 
-void      gimp_plugin_help_func    (gchar *help_data);
-void      gimp_help                (gchar *help_data);
+void      gimp_help                 (gchar *prog_name,
+				     gchar *help_data);
+
+void      gimp_plugin_help_register (gchar *help_path);
 
 /****************************************
  *           Localisation               *

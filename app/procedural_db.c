@@ -33,20 +33,21 @@
 GHashTable *procedural_ht = NULL;
 
 /*  Local functions  */
-static guint      procedural_db_hash_func (gconstpointer key);
-static void	  pdb_id_init (void);
+static guint   procedural_db_hash_func (gconstpointer key);
+static void    pdb_id_init             (void);
 
 
 void
 procedural_db_init (void)
 {
-  app_init_update_status(_("Procedural Database"), NULL, -1);
+  app_init_update_status (_("Procedural Database"), NULL, -1);
+
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func, g_str_equal);
   pdb_id_init ();
 }
 
-void
+static void
 procedural_db_free_entry (gpointer key,
 			  gpointer value,
 			  gpointer user_data)
@@ -123,9 +124,9 @@ procedural_db_execute (gchar    *name,
 		       Argument *args)
 {
   ProcRecord *procedure;
-  Argument *return_args;
-  GList *list;
-  int i;
+  Argument   *return_args;
+  GList      *list;
+  gint        i;
 
   return_args = NULL;
 
@@ -135,7 +136,7 @@ procedural_db_execute (gchar    *name,
     {
       g_message (_("PDB calling error %s not found"), name);
       
-      return_args = (Argument *) g_malloc (sizeof (Argument));
+      return_args = g_new (Argument, 1);
       return_args->arg_type = PDB_STATUS;
       return_args->value.pdb_int = PDB_CALLING_ERROR;
       return return_args;
@@ -147,7 +148,7 @@ procedural_db_execute (gchar    *name,
 	{
 	  g_message (_("PDB calling error %s not found"), name);
 
-	  return_args = (Argument *) g_malloc (sizeof (Argument));
+	  return_args = g_new (Argument, 1);
 	  return_args->arg_type = PDB_STATUS;
 	  return_args->value.pdb_int = PDB_CALLING_ERROR;
 	  return return_args;
@@ -159,7 +160,7 @@ procedural_db_execute (gchar    *name,
 	{
 	  if (args[i].arg_type != procedure->args[i].arg_type)
 	    {
-	      return_args = (Argument *) g_malloc (sizeof (Argument));
+	      return_args = g_new (Argument, 1);
 	      return_args->arg_type = PDB_STATUS;
 	      return_args->value.pdb_int = PDB_CALLING_ERROR;
 
@@ -189,7 +190,7 @@ procedural_db_execute (gchar    *name,
 	  break;
 
 	default:
-	  return_args = (Argument *) g_malloc (sizeof (Argument));
+	  return_args = g_new (Argument, 1);
 	  return_args->arg_type = PDB_STATUS;
 	  return_args->value.pdb_int = PDB_EXECUTION_ERROR;
 	  break;
@@ -217,14 +218,14 @@ procedural_db_run_proc (gchar *name,
 			...)
 {
   ProcRecord *proc;
-  Argument *params;
-  Argument *return_vals;
-  va_list args;
-  int i;
+  Argument   *params;
+  Argument   *return_vals;
+  va_list     args;
+  gint        i;
 
   if ((proc = procedural_db_lookup (name)) == NULL)
     {
-      return_vals = (Argument *) g_malloc (sizeof (Argument));
+      return_vals = g_new (Argument, 1);
       return_vals->arg_type = PDB_STATUS;
       return_vals->value.pdb_int = PDB_CALLING_ERROR;
       return return_vals;
@@ -239,7 +240,8 @@ procedural_db_run_proc (gchar *name,
     {
       if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
 	{
-	  g_message (_("Incorrect arguments passed to procedural_db_run_proc:\nArgument %d to '%s' should be a %s, but got passed a %s"),
+	  g_message (_("Incorrect arguments passed to procedural_db_run_proc:\n"
+		       "Argument %d to '%s' should be a %s, but got passed a %s"),
 		     i+1, proc->name,
 		     pdb_type_name (proc->args[i].arg_type),
 		     pdb_type_name (params[i].arg_type));
@@ -302,12 +304,12 @@ procedural_db_run_proc (gchar *name,
 
 Argument *
 procedural_db_return_args (ProcRecord *procedure,
-			   int         success)
+			   gboolean    success)
 {
   Argument *return_args;
-  int i;
+  gint i;
 
-  return_args = (Argument *) g_malloc (sizeof (Argument) * (procedure->num_values + 1));
+  return_args = g_new (Argument, procedure->num_values + 1);
 
   if (success)
     {
@@ -331,11 +333,12 @@ void
 procedural_db_destroy_args (Argument *args,
 			    int       nargs)
 {
-  int i, j;
-  int prev_val = 0;
-  char **strs;
+  gint    i, j;
+  gint    prev_val = 0;
+  gchar **strs;
 
-  if (!args) return;
+  if (!args)
+    return;
 
   for (i = 0; i < nargs; i++)
     {
@@ -357,7 +360,7 @@ procedural_db_destroy_args (Argument *args,
 	  g_free (args[i].value.pdb_pointer);
 	  break;
 	case PDB_STRINGARRAY:
-	  strs = (char **) args[i].value.pdb_pointer;
+	  strs = (gchar **) args[i].value.pdb_pointer;
 	  for (j = 0; j < prev_val; j++)
 	    g_free (strs[j]);
 	  g_free (strs);
@@ -443,9 +446,9 @@ static gint next_drawable_id;
 static gint next_display_id;
 */
 
-static GHashTable* image_hash;
-static GHashTable* drawable_hash;
-static GHashTable* display_hash;
+static GHashTable *image_hash;
+static GHashTable *drawable_hash;
+static GHashTable *display_hash;
 
 static guint
 id_hash_func (gconstpointer id)
@@ -465,8 +468,11 @@ add_cb (GimpSet   *set,
     	GimpImage *gimage,
 	gpointer   data)
 {
-  guint *id = g_new (guint, 1);
+  guint *id;
+
+  id = g_new (guint, 1);
   *id = next_image_id++;
+
   gtk_object_set_data (GTK_OBJECT (gimage), "pdb_id", id);
   g_hash_table_insert (image_hash, id, gimage);
 }
@@ -476,7 +482,10 @@ remove_cb (GimpSet   *set,
     	   GimpImage *image,
 	   gpointer   data)
 {
-  guint *id = gtk_object_get_data (GTK_OBJECT(image), "pdb_id");
+  guint *id;
+
+  id = (guint *) gtk_object_get_data (GTK_OBJECT (image), "pdb_id");
+
   gtk_object_remove_data (GTK_OBJECT(image), "pdb_id");
   g_hash_table_remove (image_hash, id);
   g_free (id);
@@ -490,20 +499,25 @@ pdb_id_init (void)
   display_hash  = g_hash_table_new (id_hash_func, id_cmp_func);
 
   gtk_signal_connect (GTK_OBJECT (image_context), "add",
-		      GTK_SIGNAL_FUNC (add_cb), NULL);
+		      GTK_SIGNAL_FUNC (add_cb),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-		      GTK_SIGNAL_FUNC (remove_cb), NULL);
+		      GTK_SIGNAL_FUNC (remove_cb),
+		      NULL);
 }
 
 
 gint
-pdb_image_to_id (GimpImage* gimage)
+pdb_image_to_id (GimpImage *gimage)
 {
-  guint *id = gtk_object_get_data (GTK_OBJECT (gimage), "pdb_id");
+  guint *id;
+
+  id = (guint *) gtk_object_get_data (GTK_OBJECT (gimage), "pdb_id");
+
   return id ? (gint) *id : -1;
 }
 	
-GimpImage*
+GimpImage *
 pdb_id_to_image (gint id)
 {
   return g_hash_table_lookup (image_hash, &id);

@@ -36,7 +36,9 @@ void  gimp_help_free               (void);
 void  gimp_help_enable_tooltips    (void);
 void  gimp_help_disable_tooltips   (void);
 
-/*  the standard gimp help function  */
+/*  the standard gimp help function
+ *  (has different implementations in the main app and in libgimp)
+ */
 void  gimp_standard_help_func      (gchar        *help_data);
 
 /*  connect the "F1" accelerator of a window  */

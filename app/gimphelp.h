@@ -32,6 +32,7 @@ enum
 };
 
 /*  the main help function  */
-void  gimp_help               (gchar *help_data);
+void   gimp_help (gchar *help_path,
+		  gchar *help_data);
 
 #endif /* __GIMP_HELP_H__ */

@@ -97,19 +97,17 @@ resize_widget_new (ResizeType    type,
 {
   Resize *resize;
   ResizePrivate *private;
+  GtkWidget *main_vbox;
   GtkWidget *vbox;
-  GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *table2;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *spinbutton;
-  GtkWidget *alignment;
+  GtkWidget *abox;
   GtkObject *adjustment;
 
-  alignment = NULL;
+  abox = NULL;
   frame = NULL;
 
   private = g_new (ResizePrivate, 1);
@@ -134,11 +132,12 @@ resize_widget_new (ResizeType    type,
 
   /*  Get the image width and height variables, based on the gimage  */
   if (width > height)
-    private->ratio = (double) DRAWING_AREA_SIZE / (double) width;
+    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) width;
   else
-    private->ratio = (double) DRAWING_AREA_SIZE / (double) height;
-  private->area_width = (int) (private->ratio * width);
-  private->area_height = (int) (private->ratio * height);
+    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) height;
+
+  private->area_width  = (gint) (private->ratio * width);
+  private->area_height = (gint) (private->ratio * height);
 
   /*  dialog box  */
   {
@@ -222,18 +221,18 @@ resize_widget_new (ResizeType    type,
     }
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (resize->resize_shell)->vbox),
-		     vbox);
+		     main_vbox);
 
   /*  the pixel dimensions frame  */
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   table = gtk_table_new (6, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -242,7 +241,7 @@ resize_widget_new (ResizeType    type,
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 4, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  the original width & height labels  */
   label = gtk_label_new (_("Original Width:"));
@@ -348,14 +347,14 @@ resize_widget_new (ResizeType    type,
   gtk_widget_show (label);
 
   /*  a table for the spinbuttons and the chainbutton  */
-  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
   table2 = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
-  gtk_container_add (GTK_CONTAINER (alignment), table2);
-  gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 4, 6,
+  gtk_container_add (GTK_CONTAINER (abox), table2);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 4, 6,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (alignment);
+  gtk_widget_show (abox);
   
   /*  the scale ratio spinbuttons  */
   private->ratio_x_adj =
@@ -398,40 +397,22 @@ resize_widget_new (ResizeType    type,
 
   gtk_widget_show (table2);
   gtk_widget_show (table);
-  gtk_widget_show (vbox2);
+  gtk_widget_show (vbox);
 
   /*  the offset frame  */
   if (type == ResizeWidget)
     {
       frame = gtk_frame_new (_("Offset"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      hbox = gtk_hbox_new (FALSE, 0);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      vbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-      vbox2 = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-      gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
-
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
  
-      /*  the x and y offset labels  */
-      label = gtk_label_new (_("X:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-
-      label = gtk_label_new (_("Y:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-
       /*  the offset sizeentry  */
       adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
       spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
@@ -447,9 +428,13 @@ resize_widget_new (ResizeType    type,
 				 GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_table_attach_defaults (GTK_TABLE (private->offset_se), spinbutton,
 				 1, 2, 0, 1);
+      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 0, 4);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
+				    _("X:"), 0, 0, 1.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
+				    _("Y:"), 1, 0, 1.0);
       gtk_widget_show (spinbutton);
-      gtk_table_attach (GTK_TABLE (table), private->offset_se, 1, 2, 0, 2,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_container_add (GTK_CONTAINER (abox), private->offset_se);
       gtk_widget_show (private->offset_se);
 
       if (dot_for_dot)
@@ -472,15 +457,16 @@ resize_widget_new (ResizeType    type,
       gtk_signal_connect (GTK_OBJECT (private->offset_se), "value_changed",
 			  (GtkSignalFunc) offset_update, resize);
 
-      gtk_widget_show (table);
+      gtk_widget_show (abox);
 
       /*  frame to hold drawing area  */
-      hbox2 = gtk_hbox_new (0, FALSE);
-      gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
 
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (hbox2), frame, TRUE, FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (abox), frame);
+
       private->drawing_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area),
 			     private->area_width, private->area_height);
@@ -493,26 +479,25 @@ resize_widget_new (ResizeType    type,
       gtk_widget_show (private->drawing_area);
       gtk_widget_show (frame);
 
-      gtk_widget_show (hbox2);
-      gtk_widget_show (vbox2);
-      gtk_widget_show (hbox);
+      gtk_widget_show (abox);
+      gtk_widget_show (vbox);
     }
 
   /*  the resolution stuff  */
   if ((type == ScaleWidget) && (target == ResizeImage))
     {
       frame = gtk_frame_new (_("Print Size & Display Unit"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox2 = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
 
       table = gtk_table_new (4, 2, FALSE);
       gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
       gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
-      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
       /*  the print size labels  */
       label = gtk_label_new (_("New Width:"));
@@ -528,30 +513,30 @@ resize_widget_new (ResizeType    type,
       gtk_widget_show (label);
 
       /*  the print size sizeentry  */
-      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+      abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
       adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
       spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_container_add (GTK_CONTAINER (alignment), spinbutton);
+      gtk_container_add (GTK_CONTAINER (abox), spinbutton);
       gtk_widget_show (spinbutton);
-      gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 0, 1,
+      gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (alignment);
+      gtk_widget_show (abox);
 
-      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+      abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
       private->printsize_se =
 	gimp_size_entry_new (1, unit, "%a", FALSE, FALSE, FALSE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->printsize_se),
 				 GTK_SPIN_BUTTON (spinbutton), NULL);
-      gtk_container_add (GTK_CONTAINER (alignment), private->printsize_se);
-      gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 1, 2,
+      gtk_container_add (GTK_CONTAINER (abox), private->printsize_se);
+      gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (private->printsize_se);
-      gtk_widget_show (alignment);
+      gtk_widget_show (abox);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
 				      0, resolution_x, FALSE);
@@ -639,10 +624,10 @@ resize_widget_new (ResizeType    type,
       gtk_widget_show (private->equal_res);
 
       gtk_widget_show (table);
-      gtk_widget_show (vbox2);
+      gtk_widget_show (vbox);
     }
 
-  gtk_widget_show (vbox);
+  gtk_widget_show (main_vbox);
 
   /*  finally, activate the first entry  */
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (private->size_se));
@@ -680,18 +665,18 @@ resize_draw (Resize *resize)
     h = private->old_height * 2 - resize->height;
 
   if (w > h)
-    private->ratio = (double) DRAWING_AREA_SIZE / (double) w;
+    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) w;
   else
-    private->ratio = (double) DRAWING_AREA_SIZE / (double) h;
+    private->ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) h;
 
-  aw = (int) (private->ratio * w);
-  ah = (int) (private->ratio * h);
+  aw = (gint) (private->ratio * w);
+  ah = (gint) (private->ratio * h);
 
   if (aw != private->area_width || ah != private->area_height)
     {
-      private->area_width = aw;
+      private->area_width  = aw;
       private->area_height = ah;
-      gtk_widget_set_usize (private->drawing_area, aw, ah);
+      gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area), aw, ah);
     }
 
   if (private->old_width <= resize->width)
