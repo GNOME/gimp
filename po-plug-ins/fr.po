@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.15\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
+"POT-Creation-Date: 2000-03-03 20:53+0100\n"
 "PO-Revision-Date: 2000-03-01 11:43+0100\n"
 "Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -87,12 +87,12 @@ msgstr "À propos"
 #: plug-ins/common/spread.c:380 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:274
 #: plug-ins/common/tiff.c:1468 plug-ins/common/tile.c:397
-#: plug-ins/common/tileit.c:405 plug-ins/common/uniteditor.c:170
+#: plug-ins/common/tileit.c:405 plug-ins/common/uniteditor.c:155
 #: plug-ins/common/unsharp.c:794 plug-ins/common/video.c:2175
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1134
+#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:973
 #: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
 #: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
 #: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
@@ -169,12 +169,12 @@ msgstr "OK"
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:276
 #: plug-ins/common/tiff.c:1470 plug-ins/common/tile.c:399
-#: plug-ins/common/tileit.c:407 plug-ins/common/uniteditor.c:172
+#: plug-ins/common/tileit.c:407 plug-ins/common/uniteditor.c:157
 #: plug-ins/common/unsharp.c:796 plug-ins/common/video.c:2177
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:884 plug-ins/common/xbm.c:1136
+#: plug-ins/common/xbm.c:725 plug-ins/common/xbm.c:975
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
 #: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
@@ -1128,8 +1128,8 @@ msgstr "Position X de la source en espace XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
-#: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
+#: plug-ins/gap/gap_mov_dialog.c:1572 plug-ins/gflare/gflare.c:2878
+#: plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
 
@@ -1515,7 +1515,7 @@ msgstr ""
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:665 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3238
@@ -1564,7 +1564,7 @@ msgstr "%s: mauvaise palette de couleurs\n"
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
-#: plug-ins/common/xbm.c:801 plug-ins/faxg3/faxg3.c:443
+#: plug-ins/common/xbm.c:642 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
@@ -1591,7 +1591,7 @@ msgstr "impossible d'ouvrir %s\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:949
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
@@ -2295,7 +2295,7 @@ msgstr "Jouer une animation: "
 
 #. The close button
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:1002
-#: plug-ins/common/sample_colorize.c:1389 plug-ins/common/uniteditor.c:531
+#: plug-ins/common/sample_colorize.c:1389 plug-ins/common/uniteditor.c:501
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 #: plug-ins/gap/gap_navigator_dialog.c:2852
@@ -2817,7 +2817,7 @@ msgid "Prefixed Name:"
 msgstr "Nom prefixé :"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1186
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1025
 msgid "Comment:"
 msgstr "Commentaire :"
 
@@ -6285,162 +6285,122 @@ msgstr "Carrelage..."
 msgid "<Toolbox>/Xtns/Unit Editor..."
 msgstr "<Toolbox>/Extensions/Explorer la base de procédures..."
 
-#: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
+#: plug-ins/common/uniteditor.c:150 plug-ins/common/uniteditor.c:573
 #, fuzzy
 msgid "New Unit"
 msgstr "Unité"
 
-#: plug-ins/common/uniteditor.c:193
+#: plug-ins/common/uniteditor.c:178
 msgid "ID:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:205
+#: plug-ins/common/uniteditor.c:188
 #, fuzzy
 msgid "Factor:"
 msgstr "Facteur"
 
-#: plug-ins/common/uniteditor.c:216
+#: plug-ins/common/uniteditor.c:197
 #, fuzzy
 msgid "Digits:"
 msgstr "Diviseur :"
 
-#: plug-ins/common/uniteditor.c:229
+#: plug-ins/common/uniteditor.c:208
 msgid "Symbol:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:242
+#: plug-ins/common/uniteditor.c:219
 #, fuzzy
 msgid "Abbreviation:"
 msgstr "Élévation :"
 
-#: plug-ins/common/uniteditor.c:255
+#: plug-ins/common/uniteditor.c:230
 #, fuzzy
 msgid "Singular:"
 msgstr "Spéculaire :"
 
-#: plug-ins/common/uniteditor.c:268
+#: plug-ins/common/uniteditor.c:241
 msgid "Plural:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:305
+#: plug-ins/common/uniteditor.c:276
 msgid "Unit factor must not be 0."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:315
+#: plug-ins/common/uniteditor.c:286
 msgid "All text fields must contain a value."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:524
+#: plug-ins/common/uniteditor.c:494
 msgid "Unit Editor"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:529 plug-ins/gimpressionist/presets.c:656
+#: plug-ins/common/uniteditor.c:499 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:542
-msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
-"checked."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:544
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:546
-msgid "How man units make up an inch."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:547
-msgid ""
-"This field is a hint for numerical input fields. It specifies how many "
-"decimal digits the input field should provide to get approximately the same "
-"accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:553
-msgid ""
-"The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
-"abbreviation if it doesn't have a symbol."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:556
-msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:558
-msgid "The unit's singular form."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:559
-msgid "The unit's plural form."
-msgstr ""
-
-#: plug-ins/common/uniteditor.c:575
+#: plug-ins/common/uniteditor.c:526
 #, fuzzy
 msgid "Saved"
 msgstr "Enregistrer"
 
-#: plug-ins/common/uniteditor.c:576
+#: plug-ins/common/uniteditor.c:527
 msgid "ID"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:577
+#: plug-ins/common/uniteditor.c:528
 msgid "Factor"
 msgstr "Facteur"
 
-#: plug-ins/common/uniteditor.c:578
+#: plug-ins/common/uniteditor.c:529
 #, fuzzy
 msgid "Digits"
 msgstr "Tons clairs"
 
-#: plug-ins/common/uniteditor.c:579
+#: plug-ins/common/uniteditor.c:530
 msgid "Symbol"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:580
+#: plug-ins/common/uniteditor.c:531
 msgid "Abbr."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:581
+#: plug-ins/common/uniteditor.c:532
 #, fuzzy
 msgid "Singular"
 msgstr "Sinus"
 
-#: plug-ins/common/uniteditor.c:582
+#: plug-ins/common/uniteditor.c:533
 msgid "Plural"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:636
+#: plug-ins/common/uniteditor.c:580
 msgid "Create a new unit from scratch."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:638
+#: plug-ins/common/uniteditor.c:582
 #, fuzzy
 msgid "Duplicate Unit"
 msgstr "Dupliquer l'intervalle"
 
-#: plug-ins/common/uniteditor.c:645
+#: plug-ins/common/uniteditor.c:589
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:648
+#: plug-ins/common/uniteditor.c:592
 msgid "Don't Save Unit"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:655
+#: plug-ins/common/uniteditor.c:599
 #, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "Effacer la fractale actuellement sélectionnée."
 
-#: plug-ins/common/uniteditor.c:660
+#: plug-ins/common/uniteditor.c:604
 #, fuzzy
 msgid "Save Unit"
 msgstr "Enregistrer points"
 
-#: plug-ins/common/uniteditor.c:667
+#: plug-ins/common/uniteditor.c:611
 #, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
 msgstr "Effacer la fractale actuellement sélectionnée."
@@ -6937,37 +6897,37 @@ msgstr "Interprétation de %s :"
 msgid "Transferring image"
 msgstr "Transfert de l'image"
 
-#: plug-ins/common/xbm.c:238
+#: plug-ins/common/xbm.c:235
 msgid "Created with The GIMP"
 msgstr "Créé avec Gimp"
 
-#: plug-ins/common/xbm.c:661
+#: plug-ins/common/xbm.c:549
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: je ne peux ouvrir \"%s\"\n"
 
-#: plug-ins/common/xbm.c:744
+#: plug-ins/common/xbm.c:613
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: je ne peux lire l'en-tête (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:750
+#: plug-ins/common/xbm.c:619
 msgid "XBM: no image width specified\n"
 msgstr "XBM: largeur d'image non spécifiée\n"
 
-#: plug-ins/common/xbm.c:756
+#: plug-ins/common/xbm.c:625
 msgid "XBM: no image height specified\n"
 msgstr "XBM: hauteur d'image non spécifiée\n"
 
-#: plug-ins/common/xbm.c:762
+#: plug-ins/common/xbm.c:631
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: type d'image non spécifié\n"
 
-#: plug-ins/common/xbm.c:879
+#: plug-ins/common/xbm.c:720
 msgid "XBM Warning"
 msgstr "Avertissement XBM"
 
-#: plug-ins/common/xbm.c:900
+#: plug-ins/common/xbm.c:741
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6981,38 +6941,28 @@ msgstr ""
 "Veuillez la convertir en noir & blanc\n"
 "(1-bit, indexé) et essayer de nouveau."
 
-#: plug-ins/common/xbm.c:971
+#: plug-ins/common/xbm.c:812
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: impossible de créer \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1129
+#: plug-ins/common/xbm.c:968
 msgid "Save as XBM"
 msgstr "Enregistrer en XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1146
+#: plug-ins/common/xbm.c:985
 msgid "XBM Options"
 msgstr "Options XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1157
+#: plug-ins/common/xbm.c:996
 msgid "X10 Format Bitmap"
 msgstr "Format Bitmap X10"
 
-#: plug-ins/common/xbm.c:1175
+#: plug-ins/common/xbm.c:1014
 msgid "Identifier Prefix:"
 msgstr "Préfixe d'identification :"
-
-#. hotspot toggle
-#: plug-ins/common/xbm.c:1193
-msgid "Write Hot Spot Values"
-msgstr ""
-
-#: plug-ins/common/xbm.c:1217
-#, fuzzy
-msgid "Hot Spot X:"
-msgstr "Rotation en X :"
 
 #: plug-ins/common/xpm.c:794
 msgid "Save as XPM"
@@ -9596,15 +9546,15 @@ msgstr "Utiliser tous les Calques non-sélectionnés"
 
 #: plug-ins/gap/gap_range_ops.c:741
 msgid "Creating Layer-Animated Image .."
-msgstr "Création d'une image animée selon les calques"
+msgstr "Création d'une image animée (trames -> calques)"
 
 #: plug-ins/gap/gap_range_ops.c:963
 msgid "Frames to Image"
-msgstr ""
+msgstr "Trames vers image"
 
 #: plug-ins/gap/gap_range_ops.c:964
 msgid "Create Multilayer-Image from Frames"
-msgstr ""
+msgstr "Création d'une image multicalques (trames -> calques)"
 
 #: plug-ins/gap/gap_range_ops.c:1104
 msgid "Flattening Frames .."
@@ -9620,26 +9570,29 @@ msgid ""
 "- desired save plugin can't handle type\n"
 "- or desired save plugin not available\n"
 msgstr ""
+"Convertir trames : l'opération d'enregistrement a ÉCHOUÉ\n"
+"- le format de fichier demandé n'est pas géré\n"
+"- ou alors le format de fichier demandé ne gère pas les images de ce type\n"
 
 #: plug-ins/gap/gap_range_ops.c:1322
 msgid "Cropping all Animation Frames .."
-msgstr ""
+msgstr "Rognage de toutes les trames de l'animation..."
 
 #: plug-ins/gap/gap_range_ops.c:1325
 msgid "Resizing all Animation Frames .."
-msgstr ""
+msgstr "Redimensionnement de toutes les trames d'animation..."
 
 #: plug-ins/gap/gap_range_ops.c:1328
 msgid "Scaling all Animation Frames .."
-msgstr ""
+msgstr "Mise à l'échelle des trames d'animation..."
 
 #: plug-ins/gap/gap_range_ops.c:1414
 msgid "Flatten Frames"
-msgstr ""
+msgstr "Aplatir trames"
 
 #: plug-ins/gap/gap_range_ops.c:1415
 msgid "Select Frame Range"
-msgstr ""
+msgstr "Sélectionner l'intervalle de trames"
 
 #: plug-ins/gap/gap_range_ops.c:1470
 #, c-format
@@ -9779,6 +9732,7 @@ msgstr "Insère le car sélectionné à la position du curseur"
 #: plug-ins/gdyntext/font_selection.c:140
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr ""
+"Trop de polices à gérer (> MAX_FONTS). Certaines polices pourront manquer."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
 #: plug-ins/gdyntext/font_selection.c:212
@@ -9859,7 +9813,7 @@ msgstr "Texte Dynamique GIMP"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:294
 msgid "Toggle creation of a new layer"
-msgstr ""
+msgstr "Si coché, réation d'un nouveau calque"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:305
 msgid "Load text from file"
@@ -9964,7 +9918,7 @@ msgstr "Aperçu"
 #: plug-ins/gflare/gflare.c:3098 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
-msgstr ""
+msgstr "Éditer"
 
 #: plug-ins/gfig/gfig.c:1934
 msgid "Edit Gfig object collection"
@@ -10187,7 +10141,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2877
 #, fuzzy
 msgid "Scale to Image"
-msgstr "Rogner aux dimensions de l'image"
+msgstr "Trames vers image"
 
 #: plug-ins/gfig/gfig.c:2885
 msgid "Scale drawings to images size"
@@ -10481,7 +10435,7 @@ msgstr "Erreur lors de la création du calque.\n"
 #: plug-ins/gfig/gfig.c:4802
 #, c-format
 msgid "Gfig Layer %d"
-msgstr ""
+msgstr "Calque Gfig n°%d"
 
 #: plug-ins/gfig/gfig.c:4875
 #, fuzzy
@@ -10525,7 +10479,7 @@ msgstr "Édition d'un objet en lecture seule - vous ne pourrez pasl'enregistrer"
 #: plug-ins/gfig/gfig.c:5291
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "Copie de %s"
 
 #: plug-ins/gfig/gfig.c:5336
 msgid "Save as..."
@@ -10537,7 +10491,7 @@ msgstr "Erreur lors de la lecture du fichier"
 
 #: plug-ins/gfig/gfig.c:6576
 msgid "Hey where has the object gone ?"
-msgstr ""
+msgstr "Hé, mais où l'objet est-il passé ?"
 
 #: plug-ins/gflare/gflare.c:819
 msgid "<Image>/Filters/Light Effects/GFlare..."
@@ -10848,7 +10802,7 @@ msgstr "Sélectionner :"
 
 #: plug-ins/gimpressionist/brush.c:431
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Ratio h/l :"
 
 #: plug-ins/gimpressionist/brush.c:435 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
@@ -10864,27 +10818,31 @@ msgstr "Enregistrer..."
 
 #: plug-ins/gimpressionist/brush.c:477
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "Réglage du rapport hauteur/largeur de la brosse"
 
 #: plug-ins/gimpressionist/brush.c:488
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "Réglage de la quantité de bossage à appliquer à chaque coup de pinceau"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
-msgstr ""
+msgstr "Moyenne sous la brosse"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
+"La couleur de dessin est la moyenne de tous les pixels de l'image originale "
+"sous la brosse"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr "Centre de la brosse"
+msgstr "Au centre de la brosse"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
+"La couleur de dessin est la couleur de l'image originale au centre de la "
+"brosse"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
@@ -10896,11 +10854,13 @@ msgstr "Ajoute une perturbation aléatoire à la couleur"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
-msgstr ""
+msgstr "Assombrissement des bords :"
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
+"À quel point il faut estomper les bords de chaque coup de brosse en les "
+"assombrissant"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
@@ -10916,80 +10876,85 @@ msgstr "Préserver l'image originale comme arrière plan"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "From paper"
-msgstr ""
+msgstr "Depuis le papier"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr ""
+msgstr "Copie la texture du papier sélectionné comme fond"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "Fond de couleur uniforme"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
+"Utilise un fond transparent ; seuls les coups de pinceau seront visibles"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Peindre les bords"
 
 #: plug-ins/gimpressionist/general.c:269
 msgid "Tileable"
-msgstr ""
+msgstr "Carrelable"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
+"Si coché, l'image résultat pourra être utilisée comme motif de papier peint "
+"sans problèmes de raccordement (discontinuités)."
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Ombre portée"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "Ajoute un effet d'ombre portée à chaque coup de pinceau"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "À quel point l'ombre portée doit être sombre"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
-msgstr ""
+msgstr "Profondeur d'ombre :"
 
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "La distance de l'objet à laquelle l'ombre portée doit apparaître"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
-msgstr ""
+msgstr "Flou de l'ombre :"
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "Quantité de flou à appliquer à l'ombre portée"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
-msgstr ""
+msgstr "Seuil de déviation :"
 
+# bof
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Une valeur de secours pour les sélections adaptatives"
 
 #: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
 msgid "Performs various artistic operations on an image"
 msgstr ""
+"Différents effets réglables censés donner un aspect de toile impressionniste"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr ""
+msgstr "<Image>/Filtres/Artistique/GIMPressionniste..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
-msgstr ""
+msgstr "Peinture..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:95
 #, c-format
@@ -10999,19 +10964,24 @@ msgid ""
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
 msgstr ""
+"*** Avertissement ***\n"
+"Il est vivement recommandé d'ajouter\n"
+"   (gimpressionist-path \\\"%s\\\")\n"
+"(ou quelque chose de semblable)\n"
+"à votre fichier gimprc.\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:350
 #: plug-ins/gimpressionist/gimpressionist.c:447
 msgid "The GIMPressionist!"
-msgstr ""
+msgstr "Le GIMPressionniste !"
 
 #: plug-ins/gimpressionist/gimpressionist.c:489
 msgid "Run with the selected settings"
-msgstr ""
+msgstr "Lancer avec les réglages choisis"
 
 #: plug-ins/gimpressionist/gimpressionist.c:496
 msgid "Quit the program"
-msgstr ""
+msgstr "Quitter GIMPressionniste"
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "About..."
@@ -11023,19 +10993,19 @@ msgstr "Montrer des informations sur cet extension et son auteur"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
-msgstr ""
+msgstr "Directions :"
 
 #: plug-ins/gimpressionist/orientation.c:77
 msgid "Start angle:"
-msgstr ""
+msgstr "Angle de départ :"
 
 #: plug-ins/gimpressionist/orientation.c:81
 msgid "Angle span:"
-msgstr ""
+msgstr "Intervalle d'angles :"
 
 #: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "Le nombre de directions (c.-à-d. de brosses) à utiliser"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
@@ -11043,7 +11013,7 @@ msgstr "L'angle de la prmeière brosse à créer"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
-msgstr ""
+msgstr "Étendue d'angles à utiliser (350 = cercle complet)"
 
 #: plug-ins/gimpressionist/orientation.c:137
 msgid ""
@@ -13288,6 +13258,9 @@ msgstr "Erreur, le fichier de propriétés XJT %s est vide."
 
 #~ msgid "Add Dir"
 #~ msgstr "Ajouter un Répertoire"
+
+#~ msgid "Internal error - list item has null object!"
+#~ msgstr "Erreur interne - list item has null object!"
 
 #~ msgid "FLI: Sorry, can't save images with Alpha.\n"
 #~ msgstr "FLI: Désolé, impossible de sauvegarder l'image avec Alpha.\n"
