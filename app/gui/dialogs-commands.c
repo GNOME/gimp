@@ -177,9 +177,6 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
               if (! substring)
                 substring = strstr (identifier, "list");
 
-              if (! substring)
-                substring = strstr (identifier, "tree");
-
               if (substring)
                 {
                   GimpContainerView *old_view;
@@ -190,8 +187,6 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                     memcpy (substring, "list", 4);
                   else if (view_type == GIMP_VIEW_TYPE_GRID)
                     memcpy (substring, "grid", 4);
-                  else if (view_type == GIMP_VIEW_TYPE_TREE)
-                    memcpy (substring, "tree", 4);
 
                   old_view = gimp_container_view_get_by_dockable (dockable);
 

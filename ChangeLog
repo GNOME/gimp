@@ -1,5 +1,44 @@
 2003-03-20  Michael Natterer  <mitch@gimp.org>
 
+	Removed deprecated and broken list views
+	based on GtkList[Item] (fixes bug #90965):
+
+	* app/widgets/gimpchannellistitem.[ch]
+	* app/widgets/gimpchannellistview.[ch]
+	* app/widgets/gimpcontainerlistview.[ch]
+	* app/widgets/gimpdrawablelistitem.[ch]
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimpitemlistitem.[ch]
+	* app/widgets/gimpitemlistview.[ch]
+	* app/widgets/gimplayerlistitem.[ch]
+	* app/widgets/gimplayerlistview.[ch]
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimpvectorslistview.[ch]: removed.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/gui/channels-commands.c
+	* app/gui/channels-menu.c
+	* app/gui/drawable-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/layers-menu.c
+	* app/gui/palettes-commands.c
+	* app/gui/test-commands.c
+	* app/gui/vectors-commands.c
+	* app/gui/vectors-menu.c: changed accordingly.
+
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c: removed the term "tree" from all user visible
+	places and create tree views when lists are requested.
+
+2003-03-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplay.[ch]: removed gdisp->draw_guides
 	and gdisp->snap_to_guides.
 

@@ -28,19 +28,12 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
-#include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 
 #include "palette-import-dialog.h"
 #include "palettes-commands.h"
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtklist.h>
 
 #include "libgimp/gimpintl.h"
 
@@ -101,6 +94,10 @@ palettes_merge_palettes_callback (GtkWidget *widget,
 				  gchar     *palette_name,
 				  gpointer   data)
 {
+#ifdef __GNUC__
+#warning FIXME: reimplement palettes_merge_palettes_callback()
+#endif
+#if 0
   GimpContainerEditor *editor;
   GimpPalette         *palette;
   GimpPalette         *new_palette;
@@ -145,4 +142,5 @@ palettes_merge_palettes_callback (GtkWidget *widget,
 
   gimp_container_add (editor->view->container,
 		      GIMP_OBJECT (new_palette));
+#endif
 }

@@ -29,10 +29,6 @@ libappwidgets_a_sources = \
 	gimpcellrenderertoggle.h	\
 	gimpcellrendererviewable.c	\
 	gimpcellrendererviewable.h	\
-	gimpchannellistitem.c		\
-	gimpchannellistitem.h		\
-	gimpchannellistview.c		\
-	gimpchannellistview.h		\
 	gimpchanneltreeview.c		\
 	gimpchanneltreeview.h		\
 	gimpcoloreditor.c		\
@@ -47,8 +43,6 @@ libappwidgets_a_sources = \
 	gimpcontainereditor.h		\
 	gimpcontainergridview.c		\
 	gimpcontainergridview.h		\
-	gimpcontainerlistview.c		\
-	gimpcontainerlistview.h		\
 	gimpcontainermenu.c		\
 	gimpcontainermenu.h		\
 	gimpcontainermenuimpl.c		\
@@ -83,10 +77,6 @@ libappwidgets_a_sources = \
 	gimpdockbook.h			\
 	gimpdocumentview.c		\
 	gimpdocumentview.h		\
-	gimpdrawablelistitem.c		\
-	gimpdrawablelistitem.h		\
-	gimpdrawablelistview.c		\
-	gimpdrawablelistview.h		\
 	gimpdrawabletreeview.c		\
 	gimpdrawabletreeview.h		\
 	gimpeditor.c			\
@@ -113,20 +103,10 @@ libappwidgets_a_sources = \
 	gimpimageview.h			\
 	gimpitemfactory.c		\
 	gimpitemfactory.h		\
-	gimpitemlistitem.c		\
-	gimpitemlistitem.h		\
-	gimpitemlistview.c		\
-	gimpitemlistview.h		\
 	gimpitemtreeview.c		\
 	gimpitemtreeview.h		\
-	gimplayerlistitem.c		\
-	gimplayerlistitem.h		\
-	gimplayerlistview.c		\
-	gimplayerlistview.h		\
 	gimplayertreeview.c		\
 	gimplayertreeview.h		\
-	gimplistitem.c			\
-	gimplistitem.h			\
 	gimpmenufactory.c		\
 	gimpmenufactory.h		\
 	gimpmenuitem.c			\
@@ -167,8 +147,6 @@ libappwidgets_a_sources = \
 	gimptoolbox-indicator-area.h	\
 	gimpundoeditor.c		\
 	gimpundoeditor.h		\
-	gimpvectorslistview.c		\
-	gimpvectorslistview.h		\
 	gimpvectorstreeview.c		\
 	gimpvectorstreeview.h		\
 	gimpviewabledialog.c		\

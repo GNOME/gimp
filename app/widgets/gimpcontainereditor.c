@@ -32,7 +32,6 @@
 
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
-#include "gimpcontainerlistview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
@@ -172,16 +171,6 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       break;
 
     case GIMP_VIEW_TYPE_LIST:
-      editor->view =
-	GIMP_CONTAINER_VIEW (gimp_container_list_view_new (container,
-							   context,
-							   preview_size,
-                                                           reorderable,
-							   min_items_x,
-							   min_items_y));
-      break;
-
-    case GIMP_VIEW_TYPE_TREE:
       editor->view =
 	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
 							   context,

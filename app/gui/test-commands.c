@@ -36,7 +36,7 @@
 
 #include "config/gimpconfig.h"
 
-#include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdatafactoryview.h"
@@ -46,7 +46,7 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
-#include "widgets/gimpdrawablelistview.h"
+#include "widgets/gimpdrawabletreeview.h"
 #include "widgets/gimppreview.h"
 
 #include "dialogs.h"
@@ -122,7 +122,7 @@ container_multi_view_new (gboolean       list,
 
   if (list)
     {
-      view = gimp_container_list_view_new (container,
+      view = gimp_container_tree_view_new (container,
 					   context,
 					   preview_size,
                                            FALSE,

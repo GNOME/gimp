@@ -38,7 +38,6 @@
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
 #include "gimpdockable.h"
-#include "gimplistitem.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
 
@@ -158,10 +157,6 @@ gimp_container_view_get_name_func_viewable (GObject *object)
   if (GIMP_IS_PREVIEW (object))
     {
       return GIMP_PREVIEW (object)->viewable;
-    }
-  else if (GIMP_IS_LIST_ITEM (object))
-    {
-      return GIMP_PREVIEW (GIMP_LIST_ITEM (object)->preview)->viewable;
     }
   else if (GIMP_IS_MENU_ITEM (object))
     {

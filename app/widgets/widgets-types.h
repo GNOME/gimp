@@ -72,15 +72,8 @@ typedef struct _GimpSelectionEditor     GimpSelectionEditor;
 typedef struct _GimpUndoEditor          GimpUndoEditor;
 
 typedef struct _GimpContainerView       GimpContainerView;
-typedef struct _GimpContainerListView   GimpContainerListView;
 typedef struct _GimpContainerGridView   GimpContainerGridView;
 typedef struct _GimpContainerTreeView   GimpContainerTreeView;
-
-typedef struct _GimpItemListView        GimpItemListView;
-typedef struct _GimpDrawableListView    GimpDrawableListView;
-typedef struct _GimpLayerListView       GimpLayerListView;
-typedef struct _GimpChannelListView     GimpChannelListView;
-typedef struct _GimpVectorsListView     GimpVectorsListView;
 
 typedef struct _GimpItemTreeView        GimpItemTreeView;
 typedef struct _GimpDrawableTreeView    GimpDrawableTreeView;
@@ -94,12 +87,6 @@ typedef struct _GimpDocumentView        GimpDocumentView;
 typedef struct _GimpImageView           GimpImageView;
 typedef struct _GimpDataFactoryView     GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
-
-typedef struct _GimpListItem            GimpListItem;
-typedef struct _GimpItemListItem        GimpItemListItem;
-typedef struct _GimpChannelListItem     GimpChannelListItem;
-typedef struct _GimpDrawableListItem    GimpDrawableListItem;
-typedef struct _GimpLayerListItem       GimpLayerListItem;
 
 typedef struct _GimpDock                GimpDock;
 typedef struct _GimpToolbox             GimpToolbox;

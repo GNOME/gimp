@@ -131,9 +131,6 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/View as Grid"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_GRID, "/View as List" },
     NULL, NULL, NULL },
-  { { N_("/View as Tree"), NULL,
-      dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_TREE, "/View as List" },
-    NULL, NULL, NULL },
 
   MENU_SEPARATOR ("/image-menu-separator"),
 
@@ -168,7 +165,6 @@ dialogs_menu_update (GtkItemFactory *factory,
       GimpViewType            view_type           = -1;
       gboolean                list_view_available = FALSE;
       gboolean                grid_view_available = FALSE;
-      gboolean                tree_view_available = FALSE;
       GimpPreviewSize         preview_size        = -1;
 
       page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
@@ -190,8 +186,6 @@ dialogs_menu_update (GtkItemFactory *factory,
             view_type = GIMP_VIEW_TYPE_GRID;
           else if ((substring = strstr (identifier, "list")))
             view_type = GIMP_VIEW_TYPE_LIST;
-          else if ((substring = strstr (identifier, "tree")))
-            view_type = GIMP_VIEW_TYPE_TREE;
 
           if (substring)
             {
@@ -204,11 +198,6 @@ dialogs_menu_update (GtkItemFactory *factory,
               if (gimp_dialog_factory_find_entry (dockbook->dock->dialog_factory,
                                                   identifier))
                 grid_view_available = TRUE;
-
-              memcpy (substring, "tree", 4);
-              if (gimp_dialog_factory_find_entry (dockbook->dock->dialog_factory,
-                                                  identifier))
-                tree_view_available = TRUE;
             }
 
           g_free (identifier);
@@ -273,20 +262,16 @@ dialogs_menu_update (GtkItemFactory *factory,
 
       SET_VISIBLE ("/View as Grid", view_type != -1);
       SET_VISIBLE ("/View as List", view_type != -1);
-      SET_VISIBLE ("/View as Tree", view_type != -1);
 
       if (view_type != -1)
         {
           if (view_type == GIMP_VIEW_TYPE_LIST)
             SET_ACTIVE ("/View as List", TRUE);
-          else if (view_type == GIMP_VIEW_TYPE_GRID)
-            SET_ACTIVE ("/View as Grid", TRUE);
           else
-            SET_ACTIVE ("/View as Tree", TRUE);
+            SET_ACTIVE ("/View as Grid", TRUE);
 
           SET_SENSITIVE ("/View as Grid", grid_view_available);
           SET_SENSITIVE ("/View as List", list_view_available);
-          SET_SENSITIVE ("/View as Tree", tree_view_available);
         }
 
       if (GIMP_IS_IMAGE_DOCK (dockbook->dock))

@@ -233,7 +233,7 @@ app/widgets/widgets-enums.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c
-app/widgets/gimpchannellistview.c
+app/widgets/gimpchanneltreeview.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
@@ -242,7 +242,7 @@ app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdock.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdnd.c
-app/widgets/gimpdrawablelistview.c
+app/widgets/gimpdrawabletreeview.c
 app/widgets/gimpfontselection.c
 app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpgradienteditor.c
@@ -250,8 +250,8 @@ app/widgets/gimphelp.c
 app/widgets/gimpimagedock.c
 app/widgets/gimpimageview.c
 app/widgets/gimpitemfactory.c
-app/widgets/gimpitemlistview.c
-app/widgets/gimplayerlistview.c
+app/widgets/gimpitemtreeview.c
+app/widgets/gimplayertreeview.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
@@ -260,7 +260,7 @@ app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimpundoeditor.c
-app/widgets/gimpvectorslistview.c
+app/widgets/gimpvectorstreeview.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
 

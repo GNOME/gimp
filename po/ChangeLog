@@ -1,3 +1,7 @@
+2003-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: app/widgets/*list* -> *tree*
+
 2003-03-18  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated and fixed some strings in Danish translation.

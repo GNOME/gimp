@@ -42,7 +42,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "widgets/gimpitemlistview.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -62,8 +61,6 @@
     gimage = ((GimpDisplay *) data)->gimage; \
   else if (GIMP_IS_GIMP (data)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_ITEM_LIST_VIEW (data)) \
-    gimage = ((GimpItemListView *) data)->gimage; \
   else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
     gimage = ((GimpItemTreeView *) data)->gimage; \
   else \

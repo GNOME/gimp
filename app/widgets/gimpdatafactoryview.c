@@ -40,7 +40,6 @@
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
-#include "gimpcontainerlistview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
 #include "gimppreviewrenderer.h"
