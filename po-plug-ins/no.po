@@ -1,47 +1,35 @@
-# Norwegian translation of gimp-modules.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@online.no>, 1999.
+# Norwegian translation of gimp-po-plugins.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-08-21 10:34-0700\n"
-"PO-Revision-Date: 2000-08-16 00:55+02:00\n"
-"Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
+"Project-Id-Version: achtung 1.1.25\n"
+"POT-Creation-Date: 2000-08-22 13:13+0200\n"
+"PO-Revision-Date: 2000-08-22 12:48+02:00\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/AlienMap/AlienMap.c:180
-msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtre/Farger/Kart/Alien kart..."
-
-#: plug-ins/AlienMap/AlienMap.c:378
-msgid "AlienMap: Transforming..."
-msgstr "AlienMap: Transformerer..."
-
-#: plug-ins/AlienMap/AlienMap.c:610
-msgid "AlienMap"
-msgstr "AlienMap"
-
-#: plug-ins/AlienMap/AlienMap.c:615 plug-ins/AlienMap2/AlienMap2.c:607
 #: plug-ins/FractalExplorer/Dialogs.c:282
-#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/gdyntext/gdyntext_ui.c:552
+#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
+#: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:552
 #: plug-ins/gfig/gfig.c:3356 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Om"
 
 #. the 3 Action Buttons
-#: plug-ins/AlienMap/AlienMap.c:617 plug-ins/AlienMap/AlienMap.c:881
-#: plug-ins/AlienMap2/AlienMap2.c:609 plug-ins/AlienMap2/AlienMap2.c:895
 #: plug-ins/FractalExplorer/Dialogs.c:284
 #: plug-ins/FractalExplorer/Dialogs.c:1377
 #: plug-ins/FractalExplorer/FractalExplorer.c:850
 #: plug-ins/FractalExplorer/FractalExplorer.c:1469
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1383
-#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1174
+#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/AlienMap.c:1398
+#: plug-ins/common/AlienMap.c:1662 plug-ins/common/AlienMap2.c:1390
+#: plug-ins/common/AlienMap2.c:1676 plug-ins/common/CML_explorer.c:1174
 #: plug-ins/common/CML_explorer.c:1932 plug-ins/common/CML_explorer.c:2252
 #: plug-ins/common/aa.c:344 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
@@ -82,7 +70,7 @@ msgstr "Om"
 #: plug-ins/common/shift.c:376 plug-ins/common/smooth_palette.c:402
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
-#: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
+#: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1589
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
 #: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:383
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
@@ -114,16 +102,16 @@ msgstr "Om"
 #: plug-ins/sinus/sinus.c:746 plug-ins/struc/struc.c:255
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
-msgstr "Ok"
+msgstr "OK"
 
 #. the  Action Button
-#: plug-ins/AlienMap/AlienMap.c:619 plug-ins/AlienMap2/AlienMap2.c:611
 #: plug-ins/FractalExplorer/Dialogs.c:286
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:859
 #: plug-ins/FractalExplorer/FractalExplorer.c:1471
 #: plug-ins/Lighting/lighting_ui.c:1078 plug-ins/MapObject/mapobject_ui.c:1385
-#: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/CML_explorer.c:1176
+#: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/AlienMap.c:1400
+#: plug-ins/common/AlienMap2.c:1392 plug-ins/common/CML_explorer.c:1176
 #: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:346
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
@@ -164,7 +152,7 @@ msgstr "Ok"
 #: plug-ins/common/shift.c:378 plug-ins/common/smooth_palette.c:404
 #: plug-ins/common/snoise.c:514 plug-ins/common/sobel.c:253
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
-#: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
+#: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
 #: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:385
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
@@ -200,241 +188,6 @@ msgstr "Ok"
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
 msgid "Cancel"
 msgstr "Avbryt"
-
-#. These values are translated for the GUI but also used internally
-#. to figure out which button the user pushed, etc.
-#. Not my design, please don't blame me -- njl
-#: plug-ins/AlienMap/AlienMap.c:658 plug-ins/FractalExplorer/Dialogs.c:673
-#: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
-#: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
-#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
-#: plug-ins/common/noisify.c:587 plug-ins/common/noisify.c:623
-#: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:135
-msgid "Red:"
-msgstr "Rød:"
-
-#: plug-ins/AlienMap/AlienMap.c:661
-msgid "Change intensity of the red channel"
-msgstr "Endre intensiteten for rød kanal"
-
-#: plug-ins/AlienMap/AlienMap.c:667 plug-ins/FractalExplorer/Dialogs.c:683
-#: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
-#: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
-#: plug-ins/common/noisify.c:598 plug-ins/common/noisify.c:634
-#: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:149
-msgid "Green:"
-msgstr "Grønn:"
-
-#: plug-ins/AlienMap/AlienMap.c:670
-msgid "Change intensity of the green channel"
-msgstr "Endre intensiteten for grønn kanal"
-
-#: plug-ins/AlienMap/AlienMap.c:676 plug-ins/FractalExplorer/Dialogs.c:693
-#: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
-#: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
-#: plug-ins/common/noisify.c:609 plug-ins/common/noisify.c:645
-#: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:163
-msgid "Blue:"
-msgstr "Blå:"
-
-#: plug-ins/AlienMap/AlienMap.c:679
-msgid "Change intensity of the blue channel"
-msgstr "Endre intensiteten for blå kanal"
-
-#. Redmode toggle box
-#: plug-ins/AlienMap/AlienMap.c:685 plug-ins/FractalExplorer/Dialogs.c:713
-#: plug-ins/common/convmatrix.c:83 plug-ins/common/decompose.c:116
-#: plug-ins/common/newsprint.c:396
-msgid "Red"
-msgstr "Rød"
-
-#: plug-ins/AlienMap/AlienMap.c:689 plug-ins/AlienMap/AlienMap.c:712
-#: plug-ins/AlienMap/AlienMap.c:735 plug-ins/FractalExplorer/Dialogs.c:717
-#: plug-ins/FractalExplorer/Dialogs.c:758
-#: plug-ins/FractalExplorer/Dialogs.c:799 plug-ins/common/ripple.c:666
-msgid "Sine"
-msgstr "Sinus"
-
-#: plug-ins/AlienMap/AlienMap.c:690 plug-ins/AlienMap/AlienMap.c:713
-#: plug-ins/AlienMap/AlienMap.c:736 plug-ins/FractalExplorer/Dialogs.c:719
-#: plug-ins/FractalExplorer/Dialogs.c:760
-#: plug-ins/FractalExplorer/Dialogs.c:801
-msgid "Cosine"
-msgstr "Kosinus"
-
-#: plug-ins/AlienMap/AlienMap.c:691 plug-ins/AlienMap/AlienMap.c:714
-#: plug-ins/AlienMap/AlienMap.c:737 plug-ins/FractalExplorer/Dialogs.c:721
-#: plug-ins/FractalExplorer/Dialogs.c:762
-#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
-#: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2701 plug-ins/common/ps.c:2714
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
-msgid "None"
-msgstr "Ingen"
-
-#: plug-ins/AlienMap/AlienMap.c:696
-msgid "Use sine-function for red component."
-msgstr "Bruk sinusfunksjonen for rød komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:698
-msgid "Use cosine-function for red component."
-msgstr "Bruk kosinusfunksjonen for rød komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:700
-msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Rød kanal: bruk lineær mapping istedet for trigonometriske funksjoner"
-
-#. Greenmode toggle box
-#: plug-ins/AlienMap/AlienMap.c:708 plug-ins/FractalExplorer/Dialogs.c:754
-#: plug-ins/common/convmatrix.c:84 plug-ins/common/decompose.c:117
-#: plug-ins/common/newsprint.c:404
-msgid "Green"
-msgstr "Grønn"
-
-#: plug-ins/AlienMap/AlienMap.c:719
-msgid "Use sine-function for green component."
-msgstr "Bruk sinusfunksjonen for grønn komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:721
-msgid "Use cosine-function for green component."
-msgstr "Bruk kosinusfunksjonen for grønn komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:723
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Grønn kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
-
-#. Bluemode toggle box
-#: plug-ins/AlienMap/AlienMap.c:731 plug-ins/FractalExplorer/Dialogs.c:795
-#: plug-ins/common/convmatrix.c:85 plug-ins/common/decompose.c:118
-#: plug-ins/common/newsprint.c:412
-msgid "Blue"
-msgstr "Blå"
-
-#: plug-ins/AlienMap/AlienMap.c:742
-msgid "Use sine-function for blue component."
-msgstr "Bruk sinusfunksjonen for blå komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:744
-msgid "Use cosine-function for blue component."
-msgstr "Bruk kosinusfunksjonen for blå komponent."
-
-#: plug-ins/AlienMap/AlienMap.c:746
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Blå kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
-
-#: plug-ins/AlienMap/AlienMap.c:876
-msgid "About AlienMap"
-msgstr "Om AlienMap"
-
-#: plug-ins/AlienMap2/AlienMap2.c:205
-msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filtre/Farger/Kart/Alien Map 2..."
-
-#: plug-ins/AlienMap2/AlienMap2.c:380
-msgid "AlienMap2: Transforming..."
-msgstr "AlienMap2: Transformerer..."
-
-#: plug-ins/AlienMap2/AlienMap2.c:602
-msgid "AlienMap2"
-msgstr "AlienMap2"
-
-#: plug-ins/AlienMap2/AlienMap2.c:651
-msgid "R/H-Frequency:"
-msgstr "R/G frekvens:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:654
-msgid "Change frequency of the red/hue channel"
-msgstr "Endre frekvensen for rød/glød kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:661
-msgid "R/H-Phaseshift:"
-msgstr "R/G faseskift:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:664
-msgid "Change angle of the red/hue channel"
-msgstr "Endre vinkel for rød/glød kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:671
-msgid "G/S-Frequency:"
-msgstr "G/M frekvens:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:674
-msgid "Change frequency of the green/saturation channel"
-msgstr "Endre frekvens for grønn/metning kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:681
-msgid "G/S-Phaseshift:"
-msgstr "G/M faseskift:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:684
-msgid "Change angle of the green/saturation channel"
-msgstr "Endre vinkel for grønn/metning kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:691
-msgid "B/L-Frequency:"
-msgstr "B/L-frekvens:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:694
-msgid "Change frequency of the blue/luminance channel"
-msgstr "Endre frekvens for blå/luminans kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:701
-msgid "B/L-Phaseshift:"
-msgstr "B/L-faseskift:"
-
-#: plug-ins/AlienMap2/AlienMap2.c:704
-msgid "Change angle of the blue/luminance channel"
-msgstr "Endre vinkel for blå/luminans kanal"
-
-#. * Gray: Operation-Mode *
-#: plug-ins/AlienMap2/AlienMap2.c:712 plug-ins/common/deinterlace.c:288
-#: plug-ins/common/hot.c:617 plug-ins/common/waves.c:374
-#: plug-ins/rcm/rcm_dialog.c:471
-msgid "Mode"
-msgstr "Modus"
-
-#: plug-ins/AlienMap2/AlienMap2.c:716
-msgid "RGB Color Model"
-msgstr "RGB fargemodell"
-
-#: plug-ins/AlienMap2/AlienMap2.c:717
-msgid "HSL Color Model"
-msgstr "HSL fargemodell"
-
-#: plug-ins/AlienMap2/AlienMap2.c:729
-msgid "Modify Red/Hue Channel"
-msgstr "Endre rød/glød kanal"
-
-#: plug-ins/AlienMap2/AlienMap2.c:736
-msgid "Use function for red/hue component"
-msgstr ""
-
-#: plug-ins/AlienMap2/AlienMap2.c:739
-msgid "Modify Green/Saturation Channel"
-msgstr ""
-
-#: plug-ins/AlienMap2/AlienMap2.c:747
-msgid "Use function for green/saturation component"
-msgstr ""
-
-#: plug-ins/AlienMap2/AlienMap2.c:750
-msgid "Modify Blue/Luminance Channel"
-msgstr ""
-
-#: plug-ins/AlienMap2/AlienMap2.c:758
-msgid "Use function for blue/luminance component"
-msgstr ""
-
-#: plug-ins/AlienMap2/AlienMap2.c:890
-msgid "About AlienMap2"
-msgstr "Om AlienMap2"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1094
@@ -587,7 +340,7 @@ msgstr ""
 #: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
 #: plug-ins/gfig/gfig.c:3530
 msgid "Load"
-msgstr "Åpne"
+msgstr "Last"
 
 #: plug-ins/FractalExplorer/Dialogs.c:526
 msgid "Load a fractal from file"
@@ -600,7 +353,7 @@ msgstr "Last en fraktal fra en fil"
 #: plug-ins/fp/fp_gtk.c:897 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:787 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
-msgstr "Nullstill"
+msgstr "Sett tilbake"
 
 #: plug-ins/FractalExplorer/Dialogs.c:534
 msgid "Reset parameters to default values"
@@ -691,13 +444,43 @@ msgstr ""
 msgid "Color Density"
 msgstr "Fargetetthet"
 
+#. These values are translated for the GUI but also used internally
+#. to figure out which button the user pushed, etc.
+#. Not my design, please don't blame me -- njl
+#: plug-ins/FractalExplorer/Dialogs.c:673 plug-ins/common/AlienMap.c:1439
+#: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
+#: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
+#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
+#: plug-ins/common/noisify.c:587 plug-ins/common/noisify.c:623
+#: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:135
+msgid "Red:"
+msgstr "Rød:"
+
 #: plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Change the intensity of the red channel"
 msgstr "Endre intensiteten for rød kanal"
 
+#: plug-ins/FractalExplorer/Dialogs.c:683 plug-ins/common/AlienMap.c:1448
+#: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
+#: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
+#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
+#: plug-ins/common/noisify.c:598 plug-ins/common/noisify.c:634
+#: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:149
+msgid "Green:"
+msgstr "Grønn:"
+
 #: plug-ins/FractalExplorer/Dialogs.c:686
 msgid "Change the intensity of the green channel"
 msgstr "Endre intensiteten for grønn kanal"
+
+#: plug-ins/FractalExplorer/Dialogs.c:693 plug-ins/common/AlienMap.c:1457
+#: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
+#: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
+#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
+#: plug-ins/common/noisify.c:609 plug-ins/common/noisify.c:645
+#: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:163
+msgid "Blue:"
+msgstr "Blå:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:696
 msgid "Change the intensity of the blue channel"
@@ -707,6 +490,40 @@ msgstr "Endre intensiteten for blå kanal"
 #: plug-ins/FractalExplorer/Dialogs.c:702
 msgid "Color Function"
 msgstr "Fargefunksjon"
+
+#. Redmode radio frame
+#: plug-ins/FractalExplorer/Dialogs.c:713 plug-ins/common/AlienMap.c:1466
+#: plug-ins/common/convmatrix.c:83 plug-ins/common/decompose.c:116
+#: plug-ins/common/newsprint.c:396
+msgid "Red"
+msgstr "Rød"
+
+#: plug-ins/FractalExplorer/Dialogs.c:717
+#: plug-ins/FractalExplorer/Dialogs.c:758
+#: plug-ins/FractalExplorer/Dialogs.c:799 plug-ins/common/AlienMap.c:1470
+#: plug-ins/common/AlienMap.c:1493 plug-ins/common/AlienMap.c:1516
+#: plug-ins/common/ripple.c:666
+msgid "Sine"
+msgstr "Sinus"
+
+#: plug-ins/FractalExplorer/Dialogs.c:719
+#: plug-ins/FractalExplorer/Dialogs.c:760
+#: plug-ins/FractalExplorer/Dialogs.c:801 plug-ins/common/AlienMap.c:1471
+#: plug-ins/common/AlienMap.c:1494 plug-ins/common/AlienMap.c:1517
+msgid "Cosine"
+msgstr "Kosinus"
+
+#: plug-ins/FractalExplorer/Dialogs.c:721
+#: plug-ins/FractalExplorer/Dialogs.c:762
+#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/AlienMap.c:1472
+#: plug-ins/common/AlienMap.c:1495 plug-ins/common/AlienMap.c:1518
+#: plug-ins/common/CML_explorer.c:167 plug-ins/common/align_layers.c:452
+#: plug-ins/common/align_layers.c:485 plug-ins/common/ps.c:2701
+#: plug-ins/common/ps.c:2714 plug-ins/common/psp.c:445
+#: plug-ins/common/tiff.c:1551 plug-ins/fits/fits.c:1032
+#: plug-ins/gap/gap_mov_dialog.c:301
+msgid "None"
+msgstr "Ingen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:726
 #: plug-ins/FractalExplorer/Dialogs.c:767
@@ -741,6 +558,20 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
+
+#. Greenmode radio frame
+#: plug-ins/FractalExplorer/Dialogs.c:754 plug-ins/common/AlienMap.c:1489
+#: plug-ins/common/convmatrix.c:84 plug-ins/common/decompose.c:117
+#: plug-ins/common/newsprint.c:404
+msgid "Green"
+msgstr "Grønn"
+
+#. Bluemode radio frame
+#: plug-ins/FractalExplorer/Dialogs.c:795 plug-ins/common/AlienMap.c:1512
+#: plug-ins/common/convmatrix.c:85 plug-ins/common/decompose.c:118
+#: plug-ins/common/newsprint.c:412
+msgid "Blue"
+msgstr "Blå"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:836
@@ -899,7 +730,7 @@ msgstr ""
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1394 plug-ins/gfig/gfig.c:3519
 msgid "Rescan"
-msgstr "Les på nytt"
+msgstr "Gjenles"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1401
 msgid "Select directory and rescan collection"
@@ -1342,13 +1173,13 @@ msgstr "Bakside:"
 #: plug-ins/MapObject/mapobject_ui.c:1226
 #: plug-ins/print/gimp_main_window.c:354
 msgid "Top:"
-msgstr "Topp:"
+msgstr "Øverst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
 #: plug-ins/print/gimp_main_window.c:376
 msgid "Bottom:"
-msgstr "Bunn:"
+msgstr "Nederst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:343
@@ -1367,7 +1198,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1178
 #: plug-ins/common/spheredesigner.c:2442
 msgid "Scale X:"
-msgstr ""
+msgstr "Skalér X:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1181
 msgid "X scale (size)"
@@ -1480,8 +1311,8 @@ msgstr "%s: ugyldig fargekart"
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
-#: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
-#: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
+#: plug-ins/common/psd.c:2096 plug-ins/common/smooth_palette.c:240
+#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
@@ -1530,6 +1361,177 @@ msgstr "Alternativer for lagring"
 #: plug-ins/bmp/bmpwrite.c:584
 msgid "RLE encoded"
 msgstr "RLE-kodet"
+
+#: plug-ins/common/AlienMap.c:964
+msgid "<Image>/Filters/Colors/Map/Alien Map..."
+msgstr "<Image>/Filtre/Farger/Kart/Alien kart..."
+
+#: plug-ins/common/AlienMap.c:1162
+msgid "AlienMap: Transforming..."
+msgstr "AlienMap: Transformerer..."
+
+#: plug-ins/common/AlienMap.c:1391
+msgid "AlienMap"
+msgstr "AlienMap"
+
+#: plug-ins/common/AlienMap.c:1442
+msgid "Change intensity of the red channel"
+msgstr "Endre intensiteten for rød kanal"
+
+#: plug-ins/common/AlienMap.c:1451
+msgid "Change intensity of the green channel"
+msgstr "Endre intensiteten for grønn kanal"
+
+#: plug-ins/common/AlienMap.c:1460
+msgid "Change intensity of the blue channel"
+msgstr "Endre intensiteten for blå kanal"
+
+#: plug-ins/common/AlienMap.c:1477
+msgid "Use sine-function for red component."
+msgstr "Bruk sinusfunksjonen for rød komponent."
+
+#: plug-ins/common/AlienMap.c:1479
+msgid "Use cosine-function for red component."
+msgstr "Bruk kosinusfunksjonen for rød komponent."
+
+#: plug-ins/common/AlienMap.c:1481
+msgid "Red channel: use linear mapping instead of any trigonometrical function"
+msgstr "Rød kanal: bruk lineær mapping istedet for trigonometriske funksjoner"
+
+#: plug-ins/common/AlienMap.c:1500
+msgid "Use sine-function for green component."
+msgstr "Bruk sinusfunksjonen for grønn komponent."
+
+#: plug-ins/common/AlienMap.c:1502
+msgid "Use cosine-function for green component."
+msgstr "Bruk kosinusfunksjonen for grønn komponent."
+
+#: plug-ins/common/AlienMap.c:1504
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Grønn kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
+
+#: plug-ins/common/AlienMap.c:1523
+msgid "Use sine-function for blue component."
+msgstr "Bruk sinusfunksjonen for blå komponent."
+
+#: plug-ins/common/AlienMap.c:1525
+msgid "Use cosine-function for blue component."
+msgstr "Bruk kosinusfunksjonen for blå komponent."
+
+#: plug-ins/common/AlienMap.c:1527
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Blå kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
+
+#: plug-ins/common/AlienMap.c:1657
+msgid "About AlienMap"
+msgstr "Om AlienMap"
+
+#: plug-ins/common/AlienMap2.c:988
+msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
+msgstr "<Image>/Filtre/Farger/Kart/Alien Map 2..."
+
+#: plug-ins/common/AlienMap2.c:1161
+msgid "AlienMap2: Transforming..."
+msgstr "AlienMap2: Transformerer..."
+
+#: plug-ins/common/AlienMap2.c:1383
+msgid "AlienMap2"
+msgstr "AlienMap2"
+
+#: plug-ins/common/AlienMap2.c:1432
+msgid "R/H-Frequency:"
+msgstr "R/G frekvens:"
+
+#: plug-ins/common/AlienMap2.c:1435
+msgid "Change frequency of the red/hue channel"
+msgstr "Endre frekvensen for rød/glød kanal"
+
+#: plug-ins/common/AlienMap2.c:1442
+msgid "R/H-Phaseshift:"
+msgstr "R/G faseskift:"
+
+#: plug-ins/common/AlienMap2.c:1445
+msgid "Change angle of the red/hue channel"
+msgstr "Endre vinkel for rød/glød kanal"
+
+#: plug-ins/common/AlienMap2.c:1452
+msgid "G/S-Frequency:"
+msgstr "G/M frekvens:"
+
+#: plug-ins/common/AlienMap2.c:1455
+msgid "Change frequency of the green/saturation channel"
+msgstr "Endre frekvens for grønn/metning kanal"
+
+#: plug-ins/common/AlienMap2.c:1462
+msgid "G/S-Phaseshift:"
+msgstr "G/M faseskift:"
+
+#: plug-ins/common/AlienMap2.c:1465
+msgid "Change angle of the green/saturation channel"
+msgstr "Endre vinkel for grønn/metning kanal"
+
+#: plug-ins/common/AlienMap2.c:1472
+msgid "B/L-Frequency:"
+msgstr "B/L-frekvens:"
+
+#: plug-ins/common/AlienMap2.c:1475
+msgid "Change frequency of the blue/luminance channel"
+msgstr "Endre frekvens for blå/luminans kanal"
+
+#: plug-ins/common/AlienMap2.c:1482
+msgid "B/L-Phaseshift:"
+msgstr "B/L-faseskift:"
+
+#: plug-ins/common/AlienMap2.c:1485
+msgid "Change angle of the blue/luminance channel"
+msgstr "Endre vinkel for blå/luminans kanal"
+
+#. * Gray: Operation-Mode *
+#: plug-ins/common/AlienMap2.c:1493 plug-ins/common/deinterlace.c:288
+#: plug-ins/common/hot.c:617 plug-ins/common/waves.c:374
+#: plug-ins/rcm/rcm_dialog.c:471
+msgid "Mode"
+msgstr "Modus"
+
+#: plug-ins/common/AlienMap2.c:1497
+msgid "RGB Color Model"
+msgstr "RGB fargemodell"
+
+#: plug-ins/common/AlienMap2.c:1498
+msgid "HSL Color Model"
+msgstr "HSL fargemodell"
+
+#: plug-ins/common/AlienMap2.c:1510
+msgid "Modify Red/Hue Channel"
+msgstr "Endre rød/glød kanal"
+
+#: plug-ins/common/AlienMap2.c:1517
+msgid "Use function for red/hue component"
+msgstr ""
+
+#: plug-ins/common/AlienMap2.c:1520
+msgid "Modify Green/Saturation Channel"
+msgstr ""
+
+#: plug-ins/common/AlienMap2.c:1528
+msgid "Use function for green/saturation component"
+msgstr ""
+
+#: plug-ins/common/AlienMap2.c:1531
+msgid "Modify Blue/Luminance Channel"
+msgstr ""
+
+#: plug-ins/common/AlienMap2.c:1539
+msgid "Use function for blue/luminance component"
+msgstr ""
+
+#: plug-ins/common/AlienMap2.c:1671
+msgid "About AlienMap2"
+msgstr "Om AlienMap2"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
@@ -1673,7 +1675,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1594
+#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
 #: plug-ins/print/gimp_color_window.c:349
 #: plug-ins/print/gimp_main_window.c:999
 #: plug-ins/print/gimp_main_window.c:1069
@@ -2044,7 +2046,7 @@ msgstr "Lagre som tekst"
 
 #. file save type
 #: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:945
-#: plug-ins/common/sunras.c:1589
+#: plug-ins/common/sunras.c:1601
 msgid "Data Formatting"
 msgstr "Dataformattering"
 
@@ -2174,8 +2176,8 @@ msgstr ""
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:1009
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
-#: plug-ins/dbbrowser/dbbrowser_utils.c:158
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:3158
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:585
 #: plug-ins/gfig/gfig.c:1966 plug-ins/gfig/gfig.c:2026
@@ -2646,7 +2648,7 @@ msgstr "Sett sammen: Bildet er ikke et gråtonebilde (bpp=%d)"
 
 #: plug-ins/common/compose.c:771
 msgid "Compose"
-msgstr "Sett sammen"
+msgstr "Lag ny"
 
 #. The left frame keeps the compose type toggles
 #: plug-ins/common/compose.c:794
@@ -2811,7 +2813,7 @@ msgstr "Nedre"
 
 #: plug-ins/common/curve_bend.c:358
 msgid "Smooth"
-msgstr "Jevn ut"
+msgstr "Myk"
 
 #: plug-ins/common/curve_bend.c:359
 msgid "Free"
@@ -2837,7 +2839,7 @@ msgstr "Kurvebøy"
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
 msgid "Copy"
-msgstr "Kopier"
+msgstr "Kopiér"
 
 #: plug-ins/common/curve_bend.c:1365
 msgid "CopyInv"
@@ -3357,7 +3359,7 @@ msgstr "Setter sammen bilder..."
 
 #: plug-ins/common/film.c:455
 msgid "Untitled"
-msgstr "Uten navn"
+msgstr "Navnløs"
 
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:736
@@ -4088,7 +4090,7 @@ msgstr "Antall rammer:"
 
 #: plug-ins/common/iwarp.c:953
 msgid "Reverse"
-msgstr "Revers"
+msgstr "Reverser"
 
 #: plug-ins/common/iwarp.c:1001
 msgid "Deform Radius:"
@@ -4147,7 +4149,7 @@ msgstr "Terskel:"
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:3949
 #: plug-ins/gflare/gflare.c:3032 plug-ins/sinus/sinus.c:891
 msgid "Settings"
-msgstr "Instillinger"
+msgstr "Innstillinger"
 
 #: plug-ins/common/iwarp.c:1137
 msgid "IWarp"
@@ -4199,7 +4201,7 @@ msgstr "Puslespill stil"
 
 #: plug-ins/common/jigsaw.c:2622
 msgid "Square"
-msgstr "Firkantet"
+msgstr "Rot"
 
 #: plug-ins/common/jigsaw.c:2623
 msgid "Curved"
@@ -4749,7 +4751,7 @@ msgstr "Papirflis"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
-msgstr "Deling"
+msgstr "Divisjon"
 
 #: plug-ins/common/papertile.c:305 plug-ins/gimpressionist/size.c:120
 #: plug-ins/gimpressionist/sizemap.c:451
@@ -4890,20 +4892,20 @@ msgstr "Menysti:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:355
-#: plug-ins/dbbrowser/dbbrowser_utils.c:343
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
 #: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name:"
 msgstr "Navn:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:377
-#: plug-ins/dbbrowser/dbbrowser_utils.c:359
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
 msgstr "Blurb:"
 
 #: plug-ins/common/plugindetails.c:399
-#: plug-ins/dbbrowser/dbbrowser_utils.c:478
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
 #: plug-ins/gap/gap_dbbrowser_utils.c:459
 msgid "Help:"
 msgstr "Hjelp:"
@@ -4919,8 +4921,8 @@ msgid "Plugin Descriptions"
 msgstr "Beskrivelse av tillegg"
 
 #: plug-ins/common/plugindetails.c:1007
-#: plug-ins/dbbrowser/dbbrowser_utils.c:152
-#: plug-ins/dbbrowser/dbbrowser_utils.c:171
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
 #: plug-ins/gap/gap_dbbrowser_utils.c:175
 msgid "Search by Name"
 msgstr "Søk på navn"
@@ -4956,7 +4958,7 @@ msgid "Tree View"
 msgstr "Trevisning"
 
 #: plug-ins/common/plugindetails.c:1109
-#: plug-ins/dbbrowser/dbbrowser_utils.c:225
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
 msgstr "Søk:"
@@ -5407,7 +5409,7 @@ msgstr "Colorize eksempel"
 
 #. gtk_container_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1367 plug-ins/common/tileit.c:564
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
 #: plug-ins/gdyntext/gdyntext_ui.c:578 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:125
@@ -5802,7 +5804,7 @@ msgstr "Bruk bakgrunnsfargen"
 
 #: plug-ins/common/spheredesigner.c:247 plug-ins/gimpressionist/general.c:217
 msgid "Solid"
-msgstr "Solid"
+msgstr "Helfylt"
 
 #: plug-ins/common/spheredesigner.c:248
 msgid "Checker"
@@ -6008,24 +6010,24 @@ msgstr "Kan ikke operere på ukjente bildetyper"
 msgid "Can't open file for writing"
 msgstr "Kan ikke åpne filen for skriving"
 
-#: plug-ins/common/sunras.c:1026 plug-ins/common/sunras.c:1117
-#: plug-ins/common/sunras.c:1198 plug-ins/common/sunras.c:1293
-#: plug-ins/common/xwd.c:1265 plug-ins/common/xwd.c:1427
-#: plug-ins/common/xwd.c:1624 plug-ins/common/xwd.c:1875
+#: plug-ins/common/sunras.c:1038 plug-ins/common/sunras.c:1129
+#: plug-ins/common/sunras.c:1210 plug-ins/common/sunras.c:1305
+#: plug-ins/common/xwd.c:1274 plug-ins/common/xwd.c:1436
+#: plug-ins/common/xwd.c:1633 plug-ins/common/xwd.c:1884
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
 msgstr "EOF funnet under lesing"
 
-#: plug-ins/common/sunras.c:1448 plug-ins/common/sunras.c:1556
+#: plug-ins/common/sunras.c:1460 plug-ins/common/sunras.c:1568
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
 msgid "Write error occured"
 msgstr "Skrivefeil oppsto"
 
-#: plug-ins/common/sunras.c:1572
+#: plug-ins/common/sunras.c:1584
 msgid "Save as SUNRAS"
 msgstr "Lagre som SUNRAS"
 
-#: plug-ins/common/sunras.c:1593
+#: plug-ins/common/sunras.c:1605
 msgid "RunLength Encoded"
 msgstr "RLE-kodet"
 
@@ -6210,7 +6212,7 @@ msgstr "Enhetseditor"
 
 #: plug-ins/common/uniteditor.c:523 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr "Oppfrisk"
+msgstr "Gjenles"
 
 #: plug-ins/common/uniteditor.c:536
 msgid ""
@@ -6354,7 +6356,7 @@ msgstr "Stor 3x3"
 
 #: plug-ins/common/video.c:51
 msgid "Hex"
-msgstr "Hex"
+msgstr "Heksadesimal"
 
 #: plug-ins/common/video.c:52
 msgid "Dots"
@@ -6928,19 +6930,19 @@ msgstr "kan ikke operere på ukjent bildetype"
 msgid "can't open file for writing"
 msgstr "kan ikke åpne filen for skriving"
 
-#: plug-ins/common/xwd.c:1167
+#: plug-ins/common/xwd.c:1176
 msgid "EOF encountered on "
 msgstr "EOF funnet ved "
 
-#: plug-ins/common/xwd.c:1313
+#: plug-ins/common/xwd.c:1322
 msgid "No memory for mapping colors"
 msgstr "Ikke nok minne til å utplassere fargene"
 
-#: plug-ins/common/xwd.c:1999
+#: plug-ins/common/xwd.c:2008
 msgid "Error during writing indexed/grey image"
 msgstr "Feil under skriving av indeksert/grått bilde"
 
-#: plug-ins/common/xwd.c:2088
+#: plug-ins/common/xwd.c:2097
 msgid "Error during writing rgb image"
 msgstr "Feil under skriving av rgb bilde"
 
@@ -6956,56 +6958,56 @@ msgstr ""
 msgid "<Toolbox>/Xtns/DB Browser..."
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:147
-#: plug-ins/dbbrowser/dbbrowser_utils.c:166
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
 msgid "DB Browser (init...)"
 msgstr "DB-leser (init...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
 #: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by Blurb"
 msgstr "Søk etter frase"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:381
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
 #: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Inn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:428
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
 #: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out:"
 msgstr "Ut:"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:516
+#: plug-ins/dbbrowser/dbbrowser_utils.c:517
 #: plug-ins/gap/gap_dbbrowser_utils.c:497 plug-ins/imagemap/imap_settings.c:89
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:531
+#: plug-ins/dbbrowser/dbbrowser_utils.c:532
 #: plug-ins/gap/gap_dbbrowser_utils.c:512
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:546
+#: plug-ins/dbbrowser/dbbrowser_utils.c:547
 #: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:641
+#: plug-ins/dbbrowser/dbbrowser_utils.c:642
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:665
+#: plug-ins/dbbrowser/dbbrowser_utils.c:666
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:676
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:740
+#: plug-ins/dbbrowser/dbbrowser_utils.c:742
 msgid "DB Browser"
 msgstr "DB-leser"
 
@@ -7259,7 +7261,7 @@ msgstr "Utvalg i kontekst"
 
 #: plug-ins/fp/fp_gtk.c:466
 msgid "Display"
-msgstr "Skjerm"
+msgstr "Vis"
 
 #: plug-ins/fp/fp_gtk.c:475
 msgid "CirclePalette"
@@ -9087,7 +9089,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Cut"
-msgstr ""
+msgstr "Klipp ut"
 
 #. menu_item paste before
 #: plug-ins/gap/gap_navigator_dialog.c:2940
@@ -9272,9 +9274,8 @@ msgid "Keep Type"
 msgstr "Driver:"
 
 #: plug-ins/gap/gap_range_ops.c:431
-#, fuzzy
 msgid "Convert to RGB"
-msgstr "Innstillinger for kopiering"
+msgstr "Konverter til RGB"
 
 #: plug-ins/gap/gap_range_ops.c:432
 #, fuzzy
@@ -9306,7 +9307,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:466 plug-ins/gap/gap_split.c:234
 msgid "Extension:"
-msgstr ""
+msgstr "Filtype:"
 
 #: plug-ins/gap/gap_range_ops.c:467
 msgid ""
@@ -9635,7 +9636,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/imagemap/imap_rectangle.c:397
 msgid "pixels"
-msgstr ""
+msgstr "piksler"
 
 #: plug-ins/gdyntext/font_selection.c:167
 msgid "points"
@@ -9865,17 +9866,15 @@ msgid "First Gfig"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1899
-#, fuzzy
 msgid "Prev"
-msgstr "Forhåndsvisning"
+msgstr "Forrige"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1928 plug-ins/gfig/gfig.c:5275
 #: plug-ins/gflare/gflare.c:3091 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
-#, fuzzy
 msgid "Edit"
-msgstr "Avslutt"
+msgstr "Rediger"
 
 #: plug-ins/gfig/gfig.c:1933
 msgid "Edit Gfig object collection"
@@ -10036,7 +10035,7 @@ msgstr "Behold originalomgivelsene"
 #: plug-ins/gflare/gflare.c:3090 plug-ins/ifscompose/ifscompose.c:783
 #: plug-ins/webbrowser/webbrowser.c:319
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #: plug-ins/gfig/gfig.c:2782
 #, fuzzy
@@ -10054,9 +10053,8 @@ msgstr ""
 #. Create selection
 #: plug-ins/gfig/gfig.c:2800 plug-ins/imagemap/imap_selection.c:358
 #: plug-ins/rcm/rcm_dialog.c:664
-#, fuzzy
 msgid "Selection"
-msgstr "Seed"
+msgstr "Valg"
 
 #: plug-ins/gfig/gfig.c:2802
 #, fuzzy
@@ -10126,14 +10124,12 @@ msgid "No Options..."
 msgstr "Alternativer for zoom"
 
 #: plug-ins/gfig/gfig.c:3123
-#, fuzzy
 msgid "Replace"
-msgstr "Sinus"
+msgstr "Erstatt"
 
 #: plug-ins/gfig/gfig.c:3124
-#, fuzzy
 msgid "Intersect"
-msgstr "Metning"
+msgstr "Kryss"
 
 #: plug-ins/gfig/gfig.c:3128
 #, fuzzy
@@ -10271,7 +10267,7 @@ msgstr "Skalering"
 
 #: plug-ins/gfig/gfig.c:3488
 msgid "Object"
-msgstr ""
+msgstr "Objekt"
 
 #: plug-ins/gfig/gfig.c:3524
 msgid "Select directory and rescan Gfig object collection"
@@ -10311,9 +10307,8 @@ msgid "Draw Name:"
 msgstr "Fraktalnavn:"
 
 #: plug-ins/gfig/gfig.c:3737 plug-ins/gfig/gfig.c:3743
-#, fuzzy
 msgid "(none)"
-msgstr "Ingen"
+msgstr "(ingen)"
 
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3900
@@ -10338,9 +10333,8 @@ msgstr "Farge"
 
 #: plug-ins/gfig/gfig.c:3913 plug-ins/ifscompose/ifscompose.c:1183
 #: plug-ins/imagemap/imap_toolbar.c:120
-#, fuzzy
 msgid "Undo"
-msgstr "Tilfeldig seed"
+msgstr "Angre"
 
 #: plug-ins/gfig/gfig.c:4055
 #, c-format
@@ -10434,9 +10428,8 @@ msgid "%s copy"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:5249
-#, fuzzy
 msgid "Save as..."
-msgstr "Lagre"
+msgstr "Lagre som..."
 
 #: plug-ins/gfig/gfig.c:6132
 #, fuzzy
@@ -10515,15 +10508,13 @@ msgid "`Default' is created."
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:2569
-#, fuzzy
 msgid "Default"
-msgstr "Seed"
+msgstr "Standard"
 
 #: plug-ins/gflare/gflare.c:2915 plug-ins/gflare/gflare.c:3754
 #: plug-ins/gflare/gflare.c:3864 plug-ins/gflare/gflare.c:4006
-#, fuzzy
 msgid "Rotation:"
-msgstr "Rotasjon"
+msgstr "Rotasjon:"
 
 #: plug-ins/gflare/gflare.c:2927 plug-ins/gflare/gflare.c:3766
 #: plug-ins/gflare/gflare.c:3877 plug-ins/gflare/gflare.c:4019
@@ -10638,9 +10629,8 @@ msgstr "Alternativer for lagring"
 #: plug-ins/gflare/gflare.c:3675 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/imagemap/imap_preferences.c:467
-#, fuzzy
 msgid "General"
-msgstr "Generelle alternativer"
+msgstr "Generelt"
 
 #.
 #. *  Gradient Menus
@@ -10715,7 +10705,7 @@ msgstr "Fil"
 #: plug-ins/gflare/gflare.c:4061 plug-ins/imagemap/imap_menu.c:389
 #: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
-msgstr ""
+msgstr "Polygon"
 
 #: plug-ins/gflare/gflare.c:4120
 #, fuzzy
@@ -11028,7 +11018,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
@@ -11037,7 +11027,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
 msgid "Edit..."
-msgstr ""
+msgstr "Rediger..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
@@ -11153,7 +11143,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "Papir"
 
 #: plug-ins/gimpressionist/paper.c:130
 #, fuzzy
@@ -11162,9 +11152,8 @@ msgstr "Forhåndsvisning av bilde"
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
-#, fuzzy
 msgid "Invert"
-msgstr "Heltall"
+msgstr "Inverter"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
@@ -11426,13 +11415,12 @@ msgid "GIMP Help Browser"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:799
-#, fuzzy
 msgid "Back"
-msgstr "Sort:"
+msgstr "Tilbake"
 
 #: plug-ins/helpbrowser/helpbrowser.c:808
 msgid "Forward"
-msgstr ""
+msgstr "Send videre"
 
 #: plug-ins/ifscompose/ifscompose.c:359
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
@@ -11445,9 +11433,8 @@ msgstr ""
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:583
-#, fuzzy
 msgid "Shear:"
-msgstr "Farge"
+msgstr "Forskyv:"
 
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:597
@@ -11456,9 +11443,8 @@ msgstr ""
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:628
-#, fuzzy
 msgid "Simple"
-msgstr "Sinus"
+msgstr "Enkel"
 
 #: plug-ins/ifscompose/ifscompose.c:640
 msgid "IfsCompose: Target"
@@ -11545,9 +11531,8 @@ msgid "Recompute Center"
 msgstr "Beregn forhåndsvisningsbildet på nytt"
 
 #: plug-ins/ifscompose/ifscompose.c:1195 plug-ins/imagemap/imap_toolbar.c:123
-#, fuzzy
 msgid "Redo"
-msgstr "Rød:"
+msgstr "Gjenopprett"
 
 #: plug-ins/ifscompose/ifscompose.c:1228
 #, fuzzy
@@ -11598,9 +11583,8 @@ msgid "Center y:"
 msgstr "Heltall"
 
 #: plug-ins/imagemap/imap_cmd_create.c:52
-#, fuzzy
 msgid "Create"
-msgstr "Heltall"
+msgstr "Lag"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
@@ -11692,9 +11676,8 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
 #: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
-#, fuzzy
 msgid "Paste"
-msgstr "Skriver:"
+msgstr "Lim inn"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:51
 #, fuzzy
@@ -11744,9 +11727,8 @@ msgid "Gopher"
 msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:195
-#, fuzzy
 msgid "Other"
-msgstr "Andre"
+msgstr ""
 
 #.
 #. * The format of the list is the File printer followed by a qsort'ed list
@@ -11799,9 +11781,8 @@ msgid "Link"
 msgstr "Lineær"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:283
-#, fuzzy
 msgid "Dimensions"
-msgstr "Retningsvektor"
+msgstr "Dimensjoner"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:325
 #, fuzzy
@@ -11844,7 +11825,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:144
 msgid "Error"
-msgstr ""
+msgstr "Feil"
 
 #: plug-ins/imagemap/imap_grid.c:143
 #, fuzzy
@@ -11864,9 +11845,8 @@ msgid "Hidden"
 msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:174
-#, fuzzy
 msgid "Lines"
-msgstr "Lineær"
+msgstr "Linjer"
 
 #: plug-ins/imagemap/imap_grid.c:183
 #, fuzzy
@@ -11936,21 +11916,19 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:215
 msgid "Open..."
-msgstr ""
+msgstr "Åpne..."
 
 #: plug-ins/imagemap/imap_menu.c:221
-#, fuzzy
 msgid "Save As..."
-msgstr "Lagre"
+msgstr "Lagre som..."
 
 #: plug-ins/imagemap/imap_menu.c:224
 msgid "Preferences..."
-msgstr ""
+msgstr "Brukervalg..."
 
 #: plug-ins/imagemap/imap_menu.c:230
-#, fuzzy
 msgid "Quit"
-msgstr "Kvalitet"
+msgstr "Avslutt"
 
 #: plug-ins/imagemap/imap_menu.c:243
 #, fuzzy, c-format
@@ -11968,7 +11946,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
-msgstr ""
+msgstr "Vis"
 
 #: plug-ins/imagemap/imap_menu.c:317
 #, fuzzy
@@ -11986,11 +11964,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom inn"
 
 #: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom ut"
 
 #: plug-ins/imagemap/imap_menu.c:349
 msgid "Zoom To"
@@ -12003,7 +11981,7 @@ msgstr "Ikke nok minne til å utplassere fargene"
 
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
-msgstr ""
+msgstr "Pil"
 
 #: plug-ins/imagemap/imap_menu.c:392
 msgid "Edit Map Info..."
@@ -12042,26 +12020,23 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_polygon.c:458
 msgid "Append"
-msgstr ""
+msgstr "Legg til"
 
 #: plug-ins/imagemap/imap_popup.c:125
 msgid "Map Info..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_popup.c:128
-#, fuzzy
 msgid "Tools"
-msgstr "Bildekommentarer"
+msgstr "Verktøy"
 
 #: plug-ins/imagemap/imap_popup.c:142
-#, fuzzy
 msgid "In"
-msgstr "Tomme"
+msgstr "Inn"
 
 #: plug-ins/imagemap/imap_popup.c:144
-#, fuzzy
 msgid "Out"
-msgstr "Utskrift"
+msgstr "Ut"
 
 #: plug-ins/imagemap/imap_popup.c:151
 #, fuzzy
@@ -12143,16 +12118,15 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "Target"
 msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:336
-#, fuzzy
 msgid "Comment"
-msgstr "Bildekommentarer"
+msgstr "Kommentar"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
@@ -12186,15 +12160,15 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_toolbar.c:115
 msgid "Preferences"
-msgstr ""
+msgstr "Brukervalg"
 
 #: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoom inn"
 
 #: plug-ins/imagemap/imap_toolbar.c:145
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoom ut"
 
 #: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"
@@ -12686,9 +12660,8 @@ msgstr "Seed"
 
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:285 plug-ins/rcm/rcm_dialog.c:356
-#, fuzzy
 msgid "From"
-msgstr "Fra bilde"
+msgstr "Fra"
 
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:307
@@ -12698,7 +12671,7 @@ msgstr "Auto"
 
 #: plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
@@ -12716,9 +12689,8 @@ msgstr ""
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:589
-#, fuzzy
 msgid "Units"
-msgstr "Enhet"
+msgstr "Enheter"
 
 #. Misc: Used unit selection: 3 radio buttons
 #: plug-ins/rcm/rcm_dialog.c:598
@@ -12761,9 +12733,8 @@ msgid "Main"
 msgstr "Vanlig"
 
 #: plug-ins/rcm/rcm_dialog.c:776
-#, fuzzy
 msgid "Misc"
-msgstr "Forskjellige operasjoner."
+msgstr "Forskjellig"
 
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
@@ -12988,7 +12959,7 @@ msgstr ""
 
 #: plug-ins/webbrowser/webbrowser.c:306
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: plug-ins/webbrowser/webbrowser.c:316
 #, fuzzy
@@ -13098,7 +13069,3 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 #, fuzzy, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil, fil %s med egenskaper for XJT er tom"
-
-#, fuzzy
-#~ msgid "Set line spacing"
-#~ msgstr "Skalering"
