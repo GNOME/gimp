@@ -1,3 +1,7 @@
+Mon Jun  8 22:09:07 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/airbrush.c: Simple pressure sensitivity.
+
 Mon Jun  8 17:47:37 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/menus.c: unref the itemfactories instead of destroying

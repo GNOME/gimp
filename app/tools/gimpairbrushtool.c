@@ -236,6 +236,7 @@ airbrush_motion (PaintCore *paint_core,
 		 GimpDrawable *drawable,
 		 double     pressure)
 {
+  gint opacity;
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
@@ -258,9 +259,13 @@ airbrush_motion (PaintCore *paint_core,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
+  opacity = pressure * (paint_core->curpressure / 0.5);
+  if (opacity > 255)
+    opacity = 255;
+
   /*  paste the newly painted area to the image  */
   paint_core_paste_canvas (paint_core, drawable,
-			   (int) (pressure * 2.55),
+			   opacity,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (),
 			   SOFT, CONSTANT);
