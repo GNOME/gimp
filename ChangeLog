@@ -1,3 +1,19 @@
+2003-05-23  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimp.[ch]: gimp_main now takes a GimpPlugInInfo *,
+	and PLUG_IN_INFO is now a static variable set from that. This
+	removes all the special casing for the Win32 and OS/2 ports around
+	this. Also added a debugging hook for quit procs.
+
+	* plug-ins/common/mng.c: moved MAIN() to the end so PLUG_IN_INFO is
+	declared.
+
+	* plug-ins/gimpressionist/gimpressionist.c: pass &PLUG_IN_INFO
+	to gimp_main.
+
+	* plug-ins/pygimp/gimpmodule.c: Here too. Also add a message
+	function.
+
 2003-05-24  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-rotate.c (gimp_image_rotate): fixed offset of

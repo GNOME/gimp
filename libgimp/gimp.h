@@ -163,8 +163,6 @@ struct _GimpParam
 
 #ifdef G_OS_WIN32
 
-void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-
 /* Define WinMain() because plug-ins are built as GUI applications. Also
  * define a main() in case some plug-in still is built as a console
  * application.
@@ -175,54 +173,38 @@ void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
 #    endif
 #  endif
 
-#  define MAIN()			\
-   static int				\
-   win32_gimp_main (int argc, char **argv)	\
-   {					\
-     set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);	\
-     return gimp_main (argc, argv);	\
-   }					\
-					\
-   struct HINSTANCE__;			\
-   int _stdcall				\
-   WinMain (struct HINSTANCE__ *hInstance, \
-	    struct HINSTANCE__ *hPrevInstance,	\
-	    char *lpszCmdLine,		\
-	    int   nCmdShow)		\
-   {					\
-     return win32_gimp_main (__argc, __argv);	\
-   }					\
-					\
-   int					\
-   main (int argc, char *argv[])	\
-   {					\
-     return win32_gimp_main (argc, argv);	\
+#  define MAIN()					\
+   struct HINSTANCE__;					\
+   int _stdcall						\
+   WinMain (struct HINSTANCE__ *hInstance, 		\
+	    struct HINSTANCE__ *hPrevInstance,		\
+	    char *lpszCmdLine,				\
+	    int   nCmdShow)				\
+   {							\
+     return gimp_main (&PLUG_IN_INFO, __argc, __argv);	\
+   }							\
+							\
+   int							\
+   main (int argc, char *argv[])			\
+   {							\
+     return gimp_main (&PLUG_IN_INFO, argc, argv);	\
    }
 #else
-#ifndef __EMX__
-#  define MAIN()			\
-   int					\
-   main (int argc, char *argv[])	\
-   {					\
-     return gimp_main (argc, argv);	\
+#  define MAIN()					\
+   int							\
+   main (int argc, char *argv[])			\
+   {							\
+     return gimp_main (&PLUG_IN_INFO, argc, argv);	\
    }
-#else
-#  define MAIN()				\
-   int						\
-   main (int argc, char *argv[])		\
-   {						\
-     set_gimp_PLUG_IN_INFO(&PLUG_IN_INFO);	\
-     return gimp_main (argc, argv);		\
-   }
-#endif
 #endif
 
 
-/* The main procedure that should be called with the
- *  'argc' and 'argv' that are passed to "main".
+/* The main procedure that should be called with the PLUG_IN_INFO structure
+ * and the 'argc' and 'argv' that are passed to "main".
  */
-gint        gimp_main                (gint      argc,
-				      gchar    *argv[]);
+gint        gimp_main                (const GimpPlugInInfo *info,
+				      gint                  argc,
+				      gchar                *argv[]);
 
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.

@@ -156,7 +156,6 @@ struct mng_data_t mng_data = {
 };
 
 
-MAIN ()
 /* The output FILE pointer which is used by libmng;
  * passed around as user data. */
      struct mnglib_userdata_t
@@ -1536,3 +1535,5 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,
   run
 };
+
+MAIN ()

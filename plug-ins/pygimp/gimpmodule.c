@@ -23,7 +23,6 @@
 
 #include "pygimp.h"
 #include <sysmodule.h>
-#include <structmember.h>
 
 /* maximum bits per pixel ... */
 #define MAX_BPP 4
@@ -190,14 +189,7 @@ pygimp_main(PyObject *self, PyObject *args)
     for (i = 0; i < argc; i++)
 	argv[i] = g_strdup(PyString_AsString(PyList_GetItem(av, i)));
 
-#ifdef G_OS_WIN32
-    {
-	extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-	set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
-    }
-#endif
-
-    gimp_main(argc, argv);
+    gimp_main(&PLUG_IN_INFO, argc, argv);
 
     if (argv != NULL) {
 	for (i = 0; i < argc; i++)
@@ -213,8 +205,18 @@ pygimp_main(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_quit(PyObject *self)
 {
-
     gimp_quit();
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+pygimp_message(PyObject *self, PyObject *args)
+{
+    char *msg;
+    if (!PyArg_ParseTuple(args, "s:message", &msg))
+        return NULL;
+    gimp_message(msg);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -804,6 +806,7 @@ id2display(PyObject *self, PyObject *args)
 static struct PyMethodDef gimp_methods[] = {
     {"main",	(PyCFunction)pygimp_main,	METH_VARARGS},
     {"quit",	(PyCFunction)pygimp_quit,	METH_NOARGS},
+    {"message",	(PyCFunction)pygimp_message,	METH_VARARGS},
     {"set_data",	(PyCFunction)pygimp_set_data,	METH_VARARGS},
     {"get_data",	(PyCFunction)pygimp_get_data,	METH_VARARGS},
     {"progress_init",	(PyCFunction)pygimp_progress_init,	METH_VARARGS},

@@ -73,6 +73,7 @@
 #  include <windows.h>
 #  undef RGB
 #endif
+
 #ifdef __EMX__
 #  include <fcntl.h>
 #endif
@@ -100,6 +101,7 @@ typedef enum {
   GIMP_DEBUG_QUERY              = 1 << 2,
   GIMP_DEBUG_INIT               = 1 << 3,
   GIMP_DEBUG_RUN                = 1 << 4,
+  GIMP_DEBUG_QUIT               = 1 << 5,
 
   GIMP_DEBUG_DEFAULT            = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
 } GimpDebugFlag;
@@ -176,35 +178,19 @@ static const GDebugKey gimp_debug_keys[] = {
   {"query",          GIMP_DEBUG_QUERY},
   {"init",           GIMP_DEBUG_INIT},
   {"run",            GIMP_DEBUG_RUN},
+  {"quit",           GIMP_DEBUG_QUIT},
   {"on",             GIMP_DEBUG_DEFAULT}
 };
 
 static const guint gimp_ndebug_keys = sizeof (gimp_debug_keys) / sizeof (GDebugKey);
 
-#ifdef G_OS_WIN32
-static GimpPlugInInfo *PLUG_IN_INFO_PTR;
-#define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
-void
-set_gimp_PLUG_IN_INFO_PTR (GimpPlugInInfo *p)
-{
-  PLUG_IN_INFO_PTR = p;
-}
-#else
-#ifndef __EMX__
-extern GimpPlugInInfo PLUG_IN_INFO;
-#else
 static GimpPlugInInfo PLUG_IN_INFO;
-void set_gimp_PLUG_IN_INFO (const GimpPlugInInfo *p)
-{
-  PLUG_IN_INFO = *p;
-}
-#endif
-#endif
 
 
 int
-gimp_main (int   argc,
-	   char *argv[])
+gimp_main (const GimpPlugInInfo *info,
+           int                   argc,
+	   char                 *argv[])
 {
   gchar       *basename;
   const gchar *env_string;
@@ -212,8 +198,6 @@ gimp_main (int   argc,
 
 #ifdef G_OS_WIN32
   gint i, j, k;
-
-  g_assert (PLUG_IN_INFO_PTR != NULL);
 
   /* Check for exe file name with spaces in the path having been split up
    * by buggy NT C runtime, or something. I don't know why this happens
@@ -223,30 +207,42 @@ gimp_main (int   argc,
   for (i = 1; i < argc; i++)
     {
       k = strlen (argv[i]);
-      if (k > 10)
-	if (g_ascii_strcasecmp (argv[i] + k - 4, ".exe") == 0)
-	  {
-	    /* Found the end of the executable name, most probably.
-	     * Splice the parts of the name back together.
-	     */
-	    GString *s;
 
-	    s = g_string_new (argv[0]);
-	    for (j = 1; j <= i; j++)
-	      {
-		s = g_string_append_c (s, ' ');
-		s = g_string_append (s, argv[j]);
-	      }
-	    argv[0] = s->str;
-	    /* Move rest of argv down */
-	    for (j = 1; j < argc - i; j++)
-	      argv[j] = argv[j + i];
-	    argv[argc - i] = NULL;
-	    argc -= i;
-	    break;
+      if (k > 10)
+	{
+	  if (g_ascii_strcasecmp (argv[i] + k - 4, ".exe") == 0)
+	    {
+	      /* Found the end of the executable name, most probably.
+	       * Splice the parts of the name back together.
+	       */
+	      GString *s;
+
+	      s = g_string_new (argv[0]);
+
+	      for (j = 1; j <= i; j++)
+		{
+		  s = g_string_append_c (s, ' ');
+		  s = g_string_append (s, argv[j]);
+		}
+
+	      argv[0] = s->str;
+
+	      /* Move rest of argv down */
+	      for (j = 1; j < argc - i; j++)
+		argv[j] = argv[j + i];
+
+	      argv[argc - i] = NULL;
+	      argc -= i;
+
+	      break;
 	  }
+       }
     }
 #endif
+
+  g_assert (info != NULL);
+
+  PLUG_IN_INFO = *info;
 
   if ((argc != 6) || (strcmp (argv[1], "-gimp") != 0))
     {
@@ -408,6 +404,9 @@ gimp_main (int   argc,
 static void
 gimp_close (void)
 {
+  if (gimp_debug_flags & GIMP_DEBUG_QUIT)
+    gimp_debug_stop ();
+
   if (PLUG_IN_INFO.quit_proc)
     (* PLUG_IN_INFO.quit_proc) ();
 

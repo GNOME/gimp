@@ -543,15 +543,8 @@ MAIN()
 #else
 int main(int argc, char **argv)
 {
-  if(argc != 2) {
-
-    /* Is this needed anymore? */
-#ifdef __EMX__
-    set_gimp_PLUG_IN_INFO(&PLUG_IN_INFO);
-#endif
-
-    return gimp_main(argc, argv);
-  }
+  if (argc != 2)
+    return gimp_main (&PLUG_IN_INFO, argc, argv);
 
   standalone = argv[1];
 
