@@ -6,7 +6,7 @@ sub std_pdb_misc {
     $date = '1995-1996';
 }
 
-sub std_image_arg {
+sub std_image_arg () {
     {
 	name => 'image',	
 	type => 'image',

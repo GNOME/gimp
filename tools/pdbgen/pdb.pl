@@ -42,7 +42,7 @@ package Gimp::CodeGen::pdb;
 		 },
     image     => {
 		     name => 'IMAGE',
-		     type => 'GImage *', 
+		     type => 'GimpImage *', 
 		     id_func => 'pdb_id_to_image',
 		     id_ret_func => 'pdb_image_to_id ($var)',
 		     id_headers => [ qw("procedural_db.h") ]
@@ -66,7 +66,8 @@ package Gimp::CodeGen::pdb;
 		     type => 'GimpDrawable *',
 		     id_func => 'gimp_drawable_get_ID',
 		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		     id_headers => [ qw("drawable.h") ]
+		     id_headers => [ qw("drawable.h") ],
+		     gimage => 'drawable_gimage (GIMP_DRAWABLE ($var))'
 		 },
     selection => {
 		     name => 'SELECTION',

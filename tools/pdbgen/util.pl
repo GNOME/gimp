@@ -17,15 +17,18 @@
 
 package Gimp::CodeGen::util;
 
+use File::Copy cp;
+use File::Compare cmp;
+
 $DEBUG_OUTPUT = 1;
 
 sub write_file {
     my $file = shift; my $realfile = $file;
     $realfile =~ s/\.tmp\.\d+$//;
     if (-e $realfile) {
-	if (`diff $realfile $file`) {
-	    `cp $realfile $realfile~` if $DEBUG_OUTPUT;
-	    `cp $file $realfile`;
+	if (cmp($realfile, $file)) {
+	    cp($realfile, "$realfile~") if $DEBUG_OUTPUT;
+	    cp($file, $realfile);
 	    print "Wrote $realfile\n";
 	}
 	else {
