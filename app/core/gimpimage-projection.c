@@ -2260,7 +2260,7 @@ gimp_image_construct_layers (GimpImage *gimage,
   PixelRegion  src1PR, src2PR, maskPR;
   PixelRegion * mask;
   GList       *list;
-  GSList      *reverse_list = NULL;
+  GList       *reverse_list = NULL;
   gint         off_x;
   gint         off_y;
 
@@ -2306,17 +2306,19 @@ gimp_image_construct_layers (GimpImage *gimage,
       layer = (GimpLayer *) list->data;
 
       /*  only add layers that are visible and not floating selections 
-	  to the list  */
+       *  to the list
+       */
       if (! gimp_layer_is_floating_sel (layer) && 
 	  gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	{
-	  reverse_list = g_slist_prepend (reverse_list, layer);
+	  reverse_list = g_list_prepend (reverse_list, layer);
 	}
     }
 
-  while (reverse_list)
+  for (list = reverse_list; list; list = g_list_next (list))
     {
-      layer = (GimpLayer *) reverse_list->data;
+      layer = (GimpLayer *) list->data;
+
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
@@ -2385,12 +2387,11 @@ gimp_image_construct_layers (GimpImage *gimage,
 	      break;
 	    }
 	}
-      gimage->construct_flag = 1;  /*  something was projected  */
 
-      reverse_list = g_slist_next (reverse_list);
+      gimage->construct_flag = 1;  /*  something was projected  */
     }
 
-  g_slist_free (reverse_list);
+  g_list_free (reverse_list);
 }
 
 static void
@@ -2404,17 +2405,19 @@ gimp_image_construct_channels (GimpImage *gimage,
   PixelRegion  src1PR;
   PixelRegion  src2PR;
   GList       *list;
-  GSList      *reverse_list = NULL;
+  GList       *reverse_list = NULL;
 
   /*  reverse the channel list  */
   for (list = GIMP_LIST (gimage->channels)->list; 
        list; 
        list = g_list_next (list))
-    reverse_list = g_slist_prepend (reverse_list, list->data);
-
-  while (reverse_list)
     {
-      channel = (GimpChannel *) reverse_list->data;
+      reverse_list = g_list_prepend (reverse_list, list->data);
+    }
+
+  for (list = reverse_list; list; list = g_list_next (list))
+    {
+      channel = (GimpChannel *) list->data;
 
       if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
 	{
@@ -2432,11 +2435,9 @@ gimp_image_construct_channels (GimpImage *gimage,
 
 	  gimage->construct_flag = 1;
 	}
-
-      reverse_list = g_slist_next (reverse_list);
     }
 
-  g_slist_free (reverse_list);
+  g_list_free (reverse_list);
 }
 
 static void

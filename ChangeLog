@@ -1,5 +1,11 @@
 2001-11-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c: gimp_image_construct_layers/channels():
+	actually free the reverse_list after projecting the drawables.
+	(Spotted by Kelly Martin).
+
+2001-11-26  Michael Natterer  <mitch@gimp.org>
+
 	* tools/authorsgen/contributors: added Rebecca Walter (bex).
 
 	* AUTHORS
