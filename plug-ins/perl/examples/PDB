@@ -7,6 +7,8 @@ use Gimp (':consts');
 use Gimp::Fu;
 use Gtk;
 use Gtk::Gdk;
+use Gimp::UI (); # for the logo
+use POSIX 'strftime';
 
 Gtk->init;
 
@@ -31,12 +33,20 @@ my @args;	# the arguments of the current function
 
 my @function;	# the names of all functions
 my %function;	# the same as hash
-my %completion;	# a hash that maps completion names to values
+my @completion;	# list of completions
+my @compdata;	# index completion -> data
+my %plugin_info;# function -> [...]
 
 sub refresh {
    undef %function;
    @function = Gimp->procedural_db_query("","","","","","","");
    @function{@function}=(1) x @function;
+   eval {
+      my ($a, $b, $c, $d, $e, $f) = Gimp->plugins_query("");
+      for $i (0..$#$a) {
+         $plugin_info{$f->[$i]} = [map $_->[$i], $a, $b, $c, $d, $e];
+      }
+   }
 }
 
 sub get_words {
@@ -139,36 +149,45 @@ sub set_current_function {
       $function{$fun} or die;
       ($blurb,$help,$author,$copyright,$date,$type,$args,$results)=
          Gimp->procedural_db_proc_info($fun);
+      $blurb_label->set($blurb);
       for(0..$args-1) {
          push(@args,[Gimp->procedural_db_proc_arg($fun,$_)]);
       }
       new_cinfo;
-   };
+
+      $help_text->delete_text(0,-1);
+      $help_text->insert_text($help,0);
+      eval {
+         my ($menupath, $accel, $path, $imagetypes, $mtime) = @{$plugin_info{$fun}};
+         $menupath_label->set($menupath);
+         $accelerator_label->set($accel);
+         $plugin_path_label->set($path);
+         $imagetypes_label->set($imagetypes);
+         $last_modified_label->set(strftime("%Y-%m-%d %H:%M:%S (%Z)", localtime ($mtime)));
+      };
+   }
 }
 
-my $block_sel_changed;	# gtk is braindamaged
-my $block_changed;	# gtk is broken
-
 sub set_clist {
-   $block_sel_changed++;
-   $clist->clear_items(0,99999);
-   %completion=@_;
+   $clist->freeze;
+   $clist->clear;
+   @completion = ();
+   @compdata = ();
    while(@_) {
-      $clist->add(new Gtk::ListItem(shift));
-      shift;
+      $clist->append(@_[0]);
+      push @completion, shift;
+      push @compdata, shift;
    }
-   $clist->unselect_item(0);
-   $clist->show_all;
-   $block_sel_changed--;
+   $clist->thaw;
 }
 
 sub complete_function {
    my $name = shift;
    $name=~s/[-_]/[-_]/g;
    my @matches = eval { sort grep /$name/i,@function };
-   if(@matches>70) {
-      set_clist map(($_,$_),@matches[0..69]);
-      $synopsis->set("showing only the first 70 matches (of ".(scalar@matches).")");
+   if(@matches>1e6) {#d#
+      set_clist map(($_,$_),@matches[0..149]);
+      $synopsis->set("showing only the first 150 matches (of ".(scalar@matches).")");
    } elsif(@matches>1) {
       set_clist map(($_,$_),@matches);
       $synopsis->set(scalar@matches." matching functions");
@@ -235,14 +254,14 @@ sub do_completion {
    my($word)=$words[$idx];
 
    $word=~s/[-_]/[-_]/g;
-   my(@matches)=grep /$word/i,keys %completion;
+   my(@matches)=grep /$word/i,@completion;
    my $new;
    if (@matches>1) {
       if (join("\n",@matches) =~ ("^(".$words[$idx].".*).*?".("\n\\1.*" x scalar@matches-1))) {
          $new=$1;
       }
    } elsif(@matches==1) {
-      $new=$completion{$matches[0]};
+      $new=$compdata[0];
    } else {
       Gtk::Gdk->beep;
    }
@@ -287,7 +306,6 @@ sub inputline {
    my $e = new Gtk::Entry;
    $e->set_text("");
    $e->signal_connect("changed",sub {
-      return if $block_changed;
       undef $last_arg;
       do_idle;
    });
@@ -309,19 +327,15 @@ sub inputline {
    $e->set_usize($ex*40,0);
    $inputline=$e;
 
-   my $c = new Gtk::List;
+   my $c = new Gtk::CList(1);
    $clist = $c;
-   $c->set_selection_mode(-single);
-   $c->set_selection_mode(-browse);
-   $c->signal_connect("selection_changed", sub {
-      return if $block_sel_changed;
+   $c->set_selection_mode(-extended);
+   $c->signal_connect("select_row", sub {
       eval {
          my($idx,$pos,@words)=get_words;
-         $words[$idx]=$completion{$c->selection->children->get}."\0";
-         $block_changed++;
+         $words[$idx]=$compdata[$_[1]]."\0";
          set_words (@words);
          set_current_function (substr($words[0],0,-1)) unless $idx;
-         $block_changed--;
       };
       do_idle;
    });
@@ -330,6 +344,48 @@ sub inputline {
    $rlist = $r;
    $r->set_selection_mode(-single);
    $r->set_selection_mode(-browse);
+}
+
+sub info {
+   my $info = new Gtk::Dialog;
+   $info->set_title("Function Info");
+   $info->signal_connect(delete_event => sub { $info->hide });
+
+   my $close = new Gtk::Button "Close";
+   $close->signal_connect(clicked => sub { $info->hide });
+   $info->action_area->add($close);
+
+   local *add_info = sub {
+      my ($label, $widget, $large) = @_;
+      my $h = new Gtk::HBox(0, 0);
+      $h->pack_start((new Gtk::Label $label.": "), 0, 0, 0);
+      $h->add($widget);
+      $info->vbox->pack_start($h, $large, 1, 5);
+   };
+
+   $blurb_label = new Gtk::Label;
+   add_info("Menu Path", $menupath_label = new Gtk::Label);
+   add_info("Accelerator", $accelerator_label = new Gtk::Label);
+   add_info("Image Types", $imagetypes_label = new Gtk::Label);
+
+   $help_text = new Gtk::Text;
+   $help_text->set_editable(0);
+   $help_text->set_word_wrap(1);
+   my $cs = new Gtk::ScrolledWindow undef,undef;
+   $cs->set_policy(-automatic,-automatic);
+   $cs->add ($help_text);
+   add_info ("Description", $cs, 1);
+
+   add_info("Author", $author_label = new Gtk::Label);
+   add_info("Last Modified", $last_modified_label = new Gtk::Label);
+   add_info("Plug-In Path", $plugin_path_label = new Gtk::Label);
+
+   my $h = new Gtk::HBox(0,5);
+   my $more = new Gtk::Button "More...";
+   $more->signal_connect(clicked => sub { $info->visible ? $info->hide : $info->show_all });
+   $h->add($blurb_label);
+   $h->add($more);
+   $h;
 }
 
 sub create_main {
@@ -345,7 +401,7 @@ sub create_main {
    $ex = $w->style->font->string_width ('Mn')*0.5;
    $ey = $w->style->font->string_width ('My');
 
-   $w->set_title('PDB Explorer - the alpha version');
+   $w->set_title('PDB Explorer - the olof edition (yet still an alpha version)');
    $w->signal_connect("destroy",sub {main_quit Gtk});
 
    $b = new Gtk::Button "Close";
@@ -365,12 +421,12 @@ sub create_main {
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
-   $cs->add_with_viewport ($clist);
+   $cs->add ($clist);
 
    my $rs = new Gtk::ScrolledWindow undef,undef;
    $rs->set_policy(-automatic,-automatic);
    $rs->add_with_viewport ($rlist);
-   $rs->set_usize(0,200);
+   $rs->set_usize(0,$ey*6);
 
    $result = new Gtk::Entry;
    $result->set_editable(0);
@@ -382,7 +438,7 @@ sub create_main {
 
    $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
       $table->attach($synopsis ,1,2,0,1,{},{},0,0);
-         #$table->attach(logo(),2,3,0,1,{},{},0,0);
+         $table->attach(Gimp::UI::logo($w),2,3,0,1,{},{},0,0);
    $table->attach(new Gtk::Label("Command")  ,0,1,1,2,{},{},0,0);
       $table->attach($inputline,1,2,1,2,['expand','fill'],{},0,0);
          $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
@@ -392,8 +448,12 @@ sub create_main {
    $table->attach(new Gtk::Label("Status"),0,1,3,4,{},{},0,0);
       $table->attach($statusbar,1,3,3,4,['expand','fill'],['expand','fill'],0,0);
 
-   my $ci = new Gtk::Frame "Command Info";
+   # the Info frame
+   my $ci = new Gtk::Frame "Info";
    $ci->border_width(10);
+   my $v = new Gtk::VBox(0,5);
+   $ci->add($v);
+   $v->pack_start(info, 0, 1, 0);
    my $sw = new Gtk::ScrolledWindow;
    $sw->set_policy(-automatic, -automatic);
    $cinfo = new_with_titles Gtk::CList '','TYPE','NAME','DESCRIPTION';
@@ -401,16 +461,15 @@ sub create_main {
    $cinfo->set_column_auto_resize (1,1);
    $cinfo->set_column_auto_resize (2,1);
    $cinfo->set_selection_mode('single');
+   $cinfo->set_usize(0, $ey*4);
    $sw->add ($cinfo);
-   $ci->add ($sw);
+   $v->add ($sw);
    $w->vbox->pack_start ($ci,1,1,0);
 
    idle;
 
    $w->realize;
-   $w->window->resize($ex*60,$ey*25);
    show_all $w;
-   $w->window->resize($ex*60,$ey*25);
 }
 
 register "extension_pdb_explorer",
@@ -433,57 +492,4 @@ register "extension_pdb_explorer",
 };
 
 exit main;
-
-sub logo {
-   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($window->window,$window->style->black,
-      #%XPM:logo%
-      '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',
-      '# c #C3C3C4', '$ c #252524', '% c #A5A5A4', '& c #646464', '* c #E4E4E4',
-      '= c #171718', '- c #989898', '; c #585858', '> c #D7D7D7', ', c #383838',
-      '\' c #B8B8B8', ') c #787878', '! c #F7F7F8', '~ c #0B0B0C', '{ c #8C8C8C',
-      '] c #4C4C4C', '^ c #CCCCCC', '/ c #2C2C2C', '( c #ABABAC', '_ c #6C6C6C',
-      ': c #EBEBEC',
-      '                                                                               ',
-      '                  ]&@;%                                                        ',
-      '     ;]_        ]];{_,&(              ^{__{^    #);^                           ',
-      '  ]);;+;)      ,//,@;@@)_           #_......_^  (..;                           ',
-      ' ;-\'\'@];@      /$=$/@_@;&          #]........]\' ^..{                           ',
-      ' @@_+%-,,]    ,/$///_^)&@;         -...{^>+./(  \'*^!  {{  ##(  ##\'   {{  ##(   ',
-      '    ;))@/;  //]);/$]_(\');]        %,..+   ^*!   #/,{ #,/%&..@*&..,^ >,,(;..,^  ',
-      '   /,)];]] ,/],+%;_%-#!#()_       \'...> >)_)_))\'\'.._ (..=~...=.~..; ^..=....=> ',
-      '   ,]]&;;] /@;->>+-+{(\'\'-+]       #...# #.....=\'\'..) \'..]*\'..$>>../-^..$##,..- ',
-      '   @_{@/, @$@_^*>(_;_&;{);\']      \'~..> ^,,/../-\'.._ (..{ ^..; \'=./-^..%  #..& ',
-      '   ,&);,& ,])-^:>#%#%+;)>->]       ;..)   >(..; \'..) \'..- #.._ -=./-^..(  ^..& ',
-      '   ,&&%]-&/]]_::^\'#--(#!:#:]&      ^...)^#-~..# \'.._ (..% #.._ %=./-^..,>*;..+ ',
-      '   ,/&%;{%;//_#^#+%+{%#!:-#%]]      -........{  \'..) \'..% #.._ %=./-^..~....~* ',
-      '   ;$@%+)#)@$/-\')%-+-)+^#@;)@,       #@..../\'   #~~) \'~~% #~=_ -/~,-^..)/..=\'  ',
-      '    ,@+(\'#);,={)]%^);@;&@=]] ,        %#\'#^(     (%(  (%   %%(  (%% ^..{>###   ',
-      '     ,@)^#;,/={)_\'-;///$$=;@ ,,                                     ^..{       ',
-      '     ],&)_=$==/])\'+),],,/$)@ @,                %(\'((\'((\'            ^..{       ',
-      '       @@]/=====@-)-]$$, ]_/ ,                 %=~~=~==&            >%%^       ',
-      '          =$@/@,@]/]$=/  ])$ &       {{{{      %=====~=_      \'-{%             ',
-      '          ,$// /$/@ /$,  $,,       %;@,,,;{>   (\'\'\'\'\'\'\'\'      #~.$-            ',
-      '          //=/ $,/; $,,   @@       ($......,>                 #~.${            ',
-      '          /$,  /,,,  @@   ,,       %$..],...{                 ^~.$-            ',
-      '           ],  ]@]   )&    ,       ($..>({..;  #\'+)\'^  ^#\'*>(-!~.${            ',
-      '           @,  --    (;    @       %$..^({..] *,..../* ^.._,.$!~.$-            ',
-      '           _,  @\'   ;\'     )       %$..@@...)!@.$#(=.; ^..~.~,!~.${            ',
-      '           ]/   ])  -      ]       ($......=>^..;--@.~^>...(^#:~.$-            ',
-      '           ;     ;-__      ;       ($../,])> %........#>..@(  #~.${            ',
-      '           _      )*       ]       %$..>{    \'..->^*>>\'>..;   #~.$-            ',
-      '           )      &&+      _       %$..\'     >=.]>>)&^ ^..;   #~.${            ',
-      '          ;-     @;];]    &-       ($..\'      \'~.....+ ^..;   #~.$-            ',
-      '          \')    ]_& @     __       %{))#       >_@,;\'  >)+(   #+){             ',
-      '         &%               @;                                                   ',
-      '        ,{_                                                                    '
-      #%XPM%
-   ));
-}
-
-
-
-
-
-
-
 
