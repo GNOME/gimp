@@ -10,6 +10,8 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.23
 ==================================
+- Fixes for using GIMP on Xinerama setups [Sven]
+- A couple of libgimp* API cleanups [Mitch, Sven]
 - Theme switching in the preferences dialog [Mitch]
 - Added a small theme [Mitch]
 - Cleanup and unification of message strings [Mitch]
