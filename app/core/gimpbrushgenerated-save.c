@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -36,9 +37,12 @@
 
 #define OVERSAMPLING 5
 
+
 static void gimp_brush_generated_generate (GimpBrushGenerated *brush);
 
-static GimpObjectClass *parent_class;
+
+static GimpObjectClass *parent_class = NULL;
+
 
 static void
 gimp_brush_generated_destroy (GtkObject *object)
@@ -55,6 +59,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
+
   object_class->destroy = gimp_brush_generated_destroy;
 }
 
@@ -103,7 +108,7 @@ gimp_brush_generated_new (gfloat radius,
 
   /* set up normal brush data */
   brush =
-    GIMP_BRUSH_GENERATED (gimp_type_new (gimp_brush_generated_get_type ()));
+    GIMP_BRUSH_GENERATED (gtk_type_new (gimp_brush_generated_get_type ()));
 
   GIMP_BRUSH (brush)->name    = g_strdup ("Untitled");
   GIMP_BRUSH (brush)->spacing = 20;
@@ -145,7 +150,7 @@ gimp_brush_generated_load (const gchar *file_name)
 
   /* create new brush */
   brush =
-    GIMP_BRUSH_GENERATED (gimp_type_new (gimp_brush_generated_get_type ()));
+    GIMP_BRUSH_GENERATED (gtk_type_new (gimp_brush_generated_get_type ()));
 
   GIMP_BRUSH (brush)->filename = g_strdup (file_name);
 
@@ -153,8 +158,8 @@ gimp_brush_generated_load (const gchar *file_name)
 
   /* read name */
   fgets (string, 255, fp);
-  if (string[strlen (string)-1] == '\n')
-    string[strlen (string)-1] = 0;
+  if (string[strlen (string) - 1] == '\n')
+    string[strlen (string) - 1] = 0;
   GIMP_BRUSH (brush)->name = g_strdup (string);
 
   /* read brush spacing */
@@ -240,7 +245,7 @@ gimp_brush_generated_freeze (GimpBrushGenerated *brush)
 {
   g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-  
+
   brush->freeze++;
 }
 
@@ -263,11 +268,13 @@ gauss (gdouble f)
   /* this aint' a real gauss function */
   if (f < -.5)
     {
-      f = -1.0-f;
+      f = -1.0 - f;
       return (2.0 * f*f);
     }
+
   if (f < .5)
     return (1.0 - 2.0 * f*f);
+
   f = 1.0 -f;
   return (2.0 * f*f);
 }
@@ -276,16 +283,16 @@ void
 gimp_brush_generated_generate (GimpBrushGenerated *brush)
 {
   register GimpBrush *gbrush = NULL;
-  register gint x, y;
-  register guchar *centerp;
-  register gdouble d;
-  register gdouble exponent;
-  register guchar a;
-  register gint length;
-  register guchar *lookup;
+  register gint       x, y;
+  register guchar    *centerp;
+  register gdouble    d;
+  register gdouble    exponent;
+  register guchar     a;
+  register gint       length;
+  register guchar    *lookup;
+  register gdouble    sum, c, s, tx, ty;
   gdouble buffer[OVERSAMPLING];
-  register gdouble sum, c, s, tx, ty;
-  gint width, height;
+  gint    width, height;
 
   g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
@@ -302,9 +309,11 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
     {
       temp_buf_free(gbrush->mask);
     }
+
   /* compute the range of the brush. should do a better job than this? */
   s = sin (gimp_deg_to_rad (brush->angle));
   c = cos (gimp_deg_to_rad (brush->angle));
+
   tx = MAX (fabs (c*ceil (brush->radius) - s*ceil (brush->radius)
 		  / brush->aspect_ratio), 
 	    fabs (c*ceil (brush->radius) + s*ceil (brush->radius)
@@ -313,53 +322,60 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 		  / brush->aspect_ratio),
 	    fabs (s*ceil (brush->radius) - c*ceil (brush->radius)
 		  / brush->aspect_ratio));
+
   if (brush->radius > tx)
     width = ceil (tx);
   else
     width = ceil (brush->radius);
+
   if (brush->radius > ty)
     height = ceil (ty);
   else
     height = ceil (brush->radius);
-  /* compute the axis for spacing */
-  GIMP_BRUSH (brush)->x_axis.x =      c*brush->radius;
-  GIMP_BRUSH (brush)->x_axis.y = -1.0*s*brush->radius;
 
-  GIMP_BRUSH (brush)->y_axis.x = (s*brush->radius / brush->aspect_ratio);
-  GIMP_BRUSH (brush)->y_axis.y = (c*brush->radius / brush->aspect_ratio);
+  /* compute the axis for spacing */
+  GIMP_BRUSH (brush)->x_axis.x =        c * brush->radius;
+  GIMP_BRUSH (brush)->x_axis.y = -1.0 * s * brush->radius;
+
+  GIMP_BRUSH (brush)->y_axis.x = (s * brush->radius / brush->aspect_ratio);
+  GIMP_BRUSH (brush)->y_axis.y = (c * brush->radius / brush->aspect_ratio);
   
-  gbrush->mask = temp_buf_new (width*2 + 1,
-			       height*2 + 1,
+  gbrush->mask = temp_buf_new (width * 2 + 1,
+			       height * 2 + 1,
 			       1, width, height, 0);
-  centerp = &gbrush->mask->data[height*gbrush->mask->width + width];
+  centerp = &gbrush->mask->data[height * gbrush->mask->width + width];
+
   if ((1.0 - brush->hardness) < 0.000001)
     exponent = 1000000; 
   else
     exponent = 1/(1.0 - brush->hardness);
+
   /* set up lookup table */
-  length = ceil (sqrt (2*ceil (brush->radius+1)*ceil (brush->radius+1))+1) * OVERSAMPLING;
+  length = ceil (sqrt (2 * ceil (brush->radius+1) * ceil (brush->radius+1))+1) * OVERSAMPLING;
   lookup = g_malloc (length);
   sum = 0.0;
+
   for (x = 0; x < OVERSAMPLING; x++)
-  {
-    d = fabs ((x+.5)/OVERSAMPLING - .5);
-    if (d > brush->radius)
-      buffer[x] = 0.0;
-    else
-      /* buffer[x] =  (1.0 - pow (d/brush->radius, exponent)); */
-      buffer[x] = gauss (pow (d/brush->radius, exponent));
-    sum += buffer[x];
-  }
-  for (x = 0; d < brush->radius || sum > .00001; d += 1.0/OVERSAMPLING)
     {
-      sum -= buffer[x%OVERSAMPLING];
+      d = fabs ((x + 0.5) / OVERSAMPLING - 0.5);
       if (d > brush->radius)
-	buffer[x%OVERSAMPLING] = 0.0;
+	buffer[x] = 0.0;
+      else
+	/* buffer[x] =  (1.0 - pow (d/brush->radius, exponent)); */
+	buffer[x] = gauss (pow (d/brush->radius, exponent));
+      sum += buffer[x];
+    }
+
+  for (x = 0; d < brush->radius || sum > 0.00001; d += 1.0 / OVERSAMPLING)
+    {
+      sum -= buffer[x % OVERSAMPLING];
+      if (d > brush->radius)
+	buffer[x % OVERSAMPLING] = 0.0;
       else
 	/* buffer[x%OVERSAMPLING] =  (1.0 - pow (d/brush->radius, exponent)); */
-	buffer[x%OVERSAMPLING] = gauss (pow (d/brush->radius, exponent));
+	buffer[x % OVERSAMPLING] = gauss (pow (d/brush->radius, exponent));
       sum += buffer[x%OVERSAMPLING];
-      lookup[x++] = RINT (sum*(255.0/OVERSAMPLING));
+      lookup[x++] = RINT (sum * (255.0 / OVERSAMPLING));
     }
   while (x < length)
     {
@@ -375,7 +391,7 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 	  ty *= brush->aspect_ratio;
 	  d = sqrt (tx*tx + ty*ty);
 	  if (d < brush->radius+1)
-	    a = lookup[(int)RINT(d*OVERSAMPLING)];
+	    a = lookup[(gint) RINT (d * OVERSAMPLING)];
 	  else
 	    a = 0;
 	  centerp[   y*gbrush->mask->width + x] = a;
@@ -383,6 +399,7 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 	}
     }
   g_free (lookup);
+
   gtk_signal_emit_by_name (GTK_OBJECT (brush), "dirty");
 }
 
@@ -396,11 +413,15 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
     radius = 0.0;
   else if (radius > 32767.0)
     radius = 32767.0;
+
   if (radius == brush->radius)
     return radius;
+
   brush->radius = radius;
+
   if (!brush->freeze)
     gimp_brush_generated_generate (brush);
+
   return brush->radius;
 }
 
@@ -412,13 +433,17 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
 
   if (hardness < 0.0)
     hardness = 0.0;
-  else if(hardness > 1.0)
+  else if (hardness > 1.0)
     hardness = 1.0;
+
   if (brush->hardness == hardness)
     return hardness;
+
   brush->hardness = hardness;
+
   if (!brush->freeze)
     gimp_brush_generated_generate (brush);
+
   return brush->hardness;
 }
 
@@ -430,13 +455,17 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
 
   if (angle < 0.0)
     angle = -1.0 * fmod (angle, 180.0);
-  else if(angle > 180.0)
+  else if (angle > 180.0)
     angle = fmod (angle, 180.0);
+
   if (brush->angle == angle)
     return angle;
+
   brush->angle = angle;
+
   if (!brush->freeze)
     gimp_brush_generated_generate (brush);
+
   return brush->angle;
 }
 
@@ -448,13 +477,17 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
 
   if (ratio < 1.0)
     ratio = 1.0;
-  else if(ratio > 1000)
+  else if (ratio > 1000)
     ratio = 1000;
+
   if (brush->aspect_ratio == ratio)
     return ratio;
+
   brush->aspect_ratio = ratio;
+
   if (!brush->freeze)
     gimp_brush_generated_generate(brush);
+
   return brush->aspect_ratio;
 }
 
@@ -467,7 +500,7 @@ gimp_brush_generated_get_radius (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_hardness (const GimpBrushGenerated* brush)
+gimp_brush_generated_get_hardness (const GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -475,7 +508,7 @@ gimp_brush_generated_get_hardness (const GimpBrushGenerated* brush)
 }
 
 gfloat
-gimp_brush_generated_get_angle (const GimpBrushGenerated* brush)
+gimp_brush_generated_get_angle (const GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -483,7 +516,7 @@ gimp_brush_generated_get_angle (const GimpBrushGenerated* brush)
 }
 
 gfloat
-gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated* brush)
+gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 

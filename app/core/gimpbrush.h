@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __GIMPBRUSH_H__
-#define __GIMPBRUSH_H__
+
+#ifndef __GIMP_BRUSH_H__
+#define __GIMP_BRUSH_H__
+
 
 #include <stdio.h>
 
@@ -41,23 +43,23 @@ struct _GimpBrush
 
 struct _GimpBrushClass
 {
-  GimpObjectClass   parent_class;
+  GimpObjectClass parent_class;
 
-  GimpBrush       * (* select_brush)     (PaintCore *paint_core);
-  gboolean          (* want_null_motion) (PaintCore *paint_core);
+  GimpBrush * (* select_brush)     (PaintCore *paint_core);
+  gboolean    (* want_null_motion) (PaintCore *paint_core);
 };
 
 #define GIMP_BRUSH_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_brush_get_type(), GimpBrushClass)
 #define GIMP_TYPE_BRUSH         (gimp_brush_get_type ())
-#define GIMP_BRUSH(obj)         (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
-#define GIMP_IS_BRUSH(obj)      (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
+#define GIMP_BRUSH(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
+#define GIMP_IS_BRUSH(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
 
 GtkType     gimp_brush_get_type    (void);
 GimpBrush * gimp_brush_new         (gchar     *filename);
 
 gboolean    gimp_brush_load        (GimpBrush *brush,
 				    gchar     *filename);
-gint        gimp_brush_load_brush  (GimpBrush *brush,
+gboolean    gimp_brush_load_brush  (GimpBrush *brush,
 				    FILE      *fp,
 				    gchar     *filename);
 
@@ -71,4 +73,5 @@ gint        gimp_brush_get_spacing (GimpBrush *brush);
 void        gimp_brush_set_spacing (GimpBrush *brush,
 				    gint       spacing);
 
-#endif /* __GIMPBRUSH_H__ */
+
+#endif /* __GIMP_BRUSH_H__ */

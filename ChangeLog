@@ -1,3 +1,31 @@
+2000-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/brush_edit.[ch]
+	* app/brush_header.h
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpbrushlist.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpcontext.h
+	* app/gimplist.[ch]
+	* app/gimpobject.[ch]
+	* app/gimpset.[ch]
+	* app/gimpsignal.[ch]
+	* app/parasitelist.h: Lotsa fixes in the brush referencing code
+	and cleanups in many GtkObjects:
+
+	- Reference brushes correctly (call gtk_object_sink() after adding
+	  them to the brush list). Don't crash when renaming a brush
+	  multiple times.
+	- Replaced all gtk_object_destroy() with gtk_object_unref|sink().
+	- Removed the "Fake Gimp object system" (gimp_object_destroy() et.al.)
+	  all over the place (while it's a good idea to have a common Gimp
+	  base object, it's totally useless to try to imitate Gtk's object
+	  system).
+	- s/sz_BrushHeader/sizeof(BrushHeader)/g
+	- And of course various indentation and coding style paranoia changes
+	  in all files I visited.
+
 Fri Sep 29 03:10:10 CEST 2000  Daniel Egger  <egger@suse.de>
 
 	* app/brightness_contrast.c:

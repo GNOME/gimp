@@ -14,8 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PARASITE_LIST_H__
 #define __PARASITE_LIST_H__
+
 
 #include <glib.h>
 #include <stdio.h>
@@ -27,8 +29,8 @@
 
 
 #define GIMP_TYPE_PARASITE_LIST    (parasite_list_get_type ())
-#define GIMP_PARASITE_LIST(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
-#define GIMP_IS_PARASITE_LIST(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
+#define GIMP_PARASITE_LIST(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
+#define GIMP_IS_PARASITE_LIST(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
 
 /* Signals:
    add
@@ -54,5 +56,6 @@ GimpParasite * parasite_list_find              (ParasiteList       *list,
 						const gchar        *name);
 
 void           parasite_shift_parent           (GimpParasite       *parasite);
+
 
 #endif  /*  __PARASITE_LIST_H__  */

@@ -17,7 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <math.h>
+
+#include "config.h"
+
 #include <string.h>
 
 #include "appenv.h"
@@ -25,12 +27,17 @@
 #include "brush_edit.h"
 #include "gimpui.h"
 
-#include "config.h"
+#include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
 
-static void brush_edit_close_callback (GtkWidget *, gpointer);
-static gint brush_edit_preview_resize (GtkWidget *widget, GdkEvent *event, 
+
+static void brush_edit_close_callback (GtkWidget                *widget,
+				       gpointer                  data);
+static gint brush_edit_preview_resize (GtkWidget                *widget,
+				       GdkEvent                 *event, 
 				       BrushEditGeneratedWindow *begw);
+
 
 static void
 update_brush_callback (GtkAdjustment            *adjustment,
@@ -38,32 +45,32 @@ update_brush_callback (GtkAdjustment            *adjustment,
 {
   if (begw->brush &&
       ((begw->radius_data->value  
-	!= gimp_brush_generated_get_radius(begw->brush))
+	!= gimp_brush_generated_get_radius (begw->brush))
        || (begw->hardness_data->value
-	   != gimp_brush_generated_get_hardness(begw->brush))
+	   != gimp_brush_generated_get_hardness (begw->brush))
        || (begw->aspect_ratio_data->value
-	   != gimp_brush_generated_get_aspect_ratio(begw->brush))
+	   != gimp_brush_generated_get_aspect_ratio (begw->brush))
        || (begw->angle_data->value
-	   !=gimp_brush_generated_get_angle(begw->brush))))
-  {
-    gimp_brush_generated_freeze (begw->brush);
-    gimp_brush_generated_set_radius       (begw->brush,
-					   begw->radius_data->value);
-    gimp_brush_generated_set_hardness     (begw->brush,
-					   begw->hardness_data->value);
-    gimp_brush_generated_set_aspect_ratio (begw->brush,
-					   begw->aspect_ratio_data->value);
-    gimp_brush_generated_set_angle        (begw->brush,
-					   begw->angle_data->value);
-    gimp_brush_generated_thaw (begw->brush);
-  }
+	   != gimp_brush_generated_get_angle (begw->brush))))
+    {
+      gimp_brush_generated_freeze (begw->brush);
+      gimp_brush_generated_set_radius       (begw->brush,
+					     begw->radius_data->value);
+      gimp_brush_generated_set_hardness     (begw->brush,
+					     begw->hardness_data->value);
+      gimp_brush_generated_set_aspect_ratio (begw->brush,
+					     begw->aspect_ratio_data->value);
+      gimp_brush_generated_set_angle        (begw->brush,
+					     begw->angle_data->value);
+      gimp_brush_generated_thaw (begw->brush);
+    }
 }
 
 static void
 brush_edit_clear_preview (BrushEditGeneratedWindow *begw)
 {
-  guchar * buf;
-  gint i;
+  guchar *buf;
+  gint    i;
 
   buf = g_new (guchar, begw->preview->requisition.width);
 
@@ -126,7 +133,7 @@ brush_edit_brush_dirty_callback (GimpBrush                *brush,
   return TRUE;
 }
 
-void
+static void
 brush_renamed_callback (GtkWidget                *widget,
 			BrushEditGeneratedWindow *begw)
 {
@@ -138,15 +145,20 @@ void
 brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 				GimpBrush                *gbrush)
 {
-  GimpBrushGenerated *brush = 0;
-  if (begw->brush == (GimpBrushGenerated*)gbrush)
+  GimpBrushGenerated *brush = NULL;
+
+  g_return_if_fail (begw != NULL);
+
+  if (begw->brush == (GimpBrushGenerated *) gbrush)
     return;
-  if (begw && begw->brush)
+
+  if (begw->brush)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (begw->brush), begw);
       gtk_object_unref (GTK_OBJECT (begw->brush));
       begw->brush = NULL;
     }
+
   if (!gbrush || !GIMP_IS_BRUSH_GENERATED (gbrush))
     {
       begw->brush = NULL;
@@ -154,29 +166,30 @@ brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 	gtk_widget_hide (begw->shell);
       return;
     }
+
   brush = GIMP_BRUSH_GENERATED (gbrush);
-  if (begw)
-    {
-      gtk_signal_connect (GTK_OBJECT (brush), "dirty",
-			  GTK_SIGNAL_FUNC (brush_edit_brush_dirty_callback),
-			  begw);
-      gtk_signal_connect (GTK_OBJECT (brush), "rename",
-			  GTK_SIGNAL_FUNC (brush_renamed_callback),
-			  begw);
-      begw->brush = NULL;
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->radius_data),
-				gimp_brush_generated_get_radius (brush));
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->hardness_data),
-				gimp_brush_generated_get_hardness (brush));
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->angle_data),
-				gimp_brush_generated_get_angle (brush));
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->aspect_ratio_data),
-				gimp_brush_generated_get_aspect_ratio (brush));
-      gtk_entry_set_text (GTK_ENTRY (begw->name), gimp_brush_get_name (gbrush));
-      begw->brush = brush;
-      gtk_object_ref (GTK_OBJECT (begw->brush));
-      brush_edit_brush_dirty_callback (GIMP_BRUSH (brush), begw);
-  }
+
+  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+		      GTK_SIGNAL_FUNC (brush_edit_brush_dirty_callback),
+		      begw);
+  gtk_signal_connect (GTK_OBJECT (brush), "rename",
+		      GTK_SIGNAL_FUNC (brush_renamed_callback),
+		      begw);
+
+  begw->brush = NULL;
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->radius_data),
+			    gimp_brush_generated_get_radius (brush));
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->hardness_data),
+			    gimp_brush_generated_get_hardness (brush));
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->angle_data),
+			    gimp_brush_generated_get_angle (brush));
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->aspect_ratio_data),
+			    gimp_brush_generated_get_aspect_ratio (brush));
+  gtk_entry_set_text (GTK_ENTRY (begw->name), gimp_brush_get_name (gbrush));
+  begw->brush = brush;
+
+  gtk_object_ref (GTK_OBJECT (begw->brush));
+  brush_edit_brush_dirty_callback (GIMP_BRUSH (brush), begw);
 }
 
 void
@@ -184,6 +197,7 @@ name_changed_func (GtkWidget                *widget,
 		   BrushEditGeneratedWindow *begw)
 {
   gchar *entry_text;
+
   entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
   gimp_brush_set_name (GIMP_BRUSH (begw->brush), entry_text);
 }
@@ -204,8 +218,7 @@ brush_edit_generated_new (void)
   GtkWidget *slider;
   GtkWidget *table;
 
-  begw = g_new (BrushEditGeneratedWindow, 1);
-  begw->brush = NULL;
+  begw = g_new0 (BrushEditGeneratedWindow, 1);
 
   begw->shell = gimp_dialog_new (_("Brush Editor"), "generated_brush_editor",
 				 gimp_standard_help_func,
@@ -222,23 +235,18 @@ brush_edit_generated_new (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (begw->shell)->vbox), vbox);
 
-  /*  Populate the window with some widgets */
-
-  /* table for brush controlls */
-  table = gtk_table_new (5, 4, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-
   /* Brush's name */
-  begw->name = gtk_entry_new();
-  gtk_box_pack_start (GTK_BOX (vbox), begw->name, TRUE, TRUE, 0);
-  
+  begw->name = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), begw->name, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (begw->name), "activate",
-		      (GtkSignalFunc) name_changed_func,
+		      GTK_SIGNAL_FUNC (name_changed_func),
 		      begw);
   gtk_signal_connect (GTK_OBJECT (begw->name), "focus_out_event",
-		      (GtkSignalFunc) focus_out_func,
+		      GTK_SIGNAL_FUNC (focus_out_func),
 		      begw);
-  gtk_widget_show(begw->name);
+
+  gtk_widget_show (begw->name);
 
   /* brush's preview widget w/frame  */
   begw->frame = gtk_frame_new (NULL);
@@ -247,21 +255,23 @@ brush_edit_generated_new (void)
 
   begw->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (begw->preview), 125, 100);
-  gtk_signal_connect_after (GTK_OBJECT(begw->frame), "size_allocate",
-		       (GtkSignalFunc) brush_edit_preview_resize,
-		       begw);
+  gtk_signal_connect_after (GTK_OBJECT (begw->frame), "size_allocate",
+			    GTK_SIGNAL_FUNC (brush_edit_preview_resize),
+			    begw);
   gtk_container_add (GTK_CONTAINER (begw->frame), begw->preview);
 
-  gtk_widget_show(begw->preview);
-  gtk_widget_show(begw->frame);
+  gtk_widget_show (begw->preview);
+  gtk_widget_show (begw->frame);
 
   /* table for sliders/labels */
   begw->scale_label = gtk_label_new ("-1:1");
   gtk_box_pack_start (GTK_BOX (vbox), begw->scale_label, FALSE, FALSE, 0);
-  begw->scale = -1;
   gtk_widget_show (begw->scale_label);
+
+  begw->scale = -1;
+
   /* table for sliders/labels */
-  table = gtk_table_new(2, 4, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  brush radius scale  */
@@ -271,7 +281,8 @@ brush_edit_generated_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->radius_data), "value_changed",
-		      (GtkSignalFunc) update_brush_callback, begw);
+		      GTK_SIGNAL_FUNC (update_brush_callback),
+		      begw);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Radius:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -283,7 +294,8 @@ brush_edit_generated_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->hardness_data), "value_changed",
-		      (GtkSignalFunc) update_brush_callback, begw);
+		      GTK_SIGNAL_FUNC (update_brush_callback),
+		      begw);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hardness:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -295,7 +307,8 @@ brush_edit_generated_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->aspect_ratio_data), "value_changed",
-		      (GtkSignalFunc) update_brush_callback, begw);
+		      GTK_SIGNAL_FUNC (update_brush_callback),
+		      begw);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Aspect Ratio:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -307,7 +320,8 @@ brush_edit_generated_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (begw->angle_data), "value_changed",
-		      (GtkSignalFunc) update_brush_callback, begw);
+		      GTK_SIGNAL_FUNC (update_brush_callback),
+		      begw);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Angle:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -327,14 +341,15 @@ brush_edit_preview_resize (GtkWidget                *widget,
 			   GdkEvent                 *event,
 			   BrushEditGeneratedWindow *begw)
 {
-   gtk_preview_size (GTK_PREVIEW (begw->preview),
-		     widget->allocation.width - 4,
-		     widget->allocation.height - 4);
-   
-   /*  update the display  */   
-   if (begw->brush)
-     brush_edit_brush_dirty_callback (GIMP_BRUSH (begw->brush), begw);
-   return FALSE;
+  gtk_preview_size (GTK_PREVIEW (begw->preview),
+		    widget->allocation.width - 4,
+		    widget->allocation.height - 4);
+
+  /*  update the display  */
+  if (begw->brush)
+    brush_edit_brush_dirty_callback (GIMP_BRUSH (begw->brush), begw);
+
+  return FALSE;
 }
  
 static void

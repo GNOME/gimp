@@ -15,46 +15,62 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_SIGNAL_H__
 #define __GIMP_SIGNAL_H__
 
+
 #include <gtk/gtksignal.h>
+
 
 /* This is the gtk "signal id" */
 typedef guint GimpSignalID;
 
 typedef const struct _GimpSignalType GimpSignalType;
 
+
 /* The arguments are encoded in the names.. */
 
-extern GimpSignalType* const gimp_sigtype_void;
-typedef void (*GimpHandlerVoid) (GtkObject*,
-				 gpointer);
+extern GimpSignalType * const gimp_sigtype_void;
+typedef void (* GimpHandlerVoid) (GtkObject *object,
+				  gpointer   data);
 
-extern GimpSignalType* const gimp_sigtype_pointer;
-typedef void (*GimpHandlerPointer) (GtkObject*, gpointer,
-				    gpointer);
+extern GimpSignalType * const gimp_sigtype_pointer;
+typedef void (* GimpHandlerPointer) (GtkObject *object,
+				     gpointer   p,
+				     gpointer   data);
 
-extern GimpSignalType* const gimp_sigtype_int;
-typedef void (*GimpHandlerInt) (GtkObject*, gint,
-				gpointer);
+extern GimpSignalType * const gimp_sigtype_int;
+typedef void (* GimpHandlerInt) (GtkObject *object,
+				 gint       i,
+				 gpointer   data);
 
-extern GimpSignalType* const gimp_sigtype_double;
-typedef void (*GimpHandlerDouble) (GtkObject*, gdouble,
-				   gpointer);
+extern GimpSignalType * const gimp_sigtype_double;
+typedef void (* GimpHandlerDouble) (GtkObject *object,
+				    gdouble    d,
+				    gpointer   data);
 
-extern GimpSignalType* const gimp_sigtype_int_int_int;
-typedef void (*GimpHandlerIntIntInt) (GtkObject*, gint, gint, gint,
-				      gpointer);
+extern GimpSignalType * const gimp_sigtype_int_int_int;
+typedef void (* GimpHandlerIntIntInt) (GtkObject *object,
+				       gint       i1,
+				       gint       i2,
+				       gint       i3,
+				       gpointer   data);
 
-extern GimpSignalType* const gimp_sigtype_int_int_int_int;
-typedef void (*GimpHandlerIntIntIntInt) (GtkObject*, gint, gint, gint, gint,
-					 gpointer);
+extern GimpSignalType * const gimp_sigtype_int_int_int_int;
+typedef void (* GimpHandlerIntIntIntInt) (GtkObject *object,
+					  gint       i1,
+					  gint       i2,
+					  gint       i3,
+					  gint       i4,
+					  gpointer   data);
+
 
 GimpSignalID gimp_signal_new (const gchar      *name,
 			      GtkSignalRunType  signal_flags,
 			      GtkType           object_type,
 			      guint             function_offset,
 			      GimpSignalType   *sig_type);
+
 
 #endif /* __GIMP_SIGNAL_H__ */

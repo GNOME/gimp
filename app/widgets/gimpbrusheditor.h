@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __BRUSH_EDIT_H__
 #define  __BRUSH_EDIT_H__
 
@@ -26,20 +27,21 @@ typedef struct _BrushEditGeneratedWindow BrushEditGeneratedWindow;
 
 struct _BrushEditGeneratedWindow
 {
-  GtkWidget *shell;
-  GtkWidget *frame;
-  GtkWidget *preview;
-  GtkWidget *scale_label;
-  GtkWidget *options_box;
-  GtkWidget *name;
+  GtkWidget     *shell;
+  GtkWidget     *frame;
+  GtkWidget     *preview;
+  GtkWidget     *scale_label;
+  GtkWidget     *options_box;
+  GtkWidget     *name;
   GtkAdjustment *radius_data;
   GtkAdjustment *hardness_data;
   GtkAdjustment *angle_data;
   GtkAdjustment *aspect_ratio_data;
+
   /*  Brush preview  */
-  GtkWidget *brush_preview;
+  GtkWidget          *brush_preview;
   GimpBrushGenerated *brush;
-  gint scale;
+  gint                scale;
 };
 
 BrushEditGeneratedWindow * brush_edit_generated_new (void);

@@ -17,8 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_CONTEXT_H__
 #define __GIMP_CONTEXT_H__
+
 
 #include <glib.h>
 
@@ -32,10 +34,10 @@
 #include "gimpobjectP.h"
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
-#define GIMP_CONTEXT(obj)            (GIMP_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
-#define GIMP_CONTEXT_CLASS(klass)    (GIMP_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
-#define GIMP_IS_CONTEXT(obj)         (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
-#define GIMP_IS_CONTEXT_CLASS(klass) (GIMP_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
+#define GIMP_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
+#define GIMP_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
+#define GIMP_IS_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
+#define GIMP_IS_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
 
 typedef enum
 {
@@ -287,5 +289,6 @@ void               gimp_context_set_gradient       (GimpContext     *context,
 void               gimp_context_gradient_changed   (GimpContext     *context);
 void               gimp_context_refresh_gradients  (void);
 void               gimp_context_update_gradients   (gradient_t      *gradient);
+
 
 #endif /* __GIMP_CONTEXT_H__ */

@@ -28,11 +28,12 @@ struct _GimpSignalType
 
 typedef const GtkType TypeArr[];
 
-GimpSignalID gimp_signal_new (const gchar      *name,
-			      GtkSignalRunType  signal_flags,
-			      GtkType           object_type,
-			      guint             function_offset,
-			      GimpSignalType   *sig_type)
+GimpSignalID
+gimp_signal_new (const gchar      *name,
+		 GtkSignalRunType  signal_flags,
+		 GtkType           object_type,
+		 guint             function_offset,
+		 GimpSignalType   *sig_type)
 {
   return gtk_signal_newv (name,
 			  signal_flags,
@@ -46,6 +47,9 @@ GimpSignalID gimp_signal_new (const gchar      *name,
 			  (GtkType *) sig_type->param_types);
 }
 
+
+/* void__void */
+
 static GimpSignalType sigtype_void = 
 {
   gtk_signal_default_marshaller,
@@ -54,7 +58,10 @@ static GimpSignalType sigtype_void =
   NULL
 };
 
-GimpSignalType* const gimp_sigtype_void = &sigtype_void;
+GimpSignalType * const gimp_sigtype_void = &sigtype_void;
+
+
+/* void__pointer */
 
 static void
 gimp_marshaller_pointer (GtkObject     *object,
@@ -80,7 +87,10 @@ static GimpSignalType sigtype_pointer =
   pointer_types
 };
 
-GimpSignalType* const gimp_sigtype_pointer = &sigtype_pointer;
+GimpSignalType * const gimp_sigtype_pointer = &sigtype_pointer;
+
+
+/* void__int */
 
 static void
 gimp_marshaller_int (GtkObject     *object,
@@ -108,6 +118,9 @@ static GimpSignalType sigtype_int =
 
 GimpSignalType* const gimp_sigtype_int = &sigtype_int;
 
+
+/* void__double */
+
 static void
 gimp_marshaller_double (GtkObject     *object,
 			GtkSignalFunc  func,
@@ -133,6 +146,9 @@ static GimpSignalType sigtype_double =
 };
 
 GimpSignalType* const gimp_sigtype_double = &sigtype_double;
+
+
+/* void__int_int_int */
 
 static void
 gimp_marshaller_int_int_int (GtkObject     *object,
@@ -164,6 +180,9 @@ static GimpSignalType sigtype_int_int_int =
 
 GimpSignalType* const gimp_sigtype_int_int_int = &sigtype_int_int_int;
 
+
+/* void__int_int_int_int */
+
 static void
 gimp_marshaller_int_int_int_int (GtkObject     *object,
 				 GtkSignalFunc  func,
@@ -194,4 +213,4 @@ static GimpSignalType sigtype_int_int_int_int =
   int_int_int_int_types
 };
 
-GimpSignalType* const gimp_sigtype_int_int_int_int = &sigtype_int_int_int_int;
+GimpSignalType * const gimp_sigtype_int_int_int_int = &sigtype_int_int_int_int;

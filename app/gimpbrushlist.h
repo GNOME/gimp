@@ -15,20 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __GIMPBRUSHLIST_H__
-#define __GIMPBRUSHLIST_H__
+
+#ifndef __GIMP_BRUSH_LIST_H__
+#define __GIMP_BRUSH_LIST_H__
 
 #include <glib.h>
 
 #include "gimpbrush.h"
 #include "gimpbrushlistF.h"
 
+
 #define GIMP_TYPE_BRUSH_LIST    (gimp_brush_list_get_type ())
-#define GIMP_BRUSH_LIST(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
-#define GIMP_IS_BRUSH_LIST(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_LIST))
+#define GIMP_BRUSH_LIST(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
+#define GIMP_IS_BRUSH_LIST(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_LIST))
+
 
 /*  global variables  */
 extern GimpBrushList *brush_list;
+
 
 /*  function declarations  */
 GimpBrushList * gimp_brush_list_new                (void);
@@ -49,8 +53,9 @@ gint            gimp_brush_list_get_brush_index    (GimpBrushList *list,
 						    GimpBrush     *brush);
 
 
-void            brushes_init                       (gint           no_data);
+void            brushes_init                       (gboolean       no_data);
 void            brushes_free                       (void);
 GimpBrush     * brushes_get_standard_brush         (void);
 
-#endif  /*  __GIMPBRUSHLIST_H__  */
+
+#endif  /*  __GIMP_BRUSH_LIST_H__  */

@@ -15,30 +15,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BRUSH_HEADER_H__
 #define __BRUSH_HEADER_H__
 
-typedef struct _BrushHeader BrushHeader;
-
 #define GBRUSH_FILE_VERSION    2
 #define GBRUSH_MAGIC    (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
-#define sz_BrushHeader (sizeof (BrushHeader))
 
 /*  All field entries are MSB  */
 
+typedef struct _BrushHeader BrushHeader;
+
 struct _BrushHeader
 {
-  unsigned int   header_size; /*  header_size = sz_BrushHeader + brush name  */
-  unsigned int   version;     /*  brush file version #  */
-  unsigned int   width;       /*  width of brush  */
-  unsigned int   height;      /*  height of brush  */
-  unsigned int   bytes;       /*  depth of brush in bytes--always 1 */
-  unsigned int   magic_number;/*  GIMP brush magic number  */
-  unsigned int   spacing;     /*  brush spacing  */
+  guint   header_size;  /*  header_size = sizeof (BrushHeader) + brush name  */
+  guint   version;      /*  brush file version #  */
+  guint   width;        /*  width of brush  */
+  guint   height;       /*  height of brush  */
+  guint   bytes;        /*  depth of brush in bytes--always 1 */
+  guint   magic_number; /*  GIMP brush magic number  */
+  guint   spacing;      /*  brush spacing  */
 };
 
 /*  In a brush file, next comes the brush name, null-terminated.  After that
  *  comes the brush data--width * height * bytes bytes of it...
  */
 
-#endif  /*  __BRUSH_HEADER_H__  */
+#endif  /*  ! __BRUSH_HEADER_H__  */

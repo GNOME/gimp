@@ -293,14 +293,14 @@ gimp_brush_pipe_load (gchar *filename)
     }
   buf[strlen (buf) - 1] = 0;
 
-  pipe = GIMP_BRUSH_PIPE (gimp_type_new (GIMP_TYPE_BRUSH_PIPE));
+  pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));
   name = g_strdup (buf);
 
   /* get the number of brushes */
   if (fgets (buf, 1024, fp) == NULL)
     {
       fclose (fp);
-      gimp_object_destroy (pipe);
+      gtk_object_sink (GTK_OBJECT (pipe));
       return NULL;
     }
   num_of_brushes = strtol (buf, &paramstring, 10);
@@ -308,7 +308,7 @@ gimp_brush_pipe_load (gchar *filename)
     {
       g_message (_("Brush pipes should have at least one brush."));
       fclose (fp);
-      gimp_object_destroy (pipe);
+      gtk_object_sink (GTK_OBJECT (pipe));
       return NULL;
     }
 
@@ -389,7 +389,7 @@ gimp_brush_pipe_load (gchar *filename)
       if (pipe->nbrushes > 0)
 	{
 	  pipe->brushes[pipe->nbrushes] =
-	    GIMP_BRUSH_PIXMAP (gimp_type_new (GIMP_TYPE_BRUSH_PIXMAP));
+	    GIMP_BRUSH_PIXMAP (gtk_type_new (GIMP_TYPE_BRUSH_PIXMAP));
 	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
 	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
 	}
@@ -405,7 +405,7 @@ gimp_brush_pipe_load (gchar *filename)
                        "brushes in the brush pipe."));
 	  fclose (fp);
 	  pattern_free (pattern);
-	  gimp_object_destroy (pipe);
+	  gtk_object_sink (GTK_OBJECT (pipe));
 	  return NULL;
        }
 
@@ -438,7 +438,7 @@ gimp_brush_pixmap_load (gchar *filename)
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
 
-  pipe = GIMP_BRUSH_PIPE (gimp_type_new (GIMP_TYPE_BRUSH_PIPE));
+  pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));
 
   /* A (single) pixmap brush is a pixmap pipe brush with just one pixmap */
   pipe->dimension = 1;
@@ -466,7 +466,7 @@ gimp_brush_pixmap_load (gchar *filename)
       g_message (_("Failed to load pixmap brush."));
       fclose (fp);
       pattern_free (pattern);
-      gimp_object_destroy (pipe);
+      gtk_object_sink (GTK_OBJECT (pipe));
       return NULL;
     }
 
