@@ -1,5 +1,11 @@
 2001-05-10  David Neary  <dneary@eircom.net>
 
+        * tools/gimp-remote.c: Got rid of some annoying 
+        warnings about stuff like exit not having a prototype.
+        Included string.h and stdlib.h.
+
+2001-05-10  David Neary  <dneary@eircom.net>
+
 	* app/tools/gimpbycolorselecttool.[ch]: Activate 
 	"Select by color" tool.
 

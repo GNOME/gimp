@@ -65,6 +65,8 @@
 
 #include <errno.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
