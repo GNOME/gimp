@@ -1,3 +1,9 @@
+2002-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c: added deserialization of
+	GValueArrays (untested). Added gimp_config_deserialize_value()
+	which is factored out from gimp_config_deserialize_property().
+
 2002-05-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c

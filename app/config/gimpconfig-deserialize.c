@@ -54,6 +54,10 @@ static GTokenType  gimp_config_deserialize_unknown     (GObject    *object,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_property    (GObject    *object,
                                                         GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_value       (GValue     *value,
+                                                        GObject    *object,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_fundamental (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
@@ -68,6 +72,10 @@ static GTokenType  gimp_config_deserialize_path        (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_color       (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_value_array (GValue     *value,
+                                                        GObject    *object,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
@@ -235,32 +243,9 @@ gimp_config_deserialize_property (GObject    *object,
     {
       /* nop */
     }
-  else if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
-    {
-      token = gimp_config_deserialize_enum (&value, prop_spec, scanner);
-    }
-  else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
-    {
-      token = gimp_config_deserialize_fundamental (&value, prop_spec, scanner);
-    }
-  else if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
-    {
-      token = gimp_config_deserialize_memsize (&value, prop_spec, scanner);
-    }
-  else if (prop_spec->value_type == GIMP_TYPE_PATH)
-    {
-      token = gimp_config_deserialize_path (&value,
-                                            object, prop_spec, scanner);
-    }
-  else if (prop_spec->value_type == GIMP_TYPE_COLOR)
-    {
-      token = gimp_config_deserialize_color (&value, prop_spec, scanner);
-    }
   else
     {
-      /*  This fallback will only work for value_types that  */
-      /*  can be transformed from a string value.            */
-      token = gimp_config_deserialize_any (&value, prop_spec, scanner);
+      token = gimp_config_deserialize_value (&value, object, prop_spec, scanner);
     }
 
   if (token == G_TOKEN_RIGHT_PAREN &&
@@ -281,6 +266,45 @@ gimp_config_deserialize_property (GObject    *object,
   g_value_unset (&value);
   
   return token;
+}
+
+static GTokenType
+gimp_config_deserialize_value (GValue     *value,
+                               GObject    *object,
+                               GParamSpec *prop_spec,
+                               GScanner   *scanner)
+{
+  if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
+    {
+      return gimp_config_deserialize_enum (value, prop_spec, scanner);
+    }
+  else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
+    {
+      return gimp_config_deserialize_fundamental (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
+    {
+      return gimp_config_deserialize_memsize (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_PATH)
+    {
+      return  gimp_config_deserialize_path (value,
+                                            object, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_COLOR)
+    {
+      return gimp_config_deserialize_color (value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == G_TYPE_VALUE_ARRAY)
+    {
+      return gimp_config_deserialize_value_array (value,
+                                                  object, prop_spec, scanner);
+    }
+
+  /*  This fallback will only work for value_types that
+   *  can be transformed from a string value.
+   */
+  return gimp_config_deserialize_any (value, prop_spec, scanner);
 }
 
 static GTokenType
@@ -578,6 +602,50 @@ gimp_config_deserialize_color (GValue     *value,
   g_scanner_set_scope (scanner, old_scope_id);
 
   return token;
+}
+
+static GTokenType
+gimp_config_deserialize_value_array (GValue     *value,
+                                     GObject    *object,
+                                     GParamSpec *prop_spec,
+                                     GScanner   *scanner)
+{
+  GParamSpecValueArray *array_spec;
+  GValueArray          *array;
+  GValue                array_value = { 0, };
+  gint                  n_values;
+  GTokenType            token;
+  gint                  i;
+
+  array_spec = G_PARAM_SPEC_VALUE_ARRAY (prop_spec);
+
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
+    return G_TOKEN_INT;
+
+  g_scanner_get_next_token (scanner);
+  n_values = scanner->value.v_int;
+
+  array = g_value_array_new (n_values);
+
+  for (i = 0; i < n_values; i++)
+    {
+      g_value_init (&array_value, array_spec->element_spec->value_type);
+
+      token = gimp_config_deserialize_value (&array_value,
+                                             object,
+                                             array_spec->element_spec,
+                                             scanner);
+
+      if (token == G_TOKEN_RIGHT_PAREN)
+        g_value_array_append (array, &array_value);
+
+      g_value_unset (&array_value);
+
+      if (token != G_TOKEN_RIGHT_PAREN)
+        return token;
+    }
+
+  return G_TOKEN_RIGHT_PAREN;
 }
 
 static GTokenType
