@@ -12,15 +12,15 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [1])
 m4_define([gimp_minor_version], [3])
-m4_define([gimp_micro_version], [26])
+m4_define([gimp_micro_version], [27])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [0])
-m4_define([gimp_binary_age], [0])
+m4_define([gimp_interface_age], [1])
+m4_define([gimp_binary_age], [1])
 
 # For overriding the version string. Comment out if not needed.
-m4_define([gimp_version], [2.0pre3])
+m4_define([gimp_version], [2.0pre4])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [1.3])
@@ -99,12 +99,23 @@ AC_SUBST(GIMP_USER_VERSION)
 AC_SUBST(GIMP_UNSTABLE)
 AC_SUBST(GIMP_FULL_NAME)
 
+
 dnl The symbol GIMP_UNSTABLE is defined above for substitution in
 dnl Makefiles and conditionally defined here as a preprocessor symbol.
 if test "x$GIMP_UNSTABLE" = "xyes"; then
   AC_DEFINE(GIMP_UNSTABLE,1,
             [Define to 1 if this is an unstable version of the GIMP])
 fi
+
+dnl Choose a desktop icon
+if test "x$GIMP_UNSTABLE" = "xyes"; then
+  GIMP_DESKTOP_ICON="gimp-devel-icon.png"
+else
+  GIMP_DESKTOP_ICON="gimp-icon.png"
+fi
+
+AC_SUBST(GIMP_DESKTOP_ICON)
+
 
 # libtool versioning
 #LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION

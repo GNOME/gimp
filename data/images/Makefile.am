@@ -5,6 +5,7 @@ imagedatadir = $(gimpdatadir)/images
 imagedata_DATA = \
 	gimp_logo.png		\
 	gimp_splash.png		\
+	wilber-devel-icon.png	\
 	wilber-icon.png		\
 	wilber-tips.png		\
 	wilber-wizard.png

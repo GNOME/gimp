@@ -1,5 +1,18 @@
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 1.3.27 (interface_age 1,
+	binary_age 1). Added GIMP_DESKTOP_ICON variable and set it
+	depending on GIMP_UNSTABLE.
+
+	* data/images/Makefile.am
+	* data/images/wilber-devel-icon.png
+	* data/images/wilber-icon.png: renamed the development icon and
+	added one for the stable version.
+
+	* data/misc/gimp.desktop.in.in: use @GIMP_DESKTOP_ICON@.
+
+2004-02-10  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_register): set
 	GIMP_CONTEXT_FONT_MASK. Fixes bug #133067.
 
