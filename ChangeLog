@@ -1,3 +1,9 @@
+2001-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimprc_cmds.c
+	* tools/pdbgen/pdb/gimprc.pdb: added a missing g_strdup() that caused
+	gimp_get_default_comment() to free the global default comment.
+
 2001-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tool_manager.[ch]: added

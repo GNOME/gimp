@@ -141,7 +141,7 @@ sub get_default_comment {
     %invoke = (
 	code => <<'CODE'
 {
-  comment = gimp->config->default_comment;
+  comment = g_strdup (gimp->config->default_comment);
   success = TRUE;
 }
 CODE

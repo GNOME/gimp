@@ -169,7 +169,7 @@ get_default_comment_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *comment;
 
-  comment = gimp->config->default_comment;
+  comment = g_strdup (gimp->config->default_comment);
   success = TRUE;
 
   return_args = procedural_db_return_args (&get_default_comment_proc, success);
