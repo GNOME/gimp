@@ -1,3 +1,11 @@
+2001-06-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmath/gimpmath.h: do not include math.h conditionally.
+	
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: ported fix for bug #50715 from
+	stable branch.
+
 2001-06-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gdyntext/ChangeLog

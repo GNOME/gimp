@@ -22,9 +22,7 @@
 #ifndef __GIMP_MATH_H__
 #define __GIMP_MATH_H__
 
-#ifdef HAVE_MATH_H
 #include <math.h>
-#endif
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>

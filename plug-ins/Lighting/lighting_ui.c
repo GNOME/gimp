@@ -1125,18 +1125,8 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *button;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("MapObject");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  if (! gimp_use_xshm ())
-    gdk_set_use_xshm (FALSE);
+  gimp_ui_init ("Lighting", FALSE);
 
   visinfo = gck_visualinfo_new ();
 
