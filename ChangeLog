@@ -1,3 +1,8 @@
+2004-10-17  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/displace.c: Added a preview and minor cleanups.
+	Can someone provide useful testcases for this plug-in?
+
 2004-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemtreeview.[ch]: moved "item_type" and
