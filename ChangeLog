@@ -4,9 +4,11 @@
 	Renamed gimp_drawable_visible() to gimp_drawable_get_visible().
 	Added a "visibility_changed" signal.
 
-	* app/gimpdrawablelistitem.[ch]
+	* app/gimplistitem.[ch]: new virtual function "set_viewable"
+	which allows subclasses to connect to the viewable's signals.
 
-	* app/gimplistitem.[ch]
+	* app/gimpdrawablelistitem.[ch]: added an eye button. Implement
+	"set_viewable" to connect to the "visibility_changed" signal.
 
 	* app/gimpchannel.[ch]: removed unused function
 	gimp_channel_toggle_visibility().
