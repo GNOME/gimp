@@ -151,7 +151,7 @@ static GtkWidget     *fill_type_notebook;
 static void       gfig_response             (GtkWidget *widget,
                                              gint       response_id,
                                              gpointer   data);
-static void       load_button_callback      (GtkWidget *widget,
+static void       gfig_load_menu_callback   (GtkWidget *widget,
                                              gpointer   data);
 static void       gfig_new_gc               (void);
 static void       gfig_save_menu_callback   (GtkWidget *widget,
@@ -552,7 +552,6 @@ gfig_dialog (void)
   return TRUE;
 }
 
-
 static void
 gfig_response (GtkWidget *widget,
                gint       response_id,
@@ -635,29 +634,66 @@ gfig_response (GtkWidget *widget,
     }
 }
 
-static void
-load_button_callback (GtkWidget *widget,
-                      gpointer   data)
+static gchar *
+gfig_get_user_writable_dir (void)
 {
-  GtkWidget *window;
+  if (gfig_path)
+    {
+      GList *list;
+      gchar *dir;
 
-  window =
-    gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
-                                 GTK_WINDOW (gtk_widget_get_toplevel (data)),
-                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+      list = gimp_path_parse (gfig_path, 16, FALSE, NULL);
+      dir = gimp_path_get_user_writable_dir (list);
+      gimp_path_free (list);
 
-                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                 GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+      return dir;
+    }
 
-                                 NULL);
+  return g_strdup (gimp_directory ());
+}
 
-  gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+static void
+gfig_load_menu_callback (GtkWidget *widget,
+                         gpointer   data)
+{
+  static GtkWidget *dialog = NULL;
 
-  g_signal_connect (window, "response",
-                    G_CALLBACK (load_file_chooser_response),
-                    window);
+  if (! dialog)
+    {
+      gchar *dir;
 
-  gtk_widget_show (window);
+      dialog =
+        gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
+                                     GTK_WINDOW (data),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (load_file_chooser_response),
+                        NULL);
+
+      dir = gfig_get_user_writable_dir ();
+      if (dir)
+        {
+          gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                               dir);
+          g_free (dir);
+        }
+
+      gtk_widget_show (dialog);
+    }
+  else
+    {
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 static void
@@ -679,12 +715,18 @@ gfig_new_gc (void)
                               GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 
-
 static void
 gfig_save_menu_callback (GtkWidget *widget,
                          gpointer   data)
 {
   create_save_file_chooser (gfig_context->current_obj, NULL, GTK_WIDGET (data));
+}
+
+static void
+gfig_close_menu_callback (GtkWidget *widget,
+                          gpointer   data)
+{
+  gtk_dialog_response (GTK_DIALOG (top_level_dlg), GTK_RESPONSE_OK);
 }
 
 /* Given a point x, y draw a circle */
@@ -757,48 +799,48 @@ create_save_file_chooser (GFigObj   *obj,
                           gchar     *tpath,
                           GtkWidget *parent)
 {
-  GtkWidget *window;
+  static GtkWidget *dialog = NULL;
 
-  window = gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
-                                        GTK_WINDOW (parent),
-                                        GTK_FILE_CHOOSER_ACTION_SAVE,
-
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  g_signal_connect (window, "response",
-                    G_CALLBACK (save_file_chooser_response),
-                    obj);
-
-  if (tpath)
+  if (!dialog)
     {
-      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
-    }
-  else if (gfig_path)
-    {
-      GList *list;
-      gchar *dir;
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      list = gimp_path_parse (gfig_path, 16, FALSE, NULL);
-      dir = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-      if (! dir)
-        dir = g_strdup (gimp_directory ());
+                                     NULL);
 
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
+      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
-      g_free (dir);
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (save_file_chooser_response),
+                        obj);
+
+      if (tpath)
+        {
+          gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), tpath);
+        }
+      else
+        {
+          gchar *dir = gfig_get_user_writable_dir ();
+
+          if (dir)
+            {
+              gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
+                                                   dir);
+              g_free (dir);
+            }
+        }
+
+      gtk_widget_show (dialog);
     }
   else
     {
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window),
-                                           g_get_tmp_dir ());
+      gtk_window_present (GTK_WINDOW (dialog));
     }
-
-  gtk_widget_show (window);
 }
 
 static GtkUIManager *
@@ -808,20 +850,24 @@ create_ui_manager (GtkWidget *window)
   {
     { "gfig-menubar", NULL, "GFig Menu" },
 
-    { "gfig-file-menu", NULL, "File" },
+    { "gfig-file-menu", NULL, "_File" },
 
     { "open", GTK_STOCK_OPEN,
       NULL, "<control>O", NULL,
-      G_CALLBACK (load_button_callback) },
+      G_CALLBACK (gfig_load_menu_callback) },
 
     { "save", GTK_STOCK_SAVE,
       NULL, "<control>S", NULL,
       G_CALLBACK (gfig_save_menu_callback) },
 
-    { "gfig-edit-menu", NULL, "Edit" },
+    { "close", GTK_STOCK_CLOSE,
+      NULL, "<control>C", NULL,
+      G_CALLBACK (gfig_close_menu_callback) },
+
+    { "gfig-edit-menu", NULL, "_Edit" },
 
     { "grid", GIMP_STOCK_GRID,
-      N_("Grid"), "<control>G", NULL,
+      N_("_Grid"), "<control>G", NULL,
       G_CALLBACK (adjust_grid_callback) },
 
     { "options", GTK_STOCK_PREFERENCES,
@@ -928,6 +974,7 @@ create_ui_manager (GtkWidget *window)
                                      "    <menu name=\"File\" action=\"gfig-file-menu\">"
                                      "      <menuitem action=\"open\" />"
                                      "      <menuitem action=\"save\" />"
+                                     "      <menuitem action=\"close\" />"
                                      "    </menu>"
                                      "    <menu name=\"Edit\" action=\"gfig-edit-menu\">"
                                      "      <menuitem action=\"grid\" />"
@@ -1154,8 +1201,7 @@ options_dialog_callback (GtkWidget *widget,
   GtkObject *scale_data;
 
   dialog = gimp_dialog_new (_("Options"), "gfig",
-                              NULL, 0,
-                              gimp_standard_help_func, HELP_ID,
+                              NULL, 0, NULL, NULL,
 
                               GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
 
@@ -1262,8 +1308,7 @@ options_dialog_callback (GtkWidget *widget,
                     G_CALLBACK (gfig_paint_callback),
                     NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Radius:"), 0.5, 0.5,
-                             scale, 1, FALSE);
+                             _("Radius:"), 0.0, 1.0, scale, 1, FALSE);
 
   gimp_dialog_run (GIMP_DIALOG (dialog));
 
@@ -1282,8 +1327,7 @@ adjust_grid_callback (GtkWidget *widget,
   GtkWidget *combo;
 
   dialog = gimp_dialog_new (_("Grid"), "gfig",
-                            NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
+                            NULL, 0, NULL, NULL,
 
                             GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
 
