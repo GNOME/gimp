@@ -1,3 +1,7 @@
+Thu Aug 13 22:20:06 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/transform_tool.[ch]: minor cosmetic changes
+
 Thu Aug 13 22:16:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	Applied the patch from Tor Lillqvist <tml@iki.fi>:

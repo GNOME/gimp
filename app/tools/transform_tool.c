@@ -90,7 +90,7 @@ static TransformOptions *
 create_transform_options (void)
 {
   TransformOptions *options;
-  GtkWidget *vbox, *hbox;
+  GtkWidget *main_box, *box, *vbox, *hbox;
   GtkWidget *label;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
@@ -110,8 +110,8 @@ create_transform_options (void)
   };
   char *direction_button_names[2] =
   {
-    "Corrective",
-    "Traditional"
+    "Traditional",
+    "Corrective"
   };
 
   /*  the new options structure  */
@@ -119,16 +119,24 @@ create_transform_options (void)
   options->type = ROTATE;
   options->smoothing = 1;
   options->clip = 1;
-  options->direction = TRANSFORM_CORRECTIVE;
+  options->direction = TRANSFORM_TRADITIONAL;
   options->grid_size = 32;
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
+  /* the main vbox */
+  main_box = gtk_vbox_new (FALSE, 1);
+ 
   /*  the main label  */
   label = gtk_label_new ("Transform Tool Options");
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  /*  the hbox holding the left and right vboxes*/
+  box = gtk_hbox_new (0, 2);
+  gtk_box_pack_start (GTK_BOX (main_box), box, FALSE, FALSE, 0);
+
+  /*  the left vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
 
   /*  the first radio frame and box, for transform type  */
   radio_frame = gtk_frame_new ("Transform");
@@ -153,6 +161,22 @@ create_transform_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
+  /*  the smoothing toggle button  */
+  smoothing_toggle = gtk_check_button_new_with_label ("Smoothing");
+  gtk_box_pack_start (GTK_BOX (vbox), smoothing_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (smoothing_toggle), "toggled",
+		      (GtkSignalFunc) transform_toggle_update,
+		      &options->smoothing);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (smoothing_toggle),
+                      options->smoothing);
+  gtk_widget_show (smoothing_toggle);
+
+  gtk_widget_show (vbox);
+
+  /*  the right vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
+
   /*  the second radio frame and box, for transform direction  */
   radio_frame = gtk_frame_new ("Tool paradigm");
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
@@ -176,26 +200,6 @@ create_transform_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
-  /*  the smoothing toggle button  */
-  smoothing_toggle = gtk_check_button_new_with_label ("Smoothing");
-  gtk_box_pack_start (GTK_BOX (vbox), smoothing_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (smoothing_toggle), "toggled",
-		      (GtkSignalFunc) transform_toggle_update,
-		      &options->smoothing);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (smoothing_toggle),
-                      options->smoothing);
-  gtk_widget_show (smoothing_toggle);
-
-  /*  the clip resulting image toggle button  */
-  clip_toggle = gtk_check_button_new_with_label ("Clip perspective");
-  gtk_box_pack_start (GTK_BOX (vbox), clip_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (clip_toggle), "toggled",
-		      (GtkSignalFunc) transform_toggle_update,
-		      &options->clip);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (clip_toggle),
-                      options->clip);
-  gtk_widget_show (clip_toggle);
-
   /*  the grid density entry  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_widget_show (hbox);
@@ -211,13 +215,26 @@ create_transform_options (void)
 		      grid_density);
   gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
   gtk_widget_show (grid_density);
+
+  /*  the clip resulting image toggle button  */
+  clip_toggle = gtk_check_button_new_with_label ("Clip perspective");
+  gtk_box_pack_start (GTK_BOX (vbox), clip_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (clip_toggle), "toggled",
+		      (GtkSignalFunc) transform_toggle_update,
+		      &options->clip);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (clip_toggle),
+                      options->clip);
+  gtk_widget_show (clip_toggle);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (box);
   
 
   /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (ROTATE, vbox);
-  tools_register_options (SCALE, vbox);
-  tools_register_options (SHEAR, vbox);
-  tools_register_options (PERSPECTIVE, vbox);
+  tools_register_options (ROTATE, main_box);
+  tools_register_options (SCALE, main_box);
+  tools_register_options (SHEAR, main_box);
+  tools_register_options (PERSPECTIVE, main_box);
 
   return options;
 }
@@ -295,7 +312,7 @@ int
 transform_tool_clip ()
 {
   if (!transform_options)
-    return 0;
+    return 1;
   else
     return transform_options->clip;
 }

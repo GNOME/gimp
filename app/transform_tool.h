@@ -27,7 +27,7 @@ int	      transform_tool_direction      (void);
 int	      transform_tool_grid_size	    (void);
 
 /*  transform directions  */
-#define TRANSFORM_CORRECTIVE 0
-#define TRANSFORM_TRADITIONAL 1
+#define TRANSFORM_TRADITIONAL 0
+#define TRANSFORM_CORRECTIVE 1
 
 #endif  /*  __TRANSFORM_TOOL_H__  */
