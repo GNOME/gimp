@@ -1,5 +1,7 @@
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c: merged fix for #97352 from stable branch.
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
 	merged fix for #79486 from stable branch.
 

@@ -11,6 +11,8 @@
  * khk@khk.net -- 13 May 2000
  * Added support for ICCPROFILE tiff tag. If this tag is present in a 
  * TIFF file, then a parasite is created and vice versa.
+ * peter@kirchgessner.net -- 29 Oct 2002
+ * Progress bar only when run interactive
  */
 
 /*
@@ -61,11 +63,11 @@ typedef struct
 
 typedef struct
 {
-  gint32     ID;
+  gint32        ID;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
-  guchar    *pixels;
-  guchar    *pixel;
+  guchar       *pixels;
+  guchar       *pixel;
 } channel_data;
 
 /* Declare some local functions.
@@ -168,7 +170,8 @@ static TiffSaveInterface tsint =
   FALSE               /*  run  */
 };
 
-static char *image_comment= NULL;
+static gchar       *image_comment = NULL;
+static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
 
 MAIN ()
 
@@ -240,7 +243,6 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam      values[2];
-  GimpRunMode           run_mode;
   GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
   GimpParasite         *parasite;
   gint32                image;
@@ -440,9 +442,11 @@ load_image (gchar *filename)
     gimp_quit ();
   }
 
-  name = g_strdup_printf( _("Loading %s:"), filename);
-  gimp_progress_init (name);
-  g_free (name);
+  if (run_mode == GIMP_RUN_INTERACTIVE) {
+    name = g_strdup_printf( _("Loading %s:"), filename);
+    gimp_progress_init (name);
+    g_free (name);
+  }
 
   TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
@@ -712,7 +716,8 @@ load_rgba (TIFF *tif, channel_data *channel)
     gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn),
                               channel[0].pixels + row * imageWidth * 4,
                               0, imageLength -row -1, imageWidth, 1);
-    gimp_progress_update ((double) row / (double) imageLength);
+    if (run_mode == GIMP_RUN_INTERACTIVE)
+      gimp_progress_update ((double) row / (double) imageLength);
   }
 }
 
@@ -744,8 +749,9 @@ load_tiles (TIFF *tif, channel_data *channel,
 
   for (y = 0; y < imageLength; y += tileLength) {
     for (x = 0; x < imageWidth; x += tileWidth) {
-      gimp_progress_update (progress + one_row *
-                            ( (double) x / (double) imageWidth));
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_progress_update (progress + one_row *
+                              ( (double) x / (double) imageWidth));
       TIFFReadTile(tif, buffer, x, y, 0, 0);
       cols= MIN(imageWidth - x, tileWidth);
       rows= MIN(imageLength - y, tileLength);
@@ -791,7 +797,8 @@ load_lines (TIFF *tif, channel_data *channel,
   buffer = g_malloc(lineSize * tile_height);
   if (planar == PLANARCONFIG_CONTIG) {
     for (y = 0; y < imageLength; y+= tile_height ) {
-      gimp_progress_update ( (double) y / (double) imageLength);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_progress_update ( (double) y / (double) imageLength);
       rows = MIN(tile_height, imageLength - y);
       for (i = 0; i < rows; ++i)
 	TIFFReadScanline(tif, buffer + i * lineSize, y + i, 0);
@@ -811,7 +818,8 @@ load_lines (TIFF *tif, channel_data *channel,
     TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
     for (s = 0; s < samples; ++s) {
       for (y = 0; y < imageLength; y+= tile_height ) {
-	gimp_progress_update ( (double) y / (double) imageLength);
+        if (run_mode == GIMP_RUN_INTERACTIVE)
+	  gimp_progress_update ( (double) y / (double) imageLength);
 	rows = MIN(tile_height, imageLength - y);
 	for (i = 0; i < rows; ++i)
 	  TIFFReadScanline(tif, buffer + i * lineSize, y + i, s);
@@ -1333,9 +1341,11 @@ save_image (gchar   *filename,
       return 0;
     }
 
-  name = g_strdup_printf( _("Saving %s:"), filename);
-  gimp_progress_init (name);
-  g_free (name);
+  if (run_mode == GIMP_RUN_INTERACTIVE) {
+    name = g_strdup_printf( _("Saving %s:"), filename);
+    gimp_progress_init (name);
+    g_free (name);
+  }
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
@@ -1548,7 +1558,8 @@ save_image (gchar   *filename,
 	  }
 	}
 
-      gimp_progress_update ((double) row / (double) rows);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_progress_update ((double) row / (double) rows);
     }
 
   TIFFFlushData (tif);
