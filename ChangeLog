@@ -1,3 +1,16 @@
+Sat Mar 13 20:22:00 EST 1999 Matt Wilson <msw@gimp.org>
+
+	(some earlier commits on this branch to make app/ build under GTK+
+	1.2 not logged here.)
+
+	* app/colormaps.[ch], app/gdisplay.[ch], app/image_render.c:
+	Changes to allow the GIMP to run without crashing.  We need to
+	figure out how to do the image rendering work without the color
+	cube we used to get from GtkPreview.  Now that GtkPreview uses
+	gdk_rgb, we don't have the color cube anymore.  We may want to
+	move the rendering functions to paint to gdk_rgb instead of
+	gdk_pixmap like the old code did.
+
 Sun Jan  3 14:39:01 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/ps/ps.c: update from author

@@ -23,8 +23,10 @@
 /*  This is a macro for arranging the red, green, and blue components into
  *  a value acceptable to the target X server
  */
+#if 0
 #define COLOR_COMPOSE(r,g,b) (lookup_red [r] | lookup_green [g] | lookup_blue [b])
-
+#endif
+#define COLOR_COMPOSE(r,g,b) (r | g | b)
 
 extern GdkVisual *g_visual;
 extern GdkColormap *g_cmap;
