@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpcontainer.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
@@ -60,6 +61,13 @@ static void  gimp_text_options_get_property (GObject     *object,
                                              guint        property_id,
                                              GValue      *value,
                                              GParamSpec  *pspec);
+
+static void  gimp_text_options_notify_font  (GimpContext *context,
+                                             GParamSpec  *pspec,
+                                             GimpText    *text);
+static void  gimp_text_notify_font          (GimpText    *text,
+                                             GParamSpec  *pspec,
+                                             GimpContext *context);
 
 static void  gimp_text_options_font_clicked (GtkWidget   *widget, 
                                              GimpContext *context);
@@ -122,6 +130,13 @@ gimp_text_options_init (GimpTextOptions *options)
 
   options->text   = GIMP_TEXT (text);
   options->buffer = gimp_prop_text_buffer_new (text, "text", -1);
+
+  g_signal_connect_object (options, "notify::font",
+                           G_CALLBACK (gimp_text_options_notify_font),
+                           text, 0);
+  g_signal_connect_object (text, "notify::font",
+                           G_CALLBACK (gimp_text_notify_font),
+                           options, 0);
 }
 
 static void
@@ -143,6 +158,55 @@ gimp_text_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_text_options_notify_font (GimpContext *context,
+                               GParamSpec  *pspec,
+                               GimpText    *text)
+{
+  GimpFont *font = gimp_context_get_font (context);
+
+  g_signal_handlers_block_by_func (text,
+                                   gimp_text_notify_font,
+                                   context);
+
+  g_object_set (text,
+                "font", gimp_object_get_name (GIMP_OBJECT (font)),
+                NULL);
+
+  g_signal_handlers_unblock_by_func (text,
+                                     gimp_text_notify_font,
+                                     context);  
+}
+                               
+static void
+gimp_text_notify_font (GimpText    *text,
+                       GParamSpec  *pspec,
+                       GimpContext *context)
+{
+  GimpObject *font;
+  gchar      *value;
+
+  g_object_get (text,
+                "font", &value,
+                NULL);
+
+  font = gimp_container_get_child_by_name (context->gimp->fonts, value);
+
+  g_free (value);
+
+  g_signal_handlers_block_by_func (context,
+                                   gimp_text_options_notify_font,
+                                   text);
+  
+  g_object_set (context,
+                "font", font,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (context,
+                                     gimp_text_options_notify_font,
+                                     text);
 }
 
 GtkWidget *

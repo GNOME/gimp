@@ -1,3 +1,9 @@
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c: connect the preview on the
+	context's font object with the font property of the text object
+	associated to the text tool options.
+
 2003-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.[ch]: added GimpFont DND.
