@@ -169,11 +169,21 @@ imap_ncsa_lex.c: imap_ncsa.l
 	$(LEX) $(LFLAGS) -Pncsa_ -i -t $< > $@
 
 imap_cern_parse.c: imap_cern.y
-	$(YACC) $(YFLAGS) -p cern_ $<
+	$(YACC) $(YFLAGS) -d -p cern_ $<
 	mv -f y.tab.c $@
 imap_csim_parse.c: imap_csim.y
-	$(YACC) $(YFLAGS) -p csim_ $<
+	$(YACC) $(YFLAGS) -d -p csim_ $<
 	mv -f y.tab.c $@
 imap_ncsa_parse.c: imap_ncsa.y
-	$(YACC) $(YFLAGS) -p ncsa_ $<
+	$(YACC) $(YFLAGS) -d -p ncsa_ $<
 	mv -f y.tab.c $@
+
+imap_cern_parse.h: imap_cern.y
+	$(YACC) $(YFLAGS) -d -p cern_ $<
+	mv -f y.tab.h $@
+imap_csim_parse.h: imap_csim.y
+	$(YACC) $(YFLAGS) -d -p csim_ $<
+	mv -f y.tab.h $@
+imap_ncsa_parse.h: imap_ncsa.y
+	$(YACC) $(YFLAGS) -d -p ncsa_ $<
+	mv -f y.tab.h $@

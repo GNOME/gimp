@@ -1,3 +1,12 @@
+2003-06-08  Maurits Rijk <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_csim_parse.h
+	* plug-ins/imagemap/imap_csim_lex.c: regenerated. Should now finally
+	fix #113445.
+	
+	* plug-ins/imagemap/Makefile.am: Added rules for regenerating 
+	csim_xxx_parse.h files.
+
 2003-06-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c
