@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.3.16\n"
-"POT-Creation-Date: 2003-06-27 03:00+0200\n"
-"PO-Revision-Date: 2003-06-25 20:36+0200\n"
+"Project-Id-Version: gimp 1.3.17\n"
+"POT-Creation-Date: 2003-07-04 17:24+0200\n"
+"PO-Revision-Date: 2003-07-04 17:24+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:20
 msgid ""
-"The layer named \"Background\" it special because it lacks transparency. "
+"The layer named \"Background\" is special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
 "stack. You may add transparency to it by right-clicking in the Layers dialog "
 "and selecting \"Add Alpha Channel\"."

@@ -1,6 +1,12 @@
+2003-07-04  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: fixed a typo (bug #116698).
+
+	* de.po: updated.
+
 2003-07-02  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
+	* es.po: Updated Spanish translation by
                  Francisco Javier F. Serrador <serrador@arrakis.es>.
 
 2003-06-30  Mohammad DAMT  <mdamt@bisnisweb.com>
