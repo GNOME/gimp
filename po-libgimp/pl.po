@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# Copyright (C) 2001-2004 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-02-13 14:50+0100\n"
+"POT-Creation-Date: 2004-03-21 22:25+0100\n"
+"PO-Revision-Date: 2004-03-19 23:17+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -414,14 +414,12 @@ msgid "GigaBytes"
 msgstr "Gigabajty"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Trójkąt"
+msgstr "Zapisywalny"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Wybór folderu"
+msgstr "Folder"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -530,9 +528,8 @@ msgstr ""
 "liczby."
 
 #: libgimpwidgets/gimpwidgets.c:1312
-#, fuzzy
 msgid "_Randomize"
-msgstr "Wylosuj"
+msgstr "Wy_losuj"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

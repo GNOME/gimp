@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# Copyright (C) 2001-2004 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -6,7 +6,7 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
 # translators@gnome.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# GNOME PL Team <translators@gnome.pl>, 1999-2003
+# GNOME PL Team <translators@gnome.pl>, 1999-2004
 # Paweł Dziekoński <pdziekonski@mml.ch.pwr.wroc.pl>, 1999-2000
 #
 # Terminy:
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
-"PO-Revision-Date: 2004-02-13 14:40+0100\n"
+"POT-Creation-Date: 2004-03-21 22:22+0100\n"
+"PO-Revision-Date: 2004-03-20 11:51+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,9 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"Nie można otworzyć testowego pliku wymiany. Aby zapobiec utracie danych "
+"zweryfikuj położenie oraz uprawnienia katalogu zdefiniowanego w "
+"preferencjach programu (aktualnie jest to \"%s\")."
 
 # c-format
 #: app/app_procs.c:275
@@ -489,6 +492,8 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
+"Określa odległość w pikselach, przy której uaktywniają się prowadnice i "
+"siatka."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -515,15 +520,17 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
+msgstr "Powoduje użycie wybranego pędzla w odniesieniu do wszystkich narzędzi."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
+"Powoduje użycie wybranego gradientu w odniesieniu do wszystkich narzędzi."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
+"Powoduje użycie wybranego desenia w odniesieniu do wszystkich narzędzi."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -889,10 +896,8 @@ msgstr ""
 "jaką skonfigurowano jako minimalną."
 
 #: app/config/gimprc-blurbs.h:378
-#, fuzzy
 msgid "Sets the size of the previews in the Undo History."
-msgstr ""
-"Ustawia rozmiar szachownicy używanej dla zobrazowania przezroczystości."
+msgstr "Ustawia rozmiar podglądów w historii operacji."
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
@@ -1075,11 +1080,11 @@ msgstr "Rozlany (zmarszczony)"
 
 #: app/core/core-enums.c:220
 msgid "Spiral (clockwise)"
-msgstr "Spiralny (zgodnie ze wskazówkami zegara)"
+msgstr "Spiralny (prawoskrętnie)"
 
 #: app/core/core-enums.c:221
 msgid "Spiral (anticlockwise)"
-msgstr "Spiralny (przeciwnie do wskazówek zegara)"
+msgstr "Spiralny (lewoskrętnie)"
 
 #: app/core/core-enums.c:239
 msgid "Intersections (dots)"
@@ -1416,14 +1421,12 @@ msgid "Change Indexed Palette"
 msgstr "Zmiana palety indeksowanej"
 
 #: app/core/core-enums.c:621
-#, fuzzy
 msgid "Drawable"
-msgstr "Przesunięcie obszaru rysowania"
+msgstr "Obszar rysowania"
 
 #: app/core/core-enums.c:622
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "Procedury obsługi obszarów rysowania"
+msgstr "Zmiana obszaru rysowania"
 
 #: app/core/core-enums.c:624
 msgid "Rename Item"
@@ -1542,13 +1545,11 @@ msgstr "Wypełnienie deseniem"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr ""
-"Kolor pierwszoplanowy na kolor tła (HSV przeciwnie do wskazówek zegara)"
+msgstr "Kolor pierwszoplanowy na kolor tła (HSV lewoskrętnie)"
 
 #: app/core/gimp-gradients.c:80
 msgid "FG to BG (HSV clockwise hue)"
-msgstr ""
-"Kolor pierwszoplanowy na kolor tła (odcień HSV zgodnie ze wskazówkami zegara)"
+msgstr "Kolor pierwszoplanowy na kolor tła (odcień HSV prawoskrętnie)"
 
 #. register all internal procedures
 #: app/core/gimp.c:664
@@ -2178,7 +2179,7 @@ msgstr "Folder"
 
 #: app/core/gimpimagefile.c:463
 msgid "Special File"
-msgstr ""
+msgstr "Plik specjalny"
 
 #: app/core/gimpimagefile.c:490
 msgid "No preview available"
@@ -2587,20 +2588,20 @@ msgstr "Przełącza szybką maskę"
 #: app/display/gimpdisplayshell.c:1403
 #, c-format
 msgid "Close %s?"
-msgstr "Czy zamknąć %s?"
+msgstr "Czy zamknąć plik z obrazem %s?"
 
 #: app/display/gimpdisplayshell.c:1413
 msgid "_Discard changes"
-msgstr ""
+msgstr "_Porzuć zmiany"
 
 #: app/display/gimpdisplayshell.c:1453
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'."
-msgstr "Dokonano zmian w pliku \"%s\". Czy pomimo tego zamknąć?"
+msgstr "Dokonano zmian w pliku z obrazem \"%s\"."
 
 #: app/display/gimpdisplayshell.c:1467
 msgid "Unsaved changes will be lost."
-msgstr ""
+msgstr "Niezapisane zmiany zostaną utracone."
 
 #: app/display/gimpdisplayshell-dnd.c:87
 msgid "Drop New Layer"
@@ -2615,9 +2616,8 @@ msgid "Color Display Filters"
 msgstr "Filtry wyświetlania kolorów"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:76
-#, fuzzy
 msgid "Configure Color Display Filters"
-msgstr "Filtry wyświetlania kolorów"
+msgstr "Konfiguracja filtrów wyświetlania kolorów"
 
 #: app/display/gimpdisplayshell-layer-select.c:123
 msgid "Layer Select"
@@ -2811,9 +2811,8 @@ msgid "%s Channel Copy"
 msgstr "Kopia kanału %s"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Kopia pustego kanału"
+msgstr "Pusty kanał"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -2961,7 +2960,7 @@ msgstr ""
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "Nie można dokonać konwersji na paletę z więcej niż 256 kolorami."
 
 #: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
@@ -3328,18 +3327,16 @@ msgid "There is no active layer or channel to stroke to."
 msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować."
 
 #: app/gui/edit-commands.c:316
-#, fuzzy
 msgid "There is no active layer or channel to cut from."
-msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować."
+msgstr "Brak aktywnej warstwy lub kanału, z którego można wyciąc."
 
 #: app/gui/edit-commands.c:327 app/gui/edit-commands.c:363
 msgid "(Unnamed Buffer)"
 msgstr "(Bufor bez nazwy)"
 
 #: app/gui/edit-commands.c:352
-#, fuzzy
 msgid "There is no active layer or channel to copy from."
-msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować."
+msgstr "Brak aktywnej warstwy lub kanału, z którego można skopiować."
 
 #: app/gui/error-console-menu.c:39
 msgid "/_Clear Errors"
@@ -3685,11 +3682,11 @@ msgstr "/typ_kolorowania/_RGB"
 
 #: app/gui/gradient-editor-menu.c:203
 msgid "/coloringtype/HSV (_counter-clockwise hue)"
-msgstr "/typ_kolorowania/HSV (_odcień przeciwnie do wskazówek zegara)"
+msgstr "/typ_kolorowania/HSV (_odcień lewoskrętnie)"
 
 #: app/gui/gradient-editor-menu.c:208
 msgid "/coloringtype/HSV (clockwise _hue)"
-msgstr "/typ_kolorowania/HSV (o_dcień zgodnie ze wskazówkami zegara)"
+msgstr "/typ_kolorowania/HSV (o_dcień prawoskrętnie)"
 
 #: app/gui/gradient-editor-menu.c:213
 msgid "/coloringtype/(Varies)"
@@ -4290,11 +4287,11 @@ msgstr "/Obraz/Przekształcenie/Odbij pio_nowo"
 #. please use the degree symbol in the translation
 #: app/gui/image-menu.c:556
 msgid "/Image/Transform/Rotate 90 degrees _CW"
-msgstr "/Obraz/Przekształcenie/Obróć o _90 stopni zgodnie z zegarem"
+msgstr "/Obraz/Przekształcenie/Obróć o _90 stopni prawoskrętnie"
 
 #: app/gui/image-menu.c:561
 msgid "/Image/Transform/Rotate 90 degrees CC_W"
-msgstr "/Obraz/Przekształcenie/Obróć o 9_0 stopni przeciwnie do zegara"
+msgstr "/Obraz/Przekształcenie/Obróć o 9_0 stopni lewoskrętnie"
 
 #: app/gui/image-menu.c:566
 msgid "/Image/Transform/Rotate _180 degrees"
@@ -4525,11 +4522,11 @@ msgstr "/Warstwa/Przekształcenie/Odbij pio_nowo"
 
 #: app/gui/image-menu.c:866
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
-msgstr "/Warstwa/Przekształcenie/Obróć o _90 stopni zgodnie z zegarem"
+msgstr "/Warstwa/Przekształcenie/Obróć o _90 stopni prawoskrętnie"
 
 #: app/gui/image-menu.c:871
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
-msgstr "/Warstwa/Przekształcenie/Obróć o 9_0 stopni przeciwnie do zegara"
+msgstr "/Warstwa/Przekształcenie/Obróć o 9_0 stopni lewoskrętnie"
 
 #: app/gui/image-menu.c:876
 msgid "/Layer/Transform/Rotate _180 degrees"
@@ -4974,9 +4971,8 @@ msgid "Layer Mask to Selection"
 msgstr "Maska warstwy na zaznaczenie"
 
 #: app/gui/layers-commands.c:723
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Pusta warstwa tekstowa"
+msgstr "Pusta warstwa"
 
 #: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
@@ -5019,9 +5015,8 @@ msgid "Layer _Name"
 msgstr "_Nazwa warstwy:"
 
 #: app/gui/layers-commands.c:1009
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "Utwórz z tekstu ścieżkę"
+msgstr "Ustaw nazwę w oparciu _tekst"
 
 #: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
@@ -5610,9 +5605,8 @@ msgid "_Navigation Preview Size:"
 msgstr "Rozmiar podglądu _nawigacyjnego:"
 
 #: app/gui/preferences-dialog.c:1218
-#, fuzzy
 msgid "_Undo History Preview Size:"
-msgstr "Rozmiar podglądu _nawigacyjnego:"
+msgstr "Rozmiar podglądu w _historii operacji:"
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1222
@@ -5643,7 +5637,7 @@ msgstr "Skróty klawiszowe"
 
 #: app/gui/preferences-dialog.c:1245
 msgid "Use Dynamic _Keyboard Shortcuts"
-msgstr "Dynamiczne skróty _klawiszowe"
+msgstr "Dynamiczne skróty k_lawiszowe"
 
 #. Themes
 #: app/gui/preferences-dialog.c:1249
@@ -5698,12 +5692,11 @@ msgstr "Używana przeglądarka WWW:"
 #. Snapping Distance
 #: app/gui/preferences-dialog.c:1396
 msgid "Guide and Grid Snapping"
-msgstr ""
+msgstr "Przyciąganie do prowadnic i siatki"
 
 #: app/gui/preferences-dialog.c:1401
-#, fuzzy
 msgid "_Snap Distance:"
-msgstr "Odległość:"
+msgstr "_Zasięg przyciągania:"
 
 #. Contiguous Regions
 #: app/gui/preferences-dialog.c:1405
@@ -5726,17 +5719,15 @@ msgstr "Domyślna _interpolacja:"
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1422
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "Opcje rysowania współdzielone przez narzędzia"
 
 #: app/gui/preferences-dialog.c:1426
-#, fuzzy
 msgid "_Brush"
-msgstr "Pędzel:"
+msgstr "_Pędzel"
 
 #: app/gui/preferences-dialog.c:1429
-#, fuzzy
 msgid "_Pattern"
-msgstr "Deseń"
+msgstr "_Deseń"
 
 #. Input Devices
 #: app/gui/preferences-dialog.c:1441 app/gui/preferences-dialog.c:1444
@@ -6456,44 +6447,36 @@ msgid "Enter a new name for the saved options"
 msgstr "Wprowadź nową nazwę zapisanych opcji"
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "Zapisane opcje"
+msgstr "/_Zapisz opcje"
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "/_Zapisz opcje/_Nowa pozycja..."
+msgstr "/Zapisz opcje/_Nowa pozycja..."
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "/_Odczytaj opcje/(Brak)"
+msgstr "/_Odczytaj opcje"
 
 #: app/gui/tool-options-menu.c:73
-#, fuzzy
 msgid "/Restore Options from/(None)"
-msgstr "/_Odczytaj opcje/(Brak)"
+msgstr "/Odczytaj opcje/(Brak)"
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "/Zmień _nazwę zapisanych opcji/(Brak)"
+msgstr "/Zmień _nazwę zapisanych opcji"
 
 #: app/gui/tool-options-menu.c:81
-#, fuzzy
 msgid "/Rename Saved Options/(None)"
-msgstr "/Zmień _nazwę zapisanych opcji/(Brak)"
+msgstr "/Zmień nazwę zapisanych opcji/(Brak)"
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "/_Usuń zapisane opcje/(Brak)"
+msgstr "/_Usuń zapisane opcje"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Delete Saved Options/(None)"
-msgstr "/_Usuń zapisane opcje/(Brak)"
+msgstr "/Usuń zapisane opcje/(Brak)"
 
 #: app/gui/tool-options-menu.c:98
 msgid "/R_eset Tool Options"
@@ -7085,9 +7068,8 @@ msgid "Calibrate"
 msgstr "Kalibruj"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "Import ścieżek"
+msgstr "Pusta ścieżka"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -8224,7 +8206,7 @@ msgstr "Modyfikacja wybranego koloru"
 msgid "R_eset Color"
 msgstr "Zr_esetuj kolor"
 
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 msgid "_Preview"
 msgstr "_Podgląd"
 
@@ -8643,9 +8625,10 @@ msgstr "Wyświetlanie interaktywnej granicy"
 msgid "Select Transparent Areas"
 msgstr "Zaznaczanie przezroczystych obszarów"
 
+# cyba: wyrzuciłem "... zaznaczenia" na końcu - wynika z kontekstu, a napis nie powinien być za długi
 #: app/tools/gimpselectionoptions.c:529
 msgid "Auto Shrink Selection"
-msgstr "Automatyczne zmniejszenie zaznaczenia"
+msgstr "Automatyczne zmniejszanie"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
@@ -8745,7 +8728,7 @@ msgid ""
 "Spacing:"
 msgstr ""
 "Odstępy\n"
-"międzywierszowe:"
+"wierszy:"
 
 #: app/tools/gimptextoptions.c:491
 msgid "Create Path from Text"
@@ -8801,9 +8784,8 @@ msgid "Transform Direction"
 msgstr "Kierunek przekształcenia"
 
 #: app/tools/gimptransformoptions.c:353
-#, fuzzy
 msgid "Supersampling"
-msgstr "Nadpróbkowanie adaptywne"
+msgstr "Nadpróbkowanie"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:358
@@ -9055,9 +9037,9 @@ msgid "No paths found in the buffer"
 msgstr "Nie odnaleziono ścieżek w buforze"
 
 #: app/vectors/gimpvectors-import.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Nie można odczytać ścieżki z pliku \"%s\"."
+msgstr "Nie można zaimportować ścieżek z pliku \"%s\": %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9088,11 +9070,13 @@ msgid "Delete"
 msgstr "Usuń"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "Kolor nowego kanału"
+msgstr ""
+"Nowy kanał\n"
+"%s Okno nowego kanału"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9660,6 +9644,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"Nowa warstwa\n"
+"%s  Okno nowej warstwy"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9814,7 +9800,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Niepoprawny napis UTF-8 w pliku \"%s\"."
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -9823,11 +9809,11 @@ msgstr ""
 "Kliknięcie odświeża podgląd\n"
 "%s  Kliknięcie wymusza odświeżenie podglądu, nawet, jeśli jest aktualny."
 
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 msgid "No Selection"
 msgstr "Brak zaznaczenia"
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniaturka %d z %d"
@@ -9925,6 +9911,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"Nowa ścieżka\n"
+"%s  Okno nowej ścieżki"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -10181,6 +10169,18 @@ msgstr "Błąd XCF: napotkano nieobsługiwaną wersję pliku %d"
 msgid "Create and edit images or photographs"
 msgstr "Program do tworzenia oraz obróbki obrazów i fotografii"
 
+#~ msgid "Created with The GIMP"
+#~ msgstr "Utworzone przy wykorzystaniu programu GIMP"
+
+#~ msgid "Paste Transform"
+#~ msgstr "Wklejenie przekształcenia"
+
+#~ msgid "Empty Layer Copy"
+#~ msgstr "Kopia pustej warstwy"
+
+#~ msgid "Empty Vectors Copy"
+#~ msgstr "Kopia pustego zestawu wektorów"
+
 #~ msgid ""
 #~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 #~ msgstr ""
@@ -10194,15 +10194,6 @@ msgstr "Program do tworzenia oraz obróbki obrazów i fotografii"
 
 #~ msgid "Channel Mod"
 #~ msgstr "Zmiana kanału"
-
-#~ msgid "Paste Transform"
-#~ msgstr "Wklejenie przekształcenia"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "Kopia pustej warstwy"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "Kopia pustego zestawu wektorów"
 
 #~ msgid "Modify letter spacing"
 #~ msgstr "Zmienia odstęp międzyznakowy"

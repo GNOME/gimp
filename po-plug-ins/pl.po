@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# Copyright (C) 2001-2004 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp14-std-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-02-13 14:44+0100\n"
+"POT-Creation-Date: 2004-03-21 22:27+0100\n"
+"PO-Revision-Date: 2004-03-20 11:25+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -9350,7 +9350,6 @@ msgid "How much to blur the drop shadow"
 msgstr "Określa stopień rozmycia rzucanego cienia"
 
 #: plug-ins/gimpressionist/general.c:210
-#, fuzzy
 msgid "Deviation threshold:"
 msgstr "Próg odchylenia:"
 
@@ -9841,7 +9840,7 @@ msgstr "Nie zainstalowano plików pomocy programu GIMP."
 
 #: plug-ins/help/domain.c:163
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Przy dostępie do plików pomocy programu GIMP wystąpił błąd."
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
@@ -9853,32 +9852,32 @@ msgid "Help ID '%s' unknown"
 msgstr "Nieznany identyfikator pomocy: \"%s\""
 
 #: plug-ins/help/domain.c:414
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"Błąd przy otwieraniu pliku \"%s\":\n"
+"Błąd składniowy w pliku \"%s\":\n"
 "%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "GIMP - Przeglądarka pomocy"
 
-#: plug-ins/helpbrowser/dialog.c:463 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<BezNazwy>"
 
-#: plug-ins/helpbrowser/dialog.c:531
+#: plug-ins/helpbrowser/dialog.c:533
 msgid "Document Not Found"
 msgstr "Nie odnaleziono dokumentu"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Could not locate help document"
 msgstr "Nie udało się odnaleźć dokumentu pomocy"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9993,49 +9992,40 @@ msgid "Relative Probability:"
 msgstr "Względne prawdopodobieństwo:"
 
 #: plug-ins/ifscompose/ifscompose.c:1191
-#, fuzzy
 msgid "/Move"
-msgstr "Przesuwanie"
+msgstr "/Przesuwanie"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "Obrót i skalowanie"
+msgstr "/Obrót i skalowanie"
 
 #: plug-ins/ifscompose/ifscompose.c:1195
-#, fuzzy
 msgid "/Stretch"
-msgstr "Rozciągnięcie"
+msgstr "/Rozciągnięcie"
 
 #: plug-ins/ifscompose/ifscompose.c:1198
-#, fuzzy
 msgid "/New"
-msgstr "Nowy"
+msgstr "/Nowy"
 
 #: plug-ins/ifscompose/ifscompose.c:1200
-#, fuzzy
 msgid "/Delete"
-msgstr "Usuń"
+msgstr "/Usuń"
 
 #: plug-ins/ifscompose/ifscompose.c:1202
-#, fuzzy
 msgid "/Undo"
-msgstr "Cofnij"
+msgstr "/Cofnij"
 
 #: plug-ins/ifscompose/ifscompose.c:1204
-#, fuzzy
 msgid "/Redo"
-msgstr "Ponów"
+msgstr "/Ponów"
 
 #: plug-ins/ifscompose/ifscompose.c:1206
-#, fuzzy
 msgid "/Select All"
-msgstr "Zaznacz wszystko"
+msgstr "/Zaznacz wszystko"
 
 #: plug-ins/ifscompose/ifscompose.c:1208
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "Przelicz ś_rodek"
+msgstr "/Przelicz środek"
 
 #: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
@@ -10596,9 +10586,8 @@ msgid "About ImageMap..."
 msgstr "Informacje o wtyczce mapy obrazu..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "Usuń przebłysk"
+msgstr "Usuń obszar"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -11810,6 +11799,9 @@ msgstr "Błąd: Nie można odczytać pliku \"%s\" z właściwościami XJT."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Błąd: Plik \"%s\" z właściwościami XJT jest pusty."
 
+#~ msgid "The requested help files are not installed."
+#~ msgstr "Nie zainstalowano odpowiednich plików pomocy."
+
 #~ msgid ""
 #~ "Failed to open help files:\n"
 #~ "%s"
@@ -11821,15 +11813,12 @@ msgstr "Błąd: Plik \"%s\" z właściwościami XJT jest pusty."
 #~ "Parse error in help domain:\n"
 #~ "%s\n"
 #~ "\n"
-#~ "(Added entires before error anyway)"
+#~ "(entries appearing before the error have been added anyway)"
 #~ msgstr ""
 #~ "Błąd składniowy w dziedzinie pomocy:\n"
 #~ "%s\n"
 #~ "\n"
-#~ "(Pomimo błędu dodano wpisy występujące wcześniej)"
-
-#~ msgid "The requested help files are not installed."
-#~ msgstr "Nie zainstalowano odpowiednich plików pomocy."
+#~ "(Pomimo błędu dodano pozycje występujące wcześniej)"
 
 #~ msgid "Only an indexed-alpha image can be saved in CEL format"
 #~ msgstr "Tylko indeksowany obraz alfa można zapisać jako CEL"
