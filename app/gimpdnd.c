@@ -948,7 +948,8 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
 
-  tool_icon = gtk_pixmap_new (tool_get_pixmap (tool_type), NULL);
+  tool_icon = gtk_pixmap_new (tool_get_pixmap (tool_type),
+			      tool_get_mask (tool_type));
 
   return tool_icon;
 }

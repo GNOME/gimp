@@ -324,12 +324,14 @@ create_tool_pixmaps (GtkWidget *parent)
   for (i = 0; i < num_tools; i++)
     {
       if (tool_info[i].icon_data)
-	tool_info[i].icon_pixmap = create_pixmap (parent->window, NULL,
+	tool_info[i].icon_pixmap = create_pixmap (parent->window, 
+						  &tool_info[i].icon_mask,
 						  tool_info[i].icon_data,
 						  22, 22);
       
       else
-	tool_info[i].icon_pixmap = create_pixmap (parent->window, NULL,
+	tool_info[i].icon_pixmap = create_pixmap (parent->window,  
+						  &tool_info[i].icon_mask,
 						  dialog_bits,
 						  22, 22);
     }
@@ -372,7 +374,8 @@ create_tools (GtkWidget *parent)
 	  gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
 	  gtk_container_add (GTK_CONTAINER (button), alignment);
 
-	  pixmap = gtk_pixmap_new (tool_get_pixmap ((ToolType)j), NULL);
+	  pixmap = gtk_pixmap_new (tool_get_pixmap ((ToolType)j), 
+				   tool_get_mask ((ToolType)j));
 	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
 
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",

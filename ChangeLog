@@ -1,3 +1,11 @@
+Sun Feb 20 03:46:12 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c
+	* app/gimpdnd.c
+	* app/info_window.c
+	* app/interface.c
+	* app/tools.[ch]: do not ignore the mask of the tool icons
+
 Sat Feb 19 20:34:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/pnm.c: Load files in the pbm ascii format even

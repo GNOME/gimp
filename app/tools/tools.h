@@ -95,6 +95,7 @@ struct _ToolInfo
 
   gchar    **icon_data;
   GdkPixmap *icon_pixmap;
+  GdkBitmap *icon_mask;
 
   gchar     *tool_desc;
   gchar     *private_tip;
@@ -136,8 +137,9 @@ void     tool_options_dialog_free  (void);
 
 gchar  * tool_active_PDB_string    (void);
 
-/* don't unref this pixmap, it is static! */
+/* don't unref this pixmaps, they are static! */
 GdkPixmap * tool_get_pixmap        (ToolType     tool_type);
+GdkBitmap * tool_get_mask          (ToolType     tool_type);
 
 #endif  /*  __TOOLS_H__  */
 

@@ -814,7 +814,8 @@ device_status_create (void)
 
 	  deviceD->eventboxes[i] = gtk_event_box_new();
 
-	  deviceD->tools[i] = gtk_pixmap_new (tool_get_pixmap (RECT_SELECT), NULL);
+	  deviceD->tools[i] = gtk_pixmap_new (tool_get_pixmap (RECT_SELECT), 
+					      tool_get_mask (RECT_SELECT));
 	  
 	  gtk_drag_source_set (deviceD->eventboxes[i],
 			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
@@ -1020,7 +1021,7 @@ device_status_update (guint32 deviceid)
 
       gtk_pixmap_set (GTK_PIXMAP (deviceD->tools[i]), 
 		      tool_get_pixmap (gimp_context_get_tool (device_info->context)),
-		      NULL);
+		      tool_get_mask (gimp_context_get_tool (device_info->context)));
 
       gtk_widget_draw (deviceD->tools[i], NULL);
       gtk_widget_show (deviceD->tools[i]);
