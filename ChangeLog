@@ -1,3 +1,11 @@
+2001-06-19  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c (file_open): do not use the global variable 
+	load_procs used by the file open dialog to store the user setting for 
+	the filetype. This setting is now only used if files are opened thru 
+	the file open dialog and not when opened using DND or other methods. 
+	Fixes bug #51722.
+
 2001-06-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c: specify encoding for char

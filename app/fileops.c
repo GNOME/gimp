@@ -109,9 +109,14 @@ static void    file_revert_confirm_callback (GtkWidget     *widget,
 
 static GimpImage * file_open_image          (gchar         *filename,
 					     gchar         *raw_filename,
+                                             PlugInProcDef *file_proc,
 					     gchar         *open_mode,
 					     RunModeType    run_mode,
 					     gint          *status);
+
+static gint    file_open_with_proc          (gchar         *filename,
+                                             gchar         *raw_filename,
+                                             PlugInProcDef *file_proc);
 
 static gint    file_save                    (GimpImage     *gimage,
 					     gchar         *filename,
@@ -710,13 +715,13 @@ file_save_type_callback (GtkWidget *widget,
 }
 
 static GimpImage *
-file_open_image (gchar       *filename,
-		 gchar       *raw_filename,
-		 gchar       *open_mode,
-		 RunModeType  run_mode,
-		 gint        *status)
+file_open_image (gchar          *filename,
+		 gchar          *raw_filename,
+                 PlugInProcDef  *file_proc,
+		 gchar          *open_mode,
+		 RunModeType     run_mode, 
+		 gint           *status)
 {
-  PlugInProcDef *file_proc;
   ProcRecord *proc;
   Argument   *args;
   Argument   *return_vals;
@@ -725,8 +730,6 @@ file_open_image (gchar       *filename,
   struct stat statbuf;
 
   *status = PDB_CANCEL;  /* inhibits error messages by caller */
-
-  file_proc = load_file_proc;
 
   if (!file_proc)
     file_proc = file_proc_find (load_procs, filename);
@@ -816,9 +819,10 @@ file_open_image (gchar       *filename,
   return NULL;
 }
 
-gint
-file_open (gchar *filename,
-	   gchar *raw_filename)
+static gint
+file_open_with_proc (gchar         *filename,
+                     gchar         *raw_filename,
+                     PlugInProcDef *file_proc)
 {
   GimpImage *gimage;
   GDisplay  *gdisplay;
@@ -827,6 +831,7 @@ file_open (gchar *filename,
 
   if ((gimage = file_open_image (filename,
 				 raw_filename,
+                                 file_proc,
 				 _("Open"),
 				 RUN_INTERACTIVE,
 				 &status)) != NULL)
@@ -851,6 +856,13 @@ file_open (gchar *filename,
     }
 
   return status;
+}
+
+gint
+file_open (gchar *filename,
+           gchar *raw_filename)
+{
+  return file_open_with_proc (filename, raw_filename, NULL);
 }
 
 TempBuf *
@@ -1540,7 +1552,8 @@ file_open_genbutton_callback (GtkWidget *widget,
 
 	    gimage_to_be_thumbed = file_open_image (full_filename,
 						    list->data,
-						    NULL,
+                                                    NULL,
+                                                    _("Open"),
 						    RUN_NONINTERACTIVE,
 						    &dummy);
 
@@ -1635,7 +1648,10 @@ file_open_ok_callback (GtkWidget *widget,
   if (err) /* e.g. http://server/filename.jpg */
     full_filename = raw_filename;
 
-  status = file_open (full_filename, raw_filename);
+  /* use the load procedure set by the dialog */
+  status = file_open_with_proc (full_filename,
+                                raw_filename,
+                                load_file_proc);
 
   if (status == PDB_SUCCESS)
     {
@@ -1677,7 +1693,10 @@ file_open_ok_callback (GtkWidget *widget,
             if (! (err == 0 && (buf.st_mode & S_IFDIR)))
               { /* Is not directory. */
 
-                status = file_open (full_filename, (char *) list->data);
+                /* use the load procedure set by the dialog */
+                status = file_open_with_proc (full_filename,
+                                              raw_filename,
+                                              load_file_proc);
 
                 if (status == PDB_SUCCESS)
                   {
@@ -1953,8 +1972,8 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       filename = gimage_filename (old_gimage);
 
-      new_gimage = file_open_image (filename, filename, _("Revert"),
-				    RUN_INTERACTIVE, &status);
+      new_gimage = file_open_image (filename, filename, NULL,
+                                    _("Revert"), RUN_INTERACTIVE, &status);
 
       if (new_gimage != NULL)
 	{
