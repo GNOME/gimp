@@ -22,6 +22,7 @@ helpdata_DATA = \
         hrz.html			\
         index.html			\
         jpeg.html			\
+	mblur.html			\
 	miff.html			\
         oilify.html			\
         pat.html			\

@@ -1,3 +1,10 @@
+2001-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* C/bug_submission.html
+	* C/filters/mblur.html: new files.
+
+	* C/*: updated.
+
 2001-01-01  Michael Natterer  <mitch@gimp.org>
 
 	* C/[some files]: removed the display filters help and the links

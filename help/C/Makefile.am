@@ -5,6 +5,7 @@ SUBDIRS = dialogs tools layers channels paths toolbox image images open save fil
 helpdatadir = $(gimpdatadir)/help/C
 
 helpdata_DATA = \
+	bug_submission.html	\
 	command_line.html	\
         contents.html		\
 	file_formats.html	\

@@ -1,0 +1,323 @@
+<HTML
+><HEAD
+><TITLE
+> Bug Submission </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="contents.html"><LINK
+REL="UP"
+TITLE="Introduction"
+HREF="introduction.html"><LINK
+REL="PREVIOUS"
+TITLE="What Can GIMP Do For Me?"
+HREF="why_gimp.html"><LINK
+REL="NEXT"
+TITLE="Using GIMP"
+HREF="using_gimp.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="why_gimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 1. Introduction</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="using_gimp.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="BUG-SUBMISSION"
+>Bug Submission</A
+></H1
+><A
+NAME="AEN148"
+></A
+><P
+>    Bug submission is an important aspect of many OpenSource projects,
+    and submitting bugs correctly increases the chances of the core
+    development team finding, and fixing any problems that may arise.
+    Of important note is the realization that it may not be the
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> causing your particular problem,
+    thus, one can understand the need for clear, concise, and acurate
+    submissions to the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> developers.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BUGSUBMISSIONHOW"
+>How to collect the information</A
+></H2
+><P
+>      As outlined, it is prefered if you can supply a certain level of
+      system information in you bug submissions. You may well be
+      wondering what, or indeed how to get this all important
+      information.
+    </P
+><P
+>      The first piece of information that is important is the version
+      of the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> you are running. This can
+      be found by clicking <SPAN
+CLASS="QUOTE"
+>"Help"</SPAN
+>, and then
+      <SPAN
+CLASS="QUOTE"
+>"About"</SPAN
+>. As you can imagine, if the problem you are
+      submitting has already been fixed in a more current version of
+      the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> than what you are using -
+      the solution will be very straight forward.  It is also helpful
+      to know where your copy of the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+      orginated from. Was it included with your distribution? Did you
+      copy it off a magazine CD? Did you download the .rpm's or the
+      .deb's? This will help locate problems caused by external
+      influences, like incorrect library versions.  Of equal
+      importance is the version of <SPAN
+CLASS="ACRONYM"
+>GTK</SPAN
+> currently in
+      use on your system. The easiest way to find this information is
+      to start a terminal window (Xterm, Eterm, konsole, etc), and run
+      <B
+CLASS="COMMAND"
+>gtk-config --version</B
+>. This will output your
+      <SPAN
+CLASS="ACRONYM"
+>GTK</SPAN
+> version to the terminal.
+    </P
+><P
+>      Another number that may help, is your
+      <SPAN
+CLASS="APPLICATION"
+>XFree86</SPAN
+> version. This can be a little
+      more difficult to find out. If you use a Linux distribution that
+      uses a package management system such as RedHat, Mandrake,
+      Debian, CorelLinux, or ome of the many others, you will find the
+      package tools invaluable in discovering application version
+      numbers.  <SPAN
+CLASS="APPLICATION"
+>XFree86</SPAN
+> is the windowing
+      system that allows <SPAN
+CLASS="APPLICATION"
+>Window Managers</SPAN
+> to
+      display such things as windows, titlebars, docks, panels, and
+      all the other prettiness you may see on your screen. If you are
+      using <SPAN
+CLASS="PRODUCTNAME"
+>Windows</SPAN
+>, this does not apply.
+    </P
+><P
+>      If you have a problem related to windowing (such as dialogs not
+      showing, or the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> suddenly
+      disapearing without apparent error) or display oriented
+      strangeness, it would be helpful to know which windows manager
+      you are using. Another question that could be asked are, is
+      whether <SPAN
+CLASS="ACRONYM"
+>GNOME</SPAN
+> or <SPAN
+CLASS="ACRONYM"
+>KDE</SPAN
+> (if
+      either) are being used.
+    </P
+><P
+>      Another useful titbit of information that is valuable for
+      diagnosis, is stating excactly what it is that has caused the
+      problem. Simply saying, <SPAN
+CLASS="QUOTE"
+>"The foo plugin doesn't
+      work."</SPAN
+> is not very helpful. Try to be as explicit as
+      possible, <SPAN
+CLASS="QUOTE"
+>"When I clicked 'foo-button' in the 'bar-plugin'
+      the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> told me that such_and_such
+      didn't work."</SPAN
+>. If the developers don't know excactly
+      which part of the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> caused the
+      error, or problem you are refering to, they can't really help
+      you.
+    </P
+><P
+>      Now that you have gathered all of the information needed for an
+      accurate bug submission, let's move on to actually submitting
+      the report.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BUGSUBMISSIONWHERE"
+>Where to submit your bug report</A
+></H2
+><P
+>      There are two good ways to submit your report. The first is
+      <A
+HREF="http://www.xach.com/gimp/news/bugreport.html"
+TARGET="_top"
+>Xachs
+      nice site</A
+>. The other way to go is to send a post to the
+      gimp-user mailinglist. Subscription information can be found
+      <A
+HREF="http://www.gimp.org/maling_list.html"
+TARGET="_top"
+>here</A
+>.
+      The user list if a great place for
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> users to talk about problems,
+      and solutions they encounter.
+    </P
+><P
+>      Now that you've submitted a bug report that's concise,
+      insightful, and just a little daring, what now? It would be
+      unreasonable to expect the developers to respond to every report
+      in person, but know that your report has been noted, and if it
+      can be reproduced, will be fixed. Bugs that are not actual bugs
+      (problems that are not related to code) should be answered for
+      you if someone else can reproduce it, or has had the same
+      problem before.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="why_gimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="using_gimp.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>What Can <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Do For Me?</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="introduction.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Using GIMP</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
