@@ -572,6 +572,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IMAGE_TYPE_BASE_TYPE (type) == gimp_image_base_type (gimage));
 
   gimp_item_configure (GIMP_ITEM (drawable), gimage,
                        offset_x, offset_y, width, height, name);
@@ -583,8 +584,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   if (drawable->tiles)
     tile_manager_unref (drawable->tiles);
 
-  drawable->tiles = tile_manager_new (width, height,
-                                      drawable->bytes);
+  drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
   drawable->visible = TRUE;
 

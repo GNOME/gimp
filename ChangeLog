@@ -1,5 +1,9 @@
 2003-06-12  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_configure): check if the
+	drawable type fits to the image. This assertion would have catched
+	the problem below.
+
 	* app/core/gimptemplate.c (gimp_template_create_image): handle all
 	fill types, fixes bug #114979.
 
