@@ -27,7 +27,7 @@ register "povray_preferences_set",
 	 "Marc Lehmann",
 	 "19990803",
 	 N_"<Toolbox>/Xtns/Render/Povray/Preferences",
-	 "*",
+	 undef,
 	 [
           [PF_FILE,	"povray_path",	"The path to the povray executable",	"x-povray"],
           [PF_STRING,	"quality",	"The quality setting (0..9, R)",	"R"],

@@ -125,7 +125,7 @@ register
         "http://bloodgate.com", 
         "10/26/1999a",
         N_"<Toolbox>/Xtns/Render/Bricks", 
-        "*",
+        undef,
         [ 
          [PF_PATTERN,  "background", "Brick pattern", "Leather"],
          [PF_STRING,  "highlight", "Second brick pattern for some highlightin (unused)", "unused yet"],

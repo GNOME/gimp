@@ -106,7 +106,7 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 	"Renders a black-and-white Yin/Yang symbol optionally
 	with \"eyes\" that may optionally be images.",
 	"Aaron Sherman", "(c) 1998, Aaron Sherman",
-	"1999b", N_"<Toolbox>/Xtns/Render/Yin-Yang", "*",
+	"1999b", N_"<Toolbox>/Xtns/Render/Yin-Yang", undef,
 	[
 		[PF_INT32, "width", "Width", 256],
 		[PF_INT32, "height", "Height", 256],

@@ -23,7 +23,7 @@ register "file_dataurl_save",
          "Marc Lehmann <pcg\@goof.com>",
          "1999-11-20",
          "<Save>/DATAURL",
-         undef,
+         "*",
          [
           [PF_SPINNER,	"tile_x",	"tile width",	32, [0, 8192, 1, 10]],
           [PF_SPINNER,	"tile_y",	"tile height",	32, [0, 8192, 1, 10]],

@@ -18,7 +18,7 @@ $path = N_"<Toolbox>/Xtns/Render/Logos/Inner Bevel";
 $shortdesc = "Perform an inner bevel on text";
 $longdesc = "This uses tigert's inner bevel method on text, which can be found with his other excellent tutorials at http://tigert.gimp.org/";
 $date = "1999-03-23";
-$imgtypes = "*";
+$imgtypes = undef;
 $author = "Seth Burgess <sjburges\@gimp.org>";
 
 $path =~ m,/([^/]+)$,; 

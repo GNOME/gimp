@@ -43,7 +43,7 @@ register	"stamps",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990314",
 		N_"<Toolbox>/Xtns/Render/Stamps",
-		"*",
+		undef,
 	[
 	[PF_INT32, "size", "img size", 90],
 	[PF_COLOR, "paper", "paper color", [255, 255, 255]],

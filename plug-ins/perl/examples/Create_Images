@@ -96,7 +96,7 @@ sub extension_create_images {
 sub query {
   gimp_install_procedure("extension_create_images", "a test extension in perl",
                         "try it out", "Marc Lehmann", "Marc Lehmann", "1997-02-06",
-                        N_"<Toolbox>/Xtns/Create_Images", "*", PROC_EXTENSION,
+                        N_"<Toolbox>/Xtns/Create_Images", undef, PROC_EXTENSION,
                         [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
 }
 

@@ -71,7 +71,7 @@ register "pixelgen",
          "Marc Lehmann <pcg\@goof.com>",
          "19991115",
          N_"<Toolbox>/Xtns/Render/Pixelgenerator",
-         "*",	
+         undef,
          [
            [PF_SPINNER,		"width"		, "The width of the new image to generate",	512, [1, 4096, 1]],
            [PF_SPINNER,		"height"	, "The height of the new image to generate",	512, [1, 4096, 1]],

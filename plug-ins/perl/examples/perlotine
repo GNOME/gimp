@@ -15,9 +15,17 @@
 # gimp_get_guide_orientation() (guide types that changed from
 # GUIDE_VERTICAL to VERTICAL and horizontal, respectively.  Should
 # work now). Also convert to indexed parameters changed, fixed them too.
-# 
+#
+# <sjburges@gimp.org> 
+# Added changes to make progess bar work for images with only horizontal
+# or vertical guides.  This was fixed at one time, I forget who did that.
+# Somehow it got broke again ;(
+#
+# Added File::Path; for making the directory if it doesn't already exist.
+#
 # If you have more additions, etc please don't hesitate to send them in!
 
+use File::Path;
 
 use Gimp;
 use Gimp::Fu;
@@ -170,7 +178,7 @@ register "perlotine",
    # 
 
    Gimp->progress_init("Perl-o-Tine");
-   $progress_increment = 1/(scalar(@horz) * scalar(@vert));
+   $progress_increment = 1/( (scalar(@horz)+1) * (scalar(@vert)+1) );
    $progress = 0.0;
    
    # (Debugging info for the guide functions)
@@ -193,8 +201,12 @@ register "perlotine",
    }
    if (!$separate) { $imgpath = ""; }
 
+    # create paths if they don't already exist
+    mkpath($savepath);
+    mkpath($savepath . $imgpath);
+
     # open HTML file for writing 
-    open FILE, ">$savepath$htmlname" or die "Couldn't open $savepath$filename: $!\n";
+    open FILE, ">$savepath$htmlname" or die "Couldn't open $savepath$htmlname: $!\n";
 
     $top=0;
     html_table_start(\*FILE,0,$cellspacing,0,$capatalize);

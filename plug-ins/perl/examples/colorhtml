@@ -27,7 +27,7 @@ register "file_colorhtml_save",
          "Marc Lehmann <pcg\@goof.com>",
          "1999-11-22",
          "<Save>/COLORHTML",
-         undef,
+         "*",
          [
           [PF_RADIO,	"character_source", "where to take the characters from", 0,
           		[sourcecode => 0, textfile => 1, filename => 2]],

@@ -152,7 +152,7 @@ Gimp::on_query {
   Gimp->install_procedure("extension_perl_control_center", "the perl control center gives information about gimp-perl",
                           "The perl control center gives information about the status of gimp-perl and allows configuration of important system parameters",
                           "Marc Lehmann", "Marc Lehmann", $VERSION,
-                          N_"<Toolbox>/Xtns/Perl/Control Center", "*", &Gimp::PROC_EXTENSION,
+                          N_"<Toolbox>/Xtns/Perl/Control Center", undef, &Gimp::PROC_EXTENSION,
                           [[&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
 };
 
