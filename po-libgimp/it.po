@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 19:53+0100\n"
-"PO-Revision-Date: 2005-01-25 09:00+0100\n"
+"POT-Creation-Date: 2005-02-13 15:21+0100\n"
+"PO-Revision-Date: 2005-02-11 13:39+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -147,20 +147,20 @@ msgstr "Conferma salvataggio"
 msgid "Confirm"
 msgstr "Conferma"
 
-#: ../libgimp/gimpexport.c:454
+#: ../libgimp/gimpexport.c:459
 msgid "Export File"
 msgstr "Esporta File"
 
-#: ../libgimp/gimpexport.c:458
+#: ../libgimp/gimpexport.c:463
 msgid "_Ignore"
 msgstr "_Ignora"
 
-#: ../libgimp/gimpexport.c:460
+#: ../libgimp/gimpexport.c:465
 msgid "_Export"
 msgstr "_Esporta"
 
 #. the headline
-#: ../libgimp/gimpexport.c:482
+#: ../libgimp/gimpexport.c:487
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -170,11 +170,11 @@ msgstr ""
 "seguenti ragioni:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:553
+#: ../libgimp/gimpexport.c:558
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: ../libgimp/gimpexport.c:653
+#: ../libgimp/gimpexport.c:658
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -183,7 +183,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello con nome %s.\n"
 "Non verranno salvati i livelli visibili."
 
-#: ../libgimp/gimpexport.c:659
+#: ../libgimp/gimpexport.c:664
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -562,6 +562,78 @@ msgstr "%d GB"
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
+#: ../libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "Modalità di operazione per gestione colore."
+
+#: ../libgimpconfig/gimpcolorconfig.c:42
+msgid "Sets the color profile for the display."
+msgstr "Imposta il profilo colore per il display."
+
+#: ../libgimpconfig/gimpcolorconfig.c:44
+msgid "Sets default RGB workspace color profile."
+msgstr "Imposta il profilo di colore predefinito RGB."
+
+#: ../libgimpconfig/gimpcolorconfig.c:46
+msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
+msgstr "Imposta il profilo di colore CMYK usato per convertire tra RGB e CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:48
+msgid "Sets the color profile used when printing."
+msgstr "Imposta il profilo di colore usato per la stampa."
+
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "Sets how colors are mapped for your display."
+msgstr "Imposta come verranno mappati i colori per il display."
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "Sets how colors are converted from workspace to simulation device."
+msgstr ""
+"Imposta come i colori saranno convertiti dallo spazio di lavoro al "
+"dispositivo di simulazione."
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "Nessuna gestione del colore"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "Display a colore gestito"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "Simulazione di stampa"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:57
+msgid "Perceptual"
+msgstr "Percettivo"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:58
+msgid "Relative Colorimetric"
+msgstr "Colorimetrico relativo"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
+msgid "Saturation"
+msgstr "Saturazione"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:60
+msgid "Absolute Colorimetric"
+msgstr "Colorimetrico assoluto"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:88
+msgid "Ask"
+msgstr "Chiedi"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:89
+msgid "Use embedded profile"
+msgstr "Usa profilo incorporato"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:90
+msgid "Convert to RGB workspace"
+msgstr "Conversione allo spazio colore RGB"
+
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
@@ -589,8 +661,8 @@ msgid "while parsing token '%s': %s"
 msgstr "analizzando il token '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
-#: ../libgimpconfig/gimpscanner.c:594
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:515
+#: ../libgimpconfig/gimpscanner.c:596
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
@@ -599,17 +671,17 @@ msgstr "errore di analisi fatale"
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere $(%s)"
 
-#: ../libgimpconfig/gimpconfigwriter.c:134
+#: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Impossibile creare il file temporaneo per '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:147
+#: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire '%s' in scrittura: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:666
+#: ../libgimpconfig/gimpconfigwriter.c:667
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -618,7 +690,7 @@ msgstr ""
 "Errore durante la scrittura di un file temporaneo per '%s': %s\n"
 "Il file originale non è stato toccato."
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:675
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -627,26 +699,26 @@ msgstr ""
 "Errore durante la scrittura di un file temporaneo per '%s': %s\n"
 "Non è stato creato nessun file."
 
-#: ../libgimpconfig/gimpconfigwriter.c:685
+#: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Errore durante la scrittura su '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:703
+#: ../libgimpconfig/gimpconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Impossibile creare '%s': %s"
 
-#: ../libgimpconfig/gimpscanner.c:100
+#: ../libgimpconfig/gimpscanner.c:102
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
 
-#: ../libgimpconfig/gimpscanner.c:270
+#: ../libgimpconfig/gimpscanner.c:272
 msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
-#: ../libgimpconfig/gimpscanner.c:621
+#: ../libgimpconfig/gimpscanner.c:623
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'elaborazione di '%s' alla riga  %d: %s"
@@ -684,7 +756,7 @@ msgstr "Caricamento fallito"
 msgid "Not loaded"
 msgstr "Non caricato"
 
-#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#: ../libgimpthumb/gimpthumb-utils.c:228 ../libgimpthumb/gimpthumb-utils.c:296
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella miniature '%s'."
@@ -752,11 +824,6 @@ msgstr "_A"
 #: ../libgimpwidgets/gimpcolorselect.c:349
 msgid "Hue"
 msgstr "Tonalità"
-
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
-msgid "Saturation"
-msgstr "Saturazione"
 
 #: ../libgimpwidgets/gimpcolorscales.c:167
 #: ../libgimpwidgets/gimpcolorselect.c:351
@@ -827,6 +894,11 @@ msgstr "Controllo stile"
 #: ../libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
 msgstr "Ante_prima"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1686
+#, c-format
+msgid "This text input field is limited to %d characters."
+msgstr "Questo campo di immissione testo è limitato a %d caratteri."
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -908,11 +980,11 @@ msgstr "Altri..."
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: ../libgimpwidgets/gimpunitmenu.c:655
+#: ../libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Unità"
 
-#: ../libgimpwidgets/gimpunitmenu.c:659
+#: ../libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Fattore"
 
@@ -937,87 +1009,75 @@ msgstr "Generatore del seme di casualità con un numero generato casualmente"
 msgid "_Randomize"
 msgstr "_Casualizza"
 
-#: ../modules/cdisplay_colorblind.c:68
+#: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
 msgstr "Protanopia (insensibilità al rosso)"
 
-#: ../modules/cdisplay_colorblind.c:70
+#: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensibilità al verde)"
 
-#: ../modules/cdisplay_colorblind.c:72
+#: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensibilità al blu)"
 
-#: ../modules/cdisplay_colorblind.c:163
+#: ../modules/cdisplay_colorblind.c:147
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtro di simulazione deficit colore (algoritmo Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:256
+#: ../modules/cdisplay_colorblind.c:237
 msgid "Color Deficient Vision"
 msgstr "Visione con deficit di colore"
 
-#: ../modules/cdisplay_colorblind.c:554
+#: ../modules/cdisplay_colorblind.c:472
 msgid "Color _Deficiency Type:"
 msgstr "Tipo di _deficit di colore:"
 
-#: ../modules/cdisplay_gamma.c:105
+#: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
 msgstr "Filtro di visualizzazione gamma dei colori"
 
-#: ../modules/cdisplay_gamma.c:178
+#: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:352
+#: ../modules/cdisplay_gamma.c:251
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../modules/cdisplay_highcontrast.c:105
+#: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
 msgstr "Filtro di visualizzazione colore ad alto contrasto"
 
-#: ../modules/cdisplay_highcontrast.c:178
+#: ../modules/cdisplay_highcontrast.c:160
 msgid "Contrast"
 msgstr "Contrasto"
 
-#: ../modules/cdisplay_highcontrast.c:352
+#: ../modules/cdisplay_highcontrast.c:251
 msgid "Contrast C_ycles:"
 msgstr "_Ciclo di contrasto:"
 
-#: ../modules/cdisplay_proof.c:57
-msgid "Perceptual"
-msgstr "Percettivo"
-
-#: ../modules/cdisplay_proof.c:58
-msgid "Relative Colorimetric"
-msgstr "Colorimetrico relativo"
-
-#: ../modules/cdisplay_proof.c:60
-msgid "Absolute Colorimetric"
-msgstr "Colorimetrico assoluto"
-
-#: ../modules/cdisplay_proof.c:147
+#: ../modules/cdisplay_proof.c:129
 msgid "Color proof filter using ICC color profile"
 msgstr "Fitro a prova di colore usando i profili di colore ICC"
 
-#: ../modules/cdisplay_proof.c:251
+#: ../modules/cdisplay_proof.c:223
 msgid "Color Proof"
 msgstr "A prova di colore"
 
-#: ../modules/cdisplay_proof.c:462
+#: ../modules/cdisplay_proof.c:348
 msgid "_Intent:"
 msgstr "_Intento:"
 
-#: ../modules/cdisplay_proof.c:465
+#: ../modules/cdisplay_proof.c:352
 msgid "Choose an ICC Color Profile"
 msgstr "Scegli un profilo di colore ICC"
 
-#: ../modules/cdisplay_proof.c:468
+#: ../modules/cdisplay_proof.c:355
 msgid "_Profile:"
 msgstr "_Profilo:"
 
-#: ../modules/cdisplay_proof.c:476
+#: ../modules/cdisplay_proof.c:360
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
