@@ -1,5 +1,9 @@
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/app-sections.txt: GimpPaintCoreState -> GimpPaintState.
+
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
 	* app-docs.sgml
 	* app-sections.txt: more updates and cleanups.
 

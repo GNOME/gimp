@@ -1951,7 +1951,6 @@ GIMP_PAINTBRUSH_GET_CLASS
 
 <SECTION>
 <FILE>gimppaintcore</FILE>
-GimpPaintCoreState
 <TITLE>GimpPaintCore</TITLE>
 GimpPaintCore
 GimpPaintCoreClass
@@ -6856,6 +6855,7 @@ GimpInkBlobType
 GIMP_TYPE_PAINT_APPLICATION_MODE
 GimpPaintApplicationMode
 GimpBrushApplicationMode
+GimpPaintState
 <SUBSECTION Standard>
 gimp_clone_type_get_type
 gimp_clone_align_mode_get_type
