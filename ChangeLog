@@ -1,3 +1,10 @@
+2001-10-10  Gediminas Paulauskas <menesis@delfi.lt>
+
+        * tips/Makefile.am|makefile.mingw: Added gimp_tips.lt.txt to the
+	targets. 
+
+	* tips/gimp_tips.lt.txt: Added Lithuanian tips file. 
+
 2001-10-10  Sven Neumann  <sven@gimp.org>
 
 	* app/docindex.c: rewrote parser to make it more robust against a 

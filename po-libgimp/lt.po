@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) 1.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-07-19 16:13+0000\n"
-"Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
+"POT-Creation-Date: 2001-10-10 02:13+0200\n"
+"PO-Revision-Date: 2001-10-09 12:56+0100\n"
+"Last-Translator: Mantas Kriauciunas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-13\n"
@@ -138,7 +138,7 @@ msgstr "Pasirinkite bylà"
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
 #: libgimp/gimpunitmenu.c:503
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: libgimp/gimpunitmenu.c:241
 msgid "More..."
@@ -185,11 +185,11 @@ msgstr "milimetrai"
 #. professional units
 #: libgimp/gimpunit.c:56
 msgid "point"
-msgstr ""
+msgstr "taðkas"
 
 #: libgimp/gimpunit.c:56
 msgid "points"
-msgstr ""
+msgstr "taðkai"
 
 #: libgimp/gimpunit.c:57
 msgid "pica"

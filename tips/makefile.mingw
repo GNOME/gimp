@@ -34,6 +34,9 @@ install : all
 %.ja.utf8: %.ja.txt
 	iconv -f EUC-JP -t UTF-8 $< >$@
 
+%.lt.utf8: %.lt.txt
+	iconv -f ISO-8859-13 -t UTF-8 $< >$@
+
 %.ko.utf8: %.ko.txt
 	iconv -f EUC-KR -t UTF-8 $< >$@
 

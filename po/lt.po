@@ -2,13 +2,14 @@
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Mantas Kriauciunas <mantelis@centras.lt>, 2001.
 # Egle Girinaite <eglyte@centras.lt>, 2001
-# 
+# Karina Gribanova <buratina@delfi.lt>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-07-19 22:38+0200\n"
-"Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
+"POT-Creation-Date: 2001-10-10 02:11+0200\n"
+"PO-Revision-Date: 2001-10-09 16:37+0100\n"
+"Last-Translator: Mantas Kriauciunas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-13\n"
@@ -34,7 +35,7 @@ msgstr "Daugiau informacijos rasite http://www.gimp.org/"
 
 #: app/airbrush.c:145 app/convolve.c:170 app/smudge.c:121
 msgid "Rate:"
-msgstr ""
+msgstr "Koeficientas:"
 
 #: app/airbrush.c:158 modules/colorsel_water.c:691
 msgid "Pressure:"
@@ -56,11 +57,11 @@ msgstr ""
 
 #: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
-msgstr ""
+msgstr "jums sukûrë jie"
 
 #: app/app_procs.c:378
 msgid "GIMP Startup"
-msgstr ""
+msgstr "GIMP Pradþia"
 
 #: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
@@ -70,7 +71,7 @@ msgstr "nagrinëjamas·\"%s\"\n"
 #. initialize the xcf file format routines
 #: app/app_procs.c:569
 msgid "Looking for data files"
-msgstr ""
+msgstr "Ieðkomos duomenø bylos"
 
 #: app/app_procs.c:569
 msgid "Parasites"
@@ -79,7 +80,7 @@ msgstr ""
 #. initialize  the global parasite table
 #: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
-msgstr ""
+msgstr "Teptukai"
 
 #. initialize the list of gimp brushes
 #: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
@@ -89,12 +90,12 @@ msgstr "Raðtai"
 #. initialize the list of gimp patterns
 #: app/app_procs.c:575 app/preferences_dialog.c:2547
 msgid "Palettes"
-msgstr ""
+msgstr "Paletës"
 
 #. initialize the list of gimp palettes
 #: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
-msgstr ""
+msgstr "Perëjimai"
 
 #: app/app_procs.c:767
 msgid "Really Quit?"
@@ -132,43 +133,43 @@ msgstr "Atðaukti"
 
 #: app/bezier_select.c:481
 msgid "Bezier path already closed."
-msgstr ""
+msgstr "Bezier kreivë jau uþdara."
 
 #: app/bezier_select.c:502
 msgid "Corrupt curve"
-msgstr ""
+msgstr "Sugadinta kreivë"
 
 #: app/bezier_select.c:3000
 msgid "Curve not closed!"
-msgstr ""
+msgstr "Kreivë nëra uþdara!"
 
 #: app/bezier_select.c:3287 app/gimage_mask.c:625
 msgid "Paintbrush operation failed."
-msgstr ""
+msgstr "Veiksmas su teptuku nepavyko."
 
 #: app/blend.c:299
 msgid "Offset:"
-msgstr ""
+msgstr "Poslinkis:"
 
 #: app/blend.c:310
 msgid "FG to BG (RGB)"
-msgstr ""
+msgstr "IÐ priekinio plano spalvos á fono spalvà (RGB)"
 
 #: app/blend.c:311
 msgid "FG to BG (HSV)"
-msgstr ""
+msgstr "Ið priekinio·plano·spalvos·á·fono·spalvà·(HSV)"
 
 #: app/blend.c:312
 msgid "FG to Transparent"
-msgstr ""
+msgstr "Ið priekinio·plano·spalvos·á·skaidrià"
 
 #: app/blend.c:313
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Papildomas perëjimas"
 
 #: app/blend.c:317
 msgid "Blend:"
-msgstr ""
+msgstr "Perëjimas:"
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
@@ -188,92 +189,92 @@ msgstr "Kvadratas"
 
 #: app/blend.c:329
 msgid "Conical (symmetric)"
-msgstr ""
+msgstr "Kûginis (simetriðkas)"
 
 #: app/blend.c:330
 msgid "Conical (asymmetric)"
-msgstr ""
+msgstr "Kûginis·(nesimetriðkas)"
 
 #: app/blend.c:331
 msgid "Shapeburst (angular)"
-msgstr ""
+msgstr "Forma (kampas)"
 
 #: app/blend.c:332
 msgid "Shapeburst (spherical)"
-msgstr ""
+msgstr "Forma (sfera)"
 
 #: app/blend.c:333
 msgid "Shapeburst (dimpled)"
-msgstr ""
+msgstr "Forma (Ádubæs)"
 
 #: app/blend.c:334
 msgid "Spiral (clockwise)"
-msgstr ""
+msgstr "Spiralinis (pagal laikrodþio rodyklæ)"
 
 #: app/blend.c:335
 msgid "Spiral (anticlockwise)"
-msgstr ""
+msgstr "Spiralinis·(prieð·laikrodþio·rodyklæ)"
 
 #: app/blend.c:339
 msgid "Gradient:"
-msgstr ""
+msgstr "Perëjimas:"
 
 #: app/blend.c:347 app/by_color_select.c:848 app/preferences_dialog.c:1840
 msgid "None"
-msgstr ""
+msgstr "Nieko"
 
 #: app/blend.c:348
 msgid "Sawtooth Wave"
-msgstr ""
+msgstr "Pjûklinë banga"
 
 #: app/blend.c:349
 msgid "Triangular Wave"
-msgstr ""
+msgstr "Trikampë banga"
 
 #: app/blend.c:353
 msgid "Repeat:"
-msgstr ""
+msgstr "Kartoti:"
 
 #: app/blend.c:372
 msgid "Adaptive Supersampling"
-msgstr ""
+msgstr "Pritaikomoji interpoliacija"
 
 #: app/blend.c:400
 msgid "Max Depth:"
-msgstr ""
+msgstr "Didþiausias gylis:"
 
 #: app/blend.c:413 app/bucket_fill.c:139 app/tool_options.c:290
 msgid "Threshold:"
-msgstr ""
+msgstr "Slenkstis:"
 
 #: app/blend.c:440
 msgid "Blend: Invalid for indexed images."
-msgstr ""
+msgstr "Perëjimas: Negalimas indeksuotiems paveikslëliams."
 
 #: app/blend.c:465
 msgid "Blend: 0, 0"
-msgstr ""
+msgstr "Perëjimas: 0, 0"
 
 #: app/blend.c:528
 msgid "Blend operation failed."
-msgstr ""
+msgstr "Perëjimas nepavyko."
 
 #: app/blend.c:534
 msgid "Blending..."
-msgstr ""
+msgstr "Perëjimas..."
 
 #: app/blend.c:612 app/blend.c:622
 msgid "Blend: "
-msgstr ""
+msgstr "Perëjimas:"
 
 #: app/brightness_contrast.c:132 app/brightness_contrast.c:221
 #: app/tools.c:1054
 msgid "Brightness-Contrast"
-msgstr ""
+msgstr "Ðviesumas-Kontrastas"
 
 #: app/brightness_contrast.c:175
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr ""
+msgstr "Ðviesumas-Ryðkumas negalimas indeksuotuose pieðiniuose."
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
@@ -298,12 +299,12 @@ msgstr "Atstatyti"
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:246
 msgid "Brightness:"
-msgstr ""
+msgstr "Ðviesumas:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:277
 msgid "Contrast:"
-msgstr ""
+msgstr "Kontrastas:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
@@ -314,7 +315,7 @@ msgstr "Perþiûra"
 
 #: app/brush_edit.c:227
 msgid "Brush Editor"
-msgstr ""
+msgstr "Teptukø savybiø nustatymas"
 
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
@@ -332,15 +333,15 @@ msgstr "Uþdaryti"
 #. the feather radius scale
 #: app/brush_edit.c:291 app/color_picker.c:187 app/tool_options.c:206
 msgid "Radius:"
-msgstr ""
+msgstr "Skersmuo:"
 
 #: app/brush_edit.c:304
 msgid "Hardness:"
-msgstr ""
+msgstr "Kietumas:"
 
 #: app/brush_edit.c:317
 msgid "Aspect Ratio:"
-msgstr ""
+msgstr "Proporcijos:"
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:322 app/rotate_tool.c:93
 msgid "Angle:"
@@ -349,7 +350,7 @@ msgstr "Kampas:"
 #. The shell
 #: app/brush_select.c:278
 msgid "Brush Selection"
-msgstr ""
+msgstr "Teptuko pasirinkimas"
 
 #: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
@@ -391,16 +392,16 @@ msgstr "Intervalas:"
 #. this should never happen
 #: app/brush_select.c:1860
 msgid "Sorry, this brush can't be edited."
-msgstr ""
+msgstr "Atleiskite, teptuko savybiø keisti negalima."
 
 #. this should never happen
 #: app/brush_select.c:1889
 msgid "Sorry, this brush can't be deleted."
-msgstr ""
+msgstr "Atleiskite,·ðio teptuko panaikinti negalima."
 
 #: app/bucket_fill.c:128 app/color_picker.c:162 app/tool_options.c:275
 msgid "Sample Merged"
-msgstr ""
+msgstr "Sujungta"
 
 #. frame for Fill Type
 #: app/bucket_fill.c:159 app/channel_ops.c:176 app/file_new_dialog.c:633
@@ -409,11 +410,11 @@ msgstr "Uþpildymo tipas"
 
 #: app/bucket_fill.c:163
 msgid "FG Color Fill"
-msgstr ""
+msgstr "Pirmo plano spalvotas uþpildymas"
 
 #: app/bucket_fill.c:166
 msgid "BG Color Fill"
-msgstr ""
+msgstr "Fono·spalvotas·uþpildymas"
 
 #: app/bucket_fill.c:169
 msgid "Pattern Fill"
@@ -421,16 +422,16 @@ msgstr "Uþpildymas raðtu"
 
 #: app/bucket_fill.c:248
 msgid "Bucket Fill operation failed."
-msgstr ""
+msgstr "Uþpildymas nepavyko."
 
 #: app/bucket_fill.c:372
 msgid "No available patterns for this operation."
-msgstr ""
+msgstr "Uþpildyti raðtu negalima."
 
 #. The shell and main vbox
 #: app/by_color_select.c:720
 msgid "By Color Selection"
-msgstr ""
+msgstr "Iðrinkimas pagal spalvà"
 
 #: app/by_color_select.c:776
 msgid "Inactive"
@@ -438,7 +439,7 @@ msgstr "Neaktyvi"
 
 #: app/by_color_select.c:784
 msgid "Selection Mode"
-msgstr "Þymëjimo reþimas"
+msgstr "Paþymëjimo reþimas"
 
 #: app/by_color_select.c:789 app/paint_funcs.c:105
 msgid "Replace"
@@ -450,15 +451,15 @@ msgstr "Pridëti"
 
 #: app/by_color_select.c:792 app/layers_dialog.c:386 app/tool_options.c:931
 msgid "Subtract"
-msgstr ""
+msgstr "Atimti"
 
 #: app/by_color_select.c:793
 msgid "Intersect"
-msgstr ""
+msgstr "Sankirta"
 
 #: app/by_color_select.c:804
 msgid "Fuzziness Threshold"
-msgstr ""
+msgstr "Iðsiliejimo slenkstis"
 
 #: app/by_color_select.c:823
 msgid "Selection"
@@ -466,7 +467,7 @@ msgstr "Paþymëjimas"
 
 #: app/by_color_select.c:834
 msgid "Invert"
-msgstr ""
+msgstr "Inversija"
 
 #: app/by_color_select.c:841
 msgid "All"
@@ -488,12 +489,12 @@ msgstr "Paþymëjimo kaukë"
 
 #: app/channel_ops.c:91 app/resize.c:436
 msgid "Offset"
-msgstr ""
+msgstr "Poslinkis"
 
 #. The offset labels
 #: app/channel_ops.c:115
 msgid "Offset X:"
-msgstr ""
+msgstr "X poslinkis:"
 
 #: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
@@ -504,7 +505,7 @@ msgstr "Y:"
 #. The wrap around option
 #: app/channel_ops.c:170
 msgid "Wrap Around"
-msgstr ""
+msgstr "Apgaubti"
 
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
 #: app/layers_dialog.c:3663
@@ -518,7 +519,7 @@ msgstr "Skaidrus"
 #. The by half height and half width option
 #: app/channel_ops.c:193
 msgid "Offset by (x/2),(y/2)"
-msgstr ""
+msgstr "Poslinkis (x/2),(y/2)"
 
 #: app/channels_dialog.c:231 app/channels_dialog.c:2577
 msgid "New Channel"
@@ -541,6 +542,8 @@ msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
+"Kanalà peversti paþymëjimu\n"
+"<Shift> Pridëti      <Ctrl> Atimti        <Shift><Ctrl> Sankirta"
 
 #: app/channels_dialog.c:255
 msgid "Delete Channel"
@@ -571,11 +574,11 @@ msgstr "Pilka"
 
 #: app/channels_dialog.c:1456
 msgid "Indexed"
-msgstr ""
+msgstr "Indeksuota"
 
 #: app/channels_dialog.c:2533
 msgid "New Channel Options"
-msgstr "Naujo kanalo nuostatos"
+msgstr "Naujo kanalo savybës"
 
 #. The name entry hbox, label and entry
 #: app/channels_dialog.c:2566 app/channels_dialog.c:2729
@@ -589,19 +592,19 @@ msgstr "Uþpildymo skaidrumas:"
 
 #: app/channels_dialog.c:2696
 msgid "Edit Channel Attributes"
-msgstr "Redaguoti·kanalo parametrus"
+msgstr "Redaguoti·kanalo savybes"
 
 #: app/clone.c:138
 msgid "Source"
-msgstr ""
+msgstr "Ðaltinis"
 
 #: app/clone.c:142
 msgid "Image Source"
-msgstr ""
+msgstr "Paveikslëlio ðaltinis"
 
 #: app/clone.c:144
 msgid "Pattern Source"
-msgstr ""
+msgstr "Raðto ðaltinis"
 
 #: app/clone.c:152
 msgid "Alignment"
@@ -609,64 +612,64 @@ msgstr "Lygiavimas"
 
 #: app/clone.c:156
 msgid "Non Aligned"
-msgstr ""
+msgstr "Nëra kà lygiuoti"
 
 #: app/clone.c:158
 msgid "Aligned"
-msgstr ""
+msgstr "Sulygiuota"
 
 #: app/clone.c:160
 msgid "Registered"
-msgstr ""
+msgstr "Uþregistruota"
 
 #: app/clone.c:273
 msgid "No patterns available for this operation."
-msgstr ""
+msgstr "Uþpildyti raðtu negalima."
 
 #. The shell and main vbox
 #: app/color_balance.c:173 app/color_balance.c:277 app/tools.c:1026
 msgid "Color Balance"
-msgstr ""
+msgstr "Spalvø balansas"
 
 #: app/color_balance.c:217
 msgid "Color balance operates only on RGB color drawables."
-msgstr ""
+msgstr "Spalvø balansas veikia tik RGB spalvø paletës pieðiniuose."
 
 #: app/color_balance.c:266 app/dodgeburn.c:186
 msgid "Shadows"
-msgstr ""
+msgstr "Ðeðëliai"
 
 #: app/color_balance.c:267 app/dodgeburn.c:184
 msgid "Midtones"
-msgstr ""
+msgstr "Pustoniai"
 
 #: app/color_balance.c:268 app/dodgeburn.c:182
 msgid "Highlights"
-msgstr ""
+msgstr "Ðviesios spalvos"
 
 #: app/color_balance.c:299
 msgid "Color Levels:"
-msgstr ""
+msgstr "Spalvø lygiai:"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:339
 msgid "Cyan"
-msgstr "Ciano"
+msgstr "Þydras"
 
 #. Create the magenta-green scale widget
 #: app/color_balance.c:364
 msgid "Magenta"
-msgstr ""
+msgstr "Roþinis"
 
 #. Create the yellow-blue scale widget
 #: app/color_balance.c:389
 msgid "Yellow"
-msgstr "Geltona"
+msgstr "Geltonas"
 
 #. The preserve luminosity toggle
 #: app/color_balance.c:442
 msgid "Preserve Luminosity"
-msgstr ""
+msgstr "Iðsaugoti ryðkumà"
 
 #: app/color_notebook.c:120
 msgid "Color Selection"
@@ -678,15 +681,15 @@ msgstr "Atstatyti senà spalvà"
 
 #: app/color_picker.c:150 app/color_picker.c:254 app/tools.c:573
 msgid "Color Picker"
-msgstr ""
+msgstr "Pipetë spalvai"
 
 #: app/color_picker.c:177
 msgid "Sample Average"
-msgstr ""
+msgstr "Vidurkis"
 
 #: app/color_picker.c:220
 msgid "Update Active Color"
-msgstr ""
+msgstr "Atnaujinti aktyvià spalvà"
 
 #: app/color_picker.c:261 app/color_picker.c:270
 msgid "Red:"
@@ -702,12 +705,12 @@ msgstr "Mëlyna:"
 
 #: app/color_picker.c:264 app/color_picker.c:273 app/color_picker.c:279
 msgid "Alpha:"
-msgstr ""
+msgstr "Alfa:"
 
 #: app/color_picker.c:265 app/color_picker.c:280 app/color_select.c:445
 #: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
-msgstr ""
+msgstr "Ðeðioliktainis trejetas:"
 
 #: app/color_picker.c:269 app/colormap_dialog.i.c:267
 msgid "Index:"
@@ -715,11 +718,11 @@ msgstr "Rodyklë:"
 
 #: app/color_picker.c:274
 msgid "Hex Triplet"
-msgstr ""
+msgstr "Ðeðioliktainis trejetas"
 
 #: app/color_picker.c:278 app/histogram_tool.c:278
 msgid "Intensity:"
-msgstr ""
+msgstr "Intensyvumas:"
 
 #: app/color_picker.c:638 app/color_picker.c:639 app/color_picker.c:640
 #: app/color_picker.c:641 app/color_picker.c:642 app/color_picker.c:643
@@ -733,27 +736,27 @@ msgstr "Nëra"
 
 #: app/color_select.c:242
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:243
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:244
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:245 app/hue_saturation.c:361
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/color_select.c:246 app/hue_saturation.c:363
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/color_select.c:247 app/hue_saturation.c:365
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/color_select.c:251 app/layers_dialog.c:389 app/paint_funcs.c:99
 #: app/tool_options.c:934
@@ -773,7 +776,7 @@ msgstr "Reikðmë"
 
 #: app/colormap_dialog.i.c:191
 msgid "Indexed Color Palette"
-msgstr ""
+msgstr "Indeksuotø spalvø paletë"
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:206 app/lc_dialog.c:149
@@ -782,55 +785,55 @@ msgstr "Paveikslëlis:"
 
 #: app/colormap_dialog.i.c:979 app/lc_dialog.c:658
 msgid "none"
-msgstr "nieko"
+msgstr "Nieko"
 
 #: app/commands.c:340
 msgid "Feather Selection"
-msgstr ""
+msgstr "Iðlieti paþymëjimà"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
-msgstr ""
+msgstr "Iðlieti paþymëjimà:"
 
 #: app/commands.c:376
 msgid "Shrink Selection"
-msgstr ""
+msgstr "Sumaþinti paþymëjimà"
 
 #: app/commands.c:379
 msgid "Shrink Selection by:"
-msgstr ""
+msgstr "Sumaþinti paþymëjimà:"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
-msgstr ""
+msgstr "Sumaþinti nuo paveikslëlio rëmelio"
 
 #: app/commands.c:410
 msgid "Grow Selection"
-msgstr ""
+msgstr "Padidinti paþymëjimà"
 
 #: app/commands.c:413
 msgid "Grow Selection by:"
-msgstr ""
+msgstr "Padidinti·paþymëjimà dydþiu:"
 
 #: app/commands.c:433
 msgid "Border Selection"
-msgstr ""
+msgstr "Rëmelio iðrinkimas"
 
 #: app/commands.c:436
 msgid "Border Selection by:"
-msgstr ""
+msgstr "Rëmelio iðrinkimas:"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Dydþio keitimo klaida: plotis ir aukðtis turi bûti didesni uþ nulá."
 
 #: app/convert.c:509
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "Spalvas paversti indeksuotomis"
 
 #: app/convert.c:528
 msgid "General Palette Options"
-msgstr "Pagrindiniai paletës nuostatos"
+msgstr "Pagrindinës paletës savybës"
 
 #: app/convert.c:541
 msgid "Generate Optimal Palette:"
@@ -843,11 +846,11 @@ msgstr "Spalvø skaièius:"
 #. create the custom_frame here, it'll be added later
 #: app/convert.c:590
 msgid "Custom Palette Options"
-msgstr "Papildomos paletës nuostatos"
+msgstr "Papildomos paletës savybës"
 
 #: app/convert.c:596
 msgid "Remove Unused Colors from Final Palette"
-msgstr ""
+msgstr "Paðalinti nenaudojamas spalvas ið galutinës paletës"
 
 #: app/convert.c:608
 msgid "Use Custom Palette:"
@@ -855,15 +858,15 @@ msgstr "Naudoti papildomà paletæ:"
 
 #: app/convert.c:642
 msgid "Use WWW-Optimized Palette"
-msgstr ""
+msgstr "Naudoti internetui tinkamà paletæ"
 
 #: app/convert.c:658
 msgid "Use Black/White (1-Bit) Palette"
-msgstr ""
+msgstr "Naudoti juodà/baltà (1-Bit) paletæ"
 
 #: app/convert.c:669
 msgid "Dither Options"
-msgstr "Maiðymo nuostatos"
+msgstr "Maiðymo savybës"
 
 #: app/convert.c:682
 msgid "No Color Dithering"
@@ -896,6 +899,9 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
+"Jûs bandote konvertuoti paveikslëlá su alfa sluoksniais ið RGB/Pilkumo "
+"atspalviø á indeksuotà.\n"
+"Jûs turëtumëte"
 
 #: app/convert.c:997
 msgid "Select Custom Palette"
@@ -907,29 +913,29 @@ msgstr ""
 
 #: app/convolve.c:191
 msgid "Blur"
-msgstr ""
+msgstr "Iðlieti"
 
 #: app/convolve.c:193
 msgid "Sharpen"
-msgstr ""
+msgstr "Paryðkinti"
 
 #: app/crop.c:184 app/tools.c:377
 msgid "Crop & Resize"
-msgstr ""
+msgstr "Apkarpymas ir dydþio keitimas"
 
 #: app/crop.c:195
 msgid "Current Layer only"
-msgstr ""
+msgstr "Tik aktyvus sluoksnis"
 
 #. enlarge toggle
 #: app/crop.c:206
 msgid "Allow Enlarging"
-msgstr ""
+msgstr "Leisti didinti"
 
 #. tool toggle
 #: app/crop.c:217 app/flip_tool.c:92 app/magnify.c:138
 msgid "Tool Toggle"
-msgstr ""
+msgstr "Árankiø jungiklis"
 
 #: app/crop.c:221 app/crop.c:1069
 msgid "Crop"
@@ -937,25 +943,25 @@ msgstr "Kirpti"
 
 #: app/crop.c:223 app/crop.c:1071
 msgid "Resize"
-msgstr ""
+msgstr "Pakeisti dydá"
 
 #: app/crop.c:522 app/crop.c:530
 msgid "Crop: "
-msgstr ""
+msgstr "Apkarpyti:"
 
 #: app/crop.c:1042
 msgid "Crop: 0 x 0"
-msgstr ""
+msgstr "Apkarpyti: 0 x 0"
 
 #. create the info dialog
 #: app/crop.c:1063
 msgid "Crop & Resize Information"
-msgstr ""
+msgstr "Informacija apie apkarpymà ir dydþio keitimà"
 
 #. add the information fields
 #: app/crop.c:1079
 msgid "Origin X:"
-msgstr ""
+msgstr "Pradþia  X:"
 
 #. the pixel size labels
 #: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
@@ -971,37 +977,37 @@ msgstr "Aukðtis:"
 
 #: app/crop.c:1120
 msgid "From Selection"
-msgstr ""
+msgstr "Nuo iðrinkimo"
 
 #: app/crop.c:1126
 msgid "Auto Shrink"
-msgstr ""
+msgstr "Automatinis sumaþinimas"
 
 #. The shell and main vbox
 #: app/curves.c:401 app/curves.c:562 app/tools.c:1166
 msgid "Curves"
-msgstr ""
+msgstr "Kreivës"
 
 #: app/curves.c:448
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr ""
+msgstr "Kreiviø negalima taikyti indeksuotiems paveikslëliams."
 
 #: app/curves.c:584
 msgid "Modify Curves for Channel:"
-msgstr ""
+msgstr "Koreguoti kreives kanalui:"
 
 #: app/curves.c:595 app/levels.c:382
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:674
 msgid "Curve Type:"
-msgstr ""
+msgstr "Kreivës tipas:"
 
 #: app/curves.c:681
 msgid "Smooth"
-msgstr ""
+msgstr "Glotnumas"
 
 #: app/curves.c:682
 msgid "Free"
@@ -1018,25 +1024,25 @@ msgstr "Iðsaugoti"
 
 #: app/curves.c:1315
 msgid "Load Curves"
-msgstr ""
+msgstr "Ákelti kreives"
 
 #: app/curves.c:1330
 msgid "Save Curves"
-msgstr ""
+msgstr "Iðsaugoti kreives"
 
 #: app/curves.c:1621
 msgid "Load/Save Curves"
-msgstr ""
+msgstr "Ákelti/Iðsaugoti kreives"
 
 #: app/curves.c:1666 app/curves.c:1684 app/levels.c:1477 app/levels.c:1495
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
-msgstr ""
+msgstr "Negaliu atidaryti bylos %s"
 
 #: app/desaturate.c:43
 msgid "Desaturate operates only on RGB color drawables."
-msgstr ""
+msgstr "Nusodrinti galima tik RGB formato paveikslëlá."
 
 #: app/devices.c:752
 msgid "Device Status"
@@ -1082,8 +1088,9 @@ msgid "Document Index"
 msgstr "Dokumento rodyklë (indeksas)"
 
 #: app/dodgeburn.c:142
+#, fuzzy
 msgid "Exposure:"
-msgstr ""
+msgstr "Iðeiga:"
 
 #. the type (dodge or burn)
 #: app/dodgeburn.c:162 app/ink.c:390
@@ -1092,32 +1099,33 @@ msgstr "Tipas"
 
 #: app/dodgeburn.c:166
 msgid "Dodge"
-msgstr ""
+msgstr "Blukinimas"
 
 #: app/dodgeburn.c:168
 msgid "Burn"
-msgstr ""
+msgstr "Ryðkinimas"
 
 #: app/dodgeburn.c:178
 msgid "Mode"
-msgstr ""
+msgstr "Reþimas"
 
 #: app/edit_selection.c:201
 msgid "Move: 0, 0"
-msgstr ""
+msgstr "Perkelti: 0, 0"
 
 #: app/edit_selection.c:451 app/edit_selection.c:461
 msgid "Move: "
-msgstr ""
+msgstr "Perkelti:"
 
 #: app/equalize.c:42
+#, fuzzy
 msgid "Equalize does not operate on indexed drawables."
-msgstr ""
+msgstr "Indeksuotø paveikslëliø suvienodinti negalima."
 
 #. the hard toggle
 #: app/eraser.c:112
 msgid "Hard Edge"
-msgstr ""
+msgstr "Aðtrûs kraðtai"
 
 #. the anti_erase toggle
 #: app/eraser.c:122 app/paint_funcs.c:106
@@ -1202,7 +1210,7 @@ msgstr "Raiðka X:"
 
 #: app/file_new_dialog.c:550 app/resize.c:619
 msgid "pixels/%a"
-msgstr ""
+msgstr "Taðkeliai/%a"
 
 #. frame for Image Type
 #: app/file_new_dialog.c:595
@@ -1243,7 +1251,7 @@ msgstr "Iðsaugoti paveikslëlá"
 
 #: app/fileops.c:543
 msgid "Save Options"
-msgstr "Saugojimo nuostatos"
+msgstr "Saugojimo savybës"
 
 #: app/fileops.c:552
 msgid "Determine File Type:"
@@ -1258,7 +1266,7 @@ msgstr ""
 "Jokia byla nëra suriðta su ðiuo paveikslëliu."
 
 #: app/fileops.c:626
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Reverting %s to\n"
 "%s\n"
@@ -1266,6 +1274,11 @@ msgid ""
 "(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
+"Atstatydami %s á \n"
+"%s\n"
+"\n"
+"(Neiðsaugosite pakeitimø\n"
+"including all undo information)"
 
 #: app/fileops.c:633
 msgid "Revert Image?"
@@ -1399,7 +1412,7 @@ msgstr ""
 
 #: app/flip_tool.c:83
 msgid "Flip Tool"
-msgstr ""
+msgstr "Veidrodis"
 
 #: app/flip_tool.c:96 app/preferences_dialog.c:1607
 #: app/preferences_dialog.c:2401
@@ -1442,15 +1455,15 @@ msgstr "grayscale-tuðèia"
 
 #: app/gdisplay.c:242
 msgid "grayscale"
-msgstr ""
+msgstr "Pilkumo atspalviai"
 
 #: app/gdisplay.c:245
 msgid "indexed-empty"
-msgstr ""
+msgstr "Indeksuotas-tuðèias"
 
 #: app/gdisplay.c:245
 msgid "indexed"
-msgstr ""
+msgstr "Indeksuotas"
 
 #: app/gdisplay_ops.c:302
 #, c-format
@@ -1469,7 +1482,7 @@ msgstr "Neina iðkirpti/kopijuoti, kadangi pasirinktas regionas tuðèias "
 
 #: app/gimage_mask.c:351
 msgid "Float Selection: No selection to float."
-msgstr ""
+msgstr "Plaukiojantis paþymëjimas: Nieko nepaþymëjote plaukiojanèiame."
 
 #: app/gimage_mask.c:363
 msgid "Floated Layer"
@@ -1480,40 +1493,44 @@ msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
+"Aktyvusis sluoksnis neturi alfa kanalo,\n"
+" kurá paverstø paþymëjimu"
 
 #: app/gimage_mask.c:518
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
+"Aktyvusis sluoksnis neturi kaukës,\n"
+"kurià paverstø paþymëjimu"
 
 #: app/gimage_mask.c:570
 msgid "No selection to stroke!"
-msgstr ""
+msgstr "Nepaþymëjote, kà reikia apvesti!"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr ""
+msgstr "Neþinoma teptuko formato  versija #%d byloje \"%s\"."
 
-#: app/gimpbrush.c:318
+#: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Klaida GIMP teptuko byloje \"%s\"."
 
-#: app/gimpbrush.c:325 app/patterns.c:236
+#: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Bevardis"
 
-#: app/gimpbrush.c:338 app/gimpbrush.c:383
+#: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr ""
+msgstr "GIMP teptuko byla gali bûti nepilna (sutrumpinta): \"%s\"."
 
-#: app/gimpbrush.c:363
+#: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr ""
+msgstr "GIMP teptuko byla gali bûti sugadinta: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1587,37 +1604,39 @@ msgstr "Naudokite Netscape vietoj to"
 
 #: app/gimpimage.c:2324
 msgid "Layer cannot be raised any further"
-msgstr ""
+msgstr "Sluoksnio aukðèiau pakelti negalima."
 
 #: app/gimpimage.c:2352
 msgid "Layer cannot be lowered any further"
-msgstr ""
+msgstr "Sluoksnio þemiau nuleisti negalima."
 
 #: app/gimpimage.c:2378
 msgid "Layer is already on top"
-msgstr ""
+msgstr "Sluoksnis jau virðuje."
 
 #: app/gimpimage.c:2384
 msgid "Can't raise Layer without alpha"
-msgstr ""
+msgstr "Negaliu pakelti sluoksnio be alfa kanalo"
 
 #: app/gimpimage.c:2412
 msgid "Layer is already on bottom"
-msgstr ""
+msgstr "Sluoksnis jau apaèioje"
 
 #: app/gimpimage.c:2467
 msgid "BG has no alpha, layer was placed above"
-msgstr ""
+msgstr "Fonas neturi alfa kanalo, sluoksnis bus patalpintas aukðèiau"
 
 #: app/gimpimage.c:2539
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
+"Neuþtenka matomø sluoksniø sujungimui. \n"
+"Turi bûti bent du."
 
 #: app/gimpimage.c:2623
 msgid "There are not enough visible layers for a merge down."
-msgstr ""
+msgstr "Neuþtenka matomø sluoksniø sujungimo su þemesniu sluoksniu veiksmui."
 
 #: app/gimpimage.c:3073
 msgid ""
@@ -1648,11 +1667,11 @@ msgstr "Neina pridëti sluoksnio kaukës"
 
 #: app/gimpimage.c:3202
 msgid "Channel cannot be raised any further"
-msgstr ""
+msgstr "Kanalo aukðèiau pakelti negalima"
 
 #: app/gimpimage.c:3253
 msgid "Channel cannot be lowered any further"
-msgstr ""
+msgstr "Kanalo þemiau nuleisti negalima"
 
 #: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
@@ -1709,11 +1728,11 @@ msgstr "Neina áraðyti á·%s;·%s"
 #: app/gimpui.c:87
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Praneðimas pakartotas %d kartø "
 
 #: app/gimpui.c:100
 msgid "Message repeated once"
-msgstr ""
+msgstr "Praneðimas pakartotas 1 kartà"
 
 #: app/gimpui.c:114
 msgid ""
@@ -1724,14 +1743,14 @@ msgstr ""
 
 #: app/gimpui.c:121
 msgid "GIMP Message"
-msgstr ""
+msgstr "GIMP praneðimas"
 
 #. pseudo unit
 #: app/gimpunit.c:63
 msgid "pixel"
 msgstr "taðkelis"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
 msgid "pixels"
 msgstr "taðkeliai"
 
@@ -1809,23 +1828,23 @@ msgstr "Kopijuoti·á vardiná buferá"
 
 #: app/gradient.c:644
 msgid "Curved"
-msgstr ""
+msgstr "Paversta á kreives"
 
 #: app/gradient.c:645
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sinusoidinis"
 
 #: app/gradient.c:646
 msgid "Spherical (increasing)"
-msgstr ""
+msgstr "Sferinis (didëjantis)"
 
 #: app/gradient.c:647
 msgid "Spherical (decreasing)"
-msgstr ""
+msgstr "Sferinis (maþëjantis)"
 
 #: app/gradient.c:652
 msgid "Plain RGB"
-msgstr ""
+msgstr "Grynas RGB"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
@@ -1837,12 +1856,12 @@ msgstr ""
 
 #: app/gradient.c:910
 msgid "Gradient Editor"
-msgstr ""
+msgstr "Perëjimø redaktorius"
 
 #: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
 #: app/palette.c:3167
 msgid "Gradient"
-msgstr ""
+msgstr "Perëjimas"
 
 #: app/gradient.c:942 app/gradient_select.c:216 app/palette.c:2198
 #: app/palette_select.c:93
@@ -1851,30 +1870,25 @@ msgstr "Pavadinimas"
 
 #. Frame & vbox for gradient functions
 #: app/gradient.c:987
-#, fuzzy
 msgid "Gradient Ops"
-msgstr "Pereinantis"
+msgstr "Perëjimo savybës"
 
 #. Buttons for gradient functions
 #: app/gradient.c:995
-#, fuzzy
 msgid "New Gradient"
-msgstr "Pereinantis"
+msgstr "Naujas perëjimas"
 
 #: app/gradient.c:1003
-#, fuzzy
 msgid "Copy Gradient"
-msgstr "Pereinantis"
+msgstr "Kopijuoti perëjimà"
 
 #: app/gradient.c:1011 app/gradient.c:1879
-#, fuzzy
 msgid "Delete Gradient"
-msgstr "Pereinantis"
+msgstr "Trinti perëjimà"
 
 #: app/gradient.c:1019
-#, fuzzy
 msgid "Rename Gradient"
-msgstr "Pereinantis"
+msgstr "Pervadinti perëjimà"
 
 #: app/gradient.c:1027 app/gradient.c:1940
 msgid "Save as POV-Ray"
@@ -1887,45 +1901,39 @@ msgstr "Parodyti viskà"
 
 #: app/gradient.c:1096
 msgid "Instant update"
-msgstr ""
+msgstr "Skubus atnaujinimas"
 
 #: app/gradient.c:1231 app/gradient.c:2065
 msgid "Default"
 msgstr "Áprastas"
 
 #: app/gradient.c:1664
-#, fuzzy
 msgid "New gradient"
-msgstr "Pereinantis"
+msgstr "Naujas perëjimas"
 
 #: app/gradient.c:1667
-#, fuzzy
 msgid "Enter a name for the new gradient"
-msgstr "Áveskite vardà ðiam buferiui"
+msgstr "Áveskite vardà naujam perëjimui"
 
 #: app/gradient.c:1668
 msgid "untitled"
 msgstr "bevardis"
 
 #: app/gradient.c:1725
-#, fuzzy
 msgid "Copy gradient"
-msgstr "Pereinantis"
+msgstr "Kopijuoti perëjimà"
 
 #: app/gradient.c:1728
-#, fuzzy
 msgid "Enter a name for the copied gradient"
-msgstr "Áveskite vardà ðiam buferiui"
+msgstr "Áveskite vardà nukopijuotam perëjimui"
 
 #: app/gradient.c:1811
-#, fuzzy
 msgid "Rename gradient"
-msgstr "Pereinantis"
+msgstr "Pervadinti perëjimà"
 
 #: app/gradient.c:1814
-#, fuzzy
 msgid "Enter a new name for the gradient"
-msgstr "Áveskite vardà ðiam buferiui"
+msgstr "Áveskite naujà vardà perëjimui"
 
 #: app/gradient.c:1874 app/palette.c:1816
 #, c-format
@@ -1933,6 +1941,8 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
+"Ar tikrai norite iðtrinti \n"
+"\"%s\" ið sàraðo ir disko?"
 
 #: app/gradient.c:2102
 #, c-format
@@ -2150,7 +2160,7 @@ msgstr ""
 #. The shell
 #: app/gradient_select.c:152
 msgid "Gradient Selection"
-msgstr ""
+msgstr "Perëjimo parinkimas"
 
 #. The shell and main vbox
 #: app/histogram_tool.c:171 app/histogram_tool.c:288 app/tools.c:1222
@@ -2192,7 +2202,7 @@ msgstr ""
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
 msgid "Hue-Saturation"
-msgstr ""
+msgstr "Atspalvis-Sodrumas"
 
 #: app/hue_saturation.c:292
 msgid "Hue-Saturation operates only on RGB color drawables."
@@ -2299,6 +2309,8 @@ msgid ""
 "The active gradient.\n"
 "Click to open the Gradients Dialog."
 msgstr ""
+"Aktyvus perëjimas.\n"
+"Paspauskite, jei norite atidaryti dialogà \"Perëjimai\"."
 
 #: app/info_dialog.c:189 app/preferences_dialog.c:1814
 #: app/preferences_dialog.c:1920
@@ -2446,7 +2458,7 @@ msgstr "Kanalas"
 
 #: app/internal_procs.c:77
 msgid "Channel Ops"
-msgstr "Kanalo nuostatos"
+msgstr "Kanalo savybës"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:391 app/paint_funcs.c:101
 #: app/tool_options.c:821 app/tool_options.c:936
@@ -2667,7 +2679,7 @@ msgstr "Plaukiojantis paþymëjimas"
 
 #: app/layers_dialog.c:3553
 msgid "New Layer Options"
-msgstr "Naujo sluoksnio nuostatos"
+msgstr "Naujo sluoksnio savybës"
 
 #. The name label and entry
 #: app/layers_dialog.c:3582
@@ -2722,7 +2734,7 @@ msgstr ""
 
 #: app/layers_dialog.c:4093
 msgid "Layer Merge Options"
-msgstr "Sluoksniø sujungimo parametrai"
+msgstr "Sluoksniø sujungimo savybës"
 
 #: app/layers_dialog.c:4118
 msgid "Final, Merged Layer should be:"
@@ -2796,7 +2808,7 @@ msgstr "Ákrauti/Iðsaugoti·lygius"
 
 #: app/magnify.c:117
 msgid "Magnify Tool"
-msgstr ""
+msgstr "Lupa"
 
 #: app/magnify.c:127
 msgid "Allow Window Resizing"
@@ -2960,7 +2972,7 @@ msgstr "/Byla/Dialogai/Sluoksniai, Kanalai ir Kontûrai..."
 
 #: app/menus.c:124
 msgid "/File/Dialogs/Tool Options..."
-msgstr "/Byla/Dialogai/Árankiø parametrai..."
+msgstr "/Byla/Dialogai/Árankiø savybës..."
 
 #: app/menus.c:129
 msgid "/File/Dialogs/Brushes..."
@@ -2972,7 +2984,7 @@ msgstr "/Byla/Dialogai/Raðtai..."
 
 #: app/menus.c:133
 msgid "/File/Dialogs/Gradients..."
-msgstr "/Byla/Dialogai/Gradientai..."
+msgstr "/Byla/Dialogai/Perëjimai..."
 
 #: app/menus.c:135
 msgid "/File/Dialogs/Palette..."
@@ -3010,11 +3022,11 @@ msgstr "/Byla/Baigti"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:171
 msgid "/_Xtns"
-msgstr "/_Iðplëtimai"
+msgstr "/_Iðpl."
 
 #: app/menus.c:173
 msgid "/Xtns/Module Browser..."
-msgstr "/_Iðplëtimai/Moduliø narðyklë..."
+msgstr "/Iðpl./Moduliø narðyklë..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
@@ -3135,23 +3147,23 @@ msgstr "/Paþymëti/Plaukiojantá"
 
 #: app/menus.c:288
 msgid "/Select/Feather..."
-msgstr ""
+msgstr "/Paþymëti/Iðlieti..."
 
 #: app/menus.c:290
 msgid "/Select/Sharpen"
-msgstr ""
+msgstr "/Paþymëti/Paaðtrinti"
 
 #: app/menus.c:292
 msgid "/Select/Shrink..."
-msgstr ""
+msgstr "/Paþymëti/Sumaþinti..."
 
 #: app/menus.c:294
 msgid "/Select/Grow..."
-msgstr ""
+msgstr "/Paþymëti/Padidinti..."
 
 #: app/menus.c:296
 msgid "/Select/Border..."
-msgstr "/Paþymëti/Rëmelis..."
+msgstr "/Paþymëti/Rëmelá..."
 
 #: app/menus.c:301
 msgid "/Select/Save to Channel"
@@ -3209,7 +3221,7 @@ msgstr "/Vaizdas/Taðkas á taðkà"
 
 #: app/menus.c:337
 msgid "/View/Info Window..."
-msgstr "/Vaizdas/Info langas..."
+msgstr "/Vaizdas/Informacijos langas..."
 
 #: app/menus.c:339
 msgid "/View/Nav. Window..."
@@ -3217,23 +3229,23 @@ msgstr "/Vaizdas/Navigacijos langas..."
 
 #: app/menus.c:344
 msgid "/View/Toggle Selection"
-msgstr "/Vaizdas/Perjungti paþymëjimà"
+msgstr "/Vaizdas/Rodyti paþymëjimà"
 
 #: app/menus.c:346
 msgid "/View/Toggle Rulers"
-msgstr "/Vaizdas/Perjungti liniuotes"
+msgstr "/Vaizdas/Rodyti liniuotes"
 
 #: app/menus.c:348
 msgid "/View/Toggle Statusbar"
-msgstr "/Vaizdas/Perjungti bûsenos juostà"
+msgstr "/Vaizdas/Rodyti bûsenos juostà"
 
 #: app/menus.c:350
 msgid "/View/Toggle Guides"
-msgstr ""
+msgstr "/Vaizdas/Rodyti pagalbines linijas"
 
 #: app/menus.c:352
 msgid "/View/Snap to Guides"
-msgstr ""
+msgstr "/Vaizdas/Kibti prie pagalbiniø linijø"
 
 #: app/menus.c:357
 msgid "/View/New View"
@@ -3241,7 +3253,7 @@ msgstr "/Vaizdas/Naujas vaizdas"
 
 #: app/menus.c:359
 msgid "/View/Shrink Wrap"
-msgstr ""
+msgstr "/Vaizdas/"
 
 #. <Image>/Image/Mode
 #: app/menus.c:364
@@ -3282,15 +3294,15 @@ msgstr "/Paveikslëlis/Transformacijos/Poslinkis..."
 
 #: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
-msgstr "/Paveikslëlis/Transformacijos/Sukimas"
+msgstr "/Paveikslëlis/Transformacijos/Pasukimas"
 
 #: app/menus.c:408
 msgid "/Image/Canvas Size..."
-msgstr ""
+msgstr "/Paveikslëlis/Paveikslëlio dydis..."
 
 #: app/menus.c:410
 msgid "/Image/Scale Image..."
-msgstr ""
+msgstr "/Paveikslëlis/Keisti dydá..."
 
 #: app/menus.c:412
 msgid "/Image/Duplicate"
@@ -3303,7 +3315,7 @@ msgstr "/Sluoksniai/Sluoksniai, Kanalai ir Kontûrai..."
 
 #: app/menus.c:424
 msgid "/Layers/Layer to Imagesize"
-msgstr "/Sluoksniai/Pakeistá dydá pagal paveikslëlá"
+msgstr ""
 
 #. <Image>/Layers/Stack
 #: app/menus.c:429
@@ -3345,11 +3357,11 @@ msgstr "/Sluoksniai/Sujungti matomus sluoksnius..."
 
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
-msgstr "/Sluoksniai/Iðlyginti paveikslëlá"
+msgstr "/Sluoksniai/Sujungti á paveikslëlá"
 
 #: app/menus.c:460
 msgid "/Layers/Mask to Selection"
-msgstr "/Sluoksniai/Kaukë -> Paþymëjimas"
+msgstr "/Sluoksniai/Kaukæ paversti paþymëjimu"
 
 #: app/menus.c:465
 msgid "/Layers/Add Alpha Channel"
@@ -3357,7 +3369,7 @@ msgstr "/Sluoksniai/Pridëti alfa kanalà"
 
 #: app/menus.c:467
 msgid "/Layers/Alpha to Selection"
-msgstr "/Sluoksniai/Alfa kanalas -> Paþymëjimas"
+msgstr "/Sluoksniai/Alfa kanalà paversti paþymëjimu"
 
 #. <Image>/Tools
 #: app/menus.c:475
@@ -3375,11 +3387,11 @@ msgstr "/Árankiai/Sukeisti spalvas"
 #. <Image>/Dialogs
 #: app/menus.c:486
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Dialogai/Sluoksniai, Kanalai ir kontûrai..."
+msgstr "/Dialogai/Sluoksniai, kanalai ir kontûrai..."
 
 #: app/menus.c:488
 msgid "/Dialogs/Tool Options..."
-msgstr "/Dialogai/Árankiø nuostatos..."
+msgstr "/Dialogai/Árankiø savybës..."
 
 #: app/menus.c:493
 msgid "/Dialogs/Brushes..."
@@ -3391,7 +3403,7 @@ msgstr "/Dialogai/Raðtai..."
 
 #: app/menus.c:497
 msgid "/Dialogs/Gradients..."
-msgstr "/Dialogai/Grandientai..."
+msgstr "/Dialogai/Perëjimai..."
 
 #: app/menus.c:499
 msgid "/Dialogs/Palette..."
@@ -3419,7 +3431,7 @@ msgstr "/Dialogai/Klaidø terminalas..."
 
 #: app/menus.c:518
 msgid "/Dialogs/Display Filters..."
-msgstr "/Dialogai/Displëjaus filtrai..."
+msgstr "/Dialogai/Rodyti filtrus..."
 
 #: app/menus.c:521
 msgid "/Dialogs/Undo History..."
@@ -3436,7 +3448,7 @@ msgstr "/Filtrai/Parodyti paskutiná"
 
 #: app/menus.c:537
 msgid "/Filters/Blur"
-msgstr "/Filtrai/Sutepimas"
+msgstr "/Filtrai/Iðliejimas"
 
 #: app/menus.c:539
 msgid "/Filters/Colors"
@@ -3484,7 +3496,7 @@ msgstr "/Filtrai/Perteikimas"
 
 #: app/menus.c:564
 msgid "/Filters/Web"
-msgstr "/Filtrai/Web"
+msgstr "/Filtrai/Tinklas"
 
 #: app/menus.c:569
 msgid "/Filters/Animation"
@@ -3529,7 +3541,7 @@ msgstr "/Stekas/Nuleisti·sluoksná·iki apaèios"
 
 #: app/menus.c:629
 msgid "/Duplicate Layer"
-msgstr "/Dublikuoti sluoksná"
+msgstr "/Padaryti sluoksnio kopijà"
 
 #: app/menus.c:631
 msgid "/Anchor Layer"
@@ -3549,7 +3561,7 @@ msgstr "/Pakeistá sluoksnio·dydá·pagal·paveikslëlá"
 
 #: app/menus.c:642
 msgid "/Scale Layer..."
-msgstr ""
+msgstr "/Keisti sluoksnio dydá..."
 
 #: app/menus.c:647
 msgid "/Merge Visible Layers..."
@@ -3557,11 +3569,11 @@ msgstr "/Sujungti matomus sluoksnius..."
 
 #: app/menus.c:649
 msgid "/Merge Down"
-msgstr "Sujungti su praeitu"
+msgstr "/Sujungti su þemiau esanèiu"
 
 #: app/menus.c:651
 msgid "/Flatten Image"
-msgstr "/Iðlyginti·paveikslëlá"
+msgstr "/Sujungti á vientisà·paveikslëlá"
 
 #: app/menus.c:656
 msgid "/Add Layer Mask..."
@@ -3577,7 +3589,7 @@ msgstr "/Iðtrinti sluoksnio·kaukæ..."
 
 #: app/menus.c:662
 msgid "/Mask to Selection"
-msgstr "/Kaukë -> Paþymëta sritis"
+msgstr "/Pakeisti kaukæ paþymëjimu"
 
 #: app/menus.c:667
 msgid "/Add Alpha Channel"
@@ -3585,11 +3597,11 @@ msgstr "/Pridëti alfa kanalà"
 
 #: app/menus.c:669
 msgid "/Alpha to Selection"
-msgstr "/Alfa kanalas -> Paþymëta·sritis"
+msgstr "/Pakeisti Alfa kanalà paþymëjimu"
 
 #: app/menus.c:674
 msgid "/Edit Layer Attributes..."
-msgstr "/Keisti sluoksnio parametrus..."
+msgstr "/Keisti sluoksnio savybes..."
 
 #: app/menus.c:685
 msgid "/New Channel..."
@@ -3605,24 +3617,23 @@ msgstr "/Nuleisti kanalà"
 
 #: app/menus.c:691
 msgid "/Duplicate Channel"
-msgstr "/Dublikuoti kanalà"
+msgstr "/Padaryti kanalo kopijà"
 
 #: app/menus.c:696
 msgid "/Channel to Selection"
-msgstr "/Kanalas·->·Paþymëta·sritis"
+msgstr "/Pakeisti kanalà paþymëjimu"
 
 #: app/menus.c:698
 msgid "/Add to Selection"
 msgstr "/Pridëti prie paþymëjimo"
 
 #: app/menus.c:700
-#, fuzzy
 msgid "/Subtract from Selection"
-msgstr "/Iðimti ið paþymëjimo"
+msgstr "/Atimti ið paþymëjimo"
 
 #: app/menus.c:702
 msgid "/Intersect with Selection"
-msgstr ""
+msgstr "/Sankirta su paþymëjimu"
 
 #: app/menus.c:707
 msgid "/Delete Channel"
@@ -3630,7 +3641,7 @@ msgstr "/Iðtrinti kanalà"
 
 #: app/menus.c:712
 msgid "/Edit Channel Attributes..."
-msgstr "/Keisti kanalo parametrus..."
+msgstr "/Keisti kanalo savybes..."
 
 #: app/menus.c:723
 msgid "/New Path"
@@ -3638,19 +3649,19 @@ msgstr "/Naujas kontûras"
 
 #: app/menus.c:725
 msgid "/Duplicate Path"
-msgstr "/Dublikuoti kontûrà"
+msgstr "/Padaryti kontûro kopijà"
 
 #: app/menus.c:727
 msgid "/Path to Selection"
-msgstr "/Kontûras·->·Paþymëta·sritis"
+msgstr "/Kontûras --> paþymëta sritis"
 
 #: app/menus.c:729
 msgid "/Selection to Path"
-msgstr "/Paþymëta·sritis -> kontûras"
+msgstr "/Paþymëta sritis --> kontûras"
 
 #: app/menus.c:731
 msgid "/Stroke Path"
-msgstr ""
+msgstr "/Apibrëþti kontûrà"
 
 #: app/menus.c:733
 msgid "/Delete Path"
@@ -3674,7 +3685,7 @@ msgstr "/Eksportuoti·kontûrà..."
 
 #: app/menus.c:749
 msgid "/Edit Path Attributes..."
-msgstr "/Keisti kontûro parametrus..."
+msgstr "/Keisti kontûro savybes..."
 
 #: app/menus.c:1314
 #, c-format
@@ -3709,17 +3720,17 @@ msgstr "Moduliø DB"
 #: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr "ákelti modulá:·\"%s\"\n"
+msgstr "Ákelti modulá:·\"%s\"\n"
 
 #: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr "praleisti modulá:·\"%s\"\n"
+msgstr "Praleisti modulá:·\"%s\"\n"
 
 #: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
-msgstr "modulio ákëlimo klaida:·%s:·%s"
+msgstr "Modulio ákëlimo klaida:·%s:·%s"
 
 #: app/module_db.c:822
 msgid "<No modules>"
@@ -3775,7 +3786,7 @@ msgstr "Automatinis ákëlimas startuojant"
 
 #: app/move.c:500
 msgid "Move Tool"
-msgstr ""
+msgstr "Poslinkio árankis"
 
 #. create the info dialog
 #: app/nav_window.c:1308
@@ -3787,14 +3798,13 @@ msgstr "Navigacija:·%s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigacija: Nëra paveikslëlio"
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr ""
 
 #: app/paint_funcs.c:90 app/tool_options.c:924
-#, fuzzy
 msgid "Behind"
-msgstr "Perëjimas"
+msgstr "Uþ"
 
 #: app/paint_funcs.c:96
 #, fuzzy
@@ -3816,11 +3826,11 @@ msgstr "Tipas:"
 
 #: app/paintbrush.c:317
 msgid "Once Forward"
-msgstr ""
+msgstr "Kartà pirmyn"
 
 #: app/paintbrush.c:318
 msgid "Once Backward"
-msgstr ""
+msgstr "Kartà atgal"
 
 #: app/paintbrush.c:319
 msgid "Loop Sawtooth"
@@ -3907,7 +3917,7 @@ msgstr "Neapibrëþtas"
 
 #: app/palette.c:1763
 msgid "New Palette"
-msgstr "Nauja paletë:"
+msgstr "Nauja paletë"
 
 #: app/palette.c:1766
 msgid "Enter a name for new palette"
@@ -3943,7 +3953,7 @@ msgstr ""
 
 #: app/palette.c:2217
 msgid "Palette Ops"
-msgstr "Paletës nuostatos"
+msgstr "Paletës savybës"
 
 #. The "Import" frame
 #: app/palette.c:2248 app/palette.c:3109 app/palette.c:3123
@@ -3974,7 +3984,7 @@ msgstr "Ðaltinis:"
 
 #: app/palette.c:3185
 msgid "Indexed Palette"
-msgstr ""
+msgstr "Indeksuota paletë"
 
 #. The sample size
 #: app/palette.c:3198
@@ -3989,7 +3999,7 @@ msgstr "Intervalas:"
 #. The shell and main vbox
 #: app/palette_select.c:61
 msgid "Palette Selection"
-msgstr ""
+msgstr "Paletës pasirinkimas"
 
 #: app/paths_dialog.c:167
 msgid "New Path"
@@ -3997,23 +4007,23 @@ msgstr "Naujas kontûras"
 
 #: app/paths_dialog.c:171
 msgid "Duplicate Path"
-msgstr ""
+msgstr "Padaryti kontûro kopijà"
 
 #: app/paths_dialog.c:175
 msgid "Path to Selection"
-msgstr ""
+msgstr "Kontûras -> Paþymëjimas"
 
 #: app/paths_dialog.c:179
 msgid "Selection to Path"
-msgstr ""
+msgstr "Paþymëjimas -> Kontûras"
 
 #: app/paths_dialog.c:183
 msgid "Stroke Path"
-msgstr ""
+msgstr "Apvesti kontûrà"
 
 #: app/paths_dialog.c:187
 msgid "Delete Path"
-msgstr ""
+msgstr "Iðtrinti kontûrà"
 
 #: app/paths_dialog.c:196
 msgid "New Point"
@@ -4038,7 +4048,7 @@ msgstr "Kontûras %d"
 
 #: app/paths_dialog.c:989
 msgid "Edit Path Attributes"
-msgstr "Keisti kontûro parametrus"
+msgstr "Keisti kontûro savybes"
 
 #: app/paths_dialog.c:992
 msgid "Enter a new name for the path"
@@ -4057,25 +4067,25 @@ msgstr "Nepavyko·nuskaityti kontûro·ið·%s"
 #: app/paths_dialog.c:1945
 #, c-format
 msgid "No points specified in path file %s"
-msgstr ""
+msgstr "Kontûro byloje nëra apraðytø taðkø %s"
 
 #: app/paths_dialog.c:1956
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr ""
+msgstr "Nepavyko nuskaityti·kontûro taðkø ið %s"
 
 #: app/paths_dialog.c:2029 app/xcf.c:438
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "atidarymas nepavyko %s:·%s\n"
+msgstr "Atidarymas nepavyko %s:·%s\n"
 
 #: app/paths_dialog.c:2051
 msgid "Load/Store Bezier Curves"
-msgstr ""
+msgstr "Uþkrauti/Saugoti Bezier kreives"
 
 #: app/paths_dialog.c:2091
 msgid "Load Path"
-msgstr "Ákrauti kontûrà"
+msgstr "Uþkrauti kontûrà"
 
 #: app/paths_dialog.c:2113
 msgid "Store Path"
@@ -4088,17 +4098,17 @@ msgstr "Raðto pasirinkimas"
 
 #: app/pattern_select.c:233
 msgid "No Patterns available"
-msgstr ""
+msgstr "Raðtø naudoti negalima"
 
 #: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr ""
+msgstr "Neþinoma raðto formato versija #%d in \"%s\"."
 
 #: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr ""
+msgstr "Klaida GIMP raðto byloje \"%s\"."
 
 #: app/patterns.c:245
 #, c-format
@@ -4107,7 +4117,7 @@ msgstr ""
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
-msgstr ""
+msgstr "Perspektyvos transformacijos informacija"
 
 #: app/perspective_tool.c:68
 msgid "Matrix:"
@@ -4115,7 +4125,7 @@ msgstr ""
 
 #: app/perspective_tool.c:308
 msgid "Perspective..."
-msgstr ""
+msgstr "Perspektyva..."
 
 #: app/plug_in.c:332
 msgid "Resource configuration"
@@ -4158,6 +4168,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Paleisti priedo nepavyko: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Tai galëjo pakenkti vidinei GIMP'o bûsenai.\n"
+"Saugumo sumetimais patariame uþsisaugoti paveikslëlius\n"
+"ir uþsikrauti GIMP'à ið naujo."
 
 #: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
 msgid "Posterize"
@@ -4173,7 +4189,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:267
 msgid "Error: Levels of undo must be zero or greater."
-msgstr ""
+msgstr "Klaida: Atðaukimø skaièius turi bûti lygus nuliui arba didesnis."
 
 #: app/preferences_dialog.c:273
 msgid "Error: Marching speed must be 50 or greater."
@@ -4181,11 +4197,11 @@ msgstr ""
 
 #: app/preferences_dialog.c:279
 msgid "Error: Default width must be one or greater."
-msgstr ""
+msgstr "Klaida: Áprastas plotis turi bûti lygus vienam ar didesnis."
 
 #: app/preferences_dialog.c:285
 msgid "Error: Default height must be one or greater."
-msgstr ""
+msgstr "Klaida:·Áprastas·aukðtis·turi·bûti·lygus·vienam·ar·didesnis."
 
 #: app/preferences_dialog.c:292
 msgid "Error: Default unit must be within unit range."
@@ -4193,7 +4209,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:299
 msgid "Error: Default resolution must not be zero."
-msgstr ""
+msgstr "Klaida: Áprasta raiðka negali bûti lygi nuliui."
 
 #: app/preferences_dialog.c:307
 msgid "Error: Default resolution unit must be within unit range."
@@ -4201,11 +4217,11 @@ msgstr ""
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
-msgstr ""
+msgstr "Klaida:·Ekrano·raiðka·negali·bûti·lygi·nuliui."
 
 #: app/preferences_dialog.c:321
 msgid "Error: Image title format must not be NULL."
-msgstr ""
+msgstr "Klaida:·Paveikslëlio pavadinimo formatas negali bûti NULL."
 
 #: app/preferences_dialog.c:328
 msgid "Error: Number of processors must be between 1 and 30."
@@ -4213,7 +4229,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:378
 msgid "Save Preferences ?"
-msgstr "Iðsaugoti nustatymus ?"
+msgstr "Iðsaugoti nuostatas ?"
 
 #: app/preferences_dialog.c:399
 msgid ""
@@ -4228,12 +4244,12 @@ msgstr ""
 
 #: app/preferences_dialog.c:492
 msgid "You will need to restart GIMP for these changes to take effect."
-msgstr ""
+msgstr "Kad pastebëtumëte pakeitimus, turësite GIMP uþkrauti ið naujo."
 
 #: app/preferences_dialog.c:1044
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Áprastas komentaras turi bûti ne ilgesnis kaip %d simboliø."
 
 #: app/preferences_dialog.c:1475
 msgid "Preferences"
@@ -4250,7 +4266,7 @@ msgstr "Nauja byla"
 
 #: app/preferences_dialog.c:1538
 msgid "Default Image Size and Unit"
-msgstr ""
+msgstr "Áprastas paveikslëlio dydis ir matavimo vienetai"
 
 #: app/preferences_dialog.c:1552
 msgid "Width"
@@ -4262,11 +4278,11 @@ msgstr "Aukðtis"
 
 #: app/preferences_dialog.c:1584
 msgid "Default Image Resolution and Resolution Unit"
-msgstr ""
+msgstr "Áprasta paveikslëlio raiðka ir raiðkos matavimo vienetai"
 
 #: app/preferences_dialog.c:1611 app/preferences_dialog.c:2405
 msgid "dpi"
-msgstr ""
+msgstr "taðkø colyje"
 
 #: app/preferences_dialog.c:1658
 msgid "Default Image Type:"
@@ -4274,15 +4290,15 @@ msgstr "Áprastas paveikslëlio tipas:"
 
 #: app/preferences_dialog.c:1670
 msgid "Maximum Image Size:"
-msgstr "Maksimalus paveikslëlio dydis"
+msgstr "Maksimalus paveikslëlio dydis:"
 
 #: app/preferences_dialog.c:1675 app/preferences_dialog.c:1677
 msgid "Default Comment"
-msgstr ""
+msgstr "Áprastas komentaras"
 
 #: app/preferences_dialog.c:1685
 msgid "Comment Used for New Images"
-msgstr ""
+msgstr "Komentaras, naudojamas naujiems paveikslëliams"
 
 #: app/preferences_dialog.c:1705 app/preferences_dialog.c:1707
 msgid "Display"
@@ -4294,31 +4310,31 @@ msgstr "Skaidrumas"
 
 #: app/preferences_dialog.c:1734
 msgid "Light Checks"
-msgstr ""
+msgstr "Ðviesiø tonø patikrinimas"
 
 #: app/preferences_dialog.c:1735
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Pustoniø patikrinimas"
 
 #: app/preferences_dialog.c:1736
 msgid "Dark Checks"
-msgstr ""
+msgstr "Tamsiø tonø patikrinimas"
 
 #: app/preferences_dialog.c:1737
 msgid "White Only"
-msgstr ""
+msgstr "Tik balta"
 
 #: app/preferences_dialog.c:1738
 msgid "Gray Only"
-msgstr ""
+msgstr "Tik pilka"
 
 #: app/preferences_dialog.c:1739
 msgid "Black Only"
-msgstr ""
+msgstr "Tik juoda"
 
 #: app/preferences_dialog.c:1743
 msgid "Transparency Type:"
-msgstr ""
+msgstr "Skaidrumo tipas:"
 
 #: app/preferences_dialog.c:1750 app/preferences_dialog.c:1842
 #: app/preferences_dialog.c:1856
@@ -4328,7 +4344,7 @@ msgstr "Maþas"
 #: app/preferences_dialog.c:1751 app/preferences_dialog.c:1843
 #: app/preferences_dialog.c:1857
 msgid "Medium"
-msgstr "Vidutiniai"
+msgstr "Vidutinis"
 
 #: app/preferences_dialog.c:1752 app/preferences_dialog.c:1844
 #: app/preferences_dialog.c:1858
@@ -4337,15 +4353,15 @@ msgstr "Didelis"
 
 #: app/preferences_dialog.c:1756
 msgid "Check Size:"
-msgstr ""
+msgstr "Patikrinti dydá:"
 
 #: app/preferences_dialog.c:1759
 msgid "8-Bit Displays"
-msgstr ""
+msgstr "8-Bit ekranai"
 
 #: app/preferences_dialog.c:1780
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Maþiausias spalvø skaièius:"
 
 #: app/preferences_dialog.c:1783
 msgid "Install Colormap"
@@ -4357,7 +4373,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1841
 msgid "Tiny"
-msgstr "Maþiukas"
+msgstr "Maþytis"
 
 #: app/preferences_dialog.c:1845
 msgid "Huge"
@@ -4365,15 +4381,15 @@ msgstr "Didþiulis"
 
 #: app/preferences_dialog.c:1849
 msgid "Preview Size:"
-msgstr ""
+msgstr "Perþiûros dydis:"
 
 #: app/preferences_dialog.c:1862
 msgid "Nav Preview Size:"
-msgstr ""
+msgstr "Nav. perþiûros dydis:"
 
 #: app/preferences_dialog.c:1872
 msgid "Recent Documents List Size:"
-msgstr ""
+msgstr "Dabartiniø dokumentø sàraðø dydis:"
 
 #. Indicators
 #: app/preferences_dialog.c:1876
@@ -4382,7 +4398,7 @@ msgstr "Árankinë"
 
 #: app/preferences_dialog.c:1879
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Rodyti teptukø, raðtø bei grandientø indikatorius"
+msgstr "Rodyti teptukø, raðtø bei perëjimø indikatorius"
 
 #: app/preferences_dialog.c:1888
 msgid "Dialog Behaviour"
@@ -4406,7 +4422,7 @@ msgstr "Rodyti patarimus"
 
 #: app/preferences_dialog.c:1932
 msgid "Context Sensitive Help with \"F1\""
-msgstr ""
+msgstr "Jautri kontekstinë pagalba su \"F1\""
 
 #: app/preferences_dialog.c:1941
 msgid "Help Browser"
@@ -4418,11 +4434,11 @@ msgstr "Vidinë"
 
 #: app/preferences_dialog.c:1954
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/preferences_dialog.c:1958
 msgid "Help Browser to Use:"
-msgstr "Naudojama pagalbos narðyklë"
+msgstr "Naudojama pagalbos narðyklë:"
 
 #: app/preferences_dialog.c:1963 app/preferences_dialog.c:1965
 msgid "Image Windows"
@@ -4434,11 +4450,11 @@ msgstr "Iðvaizda"
 
 #: app/preferences_dialog.c:1975
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Áprastai naudoti \"Taðkas á taðkà\""
 
 #: app/preferences_dialog.c:1984
 msgid "Resize Window on Zoom"
-msgstr "Paeisti lango dydá pakeitus mastelá"
+msgstr "Pakeisti lango dydá pakeitus mastelá"
 
 #: app/preferences_dialog.c:1993
 msgid "Show Rulers"
@@ -4476,7 +4492,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2066
 msgid "Image Title Format:"
-msgstr ""
+msgstr "Paveikslëlio pavadinimo formatas:"
 
 #. End of the title format string
 #: app/preferences_dialog.c:2070
@@ -4489,7 +4505,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2082
 msgid "Disable Cursor Updating"
-msgstr ""
+msgstr "Kursoriaus neatnaujinti"
 
 #: app/preferences_dialog.c:2101
 msgid "Tool Icon"
@@ -4497,28 +4513,28 @@ msgstr "Árankiø þenkliukai"
 
 #: app/preferences_dialog.c:2103
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Árankiø·þenkliukai su kryþeliu"
 
 #: app/preferences_dialog.c:2105
 msgid "Crosshair only"
-msgstr ""
+msgstr "Tik kryþelis"
 
 #: app/preferences_dialog.c:2110
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Kursoriaus reþimas:"
 
 #: app/preferences_dialog.c:2116 app/preferences_dialog.c:2118
 #: app/tools.c:1541
 msgid "Tool Options"
-msgstr "Árankiø nuostatos"
+msgstr "Árankiø savybës"
 
 #: app/preferences_dialog.c:2126
 msgid "Paint Options"
-msgstr ""
+msgstr "Daþymo savybës"
 
 #: app/preferences_dialog.c:2129
 msgid "Use Global Paint Options"
-msgstr ""
+msgstr "Naudoti globalias daþymo savybes"
 
 #: app/preferences_dialog.c:2138
 msgid "Finding Contiguous Regions"
@@ -4542,7 +4558,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2206
 msgid "Levels of Undo:"
-msgstr "Atðaukimø lygiai:"
+msgstr "Atðaukimø skaièius:"
 
 #: app/preferences_dialog.c:2218 app/user_install.c:1111
 #, fuzzy
@@ -4555,19 +4571,19 @@ msgstr "Naudojamø procesoriø skaièius:"
 
 #: app/preferences_dialog.c:2233 app/transform_tool.c:220
 msgid "Scaling"
-msgstr ""
+msgstr "Didinimas"
 
 #: app/preferences_dialog.c:2251
 msgid "Nearest Neighbor (Fast)"
-msgstr ""
+msgstr "Artimiausias kaimynas (Greitas)"
 
 #: app/preferences_dialog.c:2255
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "Kubinis (Lëtas)"
 
 #: app/preferences_dialog.c:2260
 msgid "Interpolation Type:"
-msgstr ""
+msgstr "Interpoliacijos tipas:"
 
 #: app/preferences_dialog.c:2263
 msgid "File Saving"
@@ -4587,15 +4603,15 @@ msgstr ""
 
 #: app/preferences_dialog.c:2292
 msgid "Only when Modified"
-msgstr ""
+msgstr "Tik kai padaryti pakeitimai"
 
 #: app/preferences_dialog.c:2297
 msgid "\"File > Save\" Saves the Image:"
-msgstr ""
+msgstr "\"Byla > Saugoti\" Saugo paveikslëlá:"
 
 #: app/preferences_dialog.c:2303
 msgid "Session Management"
-msgstr ""
+msgstr "Sesijos valdymas"
 
 #: app/preferences_dialog.c:2305
 msgid "Session"
@@ -4603,19 +4619,19 @@ msgstr "Sesija"
 
 #: app/preferences_dialog.c:2313
 msgid "Window Positions"
-msgstr ""
+msgstr "Lango vieta"
 
 #: app/preferences_dialog.c:2315
 msgid "Save Window Positions on Exit"
-msgstr ""
+msgstr "Iðsaugoti lango vietà baigiant"
 
 #: app/preferences_dialog.c:2329
 msgid "Clear Saved Window Positions Now"
-msgstr ""
+msgstr "Iðtrinti iðsaugotà lango vietà dabar"
 
 #: app/preferences_dialog.c:2337
 msgid "Always Try to Restore Session"
-msgstr ""
+msgstr "Visada bandyti atnaujinti sesijà"
 
 #: app/preferences_dialog.c:2346
 msgid "Devices"
@@ -4623,15 +4639,15 @@ msgstr "Árenginiai"
 
 #: app/preferences_dialog.c:2348
 msgid "Save Device Status on Exit"
-msgstr ""
+msgstr "Iðsaugoti árenginiø bûsenà iðeinant"
 
 #: app/preferences_dialog.c:2359 app/preferences_dialog.c:2361
 msgid "Monitor"
-msgstr "Monitorius"
+msgstr "Vaizduoklis"
 
 #: app/preferences_dialog.c:2369
 msgid "Get Monitor Resolution"
-msgstr "Gauti monitoriaus skiriamàjà gebà"
+msgstr "Gauti vaizduoklio skiriamàjà gebà"
 
 #: app/preferences_dialog.c:2377
 #, c-format
@@ -4672,11 +4688,11 @@ msgstr "Nurodykite Swap katalogà"
 
 #: app/preferences_dialog.c:2535
 msgid "Brushes Directories"
-msgstr "Teptukø katalogas"
+msgstr "Teptukø katalogai"
 
 #: app/preferences_dialog.c:2537
 msgid "Select Brushes Dir"
-msgstr "Nurodkite teptukø·katalogà"
+msgstr "Nurodykite teptukø·katalogà"
 
 #: app/preferences_dialog.c:2539
 msgid "Generated Brushes"
@@ -4708,11 +4724,11 @@ msgstr "Nurodykite paleèiø·katalogà"
 
 #: app/preferences_dialog.c:2551
 msgid "Gradients Directories"
-msgstr "Gradientø katalogai"
+msgstr "Perëjimø katalogai"
 
 #: app/preferences_dialog.c:2553
 msgid "Select Gradients Dir"
-msgstr "Nurodykite gradientø·katalogà"
+msgstr "Nurodykite perëjimø·katalogà"
 
 #: app/preferences_dialog.c:2555
 msgid "Plug-Ins"
@@ -4791,15 +4807,15 @@ msgstr "Pasirinkimas:·PRIDËTI"
 
 #: app/rect_select.c:206
 msgid "Selection: SUBTRACT"
-msgstr ""
+msgstr "Pasirinkimas: ATIMTI"
 
 #: app/rect_select.c:209
 msgid "Selection: INTERSECT"
-msgstr ""
+msgstr "Pasirinkimas: SANKIRTA"
 
 #: app/rect_select.c:212
 msgid "Selection: REPLACE"
-msgstr ""
+msgstr "Pasirinkimas: PAKEISTI"
 
 #: app/rect_select.c:447 app/rect_select.c:454
 msgid "Selection: "
@@ -4807,7 +4823,7 @@ msgstr "Pasirinkimas:"
 
 #: app/resize.c:182
 msgid "Scale Layer"
-msgstr ""
+msgstr "Keisti sluoksnio dydá"
 
 #: app/resize.c:184 app/resize.c:209 app/tool_options.c:801
 msgid "Size"
@@ -4815,7 +4831,7 @@ msgstr "Dydis"
 
 #: app/resize.c:188
 msgid "Scale Image"
-msgstr ""
+msgstr "Keisti paveikslëlio dydá"
 
 #: app/resize.c:190
 msgid "Pixel Dimensions"
@@ -4823,11 +4839,11 @@ msgstr ""
 
 #: app/resize.c:200
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "Nustatyti sluoksnio ribø dydá"
 
 #: app/resize.c:205
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "Nustatyti paveikslëlio dydá"
 
 #. the original width & height labels
 #: app/resize.c:278 app/scale_tool.c:85
@@ -4842,11 +4858,11 @@ msgstr "Naujas plotis:"
 #. the scale ratio labels
 #: app/resize.c:368
 msgid "Ratio X:"
-msgstr ""
+msgstr "Santykis X:"
 
 #: app/resize.c:464
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: app/resize.c:521
 msgid "Print Size & Display Unit"
@@ -4854,7 +4870,7 @@ msgstr "Rodyti dydá ir matavimo vienetus"
 
 #: app/resize.c:1310
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Didþio keitimo klaida: Plotis ir ilgis turi bûti didesnis uþ nulá."
 
 #: app/resize.c:1391
 msgid "Layer Too Small"
@@ -4866,6 +4882,9 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"Sumaþinus paveikslëlio dydá,\n"
+"keli sluoksniai visiðkai pranyks.\n"
+"Ar jûs su tuo sutinkate?"
 
 #: app/resolution_calibrate.c:108
 msgid "Calibrate Monitor Resolution"
@@ -4873,7 +4892,7 @@ msgstr "Kalibruoti monitoriaus skiriamàjà gebà"
 
 #: app/resolution_calibrate.c:221
 msgid "Measure the rulers and enter their lengths below."
-msgstr "Iðmatuokite liniuotes ir þemiau áveskite jø ilgius"
+msgstr "Iðmatuokite liniuotes ir þemiau áveskite jø ilgius."
 
 #: app/resolution_calibrate.c:241
 msgid "Horizontal:"
@@ -4889,7 +4908,7 @@ msgstr "Sukimo informacija"
 
 #: app/rotate_tool.c:108
 msgid "Center X:"
-msgstr ""
+msgstr "Centro X:"
 
 #: app/rotate_tool.c:395
 msgid "Rotating..."
@@ -4897,7 +4916,7 @@ msgstr "Suka..."
 
 #: app/scale_tool.c:81
 msgid "Scaling Information"
-msgstr ""
+msgstr "Dydþio keitimo informacija"
 
 #: app/scale_tool.c:91
 msgid "Current Width:"
@@ -4905,23 +4924,23 @@ msgstr "Esamas plotis:"
 
 #: app/scale_tool.c:106
 msgid "Scale Ratio X:"
-msgstr ""
+msgstr "Dydþio keitimo santykis X:"
 
 #: app/scale_tool.c:509
 msgid "Scaling..."
-msgstr ""
+msgstr "Keièia dydá..."
 
 #: app/shear_tool.c:77
 msgid "Shear Information"
-msgstr ""
+msgstr "Padalinti informacijà"
 
 #: app/shear_tool.c:82
 msgid "Shear Magnitude X:"
-msgstr ""
+msgstr "Padalinti dydá X:"
 
 #: app/shear_tool.c:350
 msgid "Shearing..."
-msgstr ""
+msgstr "Dalina..."
 
 #. Create the shell
 #: app/text_tool.c:156 app/text_tool.c:405
@@ -5000,6 +5019,10 @@ msgid ""
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
+"Nerasta GIMP patarimø byla!\n"
+"Turëtø bûti byla gimp_tips.txt GIMP duomenø katalogo\n"
+"patarimø pakatalogyje.\n"
+"Patikrinkite, ar teisingai ádiegëte GIMP."
 
 #: app/tool_options.c:126
 msgid "This tool has no options."
@@ -5084,11 +5107,11 @@ msgstr "Raðalas"
 
 #: app/tool_options.c:492 app/tools.c:853 app/tools.c:859
 msgid "Dodge or Burn"
-msgstr ""
+msgstr "Ðviesinimas-Tamsinimas"
 
 #: app/tool_options.c:494
 msgid "Smudge Tool"
-msgstr ""
+msgstr "Iðtepimo árankis"
 
 #: app/tool_options.c:609
 msgid "Incremental"
@@ -5096,19 +5119,19 @@ msgstr ""
 
 #: app/tool_options.c:715
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Spaudimo jautrumas"
 
 #: app/tool_options.c:734
 msgid "Opacity"
-msgstr ""
+msgstr "Nepermatomumas"
 
 #: app/tool_options.c:757
 msgid "Hardness"
-msgstr ""
+msgstr "Kietumas"
 
 #: app/tool_options.c:777
 msgid "Rate"
-msgstr ""
+msgstr "Santykis"
 
 #: app/tools.c:153
 msgid "Rect Select"
@@ -5120,7 +5143,7 @@ msgstr "/Árankiai/Þymëjimo árankiai/Keturkampis·paþymëjimas"
 
 #: app/tools.c:159
 msgid "Select rectangular regions"
-msgstr ""
+msgstr "Paþymëti staèiakampius plotus"
 
 #: app/tools.c:181
 msgid "Ellipse Select"
@@ -5132,7 +5155,7 @@ msgstr "/Árankiai/Þymëjimo·árankiai/Elipsinis·paþymëjimas"
 
 #: app/tools.c:187
 msgid "Select elliptical regions"
-msgstr "Paþymëti elipsinius regionus"
+msgstr "Paþymëti elipsinius plotus"
 
 #: app/tools.c:209
 msgid "Free Select"
@@ -5144,7 +5167,7 @@ msgstr "/Árankiai/Þymëjimo árankiai/Laisvas·paþymëjimas"
 
 #: app/tools.c:215
 msgid "Select hand-drawn regions"
-msgstr ""
+msgstr "Laisvas srièiø paþymëjimas"
 
 #: app/tools.c:237
 msgid "Fuzzy Select"
@@ -5156,7 +5179,7 @@ msgstr "/Árankiai/Þymëjimo·árankiai/Netikslus·paþymëjimas"
 
 #: app/tools.c:243
 msgid "Select contiguous regions"
-msgstr ""
+msgstr "Paþymëti apribotà plotà"
 
 #: app/tools.c:265
 msgid "Bezier Select"
@@ -5168,15 +5191,15 @@ msgstr "/Árankiai/Þymëjimo·árankiai/Bezier·paþymëjimas"
 
 #: app/tools.c:271
 msgid "Select regions using Bezier curves"
-msgstr ""
+msgstr "Paþymëti plotus naudojant Bezier kreives"
 
 #: app/tools.c:294
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr ""
+msgstr "/Árankiai/Þymëjimo árankiai/Protingos þirklës"
 
 #: app/tools.c:299
 msgid "Select shapes from image"
-msgstr ""
+msgstr "Pasirinkti linijas ið paveikslëlio"
 
 #: app/tools.c:321
 msgid "Move"
@@ -5203,13 +5226,12 @@ msgid "Zoom in & out"
 msgstr "Didinimas ir maþinimas"
 
 #: app/tools.c:378
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
 msgstr "/Árankiai/Transformavimo·árankiai/"
 
 #: app/tools.c:383
 msgid "Crop or resize the image"
-msgstr ""
+msgstr "Apkarpyti paveikslëlá arba pakeisti jo dydá"
 
 #. the transform type radio buttons
 #: app/tools.c:405 app/tools.c:433 app/tools.c:461 app/tools.c:489
@@ -5223,19 +5245,19 @@ msgstr "/Árankiai/Transformavimo árankiai/Transformavimas"
 
 #: app/tools.c:411 app/tools.c:439 app/tools.c:467 app/tools.c:495
 msgid "Rotation, scaling, shearing, perspective."
-msgstr ""
+msgstr "Pasukimas, dydþio keitimas, padalinimas, perspektyva."
 
 #: app/tools.c:517
 msgid "Flip"
-msgstr ""
+msgstr "Veidrodinis vaizdas"
 
 #: app/tools.c:518
 msgid "/Tools/Transform Tools/Flip"
-msgstr ""
+msgstr "/Árankiai/Transformavimo·árankiai/Veidrodinis vaizdas"
 
 #: app/tools.c:523
 msgid "Flip the layer or selection"
-msgstr ""
+msgstr "Veidrodinis sluoksnio arba paþymëjimo vaizdas"
 
 #: app/tools.c:545
 msgid "Text"
@@ -5255,15 +5277,15 @@ msgstr "/Árankiai/Spalvø pipetë"
 
 #: app/tools.c:579
 msgid "Pick colors from the image"
-msgstr "Paima spalvas ið paveikslëlio"
+msgstr "Iðrenka spalvas ið paveikslëlio"
 
 #: app/tools.c:602
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr ""
+msgstr "/Árankiai/Daþymo árankiai/Uþpildymas"
 
 #: app/tools.c:607
 msgid "Fill with a color or pattern"
-msgstr ""
+msgstr "Uþpildyti spalva arba raðtu"
 
 #: app/tools.c:629
 msgid "Blend"
@@ -5271,43 +5293,43 @@ msgstr "Perëjimas"
 
 #: app/tools.c:630
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/Árankiai/Pieðimo árankiai/Perëjimas"
+msgstr "/Árankiai/Daþymo árankiai/Perëjimas"
 
 #: app/tools.c:635
 msgid "Fill with a color gradient"
-msgstr ""
+msgstr "Uþpildyti spalvotu perëjimu"
 
 #: app/tools.c:658
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Árankiai/Pieðimo·árankiai/Pieðtukas"
+msgstr "/Árankiai/Daþymo árankiai/Pieðtukas"
 
 #: app/tools.c:663
 msgid "Draw sharp pencil strokes"
-msgstr ""
+msgstr "Pieðti ryðkius brûkðnius pieðtuku"
 
 #: app/tools.c:686
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Árankiai/Pieðimo·árankiai/Teptukas"
+msgstr "/Árankiai/Daþymo árankiai/Teptukas"
 
 #: app/tools.c:691
 msgid "Paint fuzzy brush strokes"
-msgstr ""
+msgstr "Tepti neryðkias linijas teptuku"
 
 #: app/tools.c:714
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Árankiai/Pieðimo·árankiai/Trintukas"
+msgstr "/Árankiai/Daþymo árankiai/Trintukas"
 
 #: app/tools.c:719
 msgid "Erase to background or transparency"
-msgstr ""
+msgstr "Nutrinti iki fono ar skaidrumo"
 
 #: app/tools.c:742
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Árankiai/Pieðimo·árankiai/Purkðtuvas"
+msgstr "/Árankiai/Daþymo árankiai/Purkðtuvas"
 
 #: app/tools.c:747
 msgid "Airbrush with variable pressure"
-msgstr ""
+msgstr "Kintamo spaudimo purkðtuvas"
 
 #: app/tools.c:769
 msgid "Clone"
@@ -5315,15 +5337,16 @@ msgstr "Klonuoti"
 
 #: app/tools.c:770
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Árankiai/Pieðimo·árankiai/Klonuoti"
+msgstr "/Árankiai/Daþymo árankiai/Klonuoti"
 
 #: app/tools.c:775
 msgid "Paint using patterns or image regions"
-msgstr ""
+msgstr "Pieðti naudojant ðablonus ar paveikslëlio sritis"
 
 #: app/tools.c:797
+#, fuzzy
 msgid "Convolve"
-msgstr ""
+msgstr "Iðlieti"
 
 #: app/tools.c:798
 msgid "/Tools/Paint Tools/Convolve"
@@ -5331,7 +5354,7 @@ msgstr ""
 
 #: app/tools.c:803
 msgid "Blur or sharpen"
-msgstr ""
+msgstr "Sulieti arba paryðkinti"
 
 #: app/tools.c:825
 msgid "Ink"
@@ -5339,23 +5362,23 @@ msgstr "Raðalas"
 
 #: app/tools.c:826
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Árankiai/Pieðimo·árankiai/Raðalas"
+msgstr "/Árankiai/Daþymo árankiai/Raðalas"
 
 #: app/tools.c:831
 msgid "Draw in ink"
-msgstr ""
+msgstr "Pieðti raðalu"
 
 #: app/tools.c:854
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr ""
+msgstr "/Árankiai/Daþymo árankiai/Ðviesinimas-Tamsinimas"
 
 #: app/tools.c:881 app/tools.c:887
 msgid "Smudge"
-msgstr ""
+msgstr "Iðtepti"
 
 #: app/tools.c:882
 msgid "/Tools/Paint Tools/Smudge"
-msgstr ""
+msgstr "/Árankiai/Daþymo árankiai/Iðtepti"
 
 #: app/tools.c:939
 msgid "Measure"
@@ -5758,7 +5781,7 @@ msgstr ""
 "gimprc naudojamas asmeniniø nustatymø, kurie átakoja\n"
 "ápastà GIMP elgsenà, saugojimui.\n"
 "Èia taip pat nustamomi ávairiø moduliø, priedø, raðtø,\n"
-" paleèiø ar pieðtukø paeiðkos keliai."
+"perëjimø, paleèiø ar pieðtukø paeiðkos keliai."
 
 #: app/user_install.c:163
 msgid ""
