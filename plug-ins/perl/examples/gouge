@@ -89,7 +89,7 @@ register "contrast_enhance_2x2",
 
 register "edge_detect_2x2",
          "detects edges in an image using a fast 2x2 kernel",
-         "Detect edges in the image using a 2x2 kernel. It is similar to Sobel, yet sharper (and lower qwuality).",
+         "Detect edges in the image using a 2x2 kernel. It is similar to Sobel, yet sharper (and lower quality).",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990725",

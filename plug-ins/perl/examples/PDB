@@ -157,6 +157,9 @@ sub set_current_function {
 
       $help_text->delete_text(0,-1);
       $help_text->insert_text($help,0);
+      $author_label->set($author);
+      $copyright_label->set($copyright);
+      $date_label->set($date);
       eval {
          my ($menupath, $accel, $path, $imagetypes, $mtime) = @{$plugin_info{$fun}};
          $menupath_label->set($menupath);
@@ -324,7 +327,7 @@ sub inputline {
       }
    });
    $e->signal_connect("activate",\&execute_command);
-   $e->set_usize($ex*40,0);
+   #$e->set_usize($ex*40,0);
    $inputline=$e;
 
    my $c = new Gtk::CList(1);
@@ -355,18 +358,35 @@ sub info {
    $close->signal_connect(clicked => sub { $info->hide });
    $info->action_area->add($close);
 
+   my $table = new Gtk::Table 2,9+1,0;
+   my $y = 0;
+   $info->vbox->add($table);
+
    local *add_info = sub {
       my ($label, $widget, $large) = @_;
-      my $h = new Gtk::HBox(0, 0);
-      $h->pack_start((new Gtk::Label $label.": "), 0, 0, 0);
-      $h->add($widget);
-      $info->vbox->pack_start($h, $large, 1, 5);
+      $label = new Gtk::Label $label.": ";
+      $label->set_alignment(0, 0);
+      $table->attach($label,0,1,$y,$y+1,[-fill],[-fill],0,0);
+      if ($large) {
+         $y++;
+         $table->attach($widget,0,2,$y,$y+$large,[-expand,-fill],[-expand,-fill],0,0);
+         $y+=$large;
+      } else {
+         $widget->set_alignment(0, 0);
+         $table->attach($widget,1,2,$y,$y+1,[-fill],[-fill],0,0);
+         $y++;
+      }
    };
 
    $blurb_label = new Gtk::Label;
    add_info(__"Menu Path", $menupath_label = new Gtk::Label);
    add_info(__"Accelerator", $accelerator_label = new Gtk::Label);
    add_info(__"Image Types", $imagetypes_label = new Gtk::Label);
+   add_info(__"Author", $author_label = new Gtk::Label);
+   add_info(__"Copyright", $copyright_label = new Gtk::Label);
+   add_info(__"Date/Version", $date_label = new Gtk::Label);
+   add_info(__"Last Modified", $last_modified_label = new Gtk::Label);
+   add_info(__"Plug-In Path", $plugin_path_label = new Gtk::Label);
 
    $help_text = new Gtk::Text;
    $help_text->set_editable(0);
@@ -374,11 +394,7 @@ sub info {
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
    $cs->add ($help_text);
-   add_info (__"Description", $cs, 1);
-
-   add_info(__"Author", $author_label = new Gtk::Label);
-   add_info(__"Last Modified", $last_modified_label = new Gtk::Label);
-   add_info(__"Plug-In Path", $plugin_path_label = new Gtk::Label);
+   add_info (__"Description", $cs, 2);
 
    my $h = new Gtk::HBox(0,5);
    my $more = new Gtk::Button __"More...";
@@ -408,8 +424,12 @@ sub create_main {
    $w->action_area->add($b);
    $b->signal_connect("clicked",sub {main_quit Gtk});
 
+   my $vpane = new Gtk::VPaned; $w->vbox->add($vpane);
+   $vpane->add1(my $f1 = new Gtk::VBox 0,0);
+   $vpane->add2(my $f2 = new Gtk::VBox 0,0);
+
    my $h = new Gtk::HBox (0,5);
-   $w->vbox->pack_start ($h,0,0,0);
+   $f1->pack_start ($h,0,0,0);
 
    inputline;
 
@@ -417,20 +437,20 @@ sub create_main {
    $synopsis->set_justify(-left);
 
    my $table = new Gtk::Table 3,4,0;
-   $w->vbox->pack_start($table,0,0,0);
+   $f1->pack_start($table,1,1,0);
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
    $cs->add ($clist);
+   #$cs->set_usize(0,$ey*6);
 
    my $rs = new Gtk::ScrolledWindow undef,undef;
    $rs->set_policy(-automatic,-automatic);
    $rs->add_with_viewport ($rlist);
-   $rs->set_usize(0,$ey*6);
 
    $result = new Gtk::Entry;
    $result->set_editable(0);
-   $result->set_usize($ex*30,0);
+   #$result->set_usize($ex*30,0);
 
    $statusbar = new Gtk::Label;
 
@@ -440,20 +460,15 @@ sub create_main {
       $table->attach($synopsis ,1,2,0,1,{},{},0,0);
          $table->attach(Gimp::UI::logo($w),2,3,0,1,{},{},0,0);
    $table->attach(new Gtk::Label(__"Command")  ,0,1,1,2,{},{},0,0);
-      $table->attach($inputline,1,2,1,2,['expand','fill'],{},0,0);
-         $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
+      $table->attach($inputline,1,3,1,2,['expand','fill'],{},0,0);
+#         $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
    $table->attach(new Gtk::Label(__"Shortcuts"),0,1,2,3,{},{},0,0);
-      $table->attach($cs       ,1,2,2,3,['expand','fill'],['expand','fill'],0,0);
-         $table->attach($rs,2,3,2,3,['expand','fill'],['expand','fill'],0,0);
+      $table->attach($cs       ,1,3,2,3,['expand','fill'],['expand','fill'],0,0);
+#         $table->attach($rs,2,3,2,3,['expand','fill'],['expand','fill'],0,0);
    $table->attach(new Gtk::Label(__"Status"),0,1,3,4,{},{},0,0);
-      $table->attach($statusbar,1,3,3,4,['expand','fill'],['expand','fill'],0,0);
+   $table->attach($statusbar,1,3,3,4,{},{},0,0);
 
-   # the Info frame
-   my $ci = new Gtk::Frame __"Info";
-   $ci->border_width(10);
-   my $v = new Gtk::VBox(0,5);
-   $ci->add($v);
-   $v->pack_start(info, 0, 1, 0);
+   $f2->pack_start(info,0,1,5);
    my $sw = new Gtk::ScrolledWindow;
    $sw->set_policy(-automatic, -automatic);
    $cinfo = new_with_titles Gtk::CList '','TYPE','NAME','DESCRIPTION';
@@ -461,10 +476,9 @@ sub create_main {
    $cinfo->set_column_auto_resize (1,1);
    $cinfo->set_column_auto_resize (2,1);
    $cinfo->set_selection_mode('single');
-   $cinfo->set_usize(0, $ey*4);
+   #$cinfo->set_usize(0, $ey*4);
    $sw->add ($cinfo);
-   $v->add ($sw);
-   $w->vbox->pack_start ($ci,1,1,0);
+   $f2->pack_start ($sw,1,1,5);
 
    idle;
 
@@ -474,7 +488,7 @@ sub create_main {
 
 register "extension_pdb_explorer",
          "Procedural Database Explorer",
-         "This is a more interactive version of the DB Browser",
+         "This is a more interactive and less broken / script-fu-centric version of the DB Browser",
          "Marc Lehmann",
          "Marc Lehmann",
          "0.4alpha",
