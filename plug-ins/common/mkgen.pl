@@ -58,6 +58,7 @@ INCLUDES = \\
 	\@X_CFLAGS\@	\\
 	\@EXIF_CFLAGS\@	\\
 	\@SVG_CFLAGS\@	\\
+	\@WMF_CFLAGS\@	\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\

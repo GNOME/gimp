@@ -18,6 +18,7 @@ INCLUDES = \
 	@X_CFLAGS@	\
 	@EXIF_CFLAGS@	\
 	@SVG_CFLAGS@	\
+	@WMF_CFLAGS@	\
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -152,7 +153,7 @@ libexec_PROGRAMS = \
 	$(WINCLIPBOARD) \
 	wind \
 	$(WINPRINT) \
-	wmf \
+	$(WMF) \
 	xbm \
 	$(XPM) \
 	xwd \
@@ -172,6 +173,7 @@ EXTRA_PROGRAMS = \
 	url \
 	winclipboard \
 	winprint \
+	wmf \
 	xpm
 
 install-%: %
@@ -1743,6 +1745,7 @@ wmf_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(LIBWMF)							\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 

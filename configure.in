@@ -24,6 +24,7 @@ GTKHTML2_REQUIRED_VERSION=2.0.0
 GIMPPRINT_REQUIRED_VERSION=4.2.0
 GIMPPRINT_TOONEW_VERSION=4.3.0
 RSVG_REQUIRED_VERSION=2.2.0
+WMF_REQUIRED_VERSION=0.2.8
 
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
@@ -33,6 +34,7 @@ AC_SUBST(GTKHTML2_REQUIRED_VERSION)
 AC_SUBST(GIMPPRINT_REQUIRED_VERSION)
 AC_SUBST(GIMPPRINT_TOONEW_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
+AC_SUBST(WMF_REQUIRED_VERSION)
 
 #
 # Making releases:
@@ -985,6 +987,29 @@ AM_CONDITIONAL(BUILD_PRINT,
                test x$enable_print != xno && test x$have_gimp_print = xyes)
 
 
+###################
+# Check for libwmf2
+###################
+
+AC_PATH_PROG(WMF_CONFIG, libwmf-config, no)
+if test "x$WMF_CONFIG" != "xno" ; then
+  AC_MSG_CHECKING(for libwmf >= $WMF_REQUIRED_VERSION)
+  wmf_version=`$WMF_CONFIG --version`
+  if expr $wmf_version \>= $WMF_REQUIRED_VERSION >/dev/null; then
+    AC_MSG_RESULT([yes (version $wmf_version)])
+    WMF=wmf
+    LIBWMF=`$WMF_CONFIG --libs`
+    WMF_CFLAGS=`$WMF_CONFIG --cflags`
+  else
+    AC_MSG_WARN([*** WMF plug-in will not be built (libwmf is too old)])
+  fi
+else
+  AC_MSG_WARN([*** WMF plug-in will not be built (libwmf not found) ***])
+fi
+AC_SUBST(LIBWMF)
+AC_SUBST(WMF_CFLAGS)
+
+
 ############################################################
 # GIF compression: Allow builder to specify at compile time
 # which compression style she wants to use for GIFs.
@@ -1083,6 +1108,7 @@ AC_SUBST(SCREENSHOT)
 AC_SUBST(URL)
 AC_SUBST(WINCLIPBOARD)
 AC_SUBST(WINPRINT)
+AC_SUBST(WMF)
 
 
 ##########################################################

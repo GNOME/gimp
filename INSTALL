@@ -36,7 +36,7 @@ need to deinstall the 1.2 version.
   5. You may want to install other third party libraries or programs that
      are needed for some of the available plugins. We recommend to check
      that the following libraries are installed: libpng, libjpeg,
-     libtiff, gimp-print (4.2.x), gtkhtml-2, libmng, librsvg.
+     libtiff, gimp-print (4.2.x), gtkhtml-2, libmng, librsvg, libwmf.
 
   6. Configure the GIMP by running the `configure' script. You may want
      to pass some options to it, see below.

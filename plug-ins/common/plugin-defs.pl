@@ -130,7 +130,7 @@
     'winclipboard' => { libdep => 'glib', ui => 1, optional => 1 },
     'wind' => { libdep => 'gtk', ui => 1 },
     'winprint' => { libdep => 'glib', ui => 1, optional => 1 },
-    'wmf' => { libdep => 'gtk', ui => 1 },
+    'wmf' => { libdep => 'gtk', ui => 1, optional => 1 },
     'xbm' => { libdep => 'gtk', ui => 1 },
     'xpm' => { libdep => 'gtk', ui => 1, optional => 1 },
     'xwd' => { libdep => 'gtk', ui => 1 },
