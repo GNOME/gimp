@@ -4701,7 +4701,7 @@ msgstr "Perspective..."
 
 #: app/plug_in.c:311
 msgid "Plug-ins"
-msgstr "Appendices"
+msgstr "Modules"
 
 #: app/plug_in.c:323
 #, c-format

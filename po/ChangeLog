@@ -1,3 +1,7 @@
+2000-02-14  Fellmann Joaquim <joaquim@hrnet.fr>
+
+	* fr.po: no more Appendices ;-)
+
 2000-02-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* de.po: s/Zurücksetzen/Standard/. This way many action_areas are
