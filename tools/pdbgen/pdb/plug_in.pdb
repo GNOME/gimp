@@ -156,7 +156,6 @@ sub plugins_query {
     delete $outargs[0]->{array}->{no_declare};
 
     %invoke = (
-	headers => [ qw("libgimp/gimpintl.h") ],
 	vars => [ 'PlugInProcDef *proc_def', 'GSList *tmp = NULL',
 		  'gint i = 0', 'regex_t sregex' ],
 	code => <<'CODE'
@@ -203,7 +202,7 @@ sub plugins_query {
   while (tmp)
     {
       if (i > num_plugins)
-	g_error (_("Internal error counting plugins"));
+	g_error ("Internal error counting plugins");
 
       proc_def = tmp->data;
       tmp = tmp->next;

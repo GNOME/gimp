@@ -38,7 +38,6 @@ app/eraser.c
 app/errorconsole.c
 app/file_new_dialog.c
 app/fileops.c
-app/fileops_cmds.c
 app/flip_tool.c
 app/floating_sel.c
 app/fuzzy_select.c
@@ -93,7 +92,6 @@ app/pattern_select.c
 app/patterns.c
 app/perspective_tool.c
 app/plug_in.c
-app/plug_in_cmds.c
 app/posterize.c
 app/preferences_dialog.c
 app/procedural_db.c

@@ -27,9 +27,6 @@
 #include "plug_in.h"
 #include "regex.h"
 
-#include "config.h"
-#include "libgimp/gimpintl.h"
-
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord temp_PDB_name_proc;
@@ -246,7 +243,7 @@ plugins_query_invoker (Argument *args)
   while (tmp)
     {
       if (i > num_plugins)
-	g_error (_("Internal error counting plugins"));
+	g_error ("Internal error counting plugins");
 
       proc_def = tmp->data;
       tmp = tmp->next;

@@ -33,8 +33,6 @@
 #include "gimprc.h"
 #include "plug_in.h"
 
-#include "libgimp/gimpintl.h"
-
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;
 static ProcRecord file_load_thumbnail_proc;
@@ -460,7 +458,7 @@ register_magic_load_handler_invoker (Argument *args)
 		   (proc->args[2].arg_type != PDB_STRING) ||
 		   (proc->values[0].arg_type != PDB_IMAGE)))
 	{
-	  g_message (_("load handler \"%s\" does not take the standard load handler args"),
+	  g_message ("load handler \"%s\" does not take the standard load handler args",
 		     name);
 	  goto done;
 	}
@@ -469,8 +467,8 @@ register_magic_load_handler_invoker (Argument *args)
     
       if (!file_proc)
 	{
-	  g_message (_("attempt to register non-existant load handler \"%s\""),
-		     name);
+	  g_message ("attempt to register non-existant load handler \"%s\""),
+		     name;
 	  goto done;
 	}
     
@@ -605,7 +603,7 @@ register_save_handler_invoker (Argument *args)
 		   (proc->args[3].arg_type != PDB_STRING) ||
 		   (proc->args[4].arg_type != PDB_STRING)))
 	{
-	  g_message (_("save handler \"%s\" does not take the standard save handler args"),
+	  g_message ("save handler \"%s\" does not take the standard save handler args",
 		     name);
 	  goto done;
 	}
@@ -614,7 +612,7 @@ register_save_handler_invoker (Argument *args)
     
       if (!file_proc)
 	{
-	  g_message (_("attempt to register non-existant save handler \"%s\""),
+	  g_message ("attempt to register non-existant save handler \"%s\"",
 		     name);
 	  goto done;
 	}

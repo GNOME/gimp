@@ -1,8 +1,14 @@
-Tue Feb  1 22:42:26 CET 2000
-
+Tue Feb  1 23:09:42 CET 2000  Sven Neumann <sven@gimp.org>
+	
 	* app/regex.c
 	* plug-ins/script-fu/regex.c: remove occurences of gettext, since 
 	we don't translate error messages
+
+	* app/gimpbrushpipe.c: we use the term "image hose", don't we?
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: don't mark error messages for 
+	translation
 
 	* app/[lotsa files]: only include libgimp/gimpintl.h if needed; but 
 	if it gets included, include config.h too
