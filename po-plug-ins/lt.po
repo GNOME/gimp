@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the Gimp package.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2002.
 # Eglė Girinaitė <eglyte@centras.lt>, 2002.
-# Žygimantas Beručka <uid0@akl.lt>, 2004.
 # Giedrius Naudžiūnas <gimp@projektas.lt>, 2004.
+# Žygimantas Beručka <uid0@akl.lt>, 2004.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plugins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-07-02 21:01+0300\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2004-11-16 07:41+0200\n"
+"PO-Revision-Date: 2004-11-16 07:42+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -516,7 +516,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Image>/Filtrai/Perteikimas/Trupmenų tirinėtojas..."
+msgstr "<Image>/Filtrai/Perteikimas/Trupmenų tyrinėtojas..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
@@ -924,7 +924,7 @@ msgstr "Medžiaga"
 
 #: plug-ins/Lighting/lighting_ui.c:1047
 msgid "_Bump Map"
-msgstr ""
+msgstr "Reljefas"
 
 #: plug-ins/Lighting/lighting_ui.c:1051
 msgid "_Environment Map"
@@ -1208,11 +1208,11 @@ msgstr "Peržiūra!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1452
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "Priartinti"
 
 #: plug-ins/MapObject/mapobject_ui.c:1466
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "Sumažinti"
 
 #: plug-ins/MapObject/mapobject_ui.c:1468
 msgid "Show Preview _Wireframe"
@@ -1257,27 +1257,27 @@ msgstr "Atidaroma  '%s'..."
 
 #: plug-ins/bmp/bmpread.c:170 plug-ins/bmp/bmpread.c:179
 #: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:193
-#: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:339
+#: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:341
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr ""
 
 #: plug-ins/bmp/bmpread.c:220 plug-ins/bmp/bmpread.c:239
 #: plug-ins/bmp/bmpread.c:260 plug-ins/bmp/bmpread.c:279
-#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:304
-#: plug-ins/bmp/bmpread.c:310
+#: plug-ins/bmp/bmpread.c:300 plug-ins/bmp/bmpread.c:306
+#: plug-ins/bmp/bmpread.c:312
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:437 plug-ins/bmp/bmpread.c:472
+#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
 msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:477 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
@@ -2288,7 +2288,7 @@ msgstr ""
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Image>/Paveikslėlis/Transformacijos/Autokadras"
+msgstr "<Image>/Paveikslėlis/Transformacijos/Automatinis apkarpymas"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2415,7 +2415,7 @@ msgstr ""
 
 #: plug-ins/common/bumpmap.c:372
 msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Image>/Filtrai/Žemėlapis/Reljiefas..."
+msgstr "<Image>/Filtrai/Žemėlapis/Reljefas..."
 
 #: plug-ins/common/bumpmap.c:524
 msgid "Bump-mapping..."
@@ -3840,7 +3840,7 @@ msgstr ""
 
 #: plug-ins/common/fractaltrace.c:131
 msgid "<Image>/Filters/Map/_Fractal Trace..."
-msgstr "<Image>/Filtrai/Žemėlapis/Frktaliniai pėdsakai..."
+msgstr "<Image>/Filtrai/Žemėlapis/Fraktaliniai pėdsakai..."
 
 #: plug-ins/common/fractaltrace.c:469 plug-ins/common/fractaltrace.c:741
 msgid "Fractal Trace"
@@ -3880,8 +3880,9 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: plug-ins/common/gauss_iir.c:164
+#, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
-msgstr "<Image>/Filtrai/Suliejimas/Gausos suliejimas (_IIR)..."
+msgstr "<Image>/File/Spausdinti..."
 
 #: plug-ins/common/gauss_iir.c:236 plug-ins/common/gauss_rle.c:229
 msgid "You must specify either horizontal or vertical (or both)"
@@ -3927,8 +3928,9 @@ msgid "_Vertical:"
 msgstr "Vertikaliai:"
 
 #: plug-ins/common/gauss_rle.c:158
+#, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
-msgstr "<Image>/Filtrai/Suliejimas/Gausos suliejimas (_RLE)..."
+msgstr "<Image>/Filtrai/Suliejimas/Gausos suliejimas (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:279 plug-ins/common/gauss_rle.c:337
 #: plug-ins/common/gauss_rle.c:417
@@ -4558,7 +4560,7 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:1101
 msgid "_Move"
-msgstr ""
+msgstr "Perkelti"
 
 #: plug-ins/common/iwarp.c:1102
 msgid "_Grow"
@@ -4761,8 +4763,9 @@ msgid "Image comments"
 msgstr "Paveikslėlio komentaras:"
 
 #: plug-ins/common/laplace.c:95
+#, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Laplace"
-msgstr "<Image>/Filtrai/Krašto aptikimas/_Laplace"
+msgstr "<Image>/Filtrai/Krašto aptikimas/Laplace"
 
 #: plug-ins/common/laplace.c:225
 msgid "Laplace..."
@@ -4782,7 +4785,7 @@ msgstr ""
 
 #: plug-ins/common/lic.c:649
 msgid "Effect Channel"
-msgstr ""
+msgstr "Kanalo efektas"
 
 #: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 msgid "_Saturation"
@@ -4866,7 +4869,7 @@ msgstr "Komentaras:"
 
 #: plug-ins/common/mail.c:503
 msgid "_Filename:"
-msgstr ""
+msgstr "Bylos pavadinimas"
 
 #. Encapsulation label
 #: plug-ins/common/mail.c:537
@@ -5327,7 +5330,7 @@ msgstr ""
 
 #: plug-ins/common/nlfilt.c:373
 msgid "A_lpha:"
-msgstr ""
+msgstr "Alfa:"
 
 #: plug-ins/common/nlfilt.c:468 plug-ins/common/waves.c:458
 msgid "_Do Preview"
@@ -5491,7 +5494,7 @@ msgstr ""
 
 #: plug-ins/common/papertile.c:385
 msgid "Background Color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: plug-ins/common/papertile.c:537
 msgid "Paper Tile..."
@@ -5878,12 +5881,13 @@ msgstr "Raiška:"
 
 #: plug-ins/common/postscript.c:2806
 msgid "Pages:"
-msgstr ""
+msgstr "Puslapiai:"
 
 #: plug-ins/common/postscript.c:2812
 msgid "Try Bounding Box"
 msgstr ""
 
+#  Colouring
 #. Colouring
 #: plug-ins/common/postscript.c:2825
 msgid "Coloring"
@@ -5985,8 +5989,9 @@ msgstr ""
 
 #: plug-ins/common/psp.c:404
 msgid "Save as PSP"
-msgstr ""
+msgstr "Išsaugoti kaip PSP"
 
+#  file save type
 #. file save type
 #: plug-ins/common/psp.c:414
 msgid "Data Compression"
@@ -6112,6 +6117,7 @@ msgstr ""
 msgid "Sample:"
 msgstr ""
 
+#  Add extra menu items for Gradient
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1434
 msgid "From Gradient"
@@ -7148,7 +7154,7 @@ msgstr "Segmento nustatymai"
 
 #: plug-ins/common/tiler.c:65
 msgid "<Image>/Filters/Map/_Make Seamless"
-msgstr "<Image>/Filtrai/Žemėlapis/Be siūlių"
+msgstr "<Image>/Filtrai/Žemėlapis/Išmėtymas"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -7194,7 +7200,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:93
 msgid "Symbol"
-msgstr ""
+msgstr "Simbolis"
 
 #: plug-ins/common/uniteditor.c:93
 msgid ""
@@ -7499,7 +7505,7 @@ msgstr "Juoda"
 
 #: plug-ins/common/warp.c:517
 msgid "FG Color"
-msgstr ""
+msgstr "FG Spalva"
 
 #  --------------------------------------------------------------------
 #  ---------    The secondary table         --------------------------
@@ -8166,7 +8172,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:1009
 msgid "Co_ntrast:"
-msgstr ""
+msgstr "Kontrastas:"
 
 #: plug-ins/flame/flame.c:1023
 msgid "_Gamma:"
@@ -8379,11 +8385,11 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:1272
 msgid "Show previous object"
-msgstr ""
+msgstr "Rodyti ankstesnį objektą"
 
 #: plug-ins/gfig/gfig.c:1285
 msgid "Show next object"
-msgstr ""
+msgstr "Rodyti sekantį objektą"
 
 #: plug-ins/gfig/gfig.c:1297
 msgid "All"
@@ -8408,7 +8414,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:496
 msgid "Orientation:"
-msgstr ""
+msgstr "Orentacija:"
 
 #: plug-ins/gfig/gfig.c:1452
 msgid "Create line"
@@ -8420,7 +8426,7 @@ msgstr "Sukurti apskritimą"
 
 #: plug-ins/gfig/gfig.c:1462
 msgid "Create ellipse"
-msgstr ""
+msgstr "Sukurti elipsę"
 
 #: plug-ins/gfig/gfig.c:1467
 msgid "Create arch"
@@ -8492,7 +8498,7 @@ msgstr "Naują"
 
 #: plug-ins/gfig/gfig.c:2039
 msgid "Multiple"
-msgstr ""
+msgstr "Daugialypis"
 
 #: plug-ins/gfig/gfig.c:2044
 msgid "Draw all objects on one layer (original or new) or one object per layer"
@@ -8525,11 +8531,11 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2074 plug-ins/gimpressionist/general.c:120
 msgid "Transparent"
-msgstr ""
+msgstr "Permatomas"
 
 #: plug-ins/gfig/gfig.c:2076 plug-ins/gfig/gfig.c:2442
 msgid "Foreground"
-msgstr ""
+msgstr "Priekinis planas"
 
 #: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
@@ -8584,7 +8590,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2253
 msgid "Gradient:"
-msgstr ""
+msgstr "Perėjimas:"
 
 #: plug-ins/gfig/gfig.c:2273
 msgid "Pressure:"
@@ -8594,6 +8600,7 @@ msgstr ""
 msgid "No Options..."
 msgstr ""
 
+#  Start of new brush selection code
 #. Start of new brush selection code
 #: plug-ins/gfig/gfig.c:2306
 msgid "Set Brush..."
@@ -8651,7 +8658,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2481
 msgid "Sector"
-msgstr ""
+msgstr "Sektorius"
 
 #: plug-ins/gfig/gfig.c:2485
 msgid "Arc as:"
@@ -8665,7 +8672,7 @@ msgstr "Rodyti vaizdą"
 
 #: plug-ins/gfig/gfig.c:2544
 msgid "Reload Image"
-msgstr ""
+msgstr "Perkrauti paveikslėlį"
 
 #: plug-ins/gfig/gfig.c:2556 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
@@ -8686,7 +8693,7 @@ msgstr "Normaliai"
 
 #: plug-ins/gfig/gfig.c:2574
 msgid "Grey"
-msgstr ""
+msgstr "Pilkas"
 
 #: plug-ins/gfig/gfig.c:2575
 msgid "Darker"
@@ -8698,7 +8705,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2577
 msgid "Very Dark"
-msgstr ""
+msgstr "Labai tamsus"
 
 #: plug-ins/gfig/gfig.c:2581
 msgid "Grid Color:"
@@ -8710,7 +8717,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2593
 msgid "Show Position"
-msgstr ""
+msgstr "Rodyti poziciją"
 
 #: plug-ins/gfig/gfig.c:2604
 msgid "Hide Control Points"
@@ -8718,7 +8725,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2649
 msgid "Show Grid"
-msgstr ""
+msgstr "Rodyti groteles"
 
 #. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
 #. it from the user interface
@@ -8781,7 +8788,7 @@ msgstr "Piešti"
 #: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
-msgstr ""
+msgstr "Pažymėti"
 
 #: plug-ins/gfig/gfig.c:3096
 #, c-format
@@ -9106,13 +9113,14 @@ msgstr ""
 msgid "_General"
 msgstr ""
 
+#  *  Gradient Menus
 #.
 #. *  Gradient Menus
 #.
 #: plug-ins/gflare/gflare.c:3454 plug-ins/gflare/gflare.c:3559
 #: plug-ins/gflare/gflare.c:3700
 msgid "Gradients"
-msgstr ""
+msgstr "Perėjimai"
 
 #: plug-ins/gflare/gflare.c:3466 plug-ins/gflare/gflare.c:3573
 #: plug-ins/gflare/gflare.c:3712
@@ -9135,7 +9143,7 @@ msgstr "Dydis (%):"
 #: plug-ins/gflare/gflare.c:3507 plug-ins/gflare/gflare.c:3614
 #: plug-ins/gflare/gflare.c:3753
 msgid "Rotation:"
-msgstr ""
+msgstr "Apsisukimas:"
 
 #: plug-ins/gflare/gflare.c:3519 plug-ins/gflare/gflare.c:3627
 #: plug-ins/gflare/gflare.c:3766
@@ -9189,7 +9197,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3856
 msgid "_Second Flares"
-msgstr "_Antraeilės ugnys"
+msgstr "Antraeilės ugnys"
 
 #: plug-ins/gflare/gflare.c:4456
 msgid "none"
@@ -9227,7 +9235,7 @@ msgstr "Išsaugoti teptuką"
 
 #: plug-ins/gimpressionist/brush.c:368
 msgid "_Brush"
-msgstr "_Teptukas"
+msgstr "Teptukas"
 
 #: plug-ins/gimpressionist/brush.c:388
 msgid "Brush Preview:"
@@ -9267,7 +9275,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
-msgstr "Spa_lva"
+msgstr "Spalva"
 
 #: plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
@@ -9287,7 +9295,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/color.c:83
 msgid "Color _noise:"
-msgstr "Spalvų _triukšmas:"
+msgstr "Spalvų triukšmas"
 
 #: plug-ins/gimpressionist/color.c:87
 msgid "Adds random noise to the color"
@@ -9307,7 +9315,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:83
 msgid "From paper"
-msgstr ""
+msgstr "Iš popieriaus"
 
 #: plug-ins/gimpressionist/general.c:89
 msgid "Copy the texture of the selected paper as a background"
@@ -9329,6 +9337,7 @@ msgstr ""
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
+#  Tileable checkbox
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:279
 msgid "Tileable"
@@ -9340,7 +9349,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:158
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Krentantis šešėlis"
 
 #: plug-ins/gimpressionist/general.c:163
 msgid "Adds a shadow effect to each brush stroke"
@@ -9414,11 +9423,11 @@ msgstr "Gimpresionistas"
 
 #: plug-ins/gimpressionist/gimpressionist.c:434
 msgid "A_bout"
-msgstr "A_pie"
+msgstr "Apie"
 
 #: plug-ins/gimpressionist/orientation.c:45
 msgid "Or_ientation"
-msgstr "Or_ientacija"
+msgstr "Orientacija"
 
 #: plug-ins/gimpressionist/orientation.c:62
 msgid "Directions:"
@@ -9453,7 +9462,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:118
 #: plug-ins/gimpressionist/size.c:113
 msgid "Radius"
-msgstr ""
+msgstr "Ribos"
 
 #: plug-ins/gimpressionist/orientation.c:124
 msgid ""
@@ -9540,7 +9549,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:487
 msgid "A_dd"
-msgstr "Pri_dėti"
+msgstr "Pridėti"
 
 #: plug-ins/gimpressionist/orientmap.c:535
 msgid "Add new vector"
@@ -9549,7 +9558,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:537
 #: plug-ins/gimpressionist/sizemap.c:494
 msgid "_Kill"
-msgstr "Nai_kinti"
+msgstr "Naikinti"
 
 #: plug-ins/gimpressionist/orientmap.c:541
 msgid "Delete selected vector"
@@ -9557,7 +9566,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:556
 msgid "_Normal"
-msgstr "_Normalus"
+msgstr "Normalus"
 
 #: plug-ins/gimpressionist/orientmap.c:557
 msgid "Vorte_x"
@@ -9613,7 +9622,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:96
 msgid "P_aper"
-msgstr "P_opierius"
+msgstr "Popierius"
 
 #: plug-ins/gimpressionist/paper.c:115
 msgid "Paper Preview:"
@@ -9621,7 +9630,7 @@ msgstr "Popieriaus peržiūra:"
 
 #: plug-ins/gimpressionist/paper.c:124
 msgid "_Invert"
-msgstr "_Invertuoti"
+msgstr "Invertuoti"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Inverts the Papers texture"
@@ -9735,7 +9744,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/size.c:43
 msgid "_Size"
-msgstr "_Dydis"
+msgstr "Dydis"
 
 #: plug-ins/gimpressionist/size.c:60
 msgid "Sizes:"
@@ -9831,7 +9840,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:519
 msgid "S_trength:"
-msgstr "_Jėga:"
+msgstr "Jėga:"
 
 #: plug-ins/gimpressionist/sizemap.c:523
 msgid "Change the strength of the selected smvector"
@@ -9870,7 +9879,7 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"Apdorojimo klaida %s:\n"
+"Gramatinė klaida %s\n"
 "%s"
 
 #: plug-ins/helpbrowser/dialog.c:153
@@ -9892,7 +9901,7 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Image>/Filtrai/Perteikimas/Gamta/Ifs _komponavimas"
+msgstr "<Image>/Filtrai/Perteikimas/Gamta/Komponavimas"
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:612
@@ -9977,7 +9986,7 @@ msgstr "Auto"
 
 #: plug-ins/ifscompose/ifscompose.c:986 plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
-msgstr "Rinktis _viską"
+msgstr "Rinktis viską"
 
 #: plug-ins/ifscompose/ifscompose.c:993
 msgid "Recompute _Center"
@@ -10013,15 +10022,15 @@ msgstr "/Naujas"
 
 #: plug-ins/ifscompose/ifscompose.c:1201
 msgid "/Delete"
-msgstr "/Ištrinti"
+msgstr "Ištrinti"
 
 #: plug-ins/ifscompose/ifscompose.c:1203
 msgid "/Undo"
-msgstr "/Atšaukti"
+msgstr "Atšaukti"
 
 #: plug-ins/ifscompose/ifscompose.c:1205
 msgid "/Redo"
-msgstr "/Grąžinti"
+msgstr "/Gražinti"
 
 #: plug-ins/ifscompose/ifscompose.c:1207
 msgid "/Select All"
@@ -10313,7 +10322,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:204
 msgid "_Web Site"
-msgstr "_Interneto puslapis"
+msgstr "Interneto puslapis"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:210
 msgid "_Ftp Site"
@@ -10329,7 +10338,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "F_ile"
-msgstr "B_yla"
+msgstr "Byla"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "WAI_S"
@@ -10337,7 +10346,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "Tel_net"
-msgstr "Tel_net"
+msgstr "Telnet"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "e-_mail"
@@ -10365,7 +10374,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:275
 msgid "_Link"
-msgstr "_Nuoroda"
+msgstr "Nuoroda"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:309
 msgid "Dimensions"
@@ -10373,7 +10382,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:313
 msgid "Pre_view"
-msgstr "Peržiū_ra"
+msgstr "Peržiūra"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
 msgid "_JavaScript"
@@ -10424,15 +10433,15 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
-msgstr "_Paslėptas"
+msgstr "Nematomas"
 
 #: plug-ins/imagemap/imap_grid.c:226
 msgid "_Lines"
-msgstr "_Linijos"
+msgstr "Linijos"
 
 #: plug-ins/imagemap/imap_grid.c:235
 msgid "C_rosses"
-msgstr "Susiki_rtimai"
+msgstr "Susikirtimai"
 
 #: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
@@ -10440,11 +10449,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:251
 msgid "_Width"
-msgstr "_Plotis"
+msgstr "Plotis:"
 
 #: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
-msgstr "_Aukštis"
+msgstr "Aukštis:"
 
 #: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
@@ -10460,7 +10469,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Image>/Filtrai/Tinklas/_Paveikslėlių žemėlapis..."
+msgstr "<Image>/Filtrai/Tinklas/Tinlalapio vaizdas..."
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
@@ -10498,16 +10507,16 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:180
 msgid "_File"
-msgstr "_Byla"
+msgstr "Byla"
 
 #: plug-ins/imagemap/imap_menu.c:186
 msgid "Open Recent"
-msgstr "Atverti nesenas"
+msgstr "Atverti nesenus"
 
 #: plug-ins/imagemap/imap_menu.c:208
 #, c-format
 msgid "_Undo %s"
-msgstr "_Atšaukti %s"
+msgstr "Atšaukti %s"
 
 #: plug-ins/imagemap/imap_menu.c:224
 #, c-format
@@ -10516,7 +10525,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:252
 msgid "_Edit"
-msgstr "K_eisti"
+msgstr "Keisti"
 
 #: plug-ins/imagemap/imap_menu.c:273
 msgid "Deselect _All"
@@ -10528,7 +10537,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:293
 msgid "_View"
-msgstr "_Vaizdas"
+msgstr "Peržiūra"
 
 #: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
@@ -10560,7 +10569,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
-msgstr "Į_rankiai"
+msgstr "Įrankiai"
 
 #: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
@@ -10576,7 +10585,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:395
 msgid "_Help"
-msgstr "_Pagalba"
+msgstr "Pagalba"
 
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
@@ -10600,7 +10609,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_polygon.c:522
 msgid "_Insert"
-msgstr ""
+msgstr "Įterpti"
 
 #: plug-ins/imagemap/imap_polygon.c:528
 msgid "A_ppend"
@@ -10660,7 +10669,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:483
 msgid "_Menu"
-msgstr "_Meniu"
+msgstr "Turinys"
 
 #: plug-ins/imagemap/imap_preferences.c:487
 msgid "Number of _Undo levels (1 - 99):"
@@ -10732,11 +10741,11 @@ msgstr "Rinktis vaizdo bylą"
 
 #: plug-ins/imagemap/imap_settings.c:100
 msgid "_Title:"
-msgstr "_Antraštė:"
+msgstr "Antraštė:"
 
 #: plug-ins/imagemap/imap_settings.c:102
 msgid "Aut_hor:"
-msgstr "A_utorius:"
+msgstr "Autorius:"
 
 #: plug-ins/imagemap/imap_settings.c:104
 msgid "Default _URL:"
@@ -10744,7 +10753,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:106
 msgid "_Description:"
-msgstr "Aprašy_mas:"
+msgstr "Aprašymas:"
 
 #: plug-ins/imagemap/imap_settings.c:126
 msgid "Map file format"
@@ -11508,7 +11517,7 @@ msgstr ""
 
 #: plug-ins/print/print.c:164
 msgid "<Image>/File/_Print..."
-msgstr "<Image>/Byla/S_pausdinti..."
+msgstr "<Image>/Byla/Spausdinti..."
 
 #: plug-ins/print/print.c:690 plug-ins/print/print.c:691
 #: plug-ins/print/print.c:781 plug-ins/print/print.c:1120
@@ -11517,7 +11526,7 @@ msgstr "Byla"
 
 #: plug-ins/rcm/rcm.c:106
 msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-msgstr "<Image>/Filtrai/Spalvos/Atspindys/Spalvoto žemėlapio _sukimas..."
+msgstr "<Image>/Filtrai/Spalvos/Atspindys/Spalvoto žemėlapio sukimas..."
 
 #: plug-ins/rcm/rcm.c:267
 msgid "Rotating the colormap..."
@@ -11563,7 +11572,7 @@ msgstr ""
 
 #: plug-ins/rcm/rcm_dialog.c:513
 msgid "Change to this"
-msgstr ""
+msgstr "Keisti į šį"
 
 #  * Gray: What is gray? *
 #. * Gray: What is gray? *
@@ -11605,6 +11614,7 @@ msgstr "Visas sluoksnis"
 msgid "Context"
 msgstr ""
 
+#  Create dialog
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:761
 msgid "Colormap Rotation"
@@ -11618,6 +11628,8 @@ msgstr "Pagrindinis"
 msgid "Misc"
 msgstr "Išpl."
 
+#  printf("width = %d, height = %d\n
+# BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/sel2path/pxl-outline.c:83
 msgid "Selection to Path..."
@@ -11660,7 +11672,7 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:532
 msgid "<Toolbox>/File/Acquire/_TWAIN..."
-msgstr "<Toolbox>/Byla/Pačiupti/_TWAIN..."
+msgstr "<Toolbox>/Byla/Pačiupti/iš skanerio (TWAIN)..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:666
