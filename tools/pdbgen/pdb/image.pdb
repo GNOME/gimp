@@ -1289,8 +1289,31 @@ HELP
 
     $outargs[0]->{alias} =~ s/g_strdup \((.*)\)/$1/;
 CODE1
+    $help .= " The filename should be in the filesystem encoding.";
 
     $inargs[1]->{no_validate} = 1;
+
+    $invoke{code} = <<CODE3;
+{
+  /*  verify that the filename can be converted to UTF-8 and back  */
+  gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+
+  if (utf8)
+    {
+      gchar *tmp = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+
+      if (tmp)
+        g_free (tmp);
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+
+  if (success)
+    $invoke{code}
+}
+CODE3
 CODE2
 
 &image_accessors('name', 'string', 'name', 1,

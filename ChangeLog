@@ -1,3 +1,13 @@
+2004-11-13  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: Adapted Sven's code into pdbgen so
+	that gimp_image_set_filename() validates that it is called with
+	a filename in the filesystem encoding which can safely be converted
+	to UTF-8 and back. Fixes #153751.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: Regenerated.
+
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/Makefile.am
@@ -40,7 +50,7 @@
 	in UTF-8 encoding.
 
 	* app/pdb/image_cmds.c
-	* libgimp/gimpimage_pdb.c
+	* libgimp/gimpimage_pdb.c: Regenerated.
 
 	* app/vectors/gimpbezierstroke.h: formatting.
 

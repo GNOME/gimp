@@ -1868,7 +1868,8 @@ gimp_image_get_filename (gint32 image_ID)
  *
  * Sets the specified image's filename.
  *
- * This procedure sets the specified image's filename.
+ * This procedure sets the specified image's filename. The filename
+ * should be in the filesystem encoding.
  *
  * Returns: TRUE on success.
  */

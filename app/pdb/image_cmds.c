@@ -3806,7 +3806,25 @@ image_set_filename_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_set_filename (gimage, filename);
+    {
+      /*  verify that the filename can be converted to UTF-8 and back  */
+      gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+
+      if (utf8)
+        {
+          gchar *tmp = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+
+          if (tmp)
+            g_free (tmp);
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+
+      if (success)
+        gimp_image_set_filename (gimage, filename);
+    }
 
   return procedural_db_return_args (&image_set_filename_proc, success);
 }
@@ -3829,7 +3847,7 @@ static ProcRecord image_set_filename_proc =
 {
   "gimp_image_set_filename",
   "Sets the specified image's filename.",
-  "This procedure sets the specified image's filename.",
+  "This procedure sets the specified image's filename. The filename should be in the filesystem encoding.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
