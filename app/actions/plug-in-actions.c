@@ -219,11 +219,12 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       path_original   = proc_def->menu_paths->data;
       path_translated = dgettext (locale_domain, path_original);
 
-      if (! plug_in_actions_check_translation (path_original, path_translated))
-        return;
+      path_original = g_strdup (path_original);
 
-      path_original   = g_strdup (path_original);
-      path_translated = g_strdup (path_translated);
+      if (plug_in_actions_check_translation (path_original, path_translated))
+        path_translated = g_strdup (path_translated);
+      else
+        path_translated = g_strdup (path_original);
 
       p1 = strrchr (path_original, '/');
       p2 = strrchr (path_translated, '/');
@@ -263,6 +264,8 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
           if (plug_in_actions_check_translation (original, translated))
             plug_in_actions_build_path (group, original, translated);
+          else
+            plug_in_actions_build_path (group, original, original);
         }
     }
   else
@@ -295,6 +298,8 @@ plug_in_actions_add_path (GimpActionGroup *group,
 
   if (plug_in_actions_check_translation (menu_path, path_translated))
     plug_in_actions_build_path (group, menu_path, path_translated);
+  else
+    plug_in_actions_build_path (group, menu_path, menu_path);
 }
 
 void

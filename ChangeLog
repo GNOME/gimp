@@ -1,5 +1,11 @@
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/plug-in-actions.c: use the orininal string if
+	plug_in_actions_check_translation() fails instead of bailing out.
+	Fixes bug #162590.
+
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimppalette.[ch]: removed the just added
 	gimp_palette_insert_entry() and added a "gint position" parameter
 	to gimp_palette_add_entry() instead (no need to have two almost
