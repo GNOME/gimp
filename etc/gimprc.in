@@ -69,6 +69,10 @@
 #  plug-ins when the plug-in is run.
 (plug-in-path "${gimp_dir}/plug-ins:${gimp_plugin_dir}/plug-ins")
 
+# Set the tool plug-in search path...this path will be searched for
+#  tool plug-ins at startup.
+(tool-plug-in-path "${gimp_dir}/tool-plug-ins:${gimp_plugin_dir}/tool-plug-ins")
+
 # Set the path for the script-fu plug-in.  This value is ignored by
 #  the GIMP if the script-fu plug-in is never run.
 (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")

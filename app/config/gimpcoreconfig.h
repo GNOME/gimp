@@ -42,6 +42,7 @@ struct _GimpCoreConfig
   GimpBaseConfig       parent_instance;
 
   gchar               *plug_in_path;
+  gchar               *tool_plug_in_path;
   gchar               *module_path;
   gchar               *brush_path;
   gchar               *pattern_path;

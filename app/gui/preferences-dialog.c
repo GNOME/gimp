@@ -147,6 +147,7 @@ static gint               old_last_opened_size;
 static gchar            * old_temp_path;
 static gchar            * old_swap_path;
 static gchar            * old_plug_in_path;
+static gchar            * old_tool_plug_in_path;
 static gchar            * old_module_path;
 static gchar            * old_brush_path;
 static gchar            * old_pattern_path;
@@ -181,15 +182,16 @@ static gboolean           edit_show_indicators;
 static gboolean           edit_nav_window_per_display;
 static gboolean           edit_info_window_follows_mouse;
 static gboolean           edit_disable_tearoff_menus;
-static gchar            * edit_temp_path      = NULL;
-static gchar            * edit_swap_path      = NULL;
-static gchar            * edit_plug_in_path   = NULL;
-static gchar            * edit_module_path    = NULL;
-static gchar            * edit_brush_path     = NULL;
-static gchar            * edit_pattern_path   = NULL;
-static gchar            * edit_palette_path   = NULL;
-static gchar            * edit_gradient_path  = NULL;
-static gchar            * edit_theme_path     = NULL;
+static gchar            * edit_temp_path          = NULL;
+static gchar            * edit_swap_path          = NULL;
+static gchar            * edit_plug_in_path       = NULL;
+static gchar            * edit_tool_plug_in_path  = NULL;
+static gchar            * edit_module_path        = NULL;
+static gchar            * edit_brush_path         = NULL;
+static gchar            * edit_pattern_path       = NULL;
+static gchar            * edit_palette_path       = NULL;
+static gchar            * edit_gradient_path      = NULL;
+static gchar            * edit_theme_path         = NULL;
 
 /*  variables which will be changed _after_ closing the dialog  */
 static guint              edit_tile_cache_size;
@@ -359,15 +361,16 @@ prefs_check_settings (Gimp *gimp)
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
       edit_disable_tearoff_menus     != old_disable_tearoff_menus     ||
 
-      prefs_strcmp (old_temp_path,      edit_temp_path)      ||
-      prefs_strcmp (old_swap_path,      edit_swap_path)      ||
-      prefs_strcmp (old_plug_in_path,   edit_plug_in_path)   ||
-      prefs_strcmp (old_module_path,    edit_module_path)    ||
-      prefs_strcmp (old_brush_path,     edit_brush_path)     ||
-      prefs_strcmp (old_pattern_path,   edit_pattern_path)   ||
-      prefs_strcmp (old_palette_path,   edit_palette_path)   ||
-      prefs_strcmp (old_gradient_path,  edit_gradient_path)  ||
-      prefs_strcmp (old_theme_path,     edit_theme_path))
+      prefs_strcmp (old_temp_path,         edit_temp_path)         ||
+      prefs_strcmp (old_swap_path,         edit_swap_path)         ||
+      prefs_strcmp (old_plug_in_path,      edit_plug_in_path)      ||
+      prefs_strcmp (old_tool_plug_in_path, edit_tool_plug_in_path) ||
+      prefs_strcmp (old_module_path,       edit_module_path)       ||
+      prefs_strcmp (old_brush_path,        edit_brush_path)        ||
+      prefs_strcmp (old_pattern_path,      edit_pattern_path)      ||
+      prefs_strcmp (old_palette_path,      edit_palette_path)      ||
+      prefs_strcmp (old_gradient_path,     edit_gradient_path)     ||
+      prefs_strcmp (old_theme_path,        edit_theme_path))
     {
       return PREFS_RESTART;
     }
@@ -498,6 +501,7 @@ prefs_save_callback (GtkWidget *widget,
   gchar      *save_temp_path;
   gchar      *save_swap_path;
   gchar      *save_plug_in_path;
+  gchar      *save_tool_plug_in_path;
   gchar      *save_module_path;
   gchar      *save_brush_path;
   gchar      *save_pattern_path;
@@ -547,15 +551,16 @@ prefs_save_callback (GtkWidget *widget,
   save_nav_window_per_display    = gimprc.nav_window_per_display;
   save_info_window_follows_mouse = gimprc.info_window_follows_mouse;
 
-  save_temp_path      = base_config->temp_path;
-  save_swap_path      = base_config->swap_path;
+  save_temp_path          = base_config->temp_path;
+  save_swap_path          = base_config->swap_path;
 
-  save_plug_in_path   = gimp->config->plug_in_path;
-  save_module_path    = gimp->config->module_path;
-  save_brush_path     = gimp->config->brush_path;
-  save_pattern_path   = gimp->config->pattern_path;
-  save_palette_path   = gimp->config->palette_path;
-  save_gradient_path  = gimp->config->gradient_path;
+  save_plug_in_path       = gimp->config->plug_in_path;
+  save_tool_plug_in_path  = gimp->config->tool_plug_in_path;
+  save_module_path        = gimp->config->module_path;
+  save_brush_path         = gimp->config->brush_path;
+  save_pattern_path       = gimp->config->pattern_path;
+  save_palette_path       = gimp->config->palette_path;
+  save_gradient_path      = gimp->config->gradient_path;
 
   save_theme_path     = gimprc.theme_path;
 
@@ -805,6 +810,11 @@ prefs_save_callback (GtkWidget *widget,
       gimp->config->plug_in_path = edit_plug_in_path;
       update = g_list_append (update, "plug-in-path");
     }
+  if (prefs_strcmp (old_tool_plug_in_path, edit_tool_plug_in_path))
+    {
+      gimp->config->tool_plug_in_path = edit_tool_plug_in_path;
+      update = g_list_append (update, "tool-plug-in-path");
+    }
   if (prefs_strcmp (old_module_path, edit_module_path))
     {
       gimp->config->module_path = edit_module_path;
@@ -864,12 +874,13 @@ prefs_save_callback (GtkWidget *widget,
   base_config->temp_path     = save_temp_path;
   base_config->swap_path     = save_swap_path;
 
-  gimp->config->plug_in_path  = save_plug_in_path;
-  gimp->config->module_path   = save_module_path;
-  gimp->config->brush_path    = save_brush_path;
-  gimp->config->pattern_path  = save_pattern_path;
-  gimp->config->palette_path  = save_palette_path;
-  gimp->config->gradient_path = save_gradient_path;
+  gimp->config->plug_in_path       = save_plug_in_path;
+  gimp->config->tool_plug_in_path  = save_tool_plug_in_path;
+  gimp->config->module_path        = save_module_path;
+  gimp->config->brush_path         = save_brush_path;
+  gimp->config->pattern_path       = save_pattern_path;
+  gimp->config->palette_path       = save_palette_path;
+  gimp->config->gradient_path      = save_gradient_path;
 
   gimprc.theme_path = save_theme_path;
 
@@ -973,17 +984,18 @@ prefs_cancel_callback (GtkWidget *widget,
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
   edit_disable_tearoff_menus     = old_disable_tearoff_menus;
 
-  prefs_strset (&edit_temp_path,      old_temp_path);
-  prefs_strset (&edit_swap_path,      old_swap_path);
+  prefs_strset (&edit_temp_path,           old_temp_path);
+  prefs_strset (&edit_swap_path,           old_swap_path);
 
-  prefs_strset (&edit_plug_in_path,   old_plug_in_path);
-  prefs_strset (&edit_module_path,    old_module_path);
-  prefs_strset (&edit_brush_path,     old_brush_path);
-  prefs_strset (&edit_pattern_path,   old_pattern_path);
-  prefs_strset (&edit_palette_path,   old_palette_path);
-  prefs_strset (&edit_gradient_path,  old_gradient_path);
+  prefs_strset (&edit_plug_in_path,        old_plug_in_path);
+  prefs_strset (&edit_tool_plug_in_path,   old_tool_plug_in_path);
+  prefs_strset (&edit_module_path,         old_module_path);
+  prefs_strset (&edit_brush_path,          old_brush_path);
+  prefs_strset (&edit_pattern_path,        old_pattern_path);
+  prefs_strset (&edit_palette_path,        old_palette_path);
+  prefs_strset (&edit_gradient_path,       old_gradient_path);
 
-  prefs_strset (&edit_theme_path,     old_theme_path);
+  prefs_strset (&edit_theme_path,          old_theme_path);
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 }
@@ -1509,12 +1521,13 @@ preferences_dialog_create (Gimp *gimp)
       edit_temp_path      = prefs_strdup (base_config->temp_path);	
       edit_swap_path      = prefs_strdup (base_config->swap_path);
 
-      edit_plug_in_path   = prefs_strdup (gimp->config->plug_in_path);
-      edit_module_path    = prefs_strdup (gimp->config->module_path);
-      edit_brush_path     = prefs_strdup (gimp->config->brush_path);
-      edit_pattern_path   = prefs_strdup (gimp->config->pattern_path);
-      edit_palette_path   = prefs_strdup (gimp->config->palette_path);
-      edit_gradient_path  = prefs_strdup (gimp->config->gradient_path);
+      edit_plug_in_path       = prefs_strdup (gimp->config->plug_in_path);
+      edit_tool_plug_in_path  = prefs_strdup (gimp->config->tool_plug_in_path);
+      edit_module_path        = prefs_strdup (gimp->config->module_path);
+      edit_brush_path         = prefs_strdup (gimp->config->brush_path);
+      edit_pattern_path       = prefs_strdup (gimp->config->pattern_path);
+      edit_palette_path       = prefs_strdup (gimp->config->palette_path);
+      edit_gradient_path      = prefs_strdup (gimp->config->gradient_path);
 
       edit_theme_path     = prefs_strdup (gimprc.theme_path);
     }
@@ -1581,15 +1594,16 @@ preferences_dialog_create (Gimp *gimp)
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
   old_disable_tearoff_menus     = edit_disable_tearoff_menus;
 
-  prefs_strset (&old_temp_path,      edit_temp_path);
-  prefs_strset (&old_swap_path,      edit_swap_path);
-  prefs_strset (&old_plug_in_path,   edit_plug_in_path);
-  prefs_strset (&old_module_path,    edit_module_path);
-  prefs_strset (&old_brush_path,     edit_brush_path);
-  prefs_strset (&old_pattern_path,   edit_pattern_path);
-  prefs_strset (&old_palette_path,   edit_palette_path);
-  prefs_strset (&old_gradient_path,  edit_gradient_path);
-  prefs_strset (&old_theme_path,     edit_theme_path);
+  prefs_strset (&old_temp_path,          edit_temp_path);
+  prefs_strset (&old_swap_path,          edit_swap_path);
+  prefs_strset (&old_plug_in_path,       edit_plug_in_path);
+  prefs_strset (&old_tool_plug_in_path,  edit_tool_plug_in_path);
+  prefs_strset (&old_module_path,        edit_module_path);
+  prefs_strset (&old_brush_path,         edit_brush_path);
+  prefs_strset (&old_pattern_path,       edit_pattern_path);
+  prefs_strset (&old_palette_path,       edit_palette_path);
+  prefs_strset (&old_gradient_path,      edit_gradient_path);
+  prefs_strset (&old_theme_path,         edit_theme_path);
 
   /*  values which will be changed on "OK" and "Save"  */
   old_tile_cache_size = edit_tile_cache_size;
@@ -2803,6 +2817,10 @@ preferences_dialog_create (Gimp *gimp)
 	"dialogs/preferences/directories.html#plug_ins",
 	N_("Select Plug-Ins Dir"),
 	&edit_plug_in_path },
+      { N_("Tool Plug-Ins"), N_("Tool Plug-Ins Directories"),
+	"dialogs/preferences/directories.html#tool_plug_ins",
+	N_("Select Tool Plug-Ins Dir"),
+	&edit_tool_plug_in_path },
       { N_("Modules"), N_("Modules Directories"),
 	"dialogs/preferences/directories.html#modules",
 	N_("Select Modules Dir"),

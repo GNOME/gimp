@@ -34,6 +34,7 @@ gimp_core_config_init (Gimp *gimp)
 
   gimp->config = g_new0 (GimpCoreConfig, 1);
 
+  gimp->config->tool_plug_in_path        = NULL;
   gimp->config->plug_in_path             = NULL;
   gimp->config->module_path              = NULL;
 

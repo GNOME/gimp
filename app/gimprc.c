@@ -361,7 +361,8 @@ gimprc_init (Gimp *gimp)
 	{ "undo-levels",              TT_INT,       NULL, NULL },
 	{ "pluginrc-path",            TT_PATH,      NULL, NULL },
 	{ "module-load-inhibit",      TT_PATH,      NULL, NULL },
-	{ "thumbnail-mode",           TT_INT,       NULL, NULL }
+	{ "thumbnail-mode",           TT_INT,       NULL, NULL },
+	{ "tool-plug-in-path",        TT_PATH,      NULL, NULL }
       };
 
       /*  this hurts badly  */
@@ -394,6 +395,7 @@ gimprc_init (Gimp *gimp)
       core_funcs[18].val1p = &gimp->config->pluginrc_path;
       core_funcs[19].val1p = &gimp->config->module_db_load_inhibit;
       core_funcs[20].val1p = &gimp->config->write_thumbnails;
+      core_funcs[21].val1p = &gimp->config->tool_plug_in_path;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
