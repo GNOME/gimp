@@ -6,4 +6,5 @@ Makefile
 Makefile.in
 POTFILES
 messages
+missing
 po2tbl.sed.in

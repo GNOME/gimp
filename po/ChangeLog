@@ -1,3 +1,9 @@
+2003-01-09  Christian Neumair  <chris@gnome-de.org>
+
+	* .cvsignore: Added missing.
+	* POTFILES.skip: Added, added data/misc/gimp.desktop.in.
+	* de.po: Updated German translation.
+
 2003-01-09  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.
