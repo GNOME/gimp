@@ -144,25 +144,13 @@ gimp_message (Gimp        *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (! gimp->console_messages)
-    {
-      switch (gimp->message_handler)
-        {
-        case GIMP_MESSAGE_BOX:
-        case GIMP_ERROR_CONSOLE:
-          if (gimp->gui.message)
-            {
-              gimp->gui.message (gimp, domain, message);
-              return;
-            }
-          break;
+  if (! domain)
+    domain = _("GIMP");
 
-        default:
-          break;
-        }
-    }
-
-  g_printerr ("%s: %s\n\n", domain ? domain : _("GIMP"), message);
+  if (! gimp->console_messages && gimp->gui.message)
+    gimp->gui.message (gimp, domain, message);
+  else
+    g_printerr ("%s: %s\n\n", domain, message);
 }
 
 void

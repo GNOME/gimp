@@ -49,6 +49,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimperrorconsole.h"
+#include "widgets/gimperrordialog.h"
 #include "widgets/gimpfontview.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
@@ -144,6 +145,13 @@ dialogs_about_get (GimpDialogFactory *factory,
   return about_dialog_create ();
 }
 
+GtkWidget *
+dialogs_error_get (GimpDialogFactory *factory,
+                   GimpContext       *context,
+                   gint               preview_size)
+{
+  return gimp_error_dialog_new (_("GIMP Message"), GIMP_STOCK_WARNING);
+}
 
 /***********/
 /*  docks  */

@@ -40,8 +40,8 @@ struct _GimpMessageBox
   GtkVBox       parent_instance;
 
   gchar        *stock_id;
-
-  GtkWidget    *label[2];
+  gint          repeat;
+  GtkWidget    *label[3];
   GtkWidget    *image;
 };
 
@@ -63,6 +63,7 @@ void        gimp_message_box_set_text         (GimpMessageBox *box,
 void        gimp_message_box_set_markup       (GimpMessageBox *box,
                                                const gchar    *format,
                                                ...);
+gint        gimp_message_box_repeat           (GimpMessageBox *box);
 
 
 G_END_DECLS

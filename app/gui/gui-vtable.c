@@ -48,6 +48,7 @@
 #include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
+#include "widgets/gimperrordialog.h"
 #include "widgets/gimpfontselect.h"
 #include "widgets/gimpgradientselect.h"
 #include "widgets/gimphelp.h"
@@ -57,7 +58,6 @@
 #include "widgets/gimppatternselect.h"
 #include "widgets/gimpprogressdialog.h"
 #include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -199,29 +199,55 @@ gui_message (Gimp        *gimp,
              const gchar *domain,
              const gchar *message)
 {
-  if (gimp->message_handler == GIMP_ERROR_CONSOLE)
+  switch (gimp->message_handler)
     {
-      GtkWidget *dockable;
+    case GIMP_ERROR_CONSOLE:
+      {
+        GtkWidget *dockable;
 
-      dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+        dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                                     gdk_screen_get_default (),
+                                                     "gimp-error-console", -1);
+
+        if (dockable)
+          {
+            GimpErrorConsole *console;
+
+            console = GIMP_ERROR_CONSOLE (GTK_BIN (dockable)->child);
+
+            gimp_error_console_add (console,
+                                    GIMP_STOCK_WARNING, domain, message);
+
+            return;
+          }
+
+        gimp->message_handler = GIMP_MESSAGE_BOX;
+      }
+      /*  fallthru  */
+
+    case GIMP_MESSAGE_BOX:
+      {
+        GtkWidget *dialog;
+
+        dialog = gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                                    gdk_screen_get_default (),
-                                                   "gimp-error-console", -1);
+                                                   "gimp-error-dialog", -1);
+        if (dialog)
+          {
+            gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
+                                   GIMP_STOCK_WARNING, domain, message);
 
-      if (dockable)
-        {
-          GimpErrorConsole *console;
+            return;
+          }
 
-          console = GIMP_ERROR_CONSOLE (GTK_BIN (dockable)->child);
+        gimp->message_handler = GIMP_CONSOLE;
+      }
+      /*  fallthru  */
 
-          gimp_error_console_add (console, GIMP_STOCK_WARNING, domain, message);
-
-          return;
-        }
-
-      gimp->message_handler = GIMP_MESSAGE_BOX;
+    case GIMP_CONSOLE:
+      g_printerr ("%s: %s\n\n", domain, message);
+      break;
     }
-
-  gimp_message_box (GIMP_STOCK_WARNING, domain, message, NULL, NULL);
 }
 
 void

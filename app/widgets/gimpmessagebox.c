@@ -29,6 +29,8 @@
 
 #include "gimpmessagebox.h"
 
+#include "gimp-intl.h"
+
 
 #define GIMP_MESSAGE_BOX_SPACING  12
 
@@ -154,6 +156,9 @@ gimp_message_box_init (GimpMessageBox *box)
 
       box->label[i] = label;
     }
+
+  box->repeat   = 0;
+  box->label[2] = NULL;
 }
 
 static void
@@ -437,4 +442,39 @@ gimp_message_box_set_markup (GimpMessageBox *box,
   va_start (args, format);
   gimp_message_box_set_label_markup (box, 1,format, args);
   va_end (args);
+}
+
+gint
+gimp_message_box_repeat (GimpMessageBox *box)
+{
+  gchar *message;
+
+  g_return_val_if_fail (GIMP_IS_MESSAGE_BOX (box), 0);
+
+  box->repeat++;
+
+  if (box->repeat > 1)
+    message = g_strdup_printf (_("Message repeated %d times."), box->repeat);
+  else
+    message = g_strdup (_("Message repeated once."));
+
+  if (box->label[2])
+    {
+      gtk_label_set_text (GTK_LABEL (box->label[2]), message);
+    }
+  else
+    {
+      GtkWidget *label = box->label[2] = gtk_label_new (message);
+
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+                                 -1);
+      gtk_box_pack_end (GTK_BOX (box), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+    }
+
+  g_free (message);
+
+  return box->repeat;
 }

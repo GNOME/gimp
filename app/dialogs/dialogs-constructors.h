@@ -37,6 +37,9 @@ GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
 GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_error_get              (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 
 
 /*  docks  */

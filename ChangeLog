@@ -1,16 +1,38 @@
-2004-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2004-08-25  Sven Neumann  <sven@gimp.org>
 
-	* devel-docs/Makefile.am: added ggr.txt to list.
+	* app/widgets/gimpmessagebox.[ch]: added gimp_message_box_repeat().
 	
-2004-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimperrordialog.[ch]: added new dialog that adds a new
+	GimpMessageBox for each message added. Fixes bug #92604.
 
-	* devel-docs/ggr.txt: added new file decribing the ggr 
-	(Gimp gradient) file format.
+	* app/widgets/gimpwidgets-utils.[ch]: removed old gimp_message_box()
+	functionality.
+
+	* app/gui/gui.c (gui_abort): use a GimpMessageBox in a GimpDialog.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: manage GimpErrorDialog as singleton.
+
+	* app/gui/gui-vtable.c (gui_message): use the new error dialog.
+
+	* app/core/gimp-gui.c (gimp_message): substitue "GIMP" for a NULL
+	domain.
+
+	* app/widgets/gimperrorconsole.c (gimp_error_console_add): fail
+	when being called with a NULL domain.
 
 2004-08-25  DindinX  <david@dindinx.org>
 
 	* app/display/gimpnavigationeditor.[ch]: eradicate some more previews
 	in favor of views.
+
+2004-08-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/Makefile.am
+	* devel-docs/ggr.txt: added new file decribing the ggr (Gimp
+	gradient) file format.
 
 2004-08-25  DindinX  <david@dindinx.org>
 

@@ -54,6 +54,7 @@
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpmessagebox.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -149,11 +150,30 @@ gui_libs_init (gint    *argc,
 void
 gui_abort (const gchar *abort_message)
 {
+  GtkWidget *dialog;
+  GtkWidget *box;
+
   g_return_if_fail (abort_message != NULL);
 
-  gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL, abort_message,
-                    (GtkCallback) gtk_main_quit, NULL);
-  gtk_main ();
+  dialog = gimp_dialog_new (_("GIMP Message"), "gimp-abort",
+                            NULL, GTK_DIALOG_MODAL, NULL, NULL,
+                            GTK_STOCK_OK, GTK_RESPONSE_OK,
+                            NULL);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
+                      "stock_id",     GIMP_STOCK_WILBER_EEK,
+                      "border_width", 12,
+                      NULL);
+
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), abort_message);
+
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
+
+  gimp_dialog_run (GIMP_DIALOG (dialog));
+
   exit (EXIT_FAILURE);
 }
 

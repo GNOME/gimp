@@ -254,10 +254,8 @@ gimp_error_console_add (GimpErrorConsole *console,
 
   g_return_if_fail (GIMP_IS_ERROR_CONSOLE (console));
   g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (domain != NULL);
   g_return_if_fail (message != NULL);
-
-  if (! domain)
-    domain = _("GIMP");
 
   gtk_text_buffer_get_end_iter (console->text_buffer, &end);
 
