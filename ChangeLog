@@ -1,3 +1,8 @@
+2004-07-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/jpeg.c: changed "exif-data" back to 
+	"jpeg-exif-data" to fix bug #148632.
+	
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD (fixes bug #120034, patch from Pedro Gimeno):

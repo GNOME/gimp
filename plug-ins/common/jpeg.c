@@ -1165,7 +1165,7 @@ load_image (const gchar *filename,
 
 	      if (exif_buf_len > EXIF_HEADER_SIZE)
 		{
-		  exif_parasite = gimp_parasite_new ("exif-data",
+		  exif_parasite = gimp_parasite_new ("jpeg-exif-data",
 						     GIMP_PARASITE_PERSISTENT,
 						     exif_buf_len, exif_buf);
 		  gimp_image_parasite_attach (image_ID, exif_parasite);
