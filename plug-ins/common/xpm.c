@@ -161,12 +161,19 @@ query (void)
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
-                          "<Load>/Xpm",
+                          N_("X PixMap image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_xpm_load", "<Load>");
+  gimp_register_file_handler_mime ("file_xpm_load", "image/x-xpixmap");
+  gimp_register_magic_load_handler ("file_xpm_load",
+                                    "xpm",
+                                    "<Load>/Xpm",
+                                    "0, string,/*\\040XPM\\040*/");
 
   gimp_install_procedure ("file_xpm_save",
                           "saves files in the xpm file format (if you're on a 16 bit display...)",
@@ -174,16 +181,14 @@ query (void)
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
-                          "<Save>/Xpm",
+                          N_("X PixMap image"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_xpm_load",
-                                    "xpm",
-                                    "<Load>/Xpm",
-                                    "0, string,/*\\040XPM\\040*/");
+  gimp_plugin_menu_register ("file_xpm_save", "<Save>");
+  gimp_register_file_handler_mime ("file_xpm_save", "image/x-xpixmap");
   gimp_register_save_handler ("file_xpm_save",
                               "xpm",
                               "<Save>/Xpm");

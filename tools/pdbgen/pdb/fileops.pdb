@@ -407,7 +407,8 @@ HELP
       goto done;
     }
 
-  file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, magics);
+  file_proc = plug_ins_file_register_magic (gimp, name,
+                                            extensions, prefixes, magics);
 
   if (! file_proc)
     {
@@ -480,7 +481,8 @@ HELP
       goto done;
     }
 
-  file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, NULL);
+  file_proc = plug_ins_file_register_magic (gimp, name,
+                                            extensions, prefixes, NULL);
 
   if (! file_proc)
     {
@@ -500,6 +502,35 @@ CODE
     );
 }
 
+sub register_file_handler_mime {
+    $blurb = 'Associates a MIME type with a file handler procedure.';
+
+    $help = <<'HELP';
+Registers a MIME type for a file handler procedure. This allows GIMP
+to determine the MIME type of the file opened or saved using this
+procedure.
+HELP
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2004';
+    $since = '2.2';
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', alias => 'name',
+	  desc => "The name of the procedure to associate a MIME type with." },
+	{ name => 'mime_type',      type => 'string',
+	  desc => "A single MIME type, like for example \"image/jpeg\"."     }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = (plug_ins_file_register_mime (gimp, name, mime_type) != NULL);
+}
+CODE
+    );
+}
+
 @headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
               "libgimpthumb/gimpthumb.h" "base/temp-buf.h"
               "core/gimp.h" "core/gimpimagefile.h"
@@ -508,8 +539,8 @@ CODE
 
 @procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler
-	    register_save_handler);
-%exports = (app => [@procs], lib => [@procs[0,1,4..7]]);
+	    register_save_handler register_file_handler_mime);
+%exports = (app => [@procs], lib => [@procs[0,1,4..8]]);
 
 $desc = 'File Operations';
 

@@ -194,7 +194,8 @@ gimp_document_list_new (Gimp *gimp)
 
 GimpImagefile *
 gimp_document_list_add_uri (GimpDocumentList *document_list,
-                            const gchar      *uri)
+                            const gchar      *uri,
+                            const gchar      *mime_type)
 {
   GimpImagefile *imagefile;
   GimpContainer *container;
@@ -217,6 +218,10 @@ gimp_document_list_add_uri (GimpDocumentList *document_list,
       gimp_container_add (container, GIMP_OBJECT (imagefile));
       g_object_unref (imagefile);
     }
+
+  g_object_set (imagefile->thumbnail,
+                "image-mimetype", mime_type,
+                NULL);
 
   return imagefile;
 }

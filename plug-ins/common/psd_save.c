@@ -178,11 +178,14 @@ query ()
                           "Monigotes",
                           "Monigotes",
                           "2000",
-                          "<Save>/PSD",
+                          N_("Photoshop image"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
+
+  gimp_plugin_menu_register ("file_psd_save", "<Save>");
+  gimp_register_file_handler_mime ("file_psd_save", "image/x-psd");
   gimp_register_save_handler ("file_psd_save", "psd", "");
 }
 

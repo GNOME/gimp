@@ -121,13 +121,15 @@ query (void)
                           "Dom Lachowicz, Sven Neumann",
                           "Dom Lachowicz <cinamod@hotmail.com>",
                           SVG_VERSION,
-			  "<Load>/SVG",
+			  N_("Scalable SVG image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_plugin_menu_register ("file_svg_load", "<Load>");
+  gimp_register_file_handler_mime ("file_svg_load", "image/svg+xml");
   gimp_register_magic_load_handler ("file_svg_load",
 				    "svg", "",
 				    "0,string,<?xml,0,string,<svg");

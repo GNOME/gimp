@@ -101,13 +101,15 @@ query (void)
                           "Dom Lachowicz <cinamod@hotmail.com>",
                           "Dom Lachowicz <cinamod@hotmail.com>",
                           "(c) 2003 - Version 0.3.0",
-                          "<Load>/WMF",
+                          N_("Microsoft WMF file"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_plugin_menu_register ("file_wmf_load", "<Load>");
+  gimp_register_file_handler_mime ("file_wmf_load", "image/x-wmf");
   gimp_register_magic_load_handler ("file_wmf_load",
                                     "wmf,apm", "",
                                     "0,string,\\327\\315\\306\\232,0,string,\\1\\0\\11\\0");

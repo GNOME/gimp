@@ -27,6 +27,7 @@ GimpImage * file_open_image                 (Gimp               *gimp,
                                              PlugInProcDef      *file_proc,
                                              GimpRunMode         run_mode,
                                              GimpPDBStatusType  *status,
+                                             const gchar       **mime_type,
                                              GError            **error);
 
 GimpImage * file_open_with_display          (Gimp               *gimp,

@@ -428,13 +428,15 @@ query (void)
                           "Adam D. Moss & Torsten Martinsen",
                           "Adam D. Moss & Torsten Martinsen",
                           "1996-1998",
-                          "<Load>/PSD",
+                          "Photoshop image",
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_plugin_menu_register ("file_psd_load", "<Load>");
+  gimp_register_file_handler_mime ("file_psd_load", "image/x-psd");
   gimp_register_magic_load_handler ("file_psd_load",
 				    "psd",
 				    "",

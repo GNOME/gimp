@@ -117,12 +117,19 @@ query (void)
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",
-                          "<Load>/BMP",
+                          N_("Windows BMP image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_bmp_load", "<Load>");
+  gimp_register_file_handler_mime ("file_bmp_load", "image/bmp");
+  gimp_register_magic_load_handler ("file_bmp_load",
+				    "bmp",
+				    "",
+				    "0,string,BM");
 
   gimp_install_procedure ("file_bmp_save",
                           "Saves files in Windows BMP file format",
@@ -130,19 +137,17 @@ query (void)
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",
-                          "<Save>/BMP",
+                          N_("Windows BMP image"),
                           "INDEXED, GRAY, RGB",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_bmp_load",
-				    "bmp",
-				    "",
-				    "0,string,BM");
-  gimp_register_save_handler       ("file_bmp_save",
-				    "bmp",
-				    "");
+  gimp_plugin_menu_register ("file_bmp_save", "<Save>");
+  gimp_register_file_handler_mime ("file_bmp_save", "image/bmp");
+  gimp_register_save_handler ("file_bmp_save",
+                              "bmp",
+                              "");
 }
 
 static void

@@ -214,12 +214,19 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
-                          "<Load>/SUNRAS",
+                          N_("SUN Rasterfile image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_sunras_load", "<Load>");
+  gimp_register_file_handler_mime ("file_sunras_load", "image/x-sun-raster");
+  gimp_register_magic_load_handler ("file_sunras_load",
+				    "im1,im8,im24,im32,rs,ras",
+				    "",
+				    "0,long,0x59a66a95");
 
   gimp_install_procedure ("file_sunras_save",
                           "save file in the SunRaster file format",
@@ -228,20 +235,17 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
-                          "<Save>/SUNRAS",
+                          N_("SUN Rasterfile image"),
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  /* Magic information for sunras would be "0,long,0x59a66a95" */
-  gimp_register_magic_load_handler ("file_sunras_load",
-				    "im1,im8,im24,im32,rs,ras",
-				    "",
-				    "0,long,0x59a66a95");
-  gimp_register_save_handler       ("file_sunras_save",
-				    "im1,im8,im24,im32,rs,ras",
-				    "");
+  gimp_plugin_menu_register ("file_sunrad_save", "<Save>");
+  gimp_register_file_handler_mime ("file_sunras_save", "image/x-sun-raster");
+  gimp_register_save_handler ("file_sunras_save",
+                              "im1,im8,im24,im32,rs,ras",
+                              "");
 }
 
 

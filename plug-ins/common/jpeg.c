@@ -330,12 +330,19 @@ query (void)
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1999",
-			  "<Load>/Jpeg",
+			  N_("JPEG image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_jpeg_load", "<Load>");
+  gimp_register_file_handler_mime ("file_jpeg_load", "image/jpeg");
+  gimp_register_magic_load_handler ("file_jpeg_load",
+				    "jpg,jpeg,jpe",
+				    "",
+				    "6,string,JFIF,6,string,Exif");
 
   gimp_install_procedure ("file_jpeg_save",
                           "saves files in the JPEG file format",
@@ -343,19 +350,17 @@ query (void)
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1999",
-                          "<Save>/JPEG",
+                          N_("JPEG image"),
 			  "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_jpeg_load",
-				    "jpg,jpeg,jpe",
-				    "",
-				    "6,string,JFIF,6,string,Exif");
-  gimp_register_save_handler       ("file_jpeg_save",
-				    "jpg,jpeg,jpe",
-				    "");
+  gimp_plugin_menu_register ("file_jpeg_save", "<Save>");
+  gimp_register_file_handler_mime ("file_jpeg_save", "image/jpeg");
+  gimp_register_save_handler ("file_jpeg_save",
+                              "jpg,jpeg,jpe",
+                              "");
 }
 
 static void

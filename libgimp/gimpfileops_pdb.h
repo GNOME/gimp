@@ -48,6 +48,8 @@ gboolean gimp_register_load_handler       (const gchar *procedure_name,
 gboolean gimp_register_save_handler       (const gchar *procedure_name,
 					   const gchar *extensions,
 					   const gchar *prefixes);
+gboolean gimp_register_file_handler_mime  (const gchar *procedure_name,
+					   const gchar *mime_type);
 
 
 G_END_DECLS

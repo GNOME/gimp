@@ -97,13 +97,15 @@ void query (void)
                           "Jochen Friedrich",
                           "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
                           VERSION,
-			  "<Load>/Fax G3",
+			  N_("G3 fax image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_plugin_menu_register ("file_faxg3_load", "<Load>");
+  gimp_register_file_handler_mime ("file_faxg3_load", "image/g3-fax");
   gimp_register_magic_load_handler ("file_faxg3_load",
 				    "g3",
 				    "",

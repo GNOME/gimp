@@ -32,11 +32,15 @@ void              plug_ins_add_internal         (Gimp          *gimp,
                                                  PlugInProcDef *proc_def);
 
 /* Add in the file load/save handler fields procedure. */
-PlugInProcDef   * plug_ins_file_handler         (Gimp          *gimp,
-                                                 gchar         *name,
-                                                 gchar         *extensions,
-                                                 gchar         *prefixes,
-                                                 gchar         *magics);
+PlugInProcDef   * plug_ins_file_register_magic  (Gimp          *gimp,
+                                                 const gchar   *name,
+                                                 const gchar   *extensions,
+                                                 const gchar   *prefixes,
+                                                 const gchar   *magics);
+
+PlugInProcDef   * plug_ins_file_register_mime   (Gimp          *gimp,
+                                                 const gchar   *name,
+                                                 const gchar   *mime_type);
 
 /* Add a plug-in definition. */
 void              plug_ins_def_add_from_rc      (Gimp          *gimp,

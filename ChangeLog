@@ -1,3 +1,49 @@
+2004-05-14  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb: added new PDB function
+	gimp_register_file_handler_mime() that allows to associate a MIME
+	type with a file procecdurre.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpfileops_pdb.[ch]: regenerated.
+
+	* app/plug-in/plug-in-proc.[ch]
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.[ch]: store a mimetype with file procedures.
+
+	* app/actions/file-commands.c
+	* app/core/gimpdocumentlist.[ch]
+	* app/core/gimpimagefile.[ch]
+	* app/file/file-open.[ch]
+	* app/file/file-save.c: set the thumbnail's mimetype from the file
+	procedure used to load/save the image.
+
+	* app/xcf/xcf.c
+	* plug-ins/bmp/bmp.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/dicom.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/png.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/svg.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/winicon/main.c: register a mimetype, set a translatable
+	action name (taken from shared-mime-info) and register to the <Load>
+	and <Save> menus using gimp_plugin_menu_register().
+
 2004-05-13  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/lib.pl

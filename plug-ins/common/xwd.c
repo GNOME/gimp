@@ -238,12 +238,19 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
-                          "<Load>/XWD",
+                          N_("X window image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_xwd_load", "<Load>");
+  gimp_register_file_handler_mime ("file_xwd_load", "image/x-xwindowdump");
+  gimp_register_magic_load_handler ("file_xwd_load",
+				    "xwd",
+				    "",
+                                    "4,long,0x00000007");
 
   gimp_install_procedure ("file_xwd_save",
                           "saves files in the XWD file format",
@@ -252,16 +259,14 @@ those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
-                          "<Save>/XWD",
+                          N_("X window image"),
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_xwd_load",
-				    "xwd",
-				    "",
-                                    "4,long,0x00000007");
+  gimp_plugin_menu_register ("file_xwd_save", "<Save>");
+  gimp_register_file_handler_mime ("file_xwd_save", "image/x-xwindowdump");
   gimp_register_save_handler ("file_xwd_save",
 			      "xwd",
 			      "");

@@ -46,13 +46,14 @@ struct _GimpImagefile
 
   Gimp               *gimp;
   GimpThumbnail      *thumbnail;
+  gchar              *mime_type;
   gchar              *description;
   gboolean            static_desc;
 };
 
 struct _GimpImagefileClass
 {
-  GimpViewableClass  parent_class;
+  GimpViewableClass   parent_class;
 
   void (* info_changed) (GimpImagefile *imagefile);
 };

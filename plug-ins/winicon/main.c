@@ -88,12 +88,19 @@ query (void)
 			  "Christian Kreibich <christian@whoop.org>",
 			  "Christian Kreibich <christian@whoop.org>",
 			  "2002",
-			  N_("<Load>/ICO"),
+                          N_("Microsoft Windows icon"),
 			  NULL,
 			  GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_ico_load", "<Load>");
+  gimp_register_file_handler_mime ("file_ico_load", "image/x-ico");
+  gimp_register_magic_load_handler ("file_ico_load",
+				    "ico",
+				    "",
+				    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
 
   gimp_install_procedure ("file_ico_save",
                           "Saves files in Windows ICO file format",
@@ -101,19 +108,17 @@ query (void)
 			  "Christian Kreibich <christian@whoop.org>",
 			  "Christian Kreibich <christian@whoop.org>",
 			  "2002",
-                          N_("<Save>/ICO"),
+                          N_("Microsoft Windows icon"),
                           "INDEXEDA, GRAYA, RGBA",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_ico_load",
-				    "ico,wico",
-				    "",
-				    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
-  gimp_register_save_handler       ("file_ico_save",
-				    "ico,wico",
-				    "");
+  gimp_plugin_menu_register ("file_ico_save", "<Save>");
+  gimp_register_file_handler_mime ("file_ico_save", "image/x-ico");
+  gimp_register_save_handler ("file_ico_save",
+                              "ico",
+                              "");
 
 }
 

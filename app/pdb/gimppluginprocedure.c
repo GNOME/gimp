@@ -36,11 +36,7 @@
 PlugInProcDef *
 plug_in_proc_def_new (void)
 {
-  PlugInProcDef *proc_def;
-
-  proc_def = g_new0 (PlugInProcDef, 1);
-
-  return proc_def;
+  return g_new0 (PlugInProcDef, 1);
 }
 
 void
@@ -81,6 +77,7 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def->extensions);
   g_free (proc_def->prefixes);
   g_free (proc_def->magics);
+  g_free (proc_def->mime_type);
   g_free (proc_def->image_types);
 
   g_free (proc_def);

@@ -166,12 +166,18 @@ query (void)
                           "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",
-                          "<Load>/XBM",
+                          N_("X BitMap image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_xbm_load", "<Load>");
+  gimp_register_file_handler_mime ("file_xbm_load", "image/x-xbitmap");
+  gimp_register_load_handler ("file_xbm_load",
+			      "xbm,icon,bitmap",
+			      "");
 
   gimp_install_procedure ("file_xbm_save",
                           "Save a file in X10 or X11 bitmap (XBM) file format",
@@ -179,15 +185,14 @@ query (void)
 			  "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",
-                          "<Save>/XBM",
+                          N_("X BitMap image"),
 			  "INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_xbm_load",
-			      "xbm,icon,bitmap",
-			      "");
+  gimp_plugin_menu_register ("file_xbm_save", "<Save>");
+  gimp_register_file_handler_mime ("file_xbm_save", "image/x-xbitmap");
   gimp_register_save_handler ("file_xbm_save",
 			      "xbm,icon,bitmap",
 			      "");

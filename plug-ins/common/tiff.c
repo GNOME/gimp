@@ -208,12 +208,19 @@ query (void)
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "1995-1996,1998-2003",
-                          "<Load>/Tiff",
+                          N_("TIFF images"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_tiff_load", "<Load>");
+  gimp_register_file_handler_mime ("file_tiff_load", "image/tiff");
+  gimp_register_magic_load_handler ("file_tiff_load",
+                                    "tif,tiff",
+                                    "",
+                                    "0,string,II*\\0,0,string,MM\\0*");
 
   gimp_install_procedure ("file_tiff_save",
                           "saves files in the tiff file format",
@@ -223,14 +230,18 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
-                          "<Save>/Tiff",
+                          N_("TIFF image"),
                           "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
 
-  /* Add a save menu path for this procedure, since it is registered as a 
-   * save handler below. */
+  gimp_plugin_menu_register ("file_tiff_save", "<Save>");
+  gimp_register_file_handler_mime ("file_tiff_save", "image/tiff");
+  gimp_register_save_handler ("file_tiff_save",
+                              "tif,tiff",
+                              "");
+
   gimp_install_procedure ("file_tiff_save2",
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
@@ -239,19 +250,13 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
-                          NULL,
+                          N_("TIFF image"),
                           "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_tiff_load",
-                                    "tif,tiff",
-                                    "",
-                                    "0,string,II*\\0,0,string,MM\\0*");
-  gimp_register_save_handler       ("file_tiff_save",
-                                    "tif,tiff",
-                                    "");
+  gimp_register_file_handler_mime ("file_tiff_save2", "image/tiff");
 }
 
 static void

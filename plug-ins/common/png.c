@@ -243,12 +243,17 @@ query (void)
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
-                          "<Load>/PNG",
+                          N_("PNG image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_png_load", "<Load>");
+  gimp_register_file_handler_mime ("file_png_load", "image/png");
+  gimp_register_magic_load_handler ("file_png_load",
+                                    "png", "", "0,string,\211PNG\r\n\032\n");
 
   gimp_install_procedure ("file_png_save",
                           "Saves files in PNG file format",
@@ -256,11 +261,13 @@ query (void)
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
-                          NULL,
+                          N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
+
+  gimp_register_file_handler_mime ("file_png_save", "image/png");
 
   gimp_install_procedure ("file_png_save2",
                           "Saves files in PNG file format",
@@ -269,29 +276,28 @@ query (void)
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
-                          NULL,
+                          N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args2), 0,
                           save_args2, NULL);
 
-  /* We only register a save menu path for this one, since it is the only one
-   * registered as a save handler below.
-   */
+  gimp_register_file_handler_mime ("file_png_save2", "image/png");
+
   gimp_install_procedure ("file_png_save_defaults",
                           "Saves files in PNG file format",
                           "This plug-in saves Portable Network Graphics (PNG) files, using the default settings stored as a parasite.",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
-                          "<Save>/PNG",
+                          N_("PNG image"),
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_defaults), 0,
                           save_args_defaults, NULL);
 
-  gimp_register_magic_load_handler ("file_png_load",
-                                    "png", "", "0,string,\211PNG\r\n\032\n");
+  gimp_plugin_menu_register ("file_png_save_defaults", "<Save>");
+  gimp_register_file_handler_mime ("file_png_save_defaults", "image/png");
   gimp_register_save_handler ("file_png_save_defaults", "png", "");
 
   gimp_install_procedure ("file_png_get_defaults",

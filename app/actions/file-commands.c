@@ -376,7 +376,7 @@ file_revert_confirm_callback (GtkWidget *widget,
       new_gimage = file_open_image (gimp, gimp_get_user_context (gimp),
                                     uri, uri, NULL,
 				    GIMP_RUN_INTERACTIVE,
-				    &status, &error);
+				    &status, NULL, &error);
 
       if (new_gimage)
 	{

@@ -121,6 +121,31 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save" },
   };
 
+  gimp_install_procedure ("file_dicom_load",
+                          "loads files of the dicom file format",
+                          "Load a file in the DICOM standard format."
+			  "The standard is defined at "
+                          "http://medical.nema.org/. The plug-in currently "
+                          "only supports reading images with uncompressed "
+                          "pixel sections.",
+                          "Dov Grobgeld",
+                          "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
+                          "2003",
+                          N_("Digital Imaging and Communications in Medicine image"),
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_dicom_load", "<Load>");
+  gimp_register_file_handler_mime ("file_dicom_load", "image/x-dcm");
+  gimp_register_magic_load_handler ("file_dicom_load",
+				    "dcm,DCM,dicom,DICOM",
+				    "",
+				    "128,string,DICM"
+				    );
+
   gimp_install_procedure ("file_dicom_save",
                           "Save file in the DICOM file format",
                           "Save an image in the medical standard DICOM image "
@@ -132,37 +157,17 @@ query (void)
                           "Dov Grobgeld",
                           "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                           "2003",
-                          "<Save>/DICOM",
+                          N_("Digital Imaging and Communications in Medicine image"),
                           "RGB, GRAY",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_install_procedure ("file_dicom_load",
-                          "loads files of the dicom file format",
-                          "Load a file in the DICOM standard format."
-			  "The standard is defined at "
-                          "http://medical.nema.org/. The plug-in currently "
-                          "only supports reading images with uncompressed "
-                          "pixel sections.",
-                          "Dov Grobgeld",
-                          "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
-                          "2003",
-                          "<Load>/DICOM",
-			  NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_magic_load_handler ("file_dicom_load",
-				    "dcm,DCM,dicom,DICOM",
-				    "",
-				    "128,string,DICM"
-				    );
-  gimp_register_save_handler       ("file_dicom_save",
-				    "dicom,dcm,DCM,DICOM",
-				    "");
+  gimp_plugin_menu_register ("file_dicom_save", "<Save>");
+  gimp_register_file_handler_mime ("file_dicom_save", "image/x-dcm");
+  gimp_register_save_handler ("file_dicom_save",
+                              "dicom,dcm,DCM,DICOM",
+                              "");
 }
 
 static void

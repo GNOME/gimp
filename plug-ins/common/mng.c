@@ -1465,11 +1465,14 @@ query (void)
 			  "S. Mukund <muks@mukund.org>",
 			  "S. Mukund <muks@mukund.org>",
                           "November 19, 2002",
-			  "<Save>/MNG", "RGB*,GRAY*",
+			  N_("MNG animation"),
+                          "RGB*,GRAY*",
                           GIMP_PLUGIN,
 			  G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
+  gimp_plugin_menu_register ("file_mng_save", "<Save>");
+  gimp_register_file_handler_mime ("file_mng_save", "image/x-mng");
   gimp_register_save_handler ("file_mng_save", "mng", "");
 }
 

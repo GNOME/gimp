@@ -64,6 +64,7 @@ static ProcRecord temp_name_proc;
 static ProcRecord register_magic_load_handler_proc;
 static ProcRecord register_load_handler_proc;
 static ProcRecord register_save_handler_proc;
+static ProcRecord register_file_handler_mime_proc;
 
 void
 register_fileops_procs (Gimp *gimp)
@@ -76,6 +77,7 @@ register_fileops_procs (Gimp *gimp)
   procedural_db_register (gimp, &register_magic_load_handler_proc);
   procedural_db_register (gimp, &register_load_handler_proc);
   procedural_db_register (gimp, &register_save_handler_proc);
+  procedural_db_register (gimp, &register_file_handler_mime_proc);
 }
 
 static Argument *
@@ -582,7 +584,8 @@ register_magic_load_handler_invoker (Gimp        *gimp,
           goto done;
         }
 
-      file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, magics);
+      file_proc = plug_ins_file_register_magic (gimp, name,
+                                                extensions, prefixes, magics);
 
       if (! file_proc)
         {
@@ -732,7 +735,8 @@ register_save_handler_invoker (Gimp        *gimp,
           goto done;
         }
 
-      file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, NULL);
+      file_proc = plug_ins_file_register_magic (gimp, name,
+                                                extensions, prefixes, NULL);
 
       if (! file_proc)
         {
@@ -785,4 +789,59 @@ static ProcRecord register_save_handler_proc =
   0,
   NULL,
   { { register_save_handler_invoker } }
+};
+
+static Argument *
+register_file_handler_mime_invoker (Gimp        *gimp,
+                                    GimpContext *context,
+                                    Argument    *args)
+{
+  gboolean success = TRUE;
+  gchar *name;
+  gchar *mime_type;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  mime_type = (gchar *) args[1].value.pdb_pointer;
+  if (mime_type == NULL || !g_utf8_validate (mime_type, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      success = (plug_ins_file_register_mime (gimp, name, mime_type) != NULL);
+    }
+
+  return procedural_db_return_args (&register_file_handler_mime_proc, success);
+}
+
+static ProcArg register_file_handler_mime_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "procedure_name",
+    "The name of the procedure to associate a MIME type with."
+  },
+  {
+    GIMP_PDB_STRING,
+    "mime_type",
+    "A single MIME type, like for example \"image/jpeg\"."
+  }
+};
+
+static ProcRecord register_file_handler_mime_proc =
+{
+  "gimp_register_file_handler_mime",
+  "Associates a MIME type with a file handler procedure.",
+  "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened, or saved using this procedure.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  2,
+  register_file_handler_mime_inargs,
+  0,
+  NULL,
+  { { register_file_handler_mime_invoker } }
 };

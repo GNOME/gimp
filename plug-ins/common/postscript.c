@@ -557,17 +557,64 @@ query (void)
   };
 
   gimp_install_procedure ("file_ps_load",
-                          "load file of PostScript/PDF file format",
-                          "load file of PostScript/PDF file format",
+                          "load PostScript documents",
+                          "load PostScript documents",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
-                          "<Load>/PostScript",
+                          N_("PostScript document"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_ps_load", "<Load>");
+  gimp_register_file_handler_mime ("file_ps_load", "application/postscript");
+  gimp_register_magic_load_handler ("file_ps_load",
+				    "ps",
+				    "",
+                                    "0,string,%!,0,long,0xc5d0d3c6");
+
+  gimp_install_procedure ("file_eps_load",
+                          "load Encapsulated PostScript images",
+                          "load Encapsulated PostScript images",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
+                          "Peter Kirchgessner",
+                          dversio,
+                          N_("Encapsulated PostScript image"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_eps_load", "<Load>");
+  gimp_register_file_handler_mime ("file_eps_load", "image/x-eps");
+  gimp_register_magic_load_handler ("file_eps_load",
+				    "eps",
+				    "",
+                                    "0,string,%!,0,long,0xc5d0d3c6");
+
+  gimp_install_procedure ("file_pdf_load",
+                          "load PDF documents",
+                          "load PDF documents",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
+                          "Peter Kirchgessner",
+                          dversio,
+                          N_("PDF document"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_pdf_load", "<Load>");
+  gimp_register_file_handler_mime ("file_pdf_load", "application/pdf");
+  gimp_register_magic_load_handler ("file_pdf_load",
+				    "pdf",
+				    "",
+                                    "0,string,%PDF");
 
   gimp_install_procedure ("file_ps_load_setargs",
                           "set additional parameters for procedure file_ps_load",
@@ -582,24 +629,40 @@ query (void)
                           set_load_args, NULL);
 
   gimp_install_procedure ("file_ps_save",
-                          "save file in PostScript file format",
+                          "save image as PostScript docuement",
                           "PostScript saving handles all image types except those with alpha channels.",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
-                          "<Save>/PostScript",
+                          N_("PostScript document"),
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_ps_load",
-				    "ps,eps,pdf",
-				    "",
-                                    "0,string,%!,0,string,%PDF,0,long,0xc5d0d3c6");
-  gimp_register_save_handler       ("file_ps_save",
-				    "ps,eps",
-				    "");
+  gimp_plugin_menu_register ("file_ps_save", "<Save>");
+  gimp_register_file_handler_mime ("file_ps_save", "application/postscript");
+  gimp_register_save_handler ("file_ps_save",
+                              "ps",
+                              "");
+
+  gimp_install_procedure ("file_eps_save",
+                          "save image as Encapsulated PostScript image",
+                          "PostScript saving handles all image types except those with alpha channels.",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
+                          "Peter Kirchgessner",
+                          dversio,
+                          N_("Encapsulated PostScript image"),
+                          "RGB, GRAY, INDEXED",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
+
+  gimp_plugin_menu_register ("file_eps_save", "<Save>");
+  gimp_register_file_handler_mime ("file_eps_save", "application/x-eps");
+  gimp_register_save_handler ("file_eps_save",
+                              "eps",
+                              "");
 }
 
 static void
@@ -654,7 +717,6 @@ run (const gchar      *name,
   gint32            drawable_ID   = -1;
   gint32            orig_image_ID = -1;
   GimpExportReturn  export        = GIMP_EXPORT_CANCEL;
-  gint              k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -665,7 +727,9 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "file_ps_load") == 0)
+  if (strcmp (name, "file_ps_load")  == 0  ||
+      strcmp (name, "file_eps_load") == 0  ||
+      strcmp (name, "file_pdf_load") == 0)
     {
       switch (run_mode)
 	{
@@ -715,8 +779,11 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	gimp_set_data ("file_ps_load", &plvals, sizeof (PSLoadVals));
     }
-  else if (strcmp (name, "file_ps_save") == 0)
+  else if (strcmp (name, "file_ps_save")  == 0 ||
+           strcmp (name, "file_eps_save") == 0)
     {
+      psvals.eps = strcmp (name, "file_ps_save");
+
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -726,7 +793,8 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("ps", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PS",
+	  export = gimp_export_image (&image_ID, &drawable_ID,
+                                      psvals.eps ? "EPS" : "PostScript",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
@@ -744,12 +812,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_ps_save", &psvals);
-
-          /* About to save an EPS-file ? Switch on eps-flag in dialog */
-          k = strlen (param[3].data.d_string);
-          if ((k >= 4) && (strcmp (param[3].data.d_string+k-4, ".eps") == 0))
-            psvals.eps = 1;
+          gimp_get_data (name, &psvals);
 
           ps_set_save_size (&psvals, orig_image_ID);
 
@@ -782,7 +845,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
-          gimp_get_data ("file_ps_save", &psvals);
+          gimp_get_data (name, &psvals);
           break;
 
         default:
@@ -798,7 +861,7 @@ run (const gchar      *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      /*  Store psvals data  */
-	      gimp_set_data ("file_ps_save", &psvals, sizeof (PSSaveVals));
+	      gimp_set_data (name, &psvals, sizeof (PSSaveVals));
 	    }
 	  else
 	    {

@@ -140,13 +140,16 @@ query (void)
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "1995-1997",
-                          "<Load>/GIF",
+                          N_("GIF image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+
+  gimp_plugin_menu_register ("file_gif_load", "<Load>");
+  gimp_register_file_handler_mime ("file_gif_load", "image/gif");
   gimp_register_magic_load_handler ("file_gif_load",
 				    "gif",
 				    "",

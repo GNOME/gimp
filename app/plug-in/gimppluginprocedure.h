@@ -32,6 +32,7 @@ struct _PlugInProcDef
   gchar           *extensions;
   gchar           *prefixes;
   gchar           *magics;
+  gchar           *mime_type;
   gchar           *image_types;
   PlugInImageType  image_types_val;
   ProcRecord       db_info;

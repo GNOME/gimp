@@ -35,16 +35,19 @@ void
 file_menu_setup (GimpUIManager *manager,
                  const gchar   *ui_path)
 {
-  gint  n_entries;
-  guint merge_id;
-  gint  i;
+  GtkUIManager *ui_manager;
+  gint          n_entries;
+  guint         merge_id;
+  gint          i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
+  ui_manager = GTK_UI_MANAGER (manager);
+
   n_entries = GIMP_GUI_CONFIG (manager->gimp->config)->last_opened_size;
 
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gtk_ui_manager_new_merge_id (ui_manager);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -54,7 +57,7 @@ file_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/File/Open Recent/Files", ui_path);
 
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+      gtk_ui_manager_add_ui (ui_manager, merge_id,
                              action_path, action_name, action_name,
                              GTK_UI_MANAGER_MENUITEM,
                              FALSE);

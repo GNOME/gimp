@@ -256,7 +256,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       GimpImage         *gimage;
       GimpPDBStatusType  dummy;
       gboolean           success;
-      GError            *error = NULL;
+      const gchar       *mime_type = NULL;
+      GError            *error     = NULL;
 
       gimage = file_open_image (imagefile->gimp,
                                 context,
@@ -265,10 +266,16 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                 NULL,
                                 GIMP_RUN_NONINTERACTIVE,
                                 &dummy,
+                                &mime_type,
                                 NULL);
 
       if (gimage)
         {
+          if (mime_type)
+            g_object_set (thumbnail,
+                          "image-mimetype", mime_type,
+                          NULL);
+
           success = gimp_imagefile_save_thumb (imagefile,
                                                gimage, size, &error);
 

@@ -68,6 +68,7 @@ file_open_image (Gimp               *gimp,
 		 PlugInProcDef      *file_proc,
 		 GimpRunMode         run_mode,
 		 GimpPDBStatusType  *status,
+                 const gchar       **mime_type,
                  GError            **error)
 {
   const ProcRecord *proc;
@@ -80,6 +81,7 @@ file_open_image (Gimp               *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (status != NULL, NULL);
+  g_return_val_if_fail (mime_type == NULL || *mime_type == NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *status = GIMP_PDB_EXECUTION_ERROR;
@@ -161,6 +163,9 @@ file_open_image (Gimp               *gimp,
           gimp_image_invalidate_channel_previews (gimage);
           gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
+          if (mime_type)
+            *mime_type = file_proc->mime_type;
+
           return gimage;
         }
       else
@@ -200,7 +205,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
                                  GimpPDBStatusType  *status,
                                  GError            **error)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  const gchar *mime_type = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -212,6 +218,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
                             file_proc,
                             GIMP_RUN_INTERACTIVE,
                             status,
+                            &mime_type,
                             error);
 
   if (gimage)
@@ -222,7 +229,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
       gimp_create_display (gimage->gimp, gimage, 1.0);
 
       documents = GIMP_DOCUMENT_LIST (gimp->documents);
-      imagefile = gimp_document_list_add_uri (documents, uri);
+      imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
 
       /*  can only create a thumbnail if the passed uri and the
        *  resulting image's uri match.

@@ -184,7 +184,8 @@ file_save_as (GimpImage      *gimage,
         }
 
       documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
-      imagefile = gimp_document_list_add_uri (documents, uri);
+      imagefile = gimp_document_list_add_uri (documents,
+                                              uri, file_proc->mime_type);
 
       if (set_uri_and_proc)
 	{

@@ -230,12 +230,16 @@ query (void)
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "1997",
-                          "<Load>/TGA",
+                          N_("TarGA image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_tga_load", "<Load>");
+  gimp_register_file_handler_mime ("file_tga_load", "image/x-tga");
+  gimp_register_load_handler ("file_tga_load", "tga", "");
 
   gimp_install_procedure ("file_tga_save",
                           "saves files in the Targa file format",
@@ -243,14 +247,14 @@ query (void)
 			  "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "1997",
-                          "<Save>/TGA",
+                          N_("TarGA image"),
 			  "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_load_handler ("file_tga_load", "tga", "");
-
+  gimp_plugin_menu_register ("file_tga_save", "<Save>");
+  gimp_register_file_handler_mime ("file_tga_save", "image/x-tga");
   gimp_register_save_handler ("file_tga_save", "tga", "");
 }
 

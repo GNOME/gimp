@@ -81,11 +81,12 @@ static ProcArg xcf_load_return_vals[] =
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp_xcf_load",
-  "XCF (GIMP)",
+  N_("GIMP XCF image"),
   NULL,
   "xcf",
   "",
   "0,string,gimp\\040xcf\\040",
+  "image/x-xcf",
   NULL, /* ignored for load */
   0,    /* ignored for load */
   {
@@ -130,11 +131,12 @@ static ProcArg xcf_save_args[] =
 static PlugInProcDef xcf_plug_in_save_proc =
 {
   "gimp_xcf_save",
-  "XCF (GIMP)",
+  N_("GIMP XCF image"),
   NULL,
   "xcf",
   "",
   NULL,
+  "image/x-xcf",
   "RGB*, GRAY*, INDEXED*",
   0, /* fill me in at runtime */
   {

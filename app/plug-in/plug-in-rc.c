@@ -55,6 +55,8 @@ static GTokenType plug_in_menu_path_deserialize  (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
                                                   ProcArg       *arg);
+static GTokenType plug_in_mime_type_deserialize  (GScanner      *scanner,
+                                                  PlugInProcDef *proc_def);
 static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
 static GTokenType plug_in_help_def_deserialize   (GScanner      *scanner,
@@ -72,7 +74,8 @@ enum
   HELP_DEF,
   HAS_INIT,
   PROC_ARG,
-  MENU_PATH
+  MENU_PATH,
+  MIME_TYPE
 };
 
 
@@ -112,6 +115,8 @@ plug_in_rc_parse (Gimp         *gimp,
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "menu-path", GINT_TO_POINTER (MENU_PATH));
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
+                              "mime-type", GINT_TO_POINTER (MIME_TYPE));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -338,6 +343,14 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
         return token;
     }
 
+  if (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+    {
+      token = plug_in_mime_type_deserialize (scanner, proc_def);
+
+      if (token != G_TOKEN_LEFT_PAREN)
+        return token;
+    }
+
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
@@ -361,6 +374,33 @@ plug_in_menu_path_deserialize (GScanner      *scanner,
     return G_TOKEN_STRING;
 
   proc_def->menu_paths = g_list_append (proc_def->menu_paths, menu_path);
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+    return G_TOKEN_RIGHT_PAREN;
+
+  return G_TOKEN_LEFT_PAREN;
+}
+
+static GTokenType
+plug_in_mime_type_deserialize (GScanner      *scanner,
+                               PlugInProcDef *proc_def)
+{
+  gchar *mime_type;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
+    return G_TOKEN_LEFT_PAREN;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
+      GPOINTER_TO_INT (scanner->value.v_symbol) != MIME_TYPE)
+    return G_TOKEN_SYMBOL;
+
+  if (! gimp_scanner_parse_string (scanner, &mime_type))
+    return G_TOKEN_STRING;
+
+  if (proc_def->mime_type)
+    g_free (proc_def->mime_type);
+
+  proc_def->mime_type = mime_type;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -568,6 +608,13 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
                   gimp_config_writer_close (writer);
 		}
+
+              if (proc_def->mime_type)
+                {
+                  gimp_config_writer_open (writer, "mime-type");
+		  gimp_config_writer_string (writer, proc_def->mime_type);
+                  gimp_config_writer_close (writer);
+                }
 
 	      gimp_config_writer_close (writer);
 	    }
