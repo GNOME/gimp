@@ -1,5 +1,10 @@
 2004-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptexteditor.c (gimp_text_editor_new): set the
+	focus on the text area.
+
+2004-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_class_init): allow to
 	move a text layer using the cursor keys.
 
