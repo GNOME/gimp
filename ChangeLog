@@ -1,3 +1,13 @@
+2000-01-05  Garry R. Osgood <gosgood@idt.net>
+	*app/undo.c: GimpChannel->bounds_known field on the
+	image Selection Mask channel was never invalidated when restored
+	via undo_pop_channel_mod(). Caused PixelRegion iterators calculating
+	new selection boundaries to use cached image dimensions, thereby
+	trying to access tiles non-existent in the scaled-down image.
+	Closes #4840; see the resolution report for that bug for more
+	information. See #4980, which created selection mask artifacts
+	leading up to the incurring of this bug.
+	
 2000-01-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphelp.[ch]: removed most functions. Show the help page in

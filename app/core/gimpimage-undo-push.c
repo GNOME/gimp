@@ -1868,6 +1868,8 @@ undo_pop_channel_mod (GImage    *gimage,
   GIMP_DRAWABLE(channel)->tiles = tiles;
   GIMP_DRAWABLE(channel)->width = tiles->width;
   GIMP_DRAWABLE(channel)->height = tiles->height;
+  GIMP_CHANNEL(channel)->bounds_known = FALSE; /* #4840. set to False because bounds 
+                                                  reflect previous tile set */
 
   /*  Set the new buffer  */
   data[1] = temp;
