@@ -185,9 +185,10 @@ gimp_create_color_adjust_window (void)
 		     gimp_standard_help_func, "filters/print.html",
 		     GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-		     _("Set Defaults"), gimp_set_color_defaults,
+		     GIMP_STOCK_RESET, gimp_set_color_defaults,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Close"), gtk_widget_hide,
+
+		     GTK_STOCK_CLOSE, gtk_widget_hide,
 		     NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);
@@ -218,7 +219,7 @@ gimp_create_color_adjust_window (void)
   gtk_container_add (GTK_CONTAINER (event_box), swatch);
   gtk_widget_show (swatch);
 
-  gimp_help_set_help_data (event_box, _("Image preview"), NULL);
+  gimp_help_set_help_data (event_box, _("Image Preview"), NULL);
   g_signal_connect (G_OBJECT (swatch), "expose_event",
                     G_CALLBACK (gimp_redraw_color_swatch),
                     NULL);

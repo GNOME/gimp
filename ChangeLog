@@ -1,3 +1,7 @@
+2002-11-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/gimp_color_window.c: use stock buttons.
+
 2002-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreview.[ch]: removed idle rendering and render
