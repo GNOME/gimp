@@ -244,26 +244,9 @@ procedural_db_execute (Gimp         *gimp,
 
   for (; list; list = g_list_next (list))
     {
-      ProcRecord *procedure;
+      ProcRecord *procedure = list->data;
       gint        i;
 
-      procedure = (ProcRecord *) list->data;
-
-#ifdef __GNUC__
-#warning: FIXME: this is impossible, right?  --mitch
-#endif
-#if 0
-      if (procedure == NULL)
-        {
-          g_warning ("PDB calling error %s not found", name);
-
-          return_args = g_new (Argument, 1);
-          return_args->arg_type      = GIMP_PDB_STATUS;
-          return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
-
-          return return_args;
-        }
-#endif
       g_return_val_if_fail (procedure != NULL, NULL);
 
       /*  check the arguments  */
@@ -359,7 +342,9 @@ procedural_db_run_proc (Gimp         *gimp,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (nreturn_vals != NULL, NULL);
 
-  if ((proc = procedural_db_lookup (gimp, name)) == NULL)
+  proc = procedural_db_lookup (gimp, name);
+
+  if (proc == NULL)
     {
       *nreturn_vals = 1;
 
@@ -377,8 +362,9 @@ procedural_db_run_proc (Gimp         *gimp,
 
   for (i = 0; i < proc->num_args; i++)
     {
-      if (proc->args[i].arg_type !=
-          (params[i].arg_type = va_arg (args, GimpPDBArgType)))
+      params[i].arg_type = va_arg (args, GimpPDBArgType);
+
+      if (proc->args[i].arg_type != params[i].arg_type)
         {
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument #%d type mismatch (expected %s, got %s)"),
@@ -554,14 +540,13 @@ procedural_db_free_data (Gimp *gimp)
 
   if (gimp->procedural_db_data_list)
     {
-      PDBData *data;
-      GList   *list;
+      GList *list;
 
       for (list = gimp->procedural_db_data_list;
            list;
            list = g_list_next (list))
         {
-          data = (PDBData *) list->data;
+          PDBData *data = list->data;
 
           g_free (data->identifier);
           g_free (data->data);
@@ -618,8 +603,7 @@ procedural_db_get_data (Gimp        *gimp,
                         const gchar *identifier,
                         gint32      *bytes)
 {
-  GList   *list;
-  PDBData *pdb_data;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
@@ -629,7 +613,7 @@ procedural_db_get_data (Gimp        *gimp,
 
   for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
     {
-      pdb_data = (PDBData *) list->data;
+      PDBData *pdb_data = list->data;
 
       if (! strcmp (pdb_data->identifier, identifier))
         {
