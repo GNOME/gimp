@@ -54,42 +54,49 @@
 #include "gimp-intl.h"
 
 static gboolean xcf_save_image_props   (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        GError     **error);
+                                        GimpImage   *gimage,
+                                        GError     **error);
 static gboolean xcf_save_layer_props   (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        GimpLayer   *layer,
-				        GError     **error);
+                                        GimpImage   *gimage,
+                                        GimpLayer   *layer,
+                                        GError     **error);
 static gboolean xcf_save_channel_props (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        GimpChannel *channel,
-				        GError     **error);
+                                        GimpImage   *gimage,
+                                        GimpChannel *channel,
+                                        GError     **error);
 static gboolean xcf_save_prop          (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        PropType     prop_type,
-				        GError     **error,
-				        ...);
+                                        GimpImage   *gimage,
+                                        PropType     prop_type,
+                                        GError     **error,
+                                        ...);
 static gboolean xcf_save_layer         (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        GimpLayer   *layer,
-				        GError     **error);
+                                        GimpImage   *gimage,
+                                        GimpLayer   *layer,
+                                        GError     **error);
 static gboolean xcf_save_channel       (XcfInfo     *info,
-				        GimpImage   *gimage,
-				        GimpChannel *channel,
-				        GError     **error);
+                                        GimpImage   *gimage,
+                                        GimpChannel *channel,
+                                        GError     **error);
 static gboolean xcf_save_hierarchy     (XcfInfo     *info,
-				        TileManager *tiles,
-				        GError     **error);
+                                        TileManager *tiles,
+                                        GError     **error);
 static gboolean xcf_save_level         (XcfInfo     *info,
-				        TileManager *tiles,
-				        GError     **error);
+                                        TileManager *tiles,
+                                        GError     **error);
 static gboolean xcf_save_tile          (XcfInfo     *info,
-				        Tile        *tile,
-				        GError     **error);
+                                        Tile        *tile,
+                                        GError     **error);
 static gboolean xcf_save_tile_rle      (XcfInfo     *info,
-				        Tile        *tile,
-				        guchar      *rlebuf,
-				        GError     **error);
+                                        Tile        *tile,
+                                        guchar      *rlebuf,
+                                        GError     **error);
+static void     xcf_save_parasite      (gchar        *key, 
+                                        GimpParasite *parasite, 
+                                        XcfInfo      *info);
+static gboolean xcf_save_old_paths     (XcfInfo      *info,
+                                        PathList     *paths, 
+                                        GError      **error);
+
 
 /* private convieniece macros */
 #define xcf_write_int32_check_error(fp, data, count) G_STMT_START { \
@@ -518,109 +525,6 @@ xcf_save_channel_props (XcfInfo     *info,
   return TRUE;
 }
 
-static void 
-xcf_save_parasite (gchar        *key, 
-                   GimpParasite *parasite, 
-                   XcfInfo      *info)
-{
-  /* can't fail fast because there is no way to exit g_slist_foreach */
-
-  if (! gimp_parasite_is_persistent (parasite))
-    return;
-
-  info->cp += xcf_write_string (info->fp, &parasite->name,  1, NULL);
-  info->cp += xcf_write_int32  (info->fp, &parasite->flags, 1, NULL);
-  info->cp += xcf_write_int32  (info->fp, &parasite->size,  1, NULL);
-  info->cp += xcf_write_int8   (info->fp, parasite->data, parasite->size, NULL);
-}
-
-static void 
-xcf_save_bz_point (PathPoint *bpt, 
-                   XcfInfo   *info)
-{
-  gfloat xfloat = bpt->x;
-  gfloat yfloat = bpt->y;
-
-  gboolean errorure = FALSE, *error;
-  
-  error = &errorure;
-  
-  /* type (gint32)
-   * x (float)
-   * y (float)
-   */
-
-  /* can't fail fast because there is no way to exit g_slist_foreach */
-
-  info->cp += xcf_write_int32 (info->fp, &bpt->type, 1, NULL);
-  info->cp += xcf_write_float (info->fp, &xfloat,    1, NULL);
-  info->cp += xcf_write_float (info->fp, &yfloat,    1, NULL);
-}
-
-static void 
-xcf_save_path (Path    *bzp, 
-               XcfInfo *info)
-{
-  guint8 state = bzp->state;
-  guint32 num_points;
-  guint32 closed;
-  guint32 version;
-
-  /*
-   * name (string)
-   * locked (gint)
-   * state (gchar)
-   * closed (gint)
-   * number points (gint)
-   * number paths (gint unused)
-   * then each point.
-   */
- 
-  /* can't fail fast because there is no way to exit g_slist_foreach */
-  
-  info->cp += xcf_write_string (info->fp, &bzp->name,    1, NULL);
-  info->cp += xcf_write_int32  (info->fp, &bzp->locked,  1, NULL);
-  info->cp += xcf_write_int8   (info->fp, &state,        1, NULL);
-  
-  closed = bzp->closed;
-  info->cp += xcf_write_int32 (info->fp, &closed,        1, NULL);
-  
-  num_points = g_slist_length (bzp->path_details);
-  info->cp += xcf_write_int32 (info->fp, &num_points,    1, NULL);
-  
-  version = 3;
-  info->cp += xcf_write_int32 (info->fp, &version,       1, NULL);
-  info->cp += xcf_write_int32 (info->fp, &bzp->pathtype, 1, NULL);
-  info->cp += xcf_write_int32 (info->fp, &bzp->tattoo,   1, NULL); 
-  g_slist_foreach (bzp->path_details, (GFunc) xcf_save_bz_point, info);
-}
-
-static gboolean
-xcf_save_bzpaths (PathList *paths, 
-                  XcfInfo  *info,
-	          GError  **error)
-{
-  guint32 num_paths;
-
-  GError *tmp_error = NULL;
-  /* Write out the following:-
-   *
-   * last_selected_row (gint)
-   * number_of_paths (gint)
-   *
-   * then each path:-
-   */
-  
-  xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &paths->last_selected_row, 1);
-  
-  num_paths = g_slist_length (paths->bz_paths);
-  xcf_write_int32_check_error (info->fp, &num_paths, 1);
-  g_slist_foreach (paths->bz_paths, (GFunc) xcf_save_path, info);
-
-  return TRUE;
-}
-
 static gboolean
 xcf_save_prop (XcfInfo   *info,
 	       GimpImage *gimage,
@@ -949,8 +853,8 @@ xcf_save_prop (XcfInfo   *info,
     case PROP_PATHS:
       {
 	PathList *paths_list;
-	guint32 base, length;
-	long pos;
+	guint32   base, length;
+	glong     pos;
 
 	paths_list =  va_arg (args, PathList *);
 
@@ -963,7 +867,7 @@ xcf_save_prop (XcfInfo   *info,
             pos = info->cp;
             xcf_write_int32_check_error (info->fp, &length, 1);
             base = info->cp;
-            xcf_check_error (xcf_save_bzpaths (paths_list, info, error));
+            xcf_check_error (xcf_save_old_paths (info, paths_list, error));
             length = info->cp - base;
             /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
@@ -1454,6 +1358,99 @@ xcf_save_tile_rle (XcfInfo  *info,
     }
   xcf_write_int8_check_error (info->fp, rlebuf, len);
   tile_release (tile, FALSE);
+
+  return TRUE;
+}
+
+static void 
+xcf_save_parasite (gchar        *key, 
+                   GimpParasite *parasite, 
+                   XcfInfo      *info)
+{
+  /* can't fail fast because there is no way to exit g_slist_foreach */
+
+  if (! gimp_parasite_is_persistent (parasite))
+    return;
+
+  info->cp += xcf_write_string (info->fp, &parasite->name,  1, NULL);
+  info->cp += xcf_write_int32  (info->fp, &parasite->flags, 1, NULL);
+  info->cp += xcf_write_int32  (info->fp, &parasite->size,  1, NULL);
+  info->cp += xcf_write_int8   (info->fp, parasite->data, parasite->size, NULL);
+}
+
+static gboolean
+xcf_save_old_paths (XcfInfo   *info,
+                    PathList  *paths,
+                    GError   **error)
+{
+  guint32  num_paths;
+  GSList   *slist;
+  GError  *tmp_error = NULL;
+
+  /* Write out the following:-
+   *
+   * last_selected_row (gint)
+   * number_of_paths (gint)
+   *
+   * then each path:-
+   */
+
+  xcf_write_int32_check_error (info->fp,
+                               (guint32 *) &paths->last_selected_row, 1);
+
+  num_paths = g_slist_length (paths->bz_paths);
+  xcf_write_int32_check_error (info->fp, &num_paths, 1);
+
+  for (slist = paths->bz_paths; slist; slist = g_slist_next (slist))
+    {
+      Path    *bzp  = slist->data;
+      guint8   state = bzp->state;
+      guint32  num_points;
+      guint32  closed;
+      guint32  version;
+      GSList  *points;
+
+      /*
+       * name (string)
+       * locked (gint)
+       * state (gchar)
+       * closed (gint)
+       * number points (gint)
+       * number paths (gint unused)
+       * then each point.
+       */
+ 
+      xcf_write_string_check_error (info->fp, &bzp->name,    1);
+      xcf_write_int32_check_error  (info->fp, &bzp->locked,  1);
+      xcf_write_int8_check_error   (info->fp, &state,        1);
+  
+      closed = bzp->closed;
+      xcf_write_int32_check_error (info->fp, &closed,        1);
+
+      num_points = g_slist_length (bzp->path_details);
+      xcf_write_int32_check_error (info->fp, &num_points,    1);
+
+      version = 3;
+      xcf_write_int32_check_error (info->fp, &version,       1);
+      xcf_write_int32_check_error (info->fp, &bzp->pathtype, 1);
+      xcf_write_int32_check_error (info->fp, &bzp->tattoo,   1);
+
+      for (points = bzp->path_details; points; points = g_slist_next (points))
+        {
+          PathPoint *bpt    = points->data;
+          gfloat     xfloat = bpt->x;
+          gfloat     yfloat = bpt->y;
+
+          /* type (gint32)
+           * x (float)
+           * y (float)
+           */
+
+          xcf_write_int32_check_error (info->fp, &bpt->type, 1);
+          xcf_write_float_check_error (info->fp, &xfloat,    1);
+          xcf_write_float_check_error (info->fp, &yfloat,    1);
+        }
+    }
 
   return TRUE;
 }

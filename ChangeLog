@@ -1,5 +1,12 @@
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/xcf/xcf-save.c: cleaned up the old path saving functions
+	just as the old path loading ones. Don't use g_slist_foreach() but
+	do everything in one functions. Added error checking for path
+	saving.
+
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-load.c (xcf_load_old_path): the old paths actually
 	*do* support multiple strokes, they are just all in one curve.
 	Added support for loading them as separate GimpBezierStrokes.
