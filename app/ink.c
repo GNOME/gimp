@@ -163,7 +163,7 @@ create_ink_options ()
   label = gtk_label_new ("Size:");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (8.0, 0.0, 100.0, 1.0, 10.0, 0.0));
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (4.0, 0.0, 25.0, 1.0, 10.0, 0.0));
   slider = gtk_hscale_new (adj);
   gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -385,7 +385,7 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
   double x,y;
   
   size = ink_options->size * (1 + ink_options->sensitivity * (2*pressure - 1));
-  if (size < 1) size = 1;
+  if (size*SUBSAMPLE < 1) size = 1/SUBSAMPLE;
 
   /* Add brush angle/aspect to title vectorially */
 
