@@ -1,5 +1,10 @@
 2004-02-03  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_dialog): improved dialog layout.
+
+2004-02-03  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/image-menu.c (image_menu_set_zoom): don't mark weird
 	format strings as translatable.
 

@@ -104,7 +104,7 @@ gimp_display_shell_scale_zoom_step (GimpZoomType zoom_type,
   };
 
   n_presets = G_N_ELEMENTS (presets);
-         
+
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
@@ -526,6 +526,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                     data);
 
   table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
@@ -535,7 +536,6 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   row = 0;
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Zoom Ratio:"), 1.0, 0.5,
                              hbox, 1, FALSE);
@@ -562,13 +562,21 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
 
+  hbox = gtk_hbox_new (FALSE, 4);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Zoom:"), 1.0, 0.5,
+                             hbox, 1, FALSE);
+
   spin = gimp_spin_button_new (&data->scale_adj,
                                fabs (shell->other_scale) * 100,
                                100.0 / 256.0, 25600.0,
                                10, 50, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom:"), 1.0, 0.5,
-                             spin, 1, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
+  gtk_widget_show (spin);
+
+  label = gtk_label_new ("%");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   g_signal_connect (data->scale_adj, "value-changed",
                     G_CALLBACK (update_zoom_values), data);
@@ -614,19 +622,19 @@ update_zoom_values (GtkAdjustment   *adj,
 {
   gint num, denom;
   gdouble scale;
-  
+
   g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->scale_adj),
                                    G_CALLBACK (update_zoom_values),
                                    dialog);
- 
+
   g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->num_adj),
                                    G_CALLBACK (update_zoom_values),
                                    dialog);
- 
+
   g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->denom_adj),
                                    G_CALLBACK (update_zoom_values),
                                    dialog);
- 
+
   if (GTK_OBJECT (adj) == dialog->scale_adj)
     {
       scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
@@ -647,11 +655,11 @@ update_zoom_values (GtkAdjustment   *adj,
   g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->scale_adj),
                                      G_CALLBACK (update_zoom_values),
                                      dialog);
- 
+
   g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->num_adj),
                                      G_CALLBACK (update_zoom_values),
                                      dialog);
- 
+
   g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->denom_adj),
                                      G_CALLBACK (update_zoom_values),
                                      dialog);
