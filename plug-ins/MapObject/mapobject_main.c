@@ -255,8 +255,6 @@ void mapobject_interactive(GDrawable *drawable)
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("map_object");
 
-  gdk_set_debug_level(0);
-  gdk_set_show_events(0);
   gdk_set_use_xshm(gimp_use_xshm());
 
   gtk_init (&argc, &argv);

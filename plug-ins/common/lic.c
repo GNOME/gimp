@@ -981,7 +981,17 @@ void create_main_dialog(void)
   GtkWidget *scale;
   GtkObject *scale_data;
   GSList *group=NULL;
-    
+  gint argc;
+  char **argv;
+  
+  argc = 1;
+  argv = g_new(gchar *, 1);
+  argv[0] = g_strdup("lic");
+
+  gtk_init(&argc, &argv);
+
+  gdk_set_use_xshm(gimp_use_xshm());
+
   /* Dialog */
     
   dialog = gtk_dialog_new();
@@ -1247,7 +1257,8 @@ void create_main_dialog(void)
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
     (GtkSignalFunc)ok_button_clicked,(gpointer)dialog);
-				          gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
+
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
     
@@ -1402,8 +1413,6 @@ void lic_interactive(GDrawable *drawable)
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("lic");
 
-  gdk_set_debug_level(0);
-  gdk_set_show_events(0);
   gdk_set_use_xshm(gimp_use_xshm());
 
   gtk_init (&argc, &argv);
