@@ -14,20 +14,25 @@ Overview of Changes in GIMP 2.1.5
 - Restored compatibility of the wire protocol that was accidentally
   broken in 2.1.4.
 
-- Added layer and mask actions to allow for more keybindings.
+- Added layer and mask actions to allow to create keybindings for them.
 
 - Preview widget improvements:
    * let the preview expand with the plug-in dialog
    * added a navigation popup similar to the one in the image window
    * respect the selection and show how it will affect the filter
+   * added API to draw to a GimpDrawablePreview from a GimpPixelRgn
 
 - Added preview to more plug-ins: Cartoon, Apply Canvas, Photocopy,
   Motion Blur,
 
+- Ported the Bumpmap plug-in preview to GimpDrawablePreview.
+
+
 Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Manish Singh, Simon
-   Budig, Nathan Summers, Alan Horkan, David Gowers, Bill Skaggs
+   Budig, Nathan Summers, Alan Horkan, David Gowers, Bill Skaggs,
+   Joao S. O. Bueno, Peter Kirchgessner
 
 
 
