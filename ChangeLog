@@ -1,3 +1,13 @@
+2004-02-02  DindinX  <david@dindinx.org>
+
+	* app/display/gimpcanvas.c: gimp_canvas_draw_segments():
+	  Do not call gdk_draw_segments() with more than 32000 segments at a
+	  time, because XDrawSegments should never be called with more
+	  segments than that. This should really be fixed at the gdk level,
+	  though.
+
+	This fixes bug #122026.
+
 2004-02-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save_thumb): use

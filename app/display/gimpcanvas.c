@@ -516,6 +516,13 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
   if (! gimp_canvas_ensure_style (canvas, style))
     return;
 
+  while (num_segments >= 32000)
+    {
+      gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                         segments, 32000);
+      num_segments -= 32000;
+      segments     += 32000;
+    }
   gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
                      segments, num_segments);
 }
