@@ -19,6 +19,7 @@ Overview of Changes in GIMP 1.3.2
 - Fixes to the Undo and PixelRegion code [Kelly]
 - Optimization and cleanup of the paint-funcs [Daniel]
 - Message proofreading [Bex]
+- Most stuff compiles with -DGTK_DISABLE_DEPRECATED [Mitch]
 - More stuff not mentioned here (see the ChangeLog)
 
 Other Contributors:
