@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-03-03 12:07+0100\n"
-"PO-Revision-Date: 2003-03-03 10:48-0300\n"
+"POT-Creation-Date: 2003-03-06 12:12+0100\n"
+"PO-Revision-Date: 2003-03-06 10:00-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2550,8 +2550,8 @@ msgid "Redness_cr709f:"
 msgstr "Redness_cr709f:"
 
 #: plug-ins/common/compose.c:257
-msgid "<Image>/Image/Mode/Compose..."
-msgstr "<Image>/Imagen/Modo/Componer..."
+msgid "<Image>/Filters/Colors/Compose..."
+msgstr "<Image>/Filtros/Colores/Componer..."
 
 #: plug-ins/common/compose.c:320
 #, c-format
@@ -3018,8 +3018,8 @@ msgid "redness_cr709f"
 msgstr "redness_cr709f"
 
 #: plug-ins/common/decompose.c:229
-msgid "<Image>/Image/Mode/Decompose..."
-msgstr "<Image>/Imagen/Modo/Descomponer..."
+msgid "<Image>/Filters/Colors/Decompose..."
+msgstr "<Image>/Filtros/Colores/Descomponer..."
 
 #: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
@@ -6767,11 +6767,11 @@ msgstr "Todos los campos de texto deben contener un valor."
 msgid "Unit Editor"
 msgstr "Editor de unidades"
 
-#: plug-ins/common/uniteditor.c:635
+#: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
 msgstr "Crea una nueva unidad partiendo de la nada."
 
-#: plug-ins/common/uniteditor.c:645
+#: plug-ins/common/uniteditor.c:641
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
 "Crea una nueva unidad usando como plantilla la unidad actualmente "
@@ -7693,8 +7693,8 @@ msgid "_Zoom:"
 msgstr "A_cercamiento:"
 
 #: plug-ins/fp/fp.c:92
-msgid "<Image>/Layer/Colors/Filter Pack..."
-msgstr "<Image>/Capa/Colores/Paquete de filtros..."
+msgid "<Image>/Filters/Colors/Filter Pack..."
+msgstr "<Image>/Filtros/Colores/Empaque de filtro..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -11168,8 +11168,8 @@ msgid "File"
 msgstr "Archivo"
 
 #: plug-ins/rcm/rcm.c:113
-msgid "<Image>/Layer/Colors/Colormap Rotation..."
-msgstr "<Image>/Capa/Colores/Rotación del mapa de color..."
+msgid "<Image>/Filters/Colors/Map/Colormap Rotation..."
+msgstr "<Image>/Filtros/Colores/Rotación del mapa de color..."
 
 #: plug-ins/rcm/rcm.c:276
 msgid "Rotating the colormap..."
@@ -11432,6 +11432,12 @@ msgstr "Error: No se puede leer el archivo de propiedades XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Error: El archivo de propiedades XJT %s está vacío"
+
+#~ msgid "<Image>/Image/Mode/Compose..."
+#~ msgstr "<Image>/Imagen/Modo/Componer..."
+
+#~ msgid "<Image>/Image/Mode/Decompose..."
+#~ msgstr "<Image>/Imagen/Modo/Descomponer..."
 
 #~ msgid "Dup"
 #~ msgstr "Duplicar"
