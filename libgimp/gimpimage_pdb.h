@@ -93,12 +93,6 @@ gint32            gimp_image_merge_visible_layers     (gint32                ima
 gint32            gimp_image_merge_down               (gint32                image_ID,
 						       gint32                merge_layer_ID,
 						       GimpMergeType         merge_type);
-gboolean          gimp_image_add_layer_mask           (gint32                image_ID,
-						       gint32                layer_ID,
-						       gint32                mask_ID);
-gboolean          gimp_image_remove_layer_mask        (gint32                image_ID,
-						       gint32                layer_ID,
-						       GimpMaskApplyMode     mode);
 guint8*           _gimp_image_get_cmap                (gint32                image_ID,
 						       gint                 *num_bytes);
 gboolean          _gimp_image_set_cmap                (gint32                image_ID,

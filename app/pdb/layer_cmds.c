@@ -51,6 +51,8 @@ static ProcRecord layer_translate_proc;
 static ProcRecord layer_set_offsets_proc;
 static ProcRecord layer_create_mask_proc;
 static ProcRecord layer_get_mask_proc;
+static ProcRecord layer_add_mask_proc;
+static ProcRecord layer_remove_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
 static ProcRecord layer_get_preserve_trans_proc;
 static ProcRecord layer_set_preserve_trans_proc;
@@ -79,6 +81,8 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_set_offsets_proc);
   procedural_db_register (gimp, &layer_create_mask_proc);
   procedural_db_register (gimp, &layer_get_mask_proc);
+  procedural_db_register (gimp, &layer_add_mask_proc);
+  procedural_db_register (gimp, &layer_remove_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
   procedural_db_register (gimp, &layer_get_preserve_trans_proc);
   procedural_db_register (gimp, &layer_set_preserve_trans_proc);
@@ -950,6 +954,115 @@ static ProcRecord layer_get_mask_proc =
   1,
   layer_get_mask_outargs,
   { { layer_get_mask_invoker } }
+};
+
+static Argument *
+layer_add_mask_invoker (Gimp     *gimp,
+                        Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  GimpLayerMask *mask;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  mask = (GimpLayerMask *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_LAYER_MASK (mask))
+    success = FALSE;
+
+  if (success)
+    {
+      success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+    
+      if (success)
+	g_object_unref (mask);
+    }
+
+  return procedural_db_return_args (&layer_add_mask_proc, success);
+}
+
+static ProcArg layer_add_mask_inargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "mask",
+    "The mask to add to the layer to receive the mask"
+  }
+};
+
+static ProcRecord layer_add_mask_proc =
+{
+  "gimp_layer_add_mask",
+  "Add a layer mask to the specified layer.",
+  "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. Both the mask and the layer must have been created for use with the specified image.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  layer_add_mask_inargs,
+  0,
+  NULL,
+  { { layer_add_mask_invoker } }
+};
+
+static Argument *
+layer_remove_mask_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 mode;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  mode = args[1].value.pdb_int;
+  if (mode < GIMP_MASK_APPLY || mode > GIMP_MASK_DISCARD)
+    success = FALSE;
+
+  if (success)
+    gimp_layer_apply_mask (layer, mode, TRUE);
+
+  return procedural_db_return_args (&layer_remove_mask_proc, success);
+}
+
+static ProcArg layer_remove_mask_inargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    GIMP_PDB_INT32,
+    "mode",
+    "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) } from which to remove mask"
+  }
+};
+
+static ProcRecord layer_remove_mask_proc =
+{
+  "gimp_layer_remove_mask",
+  "Remove the specified layer mask from the layer.",
+  "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  layer_remove_mask_inargs,
+  0,
+  NULL,
+  { { layer_remove_mask_invoker } }
 };
 
 static Argument *

@@ -28,7 +28,7 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img burst-layer 0)
-    (gimp-image-add-layer-mask img burst-layer layer-mask)
+    (gimp-layer-add-mask burst-layer layer-mask)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
     (gimp-palette-set-background bg-color)

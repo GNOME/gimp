@@ -318,7 +318,7 @@
 	 (vm-img (car vmask))
 	 (vm-layer (cadr vmask)))
 
-    (gimp-image-add-layer-mask w-img h-layer h-mask)
+    (gimp-layer-add-mask h-layer h-mask)
     (gimp-selection-all hm-img)
     (gimp-edit-copy hm-layer)
     (gimp-image-delete hm-img)
@@ -326,7 +326,7 @@
     (gimp-layer-set-opacity h-layer thread-intensity)
     (gimp-layer-set-mode h-layer MULTIPLY-MODE)
 
-    (gimp-image-add-layer-mask w-img v-layer v-mask)
+    (gimp-layer-add-mask v-layer v-mask)
     (gimp-selection-all vm-img)
     (gimp-edit-copy vm-layer)
     (gimp-image-delete vm-img)

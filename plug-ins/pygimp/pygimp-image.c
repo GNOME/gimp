@@ -55,8 +55,7 @@ img_add_layer_mask(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!O!:add_layer_mask", &PyGimpLayer_Type, &lay,
 			  &PyGimpChannel_Type, &mask))
 	return NULL;
-    return PyInt_FromLong(gimp_image_add_layer_mask(self->ID, lay->ID,
-						    mask->ID));
+    return PyInt_FromLong(gimp_layer_add_mask(lay->ID, mask->ID));
 }
 
 
@@ -225,8 +224,7 @@ img_remove_layer_mask(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!i:remove_layer_mask", &PyGimpLayer_Type, &lay,
 			  &mode))
 	return NULL;
-    return PyInt_FromLong(gimp_image_remove_layer_mask(self->ID, lay->ID,
-						       mode));
+    return PyInt_FromLong(gimp_layer_remove_mask(lay->ID, mode));
 }
 
 

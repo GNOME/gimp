@@ -128,7 +128,7 @@
     (gimp-curves-spline layer1 0 18 (spline1))
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
-    (gimp-image-add-layer-mask img layer1 layer-mask)
+    (gimp-layer-add-mask layer1 layer-mask)
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
@@ -155,7 +155,7 @@
 
     (plug-in-displace 1 img layer2 displace displace TRUE TRUE disp-map disp-map 0)
     (set! layer-mask2 (car (gimp-layer-create-mask layer2 ADD-BLACK-MASK)))
-    (gimp-image-add-layer-mask img layer2 layer-mask2)
+    (gimp-layer-add-mask layer2 layer-mask2)
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill layer-mask2 BACKGROUND-FILL)

@@ -74,7 +74,7 @@
     (gimp-selection-load active-selection)
     
     (set! mask (car (gimp-layer-create-mask hl-layer ADD-WHITE-MASK)))
-    (gimp-image-add-layer-mask image hl-layer mask)
+    (gimp-layer-add-mask hl-layer mask)
     
     (gimp-palette-set-background hl-opacity)
     (gimp-edit-fill mask BACKGROUND-FILL)

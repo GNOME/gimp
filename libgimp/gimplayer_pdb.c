@@ -454,6 +454,76 @@ gimp_layer_get_mask (gint32 layer_ID)
 }
 
 /**
+ * gimp_layer_add_mask:
+ * @layer_ID: The layer.
+ * @mask_ID: The mask to add to the layer to receive the mask.
+ *
+ * Add a layer mask to the specified layer.
+ *
+ * This procedure adds a layer mask to the specified layer. Layer masks
+ * serve as an additional alpha channel for a layer. This procedure
+ * will fail if a number of prerequisites aren't met. The layer cannot
+ * already have a layer mask. The specified mask must exist and have
+ * the same dimensions as the layer. Both the mask and the layer must
+ * have been created for use with the specified image.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_add_mask (gint32 layer_ID,
+		     gint32 mask_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_add_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_CHANNEL, mask_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_remove_mask:
+ * @layer_ID: The layer.
+ * @mode: Removal mode:  from which to remove mask.
+ *
+ * Remove the specified layer mask from the layer.
+ *
+ * This procedure removes the specified layer mask from the layer. If
+ * the mask doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_remove_mask (gint32            layer_ID,
+			GimpMaskApplyMode mode)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_remove_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, mode,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_layer_is_floating_sel:
  * @layer_ID: The layer.
  *

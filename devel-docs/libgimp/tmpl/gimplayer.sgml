@@ -39,16 +39,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_create_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@mask_type: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_layer_scale ##### -->
 <para>
 
@@ -114,12 +104,42 @@ Operations on single layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_create_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@mask_type: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_get_mask ##### -->
 <para>
 
 </para>
 
 @layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_add_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@mask_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_remove_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@mode: 
 @Returns: 
 
 

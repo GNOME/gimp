@@ -134,7 +134,7 @@
     (gimp-curves-spline layer1 0 18 (spline-chrome-it))
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
-    (gimp-image-add-layer-mask img layer1 layer-mask)
+    (gimp-layer-add-mask layer1 layer-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)

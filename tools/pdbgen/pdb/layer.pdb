@@ -330,6 +330,58 @@ CODE
     );
 }
 
+sub layer_add_mask {
+    $blurb = 'Add a layer mask to the specified layer.';
+
+    $help = <<'HELP';
+This procedure adds a layer mask to the specified layer. Layer masks serve as
+an additional alpha channel for a layer. This procedure will fail if a number
+of prerequisites aren't met. The layer cannot already have a layer mask. The
+specified mask must exist and have the same dimensions as the layer. Both the
+mask and the layer must have been created for use with the specified image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+	{ name => 'mask', type => 'layer_mask',
+	  desc => 'The mask to add to the layer' }
+    );
+    $inargs[1]->{desc} .= ' to receive the mask';
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+
+  if (success)
+    g_object_unref (mask);
+}
+CODE
+    );
+}
+
+sub layer_remove_mask {
+    $blurb = 'Remove the specified layer mask from the layer.';
+
+    $help = <<'HELP';
+This procedure removes the specified layer mask from the layer. If the mask
+doesn't exist, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+	{ name => 'mode', type => 'enum GimpMaskApplyMode',
+	  desc => 'Removal mode: { %%desc%% }' }
+    );
+    $inargs[1]->{desc} .= ' from which to remove mask';
+
+    %invoke = ( code => 'gimp_layer_apply_mask (layer, mode, TRUE);' );
+}
+
 sub layer_scale {
     my $arg = { name => 'local_origin', type => 'boolean',
 		desc => 'Use a local origin (as opposed to the image origin)' };
@@ -597,6 +649,7 @@ unshift @procs, qw(layer_new layer_new_from_drawable layer_copy
                    layer_scale layer_resize layer_resize_to_image_size
 		   layer_translate layer_set_offsets
                    layer_create_mask layer_get_mask
+                   layer_add_mask layer_remove_mask
 		   layer_is_floating_sel);
 %exports = (app => [@procs], lib => [@procs]);
 

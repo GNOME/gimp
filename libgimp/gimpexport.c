@@ -141,7 +141,7 @@ export_apply_masks (gint32  image_ID,
   for (i = 0; i < n_layers; i++)
     {
       if (gimp_layer_get_mask (layers[i]) != -1)
-        gimp_image_remove_layer_mask (image_ID, layers[i], GIMP_MASK_APPLY);
+        gimp_layer_remove_mask (layers[i], GIMP_MASK_APPLY);
     }
 
   g_free (layers);

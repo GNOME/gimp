@@ -79,6 +79,8 @@ G_BEGIN_DECLS
 
 #define gimp_image_active_drawable              gimp_image_get_active_drawable
 #define gimp_image_floating_selection           gimp_image_get_floating_sel
+#define gimp_image_add_layer_mask(i,l,m)        gimp_layer_add_mask(l,m)
+#define gimp_image_remove_layer_mask(i,l,m)     gimp_layer_remove_mask(l,m)
 
 #define gimp_gradients_get_active               gimp_gradients_get_gradient
 #define gimp_gradients_set_active               gimp_gradients_set_gradient

@@ -60,6 +60,10 @@ gboolean             gimp_layer_set_offsets          (gint32                laye
 gint32               gimp_layer_create_mask          (gint32                layer_ID,
 						      GimpAddMaskType       mask_type);
 gint32               gimp_layer_get_mask             (gint32                layer_ID);
+gboolean             gimp_layer_add_mask             (gint32                layer_ID,
+						      gint32                mask_ID);
+gboolean             gimp_layer_remove_mask          (gint32                layer_ID,
+						      GimpMaskApplyMode     mode);
 gboolean             gimp_layer_is_floating_sel      (gint32                layer_ID);
 gboolean             gimp_layer_get_preserve_trans   (gint32                layer_ID);
 gboolean             gimp_layer_set_preserve_trans   (gint32                layer_ID,

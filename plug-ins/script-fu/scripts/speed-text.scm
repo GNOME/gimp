@@ -49,7 +49,7 @@
 
     ; add layer mask
     (set! text-mask (car (gimp-layer-create-mask text-layer ADD-ALPHA-MASK)))
-    (gimp-image-add-layer-mask img text-layer text-mask)
+    (gimp-layer-add-mask text-layer text-mask)
 
     ; grow the layer
     (gimp-layer-set-edit-mask text-layer FALSE)
@@ -69,7 +69,7 @@
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)
 
-    (gimp-image-remove-layer-mask img text-layer MASK-APPLY)
+    (gimp-layer-remove-mask text-layer MASK-APPLY)
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

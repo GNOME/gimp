@@ -62,14 +62,14 @@
     (plug-in-bump-map noninteractive img pattern layer2 110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
     (set! pattern-mask (car (gimp-layer-create-mask pattern ADD-ALPHA-MASK)))
-    (gimp-image-add-layer-mask img pattern pattern-mask)
+    (gimp-layer-add-mask pattern pattern-mask)
 
     (gimp-selection-all img)
     (gimp-edit-copy layer3)
     (set! floating_sel (car (gimp-edit-paste pattern-mask 0)))
     (gimp-floating-sel-anchor floating_sel)
 
-    (gimp-image-remove-layer-mask img pattern MASK-APPLY)
+    (gimp-layer-remove-mask pattern MASK-APPLY)
     (gimp-invert layer3)
     (plug-in-gauss-iir 1 img layer3 shadow-blur-radius TRUE TRUE)
 

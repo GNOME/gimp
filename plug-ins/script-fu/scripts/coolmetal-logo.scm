@@ -92,7 +92,7 @@
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))
-    (gimp-image-add-layer-mask img reflect-layer layer-mask)
+    (gimp-layer-add-mask reflect-layer layer-mask)
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
     (gimp-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE

@@ -75,10 +75,10 @@
 	    (gimp-drawable-set-name layer "Original Background")))
       (set! layer-names (cons (car (gimp-drawable-get-name layer)) layer-names))
       (if (not (= -1 (car (gimp-layer-get-mask layer))))
-	  (gimp-image-remove-layer-mask img layer
-					(if (= TRUE apply-layer-mask?)
-					    MASK-APPLY
-					    DISCARD)))
+	  (gimp-layer-remove-mask layer
+				  (if (= TRUE apply-layer-mask?)
+				      MASK-APPLY
+				      DISCARD)))
       (if (= TRUE with-pad?)
 	  (begin
 	    (gimp-selection-layer-alpha layer)

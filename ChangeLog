@@ -1,3 +1,50 @@
+2003-12-08  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: marked gimp_image_add_layer_mask()
+	and gimp_image_remove_layer_mask() as deprecated. Didnn't remove
+	them from the PDB because the new functions' signature differs and
+	they are used very often in scripts, but removed them from the
+	libgimp C wrappers.
+
+	* tools/pdbgen/pdb/layer.pdb: added gimp_layer_add_mask() and
+	gimp_layer_remove_mask().
+
+	* libgimp/gimpcompat.h: added compat cruft.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimpexport.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/psd.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/carve-it.scm
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/chrome-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/fade-outline.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/news-text.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/slide.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/speed-text.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	* plug-ins/script-fu/scripts/weave.scm
+	* plug-ins/script-fu/scripts/xach-effect.scm
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
 2003-12-08  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/core-enums.h:

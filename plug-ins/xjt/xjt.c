@@ -3515,16 +3515,17 @@ load_xjt_image (const gchar *filename)
 		{
 
 		  /* attach the layer_mask to the layer (with identical offsets) */
-		  gimp_image_add_layer_mask(l_image_id, l_layer_id, l_channel_id);
+		  gimp_layer_add_mask (l_layer_id, l_channel_id);
 
-		  if(l_channel_prp_ptr->floating_attached)
+		  if (l_channel_prp_ptr->floating_attached)
 		    {
 		      l_fsel_attached_to_id = l_channel_id;    /* the floating selection is attached to this layer_mask */
 		    }
 
 		  if (l_channel_prp_ptr->tattoo >= 0)
 		    {
-		      gimp_drawable_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+		      gimp_drawable_set_tattoo (l_channel_id,
+                                                l_channel_prp_ptr->tattoo);
 		    }
 
 		  /* gimp_layer_set_offsets(l_channel_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy); */
@@ -3534,11 +3535,11 @@ load_xjt_image (const gchar *filename)
 		  gimp_layer_set_show_mask  (l_layer_id, l_layer_prp_ptr->show_mask);
 
 		  /* Handle layermask parasites */
-		  p_check_and_add_parasite(l_channel_id,
-					   l_dirname,
-					   l_image_prp_ptr->parasite_props,
-					   l_channel_prp_ptr->channel_pos,
-					   XJT_LAYER_MASK_PARASITE);
+		  p_check_and_add_parasite (l_channel_id,
+                                            l_dirname,
+                                            l_image_prp_ptr->parasite_props,
+                                            l_channel_prp_ptr->channel_pos,
+                                            XJT_LAYER_MASK_PARASITE);
 		}
 	      break;
 	    }
@@ -3546,12 +3547,14 @@ load_xjt_image (const gchar *filename)
     }
 
   /* load all channels */
-  for(l_channel_prp_ptr = l_image_prp_ptr->channel_props;
-      l_channel_prp_ptr != NULL;
-      l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
+  for (l_channel_prp_ptr = l_image_prp_ptr->channel_props;
+       l_channel_prp_ptr != NULL;
+       l_channel_prp_ptr = (t_channel_props *) l_channel_prp_ptr->next)
     {
-      l_jpg_file = g_strdup_printf("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
-      if(xjt_debug) printf("XJT-DEBUG: loading channel from file %s\n", l_jpg_file);
+      l_jpg_file = g_strdup_printf ("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR,
+                                    (int) l_channel_prp_ptr->channel_pos);
+      if (xjt_debug) printf ("XJT-DEBUG: loading channel from file %s\n",
+                             l_jpg_file);
 
       l_channel_id = xjpg_load_channel (l_jpg_file,
 					l_image_id,
@@ -3562,8 +3565,8 @@ load_xjt_image (const gchar *filename)
 					l_channel_prp_ptr->color_g,
 					l_channel_prp_ptr->color_b);
 
-      g_free(l_jpg_file);
-      if(l_channel_id < 0)
+      g_free (l_jpg_file);
+      if (l_channel_id < 0)
 	{
 	  l_rc = -1;
 	  break;
@@ -3583,7 +3586,8 @@ load_xjt_image (const gchar *filename)
 
       if (l_channel_prp_ptr->selection)
 	{
-	  if (xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
+	  if (xjt_debug) printf ("XJT-DEBUG: SELECTION loaded channel id = %d\n",
+                                 (int) l_channel_id);
 
 	  gimp_selection_load (l_channel_id);
 

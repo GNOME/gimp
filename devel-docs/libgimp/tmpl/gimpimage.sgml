@@ -336,28 +336,6 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_add_layer_mask ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@mask_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_layer_mask ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@mode: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_image_clean_all ##### -->
 <para>
 

@@ -710,17 +710,9 @@ HELP
 }
 
 sub image_add_layer_mask {
-    $blurb = 'Add a layer mask to the specified layer.';
-
-    $help = <<'HELP';
-This procedure adds a layer mask to the specified layer. Layer masks serve as
-an additional alpha channel for a layer. This procedure will fail if a number
-of prerequisites aren't met. The layer cannot already have a layer mask. The
-specified mask must exist and have the same dimensions as the layer. Both the
-mask and the layer must have been created for use with the specified image.
-HELP
-
-    &std_pdb_misc;
+    $blurb = 'This procedure is deprecated! Use the procedure returned as \'help\' instead.';
+    $help = 'gimp_layer_add_mask';
+    $author = $copyright = $date = '';
 
     @inargs = (
 	&std_image_arg,
@@ -743,14 +735,9 @@ CODE
 }
 
 sub image_remove_layer_mask {
-    $blurb = 'Remove the specified layer mask from the layer.';
-
-    $help = <<'HELP';
-This procedure removes the specified layer mask from the layer. If the mask
-doesn't exist, an error is returned.
-HELP
-
-    &std_pdb_misc;
+    $blurb = 'This procedure is deprecated! Use the procedure returned as \'help\' instead.';
+    $help = 'gimp_layer_remove_mask';
+    $author = $copyright = $date = '';
 
     @inargs = (
 	&std_image_arg,
@@ -1471,7 +1458,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_get_cmap image_set_cmap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs]);
+%exports = (app => [@procs], lib => [@procs[0..31,34..58]]);
 
 $desc = 'Image';
 

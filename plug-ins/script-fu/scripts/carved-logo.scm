@@ -118,7 +118,7 @@
     (gimp-layer-translate cast-shadow-layer offx offy)
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))
-    (gimp-image-add-layer-mask img cast-shadow-layer csl-mask)
+    (gimp-layer-add-mask cast-shadow-layer csl-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
@@ -127,7 +127,7 @@
     (gimp-image-add-layer img inset-layer 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
-    (gimp-image-add-layer-mask img inset-layer il-mask)
+    (gimp-layer-add-mask inset-layer il-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill il-mask BACKGROUND-FILL)

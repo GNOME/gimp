@@ -71,16 +71,16 @@
     (if (= do-fade TRUE)
 	(let ((bands-layer-mask (car (gimp-layer-create-mask bands-layer
 							     ADD-BLACK-MASK))))
-	  (gimp-image-add-layer-mask img bands-layer bands-layer-mask)
+	  (gimp-layer-add-mask bands-layer bands-layer-mask)
 	  (gimp-selection-layer-alpha logo-layer)
 	  (gimp-selection-border img fade-size)
 	  (gimp-edit-fill bands-layer-mask FOREGROUND-FILL)
-	  (gimp-image-remove-layer-mask img bands-layer MASK-APPLY)))
+	  (gimp-layer-remove-mask bands-layer MASK-APPLY)))
 
     ; Transfer the resulting grayscale bands into the layer mask.
     (let ((bands-layer-mask (car (gimp-layer-create-mask bands-layer
 							 ADD-BLACK-MASK))))
-      (gimp-image-add-layer-mask img bands-layer bands-layer-mask)
+      (gimp-layer-add-mask bands-layer bands-layer-mask)
       (gimp-selection-none img)
       (gimp-edit-copy bands-layer)
       (gimp-floating-sel-anchor (car (gimp-edit-paste bands-layer-mask
@@ -90,7 +90,7 @@
     ; masked become visible.
     (gimp-palette-set-foreground fg-color)
     (gimp-edit-fill bands-layer FOREGROUND-FILL)
-    ;; (gimp-image-remove-layer-mask img bands-layer MASK-APPLY)
+    ;; (gimp-layer-remove-mask bands-layer MASK-APPLY)
 
     ; Clean up and exit.
     (gimp-palette-set-foreground old-fg)

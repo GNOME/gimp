@@ -64,7 +64,7 @@
                  ;--- add an alpha mask for blending and select it
 		 (gimp-selection-layer-alpha bl-layer)
 		 (set! bl-mask (car (gimp-layer-create-mask bl-layer ADD-BLACK-MASK)))
-		 (gimp-image-add-layer-mask img bl-layer bl-mask)
+		 (gimp-layer-add-mask bl-layer bl-mask)
 
                  ;--- handle layer geometry
 		 (set! bl-layer-width source-layer-width)
@@ -104,7 +104,7 @@
 		       (gimp-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
 					 100 255 0 0 0)))
 
-		 (gimp-image-remove-layer-mask img bl-layer MASK-APPLY)
+		 (gimp-layer-remove-mask bl-layer MASK-APPLY)
 
                  ;--- add bright glow in front
 		 (if (= show-glow TRUE)

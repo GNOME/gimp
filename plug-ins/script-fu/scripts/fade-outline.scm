@@ -96,7 +96,7 @@
               (gimp-selection-sharpen inImage)
 
                ; apply the existing mask before creating a new one
-              (gimp-image-remove-layer-mask inImage inLayer 0)
+              (gimp-layer-remove-mask inLayer 0)
 
               (if (= inClearUnselected  TRUE)
                   (begin
@@ -107,7 +107,7 @@
                   )
                )
 
-              (gimp-image-add-layer-mask inImage inLayer l-mask)
+              (gimp-layer-add-mask inLayer l-mask)
 
               (if (= inGrowingSelection  TRUE)
                   (begin
@@ -163,7 +163,7 @@
 
               (if (=  inApplyMask TRUE)
                   (begin
-                    (gimp-image-remove-layer-mask inImage inLayer 0)
+                    (gimp-layer-remove-mask inLayer 0)
                   )
                )
 

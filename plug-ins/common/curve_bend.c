@@ -707,7 +707,7 @@ run (const gchar      *name,
        *   some transitions (especially rotate) cant operate proper on
        *   layers with masks !
        */
-      gimp_image_remove_layer_mask (l_image_id, l_layer_id, 0 /* 0==APPLY */ );
+      gimp_layer_remove_mask (l_layer_id, 0 /* 0==APPLY */ );
     }
 
   /* if there is a selection, make it the floating selection layer */

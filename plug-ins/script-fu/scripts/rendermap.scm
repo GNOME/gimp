@@ -54,7 +54,7 @@
 	(gimp-palette-set-foreground '(0 0 0))
 
 	(let ((theMask (car (gimp-layer-create-mask thinLayer 0))))
-	  (gimp-image-add-layer-mask theImage thinLayer theMask)
+	  (gimp-layer-add-mask thinLayer theMask)
 
 	  (gimp-blend theMask FG-BG-RGB-MODE NORMAL-MODE
 		      GRADIENT-LINEAR 100 0 REPEAT-TRIANGULAR FALSE

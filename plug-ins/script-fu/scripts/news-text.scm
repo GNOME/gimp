@@ -43,7 +43,7 @@
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer (/ (+ 20 blur-radius) 2) (/ (+ 20 blur-radius) 2) string 0 TRUE font-size PIXELS font)))
 
     (set! text-mask (car (gimp-layer-create-mask text-layer ADD-ALPHA-MASK)))
-    (gimp-image-add-layer-mask img text-layer text-mask)
+    (gimp-layer-add-mask text-layer text-mask)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background (list grey grey grey))
@@ -56,7 +56,7 @@
     (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
     (gimp-edit-fill text-layer FOREGROUND-FILL)
-    (gimp-image-remove-layer-mask img text-layer MASK-APPLY)
+    (gimp-layer-remove-mask text-layer MASK-APPLY)
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -45,7 +45,7 @@
     (gimp-selection-none img)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer1)
-    (gimp-image-add-layer-mask img layer1 layer-mask)
+    (gimp-layer-add-mask layer1 layer-mask)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-feather img feather)

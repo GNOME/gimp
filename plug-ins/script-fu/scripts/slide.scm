@@ -201,8 +201,8 @@
     (gimp-threshold film-mask 127 255)
 
     (gimp-image-add-layer image film-layer -1)
-    (gimp-image-add-layer-mask image film-layer film-mask)
-    (gimp-image-remove-layer-mask image film-layer MASK-APPLY))
+    (gimp-layer-add-mask film-layer film-mask)
+    (gimp-layer-remove-mask film-layer MASK-APPLY))
 
 ; reorder the layers
   (gimp-image-raise-layer image pic-layer)

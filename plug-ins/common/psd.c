@@ -1959,10 +1959,10 @@ load_image (const gchar *name)
                     g_free (tmp);
 
  		    /* Add alpha - otherwise cannot add layer mask */
- 		    gimp_layer_add_alpha(layer_ID);
+ 		    gimp_layer_add_alpha (layer_ID);
 
  		    /* Add layer mask */
-		    gimp_image_add_layer_mask (image_ID, layer_ID, mask_id);
+		    gimp_layer_add_mask (layer_ID, mask_id);
 
 		    drawable = gimp_drawable_get (mask_id);
 

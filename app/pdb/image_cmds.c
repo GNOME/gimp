@@ -2208,11 +2208,11 @@ static ProcArg image_add_layer_mask_inargs[] =
 static ProcRecord image_add_layer_mask_proc =
 {
   "gimp_image_add_layer_mask",
-  "Add a layer mask to the specified layer.",
-  "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. Both the mask and the layer must have been created for use with the specified image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use the procedure returned as 'help' instead.",
+  "gimp_layer_add_mask",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   3,
   image_add_layer_mask_inargs,
@@ -2270,11 +2270,11 @@ static ProcArg image_remove_layer_mask_inargs[] =
 static ProcRecord image_remove_layer_mask_proc =
 {
   "gimp_image_remove_layer_mask",
-  "Remove the specified layer mask from the layer.",
-  "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use the procedure returned as 'help' instead.",
+  "gimp_layer_remove_mask",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   3,
   image_remove_layer_mask_inargs,
