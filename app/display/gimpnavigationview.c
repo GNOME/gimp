@@ -44,8 +44,6 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpnavigationview.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -1,5 +1,13 @@
 2002-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpnavigationview.c: no need to include "appenv.h"
+
+	* app/tools/gimpinktool.c: pass InkOptions as user_data to the
+	ink_type_update() callback so we don't need to get them from
+	"the_gimp". Removed inclusion of "app_procs.h".
+
+2002-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint-funcs/paint-funcs.[ch]: added "gboolean use_mmx"
 	parameter to paint_funcs_setup(). Don't #include "appenv.h".
 

@@ -50,7 +50,6 @@
 #include "paint_options.h"
 #include "tool_manager.h"
 
-#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -171,8 +170,6 @@ static void        ink_finish           (GimpInkTool     *ink_tool,
 					 GimpDrawable    *drawable);
 static void        ink_cleanup          (void);
 
-static void        ink_type_update      (GtkWidget       *radio_button,
-					 BlobFunc         function);
 static gboolean    blob_button_expose   (GtkWidget       *widget,
                                          GdkEventExpose  *event,
                                          BlobFunc         function);
@@ -223,7 +220,7 @@ static gboolean brush_widget_motion_notify  (GtkWidget      *widget,
 static GimpToolOptions * ink_options_new   (GimpToolInfo    *tool_info);
 static void              ink_options_reset (GimpToolOptions *tool_options);
 static void              ink_type_update   (GtkWidget       *radio_button,
-                                            BlobFunc         function);
+                                            InkOptions      *options);
 
 
 /* local variables */
@@ -1520,9 +1517,11 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
+  g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_ellipse);
+
   g_signal_connect (G_OBJECT (radio_button), "toggled",
 		    G_CALLBACK (ink_type_update),
-		    (gpointer) blob_ellipse);
+		    options);
 
   options->function_w[0] = radio_button;
 
@@ -1536,9 +1535,11 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
+  g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_square);
+
   g_signal_connect (G_OBJECT (radio_button), "toggled",
 		    G_CALLBACK (ink_type_update), 
-		    (gpointer) blob_square);
+		    options);
   
 
   options->function_w[1] = radio_button;
@@ -1553,9 +1554,11 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_container_add (GTK_CONTAINER (radio_button), blob);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
+  g_object_set_data (G_OBJECT (radio_button), "gimp-item-data", blob_diamond);
+
   g_signal_connect (G_OBJECT (radio_button), "toggled",
 		    G_CALLBACK (ink_type_update), 
-		    (gpointer) blob_diamond);
+		    options);
 
   options->function_w[2] = radio_button;
 
@@ -1641,15 +1644,12 @@ ink_options_reset (GimpToolOptions *tool_options)
 }
 
 static void
-ink_type_update (GtkWidget *radio_button,
-		 BlobFunc   function)
+ink_type_update (GtkWidget  *radio_button,
+		 InkOptions *options)
 {
-  GimpToolInfo *tool_info;
-  InkOptions   *options;
+  BlobFunc function;
 
-  tool_info = tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_INK_TOOL);
-
-  options = (InkOptions *) tool_info->tool_options;
+  function = g_object_get_data (G_OBJECT (radio_button), "gimp-item-data");
 
   if (GTK_TOGGLE_BUTTON (radio_button)->active)
     options->function = function;
