@@ -1,5 +1,11 @@
 2005-01-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/Lighting/lighting_shade.c: remove artifacts
+	when light strikes underside of bumpmapped surface;
+	should fix bug #163877.
+	
+2005-01-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/bmp/bmp.h
 	* plug-ins/bmp/bmpread.c: handle negative height values
 	as per spec, fixes bug #158033
