@@ -1,3 +1,7 @@
+2004-01-09  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpenv.c: coding style fixes and minor cleanup.
+
 2004-01-09  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/winsnap/Makefile.am (winsnap-win32res.o): Don't try to

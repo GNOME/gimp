@@ -38,6 +38,7 @@
 #include "gimpenv.h"
 #include "gimpversion.h"
 
+
 #ifdef G_OS_WIN32
 #define STRICT
 #define WIN32_LEAN_AND_MEAN	/* without it DATADIR in objidl.h will collide */
@@ -61,11 +62,12 @@
 #endif
 
 #ifdef __EMX__
-extern const char *__XOS2RedirRoot(const char *);
+extern const char *__XOS2RedirRoot (const char *);
 #endif
 
 static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
                                  const gchar *env_dir);
+
 
 /**
  * gimp_directory:
@@ -127,10 +129,10 @@ gimp_directory (void)
   else
     {
 #ifdef __EMX__
-	gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
-	return gimp_dir;
+      gimp_dir = g_strdup (__XOS2RedirRoot (GIMPDIR));
+      return gimp_dir;
 #endif
-	if (home_dir)
+      if (home_dir)
 	{
 	  gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
 	}
@@ -194,14 +196,15 @@ gimp_toplevel_directory (void)
 {
   /* Figure it out from the executable name */
   static gchar *toplevel = NULL;
-  gchar filename[MAX_PATH];
-  gchar *sep1, *sep2;
 
-  if (toplevel != NULL)
+  gchar         filename[MAX_PATH];
+  gchar        *sep1, *sep2;
+
+  if (toplevel)
     return toplevel;
 
   if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-    g_error ("GetModuleFilename failed\n");
+    g_error ("GetModuleFilename failed");
 
   /* If the executable file name is of the format
    * <foobar>\bin\*.exe or
@@ -237,7 +240,9 @@ gimp_toplevel_directory (void)
 	    }
 	}
     }
+
   toplevel = g_strdup (filename);
+
   return toplevel;
 }
 #endif
@@ -261,10 +266,8 @@ gimp_data_directory (void)
 {
   static gchar *gimp_data_dir = NULL;
 
-  if (gimp_data_dir)
-    return gimp_data_dir;
-
-  gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", DATADIR);
+  if (! gimp_data_dir)
+    gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", DATADIR);
 
   return gimp_data_dir;
 }
@@ -288,10 +291,8 @@ gimp_locale_directory (void)
 {
   static gchar *gimp_locale_dir = NULL;
 
-  if (gimp_locale_dir != NULL)
-    return gimp_locale_dir;
-
-  gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", LOCALEDIR);
+  if (! gimp_locale_dir)
+    gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", LOCALEDIR);
 
   return gimp_locale_dir;
 }
@@ -315,10 +316,8 @@ gimp_sysconf_directory (void)
 {
   static gchar *gimp_sysconf_dir = NULL;
 
-  if (gimp_sysconf_dir != NULL)
-    return gimp_sysconf_dir;
-
-  gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", SYSCONFDIR);
+  if (! gimp_sysconf_dir)
+    gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", SYSCONFDIR);
 
   return gimp_sysconf_dir;
 }
@@ -342,10 +341,8 @@ gimp_plug_in_directory (void)
 {
   static gchar *gimp_plug_in_dir = NULL;
 
-  if (gimp_plug_in_dir)
-    return gimp_plug_in_dir;
-
-  gimp_plug_in_dir = gimp_env_get_dir ("GIMP2_PLUGINDIR", PLUGINDIR);
+  if (! gimp_plug_in_dir)
+    gimp_plug_in_dir = gimp_env_get_dir ("GIMP2_PLUGINDIR", PLUGINDIR);
 
   return gimp_plug_in_dir;
 }
@@ -366,11 +363,9 @@ gimp_gtkrc (void)
   static gchar *gimp_gtkrc_filename = NULL;
 
   if (! gimp_gtkrc_filename)
-    {
-      gimp_gtkrc_filename = g_build_filename (gimp_data_directory (),
-                                              "themes", "Default", "gtkrc",
-                                              NULL);
-    }
+    gimp_gtkrc_filename = g_build_filename (gimp_data_directory (),
+                                            "themes", "Default", "gtkrc",
+                                            NULL);
 
   return gimp_gtkrc_filename;
 }
@@ -522,22 +517,21 @@ gimp_path_to_str (GList *path)
 
   for (list = path; list; list = g_list_next (list))
     {
+      gchar *dir = (gchar *) list->data;
+
       if (str)
 	{
 	  g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-	  g_string_append (str, (gchar *) list->data);
+	  g_string_append (str, dir);
 	}
       else
 	{
-	  str = g_string_new ((gchar *) list->data);
+	  str = g_string_new (dir);
 	}
     }
 
   if (str)
-    {
-      retval = str->str;
-      g_string_free (str, FALSE);
-    }
+    retval = g_string_free (str, FALSE);
 
   return retval;
 }
@@ -546,18 +540,13 @@ gimp_path_to_str (GList *path)
  * gimp_path_free:
  * @path: A list of directories as returned by gimp_path_parse().
  *
- * This function frees the memory allocated for the list and it's strings.
+ * This function frees the memory allocated for the list and the strings
+ * it contains.
  **/
 void
 gimp_path_free (GList *path)
 {
-  GList *list;
-
-  for (list = path; list; list = g_list_next (list))
-    {
-      g_free (list->data);
-    }
-
+  g_list_foreach (path, (GFunc) g_free, NULL);
   g_list_free (path);
 }
 
@@ -572,13 +561,11 @@ gimp_path_free (GList *path)
 gchar *
 gimp_path_get_user_writable_dir (GList *path)
 {
-  GList *list;
-
-  uid_t euid;
-  gid_t egid;
-
-  struct stat filestat;
-  gint        err;
+  GList       *list;
+  uid_t        euid;
+  gid_t        egid;
+  struct stat  filestat;
+  gint         err;
 
   g_return_val_if_fail (path != NULL, NULL);
 
@@ -587,9 +574,7 @@ gimp_path_get_user_writable_dir (GList *path)
 
   for (list = path; list; list = g_list_next (list))
     {
-      gchar *dir;
-
-      dir = (gchar *) list->data;
+      gchar *dir = (gchar *) list->data;
 
       /*  check if directory exists  */
       err = stat (dir, &filestat);
@@ -633,7 +618,7 @@ gimp_env_get_dir (const gchar *gimp_env_name,
 #ifndef __EMX__
       return g_strdup (env);
 #else
-      return g_strdup (__XOS2RedirRoot(env));
+      return g_strdup (__XOS2RedirRoot (env));
 #endif
     }
   else
@@ -643,7 +628,7 @@ gimp_env_get_dir (const gchar *gimp_env_name,
       gimp_path_runtime_fix (&retval);
       return retval;
 #else
-      return g_strdup (__XOS2RedirRoot(env_dir));
+      return g_strdup (__XOS2RedirRoot (env_dir));
 #endif
     }
 }
