@@ -555,12 +555,12 @@ void
 <FUNCTION>
 <NAME>gimp_color_button_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar   *title,gint     width,gint     height,guchar  *color,gint     bpp
+const gchar     *title,gint             width,gint             height,guchar          *color,gint             bpp
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_color_button_double_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar   *title,gint     width,gint     height,gdouble *color,gint     bpp
+const gchar     *title,gint             width,gint             height,gdouble         *color,gint             bpp
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_color_button_update</NAME>
@@ -1108,12 +1108,12 @@ gint32                  image_ID,GimpConvertDitherType   dither_type,GimpConvert
 <FUNCTION>
 <NAME>gimp_dialog_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,gchar              *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,...
+const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,const gchar        *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,...
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_dialog_newv</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,gchar              *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,va_list             args
+const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        help_func,const gchar        *help_data,GtkWindowPosition   position,gint                allow_shrink,gint                allow_grow,gint                auto_shrink,va_list             args
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_dialog_set_icon</NAME>
@@ -2109,7 +2109,7 @@ typedef enum
 <FUNCTION>
 <NAME>gimp_export_image</NAME>
 <RETURNS>GimpExportReturnType  </RETURNS>
-gint32                 *image_ID,gint32                 *drawable_ID,gchar                  *format_name,GimpExportCapabilities  capabilities
+gint32                 *image_ID,gint32                 *drawable_ID,const gchar            *format_name,GimpExportCapabilities  capabilities
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_file_load</NAME>
@@ -2206,7 +2206,7 @@ void
 <FUNCTION>
 <NAME>gimp_file_selection_new</NAME>
 <RETURNS>GtkWidget *</RETURNS>
-gchar              *title,gchar              *filename,gboolean            dir_only,gboolean            check_valid
+const gchar        *title,const gchar        *filename,gboolean            dir_only,gboolean            check_valid
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_file_selection_get_filename</NAME>
@@ -2216,7 +2216,7 @@ GimpFileSelection *gfs
 <FUNCTION>
 <NAME>gimp_file_selection_set_filename</NAME>
 <RETURNS>void  </RETURNS>
-GimpFileSelection *gfs,gchar             *filename
+GimpFileSelection *gfs,const gchar       *filename
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_floating_sel_remove</NAME>
@@ -2346,7 +2346,7 @@ gchar *prog_name,gchar *help_page
 <USER_FUNCTION>
 <NAME>GimpHelpFunc</NAME>
 <RETURNS>void </RETURNS>
-gchar *help_data
+const gchar *help_data
 </USER_FUNCTION>
 <FUNCTION>
 <NAME>gimp_help_init</NAME>
@@ -2371,17 +2371,17 @@ void
 <FUNCTION>
 <NAME>gimp_standard_help_func</NAME>
 <RETURNS>void  </RETURNS>
-gchar        *help_data
+const gchar  *help_data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_help_connect_help_accel</NAME>
 <RETURNS>void  </RETURNS>
-GtkWidget    *widget,GimpHelpFunc  help_func,gchar        *help_data
+GtkWidget    *widget,GimpHelpFunc  help_func,const gchar  *help_data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_help_set_help_data</NAME>
 <RETURNS>void  </RETURNS>
-GtkWidget    *widget,const gchar  *tooltip,gchar        *help_data
+GtkWidget    *widget,const gchar  *tooltip,const gchar  *help_data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_context_help</NAME>
@@ -3543,7 +3543,7 @@ void
 <FUNCTION>
 <NAME>gimp_path_editor_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar          *filesel_title,gchar          *path
+const gchar    *filesel_title,const gchar    *path
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_path_editor_get_path</NAME>
@@ -3747,7 +3747,7 @@ struct GimpPixmap
 {
   GtkPixmap   pixmap;
 
-  gchar     **xpm_data;
+  gchar **xpm_data;
 };
 </STRUCT>
 <STRUCT>
@@ -4116,27 +4116,27 @@ GtkWidget *query_box,
 <FUNCTION>
 <NAME>gimp_query_string_box</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gchar                    *initial,GtkObject                *object,gchar                    *signal,GimpQueryStringCallback   callback,gpointer                  data
+const gchar              *title,GimpHelpFunc              help_func,const gchar              *help_data,const gchar              *message,const gchar              *initial,GtkObject                *object,const gchar              *signal,GimpQueryStringCallback   callback,gpointer                  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_int_box</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,char                     *message,gint                      initial,gint                      lower,gint                      upper,GtkObject                *object,gchar                    *signal,GimpQueryIntCallback      callback,gpointer                  data
+const gchar              *title,GimpHelpFunc              help_func,const gchar              *help_data,const gchar              *message,gint                      initial,gint                      lower,gint                      upper,GtkObject                *object,const gchar              *signal,GimpQueryIntCallback      callback,gpointer                  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_double_box</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GtkObject                *object,gchar                    *signal,GimpQueryDoubleCallback   callback,gpointer                  data
+const gchar              *title,GimpHelpFunc              help_func,const gchar              *help_data,const gchar              *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GtkObject                *object,const gchar              *signal,GimpQueryDoubleCallback   callback,gpointer                  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_size_box</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GimpUnit                  unit,gdouble                   resolution,gboolean                  dot_for_dot,GtkObject                *object,gchar                    *signal,GimpQuerySizeCallback     callback,gpointer                  data
+const gchar              *title,GimpHelpFunc              help_func,const gchar              *help_data,const gchar              *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GimpUnit                  unit,gdouble                   resolution,gboolean                  dot_for_dot,GtkObject                *object,const gchar              *signal,GimpQuerySizeCallback     callback,gpointer                  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_query_boolean_box</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gboolean                  eek,gchar                    *message,gchar                    *true_button,gchar                    *false_button,GtkObject                *object,gchar                    *signal,GimpQueryBooleanCallback  callback,gpointer                  data
+const gchar              *title,GimpHelpFunc              help_func,const gchar              *help_data,gboolean                  eek,const gchar              *message,const gchar              *true_button,const gchar              *false_button,GtkObject                *object,const gchar              *signal,GimpQueryBooleanCallback  callback,gpointer                  data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_selection_float</NAME>
@@ -4316,7 +4316,7 @@ void
 <FUNCTION>
 <NAME>gimp_size_entry_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gint                       number_of_fields,GimpUnit                   unit,gchar                     *unit_format,gboolean                   menu_show_pixels,gboolean                   menu_show_percent,gboolean                   show_refval,gint                       spinbutton_usize,GimpSizeEntryUpdatePolicy  update_policy
+gint                       number_of_fields,GimpUnit                   unit,const gchar               *unit_format,gboolean                   menu_show_pixels,gboolean                   menu_show_percent,gboolean                   show_refval,gint                       spinbutton_usize,GimpSizeEntryUpdatePolicy  update_policy
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_size_entry_add_field</NAME>
@@ -4326,7 +4326,7 @@ GimpSizeEntry   *gse,GtkSpinButton   *value_spinbutton,GtkSpinButton   *refval_s
 <FUNCTION>
 <NAME>gimp_size_entry_attach_label</NAME>
 <RETURNS>void  </RETURNS>
-GimpSizeEntry *gse,gchar         *text,gint           row,gint           column,gfloat         alignment
+GimpSizeEntry *gse,const gchar   *text,gint           row,gint           column,gfloat         alignment
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_size_entry_set_resolution</NAME>
@@ -4640,7 +4640,7 @@ gint32                    drawable_ID,gboolean                  interpolation,gd
 <FUNCTION>
 <NAME>gimp_ui_init</NAME>
 <RETURNS>void  </RETURNS>
-gchar    *prog_name,gboolean  preview
+const gchar *prog_name,gboolean     preview
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_undo_push_group_start</NAME>
@@ -4789,7 +4789,7 @@ void
 <FUNCTION>
 <NAME>gimp_unit_menu_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar       *format,GimpUnit     unit,gboolean     show_pixels,gboolean     show_percent,gboolean     show_custom
+const gchar *format,GimpUnit     unit,gboolean     show_pixels,gboolean     show_percent,gboolean     show_custom
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_unit_menu_set_unit</NAME>
@@ -4977,12 +4977,12 @@ GtkOptionMenu      *option_menu,gpointer            user_data
 <FUNCTION>
 <NAME>gimp_radio_group_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gboolean            in_frame,gchar              *frame_title,...
+gboolean            in_frame,const gchar        *frame_title,...
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_radio_group_new2</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gboolean            in_frame,gchar              *frame_title,GtkSignalFunc       radio_button_callback,gpointer            data,gpointer            initial,...
+gboolean            in_frame,const gchar        *frame_title,GtkSignalFunc       radio_button_callback,gpointer            data,gpointer            initial,...
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_spin_button_new</NAME>
@@ -5019,7 +5019,7 @@ GtkObject         **adjustment,gfloat              value,gfloat              low
 <FUNCTION>
 <NAME>gimp_scale_entry_new</NAME>
 <RETURNS>GtkObject  *</RETURNS>
-GtkTable           *table,gint                column,gint                row,gchar              *text,gint                scale_usize,gint                spinbutton_usize,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,guint               digits,gboolean            constrain,gfloat              unconstrained_lower,gfloat              unconstrained_upper,gchar              *tooltip,gchar              *help_data
+GtkTable           *table,gint                column,gint                row,const gchar        *text,gint                scale_usize,gint                spinbutton_usize,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,guint               digits,gboolean            constrain,gfloat              unconstrained_lower,gfloat              unconstrained_upper,const gchar        *tooltip,const gchar        *help_data
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_RANDOM_SEED_SPINBUTTON</NAME>
@@ -5052,7 +5052,7 @@ gint               *seed,gint               *use_time,gint                time_t
 <FUNCTION>
 <NAME>gimp_coordinates_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-GimpUnit            unit,gchar              *unit_format,gboolean            menu_show_pixels,gboolean            menu_show_percent,gint                spinbutton_usize,GimpSizeEntryUpdatePolicy  update_policy,gboolean            chainbutton_active,gboolean            chain_constrains_ratio,gchar              *xlabel,gdouble             x,gdouble             xres,gdouble             lower_boundary_x,gdouble             upper_boundary_x,gdouble             xsize_0,gdouble             xsize_100,gchar              *ylabel,gdouble             y,gdouble             yres,gdouble             lower_boundary_y,gdouble             upper_boundary_y,gdouble             ysize_0,gdouble             ysize_100
+GimpUnit            unit,const gchar        *unit_format,gboolean            menu_show_pixels,gboolean            menu_show_percent,gint                spinbutton_usize,GimpSizeEntryUpdatePolicy  update_policy,gboolean            chainbutton_active,gboolean            chain_constrains_ratio,const gchar        *xlabel,gdouble             x,gdouble             xres,gdouble             lower_boundary_x,gdouble             upper_boundary_x,gdouble             xsize_0,gdouble             xsize_100,const gchar        *ylabel,gdouble             y,gdouble             yres,gdouble             lower_boundary_y,gdouble             upper_boundary_y,gdouble             ysize_0,gdouble             ysize_100
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_MEM_SIZE_ENTRY_SPINBUTTON</NAME>
@@ -5081,7 +5081,7 @@ GtkAdjustment      *adjustment
 <FUNCTION>
 <NAME>gimp_pixmap_button_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar             **xpm_data,gchar              *text
+gchar             **xpm_data,const gchar        *text
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_toggle_button_sensitive_update</NAME>
@@ -5131,7 +5131,7 @@ GtkWidget       *widget,gpointer         data
 <FUNCTION>
 <NAME>gimp_table_attach_aligned</NAME>
 <RETURNS>void  </RETURNS>
-GtkTable           *table,gint                column,gint                row,gchar              *label_text,gfloat              xalign,gfloat              yalign,GtkWidget          *widget,gint                colspan,gboolean            left_align
+GtkTable           *table,gint                column,gint                row,const gchar        *label_text,gfloat              xalign,gfloat              yalign,GtkWidget          *widget,gint                colspan,gboolean            left_align
 </FUNCTION>
 <STRUCT>
 <NAME>WireMessage</NAME>

@@ -1,3 +1,11 @@
+2000-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/libgimp.types: #include libgimp-include.c in libgimp.types
+	instead of passing it on the command line in Makefile.am
+
+	* libgimp/libgimp-decl.txt: updated.
+
 2000-11-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt: updated

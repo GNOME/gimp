@@ -37,10 +37,14 @@ sgml/libgimp-doc.bottom: $(tmpl_sources)
 
 scan:
 	-(cd $(srcdir) \
-	&& env CFLAGS="$(CFLAGS) libgimp-include.c" CPPFLAGS="$(CPPFLAGS)" \
+	&& env \
+		CFLAGS="$(CFLAGS)" \
+		CPPFLAGS="$(CPPFLAGS)" \
 		LDFLAGS="$(LDFLAGS)" \
 		gtkdoc-scanobj --module=$(DOC_MODULE) \
-	&& gtkdoc-scan --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) \
+	&& gtkdoc-scan \
+		--module=$(DOC_MODULE) \
+		--source-dir=$(DOC_SOURCE_DIR) \
 		--ignore-headers="gimpintl.h libgimp-intl.h stdplugins-intl.h gserialize.h")
 
 templates: scan

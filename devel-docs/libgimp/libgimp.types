@@ -2,6 +2,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimp-include.c"
+
 gimp_chain_button_get_type
 gimp_color_button_get_type
 gimp_file_selection_get_type
