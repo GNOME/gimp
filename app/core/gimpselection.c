@@ -842,7 +842,7 @@ gimp_selection_float (GimpChannel  *selection,
   layer = gimp_layer_new_from_tiles (tiles,
                                      gimage,
                                      gimp_drawable_type_with_alpha (drawable),
-				     _("Floating Selection"),
+				     _("Selection"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   /*  Set the offsets  */

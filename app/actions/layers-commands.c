@@ -1050,9 +1050,7 @@ layers_edit_layer_query (GimpLayer   *layer,
   options->name_entry = gtk_entry_new ();
   gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      ((gimp_layer_is_floating_sel (layer) ?
-			_("Floating Selection") :
-			gimp_object_get_name (GIMP_OBJECT (layer)))));
+		      gimp_object_get_name (GIMP_OBJECT (layer)));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Layer _Name"), 1.0, 0.5,
                              options->name_entry, 1, FALSE);

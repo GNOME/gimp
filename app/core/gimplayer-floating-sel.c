@@ -100,9 +100,10 @@ floating_sel_remove (GimpLayer *layer)
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_relax (layer, TRUE);
 
-  /*  invalidate the preview of the obscured drawable.  We do this here
+  /*  Invalidate the preview of the obscured drawable.  We do this here
    *  because it will not be done until the floating selection is removed,
-   *  at which point the obscured drawable's preview will not be declared invalid
+   *  at which point the obscured drawable's preview will not be declared
+   *  invalid.
    */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 

@@ -1,5 +1,22 @@
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
+	Try to make floating selections more obvious:
+
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_floating_selection_changed): always display
+	"Floating Selection" as the name for a floating selection.
+
+	* app/core/gimpselection.c (gimp_selection_float): call the new
+	layer "Selection" instead of "Floating Selection". This is what
+	will be displayed if the FS is turned into a layer.
+
+	* app/actions/layers-commands.c (layers_edit_layer_query): don't
+	special case floating selections here.
+
+	* app/core/gimplayer-floating-sel.c: cosmetics.
+
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/postscript.c (ps_open): applied a patch by Peter
 	Kirchgessner that solves a problem with the recognition of the
 	bounding box. Fixes bug #152829.
