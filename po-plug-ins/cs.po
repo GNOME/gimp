@@ -1,0 +1,2843 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 1999-07-17 11:11-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: plug-ins/common/CML_explorer.c:226
+msgid "Keep image's values"
+msgstr "Keep image's values"
+
+#: plug-ins/common/CML_explorer.c:228
+msgid "Keep the first value"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:230
+msgid "Fill with parameter k"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:232
+msgid "k{x(1-x)}^p"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:234
+msgid "k{x(1-x)}^p stepped"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:236
+msgid "kx^p"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:238
+msgid "kx^p stepped"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:240
+msgid "k(1 - x^p)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:242
+msgid "k(1 - x^p) stepped"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:244
+msgid "Delta function"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:246
+msgid "Delta function stepped"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:248
+msgid "sin^p-based function"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:250
+msgid "sin^p, stepped"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:256
+msgid "None"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:258
+msgid "Max (x, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:260
+msgid "Max (x+d, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:262
+msgid "Max (x-d, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:264
+msgid "Min (x, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:266
+msgid "Min (x+d, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:268
+msgid "Min (x-d, -)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:270
+msgid "Max (x+d, -), (x < 0.5)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:272
+msgid "Max (x+d, -), (0.5 < x)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:274
+msgid "Max (x-d, -), (x < 0.5)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:276
+msgid "Max (x-d, -), (0.5 < x)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:278
+msgid "Min (x+d, -), (x < 0.5)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:280
+msgid "Min (x+d, -), (0.5 < x)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:282
+msgid "Min (x-d, -), (x < 0.5)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:284
+msgid "Min (x-d, -), (0.5 < x)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:290
+msgid "Standard"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:292
+msgid "Use average value"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:294
+msgid "Use reverse value"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:296
+msgid "With random power (0,10)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:298
+msgid "With random power (0,1)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:300
+msgid "With gradient power (0,1)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:302
+msgid "Multiply rand. value (0,1)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:304
+msgid "Multiply rand. value (0,2)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:306
+msgid "Multiply gradient (0,1)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:308
+msgid "With p and random (0,1)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:313
+msgid "All black"
+msgstr ""
+
+#. 0
+#: plug-ins/common/CML_explorer.c:314
+msgid "All gray"
+msgstr ""
+
+#. 1
+#: plug-ins/common/CML_explorer.c:315
+msgid "All white"
+msgstr ""
+
+#. 2
+#: plug-ins/common/CML_explorer.c:316
+msgid "The first row of the image"
+msgstr ""
+
+#. 3
+#: plug-ins/common/CML_explorer.c:317
+msgid "Continuous gradient"
+msgstr ""
+
+#. 4
+#: plug-ins/common/CML_explorer.c:318
+msgid "Continuous grad. w/o gap"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:320
+msgid "Random, ch. independent"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:322
+msgid "Random shared"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:324
+msgid "Randoms from seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:326
+msgid "Randoms from seed (shared)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:380 plug-ins/common/CML_explorer.c:388
+#: plug-ins/common/CML_explorer.c:1431 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:135
+msgid "Hue"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:381 plug-ins/common/CML_explorer.c:389
+#: plug-ins/common/CML_explorer.c:1435 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:136
+msgid "Saturation"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:382 plug-ins/common/CML_explorer.c:390
+#: plug-ins/common/CML_explorer.c:1439 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:137
+msgid "Value"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:387
+msgid "NULL"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:494
+msgid "Make an image of Coupled-Map Lattice"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:495
+msgid ""
+"Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula "
+"Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
+"prameter file is passed as the 4th arg. You can control CML_explorer via "
+"parameter file."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1327
+msgid "Coupled-Map-Lattice Explorer"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1344 plug-ins/common/ps.c:2448
+msgid "Preview"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1385
+msgid "New seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1391
+msgid "Fix seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1397
+msgid "Random seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1409
+msgid "Load"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1412
+msgid "Save"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1429
+msgid "Hue settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1433
+msgid "Saturation settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1437
+msgid "Value (grayimage) settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1441
+msgid "Advanced settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1443
+msgid "Advanced"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1455
+msgid "Other parameter settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1459
+msgid "Channel independed parameters"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1463
+msgid "Initial value"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1469
+msgid "Zoom scale"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1474
+msgid "Start offset"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1494
+msgid "Seed of random (only for \"from seed\" modes)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1498
+msgid "Seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1508
+msgid "Switch to \"from seed\" with the last seed"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1515
+msgid ""
+"\"Fix seed\" button is an alias of me.\n"
+"The same seed produces the same image, if (1) the widths of images are same "
+"(this is the reason why image on drawable is different from preview), and "
+"(2) all mutation rates equal to zero."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1532
+msgid "Others"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1539
+msgid "Misc operations"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1544
+msgid "Copy settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1548
+msgid "Source ch."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1554 plug-ins/common/CML_explorer.c:1588
+msgid "Destination ch."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1560
+msgid "Do copy parameters"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1578
+msgid "Selective load settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1582
+msgid "Source ch. in file"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1608
+msgid "Misc ops."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1644
+msgid "Function type"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1651
+msgid "Composition"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1658
+msgid "Misc arrange"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1665
+msgid "Use cyclic range"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1670
+msgid "Mod. rate"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1677
+msgid "Env. sensitivity"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1684
+msgid "Diffusion dist."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1691
+msgid "# of subranges"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1698
+msgid "P(ower factor)"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1705
+msgid "Parameter k"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1712
+msgid "Range low"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1719
+msgid "Range high"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1738
+msgid "Plot the graph of the settings"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1772
+msgid "Ch. sensitivity"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1779
+msgid "Mutation rate"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1786
+msgid "Mutation dist."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1815
+msgid "Graph of the current settings"
+msgstr ""
+
+#. Action Area
+#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1820
+#: plug-ins/common/CML_explorer.c:2681 plug-ins/common/CML_explorer.c:2777
+#: plug-ins/common/apply_lens.c:420 plug-ins/common/blur.c:619
+#: plug-ins/common/bumpmap.c:970 plug-ins/common/checkerboard.c:381
+#: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
+#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:914
+#: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
+#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
+#: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
+#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
+#: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
+#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
+msgid "OK"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1830
+msgid "The Graph"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:1922
+msgid "Warning: the source and the destination are the same channel."
+msgstr ""
+
+#. Action Area
+#: plug-ins/common/CML_explorer.c:2010
+msgid "Execute"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2019
+msgid "Execute and Exit"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2027
+msgid "Exit"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2045
+msgid "Save parameters to"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2108 plug-ins/common/CML_explorer.c:2301
+#, c-format
+msgid "Error: could not open \"%s\""
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2173
+msgid "CML file operation warning"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2180
+#, c-format
+msgid "%s exists, overwrite?"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2223
+msgid "Load parameters from"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2225
+msgid "Selective load from"
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2324
+msgid "Error: it's not CML parameter file."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2331
+msgid "Warning: it's an old format file."
+msgstr ""
+
+#: plug-ins/common/CML_explorer.c:2333
+msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
+msgstr ""
+
+#. cancel button
+#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
+#: plug-ins/common/CML_explorer.c:2690 plug-ins/common/apply_lens.c:430
+#: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:979
+#: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
+#: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
+#: plug-ins/common/cubism.c:347 plug-ins/common/decompose.c:924
+#: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
+#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
+#: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
+#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
+#: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
+#: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
+#: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
+msgid "Cancel"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_main.c:172
+msgid "Apply various lighting effects to an image"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_main.c:173
+msgid "No help yet"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_main.c:177
+msgid "<Image>/Filters/Light Effects/Lighting Effects"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:34
+msgid "Point light"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:35
+msgid "Directional light"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:36
+msgid "Spot light"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:37
+msgid "No light"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:43
+msgid "From image"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:44
+msgid "Waves"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:50
+msgid "Linear"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:51
+msgid "Logarithmic"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:52
+msgid "Sinusoidal"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:53
+msgid "Spherical"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:569
+msgid "General options"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:572
+msgid "Use bump mapping"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:574
+msgid "Use environment mapping"
+msgstr ""
+
+#. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
+#. (GtkSignalFunc)togglerefraction_update);
+#: plug-ins/Lighting/lighting_ui.c:578
+msgid "Transparent background"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:580
+msgid "Create new image"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:582
+msgid "High preview quality"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:584
+msgid "Enable tooltips"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:587
+msgid "Enable/disable bump-mapping (image depth)"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:588
+msgid "Enable/disable environment mapping (reflection)"
+msgstr ""
+
+#. gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer");
+#: plug-ins/Lighting/lighting_ui.c:590
+msgid "Make destination image transparent where bump height is zero"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:591
+msgid "Create a new image when applying filter"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:592
+msgid "Enable/disable high quality previews"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:593
+msgid "Enable/disable tooltip messages"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:612
+msgid "Antialiasing options"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:615
+msgid "Enable antialiasing"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:618
+msgid "Enable/disable jagged edges removal (antialiasing)"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:628
+msgid "Depth:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:633
+msgid "Threshold:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:645
+msgid "Antialiasing quality. Higher is better, but slower"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:646
+msgid "Stop when pixel differences are smaller than this value"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:669
+msgid "Light settings"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:673
+msgid "Lightsource type:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:678
+msgid "Lightsource color"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:685
+msgid "Type of light source to apply"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:686
+msgid "Set light source color (white is default)"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:688
+msgid "Position"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:691 plug-ins/Lighting/lighting_ui.c:713
+msgid "X:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:692 plug-ins/Lighting/lighting_ui.c:714
+msgid "Y:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:693 plug-ins/Lighting/lighting_ui.c:715
+msgid "Z:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:699
+msgid "Light source X position in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:700
+msgid "Light source Y position in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:701
+msgid "Light source Z position in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:710
+msgid "Direction vector"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:717
+msgid "Light source X direction in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:718
+msgid "Light source Y direction in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:719
+msgid "Light source Z direction in XYZ space"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:751
+msgid "Intensity levels"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:756
+msgid "Ambient:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:757 plug-ins/Lighting/lighting_ui.c:808
+msgid "Diffuse:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:797
+msgid "Amount of original color to show where no direct light falls"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:798
+msgid "Intensity of original color when lit by a light source"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:803
+msgid "Reflectivity"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:809
+msgid "Specular:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:810
+msgid "Hightlight:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:824
+msgid "Higher values makes the object reflect more light (appear lighter)"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:825
+msgid "Controls how intense the highlights will be"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:826
+msgid "Higher values makes the highlights more focused"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:888
+msgid "Bumpmap settings"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:894
+msgid "Bumpmap image:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:913
+msgid "Minimum height:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:915
+msgid "Maximum height:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:923
+msgid "Autostretch to fit value range"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:946
+msgid "Environment settings"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:953
+msgid "Environment image:"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:987
+msgid "Options"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:993
+msgid "Light"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:999
+msgid "Material"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1007
+msgid "Bump"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1016
+msgid "Env"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1037
+msgid "Lighting effects"
+msgstr ""
+
+#. Add Ok, Cancel and Help buttons to the action area
+#. ==================================================
+#: plug-ins/Lighting/lighting_ui.c:1061
+msgid "Apply"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1063
+msgid "Help"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1072
+msgid "Apply filter with current settings"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1073
+msgid "Close filter without doing anything"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1093
+msgid "  Preview!  "
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1094
+msgid "Recompute preview image"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1097
+msgid "Zoom in (make image bigger)"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1099
+msgid "Zoom out (make image smaller)"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:136
+msgid "Apply a lens effect"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:137
+msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:141
+msgid "<Image>/Filters/Glass Effects/Apply Lens"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:200
+msgid "Applying lens..."
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:414
+msgid "Lens effect"
+msgstr ""
+
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
+#: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
+#: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
+#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
+msgid "Parameter Settings"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:448
+msgid "Keep original surroundings"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:461
+msgid "Set surroundings to index 0"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:462
+msgid "Set surroundings to background color"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:475
+msgid "Make surroundings transparent"
+msgstr ""
+
+#: plug-ins/common/apply_lens.c:490
+msgid "Lens refraction index: "
+msgstr ""
+
+#: plug-ins/common/autostretch_hsv.c:82
+msgid ""
+"Automatically stretch the contrast of the specified drawable to cover all "
+"possible ranges."
+msgstr ""
+
+#: plug-ins/common/autostretch_hsv.c:83
+msgid ""
+"This simple plug-in does an automatic contrast stretch.  For each channel in "
+"the image, it finds the minimum and maximum values... it uses those values "
+"to stretch the individual histograms to the full contrast range.  For some "
+"images it may do just what you want; for others it may be total crap :).  "
+"This version differs from Contrast Autostretch in that it works in HSV "
+"space, and preserves hue."
+msgstr ""
+
+#: plug-ins/common/autostretch_hsv.c:87
+msgid "<Image>/Image/Colors/Auto-Stretch HSV"
+msgstr ""
+
+#: plug-ins/common/autostretch_hsv.c:119
+msgid "Auto-Stretching HSV..."
+msgstr ""
+
+#: plug-ins/common/blur.c:194
+msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
+msgstr ""
+
+#: plug-ins/common/blur.c:195
+msgid ""
+"This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You "
+"control the percentage of the pixels that are blurred and the number of "
+"times blurring is applied.  Indexed images are not supported."
+msgstr ""
+
+#: plug-ins/common/blur.c:208
+msgid "<Image>/Filters/Blur/Blur"
+msgstr ""
+
+#: plug-ins/common/blur.c:620
+msgid "Accept settings and apply filter to image"
+msgstr ""
+
+#: plug-ins/common/blur.c:622
+msgid "Close plug-in without making any changes"
+msgstr ""
+
+#.
+#. *  Randomization seed initialization controls
+#.
+#: plug-ins/common/blur.c:626
+msgid "Randomization Seed:"
+msgstr ""
+
+#.
+#. *  Time button
+#.
+#: plug-ins/common/blur.c:637
+msgid "Current Time"
+msgstr ""
+
+#: plug-ins/common/blur.c:638
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+
+#.
+#. *  User button
+#.
+#: plug-ins/common/blur.c:648
+msgid "Other Value"
+msgstr ""
+
+#: plug-ins/common/blur.c:649
+msgid ""
+"Enable user-entered value for random number generator seed - this allows you "
+"to repeat a given \"random\" operation"
+msgstr ""
+
+#: plug-ins/common/blur.c:661
+msgid "Value for seeding the random number generator"
+msgstr ""
+
+#.
+#. *  Randomization percentage label & scale (1 to 100)
+#.
+#: plug-ins/common/blur.c:666
+msgid "Randomization %:"
+msgstr ""
+
+#: plug-ins/common/blur.c:669
+msgid "Percentage of pixels to be filtered"
+msgstr ""
+
+#.
+#. *  Repeat count label & scale (1 to 100)
+#.
+#: plug-ins/common/blur.c:674
+msgid "Repeat:"
+msgstr ""
+
+#: plug-ins/common/blur.c:677
+msgid "Number of times to apply filter"
+msgstr ""
+
+#: plug-ins/bmp/bmp.c:105 plug-ins/bmp/bmp.c:106
+msgid "Loads files of Windows BMP file format"
+msgstr ""
+
+#: plug-ins/bmp/bmp.c:117 plug-ins/bmp/bmp.c:118
+msgid "Saves files in Windows BMP file format"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
+#: plug-ins/common/jpeg.c:494 plug-ins/common/png.c:345
+#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
+#: plug-ins/common/xpm.c:300
+#, c-format
+msgid "Loading %s:"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:39
+#, c-format
+msgid "%s: can't open \"%s\"\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:47
+#, c-format
+msgid "%s: not a valid BMP file %s\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:55 plug-ins/bmp/bmpread.c:73
+#: plug-ins/bmp/bmpread.c:95
+#, c-format
+msgid "%s: error reading BMP file header\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:70
+msgid "OS/2 unsupported!\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:117
+#, c-format
+msgid "%s: too many colors: %u\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:165
+#, c-format
+msgid "%s: bad colormap\n"
+msgstr ""
+
+#.
+#. * Create the "background" layer to hold the image...
+#.
+#: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
+#: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
+#: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
+#: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:455
+#: plug-ins/common/xbm.c:612
+msgid "Background"
+msgstr ""
+
+#: plug-ins/bmp/bmpwrite.c:83
+msgid "bmp: cannot operate on unknown image types or alpha images"
+msgstr ""
+
+#: plug-ins/bmp/bmpwrite.c:140
+#, c-format
+msgid "can't open %s\n"
+msgstr ""
+
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:759
+#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
+#: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
+#: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
+#, c-format
+msgid "Saving %s:"
+msgstr ""
+
+#: plug-ins/bmp/bmpwrite.c:421
+msgid "Save as BMP"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/bmp/bmpwrite.c:446
+msgid "Save Options"
+msgstr ""
+
+#: plug-ins/bmp/bmpwrite.c:454
+msgid "RLE encoded"
+msgstr ""
+
+#: plug-ins/borderaverage/borderaverage.c:98
+msgid "<Image>/Filters/Colors/Border Average"
+msgstr ""
+
+#: plug-ins/borderaverage/borderaverage.c:339
+msgid "Border Size"
+msgstr ""
+
+#: plug-ins/borderaverage/borderaverage.c:339
+msgid "Thickness"
+msgstr ""
+
+#: plug-ins/borderaverage/borderaverage.c:342
+msgid "Number of colors"
+msgstr ""
+
+#: plug-ins/borderaverage/borderaverage.c:345
+msgid "Bucket Size:"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:298
+msgid "Linear map"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:299
+msgid "Spherical map"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:300
+msgid "Sinusoidal map"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:346
+msgid "Create an embossing effect using an image as a bump map"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:354
+msgid "<Image>/Filters/Map/Bump Map"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:500
+msgid "Bump-mapping..."
+msgstr ""
+
+#. Bump map menu
+#: plug-ins/common/bumpmap.c:830 plug-ins/common/bumpmap.c:939
+msgid "Bump map"
+msgstr ""
+
+#. Compensate darkening
+#: plug-ins/common/bumpmap.c:884
+msgid "Compensate for darkening"
+msgstr ""
+
+#. Invert bumpmap
+#: plug-ins/common/bumpmap.c:895
+msgid "Invert bumpmap"
+msgstr ""
+
+#. Controls
+#: plug-ins/common/bumpmap.c:958
+msgid "Azimuth"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:959
+msgid "Elevation"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:960
+msgid "Depth"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:961
+msgid "X offset"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:962
+msgid "Y offset"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:963
+msgid "Waterlevel"
+msgstr ""
+
+#: plug-ins/common/bumpmap.c:964
+msgid "Ambient"
+msgstr ""
+
+#: plug-ins/common/bz2.c:293 plug-ins/common/bz2.c:358
+#, c-format
+msgid "bz2: fork failed: %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:300 plug-ins/common/bz2.c:365
+#, c-format
+msgid "bz2: fopen failed: %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:306 plug-ins/common/bz2.c:371
+#, c-format
+msgid "bz2: dup2 failed: %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:310
+#, c-format
+msgid "bz2: exec failed: bzip2: %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:324 plug-ins/common/bz2.c:389
+#, c-format
+msgid "bz2: bzip2 exited abnormally on file %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:375
+#, c-format
+msgid "bz2: exec failed: bunzip2: %s\n"
+msgstr ""
+
+#: plug-ins/common/bz2.c:443
+msgid "bz2: can't open bzip2ed file without a sensible extension\n"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:97
+msgid "Adds a checkerboard pattern to an image"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:102
+msgid "<Image>/Filters/Render/Checkerboard"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:164
+msgid "Adding Checkerboard..."
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:374
+msgid "Checkerboard"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:407
+msgid "Psychobilly"
+msgstr ""
+
+#: plug-ins/common/checkerboard.c:415
+msgid "Check Size"
+msgstr ""
+
+#: plug-ins/common/colorify.c:122
+msgid "Similar to the \"Color\" mode for layers."
+msgstr ""
+
+#: plug-ins/common/colorify.c:123
+msgid "Makes an average of the RGB channels and uses it to set the color"
+msgstr ""
+
+#: plug-ins/common/colorify.c:126
+msgid "<Image>/Filters/Colors/Colorify"
+msgstr ""
+
+#: plug-ins/common/colorify.c:194
+msgid "Colorifying..."
+msgstr ""
+
+#: plug-ins/common/colorify.c:308
+msgid "Colorify"
+msgstr ""
+
+#: plug-ins/common/colorify.c:314
+msgid "Ok"
+msgstr ""
+
+#: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
+#: plug-ins/print/print.c:848
+msgid "Color"
+msgstr ""
+
+#: plug-ins/common/colorify.c:344
+msgid "Custom Color: "
+msgstr ""
+
+#: plug-ins/common/colorify.c:434
+msgid "Colorify Custom Color"
+msgstr ""
+
+#: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
+msgid "RGB"
+msgstr ""
+
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
+msgid "Red:"
+msgstr ""
+
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
+msgid "Green:     "
+msgstr ""
+
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
+msgid "Blue:"
+msgstr ""
+
+#: plug-ins/common/compose.c:126
+msgid "rgb-compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:127
+msgid "RGBA"
+msgstr ""
+
+#: plug-ins/common/compose.c:127
+msgid "Alpha:"
+msgstr ""
+
+#: plug-ins/common/compose.c:128
+msgid "rgba-compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:129 plug-ins/common/decompose.c:133
+msgid "HSV"
+msgstr ""
+
+#: plug-ins/common/compose.c:129
+msgid "Hue:"
+msgstr ""
+
+#: plug-ins/common/compose.c:129
+msgid "Saturation:"
+msgstr ""
+
+#: plug-ins/common/compose.c:129
+msgid "Value:"
+msgstr ""
+
+#: plug-ins/common/compose.c:130
+msgid "hsv-compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:131 plug-ins/common/decompose.c:138
+msgid "CMY"
+msgstr ""
+
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
+msgid "Cyan:"
+msgstr ""
+
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
+msgid "Magenta:   "
+msgstr ""
+
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
+msgid "Yellow:"
+msgstr ""
+
+#: plug-ins/common/compose.c:132
+msgid "cmy-compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:143
+msgid "CMYK"
+msgstr ""
+
+#: plug-ins/common/compose.c:133
+msgid "Black:"
+msgstr ""
+
+#: plug-ins/common/compose.c:134
+msgid "cmyk-compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:228
+msgid "Compose an image from multiple gray images"
+msgstr ""
+
+#: plug-ins/common/compose.c:229
+msgid "This function creates a new image from multiple gray images"
+msgstr ""
+
+#: plug-ins/common/compose.c:234
+msgid "<Image>/Image/Channel Ops/Compose"
+msgstr ""
+
+#: plug-ins/common/compose.c:241
+msgid "Compose an image from multiple drawables of gray images"
+msgstr ""
+
+#: plug-ins/common/compose.c:242
+msgid ""
+"This function creates a new image from multiple drawables of gray images"
+msgstr ""
+
+#: plug-ins/common/compose.c:305
+#, c-format
+msgid "compose: Could not get layers for image %d"
+msgstr ""
+
+#: plug-ins/common/compose.c:354
+msgid "Composing..."
+msgstr ""
+
+#: plug-ins/common/compose.c:421
+msgid "compose: drawables have different size"
+msgstr ""
+
+#: plug-ins/common/compose.c:438
+msgid "compose: images have different size"
+msgstr ""
+
+#: plug-ins/common/compose.c:451
+msgid "compose: error in getting layer IDs"
+msgstr ""
+
+#: plug-ins/common/compose.c:468
+#, c-format
+msgid "compose: image is not a gray image (bpp=%d)"
+msgstr ""
+
+#: plug-ins/common/compose.c:483 plug-ins/common/compose.c:498
+msgid "compose: not enough memory"
+msgstr ""
+
+#: plug-ins/common/compose.c:809
+msgid "Compose"
+msgstr ""
+
+#. The left frame keeps the compose type toggles
+#: plug-ins/common/compose.c:841
+msgid "Compose channels:"
+msgstr ""
+
+#. The right frame keeps the selection menues for images.
+#. Because the labels within this frame will change when a toggle
+#. in the left frame is changed, fill in the right part first.
+#. Otherwise it can occur, that a non-existing label might be changed.
+#: plug-ins/common/compose.c:855
+msgid "Channel representations:"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:76
+msgid "Grey"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:130
+msgid "Red"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:131
+msgid "Green"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:132
+msgid "Blue"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:148
+msgid "Alpha"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:80
+msgid "Extend"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:80
+msgid "Wrap"
+msgstr ""
+
+#. Action area
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1163
+msgid "Crop"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:173
+msgid "A generic 5x5 convolution matrix"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:178
+msgid "<Image>/Filters/Generic/Convolution Matrix"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:239
+msgid "Applying convolution"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:700
+msgid "Convolution Matrix"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:715
+msgid "Defaults"
+msgstr ""
+
+#. Outbox:YABox:Frame
+#: plug-ins/common/convmatrix.c:741
+msgid "Matrix"
+msgstr ""
+
+#. divisor
+#: plug-ins/common/convmatrix.c:788
+msgid "Divisor"
+msgstr ""
+
+#. Offset
+#: plug-ins/common/convmatrix.c:803 plug-ins/common/depthmerge.c:728
+msgid "Offset"
+msgstr ""
+
+#: plug-ins/common/convmatrix.c:823
+msgid "Automatic"
+msgstr ""
+
+#. Alpha-weighting
+#: plug-ins/common/convmatrix.c:832
+msgid "Alpha-weighting"
+msgstr ""
+
+#. Wrap-modes
+#. OutBox:Inbox:Frame
+#: plug-ins/common/convmatrix.c:847
+msgid "Border"
+msgstr ""
+
+#. OutBox:Inbox:Frame
+#: plug-ins/common/convmatrix.c:875
+msgid "Channels"
+msgstr ""
+
+#: plug-ins/common/cubism.c:181
+msgid "Convert the input drawable into a collection of rotated squares"
+msgstr ""
+
+#: plug-ins/common/cubism.c:186
+msgid "<Image>/Filters/Artistic/Cubism"
+msgstr ""
+
+#: plug-ins/common/cubism.c:298
+msgid "Cubistic Transformation"
+msgstr ""
+
+#: plug-ins/common/cubism.c:331
+msgid "Cubism"
+msgstr ""
+
+#: plug-ins/common/cubism.c:364
+msgid "Use Background Color"
+msgstr ""
+
+#: plug-ins/common/cubism.c:372
+msgid "Tile Size"
+msgstr ""
+
+#: plug-ins/common/cubism.c:388
+msgid "Tile Saturation"
+msgstr ""
+
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
+msgid "red"
+msgstr ""
+
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:131
+msgid "green"
+msgstr ""
+
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
+msgid "blue"
+msgstr ""
+
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:135
+msgid "hue"
+msgstr ""
+
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:136
+msgid "saturation"
+msgstr ""
+
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
+msgid "value"
+msgstr ""
+
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:140
+msgid "cyan"
+msgstr ""
+
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
+msgid "magenta"
+msgstr ""
+
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
+msgid "yellow"
+msgstr ""
+
+#: plug-ins/common/decompose.c:140
+msgid "Cyan"
+msgstr ""
+
+#: plug-ins/common/decompose.c:141
+msgid "Magenta"
+msgstr ""
+
+#: plug-ins/common/decompose.c:142
+msgid "Yellow"
+msgstr ""
+
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:145
+msgid "cyan_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:146
+msgid "magenta_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:147
+msgid "yellow_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:144
+msgid "black"
+msgstr ""
+
+#: plug-ins/common/decompose.c:145
+msgid "Cyan_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:146
+msgid "Magenta_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:147
+msgid "Yellow_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:148
+msgid "alpha"
+msgstr ""
+
+#: plug-ins/common/decompose.c:216
+msgid "Decompose an image into different types of channels"
+msgstr ""
+
+#: plug-ins/common/decompose.c:217
+msgid ""
+"This function creates new gray images with different channel information in "
+"each of them"
+msgstr ""
+
+#: plug-ins/common/decompose.c:222
+msgid "<Image>/Image/Channel Ops/Decompose"
+msgstr ""
+
+#: plug-ins/common/decompose.c:303
+msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
+msgstr ""
+
+#: plug-ins/common/decompose.c:309
+msgid "Decomposing..."
+msgstr ""
+
+#: plug-ins/common/decompose.c:374
+msgid "decompose: not an RGB image"
+msgstr ""
+
+#: plug-ins/common/decompose.c:380
+msgid "decompose: No alpha channel available"
+msgstr ""
+
+#: plug-ins/common/decompose.c:409
+msgid "decompose: out of memory"
+msgstr ""
+
+#: plug-ins/common/decompose.c:901 plug-ins/common/decompose.c:907
+msgid "Decompose"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/common/decompose.c:934
+msgid "Extract channels:"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:194
+msgid "Combine two images using corresponding depth maps (z-buffers)"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:195
+msgid ""
+"Taking as input two full-colour, full-alpha images and two corresponding "
+"grayscale depth maps, this plug-in combines the images based on which is "
+"closer (has a lower depth map value) at each point."
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:202
+msgid "<Image>/Filters/Combine/Depth Merge"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:369
+msgid "Depth-merging..."
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:609
+msgid "Depth Merge"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:647
+msgid "Source 1"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:664 plug-ins/common/depthmerge.c:698
+msgid "Depth Map"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:681
+msgid "Source 2"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:723
+msgid "Overlap"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:733
+msgid "Scale 1"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:738
+msgid "Scale 2"
+msgstr ""
+
+#: plug-ins/common/depthmerge.c:1181
+msgid ""
+"Warning: I don't _like_ this color space.  This is a suggestion, not a "
+"threat.\n"
+msgstr ""
+
+#: plug-ins/common/destripe.c:151
+msgid ""
+"Destripe filter, used to remove vertical stripes caused by cheap scanners."
+msgstr ""
+
+#: plug-ins/common/destripe.c:152
+msgid "This plug-in tries to remove vertical stripes from an image."
+msgstr ""
+
+#: plug-ins/common/destripe.c:155
+msgid "<Image>/Filters/Enhance/Destripe"
+msgstr ""
+
+#: plug-ins/common/destripe.c:358
+msgid "Destriping..."
+msgstr ""
+
+#: plug-ins/common/destripe.c:589
+msgid "Destripe"
+msgstr ""
+
+#: plug-ins/common/destripe.c:663
+msgid "Histogram"
+msgstr ""
+
+#. button = gtk_check_button_new_with_label("Recursive");
+#. gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
+#. GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+#. gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
+#. (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+#. gtk_signal_connect(GTK_OBJECT(button), "toggled",
+#. (GtkSignalFunc)dialog_recursive_callback,
+#. NULL);
+#. gtk_widget_show(button);
+#.
+#. * Box size (radius) control...
+#.
+#: plug-ins/common/destripe.c:687
+msgid "Width"
+msgstr ""
+
+#: plug-ins/common/gif.c:408
+msgid "saves files in Compuserve GIF file format"
+msgstr ""
+
+#: plug-ins/common/gif.c:682
+msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
+msgstr ""
+
+#: plug-ins/common/gif.c:938
+msgid ""
+"GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
+"or GRAY first.\n"
+msgstr ""
+
+#: plug-ins/common/gif.c:957
+#, c-format
+msgid "GIF: can't open %s\n"
+msgstr ""
+
+#: plug-ins/common/gif.c:1064
+msgid ""
+"Transparent colour *might* be incorrect on viewers which don't support "
+"transparency."
+msgstr ""
+
+#: plug-ins/common/gif.c:1196
+msgid ""
+"The image which you are trying to save as a GIF\n"
+"contains layers which extend beyond the actual\n"
+"borders of the image.  This isn't allowed in GIFs,\n"
+"I'm afraid.\n"
+"\n"
+"You may choose whether to crop all of the layers to\n"
+"the image borders, or cancel this save."
+msgstr ""
+
+#: plug-ins/common/gif.c:1252
+msgid "Save as GIF"
+msgstr ""
+
+#. regular gif parameter settings
+#: plug-ins/common/gif.c:1286
+msgid "GIF Options"
+msgstr ""
+
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
+msgid "Interlace"
+msgstr ""
+
+#: plug-ins/common/gif.c:1306
+msgid "GIF Comment: "
+msgstr ""
+
+#: plug-ins/common/gif.c:1339 plug-ins/common/gif.c:1340
+msgid "Made with GIMP"
+msgstr ""
+
+#. additional animated gif parameter settings
+#: plug-ins/common/gif.c:1365
+msgid "Animated GIF Options"
+msgstr ""
+
+#: plug-ins/common/gif.c:1373
+msgid "Loop forever"
+msgstr ""
+
+#: plug-ins/common/gif.c:1386
+msgid "Delay between frames where unspecified: "
+msgstr ""
+
+#: plug-ins/common/gif.c:1400
+msgid " milliseconds"
+msgstr ""
+
+#: plug-ins/common/gif.c:1411
+msgid "Frame disposal where unspecified: "
+msgstr ""
+
+#: plug-ins/common/gif.c:1421
+msgid "I don't care"
+msgstr ""
+
+#: plug-ins/common/gif.c:1427
+msgid "Cumulative layers (combine)"
+msgstr ""
+
+#: plug-ins/common/gif.c:1433
+msgid "One frame per layer (replace)"
+msgstr ""
+
+#: plug-ins/common/gif.c:1491
+#, c-format
+msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
+msgstr ""
+
+#: plug-ins/common/gif.c:1507
+#, c-format
+msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:134
+msgid "loads files of Compuserve GIF file format"
+msgstr ""
+
+#: plug-ins/common/gifload.c:279
+#, c-format
+msgid "GIF: can't open \"%s\"\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:294
+msgid "GIF: error reading magic number\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:300
+msgid "GIF: not a GIF file\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:309
+msgid "GIF: bad version number, not '87a' or '89a'\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:315
+msgid "GIF: failed to read screen descriptor\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:331
+msgid "GIF: error reading global colormap\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:338
+msgid "GIF: warning - non-square pixels\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:349 plug-ins/common/gifload.c:803
+msgid "GIF: EOF / read error on image data\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:364
+msgid "GIF: OF / read error on extension function code\n"
+msgstr ""
+
+#. Not a valid start character
+#: plug-ins/common/gifload.c:374
+#, c-format
+msgid "GIF: bogus character 0x%02x, ignoring\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:382
+msgid "GIF: couldn't read left/top/width/height\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:394
+msgid "GIF: error reading local colormap\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:452
+msgid "GIF: bad colormap\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:568
+msgid "GIF: error in getting DataBlock size\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:576
+msgid "GIF: error in reading DataBlock\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:607
+msgid "GIF: ran off the end of by bits\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:718
+msgid "GIF: missing EOD in data stream (common occurence)"
+msgstr ""
+
+#: plug-ins/common/gifload.c:735
+msgid "GIF: circular table entry BIG ERROR\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:809
+msgid "GIF: error while reading\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:830
+#, c-format
+msgid "Background (%dms)"
+msgstr ""
+
+#: plug-ins/common/gifload.c:877
+#, c-format
+msgid "Frame %d"
+msgstr ""
+
+#: plug-ins/common/gifload.c:879
+#, c-format
+msgid "Frame %d (%dms)"
+msgstr ""
+
+#. 'don't care'
+#: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
+msgid " (combine)"
+msgstr ""
+
+#: plug-ins/common/gifload.c:886
+msgid " (replace)"
+msgstr ""
+
+#: plug-ins/common/gifload.c:892
+msgid " (unknown disposal)"
+msgstr ""
+
+#: plug-ins/common/gifload.c:893
+msgid ""
+"GIF: Hmm... please forward this GIF to the GIF plugin author!\n"
+"  (adam@foxbox.org)\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:896
+msgid "GIF: Something got corrupted.\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:925
+#, c-format
+msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:926
+msgid " interlaced"
+msgstr ""
+
+#: plug-ins/common/gifload.c:930
+msgid ""
+"GIF: Ouchie!  Can't handle non-alpha RGB frames.\n"
+"     Please mail the plugin author.  (adam@gimp.org)\n"
+msgstr ""
+
+#: plug-ins/common/gifload.c:1022
+msgid "GIF: too much input data, ignoring extra...\n"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:176
+msgid "loads files of the jpeg file format"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:487
+#, c-format
+msgid "can't open \"%s\"\n"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:603
+#, c-format
+msgid ""
+"don't know how to load JPEGs\n"
+"with %d color channels"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:648
+#, c-format
+msgid ""
+"unknown density unit %d\n"
+"assuming dots per inch"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:993
+msgid "Save as Jpeg"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1026
+msgid "Quality"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1042
+msgid "Smoothing"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1058
+msgid "Optimize"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1066
+msgid "Progressive"
+msgstr ""
+
+#: plug-ins/common/jpeg.c:1079
+msgid "Image Comments"
+msgstr ""
+
+#: plug-ins/common/mail.c:212
+msgid "pipe files to uuencode then mail them"
+msgstr ""
+
+#: plug-ins/common/mail.c:213
+msgid "You need to have uuencode and mail installed"
+msgstr ""
+
+#: plug-ins/common/mail.c:217
+msgid "<Image>/File/Mail image"
+msgstr ""
+
+#: plug-ins/common/mail.c:486
+msgid "Send to mail"
+msgstr ""
+
+#. filename label
+#: plug-ins/common/mail.c:620
+msgid "Filename:"
+msgstr ""
+
+#. Encapsulation label
+#: plug-ins/common/mail.c:674
+msgid "Encapsulation:"
+msgstr ""
+
+#. Encapsulation radiobutton
+#: plug-ins/common/mail.c:683
+msgid "Uuencode"
+msgstr ""
+
+#: plug-ins/common/mail.c:685
+msgid "MIME"
+msgstr ""
+
+#: plug-ins/common/mail.c:799
+msgid "mail: some sort of error with the file extension or lack thereof \n"
+msgstr ""
+
+#: plug-ins/common/oilify.c:122
+msgid "Modify the specified drawable to resemble an oil painting"
+msgstr ""
+
+#: plug-ins/common/oilify.c:123
+msgid ""
+"This function performs the well-known oil-paint effect on the specified "
+"drawable.  The size of the input mask is specified by 'mask_size'."
+msgstr ""
+
+#: plug-ins/common/oilify.c:127
+msgid "<Image>/Filters/Artistic/Oilify"
+msgstr ""
+
+#: plug-ins/common/oilify.c:198
+msgid "Oil Painting..."
+msgstr ""
+
+#: plug-ins/common/oilify.c:453
+msgid "Oilify"
+msgstr ""
+
+#: plug-ins/common/oilify.c:486
+msgid "Use intensity algorithm"
+msgstr ""
+
+#: plug-ins/common/oilify.c:494
+msgid "Mask Size"
+msgstr ""
+
+#: plug-ins/common/png.c:149
+msgid "Loads files in PNG file format"
+msgstr ""
+
+#: plug-ins/common/png.c:150
+msgid "This plug-in loads Portable Network Graphics (PNG) files."
+msgstr ""
+
+#: plug-ins/common/png.c:818
+msgid "PNG Options"
+msgstr ""
+
+#: plug-ins/common/png.c:863
+msgid "Compression level"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:209 plug-ins/print/print-pcl.c:232
+#: plug-ins/print/print-ps.c:345
+msgid "Letter"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:210 plug-ins/print/print-pcl.c:233
+#: plug-ins/print/print-ps.c:346
+msgid "Legal"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:211 plug-ins/print/print-pcl.c:234
+#: plug-ins/print/print-ps.c:347
+msgid "A4"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:212 plug-ins/print/print-pcl.c:235
+#: plug-ins/print/print-ps.c:348
+msgid "Tabloid"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:213 plug-ins/print/print-pcl.c:236
+#: plug-ins/print/print-ps.c:349
+msgid "A3"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:214 plug-ins/print/print-pcl.c:237
+#: plug-ins/print/print-ps.c:350
+msgid "12x18"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:218
+msgid "360 DPI"
+msgstr ""
+
+#: plug-ins/print/print-escp2.c:219
+msgid "720 DPI"
+msgstr ""
+
+#.
+#. * Let the user know what we're doing...
+#.
+#: plug-ins/print/print-escp2.c:510 plug-ins/print/print-pcl.c:613
+#: plug-ins/print/print-ps.c:697
+msgid "Printing..."
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:241
+msgid "Plain"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:242
+msgid "Premium"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:243
+msgid "Glossy"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:244
+msgid "Transparency"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:248
+msgid "Manual"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:249
+msgid "Tray 1"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:250
+msgid "Tray 2"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:251
+msgid "Tray 3"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:252
+msgid "Tray 4"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:256
+msgid "150 DPI"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:257
+msgid "300 DPI"
+msgstr ""
+
+#: plug-ins/print/print-pcl.c:258
+msgid "600 DPI"
+msgstr ""
+
+#: plug-ins/print/print.c:229
+msgid "PostScript Level 1"
+msgstr ""
+
+#: plug-ins/print/print.c:231
+msgid "PostScript Level 2"
+msgstr ""
+
+#: plug-ins/print/print.c:233
+msgid "HP DeskJet 500, 520"
+msgstr ""
+
+#: plug-ins/print/print.c:235
+msgid "HP DeskJet 500C, 540C"
+msgstr ""
+
+#: plug-ins/print/print.c:237
+msgid "HP DeskJet 550C, 560C"
+msgstr ""
+
+#: plug-ins/print/print.c:239
+msgid "HP DeskJet 600 series"
+msgstr ""
+
+#: plug-ins/print/print.c:241
+msgid "HP DeskJet 800 series"
+msgstr ""
+
+#: plug-ins/print/print.c:243
+msgid "HP DeskJet 1100C, 1120C"
+msgstr ""
+
+#: plug-ins/print/print.c:245
+msgid "HP DeskJet 1200C, 1600C"
+msgstr ""
+
+#: plug-ins/print/print.c:247
+msgid "HP LaserJet II series"
+msgstr ""
+
+#: plug-ins/print/print.c:249
+msgid "HP LaserJet III series"
+msgstr ""
+
+#: plug-ins/print/print.c:251
+msgid "HP LaserJet 4 series"
+msgstr ""
+
+#: plug-ins/print/print.c:253
+msgid "HP LaserJet 4V, 4Si"
+msgstr ""
+
+#: plug-ins/print/print.c:255
+msgid "HP LaserJet 5 series"
+msgstr ""
+
+#: plug-ins/print/print.c:257
+msgid "HP LaserJet 5Si"
+msgstr ""
+
+#: plug-ins/print/print.c:259
+msgid "HP LaserJet 6 series"
+msgstr ""
+
+#: plug-ins/print/print.c:261
+msgid "EPSON Stylus Color"
+msgstr ""
+
+#: plug-ins/print/print.c:263
+msgid "EPSON Stylus Color Pro"
+msgstr ""
+
+#: plug-ins/print/print.c:265
+msgid "EPSON Stylus Color Pro XL"
+msgstr ""
+
+#: plug-ins/print/print.c:267
+msgid "EPSON Stylus Color 1500"
+msgstr ""
+
+#: plug-ins/print/print.c:269
+msgid "EPSON Stylus Color 400"
+msgstr ""
+
+#: plug-ins/print/print.c:271
+msgid "EPSON Stylus Color 500"
+msgstr ""
+
+#: plug-ins/print/print.c:273
+msgid "EPSON Stylus Color 600"
+msgstr ""
+
+#: plug-ins/print/print.c:275
+msgid "EPSON Stylus Color 800"
+msgstr ""
+
+#: plug-ins/print/print.c:277
+msgid "EPSON Stylus Color 1520"
+msgstr ""
+
+#: plug-ins/print/print.c:279
+msgid "EPSON Stylus Color 3000"
+msgstr ""
+
+#: plug-ins/print/print.c:332
+msgid "This plug-in prints images from The GIMP."
+msgstr ""
+
+#: plug-ins/print/print.c:333
+msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
+msgstr ""
+
+#: plug-ins/print/print.c:337
+msgid "<Image>/File/Print"
+msgstr ""
+
+#: plug-ins/print/print.c:650
+msgid "Auto"
+msgstr ""
+
+#: plug-ins/print/print.c:651
+msgid "Portrait"
+msgstr ""
+
+#: plug-ins/print/print.c:652
+msgid "Landscape"
+msgstr ""
+
+#: plug-ins/print/print.c:685
+#, c-format
+msgid "Print v%s"
+msgstr ""
+
+#.
+#. * Media size option menu...
+#.
+#: plug-ins/print/print.c:735
+msgid "Media Size:"
+msgstr ""
+
+#.
+#. * Media type option menu...
+#.
+#: plug-ins/print/print.c:751
+msgid "Media Type:"
+msgstr ""
+
+#.
+#. * Media source option menu...
+#.
+#: plug-ins/print/print.c:767
+msgid "Media Source:"
+msgstr ""
+
+#.
+#. * Orientation option menu...
+#.
+#: plug-ins/print/print.c:783
+msgid "Orientation:"
+msgstr ""
+
+#.
+#. * Resolution option menu...
+#.
+#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
+msgid "Resolution:"
+msgstr ""
+
+#.
+#. * Output type toggles...
+#.
+#: plug-ins/print/print.c:829
+msgid "Output Type:"
+msgstr ""
+
+#: plug-ins/print/print.c:838
+msgid "B&W"
+msgstr ""
+
+#.
+#. * Scaling...
+#.
+#: plug-ins/print/print.c:861
+msgid "Scaling:"
+msgstr ""
+
+#: plug-ins/print/print.c:896
+msgid "Percent"
+msgstr ""
+
+#: plug-ins/print/print.c:905
+msgid "PPI"
+msgstr ""
+
+#.
+#. * Brightness slider...
+#.
+#: plug-ins/print/print.c:917
+msgid "Brightness:"
+msgstr ""
+
+#.
+#. * Printer option menu...
+#.
+#: plug-ins/print/print.c:952
+msgid "Printer:"
+msgstr ""
+
+#: plug-ins/print/print.c:978 plug-ins/print/print.c:1011
+msgid "Setup"
+msgstr ""
+
+#: plug-ins/print/print.c:998
+msgid "Print"
+msgstr ""
+
+#.
+#. * Printer driver option menu...
+#.
+#: plug-ins/print/print.c:1033
+msgid "Driver:"
+msgstr ""
+
+#.
+#. * PPD file...
+#.
+#: plug-ins/print/print.c:1058
+msgid "PPD File:"
+msgstr ""
+
+#: plug-ins/print/print.c:1071
+msgid "Browse"
+msgstr ""
+
+#.
+#. * Print command...
+#.
+#: plug-ins/print/print.c:1081
+msgid "Command:"
+msgstr ""
+
+#.
+#. * Output file selection dialog...
+#.
+#: plug-ins/print/print.c:1116
+msgid "Print To File?"
+msgstr ""
+
+#.
+#. * PPD file selection dialog...
+#.
+#: plug-ins/print/print.c:1126
+msgid "PPD File?"
+msgstr ""
+
+#: plug-ins/print/print.c:2112
+msgid "File"
+msgstr ""
+
+#: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
+msgid "load file of PostScript/PDF file format"
+msgstr ""
+
+#: plug-ins/common/ps.c:344
+msgid "save file in PostScript file format"
+msgstr ""
+
+#: plug-ins/common/ps.c:345
+msgid ""
+"PostScript saving handles all image types except those with alpha channels."
+msgstr ""
+
+#: plug-ins/common/ps.c:550
+msgid "PS: can't open file for reading"
+msgstr ""
+
+#: plug-ins/common/ps.c:557
+#, c-format
+msgid "Interpreting and Loading %s:"
+msgstr ""
+
+#: plug-ins/common/ps.c:565
+msgid "PS: can't interprete file"
+msgstr ""
+
+#: plug-ins/common/ps.c:647
+msgid "PostScript save cannot handle images with alpha channels"
+msgstr ""
+
+#: plug-ins/common/ps.c:658
+msgid "PS: cannot operate on unknown image types"
+msgstr ""
+
+#: plug-ins/common/ps.c:667
+msgid "PS: can't open file for writing"
+msgstr ""
+
+#: plug-ins/common/ps.c:1713 plug-ins/common/ps.c:1810
+#: plug-ins/common/ps.c:1903 plug-ins/common/ps.c:1972
+msgid "write error occured"
+msgstr ""
+
+#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+msgid "Width:"
+msgstr ""
+
+#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+msgid "Height:"
+msgstr ""
+
+#: plug-ins/common/ps.c:1999
+msgid "Pages:"
+msgstr ""
+
+#: plug-ins/common/ps.c:2001
+msgid "b/w"
+msgstr ""
+
+#: plug-ins/common/ps.c:2001
+msgid "gray"
+msgstr ""
+
+#: plug-ins/common/ps.c:2001
+msgid "colour"
+msgstr ""
+
+#: plug-ins/common/ps.c:2001
+msgid "automatic"
+msgstr ""
+
+#: plug-ins/common/ps.c:2003
+msgid "none"
+msgstr ""
+
+#: plug-ins/common/ps.c:2003
+msgid "weak"
+msgstr ""
+
+#: plug-ins/common/ps.c:2003
+msgid "strong"
+msgstr ""
+
+#: plug-ins/common/ps.c:2016
+msgid "Load PostScript"
+msgstr ""
+
+#. Rendering
+#: plug-ins/common/ps.c:2049
+msgid "Rendering"
+msgstr ""
+
+#: plug-ins/common/ps.c:2089
+msgid "try BoundingBox"
+msgstr ""
+
+#. Colouring
+#: plug-ins/common/ps.c:2102
+msgid "Colouring"
+msgstr ""
+
+#: plug-ins/common/ps.c:2138
+msgid "Graphic antialiasing"
+msgstr ""
+
+#: plug-ins/common/ps.c:2139
+msgid "Text antialiasing"
+msgstr ""
+
+#: plug-ins/common/ps.c:2264
+msgid "X-offset:"
+msgstr ""
+
+#: plug-ins/common/ps.c:2264
+msgid "Y-offset:"
+msgstr ""
+
+#: plug-ins/common/ps.c:2266
+msgid "0"
+msgstr ""
+
+#: plug-ins/common/ps.c:2266
+msgid "90"
+msgstr ""
+
+#: plug-ins/common/ps.c:2266
+msgid "180"
+msgstr ""
+
+#: plug-ins/common/ps.c:2266
+msgid "270"
+msgstr ""
+
+#: plug-ins/common/ps.c:2268
+msgid "Inch"
+msgstr ""
+
+#: plug-ins/common/ps.c:2268
+msgid "Millimeter"
+msgstr ""
+
+#: plug-ins/common/ps.c:2283
+msgid "Save PostScript"
+msgstr ""
+
+#. Image Size
+#: plug-ins/common/ps.c:2324
+msgid "Image Size"
+msgstr ""
+
+#: plug-ins/common/ps.c:2363
+msgid "keep aspect ratio"
+msgstr ""
+
+#. Unit
+#: plug-ins/common/ps.c:2373
+msgid "Unit"
+msgstr ""
+
+#. Rotation
+#: plug-ins/common/ps.c:2404
+msgid "Rotation"
+msgstr ""
+
+#. Format
+#: plug-ins/common/ps.c:2431
+msgid "Output"
+msgstr ""
+
+#: plug-ins/common/ps.c:2439
+msgid "Encapsulated PostScript"
+msgstr ""
+
+#: plug-ins/common/ps.c:2465
+msgid "Preview size"
+msgstr ""
+
+#: plug-ins/common/xbm.c:163
+msgid "Load a file in X10 or X11 bitmap (XBM) file format"
+msgstr ""
+
+#: plug-ins/common/xbm.c:164
+msgid ""
+"Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
+"format for flat black-and-white (two color indexed) images."
+msgstr ""
+
+#: plug-ins/common/xbm.c:230
+msgid "Made with Gimp"
+msgstr ""
+
+#: plug-ins/common/xbm.c:518
+#, c-format
+msgid "XBM: cannot open \"%s\"\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:583
+#, c-format
+msgid "XBM: cannot read header (ftell == %ld)\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:589
+msgid "XBM: no image width specified\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:595
+msgid "XBM: no image height specified\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:601
+msgid "XBM: no image data type specified\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:692
+msgid "XBM: can only save two color indexed images\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:697
+msgid "XBM Warning"
+msgstr ""
+
+#: plug-ins/common/xbm.c:727
+msgid ""
+"The image which you are trying to save as\n"
+"an XBM contains more than two colors.\n"
+"\n"
+"Please convert it to a black and white\n"
+"(1-bit) indexed image and try again."
+msgstr ""
+
+#: plug-ins/common/xbm.c:799
+#, c-format
+msgid "XBM: cannot create \"%s\"\n"
+msgstr ""
+
+#: plug-ins/common/xbm.c:949
+msgid "Save as XBM"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/common/xbm.c:980
+msgid "XBM Options"
+msgstr ""
+
+#: plug-ins/common/xbm.c:995
+msgid "Description: "
+msgstr ""
+
+#. X10 format
+#: plug-ins/common/xbm.c:1011
+msgid "X10 format bitmap"
+msgstr ""
+
+#: plug-ins/common/xbm.c:1024
+msgid "Identifier prefix: "
+msgstr ""
+
+#: plug-ins/common/xpm.c:170
+msgid "loads files of the xpm file format"
+msgstr ""
+
+#: plug-ins/common/xpm.c:182
+msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
+msgstr ""
+
+#: plug-ins/common/xpm.c:756
+msgid "Save as Xpm"
+msgstr ""
+
+#: plug-ins/common/xpm.c:790
+msgid "Alpha Threshold"
+msgstr ""
+
+#: plug-ins/common/xwd.c:226 plug-ins/common/xwd.c:227
+msgid "load file of the XWD file format"
+msgstr ""
+
+#: plug-ins/common/xwd.c:238
+msgid "saves files in the XWD file format"
+msgstr ""
+
+#: plug-ins/common/xwd.c:239
+msgid "XWD saving handles all image types except those with alpha channels."
+msgstr ""
+
+#: plug-ins/common/xwd.c:335
+msgid "can't open file for reading"
+msgstr ""
+
+#: plug-ins/common/xwd.c:351
+msgid "can't open file as XWD file"
+msgstr ""
+
+#: plug-ins/common/xwd.c:366
+msgid "can't get memory for colormap"
+msgstr ""
+
+#: plug-ins/common/xwd.c:384
+msgid "can't read color entries"
+msgstr ""
+
+#: plug-ins/common/xwd.c:448
+msgid "this image depth/format is not supported"
+msgstr ""
+
+#: plug-ins/common/xwd.c:452
+#, c-format
+msgid ""
+"load_image (xwd): XWD-file %s has format %d, depth %d\n"
+"and bits per pixel %d.\n"
+"Currently this is not supported.\n"
+msgstr ""
+
+#: plug-ins/common/xwd.c:480
+msgid "XWD save cannot handle images with alpha channels"
+msgstr ""
+
+#: plug-ins/common/xwd.c:491
+msgid "cannot operate on unknown image types"
+msgstr ""
+
+#: plug-ins/common/xwd.c:500
+msgid "can't open file for writing"
+msgstr ""
+
+#: plug-ins/common/xwd.c:1152
+msgid "EOF encountered on "
+msgstr ""
+
+#: plug-ins/common/xwd.c:1250 plug-ins/common/xwd.c:1412
+#: plug-ins/common/xwd.c:1609 plug-ins/common/xwd.c:1858
+msgid "EOF encountered on reading"
+msgstr ""
+
+#: plug-ins/common/xwd.c:1298
+msgid "No memory for mapping colors"
+msgstr ""
+
+#: plug-ins/common/xwd.c:1982
+msgid "Error during writing indexed/grey image"
+msgstr ""
+
+#: plug-ins/common/xwd.c:2071
+msgid "Error during writing rgb image"
+msgstr ""
