@@ -66,6 +66,8 @@ palettes_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   initial_palette = (gchar *) args[2].value.pdb_pointer;
+  if (initial_palette && !g_utf8_validate (initial_palette, -1, NULL))
+    success = FALSE;
 
   if (success)
     {

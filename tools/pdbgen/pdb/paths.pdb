@@ -80,8 +80,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose points should be listed',
-          utf8 => 1 }
+	  desc => 'the name of the path whose points should be listed' }
     );
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
@@ -194,8 +193,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path to set the current path to',
-          utf8 => 1 }
+	  desc => 'The name of the path to set the current path to' }
     );
     $inargs[0]->{desc} = 'The ID of the image to list set the paths in';
 
@@ -230,7 +228,7 @@ HELP
 		   name will be created - query the list of paths if you want
 		   to make sure that the name of the path you create is 
 		   unique. This will be set as the current path.',
-	  init => 1, utf8 => 1 },
+	  init => 1 },
 	{ name => 'ptype', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported' },
@@ -413,8 +411,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose tattoo should be obtained',
-          utf8 => 1 }
+	  desc => 'the name of the path whose tattoo should be obtained' }
     );
 
     @outargs = (
@@ -450,7 +447,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose tattoo should be set', utf8 => 1 },
+	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
 	  desc => 'The tattoo associated with the name path. Only values returned from \'path_get_tattoo\' should be used here', init => 1  }
     );
@@ -519,7 +516,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path to delete', utf8 => 1 }
+	  desc => 'The name of the path to delete' }
     );
     $inargs[0]->{desc} = 'The ID of the image to list delete the paths from';
 
@@ -551,8 +548,8 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose locked status should be obtained',
-          utf8 => 1 }
+	  desc => 'the name of the path whose locked status should be
+		   obtained' }
     );
 
     @outargs = (
@@ -588,10 +585,11 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose locked status should be set',
-          utf8 => 1 },
+	  desc => 'the name of the path whose locked status should be set' },
 	{ name => 'lockstatus', type => 'int32',
-	  desc => 'The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked', init => 1  }
+	  desc => 'The lock status associated with the name path. 0 if the
+		   path is not locked. 1 if the path is to be locked',
+	  init => 1 }
     );
 
     %invoke = (
@@ -624,8 +622,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path which should be made into selection',
-          utf8 => 1 },
+	  desc => 'The name of the path which should be made into selection' },
         { name => 'op', type => 'enum GimpChannelOps',
 	  desc => 'The desired operation with current selection' },
 	{ name => 'antialias', type => 'boolean',

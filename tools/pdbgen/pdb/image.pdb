@@ -1252,14 +1252,17 @@ CODE2
 }
 
 &image_accessors('filename', 'string', 'filename', 1,
-		 [ <<'CODE', undef ]);
+		 [ <<'CODE1', <<'CODE2' ]);
     $help =~ s/\. $//;
     $help .= <<'HELP';
  -- if it was loaded or has since been saved. Otherwise, returns NULL.
 HELP
 
     $outargs[0]->{alias} =~ s/g_strdup \((.*)\)/$1/;
-CODE
+CODE1
+
+    $inargs[1]->{no_validate} = 1;
+CODE2
 
 &image_accessors('name', 'string', 'name', 1,
 		 [ <<'CODE1', undef ]);

@@ -20,8 +20,7 @@
 sub brush_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The brush name',
-    utf8 => 1
+    desc => 'The brush name'
 }}
 
 sub dim_args () {

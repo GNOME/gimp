@@ -34,7 +34,7 @@ HELP
 
     @inargs = (
 	{ name => 'message', type => 'string', const => 1,
-	  desc => 'Message to display in the dialog', utf8 => 1 }
+	  desc => 'Message to display in the dialog' }
     );
 
     %invoke = (

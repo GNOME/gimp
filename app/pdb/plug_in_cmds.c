@@ -73,20 +73,25 @@ static Argument *
 progress_init_invoker (Gimp     *gimp,
                        Argument *args)
 {
-  gboolean success = FALSE;
+  gboolean success = TRUE;
   gchar *message;
   gint32 gdisplay;
 
   message = (gchar *) args[0].value.pdb_pointer;
+  if (message && !g_utf8_validate (message, -1, NULL))
+    success = FALSE;
 
   gdisplay = args[1].value.pdb_int;
 
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  if (success)
     {
-      success = TRUE;
-
-      if (! gimp->no_interface)
-	plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+	{
+	  if (! gimp->no_interface)
+	    plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+	}
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&progress_init_proc, success);
@@ -440,12 +445,12 @@ static ProcArg plugin_domain_register_inargs[] =
   {
     GIMP_PDB_STRING,
     "domain_name",
-    "The name of the textdomain (must be unique)."
+    "The name of the textdomain (must be unique)"
   },
   {
     GIMP_PDB_STRING,
     "domain_path",
-    "The absolute path to the compiled message catalog (may be NULL)."
+    "The absolute path to the compiled message catalog (may be NULL)"
   }
 };
 

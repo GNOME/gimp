@@ -32,13 +32,13 @@ sub fonts_popup {
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The callback PDB proc to call when font selection is made',
-          utf8 => 1 },
+	  desc => 'The callback PDB proc to call when font selection is
+		   made' },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the font popup window', utf8 => 1 },
+	  desc => 'Title to give the font popup window' },
 	{ name => 'initial_font', type => 'string',
 	  desc => 'The name of the font to set as the first selected',
-	  no_success => 1, utf8 => 1 }
+	  null_ok => 1 }
     );
 
     %invoke = (
@@ -68,8 +68,7 @@ sub fonts_close_popup {
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup',
-          utf8 => 1 }
+	  desc => 'The name of the callback registered for this popup' }
     );
 
     %invoke = (
@@ -100,10 +99,9 @@ sub fonts_set_popup {
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup',
-          utf8 => 1 },
+	  desc => 'The name of the callback registered for this popup' },
 	{ name => 'font_name', type => 'string',
-	  desc => 'The name of the font to set as selected', utf8 => 1 }
+	  desc => 'The name of the font to set as selected' }
     );
 
     %invoke = (

@@ -70,6 +70,8 @@ brushes_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   initial_brush = (gchar *) args[2].value.pdb_pointer;
+  if (initial_brush && !g_utf8_validate (initial_brush, -1, NULL))
+    success = FALSE;
 
   opacity = args[3].value.pdb_float;
   if (opacity < 0.0 || opacity > 100.0)

@@ -21,15 +21,13 @@ sub proc_name_arg () {{
     name  => 'procedure',
     type  => 'string',
     desc  => 'The procedure name',
-    alias => 'proc_name',
-    utf8  => 1
+    alias => 'proc_name'
 }}
 
 sub data_ident_arg () {{
     name => 'identifier',
     type => 'string',
-    desc => 'The identifier associated with data',
-    utf8 => 1
+    desc => 'The identifier associated with data'
 }}
 
 sub data_bytes_arg () {{
@@ -110,7 +108,7 @@ HELP
     $copyright = $author . ' & Peter Mattis';
 
     @inargs = (
-	{ name => 'filename', type => 'string',
+	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The dump filename' }
     );
 
@@ -155,7 +153,7 @@ HELP
 
     my $regcomp = ""; my $free = ""; $once = 0;
     foreach (qw(name blurb help author copyright date proc_type)) {
-	push @inargs, { name => $_, type => 'string',
+	push @inargs, { name => $_, type => 'string', no_validate => 1,
 			desc => "The regex for procedure $_" };
 
 	$regcomp .= ' ' x 2 if $once;

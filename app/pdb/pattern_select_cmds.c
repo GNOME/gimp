@@ -66,6 +66,8 @@ patterns_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   initial_pattern = (gchar *) args[2].value.pdb_pointer;
+  if (initial_pattern && !g_utf8_validate (initial_pattern, -1, NULL))
+    success = FALSE;
 
   if (success)
     {

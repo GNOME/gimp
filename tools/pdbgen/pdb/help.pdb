@@ -38,9 +38,9 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'prog_name', type => 'string',
-	  desc => 'The plug-in\'s executable name or an empty string' },
-	{ name => 'help_page', type => 'string',
+	{ name => 'prog_name', type => 'string', no_validate => 1,
+	  desc => "The plug-in's executable name or an empty string" },
+	{ name => 'help_page', type => 'string', no_validate => 1,
 	  desc => 'The location of the help page' }
     );
 

@@ -39,7 +39,7 @@ sub handler_args {
 
     push @inargs, { name => 'procedure_name', type => 'string',
 		    desc => "The name of the procedure to be used for $action",
-		    alias => 'name', utf8 => 1 };
+		    alias => 'name' };
 
     foreach ([ 'extensions', 'jpg,jpeg' ], [ 'prefixes', 'http:,ftp:' ]) {
 	&list_arg($type, $_->[0], @$_);
@@ -66,9 +66,9 @@ HELP
 	{ name => 'run_mode',
 	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
 	  desc => 'The run mode: %%desc%%' },
-	{ name => 'filename', type => 'string',
+	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file to load' },
-	{ name => 'raw_filename', type => 'string',
+	{ name => 'raw_filename', type => 'string', no_validate => 1,
 	  desc => 'The name as entered by the user' }
     );
 
@@ -123,9 +123,9 @@ HELP
 	  desc => 'Input image' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Drawable to save' },
-	{ name => 'filename', type => 'string',
+	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file to save the image in' },
-	{ name => 'raw_filename', type => 'string',
+	{ name => 'raw_filename', type => 'string', no_validate => 1,
 	  desc => 'The name as entered by the user' }
     );
 
@@ -188,7 +188,7 @@ HELP
     $date = '1999-2003';
 
     @inargs = (
-	{ name => 'filename', type => 'string',
+	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file that owns the thumbnail to load' },
     );
 
@@ -300,7 +300,7 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'filename', type => 'string',
+	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file the thumbnail belongs to' },
     );
 
@@ -349,7 +349,7 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'extension', type => 'string',
+	{ name => 'extension', type => 'string', no_validate => 1,
 	  desc => 'The extension the file will have' }
     );
 

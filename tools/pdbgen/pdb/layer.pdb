@@ -166,10 +166,6 @@ sub layer_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    if ($type =~ /string/) {
-	$inargs[1]->{utf8} = 1;
-    }
-
     $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
                           : "gimp_${core_type}_set_$prop ($core_var, $prop);";
 
@@ -241,7 +237,7 @@ HELP
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type: { %%desc%% }' },
 	{ name => 'name', type => 'string',
-	  desc => 'The layer name', no_success => 1, utf8 => 1 },
+	  desc => 'The layer name', null_ok => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity: (%%desc%%)' },
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',

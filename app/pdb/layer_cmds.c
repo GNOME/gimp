@@ -142,6 +142,8 @@ layer_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[4].value.pdb_pointer;
+  if (name && !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
 
   opacity = args[5].value.pdb_float;
   if (opacity < 0.0 || opacity > 100.0)

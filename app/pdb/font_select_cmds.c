@@ -65,6 +65,8 @@ fonts_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   initial_font = (gchar *) args[2].value.pdb_pointer;
+  if (initial_font && !g_utf8_validate (initial_font, -1, NULL))
+    success = FALSE;
 
   if (success)
     {

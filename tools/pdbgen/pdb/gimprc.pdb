@@ -42,7 +42,7 @@ HELP
 
     @inargs = (
 	{ name => 'token', type => 'string',
-	  desc => 'The token to query for', utf8 => 1 }
+	  desc => 'The token to query for' }
     );
 
     @outargs = (
@@ -82,8 +82,8 @@ HELP
 	
     @inargs = (
 	{ name => 'token', type => 'string',
-	  desc => 'The token to modify', utf8 => 1 },
-	{ name => 'value', type => 'string',
+	  desc => 'The token to modify' },
+	{ name => 'value', type => 'string', no_validate => 1,
 	  desc => 'The value to set the token to' }
     );
 

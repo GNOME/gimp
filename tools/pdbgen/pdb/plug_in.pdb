@@ -45,8 +45,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'message', type => 'string', no_success => 1,
-	  desc => 'Message to use in the progress dialog', utf8 => 1 },
+	{ name => 'message', type => 'string', null_ok => 1,
+	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'int32',
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
 		   window',
@@ -54,16 +54,15 @@ HELP
     );
 
     %invoke = (
-	success => 'FALSE',
 	code => <<'CODE'
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      success = TRUE;
-
       if (! gimp->no_interface)
 	plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -134,7 +133,7 @@ sub plugins_query {
     @inargs = (
 	{ name  => 'search_string', type => 'string',
 	  desc  => 'If not an empty string then use this as a search pattern',
-	  alias => 'search_str', no_success => 1, utf8 => 1 }
+	  alias => 'search_str', no_success => 1 }
     );
 
     @outargs = (
@@ -266,9 +265,10 @@ HELP
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
-	  desc => 'The name of the textdomain (must be unique).', utf8 => 1 },
+	  desc => 'The name of the textdomain (must be unique)' },
 	{ name => 'domain_path', type => 'string',
-	  desc => 'The absolute path to the compiled message catalog (may be NULL).',
+	  desc => 'The absolute path to the compiled message catalog (may be
+		   NULL)',
 	  no_success => 1 },
     );
 
@@ -301,7 +301,7 @@ HELP
     &mitch_misc;
 
     @inargs = (
-	{ name => 'help_path', type => 'string',
+	{ name => 'help_path', type => 'string', no_validate => 1,
 	  desc => 'The rootdir of the plug-in\'s help pages' }
     );
 

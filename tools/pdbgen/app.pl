@@ -257,19 +257,22 @@ sub marshal_inargs {
 		my ($reverse, $test, $utf8, $utf8testvar);
 
 		$test = "$var == NULL";
+                $utf8 = 1;
 
 		if ($pdbtype eq 'parasite') {
 		    $test .= " || $var->name == NULL";
-
-                    $utf8 = 1;
 		    $utf8testvar = "$var->name";
 		}
 		else {
-                    $utf8 = exists $_->{utf8} && $_->{utf8};
+		    $utf8 = !exists $_->{no_validate};
 		    $utf8testvar = "$var";
 		}
 
-		if ($utf8) {
+		if (exists $_->{null_ok}) {
+		    $reverse = sub { ${$_[0]} =~ s/!//; };
+		    $test = "$var && !g_utf8_validate ($var, -1, NULL)";
+		}
+		elsif ($utf8) {
 		    $reverse = sub { ${$_[0]} =~ s/!//;
 				     ${$_[0]} =~ s/||/&&/g;
 				     ${$_[0]} =~ s/==/!=/g };

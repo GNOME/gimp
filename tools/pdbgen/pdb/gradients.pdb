@@ -118,7 +118,7 @@ HELP
 
     @inargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the gradient to set', utf8 => 1 }
+	  desc => 'The name of the gradient to set' }
     );
 
     %invoke = (
@@ -284,8 +284,7 @@ HELP
 
     @inargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The gradient name ("" means current active gradient)',
-          utf8 => 1 },
+	  desc => 'The gradient name ("" means current active gradient)' },
 	&sample_size_arg,
 	&reverse_arg
     );

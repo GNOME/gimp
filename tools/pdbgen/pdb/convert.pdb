@@ -99,7 +99,7 @@ HELP
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
 		   (palette_type == GIMP_CUSTOM_PALETTE)',
-	  alias => 'palette_name', utf8 => 1 }
+	  alias => 'palette_name' }
     );
 
     %invoke = (

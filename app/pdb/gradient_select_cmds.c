@@ -68,6 +68,8 @@ gradients_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   initial_gradient = (gchar *) args[2].value.pdb_pointer;
+  if (initial_gradient && !g_utf8_validate (initial_gradient, -1, NULL))
+    success = FALSE;
 
   sample_size = args[3].value.pdb_int;
   if (sample_size <= 0 || sample_size > 10000)

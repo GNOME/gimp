@@ -28,15 +28,13 @@ sub pdb_misc {
 sub text_arg () {{
     name => 'text',
     type => 'string',
-    desc => 'The text to generate',
-    utf8 => 1
+    desc => 'The text to generate'
 }}
 
 sub fontname_arg () {{
     name => 'fontname',
     type => 'string',
-    desc => 'The name of the font',
-    utf8 => 1
+    desc => 'The name of the font'
 }}
 
 sub size_args () {(
@@ -68,7 +66,7 @@ sub font_prop_args {
    my @result;
    foreach (@props) {
 	(my $desc = $_) =~ s/_/-/g;
-	push @result, { name => $_, type => 'string',
+	push @result, { name => $_, type => 'string', no_validate => 1,
 			desc => qq/The font $desc/ }
    }
    @result;
