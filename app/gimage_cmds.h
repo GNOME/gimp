@@ -44,6 +44,7 @@ extern ProcRecord gimage_pick_correlate_layer_proc;
 extern ProcRecord gimage_raise_layer_proc;
 extern ProcRecord gimage_lower_layer_proc;
 extern ProcRecord gimage_merge_visible_layers_proc;
+extern ProcRecord gimage_merge_down_proc;
 extern ProcRecord gimage_flatten_proc;
 extern ProcRecord gimage_add_layer_proc;
 extern ProcRecord gimage_remove_layer_proc;

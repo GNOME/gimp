@@ -1735,6 +1735,105 @@ ProcRecord gimage_merge_visible_layers_proc =
 };
 
 
+
+/*********************************************/
+/*   GIMAGE_MERGE_DOWN                       */
+
+static Argument *
+gimage_merge_down_invoker (Argument *args)
+{
+  GImage *gimage;
+  MergeType merge_type;
+  Layer *layer;
+  Argument *return_args;
+
+  merge_type = ExpandAsNecessary;
+  layer      = NULL;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[2].value.pdb_int;
+      switch (int_value)
+	{
+	case 0: merge_type = ExpandAsNecessary; break;
+	case 1: merge_type = ClipToImage; break;
+	case 2: merge_type = ClipToBottomLayer; break;
+	default: success = FALSE;
+	}
+    }
+
+  if (success)
+    success = ((layer = gimp_image_merge_down (gimage, layer, merge_type)) != NULL);
+  return_args = procedural_db_return_args (&gimage_merge_down_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_merge_down_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  { PDB_LAYER,
+    "layer"
+    "The layer to merge down from"
+  },
+  { PDB_INT32,
+    "merge_type",
+    "The type of merge: { EXPAND-AS-NECESSARY (0), CLIP-TO-IMAGE (1), CLIP-TO-BOTTOM-LAYER (2) }"
+  }
+};
+
+ProcArg gimage_merge_down_out_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    "The resulting layer"
+  }
+};
+
+ProcRecord gimage_merge_down_proc =
+{
+  "gimp_image_merge_down",
+  "Merge the layer passed and the first visible layer below",
+  "This procedure combines the passed layer and the first visible layer below it using the specified merge type.  A merge type of EXPAND-AS-NECESSARY expands the final layer to encompass the areas of the visible layers.  A merge type of CLIP-TO-IMAGE clips the final layer to the extents of the image.  A merge type of CLIP-TO-BOTTOM-LAYER clips the final layer to the size of the bottommost layer.",
+  "Larry Ewing",
+  "Larry Ewing",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  3,
+  gimage_merge_down_args,
+
+  /*  Output arguments  */
+  1,
+  gimage_merge_down_out_args,
+
+  /*  Exec method  */
+  { { gimage_merge_down_invoker } },
+};
+
+
+
 /********************/
 /*  GIMAGE_FLATTEN  */
 
@@ -2599,6 +2698,7 @@ gimage_set_filename_invoker (Argument *args)
 {
   GImage *gimage;
   char *filename;
+  char *new_filename;
 
   success = TRUE;
   if (success)
@@ -2611,7 +2711,10 @@ gimage_set_filename_invoker (Argument *args)
     }
 
   if (success)
-    gimage_set_filename (gimage, (char *) args[1].value.pdb_pointer);
+    {
+      new_filename = (char *) args[1].value.pdb_pointer;
+      gimage_set_filename (gimage, new_filename);
+    }
 
   return procedural_db_return_args (&gimage_set_filename_proc, success);
 }

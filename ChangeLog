@@ -1,3 +1,16 @@
+Mon Aug 31 16:33:11 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+ 	* app/gimpimage.[ch]
+	* app/gimage_cmds.[ch]
+	* app/layers_dialog.c: Added merge down procedure, I'm not really
+	sure if this behaves the way people expect it to, so please send
+	me any comments on what it actually should do.  It also needs a
+	little testing, especially the pdb call.
+
+	* app/gimpimage.c: cleaned up Seth's merge commit a little. Also 
+	changed the mode of a merged layer to normal, as this seems to be
+	the proper thing.  Discussion is welcome here as well.
+	
 Mon Aug 31 19:16:36 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/gimpimage.c: I'm pleased to say that lewing doesn't

@@ -2334,7 +2334,6 @@ gimp_image_merge_visible_layers (GimpImage *gimage, MergeType merge_type)
   if (merge_list && merge_list->next)
     {
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
-      layer->opacity = 255;
       g_slist_free (merge_list);
       return layer;
     }
@@ -2369,6 +2368,54 @@ gimp_image_flatten (GimpImage *gimage)
   return layer;
 }
 
+Layer *
+gimp_image_merge_down (GimpImage *gimage,
+		       Layer *current_layer,
+		       MergeType merge_type)
+{
+  GSList *layer_list;
+  GSList *merge_list= NULL;
+  Layer *layer = NULL;
+
+  
+  layer_list = gimage->layers;
+  while (layer_list)
+    {
+      layer = (Layer *) layer_list->data;
+      if (layer == current_layer)
+	{
+	  printf ("found it\n");
+	  
+	  layer_list = g_slist_next (layer_list);
+	  while (layer_list)
+	    {
+	      layer = (Layer *) layer_list->data;
+	      if (drawable_visible (GIMP_DRAWABLE(layer)))
+		{
+		  merge_list = g_slist_append (merge_list, layer);
+		  printf ("found the next\n");
+		  layer_list = NULL;
+		}
+	      else 
+		layer_list = g_slist_next (layer_list);
+	    }
+	  merge_list = g_slist_prepend (merge_list, current_layer);
+	}
+    }
+  
+  if (merge_list && merge_list->next)
+    {
+      layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
+      g_slist_free (merge_list);
+      return layer;
+    }
+  else 
+    {
+      g_message ("There are not enough visible layers for a merge down.");
+      g_slist_free (merge_list);
+      return NULL;
+    }
+}
 
 Layer *
 gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_type)
@@ -2495,14 +2542,17 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
     }
   else
     {
-      /*  The final merged layer inherits the attributes of the bottomost layer,
-       *  with a notable exception:  The resulting layer has an alpha channel
+      /*  The final merged layer inherits the name of the bottom most layer
+       *  and the resulting layer has an alpha channel
        *  whether or not the original did
+       *  Opacity is set to 100% and the MODE is set to normal
        */
       merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
 			       drawable_name (GIMP_DRAWABLE(layer)),
-			       layer->opacity, layer->mode);
+			       OPAQUE_OPACITY, NORMAL_MODE);
+	
+
       
       if (!merge_layer) {
 	g_message ("gimp_image_merge_layers: could not allocate merge layer");

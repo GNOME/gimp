@@ -162,6 +162,7 @@ static void layers_dialog_add_layer_mask_callback (GtkWidget *, gpointer);
 static void layers_dialog_apply_layer_mask_callback (GtkWidget *, gpointer);
 static void layers_dialog_anchor_layer_callback (GtkWidget *, gpointer);
 static void layers_dialog_merge_layers_callback (GtkWidget *, gpointer);
+static void layers_dialog_merge_down_callback (GtkWidget *, gpointer);
 static void layers_dialog_flatten_image_callback (GtkWidget *, gpointer);
 static void layers_dialog_alpha_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_mask_select_callback (GtkWidget *, gpointer);
@@ -241,6 +242,8 @@ static MenuItem layers_ops[] =
     layers_dialog_anchor_layer_callback, NULL, NULL, NULL },
   { "Merge Visible Layers", 'M', GDK_CONTROL_MASK,
     layers_dialog_merge_layers_callback, NULL, NULL, NULL },
+  { "Merge Down", 'M', GDK_CONTROL_MASK,
+    layers_dialog_merge_down_callback, NULL, NULL, NULL },
   { "Flatten Image", 0, 0,
     layers_dialog_flatten_image_callback, NULL, NULL, NULL },
   { "Alpha To Selection", 0, 0,
@@ -1218,14 +1221,16 @@ layers_dialog_set_menu_sensitivity ()
   ops_button_set_sensitive (layers_ops_buttons[5], !fs && ac && gimage && lp);
   /* merge visible layers */
   gtk_widget_set_sensitive (layers_ops[10].widget, fs && ac && gimage && lp);
-  /* flatten image */
+  /* merge visible layers */
   gtk_widget_set_sensitive (layers_ops[11].widget, fs && ac && gimage && lp);
+  /* flatten image */
+  gtk_widget_set_sensitive (layers_ops[12].widget, fs && ac && gimage && lp);
   /* alpha select */
-  gtk_widget_set_sensitive (layers_ops[12].widget, fs && ac && gimage && lp && alpha);
+  gtk_widget_set_sensitive (layers_ops[13].widget, fs && ac && gimage && lp && alpha);
   /* mask select */
-  gtk_widget_set_sensitive (layers_ops[13].widget, fs && ac && gimage && lm && lp);
+  gtk_widget_set_sensitive (layers_ops[14].widget, fs && ac && gimage && lm && lp);
   /* add alpha */
-  gtk_widget_set_sensitive (layers_ops[14].widget, !alpha);
+  gtk_widget_set_sensitive (layers_ops[15].widget, !alpha);
 
   /* set mode, preserve transparency and opacity to insensitive if there are no layers  */
   gtk_widget_set_sensitive (layersD->preserve_trans, lp);
@@ -1789,6 +1794,20 @@ layers_dialog_merge_layers_callback (GtkWidget *w,
   layers_dialog_layer_merge_query (gimage, TRUE);
 }
 
+static void
+layers_dialog_merge_down_callback (GtkWidget *w, gpointer client_data)
+{
+  GImage *gimage;
+  /* if there is a currently selected gimage
+   */
+  if (!layersD)
+    return;
+  if (! (gimage = layersD->gimage))
+    return;
+  
+  gimp_image_merge_down (gimage, gimage->active_layer, ExpandAsNecessary);
+  gdisplays_flush ();
+}
 
 static void
 layers_dialog_flatten_image_callback (GtkWidget *w,
@@ -3988,3 +4007,4 @@ layers_dialog_layer_merge_query (GImage *gimage,
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
+
