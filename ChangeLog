@@ -1,3 +1,20 @@
+1999-03-14  Jay Cox  <jaycox@earthlink.net>
+
+	* app/xcf.c:
+
+	Improved the rle compression routine.  It compresses
+ 	photographic images ~8% better and is fully backwards compatible.
+	
+  	Modified the tile load/save routines to buffer their data and
+ 	only make one read/write call per tile.  This results in a 3-4X
+ 	improvement in load and save times.
+
+	Modified the path load/save routines to work properly when gint is
+ 	not a 32 bit type.
+
+	* app/pathsP.h: Changed the types of some struct data members
+	to be consistant with what is saved in the xcf files.
+
 1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* libgimp/gimppatheditor.c: checked in a buggy version before ;)

@@ -23,16 +23,16 @@
  */
 
 typedef struct {
-  gint type;
-  gint x;
-  gint y;
+  guint32 type;
+  gint32 x;
+  gint32 y;
 } BZPOINT, *BZPOINTP;
 
 typedef struct {
   GSList       * bezier_details;
-  gboolean     closed;
-  gint         state;
-  gint         locked;  /* Only bottom bit used */
+  gboolean      closed;
+  guint32       state;
+  guint32       locked;  /* Only bottom bit used */
   GString      * name;
 } BZPATH, *BZPATHP;
 
@@ -49,7 +49,7 @@ typedef struct {
 		      */
   GSList    * bz_paths;  /* list of BZPATHP */
   guint       sig_id;
-  gint        last_selected_row;
+  gint32      last_selected_row;
 } PATHIMAGELIST, *PATHIMAGELISTP, PathsList;
 
 BZPOINTP    bzpoint_new(gint,gint,gint);

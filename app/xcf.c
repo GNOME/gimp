@@ -113,7 +113,8 @@ static void xcf_save_level         (XcfInfo     *info,
 static void xcf_save_tile          (XcfInfo     *info,
 				    Tile        *tile);
 static void xcf_save_tile_rle      (XcfInfo     *info,
-				    Tile        *tile);
+				    Tile        *tile,
+				    guchar      *rlebuf);
 
 static GImage*  xcf_load_image         (XcfInfo     *info);
 static gint     xcf_load_image_props   (XcfInfo     *info,
@@ -140,7 +141,8 @@ static gint     xcf_load_level         (XcfInfo     *info,
 static gint     xcf_load_tile          (XcfInfo     *info,
 					Tile        *tile);
 static gint     xcf_load_tile_rle      (XcfInfo     *info,
-					Tile        *tile);
+					Tile        *tile,
+					int         data_length);
 
 #ifdef SWAP_FROM_FILE
 static int      xcf_swap_func          (int          fd,
@@ -706,20 +708,20 @@ static void write_bz_point(gpointer pptr, gpointer iptr)
    */
 
   info->cp += xcf_write_int32(info->fp, &bpt->type,1);
-  info->cp += xcf_write_int32(info->fp, &bpt->x,1);
-  info->cp += xcf_write_int32(info->fp, &bpt->y,1);
+  info->cp += xcf_write_int32(info->fp, (guint32*)&bpt->x,1);
+  info->cp += xcf_write_int32(info->fp, (guint32*)&bpt->y,1);
 }
 
 static BZPOINTP read_bz_point(XcfInfo *info)
 {
   BZPOINTP ptr;
-  gint type;
-  gint x;
-  gint y;
+  guint32 type;
+  gint32 x;
+  gint32 y;
 
   info->cp += xcf_read_int32(info->fp, &type,1);
-  info->cp += xcf_read_int32(info->fp, &x,1);
-  info->cp += xcf_read_int32(info->fp, &y,1);
+  info->cp += xcf_read_int32(info->fp, (guint32*)&x,1);
+  info->cp += xcf_read_int32(info->fp, (guint32*)&y,1);
 
   ptr = bzpoint_new(type,x,y);
 
@@ -730,9 +732,10 @@ static void write_one_path(gpointer pptr, gpointer iptr)
 {
   BZPATHP bzp = (BZPATHP)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
-  gchar state = (gchar)bzp->state;
-  gint num_points;
-  gint num_paths;
+  guint8 state = (gchar)bzp->state;
+  guint32 num_points;
+  guint32 num_paths;
+  guint32 closed;
 
   /*
    * name (string)
@@ -747,7 +750,8 @@ static void write_one_path(gpointer pptr, gpointer iptr)
   info->cp += xcf_write_string(info->fp, &bzp->name->str, 1);
   info->cp += xcf_write_int32(info->fp, &bzp->locked,1);
   info->cp += xcf_write_int8(info->fp, &state,1);
-  info->cp += xcf_write_int32(info->fp, &bzp->closed,1);
+  closed = bzp->closed;
+  info->cp += xcf_write_int32(info->fp, &closed,1);
   num_points = g_slist_length(bzp->bezier_details);
   info->cp += xcf_write_int32(info->fp, &num_points,1);
   num_paths = 1;
@@ -759,11 +763,11 @@ static BZPATHP read_one_path(XcfInfo *info)
 {
   BZPATHP bzp;
   gchar *name;
-  gint locked;
-  gchar state;
-  gint closed;
-  gint num_points;
-  gint num_paths;
+  guint32 locked;
+  guint8  state;
+  guint32 closed;
+  guint32 num_points;
+  guint32 num_paths;
   GSList *pts_list = NULL;
 
   info->cp += xcf_read_string(info->fp, &name, 1);
@@ -788,7 +792,7 @@ static BZPATHP read_one_path(XcfInfo *info)
 
 static void write_bzpaths(PathsList *paths, XcfInfo *info)
 {
-  gint num_paths;
+  guint32 num_paths;
   /* Write out the following:-
    *
    * last_selected_row (gint)
@@ -797,7 +801,7 @@ static void write_bzpaths(PathsList *paths, XcfInfo *info)
    * then each path:-
    */
   
-  info->cp += xcf_write_int32(info->fp,&paths->last_selected_row,1);
+  info->cp += xcf_write_int32(info->fp,(guint32*)&paths->last_selected_row,1);
   num_paths = g_slist_length(paths->bz_paths);
   info->cp += xcf_write_int32(info->fp,&num_paths,1);
   g_slist_foreach(paths->bz_paths,write_one_path,info);  
@@ -805,8 +809,8 @@ static void write_bzpaths(PathsList *paths, XcfInfo *info)
 
 static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
 {
-  gint num_paths;
-  gint last_selected_row;
+  guint32 num_paths;
+  guint32 last_selected_row;
   PathsList *paths;
   GSList *bzp_list = NULL;
 
@@ -1353,11 +1357,16 @@ xcf_save_level (XcfInfo     *info,
   guint32 offset;
   guint ntiles;
   int i;
+  guchar *rlebuf;
 
   info->cp += xcf_write_int32 (info->fp, (guint32*) &level->width, 1);
   info->cp += xcf_write_int32 (info->fp, (guint32*) &level->height, 1);
 
   saved_pos = info->cp;
+
+  /* allocate a temporary buffer to store the rle data before it is
+     written to disk */
+  rlebuf = g_malloc(level->width*level->height*level->bpp * 1.5);
 
   if (level->tiles)
     {
@@ -1378,7 +1387,7 @@ xcf_save_level (XcfInfo     *info,
 	      xcf_save_tile (info, level->tiles[i]);
 	      break;
 	    case COMPRESS_RLE:
-	      xcf_save_tile_rle (info, level->tiles[i]);
+	      xcf_save_tile_rle (info, level->tiles[i], rlebuf);
 	      break;
 	    case COMPRESS_ZLIB:
 	      g_error (_("xcf: zlib compression unimplemented"));
@@ -1406,6 +1415,8 @@ xcf_save_level (XcfInfo     *info,
 	}
     }
 
+  g_free(rlebuf);
+
   /* write out a '0' offset position to indicate the end
    *  of the level offsets.
    */
@@ -1426,10 +1437,10 @@ xcf_save_tile (XcfInfo *info,
 
 static void
 xcf_save_tile_rle (XcfInfo *info,
-		   Tile    *tile)
+		   Tile    *tile,
+		   guchar  *rlebuf)
 {
   guchar *data, *t;
-  guchar buffer[1024];
   unsigned int last;
   int state;
   int length;
@@ -1437,6 +1448,7 @@ xcf_save_tile_rle (XcfInfo *info,
   int size;
   int bpp;
   int i, j, k;
+  int len = 0;
 
   tile_lock (tile);
 
@@ -1467,17 +1479,15 @@ xcf_save_tile_rle (XcfInfo *info,
 		  count += length;
 		  if (length >= 128)
 		    {
-		      buffer[0] = 127;
-                      buffer[1] = (length >> 8);
-                      buffer[2] = length & 0x00FF;
-		      buffer[3] = last;
-		      info->cp += xcf_write_int8 (info->fp, buffer, 4);
+		      rlebuf[len++] = 127;
+                      rlebuf[len++] = (length >> 8);
+                      rlebuf[len++] = length & 0x00FF;
+		      rlebuf[len++] = last;
 		    }
 		  else
 		    {
-		      buffer[0] = length - 1;
-		      buffer[1] = last;
-		      info->cp += xcf_write_int8 (info->fp, buffer, 2);
+		      rlebuf[len++] = length - 1;
+		      rlebuf[len++] = last;
 		    }
 		  size -= length;
 		  length = 0;
@@ -1491,39 +1501,30 @@ xcf_save_tile_rle (XcfInfo *info,
 	       */
 	      if ((length == 32768) ||
 		  ((size - length) == 0) ||
-		  ((length > 0) && (last == *data)))
+		  ((length > 0) && (last == *data) && 
+		   ((size - length) == 1 || last == data[bpp])))
 		{
 		  count += length;
 		  state = 0;
 
 		  if (length >= 128)
 		    {
-		      buffer[0] = 255 - 127;
-                      buffer[1] = (length >> 8);
-                      buffer[2] = length & 0x00FF;
-		      k = 3;
+		      rlebuf[len++] = 255 - 127;
+                      rlebuf[len++] = (length >> 8);
+                      rlebuf[len++] = length & 0x00FF;
 		    }
 		  else
 		    {
-		      buffer[0] = 255 - (length - 1);
-		      k = 1;
+		      rlebuf[len++] = 255 - (length - 1);
 		    }
 
 		  t = data - length * bpp;
 		  for (j = 0; j < length; j++)
 		    {
-		      buffer[k++] = *t;
+		      rlebuf[len++] = *t;
 		      t += bpp;
-
-		      if (k >= 1024)
-			{
-			  info->cp += xcf_write_int8 (info->fp, buffer, 1024);
-			  k = 0;
-			}
 		    }
 
-		  if (k > 0)
-		    info->cp += xcf_write_int8 (info->fp, buffer, k);
 		  size -= length;
 		  length = 0;
 		}
@@ -1540,7 +1541,7 @@ xcf_save_tile_rle (XcfInfo *info,
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
 	g_print (_("xcf: uh oh! xcf rle tile saving error: %d\n"), count);
     }
-
+  info->cp += xcf_write_int8(info->fp, rlebuf, len);
   tile_release (tile, FALSE);
 }
 
@@ -1781,7 +1782,7 @@ xcf_load_image_props (XcfInfo *info,
 
 	   info->cp += xcf_read_int32 (info->fp, &unit, 1);
 	   
-	   if ( (unit < 0) || (unit >= gimp_unit_get_number_of_units()) )
+	   if ((unit >= gimp_unit_get_number_of_units()) )
 	     {
 	       g_message(_("Warning, unit out of range in XCF file, falling back to pixels"));
 	       unit = UNIT_PIXEL;
@@ -2272,7 +2273,7 @@ xcf_load_level (XcfInfo     *info,
 		TileManager *tiles)
 {
   guint32 saved_pos;
-  guint32 offset;
+  guint32 offset, offset2;
   guint ntiles;
   int width;
   int height;
@@ -2316,6 +2317,16 @@ xcf_load_level (XcfInfo     *info,
        */
       saved_pos = info->cp;
 
+      /* read in the offset of the next tile so we can calculate the amount
+	 of data needed for this tile*/
+      info->cp += xcf_read_int32 (info->fp, &offset2, 1);
+      
+      /* if the offset is 0 then we need to read in the maximum possible
+	 allowing for negative compression */
+      if (offset2 == 0)
+	offset2 = offset + width*height*4*1.5; /* 1.5 is probably more
+						  than we need to allow */
+
       /* seek to the tile offset */
       xcf_seek_pos (info, offset);
 
@@ -2330,7 +2341,7 @@ xcf_load_level (XcfInfo     *info,
 	    fail = TRUE;
 	  break;
 	case COMPRESS_RLE:
-	  if (!xcf_load_tile_rle (info, tile))
+	  if (!xcf_load_tile_rle (info, tile, offset2 - offset))
 	    fail = TRUE;
 	  break;
 	case COMPRESS_ZLIB:
@@ -2415,10 +2426,10 @@ xcf_load_tile (XcfInfo *info,
 
 static gint
 xcf_load_tile_rle (XcfInfo *info,
-		   Tile    *tile)
+		   Tile    *tile,
+		   int     data_length)
 {
   guchar *data;
-  guchar buffer[1024];
   guchar val;
   int size;
   int count;
@@ -2426,9 +2437,16 @@ xcf_load_tile_rle (XcfInfo *info,
   int tmp;
   int bpp;
   int i, j;
-
+  guchar *xcfdata, *xcfodata;
+  
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
+ 
+  xcfdata = xcfodata = g_malloc(data_length);
+
+  /* we have to use fread instead of xcf_read_* because we may be
+     reading past the end of the file here */
+  info->cp += fread ((char*) xcfdata, sizeof (char), data_length, info->fp);  
 
   for (i = 0; i < bpp; i++)
     {
@@ -2438,7 +2456,7 @@ xcf_load_tile_rle (XcfInfo *info,
 
       while (size > 0)
 	{
-	  info->cp += xcf_read_int8 (info->fp, &val, 1);
+	  val = *xcfdata++;
 
 	  length = val;
 	  if (length >= 128)
@@ -2446,24 +2464,17 @@ xcf_load_tile_rle (XcfInfo *info,
 	      length = 255 - (length - 1);
 	      if (length == 128)
 		{
-		  info->cp += xcf_read_int8 (info->fp, buffer, 2);
-		  length = (buffer[0] << 8) + buffer[1];
+		  length = (*xcfdata << 8) + xcfdata[1];
+		  xcfdata += 2;
 		}
 
 	      count += length;
 	      size -= length;
 
-	      while (length > 0)
+	      while (length-- > 0)
 		{
-		  tmp = MIN (length, 1024);
-		  info->cp += xcf_read_int8 (info->fp, buffer, tmp);
-		  length -= tmp;
-
-		  for (j = 0; j < tmp; j++)
-		    {
-		      *data = buffer[j];
-		      data += bpp;
-		    }
+		  *data = *xcfdata++;
+		  data += bpp;
 		}
 	    }
 	  else
@@ -2471,8 +2482,8 @@ xcf_load_tile_rle (XcfInfo *info,
 	      length += 1;
 	      if (length == 128)
 		{
-		  info->cp += xcf_read_int8 (info->fp, buffer, 2);
-		  length = (buffer[0] << 8) + buffer[1];
+		  length = (*xcfdata << 8) + xcfdata[1];
+		  xcfdata += 2;
 		}
 
 	      count += length;
@@ -2481,7 +2492,7 @@ xcf_load_tile_rle (XcfInfo *info,
               if (size < 0)
                 g_message (_("xcf: uh oh! xcf rle tile loading error: %d"), count);
 
-	      info->cp += xcf_read_int8 (info->fp, &val, 1);
+	      val = *xcfdata++;
 
 	      for (j = 0; j < length; j++)
 		{
@@ -2491,7 +2502,7 @@ xcf_load_tile_rle (XcfInfo *info,
 	    }
 	}
     }
-
+  g_free(xcfodata);
   return TRUE;
 }
 
