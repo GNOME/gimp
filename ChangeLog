@@ -1,3 +1,8 @@
+Sun May 17 14:02:44 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/app_procs.c: reverted the splash screen idle loop changes
+	since they expose some weird GtkLabel redraw bugs
+
 Sun May 17 00:15:40 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.31 release

@@ -307,6 +307,7 @@ static GtkWidget *win_initstatus = NULL;
 static GtkWidget *label1 = NULL;
 static GtkWidget *label2 = NULL;
 static GtkWidget *pbar = NULL;
+static gint idle_tag = -1;
 
 static void
 destroy_initialization_status_window(void)
@@ -315,6 +316,9 @@ destroy_initialization_status_window(void)
     {
       gtk_widget_destroy(win_initstatus);
       gdk_pixmap_unref(logo_pixmap);
+      win_initstatus = label1 = label2 = pbar = logo_area = NULL;
+      logo_pixmap = NULL;
+      gtk_idle_remove(idle_tag);
     }
 }
 
@@ -327,7 +331,7 @@ make_initialization_status_window(void)
 	{
 	  GtkWidget *vbox;
 
-	  win_initstatus = gtk_window_new(GTK_WINDOW_POPUP);
+	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
 	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
 			      GTK_SIGNAL_FUNC (gtk_true),
 			      NULL);
@@ -416,8 +420,9 @@ app_init_update_status(char *label1val,
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
 	}
       gtk_widget_draw(win_initstatus, &area);
-      while (gtk_events_pending())
-	gtk_main_iteration();
+      idle_tag = gtk_idle_add(gtk_true, NULL);
+      gtk_main_iteration();
+      gtk_idle_remove(idle_tag);
     }
 }
 
