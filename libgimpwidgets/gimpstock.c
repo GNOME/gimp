@@ -199,6 +199,9 @@ gimp_stock_button_pixbufs[] =
 
   { GIMP_STOCK_PATH_STROKE,              stock_path_stroke_16              },
 
+  { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
+  { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
+
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_22       },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_22               },

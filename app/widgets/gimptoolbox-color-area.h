@@ -37,11 +37,7 @@ extern GimpDisplay *color_area_gdisp; /* hack for color displays */
  */
 GtkWidget * gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                                             gint         width,
-                                            gint         height,
-                                            GdkPixmap   *default_pixmap,
-                                            GdkBitmap   *default_mask,
-                                            GdkPixmap   *swap_pixmap,
-                                            GdkBitmap   *swap_mask);
+                                            gint         height);
 
 
 #endif  /*  __GIMP_TOOLBOX_COLOR_AREA_H__  */

@@ -18,16 +18,12 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h> /* memcpy */
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
 
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -57,7 +53,7 @@ typedef enum
   FORE_AREA,
   BACK_AREA,
   SWAP_AREA,
-  DEF_AREA,
+  DEFAULT_AREA,
   INVALID_AREA
 } ColorAreaTarget;
 
@@ -66,7 +62,7 @@ typedef enum
 
 static ColorAreaTarget   color_area_target (gint                x,
                                             gint                y);
-static void   color_area_draw_rect         (GdkDrawable        *drawable,
+static void     color_area_draw_rect       (GdkDrawable        *drawable,
                                             GdkGC              *gc,
                                             gint                x,
                                             gint                y,
@@ -75,25 +71,20 @@ static void   color_area_draw_rect         (GdkDrawable        *drawable,
                                             guchar              r,
                                             guchar              g,
                                             guchar              b);
-static void   color_area_draw              (GimpContext        *context);
-static void   color_area_select_callback   (ColorNotebook      *color_notebook,
+static void     color_area_draw            (GimpContext        *context);
+static void     color_area_select_callback (ColorNotebook      *color_notebook,
                                             const GimpRGB      *color,
                                             ColorNotebookState  state,
                                             gpointer            data);
-static void   color_area_edit              (GimpContext        *context);
-static gint   color_area_events            (GtkWidget          *widget,
-                                            GdkEvent           *event,
-                                            gpointer            data);
-static void   color_area_realize           (GtkWidget          *widget,
-                                            gpointer            data);
-static void   color_area_drop_color        (GtkWidget          *widget,
+static void     color_area_edit            (GimpContext        *context);
+static void     color_area_drop_color      (GtkWidget          *widget,
                                             const GimpRGB      *color,
                                             gpointer            data);
-static void   color_area_drag_color        (GtkWidget          *widget,
+static void     color_area_drag_color      (GtkWidget          *widget,
                                             GimpRGB            *color,
                                             gpointer            data);
-static void   color_area_color_changed     (GimpContext        *context,
-                                            GimpRGB            *color,
+static gboolean color_area_events          (GtkWidget          *widget,
+                                            GdkEvent           *event,
                                             gpointer            data);
 
 
@@ -102,18 +93,7 @@ gint         active_color     = FOREGROUND;
 GimpDisplay *color_area_gdisp = NULL;
 
 /*  Static variables  */
-static GdkGC         *color_area_gc     = NULL;
-static GdkGC         *mask_gc           = NULL;
-
-static GtkWidget     *color_area        = NULL;
-
-static GdkPixmap     *color_area_pixmap = NULL;
-static GdkBitmap     *color_area_mask   = NULL;
-static GdkPixmap     *default_pixmap    = NULL;
-static GdkBitmap     *default_mask      = NULL;
-static GdkPixmap     *swap_pixmap       = NULL;
-static GdkBitmap     *swap_mask         = NULL;
-
+static GtkWidget     *color_area            = NULL;
 static ColorNotebook *color_notebook        = NULL;
 static gboolean       color_notebook_active = FALSE;
 static gint           edit_color;
@@ -132,11 +112,7 @@ static GtkTargetEntry color_area_target_table[] =
 GtkWidget *
 gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                                 gint         width,
-                                gint         height,
-                                GdkPixmap   *default_pmap,
-                                GdkBitmap   *default_msk,
-                                GdkPixmap   *swap_pmap,
-                                GdkBitmap   *swap_msk)
+                                gint         height)
 {
   GimpContext *context;
 
@@ -150,24 +126,12 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 			 GDK_EXPOSURE_MASK |
 			 GDK_BUTTON_PRESS_MASK |
 			 GDK_BUTTON_RELEASE_MASK |
-			 GDK_ENTER_NOTIFY_MASK |
+                         GDK_ENTER_NOTIFY_MASK |
 			 GDK_LEAVE_NOTIFY_MASK);
 
-#ifndef GDK_WINDOWING_DIRECTFB
   g_signal_connect (G_OBJECT (color_area), "event",
 		    G_CALLBACK (color_area_events),
 		    context);
-#endif
-
-  g_signal_connect (G_OBJECT (color_area), "realize",
-		    G_CALLBACK (color_area_realize),
-		    context);
-
-  default_pixmap = default_pmap;
-  default_mask   = default_msk;
-
-  swap_pixmap    = swap_pmap;
-  swap_mask      = swap_msk;
 
   /*  dnd stuff  */
   gtk_drag_source_set (color_area,
@@ -186,12 +150,12 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (color_area, color_area_drop_color, context);
 
-  g_signal_connect (G_OBJECT (context), "foreground_changed",
-		    G_CALLBACK (color_area_color_changed),
-		    color_area);
-  g_signal_connect (G_OBJECT (context), "background_changed",
-		    G_CALLBACK (color_area_color_changed),
-		    color_area);
+  g_signal_connect_swapped (G_OBJECT (context), "foreground_changed",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            color_area);
+  g_signal_connect_swapped (G_OBJECT (context), "background_changed",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            color_area);
 
 #ifdef DISPLAY_FILTERS
   /* display filter dummy gdisplay */
@@ -215,23 +179,23 @@ color_area_target (gint x,
   gint rect_w, rect_h;
   gint width, height;
 
-  gdk_drawable_get_size (color_area_pixmap, &width, &height);
+  width  = color_area->allocation.width;
+  height = color_area->allocation.height;
 
-  rect_w = width * 0.65;
-  rect_h = height * 0.65;
+  rect_w = (width  * 2) / 3;
+  rect_h = (height * 2) / 3;
 
   /*  foreground active  */
-  if (x > 0 && x < rect_w &&
-      y > 0 && y < rect_h)
+  if (x > 0 && x < rect_w && y > 0 && y < rect_h)
     return FORE_AREA;
-  else if (x > (width - rect_w) && x < width &&
+  else if (x > (width - rect_w)  && x < width  &&
 	   y > (height - rect_h) && y < height)
     return BACK_AREA;
-  else if (x > 0 && x < (width - rect_w) &&
+  else if (x > 0      && x < (width - rect_w) &&
 	   y > rect_h && y < height)
-    return DEF_AREA;
+    return DEFAULT_AREA;
   else if (x > rect_w && x < width &&
-	   y > 0 && y < (height - rect_h))
+	   y > 0      && y < (height - rect_h))
     return SWAP_AREA;
   else
     return -1;
@@ -239,7 +203,7 @@ color_area_target (gint x,
 
 static void
 color_area_draw_rect (GdkDrawable *drawable,
-		      GdkGC       *gc,
+                      GdkGC       *gc,
 		      gint         x,
 		      gint         y,
 		      gint         width,
@@ -259,14 +223,12 @@ color_area_draw_rect (GdkDrawable *drawable,
 
   rowstride = 3 * ((width + 3) & -4);
 
-  if (color_area_rgb_buf == NULL ||
-      color_area_rgb_buf_size < height * rowstride)
+  if (!color_area_rgb_buf || color_area_rgb_buf_size < height * rowstride)
     {
-      if (color_area_rgb_buf)
-	g_free (color_area_rgb_buf);
+      color_area_rgb_buf_size = rowstride * height;
 
-      color_area_rgb_buf = 
-        g_malloc (color_area_rgb_buf_size = rowstride * height);
+      g_free (color_area_rgb_buf);
+      color_area_rgb_buf = g_malloc (color_area_rgb_buf_size);
     }
 
   bp = color_area_rgb_buf;
@@ -303,51 +265,37 @@ color_area_draw_rect (GdkDrawable *drawable,
 static void
 color_area_draw (GimpContext *context)
 {
-  gint      rect_w, rect_h;
-  gint      width, height;
-  gint      def_width, def_height;
-  gint      swap_width, swap_height;
-  GimpRGB   color;
-  guchar    r, g, b;
-  GdkColor  mask_pattern;
+  gint       rect_w, rect_h;
+  gint       width, height;
+  gint       w, h;
+  GimpRGB    color;
+  guchar     r, g, b;
+  GdkPixbuf *pixbuf;
 
-  /* Check we haven't gotten initial expose yet,
-   * no point in drawing anything
-   */
-  if (!color_area_pixmap || !color_area_gc)
+  if (!GTK_WIDGET_DRAWABLE (color_area))
     return;
 
-  gdk_drawable_get_size (color_area_pixmap, &width, &height);
+  width  = color_area->allocation.width;
+  height = color_area->allocation.height;
 
-  rect_w = width * 0.65;
-  rect_h = height * 0.65;
-
-  /*  initialize the mask to transparent  */
-  mask_pattern.pixel = 0;
-  gdk_gc_set_foreground (mask_gc, &mask_pattern);
-  gdk_draw_rectangle (color_area_mask, mask_gc, TRUE, 0, 0, -1, -1);
-
-  /*  set the mask's gc to opaque  */
-  mask_pattern.pixel = 1;
-  gdk_gc_set_foreground (mask_gc, &mask_pattern);
+  rect_w = (width  * 2) / 3;
+  rect_h = (height * 2) / 3;
 
   /*  draw the background area  */
   gimp_context_get_background (context, &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
-  color_area_draw_rect (color_area_pixmap, color_area_gc,
+  color_area_draw_rect (color_area->window, color_area->style->fg_gc[0],
 			(width - rect_w), (height - rect_h), rect_w, rect_h,
 			r, g, b);
-  gdk_draw_rectangle (color_area_mask, mask_gc, TRUE,
-		      (width - rect_w), (height - rect_h), rect_w, rect_h);
 
   if (active_color == FOREGROUND)
-    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+    gtk_paint_shadow (color_area->style, color_area->window, GTK_STATE_NORMAL,
                       GTK_SHADOW_OUT,
                       NULL, color_area, NULL,
                       (width - rect_w), (height - rect_h),
                       rect_w, rect_h);
   else
-    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+    gtk_paint_shadow (color_area->style, color_area->window, GTK_STATE_NORMAL,
                       GTK_SHADOW_IN,
                       NULL, color_area, NULL,
                       (width - rect_w), (height - rect_h),
@@ -356,47 +304,44 @@ color_area_draw (GimpContext *context)
   /*  draw the foreground area  */
   gimp_context_get_foreground (context, &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
-  color_area_draw_rect (color_area_pixmap, color_area_gc,
-			0, 0, rect_w, rect_h,
+  color_area_draw_rect (color_area->window, color_area->style->fg_gc[0],
+                        0, 0, rect_w, rect_h,
 			r, g, b);
-  gdk_draw_rectangle (color_area_mask, mask_gc, TRUE,
-		      0, 0, rect_w, rect_h);
 
   if (active_color == FOREGROUND)
-    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+    gtk_paint_shadow (color_area->style, color_area->window, GTK_STATE_NORMAL,
                       GTK_SHADOW_IN,
                       NULL, color_area, NULL,
                       0, 0,
                       rect_w, rect_h);
   else
-    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+    gtk_paint_shadow (color_area->style, color_area->window, GTK_STATE_NORMAL,
                       GTK_SHADOW_OUT,
                       NULL, color_area, NULL,
                       0, 0,
                       rect_w, rect_h);
 
-  /*  draw the default pixmap  */
-  gdk_drawable_get_size (default_pixmap, &def_width, &def_height);
-  gdk_draw_drawable (color_area_pixmap, color_area_gc, default_pixmap,
-		     0, 0, 0, height - def_height, def_width, def_height);
-  gdk_draw_drawable (color_area_mask, mask_gc, default_mask,
-		     0, 0, 0, height - def_height, def_width, def_height);
+  /*  draw the default colors pixbuf  */
+  pixbuf = gtk_widget_render_icon (color_area, GIMP_STOCK_DEFAULT_COLORS,
+                                   GTK_ICON_SIZE_BUTTON, NULL);
+  w = gdk_pixbuf_get_width  (pixbuf);
+  h = gdk_pixbuf_get_height (pixbuf);
+  gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,
+                                       0, 0, 0, height - h, w, h,
+                                       GDK_PIXBUF_ALPHA_FULL, 127,
+                                       GDK_RGB_DITHER_MAX, 0, 0);
+  g_object_unref (pixbuf);
 
-  /*  draw the swap pixmap  */
-  gdk_drawable_get_size (swap_pixmap, &swap_width, &swap_height);
-  gdk_draw_drawable (color_area_pixmap, color_area_gc, swap_pixmap,
-		     0, 0, width - swap_width, 0, swap_width, swap_height);
-  gdk_draw_drawable (color_area_mask, mask_gc, swap_mask,
-		     0, 0, width - swap_width, 0, swap_width, swap_height);
-
-  /*  draw the widget  */
-  gdk_gc_set_clip_mask (color_area_gc, color_area_mask);
-  gdk_gc_set_clip_origin (color_area_gc, 0, 0);
-  gdk_draw_drawable (color_area->window, color_area_gc, color_area_pixmap,
-		     0, 0, 0, 0, width, height);
-
-  /*  reset the clip mask  */
-  gdk_gc_set_clip_mask (color_area_gc, NULL);
+  /*  draw the swap colors pixbuf  */
+  pixbuf = gtk_widget_render_icon (color_area, GIMP_STOCK_SWAP_COLORS,
+                                   GTK_ICON_SIZE_BUTTON, NULL);
+  w = gdk_pixbuf_get_width  (pixbuf);
+  h = gdk_pixbuf_get_height (pixbuf);
+  gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,
+                                       0, 0, width - w, 0, w, h,
+                                       GDK_PIXBUF_ALPHA_FULL, 127,
+                                       GDK_RGB_DITHER_MAX, 0, 0);
+  g_object_unref (pixbuf);
 }
 
 static void
@@ -489,32 +434,8 @@ color_area_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_CONFIGURE:
-      if (color_area_pixmap)
-	{
-	  g_object_unref (color_area_pixmap);
-	  g_object_unref (color_area_mask);
-	}
-
-      color_area_pixmap = gdk_pixmap_new (widget->window,
-					  widget->allocation.width,
-					  widget->allocation.height, -1);
-      color_area_mask = gdk_pixmap_new (widget->window,
-					widget->allocation.width,
-					widget->allocation.height, 1);
-      break;
-
     case GDK_EXPOSE:
-      if (GTK_WIDGET_DRAWABLE (widget))
-	{
-	  if (!color_area_gc)
-	    {
-	      color_area_gc = gdk_gc_new (widget->window);
-	      mask_gc = gdk_gc_new (color_area_mask);
-	    }
-
-	  color_area_draw (context);
-	}
+      color_area_draw (context);
       break;
 
     case GDK_BUTTON_PRESS:
@@ -542,7 +463,7 @@ color_area_events (GtkWidget *widget,
 	    case SWAP_AREA:
 	      gimp_context_swap_colors (context);
 	      break;
-	    case DEF_AREA:
+	    case DEFAULT_AREA:
 	      gimp_context_set_default_colors (context);
 	      break;
 	    default:
@@ -586,14 +507,6 @@ color_area_events (GtkWidget *widget,
 }
 
 static void
-color_area_realize (GtkWidget *widget,
-		    gpointer   data)
-{
-  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
-  gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
-}
-
-static void
 color_area_drag_color (GtkWidget *widget,
 		       GimpRGB   *color,
 		       gpointer   data)
@@ -629,12 +542,4 @@ color_area_drop_color (GtkWidget     *widget,
       else
 	gimp_context_set_background (context, color);
     }
-}
-
-static void
-color_area_color_changed (GimpContext *context,
-			  GimpRGB     *color,
-			  gpointer     data)
-{
-  color_area_draw (context);
 }

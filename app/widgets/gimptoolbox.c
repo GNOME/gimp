@@ -50,9 +50,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/default.xpm"
-#include "pixmaps/swap.xpm"
-
 
 #define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON
 
@@ -671,22 +668,6 @@ toolbox_create_color_area (GimpToolbox *toolbox,
   GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *col_area;
-  GdkPixmap *default_pixmap;
-  GdkBitmap *default_mask;
-  GdkPixmap *swap_pixmap;
-  GdkBitmap *swap_mask;
-
-  if (! GTK_WIDGET_REALIZED (toolbox->wbox))
-    gtk_widget_realize (toolbox->wbox);
-
-  default_pixmap = gdk_pixmap_create_from_xpm_d (toolbox->wbox->window,
-                                                 &default_mask,
-                                                 &toolbox->wbox->style->bg[GTK_STATE_NORMAL],
-                                                 default_xpm);
-  swap_pixmap = gdk_pixmap_create_from_xpm_d (toolbox->wbox->window,
-					      &swap_mask,
-					      &toolbox->wbox->style->bg[GTK_STATE_NORMAL],
-					      swap_xpm);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -699,16 +680,13 @@ toolbox_create_color_area (GimpToolbox *toolbox,
 
   gimp_help_set_help_data (alignment, NULL, "#color_area");
 
-  col_area = gimp_toolbox_color_area_create (toolbox,
-                                             54, 42,
-                                             default_pixmap, default_mask,
-                                             swap_pixmap, swap_mask);
+  col_area = gimp_toolbox_color_area_create (toolbox, 54, 42);
+
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
   gimp_help_set_help_data
-    (col_area,
-     _("Foreground & background colors.  The black "
-       "and white squares reset colors.  The arrows swap colors. Double "
-       "click to select a color from a colorrequester."), NULL);
+    (col_area, _("Foreground & background colors.  The black and white squares "
+                 "reset colors.  The arrows swap colors. Double click to open "
+                 "the color selection dialog."), NULL);
 
   gtk_widget_show (col_area);
   gtk_widget_show (alignment);

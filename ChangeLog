@@ -1,5 +1,23 @@
 2002-06-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptoolbox-color-area.[ch]: use stock pixbufs to
+	draw the "Default Colors" and "Swap Colors" buttons.
+
+	* app/widgets/gimptoolbox.c: changed accordingly.
+
+	* pixmaps/Makefile.am
+	* pixmaps/default.xpm
+	* pixmaps/swap.xpm: removed these pixmaps.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-default-colors-12.png
+	* themes/Default/images/stock-swap-colors-12.png: added them as stock
+	icons.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new stock icons.
+
+2002-06-08  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_get_brush_mask): applied
 	patch from Henning Makholm <henning@makholm.net> that fixes wrong
 	brush opacity (bug #84538).

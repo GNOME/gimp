@@ -53,6 +53,9 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_PATH_STROKE          "gimp-path-stroke"
 
+#define GIMP_STOCK_DEFAULT_COLORS       "gimp-default-colors"
+#define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
+
 
 /*  only in menu size:  */
 

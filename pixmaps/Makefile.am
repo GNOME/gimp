@@ -2,7 +2,6 @@
 
 EXTRA_DIST = \
 	delete.xpm	\
-	duplicate.xpm	\
 	new.xpm		\
 	penstroke.xpm	\
 	topath.xpm	\
@@ -21,7 +20,6 @@ EXTRA_DIST = \
 	play.xpm	\
 	prev.xpm	\
 	question.xpm	\
-	swap.xpm	\
 	update.xpm      \
 	wilber2.xpm	\
 	yes.xpm
