@@ -1,3 +1,21 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: require fontconfig >= 2.2.0 (bug #121752), check
+	for gdk-pixbuf-2.0 explicitly, added --enable-gimp-console
+	configure option, bumped version number to 1.3.21.
+
+	* app/core/Makefile.am: replaced GTK_CFLAGS by GDK_PIXBUF_CFLAGS.
+
+	* app/Makefile.am: removed -export-dynamic from LDFLAGS since we
+	don't export symbols to modules or libraries any more. Reordered
+	SUBDIRS a bit.
+
+	If --enable-gimp-console is given, try to build a second binary
+	called gimp-console-1.3 which does not link against GTK+.
+	Of course this fails badly since core/ui separation is not
+	complete yet, but the output of the failing linker is a nice list
+	of what needs to be done.
+
 2003-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c (menus_last_opened_add): removed redundant

@@ -1,15 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-if OS_WIN32
-mwindows = -mwindows
-endif
-
 SUBDIRS = \
 	paint-funcs	\
 	composite	\
 	base 		\
-	core		\
 	config		\
+	core		\
 	paint		\
 	text		\
 	vectors		\
@@ -18,13 +14,17 @@ SUBDIRS = \
 	plug-in		\
 	tools		\
 	widgets		\
-	gui		\
 	display		\
+	gui		\
 	pdb
 
 scriptdata =
 
+if ENABLE_GIMP_CONSOLE
+bin_PROGRAMS = gimp-1.3 gimp-console-1.3
+else
 bin_PROGRAMS = gimp-1.3
+endif
 
 gimp_1_3_SOURCES = \
 	app_procs.c	\
@@ -49,7 +49,9 @@ else
 REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
-gimp_1_3_LDFLAGS = -export-dynamic $(mwindows)
+if OS_WIN32
+gimp_1_3_LDFLAGS = -mwindows
+endif
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
@@ -94,14 +96,53 @@ gimp_1_3_LDADD = \
 	$(INTLLIBS)							\
 	$(REGEXREPL)
 
+if ENABLE_GIMP_CONSOLE
+gimp_console_1_3_SOURCES = $(gimp_1_3_SOURCES)
+
+gimp_console_1_3_LDADD = \
+	config/libappconfig.a						\
+	core/libappcore.a						\
+	pdb/libapppdb.a							\
+	paint/libapppaint.a						\
+	xcf/libappxcf.a							\
+	text/libapptext.a						\
+	vectors/libappvectors.a						\
+	file/libappfile.a						\
+	plug-in/libappplug-in.a						\
+	paint-funcs/libapppaint-funcs.a					\
+	base/libappbase.a						\
+	composite/libappcomposite.a					\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
+	$(GDK_PIXBUF_LIBS)						\
+	$(LIBART_LIBS)							\
+	$(PANGOFT2_LIBS)						\
+	$(FONTCONFIG_LIBS)						\
+	$(FREETYPE_LIBS)						\
+	$(GIMP_THREAD_LIBS)						\
+	$(GIMP_MP_LIBS)							\
+	$(INTLLIBS)							\
+	$(REGEXREPL)
+endif
+
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp$(EXEEXT) \
 	&& $(LN_S) gimp-$(LT_RELEASE)$(EXEEXT) gimp$(EXEEXT)
+if ENABLE_GIMP_CONSOLE
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimp-console$(EXEEXT) \
+	&& $(LN_S) gimp-console-$(LT_RELEASE)$(EXEEXT) gimp-console$(EXEEXT)
+endif
 endif
 
 uninstall-local:
 if DEFAULT_BINARY
 	rm -f $(DESTDIR)$(bindir)/gimp$(EXEEXT)
+if ENABLE_GIMP_CONSOLE
+	rm -f $(DESTDIR)$(bindir)/gimp-console-$(EXEEXT)
+endif
 endif
