@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-24 16:12+0200\n"
-"PO-Revision-Date: 2003-05-24 16:14+0200\n"
+"POT-Creation-Date: 2003-05-27 11:08+0200\n"
+"PO-Revision-Date: 2003-05-27 11:11+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -339,8 +339,8 @@ msgstr "Fel vid skrivande till \"%s\": %s"
 msgid "Failed to create file '%s': %s"
 msgstr "Misslyckades med att skapa filen \"%s\": %s"
 
-#: app/config/gimprc.c:341 app/config/gimprc.c:353 app/gui/gui.c:208
-#: app/gui/gui.c:219
+#: app/config/gimprc.c:341 app/config/gimprc.c:353 app/gui/gui.c:209
+#: app/gui/gui.c:220
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Tolkar \"%s\"\n"
@@ -701,7 +701,7 @@ msgstr ""
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "När aktiverad öppnar F1 hjälpläsasaren."
 
-#: app/config/gimpscanner.c:76 app/tools/gimpcurvestool.c:1412
+#: app/config/gimpscanner.c:76 app/tools/gimpcurvestool.c:1413
 #: app/tools/gimplevelstool.c:1546
 #, c-format
 msgid "Failed to open file: '%s': %s"
@@ -1392,7 +1392,7 @@ msgstr "Vänd kanal"
 msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
-#: app/core/gimpchannel.c:473 app/core/gimpdrawable-transform.c:1101
+#: app/core/gimpchannel.c:473 app/core/gimpdrawable-transform.c:1107
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
@@ -1522,24 +1522,24 @@ msgid "Offset Drawable"
 msgstr "Offset rityta"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:879 app/tools/gimpfliptool.c:83
+#: app/core/gimpdrawable-transform.c:882 app/tools/gimpfliptool.c:83
 msgid "Flip"
 msgstr "Vänd"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:943 app/tools/gimprotatetool.c:104
+#: app/core/gimpdrawable-transform.c:949 app/tools/gimprotatetool.c:104
 msgid "Rotate"
 msgstr "Rotera"
 
-#: app/core/gimpdrawable-transform.c:1043
+#: app/core/gimpdrawable-transform.c:1052
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/core/gimpdrawable-transform.c:1058
+#: app/core/gimpdrawable-transform.c:1067
 msgid "Paste Transform"
 msgstr "Klistra in transformation"
 
-#: app/core/gimpdrawable-transform.c:1098 app/core/gimplayer.c:557
+#: app/core/gimpdrawable-transform.c:1104 app/core/gimplayer.c:557
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
@@ -1716,7 +1716,7 @@ msgid "Selection from Channel"
 msgstr "Markering från kanal"
 
 #: app/core/gimpimage-mask.c:585 app/tools/gimpeditselectiontool.c:242
-#: app/tools/gimpeditselectiontool.c:1062
+#: app/tools/gimpeditselectiontool.c:1086
 msgid "Move Selection"
 msgstr "Flytta markering"
 
@@ -1790,7 +1790,7 @@ msgstr "Aktivera snabbmask"
 msgid "Disable QuickMask"
 msgstr "Inaktivera snabbmask"
 
-#: app/core/gimpimage-undo-push.c:3279
+#: app/core/gimpimage-undo-push.c:3274
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
@@ -2012,7 +2012,7 @@ msgstr "Byt namn på lager"
 
 #: app/core/gimplayer.c:384 app/pdb/layer_cmds.c:636 app/pdb/layer_cmds.c:767
 #: app/tools/gimpeditselectiontool.c:244
-#: app/tools/gimpeditselectiontool.c:1066
+#: app/tools/gimpeditselectiontool.c:1090
 msgid "Move Layer"
 msgstr "Flytta lager"
 
@@ -2051,7 +2051,7 @@ msgstr "%s-mask"
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: app/core/gimplayer.c:1203
+#: app/core/gimplayer.c:1205
 msgid "Layer to Image Size"
 msgstr "Lagerstorlek som bilden"
 
@@ -2619,7 +2619,7 @@ msgstr "Redigera palettfärg för indexerad bild"
 msgid "/Add Color"
 msgstr "/Lägg till färg"
 
-#: app/gui/colormap-editor-menu.c:45 app/gui/palette-editor-menu.c:43
+#: app/gui/colormap-editor-menu.c:45 app/gui/palette-editor-menu.c:42
 msgid "/Edit Color..."
 msgstr "/Redigera färg..."
 
@@ -3574,16 +3574,16 @@ msgstr "/Uppdatera färgskalor"
 msgid "/Save as POV-Ray..."
 msgstr "/Spara som POV-Ray..."
 
-#: app/gui/gui.c:482
+#: app/gui/gui.c:509
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Lägger till temat \"%s\" (%s)\n"
 
-#: app/gui/gui.c:500
+#: app/gui/gui.c:527
 msgid "Quit The GIMP?"
 msgstr "Avsluta GIMP?"
 
-#: app/gui/gui.c:504
+#: app/gui/gui.c:531
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -4400,12 +4400,12 @@ msgstr "Y:"
 #: app/gui/info-window.c:282 app/gui/info-window.c:300
 #: app/gui/info-window.c:480 app/gui/info-window.c:527
 #: app/gui/info-window.c:528 app/gui/info-window.c:531
-#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:584
-#: app/tools/gimpcolorpickertool.c:585 app/tools/gimpcolorpickertool.c:586
-#: app/tools/gimpcolorpickertool.c:587 app/tools/gimpcolorpickertool.c:588
+#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:588
 #: app/tools/gimpcolorpickertool.c:589 app/tools/gimpcolorpickertool.c:590
-#: app/tools/gimpcolorpickertool.c:606 app/tools/gimpcolorpickertool.c:613
-#: app/tools/gimpcolorpickertool.c:631 app/tools/gimpcolorpickertool.c:652
+#: app/tools/gimpcolorpickertool.c:591 app/tools/gimpcolorpickertool.c:592
+#: app/tools/gimpcolorpickertool.c:593 app/tools/gimpcolorpickertool.c:594
+#: app/tools/gimpcolorpickertool.c:610 app/tools/gimpcolorpickertool.c:617
+#: app/tools/gimpcolorpickertool.c:635 app/tools/gimpcolorpickertool.c:656
 msgid "N/A"
 msgstr "-"
 
@@ -4765,21 +4765,25 @@ msgstr "_Bakgrund"
 msgid "_Transparent"
 msgstr "_Transparent"
 
-#: app/gui/palette-editor-commands.c:97
-msgid "Edit Palette Color"
-msgstr "Redigera palettfärg"
-
-#: app/gui/palette-editor-commands.c:99
-msgid "Edit Color Palette Entry"
-msgstr "Redigera färgpalettpost"
-
 #: app/gui/palette-editor-menu.c:38
 msgid "/New Color"
 msgstr "/Ny färg"
 
-#: app/gui/palette-editor-menu.c:48
+#: app/gui/palette-editor-menu.c:46
 msgid "/Delete Color"
 msgstr "/Ta bort färg"
+
+#: app/gui/palette-editor-menu.c:53
+msgid "/Zoom In"
+msgstr "/Zooma in"
+
+#: app/gui/palette-editor-menu.c:57
+msgid "/Zoom Out"
+msgstr "/Zooma ut"
+
+#: app/gui/palette-editor-menu.c:61
+msgid "/Zoom All"
+msgstr "/Zooma allt"
 
 #: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
@@ -6513,7 +6517,7 @@ msgstr "Inkrementell"
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
-#: app/pdb/color_cmds.c:254 app/tools/gimplevelstool.c:173
+#: app/pdb/color_cmds.c:254 app/tools/gimplevelstool.c:172
 msgid "Levels"
 msgstr "Nivåer"
 
@@ -7104,7 +7108,7 @@ msgstr "Radie:"
 msgid "Update Active Color"
 msgstr "Uppdatera aktiv färg"
 
-#: app/tools/gimpcolorpickertool.c:134 app/tools/gimpcolorpickertool.c:495
+#: app/tools/gimpcolorpickertool.c:134 app/tools/gimpcolorpickertool.c:498
 msgid "Color Picker"
 msgstr "Färghämtaren"
 
@@ -7116,41 +7120,41 @@ msgstr "Hämta en färg från bilden"
 msgid "/Tools/Color Picker"
 msgstr "/Verktyg/Hämta färg"
 
-#: app/tools/gimpcolorpickertool.c:497
+#: app/tools/gimpcolorpickertool.c:500
 msgid "Color Picker Information"
 msgstr "Information om färghämtare"
 
-#: app/tools/gimpcolorpickertool.c:512 app/tools/gimpcolorpickertool.c:527
+#: app/tools/gimpcolorpickertool.c:516 app/tools/gimpcolorpickertool.c:531
 msgid "Red:"
 msgstr "Röd:"
 
-#: app/tools/gimpcolorpickertool.c:513 app/tools/gimpcolorpickertool.c:528
+#: app/tools/gimpcolorpickertool.c:517 app/tools/gimpcolorpickertool.c:532
 msgid "Green:"
 msgstr "Grön:"
 
-#: app/tools/gimpcolorpickertool.c:514 app/tools/gimpcolorpickertool.c:529
+#: app/tools/gimpcolorpickertool.c:518 app/tools/gimpcolorpickertool.c:533
 msgid "Blue:"
 msgstr "Blå:"
 
-#: app/tools/gimpcolorpickertool.c:515 app/tools/gimpcolorpickertool.c:521
-#: app/tools/gimpcolorpickertool.c:530
+#: app/tools/gimpcolorpickertool.c:519 app/tools/gimpcolorpickertool.c:525
+#: app/tools/gimpcolorpickertool.c:534
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/tools/gimpcolorpickertool.c:516 app/tools/gimpcolorpickertool.c:522
+#: app/tools/gimpcolorpickertool.c:520 app/tools/gimpcolorpickertool.c:526
 #: app/widgets/gimpcolormapeditor.c:373
 msgid "Hex Triplet:"
 msgstr "Hex-triplett:"
 
-#: app/tools/gimpcolorpickertool.c:520
+#: app/tools/gimpcolorpickertool.c:524
 msgid "Intensity:"
 msgstr "Intensitet:"
 
-#: app/tools/gimpcolorpickertool.c:526
+#: app/tools/gimpcolorpickertool.c:530
 msgid "Index:"
 msgstr "Index:"
 
-#: app/tools/gimpcolorpickertool.c:531
+#: app/tools/gimpcolorpickertool.c:535
 msgid "Hex Triplet"
 msgstr "Hexadecimal triplett"
 
@@ -7185,28 +7189,28 @@ msgstr "Endast aktuellt lager"
 msgid "Allow Enlarging  %s"
 msgstr "Tillåt förstoring %s"
 
-#: app/tools/gimpcroptool.c:161
+#: app/tools/gimpcroptool.c:160
 msgid "Crop & Resize"
 msgstr "Beskär och Ändra storlek"
 
-#: app/tools/gimpcroptool.c:162
+#: app/tools/gimpcroptool.c:161
 msgid "Crop or Resize an image"
 msgstr "Beskär eller ändra storlek på en bild"
 
-#: app/tools/gimpcroptool.c:163
+#: app/tools/gimpcroptool.c:162
 msgid "/Tools/Transform Tools/Crop & Resize"
 msgstr "/Verktyg/Transformeringsverktyg/Beskär och ändra storlek"
 
-#: app/tools/gimpcroptool.c:596
+#: app/tools/gimpcroptool.c:595
 msgid "Crop: "
 msgstr "Beskär: "
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:973
+#: app/tools/gimpcroptool.c:972
 msgid "Crop: 0 x 0"
 msgstr "Beskär: 0 × 0"
 
-#: app/tools/gimpcroptool.c:1005
+#: app/tools/gimpcroptool.c:1004
 msgid "Crop & Resize Information"
 msgstr "Information om Beskär och ändra storlek"
 
@@ -7245,7 +7249,7 @@ msgstr "Justera färgkurvor"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurvor för indexerade bilder kan inte justeras."
 
-#: app/tools/gimpcurvestool.c:614 app/tools/gimplevelstool.c:490
+#: app/tools/gimpcurvestool.c:614 app/tools/gimplevelstool.c:489
 msgid "R_eset Channel"
 msgstr "_Återställ kanal"
 
@@ -7254,7 +7258,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Modifiera kurvor för kanal:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:687 app/tools/gimplevelstool.c:711
+#: app/tools/gimpcurvestool.c:687 app/tools/gimplevelstool.c:710
 msgid "All Channels"
 msgstr "Alla kanaler"
 
@@ -7302,7 +7306,7 @@ msgid "Exposure:"
 msgstr "Exponering:"
 
 #: app/tools/gimpeditselectiontool.c:246
-#: app/tools/gimpeditselectiontool.c:1064
+#: app/tools/gimpeditselectiontool.c:1088
 msgid "Move Floating Layer"
 msgstr "Flytta flytande lager"
 
@@ -7542,73 +7546,73 @@ msgstr "Markera former i bilden"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Verktyg/Markeringsverktyg/Intelligent sax"
 
-#: app/tools/gimplevelstool.c:174
+#: app/tools/gimplevelstool.c:173
 msgid "Adjust color levels"
 msgstr "Justera färgnivåer"
 
-#: app/tools/gimplevelstool.c:175
+#: app/tools/gimplevelstool.c:174
 msgid "/Layer/Colors/Levels..."
 msgstr "/Lager/Färger/Nivåer..."
 
-#: app/tools/gimplevelstool.c:245
+#: app/tools/gimplevelstool.c:244
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
-#: app/tools/gimplevelstool.c:297
+#: app/tools/gimplevelstool.c:296
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Kan inte justera nivåer för indexerade bilder."
 
-#: app/tools/gimplevelstool.c:411
+#: app/tools/gimplevelstool.c:410
 msgid "Pick Black Point"
 msgstr "Välj svart punkt"
 
-#: app/tools/gimplevelstool.c:415
+#: app/tools/gimplevelstool.c:414
 msgid "Pick Gray Point"
 msgstr "Välj grå punkt"
 
-#: app/tools/gimplevelstool.c:419
+#: app/tools/gimplevelstool.c:418
 msgid "Pick White Point"
 msgstr "Välj vit punkt"
 
-#: app/tools/gimplevelstool.c:476
+#: app/tools/gimplevelstool.c:475
 msgid "Modify Levels for Channel:"
 msgstr "Modifiera nivåer för kanal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:500
+#: app/tools/gimplevelstool.c:499
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:603
+#: app/tools/gimplevelstool.c:602
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:633
+#: app/tools/gimplevelstool.c:632
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:729
+#: app/tools/gimplevelstool.c:728
 msgid "Read levels settings from file"
 msgstr "Läs nivåinställningar från fil"
 
-#: app/tools/gimplevelstool.c:739
+#: app/tools/gimplevelstool.c:738
 msgid "Save levels settings to file"
 msgstr "Spara nivåinställningar till fil"
 
-#: app/tools/gimplevelstool.c:751
+#: app/tools/gimplevelstool.c:750
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:753
+#: app/tools/gimplevelstool.c:752
 msgid "Adjust levels automatically"
 msgstr "Justera nivåer automatiskt"
 
-#: app/tools/gimplevelstool.c:1477
+#: app/tools/gimplevelstool.c:1476
 msgid "Load Levels"
 msgstr "Läs in nivåer"
 
-#: app/tools/gimplevelstool.c:1492
+#: app/tools/gimplevelstool.c:1491
 msgid "Save Levels"
 msgstr "Spara nivåer"
 
@@ -7632,23 +7636,23 @@ msgstr "/Verktyg/Förstora"
 msgid "Use Info Window"
 msgstr "Använd informationsfönster"
 
-#: app/tools/gimpmeasuretool.c:130
+#: app/tools/gimpmeasuretool.c:129
 msgid "Measure"
 msgstr "Mät"
 
-#: app/tools/gimpmeasuretool.c:131
+#: app/tools/gimpmeasuretool.c:130
 msgid "Measure angles and lengths"
 msgstr "Mät vinklar och längder"
 
-#: app/tools/gimpmeasuretool.c:132
+#: app/tools/gimpmeasuretool.c:131
 msgid "/Tools/Measure"
 msgstr "/Verktyg/Mät"
 
-#: app/tools/gimpmeasuretool.c:288
+#: app/tools/gimpmeasuretool.c:287
 msgid "Add Guides"
 msgstr "Lägg till hjälplinjer"
 
-#: app/tools/gimpmeasuretool.c:388
+#: app/tools/gimpmeasuretool.c:387
 msgid "Measure Distances and Angles"
 msgstr "Mät avstånd och vinklar"
 
@@ -8019,11 +8023,11 @@ msgstr ""
 msgid "Keep Width  %s"
 msgstr "Behåll bredd %s"
 
-#: app/tools/gimptransformtool.c:240
+#: app/tools/gimptransformtool.c:239
 msgid "Transforming..."
 msgstr "Transformerar..."
 
-#: app/tools/gimptransformtool.c:364
+#: app/tools/gimptransformtool.c:363
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -8342,15 +8346,15 @@ msgstr "_Stil:"
 msgid "Pack my box with five dozen liquor jugs."
 msgstr "Flygande bäckasiner söka strax hwila på mjuka tuvor"
 
-#: app/widgets/gimpgradienteditor.c:369 app/widgets/gimppaletteeditor.c:268
+#: app/widgets/gimpgradienteditor.c:369 app/widgets/gimppaletteeditor.c:320
 msgid "Zoom All"
 msgstr "Zooma allt"
 
-#: app/widgets/gimpgradienteditor.c:376 app/widgets/gimppaletteeditor.c:275
+#: app/widgets/gimpgradienteditor.c:376 app/widgets/gimppaletteeditor.c:304
 msgid "Zoom In"
 msgstr "Zooma in"
 
-#: app/widgets/gimpgradienteditor.c:383 app/widgets/gimppaletteeditor.c:282
+#: app/widgets/gimpgradienteditor.c:383 app/widgets/gimppaletteeditor.c:312
 msgid "Zoom Out"
 msgstr "Zooma ut"
 
@@ -8511,13 +8515,33 @@ msgstr "Behåll transparens"
 msgid "Anchor Floating Layer"
 msgstr "Ankra flytande lager"
 
-#: app/widgets/gimppaletteeditor.c:243 app/widgets/gimppaletteeditor.c:352
+#: app/widgets/gimppaletteeditor.c:256 app/widgets/gimppaletteeditor.c:922
 msgid "Undefined"
 msgstr "Odefinerad"
 
-#: app/widgets/gimppaletteeditor.c:252
+#: app/widgets/gimppaletteeditor.c:264
 msgid "Columns:"
 msgstr "Kolumner:"
+
+#: app/widgets/gimppaletteeditor.c:280
+msgid "New Color"
+msgstr "Ny färg"
+
+#: app/widgets/gimppaletteeditor.c:288
+msgid "Edit Color"
+msgstr "Redigera färg"
+
+#: app/widgets/gimppaletteeditor.c:296
+msgid "Delete Color"
+msgstr "Ta bort färg"
+
+#: app/widgets/gimppaletteeditor.c:1022
+msgid "Edit Palette Color"
+msgstr "Redigera palettfärg"
+
+#: app/widgets/gimppaletteeditor.c:1024
+msgid "Edit Color Palette Entry"
+msgstr "Redigera färgpalettpost"
 
 #: app/widgets/gimppropwidgets.c:1273
 #, c-format
