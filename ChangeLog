@@ -1,12 +1,11 @@
-Sun Aug 15 20:47:20 MEST 1999  Sven Neumann <sven@gimp.org>
+Sun Aug 15 22:14:20 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.[ch]: new files
 	* app/Makefile.am
 	* app/pixmaps2.h
 	* app/tools.c
 	* app/toolsF.h: added new Measure tool.
-	The tool is not yet finished, the pixmap sucks and I'm not sure 
-	about the name. Any comments??
+	The tool is not yet finished ...
 
 Sat Aug 14 14:35:16 MEST 1999  Sven Neumann <sven@gimp.org>
 
