@@ -1,5 +1,13 @@
 2005-02-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainercombobox.c
+	* libgimpwidgets/gimpintcombobox.c: set the "ellipsize" property
+	on the text cell-renderer. Not sure if it's a good idea to
+	hardcode this for GimpIntComboBox, but let's give it a try. Fixes
+	bug #136676.
+
+2005-02-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimp-help-lookup.c: use GOptionContext to parse
 	the command-line.
 

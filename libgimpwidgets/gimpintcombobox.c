@@ -82,7 +82,9 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
                                   "pixbuf",   GIMP_INT_STORE_PIXBUF,
                                   NULL);
 
-  cell = gtk_cell_renderer_text_new ();
+  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                       "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                       NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
                                   "text", GIMP_INT_STORE_LABEL,

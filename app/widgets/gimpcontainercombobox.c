@@ -169,7 +169,9 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
 
   combo_box->viewable_renderer = cell;
 
-  cell = gtk_cell_renderer_text_new ();
+  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                       "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                       NULL);
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text", COLUMN_NAME,
