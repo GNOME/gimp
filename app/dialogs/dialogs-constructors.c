@@ -25,6 +25,7 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 #include "tools/tool_options_dialog.h"
 
@@ -36,6 +37,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdrawablelistview.h"
+#include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 
 #include "about-dialog.h"
@@ -116,6 +118,8 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 static void dialogs_drawable_view_image_changed (GimpContext          *context,
 						 GimpImage            *gimage,
 						 GimpDrawableListView *view);
+
+static gchar * dialogs_tool_name_func           (GtkWidget *widget);
 
 
 /*  public functions  */
@@ -395,10 +399,15 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (global_tool_info_list,
+  view = gimp_container_list_view_new (NULL,
 				       context,
 				       22,
 				       5, 3);
+
+  gimp_container_view_set_name_func (GIMP_CONTAINER_VIEW (view),
+				     dialogs_tool_name_func);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+				     global_tool_info_list);
 
   return dialogs_dockable_new (view,
 			       "Tool List", "Tools",
@@ -508,10 +517,15 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (global_tool_info_list,
+  view = gimp_container_grid_view_new (NULL,
 				       context,
 				       22,
 				       5, 3);
+
+  gimp_container_view_set_name_func (GIMP_CONTAINER_VIEW (view),
+				     dialogs_tool_name_func);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+				     global_tool_info_list);
 
   return dialogs_dockable_new (view,
 			       "Tool Grid", "Tools",
@@ -817,13 +831,6 @@ dialogs_set_data_context_func (GimpDockable *dockable,
 }
 
 static void
-dialogs_context_disconnect (GimpContext *context,
-			    GtkWidget   *view)
-{
-  gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", NULL);
-}
-
-static void
 dialogs_set_drawable_context_func (GimpDockable *dockable,
 				   GimpContext  *context)
 {
@@ -844,10 +851,6 @@ dialogs_set_drawable_context_func (GimpDockable *dockable,
 	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
 					 GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
 					 view);
-
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
-					 GTK_SIGNAL_FUNC (dialogs_context_disconnect),
-					 view);
 	}
 
       if (context)
@@ -856,17 +859,16 @@ dialogs_set_drawable_context_func (GimpDockable *dockable,
 			      GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
 			      view);
 
-	  gtk_signal_connect (GTK_OBJECT (context), "destroy",
-			      GTK_SIGNAL_FUNC (dialogs_context_disconnect),
-			      view);
-
-	  gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context",
-			       context);
+	  dialogs_drawable_view_image_changed (context,
+					       gimp_context_get_image (context),
+					       view);
+	}
+      else
+	{
+	  dialogs_drawable_view_image_changed (NULL, NULL, view);
 	}
 
-      dialogs_drawable_view_image_changed (context,
-					   gimp_context_get_image (context),
-					   view);
+      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
     }
 }
 
@@ -897,4 +899,24 @@ dialogs_drawable_view_image_changed (GimpContext          *context,
 				     GimpDrawableListView *view)
 {
   gimp_drawable_list_view_set_image (view, gimage);
+}
+
+static gchar *
+dialogs_tool_name_func (GtkWidget *widget)
+{
+  GimpToolInfo *tool_info = NULL;
+
+  if (GIMP_IS_PREVIEW (widget))
+    {
+      tool_info = GIMP_TOOL_INFO (GIMP_PREVIEW (widget)->viewable);
+    }
+  else if (GIMP_IS_LIST_ITEM (widget))
+    {
+      tool_info = GIMP_TOOL_INFO (GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable);
+    }
+
+  if (tool_info)
+    return g_strdup (tool_info->blurb);
+  else
+    return g_strdup ("EEK");
 }

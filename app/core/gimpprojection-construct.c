@@ -155,6 +155,7 @@ guint32 next_guide_id = 1;  /* For generating guide_ID handles for PDB stuff */
 
 enum
 {
+  MODE_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
@@ -214,6 +215,15 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class    = (GimpViewableClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+
+  gimp_image_signals[MODE_CHANGED] =
+    gtk_signal_new ("mode_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       mode_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_LAYER_CHANGED] =
     gtk_signal_new ("active_layer_changed",
@@ -483,6 +493,9 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 {
   GimpImage *gimage;
   GimpLayer *layer;
+
+  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
+    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
   gimage = GIMP_IMAGE (viewable);
 
@@ -1599,8 +1612,8 @@ gimp_image_get_paths (const GimpImage *gimage)
 }
 	
 void
-gimp_image_colormap_changed (const GimpImage *gimage, 
-			     gint             col)
+gimp_image_colormap_changed (GimpImage *gimage, 
+			     gint       col)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (col < gimage->num_cols);
@@ -1608,6 +1621,14 @@ gimp_image_colormap_changed (const GimpImage *gimage,
   gtk_signal_emit (GTK_OBJECT (gimage),
 		   gimp_image_signals[COLORMAP_CHANGED],
 		   col);
+}
+
+void
+gimp_image_mode_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MODE_CHANGED]);
 }
 
 /************************************************************/
@@ -2363,6 +2384,51 @@ gimp_image_get_mask (const GimpImage *gimage)
   return gimage->selection_mask;
 }
 
+void
+gimp_image_set_component_active (GimpImage   *gimage, 
+				 ChannelType  type, 
+				 gboolean     active)
+{
+  gint pixel = -1;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  switch (type)
+    {
+    case RED_CHANNEL:     pixel = RED_PIX;     break;
+    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
+    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
+    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
+    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
+    case ALPHA_CHANNEL:
+      switch (gimp_image_base_type (gimage))
+	{
+	case RGB:     pixel = ALPHA_PIX;   break;
+	case GRAY:    pixel = ALPHA_G_PIX; break;
+	case INDEXED: pixel = ALPHA_I_PIX; break;
+	}
+      break;
+
+    default:
+      break;
+    }
+
+  if (pixel != -1 && active != gimage->active[pixel])
+    {
+      gimage->active[pixel] = active ? TRUE : FALSE;
+
+      /*  If there is an active channel and we mess with the components,
+       *  the active channel gets unset...
+       */
+      gimp_image_unset_active_channel (gimage);
+
+      gtk_signal_emit (GTK_OBJECT (gimage),
+		       gimp_image_signals[COMPONENT_ACTIVE_CHANGED],
+		       type);
+    }
+}
+
 gboolean
 gimp_image_get_component_active (const GimpImage *gimage, 
 				 ChannelType      type)
@@ -2370,13 +2436,64 @@ gimp_image_get_component_active (const GimpImage *gimage,
   /*  No sanity checking here...  */
   switch (type)
     {
-    case RED_CHANNEL:     return gimage->active[RED_PIX]; break;
-    case GREEN_CHANNEL:   return gimage->active[GREEN_PIX]; break;
-    case BLUE_CHANNEL:    return gimage->active[BLUE_PIX]; break;
-    case GRAY_CHANNEL:    return gimage->active[GRAY_PIX]; break;
+    case RED_CHANNEL:     return gimage->active[RED_PIX];     break;
+    case GREEN_CHANNEL:   return gimage->active[GREEN_PIX];   break;
+    case BLUE_CHANNEL:    return gimage->active[BLUE_PIX];    break;
+    case GRAY_CHANNEL:    return gimage->active[GRAY_PIX];    break;
     case INDEXED_CHANNEL: return gimage->active[INDEXED_PIX]; break;
-    case ALPHA_CHANNEL:   return gimage->active[ALPHA_PIX]; break;
-    default: return FALSE; break;
+    case ALPHA_CHANNEL:
+      switch (gimp_image_base_type (gimage))
+	{
+	case RGB:     return gimage->active[ALPHA_PIX];   break;
+	case GRAY:    return gimage->active[ALPHA_G_PIX]; break;
+	case INDEXED: return gimage->active[ALPHA_I_PIX]; break;
+	}
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_image_set_component_visible (GimpImage   *gimage, 
+				  ChannelType  type, 
+				  gboolean     visible)
+{
+  gint pixel = -1;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  switch (type)
+    {
+    case RED_CHANNEL:     pixel = RED_PIX;     break;
+    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
+    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
+    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
+    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
+    case ALPHA_CHANNEL:
+      switch (gimp_image_base_type (gimage))
+	{
+	case RGB:     pixel = ALPHA_PIX;   break;
+	case GRAY:    pixel = ALPHA_G_PIX; break;
+	case INDEXED: pixel = ALPHA_I_PIX; break;
+	}
+      break;
+
+    default:
+      break;
+    }
+
+  if (pixel != -1 && visible != gimage->visible[pixel])
+    {
+      gimage->visible[pixel] = visible ? TRUE : FALSE;
+
+      gtk_signal_emit (GTK_OBJECT (gimage),
+		       gimp_image_signals[COMPONENT_VISIBILITY_CHANGED],
+		       type);
     }
 }
 
@@ -2387,14 +2504,25 @@ gimp_image_get_component_visible (const GimpImage *gimage,
   /*  No sanity checking here...  */
   switch (type)
     {
-    case RED_CHANNEL:     return gimage->visible[RED_PIX]; break;
-    case GREEN_CHANNEL:   return gimage->visible[GREEN_PIX]; break;
-    case BLUE_CHANNEL:    return gimage->visible[BLUE_PIX]; break;
-    case GRAY_CHANNEL:    return gimage->visible[GRAY_PIX]; break;
+    case RED_CHANNEL:     return gimage->visible[RED_PIX];     break;
+    case GREEN_CHANNEL:   return gimage->visible[GREEN_PIX];   break;
+    case BLUE_CHANNEL:    return gimage->visible[BLUE_PIX];    break;
+    case GRAY_CHANNEL:    return gimage->visible[GRAY_PIX];    break;
     case INDEXED_CHANNEL: return gimage->visible[INDEXED_PIX]; break;
-    case ALPHA_CHANNEL:   return gimage->visible[ALPHA_PIX]; break;
-    default: return FALSE; break;
+    case ALPHA_CHANNEL:
+      switch (gimp_image_base_type (gimage))
+	{
+	case RGB:     return gimage->visible[ALPHA_PIX];   break;
+	case GRAY:    return gimage->visible[ALPHA_G_PIX]; break;
+	case INDEXED: return gimage->visible[ALPHA_I_PIX]; break;
+	}
+      break;
+
+    default:
+      break;
     }
+
+  return FALSE;
 }
 
 gboolean
@@ -2532,73 +2660,6 @@ gimp_image_unset_active_channel (GimpImage *gimage)
     }
 
   return channel;
-}
-
-void
-gimp_image_set_component_active (GimpImage   *gimage, 
-				 ChannelType  type, 
-				 gboolean     active)
-{
-  gint pixel = -1;
-
-  g_return_if_fail (gimage != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  switch (type)
-    {
-    case RED_CHANNEL:     pixel = RED_PIX;     break;
-    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
-    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
-    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
-    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
-    case ALPHA_CHANNEL:   pixel = ALPHA_PIX;  break;
-    default: break;
-    }
-
-  if (pixel != -1 && active != gimage->active[pixel])
-    {
-      gimage->active[pixel] = active ? TRUE : FALSE;
-
-      /*  If there is an active channel and we mess with the components,
-       *  the active channel gets unset...
-       */
-      gimp_image_unset_active_channel (gimage);
-
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[COMPONENT_ACTIVE_CHANGED],
-		       type);
-    }
-}
-
-void
-gimp_image_set_component_visible (GimpImage   *gimage, 
-				  ChannelType  type, 
-				  gboolean     visible)
-{
-  gint pixel = -1;
-
-  g_return_if_fail (gimage != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  switch (type)
-    {
-    case RED_CHANNEL:     pixel = RED_PIX;     break;
-    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
-    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
-    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
-    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
-    case ALPHA_CHANNEL:   pixel = ALPHA_PIX;  break;
-    default: break;
-    }
-
-  if (pixel != -1 && visible != gimage->visible[pixel])
-    {
-      gimage->visible[pixel] = visible ? TRUE : FALSE;
-
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[COMPONENT_VISIBILITY_CHANGED],
-		       type);
-    }
 }
 
 GimpLayer *

@@ -81,31 +81,31 @@ struct _GimpContainerViewClass
 
 GtkType   gimp_container_view_get_type         (void);
 
-void      gimp_container_view_set_container    (GimpContainerView *view,
-						GimpContainer     *container);
-void      gimp_container_view_set_context      (GimpContainerView *view,
-						GimpContext       *context);
-void      gimp_container_view_set_preview_size (GimpContainerView *view,
-						gint               preview_size);
-void      gimp_container_view_set_name_func    (GimpContainerView *view,
+void      gimp_container_view_set_container    (GimpContainerView   *view,
+						GimpContainer       *container);
+void      gimp_container_view_set_context      (GimpContainerView   *view,
+						GimpContext         *context);
+void      gimp_container_view_set_preview_size (GimpContainerView   *view,
+						gint                 preview_size);
+void      gimp_container_view_set_name_func    (GimpContainerView   *view,
 						GimpItemGetNameFunc  get_name_func);
 
-void      gimp_container_view_select_item      (GimpContainerView *view,
-						GimpViewable      *viewable);
-void      gimp_container_view_activate_item    (GimpContainerView *view,
-						GimpViewable      *viewable);
-void      gimp_container_view_context_item     (GimpContainerView *view,
-						GimpViewable      *viewable);
+void      gimp_container_view_select_item      (GimpContainerView   *view,
+						GimpViewable        *viewable);
+void      gimp_container_view_activate_item    (GimpContainerView   *view,
+						GimpViewable        *viewable);
+void      gimp_container_view_context_item     (GimpContainerView   *view,
+						GimpViewable        *viewable);
 
 
 /*  protected  */
 
-void      gimp_container_view_item_selected    (GimpContainerView *view,
-						GimpViewable      *item);
-void      gimp_container_view_item_activated   (GimpContainerView *view,
-						GimpViewable      *item);
-void      gimp_container_view_item_context     (GimpContainerView *view,
-						GimpViewable      *item);
+void      gimp_container_view_item_selected    (GimpContainerView   *view,
+						GimpViewable        *item);
+void      gimp_container_view_item_activated   (GimpContainerView   *view,
+						GimpViewable        *item);
+void      gimp_container_view_item_context     (GimpContainerView   *view,
+						GimpViewable        *item);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

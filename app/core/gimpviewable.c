@@ -39,8 +39,10 @@ enum
 };
 
 
-static void   gimp_viewable_class_init (GimpViewableClass *klass);
-static void   gimp_viewable_init       (GimpViewable      *viewable);
+static void   gimp_viewable_class_init         (GimpViewableClass *klass);
+static void   gimp_viewable_init               (GimpViewable      *viewable);
+
+static void   gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
 
 
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
@@ -117,7 +119,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gtk_object_class_add_signals (object_class, viewable_signals, LAST_SIGNAL);
 
-  klass->invalidate_preview = NULL;
+  klass->invalidate_preview = gimp_viewable_real_invalidate_preview;
   klass->get_preview        = NULL;
   klass->get_new_preview    = NULL;
 }
@@ -134,6 +136,15 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[INVALIDATE_PREVIEW]);
+}
+
+static void
+gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
+{
+  g_return_if_fail (viewable);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gtk_object_set_data (GTK_OBJECT (viewable), "static-viewable-preview", NULL);
 }
 
 TempBuf *
@@ -156,23 +167,21 @@ gimp_viewable_get_preview (GimpViewable *viewable,
     return temp_buf;
 
   temp_buf = gtk_object_get_data (GTK_OBJECT (viewable),
-				  "static_viewable_preview");
+				  "static-viewable-preview");
 
-  if (temp_buf)
-    {
-      if (temp_buf->width  == width  &&
-	  temp_buf->height == height)
-	return temp_buf;
+  if (temp_buf                   &&
+      temp_buf->width  == width  &&
+      temp_buf->height == height)
+    return temp_buf;
 
-      temp_buf_free (temp_buf);
-      temp_buf = NULL;
-    }
+  temp_buf = NULL;
 
   gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW],
 		   width, height, &temp_buf);
 
-  gtk_object_set_data (GTK_OBJECT (viewable), "static_viewable_preview",
-		       temp_buf);
+  gtk_object_set_data_full (GTK_OBJECT (viewable), "static-viewable-preview",
+			    temp_buf,
+			    (GtkDestroyNotify) temp_buf_free);
 
   return temp_buf;
 }

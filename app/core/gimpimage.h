@@ -148,6 +148,7 @@ struct _GimpImageClass
 {
   GimpViewableClass  parent_class;
 
+  void (* mode_changed)                 (GimpImage   *gimage);
   void (* active_layer_changed)         (GimpImage   *gimage);
   void (* active_channel_changed)       (GimpImage   *gimage);
   void (* component_visibility_changed) (GimpImage   *gimage,
@@ -302,8 +303,10 @@ PathList      * gimp_image_get_paths         (const GimpImage    *gimage);
    Currently, use this also when the image's base type is changed to/from
    indexed.  */
 
-void		gimp_image_colormap_changed  (const GimpImage    *image,
+void		gimp_image_colormap_changed  (GimpImage          *gimage,
 					      gint                col);
+
+void            gimp_image_mode_changed      (GimpImage          *gimage);
 
 
 /*  layer/channel functions  */
@@ -324,10 +327,19 @@ GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage   *gimage,
 GimpChannel   * gimp_image_get_channel_by_name   (const GimpImage   *gimage,
 						  const gchar       *name);
 GimpChannel   * gimp_image_get_mask              (const GimpImage   *gimage);
+
+void            gimp_image_set_component_active  (GimpImage         *gimage,
+						  ChannelType        type,
+						  gboolean           active);
 gboolean        gimp_image_get_component_active  (const GimpImage   *gimage,
 						  ChannelType        type);
+
+void            gimp_image_set_component_visible (GimpImage         *gimage,
+						  ChannelType        type,
+						  gboolean           visible);
 gboolean        gimp_image_get_component_visible (const GimpImage   *gimage,
 						  ChannelType        type);
+
 gboolean        gimp_image_layer_boundary        (const GimpImage   *gimage,
 						  BoundSeg         **segs,
 						  gint              *n_segs);
@@ -336,12 +348,6 @@ GimpLayer     * gimp_image_set_active_layer      (GimpImage         *gimage,
 GimpChannel   * gimp_image_set_active_channel    (GimpImage         *gimage,
 						  GimpChannel       *channel);
 GimpChannel   * gimp_image_unset_active_channel  (GimpImage         *gimage);
-void            gimp_image_set_component_active  (GimpImage         *gimage,
-						  ChannelType        type,
-						  gboolean           active);
-void            gimp_image_set_component_visible (GimpImage         *gimage,
-						  ChannelType        type,
-						  gboolean           visible);
 GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage   *gimage,
 						  gint               x,
 						  gint               y);

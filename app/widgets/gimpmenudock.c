@@ -191,6 +191,10 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 			    FALSE);
   gimp_context_set_parent (dock->context, factory->context);
 
+  if (image_dock->auto_follow_active)
+    gimp_context_copy_arg (factory->context, dock->context,
+			   GIMP_CONTEXT_ARG_IMAGE);
+
   gtk_signal_connect_while_alive
     (GTK_OBJECT (factory->context), "image_changed",
      GTK_SIGNAL_FUNC (gimp_image_dock_factory_image_changed),

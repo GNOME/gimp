@@ -20,6 +20,13 @@
 #define __APPENUMS_H__
 
 
+typedef enum /*< skip >*/
+{
+  GIMP_DROP_NONE,
+  GIMP_DROP_ABOVE,
+  GIMP_DROP_BELOW
+} GimpDropType;
+
 /* Base image types */
 typedef enum
 {

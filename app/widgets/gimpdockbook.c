@@ -35,6 +35,11 @@
 #include "gimpdnd.h"
 
 
+#define TAB_WIDGET_SIZE     24
+#define MENU_WIDGET_SIZE    16
+#define MENU_WIDGET_SPACING  4
+
+
 static void      gimp_dockbook_class_init       (GimpDockbookClass  *klass);
 static void      gimp_dockbook_init             (GimpDockbook       *dockbook);
 
@@ -162,7 +167,7 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
       GimpDockable *dockable;
 
       dockable = (GimpDockable *) gtk_object_get_data (GTK_OBJECT (source),
-						       "gimp_dockable");
+						       "gimp-dockable");
 
       if (dockable)
 	{
@@ -204,7 +209,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (dockable->dockbook == NULL);
 
-  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, 24);
+  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook,
+					     TAB_WIDGET_SIZE);
 
   if (GTK_IS_LABEL (tab_widget))
     {
@@ -219,20 +225,21 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   gimp_help_set_help_data (tab_widget, dockable->name, NULL);
 
-  gtk_object_set_data (GTK_OBJECT (tab_widget), "gimp_dockable", dockable);
+  gtk_object_set_data (GTK_OBJECT (tab_widget), "gimp-dockable", dockable);
 
   gtk_signal_connect (GTK_OBJECT (tab_widget), "button_press_event",
 		      GTK_SIGNAL_FUNC (gimp_dockbook_tab_button_press),
 		      dockable);
 
-  menu_widget = gimp_dockable_get_tab_widget (dockable, dockbook, 16);
+  menu_widget = gimp_dockable_get_tab_widget (dockable, dockbook,
+					      MENU_WIDGET_SIZE);
 
   if (! GTK_IS_LABEL (menu_widget))
     {
       GtkWidget *hbox;
       GtkWidget *label;
 
-      hbox = gtk_hbox_new (FALSE, 4);
+      hbox = gtk_hbox_new (FALSE, MENU_WIDGET_SPACING);
 
       gtk_box_pack_start (GTK_BOX (hbox), menu_widget, FALSE, FALSE, 0);
       gtk_widget_show (menu_widget);
@@ -335,6 +342,8 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 
   dockable->dockbook = NULL;
 
+  gimp_dockable_set_context (dockable, NULL);
+
   gtk_container_remove (GTK_CONTAINER (dockbook), GTK_WIDGET (dockable));
 
   if (! g_list_length (gtk_container_children (GTK_CONTAINER (dockbook))))
@@ -402,10 +411,10 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
   dockable = GIMP_DOCKABLE (data);
   dockbook = dockable->dockbook;
 
-  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
+  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
 				    GTK_WIDGET (dockable));
 
-  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
+  gtk_notebook_set_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (bevent->button == 3)
     {
@@ -474,7 +483,8 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_container_add (GTK_CONTAINER (window), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook, 24);
+  preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook,
+					  TAB_WIDGET_SIZE);
 
   if (! GTK_IS_LABEL (preview))
     {
@@ -565,22 +575,22 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
   GtkWidget    *source;
 
   dest_dockable = (GimpDockable *) gtk_object_get_data (GTK_OBJECT (widget),
-							"gimp_dockable");
+							"gimp-dockable");
 
   source = gtk_drag_get_source_widget (context);
 
-  if (source)
+  if (dest_dockable && source)
     {
       GimpDockable *src_dockable;
 
       src_dockable = (GimpDockable *) gtk_object_get_data (GTK_OBJECT (source),
-							   "gimp_dockable");
+							   "gimp-dockable");
 
       if (src_dockable)
 	{
-	  gint page_index;
+	  gint dest_index;
 
-	  page_index =
+	  dest_index =
 	    gtk_notebook_page_num (GTK_NOTEBOOK (dest_dockable->dockbook),
 				   GTK_WIDGET (dest_dockable));
 
@@ -593,7 +603,7 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 
 	      gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
 	      gimp_dockbook_add (dest_dockable->dockbook, src_dockable,
-				 page_index);
+				 dest_index);
 
 	      gtk_object_unref (GTK_OBJECT (src_dockable));
 
@@ -603,7 +613,7 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 	    {
 	      gtk_notebook_reorder_child (GTK_NOTEBOOK (src_dockable->dockbook),
 					  GTK_WIDGET (src_dockable),
-					  page_index);
+					  dest_index);
 
 	      return TRUE;
 	    }

@@ -174,7 +174,8 @@ static Undo        * undo_new           (UndoType     undo_type,
 					 gboolean     dirties_image);
 
 
-static gboolean shrink_wrap = FALSE;
+static gboolean mode_changed = FALSE;
+static gboolean shrink_wrap  = FALSE;
 
 
 static gint
@@ -472,11 +473,20 @@ pop_stack (GimpImage  *gimage,
 	    }
 	  gdisplays_flush ();
 
+	  /*  If the mode_changed flag was set  */
+	  if (mode_changed)
+	    {
+	      gimp_image_mode_changed (gimage);
+
+	      mode_changed = FALSE;
+	    }
+
 	  /*  If the shrink_wrap flag was set  */
 	  if (shrink_wrap)
 	    {
 	      gdisplays_resize_cursor_label (gimage);
 	      gdisplays_shrink_wrap (gimage);
+
 	      shrink_wrap = FALSE;
 	    }
 
@@ -2234,12 +2244,15 @@ undo_pop_gimage_mod (GimpImage *gimage,
   gint  tmp;
 
   data = (int *) data_ptr;
+
   tmp = data[0];
   data[0] = gimage->width;
   gimage->width = tmp;
+
   tmp = data[1];
   data[1] = gimage->height;
   gimage->height = tmp;
+
   tmp = data[2];
   data[2] = gimage->base_type;
   gimage->base_type = tmp;
@@ -2254,6 +2267,9 @@ undo_pop_gimage_mod (GimpImage *gimage,
   gdisplays_update_title (gimage);
 
   gimp_image_colormap_changed (gimage, -1);
+
+  if (data[2] != gimage->base_type)
+    mode_changed = TRUE;
 
   if (gimage->width != (int) data[0] || gimage->height != (int) data[1])
     shrink_wrap = TRUE;

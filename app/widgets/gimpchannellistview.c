@@ -72,7 +72,11 @@ static void   gimp_channel_list_view_toselection_dropped
 						     GimpViewable        *viewable,
 						     gpointer             data);
 
-static void   gimp_channel_list_view_create_components (GimpChannelListView *view);
+static void   gimp_channel_list_view_create_components
+                                                    (GimpChannelListView *view);
+
+static void   gimp_channel_list_view_mode_changed   (GimpImage           *gimage,
+						     GimpChannelListView *view);
 
 
 static GimpDrawableListViewClass *parent_class = NULL;
@@ -204,6 +208,10 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
 	gtk_widget_hide (channel_view->component_frame);
 
       gtk_list_clear_items (GTK_LIST (channel_view->component_list), 0, -1);
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
+				     gimp_channel_list_view_mode_changed,
+				     channel_view);
     }
 
   if (GIMP_DRAWABLE_LIST_VIEW_CLASS (parent_class)->set_image)
@@ -215,6 +223,10 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
 	gtk_widget_show (channel_view->component_frame);
 
       gimp_channel_list_view_create_components (channel_view);
+
+      gtk_signal_connect (GTK_OBJECT (view->gimage), "mode_changed",
+			  GTK_SIGNAL_FUNC (gimp_channel_list_view_mode_changed),
+			  channel_view);
     }
 }
 
@@ -335,4 +347,13 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
   gtk_list_insert_items (GTK_LIST (view->component_list), list, 0);
 
   gtk_widget_queue_resize (GTK_WIDGET (view->component_frame));
+}
+
+static void
+gimp_channel_list_view_mode_changed (GimpImage           *gimage,
+				     GimpChannelListView *view)
+{
+  gtk_list_clear_items (GTK_LIST (view->component_list), 0, -1);
+
+  gimp_channel_list_view_create_components (view);
 }

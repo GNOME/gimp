@@ -1,3 +1,47 @@
+2001-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/appenums.h: added GimpDropMode...
+	* app/gimpdnd.h: ...removed from here.
+
+	* app/gimpimage.[ch]:
+	- New signal "mode_changed".
+	- removed "const GimpImage*" from gimp_image_colormap_changed()
+	  because a signal emission is never "const" for the object
+	  which emits the signal.
+	- Fixed gimp_image_[set|get]_component_[active|visible]():
+	  ALPHA_CHANNEL maps to ALPHA_PIX only in RGB mode, use
+	  ALPHA_G_PIX/ALPHA_I_PIX in GRAY/INDEXED mode.
+
+	* app/gimpimage-convert.c
+	* app/undo.c: call gimp_image_mode_changed().
+
+	* app/gimpviewable.c: added an implementation of
+	"invalidate_preview" which frees the preview temp_buf which may be
+	attached to the viewable. Subclasses need to chain up now.
+
+	* app/gimpdrawable.c
+	* app/gimpimage.c: chain up in invalidate_preview().
+
+	* app/widgets/gimpchannellistview.c: connect to the image's
+	"mode_changed" signal and rebuild the channel list in the
+	callback.
+
+	* app/widgets/gimpcontainerview.h: indentation.
+
+	* app/widgets/gimpdockbook.c: set the dockable's context to NULL
+	in gimp_dockbook_remove()
+
+	* app/widgets/gimpimagedock.c: forgot to actually set the dock's
+	image in gimp_image_dock_new().
+
+	* app/gui/dialogs-constructors.c: added a get_name_func() for tool
+	views which returns the tool's "blurb". It's safe to assume now
+	that a dockable's context will exist as long as the dockable
+	exists unless it's explicitely set to NULL, so remove ugly hacks
+	handling context destruction.
+
+	* app/tools/gimptool.c: removed COMPAT_CRUFT and useless #include's.
+
 2001-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

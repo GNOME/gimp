@@ -301,6 +301,9 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
   GimpDrawable *drawable;
   GimpImage    *gimage;
 
+  if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
+    GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
+
   drawable = GIMP_DRAWABLE (viewable);
 
   drawable->preview_valid = FALSE;

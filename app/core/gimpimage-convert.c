@@ -943,6 +943,8 @@ gimp_image_convert (GimpImage          *gimage,
 
   gimp_image_colormap_changed (gimage, -1);
 
+  gimp_image_mode_changed (gimage);
+
   gimp_remove_busy_cursors(NULL);
 }
 

@@ -40,13 +40,6 @@ enum
   GIMP_DND_TYPE_DIALOG
 };
 
-typedef enum
-{
-  GIMP_DROP_NONE,
-  GIMP_DROP_ABOVE,
-  GIMP_DROP_BELOW
-} GimpDropType;
-
 
 #define GIMP_TARGET_URI_LIST \
         { "text/uri-list", 0, GIMP_DND_TYPE_URI_LIST }
