@@ -1,3 +1,8 @@
+Thu Mar 19 13:21:28 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* docs/gimp_quick_reference.[tex|ps]: added a 
+	single-paged reference sheet with most of the hotkeys
+
 Thu Mar 19 03:28:29 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: handle delete

@@ -1,0 +1,292 @@
+% --------------------------------------------------------------------
+%
+% GIMP Quick Reference Sheet v1.0 by Sven Neumann <sven@gimp.org>
+%
+% Any suggestions, bug reports or enhancements are very welcome.
+%
+% The list of hot-keys way compiled by Adrian Likins, a first layout
+% by Ry4an Brase inspired me to create this LaTeX-version.
+%
+% --------------------------------------------------------------------
+%
+% The GIMP -- an image manipulation program
+% Copyright (C) 1995 Spencer Kimball and Peter Mattis
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+%
+%--------------------------------------------------------------------
+
+\documentclass[10pt,a4paper]{article}
+ 
+\usepackage{anysize}
+\usepackage{rotating}
+\usepackage{hhline}
+
+\marginsize{1cm}{1cm}{1cm}{1cm}
+
+\pagestyle{empty}
+
+\renewcommand{\arraystretch}{1.1}
+
+\setlength{\fboxsep}{1pt}
+\setlength{\fboxrule}{0.2pt}
+\setlength{\unitlength}{2pt}
+
+\newcommand{\lmouse}{%
+  \raisebox{-1pt}{%
+  \begin{picture}(6,4)
+    \put(0,0){\line(0,1){3}}
+    \put(3,3){\oval(6,2)[t]}
+    \put(6,0){\line(0,1){3}}
+    \put(2,0){\line(0,1){4}}
+    \put(4,0){\line(0,1){4}}
+    \put(0,1){\line(1,0){6}}
+    \put(1,2.8){\circle*{1.5}}
+  \end{picture}} }
+\newcommand{\mmouse}{%
+  \raisebox{-1pt}{%
+  \begin{picture}(6,4)
+    \put(0,0){\line(0,1){3}}
+    \put(3,3){\oval(6,2)[t]}
+    \put(6,0){\line(0,1){3}}
+    \put(2,0){\line(0,1){4}}
+    \put(4,0){\line(0,1){4}}
+    \put(0,1){\line(1,0){6}}
+    \put(3,2.8){\circle*{1.5}}
+  \end{picture}} }
+\newcommand{\rmouse}{%
+  \raisebox{-1pt}{%
+  \begin{picture}(6,4)
+    \put(0,0){\line(0,1){3}}
+    \put(3,3){\oval(6,2)[t]}
+    \put(6,0){\line(0,1){3}}
+    \put(2,0){\line(0,1){4}}
+    \put(4,0){\line(0,1){4}}
+    \put(0,1){\line(1,0){6}}
+    \put(5,2.8){\circle*{1.5}}
+  \end{picture}} }
+\newcommand{\lrmouse}{%
+  \raisebox{-1pt}{%
+  \begin{picture}(6,4)
+    \put(0,0){\line(0,1){3}}
+    \put(3,3){\oval(6,2)[t]}
+    \put(6,0){\line(0,1){3}}
+    \put(2,0){\line(0,1){4}}
+    \put(4,0){\line(0,1){4}}
+    \put(0,1){\line(1,0){6}}
+    \put(1,2.8){\circle*{1.5}}
+    \put(5,2.8){\circle*{1.5}}
+  \end{picture}} }
+\newcommand{\shift}{\fbox{Shift} }
+\newcommand{\ctrl}{\fbox{Ctrl} }
+\newcommand{\alt}{\fbox{Alt} }
+\newcommand{\arrow}{\fbox{Arrow} }
+\newcommand{\key}[1]{\fbox{\parbox{12pt}{\rule{0pt}{7pt}\hfil#1\hfil}}}
+\newcommand{\tool}[1]{
+  \hhline{|t:==:t|}
+  \multicolumn{2}{||l||}{\textbf{#1}} \\
+  \hhline{||--||}} 
+\newcommand{\comment}[1]{
+  \hhline{||--||}
+  \multicolumn{2}{||l||}{#1} \\
+  \hhline{||--||}}
+%\newcommand{\spacer}{
+%  \hline
+%  \multicolumn{2}{}{} \\
+%  \hline}
+\newcommand{\spacer}{
+  \hhline{==}}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{sideways}
+\parbox{\textheight}{
+  \center \Large
+  The GNU Image Manipulation Program -- Quick Reference Sheet \\[1ex]
+}
+\end{sideways}
+\begin{sideways}
+\begin{tabular}[t]{|ll|}
+\tool{Selection Tools}
+\lmouse                      & Draw selection \\
+\lmouse $\rightarrow$ \lrmouse $\rightarrow$ \rmouse & Cancel selection \\ 
+\comment{On existing selections}
+\alt + \lmouse               & Move selection \\
+\comment{Initial click}
+\shift + \lmouse             & Add to selection \\
+\ctrl + \lmouse              & Subtract from selection \\
+\comment{Ellipse and Rectangle selections \hfill \key{E} / \key{R}}
+\shift + \lmouse             & Limit to circle/square \\
+\ctrl + \lmouse              & Start from center \\
+\shift + \ctrl + \lmouse     & Circle/square from center \\
+\comment{Fuzzy Selection       \hfill \key{Z}} 
+\comment{Free Selection        \hfill \key{F}} 
+\comment{Intelligent Scissors  \hfill \key{I}}
+\comment{Bezier Selection      \hfill \key{B}} 
+\lmouse {\small inside closed form}   & Bezier to selection \\
+\lmouse                      & Move control handles \\
+\shift + \lmouse             & Move one handle only \\
+\ctrl + \lmouse              & Move control point \\
+
+\spacer
+
+\tool{Move tool \hfill \key{M}}
+
+\lmouse                      & Move layer \\
+\ctrl + \arrow               & Move layer one pixel \\ 
+\shift + \arrow              & Move layer 25 pixels \\
+\alt + \arrow                & Move selection one pixel \\
+\alt + \shift + \arrow       & Move selection 25 pixels \\
+
+\spacer 
+
+\tool{Magnify Tool \hfill \shift + \key{M}}
+\lmouse \quad or \quad \key{+}           & Zoom in \\
+\shift + \lmouse \quad or \quad \key{-}  & Zoom out \\
+
+\spacer
+
+\tool{Text Tool \hfill \key{T}}
+\lmouse                     & Set top left corner of text \\
+
+\spacer
+
+\tool{Color Picker Tool \hfill \key{O}} 
+\lmouse                      & Set active color \\
+
+\hline
+\end{tabular}
+\quad
+\begin{tabular}[t]{|ll|}
+
+\tool{Transform Tool \hfill \shift + \key{T}}
+\comment{Rotation mode} 
+\lmouse                      & Free rotating \\
+\ctrl + \lmouse              & Rotate with 15$^\circ$ increments \\
+\comment{Scaling mode}
+\lmouse                      & Free scaling \\
+\shift + \lmouse             & Scale in X direction only \\
+\ctrl + \lmouse              & Scale in Y direction only \\
+\shift + \ctrl + \lmouse     & Scale with fixed aspect ratio \\
+\comment{Shearing mode}
+\lmouse                      & Free shearing \\
+\comment{Perspective mode}
+\lmouse                      & Move control point \\
+\comment{Flip Mode}
+\lmouse                      & Flip \\
+
+\spacer 
+
+\tool{Bucket Fill Tool \hfill \shift + \key{B}}
+\comment{without selection}
+\lmouse                      & Flood fill with FG color \\
+\shift + \lmouse             & Flood fill with BG color \\
+\comment{with selection} 
+\lmouse                      & Fill selection with FG color \\
+\shift + \lmouse             & Fill selection with BG color \\
+
+\spacer
+
+\tool{Blend Tool \hfill \key{L}} 
+\lmouse                      & Set start/end of gradient \\
+\lmouse + \rmouse - \lmouse  & Cancel gradient \\
+
+\spacer 
+
+\tool{Pencil Tool \hfill \shift + \key{P}}
+\lmouse                      & Draw \\
+\alt + \lmouse               & Quick draw \\
+\shift + \lmouse             & Line draw \\  
+
+\spacer 
+
+\tool{Paintbrush Tool \hfill \key{P}}
+\lmouse                      & Draw \\
+\alt + \lmouse               & Quick draw \\
+\shift + \lmouse             & Line draw \\  
+
+\hline
+\end{tabular}
+\quad
+\begin{tabular}[t]{|ll|}
+
+\tool{Eraser Tool \hfill \shift + \key{E}}
+\lmouse                      & Set to BG color / Clear \\
+\alt + \lmouse               & Quick erase \\
+\shift + \lmouse             & Line erase \\
+
+\spacer
+
+\tool{Airbrush Tool \hfill \key{A}}
+\lmouse                      & Paint \\
+\alt + \lmouse               & Quick paint \\
+\shift + \lmouse             & Line paint \\  
+
+\spacer
+
+\tool{Clone Tool \hfill \key{C}}
+\lmouse                      & Clone \\
+\ctrl + \lmouse              & Set clone source point \\
+\alt + \lmouse               & Quick clone \\  
+\shift + \lmouse             & Line clone \\
+
+\spacer
+
+\tool{Convolver Tool \hfill \key{V}}
+\lmouse                      & Blur / Sharpen \\
+
+\spacer
+
+\tool{General Hot Keys \hfill {\small(incomplete)}}
+\mmouse                      & Pan image \\[1pt]
+\key{D}                      & Select default colors \\
+\key{X}                      & Swap FG and BG colors \\[1pt]
+\ctrl + \key{N}              & New image \\
+\ctrl + \key{O}              & Open image \\
+\ctrl + \key{S}              & Save image \\
+\ctrl + \key{C}              & Close image \\[1pt]
+\ctrl + \key{C}              & Copy selection \\
+\ctrl + \key{X}              & Cut selection \\
+\ctrl + \key{V}              & Paste selection \\[1pt]
+\ctrl + \key{Z}              & Undo \\
+\ctrl + \key{R}              & Redo last undone \\[1pt]
+\ctrl + \key{I}              & Invert selection \\
+\ctrl + \key{A}              & Select all \\
+\ctrl + \shift + \key{A}     & Unselect all \\[1pt]
+\alt + \key{F}               & Repeat last plug-in \\
+\shift + \alt + \key{F}      & Reshow last plug-in \\
+
+\hline
+\end{tabular}
+
+\end{sideways}
+\begin{sideways}
+\parbox{\textheight}{
+  \center \footnotesize
+  compiled by Adrian Likins, \TeX{}ed by Sven Neumann, inspired by Ry4an Brase
+}
+\end{sideways}
+
+\end{document}
+
+
+
+
+
+
+
