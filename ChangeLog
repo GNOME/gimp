@@ -1,3 +1,13 @@
+2004-01-27  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: use AM_PATH_GIMPPRINT to get some additional
+	sanity checks.
+
+	* acinclude.m4: define AM_PATH_GIMPPRINT here, so we don't have
+	add a new autogen dependency.
+
+	* plug-ins/print/Makefile.am: Use GIMPPRINT_{CFLAGS,LIBS}
+
 2004-01-28  Simon Budig  <simon@gimp.org>
 
 	Argh, this is getting silly.

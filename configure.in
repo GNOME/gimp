@@ -1048,30 +1048,21 @@ AC_SUBST(LIBSVG)
 ######################
 
 AC_ARG_ENABLE(print, [  --disable-print         build without print support (requires libgimpprint)])
-  if test "x$enable_print" != "xno"; then
-  AC_PATH_PROG(PRINT_CONFIG, gimpprint-config, no)
-    if test "x$PRINT_CONFIG" != "xno"; then
-      AC_MSG_CHECKING(for appropriate gimpprint library)
-      print_version=`$PRINT_CONFIG --version`
-      if expr $print_version \>= gimpprint_required_version >/dev/null; then
-        if expr $print_version \< gimpprint_toonew_version >/dev/null; then
-          AC_MSG_RESULT([yes (version $print_version)])
-          have_gimp_print=yes
-          PRINT_LIBS=`$PRINT_CONFIG --libs`
-          PRINT_CFLAGS=`$PRINT_CONFIG --cflags`
-        else
-          AC_MSG_WARN([
+
+have_gimp_print=no
+if test "x$enable_print" != "xno"; then
+  AM_PATH_GIMPPRINT(gimpprint_required_version,
+    [print_version=`$GIMPPRINT_CONFIG --version`
+      if expr $print_version \>= gimpprint_toonew_version >/dev/null; then
+        AC_MSG_WARN([
 *** libgimpprint version $print_version is too new.
 *** It is likely an unstable development version.
 *** You need a version before gimpprint_toonew_version.])
-        fi
       else
-        AC_MSG_WARN([
-*** libgimpprint version $print_version is too old.
-*** You need at least version gimpprint_required_version.])
+        have_gimp_print=yes
       fi
-    fi
-  fi
+    ])
+fi
 
 if test x$enable_print != xno && test x$have_gimp_print != xyes; then
   AC_MSG_ERROR([

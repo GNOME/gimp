@@ -18,9 +18,9 @@ print_SOURCES = \
         print_gimp.h
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	$(PRINT_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	$(GIMPPRINT_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
@@ -30,6 +30,6 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(PRINT_LIBS)		\
+	$(GIMPPRINT_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
