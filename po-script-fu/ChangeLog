@@ -1,3 +1,11 @@
+2001-10-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file (you probably already have 
+	translations for the new messages in the po-plug-ins domain).
+	Fixes bug #62920.
+	
+	* de.po: updated german translation
+
 2001-10-24  Christophe Merlet  <redfox@eikonex.org>
 
 	* fr.po: updated French translation.

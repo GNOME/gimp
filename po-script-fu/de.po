@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-08-30 01:00+0200\n"
-"PO-Revision-Date: 2001-08-30 01:00+0200\n"
+"POT-Creation-Date: 2001-10-24 12:21+0200\n"
+"PO-Revision-Date: 2001-10-24 12:31+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,8 @@ msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
 #: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
@@ -106,12 +108,12 @@ msgid "About"
 msgstr "Über"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:545
 msgid "OK"
 msgstr "OK"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -127,14 +129,18 @@ msgstr ""
 "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "Autor:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr "Copyright:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "Datum:"
@@ -158,15 +164,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:540
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu Server-Einstellungen"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:567
 msgid "Server Port:"
 msgstr "Server Port:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:573
 msgid "Server Logfile:"
 msgstr "Server Logdatei:"
 
@@ -185,6 +191,67 @@ msgstr "Alle Skripte neu einlesen"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+msgid "DB Browser (init...)"
+msgstr "DB-Browser (Initialisierung...)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr "Suchen nach Namen"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr "Suchen nach Beschreibung"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr "Anwenden"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr "Suchen:"
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+msgid "Name:"
+msgstr "Name:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+msgid "Blurb:"
+msgstr "Beschreibung"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr "Eingabe:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr "Ausgabe"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr "Hilfe:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr "DB-Browser (nach Namen - bitte warten)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr "DB-Browser (nach Beschreibung - bitte warten)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr "DB-Browser (bitte warten)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+msgid "DB Browser"
+msgstr "DB-Browser"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
