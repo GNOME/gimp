@@ -1,3 +1,10 @@
+Tue Dec  9 15:21:16 PST 1997 Raph Levien <raph@acm.org>
+
+	* app/gimprc.c, app/commands.c: committed the preferences patch I
+ 	 posted to gimp-developer on 4 Nov 1997. This patch fixes some
+ 	 stability problems, as well as makes the preferences saving
+ 	 functionality more complete.
+	
 Tue Dec  9 00:52:15 EST 1997 Adrian Likins <adrian@gimp.org>
 
 	* added illusion, papertile, colorify, and glasstile
