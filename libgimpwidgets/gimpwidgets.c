@@ -189,7 +189,8 @@ gimp_option_menu_new (gboolean            menu_only,
  * @menu_only:          #TRUE if the function should return a #GtkMenu only.
  * @menu_item_callback: The callback each menu item's "activate" signal will
  *                      be connected with.
- * @callback_data:      The data which will be passed to g_signal_connect().
+ * @menu_item_callback_data:
+ *                      The data which will be passed to g_signal_connect().
  * @initial:            The @item_data of the initially selected menu item.
  * @...:                A #NULL terminated @va_list describing the menu items.
  *
@@ -474,7 +475,7 @@ gimp_radio_group_new (gboolean            in_frame,
  *                         a title.
  * @radio_button_callback: The callback each button's "toggled" signal will
  *                         be connected with.
- * @callback_data:         The data which will be passed to
+ * @radio_button_callback_data: The data which will be passed to
  *                         g_signal_connect().
  * @initial:               The @item_data of the initially pressed radio button.
  * @...:                   A #NULL terminated @va_list describing

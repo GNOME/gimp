@@ -1,5 +1,6 @@
 <SECTION>
 <FILE>gimpchainbutton</FILE>
+<TITLE>GimpChainButton</TITLE>
 GimpChainButton
 GimpChainPosition
 gimp_chain_button_new
@@ -18,6 +19,7 @@ GIMP_CHAIN_BUTTON_GET_CLASS
 
 <SECTION>
 <FILE>gimpcolorarea</FILE>
+<TITLE>GimpColorArea</TITLE>
 GimpColorArea
 GimpColorAreaType
 gimp_color_area_new
@@ -38,6 +40,7 @@ GIMP_COLOR_AREA_GET_CLASS
 
 <SECTION>
 <FILE>gimpcolorbutton</FILE>
+<TITLE>GimpColorButton</TITLE>
 GimpColorButton
 gimp_color_button_new
 gimp_color_button_set_color
@@ -57,6 +60,7 @@ GIMP_COLOR_BUTTON_GET_CLASS
 
 <SECTION>
 <FILE>gimpfileselection</FILE>
+<TITLE>GimpFileSelection</TITLE>
 GimpFileSelection
 gimp_file_selection_new
 gimp_file_selection_get_filename
@@ -74,6 +78,7 @@ GIMP_FILE_SELECTION_GET_CLASS
 
 <SECTION>
 <FILE>gimppatheditor</FILE>
+<TITLE>GimpPathEditor</TITLE>
 GimpPathEditor
 gimp_path_editor_new
 gimp_path_editor_get_path
@@ -90,6 +95,7 @@ GIMP_PATH_EDITOR_GET_CLASS
 
 <SECTION>
 <FILE>gimppixmap</FILE>
+<TITLE>GimpPixmap</TITLE>
 GimpPixmap
 gimp_pixmap_new
 gimp_pixmap_set
@@ -106,6 +112,7 @@ GIMP_PIXMAP_GET_CLASS
 
 <SECTION>
 <FILE>gimpsizeentry</FILE>
+<TITLE>GimpSizeEntry</TITLE>
 GimpSizeEntry
 GimpSizeEntryField
 GimpSizeEntryUpdatePolicy
@@ -137,6 +144,7 @@ GIMP_SIZE_ENTRY_GET_CLASS
 
 <SECTION>
 <FILE>gimpunitmenu</FILE>
+<TITLE>GimpUnitMenu</TITLE>
 GimpUnitMenu
 gimp_unit_menu_new
 gimp_unit_menu_set_unit
@@ -154,6 +162,7 @@ GIMP_UNIT_MENU_GET_CLASS
 
 <SECTION>
 <FILE>gimpbutton</FILE>
+<TITLE>GimpButton</TITLE>
 GimpButton
 gimp_button_new
 gimp_button_extended_clicked
@@ -170,6 +179,7 @@ GIMP_BUTTON_GET_CLASS
 
 <SECTION>
 <FILE>gimpoffsetarea</FILE>
+<TITLE>GimpOffsetArea</TITLE>
 GimpOffsetArea
 gimp_offset_area_new
 gimp_offset_area_set_size
@@ -187,6 +197,7 @@ GIMP_OFFSET_AREA_GET_CLASS
 
 <SECTION>
 <FILE>gimpdialog</FILE>
+<TITLE>GimpDialog</TITLE>
 GimpDialog
 gimp_dialog_new
 gimp_dialog_newv
@@ -205,6 +216,7 @@ GIMP_DIALOG_GET_CLASS
 
 <SECTION>
 <FILE>gimphelpui</FILE>
+<TITLE>GimpHelpUI</TITLE>
 GimpHelpFunc
 gimp_help_init
 gimp_help_free
@@ -218,6 +230,7 @@ gimp_context_help
 
 <SECTION>
 <FILE>gimpquerybox</FILE>
+<TITLE>GimpQueryBox</TITLE>
 GimpQueryStringCallback
 GimpQueryIntCallback
 GimpQueryDoubleCallback
@@ -233,6 +246,7 @@ GIMP_QUERY_BOX_VBOX
 
 <SECTION>
 <FILE>gimpstock</FILE>
+<TITLE>GimpStock</TITLE>
 gimp_stock_init
 GIMP_STOCK_ANCHOR
 GIMP_STOCK_DUPLICATE
@@ -313,6 +327,7 @@ GIMP_STOCK_WILBER_EEK
 
 <SECTION>
 <FILE>gimpwidgets</FILE>
+<TITLE>GimpWidgets</TITLE>
 gimp_widgets_init
 gimp_option_menu_new
 gimp_option_menu_new2

@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimpdialog
+GimpDialog
 
 <!-- ##### SECTION Short_Description ##### -->
 Constructors for #GtkDialog's and action_areas as well as other

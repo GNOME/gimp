@@ -1,5 +1,14 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimphelpui.sgml
+	* libgimpwidgets/tmpl/gimpquerybox.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: some small updates.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-docs.sgml
 	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpimage.sgml: updated.

@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimphelpui
+GimpHelpUI
 
 <!-- ##### SECTION Short_Description ##### -->
 Functions for setting #GtkTooltips and HTML links into the GIMP help

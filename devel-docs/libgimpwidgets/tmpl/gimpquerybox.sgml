@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimpquerybox
+GimpQueryBox
 
 <!-- ##### SECTION Short_Description ##### -->
 Some simple dialogs to enter a single int, double, string or boolean value.
