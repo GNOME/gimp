@@ -43,6 +43,7 @@ tips_dialog_create ()
   GtkWidget *vbox_check;
   GtkWidget *button_check;
   gchar  *   temp;
+  guchar *   utemp;
   guchar *   src;
   guchar *   dest;
   int        x;
@@ -98,20 +99,20 @@ tips_dialog_create ()
 
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (preview), wilber_width, wilber_height);
-      temp = g_malloc (wilber_width * 3);
+      utemp = g_new (guchar, wilber_width * 3);
       src = (guchar *)wilber_data;
       for (y = 0; y < wilber_height; y++)
 	{
-	  dest = temp;
+	  dest = utemp;
 	  for (x = 0; x < wilber_width; x++)
 	    {
 	      HEADER_PIXEL(src, dest);
 	      dest += 3;
 	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), temp,
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), utemp,
 				0, y, wilber_width); 
 	}
-      g_free(temp);
+      g_free(utemp);
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_box_pack_end (GTK_BOX (hbox1), frame, FALSE, TRUE, 3);

@@ -444,10 +444,16 @@ gimp_drawable_parasite_list (GimpDrawable *drawable, gint *count)
 void
 gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
 {
-  /* only set the dirty bit if we can be saved and the new parasite differs 
-     from the current one */
-  if (parasite_is_persistent(parasite) &&
-      !parasite_compare(parasite, gimp_drawable_find_parasite(drawable,
+  /* only set the dirty bit manually if we can be saved and the new
+     parasite differs from the current one and we arn't undoable */
+  if (parasite_is_undoable(parasite))
+  {
+    undo_push_group_start(drawable->gimage); /* do a group in case we have
+						attach_parrent set        */
+    undo_push_drawable_parasite (drawable->gimage, drawable, parasite);
+  }
+  else if (parasite_is_persistent(parasite) &&
+	   !parasite_compare(parasite, gimp_drawable_find_parasite(drawable,
 						parasite_name(parasite))))
     gimp_image_dirty(drawable->gimage);
   parasite_list_add(drawable->parasites, parasite);
@@ -462,6 +468,10 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
     parasite_shift_parent(parasite);
     gimp_attach_parasite(parasite);
   }
+  if (parasite_is_undoable(parasite))
+  {
+    undo_push_group_end(drawable->gimage);
+  }
 }
 
 void
@@ -470,7 +480,10 @@ gimp_drawable_detach_parasite (GimpDrawable *drawable, const char *parasite)
   Parasite *p;
   if (!(p = parasite_list_find(drawable->parasites, parasite)))
     return;
-  if (parasite_is_persistent(p))
+  if (parasite_is_undoable(p))
+    undo_push_drawable_parasite_remove (drawable->gimage, drawable,
+					parasite_name(p));
+  else if (parasite_is_persistent(p))
     gimp_image_dirty(drawable->gimage);
   parasite_list_remove(drawable->parasites, parasite);
 }

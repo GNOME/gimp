@@ -29,12 +29,15 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define PARASITE_PERSISTENT 1
+#define PARASITE_UNDOABLE   2
 
 #define PARASITE_ATTACH_PARENT (0x80 << 8)
 #define PARASITE_PARENT_PERSISTENT (PARASITE_PERSISTENT << 8)
+#define PARASITE_PARENT_UNDOABLE (PARASITE_UNDOABLE << 8)
 
 #define PARASITE_ATTACH_GRANDPARENT (0x80 << 16)
 #define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
+#define PARASITE_GRANDPARENT_UNDOABLE (PARASITE_UNDOABLE << 16)
 
 Parasite   *parasite_new      (const char *name, guint32 flags,
 			       guint32 size, const void *data);
@@ -47,6 +50,7 @@ int         parasite_compare  (const Parasite *a, const Parasite *b);
 int         parasite_is_type       (const Parasite *parasite,
 				    const char *name);
 int         parasite_is_persistent (const Parasite *p);
+int         parasite_is_undoable   (const Parasite *p);
 int         parasite_has_flag      (const Parasite *p, gulong flag);
 gulong      parasite_flags         (const Parasite *p);
 const char *parasite_name          (const Parasite *p);

@@ -42,13 +42,13 @@ gimp_attach_parasite (Parasite *p)
 }
 
 void
-gimp_detach_parasite (char *name)
+gimp_detach_parasite (const char *name)
 {
   parasite_list_remove(parasites, name);
 }
 
 Parasite *
-gimp_find_parasite (char *name)
+gimp_find_parasite (const char *name)
 {
   return parasite_list_find(parasites, name);
 }

@@ -374,6 +374,34 @@ gimp_image_enable_undo (gint32 image_ID)
 }
 
 void
+gimp_undo_push_group_start (gint32 image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_undo_push_group_start",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_undo_push_group_end (gint32 image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_undo_push_group_end",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
 gimp_image_clean_all (gint32 image_ID)
 {
   GParam *return_vals;

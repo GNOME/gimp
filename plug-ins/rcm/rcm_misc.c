@@ -49,7 +49,7 @@
 
 /*-----------------------------------------------------------------------------------*/
 
-inline float arctg(float y, float x)
+float arctg(float y, float x)
 {
   float temp = atan2(y,x);
   return (temp<0) ? (temp+TP) : temp;
@@ -379,7 +379,7 @@ void rcm_render_preview(GtkWidget *preview, gint version)
 	{
 	  for (k=0; k<3; k++)
 	  {
-	    //	    transp = reduced->mask[i*RW*bytes+j*bytes+3] / 255.0;
+	    /*	    transp = reduced->mask[i*RW*bytes+j*bytes+3] / 255.0; */
 	    transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
 	    a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
 	  }

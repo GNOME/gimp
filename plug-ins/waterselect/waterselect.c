@@ -483,7 +483,7 @@ proximity_out_event (GtkWidget *widget, GdkEventProximity *event)
 {
 #ifdef VERBOSE
   g_print ("proximity out\n");
-#endif VERBOSE
+#endif /* VERBOSE */
   return TRUE;
 }
 

@@ -2130,7 +2130,7 @@ plug_in_flush (GIOChannel *channel)
 {
   GIOError error;
   int count;
-  int bytes;
+  guint bytes;
 
   if (current_write_buffer_index > 0)
     {

@@ -252,7 +252,7 @@ static void do_layerrot(GDrawable *drawable,
       drawable = gimp_drawable_get(drawable->id);
     }
   else /* not a layer... probably a channel... abort operation */
-    exit;
+    return;
 
 
   /* If 'preserve transparency' was on, we need to temporatily

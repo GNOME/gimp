@@ -79,6 +79,11 @@ int      undo_push_fs_rigor          (GImage *, int);
 int      undo_push_fs_relax          (GImage *, int);
 int      undo_push_gimage_mod        (GImage *);
 int      undo_push_guide             (GImage *, void *);
+int      undo_push_image_parasite    (GImage *, void *);
+int      undo_push_drawable_parasite (GImage *, GimpDrawable *, void *);
+int      undo_push_image_parasite_remove    (GImage *, const char *);
+int      undo_push_drawable_parasite_remove (GImage *, GimpDrawable *,
+					     const char *);
 
 int      undo_pop                    (GImage *);
 int      undo_redo                   (GImage *);

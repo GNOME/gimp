@@ -513,11 +513,6 @@ edit_selection_draw (Tool *tool)
       break;
 
     case MaskToLayerTranslate:
-      if (diff_x < 0)
-	{
-	  x1 = x1 + 1;
-	  x1 --;
-	}
       gdisplay_transform_coords (gdisp, edit_select.x1, edit_select.y1, &x1, &y1, TRUE);
       gdisplay_transform_coords (gdisp, edit_select.x2, edit_select.y2, &x2, &y2, TRUE);
       gdk_draw_rectangle (edit_select.core->win,

@@ -340,11 +340,16 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 			gdtvals.new_layer		= !gimp_drawable_has_alpha(gdtvals.drawable_id);
 			break;
 	}
+
+	gimp_undo_push_group_start(gdtvals.image_id);
+
 	gdt_render_text(&gdtvals);
 	gdt_set_values(&gdtvals);
 	if (run_mode == RUN_INTERACTIVE)
 		gimp_set_data("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
 	values[1].data.d_int32 = gdtvals.layer_id; 
+
+	gimp_undo_push_group_end(gdtvals.image_id);
 }
 
 
@@ -496,7 +501,7 @@ void gdt_set_values(GdtVals *data)
 		data->spacing);
 
 #ifdef GIMP_HAVE_PARASITES
-	parasite = parasite_new(GDYNTEXT_PARASITE, PARASITE_PERSISTENT,
+	parasite = parasite_new(GDYNTEXT_PARASITE, PARASITE_PERSISTENT | PARASITE_UNDOABLE,
 		strlen(lname), lname);
 	gimp_drawable_attach_parasite(data->drawable_id, parasite);
 	parasite_free(parasite);
@@ -532,9 +537,6 @@ void gdt_render_text(GdtVals *data)
 	GParamColor old_color, text_color;
 
 	gimp_progress_init("GIMP Dynamic Text");
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
 
   /* save and remove current selection */
   ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
@@ -770,10 +772,6 @@ void gdt_render_text(GdtVals *data)
     gimp_destroy_params(ret_vals, nret_vals);
     gimp_image_remove_channel(data->image_id, selection_channel);
   }
-
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_end", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
 
 	gimp_displays_flush();
 	gimp_progress_update(100.0);

@@ -187,7 +187,7 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   gdisplays_selection_visibility (gdisp->gimage, SelectionPause);
 
   /* add motion memory if you press mod1 first ^ perfectmouse */
-  if (((bevent->state & GDK_MOD1_MASK) != 0) != (perfectmouse != 0))
+  if (perfectmouse == 0)
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		      GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);

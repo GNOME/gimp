@@ -99,7 +99,7 @@ static void font_selection_init(FontSelection *fs)
 	fs->font = GTK_WIDGET(fs)->style->font;
 
 	/* get X font list and setup font names and styles */
-//#define DEBUG_SPAM
+/* #define DEBUG_SPAM */
 #ifndef DEBUG_SPAM
 	/* FIXME: not only for "-*", do also "*"!!! */
 	xfontnames = XListFonts(GDK_DISPLAY(), "-*", MAX_FONTS, &num_fonts);

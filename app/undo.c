@@ -41,6 +41,9 @@
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
 
+#include "libgimp/parasite.h"
+#include "gimpparasite.h"
+
 
 
 typedef int   (* UndoPopFunc)  (GImage *, int, int, void *);
@@ -75,6 +78,7 @@ int      undo_pop_fs_rigor         (GImage *, int, int, void *);
 int      undo_pop_fs_relax         (GImage *, int, int, void *);
 int      undo_pop_gimage_mod       (GImage *, int, int, void *);
 int      undo_pop_guide            (GImage *, int, int, void *);
+int      undo_pop_parasite         (GImage *, int, int, void *);
 
 /*  Free functions  */
 
@@ -93,6 +97,8 @@ void     undo_free_fs_rigor        (int, void *);
 void     undo_free_fs_relax        (int, void *);
 void     undo_free_gimage_mod      (int, void *);
 void     undo_free_guide           (int, void *);
+void     undo_free_parasite        (int, void *);
+
 
 
 /*  Sizing functions  */
@@ -2099,3 +2105,219 @@ undo_free_guide (int   state,
 
   g_free (data_ptr);
 }
+
+
+/************/
+/* Parasite */
+
+typedef struct _ParasiteUndo ParasiteUndo;
+
+struct _ParasiteUndo
+{
+  GImage *gimage;
+  GimpDrawable *drawable;
+  Parasite *parasite;
+  char *name;
+};
+
+int
+undo_push_image_parasite (GImage   *gimage,
+			  void     *parasite)
+{
+  Undo *new;
+  ParasiteUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (ParasiteUndo);
+
+  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+    {
+      data               = g_new (ParasiteUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_parasite;
+      new->free_func     = undo_free_parasite;
+
+      data->gimage   = gimage;
+      data->drawable = NULL;
+      data->name     = g_strdup(parasite_name(parasite));
+      data->parasite = parasite_copy(gimp_image_find_parasite(gimage, data->name));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+int
+undo_push_image_parasite_remove (GImage      *gimage,
+				 const char  *name)
+{
+  Undo *new;
+  ParasiteUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (ParasiteUndo);
+
+  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+    {
+      data               = g_new (ParasiteUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_parasite;
+      new->free_func     = undo_free_parasite;
+
+      data->gimage = gimage;
+      data->drawable = NULL;
+      data->name     = g_strdup(name);
+      data->parasite = parasite_copy(gimp_image_find_parasite(gimage, data->name));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+int
+undo_push_drawable_parasite (GImage       *gimage,
+			     GimpDrawable *drawable,
+			     void         *parasite)
+{
+  Undo *new;
+  ParasiteUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (ParasiteUndo);
+
+  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+    {
+      data               = g_new (ParasiteUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_parasite;
+      new->free_func     = undo_free_parasite;
+
+      data->gimage   = NULL;
+      data->drawable = drawable;
+      data->name     = g_strdup(parasite_name(parasite));
+      data->parasite = parasite_copy(gimp_drawable_find_parasite(drawable, data->name));
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+int
+undo_push_drawable_parasite_remove (GImage       *gimage,
+				    GimpDrawable *drawable,
+				    const char   *name)
+{
+  Undo *new;
+  ParasiteUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (ParasiteUndo);
+
+  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+    {
+      data               = g_new (ParasiteUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_parasite;
+      new->free_func     = undo_free_parasite;
+
+      data->gimage   = NULL;
+      data->drawable = drawable;
+      data->name     = g_strdup(name);
+      data->parasite = parasite_copy(gimp_drawable_find_parasite(drawable, data->name));
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+
+int
+undo_pop_parasite (GImage *gimage,
+		int     state,
+		int     type,
+		void   *data_ptr)
+{
+  ParasiteUndo *data;
+  Parasite *tmp;
+  int tmp_ref;
+
+  data = data_ptr;
+
+  tmp = data->parasite;
+  
+  if (data->gimage)
+  {
+    data->parasite = parasite_copy(gimp_image_find_parasite(gimage,
+							    data->name));
+    if (tmp)
+      parasite_list_add(data->gimage->parasites, tmp);
+    else
+      parasite_list_remove(data->gimage->parasites, data->name);
+  }
+  else if (data->drawable)
+  {
+    data->parasite = parasite_copy(gimp_drawable_find_parasite(data->drawable,
+							       data->name));
+    if (tmp)
+      parasite_list_add(data->drawable->parasites, tmp);
+    else
+      parasite_list_remove(data->drawable->parasites, data->name);
+  }
+  else
+  {
+    data->parasite = parasite_copy(gimp_find_parasite(data->name));
+    if (tmp)
+      gimp_attach_parasite(tmp);
+    else
+      gimp_detach_parasite(data->name);
+  }
+    
+  if (tmp)
+    parasite_free(tmp);
+
+/*   if ((tmp            && parasite_is_persistant(tmp)) || */
+/*       (data->parasite && parasite_is_persistant(data->parasite))) */
+      switch (state)
+      {
+       case UNDO:
+	 gimage_clean (gimage);
+	 break;
+       case REDO:
+	 gimage_dirty (gimage);
+	 break;
+      }
+
+  return TRUE;
+}
+
+
+void
+undo_free_parasite (int   state,
+		 void *data_ptr)
+{
+  ParasiteUndo *data;
+
+  data = data_ptr;
+
+  if (data->parasite)
+    parasite_free (data->parasite);
+  if (data->name)
+    g_free (data->name);
+
+  g_free (data_ptr);
+}
+

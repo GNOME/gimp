@@ -214,8 +214,6 @@ parasite_list_find(ParasiteList *list, const char *name)
     return NULL;
 }
 
-static int saved_bytes;
-
 void
 parasite_shift_parent(Parasite *p)
 {

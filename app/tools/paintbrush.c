@@ -279,13 +279,7 @@ paintbrush_options_new (void)
   return options;
 }
 
-
-#define USE_SPEEDSHOP_CALIPERS 0
 #define TIMED_BRUSH 0
-
-#if USE_SPEEDSHOP_CALIPERS
-#include <SpeedShop/api.h>
-#endif
 
 void *
 paintbrush_paint_func (PaintCore *paint_core,
@@ -293,7 +287,7 @@ paintbrush_paint_func (PaintCore *paint_core,
 		       int        state)
 {
 #if TIMED_BRUSH
-  static GTimer *timer;
+  static GTimer *timer = NULL;
 #endif
   switch (state)
     {
@@ -301,29 +295,58 @@ paintbrush_paint_func (PaintCore *paint_core,
 #if TIMED_BRUSH
       timer = g_timer_new();
       g_timer_start(timer);
-#if USE_SPEEDSHOP_CALIPERS
-      ssrt_caliper_point(0, "Painting");
-#endif /* USE_SPEEDSHOP_CALIPERS */
 #endif /* TIMED_BRUSH */
+      if ((paint_core->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+	{
+	  unsigned char *color;
+	  if ((color = gimp_drawable_get_color_at(drawable, paint_core->curx,
+						  paint_core->cury)))
+	  {
+	    if ((paint_core->state & GDK_CONTROL_MASK))
+	      palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
+				      color [BLUE_PIX]);
+	    else
+	      palette_set_background (color[RED_PIX], color[GREEN_PIX],
+				      color [BLUE_PIX]);
+	    g_free(color);
+	  }
+	}
       break;
 
     case MOTION_PAINT :
-      paintbrush_motion (paint_core, drawable, 
-			 paintbrush_options->fade_out, 
-			 paintbrush_options->use_gradient ? 
-			 exp(paintbrush_options->gradient_length/10) : 0,
-			 paintbrush_options->incremental,
-			 paintbrush_options->gradient_type);
+      if ((paint_core->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+	{
+	  unsigned char *color;
+	  if ((color = gimp_drawable_get_color_at(drawable, paint_core->curx,
+						  paint_core->cury)))
+	  {
+	    if ((paint_core->state & GDK_CONTROL_MASK))
+	      palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
+				      color [BLUE_PIX]);
+	    else
+	      palette_set_background (color[RED_PIX], color[GREEN_PIX],
+				      color [BLUE_PIX]);
+	    g_free(color);
+	  }
+	}
+      else
+	paintbrush_motion (paint_core, drawable, 
+			   paintbrush_options->fade_out, 
+			   paintbrush_options->use_gradient ? 
+			   exp(paintbrush_options->gradient_length/10) : 0,
+			   paintbrush_options->incremental,
+			   paintbrush_options->gradient_type);
       break;
 
     case FINISH_PAINT :
 #if TIMED_BRUSH
-#if USE_SPEEDSHOP_CALIPERS
-      ssrt_caliper_point(0, "Not Painting Anymore");
-#endif /* USE_SPEEDSHOP_CALIPERS */
-      g_timer_stop(timer);
-      printf("painting took %f:\n", g_timer_elapsed(timer, NULL));
-      g_timer_destroy(timer);
+      if (timer)
+      {
+	g_timer_stop(timer);
+	printf("painting took %f:\n", g_timer_elapsed(timer, NULL));
+	g_timer_destroy(timer);
+	timer = NULL;
+      }
 #endif /* TIMED_BRUSH */
       break;
 
@@ -459,16 +482,16 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 
 gboolean
 paintbrush_non_gui (GimpDrawable *drawable,
-    		    int           num_strokes,
-		    double       *stroke_array,
-		    double        fade_out,
-		    int           method,
-		    double        gradient_length)
+                   int           num_strokes,
+                   double       *stroke_array,
+                   double        fade_out,
+                   int           method,
+                   double        gradient_length)
 {
   int i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
+                      stroke_array[0], stroke_array[1]))
     {
       non_gui_fade_out = fade_out;
       non_gui_gradient_length = gradient_length;
@@ -482,18 +505,18 @@ paintbrush_non_gui (GimpDrawable *drawable,
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+       paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+       {
+         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+         paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
+         non_gui_paint_core.lastx = non_gui_paint_core.curx;
+         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+       }
 
       /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);

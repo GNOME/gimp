@@ -994,8 +994,10 @@ gimp_image_parasite_list (GimpImage *image, gint *count)
 void
 gimp_image_attach_parasite (GimpImage *gimage, Parasite *parasite)
 {
-  /* only set the dirty bit if we can be saved and the new parasite differs 
-     from the current one */
+  /* only set the dirty bit manually if we can be saved and the new
+     parasite differs from the current one and we arn't undoable */
+  if (parasite_is_undoable(parasite))
+    undo_push_image_parasite (gimage, parasite);
   if (parasite_is_persistent(parasite)
       && !parasite_compare(parasite, gimp_image_find_parasite(gimage,
 						 parasite_name(parasite))))
@@ -1014,7 +1016,9 @@ gimp_image_detach_parasite (GimpImage *gimage, const char *parasite)
   Parasite *p;
   if (!(p = parasite_list_find(gimage->parasites, parasite)))
     return;
-  if (parasite_is_persistent(p))
+  if (parasite_is_undoable(p))
+    undo_push_image_parasite_remove (gimage, parasite_name(p));
+  else if (parasite_is_persistent(p))
     gimp_image_dirty(gimage);
   parasite_list_remove(gimage->parasites, parasite);
 }

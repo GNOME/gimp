@@ -62,7 +62,6 @@ parasite_new (const char *name, guint32 flags,
     p->name = g_strdup(name);
   else
   {
-    p->name = NULL;
     g_free (p);
     return NULL;
   }
@@ -132,6 +131,14 @@ parasite_is_persistent(const Parasite *p)
   if (p == NULL)
     return FALSE;
   return (p->flags & PARASITE_PERSISTENT);
+}
+
+int
+parasite_is_undoable(const Parasite *p)
+{
+  if (p == NULL)
+    return FALSE;
+  return (p->flags & PARASITE_UNDOABLE);
 }
 
 int

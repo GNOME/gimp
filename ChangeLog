@@ -1,3 +1,34 @@
+1999-04-22  Jay Cox  <jaycox@earthlink.net>
+
+	* app/edit_selection.c: removed some nonfunctional code.
+
+	* app/paint_core.c: remove the alt toggles perfectmouse behaviour.
+
+	* app/paintbrush.c: when ctl (or alt) is held set the fg (or bg) color.
+
+	* app/gimpparasite.[ch]: made char *name parameters const.
+
+	* app/parasitelist.c: removed unused static variable.
+
+	* app/gimpdrawable.c, app/gimpimage.c, app/undo.[ch]: added
+ 	support for undoing parasite changes.
+
+	* libgimp/gimp.h, libgimp/gimpimage.c: added
+ 	gimp_undo_push_group_start and gimp_undo_push_group_end
+
+	* libgimp/parasite.[ch]: added undoable flag.
+
+	* plug-ins/gdyntext/font_selection.c: fixed c++ style comment.
+
+	* plug-ins/gdyntext/gdyntext.c: use the new undoable parasites.
+
+	* plug-ins/rcm/rcm_misc.c: arctg can't be inline because it is
+ 	used in other .c files
+
+	* plug-ins/waterselect/waterselect.c,
+	* plug-ins/rotators/rotators.c, app/tips_dialog.c, app/plug_in.c:
+ 	fixed some warnings
+
 Fri Apr 23 01:31:29 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/crop.c: autocrop used to miss the bottom line

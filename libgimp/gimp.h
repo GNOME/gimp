@@ -421,6 +421,8 @@ void       gimp_image_add_layer_mask        (gint32     image_ID,
 void       gimp_image_clean_all             (gint32     image_ID);
 void       gimp_image_disable_undo          (gint32     image_ID);
 void       gimp_image_enable_undo           (gint32     image_ID);
+void       gimp_undo_push_group_start       (gint32     image_ID);
+void       gimp_undo_push_group_end         (gint32     image_ID);
 void       gimp_image_clean_all             (gint32     image_ID);
 gint32     gimp_image_flatten               (gint32     image_ID);
 void       gimp_image_lower_channel         (gint32     image_ID,
