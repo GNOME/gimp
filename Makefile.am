@@ -11,7 +11,6 @@ SUBDIRS = \
 	po-libgimp		\
 	po-plug-ins		\
 	po-script-fu		\
-	$(GIMP_PERL_PO)		\
 	data			\
 	tips			\
 	libgimpcolor		\

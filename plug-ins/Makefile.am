@@ -39,7 +39,6 @@ SUBDIRS = 			\
 	gfig			\
 	gflare			\
 	gfli			\
-	$(GIMP_PERL)		\
 	gimpressionist		\
 	$(HELPBROWSER)		\
 	ifscompose		\
