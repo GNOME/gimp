@@ -1,11 +1,20 @@
+2005-03-02  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD:
+
+	* app/dialogs/resize-dialog.c (resize_dialog_reset)
+	* app/dialogs/scale-dialog.c (scale_dialog_reset): don't rely on
+	GObject internals about the order in which properties are being
+	set. Fixes one aspect of bug #169011.
+
 2005-03-01  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c:  Back port fix for loading layer masks.
 	Fixes bug #166976.
+
 	* plug-ins/common/psd_save.c: Back port fix for file corruption
 	bug.  Includes fix for excessive memory usage.  Fixes bug #167139
 	and bug #121871.
-
 
 2005-02-24  Manish Singh  <yosh@gimp.org>
 

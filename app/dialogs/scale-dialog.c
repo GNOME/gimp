@@ -279,9 +279,15 @@ scale_dialog_reset (ScaleDialog *private)
 
   g_object_set (private->box,
                 "keep-aspect",     FALSE,
+                NULL);
+
+  g_object_set (private->box,
                 "width",           width,
                 "height",          height,
                 "unit",            private->unit,
+                NULL);
+
+  g_object_set (private->box,
                 "keep-aspect",     TRUE,
                 "xresolution",     xres,
                 "yresolution",     yres,
