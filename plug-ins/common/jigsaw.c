@@ -2528,12 +2528,11 @@ dialog_box (void)
 {
   GimpDrawable *drawable = globals.drawable;
   GtkWidget *dlg;
-  GtkWidget *main_hbox;
-  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *rbutton1;
   GtkWidget *rbutton2;
-  GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
@@ -2549,23 +2548,27 @@ dialog_box (void)
 
 			 NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_hbox);
+  hbox = gtk_hbox_new (FALSE, 10);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   preview = gimp_old_preview_new (drawable, TRUE);
-  gtk_box_pack_start (GTK_BOX (main_hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
   jigsaw(TRUE); /* render preview */
   gtk_widget_show (preview->widget);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   frame = gtk_frame_new (_("Number of Tiles"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2603,7 +2606,7 @@ dialog_box (void)
   gtk_widget_show (frame);
 
   frame = gtk_frame_new (_("Bevel Edges"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2645,9 +2648,6 @@ dialog_box (void)
 
   /* frame for primitive radio buttons */
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-
   frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
 				    G_CALLBACK (jigsaw_radio_button_update),
 				    &config.style, config.style,
@@ -2658,9 +2658,11 @@ dialog_box (void)
 				    NULL);
 
   gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
-  gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"), NULL);
+  gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
 
-  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
