@@ -230,6 +230,30 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tgradients.\n", -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "gfig\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis is a subdirectory which can be used to store\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser defined figures to be used by the gfig plug-in.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThe default gimprc file checks this subdirectory in\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\taddition to the systemwide gimp gfig installation\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\twhen searching for gfig figures.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "gflares\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis is a subdirectory which can be used to store\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser defined gflares to be used by the gflare plug-in.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThe default gimprc file checks this subdirectory in\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\taddition to the systemwide gimp gflares installation\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\twhen searching for gflares.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   "palettes\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tThis is a subdirectory which can be used to store\n", -1);
@@ -278,7 +302,7 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tThis subdirectory is used by the GIMP to store \n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "\t\tuser created and isntalled scripts. The default gimprc\n", -1);
+		   "\t\tuser created and installed scripts. The default gimprc\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tfile checks this subdirectory in addition to the system\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,

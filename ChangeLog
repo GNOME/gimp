@@ -1,3 +1,9 @@
+Sat Mar 21 16:26:08 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* docs/gimp.1
+	* app/install.c: small changes to reflect the fact that a gfig
+	directory is created in the users gimp-directory.
+
 Sat Mar 21 15:43:34 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* gimprc.in
