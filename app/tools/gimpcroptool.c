@@ -1066,6 +1066,12 @@ crop_response (GtkWidget    *widget,
   tool    = GIMP_TOOL (crop);
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
+  g_signal_handlers_block_by_func (crop->origin_sizeentry,
+                                   crop_origin_changed,
+                                   crop);
+  g_signal_handlers_block_by_func (crop->size_sizeentry,
+                                   crop_size_changed,
+                                   crop);
   switch (response_id)
     {
     case GIMP_CROP_MODE_CROP:
@@ -1081,14 +1087,14 @@ crop_response (GtkWidget    *widget,
       break;
     }
 
+  if (crop->crop_info)
+    info_dialog_popdown (crop->crop_info);
+
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (crop)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));
 
   if (gimp_tool_control_is_active (GIMP_TOOL (crop)->control))
     gimp_tool_control_halt (GIMP_TOOL (crop)->control);
-
-  if (crop->crop_info)
-    info_dialog_popdown (crop->crop_info);
 
   tool->gdisp    = NULL;
   tool->drawable = NULL;
