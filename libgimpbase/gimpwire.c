@@ -131,16 +131,7 @@ wire_read (GIOChannel *channel,
 	  do
 	    {
 	      bytes = 0;
-#ifdef __GNUC__
-#warning FIXME: g_io_channel_read_chars()
-#endif
-#if 0
 	      status = g_io_channel_read_chars (channel,
-						(gchar *) buf, count,
-						&bytes,
-						&error);
-#endif
-	      status = channel->funcs->io_read (channel,
 						(gchar *) buf, count,
 						&bytes,
 						&error);
@@ -149,8 +140,18 @@ wire_read (GIOChannel *channel,
 
 	  if (status != G_IO_STATUS_NORMAL)
 	    {
-	      g_warning ("%s: wire_read(): error: %s",
-			 g_get_prgname (), error->message);
+	      if (error)
+		{
+		  g_warning ("%s: wire_read(): error: %s",
+			     g_get_prgname (), error->message);
+		  g_error_free (error);
+		}
+	      else
+		{
+		  g_warning ("%s: wire_read(): error",
+			     g_get_prgname ());
+		}
+
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }
@@ -195,16 +196,7 @@ wire_write (GIOChannel *channel,
 	  do
 	    {
 	      bytes = 0;
-#ifdef __GNUC__
-#warning FIXME: g_io_channel_write_chars()
-#endif
-#if 0
 	      status = g_io_channel_write_chars (channel,
-						 (gchar *) buf, count,
-						 &bytes,
-						 &error);
-#endif
-	      status = channel->funcs->io_write (channel,
 						 (gchar *) buf, count,
 						 &bytes,
 						 &error);
@@ -213,8 +205,18 @@ wire_write (GIOChannel *channel,
 
 	  if (status != G_IO_STATUS_NORMAL)
 	    {
-	      g_warning ("%s: wire_write(): error: %s",
-			 g_get_prgname (), error->message);
+	      if (error)
+		{
+		  g_warning ("%s: wire_write(): error: %s",
+			     g_get_prgname (), error->message);
+		  g_error_free (error);
+		}
+	      else
+		{
+		  g_warning ("%s: wire_write(): error",
+			     g_get_prgname ());
+		}
+
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }

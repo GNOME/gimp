@@ -260,6 +260,12 @@ gimp_main (int   argc,
   g_io_channel_set_encoding (_readchannel, NULL, NULL);
   g_io_channel_set_encoding (_writechannel, NULL, NULL);
 
+  g_io_channel_set_buffered (_readchannel, FALSE);
+  g_io_channel_set_buffered (_writechannel, FALSE);
+
+  g_io_channel_set_close_on_unref (_readchannel, TRUE);
+  g_io_channel_set_close_on_unref (_writechannel, TRUE);
+
   gp_init ();
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
@@ -966,7 +972,7 @@ static gboolean
 gimp_flush (GIOChannel *channel)
 {
   GIOStatus  status;
-  GError    *error;
+  GError    *error = NULL;
   gsize      count;
   gsize      bytes;
 
@@ -978,17 +984,7 @@ gimp_flush (GIOChannel *channel)
 	  do
 	    {
 	      bytes = 0;
-#ifdef __GNUC__
-#warning FIXME: g_io_channel_write_chars()
-#endif
-#if 0
 	      status = g_io_channel_write_chars (channel,
-						 &write_buffer[count],
-						 (write_buffer_index - count),
-						 &bytes,
-						 &error);
-#endif
-	      status = channel->funcs->io_write (channel,
 						 &write_buffer[count],
 						 (write_buffer_index - count),
 						 &bytes,
@@ -998,8 +994,18 @@ gimp_flush (GIOChannel *channel)
 
 	  if (status != G_IO_STATUS_NORMAL)
 	    {
-	      g_warning ("%s: gimp_flush(): error: %s",
-			 g_get_prgname (), error->message);
+	      if (error)
+		{
+		  g_warning ("%s: gimp_flush(): error: %s",
+			     g_get_prgname (), error->message);
+		  g_error_free (error);
+		}
+	      else
+		{
+		  g_warning ("%s: gimp_flush(): error",
+			     g_get_prgname ());
+		}
+
 	      return FALSE;
 	    }
 

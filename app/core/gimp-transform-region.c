@@ -676,7 +676,9 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   /*  Flush the gdisplays  */
   if (gdisp->disp_xoffset || gdisp->disp_yoffset)
     {
-      gdk_window_get_size (gdisp->canvas->window, &x, &y);
+      x = gdisp->canvas->allocation.width;
+      y = gdisp->canvas->allocation.height;
+
       if (gdisp->disp_yoffset)
 	{
 	  gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,

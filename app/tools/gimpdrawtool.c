@@ -125,7 +125,7 @@ gimp_draw_tool_finalize (GObject *object)
 
   if (draw_tool->gc)
     {
-      gdk_gc_destroy (draw_tool->gc);
+      g_object_unref (G_OBJECT (draw_tool->gc));
       draw_tool->gc = NULL;
     }
 

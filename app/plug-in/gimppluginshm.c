@@ -1024,6 +1024,11 @@ plug_in_open (PlugIn *plug_in)
       g_io_channel_set_encoding (plug_in->his_read, NULL, NULL);
       g_io_channel_set_encoding (plug_in->his_write, NULL, NULL);
 
+      g_io_channel_set_buffered (plug_in->my_read, FALSE);
+      g_io_channel_set_buffered (plug_in->my_write, FALSE);
+      g_io_channel_set_buffered (plug_in->his_read, FALSE);
+      g_io_channel_set_buffered (plug_in->his_write, FALSE);
+
       g_io_channel_set_close_on_unref (plug_in->my_read, TRUE);
       g_io_channel_set_close_on_unref (plug_in->my_write, TRUE);
       g_io_channel_set_close_on_unref (plug_in->his_read, TRUE);
@@ -2128,7 +2133,7 @@ static gboolean
 plug_in_flush (GIOChannel *channel)
 {
   GIOStatus  status;
-  GError    *error;
+  GError    *error = NULL;
   gint       count;
   guint      bytes;
 
@@ -2140,29 +2145,30 @@ plug_in_flush (GIOChannel *channel)
 	  do
 	    {
 	      bytes = 0;
-
-#ifdef __GNUC__
-#warning FIXME: g_io_channel_write_chars()
-#endif
-#if 0
 	      status = g_io_channel_write_chars (channel,
 						 &current_write_buffer[count],
 						 (current_write_buffer_index - count),
 						 &bytes,
 						 &error);
-#endif
-
-	      status = channel->funcs->io_write (channel,
-						 &current_write_buffer[count],
-						 (current_write_buffer_index - count),
-						 &bytes,
-						 &error);
-
 	    }
 	  while (status == G_IO_STATUS_AGAIN);
 
 	  if (status != G_IO_STATUS_NORMAL)
-	    return FALSE;
+	    {
+	      if (error)
+		{
+		  g_warning ("%s: plug_in_flush(): error: %s",
+			     g_get_prgname (), error->message);
+		  g_error_free (error);
+		}
+	      else
+		{
+		  g_warning ("%s: plug_in_flush(): error",
+			     g_get_prgname ());
+		}
+
+	      return FALSE;
+	    }
 
           count += bytes;
         }

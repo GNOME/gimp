@@ -77,10 +77,10 @@ static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
 						 guint             info,
 						 guint             time);
 
-GtkType
+GType
 gimp_color_area_get_type (void)
 {
-  static guint gca_type = 0;
+  static GType gca_type = 0;
 
   if (!gca_type)
     {
@@ -96,7 +96,7 @@ gimp_color_area_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      gca_type = gtk_type_unique (gtk_preview_get_type (), &gca_info);
+      gca_type = gtk_type_unique (GTK_TYPE_PREVIEW, &gca_info);
     }
   
   return gca_type;
@@ -108,8 +108,8 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   GtkObjectClass  *object_class;
   GtkWidgetClass  *widget_class;
 
-  object_class  = (GtkObjectClass*) klass;
-  widget_class  = (GtkWidgetClass*) klass;
+  object_class  = GTK_OBJECT_CLASS (klass);
+  widget_class  = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -283,7 +283,6 @@ void
 gimp_color_area_set_type (GimpColorArea     *gca,
 			  GimpColorAreaType  type)
 {
-  g_return_if_fail (gca != NULL);
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
 
   gca->type = type;
@@ -293,7 +292,6 @@ gimp_color_area_set_type (GimpColorArea     *gca,
 static void
 gimp_color_area_update (GimpColorArea *gca)
 {
-  g_return_if_fail (gca != NULL);
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
 
   if (gca->idle_id)
@@ -311,7 +309,7 @@ static gboolean
 gimp_color_area_idle_update (gpointer data)
 {
   GimpColorArea *gca;
-  gint           window_width, window_height;
+  GtkWidget     *widget;
   guint          width, height;
   guint          x, y;
   guint          check_size = 0;
@@ -322,21 +320,19 @@ gimp_color_area_idle_update (gpointer data)
   guchar        *buf;
   gdouble        frac;
 
-  gca = GIMP_COLOR_AREA (data);
+  gca    = GIMP_COLOR_AREA (data);
+  widget = GTK_WIDGET (data);
 
   gca->idle_id = 0;
 
-  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (gca)))
+  if (! GTK_WIDGET_REALIZED (widget))
     return FALSE;
 
-  gdk_window_get_size (GTK_WIDGET (gca)->window, 
-		       &window_width, &window_height);
+  width  = widget->allocation.width;
+  height = widget->allocation.height;
 
-  if (window_width < 1 || window_height < 1)
+  if (width < 1 || height < 1)
     return FALSE;
-
-  width  = window_width;
-  height = window_height;
 
   switch (gca->type)
     {

@@ -1,3 +1,23 @@
+2001-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in.c
+	* libgimpbase/gimpwire.c
+	* libgimp/gimp.c: removed GIOChannel "channel->funcs->io_foo()"
+	hacks and use plain g_io_channel_[read|write]_chars(). An
+	additional g_io_channel_set_buffered (channel, FALSE); is needed
+	to make the channels work in binary mode. Fixed misc other stuff
+	in the GIOChannel code.
+
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpdialogfactory.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimp/gimpui.c: replaced some deprecated GDK functions.
+
+	* app/gui/palette-editor.c: block the color_name entry's "changed"
+	signal while setting it. Fixes invalid UTF-8 warnings.
+
 2001-08-30  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in.c: set the message encoding for the plug-in textdomain.

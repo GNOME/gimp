@@ -1108,7 +1108,8 @@ gimp_dialog_factory_get_window_info (GtkWidget       *window,
 
       if (! info->toplevel_entry || info->toplevel_entry->remember_size)
 	{
-	  gdk_window_get_size (window->window, &info->width, &info->height);
+	  info->width  = window->allocation.width;
+	  info->height = window->allocation.height;
 	}
       else
 	{
@@ -1130,7 +1131,6 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   static gint screen_width  = 0;
   static gint screen_height = 0;
 
-  g_return_if_fail (window != NULL);
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
   g_return_if_fail (info != NULL);

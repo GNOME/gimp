@@ -288,7 +288,8 @@ move_draw_guide (GDisplay  *gdisp,
   gdisplay_transform_coords (gdisp, gdisp->gimage->width, 
 			     gdisp->gimage->height, &x2, &y2, FALSE); 
 
-  gdk_window_get_size (gdisp->canvas->window, &w, &h);
+  w = gdisp->canvas->allocation.width;
+  h = gdisp->canvas->allocation.height;
 
   switch (guide->orientation)
     {

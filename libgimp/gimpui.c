@@ -73,7 +73,7 @@ gimp_ui_init (const gchar *prog_name,
   gdk_rgb_set_min_colors (gimp_min_colors ());
   gdk_rgb_set_install (gimp_install_cmap ());
 
-  gtk_widget_set_default_colormap (gdk_rgb_get_cmap ());
+  gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
 
   /*  Set the gamma after installing the colormap because
    *  gtk_preview_set_gamma() initializes GdkRGB if not already done
