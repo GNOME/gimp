@@ -30,13 +30,17 @@
    save old values
    correct 'cancel' behaviour */
 
+#include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct
@@ -76,8 +80,6 @@ static gint      sobel_dialog (void);
 /*
  * Sobel helper functions
  */
-static void      sobel_close_callback  (GtkWidget *widget,
-				 	gpointer   data);
 static void      sobel_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 static void      sobel_toggle_update   (GtkWidget *widget,
@@ -115,7 +117,7 @@ static SobelInterface bint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -234,96 +236,73 @@ run (gchar    *name,
 }
 
 static gint
-sobel_dialog ()
+sobel_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *hbox;
 
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("sobel");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Sobel Edge Detection"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
+			 gimp_plugin_help_func, "filters/sobel.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), sobel_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) sobel_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) sobel_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ( _("Sobel Horizontally"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  toggle = gtk_check_button_new_with_label (_("Sobel Horizontally"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
 		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ( _("Sobel Vertically"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  toggle = gtk_check_button_new_with_label (_("Sobel Vertically"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
 		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ( _("Keep sign of result (one direction only)"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  toggle = gtk_check_button_new_with_label (_("Keep Sign of Result (one Direction only)"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
 		      &bvals.keep_sign);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-
-
-  gtk_widget_show (hbox);
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -333,7 +312,6 @@ sobel_dialog ()
 
   return bint.run;
 }
-
 
 static void
 sobel_prepare_row (GPixelRgn *pixel_rgn,
@@ -368,9 +346,9 @@ sobel_prepare_row (GPixelRgn *pixel_rgn,
 
 static void
 sobel (GDrawable *drawable,
-	   gint       do_horizontal,
-	   gint       do_vertical,
-	   gint       keep_sign)
+       gint       do_horizontal,
+       gint       do_vertical,
+       gint       keep_sign)
 {
   GPixelRgn srcPR, destPR;
   gint width, height;
@@ -428,28 +406,32 @@ sobel (GDrawable *drawable,
       sobel_prepare_row (&srcPR, nr, x1, row + 1, (x2 - x1));
 
       d = dest;
-      for (col = 0; col < (x2 - x1) * bytes; col++) {
-	hor_gradient = (do_horizontal ?
-			((pr[col - bytes] +  2 * pr[col] + pr[col + bytes]) -
-			 (nr[col - bytes] + 2 * nr[col] + nr[col + bytes]))
-			: 0);
-	ver_gradient = (do_vertical ?
-			((pr[col - bytes] + 2 * cr[col - bytes] + nr[col - bytes]) -
-			 (pr[col + bytes] + 2 * cr[col + bytes] + nr[col + bytes]))
-			: 0);
-	gradient = (do_vertical && do_horizontal) ?
-	  (ROUND_TO_INT (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
-	  : (keep_sign ? (127 + (ROUND_TO_INT ((hor_gradient + ver_gradient) / 8.0)))
-	     : (ROUND_TO_INT (abs (hor_gradient + ver_gradient) / 4.0)));
+      for (col = 0; col < (x2 - x1) * bytes; col++)
+	{
+	  hor_gradient = (do_horizontal ?
+			  ((pr[col - bytes] +  2 * pr[col] + pr[col + bytes]) -
+			   (nr[col - bytes] + 2 * nr[col] + nr[col + bytes]))
+			  : 0);
+	  ver_gradient = (do_vertical ?
+			  ((pr[col - bytes] + 2 * cr[col - bytes] + nr[col - bytes]) -
+			   (pr[col + bytes] + 2 * cr[col + bytes] + nr[col + bytes]))
+			  : 0);
+	  gradient = (do_vertical && do_horizontal) ?
+	    (ROUND_TO_INT (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
+	    : (keep_sign ? (127 + (ROUND_TO_INT ((hor_gradient + ver_gradient) / 8.0)))
+	       : (ROUND_TO_INT (abs (hor_gradient + ver_gradient) / 4.0)));
 
-	if (alpha && (((col + 1) % bytes) == 0)) { /* the alpha channel */
-	  *d++ = (counter == 0) ? 0 : 255;
-	  counter = 0; }
-	else {
-	  *d++ = gradient;
-	  if (gradient > 10) counter ++;
+	  if (alpha && (((col + 1) % bytes) == 0))
+	    { /* the alpha channel */
+	      *d++ = (counter == 0) ? 0 : 255;
+	      counter = 0;
+	    }
+	  else
+	    {
+	      *d++ = gradient;
+	      if (gradient > 10) counter ++;
+	    }
 	}
-      }
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 
@@ -463,8 +445,6 @@ sobel (GDrawable *drawable,
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }
 
-
-
   /*  update the sobeled region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
@@ -476,19 +456,7 @@ sobel (GDrawable *drawable,
   free (dest);
 }
 
-
-
-
-
-
 /*  Sobel interface functions  */
-
-static void
-sobel_close_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 sobel_ok_callback (GtkWidget *widget,
@@ -500,7 +468,7 @@ sobel_ok_callback (GtkWidget *widget,
 
 static void
 sobel_toggle_update (GtkWidget *widget,
-		       gpointer   data)
+		     gpointer   data)
 {
   int *toggle_val;
 

@@ -21,15 +21,20 @@
  */
 
 #include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
-#include "libgimp/stdplugins-intl.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>		/* for seed of random number */
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpcolorspace.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -71,14 +76,7 @@ gint	preview_width = PREVIEW_WIDTH;
 gint	preview_height = PREVIEW_HEIGHT;
 #define ENTRY_WIDTH	100
 #define SCALE_WIDTH	100
-static void
-gtkW_close_callback (GtkWidget *widget, gpointer   data);
-static GtkWidget *
-gtkW_dialog_new (char *name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback);
-static GtkWidget *
-gtkW_error_dialog_new (char * name);
+
 static void
 gtkW_table_add_scale_entry (GtkWidget	*table,
 			    gchar	*name,
@@ -96,14 +94,10 @@ GtkWidget *gtkW_check_button_new (GtkWidget	*parent,
 				  gchar	*name,
 				  GtkSignalFunc update,
 				  gint	*value);
-GtkWidget *gtkW_frame_new (GtkWidget *parent, gchar *name);
-GtkWidget *gtkW_table_new (GtkWidget *parent, gint col, gint row);
-GtkWidget *gtkW_hbox_new (GtkWidget *parent);
-GtkWidget *gtkW_vbox_new (GtkWidget *parent);
 static void scatter_hsv_iscale_update (GtkAdjustment *adjustment,
 				       gpointer       data);
 static void scatter_hsv_ientry_update (GtkWidget *widget,
-				gpointer   data);
+				       gpointer   data);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -382,56 +376,85 @@ void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b)
 static int
 DIALOG ()
 {
-  GtkWidget	*dlg;
-  GtkWidget	*vbox;
-  GtkWidget	*frame;
-  GtkWidget	*table;
+  GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
   gchar	**argv;
-  gint	argc;
-  gint	index = 0;
-  static gchar	buffer[4][10];
+  gint	  argc;
+  gint	  index = 0;
+  static  gchar	buffer[4][10];
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup (PLUG_IN_NAME);
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new (PLUG_IN_NAME,
-			 (GtkSignalFunc) OK_CALLBACK,
-			 (GtkSignalFunc) gtkW_close_callback);
-  
-  vbox = gtkW_vbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (vbox, _("Parameter Settings"));
-  table = gtkW_table_new (frame, 5, 2);
+  dlg = gimp_dialog_new (_("Scatter HSV"), "scatter_hsv",
+			 gimp_plugin_help_func, "filters/scatter_hsv.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  gtkW_table_add_scale_entry (table, _("Holdness"), 0, index,
+			 _("OK"), OK_CALLBACK,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
+
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (4, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  gtkW_table_add_scale_entry (table, _("Holdness:"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.holdness,
 			      1, 8, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, _("Hue"), 0, index,
+  gtkW_table_add_scale_entry (table, _("Hue:"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.hue_distance, 
 			      0, 255, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, _("Saturation"), 0, index,
+  gtkW_table_add_scale_entry (table, _("Saturation:"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.saturation_distance,
 			      0, 255, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, _("Value"), 0, index,
+  gtkW_table_add_scale_entry (table, _("Value:"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.value_distance,
-			      0, 255,1, buffer[index]);
+			      0, 255, 1, buffer[index]);
+
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  frame = gtkW_frame_new (vbox, _("Preview (1:4) - right click to jump"));
+  frame = gtk_frame_new (_("Preview (1:4) - right click to jump"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /* preparation for preview */	
   gdk_set_use_xshm (gimp_use_xshm ());
@@ -468,6 +491,7 @@ DIALOG ()
   gtk_widget_show (preview);
 
   gtk_widget_show (frame);
+
   gtk_widget_show (vbox);
   gtk_widget_show (dlg);
   
@@ -495,15 +519,27 @@ ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message)
       gtk_rc_parse (gimp_gtkrc ());
     }
   
-  dlg = gtkW_error_dialog_new (PLUG_IN_NAME);
-  
-  table = gtk_table_new (1,1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  dlg = gimp_dialog_new (_("Scatter HSV"), "scatter_hsv",
+			 gimp_plugin_help_func, "filters/scatter_hsv.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), gtk_widget_destroy,
+			 NULL, 1, NULL, TRUE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  table = gtk_table_new (1, 1, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   label = gtk_label_new ((char *)message);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
-		    0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
 
   gtk_widget_show (label);
   gtk_widget_show (table);
@@ -670,107 +706,6 @@ OK_CALLBACK (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-/* gtkW is the abbreviation of gtk Wrapper */
-static GtkWidget *
-gtkW_dialog_new (char * name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback)
-{
-  GtkWidget *dlg, *button;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  return dlg;
-}
-
-static GtkWidget *
-gtkW_error_dialog_new (char * name)
-{
-  GtkWidget *dlg, *button;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) gtkW_close_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  return dlg;
-}
-
-GtkWidget *
-gtkW_table_new (GtkWidget *parent, gint col, gint row)
-{
-  GtkWidget	*table;
-  
-  table = gtk_table_new (col,row, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_container_add (GTK_CONTAINER (parent), table);
-  return table;
-}
-
-GtkWidget *
-gtkW_hbox_new (GtkWidget *parent)
-{
-  GtkWidget	*hbox;
-  
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 5);
-  gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, TRUE, 0);
-  return hbox;
-}
-
-GtkWidget *
-gtkW_vbox_new (GtkWidget *parent)
-{
-  GtkWidget *vbox;
-  
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
-  /* gtk_box_pack_start (GTK_BOX (parent), vbox, TRUE, TRUE, 0); */
-  gtk_container_add (GTK_CONTAINER (parent), vbox);
-  return vbox;
-}
-
 GtkWidget *
 gtkW_check_button_new (GtkWidget	*parent,
 		       gchar	*name,
@@ -789,45 +724,31 @@ gtkW_check_button_new (GtkWidget	*parent,
   return toggle;
 }
 
-GtkWidget *
-gtkW_frame_new (GtkWidget *parent,
-		gchar *name)
-{
-  GtkWidget *frame;
-  
-  frame = gtk_frame_new (name);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
-  gtk_box_pack_start (GTK_BOX(parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-  return frame;
-}
-
 static void
-gtkW_table_add_scale_entry (GtkWidget	*table,
-			    gchar	*name,
-			    gint	x,
-			    gint	y,
-			    GtkSignalFunc	scale_update,
-			    GtkSignalFunc	entry_update,
-			    gint	*value,
-			    gdouble	min,
-			    gdouble	max,
-			    gdouble	step,
-			    gchar	*buffer)
+gtkW_table_add_scale_entry (GtkWidget     *table,
+			    gchar         *name,
+			    gint           x,
+			    gint           y,
+			    GtkSignalFunc  scale_update,
+			    GtkSignalFunc  entry_update,
+			    gint          *value,
+			    gdouble        min,
+			    gdouble        max,
+			    gdouble       step,
+			    gchar         *buffer)
 {
   GtkObject *adjustment;
   GtkWidget *label, *hbox, *scale, *entry;
-  
+
   label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
+		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
 
   adjustment = gtk_adjustment_new (*value, min, max, step, step, 0.0);
   gtk_widget_show (hbox);
@@ -836,7 +757,7 @@ gtkW_table_add_scale_entry (GtkWidget	*table,
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) scale_update, value);
@@ -844,7 +765,7 @@ gtkW_table_add_scale_entry (GtkWidget	*table,
   entry = gtk_entry_new ();
   gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
   gtk_object_set_user_data (adjustment, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH/3, 0);
   sprintf (buffer, "%d", *value);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);

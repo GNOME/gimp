@@ -28,6 +28,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <errno.h>
 #include <sys/wait.h>
@@ -35,8 +37,12 @@
 #ifdef __EMX__
 #include <process.h>
 #endif
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Defines */
@@ -91,8 +97,6 @@ static void  run (gchar *name,
 		  GParam ** return_vals); /* parameters to be returned */
 static void  shoot                (void);
 static gint  shoot_dialog         (void);
-static void  shoot_close_callback (GtkWidget *widget,
-				   gpointer   data);
 static void  shoot_ok_callback    (GtkWidget *widget,
 				   gpointer   data);
 static void  shoot_toggle_update  (GtkWidget *widget,
@@ -355,20 +359,20 @@ static gint
 shoot_dialog (void)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *button;
   GtkWidget *hbox;
-  GtkWidget *hbbox;
   GtkWidget *label;
   GSList    *radio_group = NULL;
   GtkAdjustment *adj;
-  gint radio_pressed[2];
-  gint decorations;
+  gint  radio_pressed[2];
+  gint  decorations;
   guint delay;
-  gint argc = 1;
+
+  gint    argc = 1;
   gchar **argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("ScreenShot");
+  argv[0]      = g_strdup ("ScreenShot");
 
   radio_pressed[0] = (shootvals.root == FALSE);
   radio_pressed[1] = (shootvals.root == TRUE);
@@ -382,68 +386,53 @@ shoot_dialog (void)
   gdk_set_use_xshm (gimp_use_xshm ());
 
   /* Main Dialog */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Screen Shot"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
+			    gimp_plugin_help_func, "filters/screenshot.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    _("Grab"), shoot_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      (GtkSignalFunc) shoot_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
 
-  button = gtk_button_new_with_label (_("Grab"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) shoot_ok_callback,
-                      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
   /*  Single Window */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  shootint.single_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (shootint.single_button) );  
-  gtk_box_pack_start (GTK_BOX (hbox),
-		      shootint.single_button, FALSE, FALSE, 0);
-  gtk_signal_connect ( GTK_OBJECT (shootint.single_button), "toggled",
-		       (GtkSignalFunc) shoot_toggle_update,
-		       &radio_pressed[0]); 
+  shootint.single_button =
+    gtk_radio_button_new_with_label (radio_group, _("Grab a Single Window"));
+  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (shootint.single_button) );  
+  gtk_box_pack_start (GTK_BOX (vbox), shootint.single_button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (shootint.single_button), "toggled",
+		      (GtkSignalFunc) shoot_toggle_update,
+		      &radio_pressed[0]); 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.single_button), 
-				   radio_pressed[0]);
+				radio_pressed[0]);
   gtk_widget_show (shootint.single_button);
-  label = gtk_label_new (_("Grab a single window"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (hbox);
 
   /* with decorations */
   hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  shootint.decor_button = gtk_check_button_new_with_label (_("Include decorations"));
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  shootint.decor_button =
+    gtk_check_button_new_with_label (_("Include Decorations"));
   gtk_signal_connect (GTK_OBJECT (shootint.decor_button), "toggled",
                       (GtkSignalFunc) shoot_toggle_update,
                       &decorations);
@@ -457,49 +446,38 @@ shoot_dialog (void)
   /* Root Window */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-
-  shootint.root_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (shootint.root_button) );  
-  gtk_box_pack_start (GTK_BOX (hbox),  shootint.root_button, FALSE, FALSE, 0);
-  gtk_signal_connect ( GTK_OBJECT (shootint.root_button), "toggled",
-		       (GtkSignalFunc) shoot_toggle_update,
-		       &radio_pressed[1]);
+  shootint.root_button =
+    gtk_radio_button_new_with_label (radio_group, _("Grab the Whole Screen"));
+  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (shootint.root_button));  
+  gtk_box_pack_start (GTK_BOX (vbox), shootint.root_button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (shootint.root_button), "toggled",
+		      (GtkSignalFunc) shoot_toggle_update,
+		      &radio_pressed[1]);
   gtk_widget_show (shootint.root_button);
-
-  label = gtk_label_new (_("Grab the whole screen"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
   /* with delay */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      hbox, TRUE, TRUE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new (_("after"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
  
   adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
   shootint.delay_spinner = gtk_spin_button_new (adj, 0, 0);
-  gtk_box_pack_start (GTK_BOX(hbox), shootint.delay_spinner, FALSE, TRUE, 0);
-  gtk_widget_show(shootint.delay_spinner);
+  gtk_box_pack_start (GTK_BOX(hbox), shootint.delay_spinner, FALSE, FALSE, 0);
+  gtk_widget_show (shootint.delay_spinner);
 
-  label = gtk_label_new (_("seconds delay"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
+  label = gtk_label_new (_("Seconds Delay"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (hbox);
@@ -508,7 +486,7 @@ shoot_dialog (void)
 			       decorations);
   gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.root_button), 
-			       radio_pressed[1]);
+				radio_pressed[1]);
 
   gtk_widget_show (dialog);
 
@@ -523,13 +501,6 @@ shoot_dialog (void)
 
 
 /*  ScreenShot interface functions  */
-
-static void
-shoot_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 shoot_ok_callback (GtkWidget *widget,

@@ -65,7 +65,10 @@
 #endif
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
@@ -142,12 +145,9 @@ static void dialog_create_value(char *title, GtkTable *table, int row, gdouble *
 				double left, double right, double step);
 static void dialog_scale_update(GtkAdjustment *adjustment, gdouble *value);
 static void dialog_entry_update(GtkWidget *widget, gdouble *value);
-static void dialog_close_callback(GtkWidget *widget, gpointer data);
 static void dialog_ok_callback(GtkWidget *widget, gpointer data);
-static void dialog_cancel_callback(GtkWidget *widget, gpointer data);
 
 static void polar_toggle_callback(GtkWidget *widget, gpointer data);
-static void set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc);
 
 /***** Variables *****/
 
@@ -866,390 +866,358 @@ build_preview_source_image(void)
 /*****/
 
 static gint
-polarize_dialog(void)
+polarize_dialog (void)
 {
-	GtkWidget  *dialog;
-	GtkWidget  *top_table;
-	GtkWidget  *frame;
-	GtkWidget  *table;
-	GtkWidget  *hbbox;
-	GtkWidget  *button;
-	GtkWidget  *toggle;
-	GtkWidget  *hbox;
-	GtkTooltips  *tips;
-	GdkColor tips_fg, tips_bg;
-	gint        argc;
-	gchar     **argv;
-	guchar     *color_cube;
+  GtkWidget  *dialog;
+  GtkWidget  *top_table;
+  GtkWidget  *frame;
+  GtkWidget  *table;
+  GtkWidget  *toggle;
+  GtkWidget  *hbox;
+  gint     argc;
+  gchar  **argv;
+  guchar  *color_cube;
+
 #if 0
-	printf("Waiting... (pid %d)\n", getpid());
-	kill(getpid(), SIGSTOP);
+  g_print ("Waiting... (pid %d)\n", getpid ());
+  kill (getpid (), SIGSTOP);
 #endif
-	argc    = 1;
-	argv    = g_new(gchar *, 1);
-	argv[0] = g_strdup("polarize");
 
-	gtk_init(&argc, &argv);
-	gtk_rc_parse (gimp_gtkrc ());
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("polarize");
 
-	gdk_set_use_xshm(gimp_use_xshm());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-	gtk_preview_set_gamma(gimp_gamma());
-	gtk_preview_set_install_cmap(gimp_install_cmap());
-	color_cube = gimp_color_cube();
-	gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-	gtk_widget_set_default_visual(gtk_preview_get_visual());
-	gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-	build_preview_source_image();
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Polarize"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) dialog_close_callback,
+  build_preview_source_image ();
+
+  dialog = gimp_dialog_new (_("Polarize"), "polar",
+			    gimp_plugin_help_func, "filters/polar.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  top_table = gtk_table_new (3, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), top_table,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (top_table);
+
+  /* Initialize Tooltips */
+  gimp_help_init ();
+	
+  /* Preview */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
+
+  pcint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (pcint.preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), pcint.preview);
+  gtk_widget_show (pcint.preview);
+
+  /* Controls */
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_attach (GTK_TABLE (top_table), table, 0, 3, 1, 2,
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_widget_show (table);
+
+  dialog_create_value (_("Circle Depth in Percent:"), GTK_TABLE (table),
+		       0, &pcvals.circle, 0, 100.0, 1.0);
+  dialog_create_value (_("Offset Angle:"), GTK_TABLE (table),
+		       1, &pcvals.angle, 0, 359, 1.0);
+
+  /* togglebuttons for backwards, top, polar->rectangular */
+  hbox = gtk_hbox_new (TRUE, 4);
+  gtk_table_attach (GTK_TABLE (top_table), hbox, 0, 3, 2, 3, 
+		    GTK_FILL, 0 , 0, 0);
+
+  toggle = gtk_check_button_new_with_label (_("Map Backwards"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
+		      (GtkSignalFunc) polar_toggle_callback,
+		      &pcvals.backwards);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle,
+			   _("If checked the mapping will begin at the right "
+			     "side, as opposed to beginning at the left."),
 			   NULL);
 
-	top_table = gtk_table_new(3, 3, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(top_table), 6);
-	gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
-	gtk_widget_show(top_table);
+  toggle = gtk_check_button_new_with_label (_("Map from Top"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.inverse);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
+		      (GtkSignalFunc) polar_toggle_callback,
+		      &pcvals.inverse);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle,
+			   _("If unchecked the mapping will put the bottom "
+			     "row in the middle and the top row on the "
+			     "outside.  If checked it will be the opposite."),
+			   NULL);
 
-	/* Initialize Tooltips */
+  toggle = gtk_check_button_new_with_label (_("To Polar"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.polrec);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
+		      (GtkSignalFunc) polar_toggle_callback,
+		      &pcvals.polrec);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+  gtk_widget_show (toggle);
+  gimp_help_set_help_data (toggle,
+			   _("If unchecked the image will be circularly "
+			     "mapped onto a rectangle.  If checked the image "
+			     "will be mapped onto a circle."),
+			   NULL);
 
-	/* use black as foreground: */
-	tips = gtk_tooltips_new ();
-	tips_fg.red   = 0;
-	tips_fg.green = 0;
-	tips_fg.blue  = 0;
-	/* postit yellow (khaki) as background: */
-	gdk_color_alloc (gtk_widget_get_colormap (dialog), &tips_fg);
-	tips_bg.red   = 61669;
-	tips_bg.green = 59113;
-	tips_bg.blue  = 35979;
-	gdk_color_alloc (gtk_widget_get_colormap (dialog), &tips_bg);
-	gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
-	
-	/* Preview */
+  gtk_widget_show (hbox);
 
-	frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_table_attach(GTK_TABLE(top_table), frame, 1, 2, 0, 1, 0, 0, 0, 0);
-	gtk_widget_show(frame);
+  /* Done */
 
-	pcint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_size(GTK_PREVIEW(pcint.preview), preview_width, preview_height);
-	gtk_container_add(GTK_CONTAINER(frame), pcint.preview);
-	gtk_widget_show(pcint.preview);
+  gtk_widget_show (dialog);
+  dialog_update_preview ();
 
-	/* Controls */
+  gtk_main ();
+  gimp_help_free ();
+  gdk_flush ();
 
-	table = gtk_table_new(2, 3, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_table_attach(GTK_TABLE(top_table), table, 0, 3, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
-	gtk_widget_show(table);
+  g_free (pcint.check_row_0);
+  g_free (pcint.check_row_1);
+  g_free (pcint.image);
+  g_free (pcint.dimage);
 
-	dialog_create_value( _("Circle depth in percent"), GTK_TABLE(table), 0, &pcvals.circle, 0, 100.0, 1.0);
-	dialog_create_value( _("Offset angle"), GTK_TABLE(table), 1, &pcvals.angle, 0, 359, 1.0);
-
-
-	/* togglebuttons for backwards, top, polar->rectangular */
-
-	hbox = gtk_hbox_new (TRUE, 2);
-	gtk_table_attach( GTK_TABLE(top_table), hbox, 0, 3, 2, 3, 
-							GTK_FILL, 0 , 0, 0);
-
-	toggle = gtk_check_button_new_with_label(_("Map Backwards"));
-	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
-	gtk_signal_connect(GTK_OBJECT(toggle), "toggled", 
-			   (GtkSignalFunc) polar_toggle_callback,
-			   &pcvals.backwards);
-	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle, _("If checked the mapping will begin at the right side, as opposed to beginning at the left."));
-
-	toggle = gtk_check_button_new_with_label( _("Map from Top"));
-	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
-	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
-			    (GtkSignalFunc) polar_toggle_callback,
-			    &pcvals.inverse);
-	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle, _("If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite."));
-
-	toggle = gtk_check_button_new_with_label( _("To Polar"));
-	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
-	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
-			    (GtkSignalFunc) polar_toggle_callback,
-			    &pcvals.polrec);
-	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle, _("If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle."));
-
-	gtk_widget_show(hbox);
-
-	/*  Action area  */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
-	
-	button = gtk_button_new_with_label ( _("OK"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) dialog_ok_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-	
-	button = gtk_button_new_with_label ( _("Cancel"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) dialog_cancel_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-	
-	/* Done */
-
-	gtk_widget_show(dialog);
-	dialog_update_preview();
-
-	gtk_main();
-	gtk_object_unref(GTK_OBJECT(tips));
-	gdk_flush();
-
-	g_free(pcint.check_row_0);
-	g_free(pcint.check_row_1);
-	g_free(pcint.image);
-	g_free(pcint.dimage);
-
-	return pcint.run;
-} /* polarize_dialog */
-
-
-/*****/
+  return pcint.run;
+}
 
 static void
-dialog_update_preview(void)
+dialog_update_preview (void)
 {
-	double  left, right, bottom, top;
-	double  dx, dy;
-	double  px, py;
-	double  cx = 0.0, cy = 0.0;
-	int     ix, iy;
-	int     x, y;
-	double  scale_x, scale_y;
-	guchar *p_ul, *i, *p;
-	guchar *check_ul;
-	int     check;
-	guchar  outside[4];
+  double  left, right, bottom, top;
+  double  dx, dy;
+  double  px, py;
+  double  cx = 0.0, cy = 0.0;
+  int     ix, iy;
+  int     x, y;
+  double  scale_x, scale_y;
+  guchar *p_ul, *i, *p;
+  guchar *check_ul;
+  int     check;
+  guchar  outside[4];
 
-	gimp_palette_get_background(&outside[0], &outside[1], &outside[2]);
-	outside[3] = (img_has_alpha ? 0 : 255);
+  gimp_palette_get_background(&outside[0], &outside[1], &outside[2]);
+  outside[3] = (img_has_alpha ? 0 : 255);
 
-	if (img_bpp < 3) {
-		outside[1] = outside[0];
-		outside[2] = outside[0];
-	} /* if */
+  if (img_bpp < 3)
+    {
+      outside[1] = outside[0];
+      outside[2] = outside[0];
+    }
 
-	left   = sel_x1;
-	right  = sel_x2 - 1;
-	bottom = sel_y2 - 1;
-	top    = sel_y1;
+  left   = sel_x1;
+  right  = sel_x2 - 1;
+  bottom = sel_y2 - 1;
+  top    = sel_y1;
 
-	dx = (right - left) / (preview_width - 1);
-	dy = (bottom - top) / (preview_height - 1);
+  dx = (right - left) / (preview_width - 1);
+  dy = (bottom - top) / (preview_height - 1);
 
-	scale_x = (double) preview_width / (right - left + 1);
-	scale_y = (double) preview_height / (bottom - top + 1);
+  scale_x = (double) preview_width / (right - left + 1);
+  scale_y = (double) preview_height / (bottom - top + 1);
 
-	py = top;
+  py = top;
 
-	p_ul = pcint.dimage;
-/*	p_lr = pcint.dimage + 3 * (preview_width * preview_height - 1);*/
+  p_ul = pcint.dimage;
+/* p_lr = pcint.dimage + 3 * (preview_width * preview_height - 1);*/
 
-	for (y = 0; y < preview_height; y++) {
-		px = left;
+  for (y = 0; y < preview_height; y++)
+    {
+      px = left;
 
-		if ((y / CHECK_SIZE) & 1)
-			check_ul = pcint.check_row_0;
-		else
-			check_ul = pcint.check_row_1;
+      if ((y / CHECK_SIZE) & 1)
+	check_ul = pcint.check_row_0;
+      else
+	check_ul = pcint.check_row_1;
 
-		for (x = 0; x < preview_width; x++) {
-			calc_undistorted_coords(px, py, &cx, &cy);
+      for (x = 0; x < preview_width; x++)
+	{
+	  calc_undistorted_coords(px, py, &cx, &cy);
 
-			cx = (cx - left) * scale_x;
-			cy = (cy - top) * scale_y;
+	  cx = (cx - left) * scale_x;
+	  cy = (cy - top) * scale_y;
 
-			ix = (int) (cx + 0.5);
-			iy = (int) (cy + 0.5);
+	  ix = (int) (cx + 0.5);
+	  iy = (int) (cy + 0.5);
 
-			check = check_ul[x];
+	  check = check_ul[x];
 
-			if ((ix >= 0) && (ix < preview_width) &&
-			    (iy >= 0) && (iy < preview_height))
-				i = pcint.image + 4 * (preview_width * iy + ix);
-			else
-				i = outside;
+	  if ((ix >= 0) && (ix < preview_width) &&
+	      (iy >= 0) && (iy < preview_height))
+	    i = pcint.image + 4 * (preview_width * iy + ix);
+	  else
+	    i = outside;
 
-			p_ul[0] = check + ((i[0] - check) * i[3]) / 255;
-			p_ul[1] = check + ((i[1] - check) * i[3]) / 255;
-			p_ul[2] = check + ((i[2] - check) * i[3]) / 255;
+	  p_ul[0] = check + ((i[0] - check) * i[3]) / 255;
+	  p_ul[1] = check + ((i[1] - check) * i[3]) / 255;
+	  p_ul[2] = check + ((i[2] - check) * i[3]) / 255;
 
-			p_ul += 3;
+	  p_ul += 3;
 
-			px += dx;
-		} /* for */
+	  px += dx;
+	}
 
-		py += dy;
-	} /* for */
+      py += dy;
+    }
 
-	p = pcint.dimage;
+  p = pcint.dimage;
 
-	for (y = 0; y < img_height; y++) {
-		gtk_preview_draw_row(GTK_PREVIEW(pcint.preview), p, 0, y, preview_width);
+  for (y = 0; y < img_height; y++)
+    {
+      gtk_preview_draw_row(GTK_PREVIEW(pcint.preview), p, 0, y, preview_width);
 
-		p += preview_width * 3;
-	} /* for */
+      p += preview_width * 3;
+    }
 
-	gtk_widget_draw(pcint.preview, NULL);
-	gdk_flush();
-} /* dialog_update_preview */
-
-
-/*****/
+  gtk_widget_draw(pcint.preview, NULL);
+  gdk_flush();
+}
 
 static void
-dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-		    double left, double right, double step)
+dialog_create_value (char     *title,
+		     GtkTable *table,
+		     int       row,
+		     gdouble  *value,
+		     double    left,
+		     double    right,
+		     double    step)
 {
-	GtkWidget *label;
-	GtkWidget *scale;
-	GtkWidget *entry;
-	GtkObject *scale_data;
-	char       buf[256];
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *entry;
+  GtkObject *scale_data;
+  gchar      buf[256];
 
-	label = gtk_label_new(title);
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-	gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (title);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_widget_show (label);
 
-	scale_data = gtk_adjustment_new(*value, left, right,
-					step,
-					step,
-					0.0);
+  scale_data = gtk_adjustment_new (*value, left, right,
+				   step,
+				   step,
+				   0.0);
 
-	gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-			   (GtkSignalFunc) dialog_scale_update,
-			   value);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+		      (GtkSignalFunc) dialog_scale_update,
+		      value);
 
-	scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-	gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-	gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-	gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-	gtk_scale_set_digits(GTK_SCALE(scale), 3);
-	gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-	gtk_widget_show(scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (table, scale, 1, 2, row, row + 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_scale_set_digits (GTK_SCALE (scale), 3);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
 
-	entry = gtk_entry_new();
-	gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-	gtk_object_set_user_data(scale_data, entry);
-	gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-	sprintf(buf, "%0.3f", *value);
-	gtk_entry_set_text(GTK_ENTRY(entry), buf);
-	gtk_signal_connect(GTK_OBJECT(entry), "changed",
-			   (GtkSignalFunc) dialog_entry_update,
-			   value);
-	gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-	gtk_widget_show(entry);
-} /* dialog_create_value */
-
-
-/*****/
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
+  gtk_object_set_user_data (scale_data, entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf(buf, sizeof (buf), "%0.3f", *value);
+  gtk_entry_set_text (GTK_ENTRY (entry), buf);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) dialog_entry_update,
+		      value);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (entry);
+}
 
 static void
-dialog_scale_update(GtkAdjustment *adjustment, gdouble *value)
+dialog_scale_update (GtkAdjustment *adjustment,
+		     gdouble       *value)
 {
-	GtkWidget *entry;
-	char       buf[256];
+  GtkWidget *entry;
+  gchar      buf[256];
 
-	if (*value != adjustment->value) {
-		*value = adjustment->value;
+  if (*value != adjustment->value)
+    {
+      *value = adjustment->value;
 
-		entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-		sprintf(buf, "%0.3f", *value);
+      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
+      g_snprintf(buf, sizeof (buf), "%0.3f", *value);
 
-		gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-		gtk_entry_set_text(GTK_ENTRY(entry), buf);
-		gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
+      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
+      gtk_entry_set_text (GTK_ENTRY (entry), buf);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
 
-		dialog_update_preview();
-	} /* if */
-} /* dialog_scale_update */
-
-
-/*****/
+      dialog_update_preview ();
+    }
+}
 
 static void
-dialog_entry_update(GtkWidget *widget, gdouble *value)
+dialog_entry_update (GtkWidget *widget,
+		     gdouble   *value)
 {
-	GtkAdjustment *adjustment;
-	gdouble        new_value;
+  GtkAdjustment *adjustment;
+  gdouble        new_value;
 
-	new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
+  new_value = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
 
-	if (*value != new_value) {
-		adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
+  if (*value != new_value)
+    {
+      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
 
-		if ((new_value >= adjustment->lower) &&
-		    (new_value <= adjustment->upper)) {
-			*value            = new_value;
-			adjustment->value = new_value;
+      if ((new_value >= adjustment->lower) &&
+	  (new_value <= adjustment->upper))
+	{
+	  *value            = new_value;
+	  adjustment->value = new_value;
 
-			gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
 
-			dialog_update_preview();
-		} /* if */
-	} /* if */
-} /* dialog_entry_update */
-
-
-/*****/
+	  dialog_update_preview ();
+	}
+    }
+}
 
 static void
-dialog_close_callback(GtkWidget *widget, gpointer data)
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer   data)
 {
-	gtk_main_quit();
-} /* dialog_close_callback */
+  pcint.run = TRUE;
 
-
-/*****/
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
 
 static void
-dialog_ok_callback(GtkWidget *widget, gpointer data)
-{
-	pcint.run = TRUE;
-	gtk_widget_destroy(GTK_WIDGET(data));
-} /* dialog_ok_callback */
-
-
-/*****/
-
-static void
-dialog_cancel_callback(GtkWidget *widget, gpointer data)
-{
-	gtk_widget_destroy(GTK_WIDGET(data));
-} /* dialog_cancel_callback */
-
-static void polar_toggle_callback (GtkWidget *widget, gpointer   data)
+polar_toggle_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   gint *toggle_val;
 
@@ -1260,12 +1228,5 @@ static void polar_toggle_callback (GtkWidget *widget, gpointer   data)
   else
     *toggle_val = FALSE;
 
-  dialog_update_preview();
-}
-
-static void
-set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
-{
-  if (desc && desc[0])
-    gtk_tooltips_set_tip (tooltips, widget, (char *) desc, NULL);
+  dialog_update_preview ();
 }

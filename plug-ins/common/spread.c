@@ -27,8 +27,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
@@ -69,8 +72,6 @@ static GTile *   spread_pixel  (GDrawable * drawable,
 			       gint *      col,
 			       guchar *    pixel);
 
-static void      spread_close_callback  (GtkWidget *widget,
-					gpointer   data);
 static void      spread_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 static void      spread_fentry_callback   (GtkWidget     *widget,
@@ -354,8 +355,6 @@ spread_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *hbox;
@@ -364,67 +363,52 @@ spread_dialog ()
   GtkObject *x_scale_data;
   GtkObject *y_scale_data;
   gchar **argv;
-  gchar buffer[32];
-  gint argc;
+  gchar   buffer[32];
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("spread");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Spread"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Spread"), "spread",
+			 gimp_plugin_help_func, "filters/spread.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), spread_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) spread_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) spread_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
+  /* Horizontal Amount */
+  label = gtk_label_new (_("Horizontal Spread Amount:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-
-
-/* Horizontal Amount */
-  label = gtk_label_new ( _("Horizontal Spread Amount"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
-   gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
@@ -436,7 +420,6 @@ spread_dialog ()
 
   scale = gtk_hscale_new (GTK_ADJUSTMENT (x_scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
@@ -444,24 +427,23 @@ spread_dialog ()
   entry = gtk_entry_new ();
   gtk_object_set_user_data (GTK_OBJECT (entry), x_scale_data);
   gtk_object_set_user_data (x_scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%0.2f", spvals.spread_amount_x);
+  g_snprintf (buffer, sizeof (buffer), "%0.2f", spvals.spread_amount_x);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) spread_fentry_callback,
 		      &spvals.spread_amount_x);
   gtk_widget_show (entry);
 
-
-
-/* Vertical Amount */
-  label = gtk_label_new ( _("Vertical Spread Amount"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
+  /* Vertical Amount */
+  label = gtk_label_new (_("Vertical Spread Amount:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
@@ -481,16 +463,14 @@ spread_dialog ()
   entry = gtk_entry_new ();
   gtk_object_set_user_data (GTK_OBJECT (entry), y_scale_data);
   gtk_object_set_user_data (y_scale_data, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%0.2f", spvals.spread_amount_y);
+  g_snprintf (buffer, sizeof (buffer), "%0.2f", spvals.spread_amount_y);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) spread_fentry_callback,
 		      &spvals.spread_amount_y);
   gtk_widget_show (entry);
-
-
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -550,13 +530,6 @@ spread_pixel (GDrawable * drawable,
 /*  Spread interface functions  */
 
 static void
-spread_close_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 spread_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
@@ -566,7 +539,7 @@ spread_ok_callback (GtkWidget *widget,
 
 static void
 spread_fscale_callback (GtkAdjustment *adjustment,
-			  gpointer       data)
+			gpointer       data)
 {
   GtkWidget *entry;
   gchar buffer[32];
@@ -577,7 +550,7 @@ spread_fscale_callback (GtkAdjustment *adjustment,
     {
       *val = adjustment->value;
       entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%0.2f", adjustment->value);
+      g_snprintf (buffer, sizeof (buffer), "%0.2f", adjustment->value);
 
       gtk_signal_handler_block_by_data (GTK_OBJECT (entry), data);
       gtk_entry_set_text (GTK_ENTRY (entry), buffer);
@@ -587,7 +560,7 @@ spread_fscale_callback (GtkAdjustment *adjustment,
 
 static void
 spread_fentry_callback (GtkWidget *widget,
-			  gpointer   data)
+			gpointer   data)
 {
   GtkAdjustment *adjustment;
   double new_val;

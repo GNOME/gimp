@@ -29,17 +29,18 @@
  *  (1999/02/01)         hof: started development
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 
-/* GIMP includes */
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef __GIMPINTL_H__
@@ -240,7 +241,7 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query()
+query (void)
 {
   static GParamDef args[]=
     {
@@ -1244,8 +1245,6 @@ p_smp_dialog (void)
   GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *vbox2;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *pframe;
   GtkWidget *table;
@@ -1254,15 +1253,16 @@ p_smp_dialog (void)
   GtkWidget  *option_menu;
   GtkWidget  *menu;
   GtkWidget  *menu_item;
-  guchar     *color_cube;
-  char        txt_buf[20];
-  gint l_ty;
-  gint argc = 1;
+  guchar *color_cube;
+  gchar   txt_buf[20];
+  gint    l_ty;
+
+  gint    argc = 1;
   gchar **argv = g_new (gchar *, 1);
-  argv[0] = g_strdup (_("Sample Colorize"));
+  argv[0]      = g_strdup ("sample_colorize");
 
   /* set flags for check buttons from mode value bits */
-  if(g_Sdebug)  printf("p_smp_dialog START\n");
+  if (g_Sdebug)  g_print ("p_smp_dialog START\n");
  
   /* init some dialog variables */
   g_di.enable_preview_update = FALSE;
@@ -1271,139 +1271,120 @@ p_smp_dialog (void)
   g_di.dst_show_color = TRUE;
   g_di.sample_show_color = TRUE;  
   g_di.orig_inten_button = NULL;
-  
+
   /* Init GTK  */
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
   gdk_set_use_xshm (gimp_use_xshm ());
   
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   /* Main Dialog */
-  dialog = gtk_dialog_new ();
-  g_di.dialog = dialog;
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Sample Colorize"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  g_di.dialog = dialog =
+    gimp_dialog_new (_("Sample Colorize"), "sample_colorize",
+		     gimp_plugin_help_func, "filters/sample_colorize.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     _("Apply"), p_smp_apply_callback,
+		     NULL, NULL, NULL, FALSE, FALSE,
+		     _("Get Sample Colors"), p_smp_get_colors_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Close"), gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     NULL);
+
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      (GtkSignalFunc) p_smp_close_callback,
+                      GTK_SIGNAL_FUNC (p_smp_close_callback),
                       dialog);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("Apply"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) p_smp_apply_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  g_di.apply_button = button;
-  gtk_widget_set_sensitive(g_di.apply_button,FALSE);	      
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Get Sample Colors"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) p_smp_get_colors_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Close"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       frame, TRUE, TRUE, 0);
 
-  /* table for  values */
+  /* table for values */
   table = gtk_table_new (7, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 1);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-
   
   l_ty = 0;
   /* layer optionmenu (Dst) */
   label = gtk_label_new (_("Destination:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, l_ty, l_ty+1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, l_ty, l_ty+1,
+		    GTK_FILL, GTK_FILL, 4, 0);
+  gtk_widget_show (label);
 
-  option_menu = gtk_option_menu_new();
-  gtk_table_attach(GTK_TABLE(table), option_menu, 1, 2, l_ty, l_ty+1,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show(option_menu);
+  option_menu = gtk_option_menu_new ();
+  gtk_table_attach (GTK_TABLE (table), option_menu, 1, 2, l_ty, l_ty+1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (option_menu);
 
-  menu = gimp_layer_menu_new(p_smp_constrain,
-			     p_smp_menu_callback,
-			     &g_values.dst_id,  /* data */
-			     g_values.dst_id);
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
-  gtk_widget_show(option_menu);
+  menu = gimp_layer_menu_new (p_smp_constrain,
+			      p_smp_menu_callback,
+			      &g_values.dst_id,  /* data */
+			      g_values.dst_id);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  gtk_widget_show (option_menu);
 
   /* layer optionmenu (Sample) */
   label = gtk_label_new (_("Sample:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 2, 3, l_ty, l_ty+1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, l_ty, l_ty+1,
+		    GTK_FILL, GTK_FILL, 4, 0);
+  gtk_widget_show (label);
 
-  option_menu = gtk_option_menu_new();
-  gtk_table_attach(GTK_TABLE(table), option_menu, 3, 4, l_ty, l_ty+1,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show(option_menu);
+  option_menu = gtk_option_menu_new ();
+  gtk_table_attach (GTK_TABLE (table), option_menu, 3, 4, l_ty, l_ty+1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (option_menu);
 
-  menu = gimp_layer_menu_new(p_smp_constrain,
-			     p_smp_menu_callback,
-			     &g_values.sample_id,  /* data */
-			     g_values.sample_id);
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
-  gtk_widget_show(option_menu);
-
+  menu = gimp_layer_menu_new (p_smp_constrain,
+			      p_smp_menu_callback,
+			      &g_values.sample_id,  /* data */
+			      g_values.sample_id);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  gtk_widget_show (option_menu);
 
   /* Add extra menu items for Gradient */
   menu_item = gtk_menu_item_new_with_label (_("** From GRADIENT **"));
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-			    (GtkSignalFunc) p_gradient_callback,
-			    (gpointer)SMP_GRADIENT);
+		      (GtkSignalFunc) p_gradient_callback,
+		      (gpointer)SMP_GRADIENT);
   gtk_widget_show (menu_item);
 
   /* Add extra menu items for Inverted Gradient */
   menu_item = gtk_menu_item_new_with_label (_("** From INVERSE GRADIENT **"));
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-			    (GtkSignalFunc) p_gradient_callback,
-			    (gpointer)SMP_INV_GRADIENT);
+		      (GtkSignalFunc) p_gradient_callback,
+		      (gpointer)SMP_INV_GRADIENT);
   gtk_widget_show (menu_item);
-
 
   l_ty++;
 
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (hbox);
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Show Selection"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 0, 1, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_di.dst_show_selection);
@@ -1413,7 +1394,7 @@ p_smp_dialog (void)
 
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Show Color"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 1, 2, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_di.dst_show_color);
@@ -1421,9 +1402,14 @@ p_smp_dialog (void)
                                g_di.dst_show_color);
   gtk_widget_show (check_button);
 
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (hbox);
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Show Selection"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 2, 3, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc)p_smp_toggle_callback ,
                       &g_di.sample_show_selection);
@@ -1433,7 +1419,7 @@ p_smp_dialog (void)
 
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Show Color"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 3, 4, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc)p_smp_toggle_callback ,
                       &g_di.sample_show_color);
@@ -1445,50 +1431,54 @@ p_smp_dialog (void)
 
   /* Preview (Dst) */
 
-  pframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(table), pframe, 0, 2, l_ty, l_ty+1, 0, 0, 0, 0);
-  gtk_widget_show(pframe);
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), pframe, 0, 2, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_widget_show (pframe);
 
-  g_di.dst_preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(g_di.dst_preview), PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
-  gtk_container_add(GTK_CONTAINER(pframe), g_di.dst_preview);
-  gtk_widget_show(g_di.dst_preview);
+  g_di.dst_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (g_di.dst_preview),
+		    PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
+  gtk_container_add (GTK_CONTAINER (pframe), g_di.dst_preview);
+  gtk_widget_show (g_di.dst_preview);
 
   /* Preview (Sample)*/
 
-  pframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
-  gtk_widget_show(pframe);
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_widget_show (pframe);
 
-  g_di.sample_preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(g_di.sample_preview), PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
-  gtk_container_add(GTK_CONTAINER(pframe), g_di.sample_preview);
-  gtk_widget_show(g_di.sample_preview);
+  g_di.sample_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (g_di.sample_preview),
+		    PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
+  gtk_container_add (GTK_CONTAINER (pframe), g_di.sample_preview);
+  gtk_widget_show (g_di.sample_preview);
 
   l_ty++;
 
   /*  The levels graylevel prevev  */
-  pframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(pframe), GTK_SHADOW_ETCHED_IN);
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_ETCHED_IN);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);
-  gtk_table_attach(GTK_TABLE(table), pframe, 0, 2, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), pframe, 0, 2, l_ty, l_ty+1, 0, 0, 0, 0);
   
   g_di.in_lvl_gray_preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (g_di.in_lvl_gray_preview), DA_WIDTH, GRADIENT_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (g_di.in_lvl_gray_preview),
+		    DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);  
   gtk_signal_connect (GTK_OBJECT (g_di.in_lvl_gray_preview), "event",
 		      (GtkSignalFunc) p_level_in_events,
 		      &g_di);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.in_lvl_gray_preview, FALSE, TRUE, 0);
-  gtk_widget_show(g_di.in_lvl_gray_preview);
+  gtk_widget_show (g_di.in_lvl_gray_preview);
 
   /*  The levels drawing area  */
   g_di.in_lvl_drawarea = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (g_di.in_lvl_drawarea), DA_WIDTH, CONTROL_HEIGHT);
+  gtk_drawing_area_size (GTK_DRAWING_AREA (g_di.in_lvl_drawarea),
+			 DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_drawarea, LEVELS_DA_MASK);
   gtk_signal_connect (GTK_OBJECT (g_di.in_lvl_drawarea), "event",
 		      (GtkSignalFunc) p_level_in_events,
@@ -1499,21 +1489,19 @@ p_smp_dialog (void)
   gtk_widget_show(vbox2);
   gtk_widget_show(pframe);
 
-
-
   /*  The sample_colortable prevev  */
-  pframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(pframe), GTK_SHADOW_ETCHED_IN);
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_ETCHED_IN);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);
-  gtk_table_attach(GTK_TABLE(table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
 
   g_di.sample_colortab_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (g_di.sample_colortab_preview), DA_WIDTH, GRADIENT_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (g_di.sample_colortab_preview),
+		    DA_WIDTH, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.sample_colortab_preview, FALSE, TRUE, 0);
-  gtk_widget_show(g_di.sample_colortab_preview);
-
+  gtk_widget_show (g_di.sample_colortab_preview);
 
   /*  The levels drawing area  */
   g_di.sample_drawarea = gtk_drawing_area_new ();
@@ -1532,16 +1520,16 @@ p_smp_dialog (void)
   l_ty++;
 
   /*  Horizontal box for INPUT levels text widget  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_table_attach ( GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  hbox = gtk_hbox_new (TRUE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("In Level: "));
+  label = gtk_label_new (_("In Level:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-
   /*  min input text  */
-  sprintf(&txt_buf[0], "%d", (int)g_values.lvl_in_min);
+  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_in_min);
   g_di.text_lvl_in_min = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_min), &txt_buf[0]);
   gtk_widget_set_usize (g_di.text_lvl_in_min, TEXT_WIDTH, 25);
@@ -1552,7 +1540,7 @@ p_smp_dialog (void)
   gtk_widget_show (g_di.text_lvl_in_min);
 
   /* input gamma text  */
-  sprintf(&txt_buf[0], "%2.2f", g_values.lvl_in_gamma);
+  g_snprintf (txt_buf, sizeof (txt_buf), "%2.2f", g_values.lvl_in_gamma);
   g_di.text_lvl_in_gamma = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_gamma), &txt_buf[0]);
   gtk_widget_set_usize (g_di.text_lvl_in_gamma, TEXT_WIDTH, 25);
@@ -1564,7 +1552,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* high input text  */
-  sprintf(&txt_buf[0], "%d", (int)g_values.lvl_in_max);
+  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_in_max);
   g_di.text_lvl_in_max = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_max), &txt_buf[0]);
   gtk_widget_set_usize (g_di.text_lvl_in_max, TEXT_WIDTH, 25);
@@ -1575,18 +1563,17 @@ p_smp_dialog (void)
   gtk_widget_show (g_di.text_lvl_in_max);
   gtk_widget_show (hbox);
 
-
   /*  Horizontal box for OUTPUT levels text widget  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_table_attach ( GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  hbox = gtk_hbox_new (TRUE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Out Level: "));
+  label = gtk_label_new (_("Out Level:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-
   /*  min output text  */
-  sprintf(&txt_buf[0], "%d", (int)g_values.lvl_out_min);
+  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_out_min);
   g_di.text_lvl_out_min = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_min), &txt_buf[0]);
   gtk_widget_set_usize (g_di.text_lvl_out_min, TEXT_WIDTH, 25);
@@ -1597,7 +1584,7 @@ p_smp_dialog (void)
   gtk_widget_show (g_di.text_lvl_out_min);
 
   /* high output text  */
-  sprintf(&txt_buf[0], "%d", (int)g_values.lvl_out_max);
+  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_out_max);
   g_di.text_lvl_out_max = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_max), &txt_buf[0]);
   gtk_widget_set_usize (g_di.text_lvl_out_max, TEXT_WIDTH, 25);
@@ -1608,37 +1595,43 @@ p_smp_dialog (void)
   gtk_widget_show (g_di.text_lvl_out_max);
   gtk_widget_show (hbox);
 
-
-
-
   l_ty++;
   
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (hbox);
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Hold Intensity"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 0, 1, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.hold_inten);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
                                g_values.hold_inten);
   gtk_widget_show (check_button);
-  
-  
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Original Intensity"));
   g_di.orig_inten_button = check_button;
-  gtk_table_attach ( GTK_TABLE (table), check_button, 1, 2, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.orig_inten);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
                                g_values.orig_inten);
-  gtk_widget_set_sensitive(g_di.orig_inten_button,g_values.hold_inten);	      
+  gtk_widget_set_sensitive (g_di.orig_inten_button, g_values.hold_inten);
   gtk_widget_show (check_button);
   
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (hbox);
+
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Use Subcolors"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 2, 3, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.rnd_subcolors);
@@ -1648,7 +1641,7 @@ p_smp_dialog (void)
   
   /* check button */
   check_button = gtk_check_button_new_with_label (_("Smooth Samplecolors"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 3, 4, l_ty, l_ty+1, GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.guess_missing);
@@ -1660,7 +1653,6 @@ p_smp_dialog (void)
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
-
 
   gtk_widget_show (dialog);
 

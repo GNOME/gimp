@@ -56,13 +56,16 @@
  * the provided region
  */
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
@@ -109,11 +112,9 @@ static void	run	(gchar	 *name,
 			 gint	 *nreturn_vals,
 			 GParam	 **return_vals);
 
-static gint	pixelize_dialog (void);
-static void	pixelize_close_callback	 (GtkWidget *widget,
-					  gpointer   data);
-static void	pixelize_ok_callback	 (GtkWidget *widget,
-					  gpointer   data);
+static gint	pixelize_dialog      (void);
+static void	pixelize_ok_callback (GtkWidget *widget,
+				      gpointer   data);
 
 static void	pixelize	(GDrawable *drawable);
 static void	pixelize_large	(GDrawable *drawable, gint pixelwidth);
@@ -131,7 +132,6 @@ static void   entscale_int_scale_update (GtkAdjustment *adjustment,
 					 gpointer      data);
 static void   entscale_int_entry_update (GtkWidget *widget,
 					 gpointer   data);
-
 
 
 /***** Local vars *****/
@@ -161,7 +161,7 @@ static PixelArea area;
 MAIN ()
 
 static void
-query()
+query (void)
 {
   static GParamDef args[]=
     {
@@ -283,66 +283,47 @@ run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-
 static gint
-pixelize_dialog ()
+pixelize_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   gchar **argv;
-  gint	argc;
+  gint	  argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("pixelize");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
+  dlg = gimp_dialog_new (_("Pixelize"), "pixelize",
+			 gimp_plugin_help_func, "filters/pixelize.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Pixelize"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+			 _("OK"), pixelize_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) pixelize_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) pixelize_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   entscale_int_new (table, 0, 0, _("Pixel Width:"), &pvals.pixelwidth,
@@ -362,17 +343,11 @@ pixelize_dialog ()
 /*  Pixelize interface functions  */
 
 static void
-pixelize_close_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 pixelize_ok_callback (GtkWidget *widget,
 		      gpointer	 data)
 {
   pint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -405,7 +380,8 @@ pixelize (GDrawable *drawable)
   It simply sets the size of GPixelRgn as pixelwidth and proceeds.
  */
 static void
-pixelize_large (GDrawable *drawable, gint pixelwidth )
+pixelize_large (GDrawable *drawable,
+		gint       pixelwidth)
 {
   GPixelRgn src_rgn, dest_rgn;
   guchar *src_row, *dest_row;
@@ -509,7 +485,9 @@ pixelize_large (GDrawable *drawable, gint pixelwidth )
    or height is the remainder.
  */
 static void
-pixelize_small ( GDrawable *drawable, gint pixelwidth, gint tile_width )
+pixelize_small (GDrawable *drawable,
+		gint       pixelwidth,
+		gint       tile_width )
 {
   GPixelRgn src_rgn, dest_rgn;
   gint bpp;
@@ -566,7 +544,8 @@ pixelize_small ( GDrawable *drawable, gint pixelwidth, gint tile_width )
   */
 
 static void
-pixelize_sub( gint pixelwidth, gint bpp )
+pixelize_sub (gint pixelwidth,
+	      gint bpp)
 {
   glong average[4];		/* bpp <= 4 */
   gint	x, y, w, h;
@@ -658,11 +637,16 @@ pixelize_sub( gint pixelwidth, gint bpp )
  *    call_data:  data for callback func
  */
 void
-entscale_int_new ( GtkWidget *table, gint x, gint y,
-		   gchar *caption, gint *intvar,
-		   gint min, gint max, gint constraint,
-		   EntscaleIntCallbackFunc callback,
-		   gpointer call_data)
+entscale_int_new (GtkWidget              *table,
+		  gint                    x,
+		  gint                    y,
+		  gchar                  *caption,
+		  gint                   *intvar,
+		  gint                     min,
+		  gint                     max,
+		  gint                     constraint,
+		  EntscaleIntCallbackFunc  callback,
+		  gpointer                 call_data)
 {
   EntscaleIntData *userdata;
   GtkWidget *hbox;
@@ -673,7 +657,7 @@ entscale_int_new ( GtkWidget *table, gint x, gint y,
   gchar    buffer[256];
   gint	    constraint_val;
 
-  userdata = g_new ( EntscaleIntData, 1 );
+  userdata = g_new (EntscaleIntData, 1);
 
   label = gtk_label_new (caption);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -721,7 +705,7 @@ entscale_int_new ( GtkWidget *table, gint x, gint y,
 		      userdata );
 
   /* start packing */
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
 
@@ -740,17 +724,17 @@ entscale_int_new ( GtkWidget *table, gint x, gint y,
 /* when destroyed, userdata is destroyed too */
 static void
 entscale_int_destroy_callback (GtkWidget *widget,
-			       gpointer data)
+			       gpointer   data)
 {
   EntscaleIntData *userdata;
 
   userdata = data;
-  g_free ( userdata );
+  g_free (userdata);
 }
 
 static void
 entscale_int_scale_update (GtkAdjustment *adjustment,
-			   gpointer      data)
+			   gpointer       data)
 {
   EntscaleIntData *userdata;
   GtkEntry	*entry;

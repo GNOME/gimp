@@ -21,13 +21,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "config.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #define DBL_LIST_WIDTH  250
@@ -972,9 +977,9 @@ gimp_plugin_desc ()
   gint      argc;
   gchar     *clabels[4];
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("plugin_desc");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("plugindetails");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -982,17 +987,25 @@ gimp_plugin_desc ()
   plugindesc = g_new0 (PDesc, 1);
 
   /* the dialog box */
+  plugindesc->dlg =
+    gimp_dialog_new (_("Plugin descriptions"), "plugindetails",
+		     gimp_plugin_help_func, "filters/plugindetails.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, TRUE,
 
-  plugindesc->dlg = gtk_dialog_new(); 
+		     _("Search by Name"), dialog_search_callback,
+		     plugindesc, NULL, NULL, FALSE, FALSE,
+		     _("Close"), dialog_close_callback,
+		     plugindesc, NULL, NULL, TRUE, TRUE,
+
+		     NULL);
+
   plugindesc->details_showing = FALSE;
 
-  gtk_window_set_title (GTK_WINDOW (plugindesc->dlg), _("Plugin Descriptions"));
-  gtk_window_position (GTK_WINDOW (plugindesc->dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (plugindesc->dlg), "destroy",
-                      (GtkSignalFunc) dialog_close_callback,
+                      GTK_SIGNAL_FUNC (dialog_close_callback),
 		      plugindesc);
-  gtk_window_set_policy(GTK_WINDOW (plugindesc->dlg), FALSE, TRUE, TRUE);
-  
+
   /* hbox : left=notebook ; right=description */
   
   plugindesc->paned = hbox = gtk_hpaned_new();
@@ -1100,28 +1113,6 @@ gimp_plugin_desc ()
   /* right = description */
   /* the right description is build on first click of the Details button */
  
-  /* buttons in dlg->action_area */
-
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(plugindesc->dlg)->action_area), 0);
-
-  plugindesc->name_button = gtk_button_new_with_label ( _("Search by name"));
-  GTK_WIDGET_SET_FLAGS (plugindesc->name_button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (plugindesc->name_button), "clicked",
-                      (GtkSignalFunc) dialog_search_callback, plugindesc);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->action_area), 
-		    plugindesc->name_button , TRUE, TRUE, 0);
-  gtk_widget_show(plugindesc->name_button);
-
-
-  button = gtk_button_new_with_label ( _("Close"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_close_callback, plugindesc);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->action_area), 
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-
   /* now build the list */
   dialog_search_callback (NULL, (gpointer)plugindesc);
 

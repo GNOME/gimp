@@ -839,6 +839,7 @@ pixelize_SOURCES = \
 	pixelize.c
 
 pixelize_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -847,6 +848,7 @@ plasma_SOURCES = \
 	plasma.c
 
 plasma_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -855,6 +857,7 @@ plugindetails_SOURCES = \
 	plugindetails.c
 
 plugindetails_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -882,6 +885,7 @@ polar_SOURCES = \
 	polar.c
 
 polar_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -918,6 +922,7 @@ randomize_SOURCES = \
 
 randomize_LDADD = \
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -926,6 +931,7 @@ ripple_SOURCES = \
 	ripple.c
 
 ripple_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -951,6 +957,7 @@ scatter_hsv_SOURCES = \
 	scatter_hsv.c
 
 scatter_hsv_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -959,6 +966,7 @@ screenshot_SOURCES = \
 	screenshot.c
 
 screenshot_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -967,6 +975,7 @@ sel_gauss_SOURCES = \
 	sel_gauss.c
 
 sel_gauss_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -983,6 +992,7 @@ sharpen_SOURCES = \
 	sharpen.c
 
 sharpen_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -991,6 +1001,7 @@ shift_SOURCES = \
 	shift.c
 
 shift_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -999,6 +1010,7 @@ smooth_palette_SOURCES = \
 	smooth_palette.c
 
 smooth_palette_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1007,6 +1019,7 @@ snoise_SOURCES = \
 	snoise.c
 
 snoise_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1015,6 +1028,7 @@ sobel_SOURCES = \
 	sobel.c
 
 sobel_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1023,6 +1037,7 @@ sparkle_SOURCES = \
 	sparkle.c
 
 sparkle_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1031,6 +1046,7 @@ spheredesigner_SOURCES = \
 	spheredesigner.c
 
 spheredesigner_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1039,6 +1055,7 @@ spread_SOURCES = \
 	spread.c
 
 spread_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

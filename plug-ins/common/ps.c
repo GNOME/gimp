@@ -47,14 +47,18 @@ static char dversio[] = "v1.07  14-Sep-99";
 static char ident[]   = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
@@ -221,8 +225,6 @@ typedef struct
 } LoadDialogVals;
 
 static gint   load_dialog              (void);
-static void   load_close_callback      (GtkWidget *widget,
-                                        gpointer   data);
 static void   load_ok_callback         (GtkWidget *widget,
                                         gpointer   data);
 static void   load_toggle_update       (GtkWidget *widget,
@@ -242,8 +244,6 @@ typedef struct
 } SaveDialogVals;
 
 static gint   save_dialog              (void);
-static void   save_close_callback      (GtkWidget *widget,
-                                        gpointer   data);
 static void   save_ok_callback         (GtkWidget *widget,
                                         gpointer   data);
 static void   save_toggle_update       (GtkWidget *widget,
@@ -2084,107 +2084,99 @@ load_dialog (void)
 
 {
   LoadDialogVals *vals;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
+  GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *hbbox;
   GtkWidget *label;
   GtkWidget *table;
   GSList *group;
-  char buffer[STR_LENGTH];
+  gchar   buffer[STR_LENGTH];
+  gint    j, n_prop, alias, *alpha_bits;
+
   static char *label_text[] =
     { N_("Resolution:"), N_("Width:"), N_("Height:"), N_("Pages:") };
   static char *radio_text[] =
-    { N_("b/w"), N_("gray"), N_("colour"), N_("automatic") };
+    { N_("B/W"), N_("Gray"), N_("Color"), N_("Automatic") };
   static char *alias_text[] =
-    { N_("none"), N_("weak"), N_("strong") };
-  int j, n_prop, alias, *alpha_bits;
+    { N_("None"), N_("Weak"), N_("Strong") };
 
   init_gtk ();
   vals = g_malloc (sizeof (*vals));
 
-  vals->dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), _("Load PostScript"));
-  gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
+  vals->dialog = gimp_dialog_new (_("Load PostScript"), "ps",
+				  gimp_plugin_help_func, "filters/ps.html",
+				  GTK_WIN_POS_MOUSE,
+				  FALSE, TRUE, FALSE,
+
+				  _("OK"), load_ok_callback,
+				  vals, NULL, NULL, TRUE, FALSE,
+				  _("Cancel"), gtk_widget_destroy,
+				  NULL, 1, NULL, FALSE, TRUE,
+
+				  NULL);
+
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
-                      (GtkSignalFunc) load_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) load_ok_callback,
-		      vals);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), main_vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (vals->dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), hbox,
-                      TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Rendering */
   frame = gtk_frame_new (_("Rendering"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Resolution/Width/Height/Pages labels */
-  n_prop = sizeof (label_text)/sizeof (label_text[0]);
+  n_prop = sizeof (label_text) / sizeof (label_text[0]);
   table = gtk_table_new (n_prop, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   for (j = 0; j < n_prop; j++)
-  {
-    label = gtk_label_new (gettext(label_text[j]));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
-                      GTK_FILL, GTK_FILL, 0, 0);
-    gtk_widget_show (label);
-  }
+    {
+      label = gtk_label_new (gettext(label_text[j]));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
 
   /* Resolution/Width/Height/Pages Entries */
   for (j = 0; j < n_prop; j++)
-  {
-    vals->entry[j] = gtk_entry_new ();
-    gtk_widget_set_usize (vals->entry[j], 80, 0);
-    if      (j == 0) sprintf (buffer, "%d", (int)plvals.resolution);
-    else if (j == 1) sprintf (buffer, "%d", (int)plvals.width);
-    else if (j == 2) sprintf (buffer, "%d", (int)plvals.height);
-    else if (j == 3) strcpy (buffer, plvals.pages);
-    gtk_entry_set_text (GTK_ENTRY (vals->entry[j]), buffer);
-    gtk_table_attach (GTK_TABLE (table), vals->entry[j], 1, 2, j, j+1,
-                      GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show (vals->entry[j]);
-  }
+    {
+      vals->entry[j] = gtk_entry_new ();
+      gtk_widget_set_usize (vals->entry[j], 80, 0);
+      if      (j == 0)
+	g_snprintf (buffer, sizeof (buffer), "%d", (int)plvals.resolution);
+      else if (j == 1)
+	g_snprintf (buffer, sizeof (buffer), "%d", (int)plvals.width);
+      else if (j == 2)
+	g_snprintf (buffer, sizeof (buffer), "%d", (int)plvals.height);
+      else if (j == 3)
+	strcpy (buffer, plvals.pages);
+      gtk_entry_set_text (GTK_ENTRY (vals->entry[j]), buffer);
+      gtk_table_attach (GTK_TABLE (table), vals->entry[j], 1, 2, j, j+1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_widget_show (vals->entry[j]);
+    }
 
-  toggle = gtk_check_button_new_with_label (_("try BoundingBox"));
+  toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->use_bbox = (plvals.use_bbox != 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2199,67 +2191,67 @@ load_dialog (void)
   /* Colouring */
   frame = gtk_frame_new (_("Colouring"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   group = NULL;
   for (j = 0; j < 4; j++)
-  {
-    toggle = gtk_radio_button_new_with_label (group, gettext(radio_text[j]));
-    group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-    gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-    vals->dataformat[j] = (plvals.pnm_type == j+4);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                        (GtkSignalFunc) load_toggle_update,
-                        &(vals->dataformat[j]));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                 vals->dataformat[j]);
-    gtk_widget_show (toggle);
-  }
+    {
+      toggle = gtk_radio_button_new_with_label (group, gettext (radio_text[j]));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      vals->dataformat[j] = (plvals.pnm_type == j+4);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) load_toggle_update,
+			  &(vals->dataformat[j]));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    vals->dataformat[j]);
+      gtk_widget_show (toggle);
+    }
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), hbox,
-                      TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   for (alias = 0; alias < 2; alias++)
-  {
-    alpha_bits = alias ? &(vals->graphicsalphabits[0])
-                       : &(vals->textalphabits[0]);
-    frame = gtk_frame_new (alias ? _("Graphic antialiasing")
-                                 : _("Text antialiasing"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 10);
-    gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-
-    vbox = gtk_vbox_new (FALSE, 5);
-    gtk_container_border_width (GTK_CONTAINER (vbox), 5);
-    gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-    group = NULL;
-    for (j = 0; j < 3; j++)
     {
-      toggle = gtk_radio_button_new_with_label (group, gettext(alias_text[j]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      alpha_bits[j] = alias ? (plvals.graphicsalpha == (1 << j))
-                            : (plvals.textalpha == (1 << j));
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                          (GtkSignalFunc) load_toggle_update, alpha_bits+j);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), alpha_bits[j]);
-      gtk_widget_show (toggle);
-    }
+      alpha_bits = alias ? &(vals->graphicsalphabits[0])
+	                 : &(vals->textalphabits[0]);
+      frame = gtk_frame_new (alias ? _("Graphic Antialiasing")
+                                   : _("Text Antialiasing"));
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
 
-    gtk_widget_show (vbox);
-    gtk_widget_show (frame);
-  }
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+
+      group = NULL;
+      for (j = 0; j < 3; j++)
+	{
+	  toggle = gtk_radio_button_new_with_label (group,
+						    gettext (alias_text[j]));
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+	  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+	  alpha_bits[j] = alias ? (plvals.graphicsalpha == (1 << j))
+                                : (plvals.textalpha == (1 << j));
+	  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			      (GtkSignalFunc) load_toggle_update,
+			      alpha_bits+j);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					alpha_bits[j]);
+	  gtk_widget_show (toggle);
+	}
+
+      gtk_widget_show (vbox);
+      gtk_widget_show (frame);
+    }
 
   gtk_widget_show (vals->dialog);
 
@@ -2269,15 +2261,6 @@ load_dialog (void)
   g_free (vals);
 
   return plint.run;
-}
-
-
-static void
-load_close_callback (GtkWidget *widget,
-                     gpointer   data)
-
-{
-  gtk_main_quit ();
 }
 
 
@@ -2348,114 +2331,95 @@ save_dialog (void)
 
 {
   SaveDialogVals *vals;
-  GtkWidget *button;
-  GtkWidget *hbbox;
   GtkWidget *toggle;
   GtkWidget *frame, *uframe;
   GtkWidget *hbox, *vbox, *uvbox;
   GtkWidget *main_vbox[2];
   GtkWidget *label;
   GtkWidget *table;
-  GSList *group;
-  static char *label_text[] =
+  GSList  *group;
+  gchar    tmp[80];
+  gint j,  idata;
+  gdouble  rdata;
+
+  static gchar *label_text[] =
     { N_("Width:"), N_("Height:"), N_("X-offset:"), N_("Y-offset:") };
-  static char *radio_text[] =
+  static gchar *radio_text[] =
     { N_("0"), N_("90"), N_("180"), N_("270") };
-  static char *unit_text[] =
+  static gchar *unit_text[] =
     { N_("Inch"), N_("Millimeter") };
-  char tmp[80];
-  int j, idata;
-  double rdata;
 
   vals = g_malloc (sizeof (*vals));
 
-  vals->dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), _("Save PostScript"));
-  gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
+  vals->dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
+				  gimp_plugin_help_func, "filters/ps.html",
+				  GTK_WIN_POS_MOUSE,
+				  FALSE, TRUE, FALSE,
+
+				  _("OK"), save_ok_callback,
+				  vals, NULL, NULL, TRUE, FALSE,
+				  _("Cancel"), gtk_widget_destroy,
+				  NULL, 1, NULL, FALSE, TRUE,
+
+				  NULL);
+
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
-                      (GtkSignalFunc) save_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (vals->dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc)  save_ok_callback,
-		      vals);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (vals->dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /* Main hbox */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), hbox,
-                      FALSE, TRUE, 0);
+                      FALSE, FALSE, 0);
   main_vbox[0] = main_vbox[1] = NULL;
 
   for (j = 0; j < sizeof (main_vbox) / sizeof (main_vbox[0]); j++)
-  {
-    main_vbox[j] = gtk_vbox_new (FALSE, 0);
-    gtk_container_border_width (GTK_CONTAINER (main_vbox[j]), 0);
-    gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], TRUE, TRUE, 0);
-  }
+    {
+      main_vbox[j] = gtk_vbox_new (FALSE, 4);
+      gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], TRUE, TRUE, 0);
+    }
 
   /* Image Size */
   frame = gtk_frame_new (_("Image Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
-  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Width/Height/X-/Y-offset labels */
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   for (j = 0; j < 4; j++)
-  {
-    label = gtk_label_new (gettext(label_text[j]));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-    gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
-                      GTK_FILL, GTK_FILL, 0, 0);
-    gtk_widget_show (label);
-  }
+    {
+      label = gtk_label_new (gettext (label_text[j]));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
 
   /* Width/Height/X-off/Y-off Entries */
   for (j = 0; j < 4; j++)
-  {
-    vals->entry[j] = gtk_entry_new ();
-    gtk_widget_set_usize (vals->entry[j], 50, 0);
-    if      (j == 0) rdata = psvals.width;
-    else if (j == 1) rdata = psvals.height;
-    else if (j == 2) rdata = psvals.x_offset;
-    else             rdata = psvals.y_offset;
-    gtk_entry_set_text (GTK_ENTRY (vals->entry[j]), ftoa ("%-8.2f", rdata));
-    gtk_table_attach (GTK_TABLE (table), vals->entry[j], 1, 2, j, j+1,
-                      GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show (vals->entry[j]);
-  }
+    {
+      vals->entry[j] = gtk_entry_new ();
+      gtk_widget_set_usize (vals->entry[j], 50, 0);
+      if      (j == 0) rdata = psvals.width;
+      else if (j == 1) rdata = psvals.height;
+      else if (j == 2) rdata = psvals.x_offset;
+      else             rdata = psvals.y_offset;
+      gtk_entry_set_text (GTK_ENTRY (vals->entry[j]), ftoa ("%-8.2f", rdata));
+      gtk_table_attach (GTK_TABLE (table), vals->entry[j], 1, 2, j, j+1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_widget_show (vals->entry[j]);
+    }
 
-  toggle = gtk_check_button_new_with_label (_("keep aspect ratio"));
+  toggle = gtk_check_button_new_with_label (_("Keep Aspect Ratio"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->keep_ratio = (psvals.keep_ratio != 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2467,28 +2431,27 @@ save_dialog (void)
   /* Unit */
   uframe = gtk_frame_new (_("Unit"));
   gtk_frame_set_shadow_type (GTK_FRAME (uframe), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (uframe), 5);
   gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
-  uvbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (uvbox), 5);
+  uvbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (uvbox), 4);
   gtk_container_add (GTK_CONTAINER (uframe), uvbox);
 
   group = NULL;
   for (j = 0; j < 2; j++)
-  {
-    toggle = gtk_radio_button_new_with_label (group, gettext(unit_text[j]));
-    group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-    gtk_box_pack_start (GTK_BOX (uvbox), toggle, FALSE, FALSE, 0);
-    vals->unit[j] = (psvals.unit_mm == j);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                        (j == 0) ? (GtkSignalFunc) save_toggle_update :
-                        (GtkSignalFunc) save_mm_toggle_update,
-                        (j == 0) ? (gpointer)(&(vals->unit[j])) :
-                        (gpointer)vals);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                 vals->unit[j]);
-    gtk_widget_show (toggle);
-  }
+    {
+      toggle = gtk_radio_button_new_with_label (group, gettext (unit_text[j]));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (uvbox), toggle, FALSE, FALSE, 0);
+      vals->unit[j] = (psvals.unit_mm == j);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (j == 0) ? (GtkSignalFunc) save_toggle_update :
+			  (GtkSignalFunc) save_mm_toggle_update,
+			  (j == 0) ? (gpointer)(&(vals->unit[j])) :
+			  (gpointer)vals);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    vals->unit[j]);
+      gtk_widget_show (toggle);
+    }
   gtk_widget_show (uvbox);
   gtk_widget_show (uframe);
 
@@ -2498,26 +2461,26 @@ save_dialog (void)
   /* Rotation */
   frame = gtk_frame_new (_("Rotation"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   group = NULL;
   for (j = 0; j < 4; j++)
-  {
-    toggle = gtk_radio_button_new_with_label (group, radio_text[j]);
-    group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-    gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-    vals->rot[j] = (psvals.rotate == j*90);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                        (GtkSignalFunc) save_toggle_update,
-                        &(vals->rot[j]));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                 vals->rot[j]);
-    gtk_widget_show (toggle);
-  }
+    {
+      toggle = gtk_radio_button_new_with_label (group, radio_text[j]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      vals->rot[j] = (psvals.rotate == j*90);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) save_toggle_update,
+			  &(vals->rot[j]));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    vals->rot[j]);
+      gtk_widget_show (toggle);
+    }
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -2525,10 +2488,10 @@ save_dialog (void)
   /* Format */
   frame = gtk_frame_new (_("Output"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Encapsulated PostScript"));
@@ -2551,13 +2514,12 @@ save_dialog (void)
 
   /* Preview size label/entry */
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   j = 0;
-  label = gtk_label_new (_("Preview size"));
+  label = gtk_label_new (_("Preview Size:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -2569,7 +2531,7 @@ save_dialog (void)
   gtk_widget_set_usize (vals->psize_entry, 50, 0);
   idata = psvals.preview_size;
   if (idata < 0) idata = 0;
-  sprintf (tmp, "%d", idata);
+  g_snprintf (tmp, sizeof (tmp), "%d", idata);
   gtk_entry_set_text (GTK_ENTRY (vals->psize_entry), tmp);
   gtk_table_attach (GTK_TABLE (table), vals->psize_entry, 1, 2, j, j+1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -2589,15 +2551,6 @@ save_dialog (void)
   g_free (vals);
 
   return psint.run;
-}
-
-
-static void
-save_close_callback (GtkWidget *widget,
-                     gpointer   data)
-
-{
-  gtk_main_quit ();
 }
 
 

@@ -40,6 +40,8 @@
  *   see ChangeLog
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -47,10 +49,10 @@
 #include <png.h>		/* PNG library definitions */
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -84,7 +86,6 @@ static gint32	load_image                (char *);
 static gint	save_image                (char *, gint32, gint32, gint32);
 static void     init_gtk                  (void);
 static gint	save_dialog               (void);
-static void	save_close_callback       (GtkWidget *, gpointer);
 static void	save_ok_callback          (GtkWidget *, gpointer);
 static void	save_compression_update   (GtkAdjustment *, gpointer);
 static void	save_interlace_update     (GtkWidget *, gpointer);
@@ -872,18 +873,6 @@ save_image (char   *filename,	        /* I - File to save to */
 
 
 /*
- * 'save_close_callback()' - Close the save dialog window.
- */
-
-static void
-save_close_callback(GtkWidget *widget,	/* I - Close button */
-                    gpointer  data)	/* I - Callback data */
-{
-  gtk_main_quit();
-}
-
-
-/*
  * 'save_ok_callback()' - Destroy the save dialog and save the image.
  */
 
@@ -928,7 +917,7 @@ save_noextras_update (GtkWidget *widget,	/* I - Interlace toggle button */
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -950,8 +939,6 @@ static gint
 save_dialog (void)
 {
   GtkWidget	*dlg,		/* Dialog window */
-		*button,	/* OK/cancel buttons */
-                *hbbox,         /* button_box for Ok/Cancel */ 
 		*frame,		/* Frame for dialog */
 		*table,		/* Table for dialog options */
 		*toggle,	/* Interlace toggle button */
@@ -963,50 +950,36 @@ save_dialog (void)
   * Open a dialog window...
   */
 
-  dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), _("PNG Options"));
-  gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-                     (GtkSignalFunc)save_close_callback, NULL);
+  dlg = gimp_dialog_new (_("Save as PNG"), "png",
+			 gimp_plugin_help_func, "filters/png.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 NULL);
 
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
  /*
   * Compression level, interlacing controls...
   */
 
-  frame = gtk_frame_new(_("Parameter Settings"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 10);
-  gtk_box_pack_start(GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new(2, 3, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 10);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width(GTK_CONTAINER(table), 4);
+  gtk_container_add (GTK_CONTAINER(frame), table);
 
   toggle = gtk_check_button_new_with_label(_("Interlacing (Adam7)"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
@@ -1022,9 +995,10 @@ save_dialog (void)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.noextras);
   gtk_widget_show(toggle);
 
-  label = gtk_label_new(_("Compression level"));
-  gtk_misc_set_alignment(GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
+  label = gtk_label_new (_("Compression Level:"));
+  gtk_misc_set_alignment(GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
 
   scale_data = gtk_adjustment_new(pngvals.compression_level, 1.0, 9.0, 1.0, 1.0, 0.0);
   scale      = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));

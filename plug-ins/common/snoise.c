@@ -59,15 +59,18 @@
  *  Initial release.
  */
 
+#include "config.h"
 
 #include <time.h>
-#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /*---- Defines ----*/
@@ -118,7 +121,6 @@ static double plain_noise (double x, double y, unsigned int s);
 static double noise (double x, double y);
 
 static gint solid_noise_dialog (void);
-static void dialog_close_callback (GtkWidget *widget, gpointer data);
 static void dialog_toggle_update (GtkWidget *widget, gpointer data);
 static void dialog_entry_callback (GtkWidget *widget, gpointer data);
 static void dialog_scale_callback (GtkAdjustment *adjustment, gdouble *value);
@@ -478,8 +480,6 @@ solid_noise_dialog (void)
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *table;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *seed_hbox;
@@ -487,47 +487,60 @@ solid_noise_dialog (void)
   GtkWidget *scale;
   GtkObject *scale_data;
   gchar **argv;
-  gint  argc;
-  gchar buffer[32];
+  gint    argc;
+  gchar   buffer[32];
 
   /*  Set args  */
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("snoise");
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
   /*  Dialog initialization  */
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Solid Noise"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
+			 gimp_plugin_help_func, "filters/snoise.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), dialog_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      (GtkSignalFunc) dialog_close_callback, NULL);
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /*  Table  */
   table = gtk_table_new (4, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  Entry #1  */
-  label = gtk_label_new ( _("Seed"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new ( _("Seed:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
-  
-  seed_hbox = gtk_hbox_new (FALSE, 2);
+
+  seed_hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (seed_hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%d", snvals.seed);
+  g_snprintf (buffer, sizeof (buffer), "%d", snvals.seed);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) dialog_entry_callback, &snvals.seed);
+                      (GtkSignalFunc) dialog_entry_callback,
+		      &snvals.seed);
   gtk_widget_show (entry);
 
   time_button = gtk_toggle_button_new_with_label ( _("Time"));
@@ -540,8 +553,8 @@ solid_noise_dialog (void)
   gtk_widget_show (seed_hbox);
 
   /*  Entry #2  */
-  label = gtk_label_new ( _("Detail"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Detail:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
@@ -553,7 +566,8 @@ solid_noise_dialog (void)
   sprintf(buffer, "%d", snvals.detail);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) dialog_entry_callback, &snvals.detail);
+                      (GtkSignalFunc) dialog_entry_callback,
+		      &snvals.detail);
   gtk_widget_show (entry);
 
   /*  Check button #1  */
@@ -562,21 +576,23 @@ solid_noise_dialog (void)
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) dialog_toggle_update, &snvals.turbulent);
+                      (GtkSignalFunc) dialog_toggle_update,
+		      &snvals.turbulent);
   gtk_widget_show (toggle);
-  
+
   /*  Check button #2  */
   toggle = gtk_check_button_new_with_label ( _("Tilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) dialog_toggle_update, &snvals.tilable);
+                      (GtkSignalFunc) dialog_toggle_update,
+		      &snvals.tilable);
   gtk_widget_show (toggle);
-  
+
   /*  Scale #1  */
-  label = gtk_label_new ( _("X Size"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new ( _("X Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
@@ -591,12 +607,13 @@ solid_noise_dialog (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 1);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_callback, &snvals.xsize);
+		      (GtkSignalFunc) dialog_scale_callback,
+		      &snvals.xsize);
   gtk_widget_show (scale);
 
   /*  Scale #2  */
-  label = gtk_label_new ( _("Y Size"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new ( _("Y Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
@@ -611,33 +628,9 @@ solid_noise_dialog (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 1);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_callback, &snvals.ysize);
+		      (GtkSignalFunc) dialog_scale_callback,
+		      &snvals.ysize);
   gtk_widget_show (scale);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
@@ -648,16 +641,9 @@ solid_noise_dialog (void)
   return snint.run;
 }
 
-
 static void
-dialog_close_callback (GtkWidget *widget, gpointer data)
-{
-  gtk_main_quit ();
-}
-
-
-static void
-dialog_toggle_update (GtkWidget *widget, gpointer data)
+dialog_toggle_update (GtkWidget *widget,
+		      gpointer   data)
 {
   int *toggle_val;
 
@@ -669,9 +655,9 @@ dialog_toggle_update (GtkWidget *widget, gpointer data)
     *toggle_val = FALSE;
 }
 
-
 static void
-dialog_entry_callback (GtkWidget *widget, gpointer data)
+dialog_entry_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   gint *text_val;
 
@@ -680,17 +666,18 @@ dialog_entry_callback (GtkWidget *widget, gpointer data)
   *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
-
 static void
-dialog_scale_callback (GtkAdjustment *adjustment, gdouble *value)
+dialog_scale_callback (GtkAdjustment *adjustment,
+		       gdouble       *value)
 {
   *value = adjustment->value;
 }
 
-
 static void
-dialog_ok_callback (GtkWidget *widget, gpointer data)
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   snint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }

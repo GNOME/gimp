@@ -1,3 +1,34 @@
+2000-01-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/hrz.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/sunras.c: more plugins which use the dialog
+	constructor. Hacked many UIs to look like the app's dialogs.
+
 Sat Jan  8 15:04:48 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpimage.c: in gimp_image_set_resolution() check that 

@@ -517,8 +517,6 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
 
   dlg = gimp_dialog_new (_("Save as HRZ"), "hrz",
 			 gimp_plugin_help_func, "filters/hrz.html",

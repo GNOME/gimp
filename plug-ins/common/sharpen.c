@@ -34,8 +34,6 @@
  *   dialog_iscale_update()      - Update the value field using the scale.
  *   dialog_ientry_update()      - Update the value field using the text entry.
  *   dialog_ok_callback()        - Start the filter...
- *   dialog_cancel_callback()    - Cancel the filter...
- *   dialog_close_callback()     - Exit the filter dialog application.
  *   gray_filter()               - Sharpen grayscale pixels.
  *   graya_filter()              - Sharpen grayscale+alpha pixels.
  *   rgb_filter()                - Sharpen RGB pixels.
@@ -44,6 +42,38 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.15  2000/01/08 15:23:28  mitch
+ *   2000-01-08  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* plug-ins/common/Makefile.am
+ *   	* plug-ins/common/hrz.c
+ *   	* plug-ins/common/papertile.c
+ *   	* plug-ins/common/pat.c
+ *   	* plug-ins/common/pixelize.c
+ *   	* plug-ins/common/plasma.c
+ *   	* plug-ins/common/plugindetails.c
+ *   	* plug-ins/common/png.c
+ *   	* plug-ins/common/pnm.c
+ *   	* plug-ins/common/polar.c
+ *   	* plug-ins/common/ps.c
+ *   	* plug-ins/common/psp.c
+ *   	* plug-ins/common/randomize.c
+ *   	* plug-ins/common/ripple.c
+ *   	* plug-ins/common/sample_colorize.c
+ *   	* plug-ins/common/scatter_hsv.c
+ *   	* plug-ins/common/screenshot.c
+ *   	* plug-ins/common/sel_gauss.c
+ *   	* plug-ins/common/sharpen.c
+ *   	* plug-ins/common/shift.c
+ *   	* plug-ins/common/smooth_palette.c
+ *   	* plug-ins/common/snoise.c
+ *   	* plug-ins/common/sobel.c
+ *   	* plug-ins/common/sparkle.c
+ *   	* plug-ins/common/spheredesigner.c
+ *   	* plug-ins/common/spread.c
+ *   	* plug-ins/common/sunras.c: more plugins which use the dialog
+ *   	constructor. Hacked many UIs to look like the app's dialogs.
+ *
  *   Revision 1.14  2000/01/07 17:18:44  yasuhiro
  *           * plug-ins/common/scatter_hsv.c
  *           * plug-ins/common/semiflatten.c
@@ -142,14 +172,18 @@
  *   Initial revision
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#include "config.h"
+
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -188,8 +222,6 @@ static void	dialog_create_ivalue(char *, GtkTable *, int, gint *, int, int);
 static void	dialog_iscale_update(GtkAdjustment *, gint *);
 static void	dialog_ientry_update(GtkWidget *, gint *);
 static void	dialog_ok_callback(GtkWidget *, gpointer);
-static void	dialog_cancel_callback(GtkWidget *, gpointer);
-static void	dialog_close_callback(GtkWidget *, gpointer);
 
 static void	preview_init(void);
 static void	preview_exit(void);
@@ -474,6 +506,8 @@ sharpen(void)
 		width;		/* Byte width of the image */
   void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
+  filter = NULL;
+
 
  /*
   * Let the user know what we're doing...
@@ -632,169 +666,152 @@ sharpen(void)
  */
 
 static gint
-sharpen_dialog(void)
+sharpen_dialog (void)
 {
   GtkWidget	*dialog,	/* Dialog window */
 		*table,		/* Table "container" for controls */
 		*ptable,	/* Preview table */
 		*frame,		/* Frame for preview */
-		*scrollbar,	/* Horizontal + vertical scroller */
-		*hbbox,	        /* Button_box for OK/Cancel buttons */
-		*button;	/* OK/Cancel buttons */
+		*scrollbar;	/* Horizontal + vertical scroller */
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
   guchar	*color_cube;	/* Preview color cube... */
   gchar     *title;
 
-
- /*
-  * Initialize the program's display...
-  */
+  /*
+   * Initialize the program's display...
+   */
 
   argc    = 1;
-  argv    = g_new(gchar *, 1);
-  argv[0] = g_strdup("sharpen");
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("sharpen");
 
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-  gdk_set_use_xshm(gimp_use_xshm());
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+  gdk_set_use_xshm (gimp_use_xshm ());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
- /*
-  * Dialog window...
-  */
+  /*
+   * Dialog window...
+   */
 
-  dialog = gtk_dialog_new();
-  title = g_strdup_printf(_("Sharpen - %s"), PLUG_IN_VERSION);
-  gtk_window_set_title(GTK_WINDOW(dialog), title);
-  g_free(title);
-  gtk_window_set_wmclass(GTK_WINDOW(dialog), "sharpen", "Gimp");
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-		     (GtkSignalFunc) dialog_close_callback,
-		     NULL);
+  title = g_strdup_printf (_("Sharpen - %s"), PLUG_IN_VERSION);
+  dialog = gimp_dialog_new (title, "sharpen",
+			    gimp_plugin_help_func, "filters/sharpen.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+  g_free (title);
+
+  gtk_signal_connect (GTK_OBJECT(dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
  /*
   * Top-level table for dialog...
   */
 
-  table = gtk_table_new(3, 3, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 6);
-  gtk_table_set_row_spacings(GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show(table);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), table,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
- /*
-  * Preview window...
-  */
+  /*
+   * Preview window...
+   */
 
-  ptable = gtk_table_new(2, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(ptable), 0);
-  gtk_table_attach(GTK_TABLE(table), ptable, 0, 3, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(ptable);
+  ptable = gtk_table_new (2, 2, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ptable, 0, 3, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (ptable);
 
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
 
-  preview_width  = MIN(sel_width, PREVIEW_SIZE);
-  preview_height = MIN(sel_height, PREVIEW_SIZE);
+  preview_width  = MIN (sel_width, PREVIEW_SIZE);
+  preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(preview), preview_width, preview_height);
-  gtk_container_add(GTK_CONTAINER(frame), preview);
-  gtk_widget_show(preview);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
 
-  hscroll_data = gtk_adjustment_new(0, 0, sel_width - 1, 1.0,
-				    MIN(preview_width, sel_width),
-				    MIN(preview_width, sel_width));
+  hscroll_data = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
+				     MIN (preview_width, sel_width),
+				     MIN (preview_width, sel_width));
 
-  gtk_signal_connect(hscroll_data, "value_changed",
-		     (GtkSignalFunc)preview_scroll_callback, NULL);
+  gtk_signal_connect (hscroll_data, "value_changed",
+		      (GtkSignalFunc) preview_scroll_callback,
+		      NULL);
 
-  scrollbar = gtk_hscrollbar_new(GTK_ADJUSTMENT(hscroll_data));
-  gtk_range_set_update_policy(GTK_RANGE(scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach(GTK_TABLE(ptable), scrollbar, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(scrollbar);
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (scrollbar);
 
-  vscroll_data = gtk_adjustment_new(0, 0, sel_height - 1, 1.0,
-				    MIN(preview_height, sel_height),
-				    MIN(preview_height, sel_height));
+  vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
+				     MIN (preview_height, sel_height),
+				     MIN (preview_height, sel_height));
 
-  gtk_signal_connect(vscroll_data, "value_changed",
-		     (GtkSignalFunc)preview_scroll_callback, NULL);
+  gtk_signal_connect (vscroll_data, "value_changed",
+		      (GtkSignalFunc) preview_scroll_callback,
+		      NULL);
 
-  scrollbar = gtk_vscrollbar_new(GTK_ADJUSTMENT(vscroll_data));
-  gtk_range_set_update_policy(GTK_RANGE(scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach(GTK_TABLE(ptable), scrollbar, 1, 2, 0, 1, 0, GTK_FILL, 0, 0);
-  gtk_widget_show(scrollbar);
+  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1,
+		    0, GTK_FILL, 0, 0);
+  gtk_widget_show (scrollbar);
 
-  preview_init();
+  preview_init ();
 
- /*
-  * Sharpness control...
-  */
+  /*
+   * Sharpness control...
+   */
 
-  dialog_create_ivalue( _("Sharpness"), GTK_TABLE(table), 2, &sharpen_percent, 1, 99);
+  dialog_create_ivalue (_("Sharpness:"), GTK_TABLE (table), 2,
+			&sharpen_percent, 1, 99);
 
- /*
-  * OK, cancel buttons...
-  */
+  /*
+   * Show it and wait for the user to do something...
+   */
 
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_ok_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  gtk_widget_show (dialog);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_cancel_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  preview_update ();
 
- /*
-  * Show it and wait for the user to do something...
-  */
+  gtk_main ();
+  gdk_flush ();
 
-  gtk_widget_show(dialog);
+  /*
+   * Free the preview data...
+   */
 
-  preview_update();
+  preview_exit ();
 
-  gtk_main();
-  gdk_flush();
+  /*
+   * Return ok/cancel...
+   */
 
- /*
-  * Free the preview data...
-  */
-
-  preview_exit();
-
- /*
-  * Return ok/cancel...
-  */
-
-  return (run_filter);
+  return run_filter;
 }
 
 
@@ -861,6 +878,7 @@ preview_update(void)
 		width;		/* Byte width of the image */
   void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
+  filter = NULL;
 
  /*
   * Setup for filter...
@@ -1029,61 +1047,62 @@ preview_exit(void)
  */
 
 static void
-dialog_create_ivalue(char     *title,	/* I - Label for control */
-                     GtkTable *table,	/* I - Table container to use */
-                     int      row,	/* I - Row # for container */
-                     gint     *value,	/* I - Value holder */
-                     int      left,	/* I - Minimum value for slider */
-                     int      right)	/* I - Maximum value for slider */
+dialog_create_ivalue (char     *title,	/* I - Label for control */
+		      GtkTable *table,	/* I - Table container to use */
+		      int       row,	/* I - Row # for container */
+		      gint     *value,	/* I - Value holder */
+		      int       left,	/* I - Minimum value for slider */
+		      int       right)	/* I - Maximum value for slider */
 {
   GtkWidget	*label,		/* Control label */
 		*scale,		/* Scale widget */
 		*entry;		/* Text widget */
   GtkObject	*scale_data;	/* Scale data */
-  char		buf[256];	/* String buffer */
+  gchar		buf[256];	/* String buffer */
 
 
- /*
-  * Label...
-  */
+  /*
+   * Label...
+   */
 
-  label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  label = gtk_label_new (title);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach_defaults (table, label, 0, 1, row, row + 1);
   gtk_widget_show(label);
 
- /*
-  * Scale...
-  */
+  /*
+   * Scale...
+   */
 
-  scale_data = gtk_adjustment_new(*value, left, right, 1.0, 1.0, 1.0);
+  scale_data = gtk_adjustment_new (*value, left, right, 1.0, 1.0, 1.0);
 
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		     (GtkSignalFunc) dialog_iscale_update,
-		     value);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+		      (GtkSignalFunc) dialog_iscale_update,
+		      value);
 
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (table, scale, 1, 2, row, row + 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
 
- /*
-  * Text entry...
-  */
+  /*
+   * Text entry...
+   */
 
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-  gtk_object_set_user_data(scale_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buf, "%d", *value);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) dialog_ientry_update,
-		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(entry);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
+  gtk_object_set_user_data (scale_data, entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf (buf, sizeof (buf), "%d", *value);
+  gtk_entry_set_text (GTK_ENTRY (entry), buf);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) dialog_ientry_update,
+		      value);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 3, row, row + 1);
+  gtk_widget_show (entry);
 }
 
 
@@ -1092,28 +1111,27 @@ dialog_create_ivalue(char     *title,	/* I - Label for control */
  */
 
 static void
-dialog_iscale_update(GtkAdjustment *adjustment,	/* I - New value */
-                     gint          *value)	/* I - Current value */
+dialog_iscale_update (GtkAdjustment *adjustment, /* I - New value */
+		      gint          *value)	 /* I - Current value */
 {
   GtkWidget	*entry;		/* Text entry widget */
-  char		buf[256];	/* Text buffer */
-
+  gchar		buf[256];	/* Text buffer */
 
   if (*value != adjustment->value)
-  {
-    *value = adjustment->value;
+    {
+      *value = adjustment->value;
 
-    entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-    sprintf(buf, "%d", *value);
+      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
+      g_snprintf (buf, sizeof (buf), "%d", *value);
 
-    gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-    gtk_entry_set_text(GTK_ENTRY(entry), buf);
-    gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
+      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
+      gtk_entry_set_text (GTK_ENTRY (entry), buf);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
 
-    compute_luts();
+      compute_luts ();
 
-    preview_update();
-  };
+      preview_update ();
+    };
 }
 
 
@@ -1122,32 +1140,31 @@ dialog_iscale_update(GtkAdjustment *adjustment,	/* I - New value */
  */
 
 static void
-dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
-                     gint      *value)	/* I - Current value */
+dialog_ientry_update (GtkWidget *widget, /* I - Entry widget */
+                      gint      *value)	 /* I - Current value */
 {
   GtkAdjustment	*adjustment;
   gint		new_value;
 
-
-  new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
+  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 
   if (*value != new_value)
-  {
-    adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-    if ((new_value >= adjustment->lower) &&
-	(new_value <= adjustment->upper))
     {
-      *value            = new_value;
-      adjustment->value = new_value;
+      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
 
-      gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+      if ((new_value >= adjustment->lower) &&
+	  (new_value <= adjustment->upper))
+	{
+	  *value            = new_value;
+	  adjustment->value = new_value;
 
-      compute_luts();
+	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
 
-      preview_update();
+	  compute_luts ();
+
+	  preview_update ();
+	};
     };
-  };
 }
 
 
@@ -1156,35 +1173,12 @@ dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
  */
 
 static void
-dialog_ok_callback(GtkWidget *widget,	/* I - OK button widget */
-                   gpointer  data)	/* I - Dialog window */
+dialog_ok_callback (GtkWidget *widget,	/* I - OK button widget */
+		    gpointer   data)	/* I - Dialog window */
 {
   run_filter = TRUE;
-  gtk_widget_destroy(GTK_WIDGET(data));
-}
 
-
-/*
- * 'dialog_cancel_callback()' - Cancel the filter...
- */
-
-static void
-dialog_cancel_callback(GtkWidget *widget,	/* I - Cancel button widget */
-                       gpointer  data)		/* I - Dialog window */
-{
-  gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-
-/*
- * 'dialog_close_callback()' - Exit the filter dialog application.
- */
-
-static void
-dialog_close_callback(GtkWidget *widget,	/* I - Dialog window */
-                      gpointer  data)		/* I - Dialog window */
-{
-  gtk_main_quit();
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 

@@ -20,27 +20,30 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
 
-
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions. */
-static void query(void);
-static void run(char *name,
-		int nparams,
-		GParam * param,
-		int *nreturn_vals,
-		GParam ** return_vals);
-static gint dialog();
+static void query  (void);
+static void run    (char *name,
+		    int nparams,
+		    GParam * param,
+		    int *nreturn_vals,
+		    GParam ** return_vals);
+static gint dialog (void);
 
-static gint32 doit(GDrawable * drawable, gint32 *layer_id);
+static gint32 doit (GDrawable * drawable, gint32 *layer_id);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -50,13 +53,12 @@ GPlugInInfo PLUG_IN_INFO =
   run, /* run_proc */
 };
 
-int run_flag = 0;
-
+gboolean run_flag = FALSE;
 
 MAIN()
 
-
-static void query()
+static void
+query (void)
 {
   static GParamDef args[] =
   {
@@ -125,7 +127,8 @@ run (char    *name,
   values[1].type = PARAM_IMAGE;
   values[2].type = PARAM_LAYER;
 
-  switch (run_mode) {
+  switch (run_mode)
+    {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data ("plug_in_smooth_palette", &config);
@@ -159,19 +162,22 @@ run (char    *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS) {
-    drawable = gimp_drawable_get(param[2].data.d_drawable);
-    if (gimp_drawable_is_rgb(drawable->id)) {
-      gimp_progress_init ( _("Deriving smooth palette..."));
-      gimp_tile_cache_ntiles (2 * (drawable->width + 1) / gimp_tile_width ());
-      values[1].data.d_image = doit(drawable, &values[2].data.d_layer);
-      if (run_mode == RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
-      if (config.show_image)
-	gimp_display_new (values[1].data.d_image);
-    } else
-      status = STATUS_EXECUTION_ERROR;
-    gimp_drawable_detach(drawable);
+  if (status == STATUS_SUCCESS)
+    {
+      drawable = gimp_drawable_get(param[2].data.d_drawable);
+      if (gimp_drawable_is_rgb(drawable->id))
+	{
+	  gimp_progress_init ( _("Deriving smooth palette..."));
+	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) / gimp_tile_width ());
+	  values[1].data.d_image = doit(drawable, &values[2].data.d_layer);
+	  if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
+	  if (config.show_image)
+	    gimp_display_new (values[1].data.d_image);
+	}
+      else
+	status = STATUS_EXECUTION_ERROR;
+      gimp_drawable_detach(drawable);
   }
 
   values[0].data.d_status = status;
@@ -180,30 +186,44 @@ run (char    *name,
 #define R (rand())
 
 static long
-pix_diff(guchar *pal, int bpp, int i, int j) {
+pix_diff (guchar *pal,
+	  int     bpp,
+	  int     i,
+	  int     j)
+{
   long r = 0;
   int k;
 
-  for (k = 0; k < bpp; k++) {
-    int p1 = pal[j * bpp + k];
-    int p2 = pal[i * bpp + k];
-    r += (p1 - p2) * (p1 - p2);
-  }
+  for (k = 0; k < bpp; k++)
+    {
+      int p1 = pal[j * bpp + k];
+      int p2 = pal[i * bpp + k];
+      r += (p1 - p2) * (p1 - p2);
+    }
+
   return r;
 }
 
 static void
-pix_swap(guchar *pal, int bpp, int i, int j) {
+pix_swap (guchar *pal,
+	  int     bpp,
+	  int     i,
+	  int     j)
+{
   int k;
-  for (k = 0; k < bpp; k++) {
-    guchar t = pal[j * bpp + k];
-    pal[j * bpp + k] = pal[i * bpp + k];
-    pal[i * bpp + k] = t;
-  }
+
+  for (k = 0; k < bpp; k++)
+    {
+      guchar t = pal[j * bpp + k];
+      pal[j * bpp + k] = pal[i * bpp + k];
+      pal[i * bpp + k] = t;
+    }
 }
 
 static gint32
-doit(GDrawable * drawable, gint32 *layer_id) {
+doit (GDrawable *drawable,
+      gint32    *layer_id)
+{
   gint32 new_image_id;
   GDrawable *new_layer;
   int psize, i, j;
@@ -230,91 +250,105 @@ doit(GDrawable * drawable, gint32 *layer_id) {
 		      FALSE, FALSE);
 
   /* get initial palette */
-  for (i = 0; i < psize; i++) {
-    int x = R % drawable->width;
-    int y = R % drawable->height;
-    gimp_pixel_rgn_get_pixel(&pr, pal + bpp * i, x, y);
-  }
+  for (i = 0; i < psize; i++)
+    {
+      int x = R % drawable->width;
+      int y = R % drawable->height;
+      gimp_pixel_rgn_get_pixel(&pr, pal + bpp * i, x, y);
+    }
 
   /* reorder */
-  if (1) {
-    guchar *pal_best = malloc(psize * bpp);
-    guchar *original = malloc(psize * bpp);
-    double len_best = 0;
-    int try;
+  if (1)
+    {
+      guchar *pal_best = malloc(psize * bpp);
+      guchar *original = malloc(psize * bpp);
+      double len_best = 0;
+      int try;
 
-    memcpy(pal_best, pal, bpp * psize);
-    memcpy(original, pal, bpp * psize);
+      memcpy(pal_best, pal, bpp * psize);
+      memcpy(original, pal, bpp * psize);
 
-    for (try = 0; try < config.ntries; try++) {
-      double len;
-      if (!(try%5))
-	gimp_progress_update(try/(double)config.ntries);
-      memcpy(pal, original, bpp * psize);
+      for (try = 0; try < config.ntries; try++)
+	{
+	  double len;
+	  if (!(try%5))
+	    gimp_progress_update(try/(double)config.ntries);
+	  memcpy(pal, original, bpp * psize);
 
-      /* scramble */
-      for (i = 1; i < psize; i++)
-	pix_swap(pal, bpp, i, R % psize);
+	  /* scramble */
+	  for (i = 1; i < psize; i++)
+	    pix_swap(pal, bpp, i, R % psize);
 
-      /* measure */
-      len = 0.0;
-      for (i = 1; i < psize; i++)
-	len += pix_diff(pal, bpp, i, i-1);
+	  /* measure */
+	  len = 0.0;
+	  for (i = 1; i < psize; i++)
+	    len += pix_diff(pal, bpp, i, i-1);
 
-      /* improve */
-      for (i = 0; i < config.try_size; i++) {
-	int i0 = 1 + (R % (psize-2));
-	int i1 = 1 + (R % (psize-2));
-	long as_is, swapd;
-	if (1 == (i0 - i1)) {
-	  as_is = (pix_diff(pal, bpp, i1 - 1, i1) +
-		   pix_diff(pal, bpp, i0, i0 + 1));
-	  swapd = (pix_diff(pal, bpp, i1 - 1, i0) +
-		   pix_diff(pal, bpp, i1, i0 + 1));
-	} else if (1 == (i1 - i0)) {
+	  /* improve */
+	  for (i = 0; i < config.try_size; i++)
+	    {
+	      int i0 = 1 + (R % (psize-2));
+	      int i1 = 1 + (R % (psize-2));
+	      long as_is, swapd;
+	      if (1 == (i0 - i1))
+		{
+		  as_is = (pix_diff(pal, bpp, i1 - 1, i1) +
+			   pix_diff(pal, bpp, i0, i0 + 1));
+		  swapd = (pix_diff(pal, bpp, i1 - 1, i0) +
+			   pix_diff(pal, bpp, i1, i0 + 1));
+		}
+	      else if
+		(1 == (i1 - i0))
+		{
+		  as_is = (pix_diff(pal, bpp, i0 - 1, i0) +
+			   pix_diff(pal, bpp, i1, i1 + 1));
+		  swapd = (pix_diff(pal, bpp, i0 - 1, i1) +
+			   pix_diff(pal, bpp, i0, i1 + 1));
+		}
+	      else
+		{
+		  as_is = (pix_diff(pal, bpp, i0, i0 + 1) +
+			   pix_diff(pal, bpp, i0, i0 - 1) +
+			   pix_diff(pal, bpp, i1, i1 + 1) +
+			   pix_diff(pal, bpp, i1, i1 - 1));
+		  swapd = (pix_diff(pal, bpp, i1, i0 + 1) +
+			   pix_diff(pal, bpp, i1, i0 - 1) +
+			   pix_diff(pal, bpp, i0, i1 + 1) +
+			   pix_diff(pal, bpp, i0, i1 - 1));
+		}
+	      if (swapd < as_is)
+		{
+		  pix_swap(pal, bpp, i0, i1);
+		  len += swapd - as_is;
+		}
+	    }
+	  /* best? */
+	  if (0 == try || len < len_best)
+	    {
+	      memcpy(pal_best, pal, bpp * psize);
+	      len_best = len;
+	    }
+	}
+      memcpy(pal, pal_best, bpp * psize);
+      free(pal_best);
+      free(original);
+      /* clean */
+      for (i = 1; i < 4 * psize; i++)
+	{
+	  long as_is, swapd;
+	  int i0 = 1 + R % (psize - 2);
+	  int i1 = i0 + 1;
 	  as_is = (pix_diff(pal, bpp, i0 - 1, i0) +
 		   pix_diff(pal, bpp, i1, i1 + 1));
 	  swapd = (pix_diff(pal, bpp, i0 - 1, i1) +
 		   pix_diff(pal, bpp, i0, i1 + 1));
-	} else {
-	  as_is = (pix_diff(pal, bpp, i0, i0 + 1) +
-		   pix_diff(pal, bpp, i0, i0 - 1) +
-		   pix_diff(pal, bpp, i1, i1 + 1) +
-		   pix_diff(pal, bpp, i1, i1 - 1));
-	  swapd = (pix_diff(pal, bpp, i1, i0 + 1) +
-		   pix_diff(pal, bpp, i1, i0 - 1) +
-		   pix_diff(pal, bpp, i0, i1 + 1) +
-		   pix_diff(pal, bpp, i0, i1 - 1));
+	  if (swapd < as_is)
+	    {
+	      pix_swap(pal, bpp, i0, i1);
+	      len_best += swapd - as_is;
+	    }
 	}
-	if (swapd < as_is) {
-	  pix_swap(pal, bpp, i0, i1);
-	  len += swapd - as_is;
-	}
-      }
-      /* best? */
-      if (0 == try || len < len_best) {
-	memcpy(pal_best, pal, bpp * psize);
-	len_best = len;
-      }
     }
-    memcpy(pal, pal_best, bpp * psize);
-    free(pal_best);
-    free(original);
-    /* clean */
-    for (i = 1; i < 4 * psize; i++) {
-      long as_is, swapd;
-      int i0 = 1 + R % (psize - 2);
-      int i1 = i0 + 1;
-      as_is = (pix_diff(pal, bpp, i0 - 1, i0) +
-	       pix_diff(pal, bpp, i1, i1 + 1));
-      swapd = (pix_diff(pal, bpp, i0 - 1, i1) +
-	       pix_diff(pal, bpp, i0, i1 + 1));
-      if (swapd < as_is) {
-	pix_swap(pal, bpp, i0, i1);
-	len_best += swapd - as_is;
-      }
-    }
-  }
 
   /* store smooth palette */
   gimp_pixel_rgn_init(&pr, new_layer, 0, 0,
@@ -334,142 +368,133 @@ doit(GDrawable * drawable, gint32 *layer_id) {
 }
 
 
-static void close_callback(GtkWidget * widget, gpointer data)
+static void
+ok_callback (GtkWidget *widget,
+	     gpointer   data)
 {
-  gtk_main_quit();
+  run_flag = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void ok_callback(GtkWidget * widget, gpointer data)
+static void
+callback (GtkWidget *widget,
+	  gpointer   data)
 {
-  run_flag = 1;
-  gtk_widget_destroy(GTK_WIDGET(data));
+  if (&config.width == data)
+    {
+      config.width = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+    }
+  else if (&config.height == data)
+    {
+      config.height = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+    }
+  else if (&config.ntries == data)
+    {
+      config.ntries = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+    }
+  else
+    {
+      g_print (stderr, "bad data in callback: %x\n", (int) data);
+    }
 }
 
-static void callback(GtkWidget * widget, gpointer data)
-{
-  if (&config.width == data) {
-    config.width = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-  } else if (&config.height == data) {
-    config.height = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-  } else if (&config.ntries == data) {
-    config.ntries = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-  } else {
-    fprintf(stderr, "bad data in callback: %x\n", (int) data);
-  }
-}
-
-static gint dialog()
+static gint
+dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *table;
   GtkWidget *w;
   gchar **argv;
-  gint argc;
-  char b[12];
+  gint    argc;
+  gchar   b[12];
 
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("smooth palette");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("smooth_palette");
 
-  gtk_init(&argc, &argv);
+  gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), _("Smooth Palette"));
-  gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-		     (GtkSignalFunc) close_callback, NULL);
+  dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
+			 gimp_plugin_help_func, "filters/smooth_palette.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+			 _("OK"), ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 NULL);
 
-  table = gtk_table_new(4, 4, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 10);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show(table);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-  gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-  gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
 
-  {
-    w = gtk_label_new( _("Width:"));
-    gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), w, 0, 2, 0, 1,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show(w);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-    w = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), w, 2, 4, 0, 1,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_set_usize(w, 50, 0);
-    sprintf(b, "%d", config.width);
-    gtk_entry_set_text(GTK_ENTRY(w), b);
-    gtk_signal_connect(GTK_OBJECT(w), "changed",
-		       (GtkSignalFunc) callback, &config.width);
-    gtk_widget_show(w);
-  }
-  {
-    w = gtk_label_new( _("Height:"));
-    gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), w, 0, 2, 2, 3,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show(w);
+  w = gtk_label_new (_("Width:"));
+  gtk_misc_set_alignment (GTK_MISC (w), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), w, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (w);
 
-    w = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), w, 2, 4, 2, 3,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_set_usize(w, 50, 0);
-    sprintf(b, "%d", config.height);
-    gtk_entry_set_text(GTK_ENTRY(w), b);
-    gtk_signal_connect(GTK_OBJECT(w), "changed",
-		       (GtkSignalFunc) callback, &config.height);
-    gtk_widget_show(w);
-  }
-  {
-    w = gtk_label_new( _("Search Time:"));
-    gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
-    gtk_table_attach(GTK_TABLE(table), w, 0, 2, 3, 4,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show(w);
+  w = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), w, 1, 2, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize (w, 50, 0);
+  g_snprintf (b, sizeof (b), "%d", config.width);
+  gtk_entry_set_text (GTK_ENTRY (w), b);
+  gtk_signal_connect (GTK_OBJECT (w), "changed",
+		      (GtkSignalFunc) callback,
+		      &config.width);
+  gtk_widget_show (w);
 
-    w = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), w, 2, 4, 3, 4,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_set_usize(w, 50, 0);
-    sprintf(b, "%d", config.ntries);
-    gtk_entry_set_text(GTK_ENTRY(w), b);
-    gtk_signal_connect(GTK_OBJECT(w), "changed",
-		       (GtkSignalFunc) callback, &config.ntries);
-    gtk_widget_show(w);
-  }
+  w = gtk_label_new (_("Height:"));
+  gtk_misc_set_alignment (GTK_MISC (w), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), w, 0, 1, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (w);
 
-  gtk_widget_show(dlg);
-  gtk_main();
-  gdk_flush();
+  w = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), w, 1, 2, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize (w, 50, 0);
+  g_snprintf (b, sizeof (b), "%d", config.height);
+  gtk_entry_set_text (GTK_ENTRY (w), b);
+  gtk_signal_connect (GTK_OBJECT (w), "changed",
+		      (GtkSignalFunc) callback,
+		      &config.height);
+  gtk_widget_show (w);
+
+  w = gtk_label_new (_("Search Time:"));
+  gtk_misc_set_alignment (GTK_MISC (w), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), w, 0, 1, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (w);
+
+  w = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), w, 1, 2, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize (w, 50, 0);
+  g_snprintf (b, sizeof (b), "%d", config.ntries);
+  gtk_entry_set_text (GTK_ENTRY (w), b);
+  gtk_signal_connect (GTK_OBJECT (w), "changed",
+		      (GtkSignalFunc) callback,
+		      &config.ntries);
+  gtk_widget_show (w);
+
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
 
   return run_flag;
 }

@@ -26,15 +26,19 @@
  * Sparkle 1.26 - simulate pixel bloom and diffraction effects
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-#include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+#include <libgimp/gimpcolorspace.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define SCALE_WIDTH 175
@@ -116,15 +120,10 @@ static GTile*    rpnt                  (GDrawable * drawable,
 					gint       bytes,
 					gdouble    inten,
 					guchar color[MAX_CHANNELS]);
-static void      sparkle_close_callback(GtkWidget *widget,
-					gpointer   data);
 static void      sparkle_ok_callback   (GtkWidget *widget,
 					gpointer   data);
 static void      sparkle_scale_update  (GtkAdjustment *adjustment,
 					double        *scale_val);
-static void      set_tooltip (GtkTooltips *tooltips,
-                                        GtkWidget *widget,
-                                        const char *desc);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -162,7 +161,7 @@ static gint num_sparkles;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -339,94 +338,73 @@ run (char    *name,
 }
 
 static gint
-sparkle_dialog ()
+sparkle_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *scale;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
+  GtkWidget *sep;
   GtkObject *scale_data;
   GSList    *group = NULL;
   gchar **argv;
-  gint argc;
-  gint use_natural = (svals.colortype == NATURAL);
+  gint    argc;
+
+  gint use_natural    = (svals.colortype == NATURAL);
   gint use_foreground = (svals.colortype == FOREGROUND);
   gint use_background = (svals.colortype == BACKGROUND);
-  GtkTooltips *tips;
-  GdkColor tips_fg, tips_bg;	
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("sparkle");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
+  dlg = gimp_dialog_new (_("Sparkle"), "sparkle",
+			 gimp_plugin_help_func, "filters/sparkle.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Sparkle"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+			 _("OK"), sparkle_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) sparkle_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /* use black as foreground: */
-  tips = gtk_tooltips_new ();
-  tips_fg.red   = 0;
-  tips_fg.green = 0;
-  tips_fg.blue  = 0;
-  /* postit yellow (khaki) as background: */
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_fg);
-  tips_bg.red   = 61669;
-  tips_bg.green = 59113;
-  tips_bg.blue  = 35979;
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_bg);
-  gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) sparkle_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-  set_tooltip(tips,button, _("Accept settings and apply filter on image"));
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-  set_tooltip(tips,button, _("Reject any changes and close plug-in"));
+  gimp_help_init ();
 
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  table = gtk_table_new (15, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (frame);
 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  label = gtk_label_new ( _("Luminosity Threshold"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 5);
+  table = gtk_table_new (9, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label = gtk_label_new (_("Luminosity Threshold:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.lum_threshold, 0.0, 0.1, 0.001, 0.001, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -439,12 +417,12 @@ sparkle_dialog ()
 		      &svals.lum_threshold);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Luminosity Threshold"));
+  gimp_help_set_help_data (scale, _("Adjust the Luminosity Threshold"), NULL);
 
-
-  label = gtk_label_new ( _("Flare Intensity"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Flare Intensity:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.flare_inten, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -457,11 +435,12 @@ sparkle_dialog ()
 		      &svals.flare_inten);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Flare Intensity"));
+  gimp_help_set_help_data (scale, _("Adjust the Flare Intensity"), NULL);
 
-  label = gtk_label_new ( _("Spike Length"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Spike Length:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.spike_len, 1, 100, 1, 1, 0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -474,11 +453,12 @@ sparkle_dialog ()
 		      &svals.spike_len);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Spike Length"));
+  gimp_help_set_help_data (scale, _("Adjust the Spike Length"), NULL);
 
-  label = gtk_label_new ( _("Spike Points"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Spike Points:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.spike_pts, 0, 16, 1, 1, 0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -491,11 +471,12 @@ sparkle_dialog ()
 		      &svals.spike_pts);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Number of Spike Points"));
+  gimp_help_set_help_data (scale, _("Adjust the Number of Spike Points"), NULL);
 
-  label = gtk_label_new ( _("Spike Angle (-1: Random)"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Spike Angle (-1: Random):"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.spike_angle, -1, 360, 5, 5, 0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -508,11 +489,15 @@ sparkle_dialog ()
 		      &svals.spike_angle);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Spike Angle (-1 means a Random Angle is choosen)"));
+  gimp_help_set_help_data (scale,
+			   _("Adjust the Spike Angle "
+			     "(-1 means a Random Angle is choosen)"),
+			   NULL);
 
-  label = gtk_label_new ( _("Spike Density"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new ( _("Spike Density:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.density, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -525,11 +510,12 @@ sparkle_dialog ()
 		      &svals.density);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Spike Density"));
+  gimp_help_set_help_data (scale, _("Adjust the Spike Density"), NULL);
 
-  label = gtk_label_new ( _("Opacity"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Opacity:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.opacity, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -542,11 +528,12 @@ sparkle_dialog ()
 		      &svals.opacity);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Opacity of the Spikes"));
+  gimp_help_set_help_data (scale, _("Adjust the Opacity of the Spikes"), NULL);
 
-  label = gtk_label_new ( _("Random Hue"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Random Hue:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.random_hue, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -559,11 +546,15 @@ sparkle_dialog ()
 		      &svals.random_hue);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Value how much the Hue should be changed randomly"));
+  gimp_help_set_help_data (scale,
+			   _("Adjust the Value how much the Hue should "
+			     "be changed randomly"),
+			   NULL);
 
-  label = gtk_label_new ( _("Random Saturation"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9, GTK_FILL, 0, 5, 5);
+  label = gtk_label_new (_("Random Saturation:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9,
+		    GTK_FILL, GTK_FILL, 0, 0);
   scale_data = gtk_adjustment_new (svals.random_saturation, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
@@ -576,98 +567,84 @@ sparkle_dialog ()
 		      &svals.random_saturation);
   gtk_widget_show (label);
   gtk_widget_show (scale);
-  set_tooltip(tips,scale, _("Adjust the Value how much the Saturation should be changed randomly"));
+  gimp_help_set_help_data (scale,
+			   _("Adjust the Value how much the Saturation "
+			     "should be changed randomly"),
+			   NULL);
 
-  label = gtk_label_new ( _("Preserve Luminosity"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 9, 10, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
-  toggle = gtk_check_button_new ();
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
 
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 9, 10, GTK_FILL, 0, 0, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.preserve_luminosity);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &svals.preserve_luminosity);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Should the Luminosity be preserved?"));
+  gimp_help_set_help_data (toggle, _("Should the Luminosity be preserved?"),
+			   NULL);
 
-  label = gtk_label_new ( _("Invers"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 10, 11, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
-  toggle = gtk_check_button_new ();
-
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 10, 11, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_label (_("Inverse"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.invers);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &svals.invers);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Should an Inverse Effect be done?"));
+  gimp_help_set_help_data (toggle, _("Should an Inverse Effect be done?"), NULL);
 
-  label = gtk_label_new ( _("Add Border"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 11, 12, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
-  toggle = gtk_check_button_new ();
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 11, 12, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_label (_("Add Border"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &svals.border);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Draw a Border of Spikes around the Image"));
+  gimp_help_set_help_data (toggle,
+			   _("Draw a Border of Spikes around the Image"),
+			   NULL);
 
- /*  colortype  */
-  label = gtk_label_new ( _("Natural Color"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 12, 13, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
 
-  toggle = gtk_radio_button_new (group);
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 12, 13, GTK_FILL, 0, 0, 0);
+  /*  colortype  */
+  toggle = gtk_radio_button_new_with_label (group, _("Natural Color"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_natural);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &use_natural);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Use the Color of the Image"));
+  gimp_help_set_help_data (toggle, _("Use the Color of the Image"), NULL);
 
-  label = gtk_label_new ( _("Foreground Color"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 13, 14, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
-
-  toggle = gtk_radio_button_new (group);
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 13, 14, GTK_FILL, 0, 0, 0);
+  toggle = gtk_radio_button_new_with_label (group, _("Foreground Color"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_foreground);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &use_foreground);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Use the Foreground Color"));
+  gimp_help_set_help_data (toggle, _("Use the Foreground Color"), NULL);
 
-  label = gtk_label_new ( _("Background Color"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 14, 15, GTK_FILL, 0, 5, 5);
-  gtk_widget_show(label);
-
-  toggle = gtk_radio_button_new (group);
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 14, 15, GTK_FILL, 0, 0, 0);
+  toggle = gtk_radio_button_new_with_label (group, _("Background Color"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_background);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sparkle_toggle_update,
 		      &use_background);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Use the Background Color"));
+  gimp_help_set_help_data (toggle, _("Use the Background Color"), NULL);
 
-
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -682,7 +659,6 @@ sparkle_dialog ()
     svals.colortype = BACKGROUND;
 
   return sint.run;
-
 }
 
 static gint
@@ -1108,13 +1084,6 @@ fspike (GPixelRgn *dest_rgn,
 /*  Sparkle interface functions  */
 
 static void
-sparkle_close_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 sparkle_ok_callback (GtkWidget *widget,
 		     gpointer   data)
 {
@@ -1139,11 +1108,4 @@ sparkle_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-}
-
-static void
-set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
-{
-  if (desc && desc[0])
-    gtk_tooltips_set_tip (tooltips, widget, (char *) desc, NULL);
 }

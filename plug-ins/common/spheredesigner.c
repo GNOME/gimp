@@ -28,7 +28,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <gtk/gtk.h>
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
@@ -36,10 +35,14 @@
 #include <unistd.h>
 #endif
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef SRAND_FUNC
@@ -1864,6 +1867,9 @@ void fileselect(int action)
     gtk_signal_connect_object(GTK_OBJECT (GTK_FILE_SELECTION (windows[action])->cancel_button),
                               "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy),
                               GTK_OBJECT (windows[action]));
+
+    gimp_help_connect_help_accel (windows[action], gimp_plugin_help_func,
+				  "filters/spheredesigner.html");
   }
   gtk_widget_show (windows[action]);
 }
@@ -2193,7 +2199,6 @@ GtkWidget* makewindow (void)
   GtkWidget *delbutton;
   GtkWidget *loadbutton;
   GtkWidget *savebutton;
-  GtkWidget *hbox2;
   GtkWidget *okbutton;
   GtkWidget *cancelbutton;
   GtkWidget *resetbutton;
@@ -2224,24 +2229,38 @@ GtkWidget* makewindow (void)
   gtk_widget_set_default_colormap (gdk_rgb_get_cmap ());
   gtk_widget_set_default_visual (gdk_rgb_get_visual ());
 
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_object_set_data (GTK_OBJECT (window), "window", window);
-  gtk_container_border_width (GTK_CONTAINER (window), 5);
-  gtk_window_set_title (GTK_WINDOW (window), _("Sphere Designer"));
-  gtk_window_set_policy (GTK_WINDOW (window), FALSE, TRUE, FALSE);
+  window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
+			    gimp_plugin_help_func, "filters/spheredesigner.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  table1 = gtk_table_new (4, 3, FALSE);
+			    _("OK"), sphere_ok,
+			    NULL, NULL, &okbutton, TRUE, FALSE,
+			    _("Reset"), sphere_reset,
+			    NULL, NULL, &resetbutton, FALSE, FALSE,
+			    _("Cancel"), sphere_cancel,
+			    NULL, NULL, &cancelbutton, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_object_set_data (GTK_OBJECT (window), "window", window);
+  gtk_object_set_data (GTK_OBJECT (window), "okbutton", okbutton);
+  gtk_object_set_data (GTK_OBJECT (window), "cancelbutton", cancelbutton);
+  gtk_object_set_data (GTK_OBJECT (window), "resetbutton", cancelbutton);
+
+  table1 = gtk_table_new (3, 3, FALSE);
   gtk_object_set_data (GTK_OBJECT (window), "table1", table1);
   gtk_widget_show (table1);
-  gtk_container_add (GTK_CONTAINER (window), table1);
-  gtk_table_set_row_spacings (GTK_TABLE (table1), 5);
-  gtk_table_set_col_spacings (GTK_TABLE (table1), 5);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table1);
+  gtk_table_set_row_spacings (GTK_TABLE (table1), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table1), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
 
-  frame2 = gtk_frame_new ( _("Preview"));
+  frame2 = gtk_frame_new (_("Preview"));
   gtk_object_set_data (GTK_OBJECT (window), "frame2", frame2);
   gtk_widget_show (frame2);
   gtk_table_attach (GTK_TABLE (table1), frame2, 0, 1, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   drawarea = gtk_drawing_area_new ();
   gtk_object_set_data (GTK_OBJECT (window), "drawarea", drawarea);
@@ -2326,34 +2345,6 @@ GtkWidget* makewindow (void)
   gtk_signal_connect_object (GTK_OBJECT (savebutton), "clicked",
                              GTK_SIGNAL_FUNC (savepreset), NULL);
 
-
-  hbox2 = gtk_hbox_new (TRUE, 0);
-  gtk_object_set_data (GTK_OBJECT (window), "hbox2", hbox2);
-  gtk_widget_show (hbox2);
-  gtk_table_attach (GTK_TABLE (table1), hbox2, 0, 2, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-
-  okbutton = gtk_button_new_with_label ( _("OK"));
-  gtk_object_set_data (GTK_OBJECT (window), "okbutton", okbutton);
-  gtk_widget_show (okbutton);
-  gtk_box_pack_start (GTK_BOX (hbox2), okbutton, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (okbutton), "clicked",
-		      GTK_SIGNAL_FUNC (sphere_ok), window);
-
-  cancelbutton = gtk_button_new_with_label ( _("Cancel"));
-  gtk_object_set_data (GTK_OBJECT (window), "cancelbutton", cancelbutton);
-  gtk_widget_show (cancelbutton);
-  gtk_box_pack_start (GTK_BOX (hbox2), cancelbutton, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (cancelbutton), "clicked",
-		      GTK_SIGNAL_FUNC (sphere_cancel), window);
-  
-  resetbutton = gtk_button_new_with_label ( _("Reset"));
-  gtk_object_set_data (GTK_OBJECT (window), "resetbutton", cancelbutton);
-  gtk_widget_show (resetbutton);
-  gtk_box_pack_start (GTK_BOX (hbox2), resetbutton, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (resetbutton), "clicked",
-		      GTK_SIGNAL_FUNC (sphere_reset), window);
-
   frame4 = gtk_frame_new ( _("Texture Properties"));
   gtk_object_set_data (GTK_OBJECT (window), "frame4", frame4);
   gtk_widget_show (frame4);
@@ -2365,27 +2356,29 @@ GtkWidget* makewindow (void)
   gtk_widget_show (table2);
   gtk_container_add (GTK_CONTAINER (frame4), table2);
   gtk_container_border_width (GTK_CONTAINER (table2), 5);
+  gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table2), 2);
 
   label2 = gtk_label_new ( _("Type:"));
   gtk_object_set_data (GTK_OBJECT (window), "label2", label2);
   gtk_widget_show (label2);
   gtk_table_attach (GTK_TABLE (table2), label2, 0, 1, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label2), 1.0, 0.5);
 
   label3 = gtk_label_new ( _("Texture:"));
   gtk_object_set_data (GTK_OBJECT (window), "label3", label3);
   gtk_widget_show (label3);
   gtk_table_attach (GTK_TABLE (table2), label3, 0, 1, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label3), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label3), 1.0, 0.5);
 
   label4 = gtk_label_new ( _("Colors:"));
   gtk_object_set_data (GTK_OBJECT (window), "label4", label4);
   gtk_widget_show (label4);
   gtk_table_attach (GTK_TABLE (table2), label4, 0, 1, 2, 3,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label4), 1.0, 0.5);
 
   hbox3 = gtk_hbox_new (FALSE, 0);
   gtk_object_set_data (GTK_OBJECT (window), "hbox3", hbox3);
@@ -2421,15 +2414,15 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label5), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalescale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 1, 2, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_signal_connect(GTK_OBJECT(scalescale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
@@ -2438,8 +2431,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 4, 5,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label5), 1.0, 1.0);
 
   _turbulencescale = gtk_hscale_new (GTK_ADJUSTMENT (turbulencescale = gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_turbulencescale, 100, -1);
@@ -2455,8 +2448,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalexscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2464,7 +2457,7 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 3, 4, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(scalexscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
@@ -2472,8 +2465,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scaleyscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2481,7 +2474,7 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 3, 4, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(scaleyscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
@@ -2489,8 +2482,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 2, 3,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalezscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2503,13 +2496,12 @@ GtkWidget* makewindow (void)
                      (GtkSignalFunc)getscales, NULL);
 
 
-
   label6 = gtk_label_new ( _("Rotate X:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotxscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_rotscale, 100, -1);
@@ -2517,7 +2509,7 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table2), _rotscale, 3, 4, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(rotxscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
@@ -2525,8 +2517,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 4, 5,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotyscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_rotscale, 100, -1);
@@ -2542,8 +2534,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 5, 6,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotzscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_rotscale, 100, -1);
@@ -2559,8 +2551,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posxscale = gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2568,7 +2560,7 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 6, 7, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(posxscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
@@ -2576,8 +2568,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posyscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2585,7 +2577,7 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 6, 7, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(posyscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
@@ -2593,8 +2585,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 2, 3,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (poszscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_usize(_scalescale, 100, -1);
@@ -2610,7 +2602,7 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "typemenu", typemenu);
   gtk_widget_show (typemenu);
   gtk_table_attach (GTK_TABLE (table2), typemenu, 1, 2, 0, 1,
-                    (GtkAttachOptions) GTK_EXPAND, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
   typemenu_menu = gtk_menu_new ();
   item = gtk_menu_item_new_with_label ( _("Texture"));
   gtk_widget_show (item);
@@ -2636,10 +2628,10 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "texturemenu", texturemenu);
   gtk_widget_show (texturemenu);
   gtk_table_attach (GTK_TABLE (table2), texturemenu, 1, 2, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
 
   texturemenu_menu = gtk_menu_new ();
-  mktexturemenu(texturemenu_menu);
+  mktexturemenu (texturemenu_menu);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (texturemenu), texturemenu_menu);
 
@@ -2647,15 +2639,15 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label7", label7);
   gtk_widget_show (label7);
   gtk_table_attach (GTK_TABLE (table2), label7, 0, 1, 5, 6,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label7), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label7), 1.0, 1.0);
 
   _amountscale = gtk_hscale_new (GTK_ADJUSTMENT (amountscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_usize(_amountscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_amountscale", _amountscale);
   gtk_widget_show (_amountscale);
   gtk_table_attach (GTK_TABLE (table2), _amountscale, 1, 2, 5, 6,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_amountscale), 2);
   gtk_signal_connect(GTK_OBJECT(amountscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
@@ -2664,8 +2656,8 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "label8", label8);
   gtk_widget_show (label8);
   gtk_table_attach (GTK_TABLE (table2), label8, 0, 1, 6, 7,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label8), 0, 0.5);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label8), 1.0, 1.0);
 
   _expscale = gtk_hscale_new (GTK_ADJUSTMENT (expscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_usize(_expscale, 100, -1);
@@ -2680,10 +2672,10 @@ GtkWidget* makewindow (void)
   label1 = gtk_label_new ( _("by Vidar Madsen\nSeptember 1999"));
   gtk_object_set_data (GTK_OBJECT (window), "label1", label1);
   gtk_widget_show (label1);
-  gtk_table_attach (GTK_TABLE (table1), label1, 2, 4, 3, 4,
-                    (GtkAttachOptions) GTK_EXPAND, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), label1,
+		      TRUE, TRUE, 0);
 
-  gtk_widget_show(window);
+  gtk_widget_show (window);
 
   return window;
 }

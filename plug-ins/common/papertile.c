@@ -21,10 +21,14 @@
  *============================================================================*/
 
 #include "config.h"
+
 #include <stdlib.h>
+
 #include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /*============================================================================*/
@@ -291,15 +295,6 @@ dialog_destroyed ( GtkWindow *window )
 
 /*----------------------------------------------------------------------------*/
 
-static gboolean
-dialog_deleted ( GtkWindow *window, GdkEventAny *e )
-{
-  p.run = FALSE;
-  return FALSE;
-}
-
-/*----------------------------------------------------------------------------*/
-
 static void
 fractional_type_toggled ( GtkToggleButton *button, FractionalType *type )
 {
@@ -345,13 +340,11 @@ background_type_toggled ( GtkToggleButton *button, BackgroundType *type )
 /*----------------------------------------------------------------------------*/
 
 static inline void
-dialog_create ( void )
+dialog_create (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *main_hbox;
-  GtkWidget *action_box;
   GtkWidget *button;
-  GtkWidget *separator;
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
@@ -359,30 +352,31 @@ dialog_create ( void )
   GtkWidget *label;
 
   /* SPECIAL WIDGETS */
-  adjustments_create(); 
-
+  adjustments_create (); 
 
   /* DIALOG WINDOW */
-  w.dialog = gtk_window_new( GTK_WINDOW_DIALOG );
-  gtk_window_set_title( GTK_WINDOW(w.dialog), _("Paper Tile") );
-  gtk_window_set_policy( GTK_WINDOW(w.dialog), FALSE, FALSE, FALSE );
-  gtk_window_set_position( GTK_WINDOW(w.dialog), GTK_WIN_POS_MOUSE );
-  gtk_container_set_border_width( GTK_CONTAINER(w.dialog), 5 );
+  w.dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
+			      gimp_plugin_help_func, "filters/papertile.html",
+			      GTK_WIN_POS_MOUSE,
+			      FALSE, FALSE, FALSE,
+
+			      _("OK"), dialog_ok_clicked,
+			      NULL, NULL, NULL, TRUE, FALSE,
+			      _("Cancel"), dialog_cancel_clicked,
+			      NULL, NULL, NULL, FALSE, TRUE,
+
+			      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (w.dialog), "destroy",
+		      GTK_SIGNAL_FUNC (dialog_destroyed),
+		      NULL);
 
   /* MAIN LAYOUT */
-  main_vbox = gtk_vbox_new( FALSE, 5 );
-  gtk_container_set_border_width( GTK_CONTAINER(main_vbox), 0 );
-  gtk_container_add( GTK_CONTAINER(w.dialog), main_vbox );
-  main_hbox = gtk_hbox_new( TRUE, 5 );
-  gtk_container_set_border_width( GTK_CONTAINER(main_hbox), 0 );
-  gtk_box_pack_start( GTK_BOX(main_vbox), main_hbox, TRUE, TRUE, 0 );
-  separator = gtk_hseparator_new();
-  gtk_box_pack_start( GTK_BOX(main_vbox), separator, FALSE, FALSE, 0 );
-  action_box = gtk_hbutton_box_new();
-  gtk_button_box_set_child_size( GTK_BUTTON_BOX(action_box), 1, 1 );
-  gtk_button_box_set_spacing( GTK_BUTTON_BOX(action_box), 5 );
-  gtk_button_box_set_layout( GTK_BUTTON_BOX(action_box), GTK_BUTTONBOX_END );
-  gtk_box_pack_start( GTK_BOX(main_vbox), action_box, FALSE, FALSE, 0 );
+  main_vbox = gtk_vbox_new (FALSE, 5);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (w.dialog)->vbox), main_vbox);
+
+  main_hbox = gtk_hbox_new (TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, TRUE, 0);
 
   /* L */
   vbox = gtk_vbox_new( FALSE, 5 );
@@ -512,26 +506,8 @@ dialog_create ( void )
       group = gtk_radio_button_group( GTK_RADIO_BUTTON(button) );
     }
   }
-  
-  /* ACTION AREA */
-  button = gtk_button_new_with_label( _("OK") );
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT(button), "clicked",
-		      GTK_SIGNAL_FUNC (dialog_ok_clicked), NULL );
-  gtk_container_add (GTK_CONTAINER(action_box), button );
-  gtk_widget_grab_default (button);
 
-  button = gtk_button_new_with_label ( _("Cancel") );
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT(button), "clicked",
-		      GTK_SIGNAL_FUNC(dialog_cancel_clicked), NULL );
-  gtk_container_add (GTK_CONTAINER(action_box), button );
-  
   /* SIGNALS */
-  gtk_signal_connect( GTK_OBJECT(w.dialog), "destroy",
-		      GTK_SIGNAL_FUNC(dialog_destroyed), NULL );
-  gtk_signal_connect( GTK_OBJECT(w.dialog), "delete_event",
-		      GTK_SIGNAL_FUNC(dialog_deleted), NULL );
   adjustments_signal_connect();
 
   gtk_widget_show_all( w.dialog );
