@@ -1,3 +1,7 @@
+Sun May 24 08:41:34 EST 1998 Stephen Norris <srn@fn.com.au>
+
+	* plug-ins/displace/displace.c: Fix to GUI bug.
+
 Fri May 22 19:23:59 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* docs/gimp_quick_reference.*: some small fixes and additions
