@@ -178,6 +178,7 @@ batch_run_cmd (char *cmd)
   Argument *vals;
   char *rest;
   char *cmdname;
+  char *tmpname;
   char *t;
   int i;
 
@@ -194,8 +195,23 @@ batch_run_cmd (char *cmd)
   proc = procedural_db_lookup (cmdname);
   if (!proc)
     {
-      g_print ("could not find procedure: \"%s\"\n", cmdname);
-      return;
+      /* Lame hack for "-" to "_" conversion */
+      t = tmpname = g_strdup (cmdname);
+      while (*t)
+	{
+	  if (*t == '-')
+	    *t = '_';
+	  t++;
+	}
+
+      proc = procedural_db_lookup (tmpname);
+      if (!proc)
+	{
+	  g_print ("could not find procedure: \"%s\"\n", cmdname);
+	  return;
+	}
+
+      g_free (tmpname);
     }
 
   /* (gimp-procedural-db-dump "/tmp/pdb_dump") */

@@ -1,3 +1,10 @@
+Tue May 26 12:03:07 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/batch.c: do "-" to "_" conversion after an failed pdb
+	lookup, just to make sure
+
+	* app/paint_core.c: fix for some uninitialized vars
+
 Tue May 26 01:17:14 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: added --install-script. Use @INSTALL@ stuff
@@ -6,7 +13,7 @@ Tue May 26 01:17:14 PDT 1998 Manish Singh <yosh@gimp.org>
 	* libgimp/gimplayer.c: fixes for silly errors from Marc Lehmann
 
 	* libgimp/gimpchannel.c: implemented gimp_channel_set_show_masked
-	and gimp_channel_get_show_masked (already in gimp.h>
+	and gimp_channel_get_show_masked (already in gimp.h)
 
 	* plug-ins/blinds/blinds.c
 	* plug-ins/bmp/bmp.h

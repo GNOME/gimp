@@ -913,8 +913,8 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 
   maskPR.bytes = 1;
   maskPR.x = 0; maskPR.y = 0;
-  maskPR.w = srcPR.w;
-  maskPR.h = srcPR.h;
+  maskPR.w = canvas_buf->width;
+  maskPR.h = canvas_buf->height;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
   maskPR.data = mask_buf_data (brush_mask);
   
