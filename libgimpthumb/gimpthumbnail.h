@@ -83,6 +83,10 @@ GdkPixbuf      * gimp_thumbnail_get_pixbuf   (GimpThumbnail  *thumbnail,
 
 gboolean         gimp_thumbnail_save_pixbuf  (GimpThumbnail  *thumbnail,
                                               GdkPixbuf      *pixbuf,
+                                              const gchar    *software,
+                                              GError        **error);
+gboolean         gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
+                                              const gchar    *software,
                                               GError        **error);
 
 

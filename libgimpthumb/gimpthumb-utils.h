@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 gboolean    gimp_thumb_init               (const gchar   *creator,
                                            const gchar   *thumb_basedir);
 
-gchar     * gimp_thumb_png_thumb_path     (const gchar   *uri,
+gchar     * gimp_thumb_png_thumb_name     (const gchar   *uri,
                                            GimpThumbSize *size);
 gchar     * gimp_thumbnail_find_png_thumb (const gchar   *uri,
                                            GimpThumbSize *size);

@@ -98,7 +98,7 @@ gimp_thumb_init (const gchar *creator,
 }
 
 gchar *
-gimp_thumb_png_thumb_path (const gchar   *uri,
+gimp_thumb_png_thumb_name (const gchar   *uri,
                            GimpThumbSize *size)
 {
   const gchar  *name;
@@ -107,7 +107,7 @@ gimp_thumb_png_thumb_path (const gchar   *uri,
 
   g_return_val_if_fail (gimp_thumb_initialized, NULL);
 
-  if (strstr (uri, "/.thumbnails/"))
+  if (strstr (uri, thumb_dir))
     return NULL;
 
   name = gimp_thumb_png_name (uri);

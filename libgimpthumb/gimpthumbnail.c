@@ -27,6 +27,9 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -60,22 +63,22 @@ enum
 };
 
 
-static void          gimp_thumbnail_class_init      (GimpThumbnailClass *klass);
-static void          gimp_thumbnail_init            (GimpThumbnail  *thumbnail);
-static void          gimp_thumbnail_finalize        (GObject        *object);
-static void          gimp_thumbnail_set_property    (GObject        *object,
-                                                     guint           property_id,
-                                                     const GValue   *value,
-                                                     GParamSpec     *pspec);
-static void          gimp_thumbnail_get_property    (GObject        *object,
-                                                     guint           property_id,
-                                                     GValue         *value,
-                                                     GParamSpec     *pspec);
-static void          gimp_thumbnail_reset_info      (GimpThumbnail  *thumbnail);
+static void         gimp_thumbnail_class_init      (GimpThumbnailClass *klass);
+static void         gimp_thumbnail_init            (GimpThumbnail  *thumbnail);
+static void         gimp_thumbnail_finalize        (GObject        *object);
+static void         gimp_thumbnail_set_property    (GObject        *object,
+                                                    guint           property_id,
+                                                    const GValue   *value,
+                                                    GParamSpec     *pspec);
+static void         gimp_thumbnail_get_property    (GObject        *object,
+                                                    guint           property_id,
+                                                    GValue         *value,
+                                                    GParamSpec     *pspec);
+static void         gimp_thumbnail_reset_info      (GimpThumbnail  *thumbnail);
 
-static GdkPixbuf   * gimp_thumbnail_read_png_thumb  (GimpThumbnail  *thumbnail,
-                                                     GimpThumbSize   thumb_size,
-                                                     GError        **error);
+static GdkPixbuf  * gimp_thumbnail_read_png_thumb  (GimpThumbnail  *thumbnail,
+                                                    GimpThumbSize   thumb_size,
+                                                    GError        **error);
 
 
 static GObjectClass *parent_class = NULL;
@@ -307,10 +310,10 @@ static void
 gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
 {
   g_object_set (thumbnail,
-                "image-width",       0,
-                "image-height",      0,
-                "image-type",        NULL,
-                "image-num-layers",  0,
+                "image-width",      0,
+                "image-height",     0,
+                "image-type",       NULL,
+                "image-num-layers", 0,
                 NULL);
 }
 
@@ -528,8 +531,138 @@ gimp_thumbnail_get_pixbuf (GimpThumbnail  *thumbnail,
   return pixbuf;
 }
 
-/* PNG thumbnail handling routines according to the
-   Thumbnail Managing Standard  http://triq.net/~pearl/thumbnail-spec/  */
+gboolean
+gimp_thumbnail_save_pixbuf (GimpThumbnail  *thumbnail,
+                            GdkPixbuf      *pixbuf,
+                            const gchar    *software,
+                            GError        **error)
+{
+  GimpThumbSize  size;
+  gchar         *name;
+  gchar         *desc;
+  gchar         *time_str;
+  gchar         *size_str;
+  gchar         *width_str;
+  gchar         *height_str;
+  gchar         *num_str;
+  gboolean       success;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (thumbnail->uri != NULL, FALSE);
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
+  g_return_val_if_fail (software != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  size = MAX (gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+
+  if (size < 1)
+    return TRUE;
+
+  name = gimp_thumb_png_thumb_name (thumbnail->uri, &size);
+  if (! name)
+    return TRUE;
+
+  desc     = g_strdup_printf ("Thumbnail of %s",   thumbnail->uri);
+  time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
+  size_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
+
+  width_str  = g_strdup_printf ("%d", thumbnail->image_width);
+  height_str = g_strdup_printf ("%d", thumbnail->image_height);
+  num_str    = g_strdup_printf ("%d", thumbnail->image_num_layers);
+
+  success =  gdk_pixbuf_save (pixbuf, name, "png", error,
+                              TAG_DESCRIPTION,        desc,
+                              TAG_SOFTWARE,           software,
+                              TAG_THUMB_URI,          thumbnail->uri,
+                              TAG_THUMB_MTIME,        time_str,
+                              TAG_THUMB_FILESIZE,     size_str,
+                              TAG_THUMB_IMAGE_WIDTH,  width_str,
+                              TAG_THUMB_IMAGE_HEIGHT, height_str,
+
+                              thumbnail->image_type ?
+                              TAG_THUMB_GIMP_TYPE : NULL,
+                              thumbnail->image_type,
+
+                              thumbnail->image_num_layers > 0 ?
+                              TAG_THUMB_GIMP_LAYERS : NULL,
+                              num_str,
+
+                              NULL);
+
+  if (success)
+    {
+      success = chmod (name, 0600);
+
+      if (! success)
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     "Could not set permissions of thumbnail '%s': %s",
+                     name, g_strerror (errno));
+    }
+
+  g_free (num_str);
+  g_free (height_str);
+  g_free (width_str);
+  g_free (size_str);
+  g_free (time_str);
+  g_free (desc);
+  g_free (name);
+
+  return success;
+}
+
+gboolean
+gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
+                             const gchar    *software,
+                             GError        **error)
+{
+  GdkPixbuf     *pixbuf;
+  GimpThumbSize  size = GIMP_THUMB_SIZE_FAIL;
+  gchar         *name;
+  gchar         *desc;
+  gchar         *time_str;
+  gchar         *size_str;
+  gboolean       success;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (thumbnail->uri != NULL, FALSE);
+  g_return_val_if_fail (software != NULL, FALSE);
+
+  name = gimp_thumb_png_thumb_name (thumbnail->uri, &size);
+  if (! name)
+    return TRUE;
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 1, 1);
+
+  desc     = g_strdup_printf ("Thumbnail failure for %s", thumbnail->uri);
+  time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
+  size_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
+
+  success = gdk_pixbuf_save (pixbuf, name, "png", error,
+                             TAG_DESCRIPTION,    desc,
+                             TAG_SOFTWARE,       software,
+                             TAG_THUMB_URI,      thumbnail->uri,
+                             TAG_THUMB_MTIME,    time_str,
+                             TAG_THUMB_FILESIZE, size_str,
+                             NULL);
+  if (success)
+    {
+      success = chmod (name, 0600);
+
+      if (! success)
+        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                     "Could not set permissions of thumbnail '%s': %s",
+                     name, g_strerror (errno));
+    }
+
+  g_object_unref (pixbuf);
+
+  g_free (size_str);
+  g_free (time_str);
+  g_free (desc);
+  g_free (name);
+
+  return success;
+}
 
 static GdkPixbuf *
 gimp_thumbnail_read_png_thumb (GimpThumbnail  *thumbnail,
