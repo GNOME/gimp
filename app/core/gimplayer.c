@@ -52,8 +52,10 @@ static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
 static void gimp_layer_mask_destroy    (GtkObject          *object);
 
+/*
 static gint layer_signals[LAST_SIGNAL] = { 0 };
 static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
+*/
 
 static GimpDrawableClass *layer_parent_class = NULL;
 static GimpChannelClass *layer_mask_parent_class = NULL;
@@ -93,7 +95,9 @@ gimp_layer_class_init (GimpLayerClass *class)
 
   layer_parent_class = gtk_type_class (gimp_drawable_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_layer_destroy;
   drawable_class->invalidate_preview = layer_invalidate_preview;
@@ -136,7 +140,9 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *class)
   object_class = (GtkObjectClass*) class;
   layer_mask_parent_class = gtk_type_class (gimp_channel_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, layer_mask_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_layer_mask_destroy;
 }
@@ -261,6 +267,22 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
   layer->fs.num_segs = 0;
 
   return layer;
+}
+
+
+Layer *
+layer_ref (Layer *layer)
+{
+  gtk_object_ref  (GTK_OBJECT (layer));
+  gtk_object_sink (GTK_OBJECT (layer));
+  return layer;
+}
+
+
+void
+layer_unref (Layer *layer)
+{
+  gtk_object_unref (GTK_OBJECT (layer));
 }
 
 

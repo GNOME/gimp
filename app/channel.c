@@ -32,16 +32,19 @@
 
 #include "channel_pvt.h"
 
+/*
 enum {
   LAST_SIGNAL
 };
-
+*/
 
 static void gimp_channel_class_init (GimpChannelClass *klass);
 static void gimp_channel_init       (GimpChannel      *channel);
 static void gimp_channel_destroy    (GtkObject        *object);
 
+/*
 static gint channel_signals[LAST_SIGNAL] = { 0 };
+*/
 
 static GimpDrawableClass *parent_class = NULL;
 
@@ -77,7 +80,9 @@ gimp_channel_class_init (GimpChannelClass *class)
   object_class = (GtkObjectClass*) class;
   parent_class = gtk_type_class (gimp_drawable_get_type ());
 
+  /*
   gtk_object_class_add_signals (object_class, channel_signals, LAST_SIGNAL);
+  */
 
   object_class->destroy = gimp_channel_destroy;
 }
@@ -141,6 +146,21 @@ channel_new (int gimage_ID, int width, int height, char *name, int opacity,
   channel->y2 = height;
 
   return channel;
+}
+
+Channel *
+channel_ref (Channel *channel)
+{
+  gtk_object_ref  (GTK_OBJECT (channel));
+  gtk_object_sink (GTK_OBJECT (channel));
+  return channel;
+}
+
+
+void
+channel_unref (Channel *channel)
+{
+  gtk_object_unref (GTK_OBJECT (channel));
 }
 
 

@@ -86,6 +86,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
+  if (!canvas->window) 
+    return FALSE;
+
   /*  If this is the first event...  */
   if (!gdisp->select)
     {

@@ -272,6 +272,7 @@ lc_dialog_create (int gimage_id)
   if (lc_shell == NULL)
     {
       lc_shell = gtk_dialog_new ();
+      gtk_widget_ref (lc_shell);
       
       gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
@@ -371,7 +372,7 @@ lc_dialog_update_image_list ()
     return;
 
   gtk_option_menu_remove_menu (GTK_OPTION_MENU (image_option_menu));
-  gtk_widget_destroy (image_menu);
+  /* gtk_widget_destroy (image_menu); */
 
   default_id = layersD->gimage_id;
   layersD->gimage_id = -1;		/* ??? */
@@ -412,6 +413,8 @@ lc_dialog_free ()
   channels_dialog_free ();
 
   gtk_widget_destroy (lc_shell);
+  gtk_widget_unref (lc_shell);
+
   lc_shell = NULL;
 }
 

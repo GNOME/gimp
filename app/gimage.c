@@ -2147,10 +2147,10 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
        */
       if (gimage_floating_sel (gimage) && (gimage->floating_sel != float_layer) && position == 0)
 	position = 1;
-      gimage->layers = g_slist_insert (gimage->layers, float_layer, position);
+      gimage->layers = g_slist_insert (gimage->layers, layer_ref (float_layer), position);
     }
   else
-    gimage->layers = g_slist_prepend (gimage->layers, float_layer);
+    gimage->layers = g_slist_prepend (gimage->layers, layer_ref (float_layer));
   gimage->layer_stack = g_slist_prepend (gimage->layer_stack, float_layer);
 
   /*  notify the layers dialog of the currently active layer  */
@@ -2431,7 +2431,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
   undo_push_channel (gimage, cu);
 
   /*  add the channel to the list  */
-  gimage->channels = g_slist_prepend (gimage->channels, channel);
+  gimage->channels = g_slist_prepend (gimage->channels, channel_ref (channel));
 
   /*  notify this gimage of the currently active channel  */
   gimage_set_active_channel (gimage, channel);

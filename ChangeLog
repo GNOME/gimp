@@ -1,3 +1,15 @@
+Wed Feb  4 19:04:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* channel.c 
+	* channel.h
+ 	* disp_callbacks.c
+ 	* gimage.c
+ 	* layer.c
+ 	* layer.h
+	* layers_dialog.c
+	* undo.c: More GTK refcount-related changes.  (We're not there
+	yet, but we're getting closer.)
+
 Tue Feb  3 17:52:34 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/interface.[ch] app/app_procs.[ch]: Changes to deal with new
