@@ -1,3 +1,11 @@
+Wed Nov 10 11:16:54 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/fade-outline.scm: updated version
+	from Wolfgag Hofer
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* app/drawable_cmds.c: use TILE_HEIGHT for y coordinate
+
 1999-11-09  Tor Lillqvist  <tml@iki.fi>
 
 	* app/module_db.c (browser_destroy_callback): Must call

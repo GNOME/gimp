@@ -355,7 +355,7 @@ HELP
 				    TRUE, TRUE);
 
       x %= TILE_WIDTH;
-      y %= TILE_WIDTH;
+      y %= TILE_HEIGHT;
 
       p = tile_data_pointer (tile, x, y);
       for (b = 0; b < num_channels; b++)
@@ -396,7 +396,7 @@ HELP
 				    TRUE, TRUE);
 
       x %= TILE_WIDTH;
-      y %= TILE_WIDTH;
+      y %= TILE_HEIGHT;
 
       p = tile_data_pointer (tile, x, y);
       for (b = 0; b < num_channels; b++)

@@ -1,12 +1,14 @@
 ; fade-outline.scm
-; version 1.1
+; version 1.1.11a
 ;
 ; This GIMP script_fu operates on a single Layer
-; It makes it's outline boarder transparent by
-; adding a layer mask that is black (transparent) at the outline
-; and blends into white (opaque) at the inner regions of the
-; shape. The user can specify the thickness of the fading border
-; that is used to blend from transparent to opaque.
+; It blends the outline boarder from one to another transparency level
+; by adding a layer_mask that follows the shape of the selection.
+; usually from 100% (white is full opaque) to 0% (black is full transparent)
+;
+; The user can specify the thickness of the fading border
+; that is used to blend from transparent to opaque
+; and the Fading direction (shrink or grow).
 ;
 ; The outline is taken from the current selection
 ; or from the layers alpha channel if no selection is active.
@@ -38,17 +40,28 @@
 (define (script-fu-fade-outline   inImage
                                   inLayer
                                   inBorderSize
+                                  inFadeFrom
+                                  inFadeTo
+                                  inGrowingSelection
                                   inApplyMask
                                   inClearUnselected
         )
 
         (let* ((l-idx 0)
-               (l-step (/ 25500 (+ inBorderSize 1)))
-               (l-gray l-step)
                (l-old-bg-color (car (gimp-palette-get-background)))
                (l-has-selection TRUE)
-
               )
+              
+	; check Fade from and To Values (and force values from 0% to 100%)
+	(if (> inFadeFrom 100) (begin (set! inFadeFrom 100 )) )
+	(if (< inFadeFrom 0)   (begin (set! inFadeFrom 0 )) )
+	(if (> inFadeTo 100) (begin (set! inFadeTo 100 )) )
+	(if (< inFadeTo 0)   (begin (set! inFadeTo 0 )) )
+         
+	(set! l-from-gray (* inFadeFrom 255))
+	(set! l-to-gray (* inFadeTo 255))
+        (set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
+        (set! l-gray l-to-gray)
 
         ; do nothing if the layer is a layer mask
         (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
@@ -63,7 +76,7 @@
                   )
                )
 
-              ; if the layer is the floating selection convert to normal layer
+             ; if the layer is the floating selection convert to normal layer
               ; because floating selection cant have a layer mask
               (if (> (car (gimp-layer-is-floating-sel inLayer)) 0)
                   (begin
@@ -79,6 +92,9 @@
                   )
                )
 
+               ;
+              (gimp-selection-sharpen inImage)
+
                ; apply the existing mask before creating a new one
               (gimp-image-remove-layer-mask inImage inLayer 0)
 
@@ -92,11 +108,22 @@
                )
 
               (gimp-image-add-layer-mask inImage inLayer l-mask)
+
+              (if (= inGrowingSelection  TRUE)
+                  (begin
+	            (set! l-gray l-from-gray)
+	            (set! l-from-gray l-to-gray)
+                    (set! l-to-gray l-gray)
+                    (set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
+                    (set! l-orig-selection  (car (gimp-selection-save inImage)))
+                    (gimp-selection-invert inImage)
+                  )
+               )
                                            
               (while (<= l-idx inBorderSize)
                  (if (= l-idx inBorderSize)
                      (begin
-                        (set! l-gray 25500)
+                        (set! l-gray l-from-gray)
                       )
                   )
                   (gimp-palette-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
@@ -112,6 +139,27 @@
                    )
 
               )
+              
+              (if (= inGrowingSelection  TRUE)
+                  (begin
+                    (gimp-selection-load l-orig-selection)
+                    (gimp-palette-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
+                    (gimp-edit-fill l-mask)
+                    (gimp-selection-grow inImage inBorderSize)
+                    (gimp-selection-invert inImage)
+        	    (if (= inClearUnselected  TRUE)
+                	(begin
+                          ;(gimp-palette-set-background (list (/ l-from-gray 100) (/ l-from-gray 100) (/ l-from-gray 100)))
+                          (gimp-palette-set-background (list 0 0 0))
+                	 )
+                	(begin
+                          (gimp-palette-set-background (list 255 255 255))
+                	)
+        	     )
+                    (gimp-edit-fill l-mask)
+                    (gimp-image-remove-channel inImage l-orig-selection)
+                  )
+               )
 
               (if (=  inApplyMask TRUE)
                   (begin
@@ -139,14 +187,17 @@
 (script-fu-register
     "script-fu-fade-outline"
     "<Image>/Script-Fu/Selection/Fade Outline"
-    "Blend the Layers outline border to transparent"
-    "Wolfgang Hofer <wolfgang.hofer@siemens.at>"
+    "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
+    "Wolfgang Hofer <hof@hotbot.com>"
     "Wolfgang Hofer"
-    "19 May 1998"
+    "10 Nov 1999"
     "RGB RGBA GRAY GRAYA"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Border Size" "10"
+    SF-VALUE "Fade From (100%-0%)" "100"
+    SF-VALUE "Fade To   (0%-100%)" "0"
+    SF-TOGGLE "Use Growing Selection?" FALSE
     SF-TOGGLE "Apply generated Layermask?" FALSE
     SF-TOGGLE "Clear unselected Maskarea?" TRUE
 )

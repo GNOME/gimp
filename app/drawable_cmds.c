@@ -1060,7 +1060,7 @@ drawable_get_pixel_invoker (Argument *args)
 					TRUE, TRUE);
     
 	  x %= TILE_WIDTH;
-	  y %= TILE_WIDTH;
+	  y %= TILE_HEIGHT;
     
 	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
@@ -1170,7 +1170,7 @@ drawable_set_pixel_invoker (Argument *args)
 					TRUE, TRUE);
     
 	  x %= TILE_WIDTH;
-	  y %= TILE_WIDTH;
+	  y %= TILE_HEIGHT;
     
 	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
