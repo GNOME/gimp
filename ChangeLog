@@ -1,3 +1,9 @@
+2003-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_new_from_component): use
+	gimp_image_get_component_index() instead of doing the switch()es
+	manually.
+
 2003-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-preview.c
@@ -47,7 +53,7 @@
 	got from gdk_get_current_event().
 
 	* app/widgets/gimpcontainerview.c: check view->hash_table for
-	being non-NULL before using it. Be prepared to be destroyed by as
+	being non-NULL before using it. Be prepared to be destroyed as
 	a result of calling gimp_context_set_foo(view->context, foo).
 
 	* app/widgets/gimpcontainertreeview.[ch]: added

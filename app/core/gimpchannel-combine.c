@@ -291,27 +291,12 @@ gimp_channel_new_from_component (GimpImage       *gimage,
   PixelRegion  dest;
   gint         width;
   gint         height;
-  gint         pixel = -1;
+  gint         pixel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  switch (type)
-    {
-    case GIMP_RED_CHANNEL:      pixel = RED_PIX;     break;
-    case GIMP_GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
-    case GIMP_BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
-    case GIMP_GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
-    case GIMP_INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
-    case GIMP_ALPHA_CHANNEL:
-      switch (gimp_image_base_type (gimage))
-	{
-	case GIMP_RGB:     pixel = ALPHA_PIX;   break;
-	case GIMP_GRAY:    pixel = ALPHA_G_PIX; break;
-	case GIMP_INDEXED: pixel = ALPHA_I_PIX; break;
-	}
-      break;
-    }
+  pixel = gimp_image_get_component_index (gimage, type);
 
   g_return_val_if_fail (pixel != -1, NULL);
 
