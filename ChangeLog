@@ -1,5 +1,9 @@
 2001-01-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpcolorarea.c: added antialiasing
+
+2001-01-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpcolorbutton.[ch]: allow width/height of the color_area
 	to be set to negative values so the GimpColorButton can be set up
 	resizeable.

@@ -264,6 +264,7 @@ gimp_color_area_has_alpha (GimpColorArea *gca)
 static void
 gimp_color_area_update (GimpColorArea *gca)
 {
+  gint     window_width, window_height;
   guint    x, y;
   guint    width, height;
   guchar   light[3];
@@ -271,6 +272,7 @@ gimp_color_area_update (GimpColorArea *gca)
   guchar   opaque[3];
   guchar  *p;
   guchar  *buf;
+  gdouble  frac;
 
   g_return_if_fail (gca != NULL);
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
@@ -278,10 +280,14 @@ gimp_color_area_update (GimpColorArea *gca)
   if (! GTK_WIDGET_REALIZED (GTK_WIDGET (gca)))
     return;
 
-  gdk_window_get_size (GTK_WIDGET (gca)->window, &width, &height);
+  gdk_window_get_size (GTK_WIDGET (gca)->window, 
+		       &window_width, &window_height);
 
-  if (!width || !height)
+  if (window_width < 1 || window_height < 1)
     return;
+
+  width  = window_width;
+  height = window_height;
 
   p = buf = g_new (guchar, width * 3);
 
@@ -289,7 +295,7 @@ gimp_color_area_update (GimpColorArea *gca)
   opaque[1] = gca->color.g * 255.999;
   opaque[2] = gca->color.b * 255.999;
 
-  if (gca->alpha)
+  if (gca->alpha && gca->color.a < 1.0)
     {
       light[0] = (GIMP_CHECK_LIGHT + 
 		  (gca->color.r - GIMP_CHECK_LIGHT) * gca->color.a) * 255.999;
@@ -310,27 +316,55 @@ gimp_color_area_update (GimpColorArea *gca)
 
 	  for (x = 0; x < width; x++)
 	    {
-	      if (x <= y)
+	      if (x * height < y * width)
 		{
 		  *p++ = opaque[0];
 		  *p++ = opaque[1];
 		  *p++ = opaque[2];
+
+		  continue;
 		}
-	      else if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) 
-		       & 1) 
+
+	      frac = (gdouble) (x * height) / (gdouble) width - y;
+	      
+	      if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) & 1) 
 		{
-		  *p++ = light[0];
-		  *p++ = light[1];
-		  *p++ = light[2];
+		  if ((gint) frac)
+		    {
+		      *p++ = light[0];
+		      *p++ = light[1];
+		      *p++ = light[2];
+		    }
+		  else
+		    {
+		      *p++ = (gdouble) light[0]  * frac + 
+			     (gdouble) opaque[0] * (1.0 - frac);
+		      *p++ = (gdouble) light[1]  * frac + 
+			     (gdouble) opaque[1] * (1.0 - frac);
+		      *p++ = (gdouble) light[2]  * frac + 
+			     (gdouble) opaque[2] * (1.0 - frac);
+		    }
 		}
 	      else
 		{
-		  *p++ = dark[0];
-		  *p++ = dark[1];
-		  *p++ = dark[2];
+		  if ((gint) frac)
+		    {
+		      *p++ = dark[0];
+		      *p++ = dark[1];
+		      *p++ = dark[2];
+		    }
+		  else
+		    {
+		      *p++ = (gdouble) dark[0] * frac + 
+			     (gdouble) opaque[0] * (1.0 - frac);
+		      *p++ = (gdouble) dark[1] * frac + 
+			     (gdouble) opaque[1] * (1.0 - frac);
+		      *p++ = (gdouble) dark[2] * frac + 
+			     (gdouble) opaque[2] * (1.0 - frac);
+		    }
 		}
 	    }
- 
+
 	  gtk_preview_draw_row (GTK_PREVIEW (gca), buf, 
 				0, height - y - 1, width);
 	} 
