@@ -273,6 +273,7 @@ analyze (GimpDrawable *drawable)
   guchar       *sel;
   GimpPixelRgn  selPR;
   gint          ofsx, ofsy;
+  GimpDrawable *selDrawable;
 
   gimp_progress_init (_("Colorcube Analysis..."));
 
@@ -307,8 +308,9 @@ analyze (GimpDrawable *drawable)
           || gimp_drawable_is_channel (drawable->drawable_id));
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
+  selDrawable = gimp_drawable_get (gimp_image_get_selection (imageID));
   gimp_pixel_rgn_init (&selPR,
-                       gimp_drawable_get (gimp_image_get_selection (imageID)),
+                       selDrawable,
                        0, 0, width, height, FALSE, FALSE);
 
   /* allocate row buffer */
@@ -372,6 +374,7 @@ analyze (GimpDrawable *drawable)
   gimp_progress_update (1.0);
 
   /* clean up */
+  gimp_drawable_detach (selDrawable);
   g_free (src_row);
   g_free (sel);
 }

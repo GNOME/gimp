@@ -1,3 +1,8 @@
+2004-01-19  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/ccanalyze.c (analyze): Call gimp_drawable_detach()
+	after gimp_drawable_get() to plug a leak.
+
 2004-01-19  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gui/about-dialog.c (decorate_text): Fix gccism.
