@@ -1666,7 +1666,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%f", gimage_mask_feather_radius);
   query_string_box ("Feather Selection", "Feather selection by:", initial,
-		    gimage_mask_feather_callback, gdisp->gimage);
+		    gimage_mask_feather_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -2482,7 +2482,9 @@ gimage_mask_feather_callback (GtkWidget *w,
   GImage *gimage;
   double feather_radius;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   feather_radius = atof (call_data);
 
   gimage_mask_feather (gimage, feather_radius);
