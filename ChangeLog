@@ -1,3 +1,26 @@
+2000-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/hot.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/oilify.c: some more help-aware plugins.
+
+	* plug-ins/helpbrowser/helpbrowser.c: had the wrong help page
+	attached.
+
 2000-01-06  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* plug-ins/gfig/gfig.c (paint_page_menu_type): UI modification (as 

@@ -51,6 +51,8 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
@@ -477,8 +479,6 @@ static void	run	(gchar	 *name,
 			 GParam	 **return_vals);
 
 static gint	newsprint_dialog (GDrawable *drawable);
-static void	newsprint_close_callback	 (GtkWidget *widget,
-					  gpointer   data);
 static void	newsprint_ok_callback	 (GtkWidget *widget,
 					  gpointer   data);
 
@@ -1173,323 +1173,299 @@ gen_channels(NewsprintDialog_st *st, gint colourspace)
 static gint
 newsprint_dialog (GDrawable *drawable)
 {
-    gchar	**argv;
-    gint	argc;
-    /* widgets we need from callbacks stored here */
-    NewsprintDialog_st	st;
-    GtkWidget	*frame;
-    GtkWidget	*table;
-    GtkWidget	*align;
-    GtkWidget	*button;
-    GtkWidget	*hbbox;
-    GtkWidget	*hbox;
-    GtkWidget	*toggle;
-    GtkWidget	*label;
-    GSList	*group = NULL;
-    gint	bpp;
-    guchar	*color_cube;
-    gint	i;
+  gchar	**argv;
+  gint    argc;
+  /* widgets we need from callbacks stored here */
+  NewsprintDialog_st st;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *align;
+  GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *toggle;
+  GtkWidget *label;
+  GSList    *group = NULL;
+  gint    bpp;
+  guchar *color_cube;
+  gint    i;
 
-    argc = 1;
-    argv = g_new(gchar *, 1);
-    argv[0] = g_strdup("newsprint");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("newsprint");
 
-    gtk_init (&argc, &argv);
-    gtk_rc_parse(gimp_gtkrc());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-    gtk_preview_set_gamma (gimp_gamma ());
-    gtk_preview_set_install_cmap (gimp_install_cmap ());
-    color_cube = gimp_color_cube ();
-    gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-				color_cube[2], color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-    gtk_widget_set_default_visual (gtk_preview_get_visual ());
-    gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
 #if 0
-    printf("newsprint: waiting... (pid %d)\n", getpid());
-    kill(getpid(), 19);
+  g_print ("newsprint: waiting... (pid %d)\n", getpid ());
+  kill (getpid (), 19);
 #endif
 
-    /* flag values to say we haven't filled these channel
-     * states in yet */
-    for(i=0; i<NUM_CS; i++)
-	st.chst[i][0] = NULL;
+  /* flag values to say we haven't filled these channel
+   * states in yet */
+  for(i=0; i<NUM_CS; i++)
+    st.chst[i][0] = NULL;
 
-    /* we haven't shown any channels yet */
-    st.current_ch = NULL;
+  /* we haven't shown any channels yet */
+  st.current_ch = NULL;
 
-    /* need to know the bpp, so we can tell if we're doing 
-     * RGB/CMYK or grey style of dialog box */
-    bpp = gimp_drawable_bpp(drawable->id);
-    if (gimp_drawable_has_alpha(drawable->id))
-	bpp--;	
+  /* need to know the bpp, so we can tell if we're doing 
+   * RGB/CMYK or grey style of dialog box */
+  bpp = gimp_drawable_bpp(drawable->id);
+  if (gimp_drawable_has_alpha(drawable->id))
+    bpp--;	
 
-    /* force greyscale if it's the only thing we can do */
-    if (bpp == 1) {
-	pvals.colourspace = CS_GREY;
-    } else {
-	if (pvals.colourspace == CS_GREY)
-	    pvals.colourspace = CS_RGB;
+  /* force greyscale if it's the only thing we can do */
+  if (bpp == 1)
+    {
+      pvals.colourspace = CS_GREY;
+    }
+  else
+    {
+      if (pvals.colourspace == CS_GREY)
+	pvals.colourspace = CS_RGB;
     }
 
-    st.dlg = gtk_dialog_new ();
-    gtk_window_set_title (GTK_WINDOW (st.dlg), _("Newsprint"));
-    gtk_window_position (GTK_WINDOW (st.dlg), GTK_WIN_POS_MOUSE);
-    gtk_signal_connect (GTK_OBJECT (st.dlg), "destroy",
-			(GtkSignalFunc) newsprint_close_callback,
-			NULL);
+  st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
+			    gimp_plugin_help_func, "filters/newsprint.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-    /*  Action area  */
-    gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (st.dlg)->action_area), 2);
-    gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (st.dlg)->action_area), FALSE);
-    hbbox = gtk_hbutton_box_new ();
-    gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-    gtk_box_pack_end (GTK_BOX (GTK_DIALOG (st.dlg)->action_area), hbbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbbox);
-    
-    button = gtk_button_new_with_label ( _("OK"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			(GtkSignalFunc) newsprint_ok_callback,
-			st.dlg);
-    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-    gtk_widget_grab_default (button);
-    gtk_widget_show (button);
-    
-    button = gtk_button_new_with_label ( _("Cancel"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			       (GtkSignalFunc) gtk_widget_destroy,
-			       GTK_OBJECT (st.dlg));
-    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-    
-    /* resolution settings  */
-    frame = gtk_frame_new ( _("Resolution"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 10);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
-			TRUE, TRUE, 0);
+			    _("OK"), newsprint_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
 
-    table = gtk_table_new (3, 2, FALSE);
-    gtk_container_border_width (GTK_CONTAINER (table), 10);
-    gtk_container_add (GTK_CONTAINER (frame), table);
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (st.dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  /* resolution settings  */
+  frame = gtk_frame_new ( _("Resolution"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
+		      TRUE, TRUE, 0);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-    {
-      double xres, yres;
-      gimp_image_get_resolution(gimp_drawable_image_id(drawable->id),
-				&xres, &yres);
-      /* XXX hack: should really note both resolutions, and use
-       * rectangular cells, not square cells.  But I'm being lazy,
-       * and the majority of the world works with xres == yres */
-      pvals_ui.input_spi = xres;
-    }
+  {
+    double xres, yres;
+    gimp_image_get_resolution(gimp_drawable_image_id(drawable->id),
+			      &xres, &yres);
+    /* XXX hack: should really note both resolutions, and use
+     * rectangular cells, not square cells.  But I'm being lazy,
+     * and the majority of the world works with xres == yres */
+    pvals_ui.input_spi = xres;
+  }
 #endif
 
-    st.input_spi  = NULL;
-    st.output_lpi = NULL;
-    st.cellsize   = NULL;
+  st.input_spi  = NULL;
+  st.output_lpi = NULL;
+  st.cellsize   = NULL;
 
-    st.input_spi = entscale_new(table, 0, 0, _("Input SPI "),
-				ENTSCALE_INT, &pvals_ui.input_spi,
-				1.0, 1200.0, 5.0, FALSE/*constrain*/,
-				spi_callback, &st);
+  st.input_spi = entscale_new(table, 0, 0, _("Input SPI "),
+			      ENTSCALE_INT, &pvals_ui.input_spi,
+			      1.0, 1200.0, 5.0, FALSE/*constrain*/,
+			      spi_callback, &st);
 
-    st.output_lpi = entscale_new(table, 0, 1, _("Output LPI "),
-				 ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
-				 1.0, 1200.0, 5.0, FALSE/*constrain*/,
-				 lpi_callback, &st);
+  st.output_lpi = entscale_new(table, 0, 1, _("Output LPI "),
+			       ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
+			       1.0, 1200.0, 5.0, FALSE/*constrain*/,
+			       lpi_callback, &st);
 
-    st.cellsize = entscale_new(table, 0, 2, _("Cell size "),
-			       ENTSCALE_INT, &pvals.cell_width,
-			       3.0, 100.0, 1.0, FALSE/*constrain*/,
-			       cellsize_callback, &st);
+  st.cellsize = entscale_new(table, 0, 2, _("Cell size "),
+			     ENTSCALE_INT, &pvals.cell_width,
+			     3.0, 100.0, 1.0, FALSE/*constrain*/,
+			     cellsize_callback, &st);
 
-    gtk_widget_show(table);
-    gtk_widget_show(frame);
+  gtk_widget_show(table);
+  gtk_widget_show(frame);
 
+  /* screen settings */
+  frame = gtk_frame_new ( _("Screen"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
+		      TRUE, TRUE, 0);
 
-    /* screen settings */
-    frame = gtk_frame_new ( _("Screen"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 10);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
-			TRUE, TRUE, 0);
+  st.vbox = gtk_vbox_new(FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (frame), st.vbox);
 
-    st.vbox = gtk_vbox_new(FALSE, 1);
-    gtk_container_add (GTK_CONTAINER (frame), st.vbox);
+  /* we only create the channel menu and option menu if there are 
+   * more than one channels involved */
+  st.channel_menu   = NULL;
+  st.channel_option = NULL;
 
-    /* we only create the channel menu and option menu if there are 
-     * more than one channels involved */
-    st.channel_menu   = NULL;
-    st.channel_option = NULL;
-
-    /* optional portion begins */
-    if (bpp != 1)
+  /* optional portion begins */
+  if (bpp != 1)
     {
-	table = gtk_table_new (2, 2, FALSE);
-	gtk_container_border_width (GTK_CONTAINER (table), 10);
-	gtk_box_pack_start (GTK_BOX (st.vbox), table, TRUE, TRUE, 0);
+      table = gtk_table_new (2, 2, FALSE);
+      gtk_container_border_width (GTK_CONTAINER (table), 10);
+      gtk_box_pack_start (GTK_BOX (st.vbox), table, TRUE, TRUE, 0);
 
-	/* black pullout */
-	st.pull = entscale_new(table, 0, 1, _("Black pullout (%)"),
-			       ENTSCALE_INT, &pvals.k_pullout,
-			       0.0, 100.0, 1.0, TRUE/*constrain*/,
-			       NULL, NULL);
-	entscale_set_sensitive(st.pull, (pvals.colourspace == CS_CMYK));
+      /* black pullout */
+      st.pull = entscale_new(table, 0, 1, _("Black pullout (%)"),
+			     ENTSCALE_INT, &pvals.k_pullout,
+			     0.0, 100.0, 1.0, TRUE/*constrain*/,
+			     NULL, NULL);
+      entscale_set_sensitive(st.pull, (pvals.colourspace == CS_CMYK));
 
-	/* RGB / CMYK / Intensity select */
-	label = gtk_label_new( _("Separate to"));
-	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-			 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show(label);
+      /* RGB / CMYK / Intensity select */
+      label = gtk_label_new( _("Separate to"));
+      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
+		       GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show(label);
 
-	hbox = gtk_hbox_new(FALSE, 5);
+      hbox = gtk_hbox_new(FALSE, 5);
 
-	toggle = gtk_radio_button_new_with_label(group, _("RGB"));
-	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_RGB));
-	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			    (GtkSignalFunc) newsprint_cspace_update,
-			    GINT_TO_POINTER(CS_RGB));
-	gtk_widget_show (toggle);
+      toggle = gtk_radio_button_new_with_label(group, _("RGB"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    (pvals.colourspace == CS_RGB));
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) newsprint_cspace_update,
+			  GINT_TO_POINTER(CS_RGB));
+      gtk_widget_show (toggle);
 
-	toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
-	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_CMYK));
-	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			    (GtkSignalFunc) newsprint_cspace_update,
-			    GINT_TO_POINTER(CS_CMYK));
-	gtk_widget_show (toggle);
+      toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    (pvals.colourspace == CS_CMYK));
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) newsprint_cspace_update,
+			  GINT_TO_POINTER(CS_CMYK));
+      gtk_widget_show (toggle);
 
-	toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
-	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				     (pvals.colourspace == CS_INTENSITY));
-	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			    (GtkSignalFunc) newsprint_cspace_update,
-			    GINT_TO_POINTER(CS_INTENSITY));
-	gtk_widget_show (toggle);
+      toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    (pvals.colourspace == CS_INTENSITY));
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) newsprint_cspace_update,
+			  GINT_TO_POINTER(CS_INTENSITY));
+      gtk_widget_show (toggle);
 
-	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 0, 1,
-			 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show(hbox);
+      gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 0, 1,
+		       GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show(hbox);
 
-	gtk_widget_show(table);
+      gtk_widget_show(table);
 
-	/* channel lock & factory defaults button */
-	align = gtk_alignment_new(0.0, 1.0, 0.1, 1.0);
-	hbox = gtk_hbutton_box_new();
-	gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbox), 10);
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbox), GTK_BUTTONBOX_SPREAD);
+      /* channel lock & factory defaults button */
+      align = gtk_alignment_new(0.0, 1.0, 0.1, 1.0);
+      hbox = gtk_hbutton_box_new();
+      gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbox), 10);
+      gtk_button_box_set_layout(GTK_BUTTON_BOX(hbox), GTK_BUTTONBOX_SPREAD);
 
-	gtk_container_add(GTK_CONTAINER(align), hbox);
-	gtk_box_pack_start(GTK_BOX(st.vbox), align, TRUE, FALSE, 0);
-	/* make sure it went in the right place, since colourspace
-	 * radio button callbacks may have already inserted the
-	 * channel frames */
-	gtk_box_reorder_child(GTK_BOX(st.vbox), align, 1);
-	gtk_widget_show(align);
-	gtk_widget_show(hbox);
+      gtk_container_add(GTK_CONTAINER(align), hbox);
+      gtk_box_pack_start(GTK_BOX(st.vbox), align, TRUE, FALSE, 0);
+      /* make sure it went in the right place, since colourspace
+       * radio button callbacks may have already inserted the
+       * channel frames */
+      gtk_box_reorder_child(GTK_BOX(st.vbox), align, 1);
+      gtk_widget_show(align);
+      gtk_widget_show(hbox);
 
-	toggle = gtk_check_button_new_with_label( _("Lock channels"));
-	gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-			   (GtkSignalFunc) newsprint_toggle_update,
-			   &pvals_ui.lock_channels);
-	gtk_object_set_user_data(GTK_OBJECT(toggle), NULL);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (toggle),
-				    pvals_ui.lock_channels);
-	gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 0);
-	gtk_widget_show(toggle);
+      toggle = gtk_check_button_new_with_label( _("Lock channels"));
+      gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+			 (GtkSignalFunc) newsprint_toggle_update,
+			 &pvals_ui.lock_channels);
+      gtk_object_set_user_data(GTK_OBJECT(toggle), NULL);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (toggle),
+				   pvals_ui.lock_channels);
+      gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 0);
+      gtk_widget_show(toggle);
 
-	st.channel_menu   = gtk_menu_new();
-	st.channel_option = gtk_option_menu_new();
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(st.channel_option),
-				 st.channel_menu);
-	gtk_widget_show(st.channel_option);
-	gtk_box_pack_start(GTK_BOX(hbox), st.channel_option, TRUE, TRUE, 0);
+      st.channel_menu   = gtk_menu_new();
+      st.channel_option = gtk_option_menu_new();
+      gtk_option_menu_set_menu(GTK_OPTION_MENU(st.channel_option),
+			       st.channel_menu);
+      gtk_widget_show(st.channel_option);
+      gtk_box_pack_start(GTK_BOX(hbox), st.channel_option, TRUE, TRUE, 0);
 
-	button = gtk_button_new_with_label( _("Factory defaults"));
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) newsprint_defaults_callback,
-			   &st);
-	gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+      button = gtk_button_new_with_label( _("Factory defaults"));
+      gtk_signal_connect(GTK_OBJECT(button), "clicked",
+			 (GtkSignalFunc) newsprint_defaults_callback,
+			 &st);
+      gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
+      gtk_widget_show(button);
     }
 
-    /* Make the channels appropriate for this colourspace and
-     * currently selected defaults.  They may have already been
-     * created as a result of callbacks to cspace_update from
-     * gtk_toggle_button_set_active().  Other channel frames are
-     * created lazily the first time they are required. */
-    if (!st.chst[pvals.colourspace][0])
+  /* Make the channels appropriate for this colourspace and
+   * currently selected defaults.  They may have already been
+   * created as a result of callbacks to cspace_update from
+   * gtk_toggle_button_set_active().  Other channel frames are
+   * created lazily the first time they are required. */
+  if (!st.chst[pvals.colourspace][0])
     {
-	channel_st **chst;
+      channel_st **chst;
 
-	gen_channels(&st, pvals.colourspace);
+      gen_channels(&st, pvals.colourspace);
 
-	chst = st.chst[pvals.colourspace];
+      chst = st.chst[pvals.colourspace];
 
-	for(i=0; i < cspace_nchans[pvals.colourspace]; i++)
-	    gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
+      for(i=0; i < cspace_nchans[pvals.colourspace]; i++)
+	gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
 
-	/* select the first channel to edit */
-	if (st.channel_option)
-	    gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
-					chst[0]->ch_menu_num);
-	gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
+      /* select the first channel to edit */
+      if (st.channel_option)
+	gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
+				    chst[0]->ch_menu_num);
+      gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
     }
 
-    gtk_widget_show(st.vbox);
-    gtk_widget_show(frame);
+  gtk_widget_show(st.vbox);
+  gtk_widget_show(frame);
 
+  /* anti-alias control */
+  frame = gtk_frame_new ( _("Anti-alias"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
+		      TRUE, TRUE, 0);
 
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-    /* anti-alias control */
-    frame = gtk_frame_new ( _("Anti-alias"));
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 10);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
-			TRUE, TRUE, 0);
-    
-    table = gtk_table_new (1, 2, FALSE);
-    gtk_container_border_width (GTK_CONTAINER (table), 10);
-    gtk_container_add (GTK_CONTAINER (frame), table);
+  entscale_new(table, 1, 0, _("oversample "),
+	       ENTSCALE_INT, &pvals.oversample,
+	       1.0, 15.0, 1.0, TRUE/*constrain*/,
+	       NULL, NULL);
 
-    entscale_new(table, 1, 0, _("oversample "),
-		 ENTSCALE_INT, &pvals.oversample,
-		 1.0, 15.0, 1.0, TRUE/*constrain*/,
-		 NULL, NULL);
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
 
-    gtk_widget_show (table);
-    gtk_widget_show (frame);
+  gtk_widget_show (st.dlg);
 
-    gtk_widget_show (st.dlg);
+  gtk_main ();
+  gdk_flush ();
 
-    gtk_main ();
-    gdk_flush ();
-
-    return pint.run;
+  return pint.run;
 }
 
 /*  Newsprint interface functions  */
-
-static void
-newsprint_close_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-    gtk_main_quit ();
-}
 
 static void
 newsprint_ok_callback (GtkWidget *widget,

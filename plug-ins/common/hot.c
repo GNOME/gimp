@@ -63,14 +63,21 @@
  *	reducing their saturation.  By default, luminance is reduced.
  *
  */
+
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "config.h"
-#include <libgimp/gimp.h>
+
 #include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 #include <plug-ins/megawidget/megawidget.h>
 
 struct Grgb {
@@ -147,14 +154,15 @@ double	compos_lim;            /* composite amplitude limit */
 long	ichroma_lim2;          /* chroma limit squared (scaled integer) */
 int	icompos_lim;           /* composite amplitude limit (scaled integer) */
 
-static void query(void);
-static void run(char *name, int nparam, GParam *param,
-                int *nretvals, GParam **retvals);
+static void query        (void);
+static void run          (char *name, int nparam, GParam *param,
+			  int *nretvals, GParam **retvals);
 
-gint pluginCore(struct piArgs *argp);
-gint pluginCoreIA(struct piArgs *argp);
-static gint hotp(register guint8 r, register guint8 g, register guint8 b);
-static void build_tab(int m);
+gint        pluginCore   (struct piArgs *argp);
+gint        pluginCoreIA (struct piArgs *argp);
+static gint hotp         (register guint8 r, register guint8 g,
+			  register guint8 b);
+static void build_tab    (int m);
 
 /*
  * gc: apply the gamma correction specified for this video standard.
@@ -190,8 +198,10 @@ GPlugInInfo PLUG_IN_INFO = {
 MAIN()
 
 static void
-query(void){
-  static GParamDef args[] = {
+query (void)
+{
+  static GParamDef args[] =
+  {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "The Image" },
     { PARAM_DRAWABLE, "drawable", "The Drawable" },
@@ -206,22 +216,26 @@ query(void){
 
   INIT_I18N();
 
-  gimp_install_procedure("plug_in_hot",
-                         _("Look for hot NTSC or PAL pixels "),
-                         _("hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken."),
-                         "Eric L. Hernes, Alan Wm Paeth",
-                         "Eric L. Hernes",
-                         "1997",
-                         N_("<Image>/Filters/Colors/Hot..."),
-                         "RGB",
-                         PROC_PLUG_IN,
-                         nargs, nrets,
-                         args, rets);
+  gimp_install_procedure ("plug_in_hot",
+			  _("Look for hot NTSC or PAL pixels "),
+			  _("hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken."),
+			  "Eric L. Hernes, Alan Wm Paeth",
+			  "Eric L. Hernes",
+			  "1997",
+			  N_("<Image>/Filters/Colors/Hot..."),
+			  "RGB",
+			  PROC_PLUG_IN,
+			  nargs, nrets,
+			  args, rets);
 }
 
 static void
-run(char *name, int nparam, GParam *param,
-    int *nretvals, GParam **retvals){
+run (char    *name,
+     int      nparam,
+     GParam  *param,
+     int     *nretvals,
+     GParam **retvals)
+{
   static GParam rvals[1];
 
   struct piArgs args;
@@ -239,46 +253,52 @@ run(char *name, int nparam, GParam *param,
 
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
-  switch (param[0].data.d_int32) {
+  switch (param[0].data.d_int32)
+    {
     case RUN_INTERACTIVE:
-    INIT_I18N_UI();
+      INIT_I18N_UI();
       /* XXX: add code here for interactive running */
-      if(args.mode == -1) {
-         args.mode = mode_ntsc;
-         args.action =   act_lredux;
-         args.new_layerp =   1;
-      }
-      
-      if (pluginCoreIA(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
+      if (args.mode == -1)
+	{
+	  args.mode = mode_ntsc;
+	  args.action =   act_lredux;
+	  args.new_layerp =   1;
+	}
+
+      if (pluginCoreIA(&args)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
       gimp_set_data("plug_in_hot", &args, sizeof(struct piArgs));
       
     break;
 
     case RUN_NONINTERACTIVE:
-    INIT_I18N();
+      INIT_I18N();
       /* XXX: add code here for non-interactive running */
-      if (nparam != 6) {
-        rvals[0].data.d_status = STATUS_CALLING_ERROR;
-        break;
-      }
+      if (nparam != 6)
+	{
+	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  break;
+	}
       args.mode = param[3].data.d_int32;
       args.action = param[4].data.d_int32;
       args.new_layerp = param[5].data.d_int32;
 
-      if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-        break;
-      }
+      if (pluginCore(&args)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  break;
+	}
     break;
 
     case RUN_WITH_LAST_VALS:
-    INIT_I18N();
+      INIT_I18N();
       /* XXX: add code here for last-values running */
-      if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
+      if (pluginCore(&args)==-1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
     break;
 
   }
@@ -286,7 +306,8 @@ run(char *name, int nparam, GParam *param,
 }
 
 gint
-pluginCore(struct piArgs *argp) {
+pluginCore (struct piArgs *argp)
+{
   GDrawable *drw, *ndrw=NULL;
   GPixelRgn srcPr, dstPr;
   gint retval = 0;
@@ -308,36 +329,41 @@ pluginCore(struct piArgs *argp) {
   width = drw->width;
   height = drw->height;
   Bpp = drw->bpp;
-  if(argp->new_layerp) {
-    char name[40];
-    char *mode_names[] = {
-      "ntsc",
-      "pal",
-    };
-    char *action_names[] = {
-      "lum redux",
-      "sat redux",
-      "flag",
-    };
+  if (argp->new_layerp)
+    {
+      char name[40];
+      char *mode_names[] = {
+	"ntsc",
+	"pal",
+      };
+      char *action_names[] = {
+	"lum redux",
+	"sat redux",
+	"flag",
+      };
       
-    sprintf(name, "hot mask (%s, %s)", mode_names[argp->mode],
-            action_names[argp->action]);
+      g_snprintf (name, sizeof (name), "hot mask (%s, %s)",
+		  mode_names[argp->mode],
+		  action_names[argp->action]);
 	     
-    nl=gimp_layer_new(argp->image, name, width, height,
-                      RGBA_IMAGE, (gdouble)100, NORMAL_MODE);
-    ndrw = gimp_drawable_get(nl);
-    gimp_drawable_fill(nl, TRANS_IMAGE_FILL);
-    gimp_image_add_layer(argp->image, nl, 0);
-  }
+      nl = gimp_layer_new (argp->image, name, width, height,
+			   RGBA_IMAGE, (gdouble)100, NORMAL_MODE);
+      ndrw = gimp_drawable_get (nl);
+      gimp_drawable_fill (nl, TRANS_IMAGE_FILL);
+      gimp_image_add_layer (argp->image, nl, 0);
+    }
 
   src = (guchar*)malloc(width*height*Bpp);
   dst = (guchar*)malloc(width*height*4);
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
-  if (argp->new_layerp) {
-    gimp_pixel_rgn_init (&dstPr, ndrw, 0, 0, width, height, FALSE, FALSE);
-  } else {
-    gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
-  }
+  if (argp->new_layerp)
+    {
+      gimp_pixel_rgn_init (&dstPr, ndrw, 0, 0, width, height, FALSE, FALSE);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
+    }
 
   gimp_pixel_rgn_get_rect(&srcPr, src, 0, 0, width, height);
 
@@ -349,211 +375,262 @@ pluginCore(struct piArgs *argp) {
   gimp_progress_init( _("Hot"));
   prog_interval=height/10;
   
-  for(y=0;y<height;y++) {
-    if (y % prog_interval == 0) gimp_progress_update((double)y/(double)height);
-    for(x=0;x<width;x++) {
-      if (hotp(r=*(s+0),g=*(s+1),b=*(s+2))) {
-         if (argp->action == act_flag) {
-            for(i=0;i<3;i++)
-               *d++=0;
-            s+=3;
-            if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
-         } else {
-                /*
-                 * Optimization: cache the last-computed hot pixel.
-                 */
-            if (r == prev_r && g == prev_g && b == prev_b) {
-               *d++ = new_r;
-               *d++ = new_g;
-               *d++ = new_b;
-               s+=3;
-               if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
-            } else {
-               
-               Y = tab[0][0][r] + tab[0][1][g] + tab[0][2][b];
-               I = tab[1][0][r] + tab[1][1][g] + tab[1][2][b];
-               Q = tab[2][0][r] + tab[2][1][g] + tab[2][2][b];
-               
-               prev_r = r;
-               prev_g = g;
-               prev_b = b;
-                   /*
-                    * Get Y and chroma amplitudes in floating point.
-                    *
-                    * If your C library doesn't have hypot(), just use
-                    * hypot(a,b) = sqrt(a*a, b*b);
-                    *
-                    * Then extract linear (un-gamma-corrected)
-                    * floating-point pixel RGB values.
-                    */
-               fy = (double)Y / (double)SCALE;
-               fc = hypot((double)I / (double)SCALE,
-                          (double)Q / (double)SCALE);
-               
-               pr = (double)pix_decode(r);
-               pg = (double)pix_decode(g);
-               pb = (double)pix_decode(b);
-               
-                   /*
-                    * Reducing overall pixel intensity by scaling R,
-                    * G, and B reduces Y, I, and Q by the same factor.
-                    * This changes luminance but not saturation, since
-                    * saturation is determined by the chroma/luminance
-                    * ratio.
-                    *
-                    * On the other hand, by linearly interpolating
-                    * between the original pixel value and a grey
-                    * pixel with the same luminance (R=G=B=Y), we
-                    * change saturation without affecting luminance.
-                    */
-               if(argp->action == act_lredux) {
-                      /*
-                       * Calculate a scale factor that will bring the pixel
-                       * within both chroma and composite limits, if we scale
-                       * luminance and chroma simultaneously.
-                       *
-                       * The calculated chrominance reduction applies
-                       * to the gamma-corrected RGB values that are
-                       * the input to the RGB-to-YIQ operation.
-                       * Multiplying the original un-gamma-corrected
-                       * pixel values by the scaling factor raised to
-                       * the "gamma" power is equivalent, and avoids
-                       * calling gc() and inv_gc() three times each.  */
-                  scale = chroma_lim / fc;
-                  t = compos_lim / (fy + fc);
-                  if (t < scale)
-                     scale = t;
-                  scale = pow(scale, mode[argp->mode].gamma);
-                  
-                  
-                  r = (guint8)pix_encode(scale * pr);
-                  g = (guint8)pix_encode(scale * pg);
-                  b = (guint8)pix_encode(scale * pb);
-                  
-               } else { /* act_sredux hopefully */
-                      /*
-                       * Calculate a scale factor that will bring the
-                       * pixel within both chroma and composite
-                       * limits, if we scale chroma while leaving
-                       * luminance unchanged.
-                       *
-                       * We have to interpolate gamma-corrected RGB
-                       * values, so we must convert from linear to
-                       * gamma-corrected before interpolation and then
-                       * back to linear afterwards.
-                       */
-                  scale = chroma_lim / fc;
-                  t = (compos_lim - fy) / fc;
-                  if (t < scale)
-                     scale = t;
-                  
-                  pr = gc(pr,argp->mode);
-                  pg = gc(pg,argp->mode);
-                  pb = gc(pb,argp->mode);
-                  py = pr * mode[argp->mode].code[0][0] + pg * 
-                     mode[argp->mode].code[0][1] + pb *
-                     mode[argp->mode].code[0][2];
-                  r = pix_encode(inv_gc(py + scale * (pr - py), argp->mode));
-                  g = pix_encode(inv_gc(py + scale * (pg - py), argp->mode));
-                  b = pix_encode(inv_gc(py + scale * (pb - py), argp->mode));
-               }
-               *d++ = new_r = r;
-               *d++ = new_g = g;
-               *d++ = new_b = b;
-               s+=3;
-               if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
-            }
-         }
-      } else {
-         if (!argp->new_layerp) {
-            for(i=0;i<Bpp;i++)
-               *d++=*s++;
-         } else {
-            s+=Bpp;
-            d+=4;
-         }
-      }
+  for(y=0;y<height;y++)
+    {
+      if (y % prog_interval == 0) gimp_progress_update((double)y/(double)height);
+      for(x=0;x<width;x++)
+	{
+	  if (hotp(r=*(s+0),g=*(s+1),b=*(s+2)))
+	    {
+	      if (argp->action == act_flag)
+		{
+		  for(i=0;i<3;i++)
+		    *d++=0;
+		  s+=3;
+		  if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
+		}
+	      else
+		{
+		  /*
+		   * Optimization: cache the last-computed hot pixel.
+		   */
+		  if (r == prev_r && g == prev_g && b == prev_b)
+		    {
+		      *d++ = new_r;
+		      *d++ = new_g;
+		      *d++ = new_b;
+		      s+=3;
+		      if (Bpp==4)
+			*d++=*s++;
+		      else if (argp->new_layerp)
+			*d++=255;
+		    }
+		  else
+		    {
+		      Y = tab[0][0][r] + tab[0][1][g] + tab[0][2][b];
+		      I = tab[1][0][r] + tab[1][1][g] + tab[1][2][b];
+		      Q = tab[2][0][r] + tab[2][1][g] + tab[2][2][b];
+
+		      prev_r = r;
+		      prev_g = g;
+		      prev_b = b;
+		      /*
+		       * Get Y and chroma amplitudes in floating point.
+		       *
+		       * If your C library doesn't have hypot(), just use
+		       * hypot(a,b) = sqrt(a*a, b*b);
+		       *
+		       * Then extract linear (un-gamma-corrected)
+		       * floating-point pixel RGB values.
+		       */
+		      fy = (double)Y / (double)SCALE;
+		      fc = hypot((double)I / (double)SCALE,
+				 (double)Q / (double)SCALE);
+
+		      pr = (double)pix_decode(r);
+		      pg = (double)pix_decode(g);
+		      pb = (double)pix_decode(b);
+
+		      /*
+		       * Reducing overall pixel intensity by scaling R,
+		       * G, and B reduces Y, I, and Q by the same factor.
+		       * This changes luminance but not saturation, since
+		       * saturation is determined by the chroma/luminance
+		       * ratio.
+		       *
+		       * On the other hand, by linearly interpolating
+		       * between the original pixel value and a grey
+		       * pixel with the same luminance (R=G=B=Y), we
+		       * change saturation without affecting luminance.
+		       */
+		      if(argp->action == act_lredux)
+			{
+			  /*
+			   * Calculate a scale factor that will bring the pixel
+			   * within both chroma and composite limits, if we scale
+			   * luminance and chroma simultaneously.
+			   *
+			   * The calculated chrominance reduction applies
+			   * to the gamma-corrected RGB values that are
+			   * the input to the RGB-to-YIQ operation.
+			   * Multiplying the original un-gamma-corrected
+			   * pixel values by the scaling factor raised to
+			   * the "gamma" power is equivalent, and avoids
+			   * calling gc() and inv_gc() three times each.  */
+			  scale = chroma_lim / fc;
+			  t = compos_lim / (fy + fc);
+			  if (t < scale)
+			    scale = t;
+			  scale = pow(scale, mode[argp->mode].gamma);
+
+			  r = (guint8)pix_encode(scale * pr);
+			  g = (guint8)pix_encode(scale * pg);
+			  b = (guint8)pix_encode(scale * pb);
+
+			}
+		      else
+			{ /* act_sredux hopefully */
+			  /*
+			   * Calculate a scale factor that will bring the
+			   * pixel within both chroma and composite
+			   * limits, if we scale chroma while leaving
+			   * luminance unchanged.
+			   *
+			   * We have to interpolate gamma-corrected RGB
+			   * values, so we must convert from linear to
+			   * gamma-corrected before interpolation and then
+			   * back to linear afterwards.
+			   */
+			  scale = chroma_lim / fc;
+			  t = (compos_lim - fy) / fc;
+			  if (t < scale)
+			    scale = t;
+
+			  pr = gc(pr,argp->mode);
+			  pg = gc(pg,argp->mode);
+			  pb = gc(pb,argp->mode);
+			  py = pr * mode[argp->mode].code[0][0] + pg * 
+			    mode[argp->mode].code[0][1] + pb *
+			    mode[argp->mode].code[0][2];
+			  r = pix_encode(inv_gc(py + scale * (pr - py), argp->mode));
+			  g = pix_encode(inv_gc(py + scale * (pg - py), argp->mode));
+			  b = pix_encode(inv_gc(py + scale * (pb - py), argp->mode));
+			}
+		      *d++ = new_r = r;
+		      *d++ = new_g = g;
+		      *d++ = new_b = b;
+		      s+=3;
+		      if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
+		    }
+		}
+	    }
+	  else
+	    {
+	      if (!argp->new_layerp)
+		{
+		  for(i=0;i<Bpp;i++)
+		    *d++=*s++;
+		} 
+	      else
+		{
+		  s+=Bpp;
+		  d+=4;
+		}
+	    }
+	}
     }
-  }
   gimp_pixel_rgn_set_rect(&dstPr, dst, 0, 0, width, height);
-  
+
   free(src);
   free(dst);
-  
-  if(argp->new_layerp) {
-     gimp_drawable_flush(ndrw);
-     gimp_drawable_update(nl, 0, 0, width, height);
-  } else {
-     gimp_drawable_flush(drw);
-     gimp_drawable_merge_shadow (drw->id, TRUE);
-     gimp_drawable_update(drw->id, 0, 0, width, height);
-  }
-  
+
+  if(argp->new_layerp)
+    {
+      gimp_drawable_flush(ndrw);
+      gimp_drawable_update(nl, 0, 0, width, height);
+    }
+  else
+    {
+      gimp_drawable_flush(drw);
+      gimp_drawable_merge_shadow (drw->id, TRUE);
+      gimp_drawable_update(drw->id, 0, 0, width, height);
+    }
+
   gimp_displays_flush();
   
   return retval;
 }
 
+gboolean run_flag = FALSE;
+
+static void
+hot_ok_callback (GtkWidget *widget,
+		 gpointer   data)
+{
+  run_flag = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
 gint
-pluginCoreIA(struct piArgs *argp) {
+pluginCoreIA (struct piArgs *argp)
+{
   GtkWidget *dlg;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  gint runp;
-  struct mwRadioGroup modes[] = {
-     { "NTSC", 1 },
-     { "PAL", 0 },
-     { NULL, 0 }
-  };
-  struct mwRadioGroup actions[] = {
-     { N_("Reduce Luminance"), 0 },
-     { N_("Reduce Saturation"), 0 },
-     { N_("Blacken (flag)"), 0 },
-     { NULL, 0}
-  };
   gchar **argv;
-  gint argc;
-  gint i;
+  gint    argc;
+  gint    i;
+
+  struct mwRadioGroup modes[] =
+  {
+    { "NTSC", 1 },
+    { "PAL", 0 },
+    { NULL, 0 }
+  };
+  struct mwRadioGroup actions[] =
+  {
+    { N_("Reduce Luminance"), 0 },
+    { N_("Reduce Saturation"), 0 },
+    { N_("Blacken (flag)"), 0 },
+    { NULL, 0}
+  };
 
   for (i = 0; actions[i].name != NULL; i++)
      actions[i].name = gettext(actions[i].name);
 
   /* Set args */
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("hot");
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("hot");
+
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc());
 
   actions[argp->action].var = 1;
 
-  dlg = mw_app_new("plug_in_hot", _("Hot"), &runp);
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(hbox), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show(hbox);
+  dlg = gimp_dialog_new (_("Hot"), "hot",
+			 gimp_plugin_help_func, "filters/hot.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  vbox = gtk_vbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show(vbox);
+			 _("OK"), hot_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  mw_toggle_button_new(vbox, NULL, _("Create New Layer"), &argp->new_layerp);
-  mw_radio_group_new(vbox, _("Mode"), modes);
+			 NULL);
 
-  mw_radio_group_new(hbox, _("Action"), actions);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-  gtk_widget_show(dlg);
-  gtk_main();
-  gdk_flush();
+  hbox = gtk_hbox_new (FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-  argp->mode = mw_radio_result(modes);
-  argp->action = mw_radio_result(actions);
+  vbox = gtk_vbox_new (FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  mw_toggle_button_new (vbox, NULL, _("Create New Layer"), &argp->new_layerp);
+  mw_radio_group_new (vbox, _("Mode"), modes);
+
+  mw_radio_group_new (hbox, _("Action"), actions);
+
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
+
+  argp->mode = mw_radio_result (modes);
+  argp->action = mw_radio_result (actions);
   
-  if (runp) {
-     return pluginCore(argp);
-  } else {
-     return -1;
-  }
+  if (run_flag)
+    return pluginCore (argp);
+  else
+    return -1;
 }
 
 /*
@@ -577,22 +654,24 @@ pluginCoreIA(struct piArgs *argp) {
  * Chroma is always scaled to remain consistent with Y.
  */
 static void
-build_tab(int m) {
+build_tab (int m)
+{
   register double f;
   register int pv;
 
-  for (pv = 0; pv <= MAXPIX; pv++) {
-    f = (double)SCALE * (double)gc((double)pix_decode(pv),m);
-    tab[0][0][pv] = (int)(f * mode[m].code[0][0] + 0.5);
-    tab[0][1][pv] = (int)(f * mode[m].code[0][1] + 0.5);
-    tab[0][2][pv] = (int)(f * mode[m].code[0][2] + 0.5);
-    tab[1][0][pv] = (int)(f * mode[m].code[1][0] + 0.5);
-    tab[1][1][pv] = (int)(f * mode[m].code[1][1] + 0.5);
-    tab[1][2][pv] = (int)(f * mode[m].code[1][2] + 0.5);
-    tab[2][0][pv] = (int)(f * mode[m].code[2][0] + 0.5);
-    tab[2][1][pv] = (int)(f * mode[m].code[2][1] + 0.5);
-    tab[2][2][pv] = (int)(f * mode[m].code[2][2] + 0.5);
-  }
+  for (pv = 0; pv <= MAXPIX; pv++)
+    {
+      f = (double)SCALE * (double)gc((double)pix_decode(pv),m);
+      tab[0][0][pv] = (int)(f * mode[m].code[0][0] + 0.5);
+      tab[0][1][pv] = (int)(f * mode[m].code[0][1] + 0.5);
+      tab[0][2][pv] = (int)(f * mode[m].code[0][2] + 0.5);
+      tab[1][0][pv] = (int)(f * mode[m].code[1][0] + 0.5);
+      tab[1][1][pv] = (int)(f * mode[m].code[1][1] + 0.5);
+      tab[1][2][pv] = (int)(f * mode[m].code[1][2] + 0.5);
+      tab[2][0][pv] = (int)(f * mode[m].code[2][0] + 0.5);
+      tab[2][1][pv] = (int)(f * mode[m].code[2][1] + 0.5);
+      tab[2][2][pv] = (int)(f * mode[m].code[2][2] + 0.5);
+    }
 
   chroma_lim = (double)CHROMA_LIM / (100.0 - mode[m].pedestal);
   compos_lim = ((double)COMPOS_LIM - mode[m].pedestal) /
@@ -604,7 +683,10 @@ build_tab(int m) {
 }
 
 static int
-hotp(register guint8 r, register guint8 g, register guint8 b) {
+hotp (register guint8 r,
+      register guint8 g,
+      register guint8 b)
+{
   register int	y, i, q;
   register long	y2, c2;
 
@@ -652,19 +734,12 @@ hotp(register guint8 r, register guint8 g, register guint8 b) {
   /*  fprintf(stderr, "hotp: c2: %d; ichroma_lim2: %d; y2: %d; ",
 	  c2, ichroma_lim2, y2);*/
   
-  if (c2 <= ichroma_lim2 && c2 <= y2) {	/* no problems */
-    /*    fprintf(stderr, "nope\n");*/
-    return 0;
-  }
+  if (c2 <= ichroma_lim2 && c2 <= y2)
+    {	/* no problems */
+      /*    fprintf(stderr, "nope\n");*/
+      return 0;
+    }
 
   /*  fprintf(stderr, "yup\n");*/
   return 1;
 }
-
-/*
- * Local Variables:
- * mode: C
- * End:
- */
-
-/* end of file: hot/hot.c */

@@ -632,6 +632,7 @@ hot_SOURCES = \
 
 hot_LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -649,6 +650,7 @@ illusion_SOURCES = \
 	illusion.c
 
 illusion_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -657,6 +659,7 @@ iwarp_SOURCES = \
 	iwarp.c
 
 iwarp_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -665,6 +668,7 @@ jigsaw_SOURCES = \
 	jigsaw.c
 
 jigsaw_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -700,6 +704,7 @@ mail_SOURCES = \
 	mail.c
 
 mail_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -717,6 +722,7 @@ max_rgb_SOURCES = \
 	max_rgb.c
 
 max_rgb_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -725,6 +731,7 @@ mblur_SOURCES = \
 	mblur.c
 
 mblur_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -742,6 +749,7 @@ newsprint_SOURCES = \
 	newsprint.c
 
 newsprint_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -751,6 +759,7 @@ nlfilt_SOURCES = \
 
 nlfilt_LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -759,6 +768,7 @@ noisify_SOURCES = \
 	noisify.c
 
 noisify_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -784,6 +794,7 @@ oilify_SOURCES = \
 	oilify.c
 
 oilify_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

@@ -28,18 +28,22 @@
 
 /* add any necessary includes  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
-#include <gtk/gtk.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 #include <plug-ins/megawidget/megawidget.h>
 
 static mw_preview_t nlfilt_do_preview;
@@ -254,23 +258,36 @@ gint pluginCore(struct piArgs *argp) {
   return 0;
 }
 
-gint pluginCoreIA(struct piArgs *argp) {
-  gint retval=-1; /* default to error return */
+gboolean run_flag = FALSE;
+
+static void
+nlfilt_ok_callback (GtkWidget *widget,
+		    gpointer   data)
+{
+  run_flag = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+gint
+pluginCoreIA (struct piArgs *argp)
+{
+  gint retval = -1; /* default to error return */
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *preview;
-  gint runp;
-  gint i;
+  gchar **argv;
+  gint    argc;
+  gint    i;
+
   struct mwRadioGroup filter[] = {
      { N_("Alpha Trimmed Mean"), 0 },
      { N_("Optimal Estimation"), 0 },
      { N_("Edge Enhancement"), 0 },
      { NULL, 0 }
   };
-  gchar **argv;
-  gint argc;
 
   /* Set args */
   argc = 1;
@@ -283,7 +300,21 @@ gint pluginCoreIA(struct piArgs *argp) {
   for (i = 0; filter[i].name != NULL; i++)
     filter[i].name = gettext(filter[i].name);
 
-  dlg = mw_app_new("plug_in_nlfilt", _("NL Filter"), &runp);
+  dlg = gimp_dialog_new (_("NL Filter"), "nlfilt",
+			 gimp_plugin_help_func, "filters/nlfilt.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), nlfilt_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_container_border_width(GTK_CONTAINER(hbox), 5);
@@ -315,23 +346,27 @@ gint pluginCoreIA(struct piArgs *argp) {
 
   gtk_widget_show(table);
   gtk_widget_show(dlg);
-  gtk_main();
-  gdk_flush();
+
+  gtk_main ();
+  gdk_flush ();
 
   argp->filter = mw_radio_result(filter);
   
-  if(runp){
+  if (run_flag)
+    {
 #if 0
-    fprintf(stderr, "running:\n");
-    fprintf(stderr, "\t(image %d)\n", argp->img);
-    fprintf(stderr, "\t(drawable %d)\n", argp->drw);
-    fprintf(stderr, "\t(alpha %f)\n", argp->alpha);
-    fprintf(stderr, "\t(radius %f)\n", argp->radius);
+      fprintf (stderr, "running:\n");
+      fprintf (stderr, "\t(image %d)\n", argp->img);
+      fprintf (stderr, "\t(drawable %d)\n", argp->drw);
+      fprintf (stderr, "\t(alpha %f)\n", argp->alpha);
+      fprintf (stderr, "\t(radius %f)\n", argp->radius);
 #endif
-    return pluginCore(argp);
-  } else {
-    return retval;
-  }
+      return pluginCore (argp);
+    }
+  else
+    {
+      return retval;
+    }
 }
 
 static void
@@ -1040,14 +1075,3 @@ rectang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
       return 0.0;
    return (rx1 - rx0) * (ry1 - ry0);
 }
-
-/*
- * Local Variables:
- * mode: C
- * c-auto-newline: t
- * c-indent-level: 3
- *
- * End:
- */
-
-/* end of file: nlfilt/nlfilt.c */

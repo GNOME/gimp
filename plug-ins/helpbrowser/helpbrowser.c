@@ -791,7 +791,7 @@ open_browser_dialog (gchar *locale,
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
   gimp_help_connect_help_accel (window, gimp_plugin_help_func,
-				"filters/helpbrowser.html");
+				"dialogs/help.html");
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), vbox);

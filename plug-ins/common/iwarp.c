@@ -43,8 +43,11 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #define MAX_PREVIEW_WIDTH 256
@@ -99,8 +102,6 @@ static gint      iwarp_dialog();
 static void      iwarp();
 static void      iwarp_frame();
 
-static void      iwarp_close_callback  (GtkWidget *widget,
-					 gpointer   data);
 static void      iwarp_ok_callback     (GtkWidget *widget,
 					 gpointer   data);
 static gint      iwarp_motion_callback (GtkWidget *widget,
@@ -1042,68 +1043,49 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
 
 
 static gint
-iwarp_dialog()
+iwarp_dialog (void)
 {
  GtkWidget *dlg;
  GtkWidget *pframe;
  GtkWidget *top_table;
  GtkWidget *notebook;
- GtkWidget *hbbox;
- GtkWidget *button;
- guchar *color_cube; 
- gint argc;
- gchar** argv;
-  
- 
- argc = 1;
- argv = g_new(gchar *, 1);
- argv[0] = g_strdup("iwarp");
+ guchar  *color_cube; 
+ gint     argc;
+ gchar  **argv;
 
- gtk_init(&argc,&argv);
- gtk_rc_parse(gimp_gtkrc());
+ argc    = 1;
+ argv    = g_new (gchar *, 1);
+ argv[0] = g_strdup ("iwarp");
+
+ gtk_init (&argc, &argv);
+ gtk_rc_parse (gimp_gtkrc ());
  gtk_preview_set_gamma (gimp_gamma ());
  gtk_preview_set_install_cmap (gimp_install_cmap ());
  color_cube = gimp_color_cube ();
  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
+			     color_cube[2], color_cube[3]);
 
  gtk_widget_set_default_visual (gtk_preview_get_visual ());
  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
- 
- iwarp_init();
- 
- dlg = gtk_dialog_new ();
- gtk_window_set_title (GTK_WINDOW (dlg), _("IWarp"));
- gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
- gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) iwarp_close_callback,
-		      NULL);
- 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) iwarp_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-  
+ iwarp_init ();
+ 
+ dlg = gimp_dialog_new (_("IWarp"), "iwarp",
+			gimp_plugin_help_func, "filters/iwarp.html",
+			GTK_WIN_POS_MOUSE,
+			FALSE, TRUE, FALSE,
+
+			_("OK"), iwarp_ok_callback,
+			NULL, NULL, NULL, TRUE, FALSE,
+			_("Cancel"), gtk_widget_destroy,
+			NULL, 1, NULL, FALSE, TRUE,
+
+			NULL);
+
+ gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		     GTK_SIGNAL_FUNC (gtk_main_quit),
+		     NULL);
+ 
  pframe = gtk_frame_new (NULL);
  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
  gtk_widget_show (pframe); 
@@ -1350,14 +1332,6 @@ iwarp_move(int x, int y,int xx, int yy)
  }
 }
   
-
-
-static void
-iwarp_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 iwarp_ok_callback (GtkWidget *widget,

@@ -38,13 +38,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimp/stdplugins-intl.h"
 
 /************/
 /* Typedefs */
@@ -920,16 +921,6 @@ void ok_button_clicked(GtkWidget *widget, gpointer client_data)
   gtk_main_quit();
 }
 
-void cancel_button_clicked(GtkWidget *widget, gpointer client_data)
-{
-  gtk_main_quit();
-}
-
-void dialog_destroy(GtkWidget *widget, GdkEvent *ev, gpointer client_data)
-{
-  gtk_main_quit();
-}
-
 void effect_channel_callback(GtkWidget *widget,gpointer client_data)
 {
   if (GTK_TOGGLE_BUTTON(widget)->active)
@@ -977,20 +968,24 @@ void create_main_dialog(void)
   GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *menu;
-  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *scale;
   GtkObject *scale_data;
   GSList *group=NULL;
   
   /* Dialog */
-    
-  dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), _("Van Gogh (LIC)"));
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
-    (GtkSignalFunc)dialog_destroy, (gpointer)dialog);
+
+  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
+			    gimp_plugin_help_func, "filters/lic.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    _("OK"), ok_button_clicked,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_main_quit,
+			    NULL, NULL, NULL, FALSE, TRUE,
+
+			    NULL);
 
   hbox = gtk_hbox_new(FALSE,5);
   gtk_container_border_width(GTK_CONTAINER(hbox),5);
@@ -1239,31 +1234,6 @@ void create_main_dialog(void)
 
   gtk_widget_show(vbox);
   gtk_widget_show(hbox);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_button_clicked,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) cancel_button_clicked,
-		      (gpointer)dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* Done */
     

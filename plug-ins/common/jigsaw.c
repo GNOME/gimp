@@ -22,12 +22,16 @@
  * Version: 1.0.0
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 typedef enum {BEZIER_1, BEZIER_2} style_t;
@@ -40,7 +44,6 @@ static void run(gchar *name, gint nparams, GParam *param,
 static gint jigsaw(void);
 static void run_callback(GtkWidget *widget, gpointer data);
 static void dialog_box(void);
-static void dialog_close_callback(GtkWidget *widget, gpointer data);
 static void entry_callback(GtkWidget *widget, gpointer data);
 static void entry_double_callback(GtkWidget *widget, gpointer data);
 static void radio_button_primitive_callback(GtkWidget *widget, gpointer data);
@@ -2252,19 +2255,15 @@ check_config(gint width, gint height)
     }
   return;
 }  /*check_config */
-
-/*****/
   
 /********************************************************
   GUI
 ********************************************************/
 
 static void
-dialog_box(void)
+dialog_box (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *rbutton;
   GtkWidget *cbutton;
   GSList *list;
@@ -2275,283 +2274,263 @@ dialog_box(void)
   GtkWidget *table;
   GtkWidget *scale;
   GtkObject *adjustment;
-  GtkTooltips *tooltips;
-  GdkColor tips_fg, tips_bg;
 
   gchar buffer[12];
 
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup(PLUG_IN_NAME);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup (PLUG_IN_NAME);
 
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
   /* Create the dialog box */
   
-  dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), _("Jigsaw"));
-  gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-		     (GtkSignalFunc) dialog_close_callback, NULL);
+  dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
+			 gimp_plugin_help_func, "filters/jigsaw.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) run_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+			 _("OK"), run_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /* init tooltips */
-  tooltips = gtk_tooltips_new();
-  tips_fg.red = 0;
-  tips_fg.green = 0;
-  tips_fg.blue = 0;
-  gdk_color_alloc(gtk_widget_get_colormap(dlg), &tips_fg);
-  tips_bg.red = 61669;
-  tips_bg.green = 59113;
-  tips_bg.blue = 35979;
-  gdk_color_alloc(gtk_widget_get_colormap(dlg), &tips_bg);
-  gtk_tooltips_set_colors(tooltips, &tips_bg, &tips_fg);
+  gimp_help_init ();
+
   if (globals.tooltips == 0)
     {
-      gtk_tooltips_disable(tooltips);
+      gimp_help_disable_tooltips ();
     }
-  /* paramters frame */
-  frame = gtk_frame_new( _("Number of Tiles"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 10);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new(3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER(table), 10);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  /* paramters frame */
+  frame = gtk_frame_new (_("Number of Tiles"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* xtiles */
-  label = gtk_label_new( _("Horizontal:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Horizontal:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
+  gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new(config.x, MIN_XTILES, MAX_XTILES,
-				  1.0, 1.0, 0);
-  gtk_signal_connect(GTK_OBJECT(adjustment), "value_changed",
-		     (GtkSignalFunc) adjustment_callback,
-		     &config.x);
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, _("Number of pieces going across"), NULL);
+  adjustment = gtk_adjustment_new (config.x, MIN_XTILES, MAX_XTILES,
+				   1.0, 1.0, 0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (adjustment_callback),
+		      &config.x);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale, _("Number of pieces going across"), NULL);
   
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
-  gtk_object_set_user_data(GTK_OBJECT(adjustment), entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%i", config.x);
-  gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     GTK_SIGNAL_FUNC(entry_callback),
-		     (gpointer) &config.x);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, _("Number of pieces going across"), NULL);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
+  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf (buffer, sizeof (buffer), "%i", config.x);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      (gpointer) &config.x);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (entry);
+  gimp_help_set_help_data (entry, _("Number of pieces going across"), NULL);
 
   /* ytiles */
-  label = gtk_label_new( _("Vertical:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Vertical:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
+  gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new(config.y, MIN_YTILES, MAX_YTILES,
-				  1.0, 1.0, 0 );
-  gtk_signal_connect(GTK_OBJECT(adjustment), "value_changed",
-		     (GtkSignalFunc) adjustment_callback,
-		     &config.y);
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, _("Number of pieces going down"), NULL);
-  
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
-  gtk_object_set_user_data(GTK_OBJECT(adjustment), entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%i", config.y);
-  gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     GTK_SIGNAL_FUNC(entry_callback),
-		     (gpointer) &config.y);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, _("Number of pieces going down"), NULL);
+  adjustment = gtk_adjustment_new (config.y, MIN_YTILES, MAX_YTILES,
+				   1.0, 1.0, 0 );
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (adjustment_callback),
+		      &config.y);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale, _("Number of pieces going down"), NULL);
 
-  gtk_widget_show(table);
-  gtk_widget_show(frame);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
+  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf (buffer, sizeof (buffer), "%i", config.y);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      (gpointer) &config.y);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (entry);
+  gimp_help_set_help_data (entry, _("Number of pieces going down"), NULL);
+
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
 
   /* frame for bevel blending */
 
-  frame = gtk_frame_new( _("Bevel Edges"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 10);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
+  frame = gtk_frame_new (_("Bevel Edges"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new(3, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 10);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 10);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* number of blending lines */
-  label = gtk_label_new( _("Bevel width:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Bevel width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
+  gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new(config.blend_lines, MIN_BLEND_LINES,
-				  MAX_BLEND_LINES, 1.0, 1.0, 0);
-  gtk_signal_connect(GTK_OBJECT(adjustment), "value_changed",
-		     (GtkSignalFunc) adjustment_callback,
-		     &config.blend_lines);
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, _("Degree of slope of each piece's edge"), NULL);
+  adjustment = gtk_adjustment_new (config.blend_lines, MIN_BLEND_LINES,
+				   MAX_BLEND_LINES, 1.0, 1.0, 0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (adjustment_callback),
+		      &config.blend_lines);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale, _("Degree of slope of each piece's edge"),
+			   NULL);
 
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
-  gtk_object_set_user_data(GTK_OBJECT(adjustment), entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%i", config.blend_lines);
-  gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     GTK_SIGNAL_FUNC(entry_callback),
-		     (gpointer) &config.blend_lines);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, _("Degree of slope of each piece's edge"), NULL);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
+  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf (buffer, sizeof (buffer), "%i", config.blend_lines);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      (gpointer) &config.blend_lines);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (entry);
+  gimp_help_set_help_data (entry, _("Degree of slope of each piece's edge"),
+			   NULL);
 
   /* blending amount */
-  label = gtk_label_new( _("Highlight:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Highlight:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
+  gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new(config.blend_amount, MIN_BLEND_AMOUNT,
-				  MAX_BLEND_AMOUNT, 1.0, 0.05, 0.0);
-  gtk_signal_connect(GTK_OBJECT(adjustment), "value_changed",
-		     (GtkSignalFunc) adjustment_double_callback,
-		     &config.blend_amount);
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, _("The amount of highlighting on the edges of each piece"), NULL);
+  adjustment = gtk_adjustment_new (config.blend_amount, MIN_BLEND_AMOUNT,
+				   MAX_BLEND_AMOUNT, 1.0, 0.05, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (adjustment_double_callback),
+		      &config.blend_amount);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale, _("The amount of highlighting on the edges "
+				    "of each piece"), NULL);
 
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
-  gtk_object_set_user_data(GTK_OBJECT(adjustment), entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buffer, "%0.2f", config.blend_amount);
-  gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     GTK_SIGNAL_FUNC(entry_double_callback),
-		     (gpointer) &config.blend_amount);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, _("The amount of highlighting on the edges of each piece"), NULL);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
+  gtk_object_set_user_data (GTK_OBJECT (adjustment), entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  g_snprintf (buffer, sizeof (buffer), "%0.2f", config.blend_amount);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_double_callback),
+		      (gpointer) &config.blend_amount);
+  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (entry);
+  gimp_help_set_help_data (entry, _("The amount of highlighting on the edges "
+				    "of each piece"), NULL);
 
-  gtk_widget_show(table);
-  gtk_widget_show(frame);
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
   
   /* frame for primitive radio buttons */
 
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, FALSE, FALSE, 0);
-  
-  frame = gtk_frame_new( _("Jigsaw Style"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 10);
-  gtk_box_pack_start(GTK_BOX(hbox), frame, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
 
-  table = gtk_table_new(2, 1, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 5);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  frame = gtk_frame_new (_("Jigsaw Style"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
 
-  rbutton = gtk_radio_button_new_with_label(NULL, _("Square"));
-  list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
-			      config.style == BEZIER_1 ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
-		     GTK_SIGNAL_FUNC(radio_button_primitive_callback),
-		     (gpointer) BEZIER_1);
-  gtk_table_attach(GTK_TABLE(table), rbutton, 0, 1, 0, 1, GTK_FILL, 0, 10, 0);
-  gtk_widget_show(rbutton);
-  gtk_tooltips_set_tip(tooltips, rbutton, _("Each piece has straight sides"), NULL);
+  table = gtk_table_new (2, 1, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 5);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-  rbutton = gtk_radio_button_new_with_label(list, _("Curved"));
-  list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
-			      config.style == BEZIER_2 ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
-		     GTK_SIGNAL_FUNC(radio_button_primitive_callback),
-		     (gpointer) BEZIER_2);
-  gtk_table_attach(GTK_TABLE(table), rbutton, 1, 2, 0, 1, GTK_FILL, 0, 10, 0);
-  gtk_widget_show(rbutton);
-  gtk_tooltips_set_tip(tooltips, rbutton, _("Each piece has curved sides"), NULL);
+  rbutton = gtk_radio_button_new_with_label (NULL, _("Square"));
+  list = gtk_radio_button_group ((GtkRadioButton *) rbutton);
+  gtk_toggle_button_set_active ((GtkToggleButton *) rbutton,
+				config.style == BEZIER_1 ? TRUE : FALSE);
+  gtk_signal_connect (GTK_OBJECT (rbutton), "toggled",
+		      GTK_SIGNAL_FUNC (radio_button_primitive_callback),
+		      (gpointer) BEZIER_1);
+  gtk_table_attach (GTK_TABLE (table), rbutton, 0, 1, 0, 1, GTK_FILL, 0, 10, 0);
+  gtk_widget_show (rbutton);
+  gimp_help_set_help_data (rbutton, _("Each piece has straight sides"), NULL);
 
-  gtk_widget_show(table);
-  gtk_widget_show(frame);
+  rbutton = gtk_radio_button_new_with_label (list, _("Curved"));
+  list = gtk_radio_button_group ((GtkRadioButton *) rbutton);
+  gtk_toggle_button_set_active ((GtkToggleButton *) rbutton,
+				config.style == BEZIER_2 ? TRUE : FALSE);
+  gtk_signal_connect (GTK_OBJECT (rbutton), "toggled",
+		      GTK_SIGNAL_FUNC (radio_button_primitive_callback),
+		      (gpointer) BEZIER_2);
+  gtk_table_attach (GTK_TABLE (table), rbutton, 1, 2, 0, 1, GTK_FILL, 0, 10, 0);
+  gtk_widget_show (rbutton);
+  gimp_help_set_help_data (rbutton, _("Each piece has curved sides"), NULL);
 
-  table = gtk_table_new(1, 3, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 3);
-  gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, TRUE, 0);
-  
-  cbutton = gtk_check_button_new_with_label( _("Disable Tooltips"));
-  gtk_toggle_button_set_active((GtkToggleButton *) cbutton,
-			      globals.tooltips ? FALSE : TRUE);
-  gtk_signal_connect(GTK_OBJECT(cbutton), "toggled",
-		     (GtkSignalFunc) check_button_callback,
-		     (gpointer) tooltips);
-  gtk_table_attach(GTK_TABLE(table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);
-  gtk_widget_show(cbutton);
-  gtk_tooltips_set_tip(tooltips, cbutton, _("Toggle Tooltips on/off"), NULL);
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
 
-  gtk_widget_show(table);
-  gtk_widget_show(hbox);
-  gtk_widget_show(dlg);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 3);
+  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
 
-  gtk_main();
-  gdk_flush();
+  cbutton = gtk_check_button_new_with_label (_("Disable Tooltips"));
+  gtk_toggle_button_set_active ((GtkToggleButton *) cbutton,
+				globals.tooltips ? FALSE : TRUE);
+  gtk_signal_connect (GTK_OBJECT (cbutton), "toggled",
+		      GTK_SIGNAL_FUNC (check_button_callback),
+		      NULL);
+  gtk_table_attach (GTK_TABLE (table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);
+  gtk_widget_show (cbutton);
+  gimp_help_set_help_data (cbutton, _("Toggle Tooltips on/off"), NULL);
+
+  gtk_widget_show (table);
+  gtk_widget_show (hbox);
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
 
   return;
 }
@@ -2561,26 +2540,17 @@ dialog_box(void)
  ***************************************************/
 
 static void
-run_callback(GtkWidget *widget, gpointer data)
+run_callback (GtkWidget *widget,
+	      gpointer   data)
 {
   globals.dialog_result = 1;
-  gtk_widget_destroy(GTK_WIDGET(data));
-  return;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-/*****/
-
 static void
-dialog_close_callback(GtkWidget *widget, gpointer data)
-{
-  gtk_main_quit();
-  return;
-}  /* dialog_close_callback */
-
-/*****/
-
-static void
-entry_callback(GtkWidget *widget, gpointer data)
+entry_callback (GtkWidget *widget,
+		gpointer   data)
 {
   GtkAdjustment *adjustment;
   gint new_value;
@@ -2600,13 +2570,11 @@ entry_callback(GtkWidget *widget, gpointer data)
 	  gtk_signal_handler_unblock_by_data(GTK_OBJECT(adjustment), data);
 	}
     }
-  return;
-}  /* entry_callback */
-
-/*****/
+}
 
 static void
-radio_button_primitive_callback(GtkWidget *widget, gpointer data)
+radio_button_primitive_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active) /* button just got checked */
     {
@@ -2623,31 +2591,27 @@ radio_button_primitive_callback(GtkWidget *widget, gpointer data)
 	  printf("radio_button_callback: bad data\n");
 	}
     }
-  return;
-}  /* radio_button_primitive_callback */
-
-/*****/
+}
 
 static void
-check_button_callback(GtkWidget *widget, gpointer data)
+check_button_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gtk_tooltips_disable((GtkTooltips *) data);
+      gimp_help_disable_tooltips ();
       globals.tooltips = 0;
     }
   else
     {
-      gtk_tooltips_enable((GtkTooltips *) data);
+      gimp_help_enable_tooltips ();
       globals.tooltips = 1;
     }
-  return;
-}  /* check_button_callback */
-
-/*****/
+}
 
 static void
-adjustment_callback(GtkAdjustment *adjustment, gpointer data)
+adjustment_callback (GtkAdjustment *adjustment,
+		     gpointer       data)
 {
   GtkWidget *entry;
   gchar buffer[50];
@@ -2656,19 +2620,17 @@ adjustment_callback(GtkAdjustment *adjustment, gpointer data)
     {
       *(gint *)data = adjustment->value;
       entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      sprintf(buffer, "%d", *(gint *)data);
+      g_snprintf (buffer, sizeof (buffer), "%d", *(gint *)data);
 
       gtk_signal_handler_block_by_data(GTK_OBJECT(entry), data);
       gtk_entry_set_text(GTK_ENTRY(entry), buffer);
       gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), data);
     }
-  return;
-}  /* adjustment_callback */
-
-/*****/
+}
 
 static void
-adjustment_double_callback(GtkAdjustment *adjustment, gpointer data)
+adjustment_double_callback (GtkAdjustment *adjustment,
+			    gpointer       data)
 {
   GtkWidget *entry;
   gchar buffer[50];
@@ -2677,19 +2639,17 @@ adjustment_double_callback(GtkAdjustment *adjustment, gpointer data)
     {
       *(gdouble *)data = adjustment->value;
       entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      sprintf(buffer, "%0.2f", *(gdouble *)data);
+      g_snprintf (buffer, sizeof (buffer), "%0.2f", *(gdouble *)data);
 
       gtk_signal_handler_block_by_data(GTK_OBJECT(entry), data);
       gtk_entry_set_text(GTK_ENTRY(entry), buffer);
       gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), data);
     }
-  return;
-}  /* adjustment_double_callback */
-
-/*****/
+}
 
 static void
-entry_double_callback(GtkWidget *widget, gpointer data)
+entry_double_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   GtkAdjustment *adjustment;
   gdouble new_value;
@@ -2709,5 +2669,4 @@ entry_double_callback(GtkWidget *widget, gpointer data)
 	  gtk_signal_handler_unblock_by_data(GTK_OBJECT(adjustment), data);
 	}
     }
-  return;
-}  /* entry_double_callback */
+}

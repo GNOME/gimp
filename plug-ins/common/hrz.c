@@ -1,4 +1,3 @@
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * HRZ reading and writing code Copyright (C) 1996 Albert Cahalan
@@ -60,9 +59,11 @@
 #define _O_BINARY 0
 #endif
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local data types
@@ -91,7 +92,6 @@ static gint   save_image  (char   *filename,
 static void   init_gtk    (void);
 static gint   save_dialog (void);
 
-static void   save_close_callback      (GtkWidget *widget, gpointer data);
 static void   save_ok_callback         (GtkWidget *widget,
 					gpointer   data);
 /*
@@ -228,7 +228,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
+	  INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "HRZ", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
@@ -239,7 +239,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
-      INIT_I18N();
+	  INIT_I18N();
 	  break;
 	}
 
@@ -279,11 +279,12 @@ run (char    *name,
 
 /************ load HRZ image row *********************/
 void
-do_hrz_load(void *mapped, GPixelRgn *pixel_rgn)
+do_hrz_load (void      *mapped,
+	     GPixelRgn *pixel_rgn)
 {
-  unsigned char *data, *d;
-  int            x, y;
-  int            start, end, scanlines;
+  guchar *data, *d;
+  int     x, y;
+  int     start, end, scanlines;
 
   data = g_malloc (gimp_tile_height () * 256 * 3);
 
@@ -497,9 +498,8 @@ save_image (char   *filename,
   return TRUE;
 }
 
-
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -514,43 +514,27 @@ init_gtk ()
 
 /*********** Save dialog ************/
 static gint
-save_dialog ()
+save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *hbbox;
   GtkWidget *button;
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as HRZ"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Save as HRZ"), "hrz",
+			 gimp_plugin_help_func, "filters/hrz.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) save_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   gtk_main ();
   gdk_flush ();
@@ -562,17 +546,11 @@ save_dialog ()
 /**********  Save interface functions  **********/
 
 static void
-save_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   psint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

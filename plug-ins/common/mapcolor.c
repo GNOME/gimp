@@ -30,14 +30,18 @@ static char dversio[] =                          "v1.01  21-Nov-99";
 static char ident[] = "@(#) GIMP mapcolor plug-in v1.01  21-Nov-99";
 
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef HAVE_CONFIG_H
@@ -81,8 +85,6 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 static gint   dialog                  (void);
-static void   mapcolor_close_callback (GtkWidget *widget,
-				       gpointer   data);
 static void   mapcolor_ok_callback    (GtkWidget *widget,
 				       gpointer   data);
 static void   add_color_button        (int        csel_index,
@@ -297,62 +299,44 @@ static gint
 dialog ()
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
   GtkWidget *hbox;
-  GtkWidget *button;
   GtkWidget *table;
   guchar *color_cube;
   gchar **argv;
   gint argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Map colors");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("mapcolor");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  gdk_set_use_xshm(gimp_use_xshm());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2],
-                             color_cube[3]);
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Map colors"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Map Colors"), "mapcolor",
+			 gimp_plugin_help_func, "filters/mapcolor.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), mapcolor_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      (GtkSignalFunc) mapcolor_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mapcolor_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
@@ -413,15 +397,6 @@ add_color_button (int csel_index,
  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
  gtk_widget_show (button);
  gtk_widget_show (hbox);
-}
-
-
-static void
-mapcolor_close_callback (GtkWidget *widget,
-                         gpointer   data)
-
-{
-  gtk_main_quit ();
 }
 
 
