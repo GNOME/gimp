@@ -303,6 +303,19 @@ gimp_tool_info_new (Gimp                *gimp,
 
   g_object_set (tool_info->tool_options, "tool-info", tool_info, NULL);
 
+  if (tool_info->context_props)
+    {
+      gimp_context_define_properties (GIMP_CONTEXT (tool_info->tool_options),
+                                      tool_info->context_props, FALSE);
+
+      gimp_context_copy_properties (gimp_get_user_context (gimp),
+                                    GIMP_CONTEXT (tool_info->tool_options),
+                                    GIMP_CONTEXT_ALL_PROPS_MASK);
+    }
+
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (tool_info->tool_options),
+                                         tool_info->context_props);
+
   if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
     {
       tool_info->options_presets = gimp_list_new (tool_info->tool_options_type,

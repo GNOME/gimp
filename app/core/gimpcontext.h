@@ -38,15 +38,16 @@ typedef struct _GimpContextClass GimpContextClass;
 
 struct _GimpContext
 {
-  GimpObject	        parent_instance;
+  GimpObject            parent_instance;
 
   Gimp                 *gimp;
 
-  GimpContext	       *parent;
+  GimpContext          *parent;
 
   guint32               defined_props;
+  guint32               serialize_props;
 
-  GimpImage	       *image;
+  GimpImage            *image;
   gpointer              display;
 
   GimpToolInfo         *tool_info;
@@ -55,7 +56,7 @@ struct _GimpContext
   GimpRGB               foreground;
   GimpRGB               background;
 
-  gdouble	        opacity;
+  gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
 
   GimpBrush            *brush;
@@ -88,78 +89,88 @@ struct _GimpContextClass
   GimpObjectClass  parent_class;
 
   void (* image_changed)      (GimpContext          *context,
-			       GimpImage            *image);
+                               GimpImage            *image);
   void (* display_changed)    (GimpContext          *context,
-			       gpointer              display);
+                               gpointer              display);
 
   void (* tool_changed)       (GimpContext          *context,
-			       GimpToolInfo         *tool_info);
+                               GimpToolInfo         *tool_info);
 
   void (* foreground_changed) (GimpContext          *context,
-			       GimpRGB              *color);
+                               GimpRGB              *color);
   void (* background_changed) (GimpContext          *context,
-			       GimpRGB              *color);
+                               GimpRGB              *color);
   void (* opacity_changed)    (GimpContext          *context,
-			       gdouble               opacity);
+                               gdouble               opacity);
   void (* paint_mode_changed) (GimpContext          *context,
-			       GimpLayerModeEffects  paint_mode);
+                               GimpLayerModeEffects  paint_mode);
   void (* brush_changed)      (GimpContext          *context,
-			       GimpBrush            *brush);
+                               GimpBrush            *brush);
   void (* pattern_changed)    (GimpContext          *context,
-			       GimpPattern          *pattern);
+                               GimpPattern          *pattern);
   void (* gradient_changed)   (GimpContext          *context,
-			       GimpGradient         *gradient);
+                               GimpGradient         *gradient);
   void (* palette_changed)    (GimpContext          *context,
-			       GimpPalette          *palette);
+                               GimpPalette          *palette);
   void (* font_changed)       (GimpContext          *context,
-			       GimpFont             *font);
+                               GimpFont             *font);
   void (* buffer_changed)     (GimpContext          *context,
-			       GimpBuffer           *buffer);
+                               GimpBuffer           *buffer);
   void (* imagefile_changed)  (GimpContext          *context,
-			       GimpImagefile        *imagefile);
+                               GimpImagefile        *imagefile);
   void (* template_changed)   (GimpContext          *context,
-			       GimpTemplate         *template);
+                               GimpTemplate         *template);
 };
 
 
 GType         gimp_context_get_type          (void) G_GNUC_CONST;
 
 GimpContext * gimp_context_new               (Gimp              *gimp,
-					      const gchar       *name,
-					      GimpContext       *template);
+                                              const gchar       *name,
+                                              GimpContext       *template);
 
 const gchar * gimp_context_get_name          (const GimpContext *context);
 void          gimp_context_set_name          (GimpContext       *context,
-					      const gchar       *name);
+                                              const gchar       *name);
 
 GimpContext * gimp_context_get_parent        (const GimpContext *context);
 void          gimp_context_set_parent        (GimpContext       *context,
-					      GimpContext       *parent);
+                                              GimpContext       *parent);
 
 /*  define / undefinine context properties
  *
  *  the value of an undefined property will be taken from the parent context.
  */
 void          gimp_context_define_property   (GimpContext         *context,
-					      GimpContextPropType  prop,
-					      gboolean             defined);
+                                              GimpContextPropType  prop,
+                                              gboolean             defined);
 
 gboolean      gimp_context_property_defined  (GimpContext         *context,
-					      GimpContextPropType  prop);
+                                              GimpContextPropType  prop);
 
 void          gimp_context_define_properties (GimpContext         *context,
-					      GimpContextPropMask  props_mask,
-					      gboolean             defined);
+                                              GimpContextPropMask  props_mask,
+                                              gboolean             defined);
+
+
+/*  specify which context properties will be serialized
+ */
+void   gimp_context_set_serialize_properties (GimpContext         *context,
+                                              GimpContextPropMask  props_mask);
+
+GimpContextPropMask
+       gimp_context_get_serialize_properties (GimpContext         *context);
+
 
 /*  copying context properties
  */
 void          gimp_context_copy_property     (GimpContext         *src,
-					      GimpContext         *dest,
-					      GimpContextPropType  prop);
+                                              GimpContext         *dest,
+                                              GimpContextPropType  prop);
 
 void          gimp_context_copy_properties   (GimpContext         *src,
-					      GimpContext         *dest,
-					      GimpContextPropMask  props_mask);
+                                              GimpContext         *dest,
+                                              GimpContextPropMask  props_mask);
 
 
 /*  manipulate by GType  */

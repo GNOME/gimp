@@ -90,8 +90,7 @@ gimp_devices_init (Gimp                   *gimp,
       GimpDeviceInfo *device_info;
 
       device_info = gimp_device_info_new (gimp, device->name);
-      gimp_container_add (manager->device_info_list,
-                          GIMP_OBJECT (device_info));
+      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
       g_object_unref (device_info);
 
       gimp_device_info_set_from_device (device_info, device);
@@ -125,9 +124,9 @@ gimp_devices_restore (Gimp *gimp)
   filename = gimp_personal_rc_file ("devicerc");
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->device_info_list),
-				      filename,
-				      gimp,
-				      &error))
+                                      filename,
+                                      gimp,
+                                      &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message (error->message);
@@ -147,7 +146,7 @@ gimp_devices_restore (Gimp *gimp)
   user_context = gimp_get_user_context (gimp);
 
   gimp_context_copy_properties (GIMP_CONTEXT (device_info), user_context,
-				GIMP_DEVICE_INFO_CONTEXT_MASK);
+                                GIMP_DEVICE_INFO_CONTEXT_MASK);
   gimp_context_set_parent (GIMP_CONTEXT (device_info), user_context);
 }
 
@@ -167,11 +166,11 @@ gimp_devices_save (Gimp *gimp)
   filename = gimp_personal_rc_file ("devicerc");
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->device_info_list),
-				       filename,
-				       "GIMP devicerc",
-				       "end of devicerc",
-				       NULL,
-				       &error))
+                                       filename,
+                                       "GIMP devicerc",
+                                       "end of devicerc",
+                                       NULL,
+                                       &error))
     {
       g_message (error->message);
       g_error_free (error);
@@ -231,7 +230,7 @@ gimp_devices_select_device (Gimp      *gimp,
   user_context = gimp_get_user_context (gimp);
 
   gimp_context_copy_properties (GIMP_CONTEXT (new_device_info), user_context,
-				GIMP_DEVICE_INFO_CONTEXT_MASK);
+                                GIMP_DEVICE_INFO_CONTEXT_MASK);
   gimp_context_set_parent (GIMP_CONTEXT (new_device_info), user_context);
 
   if (manager->change_notify)

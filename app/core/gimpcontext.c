@@ -60,7 +60,7 @@
 
 
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
-					  GimpContext *dest);
+                                          GimpContext *dest);
 
 
 #define context_find_defined(context,prop) \
@@ -107,132 +107,132 @@ static gboolean   gimp_context_deserialize_property (GimpConfig       *config,
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
-					      GimpImage        *image,
-					      GimpContext      *context);
+                                              GimpImage        *image,
+                                              GimpContext      *context);
 static void gimp_context_real_set_image      (GimpContext      *context,
-					      GimpImage        *image);
+                                              GimpImage        *image);
 
 /*  display  */
 static void gimp_context_display_removed     (GimpContainer    *container,
-					      gpointer          display,
-					      GimpContext      *context);
+                                              gpointer          display,
+                                              GimpContext      *context);
 static void gimp_context_real_set_display    (GimpContext      *context,
-					      gpointer          display);
+                                              gpointer          display);
 
 /*  tool  */
 static void gimp_context_tool_dirty          (GimpToolInfo     *tool_info,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_tool_removed        (GimpContainer    *container,
-					      GimpToolInfo     *tool_info,
-					      GimpContext      *context);
+                                              GimpToolInfo     *tool_info,
+                                              GimpContext      *context);
 static void gimp_context_tool_list_thaw      (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_tool       (GimpContext      *context,
-					      GimpToolInfo     *tool_info);
+                                              GimpToolInfo     *tool_info);
 
 /*  foreground  */
 static void gimp_context_real_set_foreground (GimpContext      *context,
-					      const GimpRGB    *color);
+                                              const GimpRGB    *color);
 
 /*  background  */
 static void gimp_context_real_set_background (GimpContext      *context,
-					      const GimpRGB    *color);
+                                              const GimpRGB    *color);
 
 /*  opacity  */
 static void gimp_context_real_set_opacity    (GimpContext      *context,
-					      gdouble           opacity);
+                                              gdouble           opacity);
 
 /*  paint mode  */
 static void gimp_context_real_set_paint_mode (GimpContext      *context,
-					      GimpLayerModeEffects paint_mode);
+                                              GimpLayerModeEffects paint_mode);
 
 /*  brush  */
 static void gimp_context_brush_dirty         (GimpBrush        *brush,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_brush_removed       (GimpContainer    *brush_list,
-					      GimpBrush        *brush,
-					      GimpContext      *context);
+                                              GimpBrush        *brush,
+                                              GimpContext      *context);
 static void gimp_context_brush_list_thaw     (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_brush      (GimpContext      *context,
-					      GimpBrush        *brush);
+                                              GimpBrush        *brush);
 
 /*  pattern  */
 static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_pattern_removed     (GimpContainer    *container,
-					      GimpPattern      *pattern,
-					      GimpContext      *context);
+                                              GimpPattern      *pattern,
+                                              GimpContext      *context);
 static void gimp_context_pattern_list_thaw   (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_pattern    (GimpContext      *context,
-					      GimpPattern      *pattern);
+                                              GimpPattern      *pattern);
 
 /*  gradient  */
 static void gimp_context_gradient_dirty      (GimpGradient     *gradient,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_gradient_removed    (GimpContainer    *container,
-					      GimpGradient     *gradient,
-					      GimpContext      *context);
+                                              GimpGradient     *gradient,
+                                              GimpContext      *context);
 static void gimp_context_gradient_list_thaw  (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_gradient   (GimpContext      *context,
-					      GimpGradient     *gradient);
+                                              GimpGradient     *gradient);
 
 /*  palette  */
 static void gimp_context_palette_dirty       (GimpPalette      *palette,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_palette_removed     (GimpContainer    *container,
-					      GimpPalette      *palatte,
-					      GimpContext      *context);
+                                              GimpPalette      *palatte,
+                                              GimpContext      *context);
 static void gimp_context_palette_list_thaw   (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_palette    (GimpContext      *context,
-					      GimpPalette      *palatte);
+                                              GimpPalette      *palatte);
 
 /*  font  */
 static void gimp_context_font_dirty          (GimpFont         *font,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_font_removed        (GimpContainer    *container,
-					      GimpFont         *font,
-					      GimpContext      *context);
+                                              GimpFont         *font,
+                                              GimpContext      *context);
 static void gimp_context_font_list_thaw      (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_font       (GimpContext      *context,
-					      GimpFont         *font);
+                                              GimpFont         *font);
 
 /*  buffer  */
 static void gimp_context_buffer_dirty        (GimpBuffer       *buffer,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_buffer_removed      (GimpContainer    *container,
-					      GimpBuffer       *buffer,
-					      GimpContext      *context);
+                                              GimpBuffer       *buffer,
+                                              GimpContext      *context);
 static void gimp_context_buffer_list_thaw    (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_buffer     (GimpContext      *context,
-					      GimpBuffer       *buffer);
+                                              GimpBuffer       *buffer);
 
 /*  imagefile  */
 static void gimp_context_imagefile_dirty     (GimpImagefile    *imagefile,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_imagefile_removed   (GimpContainer    *container,
-					      GimpImagefile    *imagefile,
-					      GimpContext      *context);
+                                              GimpImagefile    *imagefile,
+                                              GimpContext      *context);
 static void gimp_context_imagefile_list_thaw (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_imagefile  (GimpContext      *context,
-					      GimpImagefile    *imagefile);
+                                              GimpImagefile    *imagefile);
 
 /*  template  */
 static void gimp_context_template_dirty      (GimpTemplate     *template,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_template_removed    (GimpContainer    *container,
-					      GimpTemplate     *template,
-					      GimpContext      *context);
+                                              GimpTemplate     *template,
+                                              GimpContext      *context);
 static void gimp_context_template_list_thaw  (GimpContainer    *container,
-					      GimpContext      *context);
+                                              GimpContext      *context);
 static void gimp_context_real_set_template   (GimpContext      *context,
-					      GimpTemplate     *template);
+                                              GimpTemplate     *template);
 
 
 /*  utilities  */
@@ -249,7 +249,7 @@ enum
   GIMP_CONTEXT_PROP_0,
   GIMP_CONTEXT_PROP_GIMP
 
-  /*  remaining values are in gimpcontext.h  */
+  /*  remaining values are in core-types.h  */
 };
 
 enum
@@ -339,14 +339,14 @@ gimp_context_get_type (void)
       static const GTypeInfo context_info =
       {
         sizeof (GimpContextClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_context_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpContext),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_context_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_context_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpContext),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_context_init,
       };
       static const GInterfaceInfo config_iface_info =
       {
@@ -356,8 +356,8 @@ gimp_context_get_type (void)
       };
 
       context_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					     "GimpContext",
-					     &context_info, 0);
+                                             "GimpContext",
+                                             &context_info, 0);
 
       g_type_add_interface_static (context_type, GIMP_TYPE_CONFIG,
                                    &config_iface_info);
@@ -369,168 +369,165 @@ gimp_context_get_type (void)
 static void
 gimp_context_class_init (GimpContextClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpRGB          black;
   GimpRGB          white;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_context_signals[IMAGE_CHANGED] =
     g_signal_new ("image_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, image_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_IMAGE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, image_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_IMAGE);
 
   gimp_context_signals[DISPLAY_CHANGED] =
     g_signal_new ("display_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, display_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_OBJECT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, display_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_OBJECT);
 
   gimp_context_signals[TOOL_CHANGED] =
     g_signal_new ("tool_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, tool_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_TOOL_INFO);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, tool_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_TOOL_INFO);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
     g_signal_new ("foreground_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__BOXED,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     g_signal_new ("background_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, background_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__BOXED,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, background_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[OPACITY_CHANGED] =
     g_signal_new ("opacity_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, opacity_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__DOUBLE,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_DOUBLE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, opacity_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__DOUBLE,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_DOUBLE);
 
   gimp_context_signals[PAINT_MODE_CHANGED] =
     g_signal_new ("paint_mode_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, paint_mode_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_LAYER_MODE_EFFECTS);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, paint_mode_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_LAYER_MODE_EFFECTS);
 
   gimp_context_signals[BRUSH_CHANGED] =
     g_signal_new ("brush_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, brush_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_BRUSH);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, brush_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_BRUSH);
 
   gimp_context_signals[PATTERN_CHANGED] =
     g_signal_new ("pattern_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, pattern_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_PATTERN);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, pattern_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PATTERN);
 
   gimp_context_signals[GRADIENT_CHANGED] =
     g_signal_new ("gradient_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, gradient_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_GRADIENT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, gradient_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_GRADIENT);
 
   gimp_context_signals[PALETTE_CHANGED] =
     g_signal_new ("palette_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, palette_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_PALETTE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, palette_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PALETTE);
 
   gimp_context_signals[FONT_CHANGED] =
     g_signal_new ("font_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, font_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_FONT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, font_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_FONT);
 
   gimp_context_signals[BUFFER_CHANGED] =
     g_signal_new ("buffer_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, buffer_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_BUFFER);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, buffer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_BUFFER);
 
   gimp_context_signals[IMAGEFILE_CHANGED] =
     g_signal_new ("imagefile_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, imagefile_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_IMAGEFILE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, imagefile_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_IMAGEFILE);
 
   gimp_context_signals[TEMPLATE_CHANGED] =
     g_signal_new ("template_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpContextClass, template_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_TEMPLATE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, template_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_TEMPLATE);
 
   object_class->constructor      = gimp_context_constructor;
   object_class->set_property     = gimp_context_set_property;
@@ -604,7 +601,7 @@ gimp_context_class_init (GimpContextClass *klass)
                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, GIMP_CONTEXT_PROP_OPACITY,
-				   gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
+                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_OPACITY],
                                    NULL,
                                    GIMP_OPACITY_TRANSPARENT,
                                    GIMP_OPACITY_OPAQUE,
@@ -612,7 +609,7 @@ gimp_context_class_init (GimpContextClass *klass)
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, GIMP_CONTEXT_PROP_PAINT_MODE,
-				 gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
+                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
                                  NULL,
                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                  GIMP_NORMAL_MODE,
@@ -649,62 +646,63 @@ gimp_context_class_init (GimpContextClass *klass)
                                    0);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
-				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],
-							NULL, NULL,
-							GIMP_TYPE_BUFFER,
-							G_PARAM_READWRITE));
+                                   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_BUFFER,
+                                                        G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_IMAGEFILE,
-				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_IMAGEFILE],
-							NULL, NULL,
-							GIMP_TYPE_IMAGEFILE,
-							G_PARAM_READWRITE));
+                                   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_IMAGEFILE],
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_IMAGEFILE,
+                                                        G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_TEMPLATE,
-				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_TEMPLATE],
-							NULL, NULL,
-							GIMP_TYPE_TEMPLATE,
-							G_PARAM_READWRITE));
+                                   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_TEMPLATE],
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_TEMPLATE,
+                                                        G_PARAM_READWRITE));
 }
 
 static void
 gimp_context_init (GimpContext *context)
 {
-  context->gimp           = NULL;
+  context->gimp            = NULL;
 
-  context->parent         = NULL;
+  context->parent          = NULL;
 
-  context->defined_props  = GIMP_CONTEXT_ALL_PROPS_MASK;
+  context->defined_props   = GIMP_CONTEXT_ALL_PROPS_MASK;
+  context->serialize_props = GIMP_CONTEXT_ALL_PROPS_MASK;
 
-  context->image          = NULL;
-  context->display        = NULL;
+  context->image           = NULL;
+  context->display         = NULL;
 
-  context->tool_info      = NULL;
-  context->tool_name      = NULL;
+  context->tool_info       = NULL;
+  context->tool_name       = NULL;
 
-  context->brush          = NULL;
-  context->brush_name     = NULL;
+  context->brush           = NULL;
+  context->brush_name      = NULL;
 
-  context->pattern        = NULL;
-  context->pattern_name   = NULL;
+  context->pattern         = NULL;
+  context->pattern_name    = NULL;
 
-  context->gradient       = NULL;
-  context->gradient_name  = NULL;
+  context->gradient        = NULL;
+  context->gradient_name   = NULL;
 
-  context->palette        = NULL;
-  context->palette_name   = NULL;
+  context->palette         = NULL;
+  context->palette_name    = NULL;
 
-  context->font           = NULL;
-  context->font_name      = NULL;
+  context->font            = NULL;
+  context->font_name       = NULL;
 
-  context->buffer         = NULL;
-  context->buffer_name    = NULL;
+  context->buffer          = NULL;
+  context->buffer_name     = NULL;
 
-  context->imagefile      = NULL;
-  context->imagefile_name = NULL;
+  context->imagefile       = NULL;
+  context->imagefile_name  = NULL;
 
-  context->template       = NULL;
-  context->template_name  = NULL;
+  context->template        = NULL;
+  context->template_name   = NULL;
 }
 
 static void
@@ -785,8 +783,8 @@ gimp_context_constructor (GType                  type,
                            G_CALLBACK (gimp_context_buffer_removed),
                            object, 0);
   g_signal_connect_object (gimp->named_buffers, "thaw",
-			   G_CALLBACK (gimp_context_buffer_list_thaw),
-			   object, 0);
+                           G_CALLBACK (gimp_context_buffer_list_thaw),
+                           object, 0);
 
   g_signal_connect_object (gimp->documents, "remove",
                            G_CALLBACK (gimp_context_imagefile_removed),
@@ -933,9 +931,9 @@ gimp_context_finalize (GObject *object)
 
 static void
 gimp_context_set_property (GObject      *object,
-			   guint         property_id,
-			   const GValue *value,
-			   GParamSpec   *pspec)
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
 {
   GimpContext *context = GIMP_CONTEXT (object);
 
@@ -997,9 +995,9 @@ gimp_context_set_property (GObject      *object,
 
 static void
 gimp_context_get_property (GObject    *object,
-			   guint       property_id,
-			   GValue     *value,
-			   GParamSpec *pspec)
+                           guint       property_id,
+                           GValue     *value,
+                           GParamSpec *pspec)
 {
   GimpContext *context = GIMP_CONTEXT (object);
 
@@ -1122,8 +1120,8 @@ gimp_context_serialize_property (GimpConfig       *config,
   GimpContext *context = GIMP_CONTEXT (config);
   GimpObject  *serialize_obj;
 
-  /*  serialize nothing if the property is not defined  */
-  if (! ((1 << property_id) & context->defined_props))
+  /*  serialize nothing if the property is not in serialize_props  */
+  if (! ((1 << property_id) & context->serialize_props))
     return TRUE;
 
   switch (property_id)
@@ -1259,8 +1257,8 @@ gimp_context_deserialize_property (GimpConfig *object,
 
 GimpContext *
 gimp_context_new (Gimp        *gimp,
-		  const gchar *name,
-		  GimpContext *template)
+                  const gchar *name,
+                  GimpContext *template)
 {
   GimpContext *context;
 
@@ -1278,7 +1276,7 @@ gimp_context_new (Gimp        *gimp,
       context->defined_props = template->defined_props;
 
       gimp_context_copy_properties (template, context,
-				    GIMP_CONTEXT_ALL_PROPS_MASK);
+                                    GIMP_CONTEXT_ALL_PROPS_MASK);
     }
 
   return context;
@@ -1294,7 +1292,7 @@ gimp_context_get_name (const GimpContext *context)
 
 void
 gimp_context_set_name (GimpContext *context,
-		       const gchar *name)
+                       const gchar *name)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
@@ -1324,7 +1322,7 @@ gimp_context_parent_notify (GimpContext *parent,
 
 void
 gimp_context_set_parent (GimpContext *context,
-			 GimpContext *parent)
+                         GimpContext *parent)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (parent == NULL || GIMP_IS_CONTEXT (parent));
@@ -1362,8 +1360,8 @@ gimp_context_set_parent (GimpContext *context,
 
 void
 gimp_context_define_property (GimpContext         *context,
-			      GimpContextPropType  prop,
-			      gboolean             defined)
+                              GimpContextPropType  prop,
+                              gboolean             defined)
 {
   GimpContextPropMask mask;
 
@@ -1376,25 +1374,25 @@ gimp_context_define_property (GimpContext         *context,
   if (defined)
     {
       if (! (context->defined_props & mask))
-	{
-	  context->defined_props |= mask;
-	}
+        {
+          context->defined_props |= mask;
+        }
     }
   else
     {
       if (context->defined_props & mask)
-	{
-	  context->defined_props &= ~mask;
+        {
+          context->defined_props &= ~mask;
 
-	  if (context->parent)
+          if (context->parent)
             gimp_context_copy_property (context->parent, context, prop);
-	}
+        }
     }
 }
 
 gboolean
 gimp_context_property_defined (GimpContext         *context,
-			       GimpContextPropType  prop)
+                               GimpContextPropType  prop)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
@@ -1403,8 +1401,8 @@ gimp_context_property_defined (GimpContext         *context,
 
 void
 gimp_context_define_properties (GimpContext         *context,
-				GimpContextPropMask  prop_mask,
-				gboolean             defined)
+                                GimpContextPropMask  prop_mask,
+                                gboolean             defined)
 {
   GimpContextPropType prop;
 
@@ -1416,12 +1414,32 @@ gimp_context_define_properties (GimpContext         *context,
 }
 
 
+/*  specify which context properties will be serialized  */
+
+void
+gimp_context_set_serialize_properties (GimpContext         *context,
+                                       GimpContextPropMask  props_mask)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  context->serialize_props = props_mask;
+}
+
+GimpContextPropMask
+gimp_context_get_serialize_properties (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), 0);
+
+  return context->serialize_props;
+}
+
+
 /*  copying context properties  */
 
 void
 gimp_context_copy_property (GimpContext         *src,
-			    GimpContext         *dest,
-			    GimpContextPropType  prop)
+                            GimpContext         *dest,
+                            GimpContextPropType  prop)
 {
   gpointer   object          = NULL;
   gpointer   standard_object = NULL;
@@ -1535,8 +1553,8 @@ gimp_context_copy_property (GimpContext         *src,
 
 void
 gimp_context_copy_properties (GimpContext         *src,
-			      GimpContext         *dest,
-			      GimpContextPropMask  prop_mask)
+                              GimpContext         *dest,
+                              GimpContextPropMask  prop_mask)
 {
   GimpContextPropType prop;
 
@@ -1561,7 +1579,7 @@ gimp_context_type_to_property (GType type)
   for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
-	return prop;
+        return prop;
     }
 
   return -1;
@@ -1575,7 +1593,7 @@ gimp_context_type_to_prop_name (GType type)
   for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
-	return gimp_context_prop_names[prop];
+        return gimp_context_prop_names[prop];
     }
 
   return NULL;
@@ -1589,7 +1607,7 @@ gimp_context_type_to_signal_name (GType type)
   for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
-	return g_signal_name (gimp_context_signals[prop]);
+        return g_signal_name (gimp_context_signals[prop]);
     }
 
   return NULL;
@@ -1597,18 +1615,18 @@ gimp_context_type_to_signal_name (GType type)
 
 GimpObject *
 gimp_context_get_by_type (GimpContext *context,
-			  GType        type)
+                          GType        type)
 {
   GimpContextPropType  prop;
   GimpObject          *object = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1,
-			NULL);
+                        NULL);
 
   g_object_get (context,
-		gimp_context_prop_names[prop], &object,
-		NULL);
+                gimp_context_prop_names[prop], &object,
+                NULL);
 
   /*  g_object_get() refs the object, this function however is a getter,
    *  which usually doesn't ref it's return value
@@ -1621,8 +1639,8 @@ gimp_context_get_by_type (GimpContext *context,
 
 void
 gimp_context_set_by_type (GimpContext *context,
-			  GType        type,
-			  GimpObject  *object)
+                          GType        type,
+                          GimpObject  *object)
 {
   GimpContextPropType prop;
 
@@ -1630,13 +1648,13 @@ gimp_context_set_by_type (GimpContext *context,
   g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
 
   g_object_set (context,
-		gimp_context_prop_names[prop], object,
-		NULL);
+                gimp_context_prop_names[prop], object,
+                NULL);
 }
 
 void
 gimp_context_changed_by_type (GimpContext *context,
-			      GType        type)
+                              GType        type)
 {
   GimpContextPropType  prop;
   GimpObject          *object;
@@ -1647,8 +1665,8 @@ gimp_context_changed_by_type (GimpContext *context,
   object = gimp_context_get_by_type (context, type);
 
   g_signal_emit (context,
-		 gimp_context_signals[prop], 0,
-		 object);
+                 gimp_context_signals[prop], 0,
+                 object);
 }
 
 /*****************************************************************************/
@@ -1664,7 +1682,7 @@ gimp_context_get_image (GimpContext *context)
 
 void
 gimp_context_set_image (GimpContext *context,
-			GimpImage   *image)
+                        GimpImage   *image)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_IMAGE);
@@ -1678,15 +1696,15 @@ gimp_context_image_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[IMAGE_CHANGED], 0,
-		 context->image);
+                 gimp_context_signals[IMAGE_CHANGED], 0,
+                 context->image);
 }
 
 /*  handle disappearing images  */
 static void
 gimp_context_image_removed (GimpContainer *container,
-			    GimpImage     *image,
-			    GimpContext   *context)
+                            GimpImage     *image,
+                            GimpContext   *context)
 {
   if (context->image == image)
     gimp_context_real_set_image (context, NULL);
@@ -1694,7 +1712,7 @@ gimp_context_image_removed (GimpContainer *container,
 
 static void
 gimp_context_real_set_image (GimpContext *context,
-			     GimpImage   *image)
+                             GimpImage   *image)
 {
   if (context->image == image)
     return;
@@ -1719,7 +1737,7 @@ gimp_context_get_display (GimpContext *context)
 
 void
 gimp_context_set_display (GimpContext *context,
-			  gpointer     display)
+                          gpointer     display)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_DISPLAY);
@@ -1733,8 +1751,8 @@ gimp_context_display_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[DISPLAY_CHANGED], 0,
-		 context->display);
+                 gimp_context_signals[DISPLAY_CHANGED], 0,
+                 context->display);
 }
 
 /*  handle disappearing displays  */
@@ -1749,7 +1767,7 @@ gimp_context_display_removed (GimpContainer *container,
 
 static void
 gimp_context_real_set_display (GimpContext *context,
-			       gpointer     display)
+                               gpointer     display)
 {
   if (context->display == display)
     return;
@@ -1785,7 +1803,7 @@ gimp_context_get_tool (GimpContext *context)
 
 void
 gimp_context_set_tool (GimpContext  *context,
-		       GimpToolInfo *tool_info)
+                       GimpToolInfo *tool_info)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
@@ -1800,14 +1818,14 @@ gimp_context_tool_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[TOOL_CHANGED], 0,
-		 context->tool_info);
+                 gimp_context_signals[TOOL_CHANGED], 0,
+                 context->tool_info);
 }
 
 /*  the active tool was modified  */
 static void
 gimp_context_tool_dirty (GimpToolInfo *tool_info,
-			 GimpContext  *context)
+                         GimpContext  *context)
 {
   g_free (context->tool_name);
   context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
@@ -1816,7 +1834,7 @@ gimp_context_tool_dirty (GimpToolInfo *tool_info,
 /*  the global tool list is there again after refresh  */
 static void
 gimp_context_tool_list_thaw (GimpContainer *container,
-			     GimpContext   *context)
+                             GimpContext   *context)
 {
   GimpToolInfo *tool_info;
 
@@ -1833,26 +1851,26 @@ gimp_context_tool_list_thaw (GimpContainer *container,
 /*  the active tool disappeared  */
 static void
 gimp_context_tool_removed (GimpContainer *container,
-			   GimpToolInfo  *tool_info,
-			   GimpContext   *context)
+                           GimpToolInfo  *tool_info,
+                           GimpContext   *context)
 {
   if (tool_info == context->tool_info)
     {
       context->tool_info = NULL;
 
       g_signal_handlers_disconnect_by_func (tool_info,
-					    gimp_context_tool_dirty,
-					    context);
+                                            gimp_context_tool_dirty,
+                                            context);
       g_object_unref (tool_info);
 
       if (! gimp_container_frozen (container))
-	gimp_context_tool_list_thaw (container, context);
+        gimp_context_tool_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_tool (GimpContext  *context,
-			    GimpToolInfo *tool_info)
+                            GimpToolInfo *tool_info)
 {
   if (! standard_tool_info)
     standard_tool_info = gimp_tool_info_get_standard (context->gimp);
@@ -1870,8 +1888,8 @@ gimp_context_real_set_tool (GimpContext  *context,
   if (context->tool_info)
     {
       g_signal_handlers_disconnect_by_func (context->tool_info,
-					    gimp_context_tool_dirty,
-					    context);
+                                            gimp_context_tool_dirty,
+                                            context);
       g_object_unref (context->tool_info);
     }
 
@@ -1882,12 +1900,12 @@ gimp_context_real_set_tool (GimpContext  *context,
       g_object_ref (tool_info);
 
       g_signal_connect_object (tool_info, "name_changed",
-			       G_CALLBACK (gimp_context_tool_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_tool_dirty),
+                               context,
+                               0);
 
       if (tool_info != standard_tool_info)
-	context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+        context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
     }
 
   g_object_notify (G_OBJECT (context), "tool");
@@ -1900,7 +1918,7 @@ gimp_context_real_set_tool (GimpContext  *context,
 
 void
 gimp_context_get_foreground (GimpContext *context,
-			     GimpRGB     *color)
+                             GimpRGB     *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (color != NULL);
@@ -1910,7 +1928,7 @@ gimp_context_get_foreground (GimpContext *context,
 
 void
 gimp_context_set_foreground (GimpContext   *context,
-			     const GimpRGB *color)
+                             const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (color != NULL);
@@ -1925,13 +1943,13 @@ gimp_context_foreground_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[FOREGROUND_CHANGED], 0,
-		 &context->foreground);
+                 gimp_context_signals[FOREGROUND_CHANGED], 0,
+                 &context->foreground);
 }
 
 static void
 gimp_context_real_set_foreground (GimpContext   *context,
-				  const GimpRGB *color)
+                                  const GimpRGB *color)
 {
   if (gimp_rgba_distance (&context->foreground, color) < 0.0001)
     return;
@@ -1949,7 +1967,7 @@ gimp_context_real_set_foreground (GimpContext   *context,
 
 void
 gimp_context_get_background (GimpContext *context,
-			     GimpRGB     *color)
+                             GimpRGB     *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
@@ -1960,7 +1978,7 @@ gimp_context_get_background (GimpContext *context,
 
 void
 gimp_context_set_background (GimpContext   *context,
-			     const GimpRGB *color)
+                             const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (color != NULL);
@@ -1975,13 +1993,13 @@ gimp_context_background_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[BACKGROUND_CHANGED], 0,
-		 &context->background);
+                 gimp_context_signals[BACKGROUND_CHANGED], 0,
+                 &context->background);
 }
 
 static void
 gimp_context_real_set_background (GimpContext   *context,
-				  const GimpRGB *color)
+                                  const GimpRGB *color)
 {
   if (gimp_rgba_distance (&context->background, color) < 0.0001)
     return;
@@ -2052,7 +2070,7 @@ gimp_context_get_opacity (GimpContext *context)
 
 void
 gimp_context_set_opacity (GimpContext *context,
-			  gdouble      opacity)
+                          gdouble      opacity)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_OPACITY);
@@ -2066,13 +2084,13 @@ gimp_context_opacity_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[OPACITY_CHANGED], 0,
-		 context->opacity);
+                 gimp_context_signals[OPACITY_CHANGED], 0,
+                 context->opacity);
 }
 
 static void
 gimp_context_real_set_opacity (GimpContext *context,
-			       gdouble      opacity)
+                               gdouble      opacity)
 {
   if (context->opacity == opacity)
     return;
@@ -2097,7 +2115,7 @@ gimp_context_get_paint_mode (GimpContext *context)
 
 void
 gimp_context_set_paint_mode (GimpContext          *context,
-			     GimpLayerModeEffects  paint_mode)
+                             GimpLayerModeEffects  paint_mode)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_PAINT_MODE);
@@ -2111,13 +2129,13 @@ gimp_context_paint_mode_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[PAINT_MODE_CHANGED], 0,
-		 context->paint_mode);
+                 gimp_context_signals[PAINT_MODE_CHANGED], 0,
+                 context->paint_mode);
 }
 
 static void
 gimp_context_real_set_paint_mode (GimpContext          *context,
-				  GimpLayerModeEffects  paint_mode)
+                                  GimpLayerModeEffects  paint_mode)
 {
   if (context->paint_mode == paint_mode)
     return;
@@ -2142,7 +2160,7 @@ gimp_context_get_brush (GimpContext *context)
 
 void
 gimp_context_set_brush (GimpContext *context,
-			GimpBrush   *brush)
+                        GimpBrush   *brush)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
@@ -2157,14 +2175,14 @@ gimp_context_brush_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[BRUSH_CHANGED], 0,
-		 context->brush);
+                 gimp_context_signals[BRUSH_CHANGED], 0,
+                 context->brush);
 }
 
 /*  the active brush was modified  */
 static void
 gimp_context_brush_dirty (GimpBrush   *brush,
-			  GimpContext *context)
+                          GimpContext *context)
 {
   g_free (context->brush_name);
   context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
@@ -2173,7 +2191,7 @@ gimp_context_brush_dirty (GimpBrush   *brush,
 /*  the global brush list is there again after refresh  */
 static void
 gimp_context_brush_list_thaw (GimpContainer *container,
-			      GimpContext   *context)
+                              GimpContext   *context)
 {
   GimpBrush *brush;
 
@@ -2190,26 +2208,26 @@ gimp_context_brush_list_thaw (GimpContainer *container,
 /*  the active brush disappeared  */
 static void
 gimp_context_brush_removed (GimpContainer *container,
-			    GimpBrush     *brush,
-			    GimpContext   *context)
+                            GimpBrush     *brush,
+                            GimpContext   *context)
 {
   if (brush == context->brush)
     {
       context->brush = NULL;
 
       g_signal_handlers_disconnect_by_func (brush,
-					    gimp_context_brush_dirty,
-					    context);
+                                            gimp_context_brush_dirty,
+                                            context);
       g_object_unref (brush);
 
       if (! gimp_container_frozen (container))
-	gimp_context_brush_list_thaw (container, context);
+        gimp_context_brush_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_brush (GimpContext *context,
-			     GimpBrush   *brush)
+                             GimpBrush   *brush)
 {
   if (! standard_brush)
     standard_brush = GIMP_BRUSH (gimp_brush_get_standard ());
@@ -2232,15 +2250,15 @@ gimp_context_real_set_brush (GimpContext *context,
 
       /*  make sure the active brush is swapped before we get a new one...  */
       if (base_config->stingy_memory_use &&
-	  context->brush->mask           &&
-	  G_OBJECT (context->brush)->ref_count == 2)
-	{
-	  temp_buf_swap (context->brush->mask);
-	}
+          context->brush->mask           &&
+          G_OBJECT (context->brush)->ref_count == 2)
+        {
+          temp_buf_swap (context->brush->mask);
+        }
 
       g_signal_handlers_disconnect_by_func (context->brush,
-					    gimp_context_brush_dirty,
-					    context);
+                                            gimp_context_brush_dirty,
+                                            context);
 
       g_object_unref (context->brush);
     }
@@ -2256,20 +2274,20 @@ gimp_context_real_set_brush (GimpContext *context,
       g_object_ref (brush);
 
       g_signal_connect_object (brush, "name_changed",
-			       G_CALLBACK (gimp_context_brush_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_brush_dirty),
+                               context,
+                               0);
 
       /*  Make sure the active brush is unswapped... */
       if (base_config->stingy_memory_use &&
-	  brush->mask                    &&
-	  G_OBJECT (brush)->ref_count < 2)
-	{
-	  temp_buf_unswap (brush->mask);
-	}
+          brush->mask                    &&
+          G_OBJECT (brush)->ref_count < 2)
+        {
+          temp_buf_unswap (brush->mask);
+        }
 
       if (brush != standard_brush)
-	context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
+        context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
     }
 
   g_object_notify (G_OBJECT (context), "brush");
@@ -2290,7 +2308,7 @@ gimp_context_get_pattern (GimpContext *context)
 
 void
 gimp_context_set_pattern (GimpContext *context,
-			  GimpPattern *pattern)
+                          GimpPattern *pattern)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_PATTERN);
@@ -2304,14 +2322,14 @@ gimp_context_pattern_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[PATTERN_CHANGED], 0,
-		 context->pattern);
+                 gimp_context_signals[PATTERN_CHANGED], 0,
+                 context->pattern);
 }
 
 /*  the active pattern was modified  */
 static void
 gimp_context_pattern_dirty (GimpPattern *pattern,
-			    GimpContext *context)
+                            GimpContext *context)
 {
   g_free (context->pattern_name);
   context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
@@ -2320,7 +2338,7 @@ gimp_context_pattern_dirty (GimpPattern *pattern,
 /*  the global pattern list is there again after refresh  */
 static void
 gimp_context_pattern_list_thaw (GimpContainer *container,
-				GimpContext   *context)
+                                GimpContext   *context)
 {
   GimpPattern *pattern;
 
@@ -2337,26 +2355,26 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
 /*  the active pattern disappeared  */
 static void
 gimp_context_pattern_removed (GimpContainer *container,
-			      GimpPattern   *pattern,
-			      GimpContext   *context)
+                              GimpPattern   *pattern,
+                              GimpContext   *context)
 {
   if (pattern == context->pattern)
     {
       context->pattern = NULL;
 
       g_signal_handlers_disconnect_by_func (pattern,
-					    gimp_context_pattern_dirty,
-					    context);
+                                            gimp_context_pattern_dirty,
+                                            context);
       g_object_unref (pattern);
 
       if (! gimp_container_frozen (container))
-	gimp_context_pattern_list_thaw (container, context);
+        gimp_context_pattern_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_pattern (GimpContext *context,
-			       GimpPattern *pattern)
+                               GimpPattern *pattern)
 {
   GimpBaseConfig *base_config;
 
@@ -2386,8 +2404,8 @@ gimp_context_real_set_pattern (GimpContext *context,
   if (context->pattern)
     {
       g_signal_handlers_disconnect_by_func (context->pattern,
-					    gimp_context_pattern_dirty,
-					    context);
+                                            gimp_context_pattern_dirty,
+                                            context);
       g_object_unref (context->pattern);
     }
 
@@ -2402,20 +2420,20 @@ gimp_context_real_set_pattern (GimpContext *context,
       g_object_ref (pattern);
 
       g_signal_connect_object (pattern, "name_changed",
-			       G_CALLBACK (gimp_context_pattern_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_pattern_dirty),
+                               context,
+                               0);
 
       /*  Make sure the active pattern is unswapped... */
       if (base_config->stingy_memory_use   &&
-	  pattern->mask                    &&
-	  G_OBJECT (pattern)->ref_count < 2)
-	{
-	  temp_buf_unswap (pattern->mask);
-	}
+          pattern->mask                    &&
+          G_OBJECT (pattern)->ref_count < 2)
+        {
+          temp_buf_unswap (pattern->mask);
+        }
 
       if (pattern != standard_pattern)
-	context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
+        context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
     }
 
   g_object_notify (G_OBJECT (context), "pattern");
@@ -2436,7 +2454,7 @@ gimp_context_get_gradient (GimpContext *context)
 
 void
 gimp_context_set_gradient (GimpContext  *context,
-			   GimpGradient *gradient)
+                           GimpGradient *gradient)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_GRADIENT);
@@ -2450,14 +2468,14 @@ gimp_context_gradient_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[GRADIENT_CHANGED], 0,
-		 context->gradient);
+                 gimp_context_signals[GRADIENT_CHANGED], 0,
+                 context->gradient);
 }
 
 /*  the active gradient was modified  */
 static void
 gimp_context_gradient_dirty (GimpGradient *gradient,
-			     GimpContext  *context)
+                             GimpContext  *context)
 {
   g_free (context->gradient_name);
   context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
@@ -2466,7 +2484,7 @@ gimp_context_gradient_dirty (GimpGradient *gradient,
 /*  the global gradient list is there again after refresh  */
 static void
 gimp_context_gradient_list_thaw (GimpContainer *container,
-				 GimpContext   *context)
+                                 GimpContext   *context)
 {
   GimpGradient *gradient;
 
@@ -2483,26 +2501,26 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
 /*  the active gradient disappeared  */
 static void
 gimp_context_gradient_removed (GimpContainer *container,
-			       GimpGradient  *gradient,
-			       GimpContext   *context)
+                               GimpGradient  *gradient,
+                               GimpContext   *context)
 {
   if (gradient == context->gradient)
     {
       context->gradient = NULL;
 
       g_signal_handlers_disconnect_by_func (gradient,
-					    gimp_context_gradient_dirty,
-					    context);
+                                            gimp_context_gradient_dirty,
+                                            context);
       g_object_unref (gradient);
 
       if (! gimp_container_frozen (container))
-	gimp_context_gradient_list_thaw (container, context);
+        gimp_context_gradient_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_gradient (GimpContext  *context,
-				GimpGradient *gradient)
+                                GimpGradient *gradient)
 {
   if (! standard_gradient)
     standard_gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
@@ -2520,8 +2538,8 @@ gimp_context_real_set_gradient (GimpContext  *context,
   if (context->gradient)
     {
       g_signal_handlers_disconnect_by_func (context->gradient,
-					    gimp_context_gradient_dirty,
-					    context);
+                                            gimp_context_gradient_dirty,
+                                            context);
       g_object_unref (context->gradient);
     }
 
@@ -2532,12 +2550,12 @@ gimp_context_real_set_gradient (GimpContext  *context,
       g_object_ref (gradient);
 
       g_signal_connect_object (gradient, "name_changed",
-			       G_CALLBACK (gimp_context_gradient_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_gradient_dirty),
+                               context,
+                               0);
 
       if (gradient != standard_gradient)
-	context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
+        context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
     }
 
   g_object_notify (G_OBJECT (context), "gradient");
@@ -2558,7 +2576,7 @@ gimp_context_get_palette (GimpContext *context)
 
 void
 gimp_context_set_palette (GimpContext *context,
-			  GimpPalette *palette)
+                          GimpPalette *palette)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_PALETTE);
@@ -2572,14 +2590,14 @@ gimp_context_palette_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[PALETTE_CHANGED], 0,
-		 context->palette);
+                 gimp_context_signals[PALETTE_CHANGED], 0,
+                 context->palette);
 }
 
 /*  the active palette was modified  */
 static void
 gimp_context_palette_dirty (GimpPalette *palette,
-			    GimpContext *context)
+                            GimpContext *context)
 {
   g_free (context->palette_name);
   context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
@@ -2588,7 +2606,7 @@ gimp_context_palette_dirty (GimpPalette *palette,
 /*  the global palette list is there again after refresh  */
 static void
 gimp_context_palette_list_thaw (GimpContainer *container,
-				GimpContext   *context)
+                                GimpContext   *context)
 {
   GimpPalette *palette;
 
@@ -2605,26 +2623,26 @@ gimp_context_palette_list_thaw (GimpContainer *container,
 /*  the active palette disappeared  */
 static void
 gimp_context_palette_removed (GimpContainer *container,
-			      GimpPalette   *palette,
-			      GimpContext   *context)
+                              GimpPalette   *palette,
+                              GimpContext   *context)
 {
   if (palette == context->palette)
     {
       context->palette = NULL;
 
       g_signal_handlers_disconnect_by_func (palette,
-					    gimp_context_palette_dirty,
-					    context);
+                                            gimp_context_palette_dirty,
+                                            context);
       g_object_unref (palette);
 
       if (! gimp_container_frozen (container))
-	gimp_context_palette_list_thaw (container, context);
+        gimp_context_palette_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_palette (GimpContext *context,
-			       GimpPalette *palette)
+                               GimpPalette *palette)
 {
   if (! standard_palette)
     standard_palette = GIMP_PALETTE (gimp_palette_get_standard ());
@@ -2642,8 +2660,8 @@ gimp_context_real_set_palette (GimpContext *context,
   if (context->palette)
     {
       g_signal_handlers_disconnect_by_func (context->palette,
-					    gimp_context_palette_dirty,
-					    context);
+                                            gimp_context_palette_dirty,
+                                            context);
       g_object_unref (context->palette);
     }
 
@@ -2654,12 +2672,12 @@ gimp_context_real_set_palette (GimpContext *context,
       g_object_ref (palette);
 
       g_signal_connect_object (palette, "name_changed",
-			       G_CALLBACK (gimp_context_palette_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_palette_dirty),
+                               context,
+                               0);
 
       if (palette != standard_palette)
-	context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
+        context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
     }
 
   g_object_notify (G_OBJECT (context), "palette");
@@ -2716,8 +2734,8 @@ gimp_context_font_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[FONT_CHANGED], 0,
-		 context->font);
+                 gimp_context_signals[FONT_CHANGED], 0,
+                 context->font);
 }
 
 /*  the active font was modified  */
@@ -2757,12 +2775,12 @@ gimp_context_font_removed (GimpContainer *container,
       context->font = NULL;
 
       g_signal_handlers_disconnect_by_func (font,
-					    gimp_context_font_dirty,
-					    context);
+                                            gimp_context_font_dirty,
+                                            context);
       g_object_unref (font);
 
       if (! gimp_container_frozen (container))
-	gimp_context_font_list_thaw (container, context);
+        gimp_context_font_list_thaw (container, context);
     }
 }
 
@@ -2786,8 +2804,8 @@ gimp_context_real_set_font (GimpContext *context,
   if (context->font)
     {
       g_signal_handlers_disconnect_by_func (context->font,
-					    gimp_context_font_dirty,
-					    context);
+                                            gimp_context_font_dirty,
+                                            context);
       g_object_unref (context->font);
     }
 
@@ -2798,12 +2816,12 @@ gimp_context_real_set_font (GimpContext *context,
       g_object_ref (font);
 
       g_signal_connect_object (font, "name_changed",
-			       G_CALLBACK (gimp_context_font_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_font_dirty),
+                               context,
+                               0);
 
       if (font != standard_font)
-	context->font_name = g_strdup (GIMP_OBJECT (font)->name);
+        context->font_name = g_strdup (GIMP_OBJECT (font)->name);
     }
 
   g_object_notify (G_OBJECT (context), "font");
@@ -2828,7 +2846,7 @@ gimp_context_get_buffer (GimpContext *context)
 
 void
 gimp_context_set_buffer (GimpContext *context,
-			 GimpBuffer *buffer)
+                         GimpBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_BUFFER);
@@ -2842,14 +2860,14 @@ gimp_context_buffer_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[BUFFER_CHANGED], 0,
-		 context->buffer);
+                 gimp_context_signals[BUFFER_CHANGED], 0,
+                 context->buffer);
 }
 
 /*  the active buffer was modified  */
 static void
 gimp_context_buffer_dirty (GimpBuffer  *buffer,
-			   GimpContext *context)
+                           GimpContext *context)
 {
   g_free (context->buffer_name);
   context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
@@ -2858,7 +2876,7 @@ gimp_context_buffer_dirty (GimpBuffer  *buffer,
 /*  the global buffer list is there again after refresh  */
 static void
 gimp_context_buffer_list_thaw (GimpContainer *container,
-			       GimpContext   *context)
+                               GimpContext   *context)
 {
   GimpBuffer *buffer;
 
@@ -2885,26 +2903,26 @@ gimp_context_buffer_list_thaw (GimpContainer *container,
 /*  the active buffer disappeared  */
 static void
 gimp_context_buffer_removed (GimpContainer *container,
-			     GimpBuffer    *buffer,
-			     GimpContext   *context)
+                             GimpBuffer    *buffer,
+                             GimpContext   *context)
 {
   if (buffer == context->buffer)
     {
       context->buffer = NULL;
 
       g_signal_handlers_disconnect_by_func (buffer,
-					    gimp_context_buffer_dirty,
-					    context);
+                                            gimp_context_buffer_dirty,
+                                            context);
       g_object_unref (buffer);
 
       if (! gimp_container_frozen (container))
-	gimp_context_buffer_list_thaw (container, context);
+        gimp_context_buffer_list_thaw (container, context);
     }
 }
 
 static void
 gimp_context_real_set_buffer (GimpContext *context,
-			      GimpBuffer  *buffer)
+                              GimpBuffer  *buffer)
 {
   /*
   if (! standard_buffer)
@@ -2924,8 +2942,8 @@ gimp_context_real_set_buffer (GimpContext *context,
   if (context->buffer)
     {
       g_signal_handlers_disconnect_by_func (context->buffer,
-					    gimp_context_buffer_dirty,
-					    context);
+                                            gimp_context_buffer_dirty,
+                                            context);
       g_object_unref (context->buffer);
     }
 
@@ -2936,9 +2954,9 @@ gimp_context_real_set_buffer (GimpContext *context,
       g_object_ref (buffer);
 
       g_signal_connect_object (buffer, "name_changed",
-			       G_CALLBACK (gimp_context_buffer_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_buffer_dirty),
+                               context,
+                               0);
 
       /*
       if (buffer != standard_buffer)
@@ -2982,8 +3000,8 @@ gimp_context_imagefile_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[IMAGEFILE_CHANGED], 0,
-		 context->imagefile);
+                 gimp_context_signals[IMAGEFILE_CHANGED], 0,
+                 context->imagefile);
 }
 
 /*  the active imagefile was modified  */
@@ -3033,12 +3051,12 @@ gimp_context_imagefile_removed (GimpContainer *container,
       context->imagefile = NULL;
 
       g_signal_handlers_disconnect_by_func (imagefile,
-					    gimp_context_imagefile_dirty,
-					    context);
+                                            gimp_context_imagefile_dirty,
+                                            context);
       g_object_unref (imagefile);
 
       if (! gimp_container_frozen (container))
-	gimp_context_imagefile_list_thaw (container, context);
+        gimp_context_imagefile_list_thaw (container, context);
     }
 }
 
@@ -3064,8 +3082,8 @@ gimp_context_real_set_imagefile (GimpContext   *context,
   if (context->imagefile)
     {
       g_signal_handlers_disconnect_by_func (context->imagefile,
-					    gimp_context_imagefile_dirty,
-					    context);
+                                            gimp_context_imagefile_dirty,
+                                            context);
       g_object_unref (context->imagefile);
     }
 
@@ -3076,9 +3094,9 @@ gimp_context_real_set_imagefile (GimpContext   *context,
       g_object_ref (imagefile);
 
       g_signal_connect_object (imagefile, "name_changed",
-			       G_CALLBACK (gimp_context_imagefile_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_imagefile_dirty),
+                               context,
+                               0);
 
       /*
       if (imagefile != standard_imagefile)
@@ -3122,8 +3140,8 @@ gimp_context_template_changed (GimpContext *context)
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   g_signal_emit (context,
-		 gimp_context_signals[TEMPLATE_CHANGED], 0,
-		 context->template);
+                 gimp_context_signals[TEMPLATE_CHANGED], 0,
+                 context->template);
 }
 
 /*  the active template was modified  */
@@ -3173,12 +3191,12 @@ gimp_context_template_removed (GimpContainer *container,
       context->template = NULL;
 
       g_signal_handlers_disconnect_by_func (template,
-					    gimp_context_template_dirty,
-					    context);
+                                            gimp_context_template_dirty,
+                                            context);
       g_object_unref (template);
 
       if (! gimp_container_frozen (container))
-	gimp_context_template_list_thaw (container, context);
+        gimp_context_template_list_thaw (container, context);
     }
 }
 
@@ -3204,8 +3222,8 @@ gimp_context_real_set_template (GimpContext  *context,
   if (context->template)
     {
       g_signal_handlers_disconnect_by_func (context->template,
-					    gimp_context_template_dirty,
-					    context);
+                                            gimp_context_template_dirty,
+                                            context);
       g_object_unref (context->template);
     }
 
@@ -3216,9 +3234,9 @@ gimp_context_real_set_template (GimpContext  *context,
       g_object_ref (template);
 
       g_signal_connect_object (template, "name_changed",
-			       G_CALLBACK (gimp_context_template_dirty),
-			       context,
-			       0);
+                               G_CALLBACK (gimp_context_template_dirty),
+                               context,
+                               0);
 
       /*
       if (template != standard_template)

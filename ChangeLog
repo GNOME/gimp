@@ -1,5 +1,30 @@
 2004-07-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.[ch]: added context->serialize_props mask
+	which enables specifying exactly which properties will be
+	serialized. Also fixes a bug that prevented undefined properties
+	from being serialized, breaking tool_options and device status
+	serialization.
+
+	* app/core/gimptoolinfo.c (gimp_tool_info_new): make only the
+	properties in the tool_info->context_props mask serializable, also
+	configure/initialize tool_info->tool_options.
+
+	* app/tools/gimp-tools.c (gimp_tools_register): removed
+	tool_options initialization that is now done in
+	gimp_tool_info_new().
+
+	* app/widgets/gimpdeviceinfo.c: make only the properties in
+	GIMP_DEVICE_INFO_CONTEXT_MASK serializable.
+
+	* app/widgets/gimpdevicestatus.c: add the device table to its
+	parent container again. Fixes "missing" devices.
+
+	* app/core/gimptooloptions.c
+	* app/widgets/gimpdevices.c: cleanup / code review.
+
+2004-07-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppainttool.c (gimp_paint_tool_cursor_update): if
 	the color tool is enabled, skip cursor hiding entirely.
 

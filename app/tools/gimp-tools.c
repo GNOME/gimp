@@ -458,16 +458,6 @@ gimp_tools_register (GType                   tool_type,
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);
 
-  if (tool_info->context_props)
-    {
-      gimp_context_define_properties (GIMP_CONTEXT (tool_info->tool_options),
-                                      tool_info->context_props, FALSE);
-
-      gimp_context_copy_properties (gimp_get_user_context (gimp),
-                                    GIMP_CONTEXT (tool_info->tool_options),
-                                    GIMP_CONTEXT_ALL_PROPS_MASK);
-    }
-
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
   g_object_unref (tool_info);
 

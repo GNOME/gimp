@@ -65,14 +65,14 @@ gimp_tool_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpToolOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_tool_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpToolOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_tool_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_tool_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpToolOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_tool_options_init,
       };
 
       type = g_type_register_static (GIMP_TYPE_CONTEXT,
@@ -86,9 +86,7 @@ gimp_tool_options_get_type (void)
 static void
 gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -117,9 +115,7 @@ gimp_tool_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpToolOptions *options;
-
-  options = GIMP_TOOL_OPTIONS (object);
+  GimpToolOptions *options = GIMP_TOOL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -147,9 +143,7 @@ gimp_tool_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpToolOptions *options;
-
-  options = GIMP_TOOL_OPTIONS (object);
+  GimpToolOptions *options = GIMP_TOOL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -230,10 +224,10 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
                             GIMP_OBJECT (tool_options->tool_info)->name);
 
   retval = gimp_config_serialize_to_file (GIMP_CONFIG (tool_options),
-					  filename,
-					  header, footer,
-					  NULL,
-					  error);
+                                          filename,
+                                          header, footer,
+                                          NULL,
+                                          error);
 
   g_free (filename);
   g_free (header);
@@ -256,9 +250,9 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   filename = gimp_tool_options_build_filename (tool_options, extension);
 
   retval = gimp_config_deserialize_file (GIMP_CONFIG (tool_options),
-					 filename,
-					 NULL,
-					 error);
+                                         filename,
+                                         NULL,
+                                         error);
 
   g_free (filename);
 

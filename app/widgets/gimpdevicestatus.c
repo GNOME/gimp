@@ -116,11 +116,7 @@ gimp_device_status_get_type (void)
 static void
 gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -145,6 +141,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   status->table = gtk_table_new (status->num_devices * 3, 7, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (status->table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (status->table), 6);
+  gtk_container_add (GTK_CONTAINER (status), status->table);
   gtk_widget_show (status->table);
 
   for (list = gdk_display_list_devices (display), i = 0;
@@ -172,8 +169,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       entry->separator = gtk_hbox_new (FALSE, 0);
       gtk_table_attach (GTK_TABLE (status->table), entry->separator,
-			0, 7, row, row + 1,
-			GTK_FILL, GTK_FILL, 0, 2);
+                        0, 7, row, row + 1,
+                        GTK_FILL, GTK_FILL, 0, 2);
 
       row++;
 
@@ -378,7 +375,7 @@ gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
     }
   else
     {
-      GimpContext *context;
+      GimpContext *context = GIMP_CONTEXT (device_info);
       GimpRGB      color;
       guchar       r, g, b;
       gchar        buf[64];
@@ -391,8 +388,6 @@ gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
       gtk_widget_show (entry->brush);
       gtk_widget_show (entry->pattern);
       gtk_widget_show (entry->gradient);
-
-      context = GIMP_CONTEXT (device_info);
 
       gimp_context_get_foreground (context, &color);
       gimp_rgb_get_uchar (&color, &r, &g, &b);

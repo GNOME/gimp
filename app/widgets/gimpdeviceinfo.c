@@ -86,14 +86,14 @@ gimp_device_info_get_type (void)
       static const GTypeInfo device_info_info =
       {
         sizeof (GimpDeviceInfoClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_device_info_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpDeviceInfo),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_device_info_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_device_info_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDeviceInfo),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_device_info_init,
       };
 
       device_info_type = g_type_register_static (GIMP_TYPE_CONTEXT,
@@ -107,10 +107,8 @@ gimp_device_info_get_type (void)
 static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);;
   GParamSpec   *array_spec;
-
-  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -141,7 +139,6 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                             GDK_AXIS_IGNORE,
                                                             G_PARAM_READWRITE),
                                          GIMP_CONFIG_PARAM_FLAGS);
-
   g_object_class_install_property (object_class, PROP_AXES, array_spec);
 
   array_spec = g_param_spec_value_array ("keys",
@@ -151,7 +148,6 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                                               NULL,
                                                               G_PARAM_READWRITE),
                                          GIMP_CONFIG_PARAM_FLAGS);
-
   g_object_class_install_property (object_class, PROP_KEYS, array_spec);
 }
 
@@ -187,6 +183,9 @@ gimp_device_info_constructor (GType                  type,
                                 GIMP_CONTEXT (object),
                                 GIMP_DEVICE_INFO_CONTEXT_MASK);
 
+  gimp_context_set_serialize_properties (GIMP_CONTEXT (object),
+                                         GIMP_DEVICE_INFO_CONTEXT_MASK);
+
   /*  FIXME: this is ugly and needs to be done via "notify" once
    *  the contexts' properties are dynamic.
    */
@@ -215,9 +214,7 @@ gimp_device_info_constructor (GType                  type,
 static void
 gimp_device_info_finalize (GObject *object)
 {
-  GimpDeviceInfo *device_info;
-
-  device_info = GIMP_DEVICE_INFO (object);
+  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
 
   if (device_info->axes)
     g_free (device_info->axes);
@@ -234,12 +231,8 @@ gimp_device_info_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDeviceInfo *device_info;
-  GdkDevice      *device;
-
-  device_info = GIMP_DEVICE_INFO (object);
-
-  device = device_info->device;
+  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
+  GdkDevice      *device      = device_info->device;
 
   switch (property_id)
     {
@@ -252,9 +245,7 @@ gimp_device_info_set_property (GObject      *object,
 
     case PROP_AXES:
       {
-        GValueArray *array;
-
-        array = g_value_get_boxed (value);
+        GValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
@@ -290,9 +281,7 @@ gimp_device_info_set_property (GObject      *object,
 
     case PROP_KEYS:
       {
-        GValueArray *array;
-
-        array = g_value_get_boxed (value);
+        GValueArray *array = g_value_get_boxed (value);
 
         if (array)
           {
@@ -347,12 +336,8 @@ gimp_device_info_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpDeviceInfo *device_info;
-  GdkDevice      *device;
-
-  device_info = GIMP_DEVICE_INFO (object);
-
-  device = device_info->device;
+  GimpDeviceInfo *device_info = GIMP_DEVICE_INFO (object);
+  GdkDevice      *device      = device_info->device;
 
   switch (property_id)
     {
