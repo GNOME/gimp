@@ -1,8 +1,14 @@
 2000-03-25  Sven Neumann  <sven@gimp.org>
 
+	* README.i18n: added new sections explaining what catalogs 
+	need to be translated, how to translate menupaths correctly
+	and how a third-party plug-in can add additional textdomains.
+
+2000-03-25  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/gimage.pdb
 	* app/gimage_cmds.c: corrected the description and help for the
-	gimp_image_component_* functions.
+	gimp_image_[get|set]_component_* functions.
 
 	* app/info_dialog.h: include dialog_handler.h
 

@@ -1,7 +1,8 @@
 This document exists to document the important things to care for
 because of locale support. 
 Actually this one is maintained by me, that is Daniel Egger 
-(Daniel.Egger@rz.fh-muenchen.de). 
+(Daniel.Egger@rz.fh-muenchen.de).
+	
 
 1. Why localisation?
 
@@ -142,7 +143,38 @@ Actually this one is maintained by me, that is Daniel Egger
  and it already has a translation, it will be taken over to the new catalog
  together with a remark that this one may not necessarily fit.
  
-6. And more?
+6. Gimp is different
+
+ Gimp is a complex application which has a bunch of scripts and plug-ins 
+ that all want to be internationalized. Therefore there is not one catalog
+ but many. For a full translation of the GIMP's UI, you will have to add
+ translations for the following catalogs:
+
+	 po/gimp.pot		          --  the core
+	 po-libgimp/gimp-libgimp.pot	  --  the libgimp library
+	 po-plugins/gimp-std-plugins.pot  --  most of the plug-ins
+	 plug-ins/perl/po/gimp-perl.pot   --  the gimp-perl scripts
+	 po-script-fu/gimp-script-fu.pot  --  the script-fu scripts
+
+ When translating menu_paths, please do not translate the name of the
+ item_factory (that is the one in brackets at the front), e.g. 
+ <Image>/Edit/Copy  should _not_ be translated to <Bild>/Bearbeiten/Kopieren,
+ but to <Image>/Bearbeiten/Kopieren. If you get this wrong, Gimp will warn you 
+ at startup about bad translations. So do always test your translations and
+ watch the console for output.
+
+7. Adding additional textdomains
+
+ Third-party plug-ins (plug-ins that are not distributed with The GIMP) can't 
+ have their messages in the gimp-std-plugins textdomain. We have therefore 
+ provided a mechanism that allows plug-ins to install their own message
+ catalogs and tell The GIMP to bind to that textdomain. This is necessary so 
+ that The GIMP can correctly translate the menupaths the plug-in registers. 
+ Basically the plug-in has to call  gimp_plugin_domain_add() or 
+ gimp_domain_plugin_add_with_path() before it registers any functions. Have a 
+ look at the script-fu plug-in to see how it is done in detail.
+
+8. And more?
 
  I hope I mentioned everything that is worth it and hope that this document
  will clarify some things. If it doesn't please write me a mail and tell me
@@ -152,3 +184,7 @@ Actually this one is maintained by me, that is Daniel Egger
 Happy Gimping. Yours,
                      Daniel Egger
 
+
+
+Sections (6) and (7) were added by Sven Neumann <sven@gimp.org>. He is the one
+to blame for errors in there...
