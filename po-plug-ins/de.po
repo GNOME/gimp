@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-02-17 10:53+0100\n"
-"PO-Revision-Date: 2000-02-17 10:55+0100\n"
+"POT-Creation-Date: 2000-02-19 13:45+0100\n"
+"PO-Revision-Date: 2000-02-19 13:55+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,9 +42,10 @@ msgstr "Über"
 #: plug-ins/AlienMap2/AlienMap2.c:626 plug-ins/AlienMap2/AlienMap2.c:912
 #: plug-ins/FractalExplorer/Dialogs.c:300
 #: plug-ins/FractalExplorer/Dialogs.c:1393
-#: plug-ins/FractalExplorer/FractalExplorer.c:853
-#: plug-ins/FractalExplorer/FractalExplorer.c:1582 plug-ins/bmp/bmpwrite.c:562
-#: plug-ins/borderaverage/borderaverage.c:401
+#: plug-ins/FractalExplorer/FractalExplorer.c:852
+#: plug-ins/FractalExplorer/FractalExplorer.c:1581
+#: plug-ins/Lighting/lighting_ui.c:1075 plug-ins/MapObject/mapobject_ui.c:1382
+#: plug-ins/bmp/bmpwrite.c:562 plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
@@ -108,7 +109,7 @@ msgstr "Über"
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
-#: plug-ins/ifscompose/ifscompose.c:798
+#: plug-ins/ifscompose/ifscompose.c:797
 #: plug-ins/imagemap/imap_default_dialog.c:102 plug-ins/maze/maze_face.c:203
 #: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:581
 #: plug-ins/print/print.c:1497 plug-ins/rcm/rcm_dialog.c:746
@@ -123,11 +124,11 @@ msgstr "OK"
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
 #: plug-ins/FractalExplorer/Dialogs.c:302
-#: plug-ins/FractalExplorer/FractalExplorer.c:747
-#: plug-ins/FractalExplorer/FractalExplorer.c:862
-#: plug-ins/FractalExplorer/FractalExplorer.c:1616
-#: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/bmp/bmpwrite.c:564
-#: plug-ins/borderaverage/borderaverage.c:403
+#: plug-ins/FractalExplorer/FractalExplorer.c:746
+#: plug-ins/FractalExplorer/FractalExplorer.c:861
+#: plug-ins/FractalExplorer/FractalExplorer.c:1615
+#: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1384
+#: plug-ins/bmp/bmpwrite.c:564 plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
 #: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
@@ -191,7 +192,7 @@ msgstr "OK"
 #: plug-ins/gfli/gfli.c:928 plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/ifscompose/ifscompose.c:806
+#: plug-ins/ifscompose/ifscompose.c:805
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:207
 #: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:583
 #: plug-ins/print/print.c:1395 plug-ins/print/print.c:1505
@@ -446,7 +447,8 @@ msgid "About AlienMap2"
 msgstr "Über AlienMap2"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1214
+#: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
+#: plug-ins/MapObject/mapobject_ui.c:1399 plug-ins/common/CML_explorer.c:1214
 #: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
 #: plug-ins/common/curve_bend.c:1515 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:319
@@ -458,7 +460,7 @@ msgstr "Über AlienMap2"
 #: plug-ins/gflare/gflare.c:2514 plug-ins/gflare/gflare.c:3519
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/ifscompose/ifscompose.c:913
+#: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:287
 #: plug-ins/imagemap/imap_grid.c:232 plug-ins/rcm/rcm_dialog.c:115
 #: plug-ins/rcm/rcm_dialog.c:627 plug-ins/sinus/sinus.c:1184
@@ -605,7 +607,7 @@ msgstr "Fraktal aus Datei laden"
 #: plug-ins/common/curve_bend.c:1379 plug-ins/common/iwarp.c:967
 #: plug-ins/common/spheredesigner.c:2238 plug-ins/common/tileit.c:486
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
-#: plug-ins/ifscompose/ifscompose.c:804
+#: plug-ins/ifscompose/ifscompose.c:803
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -830,13 +832,13 @@ msgid "Click here to cancel save procedure"
 msgstr "Hier klicken um den Speichervorgang abzubrechen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1984
-#: plug-ins/FractalExplorer/FractalExplorer.c:1288
+#: plug-ins/FractalExplorer/FractalExplorer.c:1287
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Datei '%s' ist keine FractalExplorer Datei"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1989
-#: plug-ins/FractalExplorer/FractalExplorer.c:1296
+#: plug-ins/FractalExplorer/FractalExplorer.c:1295
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -853,7 +855,7 @@ msgstr "<Image>/Filter/Render/Muster/Fraktal Exlorer..."
 msgid "Rendering Fractal..."
 msgstr "Berechne Fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:738
+#: plug-ins/FractalExplorer/FractalExplorer.c:737
 #: plug-ins/gflare/gflare.c:3386
 #, c-format
 msgid ""
@@ -863,33 +865,33 @@ msgstr ""
 "Wollen Sie \"%s\" wirklich\n"
 "aus der Liste und von der Festplatte löschen ?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:742
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
 msgid "Delete Fractal"
 msgstr "Fraktal löschen"
 
 #. Buttons
-#: plug-ins/FractalExplorer/FractalExplorer.c:747
-#: plug-ins/FractalExplorer/FractalExplorer.c:1467 plug-ins/gfig/gfig.c:6261
+#: plug-ins/FractalExplorer/FractalExplorer.c:746
+#: plug-ins/FractalExplorer/FractalExplorer.c:1466 plug-ins/gfig/gfig.c:6261
 #: plug-ins/gflare/gflare.c:3119 plug-ins/gflare/gflare.c:3395
-#: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:802
+#: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:801
 #: plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
 msgid "Delete"
 msgstr "Löschen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:832
+#: plug-ins/FractalExplorer/FractalExplorer.c:831
 msgid "Edit fractal name"
 msgstr "Fraktalnamen bearbeiten"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:843
+#: plug-ins/FractalExplorer/FractalExplorer.c:842
 msgid "Fractal name:"
 msgstr "Fraktalname"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:884
+#: plug-ins/FractalExplorer/FractalExplorer.c:883
 msgid "New Fractal"
 msgstr "Neues Fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1162
+#: plug-ins/FractalExplorer/FractalExplorer.c:1161
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -898,401 +900,553 @@ msgid ""
 "to your ~/.gimp-1.1/gimprc file\n"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1209
+#: plug-ins/FractalExplorer/FractalExplorer.c:1208
 #, c-format
 msgid ""
 "fractalexplorer-path miss-configured - \n"
 "Path `%.100s' not found\n"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1409
+#: plug-ins/FractalExplorer/FractalExplorer.c:1408
 msgid "My first fractal"
 msgstr "Mein erstes Fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1426
+#: plug-ins/FractalExplorer/FractalExplorer.c:1425
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Durch Doppelklick ein Fracktal auswählen"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1457
+#: plug-ins/FractalExplorer/FractalExplorer.c:1456
 msgid "Rescan"
 msgstr "Neuer Scan"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1464
+#: plug-ins/FractalExplorer/FractalExplorer.c:1463
 msgid "Select directory and rescan collection"
 msgstr "Verzeichnis auswählen und erneut scannen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1475
+#: plug-ins/FractalExplorer/FractalExplorer.c:1474
 msgid "Delete currently selected fractal"
 msgstr "Löscht das ausgewählte Fraktal"
 
 #. Call up the file sel dialogue
-#: plug-ins/FractalExplorer/FractalExplorer.c:1512
+#: plug-ins/FractalExplorer/FractalExplorer.c:1511
 msgid "Add FractalExplorer path"
 msgstr "FractalExplorer Pfad hinzufügen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1546
+#: plug-ins/FractalExplorer/FractalExplorer.c:1545
 msgid "Rescan for fractals"
 msgstr "Neuer Scan für Fraktale"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1604
+#: plug-ins/FractalExplorer/FractalExplorer.c:1603
 msgid "Add dir"
 msgstr "Verzeichnis hinzufügen"
 
-#: plug-ins/Lighting/lighting_main.c:177
+#: plug-ins/Lighting/lighting_main.c:170
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
 msgstr "<Image>/Filter/Licht-Effekte/Lichteffekte..."
 
-#: plug-ins/Lighting/lighting_ui.c:34
-msgid "Point light"
-msgstr "Punkt-Lichtquelle"
-
-#: plug-ins/Lighting/lighting_ui.c:35
-msgid "Directional light"
-msgstr "Direktionale Lichtquelle"
-
-#: plug-ins/Lighting/lighting_ui.c:36
-msgid "Spot light"
-msgstr "Scheinwerfer-Lichtquelle"
-
-#: plug-ins/Lighting/lighting_ui.c:37
-msgid "No light"
-msgstr "Keine Lichtquelle"
-
-#: plug-ins/Lighting/lighting_ui.c:43
-msgid "From image"
-msgstr "Aus Bild"
-
-#: plug-ins/Lighting/lighting_ui.c:44 plug-ins/common/waves.c:351
-msgid "Waves"
-msgstr "Wellen"
-
-#: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
-#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
-msgid "Linear"
-msgstr "Linear"
-
-#: plug-ins/Lighting/lighting_ui.c:51
-msgid "Logarithmic"
-msgstr "Logarithmisch"
-
-#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:668
-msgid "Sinusoidal"
-msgstr "Sinusförmig"
-
-#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:669
-msgid "Spherical"
-msgstr "Kreisförmig"
-
-#: plug-ins/Lighting/lighting_ui.c:210 plug-ins/Lighting/lighting_ui.c:1016
+#: plug-ins/Lighting/lighting_ui.c:147 plug-ins/Lighting/lighting_ui.c:1029
 #: plug-ins/common/spheredesigner.c:2612
 msgid "Bump"
 msgstr "Bump"
 
-#: plug-ins/Lighting/lighting_ui.c:238 plug-ins/Lighting/lighting_ui.c:1025
+#: plug-ins/Lighting/lighting_ui.c:174 plug-ins/Lighting/lighting_ui.c:1037
 msgid "Env"
 msgstr "Env"
 
-#: plug-ins/Lighting/lighting_ui.c:569
-msgid "General options"
+#. General options
+#: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:532
+msgid "General Options"
 msgstr "Generelle Einstellungen"
 
-#: plug-ins/Lighting/lighting_ui.c:572
-msgid "Use bump mapping"
+#: plug-ins/Lighting/lighting_ui.c:402
+msgid "Use Bump Mapping"
 msgstr "Benutze Bumpmapping"
 
-#: plug-ins/Lighting/lighting_ui.c:574
-msgid "Use environment mapping"
-msgstr "Benutze Environmentmapping"
-
-#. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
-#. (GtkSignalFunc)togglerefraction_update);
-#: plug-ins/Lighting/lighting_ui.c:578
-msgid "Transparent background"
-msgstr "Transparenter Hintergrund"
-
-#: plug-ins/Lighting/lighting_ui.c:580
-msgid "Create new image"
-msgstr "Neues Bild erzeugen"
-
-#: plug-ins/Lighting/lighting_ui.c:582
-msgid "High preview quality"
-msgstr "Hohe Qualität in der Vorschau"
-
-#: plug-ins/Lighting/lighting_ui.c:584
-msgid "Enable tooltips"
-msgstr "Sprechblasen aktivieren"
-
-#: plug-ins/Lighting/lighting_ui.c:587
+#: plug-ins/Lighting/lighting_ui.c:412
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Bump-mapping (Tiefeneindruck) an/ausschalten"
 
-#: plug-ins/Lighting/lighting_ui.c:588
+#: plug-ins/Lighting/lighting_ui.c:415
+msgid "Use Environment Mapping"
+msgstr "Benutze Environmentmapping"
+
+#: plug-ins/Lighting/lighting_ui.c:425
 msgid "Enable/disable environment mapping (reflection)"
 msgstr "Environment-mapping (Reflexionen) an/ausschalten"
 
-#. gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer");
-#: plug-ins/Lighting/lighting_ui.c:590
+#: plug-ins/Lighting/lighting_ui.c:428
+msgid "Transparent Background"
+msgstr "Transparenter Hintergrund"
+
+#: plug-ins/Lighting/lighting_ui.c:438
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Mache das Bild transparent, wenn die bump-mapping-Tiefe 0 ist"
 
-#: plug-ins/Lighting/lighting_ui.c:591
+#: plug-ins/Lighting/lighting_ui.c:441 plug-ins/MapObject/mapobject_ui.c:590
+#: plug-ins/common/tile.c:434
+msgid "Create New Image"
+msgstr "Neues Bild erzeugen"
+
+#: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
 msgstr "Beim Anwenden des Filters ein neues Bild erstellen"
 
-#: plug-ins/Lighting/lighting_ui.c:592
+#: plug-ins/Lighting/lighting_ui.c:453
+msgid "High Preview Quality"
+msgstr "Hohe Qualität in der Vorschau"
+
+#: plug-ins/Lighting/lighting_ui.c:463
 msgid "Enable/disable high quality previews"
 msgstr "Vorschau in hoher Qualität an/ausschalten"
 
-#: plug-ins/Lighting/lighting_ui.c:593
+#: plug-ins/Lighting/lighting_ui.c:465 plug-ins/MapObject/mapobject_ui.c:602
+msgid "Enable Tooltips"
+msgstr "Sprechblasen aktivieren"
+
+#: plug-ins/Lighting/lighting_ui.c:475 plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
 msgstr "Sprechblasen an/ausschalten"
 
-#: plug-ins/Lighting/lighting_ui.c:612
-msgid "Antialiasing options"
+#. Antialiasing options
+#: plug-ins/Lighting/lighting_ui.c:479 plug-ins/MapObject/mapobject_ui.c:615
+msgid "Antialiasing Options"
 msgstr "Einstellungen für Antialiasing"
 
-#: plug-ins/Lighting/lighting_ui.c:615
-msgid "Enable antialiasing"
+#: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
+msgid "Enable Antialiasing"
 msgstr "Antialiasing benutzen"
 
-#: plug-ins/Lighting/lighting_ui.c:618
+#: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppen (Antialiasing)"
 
-#: plug-ins/Lighting/lighting_ui.c:628 plug-ins/common/bumpmap.c:962
-#: plug-ins/common/emboss.c:602 plug-ins/struc/struc.c:304
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
+#: plug-ins/common/bumpmap.c:962 plug-ins/common/emboss.c:602
+#: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Tiefe:"
 
-#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:297
-#: plug-ins/common/unsharp.c:837 plug-ins/common/wind.c:857
-#: plug-ins/gflare/gflare.c:3041
-msgid "Threshold:"
-msgstr "Schwellwert:"
-
-#: plug-ins/Lighting/lighting_ui.c:645
+#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Qualität des Antialiasing. Höher ist besser, aber langsamer"
 
-#: plug-ins/Lighting/lighting_ui.c:646
+#: plug-ins/Lighting/lighting_ui.c:526 plug-ins/MapObject/mapobject_ui.c:662
+msgid "Treshold:"
+msgstr "Schwellwert:"
+
+#: plug-ins/Lighting/lighting_ui.c:530 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
 msgstr ""
 "Aufhören, sobald Unterschiede zwischen Pixeln kleiner als dieser Wert sind"
 
-#: plug-ins/Lighting/lighting_ui.c:674
-msgid "Light settings"
+#: plug-ins/Lighting/lighting_ui.c:556 plug-ins/MapObject/mapobject_ui.c:692
+msgid "Light Settings"
 msgstr "Licht-Eigenschaften"
 
-#: plug-ins/Lighting/lighting_ui.c:678
-msgid "Lightsource type:"
-msgstr "Lichtquelletyp:"
+#: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
+msgid "Point Light"
+msgstr "Punkt-Lichtquelle"
 
-#: plug-ins/Lighting/lighting_ui.c:683
-msgid "Lightsource color"
-msgstr "Lichtquellefarbe"
+#: plug-ins/Lighting/lighting_ui.c:573 plug-ins/MapObject/mapobject_ui.c:708
+msgid "Directional Light"
+msgstr "Direktionales Licht"
 
-#: plug-ins/Lighting/lighting_ui.c:690
+#: plug-ins/Lighting/lighting_ui.c:575
+msgid "Spot Light"
+msgstr "Scheinwerfer"
+
+#: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
+msgid "No Light"
+msgstr "Keine Lichtquelle"
+
+#: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:715
+msgid "Lightsource Type:"
+msgstr "Lichtquellentyp:"
+
+#: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
 msgstr "Stellen Sie hier den Typ der Lichtquelle ein"
 
-#: plug-ins/Lighting/lighting_ui.c:691
-msgid "Set light source color (white is default)"
-msgstr "Setze Lichtquellenfarbe (Weiss ist voreingestellt)"
+#: plug-ins/Lighting/lighting_ui.c:587 plug-ins/MapObject/mapobject_ui.c:720
+msgid "Select Lightsource Color"
+msgstr "Lichtquellenfarbe"
 
-#: plug-ins/Lighting/lighting_ui.c:693
+#: plug-ins/Lighting/lighting_ui.c:591 plug-ins/MapObject/mapobject_ui.c:724
+msgid "Lightsource Color:"
+msgstr "Lichtquellenfarbe:"
+
+#: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:728
+msgid "Set light source color"
+msgstr "Lichtquellefarbe setzen"
+
+#: plug-ins/Lighting/lighting_ui.c:597 plug-ins/MapObject/mapobject_ui.c:730
+#: plug-ins/MapObject/mapobject_ui.c:1028
 msgid "Position"
 msgstr "Position"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:696 plug-ins/Lighting/lighting_ui.c:718
-#: plug-ins/common/flarefx.c:745 plug-ins/common/nova.c:494
-#: plug-ins/common/papertile.c:283 plug-ins/gflare/gflare.c:2896
-#: plug-ins/ifscompose/ifscompose.c:513
+#: plug-ins/Lighting/lighting_ui.c:614 plug-ins/Lighting/lighting_ui.c:666
+#: plug-ins/MapObject/mapobject_ui.c:747 plug-ins/MapObject/mapobject_ui.c:799
+#: plug-ins/MapObject/mapobject_ui.c:1040
+#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:745
+#: plug-ins/common/nova.c:494 plug-ins/common/papertile.c:283
+#: plug-ins/gflare/gflare.c:2896 plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
 msgstr "X:"
 
-#. Y
-#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/Lighting/lighting_ui.c:719
-#: plug-ins/common/flarefx.c:763 plug-ins/common/nova.c:512
-#: plug-ins/common/papertile.c:292 plug-ins/gflare/gflare.c:2900
-#: plug-ins/ifscompose/ifscompose.c:527
-msgid "Y:"
-msgstr "Y:"
-
-#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/Lighting/lighting_ui.c:720
-msgid "Z:"
-msgstr "Z:"
-
-#: plug-ins/Lighting/lighting_ui.c:704
+#: plug-ins/Lighting/lighting_ui.c:621 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
 msgstr "X-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:705
+#. Y
+#: plug-ins/Lighting/lighting_ui.c:627 plug-ins/Lighting/lighting_ui.c:678
+#: plug-ins/MapObject/mapobject_ui.c:760 plug-ins/MapObject/mapobject_ui.c:811
+#: plug-ins/MapObject/mapobject_ui.c:1051
+#: plug-ins/MapObject/mapobject_ui.c:1093
+#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
+#: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
+#: plug-ins/gflare/gflare.c:2900 plug-ins/ifscompose/ifscompose.c:526
+msgid "Y:"
+msgstr "Y:"
+
+#: plug-ins/Lighting/lighting_ui.c:634 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
 msgstr "Y-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:706
+#: plug-ins/Lighting/lighting_ui.c:640 plug-ins/Lighting/lighting_ui.c:690
+#: plug-ins/MapObject/mapobject_ui.c:773 plug-ins/MapObject/mapobject_ui.c:823
+#: plug-ins/MapObject/mapobject_ui.c:1062
+#: plug-ins/MapObject/mapobject_ui.c:1102
+#: plug-ins/MapObject/mapobject_ui.c:1200
+msgid "Z:"
+msgstr "Z:"
+
+#: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
 msgstr "Z-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:715
-msgid "Direction vector"
+#: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:783
+msgid "Direction Vector"
 msgstr "Richtungsvektor"
 
-#: plug-ins/Lighting/lighting_ui.c:722
+#: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
 msgstr "X-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:723
+#: plug-ins/Lighting/lighting_ui.c:685 plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
 msgstr "Y-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:724
+#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
 msgstr "Z-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: plug-ins/Lighting/lighting_ui.c:756
-msgid "Intensity levels"
+#: plug-ins/Lighting/lighting_ui.c:722 plug-ins/MapObject/mapobject_ui.c:855
+msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:998
+#: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
+#: plug-ins/common/bumpmap.c:998
 msgid "Ambient:"
 msgstr "Ambient:"
 
-#: plug-ins/Lighting/lighting_ui.c:762 plug-ins/Lighting/lighting_ui.c:813
-msgid "Diffuse:"
-msgstr "Diffuse:"
-
-#: plug-ins/Lighting/lighting_ui.c:802
+#: plug-ins/Lighting/lighting_ui.c:753 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Anteil der ursprünglichen Farbe, wenn kein direktes Licht einfällt"
 
-#: plug-ins/Lighting/lighting_ui.c:803
+#: plug-ins/Lighting/lighting_ui.c:765 plug-ins/Lighting/lighting_ui.c:804
+#: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
+msgid "Diffuse:"
+msgstr "Diffuse:"
+
+#: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 "Intensität der ursprünglichen Farbe, wenn das Objekt von einer Lichtquelle\n"
 "angeleuchtet wird"
 
-#: plug-ins/Lighting/lighting_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
 msgstr "Reflexivität"
 
-#: plug-ins/Lighting/lighting_ui.c:814
-msgid "Specular:"
-msgstr "Spiegel:"
-
-#: plug-ins/Lighting/lighting_ui.c:815 plug-ins/common/jigsaw.c:2397
-msgid "Highlight:"
-msgstr "Glanzlicht:"
-
-#: plug-ins/Lighting/lighting_ui.c:829
+#: plug-ins/Lighting/lighting_ui.c:817 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
 "Je höher der Wert, umso mehr Licht reflektiert das Objekt (es wird heller)"
 
-#: plug-ins/Lighting/lighting_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:829 plug-ins/MapObject/mapobject_ui.c:962
+msgid "Specular:"
+msgstr "Spiegel:"
+
+#: plug-ins/Lighting/lighting_ui.c:842 plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
 msgstr "Dieser Wert legt fest wie intensiv die \"Highlights\" sind"
 
-#: plug-ins/Lighting/lighting_ui.c:831
+#: plug-ins/Lighting/lighting_ui.c:854 plug-ins/MapObject/mapobject_ui.c:987
+#: plug-ins/common/jigsaw.c:2397
+msgid "Highlight:"
+msgstr "Glanzlicht:"
+
+#: plug-ins/Lighting/lighting_ui.c:867 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
 msgstr "Je höher dieser Wert ist, umso konzentrierter werden die Glanzlichter"
 
-#: plug-ins/Lighting/lighting_ui.c:897
-msgid "Bumpmap settings"
+#: plug-ins/Lighting/lighting_ui.c:895
+msgid "Bumpmap Settings"
 msgstr "Einstellungen für Bumpmapping"
 
-#: plug-ins/Lighting/lighting_ui.c:903
-msgid "Bumpmap image:"
+#: plug-ins/Lighting/lighting_ui.c:911
+msgid "Bumpmap Image:"
 msgstr "Bumpmap Bild:"
 
-#: plug-ins/Lighting/lighting_ui.c:917
+#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:804
+#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
+msgid "Linear"
+msgstr "Linear"
+
+#: plug-ins/Lighting/lighting_ui.c:920
+msgid "Logarithmic"
+msgstr "Logarithmisch"
+
+#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:668
+msgid "Sinusoidal"
+msgstr "Sinusförmig"
+
+#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:669
+msgid "Spherical"
+msgstr "Kreisförmig"
+
+#: plug-ins/Lighting/lighting_ui.c:926
 msgid "Curve:"
 msgstr "Kurve:"
 
-#: plug-ins/Lighting/lighting_ui.c:922
-msgid "Minimum height:"
+#: plug-ins/Lighting/lighting_ui.c:932
+msgid "Minimum Height:"
 msgstr "Minimale Höhe:"
 
-#: plug-ins/Lighting/lighting_ui.c:924
-msgid "Maximum height:"
+#: plug-ins/Lighting/lighting_ui.c:941
+msgid "Maximum Height:"
 msgstr "Maximale Höhe:"
 
-#: plug-ins/Lighting/lighting_ui.c:932
-msgid "Autostretch to fit value range"
-msgstr "Automatisch strecken um Wertebereich auszunutzen"
+#: plug-ins/Lighting/lighting_ui.c:947
+msgid "Autostretch to Fit Value Range"
+msgstr "Autom. strecken um Wertebereich auszunutzen"
 
-#: plug-ins/Lighting/lighting_ui.c:955
-msgid "Environment settings"
+#: plug-ins/Lighting/lighting_ui.c:974
+msgid "Environment Settings"
 msgstr "Umgebungs-Einstellungen"
 
-#: plug-ins/Lighting/lighting_ui.c:962
-msgid "Environment image:"
+#: plug-ins/Lighting/lighting_ui.c:983
+msgid "Environment Image:"
 msgstr "Umgebungs-Bild:"
 
 #. Options section
-#: plug-ins/Lighting/lighting_ui.c:996 plug-ins/common/lic.c:1036
-#: plug-ins/common/ripple.c:620 plug-ins/gfig/gfig.c:4997
-#: plug-ins/maze/maze_face.c:338
+#: plug-ins/Lighting/lighting_ui.c:1014 plug-ins/MapObject/mapobject_ui.c:1314
+#: plug-ins/common/lic.c:1036 plug-ins/common/ripple.c:620
+#: plug-ins/gfig/gfig.c:4997 plug-ins/maze/maze_face.c:338
 msgid "Options"
 msgstr "Einstellungen"
 
-#: plug-ins/Lighting/lighting_ui.c:1002 plug-ins/common/spheredesigner.c:1574
-#: plug-ins/common/spheredesigner.c:2618
+#: plug-ins/Lighting/lighting_ui.c:1018 plug-ins/MapObject/mapobject_ui.c:1318
+#: plug-ins/common/spheredesigner.c:1574 plug-ins/common/spheredesigner.c:2618
 msgid "Light"
 msgstr "Licht"
 
-#: plug-ins/Lighting/lighting_ui.c:1008
+#: plug-ins/Lighting/lighting_ui.c:1022 plug-ins/MapObject/mapobject_ui.c:1322
 msgid "Material"
 msgstr "Material"
 
-#: plug-ins/Lighting/lighting_ui.c:1046
-msgid "Lighting effects"
+#: plug-ins/Lighting/lighting_ui.c:1069
+msgid "Lighting Effects"
 msgstr "Lichteffekte"
 
-#. Add Ok, Cancel and Help buttons to the action area
-#. ==================================================
-#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1299
-#: plug-ins/common/tileit.c:583 plug-ins/dbbrowser/dbbrowser_utils.c:155
-#: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
-#: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
-#: plug-ins/imagemap/imap_default_dialog.c:110
-msgid "Apply"
-msgstr "Anwenden"
+#: plug-ins/Lighting/lighting_ui.c:1129 plug-ins/MapObject/mapobject_ui.c:1433
+#: plug-ins/common/diffraction.c:606
+msgid "Preview!"
+msgstr "Vorschau!"
 
-#: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/imagemap/imap_menu.c:410
-#: plug-ins/maze/maze_face.c:205
-msgid "Help"
-msgstr "Hilfe"
-
-#: plug-ins/Lighting/lighting_ui.c:1081
-msgid "Apply filter with current settings"
-msgstr "Filter mit diesen Einstellungen anwenden"
-
-#: plug-ins/Lighting/lighting_ui.c:1082
-msgid "Close filter without doing anything"
-msgstr "Filter schliessen, ohne etwas zu tun"
-
-#: plug-ins/Lighting/lighting_ui.c:1102
-msgid "  Preview!  "
-msgstr "  Vorschau!  "
-
-#: plug-ins/Lighting/lighting_ui.c:1103
+#: plug-ins/Lighting/lighting_ui.c:1137 plug-ins/MapObject/mapobject_ui.c:1441
 msgid "Recompute preview image"
 msgstr "Vorschau neu errechnen"
 
-#: plug-ins/Lighting/lighting_ui.c:1106
-msgid "Zoom in (make image bigger)"
-msgstr "Hineinzoomen (Bild grösser machen)"
-
-#: plug-ins/Lighting/lighting_ui.c:1108
+#: plug-ins/Lighting/lighting_ui.c:1146 plug-ins/MapObject/mapobject_ui.c:1450
 msgid "Zoom out (make image smaller)"
 msgstr "Herauszoomen (Bild kleiner machen)"
 
-#: plug-ins/MapObject/mapobject_main.c:189
+#: plug-ins/Lighting/lighting_ui.c:1155 plug-ins/MapObject/mapobject_ui.c:1459
+msgid "Zoom in (make image bigger)"
+msgstr "Hineinzoomen (Bild grösser machen)"
+
+#: plug-ins/MapObject/mapobject_main.c:203
 msgid "<Image>/Filters/Map/Map Object..."
 msgstr "<Image>/Filter/Abbilden/Auf Object..."
+
+#: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
+#: plug-ins/MapObject/mapobject_ui.c:1332
+msgid "Box"
+msgstr "Kiste"
+
+#: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
+#: plug-ins/MapObject/mapobject_ui.c:1338
+msgid "Cylinder"
+msgstr "Zylinder"
+
+#: plug-ins/MapObject/mapobject_ui.c:545
+msgid "Map to:"
+msgstr "Abbilden auf:"
+
+# TODO
+#: plug-ins/MapObject/mapobject_ui.c:554
+msgid "Plane"
+msgstr "Ebene"
+
+#: plug-ins/MapObject/mapobject_ui.c:555
+msgid "Sphere"
+msgstr "Kugel"
+
+#: plug-ins/MapObject/mapobject_ui.c:563
+msgid "Type of object to map to"
+msgstr "Art des Objektes, auf das abgebildet wird"
+
+#: plug-ins/MapObject/mapobject_ui.c:565
+msgid "Transpararent Background"
+msgstr "Transparenter Hintergrund"
+
+#: plug-ins/MapObject/mapobject_ui.c:575
+msgid "Make image transparent outside object"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:577
+msgid "Tile Source Image"
+msgstr "Wiederhole Quellbild"
+
+#: plug-ins/MapObject/mapobject_ui.c:587
+msgid "Tile source image: useful for infinite planes"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1043
+msgid "Object X position in XYZ space"
+msgstr "X-Koordinate des Objektes im XYZ-Raum"
+
+#: plug-ins/MapObject/mapobject_ui.c:1054
+msgid "Object Y position in XYZ space"
+msgstr "Y-Koordinate des Objektes im XYZ-Raum"
+
+#: plug-ins/MapObject/mapobject_ui.c:1065
+msgid "Object Z position in XYZ space"
+msgstr "Z-Koordinate des Objektes im XYZ-Raum"
+
+#. Rotation
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2559
+#: plug-ins/gdyntext/gdyntext_ui.c:388
+msgid "Rotation"
+msgstr "Rotation"
+
+#: plug-ins/MapObject/mapobject_ui.c:1087
+msgid "Rotation angle about X axis"
+msgstr "Rotationswinkel um die X-Achse"
+
+#: plug-ins/MapObject/mapobject_ui.c:1096
+msgid "Rotation angle about Y axis"
+msgstr "Rotationswinkel um die Y-Achse"
+
+#: plug-ins/MapObject/mapobject_ui.c:1105
+msgid "Rotation angle about Z axis"
+msgstr "Rotationswinkel um die Z-Achse"
+
+#: plug-ins/MapObject/mapobject_ui.c:1129
+msgid "Front:"
+msgstr "Vorne:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1129
+msgid "Back:"
+msgstr "Hinten:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1130
+#: plug-ins/MapObject/mapobject_ui.c:1226
+msgid "Top:"
+msgstr "Oben:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1130
+#: plug-ins/MapObject/mapobject_ui.c:1226
+msgid "Bottom:"
+msgstr "Unten:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1131
+msgid "Left:"
+msgstr "Links:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1131
+msgid "Right:"
+msgstr "Rechts:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1137
+msgid "Map Images to Box Faces"
+msgstr "Bild auf Würfelseiten abbilden"
+
+#: plug-ins/MapObject/mapobject_ui.c:1178
+#: plug-ins/common/spheredesigner.c:2446
+msgid "Scale X:"
+msgstr "Skalierung X:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1181
+msgid "X scale (size)"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1192
+msgid "Y scale (size)"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1203
+msgid "Z scale (size)"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1231
+msgid "Images for the Cap Faces"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
+#: plug-ins/gimpressionist/size.c:56
+msgid "Size"
+msgstr "Grösse"
+
+#: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:763
+#: plug-ins/common/nlfilt.c:421 plug-ins/common/nova.c:399
+#: plug-ins/common/unsharp.c:819 plug-ins/common/whirlpinch.c:898
+#: plug-ins/gflare/gflare.c:2928 plug-ins/imagemap/imap_circle.c:273
+msgid "Radius:"
+msgstr "Radius:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1276
+msgid "Cylinder radius"
+msgstr "Zylinderradius"
+
+#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:824
+msgid "Length:"
+msgstr "Länge:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1288
+msgid "Cylinder length"
+msgstr "Zylinderlänge"
+
+#: plug-ins/MapObject/mapobject_ui.c:1326 plug-ins/common/blinds.c:388
+#: plug-ins/common/ripple.c:650 plug-ins/gimpressionist/orientation.c:52
+#: plug-ins/gimpressionist/orientation.c:57
+msgid "Orientation"
+msgstr "Orientierung"
+
+#: plug-ins/MapObject/mapobject_ui.c:1376
+msgid "Map to Object"
+msgstr "Auf Objekt abbilden"
+
+#: plug-ins/MapObject/mapobject_ui.c:1461
+msgid "Show Preview Wireframe"
+msgstr "Zeige Vorschau-Drahtgitter"
+
+#: plug-ins/MapObject/mapobject_ui.c:1469
+msgid "Show/hide preview wireframe"
+msgstr ""
 
 #. memory mapped file data
 #. must check file size
@@ -2086,7 +2240,7 @@ msgstr "Animation abspielen: "
 #: plug-ins/gap/gap_navigator_dialog.c:2852
 #: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
 #: plug-ins/helpbrowser/helpbrowser.c:827
-#: plug-ins/ifscompose/ifscompose.c:1250 plug-ins/imagemap/imap_menu.c:227
+#: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/script-fu/script-fu-console.c:205
 #: plug-ins/script-fu/script-fu-scripts.c:1956
 msgid "Close"
@@ -2193,12 +2347,6 @@ msgstr "Erzeuge Jalousie..."
 #: plug-ins/common/blinds.c:337
 msgid "Blinds"
 msgstr "Jalousie"
-
-#: plug-ins/common/blinds.c:388 plug-ins/common/ripple.c:650
-#: plug-ins/gimpressionist/orientation.c:52
-#: plug-ins/gimpressionist/orientation.c:57
-msgid "Orientation"
-msgstr "Orientierung"
 
 #. attach labels
 #: plug-ins/common/blinds.c:392 plug-ins/common/grid.c:526
@@ -2754,9 +2902,10 @@ msgstr "Vorschau"
 msgid "Smoothing"
 msgstr "Glättung"
 
-#. The antialias toggle
-#: plug-ins/common/curve_bend.c:1535
-msgid "Antialias"
+#. The antialiasing toggle
+#: plug-ins/common/curve_bend.c:1535 plug-ins/common/newsprint.c:1429
+#: plug-ins/common/ripple.c:629 plug-ins/mosaic/mosaic.c:602
+msgid "Antialiasing"
 msgstr "Antialiasing"
 
 #. The wor_on_copy toggle
@@ -2991,13 +3140,6 @@ msgstr "Anpassend"
 msgid "Recursive"
 msgstr "Rekursiv"
 
-#: plug-ins/common/despeckle.c:763 plug-ins/common/nlfilt.c:421
-#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:819
-#: plug-ins/common/whirlpinch.c:898 plug-ins/gflare/gflare.c:2928
-#: plug-ins/imagemap/imap_circle.c:273
-msgid "Radius:"
-msgstr "Radius:"
-
 #: plug-ins/common/despeckle.c:776
 msgid "Black Level:"
 msgstr "Schwellwert Schwarz:"
@@ -3040,10 +3182,6 @@ msgstr "Erzeuge Beugungsmuster"
 #: plug-ins/common/diffraction.c:560
 msgid "Diffraction Patterns"
 msgstr "Beugungsmuster"
-
-#: plug-ins/common/diffraction.c:606
-msgid "Preview!"
-msgstr "Vorschau!"
 
 #: plug-ins/common/diffraction.c:657
 msgid "Frequencies"
@@ -3322,31 +3460,31 @@ msgstr "Erweiterte Einstellungen (alle Werte relativ zur Filmhöhe)"
 msgid "Image Height:"
 msgstr "Bildhöhe:"
 
-#: plug-ins/common/film.c:1394
+#: plug-ins/common/film.c:1391
 msgid "Image Spacing:"
 msgstr "Bildabstand:"
 
-#: plug-ins/common/film.c:1418
+#: plug-ins/common/film.c:1412
 msgid "Hole Offset:"
 msgstr "Lochversatz:"
 
-#: plug-ins/common/film.c:1435
+#: plug-ins/common/film.c:1426
 msgid "Hole Width:"
 msgstr "Lochbreite:"
 
-#: plug-ins/common/film.c:1452
+#: plug-ins/common/film.c:1440
 msgid "Hole Height:"
 msgstr "Lochhöhe:"
 
-#: plug-ins/common/film.c:1469
+#: plug-ins/common/film.c:1454
 msgid "Hole Spacing:"
 msgstr "Lochabstand:"
 
-#: plug-ins/common/film.c:1493
+#: plug-ins/common/film.c:1475
 msgid "Number Height:"
 msgstr "Nummernhöhe:"
 
-#: plug-ins/common/film.c:1521
+#: plug-ins/common/film.c:1500
 msgid "Reset to Defaults"
 msgstr "Auf Standardwerte zurücksetzen"
 
@@ -3972,8 +4110,8 @@ msgstr "Deformations-Radius:"
 msgid "Deform Amount"
 msgstr "Deformation:"
 
-#: plug-ins/common/iwarp.c:898 plug-ins/ifscompose/ifscompose.c:868
-#: plug-ins/ifscompose/ifscompose.c:1135 plug-ins/imagemap/imap_cmd_move.c:80
+#: plug-ins/common/iwarp.c:898 plug-ins/ifscompose/ifscompose.c:867
+#: plug-ins/ifscompose/ifscompose.c:1134 plug-ins/imagemap/imap_cmd_move.c:80
 #: plug-ins/imagemap/imap_cmd_object_move.c:53
 msgid "Move"
 msgstr "Bewegen"
@@ -4416,14 +4554,10 @@ msgstr "Zoom"
 msgid "Blur Parameters"
 msgstr "Parameter"
 
-#: plug-ins/common/mblur.c:824
-msgid "Length:"
-msgstr "Länge:"
-
 #. Angle
 #: plug-ins/common/mblur.c:833 plug-ins/common/newsprint.c:1025
 #: plug-ins/common/warp.c:693 plug-ins/gimpressionist/orientmap.c:551
-#: plug-ins/ifscompose/ifscompose.c:555
+#: plug-ins/ifscompose/ifscompose.c:554
 msgid "Angle:"
 msgstr "Winkel:"
 
@@ -4505,12 +4639,6 @@ msgstr "Kanäle verbinden"
 #: plug-ins/common/newsprint.c:1407
 msgid "Factory Defaults"
 msgstr "Fabrikeinstellungen"
-
-#. anti-alias control
-#: plug-ins/common/newsprint.c:1429 plug-ins/common/ripple.c:629
-#: plug-ins/mosaic/mosaic.c:602
-msgid "Antialiasing"
-msgstr "Antialiasing"
 
 #: plug-ins/common/newsprint.c:1439
 msgid "Oversample:"
@@ -5075,11 +5203,6 @@ msgstr "Zoll"
 msgid "Millimeter"
 msgstr "Millimeter"
 
-#. Rotation
-#: plug-ins/common/ps.c:2559 plug-ins/gdyntext/gdyntext_ui.c:388
-msgid "Rotation"
-msgstr "Rotation"
-
 #. Format
 #: plug-ins/common/ps.c:2573
 msgid "Output"
@@ -5241,6 +5364,15 @@ msgstr "<Image>/Filter/Farben/Abbilden/Ähnlich Einfärben..."
 #: plug-ins/common/sample_colorize.c:1294
 msgid "Sample Colorize"
 msgstr "Ähnlich Einfärben"
+
+#. gtk_container_border_width (GTK_CONTAINER (box2), 5);
+#: plug-ins/common/sample_colorize.c:1299 plug-ins/common/tileit.c:583
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/imagemap/imap_default_dialog.c:110
+msgid "Apply"
+msgstr "Anwenden"
 
 #: plug-ins/common/sample_colorize.c:1301
 msgid "Get Sample Colors"
@@ -5760,13 +5892,9 @@ msgstr "Farben:"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2412 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:541
+#: plug-ins/ifscompose/ifscompose.c:540
 msgid "Scale:"
 msgstr "Skalierung:"
-
-#: plug-ins/common/spheredesigner.c:2446
-msgid "Scale X:"
-msgstr "Skalierung X:"
 
 #: plug-ins/common/spheredesigner.c:2463
 msgid "Scale Y:"
@@ -5928,6 +6056,11 @@ msgstr "Alphaschwellenwert: Färbe Transparenz..."
 msgid "Threshold Alpha"
 msgstr "Alphaschwellenwert"
 
+#: plug-ins/common/threshold_alpha.c:297 plug-ins/common/unsharp.c:837
+#: plug-ins/common/wind.c:857 plug-ins/gflare/gflare.c:3041
+msgid "Threshold:"
+msgstr "Schwellwert:"
+
 #: plug-ins/common/tiff.c:659
 msgid "TIFF Channel"
 msgstr "TIFF Kanäle"
@@ -5964,10 +6097,6 @@ msgstr "Kachel"
 #: plug-ins/common/tile.c:409
 msgid "Tile to New Size"
 msgstr ""
-
-#: plug-ins/common/tile.c:434
-msgid "Create New Image"
-msgstr "Neues Bild erzeugen"
 
 #: plug-ins/common/tileit.c:236
 msgid "<Image>/Filters/Map/Small Tiles..."
@@ -6199,7 +6328,7 @@ msgstr "Haupteinstellungen"
 msgid "Step Size:"
 msgstr "Schrittweite:"
 
-#: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1278
+#: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1277
 msgid "Iterations:"
 msgstr "Iterationen:"
 
@@ -6289,6 +6418,10 @@ msgstr ""
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
 msgstr "<Image>/Filter/Verzerren/Wellen..."
+
+#: plug-ins/common/waves.c:351
+msgid "Waves"
+msgstr "Wellen"
 
 #: plug-ins/common/waves.c:398
 msgid "Reflective"
@@ -7109,7 +7242,7 @@ msgstr "ABBRECHEN"
 msgid "GAP Question"
 msgstr "GAP Frage"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343
+#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:339
 msgid "File already exists:"
 msgstr "Datei existiert bereits:"
 
@@ -7341,10 +7474,6 @@ msgstr "Von Xanim lesbares Video in Frames aufteilen"
 #: plug-ins/gap/gap_decode_xanim.c:289
 msgid "Select Frame range"
 msgstr "Frame-Bereich auswählen"
-
-#: plug-ins/gap/gap_decode_xanim.c:339
-msgid "File already exists:"
-msgstr "Datei existiert bereits:"
 
 #: plug-ins/gap/gap_decode_xanim.c:531
 #, c-format
@@ -9317,7 +9446,7 @@ msgstr "Malen"
 msgid "Clear"
 msgstr "Löschen"
 
-#: plug-ins/gfig/gfig.c:4904 plug-ins/ifscompose/ifscompose.c:1200
+#: plug-ins/gfig/gfig.c:4904 plug-ins/ifscompose/ifscompose.c:1199
 #: plug-ins/imagemap/imap_toolbar.c:120
 msgid "Undo"
 msgstr "Rückgängig"
@@ -9541,7 +9670,7 @@ msgid "Auto Update Preview"
 msgstr "Autom. Echtzeitvorschau"
 
 #. Window radiobutton
-#: plug-ins/gflare/gflare.c:3116 plug-ins/ifscompose/ifscompose.c:800
+#: plug-ins/gflare/gflare.c:3116 plug-ins/ifscompose/ifscompose.c:799
 #: plug-ins/webbrowser/webbrowser.c:345
 msgid "New"
 msgstr "Neu"
@@ -10293,10 +10422,6 @@ msgstr "Das Vorschau-Fenster auffrischen"
 msgid "Revert to the original image"
 msgstr "Auf das ursprüngliche Bild zurücksetzen"
 
-#: plug-ins/gimpressionist/size.c:51 plug-ins/gimpressionist/size.c:56
-msgid "Size"
-msgstr "Grösse"
-
 # muss das nicht Directions: heissen ?
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
@@ -10479,64 +10604,64 @@ msgstr "Rückwärts"
 msgid "Forward"
 msgstr "Vorwärts"
 
-#: plug-ins/ifscompose/ifscompose.c:360
+#: plug-ins/ifscompose/ifscompose.c:359
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
 msgstr "<Image>/Filter/Render/Natur/IfsCompose..."
 
 #. Asym
-#: plug-ins/ifscompose/ifscompose.c:569
+#: plug-ins/ifscompose/ifscompose.c:568
 msgid "Asymmetry:"
 msgstr "Asymmetrie"
 
 #. Shear
-#: plug-ins/ifscompose/ifscompose.c:583
+#: plug-ins/ifscompose/ifscompose.c:582
 msgid "Shear:"
 msgstr "Scheren:"
 
 #. Flip
-#: plug-ins/ifscompose/ifscompose.c:597
+#: plug-ins/ifscompose/ifscompose.c:596
 msgid "Flip"
 msgstr "Spiegeln"
 
 #. Simple color control section
-#: plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/ifscompose/ifscompose.c:627
 msgid "Simple"
 msgstr "Einfach"
 
-#: plug-ins/ifscompose/ifscompose.c:640
+#: plug-ins/ifscompose/ifscompose.c:639
 msgid "IfsCompose: Target"
 msgstr "IfsCompose: Ziel"
 
-#: plug-ins/ifscompose/ifscompose.c:646
+#: plug-ins/ifscompose/ifscompose.c:645
 msgid "Scale Hue by:"
 msgstr "Skaliere Farbton mit:"
 
-#: plug-ins/ifscompose/ifscompose.c:661
+#: plug-ins/ifscompose/ifscompose.c:660
 msgid "Scale Value by:"
 msgstr "Skaliere Wert mit:"
 
 #. Full color control section
-#: plug-ins/ifscompose/ifscompose.c:678
+#: plug-ins/ifscompose/ifscompose.c:677
 msgid "Full"
 msgstr "Ganz"
 
-#: plug-ins/ifscompose/ifscompose.c:687
+#: plug-ins/ifscompose/ifscompose.c:686
 msgid "IfsCompose: Red"
 msgstr "IfsCompose: Rot"
 
-#: plug-ins/ifscompose/ifscompose.c:696
+#: plug-ins/ifscompose/ifscompose.c:695
 msgid "IfsCompose: Green"
 msgstr "IfsCompose: Grün"
 
-#: plug-ins/ifscompose/ifscompose.c:705
+#: plug-ins/ifscompose/ifscompose.c:704
 msgid "IfsCompose: Blue"
 msgstr "IfsCompose: Blau"
 
-#: plug-ins/ifscompose/ifscompose.c:714
+#: plug-ins/ifscompose/ifscompose.c:713
 msgid "IfsCompose: Black"
 msgstr "IfsCompose: Schwarz"
 
-#: plug-ins/ifscompose/ifscompose.c:793
+#: plug-ins/ifscompose/ifscompose.c:792
 msgid "IfsCompose"
 msgstr ""
 "Imagemap Plug-In 1.3\n"
@@ -10546,71 +10671,71 @@ msgstr ""
 "\n"
 "Veröffentlicht unter der GNU General Public License \"     "
 
-#: plug-ins/ifscompose/ifscompose.c:877 plug-ins/ifscompose/ifscompose.c:1147
+#: plug-ins/ifscompose/ifscompose.c:876 plug-ins/ifscompose/ifscompose.c:1146
 msgid "Rotate/Scale"
 msgstr "Rotieren/Skalieren"
 
-#: plug-ins/ifscompose/ifscompose.c:886 plug-ins/ifscompose/ifscompose.c:1159
+#: plug-ins/ifscompose/ifscompose.c:885 plug-ins/ifscompose/ifscompose.c:1158
 msgid "Stretch"
 msgstr "Strecken"
 
-#: plug-ins/ifscompose/ifscompose.c:906
+#: plug-ins/ifscompose/ifscompose.c:905
 msgid "Render Options"
 msgstr "Render Einstellungen"
 
-#: plug-ins/ifscompose/ifscompose.c:920 plug-ins/print/print.c:760
+#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/print.c:760
 msgid "Auto"
 msgstr "Auto"
 
-#: plug-ins/ifscompose/ifscompose.c:953
+#: plug-ins/ifscompose/ifscompose.c:952
 msgid "Spatial Transformation"
 msgstr "Raumtransformation"
 
-#: plug-ins/ifscompose/ifscompose.c:959
+#: plug-ins/ifscompose/ifscompose.c:958
 msgid "Color Transformation"
 msgstr "Farbtransformation"
 
-#: plug-ins/ifscompose/ifscompose.c:969
+#: plug-ins/ifscompose/ifscompose.c:968
 msgid "Relative Probability:"
 msgstr "Rel. Wahrscheinlichkeit:"
 
-#: plug-ins/ifscompose/ifscompose.c:1176
+#: plug-ins/ifscompose/ifscompose.c:1175
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap_menu.c:294
 msgid "Select All"
 msgstr "Alles auswählen"
 
-#: plug-ins/ifscompose/ifscompose.c:1188
+#: plug-ins/ifscompose/ifscompose.c:1187
 msgid "Recompute Center"
 msgstr "Mitte neu berechnen"
 
-#: plug-ins/ifscompose/ifscompose.c:1212 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1211 plug-ins/imagemap/imap_toolbar.c:123
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: plug-ins/ifscompose/ifscompose.c:1245
+#: plug-ins/ifscompose/ifscompose.c:1244
 msgid "IfsCompose Options"
 msgstr "IfsCompose Einstellungen"
 
-#: plug-ins/ifscompose/ifscompose.c:1265
+#: plug-ins/ifscompose/ifscompose.c:1264
 msgid "Max. Memory:"
 msgstr "Max. Speicher:"
 
-#: plug-ins/ifscompose/ifscompose.c:1292
+#: plug-ins/ifscompose/ifscompose.c:1291
 msgid "Subdivide:"
 msgstr "Unterteilung:"
 
-#: plug-ins/ifscompose/ifscompose.c:1305
+#: plug-ins/ifscompose/ifscompose.c:1304
 msgid "Spot Radius:"
 msgstr "Punkt Radius:"
 
-#: plug-ins/ifscompose/ifscompose.c:1375
+#: plug-ins/ifscompose/ifscompose.c:1374
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Berechne IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1394
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopiere IFS ins Bild (%d/%d)..."
@@ -11063,6 +11188,10 @@ msgstr "Gitter Einstellungen..."
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
 msgstr "Hilfslinien erstellen..."
+
+#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:205
+msgid "Help"
+msgstr "Hilfe"
 
 #: plug-ins/imagemap/imap_menu.c:413
 msgid "About ImageMap..."
@@ -12246,6 +12375,30 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
+
+#~ msgid "Antialias"
+#~ msgstr "Antialiasing"
+
+#~ msgid "file already exists:"
+#~ msgstr "Datei existiert bereits:"
+
+#~ msgid "From image"
+#~ msgstr "Aus Bild"
+
+#~ msgid "Create new image"
+#~ msgstr "Neues Bild erzeugen"
+
+#~ msgid "Set light source color (white is default)"
+#~ msgstr "Setze Lichtquellenfarbe (Weiss ist voreingestellt)"
+
+#~ msgid "Apply filter with current settings"
+#~ msgstr "Filter mit diesen Einstellungen anwenden"
+
+#~ msgid "Close filter without doing anything"
+#~ msgstr "Filter schliessen, ohne etwas zu tun"
+
+#~ msgid "  Preview!  "
+#~ msgstr "  Vorschau!  "
 
 #~ msgid "Move up"
 #~ msgstr "Rauf"

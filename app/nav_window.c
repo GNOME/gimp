@@ -81,7 +81,7 @@ struct _NavWinData
   GtkWidget *zoom_label;
   GtkObject *zoom_adjustment;
   GtkWidget *preview;
-  void      *gdisp_ptr; /* I'm not happy 'bout this one */
+  void      *gdisp_ptr;    /* I'm not happy 'bout this one */
   GdkGC     *gc;
   gint       dispx;        /* x pos of top left corner of display area */
   gint       dispy;        /* y pos of top left corner of display area */
@@ -1606,16 +1606,20 @@ nav_popup_click_handler (GtkWidget      *widget,
   scr_h = gdk_screen_height ();
   x = x_org + bevent->x - iwp->dispx - ((iwp->dispwidth - BORDER_PEN_WIDTH+1) * 0.5) - 2;
   y = y_org + bevent->y - iwp->dispy - ((iwp->dispheight - BORDER_PEN_WIDTH+1)* 0.5) - 2;
-  /* If we leave this in we need to warp the pointer so it still fits in 
-   * in the square representing the viewable area.
-   * However warping is probably frowned upon.
+
+  /* If the popup doesn't fit into the screen, we have a problem.
+   * We move the popup onscreen and risk that the pointer is not
+   * in the square representing the viewable area anymore. Moving
+   * the pointer will make the image scroll by a large amount,
+   * but then it works as usual. Probably better than a popup that
+   * is completely unusable in the lower right of the screen.
+   *
+   * Warping the pointer would be another solution ... 
    */
-#if 0
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
   x = (x + NAV_PREVIEW_WIDTH > scr_w) ? scr_w - NAV_PREVIEW_WIDTH : x;
   y = (y + NAV_PREVIEW_HEIGHT > scr_h) ? scr_h - NAV_PREVIEW_HEIGHT : y;
-#endif /* 0 */
 
   gtk_widget_popup (gdisp->nav_popup, x, y);
   gdk_flush();

@@ -1,3 +1,19 @@
+Sat Feb 19 13:53:34 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/fuzzy_select.c: ignore motion_events in a time-window of
+	100ms after the last event. Was intended as a workaround for bug
+	#5949, but IMO it makes the tool more responsive and easier to 
+	control.
+
+	* app/nav_window.c: as a workaround for bug #5955 move the
+	navigation popup on screen if used to close to the screen borders.
+	Moving the cursor will make the image scroll by a large amount
+	eventually, but IMHO this is better than having a nonfunctional
+	navigation popup. 
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/gap/gap_decode_xanim.c: fixed typos
+
 Sat Feb 19 00:05:12 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/ps.c: default to rotation = 0

@@ -470,8 +470,16 @@ fuzzy_select_motion (Tool           *tool,
   int diff_x, diff_y;
   double diff;
 
+  static guint last_time = 0;
+
   if (tool->state != ACTIVE)
     return;
+
+  /* don't let the events come in too fast, ignore below a delay of 100 ms */
+  if (ABS (mevent->time - last_time) < 100)
+    return;
+  
+  last_time = mevent->time;
 
   fuzzy_sel = (FuzzySelect *) tool->private;
 
