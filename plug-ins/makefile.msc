@@ -35,9 +35,11 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 COMMON1 = AlienMap AlienMap2 ccanalyze CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gee_zoom gicon gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psd_save psp randomize ripple rotate
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar postscript psd psd_save psp randomize ripple rotate
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
-COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug wmf xbm xwd zealouscrop
+COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
+
+NOTNOW = wmf 
 
 # These have own subdirectories each
 SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap xjt

@@ -32,6 +32,7 @@ OBJECTS = \
 	gimpcellrenderertoggle.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
+	gimpcolorbar.obj \
 	gimpcolordisplayeditor.obj \
 	gimpcoloreditor.obj \
 	gimpcolorframe.obj \
@@ -65,6 +66,7 @@ OBJECTS = \
 	gimpeditor.obj \
 	gimpenummenu.obj \
 	gimperrorconsole.obj \
+	gimpfiledialog.obj \
 	gimpfontview.obj \
 	gimpgradienteditor.obj \
 	gimpgrideditor.obj \
@@ -89,6 +91,7 @@ OBJECTS = \
 	gimppreviewrendererdrawable.obj \
 	gimppreviewrenderergradient.obj \
 	gimppreviewrendererimage.obj \
+	gimppreviewrendererimagefile.obj \
 	gimppreviewrendererlayer.obj \
 	gimppreviewrenderervectors.obj \
 	gimppreviewrenderer-utils.obj \
@@ -99,6 +102,7 @@ OBJECTS = \
 	gimptemplateeditor.obj \
 	gimptemplateview.obj \
 	gimptexteditor.obj \
+	gimpthumbbox.obj \
 	gimptoolbox.obj \
 	gimptoolbox-dnd.obj \
 	gimptoolbox-color-area.obj \

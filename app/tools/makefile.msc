@@ -57,6 +57,7 @@ OBJECTS = \
 	gimphistogramoptions.obj \
 #	gimphistogramtool.obj \
 	gimphuesaturationtool.obj \
+	gimpimagemapoptions.obj \
 	gimpimagemaptool.obj \
 	gimpinkoptions.obj \
 	gimpinktool.obj \

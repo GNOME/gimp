@@ -84,6 +84,8 @@ STOCK_VARIABLES = \
 	stock_delete_16		stock-delete-16.png	\
 	stock_device_status_16		stock-device-status-16.png	\
 	stock_device_status_24		stock-device-status-24.png	\
+	stock_display_filter_16	stock-display-filter-16.png \
+	stock_display_filter_24	stock-display-filter-24.png \
 	stock_duplicate_16		stock-duplicate-16.png	\
 	stock_edit_16		stock-edit-16.png	\
 	stock_error_64		stock-error-64.png	\
@@ -372,10 +374,17 @@ WILBER_VARIABLES = \
 	stock_wilber_48		stock-wilber-48.png	\
 	stock_wilber_64		stock-wilber-64.png	\
 
+CORE_VARIABLES = \
+	stock_question_64 stock-question-64.png
+
+
 all: \
+	gimp-core-pixbufs.h \
 	gimp-stock-pixbufs.h \
 	gimp-wilber-pixbufs.h
 
+gimp-core-pixbufs.h : $(CORE_IMAGES) makefile.msc
+	gdk-pixbuf-csource --raw --build-list $(CORE_VARIABLES) > gimp-core-pixbufs.h
 
 gimp-stock-pixbufs.h: $(STOCK_IMAGES) makefile.msc
 	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) $(STOCK_TOOL_VARIABLES) > gimp-stock-pixbufs.h
