@@ -120,7 +120,6 @@ static void   whirl_pinch (void);
 static int    calc_undistorted_coords (double wx, double wy,
 				       double whirl, double pinch,
 				       double *x, double *y);
-static guchar bilinear (double x, double y, guchar *values);
 
 static pixel_fetcher_t *pixel_fetcher_new (GimpDrawable *drawable);
 static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf);
@@ -434,7 +433,7 @@ whirl_pinch (void)
 		  values[2] = pixel[2][i];
 		  values[3] = pixel[3][i];
 
-		  *top_p++ = bilinear (cx, cy, values);
+		  *top_p++ = gimp_bilinear_8 (cx, cy, values);
 		}
 
 	      /* Bottom */
@@ -464,7 +463,7 @@ whirl_pinch (void)
 		  values[2] = pixel[2][i];
 		  values[3] = pixel[3][i];
 
-		  *bot_p++ = bilinear (cx, cy, values);
+		  *bot_p++ = gimp_bilinear_8 (cx, cy, values);
 		}
 
 	      bot_p -= 2 * img_bpp; /* We move backwards! */
@@ -579,28 +578,6 @@ calc_undistorted_coords (gdouble  wx,
     }
 
   return inside;
-}
-
-static guchar
-bilinear (gdouble  x,
-	  gdouble  y,
-	  guchar  *values)
-{
-  gdouble m0, m1;
-
-  x = fmod (x, 1.0);
-  y = fmod (y, 1.0);
-
-  if (x < 0.0)
-    x += 1.0;
-
-  if (y < 0.0)
-    y += 1.0;
-
-  m0 = (double) values[0] + x * ((double) values[1] - values[0]);
-  m1 = (double) values[2] + x * ((double) values[3] - values[2]);
-
-  return (guchar) (m0 + y * (m1 - m0));
 }
 
 static pixel_fetcher_t *

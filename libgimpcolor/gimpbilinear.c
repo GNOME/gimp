@@ -33,23 +33,22 @@ gimp_bilinear (gdouble  x,
 	       gdouble  y,
 	       gdouble *values)
 {
-  gdouble xx, yy;
   gdouble m0, m1;
 
   g_assert (values != NULL);
 
-  xx = fmod (x, 1.0);
-  yy = fmod (y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0.0)
     x += 1.0;
   if (y < 0.0)
     y += 1.0;
 
-  m0 = (1.0 - xx) * values[0] + xx * values[1];
-  m1 = (1.0 - xx) * values[2] + xx * values[3];
+  m0 = (1.0 - x) * values[0] + x * values[1];
+  m1 = (1.0 - x) * values[2] + x * values[3];
 
-  return (1.0 - yy) * m0 + yy * m1;
+  return (1.0 - y) * m0 + y * m1;
 }
 
 guchar
@@ -57,23 +56,22 @@ gimp_bilinear_8 (gdouble x,
 		 gdouble y,
 		 guchar *values)
 {
-  gdouble xx, yy;
   gdouble m0, m1;
 
   g_assert (values != NULL);
 
-  xx = fmod (x, 1.0);
-  yy = fmod (y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0.0)
     x += 1.0;
   if (y < 0.0)
     y += 1.0;
 
-  m0 = (1.0 - xx) * values[0] + xx * values[1];
-  m1 = (1.0 - xx) * values[2] + xx * values[3];
+  m0 = (1.0 - x) * values[0] + x * values[1];
+  m1 = (1.0 - x) * values[2] + x * values[3];
 
-  return (guchar) ((1.0 - yy) * m0 + yy * m1);
+  return (guchar) ((1.0 - y) * m0 + y * m1);
 }
 
 guint16
@@ -81,23 +79,22 @@ gimp_bilinear_16 (gdouble  x,
 		  gdouble  y,
 		  guint16 *values)
 {
-  gdouble xx, yy;
   gdouble m0, m1;
 
   g_assert (values != NULL);
 
-  xx = fmod (x, 1.0);
-  yy = fmod (y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0.0)
     x += 1.0;
   if (y < 0.0)
     y += 1.0;
 
-  m0 = (1.0 - xx) * values[0] + xx * values[1];
-  m1 = (1.0 - xx) * values[2] + xx * values[3];
+  m0 = (1.0 - x) * values[0] + x * values[1];
+  m1 = (1.0 - x) * values[2] + x * values[3];
 
-  return (guint16) ((1.0 - yy) * m0 + yy * m1);
+  return (guint16) ((1.0 - y) * m0 + y * m1);
 }
 
 guint32
@@ -105,23 +102,22 @@ gimp_bilinear_32 (gdouble  x,
 		  gdouble  y,
 		  guint32 *values)
 {
-  gdouble xx, yy;
   gdouble m0, m1;
 
   g_assert (values != NULL);
 
-  xx = fmod (x, 1.0);
-  yy = fmod (y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0.0)
     x += 1.0;
   if (y < 0.0)
     y += 1.0;
 
-  m0 = (1.0 - xx) * values[0] + xx * values[1];
-  m1 = (1.0 - xx) * values[2] + xx * values[3];
+  m0 = (1.0 - x) * values[0] + x * values[1];
+  m1 = (1.0 - x) * values[2] + x * values[3];
 
-  return (guint32) ((1.0 - yy) * m0 + yy * m1);
+  return (guint32) ((1.0 - y) * m0 + y * m1);
 }
 
 GimpRGB

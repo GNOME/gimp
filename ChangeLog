@@ -1,3 +1,12 @@
+2002-11-20  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/displace.c: replaced all implementations of bilinear 
+	func by call to gimp_bilinear_8/16
+
 2002-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.c: made object properties from the gimprc
@@ -138,6 +147,12 @@
 	functions. For the rest, judgement was used. Where it was easy, a
 	GRand * object was used and g_rand_* functions were
 	preferred. This fixes bug #67386 in HEAD.
+
+2002-11-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimpcolor/gimpbilinear.c (gimp_bilinear): fixed bug that could
+	happen with negative values of parameter x or y. Same bug in
+	gimp_bilinear_8, gimp_bilinear_16 and gimp_bilinear_32.
 
 2002-11-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

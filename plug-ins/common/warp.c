@@ -165,14 +165,6 @@ static GimpTile *warp_pixel  (GimpDrawable *drawable,
 			      gint         *col,
 			      guchar       *pixel);
 
-static guchar    bilinear        (gdouble  x,
-				  gdouble  y,
-				  guchar  *v);
-
-static gint      bilinear16      (gdouble  x,
-				  gdouble  y,
-				  gint    *v);
-
 static gint      warp_map_constrain       (gint32     image_id,
 					   gint32     drawable_id,
 					   gpointer   data);
@@ -1324,7 +1316,7 @@ warp_one (GimpDrawable *draw,
   gint    substep;         /* loop variable counting displacement vector substeps */
 
   guchar  values[4];
-  gint    ivalues[4];
+  guint32 ivalues[4];
   guchar  val;
 
   gint k;
@@ -1455,7 +1447,7 @@ warp_one (GimpDrawable *draw,
 		  ivalues[1] = 256*pixel[1][0] + pixel[1][1];
 		  ivalues[2] = 256*pixel[2][0] + pixel[2][1];
 		  ivalues[3] = 256*pixel[3][0] + pixel[3][1];
-		  xval = bilinear16(needx, needy, ivalues);
+		  xval = gimp_bilinear_32(needx, needy, ivalues);
 
 		     /* get 4 neighboring DY values from DiffY drawable for linear interpolation */
 	          ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi, yi, &yrow, &ycol, pixel[0]);
@@ -1467,7 +1459,7 @@ warp_one (GimpDrawable *draw,
 		  ivalues[1] = 256*pixel[1][0] + pixel[1][1];
 		  ivalues[2] = 256*pixel[2][0] + pixel[2][1];
 		  ivalues[3] = 256*pixel[3][0] + pixel[3][1];
-		  yval = bilinear16(needx, needy, ivalues);
+		  yval = gimp_bilinear_32(needx, needy, ivalues);
 
 		  dx += dscalefac * (xval-32768);      /* move displacement vector to this new value */
 		  dy += dscalefac * (yval-32768);
@@ -1511,7 +1503,7 @@ warp_one (GimpDrawable *draw,
 		  values[1] = pixel[1][k];
 		  values[2] = pixel[2][k];
 		  values[3] = pixel[3][k];
-		  val = bilinear(needx, needy, values);
+		  val = gimp_bilinear_8(needx, needy, values);
 		  
 		  *dest++ = val;
 		} /* for k */
@@ -1650,49 +1642,6 @@ warp_pixel (GimpDrawable *drawable,
   return tile;
 }
 
-static guchar
-bilinear (gdouble  x,
-	  gdouble  y,
-	  guchar  *v)
-{
-  gdouble m0, m1;
-
-  x = fmod(x, 1.0);
-  y = fmod(y, 1.0);
-
-  if (x < 0)
-    x += 1.0;
-  if (y < 0)
-    y += 1.0;
-
-  m0 = (gdouble) v[0] + x * ((gdouble) v[1] - v[0]);
-  m1 = (gdouble) v[2] + x * ((gdouble) v[3] - v[2]);
-
-  return (guchar) (m0 + y * (m1 - m0));
-} /* bilinear */
-
-static gint
-bilinear16 (gdouble  x,
-	    gdouble  y,
-	    gint    *v)
-{
-  gdouble m0, m1;
-
-  x = fmod(x, 1.0);
-  y = fmod(y, 1.0);
-
-  if (x < 0)
-    x += 1.0;
-  if (y < 0)
-    y += 1.0;
-
-  m0 = (gdouble) v[0] + x * ((gdouble) v[1] - v[0]);
-  m1 = (gdouble) v[2] + x * ((gdouble) v[3] - v[2]);
-
-  return (gint) (m0 + y * (m1 - m0));
-} /* bilinear16 */
-
-
 /*  Warp interface functions  */
 
 static gint
@@ -1707,11 +1656,8 @@ warp_map_constrain (gint32     image_id,
   if (drawable_id == -1)
     return TRUE;
 
-  if (gimp_drawable_width (drawable_id) == drawable->width &&
-      gimp_drawable_height (drawable_id) == drawable->height)
-    return TRUE;
-  else
-    return FALSE;
+  return (gimp_drawable_width (drawable_id) == drawable->width &&
+	  gimp_drawable_height (drawable_id) == drawable->height);
 }
 
 static void

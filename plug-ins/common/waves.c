@@ -107,10 +107,6 @@ static void wave (guchar  *src,
 		  gint     reflective,
 		  gint     verbose);
 
-static guchar bilinear (gdouble x,
-			gdouble y,
-			guchar *v);
-
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? TRUE : FALSE)
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -317,7 +313,6 @@ static gint
 pluginCoreIA (piArgs *argp,
 	      gint32         drawable)
 {
-  gint r=-1; /* default to error return */
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *frame;
@@ -432,14 +427,7 @@ pluginCoreIA (piArgs *argp,
   gtk_main ();
   gdk_flush ();
 
-  if (run_flag)
-    {
-      return pluginCore (argp, drawable);
-    }
-  else
-    {
-      return r;
-    }
+  return (run_flag) ? pluginCore (argp, drawable) : -1;
 }
 
 static void
@@ -790,7 +778,7 @@ wave (guchar  *src,
 	      else
 		values[3] = 0;
 
-	      val = bilinear (needx, needy, values);
+	      val = gimp_bilinear_8 (needx, needy, values);
 
 	      *dest++ = val;
 	    }
@@ -801,24 +789,4 @@ wave (guchar  *src,
 
   if (verbose)
     gimp_progress_update (1.0);
-}
-
-static guchar
-bilinear (gdouble  x,
-	  gdouble  y,
-	  guchar  *v)
-{
-  gdouble m0, m1;
-  x = fmod (x, 1.0);
-  y = fmod (y, 1.0);
-
-  if (x < 0)
-    x += 1.0;
-  if (y < 0)
-    y += 1.0;
-
-  m0 = (1.0 - x) * v[0] + x * v[1];
-  m1 = (1.0 - x) * v[2] + x * v[3];
-
-  return (guchar) ((1.0 - y) * m0 + y * m1);
 }

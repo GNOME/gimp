@@ -104,9 +104,6 @@ static GimpTile *displace_pixel  (GimpDrawable *drawable,
 				  gint         *row,
 				  gint         *col,
 				  guchar       *pixel);
-static guchar    bilinear        (gdouble       x,
-				  gdouble       y,
-				  guchar       *v);
 
 static gint      displace_map_constrain    (gint32     image_id,
 					    gint32     drawable_id,
@@ -623,7 +620,7 @@ displace (GimpDrawable *drawable)
 		  values[1] = pixel[1][k];
 		  values[2] = pixel[2][k];
 		  values[3] = pixel[3][k];
-		  val = bilinear(needx, needy, values);
+		  val = gimp_bilinear_8 (needx, needy, values);
 		  
 		  *dest++ = val;
 		} /* for */
@@ -748,28 +745,6 @@ displace_pixel (GimpDrawable *drawable,
   return tile;
 }
 
-
-static guchar
-bilinear (gdouble x,
-	  gdouble y,
-	  guchar *v)
-{
-  gdouble m0, m1;
-
-  x = fmod(x, 1.0);
-  y = fmod(y, 1.0);
-
-  if (x < 0)
-    x += 1.0;
-  if (y < 0)
-    y += 1.0;
-
-  m0 = (gdouble) v[0] + x * ((gdouble) v[1] - v[0]);
-  m1 = (gdouble) v[2] + x * ((gdouble) v[3] - v[2]);
-
-  return (guchar) (m0 + y * (m1 - m0));
-}
-
 /*  Displace interface functions  */
 
 static gint
@@ -784,11 +759,8 @@ displace_map_constrain (gint32   image_id,
   if (drawable_id == -1)
     return TRUE;
 
-  if (gimp_drawable_width (drawable_id) == drawable->width &&
-      gimp_drawable_height (drawable_id) == drawable->height)
-    return TRUE;
-  else
-    return FALSE;
+  return (gimp_drawable_width (drawable_id) == drawable->width &&
+	  gimp_drawable_height (drawable_id) == drawable->height);
 }
 
 static void
