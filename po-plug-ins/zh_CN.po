@@ -1733,9 +1733,8 @@ msgid "Selective Load Settings"
 msgstr "选择性加载设置"
 
 #: ../plug-ins/common/CML_explorer.c:1488
-#, fuzzy
 msgid "Source channel in file:"
-msgstr "自文件中的通道："
+msgstr "文件中的源通道："
 
 #: ../plug-ins/common/CML_explorer.c:1509
 msgid "_Misc Ops."
@@ -6052,61 +6051,52 @@ msgid "Indexed Palette Type"
 msgstr "索引色板类型"
 
 #: ../plug-ins/common/retinex.c:168
-#, fuzzy
 msgid "_Retinex..."
-msgstr "正在绘制波纹..."
+msgstr "_Retinex..."
 
 #: ../plug-ins/common/retinex.c:251
-#, fuzzy
 msgid "Retinex..."
-msgstr "旋转..."
+msgstr "Retinex..."
 
 #: ../plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
-msgstr ""
+msgstr "Retinex (4/4)：更新..."
 
 #: ../plug-ins/common/retinex.c:290
-#, fuzzy
 msgid "Retinex Image Enhancement"
-msgstr "边缘增强(_E)"
+msgstr "Retinex 图像增强"
 
 #: ../plug-ins/common/retinex.c:311
 msgid "Level"
-msgstr ""
+msgstr "级别"
 
 #: ../plug-ins/common/retinex.c:315
-#, fuzzy
 msgid "_Uniform"
-msgstr "单位编辑器"
+msgstr "均匀(_U)"
 
 #: ../plug-ins/common/retinex.c:317
-#, fuzzy
 msgid "_Low"
-msgstr "下部(_L)"
+msgstr "低(_L)"
 
 #: ../plug-ins/common/retinex.c:319
-#, fuzzy
 msgid "_High"
-msgstr "高度(_H)："
+msgstr "高(_H)："
 
 #: ../plug-ins/common/retinex.c:344
-#, fuzzy
 msgid "_Scale:"
-msgstr "缩放："
+msgstr "缩放(_S)："
 
 #: ../plug-ins/common/retinex.c:359
-#, fuzzy
 msgid "_Scale division:"
-msgstr "分裂(_D)："
+msgstr "标度分格(_S)："
 
 #: ../plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
-msgstr ""
+msgstr "动态(_D)："
 
 #: ../plug-ins/common/retinex.c:648
-#, fuzzy
 msgid "Retinex: Filtering..."
-msgstr "正在动态模糊..."
+msgstr "Retinex：正在绘制..."
 
 #: ../plug-ins/common/ripple.c:138
 msgid "_Ripple..."
@@ -6582,25 +6572,23 @@ msgstr "Sobel 垂直(_V)"
 
 #: ../plug-ins/common/sobel.c:273
 msgid "_Keep sign of result (one direction only)"
-msgstr "保持结果的符号(仅单向)(_K)"
+msgstr "保留结果中的痕迹(仅单向)(_K)"
 
 #: ../plug-ins/common/sobel.c:359
 msgid "Sobel Edge Detecting..."
 msgstr "正在进行 Sobel 边缘检测..."
 
 #: ../plug-ins/common/softglow.c:138
-#, fuzzy
 msgid "_Softglow..."
-msgstr "源文件..."
+msgstr "柔光(_S)"
 
 #: ../plug-ins/common/softglow.c:629
 msgid "Softglow"
-msgstr ""
+msgstr "柔光"
 
 #: ../plug-ins/common/softglow.c:659
-#, fuzzy
 msgid "_Glow radius:"
-msgstr "模糊半径(_B)："
+msgstr "半径(_G)："
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -7061,14 +7049,12 @@ msgid "TarGA image"
 msgstr "TarGA 图像"
 
 #: ../plug-ins/common/tga.c:428
-#, fuzzy, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "无法读取颜色项"
+msgstr "无法从“%s”中读取页脚"
 
 #: ../plug-ins/common/tga.c:444
-#, fuzzy, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "无法读取颜色项"
+msgstr "无法从“%s”读取扩展"
 
 #: ../plug-ins/common/tga.c:1194
 msgid "Save as TGA"
@@ -8741,9 +8727,8 @@ msgid "Star Number of Points"
 msgstr "星形的点的数量"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "创建圆"
+msgstr "创建 Bezier 曲线"
 
 #: ../plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -11146,9 +11131,8 @@ msgid "Set the scale (size) of the image"
 msgstr ""
 
 #: ../plug-ins/print/gimp_main_window.c:1152
-#, fuzzy
 msgid "Scale by:"
-msgstr "缩放 Z："
+msgstr "缩放为："
 
 #: ../plug-ins/print/gimp_main_window.c:1157
 msgid ""
@@ -11161,9 +11145,8 @@ msgid "Percent"
 msgstr "百分比"
 
 #: ../plug-ins/print/gimp_main_window.c:1169
-#, fuzzy
 msgid "Scale the print to the size of the page"
-msgstr "笔划的大小由区域的色调决定"
+msgstr "将打印内容缩放为纸张大小"
 
 #: ../plug-ins/print/gimp_main_window.c:1175
 msgid "PPI"
@@ -11704,9 +11687,8 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgid "Could not locate help document"
 #~ msgstr "无法定位帮助文档"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Render"
-#~ msgstr "<Image>/滤镜(R)/绘制(R)/几何图形(GFig)(_G)..."
+#~ msgstr "<Image>/滤镜/绘制"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Light Effects"
