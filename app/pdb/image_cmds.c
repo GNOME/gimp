@@ -86,7 +86,7 @@ static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
 static ProcRecord image_clean_all_proc;
 static ProcRecord image_is_dirty_proc;
-static ProcRecord image_floating_selection_proc;
+static ProcRecord image_get_floating_sel_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_thumbnail_proc;
 static ProcRecord image_set_tattoo_state_proc;
@@ -149,7 +149,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_set_cmap_proc);
   procedural_db_register (gimp, &image_clean_all_proc);
   procedural_db_register (gimp, &image_is_dirty_proc);
-  procedural_db_register (gimp, &image_floating_selection_proc);
+  procedural_db_register (gimp, &image_get_floating_sel_proc);
   procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
   procedural_db_register (gimp, &image_thumbnail_proc);
   procedural_db_register (gimp, &image_set_tattoo_state_proc);
@@ -2222,8 +2222,8 @@ static ProcRecord image_is_dirty_proc =
 };
 
 static Argument *
-image_floating_selection_invoker (Gimp     *gimp,
-                                  Argument *args)
+image_get_floating_sel_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2237,7 +2237,7 @@ image_floating_selection_invoker (Gimp     *gimp,
   if (success)
     floating_sel = gimp_image_floating_sel (gimage);
 
-  return_args = procedural_db_return_args (&image_floating_selection_proc, success);
+  return_args = procedural_db_return_args (&image_get_floating_sel_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
@@ -2245,7 +2245,7 @@ image_floating_selection_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg image_floating_selection_inargs[] =
+static ProcArg image_get_floating_sel_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -2254,7 +2254,7 @@ static ProcArg image_floating_selection_inargs[] =
   }
 };
 
-static ProcArg image_floating_selection_outargs[] =
+static ProcArg image_get_floating_sel_outargs[] =
 {
   {
     GIMP_PDB_LAYER,
@@ -2263,20 +2263,20 @@ static ProcArg image_floating_selection_outargs[] =
   }
 };
 
-static ProcRecord image_floating_selection_proc =
+static ProcRecord image_get_floating_sel_proc =
 {
-  "gimp_image_floating_selection",
+  "gimp_image_get_floating_sel",
   "Return the floating selection of the image.",
-  "This procedure returns the image's floating_sel, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
+  "This procedure returns the image's floating selection, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  image_floating_selection_inargs,
+  image_get_floating_sel_inargs,
   1,
-  image_floating_selection_outargs,
-  { { image_floating_selection_invoker } }
+  image_get_floating_sel_outargs,
+  { { image_get_floating_sel_invoker } }
 };
 
 static Argument *

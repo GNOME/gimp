@@ -1,3 +1,25 @@
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
+	Name all PDB procedures which deal with floating selections
+	consistently:
+
+	* tools/pdbgen/pdb/image.pdb: renamed
+	gimp_image_floating_selection() to gimp_image_get_floating_sel().
+
+	* libgimp/gimplayer.h: removed gimp_layer_is_floating_selection #define.
+
+	* libgimp/gimpcompat.h
+	* app/pdb/procedural_db.c: added compat stuff.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/film.c
+	* plug-ins/common/rotate.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
 2003-12-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: updated.

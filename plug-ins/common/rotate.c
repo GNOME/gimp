@@ -233,7 +233,7 @@ rotate_compute_offsets (gint *offsetx,
 
   if (rotvals.everything)  /* rotate around the image center */
     {
-      switch ( rotvals.angle )
+      switch (rotvals.angle)
 	{
 	case 1:   /* 90° */
 	  buffer   = *offsetx;
@@ -334,8 +334,8 @@ rotate_drawable (GimpDrawable *drawable)
       drawable = gimp_drawable_get (drawable->drawable_id);
       gimp_drawable_flush (drawable);
 
-      gimp_tile_cache_ntiles ( (longside / gimp_tile_width () + 1) +
-			       (longside / gimp_tile_height () + 1) );
+      gimp_tile_cache_ntiles ((longside / gimp_tile_width () + 1) +
+                              (longside / gimp_tile_height () + 1));
 
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, longside, longside,
 			   FALSE, FALSE);
@@ -371,7 +371,7 @@ rotate_drawable (GimpDrawable *drawable)
 
       g_free (buffer);
 
-      gimp_progress_update ( 1.0 );
+      gimp_progress_update (1.0);
 
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -391,7 +391,7 @@ rotate_drawable (GimpDrawable *drawable)
   gimp_layer_set_offsets (drawable->drawable_id, offsetx, offsety);
 
   if (was_preserve_transparency)
-    gimp_layer_set_preserve_transparency ( drawable->drawable_id, TRUE );
+    gimp_layer_set_preserve_transparency (drawable->drawable_id, TRUE);
 
   return;
 }
@@ -414,16 +414,16 @@ rotate (void)
 
   /* if there's a selection and we try to rotate the whole image */
   /* create an error message and exit                            */
-  if ( rotvals.everything )
+  if (rotvals.everything)
     {
-      if ( !gimp_selection_is_empty (image_ID) )
+      if (! gimp_selection_is_empty (image_ID))
 	{
 	  gimp_message (_("You can not rotate the whole image if there's a selection."));
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
-      if ( gimp_drawable_is_layer (active_drawable->drawable_id) &&
-           gimp_layer_is_floating_selection (active_drawable->drawable_id) )
+      if (gimp_drawable_is_layer (active_drawable->drawable_id) &&
+          gimp_layer_is_floating_sel (active_drawable->drawable_id))
 	{
 	  gimp_message (_("You can not rotate the whole image if there's a floating selection."));
 	  gimp_drawable_detach (active_drawable);
@@ -434,7 +434,7 @@ rotate (void)
     /* if we are trying to rotate a channel or a mask,
        create an error message and exit */
     {
-      if ( !gimp_drawable_is_layer (active_drawable->drawable_id) )
+      if (! gimp_drawable_is_layer (active_drawable->drawable_id))
 	{
 	  gimp_message (_("Sorry, channels and masks can not be rotated."));
 	  gimp_drawable_detach (active_drawable);
@@ -453,13 +453,13 @@ rotate (void)
 
       gimp_drawable_detach (active_drawable);
       layers = gimp_image_get_layers (image_ID, &nlayers);
-      for ( i=0; i<nlayers; i++ )
+      for (i = 0; i < nlayers; i++)
 	{
 	  drawable = gimp_drawable_get (layers[i]);
 	  rotate_drawable (drawable);
 	  gimp_drawable_detach (drawable);
 	}
-      g_free(layers);
+      g_free (layers);
 
       /* build a list of all guides and remove them */
       guide_ID = 0;
@@ -474,7 +474,7 @@ rotate (void)
 	}
       for (list = guides; list; list = list->next)
 	{
-	  guide = (GuideInfo *)list->data;
+	  guide = (GuideInfo *) list->data;
 	  gimp_image_delete_guide (image_ID, guide->ID);
 	}
 
@@ -532,12 +532,14 @@ rotate (void)
     {
 
       /* check for active selection and float it */
-      if ( !gimp_selection_is_empty (image_ID) &&
-	   !gimp_layer_is_floating_selection (active_drawable->drawable_id) )
-	active_drawable =
-	  gimp_drawable_get (gimp_selection_float (image_ID,
-						   active_drawable->drawable_id,
-						   0, 0));
+      if (! gimp_selection_is_empty (image_ID) &&
+          ! gimp_layer_is_floating_sel (active_drawable->drawable_id))
+        {
+          active_drawable =
+            gimp_drawable_get (gimp_selection_float (image_ID,
+                                                     active_drawable->drawable_id,
+                                                     0, 0));
+        }
 
       rotate_drawable (active_drawable);
       gimp_drawable_detach (active_drawable);

@@ -256,14 +256,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### MACRO gimp_layer_is_floating_selection ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
 <para>
 

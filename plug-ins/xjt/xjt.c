@@ -1424,7 +1424,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = (layer_id == gimp_image_get_active_layer(image_id));       /* TRUE/FALSE */
   p_write_prop (fp, PROP_ACTIVE_LAYER, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_layer_is_floating_selection(layer_id);  /* TRUE/FALSE */
+  l_param.int_val1 = gimp_layer_is_floating_sel(layer_id);  /* TRUE/FALSE */
   p_write_prop (fp, PROP_FLOATING_SELECTION, &l_param, wr_all_prp);
 
   /* check if floating selection is attached to this layer */
@@ -1718,7 +1718,7 @@ save_xjt_image (const gchar *filename,
    p_write_image_prp(l_dirname, l_fp_prp, image_id, l_wr_all_prp);
 
 
-   l_floating_layer_id = gimp_image_floating_selection(image_id);
+   l_floating_layer_id = gimp_image_get_floating_sel(image_id);
    if (l_floating_layer_id >= 0)
    {
        if(xjt_debug) printf("XJT-DEBUG: call floating_sel_relax fsel_id=%d\n",

@@ -469,7 +469,7 @@ static gint32
 p_if_selection_float_it (gint32 image_id,
 			 gint32 layer_id)
 {
-  if (!gimp_layer_is_floating_selection (layer_id))
+  if (! gimp_layer_is_floating_sel (layer_id))
     {
       gint32   l_sel_channel_id;
       gint32   l_x1, l_x2, l_y1, l_y2;
@@ -486,8 +486,9 @@ p_if_selection_float_it (gint32 image_id,
 	     the selection  */
 	  gimp_edit_copy (layer_id);
 	  layer_id = gimp_edit_paste (layer_id, FALSE);
-      }
+        }
     }
+
   return layer_id;
 }
 

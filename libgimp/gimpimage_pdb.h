@@ -101,7 +101,7 @@ gboolean          _gimp_image_set_cmap                (gint32                ima
 						       const guint8         *cmap);
 gboolean          gimp_image_clean_all                (gint32                image_ID);
 gboolean          gimp_image_is_dirty                 (gint32                image_ID);
-gint32            gimp_image_floating_selection       (gint32                image_ID);
+gint32            gimp_image_get_floating_sel         (gint32                image_ID);
 gint32            gimp_image_floating_sel_attached_to (gint32                image_ID);
 gboolean          _gimp_image_thumbnail               (gint32                image_ID,
 						       gint                  width,

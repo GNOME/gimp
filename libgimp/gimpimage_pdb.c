@@ -1243,24 +1243,24 @@ gimp_image_is_dirty (gint32 image_ID)
 }
 
 /**
- * gimp_image_floating_selection:
+ * gimp_image_get_floating_sel:
  * @image_ID: The image.
  *
  * Return the floating selection of the image.
  *
- * This procedure returns the image's floating_sel, if it exists. If it
- * doesn't exist, -1 is returned as the layer ID.
+ * This procedure returns the image's floating selection, if it exists.
+ * If it doesn't exist, -1 is returned as the layer ID.
  *
  * Returns: The image's floating selection.
  */
 gint32
-gimp_image_floating_selection (gint32 image_ID)
+gimp_image_get_floating_sel (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_image_floating_selection",
+  return_vals = gimp_run_procedure ("gimp_image_get_floating_sel",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);

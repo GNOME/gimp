@@ -26,7 +26,6 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#define gimp_layer_is_floating_selection     gimp_layer_is_floating_sel
 #define gimp_layer_get_preserve_transparency gimp_layer_get_preserve_trans
 #define gimp_layer_set_preserve_transparency gimp_layer_set_preserve_trans
 

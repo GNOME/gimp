@@ -684,7 +684,7 @@ img_get_floating_selection(PyGimpImage *self, void *closure)
 {
     gint32 id;
 
-    id = gimp_image_floating_selection(self->ID);
+    id = gimp_image_get_floating_sel(self->ID);
     if (id == -1) {
 	Py_INCREF(Py_None);
 	return Py_None;

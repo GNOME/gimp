@@ -423,7 +423,7 @@ film (void)
 
       for (k = 0; k < num_layers; k++)
 	{
-	  if (gimp_layer_is_floating_selection (layers[k]))
+	  if (gimp_layer_is_floating_sel (layers[k]))
 	    continue;
 
 	  film_width += (picture_space/2);  /* Leading space */
@@ -435,10 +435,10 @@ film (void)
       g_free (layers);
     }
 #ifdef FILM_DEBUG
-  printf ("film_height = %d, film_width = %d\n", film_height, film_width);
-  printf ("picture_height = %d, picture_space = %d, picture_y0 = %d\n",
-	  picture_height, picture_space, picture_y0);
-  printf ("Number of pictures = %d\n", num_pictures);
+  g_printerr ("film_height = %d, film_width = %d\n", film_height, film_width);
+  g_printerr ("picture_height = %d, picture_space = %d, picture_y0 = %d\n",
+              picture_height, picture_space, picture_y0);
+  g_printerr ("Number of pictures = %d\n", num_pictures);
 #endif
 
   image_ID_dst = create_new_image (_("Untitled"),
@@ -471,8 +471,8 @@ film (void)
   hole_x = hole_space / 2;
 
 #ifdef FILM_DEBUG
-  printf ("hole_x %d hole_offset %d hole_width %d hole_height %d hole_space %d\n",
-	  hole_x, hole_offset, hole_width, hole_height, hole_space );
+  g_printerr ("hole_x %d hole_offset %d hole_width %d hole_height %d hole_space %d\n",
+              hole_x, hole_offset, hole_width, hole_height, hole_space );
 #endif
 
   hole = create_hole_rgb (hole_width, hole_height);
@@ -507,10 +507,10 @@ film (void)
 
       for (k = 0; k < num_layers; k++)
 	{
-	  if (gimp_layer_is_floating_selection (layers[k]))
+	  if (gimp_layer_is_floating_sel (layers[k]))
 	    continue;
 
-	  picture_x0 += (picture_space/2);
+	  picture_x0 += picture_space / 2;
 
 	  layer_ID_src = layers[k];
 	  /* Scale the layer and insert int new image */
@@ -518,7 +518,7 @@ film (void)
                              layer_ID_dst, picture_x0, picture_y0,
                              picture_width, picture_height))
 	    {
-	      printf ("film: error during scale_layer\n");
+	      g_printerr ("film: error during scale_layer\n");
 	      return -1;
 	    }
 
@@ -554,7 +554,7 @@ film (void)
   g_free (layers);
 
   /* Drawing text/numbers leaves us with a floating selection. Stop it */
-  gimp_floating_sel_anchor (gimp_image_floating_selection (image_ID_dst));
+  gimp_floating_sel_anchor (gimp_image_get_floating_sel (image_ID_dst));
 
   /* Restore foreground */
   gimp_palette_set_foreground (&foreground);
@@ -655,7 +655,7 @@ convert_to_rgb (GimpDrawable *srcdrawable,
      break;
 
    default:
-     printf ("convert_to_rgb: unknown image type\n");
+     g_printerr ("convert_to_rgb: unknown image type\n");
      break;
    }
 }

@@ -331,7 +331,7 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_floating_selection ##### -->
+<!-- ##### FUNCTION gimp_image_get_floating_sel ##### -->
 <para>
 
 </para>

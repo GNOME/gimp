@@ -930,12 +930,12 @@ HELP
     %invoke = ( code => 'dirty = (gimage->dirty != 0);' );
 }
 
-sub image_floating_selection {
+sub image_get_floating_sel {
     $blurb = 'Return the floating selection of the image.';
 
     $help = <<'HELP';
-This procedure returns the image's floating_sel, if it exists. If it doesn't
-exist, -1 is returned as the layer ID.
+This procedure returns the image's floating selection, if it exists.
+If it doesn't exist, -1 is returned as the layer ID.
 HELP
 
     &std_pdb_misc;
@@ -1494,8 +1494,9 @@ unshift @procs, qw(image_list image_new image_delete image_base_type
                    image_raise_channel image_lower_channel
                    image_add_channel image_remove_channel
                    image_get_cmap image_set_cmap
-		   image_clean_all image_is_dirty image_floating_selection
-		   image_floating_sel_attached_to image_thumbnail
+		   image_clean_all image_is_dirty
+                   image_get_floating_sel image_floating_sel_attached_to
+                   image_thumbnail
 		   image_set_tattoo_state image_get_tattoo_state
 		   image_duplicate);
 %exports = (app => [@procs], lib => [@procs]);
