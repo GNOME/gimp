@@ -1,3 +1,16 @@
+Sat Mar 13 21:07:34 EST 1999 Matt Wilson <msw@gimp.org>
+
+	* image_render.c: Off by a factor of 3 vertical. GRAY and INDEXED
+	work.  The rest appear to have endian and bitshift errors.
+	* gximage.[ch]: more gdk_rgb functionality
+	* gdisplay.c: updated to new gximage_put arguments
+	
+Sat Mar 13 21:07:34 EST 1999 Matt Wilson <msw@gimp.org>
+
+	* gdisplay.c, gximage.[ch], image_render.c: First steps to migrate
+	to gdk_rgb displays.  You get half of the 256x256 image rendered
+	properly now.
+
 Sat Mar 13 20:22:00 EST 1999 Matt Wilson <msw@gimp.org>
 
 	(some earlier commits on this branch to make app/ build under GTK+

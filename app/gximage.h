@@ -24,7 +24,8 @@
 void     gximage_init           (void);
 void     gximage_free           (void);
 
-void     gximage_put            (GdkWindow *, int, int, int, int);
+void     gximage_put            (GdkWindow *win, int x, int y, int w, int h,
+				 int xdith, int ydith);
 guchar*  gximage_get_data       (void);
 int      gximage_get_bpp        (void);
 int      gximage_get_bpl        (void);
