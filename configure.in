@@ -4,8 +4,8 @@ dnl Process this file with autoconf to produce a configure script.
 # Sanity checks
 ###############
 
-# require autoconf 2.52
-AC_PREREQ(2.52)
+# require autoconf 2.54
+AC_PREREQ(2.54)
 
 AC_INIT(app/core/gimp.c)
 

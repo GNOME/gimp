@@ -1,3 +1,8 @@
+2003-08-17  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: bump up minimum autoconf requirement to 2.54 for
+	new features
+
 2003-08-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c (read_16bit): fixed bug that was
