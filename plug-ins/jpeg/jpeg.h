@@ -741,7 +741,34 @@ my_emit_message (j_common_ptr cinfo,
                  int          msg_level)
 {
   if (msg_level == -1)
-    cinfo->client_data = GINT_TO_POINTER(TRUE);
+    {
+      /*  disable loading of EXIF data  */
+      cinfo->client_data = GINT_TO_POINTER (TRUE);
+
+      (*cinfo->err->output_message) (cinfo);
+    }
+}
+
+static void
+my_output_message (j_common_ptr cinfo)
+{
+  gchar  buffer[JMSG_LENGTH_MAX + 1];
+
+  (*cinfo->err->format_message)(cinfo, buffer);
+
+  if (GPOINTER_TO_INT (cinfo->client_data))
+    {
+      gchar *msg = g_strconcat (buffer,
+                                "\n\n",
+                                _("EXIF data will be ignored."),
+                                NULL);
+      g_message (msg);
+      g_free (msg);
+    }
+  else
+    {
+      g_message (buffer);
+    }
 }
 
 static gint32
@@ -779,8 +806,10 @@ load_image (const gchar *filename,
   /* flag warnings, so we try to ignore corrupt EXIF data */
   if (!preview)
     {
-      cinfo.client_data = GINT_TO_POINTER(FALSE);
-      jerr.pub.emit_message = my_emit_message;
+      cinfo.client_data = GINT_TO_POINTER (FALSE);
+
+      jerr.pub.emit_message   = my_emit_message;
+      jerr.pub.output_message = my_output_message;
     }
 
   if ((infile = fopen (filename, "rb")) == NULL)
@@ -1138,6 +1167,7 @@ load_image (const gchar *filename,
 
 	      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
 	      exif_data_unref (exif_data);
+
 	      if (exif_buf_len > EXIF_HEADER_SIZE)
 		{
 		  exif_parasite = gimp_parasite_new ("exif-data",
@@ -1146,11 +1176,10 @@ load_image (const gchar *filename,
 		  gimp_image_parasite_attach (image_ID, exif_parasite);
 		  gimp_parasite_free (exif_parasite);
 		}
+
 	      free (exif_buf);
 	    }
 	}
-      else
-	g_message (_("JPEG loaded with warnings, EXIF data ignored"));
 #endif
     }
 
