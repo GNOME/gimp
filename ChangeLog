@@ -1,5 +1,9 @@
 2004-12-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp.c: more code cleanup.
+
+2004-12-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_region):
 	unset the dirty flag on the GimpPixelRgn used to iterate the region.
 

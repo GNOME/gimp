@@ -82,8 +82,6 @@ static gdouble * gen_lookup_table        (gdouble       *cmatrix,
                                           gint           cmatrix_length);
 static void      unsharp_region          (GimpPixelRgn  *srcPTR,
                                           GimpPixelRgn  *dstPTR,
-                                          gint           width,
-                                          gint           height,
                                           gint           bytes,
                                           gdouble        radius,
                                           gdouble        amount,
@@ -397,8 +395,7 @@ unsharp_mask (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  unsharp_region (&srcPR, &destPR, width, height, bytes, radius, amount,
-                  x1, x2, y1, y2, TRUE);
+  unsharp_region (&srcPR, &destPR, bytes, radius, amount, x1, x2, y1, y2, TRUE);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -412,8 +409,6 @@ unsharp_mask (GimpDrawable *drawable,
 static void
 unsharp_region (GimpPixelRgn *srcPR,
                 GimpPixelRgn *destPR,
-                gint          width,
-                gint          height,
                 gint          bytes,
                 gdouble       radius,
                 gdouble       amount,
@@ -423,27 +418,19 @@ unsharp_region (GimpPixelRgn *srcPR,
                 gint          y2,
                 gboolean      show_progress)
 {
-  guchar  *cur_col;
-  guchar  *dest_col;
-  guchar  *cur_row;
-  guchar  *dest_row;
-  gint     x;
-  gint     y;
+  guchar  *src;
+  guchar  *dest;
+  gint     width;
+  gint     height;
   gdouble *cmatrix = NULL;
   gint     cmatrix_length;
   gdouble *ctable;
-
-  gint row, col;  /* these are counters for loops */
-
-  /* these are used for the merging step */
-  gint threshold;
-  gint diff;
-  gint value;
-  gint u, v;
+  gint     row, col;
+  gint     threshold = unsharp_params.threshold;
 
   /* find height and width of subregion to act on */
-  x = x2 - x1;
-  y = y2 - y1;
+  width  = x2 - x1;
+  height = y2 - y1;
 
   /* generate convolution matrix
      and make sure it's smaller than each dimension */
@@ -452,97 +439,99 @@ unsharp_region (GimpPixelRgn *srcPR,
   /* generate lookup table */
   ctable = gen_lookup_table (cmatrix, cmatrix_length);
 
-  /*  allocate row buffers  */
-  cur_row  = g_new (guchar, x * bytes);
-  dest_row = g_new (guchar, x * bytes);
+  /* allocate row buffers */
+  src  = g_new (guchar, width * bytes);
+  dest = g_new (guchar, width * bytes);
 
   /* blank out a region of the destination memory area, I think */
-  for (row = 0; row < y; row++)
+  for (row = 0; row < height; row++)
     {
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, (x2 - x1));
-      memset (dest_row, 0, x * bytes);
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, (x2 - x1));
+      gimp_pixel_rgn_get_row (destPR, dest, x1, y1 + row, (x2 - x1));
+      memset (dest, 0, width * bytes);
+      gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, (x2 - x1));
     }
 
   /* blur the rows */
-  for (row = 0; row < y; row++)
+  for (row = 0; row < height; row++)
     {
-      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1 + row, x);
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, x);
-      blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, x);
+      gimp_pixel_rgn_get_row (srcPR, src, x1, y1 + row, width);
+      gimp_pixel_rgn_get_row (destPR, dest, x1, y1 + row, width);
+      blur_line (ctable, cmatrix, cmatrix_length, src, dest, width, bytes);
+      gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
       if (show_progress && row % 5 == 0)
-        gimp_progress_update ((gdouble) row / (3 * y));
+        gimp_progress_update ((gdouble) row / (3 * height));
     }
 
+  /* free row buffers */
+  g_free (dest);
+  g_free (src);
+
   /* allocate column buffers */
-  cur_col  = g_new (guchar, y * bytes);
-  dest_col = g_new (guchar, y * bytes);
+  src  = g_new (guchar, height * bytes);
+  dest = g_new (guchar, height * bytes);
 
   /* blur the cols */
-  for (col = 0; col < x; col++)
+  for (col = 0; col < width; col++)
     {
-      gimp_pixel_rgn_get_col (destPR, cur_col, x1 + col, y1, y);
-      gimp_pixel_rgn_get_col (destPR, dest_col, x1 + col, y1, y);
-      blur_line (ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
-      gimp_pixel_rgn_set_col (destPR, dest_col, x1 + col, y1, y);
+      gimp_pixel_rgn_get_col (destPR, src, x1 + col, y1, height);
+      gimp_pixel_rgn_get_col (destPR, dest, x1 + col, y1, height);
+      blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
+      gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
       if (show_progress && col % 5 == 0)
-        gimp_progress_update ((gdouble) col / (3 * x) + 0.33);
+        gimp_progress_update ((gdouble) col / (3 * width) + 0.33);
     }
 
   if (show_progress)
     gimp_progress_init (_("Merging..."));
 
-  /* find integer value of threshold */
-  threshold = unsharp_params.threshold;
-
   /* merge the source and destination (which currently contains
      the blurred version) images */
-  for (row = 0; row < y; row++)
+  for (row = 0; row < height; row++)
     {
-      value = 0;
+      gint value = 0;
+      gint u, v;
 
       /* get source row */
-      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1 + row, x);
+      gimp_pixel_rgn_get_row (srcPR, src, x1, y1 + row, width);
 
       /* get dest row */
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, x);
+      gimp_pixel_rgn_get_row (destPR, dest, x1, y1 + row, width);
 
       /* combine the two */
-      for (u = 0; u < x; u++)
+      for (u = 0; u < width; u++)
         {
           for (v = 0; v < bytes; v++)
             {
-              diff = (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
+              gint diff = (src[u * bytes + v] - dest[u * bytes + v]);
 
               /* do tresholding */
               if (abs (2 * diff) < threshold)
                 diff = 0;
 
-              value = cur_row[u*bytes+v] + amount * diff;
+              value = src[u*bytes+v] + amount * diff;
 
-              dest_row[u*bytes+v] = CLAMP (value, 0, 255);
+              dest[u*bytes+v] = CLAMP (value, 0, 255);
             }
         }
       /* update progress bar every five rows */
       if (show_progress && row % 5 == 0)
-        gimp_progress_update ((gdouble) row / (3 * y) + 0.67);
+        gimp_progress_update ((gdouble) row / (3 * height) + 0.67);
 
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, x);
+      gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
     }
 
   if (show_progress)
     gimp_progress_update (0.0);
 
+  /* free col buffers */
+  g_free (dest);
+  g_free (src);
+
   /* free the memory we took */
   g_free (cmatrix);
   g_free (ctable);
-  g_free (dest_col);
-  g_free (cur_col);
-  g_free (dest_row);
-  g_free (cur_row);
 }
 
 /* generates a 1-D convolution matrix to be used for each pass of
@@ -767,8 +756,7 @@ preview_update (GimpPreview *preview)
   gimp_pixel_rgn_init (&destPR, drawable, x1, y1, x2-x1, y2-y1, TRUE,  TRUE);
 
   /* unsharp region */
-  unsharp_region (&srcPR, &destPR,
-                  x2 - x1, y2 - y1, drawable->bpp,
+  unsharp_region (&srcPR, &destPR, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
                   x1, x2, y1, y2,
                   FALSE);
