@@ -30,6 +30,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define DEFAULT_CONTRAST 4.0
+
+
 #define CDISPLAY_TYPE_CONTRAST            (cdisplay_contrast_type)
 #define CDISPLAY_CONTRAST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_CONTRAST, CdisplayContrast))
 #define CDISPLAY_CONTRAST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_CONTRAST, CdisplayContrastClass))
@@ -44,16 +47,11 @@ struct _CdisplayContrast
 {
   GimpColorDisplay  parent_instance;
 
-  GFunc             ok_func;
-  gpointer          ok_data;
-  GFunc             cancel_func;
-  gpointer          cancel_data;
-
   gdouble           contrast;
   guchar           *lookup;
 
-  GtkWidget        *shell;
-  GtkWidget        *spinner;
+  GtkWidget        *hbox;
+  GtkObject        *adjustment;
 };
 
 struct _CdisplayContrastClass
@@ -78,18 +76,12 @@ static void    cdisplay_contrast_convert           (GimpColorDisplay *display,
 static void    cdisplay_contrast_load_state        (GimpColorDisplay *display,
                                                  GimpParasite     *state);
 static GimpParasite * cdisplay_contrast_save_state (GimpColorDisplay *display);
-static void    cdisplay_contrast_configure         (GimpColorDisplay *display,
-                                                 GFunc             ok_func,
-                                                 gpointer          ok_data,
-                                                 GFunc             cancel_func,
-                                                 gpointer          cancel_data);
-static void    cdisplay_contrast_configure_cancel  (GimpColorDisplay *display);
+static GtkWidget    * cdisplay_contrast_configure  (GimpColorDisplay *display);
+static void    cdisplay_contrast_configure_reset   (GimpColorDisplay *display);
 
 static void    contrast_create_lookup_table        (CdisplayContrast    *contrast);
-static void    contrast_configure_ok_callback      (GtkWidget        *widget,
-                                                 CdisplayContrast    *contrast);
-static void    contrast_configure_cancel_callback  (GtkWidget        *widget,
-                                                 CdisplayContrast    *contrast);
+static void    contrast_configure_adj_callback     (GtkAdjustment    *adj,
+                                                    CdisplayContrast    *contrast);
 
 
 static const GimpModuleInfo cdisplay_contrast_info = 
@@ -158,22 +150,22 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = cdisplay_contrast_finalize;
+  object_class->finalize         = cdisplay_contrast_finalize;
 
-  display_class->name             = _("Contrast");
-  display_class->help_page        = "modules/contrast.html";
-  display_class->clone            = cdisplay_contrast_clone;
-  display_class->convert          = cdisplay_contrast_convert;
-  display_class->load_state       = cdisplay_contrast_load_state;
-  display_class->save_state       = cdisplay_contrast_save_state;
-  display_class->configure        = cdisplay_contrast_configure;
-  display_class->configure_cancel = cdisplay_contrast_configure_cancel;
+  display_class->name            = _("Contrast");
+  display_class->help_page       = "modules/contrast.html";
+  display_class->clone           = cdisplay_contrast_clone;
+  display_class->convert         = cdisplay_contrast_convert;
+  display_class->load_state      = cdisplay_contrast_load_state;
+  display_class->save_state      = cdisplay_contrast_save_state;
+  display_class->configure       = cdisplay_contrast_configure;
+  display_class->configure_reset = cdisplay_contrast_configure_reset;
 }
 
 static void
 cdisplay_contrast_init (CdisplayContrast *contrast)
 {
-  contrast->contrast  = 4.0;
+  contrast->contrast  = DEFAULT_CONTRAST;
   contrast->lookup    = g_new (guchar, 256);
 
   contrast_create_lookup_table (contrast);
@@ -186,11 +178,8 @@ cdisplay_contrast_finalize (GObject *object)
 
   contrast = CDISPLAY_CONTRAST (object);
 
-  if (contrast->shell)
-    {
-      gtk_widget_destroy (contrast->shell);
-      contrast->shell = NULL;
-    }
+  if (contrast->hbox)
+    gtk_widget_destroy (contrast->hbox);
 
   if (contrast->lookup)
     {
@@ -306,74 +295,50 @@ cdisplay_contrast_save_state (GimpColorDisplay *display)
 			    sizeof (double), &buf);
 }
 
-static void
-cdisplay_contrast_configure (GimpColorDisplay *display,
-                             GFunc             ok_func,
-                             gpointer          ok_data,
-                             GFunc             cancel_func,
-                             gpointer          cancel_data)
+static GtkWidget *
+cdisplay_contrast_configure (GimpColorDisplay *display)
 {
   CdisplayContrast *contrast;
-  GtkWidget        *hbox;
   GtkWidget        *label;
-  GtkObject        *adjustment;
+  GtkWidget        *spinbutton;
 
   contrast = CDISPLAY_CONTRAST (display);
 
-  if (!contrast->shell)
-    {
-      contrast->ok_func     = ok_func;
-      contrast->ok_data     = ok_data;
-      contrast->cancel_func = cancel_func;
-      contrast->cancel_data = cancel_data;
+  if (contrast->hbox)
+    gtk_widget_destroy (contrast->hbox);
 
-      contrast->shell =
-	gimp_dialog_new (_("High Contrast"), "high_contrast",
-			 gimp_standard_help_func, "modules/highcontrast.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
+  contrast->hbox = gtk_hbox_new (FALSE, 2);
+  g_object_add_weak_pointer (G_OBJECT (contrast->hbox),
+                             (gpointer) &contrast->hbox);
 
-			 GTK_STOCK_CANCEL, contrast_configure_cancel_callback,
-			 contrast, NULL, NULL, FALSE, TRUE,
+  label = gtk_label_new ( _("Contrast Cycles:"));
+  gtk_box_pack_start (GTK_BOX (contrast->hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-			 GTK_STOCK_OK, contrast_configure_ok_callback,
-			 contrast, NULL, NULL, TRUE, FALSE,
+  spinbutton = gimp_spin_button_new (&contrast->adjustment,
+                                     contrast->contrast,
+                                     0.01, 10.0, 0.01, 0.1, 0.0,
+                                     0.1, 3);
+  gtk_box_pack_start (GTK_BOX (contrast->hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
-			 NULL);
+  g_signal_connect (G_OBJECT (contrast->adjustment), "value_changed",
+                    G_CALLBACK (contrast_configure_adj_callback),
+                    contrast);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (contrast->shell)->vbox),
-			  hbox, FALSE, FALSE, 0);
-
-      label = gtk_label_new ( _("Contrast Cycles:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-
-      adjustment = gtk_adjustment_new (contrast->contrast, 0.01, 10.0, 0.01, 0.1, 0.0);
-      contrast->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
-					      0.1, 3);
-      gtk_box_pack_start (GTK_BOX (hbox), contrast->spinner, FALSE, FALSE, 0);
-    }
-
-  gtk_widget_show_all (contrast->shell);
+  return contrast->hbox;
 }
 
 static void
-cdisplay_contrast_configure_cancel (GimpColorDisplay *display)
+cdisplay_contrast_configure_reset (GimpColorDisplay *display)
 {
   CdisplayContrast *contrast;
  
   contrast = CDISPLAY_CONTRAST (display);
 
-  if (contrast->shell)
-    {
-      gtk_widget_destroy (contrast->shell);
-      contrast->shell = NULL;
-    }
-
-  if (contrast->cancel_func)
-    contrast->cancel_func (contrast, contrast->cancel_data);
+  if (contrast->adjustment)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (contrast->adjustment),
+                              DEFAULT_CONTRAST);
 }
 
 static void
@@ -392,24 +357,12 @@ contrast_create_lookup_table (CdisplayContrast *contrast)
 }
 
 static void
-contrast_configure_ok_callback (GtkWidget        *widget,
-                                CdisplayContrast *contrast)
+contrast_configure_adj_callback (GtkAdjustment    *adj,
+                                 CdisplayContrast *contrast)
 {
-  contrast->contrast =
-    gtk_spin_button_get_value (GTK_SPIN_BUTTON (contrast->spinner));
+  contrast->contrast = adj->value;
 
   contrast_create_lookup_table (contrast);
 
-  gtk_widget_destroy (GTK_WIDGET (contrast->shell));
-  contrast->shell = NULL;
-
-  if (contrast->ok_func)
-    contrast->ok_func (contrast, contrast->ok_data);
-}
-
-static void
-contrast_configure_cancel_callback (GtkWidget        *widget,
-                                    CdisplayContrast *contrast)
-{
-  gimp_color_display_configure_cancel (GIMP_COLOR_DISPLAY (contrast));
+  gimp_color_display_changed (GIMP_COLOR_DISPLAY (contrast));
 }

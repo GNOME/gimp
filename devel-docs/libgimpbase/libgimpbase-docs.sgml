@@ -1,6 +1,7 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!entity GimpBaseTypes SYSTEM "sgml/gimpbasetypes.sgml">
 <!entity GimpLimits SYSTEM "sgml/gimplimits.sgml">
+<!entity GimpDatafiles SYSTEM "sgml/gimpdatafiles.sgml">
 <!entity GimpEnv SYSTEM "sgml/gimpenv.sgml">
 <!entity GimpParasite SYSTEM "sgml/gimpparasite.sgml">
 <!entity GimpParasiteIO SYSTEM "sgml/gimpparasiteio.sgml">
@@ -20,6 +21,7 @@
     &GimpBaseTypes;
     &GimpVersion;
     &GimpLimits;
+    &GimpDatafiles;
     &GimpEnv;
     &GimpParasite;
     &GimpParasiteIO;

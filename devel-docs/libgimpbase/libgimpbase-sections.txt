@@ -5,6 +5,7 @@ GimpPDBProcType
 GimpPDBStatusType
 GimpMessageHandlerType
 GimpStackTraceMode
+GimpDatafileLoaderFunc
 </SECTION>
 
 <SECTION>
@@ -162,3 +163,9 @@ GIMP_VERSION
 GIMP_CHECK_VERSION
 </SECTION>
 
+<SECTION>
+<FILE>gimpdatafiles</FILE>
+GimpDatafileData
+gimp_datafiles_check_extension
+gimp_datafiles_read_directories
+</SECTION>

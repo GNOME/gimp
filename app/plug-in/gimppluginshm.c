@@ -86,7 +86,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpdatafiles.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 

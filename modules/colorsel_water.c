@@ -104,7 +104,7 @@ static void       pressure_adjust_update    (GtkAdjustment     *adj,
 
 static const GimpModuleInfo colorsel_water_info =
 {
-  N_("Watercolor style color selector as a pluggable module"),
+  N_("Watercolor style color selector"),
   "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
   "v0.3",
   "(c) 1998-1999, released under the GPL",
@@ -289,22 +289,6 @@ colorsel_water_update (ColorselWater *water)
                                      &water->rgb, &hsv);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static gdouble
 calc (gdouble x,
       gdouble y,
@@ -317,7 +301,6 @@ calc (gdouble x,
 
   return 128 + (x - (IMAGE_SIZE >> 1)) * c - (y - (IMAGE_SIZE >> 1)) * s;
 }
-
 
 /* Initialize the preview */
 static void
@@ -352,7 +335,6 @@ select_area_draw (GtkWidget *preview)
     }
 }
 
-
 static void
 add_pigment (ColorselWater *colorsel,
 	     gboolean       erase,
@@ -364,7 +346,7 @@ add_pigment (ColorselWater *colorsel,
 
   much *= (gdouble) colorsel->pressure_adjust; 
 
- if (erase)
+  if (erase)
     {
       colorsel->rgb.r = 1 - (1 - colorsel->rgb.r) * (1 - much);
       colorsel->rgb.g = 1 - (1 - colorsel->rgb.g) * (1 - much);
@@ -429,7 +411,10 @@ button_press_event (GtkWidget      *widget,
 
   water->last_x        = event->x;
   water->last_y        = event->y;
-  water->last_pressure = 1.0; /* FIXME: event->pressure */
+  water->last_pressure = 0.5;
+
+  gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE,
+                      &water->last_pressure);
 
   water->button_state |= 1 << event->button;
 

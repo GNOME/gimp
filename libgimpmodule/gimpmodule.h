@@ -26,6 +26,8 @@
 
 #include <libgimpmodule/gimpmoduletypes.h>
 
+#include <libgimpmodule/gimpmoduledb.h>
+
 G_BEGIN_DECLS
 
 
@@ -96,15 +98,19 @@ struct _GimpModuleClass
 };
 
 
-GType        gimp_module_get_type         (void) G_GNUC_CONST;
+GType         gimp_module_get_type         (void) G_GNUC_CONST;
 
-GimpModule * gimp_module_new              (const gchar *filename,
-                                           const gchar *inhibit_str,
-                                           gboolean     verbose);
+GimpModule  * gimp_module_new              (const gchar     *filename,
+                                            gboolean         load_inhibit,
+                                            gboolean         verbose);
 
-void         gimp_module_modified         (GimpModule  *module);
-void         gimp_module_set_load_inhibit (GimpModule  *module,
-                                           const gchar *inhibit_list);
+gboolean      gimp_module_query_module     (GimpModule      *module);
+
+void          gimp_module_modified         (GimpModule      *module);
+void          gimp_module_set_load_inhibit (GimpModule      *module,
+                                            gboolean         load_inhibit);
+
+const gchar * gimp_module_state_name       (GimpModuleState  state);
 
 
 /*  GimpModuleInfo functions  */

@@ -29,7 +29,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-typedef struct _GimpParasite    GimpParasite;
+typedef struct _GimpParasite     GimpParasite;
+typedef struct _GimpDatafileData GimpDatafileData;
+
+
+typedef void (* GimpDatafileLoaderFunc) (GimpDatafileData *file_data);
 
 
 typedef enum

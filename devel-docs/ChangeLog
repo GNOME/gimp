@@ -1,3 +1,20 @@
+2002-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimpdatafiles.sgml: added GimpDatafiles
+
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/tmpl/gimpmoduledb.sgml: added GimpModuleDB.
+
+	* libgimpwidgets/libgimpwidgets.types: added gimp_dialog_get_type
+
+	* libgimpmodule/tmpl/gimpmodule.sgml
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
+	* libgimpwidgets/tmpl/gimpdialog.sgml: updated.
+
 2002-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/tmpl/gimpmoduletypes.sgml: removed because we

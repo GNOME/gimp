@@ -50,8 +50,6 @@ libappcore_a_sources = \
 	gimpdata.h			\
 	gimpdatafactory.c		\
 	gimpdatafactory.h		\
-	gimpdatafiles.c			\
-	gimpdatafiles.h			\
 	gimpdatalist.c			\
 	gimpdatalist.h			\
 	gimpdocumentlist.c		\

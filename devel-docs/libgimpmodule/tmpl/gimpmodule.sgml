@@ -68,9 +68,11 @@ Common definitions for creating a pluggable GIMP module.
 </para>
 
 @filename: 
-@inhibit_str: 
+@load_inhibit: 
 @verbose: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@inhibit_str: 
 
 
 <!-- ##### FUNCTION gimp_module_modified ##### -->
@@ -87,6 +89,8 @@ Common definitions for creating a pluggable GIMP module.
 </para>
 
 @module: 
+@load_inhibit: 
+<!-- # Unused Parameters # -->
 @inhibit_list: 
 
 

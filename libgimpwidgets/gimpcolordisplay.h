@@ -47,46 +47,42 @@ struct _GimpColorDisplayClass
   const gchar *help_page;
 
   /*  virtual functions  */
-  GimpColorDisplay * (* clone)            (GimpColorDisplay *display);
-  void               (* convert)          (GimpColorDisplay *display,
-                                           guchar           *buf,
-                                           gint              width,
-                                           gint              height,
-                                           gint              bpp,
-                                           gint              bpl);
+  GimpColorDisplay * (* clone)           (GimpColorDisplay *display);
+  void               (* convert)         (GimpColorDisplay *display,
+                                          guchar           *buf,
+                                          gint              width,
+                                          gint              height,
+                                          gint              bpp,
+                                          gint              bpl);
+  void               (* load_state)      (GimpColorDisplay *display,
+                                          GimpParasite     *state);
+  GimpParasite     * (* save_state)      (GimpColorDisplay *display);
+  GtkWidget        * (* configure)       (GimpColorDisplay *display);
+  void               (* configure_reset) (GimpColorDisplay *display);
 
-  void               (* load_state)       (GimpColorDisplay *display,
-                                           GimpParasite     *state);
-  GimpParasite     * (* save_state)       (GimpColorDisplay *display);
-  void               (* configure)        (GimpColorDisplay *display,
-                                           GFunc             ok_func,
-                                           gpointer          ok_data,
-                                           GFunc             cancel_func,
-                                           gpointer          cancel_data);
-  void               (* configure_cancel) (GimpColorDisplay *display);
+  /*  signals  */
+  void               (* changed)         (GimpColorDisplay *display);
 };
 
 
-GType              gimp_color_display_get_type     (void) G_GNUC_CONST;
-GimpColorDisplay * gimp_color_display_new          (GType              display_type);
+GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
+GimpColorDisplay * gimp_color_display_new         (GType             display_type);
 
-GimpColorDisplay * gimp_color_display_clone        (GimpColorDisplay  *display);
+GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
 
-void           gimp_color_display_convert          (GimpColorDisplay  *display,
-                                                    guchar            *buf,
-                                                    gint               width,
-                                                    gint               height,
-                                                    gint               bpp,
-                                                    gint               bpl);
-void           gimp_color_display_load_state       (GimpColorDisplay *display,
-                                                    GimpParasite     *state);
-GimpParasite * gimp_color_display_save_state       (GimpColorDisplay *display);
-void           gimp_color_display_configure        (GimpColorDisplay *display,
-                                                    GFunc             ok_func,
-                                                    gpointer          ok_data,
-                                                    GFunc             cancel_func,
-                                                    gpointer          cancel_data);
-void           gimp_color_display_configure_cancel (GimpColorDisplay *display);
+void           gimp_color_display_convert         (GimpColorDisplay *display,
+                                                   guchar           *buf,
+                                                   gint              width,
+                                                   gint              height,
+                                                   gint              bpp,
+                                                   gint              bpl);
+void           gimp_color_display_load_state      (GimpColorDisplay *display,
+                                                   GimpParasite     *state);
+GimpParasite * gimp_color_display_save_state      (GimpColorDisplay *display);
+GtkWidget    * gimp_color_display_configure       (GimpColorDisplay *display);
+void           gimp_color_display_configure_reset (GimpColorDisplay *display);
+
+void           gimp_color_display_changed         (GimpColorDisplay *display);
 
 
 G_END_DECLS

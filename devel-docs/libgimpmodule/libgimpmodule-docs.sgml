@@ -1,5 +1,6 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!entity GimpModule SYSTEM "sgml/gimpmodule.sgml">
+<!entity GimpModuleDB SYSTEM "sgml/gimpmoduledb.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -9,5 +10,6 @@
   <chapter id="libgimpmodule">
     <title>GIMP Module Library</title>
     &GimpModule;
+    &GimpModuleDB;
   </chapter>
 </book>

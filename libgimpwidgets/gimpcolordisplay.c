@@ -30,11 +30,20 @@
 #include "gimpcolordisplay.h"
 
 
+enum
+{
+  CHANGED,
+  LAST_SIGNAL
+};
+
+
 static void   gimp_color_display_class_init (GimpColorDisplayClass *klass);
 static void   gimp_color_display_init       (GimpColorDisplay      *display);
 
 
 static GObjectClass *parent_class = NULL;
+
+static guint  display_signals[LAST_SIGNAL] = { 0 };
 
 
 GType
@@ -70,12 +79,21 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 {
   parent_class = g_type_class_peek_parent (klass);
 
-  klass->clone            = NULL;
-  klass->convert          = NULL;
-  klass->load_state       = NULL;
-  klass->save_state       = NULL;
-  klass->configure        = NULL;
-  klass->configure_cancel = NULL;
+  display_signals[CHANGED] =
+    g_signal_new ("changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorDisplayClass, changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  klass->clone           = NULL;
+  klass->convert         = NULL;
+  klass->load_state      = NULL;
+  klass->save_state      = NULL;
+  klass->configure       = NULL;
+  klass->configure_reset = NULL;
 }
 
 static void
@@ -145,26 +163,30 @@ gimp_color_display_save_state (GimpColorDisplay *display)
   return NULL;
 }
 
-void
-gimp_color_display_configure (GimpColorDisplay *display,
-                              GFunc             ok_func,
-                              gpointer          ok_data,
-                              GFunc             cancel_func,
-                              gpointer          cancel_data)
+GtkWidget *
+gimp_color_display_configure (GimpColorDisplay *display)
 {
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
 
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure)
-    GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure (display,
-                                                       ok_func, ok_data,
-                                                       cancel_func, cancel_data);
+    return GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure (display);
+
+  return NULL;
 }
 
 void
-gimp_color_display_configure_cancel (GimpColorDisplay *display)
+gimp_color_display_configure_reset (GimpColorDisplay *display)
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_cancel)
-    GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_cancel (display);
+  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset)
+    GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset (display);
+}
+
+void
+gimp_color_display_changed (GimpColorDisplay *display)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+
+  g_signal_emit (G_OBJECT (display), display_signals[CHANGED], 0);
 }

@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdatafiles.h"
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
@@ -72,8 +71,7 @@ static void         gui_message                     (Gimp        *gimp,
 static GimpObject * gui_display_new                 (GimpImage   *gimage,
                                                      guint        scale);
 
-static void         gui_themes_dir_foreach_func     (const gchar *filename,
-                                                     gpointer     loader_data);
+static void         gui_themes_dir_foreach_func     (GimpDatafileData *file_data);
 static gint         gui_rotate_the_shield_harmonics (GtkWidget   *widget,
                                                      GdkEvent    *eevent,
                                                      gpointer     data);
@@ -136,7 +134,7 @@ gui_themes_init (Gimp *gimp)
   if (gimprc.theme_path)
     {
       gimp_datafiles_read_directories (gimprc.theme_path,
-				       TYPE_DIRECTORY,
+				       G_FILE_TEST_IS_DIR,
 				       gui_themes_dir_foreach_func,
 				       gimp);
     }
@@ -463,22 +461,21 @@ gui_display_new (GimpImage *gimage,
 }
 
 static void
-gui_themes_dir_foreach_func (const gchar *filename,
-			     gpointer     loader_data)
+gui_themes_dir_foreach_func (GimpDatafileData *file_data)
 {
   Gimp  *gimp;
   gchar *basename;
 
-  gimp = (Gimp *) loader_data;
+  gimp = (Gimp *) file_data->user_data;
 
-  basename = g_path_get_basename (filename);
+  basename = g_path_get_basename (file_data->filename);
 
   if (gimp->be_verbose)
-    g_print (_("Adding theme '%s' (%s)\n"), basename, filename);
+    g_print (_("Adding theme '%s' (%s)\n"), basename, file_data->filename);
 
   g_hash_table_insert (themes_hash,
 		       basename,
-		       g_strdup (filename));
+		       g_strdup (file_data->filename));
 }
 
 static gint

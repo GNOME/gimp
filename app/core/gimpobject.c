@@ -314,18 +314,28 @@ gimp_object_get_memsize (GimpObject *object)
   return GIMP_OBJECT_GET_CLASS (object)->get_memsize (object);
 }
 
-static gsize
-gimp_object_real_get_memsize (GimpObject *object)
+gsize
+gimp_g_object_get_memsize (GObject *object)
 {
   GTypeQuery type_query;
   gsize      memsize = 0;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), 0);
 
   g_type_query (G_TYPE_FROM_INSTANCE (object), &type_query);
 
   memsize += type_query.instance_size;
 
+  return memsize;
+}
+
+static gsize
+gimp_object_real_get_memsize (GimpObject *object)
+{
+  gsize memsize = 0;
+
   if (object->name)
     memsize += strlen (object->name) + 1;
 
-  return memsize;
+  return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }

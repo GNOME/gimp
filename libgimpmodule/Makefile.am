@@ -61,11 +61,14 @@ lib_LTLIBRARIES = libgimpmodule-1.3.la
 libgimpmodule_1_3_la_SOURCES = \
 	gimpmoduletypes.h	\
 	gimpmodule.c		\
-	gimpmodule.h
+	gimpmodule.h		\
+	gimpmoduledb.c		\
+	gimpmoduledb.h
 
 libgimpmoduleinclude_HEADERS = \
 	gimpmoduletypes.h	\
-	gimpmodule.h
+	gimpmodule.h		\
+	gimpmoduledb.h
 
 EXTRA_HEADERS =
 
@@ -76,7 +79,9 @@ libgimpmodule_1_3_la_LDFLAGS = \
 
 libgimpmodule_1_3_la_DEPENDENCIES = $(gimpmodule_def)
 
-libgimpmodule_1_3_la_LIBADD = $(GLIB_LIBS)
+libgimpmodule_1_3_la_LIBADD = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GLIB_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

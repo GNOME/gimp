@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpdatafiles.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -57,8 +56,7 @@ struct _PlugInHelpPathDef
 };
 
 
-static void   plug_ins_init_file       (const gchar       *filename,
-                                        gpointer           loader_data);
+static void   plug_ins_init_file       (GimpDatafileData  *file_data);
 static void   plug_ins_add_to_db       (Gimp              *gimp);
 static void   plug_ins_proc_def_insert (PlugInProcDef     *proc_def,
                                         void (* superceed_fn) (void *));
@@ -95,7 +93,7 @@ plug_ins_init (Gimp               *gimp,
 
   /* search for binaries in the plug-in directory path */
   gimp_datafiles_read_directories (gimp->config->plug_in_path, 
-                                   MODE_EXECUTABLE,
+                                   G_FILE_TEST_IS_EXECUTABLE,
 				   plug_ins_init_file, NULL);
 
   /* read the pluginrc file for cached data */
@@ -515,15 +513,14 @@ plug_ins_help_path (gchar *prog_name)
 }
 
 static void
-plug_ins_init_file (const gchar *filename,
-                    gpointer     loader_data)
+plug_ins_init_file (GimpDatafileData *file_data)
 {
   GSList    *tmp;
   PlugInDef *plug_in_def;
   gchar     *plug_in_name;
   gchar     *basename;
 
-  basename = g_path_get_basename (filename);
+  basename = g_path_get_basename (file_data->filename);
 
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -533,7 +530,8 @@ plug_ins_init_file (const gchar *filename,
 
       if (g_ascii_strcasecmp (basename, plug_in_name) == 0)
 	{
-	  g_print ("duplicate plug-in: \"%s\" (skipping)\n", filename);
+	  g_print ("duplicate plug-in: \"%s\" (skipping)\n",
+                   file_data->filename);
 	  return;
 	}
 
@@ -542,8 +540,8 @@ plug_ins_init_file (const gchar *filename,
 
   g_free (basename);
 
-  plug_in_def = plug_in_def_new (filename);
-  plug_in_def->mtime = gimp_datafile_mtime ();
+  plug_in_def        = plug_in_def_new (file_data->filename);
+  plug_in_def->mtime = file_data->mtime;
   plug_in_def->query = TRUE;
 
   plug_in_defs = g_slist_append (plug_in_defs, plug_in_def);

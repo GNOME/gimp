@@ -69,32 +69,37 @@ lib_LTLIBRARIES = libgimpbase-1.3.la
 libgimpbase_1_3_la_SOURCES = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
+	gimplimits.h		\
+	gimpunit.h		\
+	gimpversion.h		\
+	\
+	gimpdatafiles.c		\
+	gimpdatafiles.h		\
 	gimpenv.c		\
 	gimpenv.h		\
-	gimplimits.h		\
-	gimpsignal.c            \
-	gimpsignal.h            \
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
-	gimpunit.h		\
-	gimpversion.h		\
+	gimpsignal.c            \
+	gimpsignal.h            \
 	gimpwire.c		\
 	gimpwire.h
 
 libgimpbaseinclude_HEADERS = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
-	gimpenv.h		\
 	gimplimits.h		\
-	gimpsignal.h            \
+	gimpunit.h		\
+	gimpversion.h		\
+	\
+	gimpdatafiles.h		\
+	gimpenv.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
-	gimpunit.h		\
-	gimpversion.h
+	gimpsignal.h
 
 EXTRA_HEADERS =
 

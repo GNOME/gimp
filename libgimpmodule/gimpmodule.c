@@ -45,6 +45,8 @@ static void       gimp_module_finalize       (GObject         *object);
 static gboolean   gimp_module_load           (GTypeModule     *module);
 static void       gimp_module_unload         (GTypeModule     *module);
 
+static gboolean   gimp_module_open           (GimpModule      *module);
+static gboolean   gimp_module_close          (GimpModule      *module);
 static void       gimp_module_set_last_error (GimpModule      *module,
                                               const gchar     *error_str);
 
@@ -158,10 +160,9 @@ gimp_module_finalize (GObject *object)
 static gboolean
 gimp_module_load (GTypeModule *module)
 {
-  GimpModule           *gimp_module;
-  const GimpModuleInfo *info;
-  gpointer              symbol;
-  gboolean              retval;
+  GimpModule *gimp_module;
+  gpointer    symbol;
+  gboolean    retval;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
@@ -173,63 +174,11 @@ gimp_module_load (GTypeModule *module)
   if (gimp_module->verbose)
     g_print (_("Loading module: '%s'\n"), gimp_module->filename);
 
-  gimp_module->module = g_module_open (gimp_module->filename,
-                                       G_MODULE_BIND_LAZY);
+  if (! gimp_module_open (gimp_module))
+    return FALSE;
 
-  if (! gimp_module->module)
-    {
-      gimp_module->state = GIMP_MODULE_STATE_ERROR;
-      gimp_module_set_last_error (gimp_module, g_module_error ());
-
-      if (gimp_module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
-                   gimp_module->filename, gimp_module->last_module_error);
-      return FALSE;
-    }
-
-  /* find the gimp_module_query symbol */
-  if (! g_module_symbol (gimp_module->module, "gimp_module_query", &symbol))
-    {
-      gimp_module->state = GIMP_MODULE_STATE_ERROR;
-
-      gimp_module_set_last_error (gimp_module,
-                                  "Missing gimp_module_query() symbol");
-
-      if (gimp_module->verbose)
-	g_print (_("Module '%s' load error:\n%s"),
-                 gimp_module->filename, gimp_module->last_module_error);
-      g_module_close (gimp_module->module);
-      gimp_module->module = NULL;
-      return FALSE;
-    }
-
-  gimp_module->query_module = symbol;
-
-  info = gimp_module->query_module (module);
-
-  if (gimp_module->info)
-    {
-      gimp_module_info_free (gimp_module->info);
-      gimp_module->info = NULL;
-    }
-
-  if (! info)
-    {
-      gimp_module->state = GIMP_MODULE_STATE_ERROR;
-
-      gimp_module_set_last_error (gimp_module,
-                                  "gimp_module_query() returned NULL");
-
-      if (gimp_module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
-		   gimp_module->filename, gimp_module->last_module_error);
-      g_module_close (gimp_module->module);
-      gimp_module->module       = NULL;
-      gimp_module->query_module = NULL;
-      return FALSE;
-    }
-
-  gimp_module->info = gimp_module_info_copy (info);
+  if (! gimp_module_query_module (gimp_module))
+    return FALSE;
 
   /* find the gimp_module_register symbol */
   if (! g_module_symbol (gimp_module->module, "gimp_module_register", &symbol))
@@ -270,17 +219,15 @@ gimp_module_unload (GTypeModule *module)
 
   g_return_if_fail (gimp_module->module != NULL);
 
-  g_module_close (gimp_module->module); /* FIXME: error handling */
-  gimp_module->module          = NULL;
-  gimp_module->query_module    = NULL;
-  gimp_module->register_module = NULL;
-
-  gimp_module->state = GIMP_MODULE_STATE_UNLOADED_OK;
+  gimp_module_close (gimp_module);
 }
+
+
+/*  public functions  */
 
 GimpModule *
 gimp_module_new (const gchar *filename,
-                 const gchar *inhibit_list,
+                 gboolean     load_inhibit,
                  gboolean     verbose)
 {
   GimpModule *module;
@@ -289,11 +236,10 @@ gimp_module_new (const gchar *filename,
 
   module = g_object_new (GIMP_TYPE_MODULE, NULL);
 
-  module->filename = g_strdup (filename);
-  module->verbose  = verbose ? TRUE : FALSE;
-  module->on_disk  = TRUE;
-
-  gimp_module_set_load_inhibit (module, inhibit_list);
+  module->filename     = g_strdup (filename);
+  module->load_inhibit = load_inhibit ? TRUE : FALSE;
+  module->verbose      = verbose ? TRUE : FALSE;
+  module->on_disk      = TRUE;
 
   if (! module->load_inhibit)
     {
@@ -311,6 +257,71 @@ gimp_module_new (const gchar *filename,
   return module;
 }
 
+gboolean
+gimp_module_query_module (GimpModule *module)
+{
+  const GimpModuleInfo *info;
+  gboolean              close_module = FALSE;
+  gpointer              symbol;
+
+  g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
+
+  if (! module->module)
+    {
+      if (! gimp_module_open (module))
+        return FALSE;
+
+      close_module = TRUE;
+    }
+
+  /* find the gimp_module_query symbol */
+  if (! g_module_symbol (module->module, "gimp_module_query", &symbol))
+    {
+      module->state = GIMP_MODULE_STATE_ERROR;
+
+      gimp_module_set_last_error (module, "Missing gimp_module_query() symbol");
+
+      if (module->verbose)
+	g_print (_("Module '%s' load error:\n%s"),
+                 module->filename, module->last_module_error);
+
+
+      gimp_module_close (module);
+      return FALSE;
+    }
+
+  module->query_module = symbol;
+
+  if (module->info)
+    {
+      gimp_module_info_free (module->info);
+      module->info = NULL;
+    }
+
+  info = module->query_module (G_TYPE_MODULE (module));
+
+  if (! info)
+    {
+      module->state = GIMP_MODULE_STATE_ERROR;
+
+      gimp_module_set_last_error (module, "gimp_module_query() returned NULL");
+
+      if (module->verbose)
+	g_message (_("Module '%s' load error:\n%s"),
+		   module->filename, module->last_module_error);
+
+      gimp_module_close (module);
+      return FALSE;
+    }
+
+  module->info = gimp_module_info_copy (info);
+
+  if (close_module)
+    return gimp_module_close (module);
+
+  return TRUE;
+}
+
 void
 gimp_module_modified (GimpModule *module)
 {
@@ -320,42 +331,69 @@ gimp_module_modified (GimpModule *module)
 }
 
 void
-gimp_module_set_load_inhibit (GimpModule  *module,
-                              const gchar *inhibit_list)
+gimp_module_set_load_inhibit (GimpModule *module,
+                              gboolean    load_inhibit)
 {
-  gchar       *p;
-  gint         pathlen;
-  const gchar *start;
-  const gchar *end;
-
   g_return_if_fail (GIMP_IS_MODULE (module));
-  g_return_if_fail (module->filename != NULL);
 
-  module->load_inhibit = FALSE;
+  if (load_inhibit != module->load_inhibit)
+    {
+      module->load_inhibit = load_inhibit ? TRUE : FALSE;
 
-  if (! inhibit_list || ! strlen (inhibit_list))
-    return;
+      gimp_module_modified (module);
+    }
+}
 
-  p = strstr (inhibit_list, module->filename);
-  if (!p)
-    return;
 
-  /* we have a substring, but check for colons either side */
-  start = p;
-  while (start != inhibit_list && *start != G_SEARCHPATH_SEPARATOR)
-    start--;
+/*  private functions  */
 
-  if (*start == G_SEARCHPATH_SEPARATOR)
-    start++;
+const gchar *
+gimp_module_state_name (GimpModuleState state)
+{
+  static const gchar * const statenames[] =
+  {
+    N_("Module error"),
+    N_("Loaded OK"),
+    N_("Load failed"),
+    N_("Unloaded OK")
+  };
 
-  end = strchr (p, G_SEARCHPATH_SEPARATOR);
-  if (! end)
-    end = inhibit_list + strlen (inhibit_list);
+  g_return_val_if_fail (state >= GIMP_MODULE_STATE_ERROR &&
+                        state <= GIMP_MODULE_STATE_UNLOADED_OK, NULL);
 
-  pathlen = strlen (module->filename);
+  return gettext (statenames[state]);
+}
 
-  if ((end - start) == pathlen)
-    module->load_inhibit = TRUE;
+static gboolean
+gimp_module_open (GimpModule *module)
+{
+  module->module = g_module_open (module->filename, G_MODULE_BIND_LAZY);
+
+  if (! module->module)
+    {
+      module->state = GIMP_MODULE_STATE_ERROR;
+      gimp_module_set_last_error (module, g_module_error ());
+
+      if (module->verbose)
+	g_message (_("Module '%s' load error:\n%s"),
+                   module->filename, module->last_module_error);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_module_close (GimpModule *module)
+{
+  g_module_close (module->module); /* FIXME: error handling */
+  module->module          = NULL;
+  module->query_module    = NULL;
+  module->register_module = NULL;
+
+  module->state = GIMP_MODULE_STATE_UNLOADED_OK;
+
+  return TRUE;
 }
 
 static void

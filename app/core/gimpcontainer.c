@@ -195,7 +195,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_OBJECT);
 
   container_signals[REMOVE] =
     g_signal_new ("remove",
@@ -205,7 +205,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_OBJECT);
+		  GIMP_TYPE_OBJECT);
 
   container_signals[REORDER] =
     g_signal_new ("reorder",
@@ -215,7 +215,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__OBJECT_INT,
 		  G_TYPE_NONE, 2,
-		  G_TYPE_OBJECT,
+		  GIMP_TYPE_OBJECT,
 		  G_TYPE_INT);
 
   container_signals[FREEZE] =
@@ -396,7 +396,7 @@ gimp_container_serialize_foreach (GObject       *object,
 {
   GimpConfigInterface *config_iface;
   GString             *str;
-  const gchar         *name = NULL;
+  const gchar         *name;
 
   config_iface = GIMP_GET_CONFIG_INTERFACE (object);
 
@@ -413,8 +413,7 @@ gimp_container_serialize_foreach (GObject       *object,
   g_string_append_printf (str, "(%s ",
                           g_type_name (G_TYPE_FROM_INSTANCE (object)));
 
-  if (GIMP_IS_OBJECT (object))
-    name = gimp_object_get_name (GIMP_OBJECT (object));
+  name = gimp_object_get_name (GIMP_OBJECT (object));
 
   if (name)
     {

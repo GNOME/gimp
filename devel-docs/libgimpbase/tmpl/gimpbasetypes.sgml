@@ -82,3 +82,11 @@ gimpbasetypes
 @GIMP_STACK_TRACE_QUERY: 
 @GIMP_STACK_TRACE_ALWAYS: 
 
+<!-- ##### USER_FUNCTION GimpDatafileLoaderFunc ##### -->
+<para>
+
+</para>
+
+@file_data: 
+
+

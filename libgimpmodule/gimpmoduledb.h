@@ -19,17 +19,58 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_MODULES_H__
-#define __GIMP_MODULES_H__
+#ifndef __GIMP_MODULE_DB_H__
+#define __GIMP_MODULE_DB_H__
+
+G_BEGIN_DECLS
 
 
-void   gimp_modules_init    (Gimp *gimp);
-void   gimp_modules_exit    (Gimp *gimp);
+#define GIMP_TYPE_MODULE_DB            (gimp_module_db_get_type ())
+#define GIMP_MODULE_DB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE_DB, GimpModuleDB))
+#define GIMP_MODULE_DB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE_DB, GimpModuleDBClass))
+#define GIMP_IS_MODULE_DB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE_DB))
+#define GIMP_IS_MODULE_DB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE_DB))
+#define GIMP_MODULE_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE_DB, GimpModuleDBClass))
 
-void   gimp_modules_load    (Gimp *gimp);
-void   gimp_modules_unload  (Gimp *gimp);
 
-void   gimp_modules_refresh (Gimp *gimp);
+typedef struct _GimpModuleDBClass GimpModuleDBClass;
+
+struct _GimpModuleDB
+{
+  GObject   parent_instance;
+
+  GList    *modules;
+
+  gchar    *load_inhibit;
+  gboolean  verbose;
+};
+
+struct _GimpModuleDBClass
+{
+  GObjectClass  parent_class;
+
+  void (* add)             (GimpModuleDB *db,
+                            GimpModule   *module);
+  void (* remove)          (GimpModuleDB *db,
+                            GimpModule   *module);
+  void (* module_modified) (GimpModuleDB *db,
+                            GimpModule   *module);
+};
 
 
-#endif  /* __GIMP_MODULES_H__ */
+GType          gimp_module_db_get_type         (void) G_GNUC_CONST;
+GimpModuleDB * gimp_module_db_new              (gboolean      verbose);
+
+void           gimp_module_db_set_load_inhibit (GimpModuleDB *db,
+                                                const gchar  *load_inhibit);
+const gchar  * gimp_module_db_get_load_inhibit (GimpModuleDB *db);
+
+void           gimp_module_db_load             (GimpModuleDB *db,
+                                                const gchar  *module_path);
+void           gimp_module_db_refresh          (GimpModuleDB *db,
+                                                const gchar  *module_path);
+
+
+G_END_DECLS
+
+#endif  /* __GIMP_MODULE_DB_H__ */

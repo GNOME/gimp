@@ -203,8 +203,6 @@ typedef GimpToolOptions * (* GimpToolOptionsNewFunc) (GimpToolInfo *tool_info); 
 typedef void       (* GimpInitStatusFunc)       (const gchar *text1,
                                                  const gchar *text2,
                                                  gdouble      percentage);
-typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,
-						 gpointer     loader_data);
 typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar *filename);
 
 

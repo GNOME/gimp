@@ -20,12 +20,13 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "tools-types.h"
 
 /*FIXME: remove when proper module loading is in place */
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpdatafiles.h"
 /*end remove */
 
 #include "libgimptool/gimptool.h"
@@ -74,10 +75,11 @@
 #include "gimpvectortool.h"
 
 void 
-cheesey_module_loading_hack (const gchar *filename,
-                             gpointer     loader_data) 
+cheesey_module_loading_hack (GimpDatafileData *file_data)
 {
-  gimp_tool_module_new (filename, tool_manager_register_tool, loader_data);
+  gimp_tool_module_new (file_data->filename,
+                        tool_manager_register_tool,
+                        file_data->user_data);
 }
 
 void

@@ -328,7 +328,7 @@ gimp_finalize (GObject *object)
       gimp->images = NULL;
     }
 
-  if (gimp->modules)
+  if (gimp->module_db)
     gimp_modules_exit (gimp);
 
   paint_exit (gimp);
@@ -355,8 +355,9 @@ gimp_get_memsize (GimpObject *object)
 
   memsize += g_list_length (gimp->user_units) * sizeof (GList); /* FIXME */
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites)) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->modules)));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites));
+
+  memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
 
   memsize += (g_hash_table_size (gimp->image_table) *
               3 * sizeof (gpointer)); /* FIXME */

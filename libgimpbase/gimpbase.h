@@ -23,6 +23,7 @@
 
 #include <libgimpbase/gimpbasetypes.h>
 
+#include <libgimpbase/gimpdatafiles.h>
 #include <libgimpbase/gimpenv.h>
 #include <libgimpbase/gimplimits.h>
 #include <libgimpbase/gimpparasite.h>

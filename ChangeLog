@@ -1,3 +1,65 @@
+2002-10-23  Michael Natterer  <mitch@gimp.org>
+
+	Moved generic datafile loading to LibGimpBase:
+
+	* app/core/gimpdatafiles.[ch]: removed...
+
+	* libgimpbase/gimpdatafiles.[ch]: ...and add here with a changed
+	API which requires no more global variables.
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpbasetypes.h
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpdatafactory.c
+	* app/gui/gui.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins.c
+	* app/tools/tools.c: changed accordingly.
+
+	Moved module loading to LibGimpModule:
+
+	* app/core/gimpmodules.c: removed lots of code...
+
+	* libgimpmodule/gimpmoduledb.[ch]: ...and added it here as
+	GimpModuleDB object.
+
+	* libgimpmodule/Makefile.am
+	* libgimpmodule/gimpmoduletypes.h: changed accordingly.
+
+	* app/core/gimp.[ch]: replaced gimp->modules by gimp->module_db.
+
+	* libgimpmodule/gimpmodule.[ch]: added
+	gimp_module_query(). Internal cleanup. Stuff...
+
+	* app/gui/module-browser.c: changed accordingly. Unfinished...
+
+	* app/core/gimpcontainer.c
+	* app/core/gimplist.c: reverted the HACKS introduced recently.
+
+	* app/core/gimpobject.[ch]: added gimp_g_object_get_memsize()
+	utility function.
+
+	* libgimpproxy/gimpobject.[ch]: regenerated.
+
+	Changed display filter configuration stuff:
+
+	* libgimpwidgets/gimpcolordisplay.[ch]: made the virtual
+	configure() function return a GtkWidget instead of opening a
+	dialog. Changed configure_cancel() to configure_reset(). Added
+	"changed" signal.
+
+	* app/display/gimpdisplayshell-filter-dialog.c: embed the filters'
+	config GUI in the dialog. Connect to "changed" and added a "Reset"
+	button which resets the filter.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: changed accordingly.
+
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: minor fixes.
+
 2002-10-22  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/offset-dialog.c (offset_ok_callback): don't free the

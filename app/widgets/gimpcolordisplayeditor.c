@@ -40,11 +40,11 @@
 #define LIST_WIDTH  150
 #define LIST_HEIGHT 100
 
-#define UPDATE_DISPLAY(shell) G_STMT_START      \
-{	                                        \
-  gimp_display_shell_expose_full (shell);       \
-  gimp_display_shell_flush (shell);             \
-} G_STMT_END  
+#define UPDATE_DISPLAY(cdd) G_STMT_START         \
+{	                                         \
+  gimp_display_shell_expose_full ((cdd)->shell); \
+  gimp_display_shell_flush ((cdd)->shell);       \
+} G_STMT_END
 
 
 typedef struct _ColorDisplayDialog ColorDisplayDialog;
@@ -61,16 +61,22 @@ struct _ColorDisplayDialog
   GtkTreeSelection *src_sel;
   GtkTreeSelection *dest_sel;
 
+  GimpColorDisplay *selected;
+
   gboolean          modified;
 
   GList            *old_nodes;
-  GList            *conf_nodes;
 
   GtkWidget        *add_button;
   GtkWidget        *remove_button;
   GtkWidget        *up_button;
   GtkWidget        *down_button;
-  GtkWidget        *configure_button;
+
+  GtkWidget        *config_frame;
+  GtkWidget        *config_box;
+  GtkWidget        *config_widget;
+
+  GtkWidget        *reset_button;
 };
 
 
@@ -88,8 +94,6 @@ static void   color_display_up_callback        (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
 static void   color_display_down_callback      (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
-static void   color_display_configure_callback (GtkWidget          *widget,
-                                                ColorDisplayDialog *cdd);
 
 static void   dest_list_populate               (GList              *node_list,
                                                 GtkTreeStore       *dest);
@@ -99,12 +103,18 @@ static void   src_selection_changed            (GtkTreeSelection   *sel,
 static void   dest_selection_changed           (GtkTreeSelection   *sel,
                                                 ColorDisplayDialog *cdd);
 
+static void   selected_filter_changed          (GimpColorDisplay   *filter,
+                                                ColorDisplayDialog *cdd);
+static void   selected_filter_reset            (GtkWidget          *widget,
+                                                ColorDisplayDialog *cdd);
+
 static void   color_display_update_up_and_down (ColorDisplayDialog *cdd);
 
 
 static void
 make_dialog (ColorDisplayDialog *cdd)
 {
+  GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *editor;
   GtkWidget *scrolled_win;
@@ -126,10 +136,14 @@ make_dialog (ColorDisplayDialog *cdd)
 
                                  NULL);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd->dialog)->vbox), hbox,
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd->dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -220,18 +234,8 @@ make_dialog (ColorDisplayDialog *cdd)
                             NULL,
                             cdd);
 
-  cdd->configure_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GIMP_STOCK_EDIT,
-                            _("Configure the selected filter"),
-                            NULL,
-                            G_CALLBACK (color_display_configure_callback),
-                            NULL,
-                            cdd);
-
   gtk_widget_set_sensitive (cdd->up_button,        FALSE);
   gtk_widget_set_sensitive (cdd->down_button,      FALSE);
-  gtk_widget_set_sensitive (cdd->configure_button, FALSE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -262,7 +266,36 @@ make_dialog (ColorDisplayDialog *cdd)
                     G_CALLBACK (dest_selection_changed),
                     cdd);
 
+  /*  the config frame  */
+
+  cdd->config_frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), cdd->config_frame, FALSE, FALSE, 0);
+  gtk_widget_show (cdd->config_frame);
+
+  cdd->config_box = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (cdd->config_box), 4);
+  gtk_container_add (GTK_CONTAINER (cdd->config_frame), cdd->config_box);
+  gtk_widget_show (cdd->config_box);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (cdd->config_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  cdd->reset_button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  gtk_box_pack_end (GTK_BOX (hbox), cdd->reset_button, FALSE, FALSE, 0);
+  gtk_widget_show (cdd->reset_button);
+
+  gimp_help_set_help_data (cdd->reset_button,
+                           _("Reset the selected filter to default values"),
+                           NULL);
+
+  g_signal_connect (G_OBJECT (cdd->reset_button), "clicked",
+                    G_CALLBACK (selected_filter_reset),
+                    cdd);
+
+  dest_selection_changed (cdd->dest_sel, cdd);
+
+  gtk_widget_show (main_vbox);
 }
 
 static void
@@ -284,7 +317,7 @@ color_display_ok_callback (GtkWidget          *widget,
 
       g_list_free (cdd->old_nodes);
 
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -313,7 +346,7 @@ color_display_cancel_callback (GtkWidget          *widget,
 	  list = next;
 	}
 
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -373,7 +406,7 @@ color_display_add_callback (GtkWidget          *widget,
 
       color_display_update_up_and_down (cdd);
 
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -406,7 +439,7 @@ color_display_remove_callback (GtkWidget          *widget,
 
       color_display_update_up_and_down (cdd);
 
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -447,7 +480,7 @@ color_display_up_callback (GtkWidget          *widget,
 
       gtk_tree_selection_select_iter (cdd->dest_sel, &iter2);
 
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -488,36 +521,7 @@ color_display_down_callback (GtkWidget          *widget,
 
       gtk_tree_selection_select_iter (cdd->dest_sel, &iter2);
 
-      UPDATE_DISPLAY (cdd->shell);
-    }
-}
-
-static void
-color_display_configure_callback (GtkWidget          *widget,
-				  ColorDisplayDialog *cdd)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  if (gtk_tree_selection_get_selected (cdd->dest_sel, &model, &iter))
-    {
-      GimpColorDisplay *filter;
-      GValue            val = { 0, };
-
-      gtk_tree_model_get_value (model, &iter, 1, &val);
-
-      filter = g_value_get_pointer (&val);
-
-      g_value_unset (&val);
-
-      if (! g_list_find (cdd->conf_nodes, filter))
-        cdd->conf_nodes = g_list_append (cdd->conf_nodes, filter);
-
-      gimp_color_display_configure (filter, NULL, NULL, NULL, NULL);
-
-      cdd->modified = TRUE;
-
-      UPDATE_DISPLAY (cdd->shell);
+      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -614,6 +618,16 @@ dest_selection_changed (GtkTreeSelection   *sel,
   GtkTreeIter       iter;
   GimpColorDisplay *filter = NULL;
 
+  if (cdd->selected)
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (cdd->selected),
+                                            selected_filter_changed,
+                                            cdd);
+      g_object_remove_weak_pointer (G_OBJECT (cdd->selected),
+                                    (gpointer) &cdd->selected);
+      cdd->selected = NULL;
+    }
+
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
       GValue val = { 0, };
@@ -625,8 +639,63 @@ dest_selection_changed (GtkTreeSelection   *sel,
       g_value_unset (&val);
     }
 
-  gtk_widget_set_sensitive (cdd->remove_button,    (filter != NULL));
-  gtk_widget_set_sensitive (cdd->configure_button, (filter != NULL));
+  gtk_widget_set_sensitive (cdd->remove_button, (filter != NULL));
+  gtk_widget_set_sensitive (cdd->reset_button,  (filter != NULL));
+
+  if (cdd->config_widget)
+    gtk_container_remove (GTK_CONTAINER (cdd->config_box), cdd->config_widget);
+
+  if (filter)
+    {
+      gchar *str;
+
+      cdd->selected = filter;
+
+      g_object_add_weak_pointer (G_OBJECT (filter), (gpointer) &cdd->selected);
+      g_signal_connect (G_OBJECT (cdd->selected), "changed",
+                        G_CALLBACK (selected_filter_changed),
+                        cdd);
+
+      cdd->config_widget = gimp_color_display_configure (filter);
+
+      str = g_strdup_printf (_("Configure Selected Filter: %s"),
+                             GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name);
+      gtk_frame_set_label (GTK_FRAME (cdd->config_frame), str);
+      g_free (str);
+    }
+  else
+    {
+      cdd->config_widget = gtk_label_new (_("No Filter Selected"));
+      gtk_widget_set_sensitive (cdd->config_widget, FALSE);
+
+      gtk_frame_set_label (GTK_FRAME (cdd->config_frame),
+                           _("Configure Selected Filter"));
+    }
+
+  if (cdd->config_widget)
+    {
+      gtk_box_pack_start (GTK_BOX (cdd->config_box), cdd->config_widget,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (cdd->config_widget);
+
+      g_object_add_weak_pointer (G_OBJECT (cdd->config_widget),
+                                 (gpointer) &cdd->config_widget);
+    }
 
   color_display_update_up_and_down (cdd);
+}
+
+static void
+selected_filter_changed (GimpColorDisplay   *filter,
+                         ColorDisplayDialog *cdd)
+{
+  UPDATE_DISPLAY (cdd);
+}
+
+static void
+selected_filter_reset (GtkWidget          *widget,
+                       ColorDisplayDialog *cdd)
+{
+  if (cdd->selected)
+    gimp_color_display_configure_reset (cdd->selected);
 }

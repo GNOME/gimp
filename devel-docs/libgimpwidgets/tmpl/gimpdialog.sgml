@@ -20,7 +20,6 @@ dialog-related stuff.
 
 </para>
 
-@parent_instance: 
 
 <!-- ##### FUNCTION gimp_dialog_new ##### -->
 <para>

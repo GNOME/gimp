@@ -42,15 +42,10 @@
 #endif
 #endif /* G_OS_WIN32 */
 
-#include "libgimpbase/gimpbase.h"
-
-#include "core-types.h"
+#include "gimpbasetypes.h"
 
 #include "gimpdatafiles.h"
-
-
-static gboolean    filestat_valid = FALSE;
-static struct stat filestat;
+#include "gimpenv.h"
 
 
 #ifdef G_OS_WIN32
@@ -114,25 +109,29 @@ gimp_datafiles_check_extension (const gchar *filename,
   if (! (name_len && ext_len && (name_len > ext_len)))
     return FALSE;
 
-  return (strcmp (&filename[name_len - ext_len], extension) == 0);
+  return (g_ascii_strcasecmp (&filename[name_len - ext_len], extension) == 0);
 }
 
 void
 gimp_datafiles_read_directories (const gchar            *path_str,
-				 GimpDataFileFlags       flags,
-				 GimpDataFileLoaderFunc  loader_func,
-				 gpointer                loader_data)
+				 GFileTest               flags,
+				 GimpDatafileLoaderFunc  loader_func,
+				 gpointer                user_data)
 {
-  gchar         *local_path;
-  GList         *path;
-  GList         *list;
-  gchar         *filename;
-  gint           err;
-  GDir          *dir;
-  const gchar   *dir_ent;
+  GimpDatafileData  file_data = { 0 };
+  struct stat       filestat;
+  gchar            *local_path;
+  GList            *path;
+  GList            *list;
+  gchar            *filename;
+  gint              err;
+  GDir             *dir;
+  const gchar      *dir_ent;
 
   g_return_if_fail (path_str != NULL);
   g_return_if_fail (loader_func != NULL);
+
+  file_data.user_data = user_data;
 
   local_path = g_strdup (path_str);
 
@@ -150,10 +149,9 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
   for (list = path; list; list = g_list_next (list))
     {
-      /* Open directory */
       dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
-      if (!dir)
+      if (! dir)
 	{
 	  g_message ("error reading datafiles directory \"%s\"",
 		     (gchar *) list->data);
@@ -168,23 +166,41 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
 
+              file_data.filename = filename;
+              file_data.atime    = filestat.st_atime;
+              file_data.mtime    = filestat.st_mtime;
+              file_data.ctime    = filestat.st_ctime;
+
 	      if (! err)
 		{
-		  filestat_valid = TRUE;
-
-		  if (S_ISDIR (filestat.st_mode) && (flags & TYPE_DIRECTORY))
+                  if (flags & G_FILE_TEST_EXISTS)
+                    {
+                      (* loader_func) (&file_data);
+                    }
+                  else if ((flags & G_FILE_TEST_IS_REGULAR) &&
+                           S_ISREG (filestat.st_mode))
+                    {
+                      (* loader_func) (&file_data);
+                    }
+		  else if ((flags & G_FILE_TEST_IS_DIR) &&
+                           S_ISDIR (filestat.st_mode))
 		    {
-		      (* loader_func) (filename, loader_data);
+		      (* loader_func) (&file_data);
 		    }
-		  else if (S_ISREG (filestat.st_mode) &&
-			   (!(flags & MODE_EXECUTABLE) ||
-			    (filestat.st_mode & S_IXUSR) ||
-			    is_script (filename)))
+#ifdef G_OS_WIN32
+		  else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
+                           S_ISLINK (filestat.st_mode))
 		    {
-		      (* loader_func) (filename, loader_data);
+		      (* loader_func) (&file_data);
 		    }
-
-		  filestat_valid = FALSE;
+#endif
+		  else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
+                           ((filestat.st_mode & S_IXUSR) ||
+                            (S_ISREG (filestat.st_mode) &&
+                             is_script (filename))))
+		    {
+		      (* loader_func) (&file_data);
+		    }
 		}
 
 	      g_free (filename);
@@ -196,31 +212,4 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
   gimp_path_free (path);
   g_free (local_path);
-}
-
-time_t
-gimp_datafile_atime (void)
-{
-  if (filestat_valid)
-    return filestat.st_atime;
-
-  return 0;
-}
-
-time_t
-gimp_datafile_mtime (void)
-{
-  if (filestat_valid)
-    return filestat.st_mtime;
-
-  return 0;
-}
-
-time_t
-gimp_datafile_ctime (void)
-{
-  if (filestat_valid)
-    return filestat.st_ctime;
-
-  return 0;
 }

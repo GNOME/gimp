@@ -27,6 +27,7 @@ G_BEGIN_DECLS
 
 typedef struct _GimpModule     GimpModule;
 typedef struct _GimpModuleInfo GimpModuleInfo;
+typedef struct _GimpModuleDB   GimpModuleDB;
 
 
 G_END_DECLS

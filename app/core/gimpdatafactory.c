@@ -23,12 +23,13 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
-#include "gimpdatafiles.h"
 #include "gimpdatalist.h"
 
 #include "libgimp/gimpintl.h"
@@ -41,8 +42,7 @@ static void    gimp_data_factory_finalize    (GObject              *object);
 
 static gsize   gimp_data_factory_get_memsize (GimpObject           *object);
 
-static void    gimp_data_factory_data_load_callback (const gchar *filename,
-                                                     gpointer     callback_data);
+static void    gimp_data_factory_data_load_callback (GimpDatafileData *file_data);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -174,7 +174,8 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   if (factory->data_path && *factory->data_path)
     {
-      gimp_datafiles_read_directories (*factory->data_path, 0,
+      gimp_datafiles_read_directories (*factory->data_path,
+                                       G_FILE_TEST_EXISTS,
 				       gimp_data_factory_data_load_callback,
 				       factory);
     }
@@ -303,19 +304,18 @@ gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 }
 
 static void
-gimp_data_factory_data_load_callback (const gchar *filename,
-				      gpointer     callback_data)
+gimp_data_factory_data_load_callback (GimpDatafileData *file_data)
 {
   GimpDataFactory *factory;
   gint             i;
 
-  factory = (GimpDataFactory *) callback_data;
+  factory = (GimpDataFactory *) file_data->user_data;
 
   for (i = 0; i < factory->n_loader_entries; i++)
     {
       if (factory->loader_entries[i].extension)
         {
-          if (gimp_datafiles_check_extension (filename,
+          if (gimp_datafiles_check_extension (file_data->filename,
 					      factory->loader_entries[i].extension))
 	    {
               goto insert;
@@ -326,7 +326,7 @@ gimp_data_factory_data_load_callback (const gchar *filename,
           g_message (_("Trying legacy loader on\n"
 		       "file '%s'\n" 
 		       "with unknown extension."),
-                     filename);
+                     file_data->filename);
           goto insert;
         }
     }
@@ -337,11 +337,11 @@ gimp_data_factory_data_load_callback (const gchar *filename,
   {
     GimpData *data;
 
-    data = (GimpData *) (* factory->loader_entries[i].load_func) (filename);
+    data = (GimpData *) (* factory->loader_entries[i].load_func) (file_data->filename);
 
     if (! data)
       {
-	g_message (_("Warning: Failed to load data from\n'%s'"), filename);
+	g_message (_("Warning: Failed to load data from\n'%s'"), file_data->filename);
       }
     else
       {

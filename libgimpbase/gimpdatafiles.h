@@ -25,29 +25,25 @@
 #include <time.h>
 
 
-typedef enum
+struct _GimpDatafileData
 {
-  MODE_EXECUTABLE = 1 << 0,
-  TYPE_DIRECTORY  = 1 << 1
-} GimpDataFileFlags;
+  const gchar *filename;
+
+  time_t       atime;
+  time_t       mtime;
+  time_t       ctime;
+
+  gpointer     user_data;
+};
 
 
 gboolean   gimp_datafiles_check_extension  (const gchar            *filename,
 					    const gchar            *extension);
 
 void       gimp_datafiles_read_directories (const gchar            *path_str,
-					    GimpDataFileFlags       flags,
-					    GimpDataFileLoaderFunc  loader_func,
-					    gpointer                loader_data);
-
-/* Return the current datafiles access, modification
- *  or change time. The current datafile is the one for
- *  which the "DataFileLoaderFunc" function has been called
- *  on.
- */
-time_t   gimp_datafile_atime (void);
-time_t   gimp_datafile_mtime (void);
-time_t   gimp_datafile_ctime (void);
+					    GFileTest               flags,
+					    GimpDatafileLoaderFunc  loader_func,
+					    gpointer                user_data);
 
 
 #endif  /*  __GIMP_DATAFILES_H__ */

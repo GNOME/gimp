@@ -21,3 +21,22 @@ GIMP_MODULE_CLASS
 GIMP_IS_MODULE_CLASS
 GIMP_MODULE_GET_CLASS
 </SECTION>
+
+<SECTION>
+<FILE>gimpmoduledb</FILE>
+GimpModuleDB
+<TITLE>GimpModuleDB</TITLE>
+gimp_module_db_new
+gimp_module_db_set_load_inhibit
+gimp_module_db_get_load_inhibit
+gimp_module_db_load
+gimp_module_db_refresh
+<SUBSECTION Standard>
+GIMP_MODULE_DB
+GIMP_IS_MODULE_DB
+GIMP_TYPE_MODULE_DB
+gimp_module_db_get_type
+GIMP_MODULE_DB_CLASS
+GIMP_IS_MODULE_DB_CLASS
+GIMP_MODULE_DB_GET_CLASS
+</SECTION>
