@@ -78,12 +78,12 @@ static void updatesmpreviewprev(void)
          }
     }
 
-  for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row (GTK_PREVIEW(smpreviewprev),
-                          nsbuffer.col + y * nsbuffer.width * 3,
-                          0, y, OMWIDTH);
 
-  gtk_widget_queue_draw (smpreviewprev);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (smpreviewprev),
+                          0, 0, OMWIDTH, OMHEIGHT,
+                          GIMP_RGB_IMAGE,
+                          nsbuffer.col,
+                          OMWIDTH * 3);
 }
 
 static gint selectedsmvector = 0;
@@ -139,13 +139,11 @@ static void updatesmvectorprev(void)
       ppm_put_rgb (&update_vector_preview_sbuffer, x, y, white);
   }
 
-  for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row (GTK_PREVIEW(smvectorprev),
-                          update_vector_preview_sbuffer.col +
-                          y * update_vector_preview_sbuffer.width * 3,
-                          0, y, OMWIDTH);
-
-  gtk_widget_queue_draw (smvectorprev);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (smvectorprev),
+                          0, 0, OMWIDTH, OMHEIGHT,
+                          GIMP_RGB_IMAGE,
+                          update_vector_preview_sbuffer.col,
+                          OMWIDTH * 3);
 
   gtk_widget_set_sensitive (prev_button, (numsmvect > 1));
   gtk_widget_set_sensitive (next_button, (numsmvect > 1));
@@ -397,8 +395,8 @@ void create_sizemap_dialog(void)
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
-  tmpw = smvectorprev = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
+  tmpw = smvectorprev = gimp_preview_area_new ();
+  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
   gtk_widget_show(tmpw);
   gtk_widget_add_events (tmpw2, GDK_BUTTON_PRESS_MASK);
@@ -420,8 +418,8 @@ void create_sizemap_dialog(void)
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
-  tmpw = smpreviewprev = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
+  tmpw = smpreviewprev = gimp_preview_area_new ();
+  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
   gtk_widget_show(tmpw);
 

@@ -68,8 +68,6 @@ void preview_free_resources (void)
 void
 updatepreview (GtkWidget *wg, gpointer d)
 {
-  gint   i;
-
   /* This portion is remmed out because of the remming out of the
    * code below.
    *            -- Shlomi Fish
@@ -88,13 +86,17 @@ updatepreview (GtkWidget *wg, gpointer d)
    * */
 #if 0
   if (!PPM_IS_INITED (&infile) && !d) {
+    guchar *buffer;
 
-    memset(buf, 0, sizeof(buf));
-    for(i = 0; i < PREVIEWSIZE; i++) 
-    {
-      gtk_preview_draw_row (GTK_PREVIEW(preview), buf, 0, i, PREVIEWSIZE);
-    }
-  } 
+    buffer = g_new0 (guchar, 3*PREVIEWSIZE*PREVIEWSIZE);
+    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                            0, 0, PREVIEWSIZE, PREVIEWSIZE,
+                            GIMP_RGB_IMAGE,
+                            buffer,
+                            PREVIEWSIZE * 3);
+    
+    g_free (buffer);
+  }
   else 
 #endif
   {
@@ -126,18 +128,22 @@ updatepreview (GtkWidget *wg, gpointer d)
     if(img_has_alpha)
       drawalpha(&preview_ppm, &alpha_ppm);
 
-    for(i = 0; i < PREVIEWSIZE; i++)
-    {
-      gtk_preview_draw_row(GTK_PREVIEW(preview),
-                           (guchar*) &preview_ppm.col[i * PREVIEWSIZE * 3], 0, i,
-                           PREVIEWSIZE);
-    }
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, PREVIEWSIZE, PREVIEWSIZE,
+                              GIMP_RGB_IMAGE,
+                              preview_ppm.col,
+                              PREVIEWSIZE * 3);
+
     ppm_kill(&preview_ppm);
     if(img_has_alpha)
       ppm_kill(&alpha_ppm);
   }
+}
 
-  gtk_widget_queue_draw (preview);
+static void
+preview_size_allocate (GtkWidget *preview)
+{
+  updatepreview (preview, GINT_TO_POINTER (0));
 }
 
 GtkWidget *
@@ -155,10 +161,14 @@ create_preview (void)
   gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 5);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, PREVIEWSIZE, PREVIEWSIZE);
+
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
+  /* This is so the preview will be displayed when the dialog is invoked. */
+  g_signal_connect (preview, "size-allocate",
+                    G_CALLBACK (preview_size_allocate), NULL);
 
   hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

@@ -1,3 +1,12 @@
+2004-07-31  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/size.c:
+	Converted the code from using GtkPreview to GimpPreviewArea.
+	
 2004-07-30  Seth Burgess  <sjburges@gimp.org>
 	
 	* plug-ins/common/gauss.c: added some non-interactive modes (if called 

@@ -29,7 +29,7 @@ static GtkWidget *paper_overlay = NULL;
 static void paper_update_preview(void)
 {
   gint    i, j;
-  guchar  buf[100];
+  guchar  *buf,*paper_preview_buffer;
   gdouble sc;
   ppm_t   p = {0,0,NULL};
 
@@ -37,9 +37,9 @@ static void paper_update_preview(void)
   sc = p.width > p.height ? p.width : p.height;
   sc = 100.0 / sc;
   resize(&p, p.width*sc,p.height*sc);
-  for (i = 0; i < 100; i++) {
+  paper_preview_buffer = g_new0 (guchar, 100*100);
+  for (i = 0, buf = paper_preview_buffer; i < 100; i++, buf += 100) {
     int k = i * p.width * 3;
-    memset(buf, 0, 100);
     if(i < p.height) {
       for(j = 0; j < p.width; j++)
         buf[j] = p.col[k + j * 3];
@@ -47,9 +47,15 @@ static void paper_update_preview(void)
         for (j = 0; j < p.width; j++)
           buf[j] = 255 - buf[j];
     }
-    gtk_preview_draw_row (GTK_PREVIEW (paper_preview), buf, 0, i, 100);
   }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (paper_preview),
+                          0, 0, 100, 100,
+                          GIMP_GRAY_IMAGE,
+                          paper_preview_buffer,
+                          100);
+
   ppm_kill(&p);
+  g_free (paper_preview_buffer);
 
   gtk_widget_queue_draw (paper_preview);
 }
@@ -129,8 +135,8 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  paper_preview = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size(GTK_PREVIEW (tmpw), 100, 100);
+  paper_preview = tmpw = gimp_preview_area_new ();
+  gtk_widget_set_size_request (tmpw, 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show(tmpw);
 

@@ -294,16 +294,15 @@ static void
 update_brush_preview (const gchar *fn)
 {
   gint   i, j;
-  guchar buf[100];
+  guchar *preview_image;
 
   if(fn)
     brush_from_file = 1;
 
+  preview_image = g_new0(guchar, 100*100);
+
   if (!fn && brush_from_file) {
-    memset(buf, 0, 100);
-    for(i = 0; i < 100; i++) {
-      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buf, 0, i, 100);
-    }
+      /* preview_image is already initialized to our liking. */
   } else {
     double sc;
     ppm_t p = {0,0,NULL};
@@ -332,21 +331,29 @@ update_brush_preview (const gchar *fn)
     padbrush (&p, 100, 100);
     for(i = 0; i < 100; i++) {
       int k = i * p.width * 3;
-      memset(buf,0,100);
       if(i < p.height)
 	for(j = 0; j < p.width; j++)
-	  buf[j] = gammatable[p.col[k + j * 3]];
-      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buf, 0, i, 100);
+	  preview_image[i*100+j] = gammatable[p.col[k + j * 3]];
     }
     ppm_kill(&p);
   }
-  gtk_widget_queue_draw (brush_preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (brush_preview),
+                          0, 0, 100, 100,
+                          GIMP_GRAY_IMAGE,
+                          preview_image,
+                          100);
+
+  g_free (preview_image);
 }
 
 static gboolean brush_dont_update = FALSE;
 
+/*
+ * "force" implies here to change the brush even if it was the same.
+ * It is used for the initialization of the preview.
+ * */
 static void
-brush_select (GtkTreeSelection *selection)
+brush_select (GtkTreeSelection *selection, gboolean force)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
@@ -377,7 +384,12 @@ brush_select (GtkTreeSelection *selection)
       else
         {
           if (!strcmp (last_selected_brush, brush))
-            goto cleanup;
+            {
+              if (!force)
+                {
+                  goto cleanup;
+                }
+            }
           else
             {
               g_free (last_selected_brush);
@@ -413,7 +425,15 @@ brush_select_file (GtkTreeSelection *selection, gpointer data)
 {
   brush_from_file = 1;
   preset_save_button_set_sensitive (TRUE);
-  brush_select (selection);
+  brush_select (selection, FALSE);
+}
+
+static void
+brush_preview_size_allocate (GtkWidget *preview)
+{
+  GtkTreeSelection *selection;
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (brush_list));
+  brush_select (selection, TRUE);
 }
 
 static void
@@ -460,10 +480,12 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  brush_preview = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (tmpw), 100, 100);
+  brush_preview = tmpw = gimp_preview_area_new ();
+  gtk_widget_set_size_request (brush_preview, 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show (tmpw);
+  g_signal_connect (brush_preview, "size-allocate",
+                    G_CALLBACK(brush_preview_size_allocate), NULL);
 
   box3 = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE,0);
@@ -548,7 +570,7 @@ create_brushpage(GtkNotebook *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_relief);
 
-  brush_select (selection);
+  brush_select (selection, FALSE);
   readdirintolist ("Brushes", view, pcvals.selected_brush);
 
   /* 

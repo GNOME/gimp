@@ -151,11 +151,11 @@ static void update_orient_map_preview_prev (void)
         ppm_put_rgb (&update_om_preview_nbuffer, x-xo, y-yo, white);
       }
 
-  for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row (GTK_PREVIEW (orient_map_preview_prev),
-                          (guchar *) update_om_preview_nbuffer.col + 
-                          y * OMWIDTH * 3, 0, y,
-                          OMWIDTH);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (orient_map_preview_prev),
+                          0, 0, OMWIDTH, OMHEIGHT,
+                          GIMP_RGB_IMAGE,
+                          (guchar *)update_om_preview_nbuffer.col,
+                          OMWIDTH * 3);
 
   gtk_widget_queue_draw (orient_map_preview_prev);
 
@@ -213,13 +213,11 @@ static void update_vector_prev(void)
     ppm_put_rgb (&update_vector_preview_buffer, x-xo, y-yo, white);
   }
 
-  for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row (GTK_PREVIEW (vector_preview),
-                          (guchar *) update_vector_preview_buffer.col +
-                          y * OMWIDTH * 3,
-                          0, y, OMWIDTH);
-
-  gtk_widget_queue_draw (vector_preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (vector_preview),
+                          0, 0, OMWIDTH, OMHEIGHT,
+                          GIMP_RGB_IMAGE,
+                          (guchar *)update_vector_preview_buffer.col,
+                          OMWIDTH * 3);
 }
 
 void orientation_map_free_resources()
@@ -475,8 +473,8 @@ void create_orientmap_dialog(void)
 			     "Middle-click to add a new vector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), ebox, FALSE, FALSE, 0);
 
-  tmpw = vector_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (tmpw), OMWIDTH, OMHEIGHT);
+  tmpw = vector_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (ebox), tmpw);
   gtk_widget_show (tmpw);
   gtk_widget_add_events (ebox, GDK_BUTTON_PRESS_MASK);
@@ -498,8 +496,8 @@ void create_orientmap_dialog(void)
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
 
-  tmpw = orient_map_preview_prev = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
+  tmpw = orient_map_preview_prev = gimp_preview_area_new ();
+  gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);;
   gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
   gtk_widget_show(tmpw);
 
