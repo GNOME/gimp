@@ -30,7 +30,7 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-menu-qmask-on.png			\
 @STRIP_END@
 
-WILBER_IMAGES =  = @STRIP_BEGIN@ \
+WILBER_IMAGES = @STRIP_BEGIN@ \
 	stock-wilber-16x16.png			\
 	stock-wilber-32x32.png			\
 	stock-wilber-48x48.png			\

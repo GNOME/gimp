@@ -1,5 +1,9 @@
 2001-12-27  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am: fixed for 'make dist'.
+
+2001-12-27  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* NEWS
 	* configure.in: require latest versions of glib, gtk+ and friends. 
