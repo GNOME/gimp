@@ -1,7 +1,12 @@
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
+	* gimp_tips.ja.txt: removed.
+
 2003-02-09  Abel Cheung  <maddog@linux.org.hk>
 
-	* Makefile.am, zh_TW.po: Convert old traditional
-	  Chinese tips file to po file.
+	* Makefile.am
+	* zh_TW.po: Convert old traditional Chinese tips file to po file.
+
 	* gimp_tips.zh_TW.txt: Removed.
 
 2003-02-01  Abel Cheung  <maddog@linux.org.hk>
