@@ -15,6 +15,7 @@ Revision history for Gimp-Perl extension.
           perl5.004 compatibility issues and even identifies the
           buggy perl version that causes pxgettext to not work!
         - do yet another compile/link flags rotation.
+        - replaced find -path by grep 'Cause -path seems to be a gnu extension.
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.

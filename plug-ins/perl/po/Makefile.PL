@@ -49,8 +49,8 @@ $updatepo
 gimp-perl.pot: update-pot
 
 update-pot: force
-	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path '../examples/*'` ../Perl-Server > gimp-perl.pot~
-	if cmp -s gimp-perl.pot~ gimp-perl.pot; then rm -f gimp-perl.pot~ ; else mv gimp-perl.pot~ gimp-perl.pot; fi
+	\$(PERL) ../pxgettext `find .. -type f -print | grep \'\\.pm\$\$\\|\\.xs\$\$\\|examples/\\|Perl-Server\'` > gimp-perl.pot~
+	#if cmp -s gimp-perl.pot~ gimp-perl.pot; then rm -f gimp-perl.pot~ ; else mv gimp-perl.pot~ gimp-perl.pot; fi
 
 force:
 
