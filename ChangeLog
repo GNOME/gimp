@@ -1,3 +1,8 @@
+1999-10-07  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* plug-ins/common/autocrop.c (colors_equal): little hack so that
+  	  all colors with alpha == 0 compare equal
+
 1999-10-3  Simon Budig  <Simon.Budig@unix-ag.org>  
 
 	* app/path_tool.h     

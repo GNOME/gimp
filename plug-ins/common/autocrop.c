@@ -261,9 +261,16 @@ static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
   }
 }
 
-static int colors_equal(guchar *col1, guchar *col2, int bytes) {
+static int 
+colors_equal(guchar *col1, guchar *col2, int bytes) {
   int equal = 1;
   int b;
+
+  if ((bytes == 2 || bytes == 4) &&	/* HACK! */
+      col1[bytes-1] == 0 &&
+      col2[bytes-1] == 0) {
+    return 1;				/* handle zero alpha */
+  }
   
   for (b = 0; b < bytes; b++) {
     if (col1[b] != col2[b]) {
