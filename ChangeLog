@@ -1,3 +1,8 @@
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch]: added new function
+	gimp_draw_tool_draw_dashed_line().
+
 2003-09-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_init): default to

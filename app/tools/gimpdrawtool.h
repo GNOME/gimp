@@ -102,6 +102,12 @@ void       gimp_draw_tool_draw_line                (GimpDrawTool   *draw_tool,
                                                     gdouble         x2,
                                                     gdouble         y2,
                                                     gboolean        use_offsets);
+void       gimp_draw_tool_draw_dashed_line         (GimpDrawTool   *draw_tool,
+                                                    gdouble         x1,
+                                                    gdouble         y1,
+                                                    gdouble         x2,
+                                                    gdouble         y2,
+                                                    gboolean        use_offsets);
 void       gimp_draw_tool_draw_rectangle           (GimpDrawTool   *draw_tool,
                                                     gboolean        filled,
                                                     gdouble         x,

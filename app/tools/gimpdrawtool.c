@@ -345,6 +345,25 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 }
 
 void
+gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
+                                 gdouble       x1,
+                                 gdouble       y1,
+                                 gdouble       x2,
+                                 gdouble       y2,
+                                 gboolean      use_offsets)
+{
+  GdkGCValues  values;
+
+  values.line_style = GDK_LINE_ON_OFF_DASH;
+  gdk_gc_set_values (draw_tool->gc, &values, GDK_GC_LINE_STYLE);
+
+  gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, use_offsets);
+
+  values.line_style = GDK_LINE_SOLID;
+  gdk_gc_set_values (draw_tool->gc, &values, GDK_GC_LINE_STYLE);
+}
+
+void
 gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                gboolean      filled,
                                gdouble       x,
