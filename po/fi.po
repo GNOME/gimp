@@ -8,13 +8,8 @@
 #	drawable = kuva?, eikös sillä ole gimp:ssä ihan specifi merkitys?
 #	dodge = ?
 #	burn = ? (pitäisi tarkistaa nuo finski photoshopista)
-#	rivi.431 Pattern fill = Täyttö taustavärillä??? -SG
-#	1106 Anti Erase = Anti-pyyhki??? *heh* -SG
-#	1188 pixels/%a = pikseliä/%a??? ->pikseleitä/%a -SG
 #	1678 yhtevevyyden vuoksi "tiedosto" -sanaa käytettäessä.. -SG
 #	ilm. olen korjannut jotain.. -paree katsoa.. -SG(3.6)
-#	2118 "se" sana pois?->turha..? -SG	
-#	2860 ? run in batch mode = aja eräajona*..? siis *. -SG
 #	3058 dump-items||vähän aikaisemmin tyhjä myös..
 #
 msgid ""
@@ -313,13 +308,11 @@ msgstr "Palauta"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
-#, fuzzy
 msgid "Brightness:"
 msgstr "Kirkkaus:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:265
-#, fuzzy
 msgid "Contrast:"
 msgstr "Kontrasti:"
 
@@ -435,7 +428,7 @@ msgstr "Täyttö taustavärillä"
 
 #: app/bucket_fill.c:165
 msgid "Pattern Fill"
-msgstr "Täyttö taustavärillä"
+msgstr "Täyttö kuviolla"
 
 #: app/bucket_fill.c:244
 msgid "Bucket Fill operation failed."
@@ -1113,7 +1106,7 @@ msgstr "Kova reuna"
 #. the anti_erase toggle
 #: app/eraser.c:118 app/paint_funcs.c:101
 msgid "Anti Erase"
-msgstr "Anti-pyyhki"
+msgstr "Käänteinen pyyhkiminen"
 
 #: app/errorconsole.c:170
 #, c-format
@@ -1186,7 +1179,7 @@ msgstr "Uusi kuva"
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1526
 #: app/preferences_dialog.c:1563 app/user_install.c:1378
 msgid "Pixels"
-msgstr "pikseliä"
+msgstr "pikseleitä"
 
 #. the resolution labels
 #: app/file_new_dialog.c:524 app/resize.c:581
@@ -1195,7 +1188,7 @@ msgstr "Tarkkuus X:"
 
 #: app/file_new_dialog.c:545 app/resize.c:602
 msgid "pixels/%a"
-msgstr "pikseliä/%a"
+msgstr "pikseleitä/%a"
 
 #. frame for Image Type
 #: app/file_new_dialog.c:590
@@ -1244,39 +1237,42 @@ msgid "Determine File Type:"
 msgstr "Päättele tiedoston tyyppi:"
 
 #: app/fileops.c:593
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"En voi palauttaa kuvaa ennalleen. En tiedä mistä tiedostosta kuva on "
-"alunperin luettu."
+"En voi palauttaa kuvaa ennalleen.\n"
+"En tiedä mistä tiedostosta kuva on alunperin luettu."
 
 #: app/fileops.c:600
-#, fuzzy
 msgid "Revert"
 msgstr "Palauta"
 
 #: app/fileops.c:611
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Palautus epäonnistui."
+msgstr "Palautus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:708
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "Tuntemattoman kuvatyypin käyttö ei mahdollista."
+msgstr ""
+"%s epäonnistui.\n"
+"%s: Tuntematon tiedoston tyyppi."
 
 #: app/fileops.c:725
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s ei ole tavallinen tiedosto (%s)"
+msgstr ""
+"%s epäonnistui.\n"
+"%s ei ole tavallinen tiedosto"
 
 #: app/fileops.c:746
 #, c-format
@@ -1284,24 +1280,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s epäonnistui.\n"
+"%s: ei tarvittavia oikeuksia."
 
 #: app/fileops.c:795
 msgid "Open"
 msgstr "Avaa"
 
 #: app/fileops.c:1102
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "Tuntemattoman kuvatyypin käyttö ei mahdollista."
+msgstr ""
+"Tallennus epäonnistui.\n"
+"%s: Tuntemattoman tiedoston tyyppi."
 
 #: app/fileops.c:1117
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s ei ole tavallinen tiedosto (%s)"
+msgstr ""
+"Tallennus epäonnistui.\n"
+"%s ei ole tavallinen tiedosto (%s)"
 
 #: app/fileops.c:1136
 #, c-format
@@ -1341,11 +1343,12 @@ msgid "(could not make preview)"
 msgstr "(esikatselukuvaa ei voitu tehdä)"
 
 #: app/fileops.c:1618 app/fileops.c:1698
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Avaus epäonnistui: %s"
+msgstr "Avaus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:1820
 #, c-format
@@ -2124,7 +2127,7 @@ msgstr "Jakaa"
 #. Instructions
 #: app/gradient.c:4852
 msgid "Please select the number of uniform parts"
-msgstr "Valitse se yhtenäisten osien lukumäärä"
+msgstr "Valitse yhtenäisten osien lukumäärä"
 
 #: app/gradient.c:4858
 msgid "in which you want to split the selected segment"
@@ -2244,19 +2247,16 @@ msgstr "Sävyn (H) / Valoisuuden (L) / Värikylläisyyden (S) säätö"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:454
-#, fuzzy
 msgid "Hue:"
 msgstr "Sävy (H):"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:488
-#, fuzzy
 msgid "Lightness:"
 msgstr "Valoisuus (L):"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:522
-#, fuzzy
 msgid "Saturation:"
 msgstr "Värikylläisyys (S):"
 
@@ -2866,7 +2866,7 @@ msgstr "  -v --version            Tulosta versiotiedot.\n"
 
 #: app/main.c:288
 msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <komennot>   Aja eräajona*.\n"
+msgstr "  -b --batch <komennot>   Aja eräajona.\n"
 
 #: app/main.c:289
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
@@ -4982,7 +4982,6 @@ msgid "GIMP Tip of the Day"
 msgstr "Päivän GIMP-vihje"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
 msgstr "Näytä vihjeet seuraavalla kerralla"
 
@@ -6279,19 +6278,16 @@ msgid "Gamma:"
 msgstr ""
 
 #: modules/cdisplay_highcontrast.c:96
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Värien gammasuodatus"
+msgstr "Suurkontrastinen värisuodatus"
 
 #: modules/cdisplay_highcontrast.c:318
-#, fuzzy
 msgid "High Contrast"
-msgstr "Kontrasti"
+msgstr "Suuri kontrasti"
 
 #: modules/cdisplay_highcontrast.c:337
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Kontrasti"
+msgstr "Kontrastisyklejä"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
