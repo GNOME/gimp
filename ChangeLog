@@ -1,3 +1,9 @@
+2000-12-27  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/csource.c: the size of the string holding the
+	image data was one byte too short (we forgot the trailing '\0').
+	Reported by <goswin.brederlow@student.uni-tuebingen.de>
+
 2000-12-27  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml
