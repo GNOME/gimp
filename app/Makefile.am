@@ -293,6 +293,8 @@ gimp_SOURCES = \
 	gimpcontainerview.c		\
 	gimpdatafactoryview.h		\
 	gimpdatafactoryview.c		\
+	gimpdrawablelistitem.c		\
+	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\
 	gimpdrawablelistview.h		\
 	gimpdrawablepreview.c		\
@@ -301,6 +303,8 @@ gimp_SOURCES = \
 	gimpgradientpreview.c		\
 	gimpimagepreview.h		\
 	gimpimagepreview.c		\
+	gimplistitem.h			\
+	gimplistitem.c			\
 	gimppalettepreview.h		\
 	gimppalettepreview.c		\
 	gimppatternpreview.h		\

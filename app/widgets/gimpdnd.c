@@ -1016,6 +1016,36 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
   gimp_dnd_data_dest_unset (dnd_type, widget);
 }
 
+GimpViewable *
+gimp_dnd_get_drag_data (GtkWidget *widget)
+{
+  GimpDndDataType          data_type;
+  GimpDndDragViewableFunc  get_data_func;
+  gpointer                 get_data_data;
+
+  g_return_val_if_fail (widget != NULL, NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
+
+  data_type =
+    (GimpDndDataType) gtk_object_get_data (GTK_OBJECT (widget),
+					   "gimp_dnd_get_data_type");
+
+  if (! data_type)
+    return NULL;
+
+  get_data_func =
+    (GimpDndDragViewableFunc) gtk_object_get_data (GTK_OBJECT (widget),
+						   "gimp_dnd_get_data_func");
+  get_data_data =
+    (gpointer) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_get_data_data");
+
+  if (! get_data_func)
+    return NULL;
+
+  return (GimpViewable *) (* get_data_func) (widget, get_data_data);
+ 
+}
 
 /****************************/
 /*  drawable dnd functions  */

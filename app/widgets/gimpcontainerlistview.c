@@ -30,6 +30,7 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimplist.h"
+#include "gimplistitem.h"
 #include "gimppreview.h"
 
 
@@ -53,16 +54,12 @@ static void     gimp_container_list_view_select_item  (GimpContainerView      *v
 static void     gimp_container_list_view_clear_items  (GimpContainerView      *view);
 static void     gimp_container_list_view_set_preview_size (GimpContainerView  *view);
 
-static void     gimp_container_list_view_name_changed (GimpViewable           *viewable,
-						       GtkLabel               *label);
 static void    gimp_container_list_view_item_selected (GtkWidget              *widget,
 						       GtkWidget              *child,
 						       gpointer                data);
 static gint   gimp_container_list_view_item_activated (GtkWidget              *widget,
 						       GdkEventButton         *bevent,
 						       gpointer                data);
-static GimpViewable * gimp_container_list_view_drag_viewable (GtkWidget       *widget,
-							      gpointer         data);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -210,50 +207,15 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 {
   GimpContainerListView *list_view;
   GtkWidget             *list_item;
-  GtkWidget             *hbox;
-  GtkWidget             *preview;
-  GtkWidget             *label;
   GList                 *list;
 
   list_view = GIMP_CONTAINER_LIST_VIEW (view);
 
-  list_item = gtk_list_item_new ();
-
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (list_item), hbox);
-  gtk_widget_show (hbox);
-
-  preview = gimp_preview_new (viewable, view->preview_size, 1, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-  gtk_widget_show (preview);
-
-  gtk_object_set_data (GTK_OBJECT (list_item), "preview", preview);
-
-  label = gtk_label_new (gimp_object_get_name (GIMP_OBJECT (viewable)));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_object_set_data (GTK_OBJECT (list_item), "label", label);
-
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (viewable), "name_changed",
-     GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
-     label,
-     GTK_OBJECT (list_view));
+  list_item = gimp_list_item_new (viewable, view->preview_size);
 
   gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
 		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activated),
 		      list_view);
-
-  gimp_gtk_drag_source_set_by_type (list_item,
-				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-				    view->container->children_type,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (list_item),
-				view->container->children_type,
-				gimp_container_list_view_drag_viewable,
-				list_view);
 
   gtk_widget_show (list_item);
 
@@ -415,19 +377,12 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
     {
       GimpPreview *preview;
 
-      preview = gtk_object_get_data (GTK_OBJECT (list->data), "preview");
+      preview = GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview);
 
       gimp_preview_set_size (preview, view->preview_size);
     }
 
   gtk_widget_queue_resize (list_view->gtk_list);
-}
-
-static void
-gimp_container_list_view_name_changed (GimpViewable *viewable,
-				       GtkLabel     *label)
-{
-  gtk_label_set_text (label, gimp_object_get_name (GIMP_OBJECT (viewable)));
 }
 
 static void
@@ -437,8 +392,7 @@ gimp_container_list_view_item_selected (GtkWidget *widget,
 {
   GimpViewable *viewable;
 
-  viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (child),
-						"preview"))->viewable;
+  viewable = GIMP_PREVIEW (GIMP_LIST_ITEM (child)->preview)->viewable;
 
   gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data), viewable);
 }
@@ -452,23 +406,10 @@ gimp_container_list_view_item_activated (GtkWidget      *widget,
     {
       GimpViewable *viewable;
 
-      viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (widget),
-						    "preview"))->viewable;
+      viewable = GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable;
 
       gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data), viewable);
     }
 
   return FALSE;
-}
-
-static GimpViewable *
-gimp_container_list_view_drag_viewable (GtkWidget *widget,
-					gpointer   data)
-{
-  GimpViewable *viewable;
-
-  viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (widget),
-						"preview"))->viewable;
-
-  return viewable;
 }

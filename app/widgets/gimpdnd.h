@@ -139,6 +139,8 @@ void  gimp_dnd_viewable_dest_set       (GtkWidget               *widget,
 void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
 					GtkType                  type);
 
+GimpViewable * gimp_dnd_get_drag_data  (GtkWidget               *widget);
+
 
 /*  OLD drawable dnd functions  */
 

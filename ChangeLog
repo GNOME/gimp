@@ -1,3 +1,21 @@
+2001-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpdrawablelistitem.[ch]
+	* app/gimplistitem.[ch]: new widgets capable of reordering
+	themselves using DND.
+
+	* app/gimpcontainerlistview.c: removed stuff which is now done
+	by the GimpListItem.
+
+	* app/gimpdnd.[ch]: new function gimp_dnd_get_drag_data(widget)
+	which returns a GimpViewable using the widget's drag callback.
+
+	* app/gimpdrawablelistview.c: implement GimpContainerView's
+	"insert_item" method and enable reordering for the created
+	GimpListItem.
+
 2001-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenums.h: renamed ZoomType to GimpZoomZype and added it

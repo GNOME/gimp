@@ -30,6 +30,7 @@
 #include "gimpdrawablelistview.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
+#include "gimplistitem.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpviewable.h"
@@ -48,6 +49,9 @@ static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *kla
 static void   gimp_drawable_list_view_init       (GimpDrawableListView      *view);
 static void   gimp_drawable_list_view_destroy    (GtkObject                 *object);
 
+static gpointer gimp_drawable_list_view_insert_item     (GimpContainerView    *view,
+							 GimpViewable         *viewable,
+							 gint                  index);
 static void   gimp_drawable_list_view_select_item       (GimpContainerView    *view,
 							 GimpViewable         *item,
 							 gpointer              insert_data);
@@ -125,6 +129,7 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 
   object_class->destroy = gimp_drawable_list_view_destroy;
 
+  container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
   container_view_class->activate_item = gimp_drawable_list_view_activate_item;
 }
@@ -263,6 +268,25 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gpointer
+gimp_drawable_list_view_insert_item (GimpContainerView *view,
+				     GimpViewable      *viewable,
+				     gint               index)
+{
+  gpointer list_item = NULL;
+
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item)
+    list_item = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view,
+								       viewable,
+								       index);
+
+  if (list_item)
+    gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item),
+				    TRUE, view->container);
+
+  return (gpointer) list_item;
 }
 
 GtkWidget *
