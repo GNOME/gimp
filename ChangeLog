@@ -1,3 +1,19 @@
+2001-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.[ch]: some random cleanups in pre-historic code.
+
+	* app/fileops.c: useless cleanup (will be split into file-open.[ch]
+	and file-save.[ch] soon).
+
+	* app/gimppattern.c: implement GimpData's "duplicate" method.
+
+	* app/global_edit.c: cleanup in preparation for making a view on a
+	GimpContainer of cut buffers out of it.
+
+	* app/gradient_editor.c: don't let the name entry expand vertically.
+
+	* app/menus.c: typos.
+
 2001-03-25 Seth Burgess <sjburges@gimp.org>
 
         * app/tools/gimpbezierselecttool.[ch]: added new files from
