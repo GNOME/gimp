@@ -1,5 +1,10 @@
 2005-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpvectortool.c (gimp_vector_tool_status_update):
+	set a different help message in polygonal mode. Fixes bug #172051.
+
+2005-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpclipboard.c: when GIMP exits and a clipboard
 	manager is available, store the clipboard content.
 
