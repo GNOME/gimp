@@ -750,18 +750,20 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
-#if 0
     case 'a':
       if (ctx->param == 7 || final)
 	{
-	  rsvg_path_arc (ctx,
-			ctx->params[0], ctx->params[1], ctx->params[2],
-			ctx->params[3], ctx->params[4],
-			ctx->params[5], ctx->params[6]);
+          coords.x = ctx->cpx = ctx->rpx = ctx->params[5];
+          coords.y = ctx->cpy = ctx->rpy = ctx->params[6];
+
+          gimp_bezier_stroke_arcto (ctx->stroke,
+                                    ctx->params[0], ctx->params[1],
+                                    gimp_deg_to_rad (ctx->params[2]),
+                                    ctx->params[3], ctx->params[4],
+                                    &coords);
 	  ctx->param = 0;
 	}
       break;
-#endif
     default:
       ctx->param = 0;
       break;

@@ -1,3 +1,11 @@
+2003-09-11  Simon Budig  <simon@gimp.org>
+
+	* vectors/gimpbezierstroke.[ch]: Implemented
+	gimp_bezier_stroke_arcto () that creates an elliptical arc
+	in the way SVG works.
+
+	* vectors/gimpvectors-import.c: use it.
+
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: removed lots of redundant casts.
