@@ -1777,7 +1777,7 @@ transform_path (char *path,
 		}
 	      else
 		{
-		  gimp_terminate (_("transform_path(): gimprc token referenced but not defined: %s"), token);
+		  gimp_terminate ("transform_path(): gimprc token referenced but not defined: %s", token);
 		}
 	    }
 	  tmp2 = transform_path (tmp2, FALSE);

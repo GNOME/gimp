@@ -137,20 +137,13 @@ install_help (InstallCallback callback)
     { 0, N_(" needs to be created.  This\n"
 	    "subdirectory will contain a number of important files:\n\n") },
 
-    { 1, N_("gimprc\n") },
+    { 1, "gimprc\n" },
     { 0, N_("\t\tThe gimprc is used to store personal preferences\n"
-	    "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-	    "\t\tPaths to search for brushes, palettes, gradients\n"
-	    "\t\tpatterns, plug-ins and modules are also configured here.\n") },
+	    "\t\tthat affect GIMP's default behavior.\n"
+	    "\t\tPaths to search for brushes, palettes, gradients,\n"
+	    "\t\tpatterns, plug-ins and modules can also configured here.\n") },
 
-    { 1, N_("unitrc\n") },
-    { 0, N_("\t\tThe unitrc is used to store your user units database.\n"
-	    "\t\tYou can define additional units and use them just\n"
-	    "\t\tlike you use the built-in units inches, millimeters,\n"
-	    "\t\tpoints and picas. This file is overwritten each time\n"
-	    "\t\tyou quit the GIMP.\n") },
-
-    { 1, N_("pluginrc\n") },
+    { 1, "pluginrc\n" },
     { 0, N_("\t\tPlug-ins and extensions are external programs run by\n"
 	    "\t\tthe GIMP which provide additional functionality.\n"
 	    "\t\tThese programs are searched for at run-time and\n"
@@ -158,48 +151,68 @@ install_help (InstallCallback callback)
 	    "\t\tis cached in this file.  This file is intended to\n"
 	    "\t\tbe GIMP-readable only, and should not be edited.\n") },
 
-    { 1, N_("brushes\n") },
+    { 1, "menurc\n" },
+    { 0, N_("\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
+	    "\t\tThe menurc is a dump of your configuration so it can.\n"
+	    "\t\tbe remembered for the next session. You may edit this\n"
+	    "\t\tfile if you wish, but it is much easier to define the\n"
+	    "\t\tkeys from within The GIMP. Deleting this file will\n"
+	    "\t\trestore the default shortcuts.\n") },
+
+    { 1, "sessionrc\n" },
+    { 0, N_("\t\tThe sessionrc is used to store what dialog windows were\n"
+            "\t\topen the last time you quit The GIMP. You can configure\n"
+            "\t\tThe GIMP to reopen these dialogs at the saved position.\n") },
+
+    { 1, "unitrc\n" },
+    { 0, N_("\t\tThe unitrc is used to store your user units database.\n"
+	    "\t\tYou can define additional units and use them just\n"
+	    "\t\tlike you use the built-in units inches, millimeters,\n"
+	    "\t\tpoints and picas. This file is overwritten each time\n"
+	    "\t\tyou quit the GIMP.\n") },
+
+    { 1, "brushes\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined brushes.  The default gimprc file\n"
 	    "\t\tchecks this subdirectory in addition to the system-\n"
 	    "\t\twide gimp brushes installation when searching for\n"
 	    "\t\tbrushes.\n") },
 
-    { 1, N_("generated_brushes\n") },
+    { 1, "generated_brushes\n" },
     { 0, N_("\t\tThis is a subdirectory which is used to store brushes\n"
 	    "\t\tthat are created with the brush editor.  The default\n"
 	    "\t\tgimprc file checks this subdirectory when searching for\n"
 	    "\t\tgenerated brushes.\n") },
 
-    { 1, N_("gradients\n") },
+    { 1, "gradients\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined gradients.  The default gimprc file\n"
 	    "\t\tchecks this subdirectory in addition to the system-\n"
 	    "\t\twide gimp gradients installation when searching for\n"
 	    "\t\tgradients.\n") },
 
-    { 1, N_("gfig\n") },
+    { 1, "gfig\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined figures to be used by the gfig plug-in.\n"
 	    "\t\tThe default gimprc file checks this subdirectory in\n"
 	    "\t\taddition to the systemwide gimp gfig installation\n"
 	    "\t\twhen searching for gfig figures.\n") },
 
-    { 1, N_("gflares\n") },
+    { 1, "gflares\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined gflares to be used by the gflare plug-in.\n"
 	    "\t\tThe default gimprc file checks this subdirectory in\n"
 	    "\t\taddition to the systemwide gimp gflares installation\n"
 	    "\t\twhen searching for gflares.\n") },
 
-    { 1, N_("fractalexplorer\n") },
+    { 1, "fractalexplorer\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined fractals to be used by the FractalExplorer\n"
 	    "\t\tplug-in. The default gimprc file checks this subdirectory in\n"
 	    "\t\taddition to the systemwide gimp FractalExplorer installation\n"
 	    "\t\twhen searching for fractals.\n") },
 
-    { 1, N_("palettes\n") },
+    { 1, "palettes\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined palettes.  The default gimprc file\n"
 	    "\t\tchecks only this subdirectory (not the system-wide\n"
@@ -209,14 +222,14 @@ install_help (InstallCallback callback)
 	    "\t\tpalettes during GIMP execution to persist across\n"
 	    "\t\tsessions.\n") },
 
-    { 1, N_("patterns\n") },
+    { 1, "patterns\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined patterns.  The default gimprc file\n"
 	    "\t\tchecks this subdirectory in addition to the system-\n"
 	    "\t\twide gimp patterns installation when searching for\n"
 	    "\t\tpatterns.\n") },
 
-    { 1, N_("plug-ins\n") },
+    { 1, "plug-ins\n" },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser created, temporary, or otherwise non-system-\n"
 	    "\t\tsupported plug-ins.  The default gimprc file\n"
@@ -224,20 +237,20 @@ install_help (InstallCallback callback)
 	    "\t\twide GIMP plug-in directories when searching for\n"
 	    "\t\tplug-ins.\n") },
 
-    { 1, N_("modules\n") },
+    { 1, "modules\n" },
     { 0, N_("\t\tThis subdirectory can be used to store user created,\n"
 	    "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
 	    "\t\tThe default gimprc file checks this subdirectory\n"
 	    "\t\tin addition to the system-wide GIMP module directory\n"
 	    "\t\twhen searching for modules to load when initialising.\n") },
 
-    { 1, N_("scripts\n") },
+    { 1, "scripts\n" },
     { 0, N_("\t\tThis subdirectory is used by the GIMP to store \n"
 	    "\t\tuser created and installed scripts. The default gimprc\n"
 	    "\t\tfile checks this subdirectory in addition to the system\n"
 	    "\t\t-wide gimp scripts subdirectory when searching for scripts\n") },
 
-    { 1, N_("tmp\n") },
+    { 1, "tmp\n" },
     { 0, N_("\t\tThis subdirectory is used by the GIMP to temporarily\n"
 	    "\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
 	    "\t\tunceremoniously killed, files may persist in this directory\n"

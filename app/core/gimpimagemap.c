@@ -280,7 +280,7 @@ image_map_abort (ImageMap image_map)
       /* if the user has changed the image depth get out quickly */
       if (destPR.bytes != srcPR.bytes) 
 	{
-	  g_message (_("image depth change, unable to restore original image"));
+	  g_message ("image depth change, unable to restore original image");
 	  tile_manager_destroy (_image_map->undo_tiles);
 	  g_free (_image_map);
 	  return;

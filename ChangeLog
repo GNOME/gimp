@@ -1,3 +1,14 @@
+Tue Dec 28 15:05:06 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimprc.c
+	* app/image_map.c
+	* app/install.c
+	* app/layer.c
+	* app/session.c
+	* app/text_tool.c
+	* po/POTFILES.in: more strings unmarked and some corrections to the
+	text that is output on user-installation
+
 Tue Dec 28 11:25:46 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpunit.c

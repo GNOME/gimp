@@ -270,7 +270,7 @@ text_call_gdyntext (GDisplay *gdisp)
   /*  find the gDynText PDB record  */
   if ((proc_rec = procedural_db_lookup ("plug_in_dynamic_text")) == NULL)
     {
-      g_message (_("text_call_gdyntext: gDynText procedure lookup failed"));
+      g_message ("text_call_gdyntext: gDynText procedure lookup failed");
       return;
     }
 

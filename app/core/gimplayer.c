@@ -346,7 +346,7 @@ layer_copy (Layer    *layer,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer)
     {
-      g_message (_("layer_copy: could not allocate new layer"));
+      g_message ("layer_copy: could not allocate new layer");
       goto cleanup;
     }
 
@@ -424,7 +424,7 @@ layer_from_tiles (void             *gimage_ptr,
 
   if (!new_layer)
     {
-      g_message (_("layer_from_tiles: could not allocate new layer"));
+      g_message ("layer_from_tiles: could not allocate new layer");
       return NULL;
     }
 

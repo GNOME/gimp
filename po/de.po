@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-12-28 11:21+0100\n"
-"PO-Revision-Date: 1999-11-28 11:25+0100\n"
+"POT-Creation-Date: 1999-12-28 14:47+0100\n"
+"PO-Revision-Date: 1999-12-28 15:00+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Farbverläufe"
 msgid "Really Quit?"
 msgstr "Wirklich Beenden?"
 
-#: app/app_procs.c:746 app/install.c:259 app/install.c:405
+#: app/app_procs.c:746 app/install.c:272 app/install.c:418
 msgid "Quit"
 msgstr "Beenden"
 
@@ -1143,7 +1143,7 @@ msgstr ""
 "\n"
 "Wählen Sie \"OK\", um dieses Bild trotzdem zu erzeugen.\n"
 "Wählen Sie \"Abbrechen\", wenn Sie jetzt kein so großes\n"
-"Bild erzeugten möchten.\n"
+"Bild erzeugen möchten.\n"
 "\n"
 "Wenn Sie verhindern wollen, daß dieser Dialog wieder\n"
 "angezeigt wird, erhöhen Sie den Wert \"Maximale Bildgröße\"\n"
@@ -1417,11 +1417,11 @@ msgstr "Kann Bild unbekannten Typs nicht füllen."
 
 #: app/gimpdrawable.c:481
 msgid "parasite attach to drawable"
-msgstr ""
+msgstr "Parasit mit Ebene verknüpfen"
 
 #: app/gimpdrawable.c:514
 msgid "detach parasite from drawable"
-msgstr ""
+msgstr "Parasit von Ebene lösen"
 
 #: app/gimpdrawable.c:706
 msgid "unnamed"
@@ -1434,11 +1434,11 @@ msgstr "Ebenentyp %d nicht unterstützt."
 
 #: app/gimpimage.c:1128
 msgid "attach parasite to image"
-msgstr ""
+msgstr "Parasit dem Bild hinzufügen"
 
 #: app/gimpimage.c:1151
 msgid "detach parasite from image"
-msgstr ""
+msgstr "Parasit vom Bild lösen"
 
 #: app/gimpimage.c:2115
 msgid "Layer cannot be raised any further"
@@ -1557,11 +1557,6 @@ msgstr "  unerwartetes Symbol: %s\n"
 #: app/gimprc.c:1445
 msgid "error parsing pluginrc"
 msgstr "Fehler beim Lesen der pluginrc"
-
-#: app/gimprc.c:1780
-#, c-format
-msgid "transform_path(): gimprc token referenced but not defined: %s"
-msgstr ""
 
 #: app/gimprc.c:2778
 #, c-format
@@ -1958,7 +1953,7 @@ msgstr "VG Farbe"
 #: app/gradient.c:4236
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4749 app/gradient.c:4819
 msgid "(Varies)"
@@ -2114,10 +2109,6 @@ msgstr "Helligkeit"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/image_map.c:283
-msgid "image depth change, unable to restore original image"
-msgstr ""
-
 #: app/image_new.c:59 app/info_window.c:65 app/info_window.c:603
 #: app/preferences_dialog.c:1432
 msgid "Grayscale"
@@ -2139,27 +2130,27 @@ msgstr "%d Byte"
 #: app/image_new.c:265
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: app/image_new.c:267
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: app/image_new.c:269
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: app/image_new.c:271
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: app/image_new.c:273
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: app/indicator_area.c:137
 msgid ""
@@ -2347,6 +2338,9 @@ msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "\n"
 msgstr ""
+"The GIMP - GNU Image Manipulation Program\n"
+"GIMP - Das GNU Bildbearbeitungsprogramm\n"
+"\n"
 
 #: app/install.c:118
 msgid ""
@@ -2355,6 +2349,11 @@ msgid ""
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version.\n"
 msgstr ""
+"Dieses Programm ist freie Software. Sie können es unter\n"
+"den Bedingungen der GNU General Public License, wie von der\n"
+"Free Software Foundation herausgegeben, weitergeben und/oder\n"
+"modifizieren, entweder unter Version 2 der Lizenz oder (wenn\n"
+"Sie es wünschen) jeder späteren Version.\n"
 
 #: app/install.c:123
 msgid ""
@@ -2363,6 +2362,11 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details.\n"
 msgstr ""
+"Die Veröffentlichung dieses Programms erfolgt in der\n"
+"Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE JEDE\n"
+"GEWÄHRLEISTUNG - sogar ohne die implizite Gewährleistung\n"
+"der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.\n"
+"Details finden Sie in der GNU General Public License.\n"
 
 #: app/install.c:128
 msgid ""
@@ -2371,6 +2375,10 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA.\n"
 msgstr ""
+"Sie sollten eine Kopie der GNU General Public License zusammen\n"
+"mit diesem Programm erhalten haben. Falls nicht, schreiben Sie\n"
+"an die Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
+"Boston, MA 02111-1307, USA.\n"
 
 #: app/install.c:134
 msgid ""
@@ -2395,36 +2403,19 @@ msgstr ""
 "Unterverzeichnis wird ein paar wichtige Dateien enthalten:\n"
 "\n"
 
-#: app/install.c:140
-msgid "gimprc\n"
-msgstr ""
-
 #: app/install.c:141
 msgid ""
 "\t\tThe gimprc is used to store personal preferences\n"
-"\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-"\t\tPaths to search for brushes, palettes, gradients\n"
-"\t\tpatterns, plug-ins and modules are also configured here.\n"
+"\t\tthat affect GIMP's default behavior.\n"
+"\t\tPaths to search for brushes, palettes, gradients,\n"
+"\t\tpatterns, plug-ins and modules can also configured here.\n"
 msgstr ""
-
-#: app/install.c:146
-msgid "unitrc\n"
-msgstr ""
+"\t\tDie Datei gimprc wird benutzt um persönliche Einstellungen\n"
+"\t\twie GIMPs Standardverhalten zu speichern.\n"
+"\t\tAuch die Suchpfade für Pinsel, Paletten, Farbverläufe,\n"
+"\t\tMuster, Plug-Ins und Module können hier konfiguriert werden.\n"
 
 #: app/install.c:147
-msgid ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
-msgstr ""
-
-#: app/install.c:153
-msgid "pluginrc\n"
-msgstr ""
-
-#: app/install.c:154
 msgid ""
 "\t\tPlug-ins and extensions are external programs run by\n"
 "\t\tthe GIMP which provide additional functionality.\n"
@@ -2433,12 +2424,57 @@ msgid ""
 "\t\tis cached in this file.  This file is intended to\n"
 "\t\tbe GIMP-readable only, and should not be edited.\n"
 msgstr ""
+"\t\tPlug-Ins und Erweiterungen sind externe Programme, die\n"
+"\t\tvon GIMP gestartet werden und die weitere Funktionalität\n"
+"\t\tbereitstellen. Diese Programme werden zur Laufzeit gesucht\n"
+"\t\tund die Informationen über ihre Funktionalität und ihr\n"
+"\t\tErzeugungsdatum werden in dieser Datei gespeichert.\n"
+"\t\tDiese Datei sollte nur von GIMP gelesen und nicht\n"
+"\t\tbearbeitet werden.\n" 
 
-#: app/install.c:161
-msgid "brushes\n"
+#: app/install.c:155
+msgid ""
+"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
+"\t\tThe menurc is a dump of your configuration so it can.\n"
+"\t\tbe remembered for the next session. You may edit this\n"
+"\t\tfile if you wish, but it is much easier to define the\n"
+"\t\tkeys from within The GIMP. Deleting this file will\n"
+"\t\trestore the default shortcuts.\n"
 msgstr ""
+"\t\tTastaturkürzel können in GIMP dynamisch vergeben werden.\n"
+"\t\tDie Datei menurc ist eine Sicherung Ihrer Konfiguration,\n"
+"\t\tso daß diese auch in der nächsten Sitzung erhalten bleibt.\n"
+"\t\tDiese Datei kann editiert werden, aber es ist einfacher,\n"
+"\t\tdie Tastaturkürzel aus GIMP heraus zu konfigurieren.\n"
+"\t\tWird diese Datei gelöscht, so wird die Standard\n"
+"\t\tTastaturbelegung wiederhergestellt.\n" 
 
-#: app/install.c:162
+#: app/install.c:163
+msgid ""
+"\t\tThe sessionrc is used to store what dialog windows were\n"
+"\t\topen the last time you quit The GIMP. You can configure\n"
+"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
+msgstr ""
+"\t\tDie Datei sessionrc wird benutzt, um zu speichern, welche\n"
+"\t\tFenster beim Schliessen von GIMP geöffnet waren. Sie können\n"
+"\t\tGIMP so konfigurieren, daß diese Dialoge beim Start an der\n"
+"\t\tgespeicherten Position wieder geöffnet werden.\n"
+
+#: app/install.c:168
+msgid ""
+"\t\tThe unitrc is used to store your user units database.\n"
+"\t\tYou can define additional units and use them just\n"
+"\t\tlike you use the built-in units inches, millimeters,\n"
+"\t\tpoints and picas. This file is overwritten each time\n"
+"\t\tyou quit the GIMP.\n"
+msgstr ""
+"\t\tDie Datei unitrc wird benutzt, um Ihre Einheiten-Datenbank\n"
+"\t\tzu speichern. Sie können zusätzliche Einheiten definieren\n"
+"\t\tund sie wie die vordefinierten Einheiten wie Inch,\n"
+"\t\tMillimeter, Punkt und Pica benutzen. Diese Datei wird"
+"\t\tjedesmal überschrieben, wenn sie GIMP beenden.\n"
+
+#: app/install.c:175
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined brushes.  The default gimprc file\n"
@@ -2447,11 +2483,7 @@ msgid ""
 "\t\tbrushes.\n"
 msgstr ""
 
-#: app/install.c:168
-msgid "generated_brushes\n"
-msgstr "Erzeugte Pinsel\n"
-
-#: app/install.c:169
+#: app/install.c:182
 msgid ""
 "\t\tThis is a subdirectory which is used to store brushes\n"
 "\t\tthat are created with the brush editor.  The default\n"
@@ -2459,11 +2491,7 @@ msgid ""
 "\t\tgenerated brushes.\n"
 msgstr ""
 
-#: app/install.c:174
-msgid "gradients\n"
-msgstr ""
-
-#: app/install.c:175
+#: app/install.c:188
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined gradients.  The default gimprc file\n"
@@ -2472,11 +2500,7 @@ msgid ""
 "\t\tgradients.\n"
 msgstr ""
 
-#: app/install.c:181
-msgid "gfig\n"
-msgstr ""
-
-#: app/install.c:182
+#: app/install.c:195
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined figures to be used by the gfig plug-in.\n"
@@ -2485,11 +2509,7 @@ msgid ""
 "\t\twhen searching for gfig figures.\n"
 msgstr ""
 
-#: app/install.c:188
-msgid "gflares\n"
-msgstr ""
-
-#: app/install.c:189
+#: app/install.c:202
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined gflares to be used by the gflare plug-in.\n"
@@ -2498,11 +2518,7 @@ msgid ""
 "\t\twhen searching for gflares.\n"
 msgstr ""
 
-#: app/install.c:195
-msgid "fractalexplorer\n"
-msgstr ""
-
-#: app/install.c:196
+#: app/install.c:209
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined fractals to be used by the FractalExplorer\n"
@@ -2511,11 +2527,7 @@ msgid ""
 "\t\twhen searching for fractals.\n"
 msgstr ""
 
-#: app/install.c:202
-msgid "palettes\n"
-msgstr ""
-
-#: app/install.c:203
+#: app/install.c:216
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined palettes.  The default gimprc file\n"
@@ -2527,11 +2539,7 @@ msgid ""
 "\t\tsessions.\n"
 msgstr ""
 
-#: app/install.c:212
-msgid "patterns\n"
-msgstr ""
-
-#: app/install.c:213
+#: app/install.c:226
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined patterns.  The default gimprc file\n"
@@ -2540,11 +2548,7 @@ msgid ""
 "\t\tpatterns.\n"
 msgstr ""
 
-#: app/install.c:219
-msgid "plug-ins\n"
-msgstr ""
-
-#: app/install.c:220
+#: app/install.c:233
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser created, temporary, or otherwise non-system-\n"
@@ -2554,11 +2558,7 @@ msgid ""
 "\t\tplug-ins.\n"
 msgstr ""
 
-#: app/install.c:227
-msgid "modules\n"
-msgstr ""
-
-#: app/install.c:228
+#: app/install.c:241
 msgid ""
 "\t\tThis subdirectory can be used to store user created,\n"
 "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
@@ -2567,11 +2567,7 @@ msgid ""
 "\t\twhen searching for modules to load when initialising.\n"
 msgstr ""
 
-#: app/install.c:234
-msgid "scripts\n"
-msgstr ""
-
-#: app/install.c:235
+#: app/install.c:248
 msgid ""
 "\t\tThis subdirectory is used by the GIMP to store \n"
 "\t\tuser created and installed scripts. The default gimprc\n"
@@ -2579,11 +2575,7 @@ msgid ""
 "\t\t-wide gimp scripts subdirectory when searching for scripts\n"
 msgstr ""
 
-#: app/install.c:240
-msgid "tmp\n"
-msgstr ""
-
-#: app/install.c:241
+#: app/install.c:254
 msgid ""
 "\t\tThis subdirectory is used by the GIMP to temporarily\n"
 "\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2592,27 +2584,27 @@ msgid ""
 "\t\tGIMP sessions and can be destroyed with impunity.\n"
 msgstr ""
 
-#: app/install.c:250
+#: app/install.c:263
 msgid "GIMP Installation"
 msgstr "GIMP Installation"
 
-#: app/install.c:255
+#: app/install.c:268
 msgid "Install"
 msgstr "Installieren"
 
-#: app/install.c:257
+#: app/install.c:270
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: app/install.c:398
+#: app/install.c:411
 msgid "Installation Log"
 msgstr "Installation Logbuch"
 
-#: app/install.c:403
+#: app/install.c:416
 msgid "Continue"
 msgstr "Weiter"
 
-#: app/install.c:434
+#: app/install.c:447
 msgid ""
 "User Installation Log\n"
 "\n"
@@ -2620,25 +2612,31 @@ msgstr ""
 "Benutzerinstallation Logbuch\n"
 "\n"
 
-#: app/install.c:444
+#: app/install.c:457
 msgid " does not exist.  Cannot install.\n"
-msgstr ""
+msgstr " existiert nicht.  Kann nicht installieren.\n"
 
-#: app/install.c:452
+#: app/install.c:465
 msgid ""
 " has invalid permissions.\n"
 "Cannot install."
 msgstr ""
+" hat falsche Zugriffsrechte.\n"
+"Kann nicht installieren."
 
-#: app/install.c:486
+#: app/install.c:499
 msgid ""
 "Did you notice any error messages\n"
 "in the console window? If not, installation\n"
 "was successful! Otherwise, quit and investigate\n"
 "the possible reason...\n"
 msgstr ""
+"Haben Sie irgendwelche Fehlermeldungen bemerkt?\n"
+"Wenn nicht, war die Installation erfolgreich!\n"
+"Ansonsten beenden Sie das Programm jetzt und suchen\n"
+"Sie nach der möglichen Fehlerursache...\n"
 
-#: app/install.c:518
+#: app/install.c:531
 msgid ""
 "\n"
 "Installation successful!\n"
@@ -2646,7 +2644,7 @@ msgstr ""
 "\n"
 "Installation erfolgreich!\n"
 
-#: app/install.c:527
+#: app/install.c:540
 msgid ""
 "\n"
 "Installation failed.  Contact system administrator.\n"
@@ -2802,14 +2800,6 @@ msgstr "Invertierung schlug fehl."
 msgid "Zero width or height layers not allowed."
 msgstr "Ebenen mit Höhe oder Breite gleich null sind nicht erlaubt."
 
-#: app/layer.c:349
-msgid "layer_copy: could not allocate new layer"
-msgstr ""
-
-#: app/layer.c:427
-msgid "layer_from_tiles: could not allocate new layer"
-msgstr ""
-
 #: app/layer.c:480
 #, c-format
 msgid "%s mask"
@@ -2868,12 +2858,16 @@ msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
 msgstr ""
+"Ebene rauf     \n"
+"<Shift> Nach ganz oben"
 
 #: app/layers_dialog.c:270
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
 msgstr ""
+"Ebene runter      \n"
+"<Shift> Nach ganz unten"
 
 #: app/layers_dialog.c:275
 msgid "Duplicate Layer"
@@ -4853,7 +4847,7 @@ msgstr "Ein Navigations-Fenster pro Bildfenster"
 
 #: app/preferences_dialog.c:1613
 msgid "Info Window Follows Mouse"
-msgstr ""
+msgstr "Info Fenster folgt der Maus"
 
 #: app/preferences_dialog.c:1624
 msgid "Help System Settings"
@@ -4877,11 +4871,11 @@ msgstr "Hilfe Browser"
 
 #: app/preferences_dialog.c:1666
 msgid "Internal"
-msgstr "Intervall"
+msgstr "Intern"
 
 #: app/preferences_dialog.c:1668
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/preferences_dialog.c:1672
 msgid "Help Browser to Use:"
@@ -5219,6 +5213,8 @@ msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
+"Falsches Argument an procedural_db_run_proc übergeben:\n"
+"Argument %d von '%s' sollte als %s übergeben werden, aber es wurde %s benutzt"
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
@@ -5341,18 +5337,6 @@ msgstr "Skalierungsfaktor X:"
 msgid "Scaling..."
 msgstr "Skalierung"
 
-#: app/session.c:138
-msgid ""
-"# GIMP sessionrc\n"
-"# This file takes session-specific info (that is info,\n"
-"# you want to keep between two gimp-sessions). You are\n"
-"# not supposed to edit it manually, but of course you\n"
-"# can do. This file will be entirely rewritten every time\n"
-"# you quit the gimp. If this file isn't found, defaults\n"
-"# are used.\n"
-"\n"
-msgstr ""
-
 #: app/shear_tool.c:74
 msgid "Shear Information"
 msgstr "Scherungs Informationen"
@@ -5381,10 +5365,6 @@ msgstr "Rand:"
 msgid "Use Dynamic Text"
 msgstr "Dynamischen Text benutzen"
 
-#: app/text_tool.c:273
-msgid "text_call_gdyntext: gDynText procedure lookup failed"
-msgstr ""
-
 #. Create the shell
 #: app/text_tool.c:394
 msgid "Text Tool"
@@ -5401,6 +5381,9 @@ msgid ""
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
 "options."
 msgstr ""
+"\n"
+"Wenn Sie keine skalierbaren Schriften haben, versuchen Sie die "
+"OptionAntialiasing des Werkzeugs auszuschalten."
 
 #: app/text_tool.c:714
 msgid "Text Layer"
@@ -6246,6 +6229,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"XCF Warnung: Version 0 des XCF Dateiformats\n"
+"hat indizierte Farbpaletten falsch gespeichert.\n"
+"Farben wurden durch Graustufen ersetzt."
 
 #. flow slider
 #: app/xinput_airbrush.c:322
@@ -6256,22 +6242,22 @@ msgstr "Fluss:"
 #. flow sens slider
 #: app/xinput_airbrush.c:341
 msgid "Flow Sensitivity:"
-msgstr "Fluss Empfindlichkeit:"
+msgstr "Fluss Empfindl.:"
 
 #. base tilt slider
 #: app/xinput_airbrush.c:361
 msgid "Base Tilt:"
-msgstr "Grundwinkel:"
+msgstr "Grundneigung:"
 
 #. tilt sens slider
 #: app/xinput_airbrush.c:384
 msgid "Tilt Sensitivity:"
-msgstr "Winkel Empfindlichkeit:"
+msgstr "Neigung Empfindl.:"
 
 #. velocity sens slider
 #: app/xinput_airbrush.c:410
 msgid "Speed Sensitivity:"
-msgstr "Geschwindigkeit Empfindlichkeit:"
+msgstr "Geschwindigkeit Empfindl.:"
 
 #. min height slider
 #: app/xinput_airbrush.c:437
@@ -6282,15 +6268,3 @@ msgstr "Min. Höhe:"
 #: app/xinput_airbrush.c:458
 msgid "Max Height:"
 msgstr "Max. Höhe:"
-
-#~ msgid "Could not open \"%s\""
-#~ msgstr "Konnte \"%s\" nicht öffnen"
-
-#~ msgid "xcf: zlib compression unimplemented"
-#~ msgstr "xcf: zlib Kompression nicht implementiert"
-
-#~ msgid "xcf: fractal compression unimplemented"
-#~ msgstr "xcf: Fraktale Kompression nicht implementiert"
-
-#~ msgid "unknown compression type: %d"
-#~ msgstr "unbekannter Kompressionstyp: %d"

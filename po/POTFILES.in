@@ -106,7 +106,6 @@ app/rect_select.c
 app/resize.c
 app/rotate_tool.c
 app/scale_tool.c
-app/session.c
 app/shear_tool.c
 app/smudge.c
 app/temp_buf.c
