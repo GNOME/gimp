@@ -1,3 +1,20 @@
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/gimprgb-parse.c
+	* libgimpcolor/gimprgb.[ch]: added more RGB parsers and moved the
+	code to a dedicated file.
+
+	* libgimpcolor/gimpcolor.def: added new symbols.
+
+	* libgimpwidgets/gimpcolorscales.c: use gimp_rgb_parse_hex().
+
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt: added more RGB parsers.
+
+	* libgimpcolor/tmpl/gimprgb.sgml: regenerated.
+
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml

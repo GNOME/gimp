@@ -35,6 +35,8 @@ EXPORTS
 	gimp_rgb_max
 	gimp_rgb_min
 	gimp_rgb_multiply
+	gimp_rgb_parse_css
+	gimp_rgb_parse_hex
 	gimp_rgb_parse_name
 	gimp_rgb_set
 	gimp_rgb_set_alpha

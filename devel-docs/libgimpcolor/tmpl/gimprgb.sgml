@@ -86,6 +86,28 @@ GimpRGB
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_rgb_parse_hex ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@hex: 
+@len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_parse_css ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@css: 
+@len: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rgb_add ##### -->
 <para>
 

@@ -25,7 +25,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -477,7 +476,6 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   const gchar       *hex_color;
   gchar              buffer[8];
-  guint              hex_rgb;
   guchar             r, g, b;
 
   switch (event->type)
@@ -496,13 +494,8 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
       if ((strlen (hex_color) == 6) &&
           (g_ascii_strcasecmp (buffer, hex_color) != 0))
         {
-          if ((sscanf (hex_color, "%x", &hex_rgb) == 1) &&
-              (hex_rgb < (1 << 24)))
+          if (gimp_rgb_parse_hex (&selector->rgb, hex_color, 6))
 	    {
-	      gimp_rgb_set_uchar (&selector->rgb,
-				  (hex_rgb & 0xff0000) >> 16,
-				  (hex_rgb & 0x00ff00) >> 8,
-				  (hex_rgb & 0x0000ff));
               gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
 	      gimp_color_scales_update_scales (scales, -1);

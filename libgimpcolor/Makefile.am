@@ -75,7 +75,8 @@ libgimpcolor_2_0_la_SOURCES = \
 	gimphsv.c			\
 	gimphsv.h			\
 	gimprgb.c			\
-	gimprgb.h
+	gimprgb.h			\
+	gimprgb-parse.c
 
 libgimpcolorinclude_HEADERS = \
 	gimpcolor.h			\
