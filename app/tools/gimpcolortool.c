@@ -46,29 +46,29 @@ enum
 
 /*  local function prototypes  */
 
-static void 	  gimp_color_tool_class_init  (GimpColorToolClass *klass);
+static void       gimp_color_tool_class_init  (GimpColorToolClass *klass);
 static void       gimp_color_tool_init        (GimpColorTool      *color_tool);
 static void       gimp_color_tool_finalize    (GObject            *object);
 
 static void       gimp_color_tool_button_press   (GimpTool        *tool,
-						  GimpCoords      *coords,
-						  guint32          time,
-						  GdkModifierType  state,
-						  GimpDisplay     *gdisp);
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 static void       gimp_color_tool_button_release (GimpTool        *tool,
-						  GimpCoords      *coords,
-						  guint32          time,
-						  GdkModifierType  state,
-						  GimpDisplay     *gdisp);
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 static void       gimp_color_tool_motion         (GimpTool        *tool,
-						  GimpCoords      *coords,
-						  guint32          time,
-						  GdkModifierType  state,
-						  GimpDisplay     *gdisp);
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 static void       gimp_color_tool_cursor_update  (GimpTool        *tool,
-						  GimpCoords      *coords,
-						  GdkModifierType  state,
-						  GimpDisplay     *gdisp);
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 
 static void       gimp_color_tool_draw           (GimpDrawTool    *draw_tool);
 
@@ -89,28 +89,28 @@ static guint gimp_color_tool_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawToolClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_color_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
       static const GTypeInfo tool_info =
       {
         sizeof (GimpColorToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpColorTool",
+                                          "GimpColorTool",
                                           &tool_info, 0);
     }
 
@@ -128,12 +128,12 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
 
   gimp_color_tool_signals[PICKED] =
     g_signal_new ("picked",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpColorToolClass, picked),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM_ENUM_BOXED_INT,
-		  G_TYPE_NONE, 4,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorToolClass, picked),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM_ENUM_BOXED_INT,
+                  G_TYPE_NONE, 4,
                   GIMP_TYPE_COLOR_PICK_STATE,
                   GIMP_TYPE_IMAGE_TYPE,
                   GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE,
@@ -146,7 +146,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
   tool_class->motion         = gimp_color_tool_motion;
   tool_class->cursor_update  = gimp_color_tool_cursor_update;
 
-  draw_class->draw	     = gimp_color_tool_draw;
+  draw_class->draw           = gimp_color_tool_draw;
 
   klass->pick                = gimp_color_tool_real_pick;
   klass->picked              = NULL;
@@ -183,19 +183,17 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 
 static void
 gimp_color_tool_button_press (GimpTool        *tool,
-			      GimpCoords      *coords,
-			      guint32          time,
-			      GdkModifierType  state,
-			      GimpDisplay     *gdisp)
+                              GimpCoords      *coords,
+                              guint32          time,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
-  GimpColorTool *color_tool;
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
-  /*  Make the tool active and set it's gdisplay & drawable  */
+  /*  Make the tool active and set its gdisplay & drawable  */
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
   gimp_tool_control_activate (tool->control);
-
-  color_tool = GIMP_COLOR_TOOL (tool);
 
   if (color_tool->enabled)
     {
@@ -216,10 +214,10 @@ gimp_color_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_color_tool_button_release (GimpTool        *tool,
-				GimpCoords      *coords,
-				guint32          time,
-				GdkModifierType  state,
-				GimpDisplay     *gdisp)
+                                GimpCoords      *coords,
+                                guint32          time,
+                                GdkModifierType  state,
+                                GimpDisplay     *gdisp)
 {
   if (GIMP_COLOR_TOOL (tool)->enabled)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -234,10 +232,8 @@ gimp_color_tool_motion (GimpTool        *tool,
                         GdkModifierType  state,
                         GimpDisplay     *gdisp)
 {
-  GimpColorTool *color_tool;
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
   gint           off_x, off_y;
-
-  color_tool = GIMP_COLOR_TOOL (tool);
 
   if (! color_tool->enabled)
     return;
@@ -257,9 +253,9 @@ gimp_color_tool_motion (GimpTool        *tool,
 
 static void
 gimp_color_tool_cursor_update (GimpTool        *tool,
-			       GimpCoords      *coords,
-			       GdkModifierType  state,
-			       GimpDisplay     *gdisp)
+                               GimpCoords      *coords,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
@@ -346,8 +342,8 @@ gimp_color_tool_real_pick (GimpColorTool *color_tool,
 static void
 gimp_color_tool_pick (GimpColorTool      *tool,
                       GimpColorPickState  pick_state,
-		      gint                x,
-		      gint                y)
+                      gint                x,
+                      gint                y)
 {
   GimpColorToolClass *klass;
   GimpImageType       sample_type;
@@ -375,6 +371,7 @@ gimp_color_tool_enable (GimpColorTool    *color_tool,
   g_return_if_fail (GIMP_IS_COLOR_OPTIONS (options));
 
   tool = GIMP_TOOL (color_tool);
+
   if (gimp_tool_control_is_active (tool->control))
     {
       g_warning ("Trying to enable GimpColorTool while it is active.");
@@ -382,10 +379,8 @@ gimp_color_tool_enable (GimpColorTool    *color_tool,
     }
 
   if (color_tool->options)
-    {
-      g_object_unref (color_tool->options);
-      color_tool->options = NULL;
-    }
+    g_object_unref (color_tool->options);
+
   color_tool->options = g_object_ref (options);
 
   color_tool->enabled = TRUE;
@@ -399,6 +394,7 @@ gimp_color_tool_disable (GimpColorTool *color_tool)
   g_return_if_fail (GIMP_IS_COLOR_TOOL (color_tool));
 
   tool = GIMP_TOOL (color_tool);
+
   if (gimp_tool_control_is_active (tool->control))
     {
       g_warning ("Trying to disable GimpColorTool while it is active.");
