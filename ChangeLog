@@ -1,3 +1,9 @@
+2004-04-19  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: set gimp_plugin_version, gimp_sysconf_version and
+	gimp_data_version to 2.1 so that the development version is
+	clearly separated from stable gimp 2.0.
+
 2004-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* menus/Makefile.am
