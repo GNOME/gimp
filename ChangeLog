@@ -1,9 +1,14 @@
+Sat May  2 00:59:23 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimp.1: spelling corrections from Tamito Kajiyama
+
 Sat May  2 00:41:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/tiff/tiff.c: another special case fix from Nick Lamb.
 	I said it before, and I'll say it again: TIFF sucks
 
 	* app/fuzzy_select.c: find_boundary works nicer in indexed mode
+	(from Adrian)
 
 	* app/paint_funcs.c: generate dissolve random number table better
 	(thanks Owen)
