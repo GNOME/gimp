@@ -888,7 +888,7 @@ DoExtension (FILE *fd,
 	      parasite_free (comment_parasite);
 	    }
 	    
-	  comment_parasite = parasite_new ("gimp-comment",TRUE,
+	  comment_parasite = parasite_new ("gimp-comment",PARASITE_PERSISTENT,
 					    strlen(buf)+1, (void*)buf);
 #else
 	  if (showComment)

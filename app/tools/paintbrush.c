@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include "appenv.h"
 #include "gimpbrushlist.h"
@@ -133,14 +134,31 @@ create_paint_options (void)
   return options;
 }
 
+#define USE_SPEEDSHOP_CALIPERS 0
+#define TIMED_BRUSH 0
+
+#if USE_SPEEDSHOP_CALIPERS
+#include <SpeedShop/api.h>
+#endif
+
 void *
 paintbrush_paint_func (PaintCore *paint_core,
 		       GimpDrawable *drawable,
 		       int        state)
 {
+#if TIMED_BRUSH
+  static GTimer *timer;
+#endif
   switch (state)
     {
     case INIT_PAINT :
+#if TIMED_BRUSH
+      timer = g_timer_new();
+      g_timer_start(timer);
+#if USE_SPEEDSHOP_CALIPERS
+      ssrt_caliper_point(0, "Painting");
+#endif /* USE_SPEEDSHOP_CALIPERS */
+#endif /* TIMED_BRUSH */
       break;
 
     case MOTION_PAINT :
@@ -148,6 +166,14 @@ paintbrush_paint_func (PaintCore *paint_core,
       break;
 
     case FINISH_PAINT :
+#if TIMED_BRUSH
+#if USE_SPEEDSHOP_CALIPERS
+      ssrt_caliper_point(0, "Not Painting Anymore");
+#endif /* USE_SPEEDSHOP_CALIPERS */
+      g_timer_stop(timer);
+      printf("painting took %f:\n", g_timer_elapsed(timer, NULL));
+      g_timer_destroy(timer);
+#endif /* TIMED_BRUSH */
       break;
 
     default :

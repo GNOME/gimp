@@ -1,3 +1,45 @@
+1998-12-16  Jay Cox  <jaycox@earthlink.net>
+
+	* libgimp/gserialize.c
+	* libgimp/gserialize.h: Changed the enum values to allow for
+ 	simpler future expansion.
+	
+	* libgimp/parasite.c
+	* libgimp/parasite.h: s/persistant/persistent/.
+ 	new accessor functions for parasites.  #defines for new flags.
+
+	* app/paintbrush.c: added timeing code for brush strokes.
+  	It is #ifed out, and is only valid for shift clicks.
+	
+	* app/parasite_cmds.h: fixed a warning
+	
+	* app/parasitelist.h
+	* app/parasitelist.c: added _for_each and _length functions
+	
+	* app/gimpdrawable.c:  set the dirty flag when adding or removing a
+ 	persistent parasite
+	
+	* app/gimpimage.c: set the dirty flag when adding or removing a
+ 	persistent parasite.  Fixed bug and removed debug statements in
+ 	merge_down.
+
+	* app/xcf.c: save and load resolution, parasites, and tattoos.
+
+	* app/main.c: updated the deserialize test.
+	
+	* plug-ins/tiff/tiff.c
+	* plug-ins/gif/gif.c: use PARASITE_PERSISTENT define instead of 1
+
+	* plug-ins/bmp/bmp.c
+	* plug-ins/bmp/bmp.h: declare some struct variable as extern.
+	
+	* app/paint_funcs.c: Lots of optimizations aimed at speeding up
+ 	painting.  Should see a 2-4X speed up on most painting
+ 	(depending on paint modes, brush size etc.)
+
+	* app/drawable.c: check for NULL drawable in drawable_ID.
+  	this stops us from being crashed by ill-behaved plug-ins
+
 Tue Dec 15 16:18:40 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/*: stuff from patches/i18n by Daniel Egger

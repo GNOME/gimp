@@ -26,6 +26,7 @@
 #include "gimage_mask.h"
 #include "parasitelist.h"
 
+#include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
 
 enum {
@@ -260,11 +261,11 @@ void
 gimp_drawable_set_gimage (GimpDrawable *drawable, GimpImage *gimage)
 {
   g_assert(GIMP_IS_DRAWABLE(drawable));
-  drawable->gimage = gimage;
   if (gimage == NULL)
     drawable->tattoo = 0;
-  else
+  else if (drawable->tattoo == 0 || drawable->gimage != gimage )
     drawable->tattoo = gimp_image_get_new_tattoo(gimage);
+  drawable->gimage = gimage;
 }
 
 
@@ -383,11 +384,29 @@ void
 gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
 {
   parasite_list_add(drawable->parasites, parasite);
+  if (parasite_is_persistent(parasite)) /* make sure we can be saved */
+    gimp_image_dirty(drawable->gimage);
+  if (parasite_has_flag(parasite, PARASITE_ATTACH_PARENT))
+  {
+    parasite_shift_parent(parasite);
+    gimp_image_attach_parasite(drawable->gimage, parasite);
+  }
+  else if (parasite_has_flag(parasite, PARASITE_ATTACH_GRANDPARENT))
+  {
+    parasite_shift_parent(parasite);
+    parasite_shift_parent(parasite);
+    gimp_attach_parasite(parasite);
+  }
 }
 
 void
 gimp_drawable_detach_parasite (GimpDrawable *drawable, const char *parasite)
 {
+  Parasite *p;
+  if (!(p = parasite_list_find(drawable->parasites, parasite)))
+    return;
+  if (parasite_is_persistent(p))
+    gimp_image_dirty(drawable->gimage);
   parasite_list_remove(drawable->parasites, parasite);
 }
 

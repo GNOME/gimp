@@ -28,19 +28,19 @@ extern "C" {
 #include <stdarg.h>
 
 typedef enum {
-  GSERIAL_END,           /* for internal use only */
-  GSERIAL_INT8,
-  GSERIAL_INT16,
-  GSERIAL_INT32,
-  GSERIAL_FLOAT,         /* 32 bit IEEE fp value */
-  GSERIAL_DOUBLE,        /* 64 bit IEEE fp value */
-  GSERIAL_STRING,
-  GSERIAL_INT8ARRAY,
-  GSERIAL_INT16ARRAY,
-  GSERIAL_INT32ARRAY,
-  GSERIAL_FLOATARRAY,
-  GSERIAL_DOUBLEARRAY,
-  GSERIAL_LAST_TYPE
+  GSERIAL_END          = 0,           /* for internal use only */
+  GSERIAL_INT8         = 1,
+  GSERIAL_INT16        = 2,
+  GSERIAL_INT32        = 3,
+  GSERIAL_FLOAT        = 4,         /* 32 bit IEEE fp value */
+  GSERIAL_DOUBLE       = 5,        /* 64 bit IEEE fp value */
+  GSERIAL_STRING       = 101,
+  GSERIAL_INT8ARRAY    = 102,
+  GSERIAL_INT16ARRAY   = 103,
+  GSERIAL_INT32ARRAY   = 104,
+  GSERIAL_FLOATARRAY   = 105,
+  GSERIAL_DOUBLEARRAY  = 106,
+  GSERIAL_LAST_TYPE    = 107
 } GSerialType;
 
 typedef struct _GSerialItem GSerialItem;
@@ -68,7 +68,7 @@ long g_serialize(GSerialDescription *d, void **output, void *struct_data);
    /* returns the length of the serialized data.
       g_mallocs space for the data and stores a pointer to it in output */
 
-void g_deserialize(GSerialDescription *d,  void *output, void *serial);
+long g_deserialize(GSerialDescription *d,  void *output, void *serial);
    /* output must be a preallocated area large enough to hold the
       deserialized struct. */
 

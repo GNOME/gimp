@@ -25,7 +25,7 @@ extern char *prog_name;
 extern char *filename;
 extern FILE *errorfile;
 
-struct 
+extern struct Bitmap_File_Head_Struct
   {
     unsigned long bfSize;		/* 02 */
     unsigned long reserverd;		/* 06 */
@@ -33,7 +33,7 @@ struct
     unsigned long biSize;		/* 0E */
   }Bitmap_File_Head;
 
-struct
+extern struct Bitmap_Head_Struct
   {   
     unsigned long biWidth;		/* 12 */
     unsigned long biHeight;		/* 16 */
@@ -48,7 +48,7 @@ struct
     					/* 36 */
   }Bitmap_Head;
   
-struct
+extern struct Bitmap_OS2_Head_Struct
   {   
     unsigned short bcWidth;             /* 12 */
     unsigned short bcHeight;	        /* 14 */

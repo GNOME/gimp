@@ -456,7 +456,8 @@ static gint32 load_image (char *filename) {
       len = MIN(len, 241);
       img_desc[len-1] = '\000';
 
-      parasite = parasite_new("gimp-comment", 1, len, img_desc);
+      parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
+			      len, img_desc);
       gimp_image_attach_parasite(image, parasite);
       parasite_free(parasite);
     }

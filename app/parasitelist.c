@@ -144,6 +144,7 @@ parasite_list_add(ParasiteList *list, Parasite *p)
     list->table = g_hash_table_new(g_str_hash, parasite_compare_func);
   g_return_if_fail(p != NULL);
   g_return_if_fail(p->name != NULL);
+  parasite_list_remove(list, p->name);
   p = parasite_copy(p);
   g_hash_table_insert(list->table, p->name, p);
   gtk_signal_emit (GTK_OBJECT(list), parasite_list_signals[ADD], p);
@@ -166,6 +167,41 @@ parasite_list_remove(ParasiteList *list, const char *name)
   }
 }
 
+gint
+parasite_list_length(ParasiteList *list)
+{
+  g_return_val_if_fail(list != NULL, 0);
+  if (!list->table)
+    return 0;
+  return g_hash_table_size(list->table);
+}
+
+static void ppcount_func(char *key, Parasite *p, int *count)
+{
+  if (parasite_is_persistent(p))
+    *count = *count + 1;
+}
+
+gint
+parasite_list_persistent_length(ParasiteList *list)
+{
+  int ppcount = 0;
+  g_return_val_if_fail(list != NULL, 0);
+  if (!list->table)
+    return 0;
+  parasite_list_foreach(list, (GHFunc)ppcount_func, &ppcount);
+  return ppcount;
+}
+
+void
+parasite_list_foreach(ParasiteList *list, GHFunc function, gpointer user_data)
+{
+  g_return_if_fail(list != NULL);
+  if (!list->table)
+    return;
+  g_hash_table_foreach(list->table, function, user_data);
+}
+
 Parasite *
 parasite_list_find(ParasiteList *list, const char *name)
 {
@@ -177,3 +213,10 @@ parasite_list_find(ParasiteList *list, const char *name)
 }
 
 
+void
+parasite_shift_parent(Parasite *p)
+{
+  if (p == NULL)
+    return;
+  p->flags = (p->flags >> 8);
+}

@@ -402,7 +402,7 @@ static void test_gserialize()
 {
   GSerialDescription *test_struct_descript;
   test_struct *ts, *to;
-  char ser_1[] = {3, 1, 2, 3, 4, 4, 64, 83, 51, 51, 6, 0, 0, 0, 4, 102, 111, 111, 0, 8, 0, 0, 0, 2, 5, 6, 7, 8 };
+  char ser_1[] = {3, 1, 2, 3, 4, 4, 64, 83, 51, 51, 101, 0, 0, 0, 4, 102, 111, 111, 0, 103, 0, 0, 0, 2, 5, 6, 7, 8 };
   ts = g_malloc(sizeof(test_struct));
   to = g_malloc(sizeof(test_struct));
   test_struct_descript 

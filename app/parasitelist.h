@@ -40,6 +40,12 @@ ParasiteList *parasite_list_new      (void);
 ParasiteList *parasite_list_copy     (const ParasiteList *list);
 void          parasite_list_add      (ParasiteList *list, Parasite *p);
 void          parasite_list_remove   (ParasiteList *list, const char *name);
+gint          parasite_list_length   (ParasiteList *list);
+gint          parasite_list_persistent_length (ParasiteList *list);
+void          parasite_list_foreach  (ParasiteList *list, GHFunc function,
+				      gpointer user_data);
 Parasite     *parasite_list_find     (ParasiteList *list, const char *name);
+
+void          parasite_shift_parent  (Parasite *p);
 
 #endif  /*  __GIMP_PARASITE_H__  */

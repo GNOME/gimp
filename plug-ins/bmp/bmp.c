@@ -50,6 +50,9 @@ FILE *errorfile;
 char *prog_name="bmp";
 char *filename;
 int interactive_bmp;
+struct Bitmap_File_Head_Struct Bitmap_File_Head;
+struct Bitmap_Head_Struct Bitmap_Head;
+struct Bitmap_OS2_Head_Struct Bitmap_OS2_Head;
 
 /* Declare some local functions.
  */

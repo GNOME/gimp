@@ -56,7 +56,7 @@ parasite_new (const char *name, guint32 flags,
     g_free (p);
     return NULL;
   }
-  p->flags = flags;
+  p->flags = (flags & 0xFF);
   p->size = size;
   if (size)
     p->data = g_memdup(data, size);
@@ -95,9 +95,31 @@ parasite_copy (const Parasite *parasite)
 }
 
 int
-parasite_is_persistant(const Parasite *p)
+parasite_is_persistent(const Parasite *p)
 {
   if (p == NULL)
     return FALSE;
-  return (p->flags & PARASITE_PERSISTANT);
+  return (p->flags & PARASITE_PERSISTENT);
+}
+
+int
+parasite_has_flag(const Parasite *p, gulong flag)
+{
+  if (p == NULL)
+    return FALSE;
+  return (p->flags & flag);
+}
+
+void *parasite_data(const Parasite *p)
+{
+  if (p)
+    return p->data;
+  return NULL;
+}
+
+long parasite_data_size(const Parasite *p)
+{
+  if (p)
+    return p->size;
+  return 0;
 }

@@ -29,7 +29,11 @@
 int
 drawable_ID (GimpDrawable *drawable)
 {
-  return drawable->ID;
+  if (drawable)
+    return drawable->ID;
+  else
+    g_warning("drawable_ID called on a NULL pointer");
+  return 0;
 }
 
 void

@@ -40,6 +40,9 @@
 #define EPSILON            0.0001
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c)+ 0x100, \
+                            ((((t) >> 16) + (t)) >> 16))
+#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT(a-b, alpha,tmp) + b)
 
 typedef enum
 {
@@ -718,18 +721,38 @@ multiply_pixels (const unsigned char *src1,
 		 int            has_alpha2)
 {
   int alpha, b;
-
+  int tmp;
   alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
-  while (length --)
+  if (has_alpha1 && has_alpha2)
+    while (length --)
     {
       for (b = 0; b < alpha; b++)
-	dest[b] = (src1[b] * src2[b]) / 255;
+	dest[b] = INT_MULT(src1[b], src2[b], tmp);
 
-      if (has_alpha1 && has_alpha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (has_alpha2)
-	dest[alpha] = src2[alpha];
+      dest[alpha] = MIN (src1[alpha], src2[alpha]);
+
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
+    }
+  else if (has_alpha2)
+    while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = INT_MULT(src1[b], src2[b], tmp);
+
+      dest[alpha] = src2[alpha];
+
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
+    }
+  else
+    while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = INT_MULT(src1[b], src2[b], tmp);
 
       src1 += bytes1;
       src2 += bytes2;
@@ -782,13 +805,14 @@ screen_pixels (const unsigned char *src1,
 	       int            has_alpha2)
 {
   int alpha, b;
+  int tmp;
 
   alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
       for (b = 0; b < alpha; b++)
-	dest[b] = 255 - ((255 - src1[b]) * (255 - src2[b])) / 255;
+	dest[b] = 255 - INT_MULT((255 - src1[b]), (255 - src2[b]), tmp);
 
       if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
@@ -814,6 +838,7 @@ overlay_pixels (const unsigned char *src1,
 {
   int alpha, b;
   int screen, mult;
+  int tmp;
 
   alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
@@ -821,9 +846,9 @@ overlay_pixels (const unsigned char *src1,
     {
       for (b = 0; b < alpha; b++)
 	{
-	  screen = 255 - ((255 - src1[b]) * (255 - src2[b])) / 255;
-	  mult = (src1[b] * src2[b]) / 255;
-	  dest[b] = (screen * src1[b] + mult * (255 - src1[b])) / 255;
+	  screen = 255 - INT_MULT((255 - src1[b]), (255 - src2[b]), tmp);
+	  mult = INT_MULT(src1[b] ,src2[b], tmp);
+	  dest[b] = INT_BLEND(screen , mult, src1[b], tmp);
 	}
 
       if (has_alpha1 && has_alpha2)
@@ -1062,8 +1087,12 @@ scale_pixels (const unsigned char *src,
 	      int            length,
 	      int            scale)
 {
+  int tmp;
   while (length --)
-    *dest++ = (unsigned char) ((*src++ * scale) / 255);
+  {
+    *dest++ = (unsigned char) INT_MULT(*src,scale,tmp);
+    src++;
+  }
 }
 
 
@@ -1145,12 +1174,20 @@ apply_mask_to_alpha_channel (unsigned char *src,
 			     int            length,
 			     int            bytes)
 {
-  int alpha;
-
-  alpha = bytes - 1;
-  while (length --)
+  long tmp;
+  src += bytes - 1;
+  if (opacity == 255)
+    while (length --)
     {
-      src[alpha] = (src[alpha] * *mask++ * opacity) / 65025;
+      *src = INT_MULT(*src, *mask, tmp);
+      mask++;
+      src += bytes;
+    }
+  else
+    while (length --)
+    {
+      *src = INT_MULT3(*src, *mask, opacity, tmp);
+      mask++;
       src += bytes;
     }
 }
@@ -1163,15 +1200,26 @@ combine_mask_and_alpha_channel (unsigned char *src,
 				int            length,
 				int            bytes)
 {
-  unsigned char mask_val;
+  int mask_val;
   int alpha;
-
+  int tmp;
   alpha = bytes - 1;
-  while (length --)
+  src += alpha;
+
+  if (opacity != 255)
+    while (length --)
     {
-      mask_val = (*mask++ * opacity) / 255;
-      src[alpha] = src[alpha] + ((255 - src[alpha]) * mask_val) / 255;
+      mask_val = INT_MULT(*mask, opacity, tmp);
+      mask++;
+      *src = *src + INT_MULT((255 - *src) , mask_val, tmp);
       src += bytes;
+    }
+  else
+    while (length --)
+    {
+      *src = *src + INT_MULT((255 - *src) , *mask, tmp);
+      src += bytes;
+      mask++;
     }
 }
 
@@ -1287,6 +1335,10 @@ initial_inten_pixels (const unsigned char *src,
 {
   int b, dest_bytes;
   const unsigned char * m;
+  int tmp;
+  int l;
+  unsigned char *destp;
+  const unsigned char *srcp;
 
   if (mask)
     m = mask;
@@ -1298,34 +1350,41 @@ initial_inten_pixels (const unsigned char *src,
    */
   dest_bytes = bytes + 1;
 
-  if (mask)
+  for (b =0; b < bytes; b++)
+  {
+    destp = dest + b;
+    srcp = src + b;
+    l = length;
+    if (affect[b])
+      while(l--)
+      {
+	*destp = *srcp;
+	srcp  += bytes;
+	destp += dest_bytes;
+      }
+    else
+      while(l--)
+      {
+	*destp = 0;
+	destp += dest_bytes;
+      }
+  }
+/* fill the alpha channel */ 
+  if (!affect[bytes])
+    opacity = 0;
+  destp = dest + bytes;
+  if (mask && opacity != 0)
+    while (length--)
     {
-      while (length --)
-	{
-	  for (b = 0; b < bytes; b++)
-	    dest [b] = affect [b] ? src [b] : 0;
-	    
-	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? (opacity * *m) / 255 : 0;
-	    
-	  m++;
-	  dest += dest_bytes;
-	  src += bytes;
-	}
+      *destp = INT_MULT(opacity , *m, tmp);
+      destp += dest_bytes;
+      m++;
     }
   else
+    while (length--)
     {
-      while (length --)
-	{
-	  for (b = 0; b < bytes; b++)
-	    dest [b] = affect [b] ? src [b] : 0;
-	    
-	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? opacity : 0;
-	    
-	  dest += dest_bytes;
-	  src += bytes;
-	}
+      *destp = opacity;
+      destp += dest_bytes;
     }
 }
 
@@ -1341,6 +1400,7 @@ initial_inten_a_pixels (const unsigned char *src,
 {
   int alpha, b;
   const unsigned char * m;
+  int tmp;
 
   alpha = bytes - 1;
   if (mask)
@@ -1368,7 +1428,7 @@ initial_inten_a_pixels (const unsigned char *src,
 	    dest[b] = src[b] * affect[b];
 	  
 	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? (opacity * src[alpha]) / 255 : 0;
+	  dest[alpha] = affect [alpha] ? INT_MULT(opacity , src[alpha], tmp) : 0;
 	  
 	  dest += bytes;
 	  src += bytes;
@@ -1390,13 +1450,13 @@ combine_indexed_and_indexed_pixels (const unsigned char *src1,
   int b;
   unsigned char new_alpha;
   const unsigned char * m;
-
+  int tmp;
   if (mask)
     {
       m = mask;
       while (length --)
 	{
-	  new_alpha = (*m * opacity) / 255;
+	  new_alpha = INT_MULT(*m , opacity, tmp);
 	  
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -1439,7 +1499,7 @@ combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
   unsigned char new_alpha;
   const unsigned char * m;
   int src2_bytes;
-
+  long tmp;
   alpha = 1;
   src2_bytes = 2;
 
@@ -1448,7 +1508,7 @@ combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
       m = mask;
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
+	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -1464,7 +1524,7 @@ combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
     {
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
+	  new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -1490,6 +1550,7 @@ combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
   int b, alpha;
   unsigned char new_alpha;
   const unsigned char * m;
+  long tmp;
 
   alpha = 1;
 
@@ -1498,7 +1559,7 @@ combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
       m = mask;
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
+	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -1516,7 +1577,7 @@ combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
     {
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
+	  new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
@@ -1545,6 +1606,7 @@ combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
   unsigned char new_alpha;
   int src2_bytes;
   int index;
+  long tmp;
 
   alpha = 1;
   src2_bytes = 2;
@@ -1554,7 +1616,7 @@ combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
       const unsigned char *m = mask;
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
+	  new_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
 
 	  index = src2[0] * 3;
 
@@ -1574,7 +1636,7 @@ combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
     {
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
+	  new_alpha = INT_MULT(src2[alpha], opacity, tmp);
 
 	  index = src2[0] * 3;
 
@@ -1606,17 +1668,17 @@ combine_inten_and_inten_pixels (const unsigned char *src1,
   int b;
   unsigned char new_alpha;
   const unsigned char * m;
-
+  int tmp;
   if (mask)
     {
       m = mask;
       while (length --)
 	{
-	  new_alpha = (*m * opacity) / 255;
+	  new_alpha = INT_MULT(*m, opacity, tmp);
 
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
+	      INT_BLEND(src2[b], src1[b], new_alpha, tmp) :
 	    src1[b];
 
 	  m++;
@@ -1630,11 +1692,10 @@ combine_inten_and_inten_pixels (const unsigned char *src1,
     {
       while (length --)
 	{
-	  new_alpha = opacity;
 
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
+	      INT_BLEND(src2[b], src1[b], opacity, tmp) :
 	    src1[b];
 
 	  src1 += bytes;
@@ -1659,7 +1720,7 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
   int src2_bytes;
   unsigned char new_alpha;
   const unsigned char * m;
-
+  register int t1;
   alpha = bytes;
   src2_bytes = bytes + 1;
 
@@ -1672,8 +1733,8 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
 
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
-	    src1[b];
+	      INT_BLEND(src2[b], src1[b], new_alpha, t1) :
+	      src1[b];
 
 	  m++;
 	  src1 += bytes;
@@ -1683,13 +1744,23 @@ combine_inten_and_inten_a_pixels (const unsigned char *src1,
     }
   else
     {
+      if (bytes == 3 && affect[0] && affect[1] && affect[2])
+	while (length --)
+	{
+	  new_alpha = INT_MULT(src2[alpha],opacity,t1);
+	  dest[0] = INT_BLEND(src2[0] , src1[0] , new_alpha, t1);
+	  dest[1] = INT_BLEND(src2[1] , src1[1] , new_alpha, t1);
+	  dest[2] = INT_BLEND(src2[2] , src1[2] , new_alpha, t1);
+	  src1 += bytes;
+	  src2 += src2_bytes;
+	  dest += bytes;
+	}
       while (length --)
 	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
-
+	  new_alpha = INT_MULT(src2[alpha],opacity,t1);
 	  for (b = 0; b < bytes; b++)
 	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
+	      INT_BLEND(src2[b] , src1[b] , new_alpha, t1) :
 	    src1[b];
 
 	  src1 += bytes;
@@ -2540,7 +2611,6 @@ map_rgb_to_indexed (const unsigned char *cmap,
 /*    REGION FUNCTIONS                            */
 /**************************************************/
 
-
 void
 color_region (PixelRegion   *dest,
 	      const unsigned char *col)
@@ -2554,11 +2624,21 @@ color_region (PixelRegion   *dest,
       h = dest->h;
       s = dest->data;
 
-      while (h--)
+      if (dest->w*dest->bytes == dest->rowstride)
+      {
+	/* do it all in one function call if we can */
+	/* this hasn't been tested to see if it is a
+	   signifigant speed gain yet */
+	color_pixels (s, col, dest->w*h, dest->bytes);
+      }
+      else
+      {
+	while (h--)
 	{
 	  color_pixels (s, col, dest->w, dest->bytes);
 	  s += dest->rowstride;
 	}
+      }
     }
 }
 
@@ -4492,7 +4572,6 @@ combine_regions (PixelRegion   *src1,
   unsigned char * d, * m;
   unsigned char * buf;
   void * pr;
-
   combine = 0;
 
   /*  Determine which sources have alpha channels  */

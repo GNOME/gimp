@@ -37,7 +37,8 @@ struct _GSerialItem
 
 #define g_serial_copy_from_n g_serial_copy_to_n
 
-long g_serial_copy_to_n(char *dest, char *source, long data_size, long n_items)
+static long g_serial_copy_to_n(char *dest, char *source, long data_size,
+			       long n_items)
 {
   int i;
   int length = n_items*data_size;
@@ -128,6 +129,8 @@ static int g_serial_item_is_array(GSerialItem *item)
 static long g_serial_item_data_size(GSerialItem *item)
 {
   static long sizes[] = {0, 1, 2, 4, 4, 8, 1, 1, 2, 4, 4, 8};
+  if (item->type >= GSERIAL_STRING)
+    return sizes[item->type - 95];
   return sizes[item->type];
 }
 
@@ -169,7 +172,8 @@ static long g_serial_item_serialize(GSerialItem *item, char *buffer,
 {
   char *buf = buffer;
   gint32 tmp;
-  if (item->type >= GSERIAL_LAST_TYPE)
+  if (item->type >= GSERIAL_LAST_TYPE ||
+      (item->type > GSERIAL_DOUBLE && item->type < GSERIAL_STRING))
   {
     g_warning("Error serializing: Unknown serial item type.\n");
     return 0;
@@ -250,7 +254,7 @@ long g_serialize(GSerialDescription *d,  void **output, void *struct_data)
   return length;
 }
 
-void g_deserialize(GSerialDescription *d,  void *struct_data, void *serial)
+long g_deserialize(GSerialDescription *d,  void *struct_data, void *serial)
 {
   GSList *list;
   char *in_buf = serial;
@@ -262,4 +266,5 @@ void g_deserialize(GSerialDescription *d,  void *struct_data, void *serial)
 					out_buf, in_buf);
     list = list->next;
   }
+  return (in_buf - (char *)serial);
 }

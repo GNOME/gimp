@@ -893,11 +893,23 @@ void
 gimp_image_attach_parasite (GimpImage *gimage, Parasite *parasite)
 {
   parasite_list_add(gimage->parasites, parasite);
+  if (parasite_is_persistent(parasite)) /* make sure we can be saved */
+    gimp_image_dirty(gimage);
+  if (parasite_has_flag(parasite, PARASITE_ATTACH_PARENT))
+  {
+    parasite_shift_parent(parasite);
+    gimp_attach_parasite(parasite);
+  }
 }
 
 void
 gimp_image_detach_parasite (GimpImage *gimage, const char *parasite)
 {
+  Parasite *p;
+  if (!(p = parasite_list_find(gimage->parasites, parasite)))
+    return;
+  if (parasite_is_persistent(p))
+    gimp_image_dirty(gimage);
   parasite_list_remove(gimage->parasites, parasite);
 }
 
@@ -2025,8 +2037,6 @@ gimp_image_merge_down (GimpImage *gimage,
       layer = (Layer *) layer_list->data;
       if (layer == current_layer)
 	{
-	  printf ("found it\n");
-	  
 	  layer_list = g_slist_next (layer_list);
 	  while (layer_list)
 	    {
@@ -2034,7 +2044,6 @@ gimp_image_merge_down (GimpImage *gimage,
 	      if (drawable_visible (GIMP_DRAWABLE(layer)))
 		{
 		  merge_list = g_slist_append (merge_list, layer);
-		  printf ("found the next\n");
 		  layer_list = NULL;
 		}
 	      else 
@@ -2042,6 +2051,8 @@ gimp_image_merge_down (GimpImage *gimage,
 	    }
 	  merge_list = g_slist_prepend (merge_list, current_layer);
 	}
+      else
+	layer_list = g_slist_next (layer_list);
     }
   
   if (merge_list && merge_list->next)

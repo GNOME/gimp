@@ -28,6 +28,9 @@
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
+#include <libgimp/parasiteP.h>
+#include <libgimp/parasite.h>
+#include "parasitelist.h"
 
 /* #define SWAP_FROM_FILE */
 
@@ -52,7 +55,10 @@ typedef enum
   PROP_OFFSETS = 15,
   PROP_COLOR = 16,
   PROP_COMPRESSION = 17,
-  PROP_GUIDES = 18
+  PROP_GUIDES = 18,
+  PROP_RESOLUTION = 19,
+  PROP_TATTOO = 20,
+  PROP_PARASITES = 21
 } PropType;
 
 typedef enum
@@ -140,6 +146,9 @@ static void xcf_seek_end (XcfInfo *info);
 static guint xcf_read_int32   (FILE     *fp,
 			       guint32  *data,
 			       gint      count);
+static guint xcf_read_float   (FILE     *fp,
+			       gfloat   *data,
+			       gint      count);
 static guint xcf_read_int8    (FILE     *fp,
 			       guint8   *data,
 			       gint      count);
@@ -148,6 +157,9 @@ static guint xcf_read_string  (FILE     *fp,
 			       gint      count);
 static guint xcf_write_int32  (FILE     *fp,
 			       guint32  *data,
+			       gint      count);
+static guint xcf_write_float  (FILE     *fp,
+			       gfloat   *data,
 			       gint      count);
 static guint xcf_write_int8   (FILE     *fp,
 			       guint8   *data,
@@ -573,6 +585,14 @@ xcf_save_image_props (XcfInfo *info,
   if (gimage->guides)
     xcf_save_prop (info, PROP_GUIDES, gimage->guides);
 
+  xcf_save_prop (info, PROP_RESOLUTION,
+		 gimage->xresolution, gimage->yresolution);
+
+  xcf_save_prop (info, PROP_TATTOO, gimage->tattoo_state);
+
+  if (parasite_list_length(gimage->parasites) > 0)
+    xcf_save_prop (info, PROP_PARASITES, gimage->parasites);
+
   xcf_save_prop (info, PROP_END);
 }
 
@@ -599,6 +619,9 @@ xcf_save_layer_props (XcfInfo *info,
   xcf_save_prop (info, PROP_SHOW_MASK, layer->show_mask);
   xcf_save_prop (info, PROP_OFFSETS, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y);
   xcf_save_prop (info, PROP_MODE, layer->mode);
+  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(layer)->tattoo);
+  if (parasite_list_length(GIMP_DRAWABLE(layer)->parasites) > 0)
+    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(layer)->parasites);
 
   xcf_save_prop (info, PROP_END);
 }
@@ -618,8 +641,34 @@ xcf_save_channel_props (XcfInfo *info,
   xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(channel)->visible);
   xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
   xcf_save_prop (info, PROP_COLOR, channel->col);
+  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(channel)->tattoo);
+  if (parasite_list_length(GIMP_DRAWABLE(channel)->parasites) > 0)
+    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(channel)->parasites);
 
   xcf_save_prop (info, PROP_END);
+}
+
+static void write_a_parasite(char *key, Parasite *p, XcfInfo *info)
+{
+  if ((p->flags & PARASITE_PERSISTENT))
+  {
+    info->cp += xcf_write_string(info->fp, &p->name, 1);
+    info->cp += xcf_write_int32(info->fp, &p->flags, 1);
+    info->cp += xcf_write_int32(info->fp, &p->size, 1);
+    info->cp += xcf_write_int8(info->fp, p->data, p->size);
+  }
+}
+
+static Parasite *read_a_parasite(XcfInfo *info)
+{
+  Parasite *p;
+  p = g_new(Parasite, 1);
+  info->cp += xcf_read_string(info->fp, &p->name, 1);
+  info->cp += xcf_read_int32(info->fp, &p->flags, 1);
+  info->cp += xcf_read_int32(info->fp, &p->size, 1);
+  p->data = g_new (char, p->size);
+  info->cp += xcf_read_int8(info->fp, p->data, p->size);
+  return p;
 }
 
 static void
@@ -849,6 +898,58 @@ xcf_save_prop (XcfInfo  *info,
 	    info->cp += xcf_write_int32 (info->fp, (guint32*) &position, 1);
 	    info->cp += xcf_write_int8 (info->fp, (guint8*) &orientation, 1);
 	  }
+      }
+      break;
+    case PROP_RESOLUTION:
+      {
+	float xresolution, yresolution;
+
+	xresolution =  va_arg (args, gfloat);
+	yresolution =  va_arg (args, gfloat);
+	
+	size = 4*2;
+
+	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	info->cp += xcf_write_int32 (info->fp, &size, 1);
+
+	info->cp += xcf_write_float (info->fp, &xresolution, 1);
+	info->cp += xcf_write_float (info->fp, &yresolution, 1);
+
+      }
+      break;
+    case PROP_TATTOO:
+      {
+	guint32 tattoo;
+
+	tattoo =  va_arg (args, guint32);
+	size = 4;
+
+	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	info->cp += xcf_write_int32 (info->fp, &size, 1);
+	info->cp += xcf_write_int32 (info->fp, &tattoo, 1);
+      }
+      break;
+    case PROP_PARASITES:
+      {
+	ParasiteList *list;
+	guint32 base, length;
+	long pos;
+	list =  va_arg (args, ParasiteList*);
+	if (parasite_list_persistent_length(list) > 0)
+	{
+ 	  info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	  /* because we don't know how much room the parasite list will take
+	     we save the file position and write the length later */
+	  pos = ftell(info->fp);
+ 	  info->cp += xcf_write_int32 (info->fp, &length, 1);
+	  base = info->cp;
+	  parasite_list_foreach(list, (GHFunc) write_a_parasite, info);
+	  length = info->cp - base;
+	  /* go back to the saved position and write the length */
+	  fseek(info->fp, pos, SEEK_SET);
+	  xcf_write_int32 (info->fp, &length, 1);
+	  fseek(info->fp, 0, SEEK_END);
+	}
       }
       break;
     }
@@ -1447,6 +1548,31 @@ xcf_load_image_props (XcfInfo *info,
 	    gimage->guides = g_list_reverse (gimage->guides);
 	  }
 	  break;
+	 case PROP_RESOLUTION:
+	 {
+	   info->cp += xcf_read_float (info->fp, &gimage->xresolution, 1);
+	   info->cp += xcf_read_float (info->fp, &gimage->yresolution, 1);
+	 }
+	 break;
+	 case PROP_TATTOO:
+	 {
+	   info->cp += xcf_read_int32 (info->fp, &gimage->tattoo_state, 1);
+	 }
+	 break;
+	 case PROP_PARASITES:
+	 {
+	   long base = info->cp;
+	   Parasite *p;
+	   while (info->cp - base < prop_size)
+	   {
+	     p = read_a_parasite(info);
+	     gimp_image_attach_parasite(gimage, p);
+	     parasite_free(p);
+	   }
+	   if (info->cp - base != prop_size)
+	     g_message("Error detected while loading an image's parasites");
+	 }
+	 break;
 	default:
 	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
 
@@ -1520,6 +1646,25 @@ xcf_load_layer_props (XcfInfo *info,
 	case PROP_MODE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
 	  break;
+	case PROP_TATTOO:
+	  info->cp += xcf_read_int32 (info->fp,
+				      (guint32*) &GIMP_DRAWABLE(layer)->tattoo,
+				      1);
+	  break;
+	 case PROP_PARASITES:
+	 {
+	   long base = info->cp;
+	   Parasite *p;
+	   while (info->cp - base < prop_size)
+	   {
+	     p = read_a_parasite(info);
+	     gimp_drawable_attach_parasite(GIMP_DRAWABLE(layer), p);
+	     parasite_free(p);
+	   }
+	   if (info->cp - base != prop_size)
+	     g_message("Error detected while loading a layer's parasites");
+	 }
+	 break;
 	default:
 	  g_message (_("unexpected/unknown layer property: %d (skipping)"), prop_type);
 
@@ -1579,6 +1724,24 @@ xcf_load_channel_props (XcfInfo *info,
 	case PROP_COLOR:
 	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->col, 3);
 	  break;
+	case PROP_TATTOO:
+	  info->cp += xcf_read_int32 (info->fp, &GIMP_DRAWABLE(channel)->tattoo,
+				      1);
+	  break;
+	 case PROP_PARASITES:
+	 {
+	   long base = info->cp;
+	   Parasite *p;
+	   while ((info->cp - base) < prop_size)
+	   {
+	     p = read_a_parasite(info);
+	     gimp_drawable_attach_parasite(GIMP_DRAWABLE(channel), p);
+	     parasite_free(p);
+	   }
+	   if (info->cp - base != prop_size)
+	     g_message("Error detected while loading a channel's parasites");
+	 }
+	 break;
 	default:
 	  g_message (_("unexpected/unknown channel property: %d (skipping)"), prop_type);
 
@@ -2211,6 +2374,14 @@ xcf_read_int32 (FILE     *fp,
 }
 
 static guint
+xcf_read_float (FILE     *fp,
+		gfloat   *data,
+		gint      count)
+{
+  return (xcf_read_int32(fp, (guint32 *)((void *)data), count));
+}
+
+static guint
 xcf_read_int8 (FILE     *fp,
 	       guint8   *data,
 	       gint      count)
@@ -2276,6 +2447,14 @@ xcf_write_int32 (FILE     *fp,
     }
 
   return count * 4;
+}
+
+static guint
+xcf_write_float (FILE     *fp,
+		 gfloat   *data,
+		 gint      count)
+{
+  return (xcf_write_int32(fp, (guint32 *)((void *)data), count));
 }
 
 static guint
