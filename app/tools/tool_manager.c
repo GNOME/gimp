@@ -247,9 +247,7 @@ tool_manager_control_active (Gimp           *gimp,
                 (GIMP_IS_DRAW_TOOL (tool_manager->active_tool) &&
                  GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp == gdisp)))
     {
-      gimp_tool_control (tool_manager->active_tool,
-                         action,
-                         gdisp);
+      gimp_tool_control (tool_manager->active_tool, action, gdisp);
     }
   else if (action == HALT)
     {
@@ -557,7 +555,6 @@ tool_manager_image_undo_start (GimpImage       *gimage,
           gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
 
       if (gdisp && gdisp->gimage == gimage)
-        tool_manager_control_active (gimage->gimp, HALT,
-                                     tool_manager->active_tool->gdisp);
+        tool_manager_control_active (gimage->gimp, HALT, gdisp);
     }
 }

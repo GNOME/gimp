@@ -1,3 +1,8 @@
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tool_manager.c (tool_manager_image_undo_start): HALT
+	the tool with the right display. Fixes some random tool crashes.
+
 2003-10-06  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdnd.c (gimp_dnd_data_drop_handle): check for
