@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-08 23:31+02:00\n"
+"PO-Revision-Date: 2000-06-25 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2700,9 +2700,8 @@ msgid "Keep Trans."
 msgstr "Behold gennemsigtighed"
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Gennemsigtighed"
+msgstr "Behold gennemsiktighed"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
