@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.29\n"
+"Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-03 00:57+0100\n"
-"PO-Revision-Date: 2003-10-29 17:54+0100\n"
+"PO-Revision-Date: 2003-11-03 13:52+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -149,9 +149,8 @@ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Utilizza un file gimprc alternativo.\n"
 
 #: app/main.c:468
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr ""
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgstr "  --dump-gimprc            Genera un file gimprc con valori predefiniti.\n"
 
 #: app/main.c:469
 msgid ""
@@ -345,6 +344,9 @@ msgid ""
 "Default values will be used. A backup of your configuration has been\n"
 "created at '%s'."
 msgstr ""
+"C'è stato un'errore elaborando il tuo file %s .\n"
+"Saranno usati valori predefiniti. È stata fatta una copia di\n"
+"salvataggio su '%s'."
 
 #: app/config/gimpconfigwriter.c:106
 #, c-format
@@ -785,14 +787,11 @@ msgstr ""
 "l'ampiezza massima."
 
 #: app/config/gimprc-blurbs.h:330
-#, fuzzy
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr ""
-"Imposta un limite massimo alla memoria che viene usata per ogni immage per "
-"mantenere la pila dei ripristini."
+msgstr "Imposta un limite massimo alla memoria che viene usata per ogni immage per mantenere la pila dei ripristini. Indipendentemente da questa impostazione, potranno essere effettuati massimo tanti livelli di ripristino quanti sono stati configurati."
 
 #: app/config/gimprc-blurbs.h:335
 msgid "When enabled, pressing F1 will open the help browser."
@@ -1795,34 +1794,33 @@ msgstr "Segmento errato %d nel file gradiente '%s'."
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
-msgstr ""
+msgstr "Stile di linea usata per la griglia"
 
 #: app/core/gimpgrid.c:134
-#, fuzzy
 msgid "The foreground color of the grid."
-msgstr "Colore di primo piano impostato a:"
+msgstr "Colore di primo piano della griglia."
 
 #: app/core/gimpgrid.c:139
 msgid ""
 "The background color of the grid; only used in double dashed line style."
-msgstr ""
+msgstr "Colore di sfondo della griglia; usato solo con lo stile linea a doppio trattino."
 
 #: app/core/gimpgrid.c:145
 msgid "Horizontal spacing of grid lines."
-msgstr ""
+msgstr "Spaziatura orizzontale delle linee della griglia."
 
 #: app/core/gimpgrid.c:150
 msgid "Vertical spacing of grid lines."
-msgstr ""
+msgstr "Spaziatura verticale delle linee della griglia."
 
 #: app/core/gimpgrid.c:159
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
-msgstr ""
+msgstr "Spostamento orizzontale della prima linea della griglia; dev'essere un numero negativo."
 
 #: app/core/gimpgrid.c:166
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr ""
+msgstr "Spostamento verticale della prima linea della griglia; dev'essere un numero negativo."
 
 #: app/core/gimpimage-colormap.c:66
 msgid "Set Indexed Palette"
@@ -2357,17 +2355,15 @@ msgstr "Selezione fluttuante"
 
 #: app/core/gimptemplate.c:143
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr ""
+msgstr "L'unità usata per mostrare le coordinate quando non è in modalità punto-per-punto."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizonal image resolution."
-msgstr "Cambia risoluzione immagine"
+msgstr "Risoluzione orizzontale dell'immagine."
 
 #: app/core/gimptemplate.c:155
-#, fuzzy
 msgid "The vertical image resolution."
-msgstr "Cambia risoluzione immagine"
+msgstr "Risoluzione verticale dell'immagine"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2567,27 +2563,26 @@ msgstr "RGB-vuoto"
 
 #: app/display/gimpdisplayshell-title.c:167
 msgid "grayscale-empty"
-msgstr "Scala di grigio-vuoto"
+msgstr "scala di grigi - vuoto"
 
 #: app/display/gimpdisplayshell-title.c:167
 msgid "grayscale"
-msgstr "Scala di grigio"
+msgstr "scala di grigi"
 
 #: app/display/gimpdisplayshell-title.c:170
 msgid "indexed-empty"
-msgstr "scala di colore - vuoto"
+msgstr "indicizzato - vuoto"
 
 #: app/display/gimpdisplayshell-title.c:170
 msgid "indexed"
-msgstr "scala di colore"
+msgstr "indicizzato"
 
 #: app/display/gimpdisplayshell-title.c:292
-#, fuzzy
 msgid "1 layer"
-msgstr "Livello 1"
+msgstr "1 livello"
 
 #: app/display/gimpdisplayshell-title.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "%d layers"
 msgstr "%d livelli"
 
@@ -2930,9 +2925,8 @@ msgid "Document History"
 msgstr "Cronologia documenti"
 
 #: app/gui/dialogs-constructors.c:462
-#, fuzzy
 msgid "Image Templates"
-msgstr "Modelli"
+msgstr "Modelli di immagine"
 
 #: app/gui/dialogs-constructors.c:671
 msgid "Layers"
@@ -3029,14 +3023,12 @@ msgid "/Add Tab/_Paths"
 msgstr "/Aggiungi scheda/_Tracciati"
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/Inde_xed Palette"
-msgstr "/Aggiungi scheda/Palette _indicizzata"
+msgstr "/Aggiungi scheda/Tavolozza _indicizzata"
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Histogra_m"
-msgstr "/Aggiungi scheda/Cronologia _undo"
+msgstr "/Aggiungi scheda/Cronologia ri_pristini"
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/_Selection Editor"
@@ -3079,9 +3071,8 @@ msgid "/Add Tab/_Buffers"
 msgstr "/Aggiungi scheda/_Buffer"
 
 #: app/gui/dialogs-menu.c:111
-#, fuzzy
 msgid "/Add Tab/_Images"
-msgstr "/Aggiungi scheda/I_maschera"
+msgstr "/Aggiungi scheda/_Immagini"
 
 #: app/gui/dialogs-menu.c:113
 msgid "/Add Tab/Document Histor_y"
@@ -3092,9 +3083,8 @@ msgid "/Add Tab/_Templates"
 msgstr "/Aggiungi scheda/_Modelli"
 
 #: app/gui/dialogs-menu.c:117
-#, fuzzy
 msgid "/Add Tab/T_ools"
-msgstr "/Aggiungi scheda/Strumenti"
+msgstr "/Aggiungi scheda/Str_umenti"
 
 #: app/gui/dialogs-menu.c:119
 msgid "/Add Tab/Error Co_nsole"
@@ -3444,9 +3434,8 @@ msgstr ""
 "Probabilmente il corrispondente plug-in è andato in crash."
 
 #: app/gui/fonts-menu.c:44
-#, fuzzy
 msgid "/_Rescan Font List"
-msgstr "Scansiona elenco caratteri"
+msgstr "/_Rileggi elenco caratteri"
 
 #: app/gui/gradient-editor-commands.c:86
 msgid "Left Endpoint Color"
@@ -3971,9 +3960,8 @@ msgid "/Edit/_Stroke Selection..."
 msgstr "/Modifica/_Selezione da disegnare..."
 
 #: app/gui/image-menu.c:250
-#, fuzzy
 msgid "/Edit/St_roke Path..."
-msgstr "/Modifica/Disegna t_racciato attivo..."
+msgstr "/Modifica/Disegno t_racciato..."
 
 #. <Image>/Select
 #: app/gui/image-menu.c:260
@@ -4450,7 +4438,6 @@ msgid "/Layer/Layer _Boundary Size..."
 msgstr "/Livelli/Dimensione _ampiezza confine livello..."
 
 #: app/gui/image-menu.c:866
-#, fuzzy
 msgid "/Layer/Layer to _Image Size"
 msgstr "/Livelli/Livello alla dimensione _immagine"
 
@@ -4537,14 +4524,12 @@ msgid "/Dialogs/_Paths"
 msgstr "/Finestre/_Tracciati"
 
 #: app/gui/image-menu.c:957
-#, fuzzy
 msgid "/Dialogs/Inde_xed Palette"
-msgstr "/Finestre/Tavolozze _indicizzate"
+msgstr "/Finestre/Ta_volozze indicizzate"
 
 #: app/gui/image-menu.c:962
-#, fuzzy
 msgid "/Dialogs/Histogra_m"
-msgstr "/Finestre/Cronolo_gia"
+msgstr "/Finestre/Istogra_mma"
 
 #: app/gui/image-menu.c:967
 msgid "/Dialogs/_Selection Editor"
@@ -4587,9 +4572,8 @@ msgid "/Dialogs/_Buffers"
 msgstr "/Finestre/_Buffer"
 
 #: app/gui/image-menu.c:1023
-#, fuzzy
 msgid "/Dialogs/_Images"
-msgstr "/Finestre/I_mmagini"
+msgstr "/Finestre/_Immagini"
 
 #: app/gui/image-menu.c:1028
 msgid "/Dialogs/Document Histor_y"
@@ -4600,9 +4584,8 @@ msgid "/Dialogs/_Templates"
 msgstr "/Finestre/_Modelli"
 
 #: app/gui/image-menu.c:1038
-#, fuzzy
 msgid "/Dialogs/T_ools"
-msgstr "/Finestre/_Caratteri"
+msgstr "/Finestre/Str_umenti"
 
 #: app/gui/image-menu.c:1043
 msgid "/Dialogs/Error Co_nsole"
@@ -4975,9 +4958,8 @@ msgid "/Layer B_oundary Size..."
 msgstr "/Dimensione _confine del livello..."
 
 #: app/gui/layers-menu.c:107
-#, fuzzy
 msgid "/Layer to _Image Size"
-msgstr "Livello a dimensione dell'immagine"
+msgstr "/Livello a dimensione dell'_immagine"
 
 #: app/gui/layers-menu.c:112
 msgid "/_Scale Layer..."
@@ -5064,9 +5046,8 @@ msgid "Palettes Menu"
 msgstr "Menu tavolozze"
 
 #: app/gui/menus.c:198
-#, fuzzy
 msgid "Fonts Menu"
-msgstr "Menu documenti"
+msgstr "Menu caratteri"
 
 #: app/gui/menus.c:205
 msgid "Buffers Menu"
@@ -5413,42 +5394,36 @@ msgstr ""
 "apportare i seguenti cambiamenti:"
 
 #: app/gui/preferences-dialog.c:838
-#, fuzzy
 msgid "Show _Menubar"
-msgstr "Mostra barra dei menu"
+msgstr "Mostra barra dei _menu"
 
 #: app/gui/preferences-dialog.c:841
 msgid "Show _Rulers"
 msgstr "Mostra _righello"
 
 #: app/gui/preferences-dialog.c:844
-#, fuzzy
 msgid "Show Scroll_bars"
-msgstr "Mostra barre di scorrimento"
+msgstr "Mostra _barre di scorrimento"
 
 #: app/gui/preferences-dialog.c:847
 msgid "Show S_tatusbar"
 msgstr "Mostra barra di s_tato"
 
 #: app/gui/preferences-dialog.c:855
-#, fuzzy
 msgid "Show S_election"
-msgstr "Espandi selezione"
+msgstr "Mostra s_elezione"
 
 #: app/gui/preferences-dialog.c:858
-#, fuzzy
 msgid "Show _Layer Boundary"
-msgstr "/Visualizza/Mostra i bordi di _livello"
+msgstr "Mostra i bordi di _livello"
 
 #: app/gui/preferences-dialog.c:861
-#, fuzzy
 msgid "Show _Guides"
-msgstr "/Visualizza/Mostra le _guide"
+msgstr "Mostra le _guide"
 
 #: app/gui/preferences-dialog.c:864
-#, fuzzy
 msgid "Show Gri_d"
-msgstr "Non mostrare la griglia"
+msgstr "Mostra la grig_lia"
 
 #: app/gui/preferences-dialog.c:870
 msgid "Canvas Padding Mode:"
@@ -5471,19 +5446,16 @@ msgid "Maximum Image Size:"
 msgstr "Massima dimensione immagine:"
 
 #: app/gui/preferences-dialog.c:1115
-#, fuzzy
 msgid "Default Image Grid"
-msgstr "_Tipo di immagine di base:"
+msgstr "Immagine di griglia predefinita"
 
 #: app/gui/preferences-dialog.c:1118
-#, fuzzy
 msgid "Default Grid"
-msgstr "Soglia predefini_ta:"
+msgstr "Griglia predefinita"
 
 #: app/gui/preferences-dialog.c:1140
-#, fuzzy
 msgid "User Interface"
-msgstr "Interfaccia"
+msgstr "Interfaccia utente"
 
 #: app/gui/preferences-dialog.c:1143
 msgid "Interface"
@@ -5534,9 +5506,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Tasti scorciatoia"
 
 #: app/gui/preferences-dialog.c:1189
-#, fuzzy
 msgid "Use Dynamic _Keyboard Shortcuts"
-msgstr "Tasti scorciatoia dinamici"
+msgstr "Usa _tasti scorciatoia dinamici"
 
 #: app/gui/preferences-dialog.c:1198 app/gui/preferences-dialog.c:1201
 msgid "Help System"
@@ -5602,14 +5573,12 @@ msgstr "Dispositivi di ingresso"
 
 #. Input Device Settings
 #: app/gui/preferences-dialog.c:1288
-#, fuzzy
 msgid "Extended Input Devices"
-msgstr "Dispositivi di ingresso"
+msgstr "Dispositivi di ingresso estesi"
 
 #: app/gui/preferences-dialog.c:1295
-#, fuzzy
 msgid "Configure Extended Input Devices"
-msgstr "Configurazione dispositivi di ingresso"
+msgstr "Configurazione dispositivi di ingresso estesi"
 
 #: app/gui/preferences-dialog.c:1310 app/gui/preferences-dialog.c:1313
 msgid "Image Windows"
@@ -5836,7 +5805,7 @@ msgstr "Dimensione dei file miniature:"
 
 #: app/gui/preferences-dialog.c:1749
 msgid "Session Management"
-msgstr ""
+msgstr "Gestione sessioni"
 
 #: app/gui/preferences-dialog.c:1752
 #, fuzzy
@@ -7426,16 +7395,15 @@ msgstr ""
 
 #: app/text/gimptext.c:225
 msgid "Indentation of the first line"
-msgstr ""
+msgstr "Indentazione della prima riga"
 
 #: app/text/gimptext.c:230
-#, fuzzy
 msgid "Modify line spacing"
-msgstr "Spaziatura della griglia"
+msgstr "Modifica della spaziatura righe"
 
 #: app/text/gimptext.c:235
 msgid "Modify letter spacing"
-msgstr ""
+msgstr "Modifica della spaziatura caratteri"
 
 #: app/text/gimptextlayer.c:134
 msgid "Text Layer"
@@ -7464,17 +7432,14 @@ msgid ""
 msgstr ""
 
 #: app/tools/tools-enums.c:14
-#, fuzzy
 msgid "Pick Only"
-msgstr "Scacchi neri"
+msgstr "Prendi solo"
 
 #: app/tools/tools-enums.c:15
-#, fuzzy
 msgid "Set Foreground Color"
 msgstr "Modifica colore del primo piano"
 
 #: app/tools/tools-enums.c:16
-#, fuzzy
 msgid "Set Background Color"
 msgstr "Modifica colore dello sfondo"
 
@@ -9372,7 +9337,7 @@ msgstr "Auto"
 #: app/widgets/gimpimagedock.c:198
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr ""
+msgstr "Se abilitata la finestra segue automaticamente l'immagine su cui si sta lavorando."
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"
@@ -9502,9 +9467,8 @@ msgstr "Stile"
 
 #. frame for Comment
 #: app/widgets/gimptemplateeditor.c:476
-#, fuzzy
 msgid "Image Comment"
-msgstr "Menu immagine"
+msgstr "Commento immagine"
 
 #: app/widgets/gimptemplateeditor.c:597
 msgid "_Name:"
@@ -9830,17 +9794,16 @@ msgid "Landscape"
 msgstr "Orientamento orizzontale"
 
 #: app/widgets/widgets-enums.c:33
-#, fuzzy
 msgid "Pixel Values"
-msgstr "Pixel"
+msgstr "Valori pixel"
 
 #: app/widgets/widgets-enums.c:35
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: app/widgets/widgets-enums.c:36
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: app/widgets/widgets-enums.c:54
 msgid "Internal"
