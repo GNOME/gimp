@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <stdio.h>
 
-#include "libgimp/parasiteF.h"
+#include "libgimp/gimpparasiteF.h"
 
 #ifdef __cplusplus
 extern "C" {

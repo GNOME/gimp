@@ -61,12 +61,12 @@ libgimpi_a_SOURCES = \
 	gimpwidgets.h		\
 	gimpwire.c		\
 	gimpwire.h		\
-	parasite.c		\
-	parasite.h		\
-	parasiteF.h		\
-	parasiteP.h		\
-	parasiteio.c		\
-	parasiteio.h
+	gimpparasite.c		\
+	gimpparasite.h		\
+	gimpparasiteF.h		\
+	gimpparasiteP.h		\
+	gimpparasiteio.c	\
+	gimpparasiteio.h
 
 if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
@@ -80,27 +80,27 @@ endif
 
 libgimp_la_SOURCES = \
 	gimp.c			\
-	gimpchannel.c		\
+	gimpchannel_pdb.c	\
 	gimpcolorbutton.h	\
 	gimpcolorspace.c	\
-	gimpdisplay.c		\
-	gimpdrawable.c		\
+	gimpdisplay_pdb.c	\
+	gimpdrawable_pdb.c	\
 	gimpenv.c		\
-	gimpgradient.c		\
-	gimphelp.c		\
-	gimpimage.c		\
-	gimplayer.c		\
+	gimpgradient_pdb.c	\
+	gimphelp_pdb.c		\
+	gimpimage_pdb.c		\
+	gimplayer_pdb.c		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
-	gimppalette.c		\
-	gimpparasite.c		\
+	gimppalette_pdb.c	\
+	gimpparasite_pdb.c	\
 	gimppixelrgn.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
-	gimpselection.c		\
+	gimpselection_pdb.c	\
 	gimpsignal.c		\
 	gimptile.c		\
-	gimpunit.c		\
+	gimpunit_pdb.c		\
 	gimpunit.h		\
 	gimputils.c		\
 	gimputils.h		\
