@@ -51,7 +51,7 @@ Thu Feb 24 02:20:15 CET 2000  Sven Neumann <sven@gimp.org>
 
 Thu Feb 24 00:42:12 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* app/text_tool.c: don't crash if a font couldn't be loaded.
+	* app/text_tool.c: Don't crash if a font couldn't be loaded.
 	(fixes bug #6526). Reordered the way the objects in the  
 	tool_options dialog are connected, so the widgets sensitivity 
 	is set correctly.
@@ -81,10 +81,13 @@ Wed Feb 23 21:07:41 CET 2000  Sven Neumann <sven@gimp.org>
 	* app/fileops.c
 	* app/main.c
 	* app/menus.[ch]
-	* app/plug_in.c: the ultimate solution to the i18n problem :-)
+	* app/plug_in.c: The ultimate solution to the i18n problem :-)
+
+	The "i18n problem" is (TM) Daniel Egger and this solution is a 
+	derivative work using his ideas and some of the code he provided.
 
 	We bind to the gimp-std-plugins domain and additionally to all
-	domains explictely specified by plugins. When translating a
+	domains explicitely specified by plugins. When translating a
 	menu_entry, we use our knowledge about the domain the plug-in is
 	in and only search in that textdomain. No need to iterate through
 	all domains any more. 
