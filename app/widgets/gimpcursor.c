@@ -27,6 +27,8 @@
 #include "../cursors/mouse1_mmsk"
 #include "../cursors/bigcirc"
 #include "../cursors/bigcircmsk"
+#include "../cursors/dropper"
+#include "../cursors/droppermsk"
 
 typedef struct
 {
@@ -48,6 +50,8 @@ static BM_Cursor gimp_cursors[] =
     mouse1_m_x_hot, mouse1_m_y_hot, NULL},
   { bigcirc_bits, bigcircmsk_bits, bigcirc_width, bigcirc_height,
     bigcirc_x_hot, bigcirc_y_hot, NULL},
+  { dropper_bits, droppermsk_bits, dropper_width, dropper_height,
+    dropper_x_hot, dropper_y_hot, NULL},
 };
 
 
@@ -82,12 +86,13 @@ create_cursor(BM_Cursor *bmcursor)
   g_return_if_fail (bmcursor->cursor != NULL);
 }
 
-void
+static void
 gimp_change_win_cursor(GdkWindow *win, GimpCursorType curtype)
 {
   GdkCursor *cursor;
 
   g_return_if_fail (curtype < GIMP_LAST_CURSOR_ENTRY);
+  curtype -= GIMP_MOUSE1_CURSOR;
   if (!gimp_cursors[(int)curtype].cursor)
     create_cursor (&gimp_cursors[(int)curtype]);
   cursor = gimp_cursors[(int)curtype].cursor;
@@ -101,7 +106,12 @@ change_win_cursor (win, cursortype)
      GdkCursorType cursortype;
 {
   GdkCursor *cursor;
-
+  
+  if (cursortype > GDK_LAST_CURSOR)
+  {
+    gimp_change_win_cursor(win, (GimpCursorType)cursortype);
+    return;
+  }
   cursor = gdk_cursor_new (cursortype);
   gdk_window_set_cursor (win, cursor);
   gdk_cursor_destroy (cursor);

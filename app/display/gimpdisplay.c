@@ -1473,31 +1473,14 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 }
 
 
-/*  install and remove tool gimp cursor from gdisplay...  */
-void
-gdisplay_install_gimp_tool_cursor (GDisplay *gdisp,
-				   int  cursor_type)
-{
-  if (gdisp->current_cursor != (int)cursor_type || gdisp->cursor_type != 1)
-    {
-      gdisp->current_cursor = (int)cursor_type;
-      gdisp->cursor_type    = 1;
-      if (!gdisp->using_override_cursor)
-	{
-	  gimp_change_win_cursor (gdisp->canvas->window, cursor_type);
-	}
-    }
-}
-
 /*  install and remove tool cursor from gdisplay...  */
 void
 gdisplay_install_tool_cursor (GDisplay      *gdisp,
 			      GdkCursorType  cursor_type)
 {
-  if (gdisp->current_cursor != (int)cursor_type || gdisp->cursor_type != 0)
+  if (gdisp->current_cursor != (int)cursor_type)
     {
       gdisp->current_cursor = (int)cursor_type;
-      gdisp->cursor_type    = 0;
       if (!gdisp->using_override_cursor)
 	{
 	  change_win_cursor (gdisp->canvas->window, cursor_type);

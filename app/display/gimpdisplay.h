@@ -138,7 +138,7 @@ struct _GDisplay
   GSList *display_areas;          /*  Display areas list                      */
 
   int           current_cursor;   /*  Currently installed cursor              */
-  short         cursor_type;      /*  Currently installed cursor type         */
+
   GdkCursorType override_cursor;  /*  Overriding cursor (ie. hourglass)       */
 
   short draw_cursor;	          /* should we draw software cursor ?         */

@@ -22,16 +22,16 @@
 
 typedef enum
 {
-  GIMP_MOUSE1_CURSOR,
+  GIMP_MOUSE1_CURSOR = (GDK_LAST_CURSOR + 2),
   GIMP_MOUSE1P_CURSOR,
   GIMP_MOUSE1M_CURSOR,
   GIMP_BIGCIRC_CURSOR,
+  GIMP_COLOR_PICKER_CURSOR,
   GIMP_LAST_CURSOR_ENTRY
 } GimpCursorType;
 
 void change_win_cursor (GdkWindow *, GdkCursorType);
 void unset_win_cursor  (GdkWindow *);
-void gimp_change_win_cursor (GdkWindow *, GimpCursorType);
 
 void gimp_add_busy_cursors_until_idle (void);
 void gimp_add_busy_cursors            (void);

@@ -89,6 +89,9 @@ struct _paint_core
   GimpBrush *     brush;        /*  current brush	        */
 
   PaintFunc       paint_func;   /*  painting function           */
+
+  int             pick_colors;  /*  pick color if ctl or alt is pressed  */
+  int             pick_state;   /*  was ctl or alt pressed when clicked?  */
 };
 
 extern PaintCore  non_gui_paint_core;

@@ -23,6 +23,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
 #include "tool_options_ui.h"
@@ -371,7 +372,7 @@ color_picker_cursor_update (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   if (gimage_pick_correlate_layer (gdisp->gimage, x, y))
-    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+    gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR);
   else
     gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
 }

@@ -296,46 +296,15 @@ paintbrush_paint_func (PaintCore *paint_core,
       timer = g_timer_new();
       g_timer_start(timer);
 #endif /* TIMED_BRUSH */
-      if ((paint_core->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-	{
-	  unsigned char *color;
-	  if ((color = gimp_drawable_get_color_at(drawable, paint_core->curx,
-						  paint_core->cury)))
-	  {
-	    if ((paint_core->state & GDK_CONTROL_MASK))
-	      palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
-				      color [BLUE_PIX]);
-	    else
-	      palette_set_background (color[RED_PIX], color[GREEN_PIX],
-				      color [BLUE_PIX]);
-	    g_free(color);
-	  }
-	}
       break;
 
     case MOTION_PAINT :
-      if ((paint_core->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-	{
-	  unsigned char *color;
-	  if ((color = gimp_drawable_get_color_at(drawable, paint_core->curx,
-						  paint_core->cury)))
-	  {
-	    if ((paint_core->state & GDK_CONTROL_MASK))
-	      palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
-				      color [BLUE_PIX]);
-	    else
-	      palette_set_background (color[RED_PIX], color[GREEN_PIX],
-				      color [BLUE_PIX]);
-	    g_free(color);
-	  }
-	}
-      else
-	paintbrush_motion (paint_core, drawable, 
-			   paintbrush_options->fade_out, 
-			   paintbrush_options->use_gradient ? 
-			   exp(paintbrush_options->gradient_length/10) : 0,
-			   paintbrush_options->incremental,
-			   paintbrush_options->gradient_type);
+      paintbrush_motion (paint_core, drawable, 
+			 paintbrush_options->fade_out, 
+			 paintbrush_options->use_gradient ? 
+			 exp(paintbrush_options->gradient_length/10) : 0,
+			 paintbrush_options->incremental,
+			 paintbrush_options->gradient_type);
       break;
 
     case FINISH_PAINT :
@@ -378,6 +347,7 @@ tools_new_paintbrush ()
 
   private = (PaintCore *) tool->private;
   private->paint_func = paintbrush_paint_func;
+  private->pick_colors = TRUE;
 
   return tool;
 }

@@ -491,13 +491,13 @@ rect_select_cursor_update (Tool           *tool,
   switch (rect_sel->op)
   {
    case SELECTION_ADD:
-     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
+     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
      break;
    case SELECTION_SUB:
-     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
      break;
    case SELECTION_INTERSECT: /* need a real cursor for this one */
-     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_BIGCIRC_CURSOR);
+     gdisplay_install_tool_cursor (gdisp, GIMP_BIGCIRC_CURSOR);
      break;
    case SELECTION_REPLACE:
      gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);

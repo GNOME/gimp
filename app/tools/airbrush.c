@@ -178,6 +178,7 @@ tools_new_airbrush ()
 
   private = (PaintCore *) tool->private;
   private->paint_func = airbrush_paint_func;
+  private->pick_colors = TRUE;
 
   return tool;
 }
@@ -198,10 +199,10 @@ airbrush_paint_func (PaintCore *paint_core,
     case INIT_PAINT :
       /* timer_state = OFF; */
       if (timer_state == ON)
-	{
-	  g_warning (_("killing stray timer, please report to lewing@gimp.org"));
-	  gtk_timeout_remove (timer);
-	}
+      {
+	g_warning (_("killing stray timer, please report to lewing@gimp.org"));
+	gtk_timeout_remove (timer);
+      }
       timer_state = OFF;
       break;
 
@@ -213,13 +214,13 @@ airbrush_paint_func (PaintCore *paint_core,
       airbrush_motion (paint_core, drawable, airbrush_options->pressure);
 
       if (airbrush_options->rate != 0.0)
-	{
-	  airbrush_timeout.paint_core = paint_core;
-	  airbrush_timeout.drawable = drawable;
-	  timer = gtk_timeout_add ((10000 / airbrush_options->rate),
-				   airbrush_time_out, NULL);
-	  timer_state = ON;
-	}
+      {
+	airbrush_timeout.paint_core = paint_core;
+	airbrush_timeout.drawable = drawable;
+	timer = gtk_timeout_add ((10000 / airbrush_options->rate),
+				 airbrush_time_out, NULL);
+	timer_state = ON;
+      }
       break;
 
     case FINISH_PAINT :

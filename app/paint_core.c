@@ -34,6 +34,7 @@
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
+#include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -129,6 +130,23 @@ static const int subsample[5][5][9] = {
 	},
 };
 
+static void
+paint_core_sample_color(GimpDrawable *drawable, int x, int y, int state)
+{
+  unsigned char *color;
+  if ((color = gimp_drawable_get_color_at(drawable, x, y)))
+    {
+      if ((state & GDK_CONTROL_MASK))
+	palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
+				color [BLUE_PIX]);
+      else
+	palette_set_background (color[RED_PIX], color[GREEN_PIX],
+				color [BLUE_PIX]);
+      g_free(color);
+    }
+}
+
+
 void
 paint_core_button_press (tool, bevent, gdisp_ptr)
      Tool *tool;
@@ -200,6 +218,16 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   /*  Let the specific painting function initialize itself  */
   (* paint_core->paint_func) (paint_core, drawable, INIT_PAINT);
 
+  if (paint_core->pick_colors
+      && (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+  {
+    paint_core_sample_color(drawable, x, y, bevent->state);
+    paint_core->pick_state = TRUE;
+    return;
+  }
+  else
+    paint_core->pick_state = FALSE;
+
   /*  Paint to the image  */
   if (draw_line)
     {
@@ -242,6 +270,8 @@ paint_core_button_release (tool, bevent, gdisp_ptr)
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;
 
+  paint_core->pick_state = FALSE;
+
   paint_core_finish (paint_core, gimage_active_drawable (gdisp->gimage), tool->ID);
   gdisplays_flush ();
 }
@@ -260,6 +290,15 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 
   gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
 				 &paint_core->curx, &paint_core->cury, TRUE);
+
+  if (paint_core->pick_state)
+  {
+    paint_core_sample_color(gimage_active_drawable (gdisp->gimage),
+			    paint_core->curx, paint_core->cury, mevent->state);
+    return;
+  }
+
+
   paint_core->curpressure = mevent->pressure;
   paint_core->curxtilt = mevent->xtilt;
   paint_core->curytilt = mevent->ytilt;
@@ -284,17 +323,26 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
 {
   GDisplay *gdisp;
   Layer *layer;
+  PaintCore * paint_core;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
+  paint_core = (PaintCore *) tool->private;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-    if (x >= off_x && y >= off_y &&
+
+      if (paint_core->pick_colors
+	  && (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+        {
+	  ctype = GIMP_COLOR_PICKER_CURSOR;
+	}
+      else if (x >= off_x && y >= off_y &&
 	x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
 	y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
       {
@@ -357,6 +405,7 @@ paint_core_new (type)
   private = (PaintCore *) g_malloc (sizeof (PaintCore));
 
   private->core = draw_core_new (paint_core_no_draw);
+  private->pick_colors = FALSE;
 
   tool->type = type;
   tool->state = INACTIVE;
