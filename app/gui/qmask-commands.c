@@ -240,10 +240,11 @@ edit_qmask_channel_query (GimpDisplay *gdisp)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, edit_qmask_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, edit_qmask_query_cancel_callback,
 		     options, NULL, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, edit_qmask_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

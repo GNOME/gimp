@@ -352,10 +352,11 @@ channels_new_channel_query (GimpImage *gimage)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, new_channel_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, new_channel_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 
@@ -505,10 +506,11 @@ channels_edit_channel_query (GimpChannel *channel)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, edit_channel_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, edit_channel_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

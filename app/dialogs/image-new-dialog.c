@@ -117,12 +117,14 @@ file_new_dialog_create (Gimp      *gimp,
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, FALSE, TRUE,
 
-				  GTK_STOCK_OK, file_new_ok_callback,
-				  info, NULL, NULL, TRUE, FALSE,
 				  GIMP_STOCK_RESET, file_new_reset_callback,
 				  info, NULL, NULL, FALSE, FALSE,
+
 				  GTK_STOCK_CANCEL, file_new_cancel_callback,
 				  info, NULL, NULL, FALSE, TRUE,
+
+				  GTK_STOCK_OK, file_new_ok_callback,
+				  info, NULL, NULL, TRUE, FALSE,
 
 				  NULL);
 

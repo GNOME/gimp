@@ -652,12 +652,14 @@ curves_dialog_new (void)
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
-			       GTK_STOCK_OK, curves_ok_callback,
-			       cd, NULL, NULL, TRUE, FALSE,
 			       GIMP_STOCK_RESET, curves_reset_callback,
 			       cd, NULL, NULL, FALSE, FALSE,
+
 			       GTK_STOCK_CANCEL, curves_cancel_callback,
 			       cd, NULL, NULL, FALSE, TRUE,
+
+			       GTK_STOCK_OK, curves_ok_callback,
+			       cd, NULL, NULL, TRUE, FALSE,
 
 			       NULL);
 

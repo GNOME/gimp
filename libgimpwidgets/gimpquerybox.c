@@ -121,10 +121,11 @@ create_query_box (const gchar   *title,
 				     GTK_WIN_POS_MOUSE,
 				     FALSE, TRUE, FALSE,
 
-				     ok_button, ok_callback,
-				     query_box, NULL, NULL, TRUE, FALSE,
 				     cancel_button, cancel_callback,
 				     query_box, NULL, NULL, FALSE, TRUE,
+
+				     ok_button, ok_callback,
+				     query_box, NULL, NULL, TRUE, FALSE,
 
 				     NULL);
 

@@ -139,10 +139,6 @@ error_console_create (void)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  menuitem = gtk_menu_item_new_with_label (_("Write all errors to file..."));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  gtk_widget_show (menuitem);
-
   g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
 			    G_CALLBACK (error_console_write_all_callback),
 			    text_buffer);

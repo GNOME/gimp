@@ -529,10 +529,11 @@ user_install_dialog_create (Gimp *gimp)
 		     GTK_WIN_POS_CENTER,
 		     FALSE, FALSE, FALSE,
 
-		     _("Continue"), user_install_continue_callback,
-		     gimp, NULL, &continue_button, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, user_install_cancel_callback,
 		     gimp, 1, &cancel_button, FALSE, TRUE,
+
+		     _("Continue"), user_install_continue_callback,
+		     gimp, NULL, &continue_button, TRUE, FALSE,
 
 		     NULL);
 

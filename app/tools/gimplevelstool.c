@@ -403,12 +403,14 @@ levels_dialog_new (void)
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
-			       GTK_STOCK_OK, levels_ok_callback,
-			       ld, NULL, NULL, TRUE, FALSE,
 			       GIMP_STOCK_RESET, levels_reset_callback,
 			       ld, NULL, NULL, FALSE, FALSE,
+
 			       GTK_STOCK_CANCEL, levels_cancel_callback,
 			       ld, NULL, NULL, FALSE, TRUE,
+
+			       GTK_STOCK_OK, levels_ok_callback,
+			       ld, NULL, NULL, TRUE, FALSE,
 
 			       NULL);
 

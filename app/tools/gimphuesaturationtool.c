@@ -426,12 +426,14 @@ hue_saturation_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				GTK_STOCK_OK, hue_saturation_ok_callback,
-				hsd, NULL, NULL, TRUE, FALSE,
 				GIMP_STOCK_RESET, hue_saturation_reset_callback,
 				hsd, NULL, NULL, FALSE, FALSE,
+
 				GTK_STOCK_CANCEL, hue_saturation_cancel_callback,
 				hsd, NULL, NULL, FALSE, TRUE,
+
+				GTK_STOCK_OK, hue_saturation_ok_callback,
+				hsd, NULL, NULL, TRUE, FALSE,
 
 				NULL);
 

@@ -722,9 +722,11 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  the statusbar  */
   shell->statusbar = gtk_statusbar_new ();
+  gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
   gtk_widget_set_usize (shell->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (shell->statusbar),
 				 GTK_RESIZE_QUEUE);
+
   contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 					    "title");
   gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),

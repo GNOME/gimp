@@ -327,10 +327,11 @@ gamma_configure (gpointer cd_ID,
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, gamma_configure_ok_callback,
-			 cd_ID, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gamma_configure_cancel_callback,
 			 cd_ID, NULL, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, gamma_configure_ok_callback,
+			 cd_ID, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 

@@ -3735,10 +3735,11 @@ cpopup_split_uniform_callback (GtkWidget      *widget,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Split"), cpopup_split_uniform_split_callback,
-		     gradient_editor, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, cpopup_split_uniform_cancel_callback,
 		     gradient_editor, NULL, NULL, FALSE, TRUE,
+
+		     _("Split"), cpopup_split_uniform_split_callback,
+		     gradient_editor, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

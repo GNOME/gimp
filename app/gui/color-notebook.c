@@ -275,11 +275,11 @@ color_notebook_new (const gchar           *title,
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, TRUE,
 
-			 GTK_STOCK_OK, color_notebook_ok_callback,
-			 cnp, NULL, NULL, TRUE, FALSE,
-
 			 GTK_STOCK_CANCEL, color_notebook_cancel_callback,
 			 cnp, NULL, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, color_notebook_ok_callback,
+			 cnp, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
     }

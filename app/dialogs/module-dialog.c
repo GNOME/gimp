@@ -111,7 +111,7 @@ module_browser_new (Gimp *gimp)
 			   GTK_WIN_POS_NONE,
 			   FALSE, TRUE, FALSE,
 
-			   GTK_STOCK_OK, browser_popdown_callback,
+			   GTK_STOCK_CLOSE, browser_popdown_callback,
 			   NULL, NULL, NULL, TRUE, TRUE,
 
 			   NULL);

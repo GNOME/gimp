@@ -323,12 +323,14 @@ color_balance_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				GTK_STOCK_OK, color_balance_ok_callback,
-				cbd, NULL, NULL, TRUE, FALSE,
 				GIMP_STOCK_RESET, color_balance_reset_callback,
 				cbd, NULL, NULL, TRUE, FALSE,
+
 				GTK_STOCK_CANCEL, color_balance_cancel_callback,
 				cbd, NULL, NULL, FALSE, TRUE,
+
+				GTK_STOCK_OK, color_balance_ok_callback,
+				cbd, NULL, NULL, TRUE, FALSE,
 
 				NULL);
 

@@ -679,10 +679,11 @@ palette_import_dialog_new (Gimp *gimp)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
+		     GTK_STOCK_CANCEL, palette_import_close_callback,
+		     import_dialog, NULL, NULL, TRUE, TRUE,
+
 		     _("Import"), palette_import_import_callback,
 		     import_dialog, NULL, NULL, FALSE, FALSE,
-		     GTK_STOCK_CLOSE, palette_import_close_callback,
-		     import_dialog, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

@@ -156,10 +156,11 @@ make_dialog (ColorDisplayDialog *cdd)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				GTK_STOCK_OK, color_display_ok_callback,
-				cdd, NULL, NULL, TRUE, FALSE,
 				GTK_STOCK_CANCEL, color_display_cancel_callback,
 				cdd, NULL, NULL, FALSE, TRUE,
+
+				GTK_STOCK_OK, color_display_ok_callback,
+				cdd, NULL, NULL, TRUE, FALSE,
 
 				NULL);
 
