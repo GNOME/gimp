@@ -7,7 +7,7 @@
 
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell-render.c
-	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell.[ch]: changed accordingly.
 
 2003-11-09  Michael Natterer  <mitch@gimp.org>
 
