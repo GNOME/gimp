@@ -63,7 +63,7 @@ struct _GimpCropTool
 
 struct _GimpCropToolClass
 {
-  GimpToolClass parent_class;
+  GimpDrawToolClass parent_class;
 };
 
 void   gimp_crop_tool_register (void);

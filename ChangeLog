@@ -1,3 +1,19 @@
+2001-02-20  Nathan Summers  <rock@gimp.org>
+
+	* app/tools/gimptransformtool.c
+	* app/tools/gimptransformtool.h: Started work on the TransformCore.  
+	Very incomplete.  Needs a friendly visit from genmarshal.pl.  Not yet 
+	included in the build.  Move along now, folks, there's nothing more to
+	see.
+
+2001-02-28  Nathan Summers  <rock@gimp.org>
+
+	* app/tools/crop.c
+	* app/tools/crop.h: Fixed a couple instances where the crop tool was
+	incorrectly inheriting from GimpTool instead of GimpDrawTool.  The crop 
+	tool still does not work completely correctly on my machine.  It does
+	not show the lines and sometimes it includes garbage.
+
 2001-02-28  Sven Neumann  <sven@gimp.org>
 
 	Please, do not change the files in app/pdb directly, they are

@@ -1588,7 +1588,7 @@ gimp_crop_tool_get_type (void)
           (GtkClassInitFunc) NULL,
         };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
     }
   return tool_type;
 }
