@@ -34,7 +34,6 @@
 #include "actions.h"
 #include "select-actions.h"
 #include "select-commands.h"
-#include "vectors-commands.h"
 
 #include "gimp-intl.h"
 
@@ -64,11 +63,6 @@ static GimpActionEntry select_actions[] =
     N_("Invert selection"),
     G_CALLBACK (select_invert_cmd_callback),
     GIMP_HELP_SELECTION_INVERT },
-
-  { "select-from-vectors", GIMP_STOCK_SELECTION_REPLACE,
-    N_("Fr_om Path"), "<shift>V", NULL,
-    G_CALLBACK (select_from_vectors_cmd_callback),
-    NULL /* FIXME */ },
 
   { "select-float", GIMP_STOCK_FLOATING_SELECTION,
     N_("_Float"), "<control><shift>L", NULL,
@@ -110,13 +104,7 @@ static GimpActionEntry select_actions[] =
     N_("_Stroke Selection..."), NULL,
     N_("Stroke selection"),
     G_CALLBACK (select_stroke_cmd_callback),
-    GIMP_HELP_SELECTION_STROKE },
-
-  { "select-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
-    N_("To _Path"), NULL,
-    N_("Selection to path"),
-    G_CALLBACK (vectors_selection_to_vectors_cmd_callback),
-    GIMP_HELP_SELECTION_TO_PATH }
+    GIMP_HELP_SELECTION_STROKE }
 };
 
 
@@ -134,7 +122,6 @@ select_actions_update (GimpActionGroup *group,
 {
   GimpImage    *gimage;
   GimpDrawable *drawable = NULL;
-  GimpVectors  *vectors  = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
 
@@ -143,7 +130,6 @@ select_actions_update (GimpActionGroup *group,
   if (gimage)
     {
       drawable = gimp_image_active_drawable (gimage);
-      vectors  = gimp_image_get_active_vectors (gimage);
 
       fs  = (gimp_image_floating_sel (gimage) != NULL);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
@@ -152,21 +138,19 @@ select_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("select-all",          drawable);
-  SET_SENSITIVE ("select-none",         drawable && sel);
-  SET_SENSITIVE ("select-invert",       drawable);
-  SET_SENSITIVE ("select-from-vectors", vectors);
-  SET_SENSITIVE ("select-float",        drawable && sel);
+  SET_SENSITIVE ("select-all",     drawable);
+  SET_SENSITIVE ("select-none",    drawable && sel);
+  SET_SENSITIVE ("select-invert",  drawable);
+  SET_SENSITIVE ("select-float",   drawable && sel);
 
-  SET_SENSITIVE ("select-feather",      drawable && sel);
-  SET_SENSITIVE ("select-sharpen",      drawable && sel);
-  SET_SENSITIVE ("select-shrink",       drawable && sel);
-  SET_SENSITIVE ("select-grow",         drawable && sel);
-  SET_SENSITIVE ("select-border",       drawable && sel);
+  SET_SENSITIVE ("select-feather", drawable && sel);
+  SET_SENSITIVE ("select-sharpen", drawable && sel);
+  SET_SENSITIVE ("select-shrink",  drawable && sel);
+  SET_SENSITIVE ("select-grow",    drawable && sel);
+  SET_SENSITIVE ("select-border",  drawable && sel);
 
-  SET_SENSITIVE ("select-save",         drawable && sel && !fs);
-  SET_SENSITIVE ("select-stroke",       drawable && sel);
-  SET_SENSITIVE ("select-to-vectors",   drawable && sel && !fs);
+  SET_SENSITIVE ("select-save",    drawable && sel && !fs);
+  SET_SENSITIVE ("select-stroke",  drawable && sel);
 
 #undef SET_SENSITIVE
 }

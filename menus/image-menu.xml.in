@@ -76,7 +76,7 @@
       <menuitem action="select-all" />
       <menuitem action="select-none" />
       <menuitem action="select-invert" />
-      <menuitem action="select-from-vectors" />
+      <menuitem action="vectors-selection-from-vectors" />
       <menuitem action="select-float" />
       <menuitem action="tools-by-color-select-short" />
       <separator />
@@ -90,7 +90,7 @@
       <separator />
       <menuitem action="qmask-toggle" />
       <menuitem action="select-save" />
-      <menuitem action="select-to-vectors" />
+      <menuitem action="vectors-selection-to-vectors-short" />
       <separator />
     </menu>
 

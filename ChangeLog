@@ -1,5 +1,21 @@
 2004-06-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/vectors-actions.c: added alternative actions
+	"vectors-selection-from-vectors" and
+	"vectors-selection-to-vectors-short" with different labels suited
+	for the "Select" menu.
+
+	* app/actions/select-actions.c: removed "select-from-vectors"
+	and "select-to-vectors" (to vectors was crashing anyway).
+
+	* app/actions/select-commands.[ch]: removed
+	select_from_vectors_cmd_callback(). Fixes code dupliction.
+
+	* menus/image-menu.xml.in
+	* menus/selection-editor-menu.xml: changed accordingly.
+
+2004-06-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpgradienteditor.c (control_motion): use the newly
 	added GimpGradient API to set the segment's handles instead of
 	setting the values directly. Dirties the gradient correctly and

@@ -127,6 +127,11 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
     GIMP_CHANNEL_OP_REPLACE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
+  { "vectors-selection-from-vectors", GIMP_STOCK_SELECTION_REPLACE,
+    N_("Fr_om Path"), "<shift>V", NULL,
+    GIMP_CHANNEL_OP_REPLACE,
+    GIMP_HELP_PATH_SELECTION_REPLACE },
+
   { "vectors-selection-add", GIMP_STOCK_SELECTION_ADD,
     N_("_Add to Selection"), NULL, NULL,
     GIMP_CHANNEL_OP_ADD,
@@ -147,6 +152,11 @@ static GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
   { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
     N_("Selecti_on to Path"), NULL, NULL,
+    FALSE,
+    GIMP_HELP_SELECTION_TO_PATH },
+
+  { "vectors-selection-to-vectors-short", GIMP_STOCK_SELECTION_TO_PATH,
+    N_("To _Path"), NULL, NULL,
     FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
 
@@ -230,18 +240,21 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-lower",           vectors && next);
   SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
 
-  SET_SENSITIVE ("vectors-selection-to-vectors", ! mask_empty);
-  SET_SENSITIVE ("vectors-stroke",               vectors);
+  SET_SENSITIVE ("vectors-selection-to-vectors",          ! mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-short",    ! mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", ! mask_empty);
+  SET_SENSITIVE ("vectors-stroke",                        vectors);
 
   SET_SENSITIVE ("vectors-copy",   vectors);
   SET_SENSITIVE ("vectors-paste",  global_buf);
   SET_SENSITIVE ("vectors-import", gimage);
   SET_SENSITIVE ("vectors-export", vectors);
 
-  SET_SENSITIVE ("vectors-selection-replace",   vectors);
-  SET_SENSITIVE ("vectors-selection-add",       vectors);
-  SET_SENSITIVE ("vectors-selection-subtract",  vectors);
-  SET_SENSITIVE ("vectors-selection-intersect", vectors);
+  SET_SENSITIVE ("vectors-selection-replace",      vectors);
+  SET_SENSITIVE ("vectors-selection-from-vectors", vectors);
+  SET_SENSITIVE ("vectors-selection-add",          vectors);
+  SET_SENSITIVE ("vectors-selection-subtract",     vectors);
+  SET_SENSITIVE ("vectors-selection-intersect",    vectors);
 
 #undef SET_SENSITIVE
 }

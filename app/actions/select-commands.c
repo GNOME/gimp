@@ -108,26 +108,6 @@ select_none_cmd_callback (GtkAction *action,
 }
 
 void
-select_from_vectors_cmd_callback (GtkAction *action,
-                                  gpointer   data)
-{
-  GimpImage *gimage;
-  GimpVectors *vectors;
-  return_if_no_image (gimage, data);
-
-  vectors = gimp_image_get_active_vectors (gimage);
-  if (!vectors)
-    return;
-
-  gimp_channel_select_vectors (gimp_image_get_mask (gimage),
-                               _("Path to Selection"),
-                               vectors,
-                               GIMP_CHANNEL_OP_REPLACE,
-                               TRUE, FALSE, 0, 0);
-  gimp_image_flush (gimage);
-}
-
-void
 select_float_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
