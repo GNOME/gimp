@@ -21,7 +21,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "widgets/gimpactiongroup.h"
 

@@ -35,10 +35,10 @@
 #include "display/gimpdisplay.h"
 
 #ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
+#warning FIXME #include "dialogs/dialogs-types.h"
 #endif
-#include "gui/gui-types.h"
-#include "gui/info-dialog.h"
+#include "dialogs/dialogs-types.h"
+#include "dialogs/info-dialog.h"
 
 #include "gimpperspectivetool.h"
 #include "gimptoolcontrol.h"

@@ -37,8 +37,9 @@ void   templates_new_template_dialog             (Gimp         *gimp,
 void   templates_edit_template_dialog            (Gimp         *gimp,
                                                   GimpTemplate *template,
                                                   GtkWidget    *parent);
-void   templates_file_new_dialog                 (Gimp         *gimp,
+void   templates_image_new_dialog                (Gimp         *gimp,
                                                   GimpTemplate *template,
                                                   GtkWidget    *parent);
+
 
 #endif /* __TEMPLATES_COMMANDS_H__ */

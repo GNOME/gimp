@@ -36,8 +36,8 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gui/dialogs.h"
-#include "gui/stroke-dialog.h"
+#include "dialogs/dialogs.h"
+#include "dialogs/stroke-dialog.h"
 
 #include "actions.h"
 #include "select-commands.h"

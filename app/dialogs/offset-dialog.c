@@ -23,7 +23,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"

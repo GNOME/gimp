@@ -25,7 +25,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
@@ -41,7 +41,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
 
-#include "file-new-dialog.h"
+#include "image-new-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -58,34 +58,34 @@ typedef struct
 
   Gimp         *gimp;
   GimpTemplate *template;
-} FileNewDialog;
+} ImageNewDialog;
 
 
 /*  local function prototypes  */
 
-static void   file_new_response        (GtkWidget         *widget,
-                                        gint               response_id,
-                                        FileNewDialog     *dialog);
-static void   file_new_template_select (GimpContainerView *view,
-                                        GimpTemplate      *template,
-                                        gpointer           insert_data,
-                                        FileNewDialog     *dialog);
-static void   file_new_confirm_dialog  (FileNewDialog     *dialog);
-static void   file_new_create_image    (FileNewDialog     *dialog);
+static void   image_new_response        (GtkWidget         *widget,
+                                         gint               response_id,
+                                         ImageNewDialog     *dialog);
+static void   image_new_template_select (GimpContainerView *view,
+                                         GimpTemplate      *template,
+                                         gpointer           insert_data,
+                                         ImageNewDialog     *dialog);
+static void   image_new_confirm_dialog  (ImageNewDialog     *dialog);
+static void   image_new_create_image    (ImageNewDialog     *dialog);
 
 
 /*  public functions  */
 
 GtkWidget *
-file_new_dialog_new (Gimp *gimp)
+image_new_dialog_new (Gimp *gimp)
 {
-  FileNewDialog *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *table;
+  ImageNewDialog *dialog;
+  GtkWidget      *main_vbox;
+  GtkWidget      *table;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = g_new0 (FileNewDialog, 1);
+  dialog = g_new0 (ImageNewDialog, 1);
 
   dialog->gimp     = gimp;
   dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
@@ -103,11 +103,11 @@ file_new_dialog_new (Gimp *gimp)
                                     NULL);
 
   g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (file_new_response),
+                    G_CALLBACK (image_new_response),
                     dialog);
 
   g_object_set_data_full (G_OBJECT (dialog->dialog),
-                          "gimp-file-new-dialog", dialog,
+                          "gimp-image-new-dialog", dialog,
                           (GDestroyNotify) g_free);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
@@ -131,7 +131,7 @@ file_new_dialog_new (Gimp *gimp)
                              dialog->combo, 1, FALSE);
 
   g_signal_connect (dialog->combo, "select_item",
-                    G_CALLBACK (file_new_template_select),
+                    G_CALLBACK (image_new_template_select),
                     dialog);
 
   /*  Template editor  */
@@ -143,17 +143,17 @@ file_new_dialog_new (Gimp *gimp)
 }
 
 void
-file_new_dialog_set (GtkWidget    *widget,
-                     GimpImage    *gimage,
-                     GimpTemplate *template)
+image_new_dialog_set (GtkWidget    *widget,
+                      GimpImage    *gimage,
+                      GimpTemplate *template)
 {
-  FileNewDialog *dialog;
+  ImageNewDialog *dialog;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
   g_return_if_fail (template == NULL || GIMP_IS_TEMPLATE (template));
 
-  dialog = g_object_get_data (G_OBJECT (widget), "gimp-file-new-dialog");
+  dialog = g_object_get_data (G_OBJECT (widget), "gimp-image-new-dialog");
 
   g_return_if_fail (dialog != NULL);
 
@@ -177,9 +177,9 @@ file_new_dialog_set (GtkWidget    *widget,
 /*  private functions  */
 
 static void
-file_new_response (GtkWidget     *widget,
-                   gint           response_id,
-                   FileNewDialog *dialog)
+image_new_response (GtkWidget      *widget,
+                    gint            response_id,
+                    ImageNewDialog *dialog)
 {
   switch (response_id)
     {
@@ -191,9 +191,9 @@ file_new_response (GtkWidget     *widget,
     case GTK_RESPONSE_OK:
       if (dialog->template->initial_size >
           GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
-        file_new_confirm_dialog (dialog);
+        image_new_confirm_dialog (dialog);
       else
-        file_new_create_image (dialog);
+        image_new_create_image (dialog);
       break;
 
     default:
@@ -203,10 +203,10 @@ file_new_response (GtkWidget     *widget,
 }
 
 static void
-file_new_template_select (GimpContainerView *view,
-                          GimpTemplate      *template,
-                          gpointer           insert_data,
-                          FileNewDialog     *dialog)
+image_new_template_select (GimpContainerView  *view,
+                           GimpTemplate       *template,
+                           gpointer            insert_data,
+                           ImageNewDialog     *dialog)
 {
   gchar *comment = NULL;
 
@@ -232,22 +232,22 @@ file_new_template_select (GimpContainerView *view,
 /*  the confirm dialog  */
 
 static void
-file_new_confirm_dialog_callback (GtkWidget *widget,
-				  gboolean   create,
-				  gpointer   data)
+image_new_confirm_dialog_callback (GtkWidget *widget,
+                                   gboolean   create,
+                                   gpointer   data)
 {
-  FileNewDialog *dialog = (FileNewDialog *) data;
+  ImageNewDialog *dialog = data;
 
   dialog->confirm_dialog = NULL;
 
   if (create)
-    file_new_create_image (dialog);
+    image_new_create_image (dialog);
   else
     gtk_widget_set_sensitive (dialog->dialog, TRUE);
 }
 
 static void
-file_new_confirm_dialog (FileNewDialog *dialog)
+image_new_confirm_dialog (ImageNewDialog *dialog)
 {
   gchar *size_str;
   gchar *max_size_str;
@@ -279,7 +279,7 @@ file_new_confirm_dialog (FileNewDialog *dialog)
 			    text,
 			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
 			    NULL, NULL,
-			    file_new_confirm_dialog_callback,
+			    image_new_confirm_dialog_callback,
 			    dialog);
 
   g_free (text);
@@ -293,7 +293,7 @@ file_new_confirm_dialog (FileNewDialog *dialog)
 }
 
 static void
-file_new_create_image (FileNewDialog *dialog)
+image_new_create_image (ImageNewDialog *dialog)
 {
   GimpTemplate *template;
   Gimp         *gimp;

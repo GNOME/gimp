@@ -24,7 +24,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "config/gimpcoreconfig.h"
 

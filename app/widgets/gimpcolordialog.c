@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * color_notebook module (C) 1998 Austin Donnelly <austin@greenend.org.uk>
+ * color_dialog module (C) 1998 Austin Donnelly <austin@greenend.org.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,15 +25,16 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "core/gimpviewable.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
-#include "color-history.h"
-#include "color-notebook.h"
+#include "gui/color-history.h"
+
+#include "color-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -42,63 +43,63 @@
 #define COLOR_AREA_SIZE 20
 
 
-struct _ColorNotebook
+struct _ColorDialog
 {
-  GtkWidget             *shell;
-  GtkWidget             *selection;
+  GtkWidget           *shell;
+  GtkWidget           *selection;
 
-  GtkWidget             *history[COLOR_HISTORY_SIZE];
+  GtkWidget           *history[COLOR_HISTORY_SIZE];
 
-  ColorNotebookCallback  callback;
-  gpointer               client_data;
+  ColorDialogCallback  callback;
+  gpointer             client_data;
 
-  gboolean               wants_updates;
+  gboolean             wants_updates;
 };
 
 
-static void   color_notebook_help_func     (const gchar           *help_id,
-                                            gpointer               help_data);
+static void   color_dialog_help_func      (const gchar        *help_id,
+                                           gpointer            help_data);
 
-static void   color_notebook_response      (GtkWidget             *widget,
-                                            gint                   response_id,
-                                            ColorNotebook         *cnp);
+static void   color_dialog_response       (GtkWidget          *widget,
+                                           gint                response_id,
+                                           ColorDialog        *cnp);
 
-static void   color_notebook_color_changed (GimpColorSelection    *selection,
-                                            ColorNotebook         *cnp);
+static void   color_dialog_color_changed  (GimpColorSelection *selection,
+                                           ColorDialog        *cnp);
 
-static void   color_history_color_clicked  (GtkWidget             *widget,
-                                            ColorNotebook         *cnp);
-static void   color_history_color_changed  (GtkWidget             *widget,
-                                            gpointer               data);
-static void   color_history_add_clicked    (GtkWidget             *widget,
-                                            ColorNotebook         *cnp);
+static void   color_history_color_clicked (GtkWidget          *widget,
+                                           ColorDialog        *cnp);
+static void   color_history_color_changed (GtkWidget          *widget,
+                                           gpointer            data);
+static void   color_history_add_clicked   (GtkWidget          *widget,
+                                           ColorDialog        *cnp);
 
 
-static GList *color_notebooks = NULL;
+static GList *color_dialogs = NULL;
 
 
 /*  public functions  */
 
-ColorNotebook *
-color_notebook_new (GimpViewable          *viewable,
-                    const gchar           *title,
-                    const gchar           *stock_id,
-                    const gchar           *desc,
-                    GtkWidget             *parent,
-                    GimpDialogFactory     *dialog_factory,
-                    const gchar           *dialog_identifier,
-                    const GimpRGB         *color,
-                    ColorNotebookCallback  callback,
-                    gpointer               client_data,
-                    gboolean               wants_updates,
-                    gboolean               show_alpha)
+ColorDialog *
+color_dialog_new (GimpViewable        *viewable,
+                  const gchar         *title,
+                  const gchar         *stock_id,
+                  const gchar         *desc,
+                  GtkWidget           *parent,
+                  GimpDialogFactory   *dialog_factory,
+                  const gchar         *dialog_identifier,
+                  const GimpRGB       *color,
+                  ColorDialogCallback  callback,
+                  gpointer             client_data,
+                  gboolean             wants_updates,
+                  gboolean             show_alpha)
 {
-  ColorNotebook *cnp;
-  GtkWidget     *table;
-  GtkWidget     *button;
-  GtkWidget     *arrow;
-  const gchar   *role;
-  gint           i;
+  ColorDialog *cnp;
+  GtkWidget   *table;
+  GtkWidget   *button;
+  GtkWidget   *arrow;
+  const gchar *role;
+  gint         i;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -108,7 +109,7 @@ color_notebook_new (GimpViewable          *viewable,
                         NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  cnp = g_new0 (ColorNotebook, 1);
+  cnp = g_new0 (ColorDialog, 1);
 
   cnp->callback      = callback;
   cnp->client_data   = client_data;
@@ -121,7 +122,7 @@ color_notebook_new (GimpViewable          *viewable,
       cnp->shell = gimp_viewable_dialog_new (viewable, title, role,
                                              stock_id, desc,
                                              parent,
-                                             color_notebook_help_func, NULL,
+                                             color_dialog_help_func, NULL,
                                              NULL);
 
       gtk_window_set_resizable (GTK_WINDOW (cnp->shell), FALSE);
@@ -130,11 +131,11 @@ color_notebook_new (GimpViewable          *viewable,
     {
       cnp->shell = gimp_dialog_new (title, role,
                                     parent, 0,
-                                    color_notebook_help_func, NULL,
+                                    color_dialog_help_func, NULL,
                                     NULL);
    }
 
-  g_object_set_data (G_OBJECT (cnp->shell), "color-notebook", cnp);
+  g_object_set_data (G_OBJECT (cnp->shell), "color-dialog", cnp);
 
   gtk_dialog_add_buttons (GTK_DIALOG (cnp->shell),
                           GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -144,7 +145,7 @@ color_notebook_new (GimpViewable          *viewable,
   gtk_dialog_set_default_response (GTK_DIALOG (cnp->shell), GTK_RESPONSE_OK);
 
   g_signal_connect (cnp->shell, "response",
-                    G_CALLBACK (color_notebook_response),
+                    G_CALLBACK (color_dialog_response),
                     cnp);
 
   g_object_add_weak_pointer (G_OBJECT (cnp->shell), (gpointer *) &cnp->shell);
@@ -165,7 +166,7 @@ color_notebook_new (GimpViewable          *viewable,
   gtk_widget_show (cnp->selection);
 
   g_signal_connect (cnp->selection, "color_changed",
-                    G_CALLBACK (color_notebook_color_changed),
+                    G_CALLBACK (color_dialog_color_changed),
                     cnp);
 
   /* The color history */
@@ -226,17 +227,17 @@ color_notebook_new (GimpViewable          *viewable,
 
   gtk_widget_show (cnp->shell);
 
-  color_notebooks = g_list_prepend (color_notebooks, cnp);
+  color_dialogs = g_list_prepend (color_dialogs, cnp);
 
   return cnp;
 }
 
 void
-color_notebook_free (ColorNotebook *cnp)
+color_dialog_free (ColorDialog *cnp)
 {
   g_return_if_fail (cnp != NULL);
 
-  color_notebooks = g_list_remove (color_notebooks, cnp);
+  color_dialogs = g_list_remove (color_dialogs, cnp);
 
   /*  may be already destroyed by dialog factory  */
   if (cnp->shell)
@@ -250,8 +251,8 @@ color_notebook_free (ColorNotebook *cnp)
 }
 
 void
-color_notebook_set_viewable (ColorNotebook *cnb,
-                             GimpViewable  *viewable)
+color_dialog_set_viewable (ColorDialog  *cnb,
+                           GimpViewable *viewable)
 {
   g_return_if_fail (cnb != NULL);
 
@@ -261,8 +262,8 @@ color_notebook_set_viewable (ColorNotebook *cnb,
 }
 
 void
-color_notebook_set_title (ColorNotebook *cnb,
-                          const gchar   *title)
+color_dialog_set_title (ColorDialog *cnb,
+                        const gchar *title)
 {
   g_return_if_fail (cnb != NULL);
   g_return_if_fail (title != NULL);
@@ -271,14 +272,14 @@ color_notebook_set_title (ColorNotebook *cnb,
 }
 
 void
-color_notebook_set_color (ColorNotebook *cnp,
-			  const GimpRGB *color)
+color_dialog_set_color (ColorDialog   *cnp,
+                        const GimpRGB *color)
 {
   g_return_if_fail (cnp != NULL);
   g_return_if_fail (color != NULL);
 
   g_signal_handlers_block_by_func (cnp->selection,
-                                   color_notebook_color_changed,
+                                   color_dialog_color_changed,
                                    cnp);
 
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (cnp->selection), color);
@@ -286,13 +287,13 @@ color_notebook_set_color (ColorNotebook *cnp,
                                       color);
 
   g_signal_handlers_unblock_by_func (cnp->selection,
-                                     color_notebook_color_changed,
+                                     color_dialog_color_changed,
                                      cnp);
 }
 
 void
-color_notebook_get_color (ColorNotebook *cnp,
-			  GimpRGB       *color)
+color_dialog_get_color (ColorDialog *cnp,
+                        GimpRGB     *color)
 {
   g_return_if_fail (cnp != NULL);
   g_return_if_fail (color != NULL);
@@ -301,7 +302,7 @@ color_notebook_get_color (ColorNotebook *cnp,
 }
 
 void
-color_notebook_show (ColorNotebook *cnp)
+color_dialog_show (ColorDialog *cnp)
 {
   g_return_if_fail (cnp != NULL);
 
@@ -309,7 +310,7 @@ color_notebook_show (ColorNotebook *cnp)
 }
 
 void
-color_notebook_hide (ColorNotebook *cnp)
+color_dialog_hide (ColorDialog *cnp)
 {
   g_return_if_fail (cnp != NULL);
 
@@ -320,10 +321,10 @@ color_notebook_hide (ColorNotebook *cnp)
 /*  private functions  */
 
 static void
-color_notebook_help_func (const gchar *help_id,
-                          gpointer     help_data)
+color_dialog_help_func (const gchar *help_id,
+                        gpointer     help_data)
 {
-  ColorNotebook     *cnp;
+  ColorDialog       *cnp;
   GimpColorNotebook *notebook;
 
   cnp = g_object_get_data (G_OBJECT (help_data), "color-notebook");
@@ -337,9 +338,9 @@ color_notebook_help_func (const gchar *help_id,
 }
 
 static void
-color_notebook_response (GtkWidget     *widget,
-                         gint           response_id,
-                         ColorNotebook *cnp)
+color_dialog_response (GtkWidget   *widget,
+                       gint         response_id,
+                       ColorDialog *cnp)
 {
   GimpRGB color;
 
@@ -357,7 +358,7 @@ color_notebook_response (GtkWidget     *widget,
 
       if (cnp->callback)
         cnp->callback (cnp, &color,
-                       COLOR_NOTEBOOK_OK,
+                       COLOR_DIALOG_OK,
                        cnp->client_data);
       break;
 
@@ -367,15 +368,15 @@ color_notebook_response (GtkWidget     *widget,
 
       if (cnp->callback)
         cnp->callback (cnp, &color,
-                       COLOR_NOTEBOOK_CANCEL,
+                       COLOR_DIALOG_CANCEL,
                        cnp->client_data);
       break;
     }
 }
 
 static void
-color_notebook_color_changed (GimpColorSelection *selection,
-                              ColorNotebook      *cnp)
+color_dialog_color_changed (GimpColorSelection *selection,
+                            ColorDialog        *cnp)
 {
   GimpRGB color;
 
@@ -384,7 +385,7 @@ color_notebook_color_changed (GimpColorSelection *selection,
   if (cnp->wants_updates && cnp->callback)
     cnp->callback (cnp,
                    &color,
-                   COLOR_NOTEBOOK_UPDATE,
+                   COLOR_DIALOG_UPDATE,
                    cnp->client_data);
 }
 
@@ -392,8 +393,8 @@ color_notebook_color_changed (GimpColorSelection *selection,
 /*  color history callbacks  */
 
 static void
-color_history_color_clicked (GtkWidget     *widget,
-			     ColorNotebook *cnp)
+color_history_color_clicked (GtkWidget   *widget,
+			     ColorDialog *cnp)
 {
   GimpColorArea *color_area;
   GimpRGB        color;
@@ -419,20 +420,20 @@ color_history_color_changed (GtkWidget *widget,
 
   color_history_set (color_index, &changed_color);
 
-  for (list = color_notebooks; list; list = g_list_next (list))
+  for (list = color_dialogs; list; list = g_list_next (list))
     {
-      ColorNotebook *notebook = list->data;
+      ColorDialog *dialog = list->data;
 
-      if (notebook->history[color_index] != widget)
+      if (dialog->history[color_index] != widget)
         {
-          g_signal_handlers_block_by_func (notebook->history[color_index],
+          g_signal_handlers_block_by_func (dialog->history[color_index],
                                            color_history_color_changed,
                                            data);
 
           gimp_color_area_set_color
-            (GIMP_COLOR_AREA (notebook->history[color_index]), &changed_color);
+            (GIMP_COLOR_AREA (dialog->history[color_index]), &changed_color);
 
-          g_signal_handlers_unblock_by_func (notebook->history[color_index],
+          g_signal_handlers_unblock_by_func (dialog->history[color_index],
                                              color_history_color_changed,
                                              data);
         }
@@ -440,8 +441,8 @@ color_history_color_changed (GtkWidget *widget,
 }
 
 static void
-color_history_add_clicked (GtkWidget     *widget,
-			   ColorNotebook *cnp)
+color_history_add_clicked (GtkWidget   *widget,
+			   ColorDialog *cnp)
 {
   GimpRGB color;
   gint    shift_begin;

@@ -20,7 +20,7 @@
 #define __ACTIONS_TYPES_H__
 
 
-#include "gui/gui-types.h"
+#include "tools/tools-types.h"
 
 
 typedef enum

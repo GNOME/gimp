@@ -24,11 +24,6 @@
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
@@ -37,27 +32,31 @@
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 
-#include "gui/color-notebook.h"
+#ifdef __GNUC__
+#warning FIXME #include "dialogs/dialogs-types.h"
+#endif
+#include "dialogs/dialogs-types.h"
+#include "dialogs/color-dialog.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     color_area_color_clicked   (GimpFgBgEditor     *editor,
-                                            GimpActiveColor     active_color,
-                                            GimpContext        *context);
-static void     color_area_select_callback (ColorNotebook      *color_notebook,
-                                            const GimpRGB      *color,
-                                            ColorNotebookState  state,
-                                            gpointer            data);
+static void     color_area_color_clicked   (GimpFgBgEditor   *editor,
+                                            GimpActiveColor   active_color,
+                                            GimpContext      *context);
+static void     color_area_select_callback (ColorDialog      *color_dialog,
+                                            const GimpRGB    *color,
+                                            ColorDialogState  state,
+                                            gpointer          data);
 
 
 /*  local variables  */
 
 static GtkWidget       *color_area            = NULL;
-static ColorNotebook   *color_notebook        = NULL;
-static gboolean         color_notebook_active = FALSE;
+static ColorDialog     *color_dialog          = NULL;
+static gboolean         color_dialog_active = FALSE;
 static GimpActiveColor  edit_color;
 static GimpRGB          revert_fg;
 static GimpRGB          revert_bg;
@@ -93,32 +92,32 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 /*  private functions  */
 
 static void
-color_area_select_callback (ColorNotebook      *color_notebook,
-			    const GimpRGB      *color,
-			    ColorNotebookState  state,
-			    gpointer            data)
+color_area_select_callback (ColorDialog      *color_dialog,
+			    const GimpRGB    *color,
+			    ColorDialogState  state,
+			    gpointer          data)
 {
   GimpContext *context = GIMP_CONTEXT (data);
 
-  if (color_notebook)
+  if (color_dialog)
     {
       switch (state)
 	{
-	case COLOR_NOTEBOOK_OK:
-	  color_notebook_hide (color_notebook);
-	  color_notebook_active = FALSE;
+	case COLOR_DIALOG_OK:
+	  color_dialog_hide (color_dialog);
+	  color_dialog_active = FALSE;
 	  /* Fallthrough */
 
-	case COLOR_NOTEBOOK_UPDATE:
+	case COLOR_DIALOG_UPDATE:
 	  if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
 	    gimp_context_set_foreground (context, color);
 	  else
 	    gimp_context_set_background (context, color);
 	  break;
 
-	case COLOR_NOTEBOOK_CANCEL:
-	  color_notebook_hide (color_notebook);
-	  color_notebook_active = FALSE;
+	case COLOR_DIALOG_CANCEL:
+	  color_dialog_hide (color_dialog);
+	  color_dialog_active = FALSE;
 	  gimp_context_set_foreground (context, &revert_fg);
 	  gimp_context_set_background (context, &revert_bg);
           break;
@@ -134,7 +133,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
   GimpRGB      color;
   const gchar *title;
 
-  if (! color_notebook_active)
+  if (! color_dialog_active)
     {
       gimp_context_get_foreground (context, &revert_fg);
       gimp_context_get_background (context, &revert_bg);
@@ -153,27 +152,27 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   edit_color = active_color;
 
-  if (! color_notebook)
+  if (! color_dialog)
     {
       GimpDialogFactory *toplevel_factory;
 
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
-      color_notebook = color_notebook_new (NULL, title, NULL, NULL,
-                                           GTK_WIDGET (editor),
-                                           toplevel_factory,
-                                           "gimp-toolbox-color-dialog",
-					   (const GimpRGB *) &color,
-					   color_area_select_callback,
-					   context, TRUE, FALSE);
-      color_notebook_active = TRUE;
+      color_dialog = color_dialog_new (NULL, title, NULL, NULL,
+                                       GTK_WIDGET (editor),
+                                       toplevel_factory,
+                                       "gimp-toolbox-color-dialog",
+                                       (const GimpRGB *) &color,
+                                       color_area_select_callback,
+                                       context, TRUE, FALSE);
+      color_dialog_active = TRUE;
     }
   else
     {
-      color_notebook_set_title (color_notebook, title);
-      color_notebook_set_color (color_notebook, &color);
+      color_dialog_set_title (color_dialog, title);
+      color_dialog_set_color (color_dialog, &color);
 
-      color_notebook_show (color_notebook);
-      color_notebook_active = TRUE;
+      color_dialog_show (color_dialog);
+      color_dialog_active = TRUE;
     }
 }

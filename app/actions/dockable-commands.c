@@ -34,7 +34,8 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpsessioninfo.h"
 
-#include "gui/dialogs.h"
+#include "dialogs/dialogs.h"
+
 #include "dockable-commands.h"
 
 

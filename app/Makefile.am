@@ -22,6 +22,7 @@ SUBDIRS = \
 	tools		\
 	widgets		\
 	display		\
+	dialogs		\
 	actions		\
 	menus		\
 	gui		\
@@ -103,11 +104,12 @@ gimp_2_1_LDFLAGS = \
 	-u $(SYMPREFIX)file_open_dialog_show		\
 	-u $(SYMPREFIX)file_open_location_dialog_show	\
 	-u $(SYMPREFIX)file_save_dialog_show		\
-	-u $(SYMPREFIX)color_notebook_new
+	-u $(SYMPREFIX)color_dialog_new
 
 gimp_2_1_LDADD = \
 	config/libappconfig.a		\
 	gui/libappgui.a			\
+	dialogs/libappdialogs.a		\
 	menus/libappmenus.a		\
 	actions/libappactions.a		\
 	display/libappdisplay.a		\

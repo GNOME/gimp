@@ -25,7 +25,7 @@
 
 #include "gimpdataeditor.h"
 
-#include "gui/gui-types.h" /* FIXME */
+#include "dialogs/dialogs-types.h" /* FIXME */
 
 
 #define GRAD_NUM_COLORS 10
@@ -69,8 +69,8 @@ struct _GimpGradientEditor
   /*  Instant update  */
   gboolean        instant_update;
 
-  /*  Color notebook  */
-  ColorNotebook  *color_notebook;
+  /*  Color dialog  */
+  ColorDialog    *color_dialog;
 
   /*  Gradient preview  */
   gint            preview_last_x;

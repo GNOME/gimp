@@ -44,10 +44,10 @@
 #include "display/gimpdisplayshell-transform.h"
 
 #ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
+#warning FIXME #include "dialogs/dialogs-types.h"
 #endif
-#include "gui/gui-types.h"
-#include "gui/info-dialog.h"
+#include "dialogs/dialogs-types.h"
+#include "dialogs/info-dialog.h"
 
 #include "gimpcropoptions.h"
 #include "gimpcroptool.h"
@@ -1100,6 +1100,7 @@ crop_response (GtkWidget    *widget,
 {
   GimpTool        *tool    = GIMP_TOOL (crop);
   GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
+
   switch (response_id)
     {
     case GIMP_CROP_MODE_CROP:

@@ -22,7 +22,7 @@
 
 #include "gimpdataeditor.h"
 
-#include "gui/gui-types.h" /* FIXME */
+#include "dialogs/dialogs-types.h" /* FIXME */
 
 
 #define GIMP_TYPE_PALETTE_EDITOR            (gimp_palette_editor_get_type ())
@@ -52,7 +52,7 @@ struct _GimpPaletteEditor
   GtkWidget        *zoom_in_button;
   GtkWidget        *zoom_all_button;
 
-  ColorNotebook    *color_notebook;
+  ColorDialog      *color_dialog;
 
   GimpPaletteEntry *color;
   GimpPaletteEntry *dnd_color;

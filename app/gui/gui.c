@@ -64,11 +64,12 @@
 
 #include "menus/menus.h"
 
+#include "dialogs/dialogs.h"
+#include "dialogs/quit-dialog.h"
+
 #include "color-history.h"
-#include "dialogs.h"
 #include "gui.h"
 #include "gui-vtable.h"
-#include "quit-dialog.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"

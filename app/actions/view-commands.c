@@ -44,10 +44,10 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
 
-#include "gui/color-notebook.h"
-#include "gui/dialogs.h"
-#include "gui/info-dialog.h"
-#include "gui/info-window.h"
+#include "dialogs/color-dialog.h"
+#include "dialogs/dialogs.h"
+#include "dialogs/info-dialog.h"
+#include "dialogs/info-window.h"
 
 #include "actions.h"
 #include "view-commands.h"
@@ -474,10 +474,10 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
 }
 
 static void
-view_padding_color_callback (ColorNotebook      *cnb,
-                             const GimpRGB      *color,
-                             ColorNotebookState  state,
-                             gpointer            data)
+view_padding_color_callback (ColorDialog      *cnb,
+                             const GimpRGB    *color,
+                             ColorDialogState  state,
+                             gpointer          data)
 {
   GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (data);
   GimpDisplayOptions *options;
@@ -492,15 +492,15 @@ view_padding_color_callback (ColorNotebook      *cnb,
 
   switch (state)
     {
-    case COLOR_NOTEBOOK_OK:
+    case COLOR_DIALOG_OK:
       options->padding_mode_set = TRUE;
 
       gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
                                       color);
       /* fallthru */
 
-    case COLOR_NOTEBOOK_CANCEL:
-      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+    case COLOR_DIALOG_CANCEL:
+      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
       break;
 
     default:
@@ -533,7 +533,7 @@ view_padding_color_cmd_callback (GtkAction *action,
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
 
       options->padding_mode_set = TRUE;
 
@@ -543,34 +543,34 @@ view_padding_color_cmd_callback (GtkAction *action,
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
-        ColorNotebook *color_notebook;
+        ColorDialog *color_dialog;
 
-        color_notebook = g_object_get_data (G_OBJECT (shell),
-                                            "padding-color-notebook");
+        color_dialog = g_object_get_data (G_OBJECT (shell),
+                                            "padding-color-dialog");
 
-        if (! color_notebook)
+        if (! color_dialog)
           {
-            color_notebook = color_notebook_new (GIMP_VIEWABLE (gdisp->gimage),
-                                                 _("Set Canvas Padding Color"),
-                                                 GTK_STOCK_SELECT_COLOR,
-                                                 NULL,
-                                                 gdisp->shell,
-                                                 NULL, NULL,
-                                                 &options->padding_color,
-                                                 view_padding_color_callback,
-                                                 shell,
-                                                 FALSE, FALSE);
-            g_object_set_data_full (G_OBJECT (shell), "padding-color-notebook",
-                                    color_notebook,
-                                    (GDestroyNotify) color_notebook_free);
+            color_dialog = color_dialog_new (GIMP_VIEWABLE (gdisp->gimage),
+                                             _("Set Canvas Padding Color"),
+                                             GTK_STOCK_SELECT_COLOR,
+                                             NULL,
+                                             gdisp->shell,
+                                             NULL, NULL,
+                                             &options->padding_color,
+                                             view_padding_color_callback,
+                                             shell,
+                                             FALSE, FALSE);
+            g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
+                                    color_dialog,
+                                    (GDestroyNotify) color_dialog_free);
           }
 
-        color_notebook_show (color_notebook);
+        color_dialog_show (color_dialog);
       }
       break;
 
     case GIMP_CANVAS_PADDING_MODE_RESET:
-      g_object_set_data (G_OBJECT (shell), "padding-color-notebook", NULL);
+      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
 
       {
         GimpDisplayConfig  *config;

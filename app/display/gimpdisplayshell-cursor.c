@@ -22,17 +22,16 @@
 
 #include "display-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "gui/info-window.h"
+#ifdef __GNUC__
+#warning FIXME #include "dialogs/dialogs-types.h"
+#endif
+#include "dialogs/dialogs-types.h"
+#include "dialogs/info-window.h"
 
 #include "widgets/gimpcursor.h"
 

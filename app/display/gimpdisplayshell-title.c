@@ -26,11 +26,6 @@
 
 #include "display-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
@@ -41,7 +36,11 @@
 
 #include "file/file-utils.h"
 
-#include "gui/info-window.h"
+#ifdef __GNUC__
+#warning FIXME #include "dialogs/dialogs-types.h"
+#endif
+#include "dialogs/dialogs-types.h"
+#include "dialogs/info-window.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"

@@ -68,8 +68,9 @@
 #include "menus/menus.h"
 #include "menus/plug-in-menus.h"
 
-#include "dialogs.h"
-#include "dialogs-constructors.h"
+#include "dialogs/dialogs.h"
+#include "dialogs/dialogs-constructors.h"
+
 #include "themes.h"
 
 

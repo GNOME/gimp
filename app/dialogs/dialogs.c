@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -90,21 +90,21 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     NULL, 0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  ordinary toplevels  */
-  { "gimp-file-new-dialog",           dialogs_file_new_new,
+  { "gimp-image-new-dialog",          dialogs_image_new_new,
     0, FALSE, TRUE,  FALSE, FALSE },
   { "gimp-file-open-location-dialog", dialogs_file_open_location_new,
     0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  singleton toplevels  */
-  { "gimp-preferences-dialog",     dialogs_preferences_get,
+  { "gimp-preferences-dialog", dialogs_preferences_get,
     0, TRUE,  TRUE,  FALSE, FALSE },
-  { "gimp-module-manager-dialog",  dialogs_module_browser_get,
+  { "gimp-module-dialog",      dialogs_module_get,
     0, TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp-tips-dialog",            dialogs_tips_get,
+  { "gimp-tips-dialog",        dialogs_tips_get,
     0, TRUE,  FALSE, FALSE, FALSE },
-  { "gimp-about-dialog",           dialogs_about_get,
+  { "gimp-about-dialog",       dialogs_about_get,
     0, TRUE,  FALSE, FALSE, FALSE },
-  { "gimp-error-dialog",           dialogs_error_get,
+  { "gimp-error-dialog",       dialogs_error_get,
     0, TRUE,  FALSE, FALSE, FALSE }
 };
 

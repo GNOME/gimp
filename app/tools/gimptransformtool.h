@@ -22,7 +22,7 @@
 
 #include "gimpdrawtool.h"
 
-#include "gui/gui-types.h" /* FIXME */
+#include "dialogs/dialogs-types.h" /* FIXME */
 
 
 /* buffer sizes for scaling information strings (for the info dialog) */

@@ -46,8 +46,9 @@
 #include "file/file-utils.h"
 
 #ifndef GIMP_CONSOLE_COMPILATION
+#include "dialogs/user-install-dialog.h"
+
 #include "gui/gui.h"
-#include "gui/user-install-dialog.h"
 #endif
 
 #include "app_procs.h"

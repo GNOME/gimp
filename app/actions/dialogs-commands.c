@@ -33,7 +33,7 @@
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
 
-#include "gui/dialogs.h"
+#include "dialogs/dialogs.h"
 
 #include "actions.h"
 #include "dialogs-commands.h"

@@ -33,7 +33,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 
-#include "gui/offset-dialog.h"
+#include "dialogs/offset-dialog.h"
 
 #include "actions.h"
 #include "drawable-commands.h"

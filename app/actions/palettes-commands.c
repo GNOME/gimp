@@ -34,7 +34,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
 
-#include "gui/palette-import-dialog.h"
+#include "dialogs/palette-import-dialog.h"
 
 #include "palettes-commands.h"
 

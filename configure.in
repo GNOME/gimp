@@ -1596,6 +1596,7 @@ app/actions/Makefile
 app/base/Makefile
 app/config/Makefile
 app/core/Makefile
+app/dialogs/Makefile
 app/display/Makefile
 app/file/Makefile
 app/gui/Makefile

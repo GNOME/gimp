@@ -27,7 +27,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpcontroller.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
@@ -56,9 +56,10 @@
 
 #include "menus/menus.h"
 
+#include "gui/session.h"
+#include "gui/themes.h"
+
 #include "resolution-calibrate-dialog.h"
-#include "session.h"
-#include "themes.h"
 
 #include "gimp-intl.h"
 

@@ -54,7 +54,7 @@
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
-#include "gui/stroke-dialog.h"
+#include "dialogs/stroke-dialog.h"
 
 #include "actions.h"
 #include "vectors-commands.h"

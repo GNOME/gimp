@@ -51,11 +51,11 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gui/convert-dialog.h"
-#include "gui/dialogs.h"
-#include "gui/file-new-dialog.h"
-#include "gui/grid-dialog.h"
-#include "gui/resize-dialog.h"
+#include "dialogs/convert-dialog.h"
+#include "dialogs/dialogs.h"
+#include "dialogs/grid-dialog.h"
+#include "dialogs/image-new-dialog.h"
+#include "dialogs/resize-dialog.h"
 
 #include "actions.h"
 #include "image-commands.h"
@@ -117,11 +117,11 @@ image_new_cmd_callback (GtkAction *action,
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                            gtk_widget_get_screen (widget),
-                                           "gimp-file-new-dialog", -1, FALSE);
+                                           "gimp-image-new-dialog", -1, FALSE);
 
   if (dialog)
     {
-      file_new_dialog_set (dialog, NULL, NULL);
+      image_new_dialog_set (dialog, NULL, NULL);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -137,14 +137,14 @@ image_new_from_image_cmd_callback (GtkAction *action,
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
                                            gtk_widget_get_screen (widget),
-                                           "gimp-file-new-dialog", -1, FALSE);
+                                           "gimp-image-new-dialog", -1, FALSE);
 
   if (dialog)
     {
       GimpImage *gimage = action_data_get_image (data);
 
       if (gimage)
-        file_new_dialog_set (dialog, gimage, NULL);
+        image_new_dialog_set (dialog, gimage, NULL);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

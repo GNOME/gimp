@@ -47,9 +47,9 @@
 
 #include "menus/menus.h"
 
-#include "gui/dialogs.h"
-#include "gui/file-open-dialog.h"
-#include "gui/file-save-dialog.h"
+#include "dialogs/dialogs.h"
+#include "dialogs/file-open-dialog.h"
+#include "dialogs/file-save-dialog.h"
 
 #include "actions.h"
 #include "file-commands.h"

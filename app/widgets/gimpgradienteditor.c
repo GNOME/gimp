@@ -73,7 +73,7 @@
 #include "gimpviewrenderergradient.h"
 #include "gimpwidgets-utils.h"
 
-#include "gui/color-notebook.h"
+#include "dialogs/color-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -461,10 +461,10 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
   gimp_view_set_viewable (GIMP_VIEW (gradient_editor->preview),
                           (GimpViewable *) data);
 
-  if (gradient_editor->color_notebook)
+  if (gradient_editor->color_dialog)
     {
-      color_notebook_free (gradient_editor->color_notebook);
-      gradient_editor->color_notebook = NULL;
+      color_dialog_free (gradient_editor->color_dialog);
+      gradient_editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
     }
 

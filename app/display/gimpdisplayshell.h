@@ -23,8 +23,8 @@
 #include <gtk/gtkwindow.h>
 
 
-/*  FIXME: remove all gui/ stuff  */
-#include "gui/gui-types.h"
+/*  FIXME: remove all dialogs/ stuff  */
+#include "dialogs/dialogs-types.h"
 
 
 /* Apply to a float the same rounding mode used in the renderer */

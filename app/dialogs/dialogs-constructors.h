@@ -22,157 +22,157 @@
 
 /*  toplevel dialogs  */
 
-GtkWidget * dialogs_file_new_new           (GimpDialogFactory *factory,
-					    GimpContext       *context,
+GtkWidget * dialogs_image_new_new          (GimpDialogFactory *factory,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_file_open_location_new (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+GtkWidget * dialogs_module_get             (GimpDialogFactory *factory,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_error_get              (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 
 /*  docks  */
 
 GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 
 /*  dockables  */
 
 GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_gradient_list_view_new (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_palette_list_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_font_list_view_new     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_document_list_new      (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_template_list_new      (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_image_grid_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_brush_grid_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_pattern_grid_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_font_grid_view_new     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_document_grid_new      (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_vectors_list_view_new  (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_histogram_editor_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_selection_editor_new   (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_undo_history_new       (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_navigation_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_color_editor_new       (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 
 GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 void        dialogs_edit_brush_func        (GimpData          *data,
                                             GtkWidget         *parent);
 
 GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 void        dialogs_edit_gradient_func     (GimpData          *data,
                                             GtkWidget         *parent);
 
 GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
-					    GimpContext       *context,
+                                            GimpContext       *context,
                                             gint               preview_size);
 void        dialogs_edit_palette_func      (GimpData          *data,
                                             GtkWidget         *parent);

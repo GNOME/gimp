@@ -181,9 +181,9 @@ static GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-preferences-dialog",
     GIMP_HELP_PREFS_DIALOG },
 
-  { "dialogs-module-manager", GTK_STOCK_EXECUTE,
+  { "dialogs-module-dialog", GTK_STOCK_EXECUTE,
     N_("_Module Manager"), NULL, NULL,
-    "gimp-module-manager-dialog",
+    "gimp-module-dialog",
     GIMP_HELP_MODULE_DIALOG },
 
   { "dialogs-tips", GIMP_STOCK_INFO,

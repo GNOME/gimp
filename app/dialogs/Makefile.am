@@ -1,0 +1,68 @@
+## Process this file with automake to produce Makefile.in
+
+noinst_LIBRARIES = libappdialogs.a
+
+libappdialogs_a_SOURCES = \
+	dialogs-types.h			\
+	dialogs.c			\
+	dialogs.h			\
+	dialogs-constructors.c		\
+	dialogs-constructors.h		\
+	\
+	about-dialog.c			\
+	about-dialog.h			\
+	color-dialog.c			\
+	color-dialog.h			\
+	convert-dialog.c		\
+	convert-dialog.h		\
+	file-dialog-utils.c		\
+	file-dialog-utils.h		\
+	file-open-dialog.c		\
+	file-open-dialog.h		\
+	file-open-location-dialog.c	\
+	file-open-location-dialog.h	\
+	file-save-dialog.c		\
+	file-save-dialog.h		\
+	grid-dialog.h                   \
+	grid-dialog.c                   \
+	image-new-dialog.c		\
+	image-new-dialog.h		\
+	info-dialog.c			\
+	info-dialog.h			\
+	info-window.c			\
+	info-window.h			\
+	module-dialog.c			\
+	module-dialog.h			\
+	offset-dialog.c			\
+	offset-dialog.h			\
+	palette-import-dialog.c		\
+	palette-import-dialog.h		\
+	preferences-dialog.c		\
+	preferences-dialog.h		\
+	quit-dialog.c			\
+	quit-dialog.h			\
+	resize-dialog.c			\
+	resize-dialog.h			\
+	resolution-calibrate-dialog.c	\
+	resolution-calibrate-dialog.h	\
+	stroke-dialog.c			\
+	stroke-dialog.h			\
+	tips-dialog.c			\
+	tips-dialog.h			\
+	tips-parser.c			\
+	tips-parser.h			\
+	user-install-dialog.c		\
+	user-install-dialog.h
+
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * module-browser.h
+ * module-dialog.h
  * (C) 1999 Austin Donnelly <austin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,10 +19,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MODULE_BROWSER_H__
+#ifndef __MODULE_DIALOG_H__
 
 
-GtkWidget * module_browser_new (Gimp *gimp);
+GtkWidget * module_dialog_new (Gimp *gimp);
 
 
-#endif  /* __MODULE_BROWSER_H__ */
+#endif  /* __MODULE_DIALOG_H__ */

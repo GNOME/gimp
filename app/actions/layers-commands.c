@@ -61,7 +61,7 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
-#include "gui/resize-dialog.h"
+#include "dialogs/resize-dialog.h"
 
 #include "actions.h"
 #include "layers-commands.h"

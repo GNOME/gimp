@@ -1,5 +1,84 @@
 2004-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in
+	* app/Makefile.am: added new directory app/dialogs and link
+	libappdialogs.c into the gimp binary.
+
+	* app/gui/Makefile.am
+	* app/gui/gui-types.h
+	* app/gui/gui-vtable.c
+	* app/gui/gui.c
+
+	* app/gui/about-dialog.[ch]
+	* app/gui/authors.h
+	* app/gui/color-notebook.[ch]
+	* app/gui/convert-dialog.[ch]
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.[ch]
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/file-new-dialog.[ch]
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-open-location-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]
+	* app/gui/grid-dialog.[ch]
+	* app/gui/info-dialog.[ch]
+	* app/gui/info-window.[ch]
+	* app/gui/module-browser.[ch]
+	* app/gui/offset-dialog.[ch]
+	* app/gui/palette-import-dialog.[ch]
+	* app/gui/preferences-dialog.[ch]
+	* app/gui/quit-dialog.[ch]
+	* app/gui/resize-dialog.[ch]
+	* app/gui/resolution-calibrate-dialog.[ch]
+	* app/gui/stroke-dialog.[ch]
+	* app/gui/tips-dialog.[ch]
+	* app/gui/tips-parser.[ch]
+	* app/gui/user-install-dialog.[ch]: removed these files...
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/dialogs-types.h
+
+	* app/dialogs/*.[ch]: ...and added them here. Changed some
+	filenames like module-browser -> module-dialog.
+
+	* app/app_procs.c
+	* app/actions/actions-types.h
+	* app/actions/actions.c
+	* app/actions/dialogs-actions.c
+	* app/actions/dialogs-commands.c
+	* app/actions/dockable-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/file-commands.c
+	* app/actions/gradient-editor-commands.c
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/palettes-commands.c
+	* app/actions/select-commands.c
+	* app/actions/templates-commands.c
+	* app/actions/templates-commands.h
+	* app/actions/vectors-commands.c
+	* app/actions/view-commands.c
+	* app/display/gimpdisplayshell-cursor.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.[ch]
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]
+	* app/widgets/gimptoolbox-color-area.c
+	* menus/toolbox-menu.xml.in
+	* tools/authorsgen/authorsgen.pl: changed accordingly.
+
+2004-09-13  Michael Natterer  <mitch@gimp.org>
+
 	Restore binary compatibility of the wire protocol that was
 	broken by the recent GPConfig changes:
 

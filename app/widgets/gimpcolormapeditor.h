@@ -53,7 +53,7 @@ struct _GimpColormapEditor
   GtkWidget       *index_spinbutton;
   GtkWidget       *color_entry;
 
-  ColorNotebook   *color_notebook;
+  ColorDialog     *color_dialog;
 };
 
 struct _GimpColormapEditorClass

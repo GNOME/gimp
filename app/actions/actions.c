@@ -42,7 +42,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gui/dialogs.h"
+#include "dialogs/dialogs.h"
 
 #include "brushes-actions.h"
 #include "buffers-actions.h"

@@ -38,7 +38,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "config/gimpconfig-utils.h"
 #include "config/gimprc.h"

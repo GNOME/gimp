@@ -21,11 +21,8 @@
 
 
 #include "tools/tools-types.h"
+#include "dialogs/dialogs-types.h"
 #include "menus/menus-types.h"
-
-
-typedef struct _ColorNotebook    ColorNotebook;
-typedef struct _InfoDialog       InfoDialog;
 
 
 #endif /* __GUI_TYPES_H__ */

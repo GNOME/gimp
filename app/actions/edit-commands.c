@@ -42,7 +42,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
-#include "gui/dialogs.h"
+#include "dialogs/dialogs.h"
 
 #include "actions.h"
 #include "edit-commands.h"

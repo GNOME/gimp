@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "dialogs-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -80,9 +80,9 @@
 #include "about-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "file-new-dialog.h"
 #include "file-open-location-dialog.h"
-#include "module-browser.h"
+#include "image-new-dialog.h"
+#include "module-dialog.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
 
@@ -107,11 +107,11 @@ static void   dialogs_indexed_palette_selected (GimpColormapEditor *editor,
 /**********************/
 
 GtkWidget *
-dialogs_file_new_new (GimpDialogFactory *factory,
-                      GimpContext       *context,
-                      gint               preview_size)
+dialogs_image_new_new (GimpDialogFactory *factory,
+                       GimpContext       *context,
+                       gint               preview_size)
 {
-  return file_new_dialog_new (context->gimp);
+  return image_new_dialog_new (context->gimp);
 }
 
 GtkWidget *
@@ -131,11 +131,11 @@ dialogs_preferences_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_module_browser_get (GimpDialogFactory *factory,
-			    GimpContext       *context,
-                            gint               preview_size)
+dialogs_module_get (GimpDialogFactory *factory,
+                    GimpContext       *context,
+                    gint               preview_size)
 {
-  return module_browser_new (context->gimp);
+  return module_dialog_new (context->gimp);
 }
 
 GtkWidget *

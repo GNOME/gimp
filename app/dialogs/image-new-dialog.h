@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FILE_NEW_DIALOG_H__
-#define __FILE_NEW_DIALOG_H__
+#ifndef __IMAGE_NEW_DIALOG_H__
+#define __IMAGE_NEW_DIALOG_H__
 
 
-GtkWidget * file_new_dialog_new (Gimp         *gimp);
+GtkWidget * image_new_dialog_new (Gimp         *gimp);
 
-void        file_new_dialog_set (GtkWidget    *widget,
-                                 GimpImage    *gimage,
-                                 GimpTemplate *template);
+void        image_new_dialog_set (GtkWidget    *widget,
+                                  GimpImage    *gimage,
+                                  GimpTemplate *template);
 
 
-#endif /* __FILE_NEW_DIALOG_H__ */
+#endif /* __IMAGE_NEW_DIALOG_H__ */
