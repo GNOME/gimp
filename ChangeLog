@@ -1,5 +1,8 @@
 2001-10-23  Sven Neumann  <sven@gimp.org>
 
+	* TODO.xml: added an entry for handling layers with masks with the 
+	Transform Tool.
+
 	* app/gui/tips_dialog.c: make Next and Previous buttons insensitive 
 	if no tips could be loaded (as done in the stable branch).
 	

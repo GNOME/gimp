@@ -231,6 +231,20 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="medium" status="0%" target="1.4">
+      <title>Allow Transformations on Layer Masks</title>
+      <description>
+	<p>
+	  Layers that have masks attached can currently not be manipulated 
+	  using the Transform Tool. It shouldn't be too hard to extend the
+	  Transform Tool to handle layers with masks correctly.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
   </section> <!-- Tools -->
 
   <section>
