@@ -28,9 +28,17 @@
 static GtkWidget    *presetnameentry = NULL;
 static GtkWidget    *presetlist      = NULL;
 static GtkWidget    *presetdesclabel = NULL;
+static GtkWidget    *presetsavebutton = NULL;
 static GtkListStore *store;
 static gchar        *selected_preset_orig_name = NULL;
 static gchar        *selected_preset_filename = NULL;
+
+
+void preset_save_button_set_sensitive (gboolean s)
+{
+  if (GTK_IS_WIDGET (presetsavebutton))
+    gtk_widget_set_sensitive (GTK_WIDGET (presetsavebutton), s);
+}
 
 void preset_free(void)
 {

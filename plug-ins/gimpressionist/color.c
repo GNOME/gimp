@@ -14,12 +14,13 @@
 #define NUMCOLORRADIO 2
 
 static GtkWidget *colorradio[NUMCOLORRADIO];
+static GtkObject *colornoiseadjust = NULL;
 
-
-void color_type_restore(void)
+void color_restore(void)
 {
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON(colorradio[pcvals.colortype]), TRUE);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
 }
 
 void create_colorpage(GtkNotebook *notebook)
@@ -55,8 +56,6 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show(frame);
 
-  color_type_restore();
-
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -73,6 +72,8 @@ void create_colorpage(GtkNotebook *notebook)
   g_signal_connect (colornoiseadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.colornoise);
+
+  color_restore();
 
   gtk_notebook_append_page_menu (notebook, vbox, label, NULL);
 }

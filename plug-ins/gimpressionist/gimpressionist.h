@@ -5,6 +5,8 @@
 /* Includes necessary for the correct processing of this file. */
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include "ppmtool.h"
 /* Defines */
 
 #define PLUG_IN_NAME    "plug_in_gimpressionist"
@@ -117,27 +119,8 @@ enum PRESETS_LIST_COLUMN_ENUM
 
 /* Globals */
 
-extern char *standalone;
-
 extern gimpressionist_vals_t pcvals;
-extern char *path;
-extern struct ppm infile;
-extern struct ppm inalpha;
-extern GtkWidget *window;
-
-extern int brushfile;
-extern struct ppm brushppm;
-
-extern GtkObject *devthreshadjust;
-
-extern GtkWidget *colortype;
-extern GtkObject *colornoiseadjust;
-
-extern GtkWidget *previewbutton;
-
 extern gboolean img_has_alpha;
-
-extern GRand *gr;
 
 /* Prototypes */
 
@@ -145,10 +128,7 @@ GList *parsepath(void);
 void free_parsepath_cache(void);
 
 void create_paperpage(GtkNotebook *);
-void create_brushpage(GtkNotebook *);
 void create_orientationpage(GtkNotebook *);
-void create_generalpage(GtkNotebook *);
-void create_placementpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
 
 void grabarea(void);

@@ -36,6 +36,10 @@ static GtkObject *brushgammaadjust     = NULL;
 
 static gchar *last_selected_brush = NULL;
 
+static gint brushfile = 2;
+
+static ppm_t brushppm  = {0, 0, NULL};
+
 void brush_restore(void)
 {
   reselect (brushlist, pcvals.selectedbrush);
@@ -52,6 +56,14 @@ void brush_store(void)
 void brush_free(void)
 {
   g_free (last_selected_brush);
+}
+
+void brush_get_selected (ppm_t *p)
+{
+  if(brushfile)
+    reloadbrush(pcvals.selectedbrush, p);
+  else
+    copyppm(&brushppm, p);
 }
 
 static void  updatebrushprev (const char *fn);
@@ -95,8 +107,7 @@ brushdmenuselect (GtkWidget *widget,
 #if 0
       unselectall(brushlist);
 #endif
-      if (GTK_IS_WIDGET (presetsavebutton))
-        gtk_widget_set_sensitive (GTK_WIDGET (presetsavebutton), FALSE);
+      preset_save_button_set_sensitive (FALSE);
     }
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (brushgammaadjust), 1.0);
@@ -404,7 +415,7 @@ static void
 selectbrushfile (GtkTreeSelection *selection, gpointer data)
 {
   brushfile = 1;
-  gtk_widget_set_sensitive (presetsavebutton, TRUE);
+  preset_save_button_set_sensitive (TRUE);
   selectbrush (selection, NULL);
 }
 

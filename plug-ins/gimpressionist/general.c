@@ -25,6 +25,7 @@ static GtkWidget *generalcolbutton;
 static GtkObject *generalshadowadjust = NULL;
 static GtkObject *generalshadowdepth = NULL;
 static GtkObject *generalshadowblur = NULL;
+static GtkObject *devthreshadjust = NULL;
 
 static int normalize_bg(int n)
 {
@@ -38,33 +39,42 @@ static void general_bg_store(GtkWidget *wg, void *d)
 
 void general_store(void)
 {
-    pcvals.generalpaintedges = GTK_TOGGLE_BUTTON(generalpaintedges)->active;
-    pcvals.generaldarkedge = GTK_ADJUSTMENT(generaldarkedgeadjust)->value;
-    pcvals.generaltileable = GTK_TOGGLE_BUTTON(generaltileable)->active;
-    pcvals.generaldropshadow = GTK_TOGGLE_BUTTON(generaldropshadow)->active;
-    pcvals.generalshadowdarkness = GTK_ADJUSTMENT(generalshadowadjust)->value;
-    pcvals.generalshadowdepth = GTK_ADJUSTMENT(generalshadowdepth)->value;
-    pcvals.generalshadowblur = GTK_ADJUSTMENT(generalshadowblur)->value;
+  pcvals.generalpaintedges = GTK_TOGGLE_BUTTON(generalpaintedges)->active;
+  pcvals.generaldarkedge = GTK_ADJUSTMENT(generaldarkedgeadjust)->value;
+  pcvals.generaltileable = GTK_TOGGLE_BUTTON(generaltileable)->active;
+  pcvals.generaldropshadow = GTK_TOGGLE_BUTTON(generaldropshadow)->active;
+  pcvals.generalshadowdarkness = GTK_ADJUSTMENT(generalshadowadjust)->value;
+  pcvals.generalshadowdepth = GTK_ADJUSTMENT(generalshadowdepth)->value;
+  pcvals.generalshadowblur = GTK_ADJUSTMENT(generalshadowblur)->value;
+  pcvals.devthresh = GTK_ADJUSTMENT(devthreshadjust)->value;
 }
 
 void general_restore(void)
 {
-    gtk_toggle_button_set_active (
-        GTK_TOGGLE_BUTTON (
-            generalbgradio[normalize_bg (pcvals.generalbgtype)]
-        ),
-        TRUE
-        );
+  gtk_toggle_button_set_active (
+    GTK_TOGGLE_BUTTON (generalbgradio[normalize_bg (pcvals.generalbgtype)]
+                      ),
+    TRUE
+    );
 
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generalpaintedges), pcvals.generalpaintedges);
-    gtk_adjustment_set_value(GTK_ADJUSTMENT(generaldarkedgeadjust), pcvals.generaldarkedge);
-    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowadjust), pcvals.generalshadowdarkness);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaldropshadow), pcvals.generaldropshadow);
-    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowdepth), pcvals.generalshadowdepth);
-    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowblur), pcvals.generalshadowblur);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaltileable), pcvals.generaltileable);
-    gimp_color_button_set_color (GIMP_COLOR_BUTTON(generalcolbutton),
-                                 &pcvals.color);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generalpaintedges),
+                                pcvals.generalpaintedges);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (generaldarkedgeadjust),
+                            pcvals.generaldarkedge);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowadjust),
+                            pcvals.generalshadowdarkness);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generaldropshadow),
+                                pcvals.generaldropshadow);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowdepth),
+                            pcvals.generalshadowdepth);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (generalshadowblur),
+                            pcvals.generalshadowblur);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (generaltileable),
+                                pcvals.generaltileable);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (generalcolbutton),
+                               &pcvals.color);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (devthreshadjust),
+                            pcvals.devthresh);
 }
 
 static void selectcolor(GtkWidget *widget, gpointer data)

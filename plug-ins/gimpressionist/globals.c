@@ -6,21 +6,9 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
-GtkWidget *presetsavebutton = NULL;
-GtkWidget *presetdesctext = NULL;
-GtkObject *devthreshadjust = NULL;
-gint  brushfile = 2;
-ppm_t brushppm  = {0, 0, NULL};
 gboolean img_has_alpha = FALSE;
+GRand *random_generator;
 gimpressionist_vals_t pcvals;
-ppm_t infile = {0,0,NULL};
-ppm_t inalpha = {0,0,NULL};
-GRand *gr;
-
-GtkWidget        *previewbutton = NULL;
-GtkObject *colornoiseadjust = NULL;
-
-
 
 /*
  * The default values for the application, to be initialized at startup.

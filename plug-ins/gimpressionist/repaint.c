@@ -8,9 +8,12 @@
 #include <libgimp/gimp.h>
 
 #include "gimpressionist.h"
+#include "brush.h"
 #include "placement.h"
-#include "size.h"
 #include "ppmtool.h"
+#include "preview.h"
+#include "random.h"
+#include "size.h"
 
 #include <libgimp/stdplugins-intl.h>
 
@@ -160,7 +163,7 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
     return 0;
   }
 
-  i = g_rand_int_range (gr, 0, g_list_length(brlist));
+  i = g_rand_int_range (random_generator, 0, g_list_length(brlist));
   best = (long)((g_list_nth(brlist,i))->data);
   g_list_free(brlist);
 
@@ -314,10 +317,7 @@ void repaint(ppm_t *p, ppm_t *a)
     shadows = NULL;
 
   brushes[0].col = NULL;
-  if(brushfile)
-    reloadbrush(runningvals.selectedbrush, &brushes[0]);
-  else
-    copyppm(&brushppm, &brushes[0]);
+  brush_get_selected (&brushes[0]);
 
   resize(&brushes[0], brushes[0].width, brushes[0].height * pow(10,runningvals.brushaspect));
   scale = runningvals.sizelast / MAX(brushes[0].width, brushes[0].height);
@@ -630,7 +630,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     for(j = 0; j < i; j++) {
       int a, b;
-      a = g_rand_int_range (gr, 0, i);
+      a = g_rand_int_range (random_generator, 0, i);
       b = xpos[j]; xpos[j] = xpos[a]; xpos[a] = b;
       b = ypos[j]; ypos[j] = ypos[a]; ypos[a] = b;
     }
@@ -644,23 +644,24 @@ void repaint(ppm_t *p, ppm_t *a)
         char tmps[40];
         g_snprintf (tmps, sizeof (tmps),
                     "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
-        gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), tmps);
+        preview_set_button_label (tmps);
+
         while(gtk_events_pending())
           gtk_main_iteration();
       }
     }
 
     if(runningvals.placetype == PLACEMENT_TYPE_RANDOM) {
-      tx = g_rand_int_range (gr, maxbrushwidth/2,
+      tx = g_rand_int_range (random_generator, maxbrushwidth/2,
                              tmp.width - maxbrushwidth/2);
-      ty = g_rand_int_range (gr, maxbrushheight/2,
+      ty = g_rand_int_range (random_generator, maxbrushheight/2,
                              tmp.height - maxbrushheight/2);
     } else if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) {
       tx = xpos[i-1];
       ty = ypos[i-1];
     }
     if(runningvals.placecenter) {
-      double z = g_rand_double_range (gr, 0, 0.75);
+      double z = g_rand_double_range (random_generator, 0, 0.75);
       tx = tx * (1.0-z) + tmp.width/2 * z;
       ty = ty * (1.0-z) + tmp.height/2 * z;
     }
@@ -683,7 +684,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
     switch(runningvals.orienttype) {
     case ORIENTATION_RANDOM:
-      on = g_rand_int_range (gr, 0, runningvals.orientnum);
+      on = g_rand_int_range (random_generator, 0, runningvals.orientnum);
       break;
     case ORIENTATION_VALUE:
     case ORIENTATION_RADIUS:
@@ -703,7 +704,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
     switch(runningvals.sizetype) {
     case SIZE_TYPE_RANDOM:
-      sn = g_rand_int_range (gr, 0, runningvals.sizenum);
+      sn = g_rand_int_range (random_generator, 0, runningvals.sizenum);
       break;
     case SIZE_TYPE_VALUE:
     case SIZE_TYPE_RADIUS:
@@ -787,7 +788,7 @@ void repaint(ppm_t *p, ppm_t *a)
 #define BOUNDS(a) (((a) < 0) ? (a) : ((a) > 255) ? 255 : (a))
 #define MYASSIGN(a) \
     { \
-        a = a + g_rand_double_range (gr, -v/2.0, v/2.0); \
+        a = a + g_rand_double_range (random_generator, -v/2.0, v/2.0); \
         a = BOUNDS(a) ;       \
     }
       MYASSIGN(r);
@@ -900,7 +901,7 @@ void repaint(ppm_t *p, ppm_t *a)
   if(runningvals.run) {
     gimp_progress_update(0.8);
   } else {
-    gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), _("Update"));
+    preview_set_button_label (_("Update"));
   }
   running = 0;
 }

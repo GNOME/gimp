@@ -32,24 +32,17 @@ void storevals(void)
   paper_store();
   brush_store();
   general_store();
-  pcvals.devthresh = GTK_ADJUSTMENT(devthreshadjust)->value;
 }
 
 void restorevals(void)
 {
   brush_restore();
   paper_restore();
-
   orientation_restore();
-
   size_restore();
-
   place_restore();
   general_restore();
-
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(devthreshadjust), pcvals.devthresh);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
-  color_type_restore();
+  color_restore();
 
   update_orientmap_dialog();
 }

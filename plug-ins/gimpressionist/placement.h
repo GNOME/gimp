@@ -9,5 +9,6 @@ enum PLACEMENT_TYPE_ENUM
 
 void place_store(void);
 void place_restore(void);
+void create_placementpage(GtkNotebook *);
 
 #endif

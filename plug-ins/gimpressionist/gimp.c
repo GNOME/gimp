@@ -7,10 +7,13 @@
 #include <libgimp/gimp.h>
 
 #include "ppmtool.h"
+#include "infile.h"
 #include "gimpressionist.h"
 #include "preview.h"
 #include "brush.h"
 #include "presets.h"
+#include "random.h"
+
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -31,6 +34,24 @@ GimpPlugInInfo PLUG_IN_INFO = {
 }; /* PLUG_IN_INFO */
 
 static GimpDrawable *drawable;
+static ppm_t infile = {0,0,NULL};
+static ppm_t inalpha = {0,0,NULL};
+
+
+void infile_copy_to_ppm(ppm_t * p)
+{
+  if(!infile.col)
+    grabarea();
+#if 0
+    updatepreview (NULL, (void *)2); /* Force grabarea() */
+#endif
+  copyppm(&infile, p);
+}
+
+void infile_copy_alpha_to_ppm(ppm_t * p)
+{
+  copyppm(&inalpha, p);
+}
 
 MAIN()
 
@@ -107,7 +128,7 @@ run (const gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gr = g_rand_new ();
+  random_generator = g_rand_new ();
 
   switch (run_mode)
     {
@@ -173,7 +194,7 @@ run (const gchar      *name,
     }
 
   /* Resources Cleanup */
-  g_rand_free (gr);
+  g_rand_free (random_generator);
   free_parsepath_cache();
   reloadbrush(NULL, NULL);
   preview_free_resources();

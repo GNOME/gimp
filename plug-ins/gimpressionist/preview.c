@@ -14,12 +14,18 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "infile.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
 static GtkWidget *preview       = NULL;
+static GtkWidget *previewbutton = NULL;
 
+void preview_set_button_label(gchar * text)
+{
+  gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), text);
+}
 
 static void drawalpha(ppm_t *p, ppm_t *a)
 {
@@ -65,10 +71,23 @@ updatepreview (GtkWidget *wg, gpointer d)
   gint   i;
   guchar buf[PREVIEWSIZE*3];
 
+  /* This portion is remmed out because of the remming out of the
+   * code below.
+   *            -- Shlomi Fish
+   * */
+#if 0
   if(!infile.col && d)
     grabarea();
+#endif
 
+  /* It seems that infile.col must be true here. (after grabarea() that is.)
+   * Thus, I'm removing this entire portion of the code in hope that
+   * it works OK afterwards.
+   *            -- Shlomi Fish
+   * */
+#if 0
   if(!infile.col && !d) {
+
     memset(buf, 0, sizeof(buf));
     for(i = 0; i < PREVIEWSIZE; i++) 
     {
@@ -76,15 +95,16 @@ updatepreview (GtkWidget *wg, gpointer d)
     }
   } 
   else 
+#endif
   {
     if(!backup_ppm.col)
     {
-      copyppm(&infile, &backup_ppm);
+      infile_copy_to_ppm (&backup_ppm);
       if((backup_ppm.width != PREVIEWSIZE) || (backup_ppm.height != PREVIEWSIZE))
         resize_fast(&backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
       if(img_has_alpha) 
       {
-        copyppm(&inalpha, &alpha_backup_ppm);
+        infile_copy_alpha_to_ppm (&alpha_backup_ppm);
         if((alpha_backup_ppm.width != PREVIEWSIZE) || (alpha_backup_ppm.height != PREVIEWSIZE))
           resize_fast(&alpha_backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
       }

@@ -103,9 +103,13 @@ static void updatesmvectorprev(void)
 
   if(!ok || (val != lastval))
     {
+#if 0
       if(!infile.col)
          updatepreview (NULL, (void *)2); /* Force grabarea() */
       copyppm(&infile, &backup);
+#else
+      infile_copy_to_ppm (&backup);
+#endif
       ppmbrightness(&backup, val, 1,1,1);
       if (backup.width != OMWIDTH || backup.height != OMHEIGHT)
          resize_fast(&backup, OMWIDTH, OMHEIGHT);

@@ -12,6 +12,7 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "infile.h"
 
 #include "preview.h"
 
@@ -174,9 +175,7 @@ static void updatevectorprev(void)
   else val = 0.5;
 
   if(!ok || (val != lastval)) {
-    if(!infile.col)
-      updatepreview (NULL, (void *)2); /* Force grabarea() */
-    copyppm(&infile, &backup);
+    infile_copy_to_ppm(&backup);
     ppmbrightness(&backup, val, 1,1,1);
     if((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))
       resize_fast(&backup, OMWIDTH, OMHEIGHT);

@@ -37,6 +37,7 @@ gimpressionist_sources = \
 	gimpressionist.c	\
 	gimpressionist.h	\
 	globals.c		\
+	infile.h        \
 	orientation.c		\
 	orientmap.c		\
 	paper.c			\
@@ -49,7 +50,9 @@ gimpressionist_sources = \
 	presets.h		\
 	preview.c		\
 	preview.h		\
+	random.h        \
 	repaint.c		\
+	size.h          \
 	size.c			\
 	sizemap.c		\
 	utils.c

@@ -9,9 +9,9 @@ enum SELECT_PRESET_RETURN_VALUES
 };
 
 void create_presetpage (GtkNotebook *);
-extern GtkWidget *presetsavebutton;
 int select_preset (const gchar *preset);
 void preset_free (void);
+void preset_save_button_set_sensitive (gboolean s);
 
 #endif
 
