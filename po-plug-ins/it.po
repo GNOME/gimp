@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-10-11 08:22+0200\n"
+"POT-Creation-Date: 2004-10-17 20:11+0200\n"
+"PO-Revision-Date: 2004-10-17 20:12+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgid "Co_lors"
 msgstr "Co_lori"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:883 plug-ins/common/borderaverage.c:404
+#: plug-ins/FractalExplorer/Dialogs.c:883 plug-ins/common/borderaverage.c:405
 msgid "Number of Colors"
 msgstr "Numero di colori"
 
@@ -2106,27 +2106,27 @@ msgstr "_Sfoca"
 msgid "Blurring..."
 msgstr "Sfocatura in corso..."
 
-#: plug-ins/common/borderaverage.c:100
+#: plug-ins/common/borderaverage.c:101
 msgid "_Border Average..."
 msgstr "_Bordo medio..."
 
-#: plug-ins/common/borderaverage.c:167
+#: plug-ins/common/borderaverage.c:168
 msgid "Border Average..."
 msgstr "Bordo medio..."
 
-#: plug-ins/common/borderaverage.c:347
+#: plug-ins/common/borderaverage.c:348
 msgid "Borderaverage"
 msgstr "Bordo medio"
 
-#: plug-ins/common/borderaverage.c:361
+#: plug-ins/common/borderaverage.c:362
 msgid "Border Size"
 msgstr "Dimensione bordo"
 
-#: plug-ins/common/borderaverage.c:369
+#: plug-ins/common/borderaverage.c:370
 msgid "_Thickness:"
 msgstr "_Spessore:"
 
-#: plug-ins/common/borderaverage.c:412
+#: plug-ins/common/borderaverage.c:413
 msgid "_Bucket size:"
 msgstr "Dimensione secc_hiello:"
 
@@ -2388,28 +2388,28 @@ msgstr "Colore personalizzato:"
 msgid "Colorify Custom Color"
 msgstr "Colorazione con colori personalizzati"
 
-#: plug-ins/common/colortoalpha.c:97
+#: plug-ins/common/colortoalpha.c:105
 msgid "Color to _Alpha..."
 msgstr "Colore ad _alfa..."
 
-#: plug-ins/common/colortoalpha.c:176
+#: plug-ins/common/colortoalpha.c:183
 msgid "Removing color..."
 msgstr "Rimozione colore..."
 
-#: plug-ins/common/colortoalpha.c:317
+#: plug-ins/common/colortoalpha.c:364
 msgid "Color to Alpha"
 msgstr "Colore ad alfa"
 
-#: plug-ins/common/colortoalpha.c:333 plug-ins/common/mapcolor.c:424
+#: plug-ins/common/colortoalpha.c:389 plug-ins/common/mapcolor.c:424
 #: plug-ins/gfli/gfli.c:838 plug-ins/gfli/gfli.c:901
 msgid "From:"
 msgstr "Da:"
 
-#: plug-ins/common/colortoalpha.c:337
+#: plug-ins/common/colortoalpha.c:393
 msgid "Color to Alpha Color Picker"
 msgstr "Colore a contagocce colore alfa"
 
-#: plug-ins/common/colortoalpha.c:348
+#: plug-ins/common/colortoalpha.c:407
 msgid "to alpha"
 msgstr "ad alfa"
 
@@ -2610,7 +2610,7 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "_Estendi"
 
-#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:357
+#: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:394
 #: plug-ins/common/edge.c:716 plug-ins/common/ripple.c:560
 msgid "_Wrap"
 msgstr "_Wrap"
@@ -3245,38 +3245,38 @@ msgstr "Po_larizzazione:"
 msgid "Other options"
 msgstr "Altre opzioni"
 
-#: plug-ins/common/displace.c:151
+#: plug-ins/common/displace.c:154
 msgid "_Displace..."
 msgstr "S_postamento..."
 
-#: plug-ins/common/displace.c:225
+#: plug-ins/common/displace.c:228
 msgid "Displacing..."
 msgstr "Spostamento..."
 
-#: plug-ins/common/displace.c:260
+#: plug-ins/common/displace.c:268
 msgid "Displace"
 msgstr "Sposta"
 
 #. X options
-#: plug-ins/common/displace.c:278
+#: plug-ins/common/displace.c:297
 msgid "_X displacement:"
 msgstr "Spostamento _X:"
 
 #. Y Options
-#: plug-ins/common/displace.c:316
+#: plug-ins/common/displace.c:344
 msgid "_Y displacement:"
 msgstr "Spostamento _Y:"
 
-#: plug-ins/common/displace.c:353
+#: plug-ins/common/displace.c:390
 msgid "On Edges:"
 msgstr "Sui bordi:"
 
-#: plug-ins/common/displace.c:359 plug-ins/common/edge.c:729
+#: plug-ins/common/displace.c:396 plug-ins/common/edge.c:729
 #: plug-ins/common/ripple.c:561 plug-ins/common/waves.c:274
 msgid "_Smear"
 msgstr "_Macchia"
 
-#: plug-ins/common/displace.c:361 plug-ins/common/edge.c:742
+#: plug-ins/common/displace.c:398 plug-ins/common/edge.c:742
 #: plug-ins/common/fractaltrace.c:735 plug-ins/common/newsprint.c:407
 #: plug-ins/common/ripple.c:562
 msgid "_Black"
@@ -4116,23 +4116,23 @@ msgstr "Dimensione:"
 msgid "Ranks:"
 msgstr "Ranghi:"
 
-#: plug-ins/common/glasstile.c:116
+#: plug-ins/common/glasstile.c:112
 msgid "_Glass Tile..."
 msgstr "Piastrelle di _vetro..."
 
-#: plug-ins/common/glasstile.c:194
+#: plug-ins/common/glasstile.c:191
 msgid "Glass Tile..."
 msgstr "Piastrelle di vetro..."
 
-#: plug-ins/common/glasstile.c:232
+#: plug-ins/common/glasstile.c:229
 msgid "Glass Tile"
 msgstr "Piastrelle di vetro"
 
-#: plug-ins/common/glasstile.c:270
+#: plug-ins/common/glasstile.c:259
 msgid "Tile _width:"
 msgstr "_Larghezza mattonella:"
 
-#: plug-ins/common/glasstile.c:284 plug-ins/common/mosaic.c:621
+#: plug-ins/common/glasstile.c:273 plug-ins/common/mosaic.c:621
 msgid "Tile _height:"
 msgstr "_Altezza mattonella:"
 
@@ -9541,7 +9541,6 @@ msgstr ""
 "%s"
 
 #: plug-ins/helpbrowser/dialog.c:148
-#, fuzzy
 msgid "GIMP Help browser"
 msgstr "Navigatore dell'aiuto di Gimp"
 
@@ -11560,105 +11559,3 @@ msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
-
-#~ msgid "<Image>/Filters/Render"
-#~ msgstr "<Image>/Filtri/Render"
-
-#~ msgid "<Image>/Filters/Light Effects"
-#~ msgstr "<Image>/Filtri/Effetti luce"
-
-#~ msgid "<Image>/Filters/Map"
-#~ msgstr "<Image>/Filtri/Mappa"
-
-#~ msgid "<Image>/Filters/Colors/Map"
-#~ msgstr "<Image>/Filtri/Colori/Mappa"
-
-#~ msgid "<Image>/Filters/Render/Pattern"
-#~ msgstr "<Image>/Filtri/Render/Motivi"
-
-#~ msgid "<Image>/Layer"
-#~ msgstr "<Image>/Livelli"
-
-#~ msgid "<Image>/Filters/Animation"
-#~ msgstr "<Image>/Filtri/Animazione"
-
-#~ msgid "<Image>/Filters/Glass Effects"
-#~ msgstr "<Image>/Filtri/Effetti lente"
-
-#~ msgid "<Image>/Image/Crop"
-#~ msgstr "<Image>/Immagine/Ritaglio"
-
-#~ msgid "<Image>/Layer/Crop"
-#~ msgstr "<Image>/Livelli/Ritaglio"
-
-#~ msgid "<Image>/Layer/Colors/Auto"
-#~ msgstr "<Image>/Livelli/Colori/Auto"
-
-#~ msgid "<Image>/Filters/Distorts"
-#~ msgstr "<Image>/Filtri/Distorsioni"
-
-#~ msgid "<Image>/Filters/Blur"
-#~ msgstr "<Image>/Filtri/Sfocatura"
-
-#~ msgid "<Image>/Filters/Colors"
-#~ msgstr "<Image>/Filtri/Colori"
-
-#~ msgid "<Image>/Layer/Colors/Info"
-#~ msgstr "<Image>/Livelli/Colori/Informazioni"
-
-#~ msgid "<Image>/Layer/Transparency/Modify"
-#~ msgstr "<Image>/Image/Trasparenza/Modifica"
-
-#~ msgid "<Image>/Image/Mode"
-#~ msgstr "<Image>/Immagine/Modalità"
-
-#~ msgid "<Image>/Filters/Generic"
-#~ msgstr "<Image>/Filtri/Generici"
-
-#~ msgid "<Image>/Filters/Artistic"
-#~ msgstr "<Image>/Filtri/Artistici"
-
-#~ msgid "<Image>/Filters/Enhance"
-#~ msgstr "<Image>/Filtri/Enhance"
-
-#~ msgid "<Image>/Filters/Combine"
-#~ msgstr "<Image>/Filtri/Combina"
-
-#~ msgid "<Image>/Filters/Edge-Detect"
-#~ msgstr "<Image>/Filtri/Rilevamento-spigoli"
-
-#~ msgid "<Image>/Filters/Toys"
-#~ msgstr "<Image>/Filtri/Giocattoli"
-
-#~ msgid "<Image>/Image/Transform"
-#~ msgstr "<Image>/Immagine/Trasforma"
-
-#~ msgid "<Image>/File/Send"
-#~ msgstr "<Image>/File/Spedisci"
-
-#~ msgid "_Do preview"
-#~ msgstr "_Crea anteprima"
-
-#~ msgid "<Image>/Filters/Noise"
-#~ msgstr "<Image>/Filtri/Disturbo"
-
-#~ msgid "<Image>/Filters/Render/Clouds"
-#~ msgstr "<Image>/Filtri/Render/Nuvole"
-
-#~ msgid "Right-Click Preview to Jump"
-#~ msgstr "Fare clic col tasto destro sull'anteprima per saltare"
-
-#~ msgid "<Toolbox>/File/Acquire"
-#~ msgstr "<Toolbox>/File/Acquisizione"
-
-#~ msgid "<Toolbox>/Xtns/Extensions"
-#~ msgstr "<Toolbox>/Xtns/Estensioni"
-
-#~ msgid "<Image>/Edit"
-#~ msgstr "<Image>/Modifica"
-
-#~ msgid "<Image>/Filters/Render/Nature"
-#~ msgstr "<Image>/Filtri/Render/Natura"
-
-#~ msgid "<Image>/Filters/Web"
-#~ msgstr "<Image>/Filtri/Web"
