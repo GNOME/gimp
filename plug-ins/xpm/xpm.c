@@ -57,9 +57,6 @@ static void   run        (char    *name,
                           int     *nreturn_vals,
                           GParam **return_vals);
 
-static void
-dump(XImage *xx, char *yy);
-
 static gint32
 load_image   (char   *filename);
 
@@ -147,6 +144,8 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING,   "filename", "The name of the file to save the image in" },
     { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { PARAM_FLOAT,    "alpha_threshold", "Alpha cutoff threshold" }
+
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -229,15 +228,16 @@ run (char    *name,
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 4)
+	  if (nparams != 5)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
-	      xpmvals.threshold = param[4].data.d_float;
+	      xpmvals.threshold = param[5].data.d_float;
 	    }
 	  if (status == STATUS_SUCCESS &&
 	      (xpmvals.threshold < 0.0 || xpmvals.threshold > 1.0))
 	    status = STATUS_CALLING_ERROR;
+	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
@@ -653,17 +653,6 @@ save_image_2 (GDrawable *drawable,
 
   g_free(buffer);
   return 1;
-}
-
-static void
-dump(XImage *xx, char *yy)
-{
-  printf("\n%s\n", yy);
-  printf("%d %d %d\n", xx->width, xx->height, xx->depth);
-  printf("%x %x %x\n", xx->red_mask, xx->green_mask, xx->blue_mask);
-  printf("%d %d %d\n", xx->format, xx->byte_order, xx->bitmap_bit_order);
-  printf("%d %d\n", xx->bitmap_unit, xx->bitmap_pad);
-  printf("%d %d\n", xx->bytes_per_line, xx->bits_per_pixel);
 }
 
 
