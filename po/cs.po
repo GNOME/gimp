@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-31 11:52+0200\n"
-"PO-Revision-Date: 2003-08-01 02:36+0200\n"
+"POT-Creation-Date: 2003-08-08 11:47+0200\n"
+"PO-Revision-Date: 2003-08-08 20:42+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -368,13 +368,16 @@ msgstr ""
 msgid ""
 "Specifies how the area around the image should be drawn when in fullscreen "
 "mode."
-msgstr "Určuje, jak se má v režimu přes celou obrazovku kreslit oblast okolo obrázku."
+msgstr ""
+"Určuje, jak se má v režimu přes celou obrazovku kreslit oblast okolo obrázku."
 
 #: app/config/gimprc-blurbs.h:27
 msgid ""
 "Sets the canvas padding color used when in fullscreen mode and the padding "
 "mode is set to custom color."
-msgstr "Nastavuje barvu doplnění plátna používanou v režimu přes celou obrazovku, je-li režim doplnění nastaven na vlastní barvu."
+msgstr ""
+"Nastavuje barvu doplnění plátna používanou v režimu přes celou obrazovku, je-"
+"li režim doplnění nastaven na vlastní barvu."
 
 #: app/config/gimprc-blurbs.h:31
 msgid ""
@@ -602,25 +605,37 @@ msgstr ""
 msgid ""
 "When enabled, the menubar is visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Menubar\" command."
-msgstr "Je-li povoleno, je lišta s menu implicitně viditelná v režimu přes celou obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat lištu s menu\"."
+msgstr ""
+"Je-li povoleno, je lišta s menu implicitně viditelná v režimu přes celou "
+"obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat lištu s "
+"menu\"."
 
 #: app/config/gimprc-blurbs.h:270
 msgid ""
 "When enabled, the rulers are visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Rulers\" command."
-msgstr "Je-li povoleno, jsou pravítka implicitně viditelná v režimu přes celou obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat pravítka\"."
+msgstr ""
+"Je-li povoleno, jsou pravítka implicitně viditelná v režimu přes celou "
+"obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat pravítka"
+"\"."
 
 #: app/config/gimprc-blurbs.h:274
 msgid ""
 "When enabled, the scrollbars are visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Scrollbars\" command."
-msgstr "Je-li povoleno, jsou posuvné pruhy implicitně viditelné v režimu přes celou obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat posuvné pruhy\"."
+msgstr ""
+"Je-li povoleno, jsou posuvné pruhy implicitně viditelné v režimu přes celou "
+"obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat posuvné "
+"pruhy\"."
 
 #: app/config/gimprc-blurbs.h:278
 msgid ""
 "When enabled, the statusbar is visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Statusbar\" command."
-msgstr "Je-li povoleno, je stavová lišta implicitně viditelná v režimu přes celou obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat stavovou lištu\"."
+msgstr ""
+"Je-li povoleno, je stavová lišta implicitně viditelná v režimu přes celou "
+"obrazovku. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat stavovou "
+"lištu\"."
 
 #: app/config/gimprc-blurbs.h:282
 msgid "Enable to display a handy GIMP tip on startup."
@@ -1390,7 +1405,7 @@ msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:276
+#: app/tools/gimpvectortool.c:278
 msgid "Unnamed"
 msgstr "Beze jména"
 
@@ -2238,7 +2253,7 @@ msgid "pixel"
 msgstr "pixel"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:623
 msgid "pixels"
 msgstr "pixelů"
 
@@ -3832,7 +3847,7 @@ msgstr "/Soubor/Na_vrátit..."
 msgid "/File/_Close"
 msgstr "/Soubor/_Zavřít"
 
-#: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:228
+#: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:230
 msgid "/File/_Quit"
 msgstr "/Soubor/_Konec"
 
@@ -4523,85 +4538,101 @@ msgid "/Filters/_Colors"
 msgstr "/Filtry/_Barvy"
 
 #: app/gui/image-menu.c:1014
+msgid "/Filters/Colors/Ma_p"
+msgstr "/Filtry/_Barvy/_Mapa"
+
+#: app/gui/image-menu.c:1015
 msgid "/Filters/_Noise"
 msgstr "/Filtry/_Šum"
 
-#: app/gui/image-menu.c:1015
+#: app/gui/image-menu.c:1016
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filtry/_Detekce hran"
 
-#: app/gui/image-menu.c:1016
+#: app/gui/image-menu.c:1017
 msgid "/Filters/En_hance"
 msgstr "/Filtry/_Vylepšení"
 
-#: app/gui/image-menu.c:1017
+#: app/gui/image-menu.c:1018
 msgid "/Filters/_Generic"
 msgstr "/Filtry/_Obecné"
 
-#: app/gui/image-menu.c:1021
+#: app/gui/image-menu.c:1022
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Filtry/Efekty se s_klem"
 
-#: app/gui/image-menu.c:1022
+#: app/gui/image-menu.c:1023
 msgid "/Filters/_Light Effects"
 msgstr "/Filtry/Efekty se _světlem"
 
-#: app/gui/image-menu.c:1023
+#: app/gui/image-menu.c:1024
 msgid "/Filters/_Distorts"
 msgstr "/Filtry/_Zkreslení"
 
-#: app/gui/image-menu.c:1024
+#: app/gui/image-menu.c:1025
 msgid "/Filters/_Artistic"
 msgstr "/Filtry/_Umění"
 
-#: app/gui/image-menu.c:1025
+#: app/gui/image-menu.c:1026
 msgid "/Filters/_Map"
 msgstr "/Filtry/_Mapování"
 
-#: app/gui/image-menu.c:1026
+#: app/gui/image-menu.c:1027
 msgid "/Filters/_Render"
 msgstr "/Filtry/V_yobrazení"
 
-#: app/gui/image-menu.c:1027
+#: app/gui/image-menu.c:1028
+msgid "/Filters/Render/_Clouds"
+msgstr "/Filtry/V_yobrazení/_Mraky"
+
+#: app/gui/image-menu.c:1029
+msgid "/Filters/Render/_Nature"
+msgstr "/Filtry/V_yobrazení/_Příroda"
+
+#: app/gui/image-menu.c:1030
+msgid "/Filters/Render/_Pattern"
+msgstr "/Filtry/V_yobrazení/_Vzorek"
+
+#: app/gui/image-menu.c:1031
 msgid "/Filters/_Web"
 msgstr "/Filtry/_WWW"
 
-#: app/gui/image-menu.c:1031
+#: app/gui/image-menu.c:1035
 msgid "/Filters/An_imation"
 msgstr "/Filtry/_Animace"
 
-#: app/gui/image-menu.c:1032
+#: app/gui/image-menu.c:1036
 msgid "/Filters/C_ombine"
 msgstr "/Filtry/_Kombinace"
 
-#: app/gui/image-menu.c:1036
+#: app/gui/image-menu.c:1040
 msgid "/Filters/To_ys"
 msgstr "/Filtry/_Hračky"
 
-#: app/gui/image-menu.c:1361
+#: app/gui/image-menu.c:1365
 #, c-format
 msgid "_Undo %s"
 msgstr "_Vrátit %s"
 
-#: app/gui/image-menu.c:1366
+#: app/gui/image-menu.c:1370
 #, c-format
 msgid "_Redo %s"
 msgstr "_Zrušit vrácení %s"
 
-#: app/gui/image-menu.c:1370
+#: app/gui/image-menu.c:1374
 msgid "_Undo"
 msgstr "Vr_átit"
 
-#: app/gui/image-menu.c:1371
+#: app/gui/image-menu.c:1375
 msgid "_Redo"
 msgstr "Z_rušit vrácení"
 
-#: app/gui/image-menu.c:1617
+#: app/gui/image-menu.c:1621
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr "Jiný (%d:%d) ..."
 
-#: app/gui/image-menu.c:1626
+#: app/gui/image-menu.c:1630
 #, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "_Zvětšení (%d:%d)"
@@ -5181,21 +5212,21 @@ msgstr "/Smazat vzorek..."
 msgid "/Refresh Patterns"
 msgstr "/Aktualizovat vzorky"
 
-#: app/gui/plug-in-menus.c:363
+#: app/gui/plug-in-menus.c:367
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Z_opakovat \"%s\""
 
-#: app/gui/plug-in-menus.c:364
+#: app/gui/plug-in-menus.c:368
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Znovu z_obrazit \"%s\""
 
-#: app/gui/plug-in-menus.c:390
+#: app/gui/plug-in-menus.c:394
 msgid "Repeat Last"
 msgstr "Opakovat poslední"
 
-#: app/gui/plug-in-menus.c:393
+#: app/gui/plug-in-menus.c:397
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
@@ -6083,33 +6114,37 @@ msgstr "/Soubor/Dialogy/_Šablony..."
 msgid "/File/Dialogs/Error Co_nsole..."
 msgstr "/Soubor/Dialogy/_Chybová konzola..."
 
+#: app/gui/toolbox-menu.c:218
+msgid "/File/D_ebug"
+msgstr "/Soubor/_Ladění"
+
 #. <Toolbox>/Xtns
-#: app/gui/toolbox-menu.c:236
+#: app/gui/toolbox-menu.c:238
 msgid "/_Xtns"
 msgstr "/_Rozš."
 
-#: app/gui/toolbox-menu.c:238
+#: app/gui/toolbox-menu.c:240
 msgid "/Xtns/_Module Manager..."
 msgstr "/Rozš./_Správce modulů..."
 
 #. <Toolbox>/Help
-#: app/gui/toolbox-menu.c:247
+#: app/gui/toolbox-menu.c:249
 msgid "/_Help"
 msgstr "/_Pomoc"
 
-#: app/gui/toolbox-menu.c:249
+#: app/gui/toolbox-menu.c:251
 msgid "/Help/_Help..."
 msgstr "/Pomoc/_Nápověda..."
 
-#: app/gui/toolbox-menu.c:254
+#: app/gui/toolbox-menu.c:256
 msgid "/Help/_Context Help..."
 msgstr "/Pomoc/_Kontextová nápověda..."
 
-#: app/gui/toolbox-menu.c:259
+#: app/gui/toolbox-menu.c:261
 msgid "/Help/_Tip of the Day..."
 msgstr "/Pomoc/_Tip dne..."
 
-#: app/gui/toolbox-menu.c:264
+#: app/gui/toolbox-menu.c:266
 msgid "/Help/_About..."
 msgstr "/Pomoc/O _programu..."
 
@@ -6964,7 +6999,7 @@ msgstr "Pomocná procedura"
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: app/plug-in/plug-in.c:704
+#: app/plug-in/plug-in.c:706
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8401,23 +8436,23 @@ msgstr "Přejmenování cesty"
 msgid "Move Path"
 msgstr "Přesunout cestu"
 
-#: app/vectors/gimpvectors.c:333
+#: app/vectors/gimpvectors.c:326
 msgid "Scale Path"
 msgstr "Škálovat cestu"
 
-#: app/vectors/gimpvectors.c:372
+#: app/vectors/gimpvectors.c:361
 msgid "Resize Path"
 msgstr "Změnit velikost cesty"
 
-#: app/vectors/gimpvectors.c:409
+#: app/vectors/gimpvectors.c:391
 msgid "Flip Path"
 msgstr "Překlopit cestu"
 
-#: app/vectors/gimpvectors.c:473
+#: app/vectors/gimpvectors.c:437
 msgid "Rotate Path"
 msgstr "Rotovat cestu"
 
-#: app/vectors/gimpvectors.c:514
+#: app/vectors/gimpvectors.c:468
 msgid "Transform Path"
 msgstr "Transformovat cestu"
 
