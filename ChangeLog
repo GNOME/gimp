@@ -1,3 +1,9 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: when automake 1.8 is being used, require at least
+	version 1.8.3. Earlier versions of the automake-1.8 series don't
+	handle gimp-console correctly.
+
 2004-07-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-dump.c
