@@ -29,6 +29,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpcolordisplay.h	\
 	gimpcolornotebook.c	\
 	gimpcolornotebook.h	\
+	gimpcolorscale.c	\
+	gimpcolorscale.h	\
 	gimpcolorscales.c	\
 	gimpcolorscales.h	\
 	gimpcolorselector.c	\

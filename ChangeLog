@@ -1,3 +1,12 @@
+2002-10-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.[ch]: new files, basic framework
+	for a new widget, does nothing yet.
+
+	* Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h: changed accordingly.
+
 2002-10-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorscales.c: removed the hashmark from the
