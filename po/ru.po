@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.19\n"
-"POT-Creation-Date: 2000-04-13 02:03+0400\n"
-"PO-Revision-Date: 2000-04-13 02:18+04:00\n"
+"POT-Creation-Date: 2000-04-17 13:22+0400\n"
+"PO-Revision-Date: 2000-04-18 15:23+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "Нажим:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:531
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:568
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -117,9 +117,9 @@ msgstr "Выход"
 #: app/channels_dialog.c:2504 app/channels_dialog.c:2667
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:370 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:316 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1022
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1035
 #: app/layers_dialog.c:3438 app/layers_dialog.c:3620 app/layers_dialog.c:3712
 #: app/layers_dialog.c:3964 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:201 app/preferences_dialog.c:1434 app/qmask.c:281
@@ -315,12 +315,12 @@ msgid "Brush Editor"
 msgstr "Редактор кистей"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
+#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:690
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:370 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:316 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:157 app/tools.c:1088
@@ -341,59 +341,59 @@ msgstr "Жесткость:"
 msgid "Aspect Ratio:"
 msgstr "Пропорции:"
 
-#: app/brush_edit.c:312 app/measure.c:282 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Угол:"
 
 #. The shell
-#: app/brush_select.c:269
+#: app/brush_select.c:272
 msgid "Brush Selection"
 msgstr "Выбор кисти"
 
-#: app/brush_select.c:276 app/gradient.c:799 app/module_db.c:321
+#: app/brush_select.c:279 app/gradient.c:799 app/module_db.c:321
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Обновить"
 
-#: app/brush_select.c:404
+#: app/brush_select.c:407
 msgid "No Brushes available"
 msgstr "Нет доступных кистей"
 
-#: app/brush_select.c:445 app/layers_dialog.c:412 app/tool_options.c:504
+#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:504
 msgid "Opacity:"
 msgstr "Непрозрачность:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:364 app/tool_options.c:528
+#: app/brush_select.c:456 app/layers_dialog.c:364 app/tool_options.c:528
 msgid "Mode:"
 msgstr "Режим:"
 
-#: app/brush_select.c:464 app/palette.c:1176 app/palette.c:2239
+#: app/brush_select.c:467 app/palette.c:1176 app/palette.c:2239
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Новая"
 
-#: app/brush_select.c:470 app/colormap_dialog.i.c:136
+#: app/brush_select.c:473 app/colormap_dialog.i.c:136
 #: app/gradient_select.c:151 app/palette.c:1183 app/palette.c:2086
 #: app/palette_select.c:64
 msgid "Edit"
 msgstr "Правка"
 
-#: app/brush_select.c:476 app/global_edit.c:770 app/gradient.c:1769
+#: app/brush_select.c:479 app/global_edit.c:770 app/gradient.c:1769
 #: app/palette.c:1193 app/palette.c:1826 app/palette.c:2250
 msgid "Delete"
 msgstr "Удалить"
 
-#: app/brush_select.c:507
+#: app/brush_select.c:510
 msgid "Spacing:"
 msgstr "Интервал:"
 
 #. this should never happen
-#: app/brush_select.c:1791
+#: app/brush_select.c:1850
 msgid "Sorry, this brush can't be edited."
 msgstr "Извините, эта кисть не может быть исправлена."
 
 #. this should never happen
-#: app/brush_select.c:1820
+#: app/brush_select.c:1879
 msgid "Sorry, this brush can't be deleted."
 msgstr "Извините, эта кисть не может быть удалена."
 
@@ -1077,7 +1077,7 @@ msgid "Exposure:"
 msgstr "Экспозиция:"
 
 #. the type (dodge or burn)
-#: app/dodgeburn.c:161 app/ink.c:421
+#: app/dodgeburn.c:161 app/ink.c:385
 msgid "Type"
 msgstr "Тип"
 
@@ -1377,7 +1377,7 @@ msgstr "Доступные фильтры"
 msgid "Active Filters"
 msgstr "Действующие фильтры"
 
-#: app/gdisplay_ops.c:362
+#: app/gdisplay_ops.c:308
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1680,7 +1680,7 @@ msgstr "Сообщение GIMP"
 msgid "pixel"
 msgstr "точка растра"
 
-#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:511
+#: app/gimpunit.c:59 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
 msgid "pixels"
 msgstr "точек растра"
 
@@ -2358,37 +2358,30 @@ msgstr "Индексированный цвет"
 msgid "colors"
 msgstr "цвета"
 
-#. size slider
-#: app/ink.c:296
+#. adjust sliders
+#: app/ink.c:291
+msgid "Adjustment"
+msgstr "Выравнивание"
+
+#: app/ink.c:308 app/ink.c:346
 msgid "Size:"
 msgstr "Размер:"
 
-#. sens slider
-#: app/ink.c:314 app/ink.c:338 app/ink.c:368
-msgid "Sensitivity:"
-msgstr "Чувствительность:"
+#. sens sliders
+#: app/ink.c:329
+msgid "Sensitivity"
+msgstr "Чувствительность"
 
-#. tilt sens slider
-#: app/ink.c:332
-msgid "Tilt"
-msgstr "Наклон"
+#: app/ink.c:359
+msgid "Tilt:"
+msgstr "Наклон:"
 
-#. velocity sens slider
-#: app/ink.c:362
-msgid "Speed"
-msgstr "Скорость"
-
-#. angle adjust slider
-#: app/ink.c:392
-msgid "Angle"
-msgstr "Угол"
-
-#: app/ink.c:398
-msgid "Adjust:"
-msgstr "Выравнивание:"
+#: app/ink.c:372
+msgid "Speed:"
+msgstr "Скорость:"
 
 #. Brush shape widget
-#: app/ink.c:485
+#: app/ink.c:454
 msgid "Shape"
 msgstr "Форма"
 
@@ -2872,19 +2865,19 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Это консольное окно закроется в течение десяти секунд)\n"
 
-#: app/measure.c:118 app/measure.c:279
+#: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
 msgstr "Измеритель"
 
-#: app/measure.c:127
+#: app/measure.c:130
 msgid "Use Info Window"
 msgstr "Использовать информационное окно"
 
-#: app/measure.c:281
+#: app/measure.c:316
 msgid "Distance:"
 msgstr "Расстояние:"
 
-#: app/measure.c:454 app/measure.c:459 app/measure.c:467 app/measure.c:495
+#: app/measure.c:504 app/measure.c:509 app/measure.c:517 app/measure.c:545
 msgid "degrees"
 msgstr "градусы"
 
@@ -5018,8 +5011,8 @@ msgid "Opacity"
 msgstr "Непрозрачность"
 
 #: app/tool_options.c:730
-msgid "Pressure"
-msgstr "Нажим"
+msgid "Hardness"
+msgstr "Жесткость"
 
 #: app/tool_options.c:750
 msgid "Rate"
@@ -6111,8 +6104,10 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"Gimp использует ограниченное количество памяти для хранения данных изображения\n"
-"так называемый \"Tile Cache\". Вы должны подобрать занимаемый им в памяти размер.\n"
+"Gimp использует ограниченное количество памяти для хранения данных "
+"изображения\n"
+"так называемый \"Tile Cache\". Вы должны подобрать занимаемый им в памяти "
+"размер.\n"
 "Обдумайте количество памяти используемое другими запущенными процессами. "
 
 #: app/user_install.c:1098
@@ -6122,10 +6117,13 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"Все изображения и данные для отката, которые не поместятся в \"Tile Cache\",\n"
+"Все изображения и данные для отката, которые не поместятся в \"Tile "
+"Cache\",\n"
 "будут записаны в файл подкачки. Этот файл должен располагаться в локальной\n"
-"файловой системе с достаточным свободным местом (несколько сот MB). В системах\n"
-"UNIX вы можете использовать системный временный каталог (\"/tmp\" or \"/var/tmp\")."
+"файловой системе с достаточным свободным местом (несколько сот MB). В "
+"системах\n"
+"UNIX вы можете использовать системный временный каталог (\"/tmp\" or "
+"\"/var/tmp\")."
 
 #: app/user_install.c:1112
 msgid "Swap Directory:"

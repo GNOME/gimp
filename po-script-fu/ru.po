@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
 "POT-Creation-Date: 2000-04-10 22:10+0400\n"
-"PO-Revision-Date: 2000-04-13 03:18+04:00\n"
+"PO-Revision-Date: 2000-04-18 16:50+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -757,13 +757,13 @@ msgstr "Основной радиус (точек)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:5
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "Высота скоса (резкость)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:9
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:6
 #: plug-ins/script-fu/scripts/pupi-button.scm:13
 msgid "Bevel Width"
-msgstr ""
+msgstr "Ширина скоса"
 
 #: plug-ins/script-fu/scripts/glossy.scm:6
 msgid "Blend Gradient (Outline)"
@@ -858,7 +858,7 @@ msgstr "Размер буфера (% высоты текста)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:8
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Радиус размывания рельефа (Альфа-слой)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:5
 msgid "Burst Color"
@@ -1380,7 +1380,7 @@ msgstr "Размер изображения"
 #: plug-ins/script-fu/scripts/flatland.scm:2
 #: plug-ins/script-fu/scripts/land.scm:2
 msgid "Image Width"
-msgstr "Щирина изображения"
+msgstr "Ширина изображения"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:2
 msgid "Image to Carve"
@@ -1397,7 +1397,7 @@ msgstr "Индекcное изображение"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:5
 msgid "Index to n Colors (0 = Remain RGB):"
-msgstr ""
+msgstr "Индекс из n цветов (0 = оставить в RGB):"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:7
 msgid "Insert Layer Names"
@@ -1480,6 +1480,8 @@ msgid ""
 "Mosaic Tile Type\n"
 "Squares 0, Hex 1, Oct 2"
 msgstr ""
+"Тип мозаики: квадраты 0,\n"
+"шестиугольники 1, восьмиуголькики 2"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:5
 msgid "Mottle"
