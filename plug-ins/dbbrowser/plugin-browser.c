@@ -49,7 +49,6 @@ typedef struct
   GtkWidget   *descr_scroll;
   GtkWidget   *info_table;
   GtkWidget   *paned;
-  GtkWidget   *info_align;
   gint         num_plugins;
   gboolean     details_showing;
 } PDesc;
@@ -281,11 +280,9 @@ procedure_general_select_callback (PDesc *pdesc,
   GtkWidget       *text_view;
   GtkTextBuffer   *text_buffer;
   GtkWidget       *old_table;
-  GtkWidget       *old_align;
   gint             table_row = 0;
   gchar           *str;
   GtkWidget       *separator;
-  GtkWidget       *entry;
 
 #define ADD_SEPARATOR                                                         \
 G_STMT_START                                                                  \
@@ -326,13 +323,13 @@ G_STMT_END
                                 &selected_params,  &selected_return_vals);
 
   old_table = pdesc->info_table;
-  old_align = pdesc->info_align;
 
-  pdesc->info_table = gtk_table_new (10, 5, FALSE);
-  pdesc->info_align = gtk_alignment_new (0.5, 0.5, 0, 0);
+  pdesc->info_table = gtk_table_new (9, 5, FALSE);
 
+  gtk_container_set_border_width (GTK_CONTAINER (pdesc->info_table), 12);
   gtk_table_set_col_spacings (GTK_TABLE (pdesc->info_table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (pdesc->info_table), 0, 2);
+  gtk_table_set_row_spacings (GTK_TABLE (pdesc->info_table), 6);
+
 
   /* Number of plugins */
 
@@ -351,9 +348,9 @@ G_STMT_END
   /* menu path */
 
   label = gtk_label_new (format_menu_path (pinfo->menu));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Menu Path:"), 1.0, 0.5,
+                             _("Menu Path:"), 0.0, 0.0,
                              label, 3, FALSE);
   table_row++;
 
@@ -361,12 +358,12 @@ G_STMT_END
 
   /* show the name */
 
-  entry = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (entry), pinfo->realname);
-  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+  label = gtk_label_new (pinfo->realname);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Name:"), 1.0, 0.5,
-                             entry, 3, FALSE);
+                             _("Name:"), 0.0, 0.0,
+                             label, 3, FALSE);
   table_row++;
 
   ADD_SEPARATOR;
@@ -374,9 +371,9 @@ G_STMT_END
   /* show the description */
 
   label = gtk_label_new (selected_proc_blurb);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Blurb:"), 1.0, 0.5,
+                             _("Blurb:"), 0.0, 0.0,
                              label, 3, FALSE);
   table_row++;
 
@@ -389,7 +386,7 @@ G_STMT_END
       gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
       gtk_table_set_col_spacing (GTK_TABLE (help), 0, 2);
       gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                                 _("Help:"), 1.0, 0.5,
+                                 _("Help:"), 0.0, 0.0,
                                  help, 3, FALSE);
       table_row++;
 
@@ -414,29 +411,21 @@ G_STMT_END
   /* show the type */
 
   label = gtk_label_new (gettext (proc_type_str[selected_proc_type]));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Type:"), 1.0, 0.5,
+                             _("Type:"), 0.0, 0.0,
                              label, 3, FALSE);
   table_row++;
-
-  ADD_SEPARATOR;
 
   /* Remove old and replace with new */
 
   if (old_table)
     gtk_widget_destroy (old_table);
 
-  if (old_align)
-    gtk_widget_destroy (old_align);
-
-  gtk_container_add (GTK_CONTAINER (pdesc->info_align),pdesc->info_table);
-
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (pdesc->descr_scroll),
-                                         pdesc->info_align);
+                                         pdesc->info_table);
 
   gtk_widget_show (pdesc->info_table);
-  gtk_widget_show (pdesc->info_align);
 
   if (selected_proc_blurb)
     g_free (selected_proc_blurb);
@@ -994,14 +983,14 @@ gimp_plugin_desc (void)
   /* hbox : left=notebook ; right=description */
 
   plugindesc->paned = hbox = gtk_hpaned_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (plugindesc->paned), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->vbox),
                       hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /* left = vbox : the list and the search entry */
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_paned_pack1 (GTK_PANED (hbox), vbox, FALSE, FALSE);
   gtk_widget_show (vbox);
 
@@ -1055,11 +1044,10 @@ gimp_plugin_desc (void)
                                                      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
-/*  g_signal_connect (plugindesc->clist, "click_column",
-                    G_CALLBACK (clist_click_column),
-                    NULL);
-  */
   swindow = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (swindow), 2);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swindow),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
@@ -1115,6 +1103,9 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   swindow = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (swindow), 2);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swindow),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_set_size_request (tree_view, DBL_LIST_WIDTH, DBL_HEIGHT);
@@ -1135,9 +1126,8 @@ gimp_plugin_desc (void)
 
   /* search entry & details button */
 
-  searchhbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox),
-                      searchhbox, FALSE, FALSE, 0);
+  searchhbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), searchhbox, FALSE, FALSE, 0);
   gtk_widget_show (searchhbox);
 
   label = gtk_label_new (_("Search:"));

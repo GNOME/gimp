@@ -95,20 +95,20 @@ typedef struct
 
 /***** Prototypes *****/
 
-static void query                (void);
-static void run                  (const gchar      *name,
-				  gint              nparams,
-				  const GimpParam  *param,
-				  gint             *nreturn_vals,
-				  GimpParam       **return_vals);
-static void set_default_params   (void);
+static void    query                (void);
+static void    run                  (const gchar      *name,
+                                     gint              nparams,
+                                     const GimpParam  *param,
+                                     gint             *nreturn_vals,
+                                     GimpParam       **return_vals);
+static void    set_default_params   (void);
 
-static void dialog_toggle_update (GtkWidget         *widget,
-				  gint32             value);
-static void dialog_scale_update  (GtkAdjustment     *adjustment,
-				  gdouble           *value);
+static void    dialog_toggle_update (GtkWidget         *widget,
+                                     gint32             value);
+static void    dialog_scale_update  (GtkAdjustment     *adjustment,
+                                     gdouble           *value);
 
-static gint do_dialog            (void);
+static gboolean dialog              (void);
 
 static void     init_calculation    (gint32 drawable_id);
 static void     do_curl_effect      (gint32 drawable_id);
@@ -261,7 +261,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  First acquire information with a dialog  */
-	  if (!do_dialog ())
+	  if (! dialog ())
 	    return;
 	  break;
 
@@ -468,8 +468,8 @@ dialog_toggle_update (GtkWidget *widget,
 		   curl_pixmaps[pixmapindex]);
 }
 
-static gint
-do_dialog (void)
+static gboolean
+dialog (void)
 {
   /* Missing options: Color-dialogs? / own curl layer ? / transparency
      to original drawable / Warp-curl (unsupported yet) */
@@ -477,7 +477,6 @@ do_dialog (void)
   GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *shade_button;
@@ -485,7 +484,7 @@ do_dialog (void)
   GtkWidget *button;
   GtkWidget *scale;
   GtkObject *adjustment;
-  gint       pixmapindex;
+  gint       i;
   gboolean   run;
 
   gimp_ui_init ("pagecurl", FALSE);
@@ -499,27 +498,27 @@ do_dialog (void)
 
 			    NULL);
 
-   vbox = gtk_vbox_new (FALSE, 4);
-   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
+   vbox = gtk_vbox_new (FALSE, 12);
+   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                       vbox, TRUE, TRUE, 0);
    gtk_widget_show (vbox);
 
-   frame = gtk_frame_new (_("Curl Location"));
+   frame = gimp_frame_new (_("Curl Location"));
    gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
    table = gtk_table_new (3, 3, FALSE);
-   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
-   pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
-                  curl.do_upper_left * 3 + curl.do_horizontal * 4);
+   i = (curl.do_lower_left + curl.do_upper_right * 2 +
+        curl.do_upper_left * 3 + curl.do_horizontal * 4);
 
-   if (pixmapindex < 0 || pixmapindex > 7)
-     pixmapindex = 0;
+   if (i < 0 || i > 7)
+     i = 0;
 
-   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[pixmapindex]);
+   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[i]);
 
    gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 1, 2, 1, 2,
 		     GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -562,11 +561,10 @@ do_dialog (void)
    gtk_widget_show (table);
    gtk_widget_show (frame);
 
-   frame = gtk_frame_new (_("Curl Orientation"));
+   frame = gimp_frame_new (_("Curl Orientation"));
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-   hbox = gtk_hbox_new (FALSE, 4);
-   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+   hbox = gtk_hbox_new (FALSE, 6);
    gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {
@@ -600,6 +598,24 @@ do_dialog (void)
    gtk_widget_show (hbox);
    gtk_widget_show (frame);
 
+   frame = gimp_frame_new (_("Curl Opacity"));
+   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+   gtk_widget_show (frame);
+
+   adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
+				    1.0, 1.0, 0.0);
+   g_signal_connect (adjustment, "value_changed",
+                     G_CALLBACK (dialog_scale_update),
+                     &(curl.do_curl_opacity));
+
+   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+   gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
+   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+   gtk_scale_set_digits (GTK_SCALE (scale), 0);
+   gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
+   gtk_container_add (GTK_CONTAINER (frame), scale);
+   gtk_widget_show (scale);
+
    shade_button = gtk_check_button_new_with_label (_("Shade under Curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				 curl.do_shade_under ? TRUE : FALSE);
@@ -623,29 +639,6 @@ do_dialog (void)
    g_signal_connect (gradient_button, "toggled",
                      G_CALLBACK (dialog_toggle_update),
                      GINT_TO_POINTER (9));
-
-   frame = gtk_frame_new (_("Curl Opacity"));
-   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-   gtk_widget_show (frame);
-
-   vbox2 = gtk_vbox_new (FALSE, 0);
-   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-   gtk_widget_show (vbox2);
-
-   adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
-				    1.0, 1.0, 0.0);
-   g_signal_connect (adjustment, "value_changed",
-                     G_CALLBACK (dialog_scale_update),
-                     &(curl.do_curl_opacity));
-
-   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-   gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
-   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-   gtk_scale_set_digits (GTK_SCALE (scale), 0);
-   gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-   gtk_box_pack_start (GTK_BOX (vbox2), scale, TRUE, FALSE, 0);
-   gtk_widget_show (scale);
 
    gtk_widget_show (dialog);
 

@@ -150,13 +150,14 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   /* hpaned : left=list ; right=description */
 
   hpaned = gtk_hpaned_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (hpaned), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dbbrowser->dialog)->vbox),
                       hpaned, TRUE, TRUE, 0);
   gtk_widget_show (hpaned);
 
   /* left = vbox : the list and the search entry */
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_paned_pack1 (GTK_PANED (hpaned), vbox, FALSE, TRUE);
   gtk_widget_show (vbox);
 
@@ -198,12 +199,12 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 
   /* search entry */
 
-  searchhbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), searchhbox, FALSE, FALSE, 2);
+  searchhbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), searchhbox, FALSE, FALSE, 0);
   gtk_widget_show (searchhbox);
 
   label = gtk_label_new_with_mnemonic (_("_Search:"));
-  gtk_box_pack_start (GTK_BOX (searchhbox), label, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (searchhbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   dbbrowser->search_entry = gtk_entry_new ();
@@ -217,15 +218,16 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   /* right = description */
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (scrolled_window, DBL_WIDTH - DBL_LIST_WIDTH, -1);
+  gtk_widget_set_size_request (scrolled_window,
+                               DBL_WIDTH - DBL_LIST_WIDTH, -1);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
   gtk_paned_pack2 (GTK_PANED (hpaned), scrolled_window, TRUE, TRUE);
   gtk_widget_show (scrolled_window);
 
-  dbbrowser->descr_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (dbbrowser->descr_vbox), 4);
+  dbbrowser->descr_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (dbbrowser->descr_vbox), 12);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
                                          dbbrowser->descr_vbox);
   gtk_widget_show (dbbrowser->descr_vbox);
@@ -333,25 +335,25 @@ dialog_select (dbbrowser_t *dbbrowser,
                                           5, FALSE);
 
   gtk_table_set_col_spacings (GTK_TABLE (dbbrowser->description), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (dbbrowser->description), 0, 2);
+  gtk_table_set_row_spacings (GTK_TABLE (dbbrowser->description), 6);
 
   /* show the name */
 
   label = gtk_label_new (dbbrowser->selected_scheme_proc_name);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
 
   gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                             _("Name:"), 1.0, 0.5,
+                             _("Name:"), 0.0, 0.0,
                              label, 3, FALSE);
 
   /* show the description */
 
   label = gtk_label_new (dbbrowser->selected_proc_blurb);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
 
   gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                             _("Blurb:"), 1.0, 0.5,
+                             _("Blurb:"), 0.0, 0.0,
                              label, 3, FALSE);
 
   sep = gtk_hseparator_new ();
@@ -364,7 +366,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   if (dbbrowser->selected_nparams)
     {
       label = gtk_label_new (_("In:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                         0, 1, row, row + (dbbrowser->selected_nparams),
                         GTK_FILL, GTK_FILL, 0, 0);
@@ -374,7 +376,7 @@ dialog_select (dbbrowser_t *dbbrowser,
         {
           /* name */
           label = gtk_label_new ((dbbrowser->selected_params[i]).name);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
           gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                             1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
           gtk_widget_show (label);
@@ -382,7 +384,7 @@ dialog_select (dbbrowser_t *dbbrowser,
           /* type */
           type = GParamType2char ((dbbrowser->selected_params[i]).type);
           label = gtk_label_new (type);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
           gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                             2, 3, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
           gtk_widget_show (label);
@@ -412,7 +414,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   if (dbbrowser->selected_nreturn_vals)
     {
       label = gtk_label_new (_("Out:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                         0, 1, row, row + (dbbrowser->selected_nreturn_vals),
                         GTK_FILL, GTK_FILL, 0, 0);
@@ -422,7 +424,7 @@ dialog_select (dbbrowser_t *dbbrowser,
         {
           /* name */
           label = gtk_label_new ((dbbrowser->selected_return_vals[i]).name);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
           gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                             1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
           gtk_widget_show (label);
@@ -430,14 +432,14 @@ dialog_select (dbbrowser_t *dbbrowser,
           /* type */
           type = GParamType2char (dbbrowser->selected_return_vals[i].type);
           label = gtk_label_new (type);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
           gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                             2, 3, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
           gtk_widget_show (label);
 
           /* description */
           label = gtk_label_new (dbbrowser->selected_return_vals[i].description);
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
           gtk_table_attach (GTK_TABLE (dbbrowser->description), label,
                             3, 4, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
           gtk_widget_show (label);
@@ -461,11 +463,11 @@ dialog_select (dbbrowser_t *dbbrowser,
       (strlen (dbbrowser->selected_proc_help) > 1))
     {
       label = gtk_label_new (dbbrowser->selected_proc_help);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
       gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                                 _("Help:"), 1.0, 0.5,
+                                 _("Help:"), 0.0, 0.0,
                                  label, 3, FALSE);
 
       sep = gtk_hseparator_new ();
@@ -479,27 +481,27 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* show the author & the copyright */
 
   label = gtk_label_new (dbbrowser->selected_proc_author);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
 
   gtk_table_set_row_spacing (GTK_TABLE (dbbrowser->description), row, 2);
   gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                             _("Author:"), 1.0, 0.5,
+                             _("Author:"), 0.0, 0.0,
                              label, 3, FALSE);
 
   label = gtk_label_new (dbbrowser->selected_proc_date);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
 
   gtk_table_set_row_spacing (GTK_TABLE (dbbrowser->description), row, 2);
   gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                             _("Date:"), 1.0, 0.5,
+                             _("Date:"), 0.0, 0.0,
                              label, 3, FALSE);
 
   label = gtk_label_new (dbbrowser->selected_proc_copyright);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
 
   gtk_table_set_row_spacing (GTK_TABLE (dbbrowser->description), row, 2);
   gimp_table_attach_aligned (GTK_TABLE (dbbrowser->description), 0, row++,
-                             _("Copyright:"), 1.0, 0.5,
+                             _("Copyright:"), 0.0, 0.0,
                              label, 3, FALSE);
 
   if (old_description)
@@ -508,6 +510,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   gtk_box_pack_start (GTK_BOX (dbbrowser->descr_vbox),
                       dbbrowser->description, FALSE, FALSE, 0);
+
   gtk_widget_show (dbbrowser->description);
 }
 

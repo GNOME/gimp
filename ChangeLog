@@ -1,5 +1,11 @@
 2004-05-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/plugindetails.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/pagecurl/pagecurl.c: HIG-ified.
+
+2004-05-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/gimp_color_window.c
 	* plug-ins/print/gimp_main_window.c: HIG-ified and ported to
 	GtkFileChooser.
