@@ -193,7 +193,7 @@ query ()
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-              N_("<Image>/Image/Alpha/Threshold Alpha"),
+			  N_("<Image>/Image/Alpha/Threshold Alpha..."),
 			  "RGBA,GRAYA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

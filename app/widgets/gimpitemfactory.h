@@ -48,6 +48,8 @@ void menus_get_paths_menu      (GtkWidget            **menu,
 void menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
 				       gpointer               callback_data);
 
+void menus_reorder_plugins     (void);
+
 void menus_destroy             (gchar                 *path);
 
 void menus_quit                (void);
@@ -58,8 +60,6 @@ void menus_set_sensitive_glue  (gchar                 *prepath,
 				gchar                 *path,
 				gboolean               sensitive);
 
-void menus_set_state           (gchar                 *path,
-				gboolean               state);
 void menus_set_state_glue      (gchar                 *prepath,
 				gchar                 *path,
 				gboolean               state);

@@ -1,3 +1,68 @@
+1999-11-20  Michael Natterer  <mitch@gimp.org>
+
+	Reorganized the core menu items (everything except
+	<Image>/Filters). Everything is of course trivial to change again,
+	so please comment on the new "menu feeling" ;-)
+
+	* app/menus.[ch]:
+
+	- Applied the suggestions collected by Olof.
+	- Added "..." to all items which open a dialog.
+	- Introduced some additional separators (e.g. in "Dialogs").
+	- Reorder some plugins and the color correct tools after
+	  initialisation.
+	- A menu entry to invoke the tooltips inspector.
+	- A debugging menu entry which dumps the menu paths and their help
+	  pages (will of course go away when the help sys is consistent).
+
+	There are currently two identical "Help" menus because
+	<Toolbox>/Help trashes the menu bar if the toolbox is too narrow
+	(gtk doesn't seem to support multi-line menubars, any idea?)
+
+	* app/app_procs.c: call menus_reorder_plugins() after loading the
+	plugins to beautify the "Xtns" menu.
+
+	* app/commands.[ch]: reordered some functions to match the new
+	menu structure (for easier source navigation) and renamed some to
+	be consistent (e.g. all help functions are now called help_*).
+
+	Show/Hide the rulers with ordinary gtk_widget_[show|hide]()
+	commands. I've tested it several times and it looks exactly the
+	same as the old code which used internal gtk knowledge.
+
+	* app/gdisplay.c: applied the menu changes to
+	gdisplay_set_menu_sensitivity().
+
+	* app/gimphelp.[ch]: new public function gimp_context_help() which
+	invokes the tooltips inspector. Code cleanup.
+
+	* app/resize.c: changed the dialogs' titles to match the menu entries.
+
+	* app/session.c: renamed the gradient selection cmd callback to be
+	consistent with brushes/patterns.
+
+	* app/tools.c: added "..." to the menu paths of the tools which
+	have dialogs.
+
+	* app/fileops.c
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/paths_dialog.c: added some "...".
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/fp/fp.c
+	* plug-ins/print/print.c
+	* plug-ins/rcm/rcm.c: changed the menu paths and added "...".
+
 Fri Nov 19 18:47:30 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* po and po-plug-ins dirs: moved the libgimp translations to

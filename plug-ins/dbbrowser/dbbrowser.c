@@ -80,7 +80,7 @@ query ()
                           "Thomas Noel",
                           "Thomas Noel",
                           "23th june 1997",
-                          "<Toolbox>/Xtns/DB Browser",
+                          "<Toolbox>/Xtns/DB Browser...",
 			  "",
                           PROC_EXTENSION,
 			  nargs, 0,

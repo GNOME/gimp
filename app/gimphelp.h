@@ -46,4 +46,7 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 /*  the main help function  */
 void  gimp_help                    (gchar        *help_data);
 
+/*  activate the context help inspector  */
+void  gimp_context_help            (void);
+
 #endif /* __GIMP_HELP_H__ */

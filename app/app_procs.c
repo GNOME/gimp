@@ -546,10 +546,12 @@ app_init (void)
   gradients_init (no_data);        /*  initialize the list of gimp gradients  */
   app_init_update_status (NULL, NULL, 1.00);
 
-  plug_in_init ();         /*  initialize the plug in structures   */
-  module_db_init ();       /*  load any modules we need            */
+  plug_in_init ();           /*  initialize the plug in structures  */
+  module_db_init ();         /*  load any modules we need           */
   RESET_BAR();
-  file_ops_post_init ();   /*  post-initialize the file types      */
+  file_ops_post_init ();     /*  post-initialize the file types     */
+
+  menus_reorder_plugins ();  /*  beautify some menus                */
 
   /* Add the swap file  */
   if (swap_path == NULL)

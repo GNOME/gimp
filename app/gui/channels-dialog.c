@@ -627,7 +627,7 @@ channels_dialog_set_menu_sensitivity (void)
         gtk_widget_set_sensitive (channels_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
-  SET_SENSITIVE (N_("/New Channel"), !fs_sens);
+  SET_SENSITIVE (N_("/New Channel..."), !fs_sens);
   SET_OPS_SENSITIVE (0, !fs_sens);
 
   SET_SENSITIVE (N_("/Raise Channel"), !fs_sens && aux_sens);
@@ -904,7 +904,7 @@ channel_list_events (GtkWidget *widget,
 
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
-	  if (bevent->button == 3 || bevent->button == 2)
+	  if (bevent->button == 3)
 	    {
 	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu),
 			      NULL, NULL, NULL, NULL,

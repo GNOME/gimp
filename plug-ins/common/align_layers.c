@@ -30,7 +30,7 @@
 #define	PLUG_IN_NAME	"plug_in_align_layers"
 #define SHORT_NAME	"align_layers"
 #define PROGRESS_NAME	"align_layers"
-#define MENU_POSITION	"<Image>/Layers/Align Visible Layers"
+#define MENU_POSITION	"<Image>/Layers/Align Visible Layers..."
 #define	MAIN_FUNCTION	main_function
 #define INTERFACE	align_layers_interface
 #define	DIALOG		align_layers_dialog

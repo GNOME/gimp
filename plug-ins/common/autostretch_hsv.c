@@ -84,7 +84,7 @@ query ()
 			  "Scott Goehring and Federico Mena Quintero",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Image/Colors/Auto-Stretch HSV"),
+			  N_("<Image>/Image/Colors/Auto/Stretch HSV"),
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

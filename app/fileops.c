@@ -71,13 +71,13 @@ struct _OverwriteBox
 };
 
 static void file_overwrite              (char *filename,
-					 char* raw_filename);
+					 char *raw_filename);
 static void file_overwrite_yes_callback (GtkWidget *, gpointer);
 static void file_overwrite_no_callback  (GtkWidget *, gpointer);
 
-static GimpImage* file_open_image   (char *filename,
-				     char *raw_filename,
-				     RunModeType runmode);
+static GimpImage * file_open_image   (char *filename,
+				      char *raw_filename,
+				      RunModeType runmode);
 
 static void genbutton_callback (GtkWidget *, gpointer);
 
@@ -109,8 +109,8 @@ static int  file_check_magic_list (GSList *magics_list,
                                    guchar *head,
                                    FILE   *ifp);
 
-static void      file_update_menus      (GSList *procs,
-					 int     image_type);
+static void file_update_menus     (GSList *procs,
+				   int     image_type);
 
 
 static GtkWidget  *fileload = NULL;
@@ -1062,7 +1062,6 @@ file_save (GimpImage *gimage,
   g_free (return_vals);
   g_free (args);
 
-
   return return_val;
 }
 
@@ -1070,10 +1069,10 @@ file_save (GimpImage *gimage,
 /* The readXVThumb function source may be re-used under
    the XFree86-style license. <adam@gimp.org> */
 static guchar*
-readXVThumb(const gchar  *fnam,
-	    gint         *w,
-	    gint         *h,
-	    gchar       **imginfo /* caller frees if != NULL */)
+readXVThumb (const gchar  *fnam,
+	     gint         *w,
+	     gint         *h,
+	     gchar       **imginfo /* caller frees if != NULL */)
 {
   FILE *fp;
   const gchar *P7_332 = "P7 332";
@@ -1650,10 +1649,10 @@ file_save_ok_callback (GtkWidget *widget,
 static void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open"), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Open"), FALSE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open..."), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Open..."), FALSE);
   menus_set_sensitive_glue ("<Image>", N_("/File/Save"), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Save as"), FALSE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Save as..."), FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1663,13 +1662,13 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
 
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open"), TRUE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Open"), TRUE);
+  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open..."), TRUE);
+  menus_set_sensitive_glue ("<Image>", N_("/File/Open..."), TRUE);
 
   if (gdisplay_active ())
     {
       menus_set_sensitive_glue ("<Image>", N_("/File/Save"), TRUE);
-      menus_set_sensitive_glue ("<Image>", N_("/File/Save as"), TRUE);
+      menus_set_sensitive_glue ("<Image>", N_("/File/Save as..."), TRUE);
     }
 
   return TRUE;
@@ -1689,19 +1688,18 @@ file_overwrite (char *filename,
 
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
-  overwrite_box->obox =
-    gimp_dialog_new (_("File Exists!"), "file_exists",
-		     gimp_standard_help_func,
-		     "save/file_exists.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+  overwrite_box->obox = gimp_dialog_new (_("File Exists!"), "file_exists",
+					 gimp_standard_help_func,
+					 "save/file_exists.html",
+					 GTK_WIN_POS_MOUSE,
+					 FALSE, TRUE, FALSE,
 
-		     _("Yes"), file_overwrite_yes_callback,
-		     overwrite_box, NULL, TRUE, FALSE,
-		     _("No"), file_overwrite_no_callback,
-		     overwrite_box, NULL, FALSE, TRUE,
+					 _("Yes"), file_overwrite_yes_callback,
+					 overwrite_box, NULL, TRUE, FALSE,
+					 _("No"), file_overwrite_no_callback,
+					 overwrite_box, NULL, FALSE, TRUE,
 
-		     NULL);
+					 NULL);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -1737,7 +1735,7 @@ file_overwrite_yes_callback (GtkWidget *widget,
     }
   else
     {
-      GString* s;
+      GString *s;
       GtkWidget *fs;
 
       fs = filesave;

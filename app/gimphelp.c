@@ -28,10 +28,29 @@
 
 #include "libgimp/gimpintl.h"
 
-#define USE_TIPS_QUERY
 #define DEBUG_HELP
 
-static GtkTooltips * tool_tips;
+/*  local function prototypes  */
+static void gimp_help_callback                   (GtkWidget      *widget,
+						  gpointer        data);
+static gint gimp_help_tips_query_idle_show_help  (gpointer        data);
+static gint gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
+						  GtkWidget      *widget,
+						  const gchar    *tip_text,
+						  const gchar    *tip_private,
+						  GdkEventButton *event,
+						  gpointer        func_data);
+static gint gimp_help_tips_query_idle_start      (gpointer        tips_query);
+static void gimp_help_tips_query_start           (GtkWidget      *widget,
+						  gpointer        tips_query);
+
+/*  local variables  */
+static GtkTooltips * tool_tips  = NULL;
+static GtkWidget   * tips_query = NULL;
+
+/**********************/
+/*  public functions  */
+/**********************/
 
 void
 gimp_help_init (void)
@@ -65,6 +84,161 @@ gimp_standard_help_func (gchar *help_data)
   gimp_help (help_data);
 }
 
+void
+gimp_help_connect_help_accel (GtkWidget    *widget,
+			      GimpHelpFunc  help_func,
+			      gchar        *help_data)
+{
+  GtkAccelGroup *accel_group;
+
+  if (!help_func)
+    return;
+
+  /*  set up the help signals and tips query widget  */
+  if (!tips_query)
+    {
+      tips_query = gtk_tips_query_new ();
+
+      gtk_widget_set (tips_query,
+		      "GtkTipsQuery::emit_always", TRUE,
+		      NULL);
+
+      gtk_signal_connect (GTK_OBJECT (tips_query), "widget_selected",
+			  GTK_SIGNAL_FUNC (gimp_help_tips_query_widget_selected),
+			  NULL);
+
+      /*  FIXME: EEEEEEEEEEEEEEEEEEEEK, this is very ugly and forbidden...
+       *  does anyone know a way to do this tips query stuff without
+       *  having to attach to some parent widget???
+       */
+      tips_query->parent = widget;
+      gtk_widget_realize (tips_query);
+
+      gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
+					"tips_query",
+					GTK_RUN_LAST,
+					gtk_signal_default_marshaller,
+					GTK_TYPE_NONE,
+					0,
+					NULL);
+
+      gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
+					"help",
+					GTK_RUN_LAST,
+					gtk_signal_default_marshaller,
+					GTK_TYPE_NONE,
+					0,
+					NULL);
+    }
+
+  gimp_help_set_help_data (widget, NULL, help_data);
+
+  gtk_signal_connect (GTK_OBJECT (widget), "help",
+		      GTK_SIGNAL_FUNC (gimp_help_callback),
+		      (gpointer) help_func);
+
+  gtk_signal_connect (GTK_OBJECT (widget), "tips_query",
+		      GTK_SIGNAL_FUNC (gimp_help_tips_query_start),
+		      (gpointer) tips_query);
+
+  gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
+
+  /*  a new accelerator group for this widget  */
+  accel_group = gtk_accel_group_new ();
+
+  /*  FIXME: does not work for some reason...
+  gtk_widget_add_accelerator (widget, "help", accel_group,
+			      GDK_F1, 0, GTK_ACCEL_LOCKED);
+  gtk_widget_add_accelerator (widget, "tips_query", accel_group,
+			      GDK_F1, GDK_SHIFT_MASK, GTK_ACCEL_LOCKED);
+  */
+
+  /*  ...while using this internal stuff works  */
+  gtk_accel_group_add (accel_group, GDK_F1, 0, 0,
+		       GTK_OBJECT (widget), "help");
+  gtk_accel_group_add (accel_group, GDK_F1, GDK_SHIFT_MASK, 0,
+		       GTK_OBJECT (widget), "tips_query");
+
+  gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
+}
+
+void
+gimp_help_set_help_data (GtkWidget *widget,
+			 gchar     *tooltip,
+			 gchar     *help_data)
+{
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (tooltip)
+    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
+  else if (help_data)
+    gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
+}
+
+/*  the main help function  */
+void
+gimp_help (gchar *help_data)
+{
+  ProcRecord *proc_rec;
+
+#ifdef DEBUG_HELP
+  g_print ("Help Page: %s\n", help_data);
+#endif  /*  DEBUG_HELP  */
+
+  /*  Check if a help browser is already running  */
+  proc_rec = procedural_db_lookup ("extension_gimp_help_browser_temp");
+
+  if (proc_rec == NULL)
+    {
+      Argument *args = NULL;
+
+      proc_rec = procedural_db_lookup ("extension_gimp_help_browser");
+
+      if (proc_rec == NULL)
+	{
+	  g_message (_("Could not find the GIMP Help Browser procedure.\n"
+		       "It probably was not compiled because\n"
+		       "you don't have GtkXmHTML installed."));
+	  return;
+	}
+
+      args = g_new (Argument, 2);
+      args[0].arg_type = PDB_INT32;
+      args[0].value.pdb_int = RUN_INTERACTIVE;
+      args[1].arg_type = PDB_STRING;
+      args[1].value.pdb_pointer = help_data;
+
+      plug_in_run (proc_rec, args, 2, FALSE, TRUE, 0);
+
+      g_free (args);
+    }
+  else
+    {
+      Argument *return_vals;
+      gint      nreturn_vals;
+
+      return_vals =
+        procedural_db_run_proc ("extension_gimp_help_browser_temp",
+                                &nreturn_vals,
+                                PDB_STRING, help_data,
+                                PDB_END);
+
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+    }
+}
+
+void
+gimp_context_help (void)
+{
+  if (tips_query)
+    gimp_help_tips_query_start (NULL, tips_query);
+}
+
+/*********************/
+/*  local functions  */
+/*********************/
+
 static void
 gimp_help_callback (GtkWidget *widget,
 		    gpointer   data)
@@ -84,10 +258,8 @@ gimp_help_callback (GtkWidget *widget,
  *  some widget holding a grab before starting the query because strange
  *  things happen if (1) the help browser pops up while the query has
  *  grabbed the pointer or (2) the query grabs the pointer while some
- *  other part of the gimp has grabbed it (e.g. the move tool, eek)
+ *  other part of the gimp has grabbed it (e.g. a tool, eek)
  */
-
-#ifdef USE_TIPS_QUERY
 
 static gint
 gimp_help_tips_query_idle_show_help (gpointer data)
@@ -198,164 +370,4 @@ gimp_help_tips_query_start (GtkWidget *widget,
 {
   if (use_help && ! GTK_TIPS_QUERY (tips_query)->in_query)
     gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_start, tips_query);
-}
-
-#endif
-
-void
-gimp_help_connect_help_accel (GtkWidget    *widget,
-			      GimpHelpFunc  help_func,
-			      gchar        *help_data)
-{
-  GtkAccelGroup *accel_group;
-
-  static guint      help_signal_id       = 0;
-#ifdef USE_TIPS_QUERY
-  static guint      tips_query_signal_id = 0;
-  static GtkWidget *tips_query           = NULL;
-#endif
-
-  if (!help_func)
-    return;
-
-  /*  set up the help signals and tips query widget  */
-  if (! help_signal_id)
-    {
-#ifdef USE_TIPS_QUERY
-      tips_query = gtk_tips_query_new ();
-
-      gtk_widget_set (tips_query,
-		      "GtkTipsQuery::emit_always", TRUE,
-		      NULL);
-
-      gtk_signal_connect (GTK_OBJECT (tips_query), "widget_selected",
-			  GTK_SIGNAL_FUNC (gimp_help_tips_query_widget_selected),
-			  NULL);
-
-      /*  FIXME: EEEEEEEEEEEEEEEEEEEEK, this is very ugly and forbidden...
-       *  does anyone know a way to do this tips query stuff without
-       *  having to attach to some parent widget???
-       */
-      tips_query->parent = widget;
-      gtk_widget_realize (tips_query);
-
-      tips_query_signal_id =
-	gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
-					  "tips_query",
-					  GTK_RUN_LAST,
-					  gtk_signal_default_marshaller,
-					  GTK_TYPE_NONE,
-					  0,
-					  NULL);
-#endif
-
-      help_signal_id =
-	gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
-					  "help",
-					  GTK_RUN_LAST,
-					  gtk_signal_default_marshaller,
-					  GTK_TYPE_NONE,
-					  0,
-					  NULL);
-    }
-
-  gimp_help_set_help_data (widget, NULL, help_data);
-
-  gtk_signal_connect (GTK_OBJECT (widget), "help",
-		      GTK_SIGNAL_FUNC (gimp_help_callback),
-		      (gpointer) help_func);
-
-#ifdef USE_TIPS_QUERY
-  gtk_signal_connect (GTK_OBJECT (widget), "tips_query",
-		      GTK_SIGNAL_FUNC (gimp_help_tips_query_start),
-		      (gpointer) tips_query);
-
-  gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
-#endif
-
-  /*  a new accelerator group for this widget  */
-  accel_group = gtk_accel_group_new ();
-
-  /*  FIXME: does not work for some reason...
-  gtk_widget_add_accelerator (widget, "help", accel_group,
-			      GDK_F1, 0, GTK_ACCEL_LOCKED);
-  gtk_widget_add_accelerator (widget, "tips_query", accel_group,
-			      GDK_F1, GDK_SHIFT_MASK, GTK_ACCEL_LOCKED);
-  */
-
-  /*  ...while using this internal stuff works  */
-  gtk_accel_group_add (accel_group, GDK_F1, 0, 0,
-		       GTK_OBJECT (widget), "help");
-#ifdef USE_TIPS_QUERY
-  gtk_accel_group_add (accel_group, GDK_F1, GDK_SHIFT_MASK, 0,
-		       GTK_OBJECT (widget), "tips_query");
-#endif
-
-  gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
-}
-
-void
-gimp_help_set_help_data (GtkWidget *widget,
-			 gchar     *tooltip,
-			 gchar     *help_data)
-{
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  if (tooltip)
-    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
-  else if (help_data)
-    gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
-}
-
-/*  the main help function  */
-void
-gimp_help (gchar *help_data)
-{
-  ProcRecord *proc_rec;
-
-#ifdef DEBUG_HELP
-  g_print ("Help Page: %s\n", help_data);
-#endif
-
-  /*  Check if a help browser is already running  */
-  proc_rec = procedural_db_lookup ("extension_gimp_help_browser_temp");
-
-  if (proc_rec == NULL)
-    {
-      Argument *args = NULL;
-
-      proc_rec = procedural_db_lookup ("extension_gimp_help_browser");
-
-      if (proc_rec == NULL)
-	{
-	  g_message (_("Could not find the GIMP Help Browser procedure.\n"
-		       "It probably was not compiled because\n"
-		       "you don't have GtkXmHTML installed."));
-	  return;
-	}
-
-      args = g_new (Argument, 2);
-      args[0].arg_type = PDB_INT32;
-      args[0].value.pdb_int = RUN_INTERACTIVE;
-      args[1].arg_type = PDB_STRING;
-      args[1].value.pdb_pointer = help_data;
-
-      plug_in_run (proc_rec, args, 2, FALSE, TRUE, 0);
-
-      g_free (args);
-    }
-  else
-    {
-      Argument *return_vals;
-      gint      nreturn_vals;
-
-      return_vals =
-        procedural_db_run_proc ("extension_gimp_help_browser_temp",
-                                &nreturn_vals,
-                                PDB_STRING, help_data,
-                                PDB_END);
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-    }
 }

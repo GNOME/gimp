@@ -88,6 +88,8 @@ static gint      selection_shrink_pixels     = 1;
 static gboolean  selection_shrink_edge_lock  = FALSE;
 
 
+/*****  File  *****/
+
 void
 file_open_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
@@ -131,6 +133,28 @@ file_quit_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
   app_exit (FALSE);
+}
+
+/*****  Edit  *****/
+
+void
+edit_undo_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  undo_pop (gdisp->gimage);
+}
+
+void
+edit_redo_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  undo_redo (gdisp->gimage);
 }
 
 void
@@ -184,6 +208,36 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
 }
 
 void
+edit_named_cut_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  named_edit_cut (gdisp);
+}
+
+void
+edit_named_copy_cmd_callback (GtkWidget *widget,
+			      gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  named_edit_copy (gdisp);
+}
+
+void
+edit_named_paste_cmd_callback (GtkWidget *widget,
+			       gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  named_edit_paste (gdisp);
+}
+
+void
 edit_clear_cmd_callback (GtkWidget *widget,
 			 gpointer   client_data)
 {
@@ -216,74 +270,7 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
-void
-edit_undo_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  undo_pop (gdisp->gimage);
-}
-
-void
-edit_redo_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  undo_redo (gdisp->gimage);
-}
-
-void
-edit_show_undo_history_cmd_callback (GtkWidget *widget,
-				     gpointer   client_data)
-{
-  GDisplay * gdisp;
-  GImage   * gimage;
-  return_if_no_display (gdisp);
-
-  gimage = gdisp->gimage;
-
-  if (!gimage->undo_history)
-      gimage->undo_history = undo_history_new (gimage);
-
-  if (!GTK_WIDGET_VISIBLE (gimage->undo_history))
-      gtk_widget_show (gimage->undo_history);
-  else
-      gdk_window_raise (gimage->undo_history->window);
-}
-
-void
-edit_named_cut_cmd_callback (GtkWidget *widget,
-			     gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  named_edit_cut (gdisp);
-}
-
-void
-edit_named_copy_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  named_edit_copy (gdisp);
-}
-
-void
-edit_named_paste_cmd_callback (GtkWidget *widget,
-			       gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  named_edit_paste (gdisp);
-}
+/*****  Select  *****/
 
 void
 select_invert_cmd_callback (GtkWidget *widget,
@@ -331,40 +318,6 @@ select_float_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_sharpen_cmd_callback (GtkWidget *widget,
-			     gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  gimage_mask_sharpen (gdisp->gimage);
-  gdisplays_flush ();
-}
-
-void
-select_border_cmd_callback (GtkWidget *widget,
-			    gpointer   client_data)
-{
-  GtkWidget *qbox;
-  GDisplay  *gdisp;
-
-  return_if_no_display (gdisp);
-
-  qbox = gimp_query_size_box (_("Border Selection"),
-			      gimp_standard_help_func,
-			      "dialogs/border_selection.html",
-			      _("Border selection by:"),
-			      selection_border_radius, 1, 32767, 0,
-			      gdisp->gimage->unit,
-			      MIN (gdisp->gimage->xresolution,
-				   gdisp->gimage->yresolution),
-			      gdisp->dot_for_dot,
-			      GTK_OBJECT (gdisp->gimage), "destroy",
-			      gimage_mask_border_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
-}
-
-void
 select_feather_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
@@ -388,26 +341,14 @@ select_feather_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_grow_cmd_callback (GtkWidget *widget,
-			  gpointer   client_data)
+select_sharpen_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
 {
-  GtkWidget *qbox;
-  GDisplay  *gdisp;
-
+  GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  qbox = gimp_query_size_box (_("Grow Selection"),
-			      gimp_standard_help_func,
-			      "dialogs/grow_selection.html",
-			      _("Grow selection by:"),
-			      selection_grow_pixels, 1, 32767, 0,
-			      gdisp->gimage->unit,
-			      MIN (gdisp->gimage->xresolution,
-				   gdisp->gimage->yresolution),
-			      gdisp->dot_for_dot,
-			      GTK_OBJECT (gdisp->gimage), "destroy",
-			      gimage_mask_grow_callback, gdisp->gimage);
-  gtk_widget_show (qbox);
+  gimage_mask_sharpen (gdisp->gimage);
+  gdisplays_flush ();
 }
 
 void
@@ -447,6 +388,52 @@ select_shrink_cmd_callback (GtkWidget *widget,
 }
 
 void
+select_grow_cmd_callback (GtkWidget *widget,
+			  gpointer   client_data)
+{
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
+
+  return_if_no_display (gdisp);
+
+  qbox = gimp_query_size_box (_("Grow Selection"),
+			      gimp_standard_help_func,
+			      "dialogs/grow_selection.html",
+			      _("Grow selection by:"),
+			      selection_grow_pixels, 1, 32767, 0,
+			      gdisp->gimage->unit,
+			      MIN (gdisp->gimage->xresolution,
+				   gdisp->gimage->yresolution),
+			      gdisp->dot_for_dot,
+			      GTK_OBJECT (gdisp->gimage), "destroy",
+			      gimage_mask_grow_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
+}
+
+void
+select_border_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
+{
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
+
+  return_if_no_display (gdisp);
+
+  qbox = gimp_query_size_box (_("Border Selection"),
+			      gimp_standard_help_func,
+			      "dialogs/border_selection.html",
+			      _("Border selection by:"),
+			      selection_border_radius, 1, 32767, 0,
+			      gdisp->gimage->unit,
+			      MIN (gdisp->gimage->xresolution,
+				   gdisp->gimage->yresolution),
+			      gdisp->dot_for_dot,
+			      GTK_OBJECT (gdisp->gimage), "destroy",
+			      gimage_mask_border_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
+}
+
+void
 select_save_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
@@ -457,15 +444,7 @@ select_save_cmd_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
-void
-view_dot_for_dot_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
-
-  gdisplay_set_dot_for_dot (gdisp, GTK_CHECK_MENU_ITEM (widget)->active);
-}
+/*****  View  *****/
 
 void
 view_zoomin_cmd_callback (GtkWidget *widget,
@@ -499,70 +478,80 @@ view_zoom_val (GtkWidget *widget,
 }
 
 void
-view_zoom_16_1_callback (GtkWidget *widget,
-			 gpointer   client_data)
+view_zoom_16_1_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 1601);
 }
 
 void
-view_zoom_8_1_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_8_1_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 801);
 }
 
 void
-view_zoom_4_1_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_4_1_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 401);
 }
 
 void
-view_zoom_2_1_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_2_1_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 201);
 }
 
 void
-view_zoom_1_1_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_1_1_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 101);
 }
 
 void
-view_zoom_1_2_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_1_2_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 102);
 }
 
 void
-view_zoom_1_4_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_1_4_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 104);
 }
 
 void
-view_zoom_1_8_callback (GtkWidget *widget,
-			gpointer   client_data)
+view_zoom_1_8_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 108);
 }
 
 void
-view_zoom_1_16_callback (GtkWidget *widget,
-			 gpointer   client_data)
+view_zoom_1_16_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
 {
   view_zoom_val (widget, client_data, 116);
 }
 
 void
-view_window_info_cmd_callback (GtkWidget *widget,
+view_dot_for_dot_cmd_callback (GtkWidget *widget,
+			       gpointer   client_data)
+{
+  GDisplay *gdisp;
+  return_if_no_display (gdisp);
+
+  gdisplay_set_dot_for_dot (gdisp, GTK_CHECK_MENU_ITEM (widget)->active);
+}
+
+void
+view_info_window_cmd_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
   GDisplay * gdisp;
@@ -575,13 +564,13 @@ view_window_info_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_window_nav_cmd_callback (GtkWidget *widget,
+view_nav_window_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  if(nav_window_per_display) 
+  if (nav_window_per_display) 
     {
       if (! gdisp->window_nav_dialog)
 	gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
@@ -590,8 +579,27 @@ view_window_nav_cmd_callback (GtkWidget *widget,
     }
   else
     {
-      nav_window_follow_auto();
+      nav_window_follow_auto ();
     }
+}
+
+void
+view_undo_history_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  GDisplay * gdisp;
+  GImage   * gimage;
+  return_if_no_display (gdisp);
+
+  gimage = gdisp->gimage;
+
+  if (!gimage->undo_history)
+    gimage->undo_history = undo_history_new (gimage);
+
+  if (!GTK_WIDGET_VISIBLE (gimage->undo_history))
+    gtk_widget_show (gimage->undo_history);
+  else
+    gdk_window_raise (gimage->undo_history->window);
 }
 
 void
@@ -620,23 +628,13 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  /* This routine use promiscuous knowledge of gtk internals
-   *  in order to hide and show the rulers "smoothly". This
-   *  is kludgy and a hack and may break if gtk is changed
-   *  internally.
-   */
-
   if (!GTK_CHECK_MENU_ITEM (widget)->active)
     {
       if (GTK_WIDGET_VISIBLE (gdisp->origin))
 	{
-	  gtk_widget_unmap (gdisp->origin);
-	  gtk_widget_unmap (gdisp->hrule);
-	  gtk_widget_unmap (gdisp->vrule);
-
-	  GTK_WIDGET_UNSET_FLAGS (gdisp->origin, GTK_VISIBLE);
-	  GTK_WIDGET_UNSET_FLAGS (gdisp->hrule, GTK_VISIBLE);
-	  GTK_WIDGET_UNSET_FLAGS (gdisp->vrule, GTK_VISIBLE);
+	  gtk_widget_hide (gdisp->origin);
+	  gtk_widget_hide (gdisp->hrule);
+	  gtk_widget_hide (gdisp->vrule);
 
 	  gtk_widget_queue_resize (GTK_WIDGET (gdisp->origin->parent));
 	}
@@ -645,16 +643,31 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
     {
       if (!GTK_WIDGET_VISIBLE (gdisp->origin))
 	{
-	  GTK_WIDGET_SET_FLAGS (gdisp->origin, GTK_VISIBLE);
-	  GTK_WIDGET_SET_FLAGS (gdisp->hrule, GTK_VISIBLE);
-	  GTK_WIDGET_SET_FLAGS (gdisp->vrule, GTK_VISIBLE);
-
-	  gtk_widget_map (gdisp->origin);
-	  gtk_widget_map (gdisp->hrule);
-	  gtk_widget_map (gdisp->vrule);
+	  gtk_widget_show (gdisp->origin);
+	  gtk_widget_show (gdisp->hrule);
+	  gtk_widget_show (gdisp->vrule);
 
 	  gtk_widget_queue_resize (GTK_WIDGET (gdisp->origin->parent));
 	}
+    }
+}
+
+void
+view_toggle_statusbar_cmd_callback (GtkWidget *widget,
+				    gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  if (!GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      if (GTK_WIDGET_VISIBLE (gdisp->statusarea))
+	gtk_widget_hide (gdisp->statusarea);
+    }
+  else
+    {
+      if (!GTK_WIDGET_VISIBLE (gdisp->statusarea))
+	gtk_widget_show (gdisp->statusarea);
     }
 }
 
@@ -688,25 +701,6 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_toggle_statusbar_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  if (!GTK_CHECK_MENU_ITEM (widget)->active)
-    {
-      if (GTK_WIDGET_VISIBLE (gdisp->statusarea))
-	gtk_widget_hide (gdisp->statusarea);
-    }
-  else
-    {
-      if (!GTK_WIDGET_VISIBLE (gdisp->statusarea))
-	gtk_widget_show (gdisp->statusarea);
-    }
-}
-
-void
 view_new_view_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
@@ -726,58 +720,7 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
   shrink_wrap_display (gdisp);
 }
 
-void
-image_equalize_cmd_callback (GtkWidget *widget,
-			     gpointer   client_data)
-{
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
-
-  image_equalize (gdisp->gimage);
-  gdisplays_flush ();
-}
-
-void
-image_invert_cmd_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  image_invert (gdisp->gimage);
-  gdisplays_flush ();
-}
-
-void
-image_desaturate_cmd_callback (GtkWidget *widget,
-			       gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  image_desaturate (gdisp->gimage);
-  gdisplays_flush ();
-}
-
-void
-channel_ops_duplicate_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  channel_ops_duplicate (gdisp->gimage);
-}
-
-void
-channel_ops_offset_cmd_callback (GtkWidget *widget,
-				 gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  channel_ops_offset (gdisp->gimage);
-}
+/*****  Image  *****/
 
 void
 image_convert_rgb_cmd_callback (GtkWidget *widget,
@@ -807,6 +750,49 @@ image_convert_indexed_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   convert_to_indexed (gdisp->gimage);
+}
+
+void
+image_desaturate_cmd_callback (GtkWidget *widget,
+			       gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  image_desaturate (gdisp->gimage);
+  gdisplays_flush ();
+}
+
+void
+image_invert_cmd_callback (GtkWidget *widget,
+			   gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  image_invert (gdisp->gimage);
+  gdisplays_flush ();
+}
+
+void
+image_equalize_cmd_callback (GtkWidget *widget,
+			     gpointer   client_data)
+{
+  GDisplay *gdisp;
+  return_if_no_display (gdisp);
+
+  image_equalize (gdisp->gimage);
+  gdisplays_flush ();
+}
+
+void
+image_offset_cmd_callback (GtkWidget *widget,
+			   gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  channel_ops_offset (gdisp->gimage);
 }
 
 void
@@ -872,12 +858,24 @@ image_scale_cmd_callback (GtkWidget *widget,
 }
 
 void
+image_duplicate_cmd_callback (GtkWidget *widget,
+			      gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  channel_ops_duplicate (gdisp->gimage);
+}
+
+/*****  Layers  *****/
+
+void
 layers_previous_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   GDisplay * gdisp;
-  int        current_layer;
   Layer    * new_layer;
+  gint       current_layer;
 
   return_if_no_display (gdisp);
 
@@ -902,8 +900,8 @@ layers_next_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
   GDisplay * gdisp;
-  int        current_layer;
   Layer    * new_layer;
+  gint       current_layer;
 
   return_if_no_display (gdisp);
 
@@ -1000,17 +998,6 @@ layers_flatten_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_alpha_select_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  GDisplay * gdisp;
-  return_if_no_display (gdisp);
-
-  gimage_mask_layer_alpha (gdisp->gimage, gdisp->gimage->active_layer);
-  gdisplays_flush ();
-}
-
-void
 layers_mask_select_cmd_callback (GtkWidget *widget,
 				 gpointer   client_data)
 {
@@ -1031,6 +1018,19 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
   layer_add_alpha ( gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
+
+void
+layers_alpha_select_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  gimage_mask_layer_alpha (gdisp->gimage, gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
+/*****  Tools  *****/
 
 void
 tools_default_colors_cmd_callback (GtkWidget *widget,
@@ -1065,9 +1065,9 @@ tools_select_cmd_callback (GtkWidget *widget,
   /*  Complete the initialisation by doing the same stuff
    *  tools_initialize() does after it did what tools_select() does
    */
-  if (tool_info[callback_action].init_func)
+  if (tool_info[tool_type].init_func)
     {
-      (* tool_info[callback_action].init_func) (gdisp);
+      (* tool_info[tool_type].init_func) (gdisp);
 
       active_tool->drawable = gimage_active_drawable (gdisp->gimage);
     }
@@ -1080,12 +1080,33 @@ tools_select_cmd_callback (GtkWidget *widget,
   active_tool->gdisp_ptr = gdisp;
 }
 
+/*****  Filters  *****/
+
 void
 filters_repeat_cmd_callback (GtkWidget *widget,
 			     gpointer   callback_data,
 			     guint      callback_action)
 {
   plug_in_repeat (callback_action);
+}
+
+/*****  Dialogs  ******/
+
+void
+dialogs_lc_cmd_callback (GtkWidget *widget,
+			 gpointer   client_data)
+{
+  GDisplay * gdisp;
+  gdisp = gdisplay_active ();
+
+  lc_dialog_create (gdisp ? gdisp->gimage : NULL);
+}
+
+void
+dialogs_tool_options_cmd_callback (GtkWidget *widget,
+				   gpointer   client_data)
+{
+  tool_options_dialog_show ();
 }
 
 void
@@ -1103,41 +1124,31 @@ dialogs_patterns_cmd_callback (GtkWidget *widget,
 }
 
 void
+dialogs_gradients_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  gradient_dialog_create ();
+}
+
+void
 dialogs_palette_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   palette_dialog_create ();
 }
 
-void
-dialogs_gradient_cmd_callback (GtkWidget *widget,
-			       gpointer   client_data)
-{
-  gradient_dialog_create ();
-}
-
-void
-dialogs_lc_cmd_callback (GtkWidget *widget,
-			 gpointer   client_data)
-{
-  GDisplay * gdisp;
-  gdisp = gdisplay_active ();
-
-  lc_dialog_create (gdisp ? gdisp->gimage : NULL);
-}
-
 static void
-cmap_dlg_sel_cb (ColormapDialog *dlg,
-		 gpointer        user_data)
+dialogs_indexed_palette_select_callback (ColormapDialog *dlg,
+					 gpointer        user_data)
 {
-  guchar    * c;
-  GimpImage * img = colormap_dialog_image(dlg);
+  guchar    *c;
+  GimpImage *img = colormap_dialog_image (dlg);
 
-  c = &img->cmap[colormap_dialog_col_index(dlg) * 3];
+  c = &img->cmap[colormap_dialog_col_index (dlg) * 3];
 
-  if(active_color == FOREGROUND)
+  if (active_color == FOREGROUND)
     gimp_context_set_foreground (gimp_context_get_user (), c[0], c[1], c[2]);
-  else if(active_color == BACKGROUND)
+  else if (active_color == BACKGROUND)
     gimp_context_set_background (gimp_context_get_user (), c[0], c[1], c[2]);
 }
 
@@ -1150,17 +1161,11 @@ dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
   if (!cmap_dlg)
     {
       cmap_dlg = colormap_dialog_create (image_context);
-      colormap_dialog_connect_selected (cmap_dlg_sel_cb, NULL, cmap_dlg);
+      colormap_dialog_connect_selected (dialogs_indexed_palette_select_callback,
+					NULL, cmap_dlg);
     }
 
   gtk_widget_show (GTK_WIDGET (cmap_dlg));
-}
-
-void
-dialogs_tool_options_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  tool_options_dialog_show ();
 }
 
 void
@@ -1186,30 +1191,9 @@ dialogs_error_console_cmd_callback (GtkWidget *widget,
 
 void
 dialogs_display_filters_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
+				      gpointer   client_data)
 {
   gdisplay_color_ui (gdisplay_active ());
-}
-
-void
-dialogs_about_cmd_callback (GtkWidget *widget,
-			    gpointer   client_data)
-{
-  about_dialog_create (FALSE);
-}
-
-void
-gimp_help_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
-{
-  gimp_help (NULL);
-}
-
-void
-dialogs_tips_cmd_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  tips_dialog_create ();
 }
 
 void
@@ -1222,17 +1206,47 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
   gtk_widget_show (w);
 }
 
+/*****  Help  *****/
 
-/*********************/
-/*  Local functions  */
-/*********************/
+void
+help_help_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  gimp_help (NULL);
+}
+
+void
+help_context_help_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  gimp_context_help ();
+}
+
+void
+help_tips_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  tips_dialog_create ();
+}
+
+void
+help_about_cmd_callback (GtkWidget *widget,
+			 gpointer   client_data)
+{
+  about_dialog_create (FALSE);
+}
+
+
+/*****************************/
+/*****  Local functions  *****/
+/*****************************/
 
 static void
 image_resize_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
-  ImageResize * image_resize;
-  GImage      * gimage;
+  ImageResize *image_resize;
+  GImage      *gimage;
 
   image_resize = (ImageResize *) client_data;
 
@@ -1264,11 +1278,11 @@ static void
 image_scale_callback (GtkWidget *widget,
 		      gpointer   client_data)
 {
-  ImageResize * image_scale;
-  GImage      * gimage;
-  gboolean      flush = FALSE;  /* this is a bit ugly: 
-				   we hijack the flush variable to check if 
-				   an undo_group was already started */
+  ImageResize *image_scale;
+  GImage      *gimage;
+  gboolean     flush = FALSE;  /* this is a bit ugly: 
+				  we hijack the flush variable to check if 
+				  an undo_group was already started */
 
   image_scale = (ImageResize *) client_data;
 
@@ -1304,7 +1318,7 @@ image_scale_callback (GtkWidget *widget,
 	    {
 	      if (!flush)
 		undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-	
+
 	      gimage_scale (gimage,
 			    image_scale->resize->width,
 			    image_scale->resize->height);
@@ -1353,7 +1367,7 @@ gimage_mask_feather_callback (GtkWidget *widget,
 
   gimage = GIMP_IMAGE (client_data);
 
-  selection_feather_radius = *(gdouble*) call_data;
+  selection_feather_radius = *(gdouble *) call_data;
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
@@ -1376,7 +1390,6 @@ gimage_mask_feather_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
-
 static void
 gimage_mask_border_callback (GtkWidget *widget,
 			     gpointer   client_data,
@@ -1389,7 +1402,7 @@ gimage_mask_border_callback (GtkWidget *widget,
 
   gimage = GIMP_IMAGE (client_data);
 
-  selection_border_radius = (int) (*(gdouble*) call_data + 0.5);
+  selection_border_radius = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
@@ -1407,11 +1420,10 @@ gimage_mask_border_callback (GtkWidget *widget,
       else
 	radius_x *= factor;
     }
-  
+
   gimage_mask_border (gimage, radius_x, radius_y);
   gdisplays_flush ();
 }
-
 
 static void
 gimage_mask_grow_callback (GtkWidget *widget,
@@ -1425,12 +1437,12 @@ gimage_mask_grow_callback (GtkWidget *widget,
 
   gimage = GIMP_IMAGE (client_data);
 
-  selection_grow_pixels = (int) (*(gdouble*) call_data + 0.5);
+  selection_grow_pixels = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_grow_pixels;
-  
+
   if (unit != UNIT_PIXEL)
     {
       gdouble factor;
@@ -1448,7 +1460,6 @@ gimage_mask_grow_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
-
 static void
 gimage_mask_shrink_callback (GtkWidget *widget,
 			     gpointer   client_data,
@@ -1461,7 +1472,7 @@ gimage_mask_shrink_callback (GtkWidget *widget,
 
   gimage = GIMP_IMAGE (client_data);
 
-  selection_shrink_pixels = (int) (*(gdouble*) call_data + 0.5);
+  selection_shrink_pixels = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 

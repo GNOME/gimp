@@ -156,8 +156,8 @@ resize_widget_new (ResizeType    type,
 	    frame = gtk_frame_new (_("Size"));
 	    break;
 	  case ResizeImage:
-	    wmclass = "image_scale";
-	    window_title = _("Image Scale");
+	    wmclass = "scale_image";
+	    window_title = _("Scale Image");
 	    help_page = "dialogs/scale_image.html";
 	    frame = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
@@ -169,12 +169,12 @@ resize_widget_new (ResizeType    type,
 	  {
 	  case ResizeLayer:
 	    wmclass = "resize_layer";
-	    window_title = _("Resize Layer");
+	    window_title = _("Set Layer Boundary Size");
 	    help_page = "layers/dialogs/resize_layer.html";
 	    break;
 	  case ResizeImage:
-	    wmclass = "image_resize";
-	    window_title = _("Image Resize");
+	    wmclass = "resize_image";
+	    window_title = _("Set Canvas Size");
 	    help_page = "dialogs/resize_image.html";
 	    break;
 	  }

@@ -86,12 +86,13 @@ query (void)
 			  "Martin Weber",
 		 	  "Martin Weber", 
 		  	  "1997", 	 	 
-			  N_("<Image>/Image/Colors/Color Enhance"),
+			  N_("<Image>/Image/Colors/Auto/Color Enhance"),
 	   	  	  "RGB*, INDEXED*",
  			  PROC_PLUG_IN,
 	 	  	  nargs, nreturn_vals,
  			  args,
-			  return_vals); }
+			  return_vals);
+}
 
 static void
 run (char    *name,

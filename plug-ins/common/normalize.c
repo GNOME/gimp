@@ -80,7 +80,7 @@ query ()
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Image/Colors/Normalize"),
+			  N_("<Image>/Image/Colors/Auto/Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -336,7 +336,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      N_("<Image>/File/Print"),
+      N_("<Image>/File/Print..."),
       "RGB*,GRAY*,INDEXED*",
       PROC_PLUG_IN,
       nargs,

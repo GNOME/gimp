@@ -112,7 +112,7 @@ void query(void)
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",
 			  "04th April 1999",
-			  "<Image>/Filters/Darkroom/Colormap Rotation",
+			  "<Image>/Image/Colors/Colormap Rotation...",
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -214,7 +214,7 @@ query ()
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, Spencer Kimball and Peter Mattis",
 			  "1995-1997",
-			  N_("<Image>/File/Mail image"),
+			  N_("<Image>/File/Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

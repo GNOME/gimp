@@ -1014,6 +1014,9 @@ layers_dialog_set_menu_sensitivity (void)
         gtk_widget_set_sensitive (layers_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
+  SET_SENSITIVE (N_("/New Layer..."), gimage);
+  SET_OPS_SENSITIVE (0, gimage);
+
   SET_SENSITIVE (N_("/Stack/Previous Layer"), fs && ac && gimage && lp && prev);
   SET_SENSITIVE (N_("/Stack/Next Layer"), fs && ac && gimage && lp && next);
 
@@ -1030,9 +1033,6 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE (N_("/Stack/Layer to Bottom"),
 		 fs && ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE (N_("/New Layer"), gimage);
-  SET_OPS_SENSITIVE (0, gimage);
-
   SET_SENSITIVE (N_("/Duplicate Layer"), fs && ac && gimage && lp);
   SET_OPS_SENSITIVE (3, fs && ac && gimage && lp);
 
@@ -1042,18 +1042,19 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE (N_("/Delete Layer"), ac && gimage && lp);
   SET_OPS_SENSITIVE (5, ac && gimage && lp);
 
-  SET_SENSITIVE (N_("/Scale Layer"), ac && gimage && lp);
-  SET_SENSITIVE (N_("/Resize Layer"), ac && gimage && lp);
+  SET_SENSITIVE (N_("/Layer Boundary Size..."), ac && gimage && lp);
+  SET_SENSITIVE (N_("/Scale Layer..."), ac && gimage && lp);
 
-  SET_SENSITIVE (N_("/Merge Visible Layers"), fs && ac && gimage && lp);
+  SET_SENSITIVE (N_("/Merge Visible Layers..."), fs && ac && gimage && lp);
   SET_SENSITIVE (N_("/Merge Down"), fs && ac && gimage && lp);
   SET_SENSITIVE (N_("/Flatten Image"), fs && ac && gimage && lp);
 
-  SET_SENSITIVE (N_("/Add Layer Mask"), fs && ac && gimage && !lm && lp && alpha);
-  SET_SENSITIVE (N_("/Apply Layer Mask"), fs && ac && gimage && lm && lp);
-  SET_SENSITIVE (N_("/Alpha to Selection"), fs && ac && gimage && lp && alpha);
+  SET_SENSITIVE (N_("/Add Layer Mask..."), fs && ac && gimage && !lm && lp && alpha);
+  SET_SENSITIVE (N_("/Apply Layer Mask..."), fs && ac && gimage && lm && lp);
   SET_SENSITIVE (N_("/Mask to Selection"), fs && ac && gimage && lm && lp);
+
   SET_SENSITIVE (N_("/Add Alpha Channel"), !alpha);
+  SET_SENSITIVE (N_("/Alpha to Selection"), fs && ac && gimage && lp && alpha);
 
 #undef SET_OPS_SENSITIVE
 #undef SET_SENSITIVE
@@ -1375,7 +1376,7 @@ layer_list_events (GtkWidget *widget,
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 3 || bevent->button == 2)
+	  if (bevent->button == 3)
 	    {
 	      gtk_menu_popup (GTK_MENU (layersD->ops_menu),
 			      NULL, NULL, NULL, NULL,
