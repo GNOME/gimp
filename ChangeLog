@@ -1,5 +1,15 @@
 2000-12-11  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/print/Makefile.am: removed obsolete checks for lpc, lpstat
+	and friends
+
+	* plug-ins/perl/examples/blended2
+	* plug-ins/perl/examples/translogo: register with the correct image
+	types. Fixes bug #10675.
+	
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gdyntext/font_selection.c
 	* plug-ins/winsnap/winsnap.c: use new GTK+ API
 	s/gtk_toggle_button_set_state/gtk_toggle_button_set_active/

@@ -43,10 +43,6 @@ INCLUDES = \
 
 AM_CPPFLAGS = \
         -DLOCALEDIR=\""$(localedir)"\"		\
-	@LP_DEF@				\
-	@LPSTAT_DEF@				\
-	@LPR_DEF@				\
-	@LPC_DEF@				\
 	-DVERSION=\"$(GIMP_PRINT_VERSION)\"	\
 	-DRELEASE_DATE=\"$(GIMP_PRINT_RELEASE_DATE)\"
 
