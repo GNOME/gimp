@@ -237,6 +237,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->moving_guide       = FALSE;
   move->old_active_layer   = NULL;
   move->old_active_vectors = NULL;
+  move->change_active      = options->change_active;
 
   if (! options->move_current)
     {
@@ -246,7 +247,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
           if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
                                          coords, 7, 7,
-                                         NULL, NULL, NULL, NULL, NULL, &vectors))
+                                         NULL, NULL, NULL, NULL, NULL,
+                                         &vectors))
             {
               move->old_active_vectors =
                 gimp_image_get_active_vectors (gdisp->gimage);
@@ -256,7 +258,6 @@ gimp_move_tool_button_press (GimpTool        *tool,
           else
             {
               /*  no path picked  */
-
               return;
             }
         }
@@ -457,15 +458,21 @@ gimp_move_tool_button_release (GimpTool        *tool,
     {
       if (move->old_active_layer)
         {
-          gimp_image_set_active_layer (gdisp->gimage,
-                                       move->old_active_layer);
+          if ( ! move->change_active)
+            {
+              gimp_image_set_active_layer (gdisp->gimage,
+                                           move->old_active_layer);
+            }
           move->old_active_layer = NULL;
         }
 
       if (move->old_active_vectors)
         {
-          gimp_image_set_active_vectors (gdisp->gimage,
-                                         move->old_active_vectors);
+          if (! move->change_active)
+            {
+              gimp_image_set_active_vectors (gdisp->gimage,
+                                             move->old_active_vectors);
+            }
           move->old_active_vectors = NULL;
         }
 

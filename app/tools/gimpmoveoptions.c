@@ -41,7 +41,8 @@ enum
 {
   PROP_0,
   PROP_MOVE_TYPE,
-  PROP_MOVE_CURRENT
+  PROP_MOVE_CURRENT,
+  PROP_CHANGE_ACTIVE
 };
 
 
@@ -107,6 +108,11 @@ gimp_move_options_class_init (GimpMoveOptionsClass *klass)
                                     "move-current", NULL,
                                     FALSE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CHANGE_ACTIVE,
+                                    "change-active", NULL,
+                                    TRUE,
+                                    0);
+
 }
 
 static void
@@ -124,6 +130,9 @@ gimp_move_options_set_property (GObject      *object,
       break;
     case PROP_MOVE_CURRENT:
       options->move_current = g_value_get_boolean (value);
+      break;
+    case PROP_CHANGE_ACTIVE:
+      options->change_active = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -147,6 +156,9 @@ gimp_move_options_get_property (GObject    *object,
     case PROP_MOVE_CURRENT:
       g_value_set_boolean (value, options->move_current);
       break;
+    case PROP_CHANGE_ACTIVE:
+      g_value_set_boolean (value, options->change_active);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -160,27 +172,33 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 {
   const gchar *false_label = NULL;
   const gchar *true_label  = NULL;
+  const gchar *change_active_label = NULL;
   GtkWidget   *button;
+  GtkWidget   *check;
   GSList      *group;
 
   button = g_object_get_data (G_OBJECT (frame), "radio-button");
+  check  = g_object_get_data (G_OBJECT (frame), "check");
 
   switch (move_options->move_type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      false_label = _("Pick a layer or guide to Move");
-      true_label  = _("Move the current layer");
+      false_label         = _("Pick a layer or guide to Move");
+      true_label          = _("Move the active layer");
+      change_active_label = _("Change the active layer");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      false_label = _("Move selection");
-      true_label  = _("Move selection");
+      false_label         = _("Move selection");
+      true_label          = _("Move selection");
+      change_active_label = NULL;
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      false_label = _("Pick a path to move");
-      true_label  = _("Move the current path");
-     break;
+      false_label         = _("Pick a path to move");
+      true_label          = _("Move the active path");
+      change_active_label = _("Change the active path");
+      break;
     }
 
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
@@ -189,8 +207,21 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
   group = g_slist_next (group);
   gtk_button_set_label (GTK_BUTTON (group->data), false_label);
 
+  gtk_button_set_label (GTK_BUTTON (check), change_active_label);
+
   gtk_widget_set_sensitive (frame,
                             move_options->move_type != GIMP_TRANSFORM_TYPE_SELECTION);
+  gtk_widget_set_sensitive (check,
+                            move_options->move_type != GIMP_TRANSFORM_TYPE_SELECTION);
+
+  if (move_options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+    {
+      gtk_widget_hide (check);
+    }
+  else
+    {
+      gtk_widget_show (check);
+    }
 }
 
 GtkWidget *
@@ -201,6 +232,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
+  GtkWidget *check;
   gchar     *title;
 
   vbox = gimp_tool_options_gui (tool_options);
@@ -221,6 +253,11 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
                                              title, "true", "false");
 
+  /* change active layer */
+  check = gimp_prop_check_button_new (config, "change_active", "false");
+
+  g_object_set_data (G_OBJECT (frame), "check", check);
+
   gimp_move_options_notify_type (GIMP_MOVE_OPTIONS (config), NULL, frame);
 
   g_signal_connect_object (config, "notify::move-type",
@@ -229,6 +266,10 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
+  if (GIMP_MOVE_OPTIONS (config)->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+    gtk_widget_show (check);
 
   g_free (title);
 
