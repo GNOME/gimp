@@ -630,20 +630,18 @@ bezier_edit_point_on_curve(int             x,
 	  if (ModeEdit== EXTEND_REMOVE)
 	    {
 
-	      if(bevent->state & GDK_SHIFT_MASK)
+	      if((bevent->state & GDK_SHIFT_MASK) || (point_counts <= 7))
 		{
-		  delete_whole_curve(bezier_sel,start_pt);
-		}
-	      else if (point_counts <= 7)
-		{
-		  /* If we've got less then 7 points ie: 2 anchors points 4 controls 
-		     Then the curve is minimal closed curve.
-		     I've decided to not operate on this kind of curve because it    
-		     implies opening the curve and change some drawing states        
-		     Removing 1 point of curve that contains 2 point is something    
-		     similare to reconstruct the curve !!!
+		  /* Case 1: GDK_SHIFT_MASK - The user explicitly wishes the present 
+                     curve to go away.
+                     Case 2: The current implementation cannot cope with less than
+                     7 points ie: 2 anchors points and 4 controls: the minimal closed curve.
+                     Since the user wishes less than this implementation minimum,
+                     we take this for an implicit wish that the entire curve go away.
+                     G'bye dear curve. 
 		  */
-		  return(0); 
+
+		  delete_whole_curve(bezier_sel,start_pt);
 		}
 	      else if(!finded->prev || !finded->prev->prev) 
 		{
@@ -1627,7 +1625,7 @@ bezier_select_cursor_update (Tool           *tool,
 	  if (on_control_pnt && mevent->state & GDK_SHIFT_MASK)
 	    {
 	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
-	      g_print ("delete whole curve cursor\n");
+/*            g_print ("delete whole curve cursor\n"); */
 	    }
 	  else if (on_control_pnt)
 	    {

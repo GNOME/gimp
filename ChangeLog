@@ -1,3 +1,13 @@
+2000-04-01  Garry R. Osgood   <gosgood@idt.net>
+	* app/bezier_select.c
+	When user deletion of anchor points decimates a curve
+	below the number which the implementation can properly
+	manipulate, bezier_edit_point_on_curve() now invokes 
+	delete_whole_curve(). Formerly returned a zero, prompting
+  	a mode change and a re-interpretation of the mouse-button-down
+	event as the addition of a new curve segment, giving
+	rise to #6093. Closes #6093.
+	
 2000-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/disp_callbacks.c: when dropping a drawable, do the
