@@ -210,7 +210,7 @@ gimp_size_entry_finalize (GObject *object)
  *                     GIMP_SIZE_ENTRY_UPDATE_NONE).
  * @menu_show_percent: %TRUE if the unit menu shold contain an item for
  *                     GIMP_UNIT_PERCENT.
- * @show_refval:       %TRUE if you want an extra "refenence value"
+ * @show_refval:       %TRUE if you want an extra "reference value"
  *                     spinbutton per input field.
  * @spinbutton_width:  The minimal horizontal size of the #GtkSpinButton's.
  * @update_policy:     How the automatic pixel <-> real-world-unit
