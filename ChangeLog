@@ -1,5 +1,9 @@
 2004-07-31  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/diffraction.c: ported to GimpPreviewArea.
+
+2004-07-31  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/despeckle.c: use even more GimpPreviewArea's
 	facilities.
 

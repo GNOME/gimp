@@ -30,11 +30,6 @@
 #endif
 #include <sys/types.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -76,7 +71,7 @@ typedef struct
 {
   GtkWidget *preview;
   GtkWidget *progress;
-  guchar     preview_row[PREVIEW_WIDTH * 3];
+  guchar     preview_buffer[PREVIEW_WIDTH * PREVIEW_HEIGHT * 3];
 } diffraction_interface_t;
 
 
@@ -84,25 +79,25 @@ typedef struct
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static void diffraction (GimpDrawable *drawable);
 
 static void   diff_init_luts (void);
 static void   diff_diffract  (gdouble  x,
-			      gdouble  y,
-			      GimpRGB *rgb);
+                              gdouble  y,
+                              GimpRGB *rgb);
 static double diff_point     (gdouble  x,
-			      gdouble  y,
-			      gdouble  edges,
-			      gdouble  contours,
-			      gdouble  lam);
+                              gdouble  y,
+                              gdouble  edges,
+                              gdouble  contours,
+                              gdouble  lam);
 static double diff_intensity (gdouble  x,
-			      gdouble  y,
-			      gdouble  lam);
+                              gdouble  y,
+                              gdouble  lam);
 
 static gboolean  diffraction_dialog     (void);
 static void      dialog_update_preview  (void);
@@ -139,7 +134,7 @@ static diffraction_interface_t dint =
 {
   NULL,  /* preview */
   NULL,  /* progress */
-  { 0 }  /* preview_row */
+  { 0 }  /* preview_buffer */
 };
 
 static gdouble cos_lut[ITERATIONS + 1];
@@ -162,30 +157,30 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
     { GIMP_PDB_FLOAT,    "lam_r",        "Light frequency (red)" },
-    { GIMP_PDB_FLOAT, 	  "lam_g",        "Light frequency (green)" },
-    { GIMP_PDB_FLOAT, 	  "lam_b",        "Light frequency (blue)" },
-    { GIMP_PDB_FLOAT, 	  "contour_r",    "Number of contours (red)" },
-    { GIMP_PDB_FLOAT, 	  "contour_g",    "Number of contours (green)" },
-    { GIMP_PDB_FLOAT, 	  "contour_b",    "Number of contours (blue)" },
-    { GIMP_PDB_FLOAT, 	  "edges_r",      "Number of sharp edges (red)" },
-    { GIMP_PDB_FLOAT, 	  "edges_g",      "Number of sharp edges (green)" },
-    { GIMP_PDB_FLOAT, 	  "edges_b",      "Number of sharp edges (blue)" },
-    { GIMP_PDB_FLOAT, 	  "brightness",   "Brightness and shifting/fattening of contours" },
-    { GIMP_PDB_FLOAT, 	  "scattering",   "Scattering (Speed vs. quality)" },
-    { GIMP_PDB_FLOAT, 	  "polarization", "Polarization" }
+    { GIMP_PDB_FLOAT,     "lam_g",        "Light frequency (green)" },
+    { GIMP_PDB_FLOAT,     "lam_b",        "Light frequency (blue)" },
+    { GIMP_PDB_FLOAT,     "contour_r",    "Number of contours (red)" },
+    { GIMP_PDB_FLOAT,     "contour_g",    "Number of contours (green)" },
+    { GIMP_PDB_FLOAT,     "contour_b",    "Number of contours (blue)" },
+    { GIMP_PDB_FLOAT,     "edges_r",      "Number of sharp edges (red)" },
+    { GIMP_PDB_FLOAT,     "edges_g",      "Number of sharp edges (green)" },
+    { GIMP_PDB_FLOAT,     "edges_b",      "Number of sharp edges (blue)" },
+    { GIMP_PDB_FLOAT,     "brightness",   "Brightness and shifting/fattening of contours" },
+    { GIMP_PDB_FLOAT,     "scattering",   "Scattering (Speed vs. quality)" },
+    { GIMP_PDB_FLOAT,     "polarization", "Polarization" }
   };
 
   gimp_install_procedure ("plug_in_diffraction",
-			  "Generate diffraction patterns",
-			  "Help?  What help?  Real men do not need help :-)",  /* FIXME */
-			  "Federico Mena Quintero",
-			  "Federico Mena Quintero & David Bleecker",
-			  "April 1997, 0.5",
-			  N_("_Diffraction Patterns..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Generate diffraction patterns",
+                          "Help?  What help?  Real men do not need help :-)",  /* FIXME */
+                          "Federico Mena Quintero",
+                          "Federico Mena Quintero & David Bleecker",
+                          "April 1997, 0.5",
+                          N_("_Diffraction Patterns..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_diffraction",
                              N_("<Image>/Filters/Render/Pattern"));
@@ -226,30 +221,30 @@ run (const gchar      *name,
 
       /* Get information from the dialog */
       if (!diffraction_dialog ())
-	return;
+        return;
 
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 15)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  dvals.lam_r 	     = param[3].data.d_float;
-	  dvals.lam_g 	     = param[4].data.d_float;
-	  dvals.lam_b        = param[5].data.d_float;
-	  dvals.contour_r    = param[6].data.d_float;
-	  dvals.contour_g    = param[7].data.d_float;
-	  dvals.contour_b    = param[8].data.d_float;
-	  dvals.edges_r      = param[9].data.d_float;
-	  dvals.edges_g      = param[10].data.d_float;
-	  dvals.edges_b      = param[11].data.d_float;
-	  dvals.brightness   = param[12].data.d_float;
-	  dvals.scattering   = param[13].data.d_float;
-	  dvals.polarization = param[14].data.d_float;
-	}
+        {
+          dvals.lam_r        = param[3].data.d_float;
+          dvals.lam_g        = param[4].data.d_float;
+          dvals.lam_b        = param[5].data.d_float;
+          dvals.contour_r    = param[6].data.d_float;
+          dvals.contour_g    = param[7].data.d_float;
+          dvals.contour_b    = param[8].data.d_float;
+          dvals.edges_r      = param[9].data.d_float;
+          dvals.edges_g      = param[10].data.d_float;
+          dvals.edges_b      = param[11].data.d_float;
+          dvals.brightness   = param[12].data.d_float;
+          dvals.scattering   = param[13].data.d_float;
+          dvals.polarization = param[14].data.d_float;
+        }
 
       break;
 
@@ -270,19 +265,19 @@ run (const gchar      *name,
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles ((active_drawable->width + gimp_tile_width() - 1) /
-			      gimp_tile_width());
+                              gimp_tile_width());
 
       /* Run! */
       diffraction (active_drawable);
 
       /* If run mode is interactive, flush displays */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_diffraction",
-		       &dvals, sizeof(diffraction_vals_t));
+        gimp_set_data ("plug_in_diffraction",
+                       &dvals, sizeof(diffraction_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -293,18 +288,18 @@ run (const gchar      *name,
 }
 
 typedef struct {
-  gdouble 	dhoriz;
-  gdouble 	dvert;
-  gint		x1;
-  gint 		y1;
+  gdouble       dhoriz;
+  gdouble       dvert;
+  gint          x1;
+  gint          y1;
 } DiffractionParam_t;
 
 static void
 diffraction_func (gint x,
-		  gint y,
-		  guchar *dest,
-		  gint bpp,
-		  gpointer data)
+                  gint y,
+                  guchar *dest,
+                  gint bpp,
+                  gpointer data)
 {
   DiffractionParam_t *param = (DiffractionParam_t*) data;
   gdouble px, py;
@@ -366,8 +361,8 @@ diff_init_luts (void)
 
 static void
 diff_diffract (double   x,
-	       double   y,
-	       GimpRGB* rgb)
+               double   y,
+               GimpRGB* rgb)
 {
   rgb->r = diff_point (x, y, dvals.edges_r, dvals.contour_r, dvals.lam_r);
   rgb->g = diff_point (x, y, dvals.edges_g, dvals.contour_g, dvals.lam_g);
@@ -376,19 +371,19 @@ diff_diffract (double   x,
 
 static double
 diff_point (double x,
-	    double y,
-	    double edges,
-	    double contours,
-	    double lam)
+            double y,
+            double edges,
+            double contours,
+            double lam)
 {
   return fabs (edges * sin (contours * atan (dvals.brightness *
-					     diff_intensity (x, y, lam))));
+                                             diff_intensity (x, y, lam))));
 }
 
 static double
 diff_intensity (double x,
-		double y,
-		double lam)
+                double y,
+                double lam)
 {
   int    i;
   double cxy, sxy;
@@ -404,9 +399,9 @@ diff_intensity (double x,
   for (i = 0; i <= ITERATIONS; i++)
     {
       param = lam *
-	(cos_lut[i] * x +
-	 param_lut1[i] * y -
-	 param_lut2[i]);
+        (cos_lut[i] * x +
+         param_lut1[i] * y -
+         param_lut2[i]);
 
       cxy += cos (param);
       sxy += sin (param);
@@ -421,7 +416,7 @@ diff_intensity (double x,
   sinpolpi2 = sin (polpi2);
 
   return dvals.scattering * ((cospolpi2 + sinpolpi2) * cxy * cxy +
-			     (cospolpi2 - sinpolpi2) * sxy * sxy);
+                             (cospolpi2 - sinpolpi2) * sxy * sxy);
 }
 
 static gboolean
@@ -442,17 +437,17 @@ diffraction_dialog (void)
 
   dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-diffraction",
+                            gimp_standard_help_func, "plug-in-diffraction",
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Preview */
@@ -461,13 +456,13 @@ diffraction_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (NULL);
+  frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  dint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW(dint.preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  dint.preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (dint.preview, PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), dint.preview);
   gtk_widget_show (dint.preview);
 
@@ -500,28 +495,28 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Red:"), SCALE_WIDTH, 0,
-			      dvals.lam_r, 0.0, 20.0, 0.2, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Red:"), SCALE_WIDTH, 0,
+                              dvals.lam_r, 0.0, 20.0, 0.2, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Green:"), SCALE_WIDTH, 0,
-			      dvals.lam_g, 0.0, 20.0, 0.2, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Green:"), SCALE_WIDTH, 0,
+                              dvals.lam_g, 0.0, 20.0, 0.2, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Blue:"), SCALE_WIDTH, 0,
-			      dvals.lam_b, 0.0, 20.0, 0.2, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Blue:"), SCALE_WIDTH, 0,
+                              dvals.lam_b, 0.0, 20.0, 0.2, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_b);
@@ -538,28 +533,28 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Red:"), SCALE_WIDTH, 0,
-			      dvals.contour_r, 0.0, 10.0, 0.1, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Red:"), SCALE_WIDTH, 0,
+                              dvals.contour_r, 0.0, 10.0, 0.1, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Green:"), SCALE_WIDTH, 0,
-			      dvals.contour_g, 0.0, 10.0, 0.1, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Green:"), SCALE_WIDTH, 0,
+                              dvals.contour_g, 0.0, 10.0, 0.1, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Blue:"), SCALE_WIDTH, 0,
-			      dvals.contour_b, 0.0, 10.0, 0.1, 1.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Blue:"), SCALE_WIDTH, 0,
+                              dvals.contour_b, 0.0, 10.0, 0.1, 1.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_b);
@@ -576,28 +571,28 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Red:"), SCALE_WIDTH, 0,
-			      dvals.edges_r, 0.0, 1.0, 0.01, 0.1, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Red:"), SCALE_WIDTH, 0,
+                              dvals.edges_r, 0.0, 1.0, 0.01, 0.1, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Green:"), SCALE_WIDTH, 0,
-			      dvals.edges_g, 0.0, 1.0, 0.01, 0.1, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Green:"), SCALE_WIDTH, 0,
+                              dvals.edges_g, 0.0, 1.0, 0.01, 0.1, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Blue:"), SCALE_WIDTH, 0,
-			      dvals.edges_b, 0.0, 1.0, 0.01, 0.1, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Blue:"), SCALE_WIDTH, 0,
+                              dvals.edges_b, 0.0, 1.0, 0.01, 0.1, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_b);
@@ -614,28 +609,28 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Brightness:"), SCALE_WIDTH, 7,
-			      dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Brightness:"), SCALE_WIDTH, 7,
+                              dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.brightness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Sc_attering:"), SCALE_WIDTH, 7,
-			      dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Sc_attering:"), SCALE_WIDTH, 7,
+                              dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.scattering);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Po_larization:"), SCALE_WIDTH, 7,
-			      dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Po_larization:"), SCALE_WIDTH, 7,
+                              dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.polarization);
@@ -675,41 +670,44 @@ dialog_update_preview (void)
 
   py = top;
 
+  p  = dint.preview_buffer;
   for (y = 0; y < PREVIEW_HEIGHT; y++)
     {
       px = left;
-      p  = dint.preview_row;
 
       for (x = 0; x < PREVIEW_WIDTH; x++)
-	{
-	  diff_diffract (px, py, &rgb);
+        {
+          diff_diffract (px, py, &rgb);
 
-	  *p++ = 255.0 * rgb.r;
-	  *p++ = 255.0 * rgb.g;
-	  *p++ = 255.0 * rgb.b;
+          *p++ = 255.0 * rgb.r;
+          *p++ = 255.0 * rgb.g;
+          *p++ = 255.0 * rgb.b;
 
-	  px += dx;
-	}
+          px += dx;
+        }
 
-      gtk_preview_draw_row (GTK_PREVIEW (dint.preview),
-			    dint.preview_row, 0, y, PREVIEW_WIDTH);
-
-      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (dint.progress),
-                                     (gdouble) y /
-                                     (gdouble) (PREVIEW_HEIGHT - 1));
-      while (gtk_events_pending ())
-        gtk_main_iteration ();
-
+      if ((y%10)==0)
+      {
+        gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (dint.progress),
+                                       (gdouble) y /
+                                       (gdouble) (PREVIEW_HEIGHT - 1));
+        while (gtk_events_pending ())
+          gtk_main_iteration ();
+      }
       py += dy;
     }
 
-  gtk_widget_queue_draw (dint.preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (dint.preview),
+                          0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
+                          GIMP_RGB_IMAGE,
+                          dint.preview_buffer,
+                          3 * PREVIEW_WIDTH);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (dint.progress), 0.0);
 }
 
 static void
 dialog_update_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   dialog_update_preview ();
 }
