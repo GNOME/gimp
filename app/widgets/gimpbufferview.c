@@ -38,7 +38,7 @@
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
-#include "gimpviewrenderer.h"
+#include "gimpviewrendererbuffer.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -146,14 +146,11 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  buffer_view->global_preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                                        GIMP_TYPE_BUFFER,
-                                                        view_size,
-                                                        view_border_width,
-                                                           FALSE);
-  gtk_widget_set_size_request (buffer_view->global_preview,
-                               view_size + 2 * view_border_width,
-                               view_size + 2 * view_border_width);
+  buffer_view->global_preview =
+    gimp_view_new_full_by_types (GIMP_TYPE_VIEW,
+                                 GIMP_TYPE_BUFFER,
+                                 view_size, view_size, view_border_width,
+                                 FALSE, FALSE, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (buffer_view->global_preview);
@@ -262,9 +259,6 @@ gimp_buffer_view_preview_notify (GimpContainerView *container_view,
   view_size = gimp_container_view_get_preview_size (container_view,
                                                     &view_border_width);
 
-  gimp_view_renderer_set_size (view->renderer,
-                               view_size, view_border_width);
-  gtk_widget_set_size_request (buffer_view->global_preview,
-                               view_size + 2 * view_border_width,
-                               view_size + 2 * view_border_width);
+  gimp_view_renderer_set_size_full (view->renderer,
+                                    view_size, view_size, view_border_width);
 }

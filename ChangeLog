@@ -1,5 +1,13 @@
 2004-09-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpbufferview.c: simplified the code which deals
+	with the global_buffer's preview. The new buffer view renderer
+	does the aspect ratio magic all by itself now.
+
+	* app/actions/image-commands.h: removed trailing whitespace.
+
+2004-09-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpviewrendererbuffer.[ch]: added a view renderer
