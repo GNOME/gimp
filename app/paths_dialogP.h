@@ -18,10 +18,16 @@
 #ifndef  __PATHS_DIALOG_P_H__
 #define  __PATHS_DIALOG_P_H__
 
+#include "bezier_selectP.h"
+
 void        paths_newpoint_current       (BezierSelect *, GDisplay *);
 void        paths_first_button_press     (BezierSelect *, GDisplay *);
 void        paths_new_bezier_select_tool (void);
 PATHP       paths_get_bzpaths            (void);
 void        paths_set_bzpaths            (GImage*, PATHP);
+void        paths_dialog_set_default_op  (void);
+void        paths_transform_flip_horz    (GImage *);
+void        paths_transform_flip_vert    (GImage *);
+void        paths_transform_xy           (GImage *,gint,gint);
 
 #endif  /*  __PATHS_DIALOG_P_H__  */

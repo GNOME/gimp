@@ -119,4 +119,6 @@ void   tools_register             (ToolType     tool_type,
 void   active_tool_control        (ToolAction   action,
 				   void        *gdisp_ptr);
 
+guchar *tool_active_PDB_string    (void);
+
 #endif  /*  __TOOLS_H__  */

@@ -1,3 +1,28 @@
+Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/bezier_select.c
+	* app/edit_selection.c
+	* app/flip_tool.c
+	* app/gimage_mask.c
+	* app/paths_dialog.c
+	* app/paths_dialogP.h
+	* app/undo.c
+	* app/tools.h
+	* app/tools.c
+
+	1) Fixed some problems with the paths tool. Now the tool suboption
+	"new point" is selected automatically when appropriate. Eg if you
+	have the "add point" suboption selected and click  on a point
+	not on the curve the "new point" option will become selected and the
+	new point will be added.
+
+	2) The "new point" option is defaulted to on when a new image is created	or a new image is selected from the image menu.
+
+	3) Move and flip tool now effect the path if it is locked.
+
+	4) Edit stroke now uses the currently selected tool as it should do 
+	when stroking.
+
 1999-10-17  Tomas Ogren  <stric@ing.umu.se>
 
 	* plug-ins/common/compose.c

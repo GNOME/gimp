@@ -229,6 +229,13 @@ paths_ops_button_set_sensitive (gint     but,
     }
 }
 
+void
+paths_dialog_set_default_op()
+{
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(point_ops_buttons[0].widget),
+			       TRUE);
+}
+
 static void
 point_ops_button_set_sensitive(gint but,gboolean sensitive)
 {
@@ -354,6 +361,7 @@ GtkWidget * paths_dialog_create()
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,FALSE);
+      paths_dialog_set_default_op();
     }
   
   return paths_dialog->vbox;
@@ -1096,6 +1104,7 @@ paths_dialog_update (GimpImage* gimage)
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,FALSE);
+      paths_dialog_set_default_op();
       return;
     }
   else
@@ -1110,6 +1119,7 @@ paths_dialog_update (GimpImage* gimage)
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
+      paths_dialog_set_default_op();
     }
 
   /* update the clist to reflect this images bz list */
@@ -1340,6 +1350,8 @@ paths_dialog_new_path(PATHIMAGELISTP *plp,gpointer points,GimpImage *gimage,gint
 void 
 paths_dialog_new_path_callback (GtkWidget * widget, gpointer udata)
 {
+  BezierSelect * bsel;
+  GDisplay *gdisp;
   PATHP bzp = paths_dialog_new_path(&paths_dialog->current_path_list,
 				      NULL,
 				      paths_dialog->gimage,
@@ -1356,6 +1368,14 @@ paths_dialog_new_path_callback (GtkWidget * widget, gpointer udata)
   point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
   point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
   point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
+  paths_dialog_set_default_op();
+
+  /* Clear the path display out */
+  bsel = path_to_beziersel(bzp);
+  gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
+				paths_dialog->gimage);
+  bezier_paste_bezierselect_to_current(gdisp,bsel);
+  beziersel_free(bsel);
 }
 
 void 
@@ -1422,6 +1442,8 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
   point_ops_button_set_sensitive(POINT_DEL_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_NEW_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_EDIT_BUTTON,new_sz);
+  if(!new_sz)
+    paths_dialog_set_default_op();
 }
 
 
@@ -1520,7 +1542,7 @@ paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
   PATHP bzp;
   PATHIMAGELISTP plp;
   BezierSelect * bezier_sel;
-  gint row = paths_dialog->selected_row_num;
+  gint row;
   gint tmprow;
 
   g_return_if_fail(paths_dialog->current_path_list != NULL);
@@ -1529,6 +1551,7 @@ paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
   if(paths_dialog->selected_row_num < 0)
     return;
   
+  row = paths_dialog->current_path_list->last_selected_row;
   /* Get bzpath structure  */
   plp = paths_dialog->current_path_list;
   bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
@@ -2306,6 +2329,8 @@ file_ok_callback (GtkWidget *widget,
 	  point_ops_button_set_sensitive(POINT_ADD_BUTTON,val);
 	  point_ops_button_set_sensitive(POINT_DEL_BUTTON,val);
 	  point_ops_button_set_sensitive(POINT_NEW_BUTTON,val);
+	  if(!val)
+	    paths_dialog_set_default_op();
 	  point_ops_button_set_sensitive(POINT_EDIT_BUTTON,val);
 	}
       fclose(f);      
@@ -2570,6 +2595,106 @@ paths_transform_do_undo(GimpImage *gimage,void *data)
 			       1);
 	}
     }
+}
+
+static void
+transform_func(GimpImage  *gimage, 
+	       int         flip, 
+	       gdouble     x, 
+	       gdouble     y)
+{
+  PATHIMAGELISTP plp;
+  PATHP          p;
+  PATHP          p_copy;
+  GSList        *points_list;
+  BezierSelect  *bezier_sel;
+  GSList        *plist;
+  gint           loop;
+  gint           tmprow;
+
+  /* As a first off lets just translate the current path */
+
+  /* Get bzpath structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+
+  if(!plp)
+    return;
+
+  plist = plp->bz_paths;
+  loop = 0;
+
+  while(plist)
+    {
+      p = (PATHP)plist->data;
+      if(p->locked)
+	{
+	  p_copy = p;
+	  
+	  points_list = p_copy->path_details;
+	  
+	  while (points_list)
+	    {
+	      PATHPOINTP ppoint = points_list->data;
+	      
+	      if(flip)
+		{
+		  if(x > 0.0)
+		    {
+		      ppoint->y = gimage->height - ppoint->y;
+		    }
+		  else
+		    {
+		      ppoint->x = gimage->width - ppoint->x;
+		    }
+		}
+	      else
+		{
+		  ppoint->y += y;
+		  ppoint->x += x;
+		}
+
+	      points_list = points_list->next;
+	    }
+	  
+	  /* Only update if we have a dialog, we have a currently 
+	   * selected path and its the showing the same image.
+	   */
+
+	  if(paths_dialog && 
+	     paths_dialog->current_path_list &&
+	     paths_dialog->gimage == gimage)
+	    {
+	      /* Now fudge the drawing....*/
+	      bezier_sel = path_to_beziersel(p_copy);
+	      tmprow = paths_dialog->current_path_list->last_selected_row;
+	      paths_dialog->current_path_list->last_selected_row = loop;
+	      paths_update_preview(bezier_sel);
+	      beziersel_free(bezier_sel);
+	      paths_dialog->current_path_list->last_selected_row = tmprow;
+	      paths_dialog->selected_row_num = tmprow;
+	    }
+	}
+      plist = g_slist_next(plist);
+      loop++;
+    }
+}
+
+void
+paths_transform_flip_horz(GimpImage  *gimage)
+{
+  transform_func(gimage,TRUE,0.0,0);
+}
+
+void
+paths_transform_flip_vert(GimpImage  *gimage)
+{
+  transform_func(gimage,TRUE,1.0,0);
+}
+
+void 
+paths_transform_xy(GimpImage  *gimage,gint x,gint y)
+{
+  transform_func(gimage,FALSE,(gdouble)x,(gdouble)y);
 }
 
 void

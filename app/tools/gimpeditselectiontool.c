@@ -28,6 +28,7 @@
 #include "gdisplay.h"
 #include "undo.h"
 #include "gimprc.h"
+#include "paths_dialogP.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -304,6 +305,10 @@ edit_selection_button_release (Tool           *tool,
 	  if (layer_is_floating_sel (layer))
 	    floating_sel_anchor (layer);
 	}
+    }
+  else
+    {
+      paths_transform_xy(gdisp->gimage,edit_select.cumlx,edit_select.cumly);
     }
   
   undo_push_group_end (gdisp->gimage);

@@ -905,6 +905,12 @@ bezier_select_button_press (Tool           *tool,
 	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
 			      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			      NULL, NULL, bevent->time);
+	  else
+	    {
+	      paths_dialog_set_default_op();
+	      /* recursive call */
+	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	    }
 	  return;
 	}
 
@@ -920,10 +926,17 @@ bezier_select_button_press (Tool           *tool,
 	  bezier_sel->cur_anchor = NULL;
 	  bezier_sel->cur_control = NULL;
 
-	  bezier_edit_point_on_curve(x,y,halfwidth,gdisp,bezier_sel,tool,bevent);
+	  grab_pointer = bezier_edit_point_on_curve(x,y,halfwidth,gdisp,bezier_sel,tool,bevent);
 
 	  bezier_sel->draw = BEZIER_DRAW_ALL; 
 	  draw_core_resume (bezier_sel->core, tool);
+
+	  if(!grab_pointer)
+	    {
+	      paths_dialog_set_default_op();
+	      /* recursive call */
+	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	    }
 	  return;
 	}
 
@@ -938,7 +951,17 @@ bezier_select_button_press (Tool           *tool,
 
 	  bezier_sel->draw = BEZIER_DRAW_ALL;
 	  draw_core_resume (bezier_sel->core, tool);
-	  break;
+	  if (grab_pointer)
+	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
+			      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+			      NULL, NULL, bevent->time);
+	  else
+	    {
+	      paths_dialog_set_default_op();
+	      /* recursive call */
+	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	    }
+	  return;
 	}
 
       if(bezier_sel->cur_anchor)
@@ -1046,7 +1069,10 @@ bezier_select_button_press (Tool           *tool,
 	{
 	  /* draw the handles */
 	  if(!grab_pointer)
-	    bezier_start_new_segment(bezier_sel,x,y);
+	    {
+	      paths_dialog_set_default_op();
+	      bezier_start_new_segment(bezier_sel,x,y);
+	    }
 	  bezier_sel->draw = BEZIER_DRAW_ALL; 
 	  draw_core_resume (bezier_sel->core, tool);
 	}
@@ -3069,48 +3095,6 @@ bezier_gen_points(BezierSelect     *bezier_sel,
   return (TRUE);
 }
 
-static guchar *
-active_tool_PDB_string()
-{
-  guchar *toolStr = "gimp_paintbrush_default";
-  /* Return the correct PDB function for the active tool */
-  /* The default is paintbrush if the tool is not recognised */
-
-  if(!active_tool)
-    return toolStr;
-
-  switch(active_tool->type)
-    {
-    case PENCIL:
-      toolStr = "gimp_pencil";
-      break;
-    case PAINTBRUSH:
-      toolStr = "gimp_paintbrush_default";
-      break;
-    case ERASER:
-      toolStr = "gimp_eraser_default";
-      break;
-    case AIRBRUSH:
-      toolStr = "gimp_airbrush_default";
-      break;
-    case CLONE:
-      toolStr = "gimp_clone_default";
-      break;
-    case CONVOLVE:
-      toolStr = "gimp_convolve_default";
-      break;
-    case SMUDGE:
-      toolStr = "gimp_smudge_default";
-      break;
-    case DODGEBURN:
-      toolStr = "gimp_dodgeburn_default";
-      break;
-    default:
-      toolStr = "gimp_paintbrush_default";
-    }
-  return toolStr;
-}
-
 void
 bezier_stroke (BezierSelect *bezier_sel,
 	       GDisplay     *gdisp,
@@ -3145,7 +3129,7 @@ bezier_stroke (BezierSelect *bezier_sel,
 	}
 
       /* Stroke with the correct tool */
-      return_vals = procedural_db_run_proc (active_tool_PDB_string(),
+      return_vals = procedural_db_run_proc (tool_active_PDB_string(),
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (drawable),
 					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,

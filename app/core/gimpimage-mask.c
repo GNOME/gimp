@@ -39,12 +39,6 @@
 /*  local variables  */
 static int gimage_mask_stroking = FALSE;
 
-/*  local functions  */
-static void *
-gimage_mask_stroke_paint_func (PaintCore    *paint_core,
-			       GimpDrawable *drawable,
-			       int           state);
-
 /*  functions  */
 int
 gimage_mask_boundary (GImage    *gimage,
@@ -536,7 +530,7 @@ gimage_mask_save (GImage *gimage)
 }
 
 
-int
+int 
 gimage_mask_stroke (GImage       *gimage,
 		    GimpDrawable *drawable)
 {
@@ -549,6 +543,10 @@ gimage_mask_stroke (GImage       *gimage,
   int seg;
   int offx, offy;
   int i;
+  gdouble *stroke_points;
+  gint cpnt;
+  Argument *return_vals;
+  int nreturn_vals;
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out,
 			      &num_segs_in, &num_segs_out))
@@ -563,93 +561,63 @@ gimage_mask_stroke (GImage       *gimage,
 
   /*  find the drawable offsets  */
   drawable_offsets (drawable, &offx, &offy);
-
-  /*  init the paint core  */
-  if (! paint_core_init (&non_gui_paint_core, drawable,
-			 (stroke_segs[0].x1 - offx),
-			 (stroke_segs[0].y1 - offy)))
-    return FALSE;
-
-  /*  set the paint core's paint func  */
-  non_gui_paint_core.paint_func = gimage_mask_stroke_paint_func;
   gimage_mask_stroking = TRUE;
 
-  non_gui_paint_core.startx =
-    non_gui_paint_core.lastx = (stroke_segs[0].x1 - offx);
-  non_gui_paint_core.starty =
-    non_gui_paint_core.lasty = (stroke_segs[0].y1 - offy);
+  /*  Start an undo group  */
+  undo_push_group_start (gimage, PAINT_CORE_UNDO);
 
   seg = 0;
+  cpnt = 0;
+  /* Largest array required (may be used in segments!) */
+  stroke_points = g_malloc(sizeof(gdouble)*2*(num_segs_in+4));
+
+  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].x1 - offx);
+  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].y1 - offy);
+
   for (i = 0; i < num_strokes; i++)
     {
       while (stroke_segs[seg].x2 != -1)
 	{
-	  non_gui_paint_core.curx = (stroke_segs[seg].x2 - offx);
-	  non_gui_paint_core.cury = (stroke_segs[seg].y2 - offy);
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-
+	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x2 - offx);
+	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y2 - offy);
 	  seg ++;
 	}
 
-      seg ++;
-      non_gui_paint_core.startx =
-	non_gui_paint_core.lastx = (stroke_segs[seg].x1 - offx);
-      non_gui_paint_core.starty =
-	non_gui_paint_core.lasty = (stroke_segs[seg].y1 - offy);
-    }
+      /* Close the stroke poitns up */
+      stroke_points[cpnt++] = stroke_points[0];
+      stroke_points[cpnt++] = stroke_points[1];
 
-  /*  finish the painting  */
-  paint_core_finish (&non_gui_paint_core, drawable, -1);
+      /* Stroke with the correct tool */
+      return_vals = procedural_db_run_proc (tool_active_PDB_string(),
+					    &nreturn_vals,
+					    PDB_DRAWABLE, drawable_ID (drawable),
+					    PDB_INT32, (gint32) cpnt,
+					    PDB_FLOATARRAY, stroke_points,
+					    PDB_END);
+      
+      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
+	{
+	  /* Not required */
+	  /*gdisplays_flush ();*/
+	}
+      else
+	g_message (_("Paintbrush operation failed."));
+      
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+      
+      cpnt = 0;
+      seg ++;
+      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x1 - offx);
+      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y1 - offy);
+    }
 
   /*  cleanup  */
   gimage_mask_stroking = FALSE;
-  paint_core_cleanup ();
+  g_free (stroke_points);
   g_free (stroke_segs);
 
+  /*  End an undo group  */
+  undo_push_group_end (gimage);
+
   return TRUE;
-}
-
-static void *
-gimage_mask_stroke_paint_func (PaintCore    *paint_core,
-			       GimpDrawable *drawable,
-			       int           state)
-{
-  GImage      *gimage;
-  TempBuf     *area;
-  GimpContext *context;
-  unsigned char col[MAX_CHANNELS];
-
-  if (! (gimage = drawable_gimage (drawable)))
-    return NULL;
-
-  gimage_get_foreground (gimage, drawable, col);
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, 1.0)))
-    return NULL;
-
-  /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
-  /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
-
-  if (gimp_context_get_current () == gimp_context_get_user () &&
-      ! global_paint_options)
-    context = tool_info[PAINTBRUSH].tool_context;
-  else
-    context = gimp_context_get_current ();
-
-  /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (gimp_context_get_opacity (context) * 255),
-			   gimp_context_get_paint_mode (context),
-			   SOFT, 1.0, CONSTANT);
-
-  return NULL;
 }

@@ -1032,23 +1032,32 @@ undo_free_mask (UndoState  state,
 /***************************************/
 /*  Layer displacement Undo functions  */
 
+typedef struct _layer_display_undo LayerDisplaceUndo;
+
+struct _layer_display_undo 
+{
+  int    info[3];
+  void * path_undo;
+};
+
 int
 undo_push_layer_displace (GImage    *gimage,
 			  GimpLayer *layer)
 {
   Undo * new;
-  int * info;
+  LayerDisplaceUndo * ldu;
 
   if ((new = undo_push (gimage, 12, LAYER_DISPLACE_UNDO, TRUE)))
     {
-      new->data          = (void *) g_malloc (sizeof (int) * 3);
+      new->data          = (void *) g_malloc (sizeof(LayerDisplaceUndo));
       new->pop_func      = undo_pop_layer_displace;
       new->free_func     = undo_free_layer_displace;
 
-      info = (int *) new->data;
-      info[0] = drawable_ID(GIMP_DRAWABLE(layer));
-      info[1] = GIMP_DRAWABLE(layer)->offset_x;
-      info[2] = GIMP_DRAWABLE(layer)->offset_y;
+      ldu = (LayerDisplaceUndo *) new->data;
+      ldu->info[0] = drawable_ID(GIMP_DRAWABLE(layer));
+      ldu->info[1] = GIMP_DRAWABLE(layer)->offset_x;
+      ldu->info[2] = GIMP_DRAWABLE(layer)->offset_y;
+      ldu->path_undo = paths_transform_start_undo(gimage);
 
       return TRUE;
     }
@@ -1065,10 +1074,10 @@ undo_pop_layer_displace (GImage     *gimage,
 {
   Layer * layer;
   int old_offsets[2];
-  int *info;
+  LayerDisplaceUndo * ldu;
 
-  info = (int *) info_ptr;
-  layer = layer_get_ID (info[0]);
+  ldu = (LayerDisplaceUndo *) info_ptr;
+  layer = layer_get_ID (ldu->info[0]);
   if (layer)
     {
       old_offsets[0] = GIMP_DRAWABLE(layer)->offset_x;
@@ -1077,16 +1086,16 @@ undo_pop_layer_displace (GImage     *gimage,
 		       GIMP_DRAWABLE(layer)->width,
 		       GIMP_DRAWABLE(layer)->height);
 
-      GIMP_DRAWABLE(layer)->offset_x = info[1];
-      GIMP_DRAWABLE(layer)->offset_y = info[2];
+      GIMP_DRAWABLE(layer)->offset_x = ldu->info[1];
+      GIMP_DRAWABLE(layer)->offset_y = ldu->info[2];
       drawable_update (GIMP_DRAWABLE(layer), 0, 0,
 		       GIMP_DRAWABLE(layer)->width,
 		       GIMP_DRAWABLE(layer)->height);
       
       if (layer->mask) 
 	{
-	  GIMP_DRAWABLE(layer->mask)->offset_x = info[1];
-	  GIMP_DRAWABLE(layer->mask)->offset_y = info[2];
+	  GIMP_DRAWABLE(layer->mask)->offset_x = ldu->info[1];
+	  GIMP_DRAWABLE(layer->mask)->offset_y = ldu->info[2];
 	  drawable_update (GIMP_DRAWABLE(layer->mask), 0, 0,
 			   GIMP_DRAWABLE(layer->mask)->width,
 			   GIMP_DRAWABLE(layer->mask)->height);
@@ -1096,8 +1105,12 @@ undo_pop_layer_displace (GImage     *gimage,
       /*  invalidate the selection boundary because of a layer modification  */
       layer_invalidate_boundary (layer);
 
-      info[1] = old_offsets[0];
-      info[2] = old_offsets[1];
+      ldu->info[1] = old_offsets[0];
+      ldu->info[2] = old_offsets[1];
+
+      /* Now undo paths bits */
+      if(ldu->path_undo)
+	paths_transform_do_undo(gimage,ldu->path_undo);
 
       return TRUE;
     }
@@ -1111,6 +1124,14 @@ undo_free_layer_displace (UndoState  state,
 			  UndoType   type,
 			  void      *info_ptr)
 {
+  LayerDisplaceUndo * ldu;
+
+  ldu = (LayerDisplaceUndo *) info_ptr;
+
+  /* Free mem held for paths undo stuff */
+  if(ldu->path_undo)
+    paths_transform_free_undo(ldu->path_undo);  
+
   g_free (info_ptr);
 }
 

@@ -26,6 +26,7 @@
 #include "temp_buf.h"
 #include "tool_options_ui.h"
 #include "transform_core.h"
+#include "paths_dialogP.h"
 
 #include "undo.h"
 #include "gimage.h"
@@ -267,6 +268,15 @@ flip_tool_flip (GimpImage               *gimage,
 	    pixel_region_init (&destPR, new, 0, (orig->height - i - 1), orig->width, 1, TRUE);
 	    copy_region (&srcPR, &destPR);
 	  }
+
+      /* flip locked paths */
+      /* Note that the undo structures etc are setup before we enter this
+       * function.
+       */
+      if(type == ORIENTATION_HORIZONTAL)
+	paths_transform_flip_horz(gimage);
+      else
+	paths_transform_flip_vert(gimage);
     }
 
   return new;

@@ -1056,3 +1056,45 @@ tools_options_reset_callback (GtkWidget *widget,
   if (tool_info[(int) active_tool->type].tool_options->reset_func)
     (* tool_info[(int) active_tool->type].tool_options->reset_func) ();
 }
+
+guchar *
+tool_active_PDB_string()
+{
+  guchar *toolStr = "gimp_paintbrush_default";
+  /* Return the correct PDB function for the active tool */
+  /* The default is paintbrush if the tool is not recognised */
+
+  if(!active_tool)
+    return toolStr;
+
+  switch(active_tool->type)
+    {
+    case PENCIL:
+      toolStr = "gimp_pencil";
+      break;
+    case PAINTBRUSH:
+      toolStr = "gimp_paintbrush_default";
+      break;
+    case ERASER:
+      toolStr = "gimp_eraser_default";
+      break;
+    case AIRBRUSH:
+      toolStr = "gimp_airbrush_default";
+      break;
+    case CLONE:
+      toolStr = "gimp_clone_default";
+      break;
+    case CONVOLVE:
+      toolStr = "gimp_convolve_default";
+      break;
+    case SMUDGE:
+      toolStr = "gimp_smudge_default";
+      break;
+    case DODGEBURN:
+      toolStr = "gimp_dodgeburn_default";
+      break;
+    default:
+      toolStr = "gimp_paintbrush_default";
+    }
+  return toolStr;
+}
