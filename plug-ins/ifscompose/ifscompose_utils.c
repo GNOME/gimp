@@ -871,7 +871,7 @@ ifs_render (AffElement     **elements,
 	    guchar          *data,
 	    guchar          *mask,
 	    guchar          *nhits,
-	    gint             preview)
+	    gboolean         preview)
 {
   gint     i, k;
   gdouble  x, y;
@@ -896,19 +896,26 @@ ifs_render (AffElement     **elements,
   fprob = g_new (gdouble, num_elements);
   prob = g_new (guint32, num_elements);
   pt = 0.0;
-  for (i=0;i<num_elements;i++)
+
+  for (i = 0; i < num_elements; i++)
     {
-      aff_element_compute_trans(elements[i],width*subdivide,height*subdivide,
-				vals->center_x, vals->center_y);
+      aff_element_compute_trans(elements[i],
+                                width * subdivide,
+                                height * subdivide,
+				vals->center_x,
+                                vals->center_y);
       fprob[i] = fabs(
 	elements[i]->trans.a11 * elements[i]->trans.a22
 	- elements[i]->trans.a12 * elements[i]->trans.a21);
+
       /* As a heuristic, if the determinant is really small, it's
 	 probably a line element, so increase the probability so
 	 it gets rendered */
+
       /* FIXME: figure out what 0.01 really should be */
       if (fprob[i] < 0.01)
         fprob[i] = 0.01;
+
       fprob[i] *= elements[i]->v.prob;
 
       pt += fprob[i];
@@ -920,42 +927,47 @@ ifs_render (AffElement     **elements,
       psum += (guint32) -1 * (fprob[i]/pt);
       prob[i] = psum;
     }
-  prob[i-1] = (guint32) -1;      /* make sure we don't get bitten
-			           by roundoff*/
+
+  prob[i-1] = (guint32) -1;  /* make sure we don't get bitten by roundoff */
+
   /* create the brush */
   if (!preview)
-    brush = create_brush (vals,&brush_size,&brush_offset);
+    brush = create_brush (vals, &brush_size, &brush_offset);
 
   x = y = 0;
   r = g = b = 0;
 
   /* now run the iteration */
-  for (i=0;i<nsteps;i++)
+  for (i = 0; i < nsteps; i++)
     {
       if (!preview && !(i % 5000))
 	gimp_progress_update ((gdouble) i / (gdouble) nsteps);
+
       p0 = g_random_int ();
-      k=0;
+      k = 0;
+
       while (p0 > prob[k])
 	k++;
 
-      aff2_apply(&elements[k]->trans,x,y,&x,&y);
-      aff3_apply(&elements[k]->color_trans,r,g,b,&r,&g,&b);
-      if (i<50) continue;
+      aff2_apply (&elements[k]->trans, x, y, &x, &y);
+      aff3_apply (&elements[k]->color_trans, r, g, b, &r, &g, &b);
 
-      ri = (gint) (254.999 * r + 0.5);
-      gi = (gint) (254.999 * g + 0.5);
-      bi = (gint) (254.999 * b + 0.5);
+      if (i < 50)
+        continue;
+
+      ri = (gint) (255.0 * r + 0.5);
+      gi = (gint) (255.0 * g + 0.5);
+      bi = (gint) (255.0 * b + 0.5);
 
       if (preview)
 	{
-	  if ((x<width) && (y<(band_y+band_height)) &&
+	  if ((x < width) && (y < (band_y + band_height)) &&
 	      (x >= 0) && (y >= band_y) &&
 	      (ri >= 0) && (ri < 256) &&
 	      (gi >= 0) && (gi < 256) &&
 	      (bi >= 0) && (bi < 256))
 	    {
-	      ptr = data + 3 * (((gint)(y-band_y))*width + (gint)x);
+	      ptr = data + 3 * (((gint) (y - band_y)) * width + (gint) x);
 	      *ptr++ = ri;
 	      *ptr++ = gi;
 	      *ptr = bi;
@@ -975,8 +987,8 @@ ifs_render (AffElement     **elements,
 
 	    gint index;
 	    gint ii,jj;
-	    gint jj0 = floor(y-brush_offset-band_y*subdivide);
-	    gint ii0 = floor(x-brush_offset);
+	    gint jj0 = floor (y - brush_offset - band_y * subdivide);
+	    gint ii0 = floor (x - brush_offset);
 	    gint jjmax,iimax;
 	    gint jjmin = 0;
 	    gint iimin = 0;
@@ -1014,23 +1026,23 @@ ifs_render (AffElement     **elements,
 		    continue;
 		  nhits[index] = ++n_hits;
 		  m_old = mask[index];
-		  m_new = m_old + m_pix - m_old*m_pix/255;
+		  m_new = m_old + m_pix - m_old * m_pix / 255;
 		  mask[index] = m_new;
 
 		  /* relative probability that old colored pixel is on top */
-		  old_scale = m_old*(255*n_hits-m_pix);
+		  old_scale = m_old * (255 * n_hits - m_pix);
 		  /* relative probability that new colored pixel is on top */
-		  pix_scale = m_pix*((255-m_old)*n_hits+m_old);
+		  pix_scale = m_pix * ((255 - m_old) * n_hits + m_old);
 
-		  ptr = data + 3*index;
-		  *ptr = ( old_scale * (*ptr) + pix_scale * ri ) /
-		    ( old_scale + pix_scale );
+		  ptr = data + 3 * index;
+		  *ptr = (old_scale * (*ptr) + pix_scale * ri) /
+		    (old_scale + pix_scale);
 		  ptr++;
-		  *ptr = ( old_scale * (*ptr) + pix_scale * gi ) /
-		    ( old_scale + pix_scale );
+		  *ptr = (old_scale * (*ptr) + pix_scale * gi) /
+		    (old_scale + pix_scale);
 		  ptr++;
-		  *ptr = ( old_scale * (*ptr) + pix_scale * bi ) /
-		    ( old_scale + pix_scale );
+		  *ptr = (old_scale * (*ptr) + pix_scale * bi) /
+		    (old_scale + pix_scale);
 		}
 	  }
     } /* main iteration */

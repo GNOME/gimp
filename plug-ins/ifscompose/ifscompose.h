@@ -79,44 +79,79 @@ typedef struct {
 
 
 /* manipulation of affine transforms */
-void aff2_translate       (Aff2 *naff, gdouble x, gdouble y);
-void aff2_rotate          (Aff2 *naff, gdouble theta);
-void aff2_scale           (Aff2 *naff, gdouble s, gint flip);
-void aff2_distort         (Aff2 *naff, gdouble asym, gdouble shear);
-void aff2_compute_stretch (Aff2 *naff,
-			   gdouble xo, gdouble yo,
-			   gdouble xn, gdouble yn);
-void aff2_compute_distort (Aff2 *naff,
-			   gdouble xo, gdouble yo,
-			   gdouble xn, gdouble yn);
-void aff2_compose         (Aff2 *naff, Aff2 *aff1, Aff2 *aff2);
-void aff2_invert          (Aff2 *naff, Aff2 *aff);
-void aff2_apply           (Aff2 *aff, gdouble x,  gdouble y, 
-			   gdouble *xf, gdouble *yf);
-void aff2_fixed_point     (Aff2 *aff, gdouble *xf, gdouble *yf);
-void aff3_apply           (Aff3 *t, gdouble x, gdouble y, gdouble z,
-			   gdouble *xf, gdouble *yf, gdouble *zf);
+void aff2_translate       (Aff2    *naff,
+                           gdouble  x,
+                           gdouble  y);
+void aff2_rotate          (Aff2    *naff,
+                           gdouble  theta);
+void aff2_scale           (Aff2    *naff,
+                           gdouble  s,
+                           gint     flip);
+void aff2_distort         (Aff2    *naff,
+                           gdouble  asym,
+                           gdouble  shear);
+void aff2_compute_stretch (Aff2    *naff,
+			   gdouble  xo,
+                           gdouble  yo,
+			   gdouble  xn,
+                           gdouble  yn);
+void aff2_compute_distort (Aff2    *naff,
+			   gdouble  xo,
+                           gdouble  yo,
+			   gdouble  xn,
+                           gdouble  yn);
+void aff2_compose         (Aff2    *naff,
+                           Aff2    *aff1,
+                           Aff2    *aff2);
+void aff2_invert          (Aff2    *naff,
+                           Aff2    *aff);
+void aff2_apply           (Aff2    *aff,
+                           gdouble  x,
+                           gdouble  y,
+			   gdouble *xf,
+                           gdouble *yf);
+void aff2_fixed_point     (Aff2    *aff,
+                           gdouble *xf,
+                           gdouble *yf);
+void aff3_apply           (Aff3    *t,
+                           gdouble  x,
+                           gdouble  y,
+                           gdouble  z,
+			   gdouble *xf,
+                           gdouble *yf,
+                           gdouble *zf);
 
 
 /* manipulation of polygons */
 IPolygon *ipolygon_convex_hull (IPolygon *poly);
-gint      ipolygon_contains    (IPolygon *poly, gint xt, gint yt);
+gint      ipolygon_contains    (IPolygon *poly,
+                                gint      xt,
+                                gint      yt);
 
 
 /* manipulation of composite transforms */
-AffElement *aff_element_new                  (gdouble x, gdouble y, GimpRGB *color, gint count);
-void        aff_element_free                 (AffElement *elem);
-void        aff_element_compute_trans        (AffElement *elem, gdouble width,
-					      gdouble height,
-					      gdouble center_x, gdouble center_y);
-void        aff_element_compute_color_trans  (AffElement *elem);
-void        aff_element_decompose_trans      (AffElement *elem, Aff2 *aff, 
-					      gdouble width, gdouble height,
-					      gdouble center_x, gdouble center_y);
-void        aff_element_compute_boundary     (AffElement *elem, gint width,
-					      gint height,
-					      AffElement **elements, 
-					      int num_elements);
+AffElement *aff_element_new                  (gdouble      x,
+                                              gdouble      y,
+                                              GimpRGB     *color,
+                                              gint         count);
+void        aff_element_free                 (AffElement  *elem);
+void        aff_element_compute_trans        (AffElement  *elem,
+                                              gdouble      width,
+					      gdouble      height,
+					      gdouble      center_x,
+                                              gdouble      center_y);
+void        aff_element_compute_color_trans  (AffElement  *elem);
+void        aff_element_decompose_trans      (AffElement  *elem,
+                                              Aff2        *aff,
+					      gdouble      width,
+                                              gdouble      height,
+					      gdouble      center_x,
+                                              gdouble      center_y);
+void        aff_element_compute_boundary     (AffElement  *elem,
+                                              gint         width,
+					      gint         height,
+					      AffElement **elements,
+					      gint         num_elements);
 void        aff_element_draw                 (AffElement  *elem,
                                               gint         selected,
 					      gint         width,
@@ -127,10 +162,18 @@ void        aff_element_draw                 (AffElement  *elem,
 					      PangoLayout *layout);
 
 
-void ifs_render (AffElement **elements, gint num_elements,
-		 gint width, gint height, gint nsteps,
-		 IfsComposeVals *vals, gint band_y, gint band_height,
-		 guchar *data, guchar *mask, guchar *nhits, gint preview);
+void       ifs_render (AffElement     **elements,
+                       gint             num_elements,
+                       gint             width,
+                       gint             height,
+                       gint             nsteps,
+                       IfsComposeVals  *vals,
+                       gint             band_y,
+                       gint             band_height,
+                       guchar          *data,
+                       guchar          *mask,
+                       guchar          *nhits,
+                       gboolean         preview);
 
 gchar    * ifsvals_stringify    (IfsComposeVals   *vals,
                                  AffElement      **elements);

@@ -22,16 +22,10 @@
 /* TODO
  * ----
  *
- * 1. Run in non-interactive mode (need to figure out useful
- *    way for a script to give the 19N paramters for an image).
- *    Perhaps just support saving parameters to a file, script
- *    passes file name.  (The save-to-file part is already done [Yeti])
- * 2. Save settings on a per-layer basis (long term, needs GIMP
- *    support to do properly). Load/save from affine parameters?
- * 3. Figure out if we need multiple phases for supersampled
- *    brushes.
- * 4. (minor) Make undo work correctly when focus is in entry widget.
- *    (This seems fixed now (by mere change to spinbuttons) [Yeti])
+ * 1. Run in non-interactive mode (need to figure out useful way for a
+ *    script to give the 19N paramters for an image).  Perhaps just
+ *    support saving parameters to a file, script passes file name.
+ * 2. Figure out if we need multiple phases for supersampled brushes.
  */
 
 #include "config.h"
@@ -301,19 +295,19 @@ static gint         undo_start = 0;
 /* num_elements = 0, signals not inited */
 static IfsComposeVals ifsvals =
 {
-  0,           /* num_elements */
+  0,       /* num_elements */
   50000,   /* iterations   */
-  4096,           /* max_memory   */
-  4,           /* subdivide    */
-  0.75,           /* radius       */
-  1.0,           /* aspect ratio */
-  0.5,           /* center_x     */
-  0.5,           /* center_y     */
+  4096,    /* max_memory   */
+  4,       /* subdivide    */
+  0.75,    /* radius       */
+  1.0,     /* aspect ratio */
+  0.5,     /* center_x     */
+  0.5,     /* center_y     */
 };
 
 static IfsComposeInterface ifscint =
 {
-  FALSE,        /* run */
+  FALSE,   /* run          */
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -371,12 +365,12 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *active_drawable;
+  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpParasite      *parasite = NULL;
   guint32            image_id;
-  gboolean           found_parasite;
+  gboolean           found_parasite = FALSE;
 
   run_mode = param[0].data.d_int32;
 
@@ -388,8 +382,8 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  image_id        = param[1].data.d_image;
-  active_drawable = gimp_drawable_get (param[2].data.d_drawable);
+  image_id = param[1].data.d_image;
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
@@ -397,9 +391,8 @@ run (const gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_drawable_parasite_find (active_drawable->drawable_id,
+      parasite = gimp_drawable_parasite_find (drawable->drawable_id,
                                               IFSCOMPOSE_PARASITE);
-      found_parasite = FALSE;
       if (parasite)
         {
           found_parasite = ifsvals_parse_string (gimp_parasite_data (parasite),
@@ -409,10 +402,9 @@ run (const gchar      *name,
 
       if (!found_parasite)
         {
-          gint length;
+          gint length = gimp_get_data_size (IFSCOMPOSE_DATA);
 
-          length = gimp_get_data_size (IFSCOMPOSE_DATA);
-          if (length)
+          if (length > 0)
             {
               gchar *data = g_new (gchar, length);
 
@@ -426,34 +418,31 @@ run (const gchar      *name,
       count_for_naming = ifsvals.num_elements;
 
       /*  First acquire information with a dialog  */
-      if (! ifs_compose_dialog (active_drawable))
+      if (! ifs_compose_dialog (drawable))
         return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there!  */
       status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /*  Possibly retrieve data  */
-        {
-          gint length;
+      {
+        gint length = gimp_get_data_size (IFSCOMPOSE_DATA);
 
-          length = gimp_get_data_size (IFSCOMPOSE_DATA);
-          if (length)
-            {
-              gchar *data = g_new (gchar, length);
+        if (length > 0)
+          {
+            gchar *data = g_new (gchar, length);
 
-              gimp_get_data (IFSCOMPOSE_DATA, data);
-              ifsvals_parse_string (data, &ifsvals, &elements);
-              g_free (data);
-            }
-          else
-            {
-              ifs_compose_set_defaults ();
-            }
-        }
+            gimp_get_data (IFSCOMPOSE_DATA, data);
+            ifsvals_parse_string (data, &ifsvals, &elements);
+            g_free (data);
+          }
+        else
+          {
+            ifs_compose_set_defaults ();
+          }
+      }
       break;
 
     default:
@@ -462,12 +451,11 @@ run (const gchar      *name,
 
   /*  Render the fractal  */
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->drawable_id) ||
-       gimp_drawable_is_gray (active_drawable->drawable_id)))
+      (gimp_drawable_is_rgb (drawable->drawable_id) ||
+       gimp_drawable_is_gray (drawable->drawable_id)))
     {
       /*  set the tile cache size so that the operation works well  */
-      gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width,
-                                        active_drawable->height) /
+      gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
                                    gimp_tile_width () + 1));
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -478,7 +466,7 @@ run (const gchar      *name,
           gimp_image_undo_group_start (image_id);
 
           /*  run the effect  */
-          ifs_compose (active_drawable);
+          ifs_compose (drawable);
 
           /*  Store data for next invocation - both globally and
            *  as a parasite on this layer
@@ -491,8 +479,7 @@ run (const gchar      *name,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         strlen (str) + 1, str);
-          gimp_drawable_parasite_attach (active_drawable->drawable_id,
-                                         parasite);
+          gimp_drawable_parasite_attach (drawable->drawable_id, parasite);
           gimp_parasite_free (parasite);
 
           g_free (str);
@@ -502,7 +489,7 @@ run (const gchar      *name,
       else
         {
           /*  run the effect  */
-          ifs_compose (active_drawable);
+          ifs_compose (drawable);
         }
 
       /*  If the run mode is interactive, flush the displays  */
@@ -516,7 +503,7 @@ run (const gchar      *name,
 
   values[0].data.d_status = status;
 
-  gimp_drawable_detach (active_drawable);
+  gimp_drawable_detach (drawable);
 }
 
 static GtkWidget *
@@ -1159,16 +1146,24 @@ design_op_menu_create (GtkWidget *window)
 static void
 design_op_actions_update (void)
 {
-  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                           "/ui/dummy-menubar/ifs-compose-menu/undo"),
+  GtkAction *act;
+
+  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                   "/ui/dummy-menubar/ifs-compose-menu/undo");
+  g_object_set (act,
                 "sensitive", undo_cur >= 0,
                 NULL);
-  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                           "/ui/dummy-menubar/ifs-compose-menu/redo"),
+
+  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                   "/ui/dummy-menubar/ifs-compose-menu/redo");
+
+  g_object_set (act,
                 "sensitive", undo_cur != undo_num - 1,
                 NULL);
-  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                           "/ui/dummy-menubar/ifs-compose-menu/delete"),
+
+  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                   "/ui/dummy-menubar/ifs-compose-menu/delete");
+  g_object_set (act,
                 "sensitive", ifsvals.num_elements > 2,
                 NULL);
 }
@@ -1280,7 +1275,10 @@ ifs_compose (GimpDrawable *drawable)
   GimpImageType  type   = gimp_drawable_type (drawable->drawable_id);
   gint           width  = drawable->width;
   gint           height = drawable->height;
-  gint           num_bands, band_height, band_y, band_no;
+  gint           num_bands;
+  gint           band_height;
+  gint           band_y;
+  gint           band_no;
   gint           i, j;
   guchar        *data;
   guchar        *mask = NULL;
@@ -1288,7 +1286,7 @@ ifs_compose (GimpDrawable *drawable)
   guchar         rc, gc, bc;
   GimpRGB        color;
 
-  num_bands = ceil((gdouble)(width*height*SQR(ifsvals.subdivide)*5)
+  num_bands = ceil ((gdouble) (width * height * SQR (ifsvals.subdivide) * 5)
                    / (1024 * ifsvals.max_memory));
   band_height = (height + num_bands - 1) / num_bands;
 
@@ -1302,31 +1300,26 @@ ifs_compose (GimpDrawable *drawable)
   gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
-  band_y = 0;
-  for (band_no = 0; band_no < num_bands; band_no++)
+  gimp_progress_init (NULL);
+
+  for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
-      guchar *ptr;
-      guchar *maskptr;
-      guchar *dest;
-      guchar *destrow;
-      guchar maskval;
-      GimpPixelRgn dest_rgn;
-      gint progress;
-      gint max_progress;
+      GimpPixelRgn  dest_rgn;
+      gpointer      pr;
+      gint          progress;
+      gint          max_progress;
 
-      gpointer pr;
-
-      gimp_progress_init (NULL);
+      gimp_progress_update (0.0);
       gimp_progress_set_text (_("Rendering IFS (%d/%d)..."),
-                              band_no+1, num_bands);
+                              band_no + 1, num_bands);
 
       /* render the band to a buffer */
       if (band_y + band_height > height)
         band_height = height - band_y;
 
       /* we don't need to clear data since we store nhits */
-      memset(mask, 0, width*band_height*SQR(ifsvals.subdivide));
-      memset(nhits, 0, width*band_height*SQR(ifsvals.subdivide));
+      memset (mask, 0, width * band_height * SQR (ifsvals.subdivide));
+      memset (nhits, 0, width * band_height * SQR (ifsvals.subdivide));
 
       ifs_render (elements,
                   ifsvals.num_elements, width, height, ifsvals.iterations,
@@ -1334,9 +1327,9 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-      gimp_progress_init (NULL);
+      gimp_progress_update (0.0);
       gimp_progress_set_text (_("Copying IFS to image (%d/%d)..."),
-                              band_no+1, num_bands);
+                              band_no + 1, num_bands);
 
       progress = 0;
       max_progress = band_height * width;
@@ -1348,81 +1341,96 @@ ifs_compose (GimpDrawable *drawable)
            pr != NULL;
            pr = gimp_pixel_rgns_process (pr))
         {
-          destrow = dest_rgn.data;
+          guchar *destrow = dest_rgn.data;
 
           for (j = dest_rgn.y; j < (dest_rgn.y + dest_rgn.h); j++)
             {
-              dest = destrow;
+              guchar *dest = destrow;
 
               for (i = dest_rgn.x; i < (dest_rgn.x + dest_rgn.w); i++)
                 {
                   /* Accumulate a reduced pixel */
 
+                  gint rtot = 0;
+                  gint btot = 0;
+                  gint gtot = 0;
+                  gint mtot = 0;
                   gint ii, jj;
-                  gint rtot=0;
-                  gint btot=0;
-                  gint gtot=0;
-                  gint mtot=0;
+
                   for (jj = 0; jj < ifsvals.subdivide; jj++)
                     {
-                      ptr = data + 3 *
-                        (((j-band_y)*ifsvals.subdivide+jj) *
-                         ifsvals.subdivide*width +
-                         i*ifsvals.subdivide);
+                      guchar *ptr;
+                      guchar *maskptr;
+
+                      ptr = data +
+                        3 * (((j - band_y) * ifsvals.subdivide + jj) *
+                             ifsvals.subdivide * width +
+                             i * ifsvals.subdivide);
 
                       maskptr = mask +
-                        ((j-band_y)*ifsvals.subdivide+jj) *
-                        ifsvals.subdivide*width +
-                        i*ifsvals.subdivide;
+                        ((j - band_y) * ifsvals.subdivide + jj) *
+                        ifsvals.subdivide * width +
+                        i * ifsvals.subdivide;
+
                       for (ii = 0; ii < ifsvals.subdivide; ii++)
                         {
-                          maskval = *maskptr++;
+                          guchar  maskval = *maskptr++;
+
                           mtot += maskval;
                           rtot += maskval* *ptr++;
                           gtot += maskval* *ptr++;
                           btot += maskval* *ptr++;
                         }
                     }
+
                   if (mtot)
                     {
                       rtot /= mtot;
                       gtot /= mtot;
                       btot /= mtot;
-                      mtot /= SQR(ifsvals.subdivide);
+                      mtot /= SQR (ifsvals.subdivide);
                     }
+
                   /* and store it */
                   switch (type)
                     {
                      case GIMP_GRAY_IMAGE:
-                      *dest++ = (mtot*(rtot+btot+gtot)+
-                                 (255-mtot)*(rc+gc+bc))/(3*255);
+                      *dest++ = (mtot * (rtot + btot + gtot) +
+                                 (255 - mtot) * (rc + gc + bc)) / (3 * 255);
                       break;
+
                     case GIMP_GRAYA_IMAGE:
-                      *dest++ = (rtot+btot+gtot)/3;
+                      *dest++ = (rtot + btot + gtot) / 3;
                       *dest++ = mtot;
                       break;
+
                     case GIMP_RGB_IMAGE:
-                      *dest++ = (mtot*rtot + (255-mtot)*rc)/255;
-                      *dest++ = (mtot*gtot + (255-mtot)*gc)/255;
-                      *dest++ = (mtot*btot + (255-mtot)*bc)/255;
+                      *dest++ = (mtot * rtot + (255 - mtot) * rc) / 255;
+                      *dest++ = (mtot * gtot + (255 - mtot) * gc) / 255;
+                      *dest++ = (mtot * btot + (255 - mtot) * bc) / 255;
                       break;
+
                     case GIMP_RGBA_IMAGE:
                       *dest++ = rtot;
                       *dest++ = gtot;
                       *dest++ = btot;
                       *dest++ = mtot;
                       break;
+
                     case GIMP_INDEXED_IMAGE:
                     case GIMP_INDEXEDA_IMAGE:
                       g_error ("Indexed images not supported by IFS Fractal");
                       break;
                     }
                 }
+
               destrow += dest_rgn.rowstride;
             }
+
           progress += dest_rgn.w * dest_rgn.h;
           gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
         }
+
       band_y += band_height;
     }
 
