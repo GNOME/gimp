@@ -567,7 +567,7 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
 LDFLAGS = /link /subsystem:windows /machine:ix86 $(LINKDEBUG)
 
@@ -594,7 +594,7 @@ RESOURCE = ..\..\app\gimp.res
 !ENDIF
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\megawidget\megawidget.lib $(PLUGINDIR)\gpc\gpc.lib  $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\megawidget\megawidget.lib $(PLUGINDIR)\gpc\gpc.lib  $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc
 	rc -r -fo $(PLUGIN).res $(PLUGIN).rc

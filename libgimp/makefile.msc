@@ -39,7 +39,7 @@ GTK = ..\..\gtk+
 GLIB = ..\..\glib
 INTL = ..\..\intl
 
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
+CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
 	..\config.h	\
@@ -149,7 +149,7 @@ gimpui_OBJECTS = \
 	gimpunitmenu.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
 
 gimpmenu.obj : gimpmenu.c
 	$(CC) $(CFLAGS) -GD -c gimpmenu.c

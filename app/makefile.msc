@@ -33,7 +33,7 @@ GLIB = ..\..\glib
 GMODULE = $(GLIB)\gmodule
 INTL = ..\..\intl
 
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
 # GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
@@ -148,6 +148,7 @@ gimp_OBJECTS = \
 	gimpcontextpreview.obj	\
 	gimpdnd.obj		\
 	gimphelp.obj		\
+	gimphelp_cmds.obj	\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\
@@ -274,7 +275,7 @@ gimp.def: gimp.sym
 	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:

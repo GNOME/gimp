@@ -21,13 +21,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdk.h>
 
-#ifdef GDK_WINDOWING_WIN32
-# define POINTS POINTS_win32	/* Guard against clash */
-#endif
 #include <gdk/gdkprivate.h>
-#ifdef GDK_WINDOWING_WIN32
-# undef POINTS
-#endif
 
 #include "appenv.h"
 #include "drawable.h"

@@ -1,3 +1,15 @@
+2000-01-02  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Some clarifications.
+
+	* app/makefile.{cygwin,msc}
+	* libgimp/makefile.{cygwin,msc}
+	* plug-ins/makefile.{cygwin,msc}: Changes corresponding to the GTk+
+	source reorg. Add new files.
+
+	* app/text_tool.c: Remove now unnecessary workaround for Win32
+	POINTS identifier clash.
+	
 2000-01-01 Garry R. Osgood <gosgood@idt.net>
 	Happy New Year.
 	*app/disp_callbacks.c Checked RGB/GRAY/INDEXED combinations

@@ -532,7 +532,7 @@ OPTIMIZE = -O
 
 CC = gcc $(OPTIMIZE) -mno-cygwin -mpentium -fnative-struct
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK)/gdk -I$(GTK) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk -I$(GTK) -I$(INTL)
 
 ifdef PLUGIN
 
