@@ -487,7 +487,7 @@ void pad(struct ppm *p, int left,int right, int top, int bottom, guchar *bg)
   p->col = tmp.col;
 }
 
-void saveppm(struct ppm *p, char *fn)
+void saveppm(struct ppm *p, const char *fn)
 {
   FILE *f = fopen(fn, "wb");
   fprintf(f, "P6\n%d %d\n255\n", p->width, p->height);

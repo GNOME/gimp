@@ -282,7 +282,7 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
     stat(fpath, &st);
     g_free(fpath);
     if(!S_ISREG(st.st_mode)) continue;
-    flist = g_list_insert_sorted(flist, g_strdup(de->d_name), (GCompareFunc)g_strcasecmp);
+    flist = g_list_insert_sorted(flist, g_strdup(de->d_name), (GCompareFunc)g_ascii_strcasecmp);
   }
   closedir(dir);
 

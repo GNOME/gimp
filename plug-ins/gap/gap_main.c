@@ -864,7 +864,7 @@ run (char    *name,
      int     *nreturn_vals,
      GimpParam **return_vals)
 {
-  char       *l_env;
+  const char *l_env;
   
   char        l_extension[32];
   char        l_sel_str[MAX_LAYERNAME];

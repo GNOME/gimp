@@ -309,7 +309,7 @@ change_color(PreferencesDialog_t *param, GtkWidget *button,
    gdk_color->blue = (guint16)(color[2]*65535.0);
 
    colormap = gdk_drawable_get_colormap(button->window);
-   gdk_color_alloc(colormap, gdk_color);
+   gdk_colormap_alloc_color(colormap, gdk_color, FALSE, TRUE);
    gdk_window_set_background(button->window, gdk_color);
    gdk_window_clear(button->window);
 }

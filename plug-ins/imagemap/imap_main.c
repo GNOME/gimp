@@ -232,10 +232,10 @@ init_preferences(void)
    
    preferences_load(&_preferences);
 
-   gdk_color_alloc(colormap, &colors->normal_fg);
-   gdk_color_alloc(colormap, &colors->normal_bg);
-   gdk_color_alloc(colormap, &colors->selected_fg);
-   gdk_color_alloc(colormap, &colors->selected_bg);
+   gdk_colormap_alloc_color(colormap, &colors->normal_fg, FALSE, TRUE);
+   gdk_colormap_alloc_color(colormap, &colors->normal_bg, FALSE, TRUE);
+   gdk_colormap_alloc_color(colormap, &colors->selected_fg, FALSE, TRUE);
+   gdk_colormap_alloc_color(colormap, &colors->selected_bg, FALSE, TRUE);
 
    _preferences.normal_gc = gdk_gc_new(_preview->preview->window);
    _preferences.selected_gc = gdk_gc_new(_preview->preview->window);
@@ -508,8 +508,10 @@ main_set_title(const char *filename)
    char *title, *p;
    
    g_strreplace(&_filename, filename);
-   p = (filename) ? g_basename(filename) : _("<Untitled>");
+   p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
    title = g_strdup_printf("%s - ImageMap 1.3", p);
+   if (filename)
+     g_free (p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);
    g_free(title);
 }
@@ -637,7 +639,7 @@ draw_shapes(GtkWidget *preview)
 static void
 clear_map_info(void)
 {
-   gchar *author = g_get_real_name();
+   const gchar *author = g_get_real_name();
 
    if (!*author)
       author = g_get_user_name();

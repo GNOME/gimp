@@ -41,8 +41,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpunit.h"
 
-#include "pdb/internal_procs.h"
-
 #include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
@@ -75,7 +73,7 @@ Gimp *the_gimp = NULL;
 static gboolean is_app_exit_finish_done = FALSE;
 
 
-void
+static void
 app_init_update_status (const gchar *text1,
 		        const gchar *text2,
 		        gdouble      percentage)
@@ -148,16 +146,9 @@ app_init (gint    gimp_argc,
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
-  gimp_initialize (the_gimp);
+  gimp_initialize (the_gimp, app_init_update_status);
 
   tool_manager_init (the_gimp);
-
-  /*  Initialize the procedural database
-   *    We need to do this first because any of the init
-   *    procedures might install or query it as needed.
-   */
-  app_init_update_status (_("Procedural Database"), NULL, -1);
-  internal_procs_init (the_gimp);
 
   /*  Now we are ready to draw the splash-screen-image
    *  to the start-up window
@@ -169,9 +160,11 @@ app_init (gint    gimp_argc,
 
   /*  Load all data files
    */
-  gimp_restore (the_gimp, no_data);
+  gimp_restore (the_gimp, app_init_update_status, no_data);
 
-  plug_in_init ();           /*  initialize the plug in structures  */
+  /*  Initialize the plug-in structures
+   */
+  plug_in_init (the_gimp, app_init_update_status);
 
   if (! no_interface)
     {

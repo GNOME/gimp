@@ -236,7 +236,7 @@ filesel_close_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
 static void
 filesel_ok_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
 {
-  char	    *filename;
+  const gchar *filename;
 
   if(arr_ptr->text_filesel == NULL) return;  /* filesel is already open */
 

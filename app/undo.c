@@ -55,7 +55,6 @@
 #include "tools/gimptransformtool.h"
 #include "tools/tool_manager.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "path_transform.h"
 #include "undo.h"
@@ -449,7 +448,7 @@ pop_stack (GimpImage  *gimage,
       if (status && !in_group)
 	{
 	  /*  Flush any image updates and displays  */
-	  gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp));
+	  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
 
 	  if (gdisp != NULL)
 	    {

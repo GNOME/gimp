@@ -338,20 +338,20 @@ set_buttons_sensitivity(PolygonProperties_t *data)
 static void
 insert_button_clicked(GtkWidget *widget, PolygonProperties_t *data)
 {
-   gchar *text[2];
+   const gchar *text[2];
    text[0] = gtk_entry_get_text(GTK_ENTRY(data->x));
    text[1] = gtk_entry_get_text(GTK_ENTRY(data->y));
-   gtk_clist_insert(GTK_CLIST(data->list), data->selected_row, text);
+   gtk_clist_insert(GTK_CLIST(data->list), data->selected_row, (gchar **) text);
    set_buttons_sensitivity(data);
 }
 
 static void
 append_button_clicked(GtkWidget *widget, PolygonProperties_t *data)
 {
-   gchar *text[2];
+   const gchar *text[2];
    text[0] = gtk_entry_get_text(GTK_ENTRY(data->x));
    text[1] = gtk_entry_get_text(GTK_ENTRY(data->y));
-   gtk_clist_append(GTK_CLIST(data->list), text);
+   gtk_clist_append(GTK_CLIST(data->list), (gchar **) text);
    set_buttons_sensitivity(data);
 }
 

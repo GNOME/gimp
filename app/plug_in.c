@@ -299,7 +299,8 @@ plug_in_init_shm (void)
 }
 
 void
-plug_in_init (void)
+plug_in_init (Gimp               *gimp,
+              GimpInitStatusFunc  status_callback)
 {
   extern gboolean use_shm;
 
@@ -310,6 +311,9 @@ plug_in_init (void)
   PlugInProcDef *proc_def;
   gfloat         nplugins;
   gfloat         nth;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (status_callback != NULL);
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -344,14 +348,14 @@ plug_in_init (void)
   else
     filename = gimp_personal_rc_file ("pluginrc");
 
-  app_init_update_status (_("Resource configuration"), filename, -1);
+  (* status_callback) (_("Resource configuration"), filename, -1);
   gimprc_parse_file (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   tmp = plug_in_defs;
-  app_init_update_status (_("Plug-ins"), "", 0);
+  (* status_callback) (_("Plug-ins"), "", 0);
   nplugins = g_slist_length (tmp);
   nth = 0;
   while (tmp)
@@ -369,7 +373,7 @@ plug_in_init (void)
 	  plug_in_query (plug_in_def);
 	}
 
-      app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
+      (* status_callback) (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
     }
 
@@ -419,7 +423,7 @@ plug_in_init (void)
   if (be_verbose)
     g_print (_("Starting extensions: "));
 
-  app_init_update_status (_("Extensions"), "", 0);
+  (* status_callback) (_("Extensions"), "", 0);
 
   tmp = proc_defs;
   nplugins = g_slist_length (tmp); nth = 0;
@@ -436,8 +440,7 @@ plug_in_init (void)
 	  if (be_verbose)
 	    g_print ("%s ", proc_def->db_info.name);
 
-	  app_init_update_status (NULL, proc_def->db_info.name,
-				  nth / nplugins);
+	  (* status_callback) (NULL, proc_def->db_info.name, nth / nplugins);
 
 	  plug_in_run (&proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}

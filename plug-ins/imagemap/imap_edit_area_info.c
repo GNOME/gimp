@@ -36,35 +36,35 @@
 static gint callback_lock;
 
 
-static const gchar*
+static gchar*
 relative_filter(const char *name, gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->relative_link)))
-      return g_basename(name);
-   return name;
+      return g_path_get_basename(name);
+   return g_strdup (name);
 }
 
 static void
 url_changed(GtkWidget *widget, gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
-   gchar *url = gtk_entry_get_text(GTK_ENTRY(param->url));
+   const gchar *url = gtk_entry_get_text(GTK_ENTRY(param->url));
    GtkWidget *button;
 
-   if (!g_strncasecmp(url, "http://", sizeof("http://") - 1))
+   if (!g_ascii_strncasecmp(url, "http://", sizeof("http://") - 1))
       button = param->web_site;
-   else if (!g_strncasecmp(url, "ftp://", sizeof("ftp://") - 1))
+   else if (!g_ascii_strncasecmp(url, "ftp://", sizeof("ftp://") - 1))
       button = param->ftp_site;
-   else if (!g_strncasecmp(url, "gopher://", sizeof("gopher://") - 1))
+   else if (!g_ascii_strncasecmp(url, "gopher://", sizeof("gopher://") - 1))
       button = param->gopher;
-   else if (!g_strncasecmp(url, "file:/", sizeof("file:/") - 1))
+   else if (!g_ascii_strncasecmp(url, "file:/", sizeof("file:/") - 1))
       button = param->file;
-   else if (!g_strncasecmp(url, "wais://", sizeof("wais://") - 1))
+   else if (!g_ascii_strncasecmp(url, "wais://", sizeof("wais://") - 1))
       button = param->wais;
-   else if (!g_strncasecmp(url, "telnet://", sizeof("telnet://") - 1))
+   else if (!g_ascii_strncasecmp(url, "telnet://", sizeof("telnet://") - 1))
       button = param->telnet;
-   else if (!g_strncasecmp(url, "mailto:", sizeof("mailto:") - 1))
+   else if (!g_ascii_strncasecmp(url, "mailto:", sizeof("mailto:") - 1))
       button = param->email;
    else
       button = param->other;

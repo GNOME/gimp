@@ -1261,7 +1261,7 @@ p_points_load_from_file (GtkWidget *widget,
 		      gpointer	 data)
 {
   t_mov_path_preview *path_ptr = data;
-  gchar	    *filename;
+  const gchar        *filename;
   
   if(gap_debug) printf("p_points_load_from_file\n");
   if(path_ptr->filesel == NULL) return;
@@ -1285,7 +1285,7 @@ p_points_save_to_file (GtkWidget *widget,
 		      gpointer	 data)
 {
   t_mov_path_preview *path_ptr = data;
-  char	    *filename;
+  const gchar        *filename;
   
   if(gap_debug) printf("p_points_save_to_file\n");
   if(path_ptr->filesel == NULL) return;

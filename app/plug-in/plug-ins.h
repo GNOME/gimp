@@ -102,7 +102,8 @@ struct _PlugInProcDef
 
 
 /* Initialize the plug-ins */
-void            plug_in_init                 (void);
+void            plug_in_init                 (Gimp               *gimp,
+                                              GimpInitStatusFunc  status_callback);
 
 /* Kill all running plug-ins */
 void            plug_in_kill                 (void);

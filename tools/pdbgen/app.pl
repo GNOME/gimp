@@ -823,7 +823,7 @@ GPL
 	push @group_decls, $decl;
 	$longest = length $decl if $longest < length $decl;
 
-	$group_procs .= ' ' x 2 . "app_init_update_status (";
+	$group_procs .= ' ' x 2 . "(* status_callback) (";
 	$group_procs .= q/_("Internal Procedures")/ unless $once;
 	$group_procs .= 'NULL' if $once++;
 	$group_procs .= qq/, _("$main::grp{$group}->{desc}"), /;
@@ -842,7 +842,8 @@ GPL
 #ifndef $guard
 #define $guard
 
-void internal_procs_init (Gimp *gimp);
+void internal_procs_init (Gimp               *gimp,
+                          GimpInitStatusFunc  status_callback);
 
 #endif /* $guard */
 HEADER
@@ -855,7 +856,7 @@ HEADER
 	print IFILE qq@#include "config.h"\n\n@;
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
-	print IFILE qq@#include "app_procs.h"\n\n@;
+	print IFILE qq@#include "core/gimp.h"\n\n@;
 	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
 	foreach (@group_decls) {
@@ -863,7 +864,17 @@ HEADER
 	}
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
-	print IFILE "void\ninternal_procs_init (Gimp *gimp)\n{\n$group_procs}\n";
+	print IFILE <<BODY;
+void
+internal_procs_init (Gimp               *gimp,
+                     GimpInitStatusFunc  status_callback)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (status_callback != NULL);
+ 
+$group_procs
+}
+BODY
 	close IFILE;
 	&write_file($internal);
     }

@@ -26,15 +26,11 @@
 extern Gimp *the_gimp;
 
 
-void       app_init_update_status (const gchar  *label1,
-				   const gchar  *label2,
-				   gdouble       percentage);
-
-void       app_init               (gint          gimp_argc,
-				   gchar       **gimp_argv);
-void       app_exit               (gboolean      kill_it);
-void       app_exit_finish        (void);
-gboolean   app_exit_finish_done   (void);
+void       app_init             (gint       gimp_argc,
+				 gchar    **gimp_argv);
+void       app_exit             (gboolean   kill_it);
+void       app_exit_finish      (void);
+gboolean   app_exit_finish_done (void);
 
 
 #endif /* __APP_PROCS_H__ */

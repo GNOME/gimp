@@ -248,13 +248,13 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
 static gint
 p_pitstop_dialog(gint text_flag, char *filter_procname)
 {
-  gchar *l_env;
-  gchar *l_msg;
+  const gchar      *l_env;
+  gchar            *l_msg;
   static t_but_arg  l_but_argv[2];
   gint              l_but_argc;
   gint              l_argc;
   static t_arr_arg  l_argv[1];
-  int               l_continue;
+  gint              l_continue;
   
     
 

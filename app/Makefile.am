@@ -129,8 +129,8 @@ gimp_LDADD = @STRIP_BEGIN@ \
 	display/libappdisplay.a						\
 	widgets/libappwidgets.a						\
 	plug-in/libappplug-in.a						\
-	pdb/libapppdb.a							\
 	core/libappcore.a						\
+	pdb/libapppdb.a							\
 	xcf/libappxcf.a							\
 	paint-funcs/libapppaint-funcs.a					\
 	base/libappbase.a						\

@@ -476,8 +476,8 @@ run (char    *name,
      int     *nreturn_vals,
      GimpParam **return_vals)
 {
-  gint32 l_active_image;
-  char       *l_env;
+  gint32       l_active_image;
+  const gchar *l_env;
   
   static GimpParam values[2];
   GimpRunModeType run_mode;

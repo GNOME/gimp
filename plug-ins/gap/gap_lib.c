@@ -1127,13 +1127,13 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_m
  */
 int p_save_named_frame(gint32 image_id, char *sav_name)
 {
-  GimpParam* l_params;
-  char  *l_ext;
-  char  *l_tmpname;
-  gint   l_retvals;
-  int    l_gzip;
-  int    l_xcf;
-  int    l_rc;
+  GimpParam *l_params;
+  gchar     *l_ext;
+  char      *l_tmpname;
+  gint       l_retvals;
+  int        l_gzip;
+  int        l_xcf;
+  int        l_rc;
 
   l_tmpname = NULL;
   l_rc   = -1;
@@ -1184,7 +1184,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
 
    if(gap_debug)
    {
-     l_ext = g_getenv("GAP_NO_SAVE");
+     l_ext = (gchar *) g_getenv("GAP_NO_SAVE");
      if(l_ext != NULL)
      {
        fprintf(stderr, "DEBUG: GAP_NO_SAVE is set: save is skipped: '%s'\n", l_tmpname);

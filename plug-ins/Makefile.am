@@ -43,13 +43,13 @@ SUBDIRS = 			\
 	fp			\
 ##	gap			\
 ##	gdyntext		\
-##	gfig			\
+	gfig			\
 	gflare			\
 	gfli			\
-##	gimpressionist		\
+	gimpressionist		\
 	$(HELPBROWSER)		\
 	ifscompose		\
-##	imagemap		\
+	imagemap		\
 	maze			\
 	mosaic			\
 	pagecurl		\

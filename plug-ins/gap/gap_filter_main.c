@@ -135,8 +135,8 @@ run (char    *name,
   gint32  total_steps;
   gdouble current_step;
   
-  gint32     l_rc;
-  char       *l_env;
+  gint32      l_rc;
+  const char *l_env;
 
   *nreturn_vals = 1;
   *return_vals = values;

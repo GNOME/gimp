@@ -52,7 +52,6 @@
 #include "color-notebook.h"
 #include "session.h"
 
-#include "app_procs.h"
 #include "appenv.h"
 #include "gimprc.h"
 
@@ -66,7 +65,6 @@ session_init (void)
   gchar *filename;
 
   filename = gimp_personal_rc_file ("sessionrc");
-  app_init_update_status (NULL, filename, -1);
 
   if (! gimprc_parse_file (filename))
     {

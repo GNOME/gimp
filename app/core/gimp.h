@@ -115,50 +115,52 @@ struct _GimpClass
 
 GType         gimp_get_type             (void);
 
-Gimp        * gimp_new                  (gboolean           be_verbose);
+Gimp        * gimp_new                  (gboolean            be_verbose);
 
-void          gimp_initialize           (Gimp              *gimp);
+void          gimp_initialize           (Gimp               *gimp,
+                                         GimpInitStatusFunc  status_callback);
 
-void          gimp_restore              (Gimp              *gimp,
-					 gboolean           no_data);
-void          gimp_shutdown             (Gimp              *gimp);
+void          gimp_restore              (Gimp               *gimp,
+                                         GimpInitStatusFunc  status_callback,
+					 gboolean            no_data);
+void          gimp_shutdown             (Gimp               *gimp);
 
-void          gimp_set_busy             (Gimp              *gimp);
-void          gimp_set_busy_until_idle  (Gimp              *gimp);
-void          gimp_unset_busy           (Gimp              *gimp);
+void          gimp_set_busy             (Gimp               *gimp);
+void          gimp_set_busy_until_idle  (Gimp               *gimp);
+void          gimp_unset_busy           (Gimp               *gimp);
 
-GimpImage   * gimp_create_image         (Gimp              *gimp,
-					 gint               width,
-					 gint               height,
-					 GimpImageBaseType  type,
-					 gboolean           attach_comment);
+GimpImage   * gimp_create_image         (Gimp               *gimp,
+					 gint                width,
+					 gint                height,
+					 GimpImageBaseType   type,
+					 gboolean            attach_comment);
 
-void          gimp_create_display       (Gimp              *gimp,
-					 GimpImage         *gimage);
+void          gimp_create_display       (Gimp               *gimp,
+					 GimpImage          *gimage);
 
 /*
-void          gimp_open_file            (Gimp              *gimp,
-					 const gchar       *filename,
-					 gboolean           with_display);
+void          gimp_open_file            (Gimp               *gimp,
+					 const gchar        *filename,
+					 gboolean            with_display);
 */
 
-GimpContext * gimp_create_context       (Gimp              *gimp,
-					 const gchar       *name,
-					 GimpContext       *template);
+GimpContext * gimp_create_context       (Gimp               *gimp,
+					 const gchar        *name,
+					 GimpContext        *template);
 
-GimpContext * gimp_get_standard_context (Gimp              *gimp);
+GimpContext * gimp_get_standard_context (Gimp               *gimp);
 
-void          gimp_set_default_context  (Gimp              *gimp,
-					 GimpContext       *context);
-GimpContext * gimp_get_default_context  (Gimp              *gimp);
+void          gimp_set_default_context  (Gimp               *gimp,
+					 GimpContext        *context);
+GimpContext * gimp_get_default_context  (Gimp               *gimp);
 
-void          gimp_set_user_context     (Gimp              *gimp,
-					 GimpContext       *context);
-GimpContext * gimp_get_user_context     (Gimp              *gimp);
+void          gimp_set_user_context     (Gimp               *gimp,
+					 GimpContext        *context);
+GimpContext * gimp_get_user_context     (Gimp               *gimp);
 
-void          gimp_set_current_context  (Gimp              *gimp,
-					 GimpContext       *context);
-GimpContext * gimp_get_current_context  (Gimp              *gimp);
+void          gimp_set_current_context  (Gimp               *gimp,
+					 GimpContext        *context);
+GimpContext * gimp_get_current_context  (Gimp               *gimp);
 
 
 #endif  /* __GIMP_H__ */

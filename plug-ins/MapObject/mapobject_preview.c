@@ -348,7 +348,7 @@ clear_light_marker (void)
 		      backbuf.x, backbuf.y,
 		      backbuf.w, backbuf.h);
 
-      gdk_image_unref (backbuf.image);
+      g_object_unref (G_OBJECT (backbuf.image));
       backbuf.image = NULL;
     }
 }

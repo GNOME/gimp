@@ -75,7 +75,7 @@ gimp_modules_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->modules = gimp_list_new (GIMP_TYPE_MODULE_INFO,
-                                 GIMP_CONTAINER_POLICY_STRONG);
+                                 GIMP_CONTAINER_POLICY_WEAK);
   gimp->write_modulerc = FALSE;
 }
 
@@ -153,7 +153,7 @@ gimp_modules_refresh (Gimp *gimp)
 }
 
 static void
-gimp_modules_module_free_func (gpointer data, 
+gimp_modules_module_free_func (gpointer data,
                                gpointer user_data)
 {
   GimpModuleInfoObj *module_info = data;
@@ -286,8 +286,6 @@ gimp_modules_module_initialize (const gchar *filename,
     }
 
   gimp_container_add (gimp->modules, GIMP_OBJECT (module_info));
-
-  g_object_unref (G_OBJECT (module_info));
 }
 
 typedef struct
@@ -397,4 +395,6 @@ gimp_modules_module_remove_func (gpointer data,
   gimp        = (Gimp *) user_data;
 
   gimp_container_remove (gimp->modules, GIMP_OBJECT (module_info));
+
+  g_object_unref (G_OBJECT (module_info));
 }

@@ -324,11 +324,11 @@ make_view_menu(GtkWidget *menu_bar)
 
    _menu.color = make_radio_item(view_menu, NULL, _("Color"), menu_command,
 				 &_menu.cmd_color);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.color));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.color));
 
    _menu.gray = make_radio_item(view_menu, group, _("Grayscale"), menu_command,
 				&_menu.cmd_gray);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.gray));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.gray));
 
    if (!get_map_info()->color) { /* Gray image */
       gtk_widget_set_sensitive(_menu.color, FALSE);
@@ -350,25 +350,25 @@ make_view_menu(GtkWidget *menu_bar)
 
    _menu.zoom[0] = make_radio_item(zoom_menu, NULL, "1:1", menu_zoom_to_1,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[0]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[0]));
    _menu.zoom[1] = make_radio_item(zoom_menu, group, "1:2", menu_zoom_to_2,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[1]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[1]));
    _menu.zoom[2] = make_radio_item(zoom_menu, group, "1:3", menu_zoom_to_3,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[2]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[2]));
    _menu.zoom[3] = make_radio_item(zoom_menu, group, "1:4", menu_zoom_to_4,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[3]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[3]));
    _menu.zoom[4] = make_radio_item(zoom_menu, group, "1:5", menu_zoom_to_5,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[4]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[4]));
    _menu.zoom[5] = make_radio_item(zoom_menu, group, "1:6", menu_zoom_to_6,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[5]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[5]));
    _menu.zoom[6] = make_radio_item(zoom_menu, group, "1:7", menu_zoom_to_7,
 				   NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.zoom[6]));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[6]));
    _menu.zoom[7] = make_radio_item(zoom_menu, group, "1:8", menu_zoom_to_8,
 				   NULL);
 }
@@ -380,12 +380,12 @@ make_mapping_menu(GtkWidget *menu_bar)
    GSList    *group;
 
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
    _menu.rectangle = make_radio_item(menu, group, _("Rectangle"),
 				     menu_rectangle, NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.rectangle));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.rectangle));
    _menu.circle = make_radio_item(menu, group, _("Circle"), menu_circle, NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_menu.circle));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.circle));
    _menu.polygon = make_radio_item(menu, group, _("Polygon"), menu_polygon,
 				   NULL);
    make_separator(menu);

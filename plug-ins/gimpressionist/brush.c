@@ -165,7 +165,7 @@ void brushlistrefresh(void)
 
 void savebrush_ok(GtkWidget *w, GtkFileSelection *fs, gpointer data)
 {
-  char *fn;
+  const gchar *fn;
   fn = gtk_file_selection_get_filename (GTK_FILE_SELECTION(fs));
 
   saveppm(&brushppm, fn);

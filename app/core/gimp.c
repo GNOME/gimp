@@ -30,6 +30,7 @@
 #include "base/tile-manager.h"
 
 #include "pdb/procedural_db.h"
+#include "pdb/internal_procs.h"
 
 #include "xcf/xcf.h"
 
@@ -53,8 +54,6 @@
 #include "gimpparasite.h"
 #include "gimptoolinfo.h"
 #include "gimpunit.h"
-
-#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -313,7 +312,8 @@ gimp_new (gboolean be_verbose)
 }
 
 void
-gimp_initialize (Gimp *gimp)
+gimp_initialize (Gimp               *gimp,
+                 GimpInitStatusFunc  status_callback)
 {
   GimpContext *context;
 
@@ -343,6 +343,7 @@ gimp_initialize (Gimp *gimp)
   };
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (status_callback != NULL);
 
   gimp->brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
@@ -395,39 +396,45 @@ gimp_initialize (Gimp *gimp)
 
   gimp_set_current_context (gimp, context);
   g_object_unref (G_OBJECT (context));
+
+  /*  register all internal procedures  */
+  (* status_callback) (_("Procedural Database"), NULL, -1);
+  internal_procs_init (gimp, status_callback);
 }
 
 void
-gimp_restore (Gimp     *gimp,
-	      gboolean  no_data)
+gimp_restore (Gimp               *gimp,
+              GimpInitStatusFunc  status_callback,
+	      gboolean            no_data)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (status_callback != NULL);
 
   /*  initialize  the global parasite table  */
-  app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
+  (* status_callback) (_("Looking for data files"), _("Parasites"), 0.00);
   gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
-  app_init_update_status (NULL, _("Brushes"), 0.18);
+  (* status_callback) (NULL, _("Brushes"), 0.18);
   gimp_data_factory_data_init (gimp->brush_factory, no_data); 
 
   /*  initialize the list of gimp patterns   */
-  app_init_update_status (NULL, _("Patterns"), 0.36);
+  (* status_callback) (NULL, _("Patterns"), 0.36);
   gimp_data_factory_data_init (gimp->pattern_factory, no_data); 
 
   /*  initialize the list of gimp palettes   */
-  app_init_update_status (NULL, _("Palettes"), 0.54);
+  (* status_callback) (NULL, _("Palettes"), 0.54);
   gimp_data_factory_data_init (gimp->palette_factory, no_data); 
 
   /*  initialize the list of gimp gradients  */
-  app_init_update_status (NULL, _("Gradients"), 0.72);
+  (* status_callback) (NULL, _("Gradients"), 0.72);
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
 
   /*  initialize  the global parasite table  */
-  app_init_update_status (NULL, _("Documents"), 0.90);
+  (* status_callback) (NULL, _("Documents"), 0.90);
   gimp_documents_load (gimp);
 
-  app_init_update_status (NULL, NULL, 1.00);
+  (* status_callback) (NULL, NULL, 1.00);
 
   gimp_modules_load (gimp);
 }

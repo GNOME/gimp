@@ -118,6 +118,7 @@ make_tools(GtkWidget *window)
    GtkWidget *handlebox;
    GtkWidget *toolbar;
 
+   toolbar = gtk_toolbar_new ();
    _tools.container = handlebox = gtk_handle_box_new();
    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
    gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);

@@ -570,7 +570,8 @@ static DAllObjs * copy_all_objs           (DAllObjs *objs);
 static void       setup_undo              (void);
 static void       d_pnt_add_line          (Dobject *obj,
 					   gint x, gint y, gint pos);
-static GFigObj  * gfig_load               (gchar *filename, gchar *name);
+static GFigObj  * gfig_load               (const gchar *filename,
+                                           const gchar *name);
 static void       free_all_objs           (DAllObjs * objs);
 static void       draw_objects            (DAllObjs *objs, gint show_single);
 static Dobject  * d_load_line             (FILE *from);
@@ -1134,7 +1135,8 @@ gfig_load_objs (GFigObj *gfig,
 }
 
 static GFigObj *
-gfig_load (gchar *filename, gchar *name)
+gfig_load (const gchar *filename,
+           const gchar *name)
 {
   GFigObj * gfig;
   FILE * fp;
@@ -1511,7 +1513,7 @@ file_selection_ok (GtkWidget        *w,
 		   GtkFileSelection *fs,
 		   gpointer data)
 {
-  gchar *filenamebuf;
+  const gchar *filenamebuf;
   struct stat filestat;
   gint	err;
   GFigObj *obj = (GFigObj *)gtk_object_get_user_data (GTK_OBJECT (fs));
@@ -1594,10 +1596,9 @@ create_file_selection (GFigObj *obj,
     }
   else
     {
-      gchar *tmp = g_get_tmp_dir ();
+      const gchar *tmp = g_get_tmp_dir ();
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tmp);
-      g_free (tmp);
     }
 
   if (!GTK_WIDGET_VISIBLE (window))
@@ -1977,7 +1978,7 @@ num_sides_dialog (gchar *d_title,
       GtkWidget *option_menu;
 
       option_menu =
-	gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+	gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			       which_way, (gpointer) *which_way,
 
 			       _("Clockwise"),      (gpointer) 0, NULL,
@@ -2349,7 +2350,7 @@ gfig_brush_preview (GtkWidget **pv)
   gtk_widget_show (vbox);
 
   option_menu =
-    gimp_option_menu_new2 (FALSE, gfig_brush_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gfig_brush_menu_callback),
 			   *pv, (gpointer) selvals.brshtype,
 
 			   _("Brush"),    (gpointer) BRUSH_BRUSH_TYPE, NULL,
@@ -2771,7 +2772,7 @@ paint_page (void)
   gtk_widget_show (table);
 
   page_menu_layers =
-    gimp_option_menu_new2 (FALSE, paint_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
 			   (gpointer) PAINT_LAYERS_MENU, 0,
 
 			   _("Original"), (gpointer) ORIGINAL_LAYER, NULL,
@@ -2790,7 +2791,7 @@ paint_page (void)
 			     page_menu_layers, 1, TRUE);
 
   page_menu_type =
-    gimp_option_menu_new2 (FALSE, paint_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
 			   (gpointer) PAINT_TYPE_MENU, 0,
 
 			   _("Brush"),
@@ -2832,7 +2833,7 @@ paint_page (void)
 			     page_menu_type, 1, TRUE);
 
   page_menu_bg =
-    gimp_option_menu_new2 (FALSE, paint_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
 			   (gpointer) PAINT_BGS_MENU, 0,
 
 			   _("Transparent"), (gpointer) LAYER_TRANS_BG, NULL,
@@ -3138,7 +3139,7 @@ select_page (void)
    */
 
   /* 1 */
-  menu = gimp_option_menu_new2 (FALSE, select_menu_callback,
+  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
 				(gpointer) SELECT_TYPE_MENU, 0,
 
 				_("Add"),       (gpointer) ADD, NULL,
@@ -3184,7 +3185,7 @@ select_page (void)
 
   /* 5 */
   menu =
-    gimp_option_menu_new2 (FALSE, select_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
 			   (gpointer) SELECT_TYPE_MENU_FILL, 0,
 
 			   _("Pattern"),    (gpointer) FILL_PATTERN, NULL,
@@ -3211,7 +3212,7 @@ select_page (void)
 
   /* 7 */
   menu =
-    gimp_option_menu_new2 (FALSE, select_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
 			   (gpointer) SELECT_TYPE_MENU_WHEN, 0,
 
 			   _("Each Selection"), (gpointer) FILL_EACH, NULL,
@@ -3223,7 +3224,7 @@ select_page (void)
 			     menu, 1, FALSE);
 
   /* 8 */
-  menu = gimp_option_menu_new2 (FALSE, select_menu_callback,
+  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
 				(gpointer) SELECT_ARCTYPE_MENU, 0,
 
 				_("Segment"), (gpointer) ARC_SEGMENT, NULL,
@@ -3305,7 +3306,7 @@ options_page (void)
 			     NULL, 0, 0,
 			     button, 1, TRUE);
 
-  menu = gimp_option_menu_new2 (FALSE, gridtype_menu_callback,
+  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (gridtype_menu_callback),
 				(gpointer) GRID_TYPE_MENU, 0,
 
 				_("Rectangle"), (gpointer) RECT_GRID, NULL,
@@ -3320,7 +3321,7 @@ options_page (void)
   gfig_opt_widget.gridtypemenu = menu;
 
   menu =
-    gimp_option_menu_new2 (FALSE, gridtype_menu_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gridtype_menu_callback),
 			   (gpointer) GRID_RENDER_MENU, 0,
 
 			   _("Normal"),     (gpointer) GTK_STATE_NORMAL, NULL,
@@ -3879,9 +3880,9 @@ gfig_grid_colours (GtkWidget   *widget,
   };
 
   gdk_color_parse ("gray50", &new_col1);
-  gdk_color_alloc (xxx, &new_col1);
+  gdk_colormap_alloc_color (xxx, &new_col1, FALSE, TRUE);
   gdk_color_parse ("gray80", &new_col2);
-  gdk_color_alloc (xxx, &new_col2);
+  gdk_colormap_alloc_color (xxx, &new_col2, FALSE, TRUE);
   values.background.pixel = new_col1.pixel;
   values.foreground.pixel = new_col2.pixel;
   values.fill    = GDK_OPAQUE_STIPPLED;
@@ -4558,7 +4559,7 @@ gfig_load_file_selection_ok (GtkWidget        *widget,
 		             GtkFileSelection *fs,
 		             gpointer          data)
 {
-  gchar       *filename;
+  const gchar *filename;
   struct stat  filestat;
   gint         err;
   GFigObj     *gfig;
@@ -5055,14 +5056,13 @@ gfig_update_stat_labels (void)
   if (current_obj->filename)
     {
       gint slen;
-      gchar *hm = g_get_home_dir ();
+      gchar *hm  = (gchar *) g_get_home_dir ();
       gchar *dfn = g_strdup (current_obj->filename);
 #ifdef __EMX__
       if (hm)
 	hm = _fnslashify (hm);
 #endif
 
-      
 #ifndef __EMX__
       if (hm != NULL && !strncmp (dfn, hm, strlen (hm)-1))
 #else

@@ -180,7 +180,7 @@ run (char    *name,
      int     *nreturn_vals,
      GimpParam **return_vals)
 {
-  char       *l_env;
+  const char *l_env;
   
   char        l_extension[32];
   static GimpParam values[2];

@@ -40,7 +40,7 @@
 static void
 open_cb(GtkWidget *widget, gpointer data)
 {
-   char *filename;
+   const gchar *filename;
    struct stat buf;
    int err;
 
@@ -97,7 +97,7 @@ do_file_exists_dialog(gpointer data)
 static void
 save_cb(GtkWidget *widget, gpointer data)
 {
-   char *filename;
+   const gchar *filename;
    struct stat buf;
    int err;
 

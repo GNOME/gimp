@@ -412,7 +412,7 @@ p_dirname(char *fname)
 static void
 p_init_xanim_global_name()
 {
-  char *l_env;
+  const gchar *l_env;
   
   l_env = g_getenv("GAP_XANIM_PROG");
   

@@ -111,8 +111,8 @@ static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_fla
                       char *step_backup_file, gint len_step_backup_file,
 		      gint32 layer_idx)
 {
-  gchar *l_env;
-  gchar *l_msg;
+  const gchar      *l_env;
+  gchar            *l_msg;
   static t_but_arg  l_but_argv[3];
   gint              l_but_argc;
   gint              l_argc;

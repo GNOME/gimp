@@ -26,7 +26,7 @@
 
 #include "gtk/gtk.h"
 
-typedef const gchar* (*BrowseFilter_t)(const gchar*, gpointer data);
+typedef gchar* (*BrowseFilter_t)(const gchar*, gpointer data);
 
 typedef struct {
    const gchar *name;

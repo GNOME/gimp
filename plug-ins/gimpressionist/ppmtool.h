@@ -14,7 +14,7 @@ void resize(struct ppm *p, int nx, int ny);
 void rescale(struct ppm *p, double scale);
 void resize_fast(struct ppm *p, int nx, int ny);
 void loadppm(char *fn, struct ppm *p);
-void saveppm(struct ppm *p, char *fn);
+void saveppm(struct ppm *p, const char *fn);
 void copyppm(struct ppm *s, struct ppm *p);
 void fill(struct ppm *p, guchar *c);
 void freerotate(struct ppm *p, double amount);

@@ -1501,7 +1501,7 @@ main_dialog (GimpDrawable *drawable)
     g_free (preview_rgb_data);
   
   if (image != NULL)
-    gdk_image_unref (image);
+    g_object_unref (G_OBJECT (image));
 
   gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);

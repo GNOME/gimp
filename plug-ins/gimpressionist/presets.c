@@ -418,7 +418,7 @@ void create_savepreset(void)
 
 void savepreset(GtkWidget *wg, GtkWidget *p)
 {
-  char *l;
+  const gchar *l;
   static char fname[200];
   FILE *f;
   GList *thispath;

@@ -34,15 +34,19 @@ static void
 select_cb(GtkWidget *widget, gpointer data)
 {
    BrowseWidget_t *browse = (BrowseWidget_t*) data;
-   const gchar *p;
-   gchar *file;
+   gchar *p;
+   const gchar *file;
 
    file = gtk_file_selection_get_filename(
       GTK_FILE_SELECTION(browse->file_selection));
 
-   p = (browse->filter) ? browse->filter(file, browse->filter_data) : file;
+   p = (browse->filter) ? browse->filter(file, browse->filter_data) : (gchar *) file;
 
    gtk_entry_set_text(GTK_ENTRY(browse->file), p);
+
+   if (browse->filter)
+     g_free (p);
+
    gtk_widget_hide(browse->file_selection);
    gtk_widget_grab_focus(browse->file);
 }

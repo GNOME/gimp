@@ -419,7 +419,7 @@ off_x_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   int offset;
 
   resize = (Resize *) data;
@@ -442,7 +442,7 @@ off_y_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   int offset;
 
   resize = (Resize *) data;
@@ -465,7 +465,7 @@ width_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   double ratio;
   int new_height;
   char size[12];
@@ -539,7 +539,7 @@ height_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   double ratio;
   int new_width;
   char size[12];
@@ -613,7 +613,7 @@ ratio_x_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   int new_width;
   int new_height;
   char size[12];
@@ -695,7 +695,7 @@ ratio_y_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
+  const char *str;
   int new_width;
   int new_height;
   char size[12];

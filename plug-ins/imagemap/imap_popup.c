@@ -128,13 +128,13 @@ create_main_popup_menu(void)
    sub_menu = make_sub_menu(popup_menu, _("Tools"));
    _popup.arrow = make_radio_item(sub_menu, NULL, _("Arrow"), popup_arrow, 
 				  NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.arrow));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.arrow));
    _popup.rectangle = make_radio_item(sub_menu, group, _("Rectangle"), 
 				      popup_rectangle, NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.rectangle));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.rectangle));
    _popup.circle = make_radio_item(sub_menu, group, _("Circle"), 
 				   popup_circle, NULL);
-   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.circle));
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.circle));
    _popup.polygon = make_radio_item(sub_menu, group, _("Polygon"), 
 				    popup_polygon, NULL);
    

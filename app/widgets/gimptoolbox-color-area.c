@@ -96,8 +96,7 @@ static GtkTargetEntry color_area_target_table[] =
 {
   GIMP_TARGET_COLOR
 };
-static guint n_color_area_targets = (sizeof (color_area_target_table) /
-				     sizeof (color_area_target_table[0]));
+
 
 /*  Local functions  */
 static ColorAreaTarget
@@ -512,7 +511,8 @@ color_area_create (gint       width,
   /*  dnd stuff  */
   gtk_drag_source_set (color_area,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_area_target_table, n_color_area_targets,
+                       color_area_target_table,
+                       G_N_ELEMENTS (color_area_target_table),
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (color_area, color_area_drag_color, NULL);
 
@@ -520,7 +520,8 @@ color_area_create (gint       width,
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
 		     GTK_DEST_DEFAULT_DROP,
-		     color_area_target_table, n_color_area_targets,
+		     color_area_target_table,
+                     G_N_ELEMENTS (color_area_target_table),
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
 

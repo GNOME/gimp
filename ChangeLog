@@ -1,3 +1,72 @@
+2001-10-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: link the app in a different order as some init
+	functions are called from core/gimp.c instead of app_procs.c now.
+
+	* app/app_procs.[ch]: made app_init_update_status() private and
+	pass it as callback to various init functions.
+
+	* app/plug_in.[ch]: plug_in_init() take "gimp" and "status_callback"
+	parameters.
+
+	* app/undo.c: use "gimage->gimp" instead of "the_gimp", don't
+	include "app_procs.h".
+
+	* app/core/core-types.h: added "GimpInitStatusFunc" typedef.
+
+	* app/core/gimp.[ch]: gimp_initialize() and gimp_restore() now
+	take a "status_callback" as parameter. Don't include "app_procs.h".
+
+	* app/core/gimpmodules.c: putting the modules in a strong
+	container was a bad idea because it may be impossible to finalize
+	a GimpModuleInfo object belonging to a stalled module.
+
+	* app/gui/color-area.c: use G_N_ELEMENTS().
+
+	* app/gui/session.c: don't call app_init_update_status() and don't
+	include "app_procs.h" because this happens after the splash is
+	hidden.
+
+	* tools/pdbgen/app.pl
+	* app/pdb/internal_procs.[ch]: pass a "status_callback" to
+	internal_procs_init(), don't include "app_procs.h".
+
+	* plug-ins/Makefile.am: build gfig, gimpressionist and imagemap
+	again.
+
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_ui.c: s/gdk_image_unref/g_object_unref/
+
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/gimpressionist/ppmtool.[ch]
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/imagemap/imap_browse.[ch]
+	* plug-ins/imagemap/imap_csim.y
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_file.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_polygon.c
+	* plug-ins/imagemap/imap_popup.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_taglist.c
+	* plug-ins/imagemap/imap_tools.c: ported to current GLib/Gtk+.
+
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_filter_foreach.c
+	* plug-ins/gap/gap_filter_main.c
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/gap/gap_lib.c
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_mod_layer.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gap/resize.c: half-way fixed this one too but I'm not
+	willing to fix tons of duplicated and deprecated app/ code...
+
 2001-10-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.c
