@@ -837,6 +837,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
                                GimpDisplay     *gdisp)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
   if (! paint_tool->show_cursor)
     {
@@ -844,7 +845,9 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
                             GIMP_CURSOR_NONE,
                             GIMP_TOOL_CURSOR_NONE,
                             GIMP_CURSOR_MODIFIER_NONE);
-      return;
+
+      if (! color_tool->enabled)
+        return;
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

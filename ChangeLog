@@ -1,3 +1,10 @@
+2004-06-30  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_cursor_update):
+	Chain up if the color tool is enabled. This fixes the problem of
+	the color picker cursor not appearing when using a paint tool
+	in color picking mode while "Show Paint Tool Cursor" is off.
+
 2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimpdrawable.c: moved call to
