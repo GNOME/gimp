@@ -1,3 +1,8 @@
+2003-01-14  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Oops, the configure.in change below didn't actually
+	work. Refactored so it does.
+
 2003-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_set_geometry): added
@@ -23,7 +28,7 @@
 2003-01-13  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Partially address #102058 with a --with-shm configure
-	options. Defaults to sysv except on OS X, where it is none.
+	option. Defaults to sysv except on OS X, where it is none.
 
 2003-01-13  Michael Natterer  <mitch@gimp.org>
 

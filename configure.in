@@ -432,10 +432,10 @@ AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 ###################################
 # Checks for shared memory handling
 ###################################
-
+                                                                                
 dnl MacOS X has broken SysV shm
-case "$host" in
-  *-apple-machten*)
+case "$host_os" in
+  darwin* | rhapsody* | machten*)
     # We can put something else here when something that works is implemented
     shmdefault=none
     ;;
