@@ -376,7 +376,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
 #define CHECK_COLOR(area, row, col)        \
   (((((area)->offset_y + (row)) & size) ^  \
-    (((area)->offset_x + (col)) & size)) ? light : dark)
+    (((area)->offset_x + (col)) & size)) ? dark : light)
 
   src  = buf;
   dest = area->buf + x * 3 + y * area->rowstride;

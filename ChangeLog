@@ -1,3 +1,8 @@
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.c (CHECK_COLOR): swapped light
+	and gray checks to get a checkerboard that matches the image window.
+
 2004-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpprotocol.h (struct _GPConfig): replaced the
