@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
 "POT-Creation-Date: 2000-04-02 23:33+0200\n"
-"PO-Revision-Date: 2000-04-03 11:46+02:00\n"
+"PO-Revision-Date: 2000-04-06 17:39+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7968,7 +7968,7 @@ msgstr "<Image>/Video/Frames konvertieren..."
 
 #: plug-ins/gap/gap_main.c:511
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Video/Frames-Größe verändern..."
+msgstr "<Image>/Video/Frame-Größe verändern..."
 
 #: plug-ins/gap/gap_main.c:523
 msgid "<Image>/Video/Frames Crop..."
