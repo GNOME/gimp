@@ -16,46 +16,70 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __RECT_SELECT_H__
-#define __RECT_SELECT_H__
+#ifndef __GIMP_RECT_SELECT_TOOL_H__
+#define __GIMP_RECT_SELECT_TOOL_H__
 
 
-/*  rect select action functions  */
-void   rect_select_button_press    (Tool           *tool,
-				    GdkEventButton *bevent,
-				    GDisplay       *gdisp);
-void   rect_select_button_release  (Tool           *tool,
-				    GdkEventButton *bevent,
-				    GDisplay       *gdisp);
-void   rect_select_motion          (Tool           *tool,
-				    GdkEventMotion *mevent,
-				    GDisplay       *gdisp);
-void   rect_select_modifier_update (Tool           *tool,
-				    GdkEventKey    *kevent,
-				    GDisplay       *gdisp);
-void   rect_select_cursor_update   (Tool           *tool,
-				    GdkEventMotion *mevent,
-				    GDisplay       *gdisp);
-void   rect_select_oper_update     (Tool           *tool,
-				    GdkEventMotion *mevent,
-				    GDisplay       *gdisp);
-void   rect_select_control         (Tool           *tool,
-				    ToolAction      tool_action,
-				    GDisplay       *gdisp);
-
-/*  rect select functions  */
-void   rect_select_draw            (Tool           *tool);
-void   rect_select                 (GimpImage      *gimage,
-				    gint            x,
-				    gint            y,
-				    gint            w,
-				    gint            g,
-				    SelectOps       op,
-				    gboolean        feather,
-				    gdouble         feather_radius);
-
-Tool * tools_new_rect_select       (void);
-void   tools_free_rect_select      (Tool           *tool);
+#include "gimpselectiontool.h"
 
 
-#endif  /*  __RECT_SELECT_H__  */
+#define GIMP_TYPE_RECT_SELECT_TOOL            (gimp_rect_select_tool_get_type ())
+#define GIMP_RECT_SELECT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_RECT_SELECT_TOOL, GimpRectSelectTool))
+#define GIMP_IS_RECT_SELECT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_RECT_SELECT_TOOL))
+#define GIMP_RECT_SELECT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RECT_SELECT_TOOL, GimpRectSelectToolClass))
+#define GIMP_IS_RECT_SELECT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RECT_SELECT_TOOL))
+
+
+typedef struct _GimpRectSelectTool      GimpRectSelectTool;
+typedef struct _GimpRectSelectToolClass GimpRectSelectToolClass;
+
+struct _GimpRectSelectTool
+{
+  GimpSelectionTool  parent_instance;
+
+  gint               x, y;        /*  upper left hand coordinate  */
+  gint               w, h;        /*  width and height  */
+  gint               center;      /*  is the selection being created from the
+                                   *  center out?  */
+
+  gint               fixed_size;
+  gdouble            fixed_width;
+  gdouble            fixed_height;
+  guint              context_id;   /*  for the statusbar  */
+  
+};
+
+struct _GimpRectSelectToolClass
+{
+  GimpSelectionToolClass parent_class;
+
+  void (* rect_select) (GimpRectSelectTool *rect_tool,
+                        gint                x,
+                        gint                y,
+                        gint                w,
+                        gint                h);
+};
+
+
+void       gimp_rect_select_tool_register    (void);
+
+GtkType    gimp_rect_select_tool_get_type    (void);
+
+void       gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
+                                              gint                x,
+                                              gint                y,
+                                              gint                w,
+                                              gint                h);
+
+
+void       rect_select                       (GimpImage          *gimage,
+                                              gint                x,
+                                              gint                y,
+                                              gint                w,
+                                              gint                h,
+                                              SelectOps           op,
+                                              gboolean            feather,
+                                              gdouble             feather_radius);
+
+
+#endif  /*  __GIMP_RECT_SELECT_TOOL_H__  */

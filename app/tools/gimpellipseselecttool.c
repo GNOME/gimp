@@ -24,27 +24,80 @@
 
 #include "apptypes.h"
 
-#include "draw_core.h"
-#include "edit_selection.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
-#include "rect_select.h"
-#include "rect_selectP.h"
 
-#include "ellipse_select.h"
+#include "gimpellipseselecttool.h"
+#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool_manager.h"
+
+#include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
-/*  the ellipse selection tool options  */
-SelectionOptions * ellipse_options = NULL;
+static void   gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass);
+static void   gimp_ellipse_select_tool_init       (GimpEllipseSelectTool      *ellipse_select);
+static void   gimp_ellipse_select_tool_destroy     (GtkObject          *object);
+
+static void   gimp_ellipse_select_tool_draw        (GimpDrawTool       *draw_tool);
+
+static void   gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
+                                                    gint                x,
+                                                    gint                y,
+                                                    gint                w,
+                                                    gint                h);
+
+static void   gimp_ellipse_select_tool_options_reset (void);
 
 
-/*************************************/
-/*  Ellipsoidal selection apparatus  */
+static GimpRectSelectToolClass *parent_class = NULL;
+
+static SelectionOptions *ellipse_options = NULL;
+
+
+/*  public functions  */
+
+void
+gimp_ellipse_select_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_ELLIPSE_SELECT_TOOL, FALSE,
+                              "gimp:ellipse_select_tool",
+                              _("Ellipse Select"),
+                              _("Select elliptical regions"),
+                              _("/Tools/Selection Tools/Ellipse Select"), "E",
+                              NULL, "tools/ellipse_select.html",
+                              (const gchar **) circ_bits);
+}
+
+GtkType
+gimp_ellipse_select_tool_get_type (void)
+{
+  static GtkType ellipse_select_type = 0;
+
+  if (! ellipse_select_type)
+    {
+      GtkTypeInfo ellipse_select_info =
+      {
+        "GimpEllipseSelectTool",
+        sizeof (GimpEllipseSelectTool),
+        sizeof (GimpEllipseSelectToolClass),
+        (GtkClassInitFunc) gimp_ellipse_select_tool_class_init,
+        (GtkObjectInitFunc) gimp_ellipse_select_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL
+      };
+
+      ellipse_select_type = gtk_type_unique (GIMP_TYPE_RECT_SELECT_TOOL,
+                                             &ellipse_select_info);
+    }
+
+  return ellipse_select_type;
+}
 
 void
 ellipse_select (GimpImage *gimage,
@@ -95,78 +148,114 @@ ellipse_select (GimpImage *gimage,
     }
 }
 
-void
-ellipse_select_draw (Tool *tool)
+
+/*  private functions  */
+
+static void
+gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 {
-  EllipseSelect *ellipse_sel;
-  gint           x1, y1;
-  gint           x2, y2;
+  GtkObjectClass          *object_class;
+  GimpToolClass           *tool_class;
+  GimpDrawToolClass       *draw_tool_class;
+  GimpRectSelectToolClass *rect_tool_class;
 
-  ellipse_sel = (EllipseSelect *) tool->private;
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
+  rect_tool_class = (GimpRectSelectToolClass *) klass;
 
-  x1 = MIN (ellipse_sel->x, ellipse_sel->x + ellipse_sel->w);
-  y1 = MIN (ellipse_sel->y, ellipse_sel->y + ellipse_sel->h);
-  x2 = MAX (ellipse_sel->x, ellipse_sel->x + ellipse_sel->w);
-  y2 = MAX (ellipse_sel->y, ellipse_sel->y + ellipse_sel->h);
+  parent_class = gtk_type_class (GIMP_TYPE_RECT_SELECT_TOOL);
+
+  object_class->destroy        = gimp_ellipse_select_tool_destroy;
+
+  draw_tool_class->draw        = gimp_ellipse_select_tool_draw;
+
+  rect_tool_class->rect_select = gimp_ellipse_select_tool_rect_select;
+}
+
+static void
+gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
+{
+  GimpTool          *tool;
+  GimpSelectionTool *select_tool;
+
+  tool        = GIMP_TOOL (ellipse_select);
+  select_tool = GIMP_SELECTION_TOOL (ellipse_select);
+
+  if (! ellipse_options)
+    {
+      ellipse_options =
+        selection_options_new (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+                               gimp_ellipse_select_tool_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+                                          (ToolOptions *) ellipse_options);
+    }
+
+  tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+}
+
+static void
+gimp_ellipse_select_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpTool           *tool;
+  GimpRectSelectTool *rect_sel;
+  gint                x1, y1;
+  gint                x2, y2;
+
+  tool     = GIMP_TOOL (draw_tool);
+  rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
+
+  x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
+  y1 = MIN (rect_sel->y, rect_sel->y + rect_sel->h);
+  x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
+  y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
 
   gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
   gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
 
-  gdk_draw_arc (ellipse_sel->core->win,
-		ellipse_sel->core->gc, 0,
-		x1, y1, (x2 - x1), (y2 - y1), 0, 23040);
+  gdk_draw_arc (draw_tool->win,
+		draw_tool->gc,
+                0,
+		x1, y1, (x2 - x1), (y2 - y1),
+                0, 23040);
 }
 
 static void
-ellipse_select_options_reset (void)
+gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
+                                      gint                x,
+                                      gint                y,
+                                      gint                w,
+                                      gint                h)
+{
+  GimpTool          *tool;
+  GimpSelectionTool *sel_tool;
+  SelectionOptions  *sel_options;
+
+  tool     = GIMP_TOOL (rect_tool);
+  sel_tool = GIMP_SELECTION_TOOL (rect_tool);
+
+  sel_options = (SelectionOptions *)
+    tool_manager_get_info_by_tool (tool)->tool_options;
+
+  ellipse_select (tool->gdisp->gimage,
+                  x, y, w, h,
+                  sel_tool->op,
+                  sel_options->antialias,
+                  sel_options->feather,
+                  sel_options->feather_radius);
+}
+
+static void
+gimp_ellipse_select_tool_options_reset (void)
 {
   selection_options_reset (ellipse_options);
-}
-
-Tool *
-tools_new_ellipse_select  (void)
-{
-  Tool          *tool;
-  EllipseSelect *private;
-
-  /*  The tool options  */
-  if (!ellipse_options)
-    {
-      ellipse_options =
-	selection_options_new (ELLIPSE_SELECT, ellipse_select_options_reset);
-      tools_register (ELLIPSE_SELECT, (ToolOptions *) ellipse_options);
-    }
-
-  tool = tools_new_tool (ELLIPSE_SELECT);
-  private = g_new0 (EllipseSelect, 1);
-
-  private->core = draw_core_new (ellipse_select_draw);
-  /*  Make the selection static, not blinking  */
-  private->x = private->y = 0;
-  private->w = private->h = 0;
-
-  tool->private = (void *) private;
-
-  tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
-
-  tool->button_press_func   = rect_select_button_press;
-  tool->button_release_func = rect_select_button_release;
-  tool->motion_func         = rect_select_motion;
-  tool->modifier_key_func   = rect_select_modifier_update;
-  tool->cursor_update_func  = rect_select_cursor_update;
-  tool->oper_update_func    = rect_select_oper_update;
-  tool->control_func        = rect_select_control;
-
-  return tool;
-}
-
-void
-tools_free_ellipse_select (Tool *tool)
-{
-  EllipseSelect *ellipse_sel;
-
-  ellipse_sel = (EllipseSelect *) tool->private;
-
-  draw_core_free (ellipse_sel->core);
-  g_free (ellipse_sel);
 }

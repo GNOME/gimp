@@ -16,23 +16,48 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ELLIPSE_SELECT_H__
-#define __ELLIPSE_SELECT_H__
+#ifndef __GIMP_ELLIPSE_SELECT_TOOL_H__
+#define __GIMP_ELLIPSE_SELECT_TOOL_H__
 
 
-void   ellipse_select            (GimpImage *gimage,
-				  gint       x,
-				  gint       y,
-				  gint       w,
-				  gint       h,
-				  SelectOps  op,
-				  gboolean   antialias,
-				  gboolean   feather,
-				  gdouble    feather_radius);
-void   ellipse_select_draw       (Tool      *tool);
-
-Tool * tools_new_ellipse_select  (void);
-void   tools_free_ellipse_select (Tool      *tool);
+#include "gimprectselecttool.h"
 
 
-#endif  /*  __ELLIPSE_SELECT_H__  */
+#define GIMP_TYPE_ELLIPSE_SELECT_TOOL            (gimp_ellipse_select_tool_get_type ())
+#define GIMP_ELLIPSE_SELECT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_ELLIPSE_SELECT_TOOL, GimpEllipseSelectTool))
+#define GIMP_IS_ELLIPSE_SELECT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_ELLIPSE_SELECT_TOOL))
+#define GIMP_ELLIPSE_SELECT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ELLIPSE_SELECT_TOOL, GimpEllipseSelectToolClass))
+#define GIMP_IS_ELLIPSE_SELECT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ELLIPSE_SELECT_TOOL))
+
+
+typedef struct _GimpEllipseSelectTool      GimpEllipseSelectTool;
+typedef struct _GimpEllipseSelectToolClass GimpEllipseSelectToolClass;
+
+struct _GimpEllipseSelectTool
+{
+  GimpRectSelectTool  parent_instance;
+};
+
+struct _GimpEllipseSelectToolClass
+{
+  GimpRectSelectToolClass parent_class;
+};
+
+
+void       gimp_ellipse_select_tool_register (void);
+
+GtkType    gimp_ellipse_select_tool_get_type (void);
+
+
+void       ellipse_select                    (GimpImage *gimage,
+                                              gint       x,
+                                              gint       y,
+                                              gint       w,
+                                              gint       h,
+                                              SelectOps  op,
+                                              gboolean   antialias,
+                                              gboolean   feather,
+                                              gdouble    feather_radius);
+
+
+#endif  /*  __GIMP_ELLIPSE_SELECT_TOOL_H__  */

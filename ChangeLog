@@ -1,5 +1,17 @@
 2001-03-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpellipseselecttool.[ch]
+	* app/tools/gimprectselecttool.[ch]: new objects based on a (heavily
+	modified) patch by Dave Neary <dneary@eircom.net>.
+
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimptool.[ch]
+	* app/tools/selection_options.c
+	* app/tools/tools.c: changed accordingly.
+
+2001-03-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/apptypes.h
 	* app/channel_ops.c
 	* app/commands.c

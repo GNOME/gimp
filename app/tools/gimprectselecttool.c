@@ -28,52 +28,105 @@
 #include "apptypes.h"
 
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimpmarshal.h"
 #include "floating_sel.h"
 
-#include "edit_selection.h"
-#include "rect_select.h"
-#include "rect_selectP.h"
+#include "gimpeditselectiontool.h"
+#include "gimprectselecttool.h"
+#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 #define STATUSBAR_SIZE 128
 
 
-extern void   ellipse_select                 (GimpImage  *gimage,
-					      gint        x,
-					      gint        y,
-					      gint        w,
-					      gint        h,
-					      SelectOps   op,
-					      gboolean    antialias,
-					      gboolean    feather,
-					      gdouble     feather_radius);
-
-static void   selection_tool_update_op_state (RectSelect *rect_sel,
-					      gint        x,
-					      gint        y,
-					      gint        state, 
-					      GDisplay   *gdisp);
+enum
+{
+  RECT_SELECT,
+  LAST_SIGNAL
+};
 
 
-/*  the rectangular selection tool options  */
+static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
+static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
+static void   gimp_rect_select_tool_destroy          (GtkObject      *object);
+
+static void   gimp_rect_select_tool_button_press     (GimpTool       *tool,
+                                                      GdkEventButton *bevent,
+                                                      GDisplay       *gdisp);
+static void   gimp_rect_select_tool_button_release   (GimpTool       *tool,
+                                                      GdkEventButton *bevent,
+                                                      GDisplay       *gdisp);
+static void   gimp_rect_select_tool_motion           (GimpTool       *tool,
+                                                      GdkEventMotion *mevent,
+                                                      GDisplay       *gdisp);
+
+static void   gimp_rect_select_tool_draw             (GimpDrawTool   *draw_tool);
+
+static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
+                                                      gint                x,
+                                                      gint                y,
+                                                      gint                w,
+                                                      gint                h);
+
+static void   gimp_rect_select_tool_options_reset    (void);
+
+
+static guint rect_select_signals[LAST_SIGNAL] = { 0 };
+
+static GimpSelectionToolClass *parent_class = NULL;
+
 static SelectionOptions *rect_options = NULL;
 
-/*  in gimp, ellipses are rectangular, too ;)  */
-extern SelectionOptions *ellipse_options;
 
+/*  public functions  */
 
-/*************************************/
-/*  Rectangular selection apparatus  */
+void
+gimp_rect_select_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_RECT_SELECT_TOOL, FALSE,
+                              "gimp:rect_select_tool",
+                              _("Rect Select"),
+                              _("Select rectangular regions"),
+                              _("/Tools/Selection Tools/Rect Select"), "R",
+                              NULL, "tools/rect_select.html",
+                              (const gchar **) rect_bits);
+}
+
+GtkType
+gimp_rect_select_tool_get_type (void)
+{
+  static GtkType rect_select_type = 0;
+
+  if (! rect_select_type)
+    {
+      GtkTypeInfo rect_select_info =
+      {
+        "GimpRectSelectTool",
+        sizeof (GimpRectSelectTool),
+        sizeof (GimpRectSelectToolClass),
+        (GtkClassInitFunc) gimp_rect_select_tool_class_init,
+        (GtkObjectInitFunc) gimp_rect_select_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL
+      };
+
+      rect_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
+                                          &rect_select_info);
+    }
+
+  return rect_select_type;
+}
 
 void
 rect_select (GimpImage *gimage,
@@ -120,40 +173,116 @@ rect_select (GimpImage *gimage,
     }
 }
 
-void
-rect_select_button_press (Tool           *tool,
-			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
-{
-  RectSelect *rect_sel;
-  gchar       select_mode[STATUSBAR_SIZE];
-  gint        x, y;
-  GimpUnit    unit = GIMP_UNIT_PIXEL;
-  gdouble     unit_factor;
 
-  rect_sel = (RectSelect *) tool->private;
+/*  private funuctions  */
+
+static void
+gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
+
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
+
+  rect_select_signals[RECT_SELECT] =
+    gtk_signal_new ("rect_select",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpRectSelectToolClass,
+                                       rect_select),
+                    gimp_marshal_NONE__INT_INT_INT_INT,
+                    GTK_TYPE_NONE, 4,
+                    GTK_TYPE_INT,
+                    GTK_TYPE_INT,
+                    GTK_TYPE_INT,
+                    GTK_TYPE_INT);
+
+  gtk_object_class_add_signals (object_class, rect_select_signals, LAST_SIGNAL);
+
+  object_class->destroy      = gimp_rect_select_tool_destroy;
+
+  tool_class->button_press   = gimp_rect_select_tool_button_press;
+  tool_class->button_release = gimp_rect_select_tool_button_release;
+  tool_class->motion         = gimp_rect_select_tool_motion;
+
+  draw_tool_class->draw      = gimp_rect_select_tool_draw;
+
+  klass->rect_select         = gimp_rect_select_tool_real_rect_select;
+}
+
+static void
+gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
+{
+  GimpTool          *tool;
+  GimpSelectionTool *select_tool;
+
+  tool        = GIMP_TOOL (rect_select);
+  select_tool = GIMP_SELECTION_TOOL (rect_select);
+
+  if (! rect_options)
+    {
+      rect_options = selection_options_new (GIMP_TYPE_RECT_SELECT_TOOL,
+                                            gimp_rect_select_tool_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_RECT_SELECT_TOOL,
+                                          (ToolOptions *) rect_options);
+    }
+
+  tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
+  rect_select->x = rect_select->y = 0;
+  rect_select->w = rect_select->h = 0;
+
+}
+
+static void
+gimp_rect_select_tool_destroy (GtkObject *object)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (object);
+
+  if (tool->state == ACTIVE)
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_rect_select_tool_button_press (GimpTool       *tool,
+                                    GdkEventButton *bevent,
+                                    GDisplay       *gdisp)
+{
+  GimpRectSelectTool *rect_sel;
+  GimpSelectionTool  *sel_tool;
+  SelectionOptions   *sel_options;
+  gchar               select_mode[STATUSBAR_SIZE];
+  gint                x, y;
+  GimpUnit            unit = GIMP_UNIT_PIXEL;
+  gdouble             unit_factor;
+
+  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
+  sel_tool = GIMP_SELECTION_TOOL (tool);
+
+  sel_options = (SelectionOptions *)
+    tool_manager_get_info_by_tool (tool)->tool_options;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
   rect_sel->x = x;
   rect_sel->y = y;
-  switch (tool->type)
-    {
-    case RECT_SELECT:
-      rect_sel->fixed_size   = rect_options->fixed_size;
-      rect_sel->fixed_width  = rect_options->fixed_width;
-      rect_sel->fixed_height = rect_options->fixed_height;
-      unit = rect_options->fixed_unit;
-      break;
-    case ELLIPSE_SELECT:
-      rect_sel->fixed_size   = ellipse_options->fixed_size;
-      rect_sel->fixed_width  = ellipse_options->fixed_width;
-      rect_sel->fixed_height = ellipse_options->fixed_height;
-      unit = ellipse_options->fixed_unit;
-      break;
-    default:
-      break;
-    }
+
+  rect_sel->fixed_size   = sel_options->fixed_size;
+  rect_sel->fixed_width  = sel_options->fixed_width;
+  rect_sel->fixed_height = sel_options->fixed_height;
+  unit = sel_options->fixed_unit;
 
   switch (unit)
     {
@@ -191,7 +320,7 @@ rect_select_button_press (Tool           *tool,
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
-  switch (rect_sel->op)
+  switch (sel_tool->op)
     {
     case SELECTION_MOVE_MASK:
       init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
@@ -206,7 +335,8 @@ rect_select_button_press (Tool           *tool,
   /* initialize the statusbar display */
   rect_sel->context_id =
     gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "selection");
-  switch (rect_sel->op)
+
+  switch (sel_tool->op)
     {
     case SELECTION_ADD:
       g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: ADD"));
@@ -223,30 +353,34 @@ rect_select_button_press (Tool           *tool,
     default:
       break;
     }
+
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
 		      rect_sel->context_id, select_mode);
 
-  draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        gdisp->canvas->window);
 }
 
-void
-rect_select_button_release (Tool           *tool,
-			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
+static void
+gimp_rect_select_tool_button_release (GimpTool       *tool,
+                                      GdkEventButton *bevent,
+                                      GDisplay       *gdisp)
 {
-  RectSelect *rect_sel;
-  gint        x1, y1;
-  gint        x2, y2;
-  gint        w, h;
+  GimpRectSelectTool *rect_sel;
+  GimpSelectionTool  *sel_tool;
+  gint                x1, y1;
+  gint                x2, y2;
+  gint                w, h;
 
-  rect_sel = (RectSelect *) tool->private;
+  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
+  sel_tool = GIMP_SELECTION_TOOL (tool);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
 
-  draw_core_stop (rect_sel->core, tool);
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
@@ -254,82 +388,66 @@ rect_select_button_release (Tool           *tool,
     {
       x1 = (rect_sel->w < 0) ? rect_sel->x + rect_sel->w : rect_sel->x;
       y1 = (rect_sel->h < 0) ? rect_sel->y + rect_sel->h : rect_sel->y;
+
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
 
-     if ((!w || !h) && !rect_sel->fixed_size)
-	{
-	  /*  If there is a floating selection, anchor it  */
-	  if (gimp_image_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
-	  /*  Otherwise, clear the selection mask  */
-	  else
-	    gimage_mask_clear (gdisp->gimage);
-	  
-	  gdisplays_flush ();
-	  return;
-	}
-      
+      if ((!w || !h) && !rect_sel->fixed_size)
+        {
+          /*  If there is a floating selection, anchor it  */
+          if (gimp_image_floating_sel (gdisp->gimage))
+            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          /*  Otherwise, clear the selection mask  */
+          else
+            gimage_mask_clear (gdisp->gimage);
+
+          gdisplays_flush ();
+          return;
+        }
+
       x2 = x1 + w;
       y2 = y1 + h;
 
-      switch (tool->type)
-	{
-	case RECT_SELECT:
-	  rect_select (gdisp->gimage,
-		       x1, y1, (x2 - x1), (y2 - y1),
-		       rect_sel->op,
-		       rect_options->feather,
-		       rect_options->feather_radius);
-	  break;
-	  
-	case ELLIPSE_SELECT:
-	  ellipse_select (gdisp->gimage,
-			  x1, y1, (x2 - x1), (y2 - y1),
-			  rect_sel->op,
-			  ellipse_options->antialias,
-			  ellipse_options->feather,
-			  ellipse_options->feather_radius);
-	  break;
-	default:
-	  break;
-	}
-	  
+      gimp_rect_select_tool_rect_select (rect_sel,
+                                         x1, y1, (x2 - x1), (y2 - y1));
+
       /*  show selection on all views  */
       gdisplays_flush ();
-   }
+    }
 }
 
-void
-rect_select_motion (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    GDisplay       *gdisp)
+static void
+gimp_rect_select_tool_motion (GimpTool       *tool,
+                              GdkEventMotion *mevent,
+                              GDisplay       *gdisp)
 {
-  RectSelect *rect_sel;
-  gchar       size[STATUSBAR_SIZE];
-  gint        ox, oy;
-  gint        x, y;
-  gint        w, h, s;
-  gint        tw, th;
-  gdouble     ratio;
+  GimpRectSelectTool *rect_sel;
+  GimpSelectionTool  *sel_tool;
+  gchar               size[STATUSBAR_SIZE];
+  gint                ox, oy;
+  gint                x, y;
+  gint                w, h, s;
+  gint                tw, th;
+  gdouble             ratio;
 
-  rect_sel = (RectSelect *) tool->private;
+  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
+  sel_tool = GIMP_SELECTION_TOOL (tool);
 
   /*  needed for immediate cursor update on modifier event  */
-  rect_sel->current_x = mevent->x;
-  rect_sel->current_y = mevent->y;
+  sel_tool->current_x = mevent->x;
+  sel_tool->current_y = mevent->y;
 
   if (tool->state != ACTIVE)
     return;
 
-  if (rect_sel->op == SELECTION_ANCHOR)
+  if (sel_tool->op == SELECTION_ANCHOR)
     {
-      rect_sel->op = SELECTION_REPLACE;
+      sel_tool->op = SELECTION_REPLACE;
 
-      rect_select_cursor_update (tool, mevent, gdisp);
+      gimp_tool_cursor_update (tool, mevent, gdisp);
     }
 
-  draw_core_pause (rect_sel->core, tool);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /* Calculate starting point */
 
@@ -345,6 +463,7 @@ rect_select_motion (Tool           *tool,
     }
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+
   if (rect_sel->fixed_size)
     {
       if (mevent->state & GDK_SHIFT_MASK)
@@ -387,7 +506,8 @@ rect_select_motion (Tool           *tool,
       h = (y - oy);
     }
 
-  /*  If the shift key is down, then make the rectangle square (or ellipse circular) */
+  /* If the shift key is down, then make the rectangle square (or
+      ellipse circular) */
   if ((mevent->state & GDK_SHIFT_MASK) && !rect_sel->fixed_size)
     {
       s = MAX (abs (w), abs (h));
@@ -446,6 +566,7 @@ rect_select_motion (Tool           *tool,
     }
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
+
   if (gdisp->dot_for_dot)
     {
       g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
@@ -463,20 +584,23 @@ rect_select_motion (Tool           *tool,
 		  (gdouble) abs(rect_sel->h) * unit_factor /
 		  gdisp->gimage->yresolution);
     }
+
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id,
 		      size);
 
-  draw_core_resume (rect_sel->core, tool);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
-void
-rect_select_draw (Tool *tool)
+static void
+gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  RectSelect *rect_sel;
-  gint        x1, y1;
-  gint        x2, y2;
+  GimpRectSelectTool *rect_sel;
+  GimpTool           *tool;
+  gint                x1, y1;
+  gint                x2, y2;
 
-  rect_sel = (RectSelect *) tool->private;
+  rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
+  tool     = GIMP_TOOL (draw_tool);
 
   x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
   y1 = MIN (rect_sel->y, rect_sel->y + rect_sel->h);
@@ -486,259 +610,51 @@ rect_select_draw (Tool *tool)
   gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
   gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
 
-  gdk_draw_rectangle (rect_sel->core->win,
-		      rect_sel->core->gc, 0,
+  gdk_draw_rectangle (draw_tool->win,
+		      draw_tool->gc, 0,
 		      x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static void
-selection_tool_update_op_state (RectSelect *rect_sel,
-				gint        x,
-				gint        y,
-				gint        state,  
-				GDisplay   *gdisp)
+gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
+                                        gint                x,
+                                        gint                y,
+                                        gint                w,
+                                        gint                h)
 {
-  GimpLayer *layer;
-  GimpLayer *floating_sel;
-  gint       tx, ty;
+  GimpTool          *tool;
+  GimpSelectionTool *sel_tool;
+  SelectionOptions  *sel_options;
 
-  if (active_tool->state == ACTIVE)
-    return;
+  tool     = GIMP_TOOL (rect_tool);
+  sel_tool = GIMP_SELECTION_TOOL (rect_tool);
 
-  gdisplay_untransform_coords (gdisp, x, y, &tx, &ty, FALSE, FALSE);
+  sel_options = (SelectionOptions *)
+    tool_manager_get_info_by_tool (tool)->tool_options;
 
-  layer = gimp_image_pick_correlate_layer (gdisp->gimage, tx, ty);
-  floating_sel = gimp_image_floating_sel (gdisp->gimage);
-
-  if (state & GDK_MOD1_MASK &&
-      !gimage_mask_is_empty (gdisp->gimage))
-    {
-      rect_sel->op = SELECTION_MOVE_MASK; /* move just the selection mask */
-    }
-  else if (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
-	   layer &&
-	   (layer == floating_sel ||
-	    (gdisplay_mask_value (gdisp, x, y) &&
-	     floating_sel == NULL)))
-    {
-      rect_sel->op = SELECTION_MOVE;      /* move the selection */
-    }
-  else if ((state & GDK_SHIFT_MASK) &&
-	   !(state & GDK_CONTROL_MASK))
-    {
-      rect_sel->op = SELECTION_ADD;       /* add to the selection */
-    }
-  else if ((state & GDK_CONTROL_MASK) &&
-	   !(state & GDK_SHIFT_MASK))
-    {
-      rect_sel->op = SELECTION_SUB;       /* subtract from the selection */
-    }
-  else if ((state & GDK_CONTROL_MASK) &&
-	   (state & GDK_SHIFT_MASK))
-    {
-      rect_sel->op = SELECTION_INTERSECT; /* intersect with selection */
-    }
-  else if (floating_sel)
-    {
-      rect_sel->op = SELECTION_ANCHOR;    /* anchor the selection */
-    }
-  else
-    {
-      rect_sel->op = SELECTION_REPLACE;   /* replace the selection */
-    }
+  rect_select (tool->gdisp->gimage,
+               x, y, w, h,
+               sel_tool->op,
+               sel_options->feather,
+               sel_options->feather_radius);
 }
 
 void
-rect_select_oper_update  (Tool           *tool,
-			  GdkEventMotion *mevent,
-			  GDisplay       *gdisp)
+gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
+                                   gint                x,
+                                   gint                y,
+                                   gint                w,
+                                   gint                h)
 {
-  RectSelect *rect_sel;
+  g_return_if_fail (rect_tool != NULL);
+  g_return_if_fail (GIMP_IS_RECT_SELECT_TOOL (rect_tool));
 
-  rect_sel = (RectSelect *) tool->private;
-
-  rect_sel->current_x = mevent->x;
-  rect_sel->current_y = mevent->y;
-
-  selection_tool_update_op_state (rect_sel,
-				  rect_sel->current_x,
-				  rect_sel->current_y,
-				  mevent->state, gdisp);
-}
-
-void
-rect_select_modifier_update (Tool        *tool,
-			     GdkEventKey *kevent,
-			     GDisplay    *gdisp)
-{
-  RectSelect *rect_sel;
-  gint        state;
-
-  state = kevent->state;
-
-  switch (kevent->keyval)
-    {
-    case GDK_Alt_L: case GDK_Alt_R:
-      if (state & GDK_MOD1_MASK)
-	state &= ~GDK_MOD1_MASK;
-      else
-	state |= GDK_MOD1_MASK;
-      break;
-
-    case GDK_Shift_L: case GDK_Shift_R:
-      if (state & GDK_SHIFT_MASK)
-	state &= ~GDK_SHIFT_MASK;
-      else
-	state |= GDK_SHIFT_MASK;
-      break;
-
-    case GDK_Control_L: case GDK_Control_R:
-      if (state & GDK_CONTROL_MASK)
-	state &= ~GDK_CONTROL_MASK;
-      else
-	state |= GDK_CONTROL_MASK;
-      break;
-    }
-
-  rect_sel = (RectSelect *) tool->private;
-  selection_tool_update_op_state (rect_sel,
-				  rect_sel->current_x,
-				  rect_sel->current_y,
-				  state, gdisp);
-}
-
-void
-rect_select_cursor_update (Tool           *tool,
-			   GdkEventMotion *mevent,
-			   GDisplay       *gdisp)
-{
-  RectSelect *rect_sel;
-
-  rect_sel = (RectSelect *) tool->private;
-
-  switch (rect_sel->op)
-    {
-    case SELECTION_ADD:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_PLUS);
-      break;
-    case SELECTION_SUB:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_MINUS);
-      break;
-    case SELECTION_INTERSECT: 
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_INTERSECT);
-      break;
-    case SELECTION_REPLACE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_NONE);
-      break;
-    case SELECTION_MOVE_MASK:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_MOVE);
-      break;
-    case SELECTION_MOVE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_MOVE_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
-      break;
-    case SELECTION_ANCHOR:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    tool->tool_cursor,
-				    GIMP_CURSOR_MODIFIER_ANCHOR);
-      break;
-    }
-}
-
-void
-rect_select_control (Tool       *tool,
-		     ToolAction  action,
-		     GDisplay   *gdisp)
-{
-  RectSelect *rect_sel;
-
-  rect_sel = (RectSelect *) tool->private;
-
-  switch (action)
-    {
-    case PAUSE:
-      draw_core_pause (rect_sel->core, tool);
-      break;
-
-    case RESUME:
-      draw_core_resume (rect_sel->core, tool);
-      break;
-
-    case HALT:
-      draw_core_stop (rect_sel->core, tool);
-      break;
-
-    default:
-      break;
-    }
+  gtk_signal_emit (GTK_OBJECT (rect_tool), rect_select_signals[RECT_SELECT],
+                   x, y, w, h);
 }
 
 static void
-rect_select_options_reset (void)
+gimp_rect_select_tool_options_reset (void)
 {
   selection_options_reset (rect_options);
-}
-
-Tool *
-tools_new_rect_select (void)
-{
-  Tool * tool;
-  RectSelect * private;
-
-  /*  The tool options  */
-  if (! rect_options)
-    {
-      rect_options =
-	selection_options_new (RECT_SELECT, rect_select_options_reset);
-      tools_register (RECT_SELECT, (ToolOptions *) rect_options);
-    }
-
-  tool = tools_new_tool (RECT_SELECT);
-  private = g_new0 (RectSelect, 1);
-
-  private->core = draw_core_new (rect_select_draw);
-  private->x = private->y = 0;
-  private->w = private->h = 0;
-  private->op = SELECTION_REPLACE;
-
-  tool->private = (void *) private;
-
-  tool->button_press_func   = rect_select_button_press;
-  tool->button_release_func = rect_select_button_release;
-  tool->motion_func         = rect_select_motion;
-  tool->modifier_key_func   = rect_select_modifier_update;
-  tool->cursor_update_func  = rect_select_cursor_update;
-  tool->oper_update_func    = rect_select_oper_update;
-  tool->control_func        = rect_select_control;
-
-  return tool;
-}
-
-void
-tools_free_rect_select (Tool *tool)
-{
-  RectSelect * rect_sel;
-
-  rect_sel = (RectSelect *) tool->private;
-
-  draw_core_free (rect_sel->core);
-  g_free (rect_sel);
 }

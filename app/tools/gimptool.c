@@ -534,7 +534,6 @@ STUB(paths_dialog_edit_path_attributes_callback)
 QUIET_STUB(GIMP_IS_FUZZY_SELECT)
 STUB(dodgeburn_non_gui)
 STUB(dodgeburn_non_gui_default)
-STUB(ellipse_select)
 STUB(eraser_non_gui)
 STUB(eraser_non_gui_default)
 STUB(transform_core_cut)
@@ -546,7 +545,6 @@ STUB(fuzzy_select)
 STUB(pencil_non_gui)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
-STUB(rect_select)
 STUB(rotate_tool_rotate)
 STUB(scale_tool_scale)
 STUB(shear_tool_shear)
@@ -567,62 +565,6 @@ STUB(path_transform_xy)
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
 {
-  {
-    NULL,
-    N_("Rect Select"),
-    N_("/Tools/Select Tools/Rect Select"),
-    "R",
-    (char **) rect_bits,
-    NULL,
-    NULL,
-    N_("Select rectangular regions"),
-    "tools/rect_select.html",
-    RECT_SELECT,
-    tools_new_rect_select,
-    tools_free_rect_select,
-    NULL,
-    NULL,
-    NULL,
-    {
-      rect_select_small_bits, rect_select_small_mask_bits,
-      rect_select_small_width, rect_select_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Ellipse Select"),
-    N_("/Tools/Select Tools/Ellipse Select"),
-    "E",
-    (char **) circ_bits,
-    NULL,
-    NULL,
-    N_("Select elliptical regions"),
-    "tools/ellipse_select.html",
-    ELLIPSE_SELECT,
-    tools_new_ellipse_select,
-    tools_free_ellipse_select,
-    NULL,
-    NULL,
-    NULL,
-    {
-      ellipse_select_small_bits, ellipse_select_small_mask_bits,
-      ellipse_select_small_width, ellipse_select_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
   {
     NULL,
     N_("Free Select"),

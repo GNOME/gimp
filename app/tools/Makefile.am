@@ -15,8 +15,8 @@ libapptools_la_SOURCES = \
 ##	gimpconvolvetool.h	\
 ##	gimpdodgeburntool.c	\
 ##	gimpdodgeburntool.h	\
-##	gimpellipseselecttool.c	\
-##	gimpellipseselecttool.h	\
+	gimpellipseselecttool.c	\
+	gimpellipseselecttool.h	\
 ##	gimperasertool.c	\
 ##	gimperasertool.h	\
 ##	gimpfliptool.c		\
@@ -56,8 +56,8 @@ libapptools_la_SOURCES = \
 ##	gimppenciltool.h	\
 ##	gimpperspectivetool.c	\
 ##	gimpperspectivetool.h	\
-##	gimprectselecttool.c	\
-##	gimprectselecttool.h	\
+	gimprectselecttool.c	\
+	gimprectselecttool.h	\
 ##	rect_selectP.h		\
 ##	gimprotatetool.c	\
 ##	gimprotatetool.h	\

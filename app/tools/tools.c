@@ -66,6 +66,8 @@ register_tools (void)
   gimp_color_picker_tool_register ();
   gimp_text_tool_register ();
   gimp_move_tool_register ();
+  gimp_ellipse_select_tool_register ();
+  gimp_rect_select_tool_register ();
 
 /*
   snatched from the pdb.  For inspiration only.  ;)
