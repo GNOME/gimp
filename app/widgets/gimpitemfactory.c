@@ -429,7 +429,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
       gtk_widget_show (preview);
 
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
       gtk_widget_show (label);
 
       g_object_unref (G_OBJECT (label));

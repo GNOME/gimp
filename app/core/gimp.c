@@ -723,49 +723,6 @@ gimp_create_display (Gimp      *gimp,
   return NULL;
 }
 
-#if 0
-void
-gimp_open_file (Gimp        *gimp,
-		const gchar *filename,
-		gboolean     with_display)
-{
-  GimpImage *gimage;
-  gint       status;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (filename != NULL);
-
-  gimage = file_open_image (gimp,
-			    filename,
-			    filename,
-			    _("Open"),
-			    NULL,
-			    RUN_INTERACTIVE,
-			    &status);
-
-  if (gimage)
-    {
-      gchar *absolute;
-
-      /* enable & clear all undo steps */
-      gimp_image_undo_enable (gimage);
-
-      /* set the image to clean  */
-      gimp_image_clean_all (gimage);
-
-      if (with_display)
-	gimp_create_display (gimage->gimp, gimage, 0x0101);
-
-      absolute = file_open_absolute_filename (filename);
-
-      document_index_add (absolute);
-      menus_last_opened_add (absolute);
-
-      g_free (absolute);
-    }
-}
-#endif
-
 GimpContext *
 gimp_get_standard_context (Gimp *gimp)
 {

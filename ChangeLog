@@ -1,3 +1,14 @@
+2002-04-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.c: removed some #if 0'ed stuff.
+
+	* app/gui/edit-commands.c (edit_copy_cmd_callback): call
+	gdisplays_flush() so the menus are updated correctly.
+
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_color):
+	pack the original menu item label with TRUE, TRUE into the created
+	hbox so it's accel. label is visible.
+
 2002-04-12  Michael Natterer  <mitch@gimp.org>
 
 	Well, sometimes the most obvious solution is not the first one...

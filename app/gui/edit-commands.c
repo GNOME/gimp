@@ -123,7 +123,10 @@ edit_copy_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_edit_copy (gimage, gimp_image_active_drawable (gimage));
+  if (gimp_edit_copy (gimage, gimp_image_active_drawable (gimage)))
+    {
+      gdisplays_flush ();
+    }
 }
 
 void
