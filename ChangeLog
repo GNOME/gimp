@@ -1,5 +1,10 @@
 2003-07-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: added a toggle that allows to disable
+	saving of the image comment.
+
+2003-07-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blur.c
 	* plug-ins/common/gifload.c
 	* plug-ins/common/gih.c

@@ -72,13 +72,14 @@
 
 typedef struct
 {
-  gint interlaced;
-  gint compression_level;
-  gint bkgd;
-  gint gama;
-  gint offs;
-  gint phys;
-  gint time;
+  gboolean  interlaced;
+  gint      compression_level;
+  gboolean  bkgd;
+  gboolean  gama;
+  gboolean  offs;
+  gboolean  phys;
+  gboolean  time;
+  gboolean  comment;
 }
 PngSaveVals;
 
@@ -100,35 +101,42 @@ static gint   save_image (const gchar *filename,
                           gint32       drawable_ID,
                           gint32       orig_image_ID);
 
-static void respin_cmap (png_structp pp,
-                         png_infop info,
-                         guchar * remap,
-                         gint32 image_ID,
-                         GimpDrawable * drawable);
+static void respin_cmap (png_structp   pp,
+                         png_infop     info,
+                         guchar       *remap,
+                         gint32        image_ID,
+                         GimpDrawable *drawable);
 
-static gint save_dialog (void);
-static void save_ok_callback (GtkWidget * widget,
-                              gpointer data);
+static gint save_dialog      (gint32     image_ID);
+static void save_ok_callback (GtkWidget *widget,
+                              gpointer   data);
 
-static int find_unused_ia_colour (guchar * pixels,
-                                  int numpixels,
-                                  int *colors);
+static int find_unused_ia_colour (guchar *pixels,
+                                  gint    numpixels,
+                                  gint   *colors);
 
 /*
  * Globals...
  */
 
-GimpPlugInInfo PLUG_IN_INFO = {
-  NULL,                         /* init_proc  */
-  NULL,                         /* quit_proc  */
-  query,                        /* query_proc */
-  run,                          /* run_proc   */
+GimpPlugInInfo PLUG_IN_INFO =
+{
+  NULL,
+  NULL,
+  query,
+  run,
 };
 
-PngSaveVals pngvals = {
+PngSaveVals pngvals =
+{
   FALSE,
-  6,
-  TRUE, FALSE, FALSE, TRUE, TRUE
+  9,
+  TRUE,
+  FALSE,
+  FALSE,
+  TRUE,
+  TRUE,
+  TRUE
 };
 
 static gboolean runme = FALSE;
@@ -139,55 +147,6 @@ static gboolean runme = FALSE;
 
 MAIN ()
 
-/* Try to find a colour in the palette which isn't actually 
- * used in the image, so that we can use it as the transparency 
- * index. Taken from gif.c */
-static int find_unused_ia_colour (guchar * pixels,
-                                  int numpixels,
-                                  int *colors)
-{
-  int i;
-  gboolean ix_used[256];
-  gboolean trans_used = FALSE;
-
-  for (i = 0; i < *colors; i++)
-    {
-      ix_used[i] = FALSE;
-    }
-
-  for (i = 0; i < numpixels; i++)
-    {
-      /* If alpha is over a threshold, the colour index in the 
-       * palette is taken. Otherwise, this pixel is transparent. */
-      if (pixels[i * 2 + 1] > 127)
-        ix_used[pixels[i * 2]] = TRUE;
-      else
-        trans_used = TRUE;
-    }
-
-  /* If there is no transparency, ignore alpha. */
-  if (trans_used == FALSE)
-    return -1;
-
-  for (i = 0; i < *colors; i++)
-    {
-      if (ix_used[i] == FALSE)
-        {
-          return i;
-        }
-    }
-
-  /* Couldn't find an unused colour index within the number of
-     bits per pixel we wanted.  Will have to increment the number
-     of colours in the image and assign a transparent pixel there. */
-  if ((*colors) < 256)
-    {
-      (*colors)++;
-      return ((*colors) - 1);
-    }
-
-  return (-1);
-}
 
 /*
  * 'query()' - Respond to a plug-in query...
@@ -263,13 +222,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  gint32               orig_image_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  gint32                orig_image_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -341,7 +300,7 @@ run (const gchar      *name,
           /*
            * Then acquire information with a dialog...
            */
-          if (!save_dialog ())
+          if (!save_dialog (orig_image_ID))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -355,13 +314,13 @@ run (const gchar      *name,
             }
           else
             {
-              pngvals.interlaced = param[5].data.d_int32;
+              pngvals.interlaced        = param[5].data.d_int32;
               pngvals.compression_level = param[6].data.d_int32;
-              pngvals.bkgd = param[7].data.d_int32;
-              pngvals.gama = param[8].data.d_int32;
-              pngvals.phys = param[9].data.d_int32;
-              pngvals.offs = param[10].data.d_int32;
-              pngvals.time = param[11].data.d_int32;
+              pngvals.bkgd              = param[7].data.d_int32;
+              pngvals.gama              = param[8].data.d_int32;
+              pngvals.phys              = param[9].data.d_int32;
+              pngvals.offs              = param[10].data.d_int32;
+              pngvals.time              = param[11].data.d_int32;
 
               if (pngvals.compression_level < 0 ||
                   pngvals.compression_level > 9)
@@ -402,6 +361,58 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
+}
+
+
+/* Try to find a colour in the palette which isn't actually 
+ * used in the image, so that we can use it as the transparency 
+ * index. Taken from gif.c */
+static gint
+find_unused_ia_colour (guchar *pixels,
+                       gint    numpixels,
+                       gint   *colors)
+{
+  gint     i;
+  gboolean ix_used[256];
+  gboolean trans_used = FALSE;
+
+  for (i = 0; i < *colors; i++)
+    {
+      ix_used[i] = FALSE;
+    }
+
+  for (i = 0; i < numpixels; i++)
+    {
+      /* If alpha is over a threshold, the colour index in the 
+       * palette is taken. Otherwise, this pixel is transparent. */
+      if (pixels[i * 2 + 1] > 127)
+        ix_used[pixels[i * 2]] = TRUE;
+      else
+        trans_used = TRUE;
+    }
+
+  /* If there is no transparency, ignore alpha. */
+  if (trans_used == FALSE)
+    return -1;
+
+  for (i = 0; i < *colors; i++)
+    {
+      if (ix_used[i] == FALSE)
+        {
+          return i;
+        }
+    }
+
+  /* Couldn't find an unused colour index within the number of
+     bits per pixel we wanted.  Will have to increment the number
+     of colours in the image and assign a transparent pixel there. */
+  if ((*colors) < 256)
+    {
+      (*colors)++;
+      return ((*colors) - 1);
+    }
+
+  return (-1);
 }
 
 
@@ -850,42 +861,45 @@ save_image (const gchar *filename,
 
   guchar remap[256];            /* Re-mapping for the palette */
   
-  png_textp     text = NULL;
+  png_textp  text = NULL;
 
-  GimpParasite *parasite;
-
-  parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
-  if (parasite) 
+  if (pngvals.comment)
     {
-      gchar *comment = g_strndup (gimp_parasite_data (parasite),
-				  gimp_parasite_data_size (parasite));
+      GimpParasite *parasite;
 
-      gimp_parasite_free (parasite);
+      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
+      if (parasite) 
+        {
+          gchar *comment = g_strndup (gimp_parasite_data (parasite),
+                                      gimp_parasite_data_size (parasite));
 
-      text = g_new0 (png_text, 1);
-      text->key         = "Comment";
+          gimp_parasite_free (parasite);
+
+          text = g_new0 (png_text, 1);
+          text->key         = "Comment";
 
 #ifdef PNG_iTXt_SUPPORTED
 
-      text->compression = PNG_ITXT_COMPRESSION_NONE;
-      text->text        = comment
-      text->itxt_length = strlen (comment);
+          text->compression = PNG_ITXT_COMPRESSION_NONE;
+          text->text        = comment;
+          text->itxt_length = strlen (comment);
 
 #else
 
-      text->compression = PNG_TEXT_COMPRESSION_NONE;
-      text->text        = g_convert (comment, -1, 
-				     "ISO-8859-1", "UTF-8", 
-				     NULL, &text->text_length, 
-				     NULL);
+          text->compression = PNG_TEXT_COMPRESSION_NONE;
+          text->text        = g_convert (comment, -1, 
+                                         "ISO-8859-1", "UTF-8", 
+                                         NULL, &text->text_length, 
+                                         NULL);
 
 #endif
 
-      if (!text->text)
-	{
-	  g_free (text);
-	  text = NULL;
-	}
+          if (!text->text)
+            {
+              g_free (text);
+              text = NULL;
+            }
+        }
     }
 
   /*
@@ -943,18 +957,16 @@ save_image (const gchar *filename,
 
   png_set_compression_level (pp, pngvals.compression_level);
 
-  info->width = drawable->width;
-  info->height = drawable->height;
-  info->bit_depth = 8;
+  info->width          = drawable->width;
+  info->height         = drawable->height;
+  info->bit_depth      = 8;
   info->interlace_type = pngvals.interlaced;
 
   /* 
    * Initialise remap[]
    */
   for (i = 0; i < 256; i++)
-    {
-      remap[i] = i;
-    }
+    remap[i] = i;
 
   /*
    * Set color type and remember bytes per pixel count 
@@ -989,7 +1001,8 @@ save_image (const gchar *filename,
     case GIMP_INDEXEDA_IMAGE:
       bpp = 2;
       info->color_type = PNG_COLOR_TYPE_PALETTE;
-      respin_cmap (pp, info, remap, image_ID, drawable);        /* fix up transparency */
+      /* fix up transparency */
+      respin_cmap (pp, info, remap, image_ID, drawable);
       break;
     default:
       g_message ("'%s':\nImage type can't be saved as PNG", filename);
@@ -1269,14 +1282,14 @@ respin_cmap (png_structp pp,
 }
 
 static gint
-save_dialog (void)
+save_dialog (gint32 image_ID)
 {
-  GtkWidget *dlg;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *scale;
-  GtkObject *scale_data;
+  GtkWidget    *dlg;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkWidget    *toggle;
+  GtkObject    *scale;
+  GimpParasite *parasite;
 
   dlg = gimp_dialog_new (_("Save as PNG"), "png",
                          gimp_standard_help_func, "filters/png.html",
@@ -1290,21 +1303,21 @@ save_dialog (void)
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
+  frame = gtk_frame_new (_("Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 7, FALSE);
+  table = gtk_table_new (8, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Interlacing (Adam7)"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 pngvals.interlaced);
   gtk_widget_show (toggle);
@@ -1313,64 +1326,69 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.interlaced);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _background color"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _Background Color"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.bkgd);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _Gamma"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.gama);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _layer offset"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _Layer Offset"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.offs);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _resolution"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _Resolution"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.phys);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save creation _time"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6, GTK_FILL, 0, 0, 0);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save Creation _Time"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 5, 6, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
 
-  scale_data = gtk_adjustment_new (pngvals.compression_level,
-                                   0.0, 9.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("Co_mpression Level:"), 1.0, 1.0,
-                             scale, 1, FALSE);
-  gtk_widget_show (scale);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save Comme_nt"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                pngvals.comment);
+  gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (scale,
-			   _("Choose a high compression level "
-			     "for small file size"),
-			   NULL);
+  parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+  gtk_widget_set_sensitive (toggle, parasite != NULL);
+  gimp_parasite_free (parasite);
+  
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pngvals.comment);
 
-  g_signal_connect (scale_data, "value_changed",
+  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+                                _("Co_mpression Level:"),
+                                SCALE_WIDTH, 0,
+                                pngvals.compression_level,
+                                0.0, 9.0, 1.0, 1.0, 0, TRUE, 0.0, 0.0,
+                                _("Choose a high compression level "
+                                  "for small file size"), NULL);
+
+  g_signal_connect (scale, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 
