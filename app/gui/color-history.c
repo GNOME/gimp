@@ -32,9 +32,6 @@
 #include "color-history.h"
 
 
-#define COLOR_HISTORY_SIZE 16
-
-
 static void   color_history_init (void);
 
 
@@ -152,7 +149,6 @@ color_history_add (const GimpRGB *rgb)
 
 		  goto doit;
 		}
-	      
 	    }
 	}
     }

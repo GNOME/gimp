@@ -1,3 +1,11 @@
+2003-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/color-history.[ch]: changed COLOR_HISTORY_SIZE to 12 to
+	reduce the minimum size of the color selector dialog.
+
+	* app/gui/color-notebook.c (color_notebook_new): changed the
+	dialog setup to not depend on COLOR_HISTORY_SIZE being 16.
+
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c
@@ -37,7 +45,7 @@
 2003-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/color-notebook.c (color_notebook_new): added a default
-	role used for color selectors not handled by the GimpDialogFactory.
+	role used for color selectors not handled by GimpDialogFactory.
 	Fixes bug #126783.
 
 2003-11-12  Michael Natterer  <mitch@gimp.org>

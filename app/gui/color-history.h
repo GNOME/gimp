@@ -22,7 +22,7 @@
 #ifndef __COLOR_HISTORY_H__
 #define __COLOR_HISTORY_H__
 
-#define COLOR_HISTORY_SIZE 16
+#define COLOR_HISTORY_SIZE 12
 
 
 gint   color_history_add         (const GimpRGB    *rgb);

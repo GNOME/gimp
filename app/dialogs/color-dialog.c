@@ -175,7 +175,7 @@ color_notebook_new (GimpViewable          *viewable,
                     cnp);
 
   /* The color history */
-  table = gtk_table_new (2, 9, TRUE);
+  table = gtk_table_new (2, 1 + COLOR_HISTORY_SIZE / 2, TRUE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
@@ -202,16 +202,18 @@ color_notebook_new (GimpViewable          *viewable,
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
       GimpRGB history_color;
+      gint    row, column;
 
       color_history_get (i, &history_color);
 
       button = gtk_button_new ();
       gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+
+      column = i % (COLOR_HISTORY_SIZE / 2);
+      row    = i / (COLOR_HISTORY_SIZE / 2);
+
       gtk_table_attach_defaults (GTK_TABLE (table), button,
-				 (i > 7 ? i - 8 : i) + 1,
-				 (i > 7 ? i - 8 : i) + 2,
-				 i > 7 ? 1 : 0,
-				 i > 7 ? 2 : 1);
+                                 column + 1, column + 2, row, row + 1);
 
       cnp->history[i] = gimp_color_area_new (&history_color,
 					     GIMP_COLOR_AREA_SMALL_CHECKS,
