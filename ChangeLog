@@ -1,3 +1,9 @@
+2003-02-22  Dave Neary  <bolsh@gimp.org>
+
+        * plug-ins/common/png.c: Fixed bug #105360. Previously,
+        alpha was taking up an index entry even if there were
+        no transparent entries. Sorry about that :)
+
 2003-02-21  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: oops, put back in perl binary location stuff for

@@ -137,19 +137,21 @@ static gboolean runme = FALSE;
  */
 
 MAIN ()
+
 /* Try to find a colour in the palette which isn't actually 
  * used in the image, so that we can use it as the transparency 
  * index. Taken from gif.c */
-     static int find_unused_ia_colour (guchar * pixels,
-                                       int numpixels,
-                                       int *colors)
+static int find_unused_ia_colour (guchar * pixels,
+                                  int numpixels,
+                                  int *colors)
 {
   int i;
-  gboolean ix_used[256];
+  gboolean ix_used[256]; // max of 256 palette entries
+  gboolean trans_used = FALSE;
 
-  for (i = 0; i < 256; i++)
+  for (i = 0; i < *colors; i++)
     {
-      ix_used[i] = (gboolean) FALSE;
+      ix_used[i] = FALSE;
     }
 
   for (i = 0; i < numpixels; i++)
@@ -157,12 +159,18 @@ MAIN ()
       /* If there is no alpha, then the index associated with 
        * this pixel is taken */
       if (pixels[i * 2 + 1])
-        ix_used[pixels[i * 2]] = (gboolean) TRUE;
+        ix_used[pixels[i * 2]] = TRUE;
+      else
+        trans_used = TRUE;
     }
 
-  for (i = 255; i >= 0; i--)
+  // If there is no transparency, ignore alpha.
+  if (trans_used == FALSE)
+    return -1;
+
+  for (i = 0; i < *colors; i++)
     {
-      if (ix_used[i] == (gboolean) FALSE)
+      if (ix_used[i] == FALSE)
         {
           return i;
         }
