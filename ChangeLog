@@ -1,3 +1,6 @@
+Sat Oct 30 10:14:35 BST 1999 Nick Lamb <njl195@zepler.org>
+	* app/fileops.c: Fix #3179 (Revert uses wrong filename)
+
 1999-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/brush_select.c
