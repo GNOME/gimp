@@ -161,6 +161,7 @@ gimpui_OBJECTS = \
 	gimppixmap.o	\
 	gimpquerybox.o	\
 	gimpsizeentry.o \
+	gimpui.o \
 	gimpunitmenu.o	\
 	gimpwidgets.o
 

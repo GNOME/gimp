@@ -2,7 +2,9 @@
 ## Use: nmake -f makefile.msc
 
 # Change this to wherever you want to install gimp.exe.
-BIN = C:\gimp\bin
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+BIN = C:\install\gimp\bin
 
 ################################################################
 

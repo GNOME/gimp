@@ -76,7 +76,6 @@ is_script (const gchar *filename)
       if (pathext != NULL)
 	{
 	  exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
-	  g_free (pathext);
 	}
       else
 	{

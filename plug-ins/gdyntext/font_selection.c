@@ -25,7 +25,11 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#if GTK_CHECK_VERSION(1,3,0)
+#include <gdk/gdkprivate.h>
+#else
 #include <gdk/gdkx.h>
+#endif
 
 #include "font_selection.h"
 

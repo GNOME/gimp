@@ -55,53 +55,53 @@ install : all
 	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
 
 gimpi_OBJECTS = \
-	gimpenv.obj	\
-	gimpchainbutton.obj\
-	gimpcolorbutton.obj\
+	gimpenv.obj \
+	gimpchainbutton.obj \
+	gimpcolorbutton.obj \
 	gimpcolorspace.obj \
-	gimpdialog.obj	\
-	gimpfileselection.obj\
-	gimphelpui.obj	\
-	gimpmatrix.obj	\
-	gimppatheditor.obj\
-	gimppixmap.obj	\
-	gimpprotocol.obj\
-	gimpquerybox.obj\
-	gimpsizeentry.obj\
-	gimpunitmenu.obj\
-	gimpvector.obj	\
-	gimpwidgets.obj	\
-	gimpwire.obj	\
-	gserialize.obj	\
-	parasite.obj	\
+	gimpdialog.obj \
+	gimpfileselection.obj \
+	gimphelpui.obj \
+	gimpmatrix.obj \
+	gimppatheditor.obj \
+	gimppixmap.obj \
+	gimpprotocol.obj \
+	gimpquerybox.obj \
+	gimpsizeentry.obj \
+	gimpunitmenu.obj \
+	gimpvector.obj \
+	gimpwidgets.obj \
+	gimpwire.obj \
+	gserialize.obj \
+	parasite.obj \
 	parasiteio.obj
 
 gimpi.lib : $(gimpi_OBJECTS)
 	lib /out:gimpi.lib $(gimpi_OBJECTS)
 
 gimp_OBJECTS = \
-	gimp.obj	\
-	gimpchannel.obj	\
+	gimp.obj \
+	gimpchannel.obj \
 	gimpcolorspace.obj \
-	gimpdisplay.obj	\
-	gimpdrawable.obj\
-	gimpenv.obj	\
-	gimpgradient.obj\
-	gimphelp.obj	\
-	gimpimage.obj	\
-	gimplayer.obj	\
-	gimpmatrix.obj	\
-	gimppalette.obj	\
-	gimpparasite.obj\
-	gimppixelrgn.obj\
-	gimpprotocol.obj\
-	gimpselection.obj\
-	gimptile.obj	\
-	gimpunit.obj	\
-	gimpvector.obj	\
-	gimpwire.obj	\
-	gserialize.obj	\
-	parasite.obj	\
+	gimpdisplay.obj \
+	gimpdrawable.obj \
+	gimpenv.obj \
+	gimpgradient.obj \
+	gimphelp.obj \
+	gimpimage.obj \
+	gimplayer.obj \
+	gimpmatrix.obj \
+	gimppalette.obj \
+	gimpparasite.obj \
+	gimppixelrgn.obj \
+	gimpprotocol.obj \
+	gimpselection.obj \
+	gimptile.obj \
+	gimpunit.obj \
+	gimpvector.obj \
+	gimpwire.obj \
+	gserialize.obj \
+	parasite.obj \
 	parasiteio.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
@@ -153,21 +153,22 @@ parasite.obj : parasite.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION parasite.c
 
 gimpui_OBJECTS = \
-	gimpmenu.obj	\
-	gimpbrushmenu.obj\
-	gimpchainbutton.obj\
-	gimpcolorbutton.obj\
-	gimpdialog.obj	\
-	gimpexport.obj	\
-	gimpfileselection.obj\
-	gimpgradientmenu.obj\
-	gimphelpui.obj	\
-	gimppatheditor.obj\
-	gimppatternmenu.obj\
-	gimppixmap.obj	\
-	gimpquerybox.obj\
-	gimpsizeentry.obj\
-	gimpunitmenu.obj\
+	gimpmenu.obj \
+	gimpbrushmenu.obj \
+	gimpchainbutton.obj \
+	gimpcolorbutton.obj \
+	gimpdialog.obj \
+	gimpexport.obj \
+	gimpfileselection.obj \
+	gimpgradientmenu.obj \
+	gimphelpui.obj \
+	gimppatheditor.obj \
+	gimppatternmenu.obj \
+	gimppixmap.obj \
+	gimpquerybox.obj \
+	gimpsizeentry.obj \
+	gimpui.obj \
+	gimpunitmenu.obj \
 	gimpwidgets.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def

@@ -89,4 +89,5 @@ EXPORTS
 	gimp_spin_button_new
 	gimp_table_attach_aligned
 	gimp_toggle_button_update
+	gimp_ui_init
 	gimp_unit_menu_update

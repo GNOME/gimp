@@ -2,7 +2,9 @@
 ## Use: make -f makefile.cygwin
 
 # Change this to wherever you want to install gimp.exe.
-BIN = /gimp/bin
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+BIN = /install/gimp/bin
 
 OPTIMIZE = -g -O
 

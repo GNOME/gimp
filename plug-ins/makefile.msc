@@ -7,7 +7,9 @@
 
 INSTALL = copy
 
-GIMP = C:\gimp
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+GIMP = C:\install\gimp
 
 BIN = $(GIMP)\plug-ins
 

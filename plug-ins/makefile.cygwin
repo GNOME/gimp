@@ -7,7 +7,9 @@
 
 INSTALL = install
 
-GIMP = /gimp
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+GIMP = /install/gimp
 
 BIN = $(GIMP)/plug-ins
 
@@ -135,6 +137,7 @@ guash-data-install:
 script-fu-data-install:
 	-mkdir $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
+	rm $(GIMP)/scripts/test-sphere.scm
 	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
 	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(GIMP)/fractalexplorer; fi; done
 	rm $(GIMP)/fractalexplorer/Makefile.am
