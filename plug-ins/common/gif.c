@@ -40,7 +40,7 @@
  *
  * 2002/04/24 - Cameron Gregory, http://www.flamingtext.com/
  *           Added no compress option
- *			 Added rlecompress().  Should not be covered by lzw patent,
+ *           Added rlecompress().  Should not be covered by lzw patent,
  *           but this is not legal advice.
  *
  * 99/04/25

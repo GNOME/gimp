@@ -1,3 +1,7 @@
+2003-07-29  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gif.c: Trivial -- tabs-to-spaces.
+
 2003-07-29  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/gif.c: Include a patch by Cameron Gergory 
