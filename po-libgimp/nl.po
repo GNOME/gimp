@@ -2,13 +2,14 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000
 # Branko Collin <collin@xs4all.nl>, 2001
+# Tino Meinen <a.t.meinen@chello.nl>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-03-21 01:54+0100\n"
-"Last-Translator: Branko Collin <collin@xs4all.nl>\n"
+"POT-Creation-Date: 2004-10-16 19:14+0200\n"
+"PO-Revision-Date: 2004-10-17 02:43+0200\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -21,6 +22,7 @@ msgstr "Penseelselectie"
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
+# Of verkennen
 #: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Bladeren..."
@@ -198,7 +200,7 @@ msgstr "Verloopselectie"
 
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
-msgstr ""
+msgstr "(Leeg)"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -210,73 +212,71 @@ msgstr "procent"
 
 #: libgimpbase/gimpbaseenums.c:15
 msgid "Small"
-msgstr ""
+msgstr "Klein"
 
 #: libgimpbase/gimpbaseenums.c:16
 msgid "Medium"
-msgstr ""
+msgstr "Middel"
 
 #: libgimpbase/gimpbaseenums.c:17
 msgid "Large"
-msgstr ""
+msgstr "Groot"
 
 #: libgimpbase/gimpbaseenums.c:37
 msgid "Light Checks"
-msgstr ""
+msgstr "Lichte vakjes"
 
 #: libgimpbase/gimpbaseenums.c:38
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Midtoonvakjes"
 
 #: libgimpbase/gimpbaseenums.c:39
 msgid "Dark Checks"
-msgstr ""
+msgstr "Donkere vakjes"
 
 #: libgimpbase/gimpbaseenums.c:40
 msgid "White Only"
-msgstr ""
+msgstr "Volledig wit"
 
 #: libgimpbase/gimpbaseenums.c:41
 msgid "Gray Only"
-msgstr ""
+msgstr "Volledig grijs"
 
 #: libgimpbase/gimpbaseenums.c:42
-#, fuzzy
 msgid "Black Only"
-msgstr "Zwart"
+msgstr "Volledig zwart"
 
 #: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
-msgstr ""
+msgstr "RGB kleur"
 
 #: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
-#, fuzzy
 msgid "Grayscale"
-msgstr "Converteren naar grijswaarden"
+msgstr "Grijswaarden"
 
 #: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
-msgstr ""
+msgstr "Kleur met index"
 
 #: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alpha"
 
 #: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Grijswaarden-alpha"
 
 #: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
-msgstr ""
+msgstr "Met index"
 
 #: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Met index en alpha"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -458,13 +458,12 @@ msgid "Alpha"
 msgstr "Alpha"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML"
+msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML-_notatie:"
 
 # Huidige kleur
 # (niet huidig kleur)
@@ -515,16 +514,17 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Vakgrootte"
 
+# transparantietype
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Transparantiestijl"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "_Voorbeeld"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -763,13 +763,12 @@ msgstr "Zwart"
 
 # Zwart-onttrekking (%):
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Zwart-onttrekking (%):"
+msgstr "Zwart-_onttrekking:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Het percentage zwart dat uit de gekleurde inkt wordt onttrokken."
 
 # Driehoekige kleurkiezer in schilderstijl
 #: modules/colorsel_triangle.c:104
