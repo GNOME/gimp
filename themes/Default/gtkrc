@@ -22,36 +22,36 @@ gtk-can-change-accels = 1
 
 style "gimp-default-style"
 {
-  stock["gtk-delete"] =
-    {
-      { "images/stock-delete-16.png", *, *, "gtk-button" },
-      { "images/stock-delete-16.png", *, *, *            }
-    }
-  stock["gtk-go-down"] =
-    {
-      { "images/stock-lower-16.png", *, *, "gtk-button" },
-      { "images/stock-lower-16.png", *, *, *            }
-    }
-  stock["gtk-go-up"] =
-    {
-      { "images/stock-raise-16.png", *, *, "gtk-button" },
-      { "images/stock-raise-16.png", *, *, *            }
-    }
-  stock["gtk-new"] =
-    {
-      { "images/stock-new-16.png", *, *, "gtk-button" },
-      { "images/stock-new-16.png", *, *, *            }
-    }
-  stock["gtk-paste"] =
-    {
-      { "images/stock-paste-16.png", *, *, "gtk-button" },
-      { "images/stock-paste-16.png", *, *, *            }
-    }
-  stock["gtk-refresh"] =
-    {
-      { "images/stock-refresh-16.png", *, *, "gtk-button" },
-      { "images/stock-refresh-16.png", *, *, *            }
-    }
+#  stock["gtk-delete"] =
+#    {
+#      { "images/stock-delete-16.png", *, *, "gtk-button" },
+#      { "images/stock-delete-16.png", *, *, *            }
+#    }
+#  stock["gtk-go-down"] =
+#    {
+#      { "images/stock-lower-16.png", *, *, "gtk-button" },
+#      { "images/stock-lower-16.png", *, *, *            }
+#    }
+#  stock["gtk-go-up"] =
+#    {
+#      { "images/stock-raise-16.png", *, *, "gtk-button" },
+#      { "images/stock-raise-16.png", *, *, *            }
+#    }
+#  stock["gtk-new"] =
+#    {
+#      { "images/stock-new-16.png", *, *, "gtk-button" },
+#      { "images/stock-new-16.png", *, *, *            }
+#    }
+#  stock["gtk-paste"] =
+#    {
+#      { "images/stock-paste-16.png", *, *, "gtk-button" },
+#      { "images/stock-paste-16.png", *, *, *            }
+#    }
+#  stock["gtk-refresh"] =
+#    {
+#      { "images/stock-refresh-16.png", *, *, "gtk-button" },
+#      { "images/stock-refresh-16.png", *, *, *            }
+#    }
 
   stock["gtk-dialog-error"] =
     {
@@ -82,7 +82,7 @@ style "gimp-default-style"
   GimpDockable::content_spacing    = 2
   GimpEditor::content_spacing      = 2
   GimpEditor::button_spacing       = 2
-  GimpEditor::button_icon_size     = button
+  GimpEditor::button_icon_size     = menu
 }
 
 class "GtkWidget" style "gimp-default-style"

@@ -13,6 +13,7 @@ DIALOG_IMAGES = \
 	stock-question-64.png	\
 	stock-warning-64.png
 
+## these override icons aren't used with the current default theme
 GTK_STOCK_IMAGES = \
 	stock-delete-16.png	\
 	stock-lower-16.png	\
@@ -145,7 +146,7 @@ STOCK_IMAGES = \
 	$(STOCK_TOOL_IMAGES)	\
 	$(STOCK_WILBER_IMAGES)
 
-themedata_DATA = $(DIALOG_IMAGES) $(GTK_STOCK_IMAGES) $(STOCK_IMAGES)
+themedata_DATA = $(DIALOG_IMAGES) $(STOCK_IMAGES) $(GTK_STOCK_IMAGES)
 
 EXTRA_DIST = \
 	$(themedata_DATA)	\

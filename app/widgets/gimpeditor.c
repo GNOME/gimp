@@ -33,7 +33,7 @@
 
 #define DEFAULT_CONTENT_SPACING  2
 #define DEFAULT_BUTTON_SPACING   2
-#define DEFAULT_BUTTON_ICON_SIZE GTK_ICON_SIZE_BUTTON
+#define DEFAULT_BUTTON_ICON_SIZE GTK_ICON_SIZE_MENU
 
 
 static void   gimp_editor_class_init (GimpEditorClass *klass);

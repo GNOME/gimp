@@ -1,5 +1,15 @@
 2002-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpeditor.c: changed the default button_icon_size to
+	GTK_ICON_SIZE_MENU.
+
+	* themes/Default/gtkrc
+	* themes/Default/images/Makefile.am: don't override GTK+ button
+	icons.  This renders some of the compiled-in icons unused; we
+	should remove them later.
+
+2002-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/dialogs-constructors.c: draw the tool icons in dockbook
 	tabs using GtkImages, not using GimpPreviews.
 
