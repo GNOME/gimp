@@ -81,6 +81,14 @@ dnl Check for GTK+
 AM_PATH_GTK(1.2.8,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
+dnl Quick hack to deny non GTK 1.2
+if (expr $gtk_config_major_version \> 1) > /dev/null; then
+  AC_MSG_ERROR(GIMP does not work with versions of GTK > 1.2)
+fi
+if (expr $gtk_config_minor_version \> 2) > /dev/null; then
+  AC_MSG_ERROR(GIMP does not work with versions of GTK > 1.2)
+fi
+
 changequote(,)dnl
 
 dnl Evil stuff to extract GLIB stuff from gtk-config output
@@ -254,6 +262,8 @@ dnl Test for libjpeg
       AC_MSG_CHECKING([for jpeglib.h])
       AC_TRY_CPP(
 [#include <stdio.h>
+#undef HAVE_STDDEF_H
+#undef HAVE_STDLIB_H
 #undef PACKAGE
 #undef VERSION
 #include <jpeglib.h>],

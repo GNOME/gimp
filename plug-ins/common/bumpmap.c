@@ -475,11 +475,6 @@ run (gchar   *name,
       if ((gimp_drawable_is_rgb(drawable->id) ||
 	   gimp_drawable_is_gray(drawable->id)))
 	{
-	  /* Set the tile cache size */
-	  gimp_tile_cache_ntiles (2 * (drawable->width +
-				       gimp_tile_width () - 1) /
-				  gimp_tile_width ());
-
 	  /* Run! */
 	  bumpmap ();
 
@@ -513,6 +508,7 @@ bumpmap (void)
   gint              y;
   gint              progress;
   gint              tmp;
+  gint              drawable_tiles_per_row, bm_tiles_per_row;
 
 #if 0
   g_print ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -535,6 +531,17 @@ bumpmap (void)
   bm_height    = gimp_drawable_height (bm_drawable->id);
   bm_bpp       = gimp_drawable_bpp (bm_drawable->id);
   bm_has_alpha = gimp_drawable_has_alpha (bm_drawable->id);
+
+  /* Set the tile cache size */
+  /* Compute number of tiles needed for one row of the drawable */
+  drawable_tiles_per_row =
+    1
+    + (sel_x2 + gimp_tile_width () - 1) / gimp_tile_width ()
+    - sel_x1 / gimp_tile_width ();
+  /* Compute number of tiles needed for one row of the bitmap */
+  bm_tiles_per_row = (bm_width + gimp_tile_width () - 1) / gimp_tile_width ();
+  /* Cache one row of source, destination and bitmap */
+  gimp_tile_cache_ntiles (bm_tiles_per_row + 2 * drawable_tiles_per_row);
 
   /* Initialize offsets */
   tmp = bmvals.yofs + sel_y1;

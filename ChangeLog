@@ -1,5 +1,16 @@
 2001-04-23  Sven Neumann  <sven@gimp.org>
 
+	Merged Yosh's changes from stable branch:
+
+	* acinclude.m4: updated libtool stuff
+
+        * configure.in: more #undefs so jpeglib.h test works
+
+        * plug-ins/common/bumpmap.c: speedup patch from Ernst Lippe
+        <ernstl@planet.nl> (tile cache size optimization)
+
+2001-04-23  Sven Neumann  <sven@gimp.org>
+
 	Merged changes from stable branch:
 	
         * plug-ins/perl/examples/terral_text: fixed typo.
