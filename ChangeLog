@@ -1,3 +1,10 @@
+2005-03-28  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/dialogs/resize-dialog.c (resize_dialog_new): handle
+	gimp_viewable_get_pixbuf() returning NULL. Fixes bug #171827.
+
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
