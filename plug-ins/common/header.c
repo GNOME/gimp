@@ -181,7 +181,7 @@ save_image (gchar  *filename,
   switch (drawable_type)
     {
     case GIMP_RGB_IMAGE:
-      fprintf (fp, "#define HEADER_PIXEL(data,pixel) {\\\n  pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n  pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n  pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n  data += 4;\n}\n");
+      fprintf (fp, "#define HEADER_PIXEL(data,pixel) {\\\n  pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n  pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n  pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n  data += 4; \\\n}\n");
       fprintf (fp, "static char *header_data =\n\t\"");
 
       data = g_new (guchar, drawable->width * drawable->bpp);
