@@ -416,7 +416,7 @@ static void update_color_preview (ColorSelectP coldata,
             color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
           } else {
             val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
-            if (val>0 && val<=1) {   // eigentlich val>=0, aber dann Grafikfehler...
+            if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
               sat = (val==0?0: ((float) (y-sy-val*(vy-sy)) / (val * (float) (hy-vy))));
               if (sat >= 0 && sat <= 1) 
                 color_hsv_to_rgb (hue, sat, val, &buf[k], &buf[k+1], &buf[k+2]);
@@ -429,7 +429,7 @@ static void update_color_preview (ColorSelectP coldata,
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf, COLORWHEELRADIUS - dx, COLORWHEELRADIUS - y - 1, 2*dx+1);
     }
   
-    // Marker im aeusseren Ring
+    /* Marker im aeusseren Ring */
   
     x0 = (gint) (sin(hue*M_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
     y0 = (gint) (cos(hue*M_PI/180) * ((float) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1)/2 + COLORTRIANGLERADIUS) + 0.5);
@@ -450,7 +450,7 @@ static void update_color_preview (ColorSelectP coldata,
   
   
   } else {
-    // Marker im Dreieck loeschen
+    /* Marker im Dreieck loeschen */
   
     s = coldata->oldsat;
     v = coldata->oldval;
@@ -464,7 +464,7 @@ static void update_color_preview (ColorSelectP coldata,
           color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
         } else {
           val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
-          if (val>0 && val<=1) {   // eigentlich val>=0, aber dann Grafikfehler...
+          if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
             sat = (val==0?0: ((float) (y-sy-val*(vy-sy)) / (val * (float) (hy-vy))));
             if (sat >= 0 && sat <= 1) 
               color_hsv_to_rgb (hue, sat, val, &buf[k], &buf[k+1], &buf[k+2]);
@@ -479,7 +479,7 @@ static void update_color_preview (ColorSelectP coldata,
     coldata->oldval = coldata->values[VALUE] / 100.0;
   }
   
-  // Marker im Dreieck
+  /* Marker im Dreieck */
 
   col = INTENSITY(coldata->values[RED], coldata->values[GREEN],
                   coldata->values[BLUE]) > 127 ? 0 : 255 ;
@@ -501,7 +501,7 @@ static void update_color_preview (ColorSelectP coldata,
           color_hsv_to_rgb (atan2 (x,y) / M_PI * 180, 1, 1, &buf[k], &buf[k+1], &buf[k+2]);
         } else {
           val = (float) ((x-sx)*(hy-vy)-(y-sy)*(hx-vx)) / (float) ((vx-sx)*(hy-vy)-(vy-sy)*(hx-vx));
-          if (val>0 && val<=1) {   // eigentlich val>=0, aber dann Grafikfehler...
+          if (val>0 && val<=1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
             sat = (val==0?0: ((float) (y-sy-val*(vy-sy)) / (val * (float) (hy-vy))));
             if (sat >= 0 && sat <= 1) 
               color_hsv_to_rgb (hue, sat, val, &buf[k], &buf[k+1], &buf[k+2]);
@@ -559,9 +559,9 @@ color_selection_callback(GtkWidget *widget, GdkEvent *event)
       y = - event->button.y + COLORWHEELRADIUS + 1;
       r = sqrt((float) (x*x+y*y));
       if ( /* r <= COLORWHEELRADIUS  && */ r > COLORTRIANGLERADIUS) 
-        coldata->mode = 1;  // Dragging in the Ring
+        coldata->mode = 1;  /* Dragging in the Ring */
       else
-        coldata->mode = 2;  // Dragging in the Triangle
+        coldata->mode = 2;  /* Dragging in the Triangle */
       break;
 
     case GDK_MOTION_NOTIFY:
