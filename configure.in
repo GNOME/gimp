@@ -879,6 +879,9 @@ fi
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
+   dnl screenshot plug-in needs to link to X11 explicitely
+   LIBSCREENSHOT="$X_LIBS -lX11"
+
     dnl Test for Xmu
     if test -z "$LIBXMU"; then
       gimp_save_CFLAGS="$CFLAGS"
@@ -894,10 +897,9 @@ if test "$gdk_target" = x11; then
 	[AC_MSG_WARN(*** gimp-remote will not be built (XMU library not found) ***)], -lXt -lX11)
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
+      LIBSCREENSHOT="$LIBXMU"
     fi
 
-   dnl screenshot plug-in needs to link to X11 explicitely
-   LIBSCREENSHOT="$X_LIBS -lX11"
 fi
 
 AC_SUBST(LIBXMU)

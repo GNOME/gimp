@@ -34,6 +34,11 @@
 
 #if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
+
+#ifdef HAVE_X11_XMU_WINUTIL_H
+#include <X11/Xmu/WinUtil.h>
+#endif /* HAVE_X11_XMU_WINUTIL_H */
+
 #elif defined(GDK_WINDOWING_WIN32)
 #include <windows.h>
 #endif
@@ -134,13 +139,19 @@ static const guint8 screenshot_icon[] =
 #endif
 #endif
 
+typedef enum
+{
+  SHOOT_ROOT,
+  SHOOT_REGION,
+  SHOOT_WINDOW
+} ShootType;
+
 typedef struct
 {
-  gboolean         root;
-  gboolean         region;
+  ShootType        shoot_type;
+  gboolean         decorate;
   guint            window_id;
   guint            select_delay;
-  guint            grab_delay;
   gint             x1;
   gint             y1;
   gint             x2;
@@ -149,12 +160,11 @@ typedef struct
 
 static ScreenShotValues shootvals =
 {
-  FALSE,     /* root window  */
-  FALSE,     /* use dragged region */
-  0,         /* window ID    */
-  0,         /* select delay */
-  0,         /* grab delay   */
-  0,         /* coords of region dragged out by pointer */
+  SHOOT_ROOT, /* root window  */
+  TRUE,       /* include WM decorations */
+  0,          /* window ID    */
+  0,          /* select delay */
+  0,          /* coords of region dragged out by pointer */
   0,
   0,
   0
@@ -276,18 +286,19 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 3)
 	{
-          shootvals.region       = FALSE;
-	  shootvals.root         = param[1].data.d_int32;
+          gboolean do_root = param[1].data.d_int32;
+          if (do_root)
+            shootvals.shoot_type = SHOOT_ROOT;
+          else
+            shootvals.shoot_type = SHOOT_WINDOW;
 	  shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
-	  shootvals.grab_delay   = 0;
 	}
       else if (nparams == 7)
 	{
-	  shootvals.root         = param[1].data.d_int32;
+	  shootvals.shoot_type   = SHOOT_REGION;
 	  shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
-	  shootvals.grab_delay   = 0;
           shootvals.x1           = param[3].data.d_int32;
           shootvals.y1           = param[4].data.d_int32;
           shootvals.x2           = param[5].data.d_int32;
@@ -313,8 +324,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (shootvals.grab_delay > 0)
-	shoot_delay (shootvals.grab_delay);
+      if (shootvals.shoot_type == SHOOT_ROOT && shootvals.select_delay > 0)
+	shoot_delay (shootvals.select_delay);
 
       image_ID = shoot (screen);
 
@@ -369,7 +380,7 @@ select_window_x11 (GdkScreen *screen)
   x_cursor = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   buttons  = 0;
 
-  if (shootvals.region)
+  if (shootvals.shoot_type == SHOOT_REGION)
     {
       mask |= PointerMotionMask;
 
@@ -420,6 +431,11 @@ select_window_x11 (GdkScreen *screen)
               x_win = x_event.xbutton.subwindow;
               if (x_win == None)
                 x_win = x_root;
+#ifdef HAVE_X11_XMU_WINUTIL_H
+              else if (! shootvals.decorate)
+                x_win = XmuClientWindow (x_dpy, x_win);
+#endif
+
               shootvals.x2 = shootvals.x1 = x_event.xbutton.x_root;
               shootvals.y2 = shootvals.y1 = x_event.xbutton.y_root;
             }
@@ -429,7 +445,7 @@ select_window_x11 (GdkScreen *screen)
         case ButtonRelease:
           if (buttons > 0)
             buttons--;
-          if (! buttons && shootvals.region)
+          if (! buttons && shootvals.shoot_type == SHOOT_REGION)
             {
               x = MIN (shootvals.x1, shootvals.x2);
               y = MIN (shootvals.y1, shootvals.y2);
@@ -461,7 +477,6 @@ select_window_x11 (GdkScreen *screen)
               h = ABS (shootvals.y2 - shootvals.y1);
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
-/*               XSync (x_dpy, FALSE); */
             }
           break;
 
@@ -629,7 +644,8 @@ shoot (GdkScreen *screen)
   screen_rect.width  = gdk_screen_get_width (screen);
   screen_rect.height = gdk_screen_get_height (screen);
 
-  if (shootvals.region)
+
+  if (shootvals.shoot_type == SHOOT_REGION)
     {
       rect.x = MIN (shootvals.x1, shootvals.x2);
       rect.y = MIN (shootvals.y1, shootvals.y2);
@@ -638,9 +654,8 @@ shoot (GdkScreen *screen)
     }
   else
     {
-      if (shootvals.root)
+      if (shootvals.shoot_type == SHOOT_ROOT)
         {
-          /* entire screen */
           window = gdk_screen_get_root_window (screen);
         }
       else
@@ -680,7 +695,7 @@ shoot (GdkScreen *screen)
 
   if (!screenshot)
     {
-      g_message (_("Error obtaining Screen Shot"));
+      g_message (_("Error obtaining Screen shot"));
       return -1;
     }
 
@@ -755,39 +770,78 @@ shoot_dialog (GdkScreen **screen)
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("a _Single Window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), ! shootvals.root);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_WINDOW);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (FALSE));
+                     GINT_TO_POINTER (SHOOT_WINDOW));
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.root);
+                    &shootvals.shoot_type);
+
+#ifdef HAVE_X11_XMU_WINUTIL_H
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_check_button_new_with_label (_("Include decoration"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.decorate);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 20);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &shootvals.decorate);
+
+#endif /* HAVE_X11_XMU_WINUTIL_H */
 
   /*  dragged region  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("Selected Region"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.region);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_REGION);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (TRUE));
+                     GINT_TO_POINTER (SHOOT_REGION));
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.region);
+                    &shootvals.shoot_type);
 
   gtk_widget_show (button);
 
-  /*  select window delay  */
+  /*  root window  */
+  button = gtk_radio_button_new_with_mnemonic (radio_group,
+					       _("the _Whole Screen"));
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_ROOT);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (SHOOT_ROOT));
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &shootvals.shoot_type);
+
+  gtk_widget_show (button);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
+
+  /*  grab delay  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("S_elect After"));
+  label = gtk_label_new_with_mnemonic (_("Delay for"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -802,50 +856,7 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 
-  label = gtk_label_new (_("Seconds Delay"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /*  root window  */
-  button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("the _Whole Screen"));
-  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.root);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-  g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (TRUE));
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.root);
-
-  gtk_widget_show (button);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-
-  /*  grab delay  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("Grab _After"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  adj = gtk_adjustment_new (shootvals.grab_delay, 0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
-  gtk_widget_show (spinner);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &shootvals.grab_delay);
-
-  label = gtk_label_new (_("Seconds Delay"));
+  label = gtk_label_new (_("seconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -869,7 +880,7 @@ shoot_dialog (GdkScreen **screen)
      g_timeout_add (100, (GSourceFunc) gtk_main_quit, NULL);
      gtk_main ();
 
-     if (!shootvals.root && !shootvals.window_id)
+     if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
        {
          if (shootvals.select_delay > 0)
            shoot_delay (shootvals.select_delay);

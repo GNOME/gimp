@@ -1,3 +1,10 @@
+2005-03-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* configure.in
+	* plug-ins/common/screenshot.c: allow option of screenshot
+	without decorations if libXmu is present (fixes bug #133626),
+	clean up code a bit.
+
 2005-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]
