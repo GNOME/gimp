@@ -1,6 +1,12 @@
 2002-12-26  Tor Lillqvist  <tml@iki.fi>
 
-	* app/Makefile.am (EXTRA_DIST): Drop makefile.mingw{,.in}.
+	* app/Makefile.am: On Win32, create export file gimp.exp.
+	(EXTRA_DIST): Drop makefile.mingw{,.in}.
+	(LDFLAGS): Add -mwindows.
+	(LDADD): Link with gimp.exp.
+
+	* app/gimp.sym: Remove all old entries (seemed to be obsolete).
+	Instead, add the ones linked to from libgimptool.
 
 	* app/gui/user-install-dialog.c (user_install_run): On Win32, use
 	similar code as in GIMP 1.2, i.e. don't run a script to do the

@@ -1,5 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+gimp_exp = gimp.exp
+
+gimp.exp : gimp.def
+	dlltool --output-exp $@ --input-def gimp.def
+
+gimp.def: gimp.sym
+	echo EXPORTS >$@
+	cat $< >>$@
+
+mwindows = -mwindows
+
+endif
+
 SUBDIRS = \
 	paint-funcs	\
 	base 		\
@@ -79,7 +93,7 @@ else
 REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
-gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
+gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
@@ -93,6 +107,7 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_1_3_LDADD = \
+	$(gimp_exp)							\
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
 	tools/libapptools.a						\
@@ -124,11 +139,11 @@ gimp_1_3_LDADD = \
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp \
-	&& $(LN_S) gimp-1.3 gimp
+	&& rm -f gimp$(EXEEXT) \
+	&& $(LN_S) gimp-1.3$(EXEEXT) gimp$(EXEEXT)
 endif
 
 uninstall-local:
 if DEFAULT_BINARY
-	rm -f $(DESTDIR)$(bindir)/gimp
+	rm -f $(DESTDIR)$(bindir)/gimp$(EXEEXT)
 endif
