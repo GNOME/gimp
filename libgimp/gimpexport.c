@@ -466,6 +466,12 @@ export_dialog (GSList      *actions,
 
 			    NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_NO,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   hbox = gtk_hbox_new (FALSE, 12);
