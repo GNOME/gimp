@@ -1151,16 +1151,11 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
                                    GtkLabel     *label)
 {
   GtkImage *image;
-  gchar    *text;
 
   if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
     gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
 
-  text = g_strdup_printf (_("%s Options"), tool_info->blurb);
-
-  gtk_label_set_text (label, text);
-
-  g_free (text);
+  gtk_label_set_text (label, tool_info->blurb);
 
   gimp_help_set_help_data (GTK_WIDGET (label)->parent->parent,
                            tool_info->help,
@@ -1177,7 +1172,6 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
   GtkWidget    *hbox;
   GtkWidget    *image;
   GtkWidget    *label;
-  gchar        *text;
   gint          width;
   gint          height;
 
@@ -1194,11 +1188,7 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  text = g_strdup_printf (_("%s Options"), tool_info->blurb);
-
-  label = gtk_label_new (text);
-
-  g_free (text);
+  label = gtk_label_new (tool_info->blurb);
 
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

@@ -1,5 +1,8 @@
 2002-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/dialogs-constructors.c: don't add "Options" to the
+	tools name when setting the dockbook tab label.
+
 	* app/gui/color-notebook.c: removed the white and black color
 	buttons since white and black are trivial to select anyway.
 
