@@ -37,7 +37,6 @@
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
-#include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -1760,7 +1759,7 @@ gimp_unit_menu_update (GtkWidget *widget,
 
   digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
 	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, _gimp_eek.unit_get_digits (*val))))));
+	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
 
   digits += gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (widget));
 

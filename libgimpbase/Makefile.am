@@ -69,9 +69,10 @@ libgimpbase_1_3_la_SOURCES = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
 	gimplimits.h		\
-	gimpunit.h		\
 	gimpversion.h		\
 	\
+	gimpbase-private.c	\
+	gimpbase-private.h	\
 	gimpdatafiles.c		\
 	gimpdatafiles.h		\
 	gimpenv.c		\
@@ -84,6 +85,8 @@ libgimpbase_1_3_la_SOURCES = \
 	gimpprotocol.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
+	gimpunit.c		\
+	gimpunit.h		\
 	gimputils.c            	\
 	gimputils.h            	\
 	gimpwin32-io.h		\
@@ -94,15 +97,15 @@ libgimpbaseinclude_HEADERS = \
 	gimpbase.h		\
 	gimpbasetypes.h		\
 	gimplimits.h		\
-	gimpunit.h		\
-	gimputils.h		\
 	gimpversion.h		\
 	\
 	gimpdatafiles.h		\
 	gimpenv.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
-	gimpsignal.h
+	gimpsignal.h		\
+	gimpunit.h		\
+	gimputils.h
 
 libgimpbase_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\

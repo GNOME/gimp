@@ -32,7 +32,6 @@
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
-#include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -210,10 +209,10 @@ gimp_unit_menu_new (const gchar *format,
   GimpUnit      u;
 
   g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
-			 (unit < _gimp_eek.unit_get_number_of_units ())) ||
+			 (unit < gimp_unit_get_number_of_units ())) ||
 			(unit == GIMP_UNIT_PERCENT), NULL);
 
-  if ((unit >= _gimp_eek.unit_get_number_of_built_in_units ()) &&
+  if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
       (unit != GIMP_UNIT_PERCENT))
     show_custom = TRUE;
 
@@ -225,7 +224,7 @@ gimp_unit_menu_new (const gchar *format,
 
   menu = gtk_menu_new ();
   for (u = show_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
-       u < _gimp_eek.unit_get_number_of_built_in_units ();
+       u < gimp_unit_get_number_of_built_in_units ();
        u++)
     {
       /*  special cases "pixels" and "percent"  */
@@ -267,7 +266,7 @@ gimp_unit_menu_new (const gchar *format,
                         unit_menu);
     }
 
-  if ((unit >= _gimp_eek.unit_get_number_of_built_in_units ()) &&
+  if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
       (unit != GIMP_UNIT_PERCENT))
     {
       menuitem = gtk_menu_item_new ();
@@ -340,7 +339,7 @@ gimp_unit_menu_set_unit (GimpUnitMenu *menu,
   g_return_if_fail (GIMP_IS_UNIT_MENU (menu));
   g_return_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
 		     ((unit > GIMP_UNIT_PIXEL) || menu->show_pixels) &&
-		     (unit < _gimp_eek.unit_get_number_of_units ())) ||
+		     (unit < gimp_unit_get_number_of_units ())) ||
 		    ((unit == GIMP_UNIT_PERCENT) && menu->show_percent));
 
   if (unit == menu->unit)
@@ -510,27 +509,27 @@ gimp_unit_menu_build_string (const gchar *format,
 
 	    case 'f': /* factor (how many units make up an inch) */
 	      i += print (buffer, sizeof (buffer), i, "%f",
-			  _gimp_eek.unit_get_factor (unit));
+			  gimp_unit_get_factor (unit));
 	      break;
 
 	    case 'y': /* symbol ("''" for inch) */
 	      i += print (buffer, sizeof (buffer), i, "%s",
-			  _gimp_eek.unit_get_symbol (unit));
+			  gimp_unit_get_symbol (unit));
 	      break;
 
 	    case 'a': /* abbreviation */
 	      i += print (buffer, sizeof (buffer), i, "%s",
-			  _gimp_eek.unit_get_abbreviation (unit));
+			  gimp_unit_get_abbreviation (unit));
 	      break;
 
 	    case 's': /* singular */
 	      i += print (buffer, sizeof (buffer), i, "%s",
-			  _gimp_eek.unit_get_singular (unit));
+			  gimp_unit_get_singular (unit));
 	      break;
 
 	    case 'p': /* plural */
 	      i += print (buffer, sizeof (buffer), i, "%s",
-			  _gimp_eek.unit_get_plural (unit));
+			  gimp_unit_get_plural (unit));
 	      break;
 
 	    default:
@@ -662,7 +661,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
 					       "text", FACTOR_COLUMN, NULL);
 
   /*  the unit lines  */
-  num_units = _gimp_eek.unit_get_number_of_units ();
+  num_units = gimp_unit_get_number_of_units ();
   for (unit = GIMP_UNIT_END; unit < num_units; unit++)
     {
       gtk_list_store_append (list, &iter);

@@ -176,7 +176,7 @@ main (int    argc,
           if (format)
             {
               g_type_init ();
-              the_gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+              g_object_new (GIMP_TYPE_GIMP, NULL);
 
               gimp_text_console_exit (gimp_config_dump (format) ?
                                       EXIT_SUCCESS : EXIT_FAILURE);

@@ -34,9 +34,9 @@ gimp_1_3_SOURCES = \
 	batch.h		\
 	errors.c	\
 	errors.h	\
-	gimp-intl.h	\
-	libgimp_glue.c	\
-	libgimp_glue.h
+	units.c		\
+	units.h		\
+	gimp-intl.h
 
 EXTRA_DIST = \
 	makefile.msc	\

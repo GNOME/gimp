@@ -62,8 +62,6 @@ gimp_ui_init (const gchar *prog_name,
 {
   static gboolean initialized = FALSE;
 
-  GimpWidgetsVTable vtable;
-
   const gchar  *display_name;
   gint          argc;
   gchar       **argv;
@@ -109,19 +107,7 @@ gimp_ui_init (const gchar *prog_name,
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
-  /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
-  vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
-  vtable.unit_get_factor          = gimp_unit_get_factor;
-  vtable.unit_get_digits          = gimp_unit_get_digits;
-  vtable.unit_get_identifier      = gimp_unit_get_identifier;
-  vtable.unit_get_symbol          = gimp_unit_get_symbol;
-  vtable.unit_get_abbreviation    = gimp_unit_get_abbreviation;
-  vtable.unit_get_singular        = gimp_unit_get_singular;
-  vtable.unit_get_plural          = gimp_unit_get_plural;
-
-  gimp_widgets_init (&vtable,
-                     gimp_ui_help_func,
+  gimp_widgets_init (gimp_ui_help_func,
                      gimp_palette_get_foreground,
                      gimp_palette_get_background,
                      gimp_ensure_modules);

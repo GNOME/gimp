@@ -35,7 +35,6 @@
 #include "themes/Default/images/gimp-wilber-pixbufs.h"
 
 
-GimpWidgetsVTable     _gimp_eek                 = { NULL, };
 GimpHelpFunc          _gimp_standard_help_func  = NULL;
 GimpGetColorFunc      _gimp_get_foreground_func = NULL;
 GimpGetColorFunc      _gimp_get_background_func = NULL;
@@ -43,8 +42,7 @@ GimpEnsureModulesFunc _gimp_ensure_modules_func = NULL;
 
 
 void
-gimp_widgets_init (GimpWidgetsVTable    *vtable,
-                   GimpHelpFunc          standard_help_func,
+gimp_widgets_init (GimpHelpFunc          standard_help_func,
                    GimpGetColorFunc      get_foreground_func,
                    GimpGetColorFunc      get_background_func,
                    GimpEnsureModulesFunc ensure_modules_func)
@@ -63,13 +61,11 @@ gimp_widgets_init (GimpWidgetsVTable    *vtable,
     stock_wilber_64
   };
 
-  g_return_if_fail (vtable != NULL);
   g_return_if_fail (standard_help_func != NULL);
 
   if (gimp_widgets_initialized)
     g_error ("gimp_widgets_init() must only be called once!");
 
-  _gimp_eek                 = *vtable;
   _gimp_standard_help_func  = standard_help_func;
   _gimp_get_foreground_func = get_foreground_func;
   _gimp_get_background_func = get_background_func;
@@ -92,5 +88,3 @@ gimp_widgets_init (GimpWidgetsVTable    *vtable,
 
   gimp_widgets_initialized = TRUE;
 }
-
-

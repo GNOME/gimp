@@ -51,6 +51,7 @@
 #include "app_procs.h"
 #include "batch.h"
 #include "errors.h"
+#include "units.h"
 
 #include "gimp-intl.h"
 
@@ -64,9 +65,9 @@ static gboolean   app_exit_after_callback (Gimp        *gimp,
                                            gboolean     kill_it);
 
 
-/*  global variables  */
+/*  private variables  */
 
-Gimp *the_gimp = NULL;
+static Gimp *the_gimp = NULL;
 
 
 /*  public functions  */
@@ -173,6 +174,8 @@ app_init (const gchar         *full_prog_name,
 		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
 		     gimp_error_log_func,
 		     &the_gimp);
+
+  units_init (the_gimp);
 
   /*  Check if the user's gimp_directory exists
    */

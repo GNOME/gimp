@@ -24,11 +24,6 @@
 #error You must not #include "app_procs.h" from an app/ subdir
 #endif
 
-/*
- *  this is a temp hack
- */
-extern Gimp *the_gimp;
-
 
 gboolean  app_gui_libs_init (gint      *gimp_argc,
                              gchar   ***gimp_argv);

@@ -31,12 +31,11 @@
 
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
-#include "gimpwidgets-private.h"
 
 
 #define SIZE_MAX_VALUE 500000.0
 
-#define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (_gimp_eek.unit_get_digits (unit), 5) + 1)
+#define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)
 
 
 enum
@@ -664,10 +663,10 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
 	  gimp_size_entry_set_refval_boundaries (gse, field,
 						 gsef->min_value *
 						 gsef->resolution /
-						 _gimp_eek.unit_get_factor (gse->unit),
+						 gimp_unit_get_factor (gse->unit),
 						 gsef->max_value *
 						 gsef->resolution /
-						 _gimp_eek.unit_get_factor (gse->unit));
+						 gimp_unit_get_factor (gse->unit));
 	  break;
 	}
       break;
@@ -675,9 +674,9 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_refval_boundaries (gse, field,
 					     gsef->min_value *
-					     _gimp_eek.unit_get_factor (gse->unit),
+					     gimp_unit_get_factor (gse->unit),
 					     gsef->max_value *
-					     _gimp_eek.unit_get_factor (gse->unit));
+					     gimp_unit_get_factor (gse->unit));
       break;
 
     default:
@@ -746,7 +745,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 	default:
 	  gsef->refval =
 	    CLAMP (value * gsef->resolution /
-		   _gimp_eek.unit_get_factor (gsef->gse->unit),
+		   gimp_unit_get_factor (gsef->gse->unit),
 		   gsef->min_refval, gsef->max_refval);
 	  break;
 	}
@@ -757,7 +756,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->refval =
-	CLAMP (value * _gimp_eek.unit_get_factor (gsef->gse->unit),
+	CLAMP (value * gimp_unit_get_factor (gsef->gse->unit),
 	       gsef->min_refval, gsef->max_refval);
       if (gsef->gse->show_refval)
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
@@ -887,10 +886,10 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
 	default:
 	  gimp_size_entry_set_value_boundaries (gse, field,
 						gsef->min_refval *
-						_gimp_eek.unit_get_factor (gse->unit) /
+						gimp_unit_get_factor (gse->unit) /
 						gsef->resolution,
 						gsef->max_refval *
-						_gimp_eek.unit_get_factor (gse->unit) /
+						gimp_unit_get_factor (gse->unit) /
 						gsef->resolution);
 	  break;
 	}
@@ -899,9 +898,9 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_value_boundaries (gse, field,
 					    gsef->min_refval /
-					    _gimp_eek.unit_get_factor (gse->unit),
+					    gimp_unit_get_factor (gse->unit),
 					    gsef->max_refval /
-					    _gimp_eek.unit_get_factor (gse->unit));
+					    gimp_unit_get_factor (gse->unit));
       break;
 
     default:
@@ -1005,7 +1004,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 	  break;
 	default:
 	  gsef->value =
-	    CLAMP (refval * _gimp_eek.unit_get_factor (gsef->gse->unit) /
+	    CLAMP (refval * gimp_unit_get_factor (gsef->gse->unit) /
 		   gsef->resolution,
 		   gsef->min_value, gsef->max_value);
 	  break;
@@ -1016,7 +1015,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->value =
-	CLAMP (refval / _gimp_eek.unit_get_factor (gsef->gse->unit),
+	CLAMP (refval / gimp_unit_get_factor (gsef->gse->unit),
 	       gsef->min_value, gsef->max_value);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->value_adjustment),
 				gsef->value);
@@ -1125,8 +1124,8 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 	}
       else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
 	{
-	  digits = (_gimp_eek.unit_get_digits (GIMP_UNIT_INCH) -
-                    _gimp_eek.unit_get_digits (unit));
+	  digits = (gimp_unit_get_digits (GIMP_UNIT_INCH) -
+                    gimp_unit_get_digits (unit));
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				      MAX (3 + digits, 3));
 	}

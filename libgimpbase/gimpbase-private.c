@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets-private.h
+ * gimpbase-private.c
  * Copyright (C) 2003 Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -20,29 +20,31 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_WIDGETS_PRIVATE_H__
-#define __GIMP_WIDGETS_PRIVATE_H__
+#include "config.h"
+
+#include <glib.h>
+
+#include "libgimpbase/gimpbase.h"
+
+#include "gimpbasetypes.h"
+
+#include "gimpbase-private.h"
 
 
-typedef gboolean (* GimpGetColorFunc)      (GimpRGB *color);
-typedef void     (* GimpEnsureModulesFunc) (void);
+GimpUnitVTable _gimp_unit_vtable = { NULL, };
 
 
-extern GimpHelpFunc          _gimp_standard_help_func;
-extern GimpGetColorFunc      _gimp_get_foreground_func;
-extern GimpGetColorFunc      _gimp_get_background_func;
-extern GimpEnsureModulesFunc _gimp_ensure_modules_func;
+void
+gimp_base_init (GimpUnitVTable *vtable)
+{
+  static gboolean gimp_base_initialized = FALSE;
 
+  g_return_if_fail (vtable != NULL);
 
-G_BEGIN_DECLS
+  if (gimp_base_initialized)
+    g_error ("gimp_base_init() must only be called once!");
 
+  _gimp_unit_vtable = *vtable;
 
-void  gimp_widgets_init (GimpHelpFunc          standard_help_func,
-                         GimpGetColorFunc      get_foreground_func,
-                         GimpGetColorFunc      get_background_func,
-                         GimpEnsureModulesFunc ensure_modules_func);
-
-
-G_END_DECLS
-
-#endif /* __GIMP_WIDGETS_PRIVATE_H__ */
+  gimp_base_initialized = TRUE;
+}

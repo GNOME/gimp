@@ -87,11 +87,13 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase-private.h"
 #include "libgimpbase/gimpenv.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimpunitcache.h"
 
 
 /* Maybe this should go in a public header if we add other things to it */
@@ -344,6 +346,27 @@ gimp_main (const GimpPlugInInfo *info,
   gp_init ();
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
+
+
+  /*  initialize units  */
+  {
+    GimpUnitVTable vtable;
+
+    vtable.unit_get_number_of_units = _gimp_unit_cache_get_number_of_units;
+    vtable.unit_get_number_of_built_in_units = _gimp_unit_cache_get_number_of_built_in_units;
+    vtable.unit_new                 = _gimp_unit_cache_new;
+    vtable.unit_get_deletion_flag   = _gimp_unit_cache_get_deletion_flag;
+    vtable.unit_set_deletion_flag   = _gimp_unit_cache_set_deletion_flag;
+    vtable.unit_get_factor          = _gimp_unit_cache_get_factor;
+    vtable.unit_get_digits          = _gimp_unit_cache_get_digits;
+    vtable.unit_get_identifier      = _gimp_unit_cache_get_identifier;
+    vtable.unit_get_symbol          = _gimp_unit_cache_get_symbol;
+    vtable.unit_get_abbreviation    = _gimp_unit_cache_get_abbreviation;
+    vtable.unit_get_singular        = _gimp_unit_cache_get_singular;
+    vtable.unit_get_plural          = _gimp_unit_cache_get_plural;
+
+    gimp_base_init (&vtable);
+  }
 
 
   /* initialize i18n support */

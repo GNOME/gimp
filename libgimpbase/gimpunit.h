@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpunit.h
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,13 +18,6 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */
-
-/* NOTE:
- *
- * This file serves as header for both app/gimpunit.c and libgimp/gimpunit.c
- * because the unit functions are needed by widgets which are used by both
- * the gimp app and plugins.
  */
 
 #ifndef __GIMP_UNIT_H__

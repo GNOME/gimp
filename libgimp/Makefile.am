@@ -187,7 +187,8 @@ libgimp_1_3_la_SOURCES = \
 	gimpselection.h		\
 	gimptile.c		\
 	gimptile.h		\
-	gimpunit.c		\
+	gimpunitcache.c		\
+	gimpunitcache.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 

@@ -1,3 +1,43 @@
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase-private.[ch]
+	* libgimpbase/gimpunit.c: new files implementing GimpUnitVTable
+	(formerly known as GimpWidgetsVTable). Now the unit functions
+	finally live in the same library as their header declarations.
+
+	* libgimpbase/gimpunit.h: removed comment about being a header for
+	two different files.
+
+	* libgimpwidgets/gimpwidgets-private.[ch]: removed
+	GimpWidgetsVTable.
+
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c
+	* libgimpwidgets/gimpwidgets.c: use normal gimp_unit functions
+	again.
+
+	* libgimp/gimpui.c
+	* app/gui/gui.c: removed GimpWidgetVTable stuff.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpunitcache.[ch]: new files.
+
+	* libgimp/gimpunit.c: removed (moved to gimpunitcache.c).
+
+	* libgimp/gimp.c (gimp_main): initialize GimpUnitVTable using the
+	gimp_unit_cache functions.
+
+	* app/Makefile.am
+	* app/units.[ch]: new files implementing GimpUnitVTable.
+
+	* app/libgimp_glue.[ch]: removed.
+
+	* app/app_procs.[ch]: made "the_gimp" a static variable. Call
+	units_init().
+
+	* app/main.c: changed accordingly.
+
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def

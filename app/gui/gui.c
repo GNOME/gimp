@@ -119,7 +119,6 @@ gboolean
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
-  GimpWidgetsVTable  vtable;
   const gchar       *mismatch;
 
   g_return_val_if_fail (argc != NULL, FALSE);
@@ -128,19 +127,7 @@ gui_libs_init (gint    *argc,
   if (!gtk_init_check (argc, argv))
     return FALSE;
 
-  /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.unit_get_number_of_units          = gimp_unit_get_number_of_units;
-  vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
-  vtable.unit_get_factor          = gimp_unit_get_factor;
-  vtable.unit_get_digits          = gimp_unit_get_digits;
-  vtable.unit_get_identifier      = gimp_unit_get_identifier;
-  vtable.unit_get_symbol          = gimp_unit_get_symbol;
-  vtable.unit_get_abbreviation    = gimp_unit_get_abbreviation;
-  vtable.unit_get_singular        = gimp_unit_get_singular;
-  vtable.unit_get_plural          = gimp_unit_get_plural;
-
-  gimp_widgets_init (&vtable,
-                     gui_help_func,
+  gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
                      gui_get_background_func,
                      NULL);
