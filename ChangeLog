@@ -1,5 +1,10 @@
 Thu Jun  3 16:51:18 MEST 1999 Sven Neumann <sven@gimp.org>
 
+	* app/paint_core.c: Improved the line draw preview a bit. It's still 
+	not perfect, but should work better with respect to mutliple modifiers
+	being pressed. Prototyped all functions in paint_core.c while I was 
+	on it.
+
 	* app/channels_dialog.c
 	* app/layers_dialog.c
 	* app/ops_buttons.[ch]: Channels can now be intersected with the 

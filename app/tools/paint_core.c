@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include <stdio.h>     /* temporary for debuggin */
+#include <stdio.h>     /* temporary for debugging */
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
@@ -47,6 +47,8 @@
 
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
+
+#define COMMON_MODIFIERS_MASK (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)
 
 /*  global variables--for use in the various paint tools  */
 PaintCore  non_gui_paint_core;
@@ -136,31 +138,32 @@ static const int subsample[5][5][9] = {
 };
 
 static void
-paint_core_sample_color (GimpDrawable *drawable, int x, int y, int state)
+paint_core_sample_color (GimpDrawable *drawable, 
+			 int x, 
+			 int y, 
+			 int state)
 {
   unsigned char *color;
   if ((color = gimp_drawable_get_color_at(drawable, x, y)))
     {
       if ((state & GDK_CONTROL_MASK))
-	palette_set_foreground (color[RED_PIX], color[GREEN_PIX],
-				color [BLUE_PIX]);
+	palette_set_foreground (color[RED_PIX], color[GREEN_PIX], color [BLUE_PIX]);
       else
-	palette_set_background (color[RED_PIX], color[GREEN_PIX],
-				color [BLUE_PIX]);
+	palette_set_background (color[RED_PIX], color[GREEN_PIX], color [BLUE_PIX]);
+
       g_free(color);
     }
 }
 
 
 void
-paint_core_button_press (tool, bevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventButton *bevent;
-     gpointer gdisp_ptr;
+paint_core_button_press (Tool           *tool, 
+			 GdkEventButton *bevent, 
+			 gpointer        gdisp_ptr)
 {
   PaintCore * paint_core;
   GDisplay * gdisp;
-  int draw_line = 0;
+  gboolean draw_line;
   double x, y;
   GimpDrawable *drawable;
 
@@ -173,14 +176,15 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   if (! paint_core_init (paint_core, drawable, x, y))
     return;
 
+  draw_line = FALSE;
+
   paint_core->curpressure = bevent->pressure;
   paint_core->curxtilt = bevent->xtilt;
   paint_core->curytilt = bevent->ytilt;
   paint_core->state = bevent->state;
 
   /*  if this is a new image, reinit the core vals  */
-  if (gdisp_ptr != tool->gdisp_ptr ||
-      ! (bevent->state & GDK_SHIFT_MASK))
+  if ((gdisp_ptr != tool->gdisp_ptr) || ! (bevent->state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
       paint_core->startx = paint_core->lastx = paint_core->curx = x;
@@ -192,9 +196,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   /*  If shift is down and this is not the first paint
    *  stroke, then draw a line from the last coords to the pointer
    */
-  else if (bevent->state & GDK_SHIFT_MASK)
+  else if ((bevent->state & COMMON_MODIFIERS_MASK) == GDK_SHIFT_MASK)
     {
-      draw_line = 1;
+      draw_line = TRUE;
       paint_core->startx = paint_core->lastx;
       paint_core->starty = paint_core->lasty;
       paint_core->startpressure = paint_core->lastpressure;
@@ -250,10 +254,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
 }
 
 void
-paint_core_button_release (tool, bevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventButton *bevent;
-     gpointer gdisp_ptr;
+paint_core_button_release (Tool           *tool, 
+			   GdkEventButton *bevent, 
+			   gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
   GImage * gimage;
@@ -283,10 +286,9 @@ paint_core_button_release (tool, bevent, gdisp_ptr)
 }
 
 void
-paint_core_motion (tool, mevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventMotion *mevent;
-     gpointer gdisp_ptr;
+paint_core_motion (Tool           *tool, 
+		   GdkEventMotion *mevent, 
+		   gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
   PaintCore * paint_core;
@@ -321,10 +323,9 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 }
 
 void
-paint_core_cursor_update (tool, mevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventMotion *mevent;
-     gpointer gdisp_ptr;
+paint_core_cursor_update (Tool           *tool, 
+			  GdkEventMotion *mevent, 
+			  gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   Layer *layer;
@@ -341,32 +342,20 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
   gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
 			       &x, &y, TRUE, FALSE);
  
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+  if (layer = gimage_get_active_layer (gdisp->gimage))
     {
-      int off_x, off_y;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-
+      /* If Ctrl or Mod1 is pressed, pick colors */ 
       if (paint_core->pick_colors
 	  && (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
-      else if (x >= off_x && y >= off_y &&
-	       x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	       y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
-	{
-	  /*  One more test--is there a selected region?
-	   *  if so, is cursor inside?
-	   */
-	  if (gimage_mask_is_empty (gdisp->gimage))
-	    ctype = GDK_PENCIL;
-	  else if (gimage_mask_value (gdisp->gimage, x, y))
-	    ctype = GDK_PENCIL;
-	}
 
       /* If shift is down and this is not the first paint stroke, draw a line */
-      if (gdisp_ptr == tool->gdisp_ptr && mevent->state & GDK_SHIFT_MASK)
+      else if (gdisp_ptr == tool->gdisp_ptr && 
+	       (mevent->state & COMMON_MODIFIERS_MASK) == GDK_SHIFT_MASK)
 	{
+	  ctype = GDK_PENCIL;
 	  /*  Get the current coordinates  */
 	  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
 					 &paint_core->curx, &paint_core->cury, TRUE);
@@ -379,17 +368,34 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
 	      paint_core->core->paused_count = 0;
 	      draw_core_resume (paint_core->core, tool);
 	    }
+	} 
+      /* Normal operation -- no modifier pressed or first stroke */
+      else 
+	{
+	  int off_x, off_y;
+	  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+
+	  if (x >= off_x && y >= off_y &&
+	       x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	       y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	    {
+	      /*  One more test--is there a selected region?
+	       *  if so, is cursor inside?
+	       */
+	      if (gimage_mask_is_empty (gdisp->gimage))
+		ctype = GDK_PENCIL;
+	      else if (gimage_mask_value (gdisp->gimage, x, y))
+		ctype = GDK_PENCIL;
+	    }
 	}
     }
-
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
 void
-paint_core_control (tool, action, gdisp_ptr)
-     Tool * tool;
-     int action;
-     gpointer gdisp_ptr;
+paint_core_control (Tool    *tool, 
+		    int      action, 
+		    gpointer gdisp_ptr)
 {
   PaintCore * paint_core;
   GDisplay *gdisp;
@@ -417,8 +423,7 @@ paint_core_control (tool, action, gdisp_ptr)
 
 
 void
-paint_core_draw (tool)
-     Tool * tool;
+paint_core_draw (Tool *tool)
 {
   GDisplay *gdisp;
   PaintCore * paint_core;
@@ -460,8 +465,7 @@ paint_core_draw (tool)
 }	      
 
 Tool *
-paint_core_new (type)
-     int type;
+paint_core_new (int type)
 {
   Tool * tool;
   PaintCore * private;
@@ -493,8 +497,7 @@ paint_core_new (type)
 }
 
 void
-paint_core_free (tool)
-     Tool * tool;
+paint_core_free (Tool *tool)
 {
   PaintCore * paint_core;
 
@@ -516,10 +519,10 @@ paint_core_free (tool)
 }
 
 int
-paint_core_init (paint_core, drawable, x, y)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     double x, y;
+paint_core_init (PaintCore    *paint_core, 
+		 GimpDrawable *drawable, 
+		 double        x, 
+		 double        y)
 {
   static GimpBrushP brush = 0;
   
@@ -657,9 +660,8 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
   
 
 void
-paint_core_interpolate (paint_core, drawable)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
+paint_core_interpolate (PaintCore    *paint_core, 
+			GimpDrawable *drawable)
 {
   int n;
   vector2d delta;
@@ -719,10 +721,9 @@ paint_core_interpolate (paint_core, drawable)
 }
 
 void
-paint_core_finish (paint_core, drawable, tool_id)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int tool_id;
+paint_core_finish (PaintCore    *paint_core, 
+		   GimpDrawable *drawable, 
+		   int           tool_id)
 {
   GImage *gimage;
   PaintUndo *pu;
@@ -792,9 +793,8 @@ paint_core_cleanup ()
 /************************/
 
 TempBuf *
-paint_core_get_paint_area (paint_core, drawable)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
+paint_core_get_paint_area (PaintCore    *paint_core, 
+			   GimpDrawable *drawable)
 {
   int x, y;
   int x1, y1, x2, y2;
@@ -829,11 +829,9 @@ paint_core_get_paint_area (paint_core, drawable)
 }
 
 TempBuf *
-paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int x1, y1;
-     int x2, y2;
+paint_core_get_orig_image (PaintCore    *paint_core, 
+			   GimpDrawable *drawable, 
+			   int x1, int y1, int x2, int y2)
 {
   PixelRegion srcPR, destPR;
   Tile *undo_tile;
@@ -905,15 +903,13 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
 }
 
 void
-paint_core_paste_canvas (paint_core, drawable, brush_opacity, image_opacity, paint_mode,
-			 brush_hardness, mode)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int brush_opacity;
-     int image_opacity;
-     int paint_mode;
-     int brush_hardness;
-     int mode;
+paint_core_paste_canvas (PaintCore    *paint_core, 
+			 GimpDrawable *drawable, 
+			 int brush_opacity, 
+			 int image_opacity, 
+			 int paint_mode,
+			 int brush_hardness, 
+			 int mode)
 {
   MaskBuf *brush_mask;
 
@@ -929,14 +925,12 @@ paint_core_paste_canvas (paint_core, drawable, brush_opacity, image_opacity, pai
    rather than using it to composite (i.e. transparent over opaque
    becomes transparent rather than opauqe. */
 void
-paint_core_replace_canvas (paint_core, drawable, brush_opacity, image_opacity,
-			   brush_hardness, mode)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int brush_opacity;
-     int image_opacity;
-     int brush_hardness;
-     int mode;
+paint_core_replace_canvas (PaintCore    *paint_core, 
+			   GimpDrawable *drawable, 
+			   int brush_opacity, 
+			   int image_opacity, 
+			   int brush_hardness, 
+			   int mode)
 {
   MaskBuf *brush_mask;
 
@@ -967,9 +961,9 @@ static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah)
  ************************************************************/
 
 static MaskBuf *
-paint_core_subsample_mask (mask, x, y)
-     MaskBuf * mask;
-     double x, y;
+paint_core_subsample_mask (MaskBuf *mask, 
+			   double   x, 
+			   double   y)
 {
   MaskBuf * dest;
   double left;
@@ -1034,10 +1028,10 @@ paint_core_subsample_mask (mask, x, y)
 /* #define FANCY_PRESSURE */
 
 static MaskBuf *
-paint_core_pressurize_mask (brush_mask, x, y, pressure)
-     MaskBuf * brush_mask;
-     double x, y;
-     double pressure;
+paint_core_pressurize_mask (MaskBuf *brush_mask, 
+			    double   x, 
+			    double   y, 
+			    double   pressure)
 {
   static MaskBuf *last_brush = NULL;
   static unsigned char mapi[256];
@@ -1138,8 +1132,7 @@ paint_core_pressurize_mask (brush_mask, x, y, pressure)
 }
 
 static MaskBuf *
-paint_core_solidify_mask (brush_mask)
-     MaskBuf * brush_mask;
+paint_core_solidify_mask (MaskBuf *brush_mask)
 {
   static MaskBuf *last_brush = NULL;
   int i, j;
@@ -1171,9 +1164,8 @@ paint_core_solidify_mask (brush_mask)
 }
 
 static MaskBuf *
-paint_core_get_brush_mask (paint_core, brush_hardness)
-     PaintCore * paint_core;
-     int brush_hardness;
+paint_core_get_brush_mask (PaintCore *paint_core, 
+			   int        brush_hardness)
 {
   MaskBuf * bm;
 
@@ -1197,14 +1189,13 @@ paint_core_get_brush_mask (paint_core, brush_hardness)
 }
 
 static void
-paint_core_paste (paint_core, brush_mask, drawable, brush_opacity, image_opacity, paint_mode, mode)
-     PaintCore *paint_core;
-     MaskBuf *brush_mask;
-     GimpDrawable *drawable;
-     int brush_opacity;
-     int image_opacity;
-     int paint_mode;
-     int mode;
+paint_core_paste (PaintCore    *paint_core, 
+		  MaskBuf      *brush_mask, 
+		  GimpDrawable *drawable, 
+		  int           brush_opacity, 
+		  int           image_opacity, 
+		  int           paint_mode, 
+		  int           mode)
 {
   GImage *gimage;
   PixelRegion srcPR;
@@ -1275,13 +1266,12 @@ paint_core_paste (paint_core, brush_mask, drawable, brush_opacity, image_opacity
    mode.
 */
 static void
-paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opacity, mode)
-     PaintCore *paint_core;
-     MaskBuf *brush_mask;
-     GimpDrawable *drawable;
-     int brush_opacity;
-     int image_opacity;
-     int mode;
+paint_core_replace (PaintCore    *paint_core, 
+		    MaskBuf      *brush_mask, 
+		    GimpDrawable *drawable, 
+		    int           brush_opacity, 
+		    int           image_opacity, 
+		    int           mode)
 {
   GImage *gimage;
   PixelRegion srcPR, maskPR;
@@ -1346,10 +1336,9 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 }
 
 static void
-paint_to_canvas_tiles (paint_core, brush_mask, brush_opacity)
-     PaintCore *paint_core;
-     MaskBuf *brush_mask;
-     int brush_opacity;
+paint_to_canvas_tiles (PaintCore *paint_core, 
+		       MaskBuf   *brush_mask, 
+		       int        brush_opacity)
 {
   PixelRegion srcPR, maskPR;
   int x, y;
@@ -1392,10 +1381,9 @@ paint_to_canvas_tiles (paint_core, brush_mask, brush_opacity)
 }
 
 static void
-paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
-     PaintCore *paint_core;
-     MaskBuf *brush_mask;
-     int brush_opacity;
+paint_to_canvas_buf (PaintCore *paint_core, 
+		     MaskBuf   *brush_mask, 
+		     int        brush_opacity)
 {
   PixelRegion srcPR, maskPR;
   int x, y;
@@ -1427,10 +1415,8 @@ paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
 }
 
 static void
-set_undo_tiles (drawable, x, y, w, h)
-     GimpDrawable *drawable;
-     int x, y;
-     int w, h;
+set_undo_tiles (GimpDrawable *drawable, 
+		int x, int y, int w, int h)
 {
   int i, j;
   Tile *src_tile;
@@ -1458,9 +1444,7 @@ set_undo_tiles (drawable, x, y, w, h)
 }
 
 static void
-set_canvas_tiles (x, y, w, h)
-     int x, y;
-     int w, h;
+set_canvas_tiles (int x, int y, int w, int h)
 {
   int i, j;
   Tile *tile;
@@ -1498,3 +1482,6 @@ free_paint_buffers ()
     temp_buf_free (canvas_buf);
   canvas_buf = NULL;
 }
+
+
+
