@@ -18,7 +18,7 @@
         has an init function.  Incremented the interface age.
 
 	(inspired by a patch by Tor Lillqvist available at 
-	http://bugzilla.gnome.org/showattachment.cgi?attach_id=6214
+	http://bugzilla.gnome.org/showattachment.cgi?attach_id=6214)
 
 2002-02-12  Sven Neumann  <sven@gimp.org>
 
