@@ -47,11 +47,16 @@ sub sample_merged_arg () {{
 # Common invoker for checking for image/drawable consistency
 sub invoke {
     %invoke = (
-	vars => [ 'GimpImage *gimage' ],
 	code => <<CODE
 {
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-  @{[shift]};
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      @{[shift]};
+    }
 }
 CODE
     );
@@ -234,15 +239,12 @@ HELP
 	                 "core/gimpchannel.h") ],
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-  if (! gimage)
+  if (success)
     {
-      success = FALSE;
-    }
-  else
-    {
-      gboolean do_seed_fill;
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      gboolean   do_seed_fill;
 
       do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
@@ -313,11 +315,9 @@ HELP
         headers => [ qw("core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
-    {
-      success = FALSE;
-    }
-  else
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
     {
       if (progress)
         gimp_progress_start (progress, _("Blending..."), FALSE);
@@ -358,15 +358,20 @@ HELP
 	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-  g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+  if (success)
+    {
+      GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
 
-  success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                              drawable, context, desc, TRUE);
+      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
-  g_object_unref (desc);
+      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                                  drawable, context, desc, TRUE);
+
+      g_object_unref (desc);
+    }
 }
 CODE
     );

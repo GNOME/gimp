@@ -70,6 +70,7 @@ gimp_edit_cut (GimpImage    *gimage,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return gimp_edit_extract (gimage, drawable, context, TRUE);
@@ -82,6 +83,7 @@ gimp_edit_copy (GimpImage    *gimage,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return gimp_edit_extract (gimage, drawable, context, FALSE);
@@ -274,6 +276,7 @@ gimp_edit_clear (GimpImage    *gimage,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   return gimp_edit_fill_internal (gimage, drawable, context,
@@ -291,6 +294,7 @@ gimp_edit_fill (GimpImage    *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   switch (fill_type)

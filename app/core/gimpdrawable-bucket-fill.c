@@ -63,11 +63,10 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
   GimpPattern *pattern = NULL;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   if (fill_mode == GIMP_FG_BUCKET_FILL)
     {
@@ -129,14 +128,13 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   gboolean     selection;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (fill_mode != GIMP_PATTERN_BUCKET_FILL ||
                     GIMP_IS_PATTERN (pattern));
   g_return_if_fail (fill_mode == GIMP_PATTERN_BUCKET_FILL ||
                     color != NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   bytes     = gimp_drawable_bytes (drawable);
   selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);

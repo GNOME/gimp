@@ -977,7 +977,9 @@ gimp_item_stroke (GimpItem       *item,
   gboolean       retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_STROKE_DESC (stroke_desc), FALSE);
 

@@ -1,5 +1,20 @@
 2004-11-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpitem.c (gimp_item_stroke): added precondition
+	checks for gimp_item_is_attached() and removed checks for
+	gimp_item_get_image() to actually return an image (because it
+	always returns an image).
+
+	* tools/pdbgen/pdb/edit.pdb: let all wrappers fail if the drawable
+	is not attached.
+
+	* app/pdb/edit_cmds.c: regenerated.
+
+2004-11-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/add-bevel.scm
 	* plug-ins/script-fu/scripts/addborder.scm
 	* plug-ins/script-fu/scripts/carve-it.scm

@@ -70,7 +70,6 @@ edit_cut_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -78,8 +77,14 @@ edit_cut_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      non_empty = gimp_edit_cut (gimage, drawable, context) != NULL;
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          non_empty = gimp_edit_cut (gimage, drawable, context) != NULL;
+        }
     }
 
   return_args = procedural_db_return_args (&edit_cut_proc, success);
@@ -135,7 +140,6 @@ edit_copy_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -143,8 +147,14 @@ edit_copy_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      non_empty = gimp_edit_copy (gimage, drawable, context) != NULL;
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          non_empty = gimp_edit_copy (gimage, drawable, context) != NULL;
+        }
     }
 
   return_args = procedural_db_return_args (&edit_copy_proc, success);
@@ -279,7 +289,6 @@ edit_clear_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -287,8 +296,14 @@ edit_clear_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_clear (gimage, drawable, context);
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          success = gimp_edit_clear (gimage, drawable, context);
+        }
     }
 
   return procedural_db_return_args (&edit_clear_proc, success);
@@ -329,7 +344,6 @@ edit_fill_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 fill_type;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -341,8 +355,14 @@ edit_fill_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_fill (gimage, drawable, context, (GimpFillType) fill_type);
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          success = gimp_edit_fill (gimage, drawable, context, (GimpFillType) fill_type);
+        }
     }
 
   return procedural_db_return_args (&edit_fill_proc, success);
@@ -423,15 +443,12 @@ edit_bucket_fill_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (! gimage)
+      if (success)
         {
-          success = FALSE;
-        }
-      else
-        {
-          gboolean do_seed_fill;
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          gboolean   do_seed_fill;
 
           do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
@@ -583,11 +600,9 @@ edit_blend_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
-        {
-          success = FALSE;
-        }
-      else
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
         {
           if (progress)
             gimp_progress_start (progress, _("Blending..."), FALSE);
@@ -728,15 +743,20 @@ edit_stroke_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+      if (success)
+        {
+          GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
 
-      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                                  drawable, context, desc, TRUE);
+          g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
-      g_object_unref (desc);
+          success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                                      drawable, context, desc, TRUE);
+
+          g_object_unref (desc);
+        }
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);
