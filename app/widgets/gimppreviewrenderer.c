@@ -509,8 +509,6 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
 
       if (gdk_rectangle_intersect (&buf_rect, expose_area, &render_rect))
         {
-          /* FIXME: remove when we no longer support GTK 2.0.x */
-#if GTK_CHECK_VERSION(2,2,0)
           gdk_draw_pixbuf (GDK_DRAWABLE (window),
                            widget->style->bg_gc[widget->state],
                            renderer->no_preview_pixbuf,
@@ -523,20 +521,6 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                            GDK_RGB_DITHER_NORMAL,
                            expose_area->x - draw_area->x,
                            expose_area->y - draw_area->y);
-#else
-          gdk_pixbuf_render_to_drawable (renderer->no_preview_pixbuf,
-                                         window,
-                                         widget->style->bg_gc[widget->state],
-                                         render_rect.x - buf_rect.x,
-                                         render_rect.y - buf_rect.y,
-                                         render_rect.x,
-                                         render_rect.y, 
-                                         render_rect.width,
-                                         render_rect.height,
-                                         GDK_RGB_DITHER_NORMAL,
-                                         expose_area->x - draw_area->x,
-                                         expose_area->y - draw_area->y);
-#endif
         }
     }
   else if (renderer->buffer)

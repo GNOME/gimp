@@ -127,7 +127,7 @@ gui_libs_init (gint    *argc,
 void
 gui_environ_init (Gimp *gimp)
 {
-  gchar *name = NULL;
+  gchar *display, *name = NULL;
 
 #if defined (GDK_WINDOWING_X11)
   name = "DISPLAY";
@@ -138,9 +138,11 @@ gui_environ_init (Gimp *gimp)
   /* TODO: Need to care about display migration with GTK+ 2.2 at some point */
 
   if (name)
-    gimp_environ_table_add (gimp->environ_table,
-                            name, gdk_get_display (),
-			    NULL);
+    {
+      display = gdk_get_display ();
+      gimp_environ_table_add (gimp->environ_table, name, display, NULL);
+      g_free (display);
+    }
 }
 
 void

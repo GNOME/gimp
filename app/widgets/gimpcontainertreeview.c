@@ -399,61 +399,27 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 
   if (iter)
     {
-      GtkTreeIter selected_iter;
-      gboolean    selected;
+      GtkTreeModel *model;
+      GtkTreePath  *path;
+      GtkTreeIter   place_iter;
 
-      selected = gtk_tree_selection_get_selected (tree_view->selection,
-                                                  NULL, &selected_iter);
-
-      if (selected)
-        {
-          GimpViewable *selected_viewable;
-
-          gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list), &selected_iter,
-                              COLUMN_VIEWABLE, &selected_viewable,
-                              -1);
-
-          if (selected_viewable != viewable)
-            selected = FALSE;
-
-          g_object_unref (selected_viewable);
-        }
-
-      if (selected)
-        g_signal_handlers_block_by_func (tree_view->selection,
-                                         gimp_container_tree_view_selection_changed,
-                                         tree_view);
-
-      gtk_list_store_remove (tree_view->list, iter);
+      model = GTK_TREE_MODEL (tree_view->list);
 
       if (new_index == -1)
-        gtk_list_store_append (tree_view->list, iter);
-      else
-        gtk_list_store_insert (tree_view->list, iter, new_index);
+        new_index = gtk_tree_model_iter_n_children (model, NULL) - 1;
+      
+      path = gtk_tree_path_new_from_indices (new_index, NULL);
 
-      gimp_container_tree_view_set (tree_view, iter, viewable);
-
-      if (selected)
-        {
-          GtkTreePath *path;
-
-          gtk_tree_selection_select_iter (tree_view->selection, iter);
-
-          g_signal_handlers_unblock_by_func (tree_view->selection,
-                                             gimp_container_tree_view_selection_changed,
-                                             tree_view);
-
-          path = gtk_tree_model_get_path (GTK_TREE_MODEL (tree_view->list),
-                                          iter);
+      gtk_tree_model_get_iter (model, &place_iter, path);
+      gtk_list_store_move_before (tree_view->list, iter, &place_iter);
 
 #ifdef __GNUC__
 #warning FIXME: use use_align == FALSE as soon as implemented by GtkTreeView
 #endif
-          gtk_tree_view_scroll_to_cell (tree_view->view, path,
-                                        NULL, TRUE, 0.5, 0.0);
+      gtk_tree_view_scroll_to_cell (tree_view->view, path,
+                                    NULL, TRUE, 0.5, 0.0);
 
-          gtk_tree_path_free (path);
-        }
+      gtk_tree_path_free (path);
     }
 }
 

@@ -575,17 +575,13 @@ unit_editor_dialog (void)
   gtk_widget_show (tv);
 
   rend = gtk_cell_renderer_toggle_new ();
-  col = gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
-                                                  rend,
-
-                                                  "active",      SAVE,
-                                                  "activatable", USER_UNIT,
-
-                                                  (GTK_CHECK_VERSION (2,2,0) ?
-                                                   "cell-background-gdk" : NULL),
-                                                  BG_COLOR,
-
-                                                  NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
+                                              rend,
+                                              "active",              SAVE,
+                                              "activatable",         USER_UNIT,
+                                              "cell-background-gdk", BG_COLOR,
+                                              NULL);
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 

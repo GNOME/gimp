@@ -22,16 +22,9 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
-#include <gtk/gtk.h>
+#include "gtkhwrapbox.h"
 
 #include "libgimpmath/gimpmath.h"
-
-#include "gtkhwrapbox.h"
 
 
 /* --- prototypes --- */
@@ -53,26 +46,28 @@ static gpointer parent_class = NULL;
 
 
 /* --- functions --- */
-GtkType
+GType
 gtk_hwrap_box_get_type (void)
 {
-  static GtkType hwrap_box_type = 0;
+  static GType hwrap_box_type = 0;
   
   if (!hwrap_box_type)
     {
-      static const GtkTypeInfo hwrap_box_info =
+      static const GTypeInfo hwrap_box_info =
       {
-	"GtkHWrapBox",
-	sizeof (GtkHWrapBox),
 	sizeof (GtkHWrapBoxClass),
-	(GtkClassInitFunc) gtk_hwrap_box_class_init,
-	(GtkObjectInitFunc) gtk_hwrap_box_init,
-        /* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	NULL,		/* base_init */
+	NULL,		/* base_finalize */
+	(GClassInitFunc) gtk_hwrap_box_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data */
+	sizeof (GtkHWrapBox),
+	0,		/* n_preallocs */
+	(GInstanceInitFunc) gtk_hwrap_box_init,
       };
       
-      hwrap_box_type = gtk_type_unique (GTK_TYPE_WRAP_BOX, &hwrap_box_info);
+      hwrap_box_type = g_type_register_static (GTK_TYPE_WRAP_BOX, "GtkHWrapBox",
+					       &hwrap_box_info, 0);
     }
   
   return hwrap_box_type;
@@ -81,17 +76,17 @@ gtk_hwrap_box_get_type (void)
 static void
 gtk_hwrap_box_class_init (GtkHWrapBoxClass *class)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
   GtkWidgetClass *widget_class;
   GtkContainerClass *container_class;
   GtkWrapBoxClass *wrap_box_class;
   
-  object_class = GTK_OBJECT_CLASS (class);
+  object_class = G_OBJECT_CLASS (class);
   widget_class = GTK_WIDGET_CLASS (class);
   container_class = GTK_CONTAINER_CLASS (class);
   wrap_box_class = GTK_WRAP_BOX_CLASS (class);
   
-  parent_class = gtk_type_class (GTK_TYPE_WRAP_BOX);
+  parent_class = g_type_class_peek_parent (class);
   
   widget_class->size_request = gtk_hwrap_box_size_request;
   widget_class->size_allocate = gtk_hwrap_box_size_allocate;
@@ -109,13 +104,7 @@ gtk_hwrap_box_init (GtkHWrapBox *hwbox)
 GtkWidget*
 gtk_hwrap_box_new (gboolean homogeneous)
 {
-  GtkHWrapBox *hwbox;
-
-  hwbox = GTK_HWRAP_BOX (gtk_widget_new (GTK_TYPE_HWRAP_BOX, NULL));
-
-  GTK_WRAP_BOX (hwbox)->homogeneous = homogeneous ? TRUE : FALSE;
-
-  return GTK_WIDGET (hwbox);
+  return g_object_new (GTK_TYPE_HWRAP_BOX, "homogeneous", homogeneous, NULL);
 }
 
 static inline void

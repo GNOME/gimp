@@ -31,11 +31,11 @@ G_BEGIN_DECLS
 
 /* --- type macros --- */
 #define GTK_TYPE_WRAP_BOX	     (gtk_wrap_box_get_type ())
-#define GTK_WRAP_BOX(obj)	     (GTK_CHECK_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
-#define GTK_WRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
-#define GTK_IS_WRAP_BOX(obj)	     (GTK_CHECK_TYPE ((obj), GTK_TYPE_WRAP_BOX))
-#define GTK_IS_WRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
-#define GTK_WRAP_BOX_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
+#define GTK_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
+#define GTK_WRAP_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
+#define GTK_IS_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_WRAP_BOX))
+#define GTK_IS_WRAP_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
+#define GTK_WRAP_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
 
 
 /* --- typedefs --- */
@@ -84,7 +84,7 @@ struct _GtkWrapBoxChild
 
 
 /* --- prototypes --- */
-GtkType	   gtk_wrap_box_get_type            (void) G_GNUC_CONST;
+GType	   gtk_wrap_box_get_type            (void) G_GNUC_CONST;
 void	   gtk_wrap_box_set_homogeneous     (GtkWrapBox      *wbox,
 					     gboolean         homogeneous);
 void	   gtk_wrap_box_set_hspacing        (GtkWrapBox      *wbox,

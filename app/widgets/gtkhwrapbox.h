@@ -31,11 +31,11 @@ G_BEGIN_DECLS
 
 /* --- type macros --- */
 #define GTK_TYPE_HWRAP_BOX	      (gtk_hwrap_box_get_type ())
-#define GTK_HWRAP_BOX(obj)	      (GTK_CHECK_CAST ((obj), GTK_TYPE_HWRAP_BOX, GtkHWrapBox))
-#define GTK_HWRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_HWRAP_BOX, GtkHWrapBoxClass))
-#define GTK_IS_HWRAP_BOX(obj)	      (GTK_CHECK_TYPE ((obj), GTK_TYPE_HWRAP_BOX))
-#define GTK_IS_HWRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_HWRAP_BOX))
-#define GTK_HWRAP_BOX_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_HWRAP_BOX, GtkHWrapBoxClass))
+#define GTK_HWRAP_BOX(obj)	      (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_HWRAP_BOX, GtkHWrapBox))
+#define GTK_HWRAP_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_HWRAP_BOX, GtkHWrapBoxClass))
+#define GTK_IS_HWRAP_BOX(obj)	      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_HWRAP_BOX))
+#define GTK_IS_HWRAP_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_HWRAP_BOX))
+#define GTK_HWRAP_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_HWRAP_BOX, GtkHWrapBoxClass))
 
 
 /* --- typedefs --- */
@@ -61,7 +61,7 @@ struct _GtkHWrapBoxClass
 
 
 /* --- prototypes --- */
-GtkType	    gtk_hwrap_box_get_type  (void) G_GNUC_CONST;
+GType	    gtk_hwrap_box_get_type  (void) G_GNUC_CONST;
 GtkWidget * gtk_hwrap_box_new       (gboolean homogeneous);
 
 

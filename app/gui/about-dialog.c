@@ -334,22 +334,9 @@ about_dialog_load_logo (GtkWidget *window)
 
   gc = gdk_gc_new (logo_pixmap);
 
-  /* FIXME: remove when we no longer support GTK 2.0.x */
-#if GTK_CHECK_VERSION(2,2,0)
   gdk_draw_pixbuf (GDK_DRAWABLE (logo_pixmap), gc, pixbuf,
                    0, 0, 0, 0, logo_width, logo_height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
-#else
-  gdk_pixbuf_render_to_drawable (pixbuf,
-                                 GDK_DRAWABLE (logo_pixmap),
-                                 gc,
-                                 0, 0,
-                                 0, 0,
-                                 logo_width,
-                                 logo_height,
-                                 GDK_RGB_DITHER_NORMAL,
-                                 0, 0);
-#endif
 
   g_object_unref (gc);
   g_object_unref (pixbuf);

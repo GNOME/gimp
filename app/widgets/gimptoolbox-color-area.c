@@ -319,17 +319,9 @@ color_area_draw (GimpContext *context)
                                    GTK_ICON_SIZE_MENU, NULL);
   w = gdk_pixbuf_get_width  (pixbuf);
   h = gdk_pixbuf_get_height (pixbuf);
-  /* FIXME: remove when we no longer support GTK 2.0.x */
-#if GTK_CHECK_VERSION(2,2,0)
   gdk_draw_pixbuf (color_area->window, NULL, pixbuf,
                    0, 0, 0, height - h, w, h,
                    GDK_RGB_DITHER_MAX, 0, 0);
-#else
-  gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,
-                                       0, 0, 0, height - h, w, h,
-                                       GDK_PIXBUF_ALPHA_FULL, 127,
-                                       GDK_RGB_DITHER_MAX, 0, 0);
-#endif
   g_object_unref (pixbuf);
 
   /*  draw the swap colors pixbuf  */
@@ -337,17 +329,9 @@ color_area_draw (GimpContext *context)
                                    GTK_ICON_SIZE_MENU, NULL);
   w = gdk_pixbuf_get_width  (pixbuf);
   h = gdk_pixbuf_get_height (pixbuf);
-  /* FIXME: remove when we no longer support GTK 2.0.x */
-#if GTK_CHECK_VERSION(2,2,0)
   gdk_draw_pixbuf (color_area->window, NULL, pixbuf,
                    0, 0, width - w, 0, w, h,
                    GDK_RGB_DITHER_MAX, 0, 0);
-#else
-  gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,
-                                       0, 0, width - w, 0, w, h,
-                                       GDK_PIXBUF_ALPHA_FULL, 127,
-                                       GDK_RGB_DITHER_MAX, 0, 0);
-#endif
   g_object_unref (pixbuf);
 }
 

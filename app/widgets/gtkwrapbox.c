@@ -22,26 +22,22 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include "gtkwrapbox.h"
 
 
-/* --- arguments --- */
+/* --- properties --- */
 enum {
-  ARG_0,
-  ARG_HOMOGENEOUS,
-  ARG_JUSTIFY,
-  ARG_HSPACING,
-  ARG_VSPACING,
-  ARG_LINE_JUSTIFY,
-  ARG_ASPECT_RATIO,
-  ARG_CURRENT_RATIO,
-  ARG_CHILD_LIMIT
+  PROP_0,
+  PROP_HOMOGENEOUS,
+  PROP_JUSTIFY,
+  PROP_HSPACING,
+  PROP_VSPACING,
+  PROP_LINE_JUSTIFY,
+  PROP_ASPECT_RATIO,
+  PROP_CURRENT_RATIO,
+  PROP_CHILD_LIMIT
 };
+
 enum {
   CHILD_PROP_0,
   CHILD_PROP_POSITION,
@@ -56,12 +52,14 @@ enum {
 /* --- prototypes --- */
 static void gtk_wrap_box_class_init    (GtkWrapBoxClass    *klass);
 static void gtk_wrap_box_init          (GtkWrapBox         *wbox);
-static void gtk_wrap_box_get_arg       (GtkObject          *object,
-					GtkArg             *arg,
-					guint               arg_id);
-static void gtk_wrap_box_set_arg       (GtkObject          *object,
-					GtkArg             *arg,
-					guint               arg_id);
+static void gtk_wrap_box_set_property  (GObject            *object,
+					guint               property_id,
+					const GValue       *value,
+					GParamSpec         *pspec);
+static void gtk_wrap_box_get_property  (GObject            *object,
+					guint               property_id,
+					GValue             *value,
+					GParamSpec         *pspec);
 static void gtk_wrap_box_set_child_property (GtkContainer    *container,
 					     GtkWidget       *child,
 					     guint            property_id,
@@ -84,7 +82,7 @@ static void gtk_wrap_box_forall        (GtkContainer       *container,
 					gboolean            include_internals,
 					GtkCallback         callback,
 					gpointer            callback_data);
-static GtkType gtk_wrap_box_child_type (GtkContainer       *container);
+static GType gtk_wrap_box_child_type   (GtkContainer       *container);
 
 
 /* --- variables --- */
@@ -92,26 +90,28 @@ static gpointer parent_class = NULL;
 
 
 /* --- functions --- */
-GtkType
+GType
 gtk_wrap_box_get_type (void)
 {
-  static GtkType wrap_box_type = 0;
+  static GType wrap_box_type = 0;
   
   if (!wrap_box_type)
     {
-      static const GtkTypeInfo wrap_box_info =
+      static const GTypeInfo wrap_box_info =
       {
-	"GtkWrapBox",
-	sizeof (GtkWrapBox),
 	sizeof (GtkWrapBoxClass),
-	(GtkClassInitFunc) gtk_wrap_box_class_init,
-	(GtkObjectInitFunc) gtk_wrap_box_init,
-        /* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	NULL,		/* base_init */
+	NULL,		/* base_finalize */
+	(GClassInitFunc) gtk_wrap_box_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data */
+	sizeof (GtkWrapBox),
+	0,		/* n_preallocs */
+	(GInstanceInitFunc) gtk_wrap_box_init,
       };
       
-      wrap_box_type = gtk_type_unique (GTK_TYPE_CONTAINER, &wrap_box_info);
+      wrap_box_type = g_type_register_static (GTK_TYPE_CONTAINER, "GtkWrapBox",
+					      &wrap_box_info, 0);
     }
   
   return wrap_box_type;
@@ -120,18 +120,18 @@ gtk_wrap_box_get_type (void)
 static void
 gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
   GtkWidgetClass *widget_class;
   GtkContainerClass *container_class;
   
-  object_class = GTK_OBJECT_CLASS (class);
+  object_class = G_OBJECT_CLASS (class);
   widget_class = GTK_WIDGET_CLASS (class);
   container_class = GTK_CONTAINER_CLASS (class);
   
   parent_class = g_type_class_peek_parent (class);
   
-  object_class->set_arg = gtk_wrap_box_set_arg;
-  object_class->get_arg = gtk_wrap_box_get_arg;
+  object_class->set_property = gtk_wrap_box_set_property;
+  object_class->get_property = gtk_wrap_box_get_property;
   
   widget_class->map = gtk_wrap_box_map;
   widget_class->unmap = gtk_wrap_box_unmap;
@@ -145,46 +145,121 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
   container_class->get_child_property = gtk_wrap_box_get_child_property;
 
   class->rlist_line_children = NULL;
-  
-  gtk_object_add_arg_type ("GtkWrapBox::homogeneous",
-			   GTK_TYPE_BOOL, GTK_ARG_READWRITE, ARG_HOMOGENEOUS);
-  gtk_object_add_arg_type ("GtkWrapBox::justify",
-			   GTK_TYPE_JUSTIFICATION, GTK_ARG_READWRITE, ARG_JUSTIFY);
-  gtk_object_add_arg_type ("GtkWrapBox::hspacing",
-			   GTK_TYPE_UINT, GTK_ARG_READWRITE, ARG_HSPACING);
-  gtk_object_add_arg_type ("GtkWrapBox::vspacing",
-			   GTK_TYPE_UINT, GTK_ARG_READWRITE, ARG_VSPACING);
-  gtk_object_add_arg_type ("GtkWrapBox::line_justify",
-			   GTK_TYPE_JUSTIFICATION, GTK_ARG_READWRITE, ARG_LINE_JUSTIFY);
-  gtk_object_add_arg_type ("GtkWrapBox::aspect_ratio",
-			   GTK_TYPE_FLOAT, GTK_ARG_READWRITE, ARG_ASPECT_RATIO);
-  gtk_object_add_arg_type ("GtkWrapBox::current_ratio",
-			   GTK_TYPE_FLOAT, GTK_ARG_READABLE, ARG_CURRENT_RATIO);
-  gtk_object_add_arg_type ("GtkWrapBox::max_children_per_line",
-			   GTK_TYPE_UINT, GTK_ARG_READWRITE, ARG_CHILD_LIMIT);
 
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_POSITION,
-					      g_param_spec_int ("position", NULL, NULL,
+  g_object_class_install_property (object_class,
+				   PROP_HOMOGENEOUS,
+				   g_param_spec_boolean ("homogeneous",
+							 NULL,
+							 NULL,
+							 FALSE,
+							 G_PARAM_READWRITE));
+  g_object_class_install_property (object_class,
+				   PROP_JUSTIFY,
+				   g_param_spec_enum ("justify",
+						      NULL,
+						      NULL,
+						      GTK_TYPE_JUSTIFICATION,
+						      GTK_JUSTIFY_LEFT,
+						      G_PARAM_READWRITE));
+  g_object_class_install_property (object_class,
+				   PROP_HSPACING,
+				   g_param_spec_uint ("hspacing",
+						      NULL,
+						      NULL,
+						      0,
+						      G_MAXINT,
+						      0,
+						      G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
+				   PROP_VSPACING,
+				   g_param_spec_uint ("vspacing",
+						      NULL,
+						      NULL,
+						      0,
+						      G_MAXINT,
+						      0,
+						      G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
+				   PROP_LINE_JUSTIFY,
+				   g_param_spec_enum ("line_justify",
+						      NULL,
+						      NULL,
+						      GTK_TYPE_JUSTIFICATION,
+						      GTK_JUSTIFY_BOTTOM,
+						      G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
+				   PROP_ASPECT_RATIO,
+				   g_param_spec_float ("aspect_ratio",
+						       NULL,
+						       NULL,
+						       0.0,
+						       G_MAXFLOAT,
+						       1.0,
+						       G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
+				   PROP_CURRENT_RATIO,
+				   g_param_spec_float ("current_ratio",
+						       NULL,
+						       NULL,
+						       0.0,
+						       G_MAXFLOAT,
+						       1.0,
+						       G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class,
+				   PROP_CHILD_LIMIT,
+				   g_param_spec_uint ("max_children_per_line",
+						      NULL,
+						      NULL,
+						      1,
+						      32767,
+						      32767,
+						      G_PARAM_READWRITE));
+
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_POSITION,
+					      g_param_spec_int ("position",
+								NULL,
+								NULL,
 								-1, G_MAXINT, 0,
 								G_PARAM_READWRITE));
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_HEXPAND,
-					      g_param_spec_boolean ("hexpand", NULL, NULL,
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_HEXPAND,
+					      g_param_spec_boolean ("hexpand",
+								    NULL,
+								    NULL,
 								    FALSE,
 								    G_PARAM_READWRITE));
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_HFILL,
-					      g_param_spec_boolean ("hfill", NULL, NULL,
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_HFILL,
+					      g_param_spec_boolean ("hfill",
+								    NULL,
+								    NULL,
 								    FALSE,
 								    G_PARAM_READWRITE));
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_VEXPAND,
-					      g_param_spec_boolean ("vexpand", NULL, NULL,
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_VEXPAND,
+					      g_param_spec_boolean ("vexpand",
+								    NULL,
+								    NULL,
 								    FALSE,
 								    G_PARAM_READWRITE));
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_VFILL,
-					      g_param_spec_boolean ("vfill", NULL, NULL,
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_VFILL,
+					      g_param_spec_boolean ("vfill",
+								    NULL,
+								    NULL,
 								    FALSE,
 								    G_PARAM_READWRITE));
-  gtk_container_class_install_child_property (container_class, CHILD_PROP_VFILL,
-					      g_param_spec_boolean ("wrapped", NULL, NULL,
+  gtk_container_class_install_child_property (container_class,
+					      CHILD_PROP_VFILL,
+					      g_param_spec_boolean ("wrapped",
+								    NULL,
+								    NULL,
 								    FALSE,
 								    G_PARAM_READWRITE));
 }
@@ -201,84 +276,86 @@ gtk_wrap_box_init (GtkWrapBox *wbox)
   wbox->line_justify = GTK_JUSTIFY_BOTTOM;
   wbox->n_children = 0;
   wbox->children = NULL;
-  wbox->aspect_ratio = 1;
+  wbox->aspect_ratio = 1.0;
   wbox->child_limit = 32767;
 }
 
 static void
-gtk_wrap_box_set_arg (GtkObject *object,
-		      GtkArg    *arg,
-		      guint      arg_id)
+gtk_wrap_box_set_property (GObject      *object,
+			   guint         property_id,
+			   const GValue *value,
+			   GParamSpec   *pspec)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (object);
   
-  switch (arg_id)
+  switch (property_id)
     {
-    case ARG_HOMOGENEOUS:
-      gtk_wrap_box_set_homogeneous (wbox, GTK_VALUE_BOOL (*arg));
+    case PROP_HOMOGENEOUS:
+      gtk_wrap_box_set_homogeneous (wbox, g_value_get_boolean (value));
       break;
-    case ARG_JUSTIFY:
-      gtk_wrap_box_set_justify (wbox, GTK_VALUE_ENUM (*arg));
+    case PROP_JUSTIFY:
+      gtk_wrap_box_set_justify (wbox, g_value_get_enum (value));
       break;
-    case ARG_LINE_JUSTIFY:
-      gtk_wrap_box_set_line_justify (wbox, GTK_VALUE_ENUM (*arg));
+    case PROP_LINE_JUSTIFY:
+      gtk_wrap_box_set_line_justify (wbox, g_value_get_enum (value));
       break;
-    case ARG_HSPACING:
-      gtk_wrap_box_set_hspacing (wbox, GTK_VALUE_UINT (*arg));
+    case PROP_HSPACING:
+      gtk_wrap_box_set_hspacing (wbox, g_value_get_uint (value));
       break;
-    case ARG_VSPACING:
-      gtk_wrap_box_set_vspacing (wbox, GTK_VALUE_UINT (*arg));
+    case PROP_VSPACING:
+      gtk_wrap_box_set_vspacing (wbox, g_value_get_uint (value));
       break;
-    case ARG_ASPECT_RATIO:
-      gtk_wrap_box_set_aspect_ratio (wbox, GTK_VALUE_FLOAT (*arg));
+    case PROP_ASPECT_RATIO:
+      gtk_wrap_box_set_aspect_ratio (wbox, g_value_get_float (value));
       break;
-    case ARG_CHILD_LIMIT:
-      if (wbox->child_limit != GTK_VALUE_UINT (*arg))
-	{
-	  wbox->child_limit = CLAMP (GTK_VALUE_UINT (*arg), 1, 32767);
-	  gtk_widget_queue_resize (GTK_WIDGET (wbox));
-	}
+    case PROP_CHILD_LIMIT:
+      if (wbox->child_limit != g_value_get_uint (value))
+	gtk_widget_queue_resize (GTK_WIDGET (wbox));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
 static void
-gtk_wrap_box_get_arg (GtkObject *object,
-		      GtkArg    *arg,
-		      guint      arg_id)
+gtk_wrap_box_get_property (GObject    *object,
+			   guint       property_id,
+			   GValue     *value,
+			   GParamSpec *pspec)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (object);
   GtkWidget *widget = GTK_WIDGET (object);
   
-  switch (arg_id)
+  switch (property_id)
     {
-    case ARG_HOMOGENEOUS:
-      GTK_VALUE_BOOL (*arg) = wbox->homogeneous;
+    case PROP_HOMOGENEOUS:
+      g_value_set_boolean (value, wbox->homogeneous);
       break;
-    case ARG_JUSTIFY:
-      GTK_VALUE_ENUM (*arg) = wbox->justify;
+    case PROP_JUSTIFY:
+      g_value_set_enum (value, wbox->justify);
       break;
-    case ARG_LINE_JUSTIFY:
-      GTK_VALUE_ENUM (*arg) = wbox->line_justify;
+    case PROP_LINE_JUSTIFY:
+      g_value_set_enum (value, wbox->line_justify);
       break;
-    case ARG_HSPACING:
-      GTK_VALUE_UINT (*arg) = wbox->hspacing;
+    case PROP_HSPACING:
+      g_value_set_uint (value, wbox->hspacing);
       break;
-    case ARG_VSPACING:
-      GTK_VALUE_UINT (*arg) = wbox->vspacing;
+    case PROP_VSPACING:
+      g_value_set_uint (value, wbox->vspacing);
       break;
-    case ARG_ASPECT_RATIO:
-      GTK_VALUE_FLOAT (*arg) = wbox->aspect_ratio;
+    case PROP_ASPECT_RATIO:
+      g_value_set_float (value, wbox->aspect_ratio);
       break;
-    case ARG_CURRENT_RATIO:
-      GTK_VALUE_FLOAT (*arg) = (((gfloat) widget->allocation.width) /
-				((gfloat) widget->allocation.height));
+    case PROP_CURRENT_RATIO:
+      g_value_set_float (value, (((gfloat) widget->allocation.width) /
+				 ((gfloat) widget->allocation.height)));
       break;
-    case ARG_CHILD_LIMIT:
-      GTK_VALUE_UINT (*arg) = wbox->child_limit;
+    case PROP_CHILD_LIMIT:
+      g_value_set_uint (value, wbox->child_limit);
       break;
     default:
-      arg->type = GTK_TYPE_INVALID;
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -291,10 +368,15 @@ gtk_wrap_box_set_child_property (GtkContainer    *container,
 				 GParamSpec      *pspec)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (container);
-  gboolean hexpand = FALSE, hfill = FALSE, vexpand = FALSE, vfill = FALSE, wrapped = FALSE;
-  
+  gboolean hexpand = FALSE, hfill = FALSE;
+  gboolean vexpand = FALSE, vfill = FALSE;
+  gboolean wrapped = FALSE;
+
   if (property_id != CHILD_PROP_POSITION)
-    gtk_wrap_box_query_child_packing (wbox, child, &hexpand, &hfill, &vexpand, &vfill, &wrapped);
+    gtk_wrap_box_query_child_packing (wbox, child,
+				      &hexpand, &hfill,
+				      &vexpand, &vfill,
+				      &wrapped);
   
   switch (property_id)
     {
@@ -345,10 +427,15 @@ gtk_wrap_box_get_child_property (GtkContainer    *container,
 				 GParamSpec      *pspec)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (container);
-  gboolean hexpand = FALSE, hfill = FALSE, vexpand = FALSE, vfill = FALSE, wrapped = FALSE;
+  gboolean hexpand = FALSE, hfill = FALSE;
+  gboolean vexpand = FALSE, vfill = FALSE;
+  gboolean wrapped = FALSE;
   
   if (property_id != CHILD_PROP_POSITION)
-    gtk_wrap_box_query_child_packing (wbox, child, &hexpand, &hfill, &vexpand, &vfill, &wrapped);
+    gtk_wrap_box_query_child_packing (wbox, child,
+				      &hexpand, &hfill,
+				      &vexpand, &vfill,
+				      &wrapped);
   
   switch (property_id)
     {
@@ -385,7 +472,7 @@ gtk_wrap_box_get_child_property (GtkContainer    *container,
     }
 }
 
-static GtkType
+static GType
 gtk_wrap_box_child_type	(GtkContainer *container)
 {
   return GTK_TYPE_WIDGET;

@@ -1,3 +1,23 @@
+2003-03-05  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: require GTK+ 2.2. The 2.0.x series is no longer
+	maintained, and there are some very real bugs that won't go away.
+
+	* app/gui/about-dialog.c
+	* app/widgets/gimppreviewrenderer.c
+	* app/widgets/gimptoolbox-color-area.c
+	* plug-ins/common/uniteditor.c: remove special casing for GTK+ 2.0
+	vs. 2.2
+
+	* app/widgets/gtkwrapbox.[ch]
+	* app/widgets/gtkhwrapbox.[ch]
+	* app/widgets/gtkvwrapbox.[ch]: remove deprecated functions
+
+	* app/gui/gui.c: free return value of gdk_get_display ()
+
+	* app/widgets/gimpcontainertreeview.c: use gtk_list_store_move_before ()
+	for reordering.
+
 2003-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am
