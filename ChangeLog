@@ -1,3 +1,12 @@
+1999-01-19  Jay Cox  <jaycox@earthlink.net>
+
+	* app/brush_select.c: make the edit button active if the default
+ 	brush is a generated brush.  Make sure brush spacing >= 1.0
+	* app/gimpbrushlist.c: do not add a brush to the brush list if it
+ 	failed to load
+	* app/gradient.c:  Fix typo that caused a crash with --no-data
+	* app/main.c: be more forgiving of fp rounding in gserialize tests
+
 Mon Jan 18 23:36:57 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/menus.c: include module browser, plus re-instate the 'swap

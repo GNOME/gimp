@@ -301,7 +301,7 @@ brush_select_new (gchar * title,
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
   label = gtk_label_new (_("Spacing:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-  bsp->spacing_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0));
+  bsp->spacing_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
   slider = gtk_hscale_new (bsp->spacing_data);
   gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -410,7 +410,7 @@ brush_select_new (gchar * title,
 	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
 	}
       bsp->redraw = old_value;
-      if (GIMP_IS_BRUSH_GENERATED(active) && title)
+      if (GIMP_IS_BRUSH_GENERATED(active))
 	gtk_widget_set_sensitive (bsp->edit_button, 1);
       else
 	gtk_widget_set_sensitive (bsp->edit_button, 0); 

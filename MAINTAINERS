@@ -74,8 +74,9 @@ Name:  Jay Cox
 Email:  jaycox@earthlink.net
 url:
 ircnick: j
-expertise: Brushes, selection functions, Parasites.
-current work:  Parasites
+expertise: Brushes, selection functions, Parasites, paint_funcs, 
+           threads, cmyk, xcf.
+current work:  Multi-processor support.
 commit access: yes
 
 Name: Larry Ewing

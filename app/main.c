@@ -453,9 +453,11 @@ static void test_gserialize()
 
   g_deserialize(test_struct_descript,  (char *)(void*)to, ser_1);
 
+#define EPSILON .0001
+
   if (to->test_gint32 != ts->test_gint32)
     g_message("gint32 test failed (please email your system configuration to jaycox@earthlink.net): %d\n", to->test_gint32);
-  if (to->test_float != ts->test_float)
+  if (to->test_float + EPSILON < ts->test_float || to->test_float - EPSILON > ts->test_float)
     g_message("float test failed (please email your system configuration to jaycox@earthlink.net): %f\n", to->test_float);
   if (strcmp(to->test_string, ts->test_string) != 0)
     g_message("string test failed (please email your system configuration to jaycox@earthlink.net): %s\n", to->test_string);

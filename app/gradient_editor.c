@@ -5980,7 +5980,7 @@ build_user_filename(char *name, char *path_str)
 			path = g_strdup(token);
 		} /* else */
 
-		filename = g_strdup_printf(filename, "%s/%s", path, name);
+		filename = g_strdup_printf("%s/%s", path, name);
 
 		g_free(path);
 	} /* if */

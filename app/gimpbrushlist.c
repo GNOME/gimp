@@ -151,12 +151,21 @@ brush_load(char *filename)
 {
   if (strcmp(&filename[strlen(filename) - 4], ".gbr") == 0)
   {
-    gimp_brush_list_add(brush_list, gimp_brush_new(filename));
+    GimpBrush *brush;
+    brush = gimp_brush_new(filename);
+    if (brush != NULL)
+      gimp_brush_list_add(brush_list, brush);
+    else
+      g_message("Warning: failed to load brush \"%s\"", filename);
   }
   else if (strcmp(&filename[strlen(filename) - 4], ".vbr") == 0)
   {
-    gimp_brush_list_add(brush_list,
-			GIMP_BRUSH(gimp_brush_generated_load(filename)));
+    GimpBrushGenerated *brush;
+    brush = gimp_brush_generated_load(filename);
+    if (brush != NULL)
+      gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+    else
+      g_message("Warning: failed to load brush \"%s\"", filename);
   }
 }
 
