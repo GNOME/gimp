@@ -1,21 +1,19 @@
 Developers documentation 
 ------------------------
 
-This directory holds information that you will find
-useful if you develop a Gimp plug-in or want to work
-on the Gimp core.
+This directory holds information that you will find useful if you
+develop a GIMP plug-in or want to work on the GIMP core.
 
    libgimp
    libgimpbase
    libgimpcolor
    libgimpmath
-   libgimpwidgets  - complete libgimp documentation generated
-                     from the source; see README.gtkdoc
-
-   gih.txt         - description of the GIH format used to 
-                     store a series of pixmap brushes
-   gpb.txt         - description of the GPB format used to
-                     store pixmap brushes
+   libgimpmodule
+   libgimpwidgets  - complete libgimp documentation generated from
+                     the source; see README.gtkdoc
+   gih.txt         - description of the GIH format used to store a
+                     series of pixmap brushes
+   gpb.txt         - description of the GPB format for pixmap brushes
    parasites.txt   - descriptions of known parasites
    undo.txt        - description of the undo system
    xcf.txt         - description of Gimp's XCF format 

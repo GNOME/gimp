@@ -1,5 +1,7 @@
 2002-11-24  Sven Neumann  <sven@gimp.org>
 
+	* README
+	* README.gtkdoc
 	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimpwidgets.sgml: updated.
 
