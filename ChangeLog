@@ -1,5 +1,6 @@
 2004-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* menus/Makefile.am
 	* menus/toolbox-menu.xml: added the toolbox menu.
 
 2004-04-19  Michael Natterer  <mitch@gimp.org>
