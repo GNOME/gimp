@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-12 17:40+0100\n"
-"PO-Revision-Date: 2004-12-12 17:42+0100\n"
+"POT-Creation-Date: 2004-12-12 18:58+0100\n"
+"PO-Revision-Date: 2004-12-12 18:55+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -10165,7 +10165,24 @@ msgstr "Vordergrund: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Hintergrund: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:430
+#: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
+msgid "Close all tabs?"
+msgstr "Alle Reiter schließen?"
+
+#: app/widgets/gimpdock.c:354
+msgid "Close all Tabs"
+msgstr "Alle Reiter schließen"
+
+#: app/widgets/gimpdock.c:361
+#, c-format
+msgid ""
+"This window has %d tabs open. Closing the window will also close all its "
+"tabs."
+msgstr ""
+"Dieses Fenster hat %d offene Reiter. Das Schließen dieses Fensters wird auch "
+"diese schließen."
+
+#: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
 msgstr "Hier können Dialoge angedockt werden."
 

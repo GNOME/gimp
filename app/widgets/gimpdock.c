@@ -39,6 +39,8 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
+#include "gimpmessagebox.h"
+#include "gimpmessagedialog.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -79,6 +81,8 @@ static void        gimp_dock_get_property      (GObject               *object,
 
 static void        gimp_dock_destroy           (GtkObject             *object);
 
+static gboolean    gimp_dock_delete_event      (GtkWidget             *widget,
+                                                GdkEventAny	      *event);
 static gboolean    gimp_dock_key_press_event   (GtkWidget             *widget,
                                                 GdkEventKey           *kevent);
 
@@ -178,18 +182,19 @@ gimp_dock_class_init (GimpDockClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_DOCKBOOK);
 
-  object_class->constructor  = gimp_dock_constructor;
-  object_class->set_property = gimp_dock_set_property;
-  object_class->get_property = gimp_dock_get_property;
+  object_class->constructor     = gimp_dock_constructor;
+  object_class->set_property    = gimp_dock_set_property;
+  object_class->get_property    = gimp_dock_get_property;
 
-  gtk_object_class->destroy  = gimp_dock_destroy;
+  gtk_object_class->destroy     = gimp_dock_destroy;
 
+  widget_class->delete_event    = gimp_dock_delete_event;
   widget_class->key_press_event = gimp_dock_key_press_event;
   widget_class->style_set       = gimp_dock_style_set;
 
-  klass->setup               = NULL;
-  klass->book_added          = gimp_dock_real_book_added;
-  klass->book_removed        = gimp_dock_real_book_removed;
+  klass->setup                  = NULL;
+  klass->book_added             = gimp_dock_real_book_added;
+  klass->book_removed           = gimp_dock_real_book_removed;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -323,6 +328,45 @@ gimp_dock_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gboolean
+gimp_dock_delete_event (GtkWidget   *widget,
+                        GdkEventAny *event)
+{
+  GimpDock *dock = GIMP_DOCK (widget);
+  GList    *list;
+  gboolean  retval = FALSE;
+  gint      n;
+
+  for (list = dock->dockbooks, n = 0; list; list = list->next)
+    n += gtk_notebook_get_n_pages (GTK_NOTEBOOK (list->data));
+
+  if (n > 1)
+    {
+      GtkWidget *dialog =
+        gimp_message_dialog_new (_("Close all tabs?"),
+                                 GIMP_STOCK_WARNING,
+                                 widget, GTK_DIALOG_MODAL,
+                                 NULL, NULL,
+
+                                 GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
+                                 _("Close all Tabs"), GTK_RESPONSE_OK,
+
+                                 NULL);
+
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Close all tabs?"));
+      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                 _("This window has %d tabs open. Closing the "
+                                   "window will also close all its tabs."), n);
+
+      retval = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_CANCEL);
+
+      gtk_widget_destroy (dialog);
+    }
+
+  return retval;
 }
 
 static gboolean

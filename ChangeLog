@@ -1,3 +1,9 @@
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdock.c: show a confirmation dialog if a dock
+	with multiple tabs is being closed. Sorry for the new strings,
+	they were carefully copied from gnome-terminal.
+
 2004-12-12  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/pnm.c: make export do the right thing when
