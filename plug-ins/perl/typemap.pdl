@@ -1,0 +1,16 @@
+TYPEMAP
+pdl*	T_PDL
+pdl *	T_PDL
+Logical	T_IV
+float	T_NV
+
+INPUT
+
+T_PDL
+	$var = PDL->SvPDLV($arg)
+
+
+OUTPUT
+
+T_PDL
+	PDL->SetSV_PDL($arg,$var);

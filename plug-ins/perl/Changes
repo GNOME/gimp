@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+1.091 Sun May 23 13:21:34 CEST 1999
+	- include a fake typemap.pdl.
+
 1.09 Fri May 21 14:12:02 CEST 1999
         - added gimpdoc, a simple man-like help viewer.
 	- corrected PDL version check to work with version 2.001.

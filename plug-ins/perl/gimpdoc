@@ -1,0 +1,145 @@
+#!/usr/bin/perl
+
+# -r	print raw format (i.e. suitable for groff -man)
+
+use Gimp qw(:consts spawn_options=no-data);
+use Getopt::Std;
+#use Config '%Config';
+
+$VERSION=$Gimp::VERSION;
+
+getopts('r');
+
+if (@ARGV<1) {
+   my $me = $0;
+   $me =~ s,.*[/\\],,;
+   print STDERR <<EOF;
+
+Usage: $me [-r] function...
+
+Options:
+     -r  print raw tbl|nroff source.
+
+EOF
+   exit(1);
+}
+
+Gimp::init;
+
+for (@ARGV) {
+   push @matches, Gimp->procedural_db_query ($_,"","","","","","");
+}
+
+@matches or die "No matching function found\n";
+
+@matches = sort @matches;
+
+$filter = "| tbl | nroff -man | ( eval '$ENV{PAGER}' || less || pg || more )";
+$filter = ">&STDOUT" if $opt_r;
+
+open PAGER,$filter or die "unable to open pipe to the pager ($filter)\n";
+
+if(@matches>1) {
+   print PAGER ".TH gimpdoc gimpdoc\n.SH MATCHING FUNCTIONS\n",join("\n.br\n",@matches),"\n";
+}
+
+%pf_type2string = (
+         &PARAM_INT8		=> 'INT8',
+         &PARAM_INT16		=> 'INT16',
+         &PARAM_INT32		=> 'INT32',
+         &PARAM_FLOAT		=> 'FLOAT',
+         &PARAM_STRING		=> 'STRING',
+         &PARAM_INT8ARRAY	=> 'INT8ARRAY',
+         &PARAM_INT16ARRAY	=> 'INT16ARRAY',
+         &PARAM_INT32ARRAY	=> 'INT32ARRAY',
+         &PARAM_FLOATARRAY	=> 'FLOATARRAY',
+         &PARAM_STRINGARRAY	=> 'STRINGARRAY',
+         &PARAM_COLOR		=> 'COLOUR',
+         &PARAM_IMAGE		=> 'IMAGE',
+         &PARAM_LAYER		=> 'LAYER',
+         &PARAM_CHANNEL		=> 'CHANNEL',
+         &PARAM_DRAWABLE	=> 'DRAWABLE',
+         &PARAM_DISPLAY		=> 'DISPLAY',
+         &PARAM_SELECTION	=> 'SELECTION',
+         &PARAM_PARASITE	=> 'PARASITE',
+
+         &PARAM_STATUS		=> 'STATUS',
+         &PARAM_REGION		=> 'REGION',
+         &PARAM_BOUNDARY	=> 'BOUNDARY',
+         &PARAM_PATH		=> 'PATH',
+);
+
+sub type2str {
+  $pf_type2string{$_[0]}
+  ? $pf_type2string{$_[0]}
+  : "UNKNOWN($_[0])";
+}
+
+my $version = "gimp-".Gimp->major_version.".".Gimp->minor_version;
+my $theader = <<EOF;
+.TS H
+expand ;
+l l l
+___
+lw20 lw20 lw60.
+TYPE	NAME	DESCRIPTION
+EOF
+
+for $name (@matches) {
+    my ($blurb, $help, $author, $copyright, $date, $type, $nargs, $nvals) =
+       Gimp->procedural_db_proc_info ($name);
+    my @args = map [Gimp->procedural_db_proc_arg ($name, $_)],0..($nargs-1);
+    my @vals = map [Gimp->procedural_db_proc_val ($name, $_)],0..($nvals-1);
+    
+    my $args;
+    my $vals;
+
+    if ($nvals == 0) {
+       $vals = "";
+    } elsif ($nvals == 1) {
+       $vals = "$vals[0][1]\\ =\\ ";
+    } else {
+       $vals = "(".join(",",map $_->[1],@vals).")\\ =\\ ";
+    }
+
+    if ($nargs == 0) {
+       $args = "";
+    } else {
+       $args = "\\ (".join(",",map $_->[1],@args).")";
+    }
+    
+    print PAGER <<EOF;
+.TH "$name" "gimpdoc" "$date" "$version"
+.SH NAME
+\\fB$name\\fR \- $blurb
+.SH SYNOPSIS
+$vals\\fB$name\\fR$args
+.SH DESCRIPTION
+$help
+EOF
+    if ($nargs) {
+       print PAGER ".SH INPUT ARGUMENTS\n$theader";
+       for (@args) {
+          print PAGER join("	",type2str($_->[0])." ",$_->[1]." ","T{\n".$_->[2]."\nT}"),"\n"; 
+       }
+       print PAGER ".TE\n";
+    }
+
+    if ($nvals) {
+       print PAGER ".SH RETURN VALUES\n$theader";
+       for (@vals) {
+          print PAGER join("	",type2str($_->[0])." ",$_->[1]." ","T{\n".$_->[2]."\nT}"),"\n"; 
+       }
+       print PAGER ".TE\n";
+    }
+    print PAGER <<EOF;
+.SH AUTHOR
+$author
+.br
+(c)$date $copyright
+EOF
+}
+
+Gimp::end;
+
+close PAGER;

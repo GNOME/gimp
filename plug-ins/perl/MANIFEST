@@ -9,6 +9,7 @@ TODO
 AUTHORS
 Makefile.PL
 typemap
+typemap.pdl
 Gimp.pm
 Gimp.xs
 scm2perl

@@ -123,9 +123,11 @@ if ($PDL) {
    $do_config_msg && print "checking for PDL include path... ",&PDL::Core::Dev::PDL_INCLUDE,"\n";
    $do_config_msg && print "checking for PDL typemap... ",&PDL::Core::Dev::PDL_TYPEMAP,"\n";
 
-   $cfg{pdl_inc}       = $pdl_inc = &PDL::Core::Dev::PDL_INCLUDE;
-   $cfg{pdl_typemaps } = "@{[@pdl_typemaps = &PDL::Core::Dev::PDL_TYPEMAP]}";
+   $cfg{pdl_inc}      = $pdl_inc = &PDL::Core::Dev::PDL_INCLUDE;
+   $cfg{pdl_typemaps} = "@{[@pdl_typemaps = &PDL::Core::Dev::PDL_TYPEMAP]}";
    $DEFINE1	.= " -DHAVE_PDL=1";
+} else {
+   @pdl_typemaps = "$topdir/typemap.pdl";
 }
 
 $cfg{INC1}    = $INC1;

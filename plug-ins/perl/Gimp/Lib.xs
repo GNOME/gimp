@@ -112,7 +112,7 @@ static pdl *new_pdl (int a, int b, int c)
   return p;
 }
 
-static old_pdl (pdl **p, short ndims, int dim0)
+static void old_pdl (pdl **p, short ndims, int dim0)
 {
   PDL->converttype (p, PDL_B, PDL_PERM);
   PDL->make_physical (*p);
