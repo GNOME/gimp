@@ -1144,6 +1144,21 @@ CODE
     );
 }
 
+# Incomplete
+
+sub ink {
+    $blurb = 'Paint in the current brush without sub-pixel sampling.';
+
+    $help = 'fixme fixme';
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+}
+
 @procs = qw(airbrush blend bucket_fill by_color_select clone color_picker
 	    convolve crop ellipse_select eraser flip free_select fuzzy_select
 	    paintbrush pencil perspective rect_select rotate scale shear);

@@ -65,13 +65,6 @@ struct _OverwriteBox
   char *      raw_filename;
 };
 
-static Argument* register_load_handler_invoker (Argument *args);
-static Argument* register_magic_load_handler_invoker (Argument *args);
-static Argument* register_save_handler_invoker (Argument *args);
-static Argument* file_load_invoker             (Argument *args);
-static Argument* file_save_invoker             (Argument *args);
-static Argument* file_temp_name_invoker        (Argument *args);
-
 static void file_overwrite              (char *filename,
 					 char* raw_filename);
 static void file_overwrite_yes_callback (GtkWidget *w,
@@ -123,8 +116,6 @@ static int  file_check_magic_list (GSList *magics_list,
                                    unsigned char *head,
                                    FILE *ifp);
 
-static PlugInProcDef* file_proc_find         (GSList *procs,
-					 char   *filename);
 static void      file_update_menus      (GSList *procs,
 					 int     image_type);
 
@@ -142,195 +133,8 @@ static GtkWidget  *open_options_genbuttonlabel = NULL;
 /* Some state for the thumbnailer */
 static gchar      *preview_fullname = NULL;
 
-
-/* Load by extension.
- */
-static ProcArg file_load_args[] =
-{
-  { PDB_INT32, "run_mode", "Interactive, non-interactive." },
-  { PDB_STRING, "filename", "The name of the file to load." },
-  { PDB_STRING, "raw_filename", "The name entered." },
-};
-
-static ProcArg file_load_return_vals[] =
-{
-  { PDB_IMAGE, "image", "Output image." },
-};
-
-static ProcRecord file_load_proc =
-{
-  "gimp_file_load",
-  "Loads a file by extension",
-  "This procedure invokes the correct file load handler according to the file's extension and/or prefix.  The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
-  "Josh MacDonald",
-  "Josh MacDonald",
-  "1997",
-  PDB_INTERNAL,
-  3,
-  file_load_args,
-  1,
-  file_load_return_vals,
-  { { file_load_invoker } },
-};
-
-/* Save by extension.
- */
-static ProcArg file_save_args[] =
-{
-  { PDB_INT32, "run_mode", "Interactive, non-interactive" },
-  { PDB_IMAGE, "image", "Input image" },
-  { PDB_DRAWABLE, "drawable", "Drawable to save" },
-  { PDB_STRING, "filename", "The name of the file to save the image in" },
-  { PDB_STRING, "raw_filename", "The name of the file to save the image in" }
-};
-
-static ProcRecord file_save_proc =
-{
-  "gimp_file_save",
-  "Saves a file by extension",
-  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp she wants to fetch a URL, and the full pathname will not look like a URL.",
-  "Josh MacDonald",
-  "Josh MacDonald",
-  "1997",
-  PDB_INTERNAL,
-  5,
-  file_save_args,
-  0,
-  NULL,
-  { { file_save_invoker } },
-};
-
-/* Temp name.
- */
-
-static ProcArg file_temp_name_args[] =
-{
-  { PDB_STRING, "extension", "The extension the file will have." }
-};
-
-static ProcArg file_temp_name_values[] =
-{
-  { PDB_STRING, "name", "The temp name." }
-};
-
-static ProcRecord file_temp_name_proc =
-{
-  "gimp_temp_name",
-  "Generates a unique filename.",
-  "Generates a unique filename using the temp path supplied in the user's gimprc.",
-  "Josh MacDonald",
-  "Josh MacDonald",
-  "1997",
-  PDB_INTERNAL,
-  1,
-  file_temp_name_args,
-  1,
-  file_temp_name_values,
-  { { file_temp_name_invoker } },
-};
-
-/* Register magic load handler.
- */
-
-static ProcArg register_magic_load_handler_args[] =
-{
-  { PDB_STRING,
-    "procedure_name",
-    "the name of the procedure to be used for loading" },
-  { PDB_STRING,
-    "extensions",
-    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
-  { PDB_STRING,
-    "prefixes",
-    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
-  { PDB_STRING,
-    "magics",
-    "comma separated list of magic file information this handler can load (ie. \"0,string,GIF\")" },
-};
-
-static ProcRecord register_magic_load_handler_proc =
-{
-  "gimp_register_magic_load_handler",
-  "Registers a file load handler procedure",
-  "Registers a procedural database procedure to be called to load files of a \
-      particular file format using magic file information.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  4,
-  register_magic_load_handler_args,
-  0,
-  NULL,
-  { { register_magic_load_handler_invoker } },
-};
-
-/* Register load handler.
- */
-
-static ProcArg register_load_handler_args[] =
-{
-  { PDB_STRING,
-    "procedure_name",
-    "the name of the procedure to be used for loading" },
-  { PDB_STRING,
-    "extensions",
-    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
-  { PDB_STRING,
-    "prefixes",
-    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
-};
-
-static ProcRecord register_load_handler_proc =
-{
-  "gimp_register_load_handler",
-  "Registers a file load handler procedure",
-  "Registers a procedural database procedure to be called to load files of a particular file format.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  3,
-  register_load_handler_args,
-  0,
-  NULL,
-  { { register_load_handler_invoker } },
-};
-
-/* Register save handler.
- */
-
-static ProcArg register_save_handler_args[] =
-{
-  { PDB_STRING,
-    "procedure_name",
-    "the name of the procedure to be used for saving" },
-  { PDB_STRING,
-    "extensions",
-    "comma separated list of extensions this handler can save (ie. \"jpeg,jpg\")" },
-  { PDB_STRING,
-    "prefixes",
-    "comma separated list of prefixes this handler can save (ie. \"http:,ftp:\")" },
-};
-
-static ProcRecord register_save_handler_proc =
-{
-  "gimp_register_save_handler",
-  "Registers a file save handler procedure",
-  "Registers a procedural database procedure to be called to save files in a particular file format.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  3,
-  register_save_handler_args,
-  0,
-  NULL,
-  { { register_save_handler_invoker } },
-};
-
-static GSList *load_procs = NULL;
-static GSList *save_procs = NULL;
+GSList *load_procs = NULL;
+GSList *save_procs = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
@@ -356,18 +160,12 @@ file_message_box_close_callback (GtkWidget *w,
 }
 
 void
-file_ops_pre_init ()
+file_ops_pre_init (void)
 {
-  procedural_db_register (&register_magic_load_handler_proc);
-  procedural_db_register (&register_load_handler_proc);
-  procedural_db_register (&register_save_handler_proc);
-  procedural_db_register (&file_load_proc);
-  procedural_db_register (&file_save_proc);
-  procedural_db_register (&file_temp_name_proc);
 }
 
 void
-file_ops_post_init ()
+file_ops_post_init (void)
 {
   GtkMenuEntry entry;
   PlugInProcDef *file_proc;
@@ -403,110 +201,6 @@ file_ops_post_init ()
 
       menus_create (&entry, 1);
     }
-}
-
-static Argument*
-register_load_handler_invoker (Argument *args)
-{
-  Argument fargs[4];
-
-  memcpy ((char *)fargs, (char *)args, 3*sizeof (args[0]));
-  fargs[3].arg_type = PDB_STRING;
-  fargs[3].value.pdb_pointer = NULL;
-
-  return (register_magic_load_handler_invoker (fargs));
-}
-
-static Argument*
-register_magic_load_handler_invoker (Argument *args)
-{
-  Argument *return_args;
-  ProcRecord *proc;
-  PlugInProcDef* file_proc;
-  int success;
-
-  success = FALSE;
-
-  proc = procedural_db_lookup ((char*) args[0].value.pdb_pointer);
-
-  if (proc && ((proc->num_args < 3) ||
-	       (proc->num_values < 1) ||
-	       (proc->args[0].arg_type != PDB_INT32) ||
-	       (proc->args[1].arg_type != PDB_STRING) ||
-	       (proc->args[2].arg_type != PDB_STRING) ||
-	       (proc->values[0].arg_type != PDB_IMAGE)))
-    {
-      g_message (_("load handler \"%s\" does not take the standard load handler args"),
-		 (char*) args[0].value.pdb_pointer);
-      goto done;
-    }
-
-  file_proc = plug_in_file_handler ((char*) args[0].value.pdb_pointer,
-				    (char*) args[1].value.pdb_pointer,
-				    (char*) args[2].value.pdb_pointer,
-				    (char*) args[3].value.pdb_pointer);
-
-  if (!file_proc)
-    {
-      g_message (_("attempt to register non-existant load handler \"%s\""),
-		 (char*) args[0].value.pdb_pointer);
-      goto done;
-    }
-
-  load_procs = g_slist_prepend (load_procs, file_proc);
-
-  success = TRUE;
-
-done:
-
-  return_args = procedural_db_return_args (&register_load_handler_proc, success);
-
-  return return_args;
-}
-
-static Argument*
-register_save_handler_invoker (Argument *args)
-{
-  Argument *return_args;
-  ProcRecord *proc;
-  PlugInProcDef* file_proc;
-  int success;
-
-  success = FALSE;
-
-  proc = procedural_db_lookup ((char*) args[0].value.pdb_pointer);
-  if (proc && ((proc->num_args < 5) ||
-	       (proc->args[0].arg_type != PDB_INT32) ||
-	       (proc->args[1].arg_type != PDB_IMAGE) ||
-	       (proc->args[2].arg_type != PDB_DRAWABLE) ||
-	       (proc->args[3].arg_type != PDB_STRING) ||
-	       (proc->args[4].arg_type != PDB_STRING)))
-    {
-      g_message (_("save handler \"%s\" does not take the standard save handler args"),
-		 (char*) args[0].value.pdb_pointer);
-      goto done;
-    }
-
-  file_proc = plug_in_file_handler ((char*) args[0].value.pdb_pointer,
-				    (char*) args[1].value.pdb_pointer,
-				    (char*) args[2].value.pdb_pointer,
-				    NULL);
-
-  if (!file_proc)
-    {
-      g_message (_("attempt to register non-existant save handler \"%s\""),
-		 (char*) args[0].value.pdb_pointer);
-      goto done;
-    }
-
-  save_procs = g_slist_prepend (save_procs, file_proc);
-
-  success = TRUE;
-
-done:
-  return_args = procedural_db_return_args (&register_save_handler_proc, success);
-
-  return return_args;
 }
 
 void
@@ -1823,7 +1517,7 @@ file_overwrite_no_callback (GtkWidget *w,
   gtk_widget_set_sensitive (GTK_WIDGET(filesave), TRUE);
 }
 
-static PlugInProcDef*
+PlugInProcDef*
 file_proc_find (GSList *procs,
 		char   *filename)
 {
@@ -1920,14 +1614,16 @@ file_proc_find (GSList *procs,
   return NULL;
 }
 
-static void file_convert_string (char *instr,
-                                 char *outmem,
-                                 int maxmem,
-                                 int *nmem)
-{               /* Convert a string in C-notation to array of char */
-  unsigned char *uin = (unsigned char *)instr;
-  unsigned char *uout = (unsigned char *)outmem;
-  unsigned char tmp[5], *tmpptr;
+static void
+file_convert_string (char *instr,
+		     char *outmem,
+		     int   maxmem,
+		     int  *nmem)
+{
+  /* Convert a string in C-notation to array of char */
+  guchar *uin = (guchar *) instr;
+  guchar *uout = (guchar *) outmem;
+  guchar tmp[5], *tmpptr;
   int k;
 
   while ((*uin != '\0') && ((((char *)uout) - outmem) < maxmem))
@@ -1972,20 +1668,20 @@ static void file_convert_string (char *instr,
 }
 
 static int
-file_check_single_magic (char *offset,
-                         char *type,
-                         char *value,
-                         int headsize,
-                         unsigned char *file_head,
-                         FILE *ifp)
+file_check_single_magic (char   *offset,
+                         char   *type,
+                         char   *value,
+                         int     headsize,
+                         guchar *file_head,
+                         FILE   *ifp)
 
 { /* Return values are 0: no match, 1: magic match, 2: size match */
   long offs;
-  unsigned long num_testval, num_operatorval;
-  unsigned long fileval;
+  gulong num_testval, num_operatorval;
+  gulong fileval;
   int numbytes, k, c = 0, found = 0;
   char *num_operator_ptr, num_operator, num_test;
-  unsigned char mem_testval[256];
+  guchar mem_testval[256];
 
   /* Check offset */
   if (sscanf (offset, "%ld", &offs) != 1) return (0);
@@ -2109,12 +1805,14 @@ file_check_single_magic (char *offset,
   return (found);
 }
 
-static int file_check_magic_list (GSList *magics_list,
-                                  int headsize,
-                                  unsigned char *head,
-                                  FILE *ifp)
+static int
+file_check_magic_list (GSList *magics_list,
+		       int     headsize,
+		       guchar *head,
+		       FILE   *ifp)
 
-{ /* Return values are 0: no match, 1: magic match, 2: size match */
+{
+  /* Return values are 0: no match, 1: magic match, 2: size match */
   char *offset, *type, *value;
   int and = 0;
   int found = 0, match_val;
@@ -2131,9 +1829,9 @@ static int file_check_magic_list (GSList *magics_list,
       match_val = file_check_single_magic (offset, type, value,
                                            headsize, head, ifp);
       if (and)
-          found = found && match_val;
+	found = found && match_val;
       else
-          found = match_val;
+	found = match_val;
 
       and = (strchr (offset, '&') != NULL);
       if ((!and) && found) return (match_val);
@@ -2155,72 +1853,4 @@ file_update_menus (GSList *procs,
       if (file_proc->db_info.proc_type != PDB_EXTENSION)
 	menus_set_sensitive (gettext(file_proc->menu_path), (file_proc->image_types_val & image_type));
     }
-}
-
-static Argument*
-file_load_invoker (Argument *args)
-{
-  PlugInProcDef *file_proc;
-  ProcRecord *proc;
-
-  file_proc = file_proc_find (load_procs, args[2].value.pdb_pointer);
-  if (!file_proc)
-    return procedural_db_return_args (&file_load_proc, FALSE);
-
-  proc = &file_proc->db_info;
-
-  return procedural_db_execute (proc->name, args);
-}
-
-static Argument*
-file_save_invoker (Argument *args)
-{
-  Argument *new_args;
-  Argument *return_vals;
-  PlugInProcDef *file_proc;
-  ProcRecord *proc;
-  int i;
-
-  file_proc = file_proc_find (save_procs, args[4].value.pdb_pointer);
-  if (!file_proc)
-    return procedural_db_return_args (&file_save_proc, FALSE);
-
-  proc = &file_proc->db_info;
-
-  new_args = g_new (Argument, proc->num_args);
-  memset (new_args, 0, (sizeof (Argument) * proc->num_args));
-
-  for (i = 0; i < proc->num_args; i++)
-    new_args[i].arg_type = proc->args[i].arg_type;
-
-  memcpy(new_args, args, (sizeof (Argument) * 5));
-
-  return_vals = procedural_db_execute (proc->name, new_args);
-  g_free (new_args);
-
-  return return_vals;
-}
-
-static Argument*
-file_temp_name_invoker (Argument *args)
-{
-  static gint id = 0;
-  static gint pid;
-  Argument *return_args;
-
-  GString *s = g_string_new (NULL);
-
-  if (id == 0)
-    pid = getpid();
-
-  g_string_sprintf (s, "%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
-		    temp_path, pid, id++, (char*)args[0].value.pdb_pointer);
-
-  return_args = procedural_db_return_args (&file_temp_name_proc, TRUE);
-
-  return_args[1].value.pdb_pointer = s->str;
-
-  g_string_free (s, FALSE);
-
-  return return_args;
 }

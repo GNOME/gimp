@@ -20,14 +20,18 @@
 
 #include "procedural_db.h"
 
+#include "app_procs.h"
+
 #include "libgimp/gimpfeatures.h"
 
 static ProcRecord version_proc;
+static ProcRecord quit_proc;
 
 void
 register_misc_procs (void)
 {
   procedural_db_register (&version_proc);
+  procedural_db_register (&quit_proc);
 }
 
 static Argument *
@@ -64,4 +68,41 @@ static ProcRecord version_proc =
   1,
   version_outargs,
   { { version_invoker } }
+};
+
+static Argument *
+quit_invoker (Argument *args)
+{
+  gboolean kill_it;
+
+  kill_it = args[0].value.pdb_int ? TRUE : FALSE;
+
+  app_exit (kill_it);
+
+  return procedural_db_return_args (&quit_proc, TRUE);
+}
+
+static ProcArg quit_inargs[] =
+{
+  {
+    PDB_INT32,
+    "kill",
+    "Flag specifying whether to kill the gimp process or exit normally"
+  }
+};
+
+static ProcRecord quit_proc =
+{
+  "gimp_quit",
+  "Causes the gimp to exit gracefully.",
+  "The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  1,
+  quit_inargs,
+  0,
+  NULL,
+  { { quit_invoker } }
 };

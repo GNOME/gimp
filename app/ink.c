@@ -146,8 +146,6 @@ static void    dist_smoother_add    (InkTool* ink_tool, gdouble value);
 static gdouble dist_smoother_result (InkTool* ink_tool);
 static void    dist_smoother_init   (InkTool* ink_tool, gdouble initval);
 
-static Argument *ink_invoker              (Argument *);
-
 static void ink_init   (InkTool      *ink_tool, 
 			GimpDrawable *drawable, 
 			double        x, 
@@ -1471,10 +1469,8 @@ ink_to_canvas_tiles (InkTool *ink_tool,
 }
 
 static void
-ink_set_undo_tiles (drawable, x, y, w, h)
-     GimpDrawable *drawable;
-     int x, y;
-     int w, h;
+ink_set_undo_tiles (GimpDrawable *drawable,
+		    int x, int y, int w, int h)
 {
   int i, j;
   Tile *src_tile;
@@ -1497,9 +1493,7 @@ ink_set_undo_tiles (drawable, x, y, w, h)
 
 
 static void
-ink_set_canvas_tiles (x, y, w, h)
-     int x, y;
-     int w, h;
+ink_set_canvas_tiles (int x, int y, int w, int h)
 {
   int i, j;
   Tile *tile;
@@ -1532,7 +1526,7 @@ ink_no_draw (Tool *tool)
 }
 
 Tool *
-tools_new_ink ()
+tools_new_ink (void)
 {
   Tool * tool;
   InkTool * private;
@@ -1595,57 +1589,4 @@ tools_free_ink (Tool *tool)
 
   /*  Free the paint core  */
   g_free (ink_tool);
-}
-
-
-/*  The ink procedure definition  */
-ProcArg ink_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-
-ProcRecord ink_proc =
-{
-  "gimp_ink",
-  "Paint in the current brush without sub-pixel sampling",
-  "fixme fixme",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  4,
-  ink_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { ink_invoker } },
-};
-
-static Argument *
-ink_invoker (args)
-     Argument *args;
-{
-  /* Fix me */
-  return NULL;
 }

@@ -8,6 +8,7 @@
     convert
     drawable
     edit
+    fileops
     floating_sel
     gdisplay
     gimage

@@ -20,11 +20,14 @@
 
 #include "procedural_db.h"
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "libgimp/gimpintl.h"
+
 #include "regex.h"
+
+#include "libgimp/gimpintl.h"
 
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;

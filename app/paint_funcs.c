@@ -39,12 +39,6 @@
 
 #include <stdio.h>
 
-#ifdef ENABLE_MP
-/* pthread.h is only needed because of an apparent bug in the
-   rand_r function in GNU Libc 2.1 */
-#include <pthread.h>
-#endif /* ENABLE_MP */
-
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
 #define HASH_TABLE_SIZE    1021
@@ -1007,41 +1001,47 @@ dissolve_pixels (const unsigned char *src,
   int alpha, b;
   int rand_val;
   
-#if  defined(ENABLE_MP) && defined(linux)
-  /* rand_r seems to be broken on the linux systems we tried, so
-     disable it for now */
-  /* if we are mult-threaded and can't use rand_r then we must
-     use a mutex to force single-threaded execution of this function */
-  static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-  pthread_mutex_lock(&mutex);
-  {
-#elif defined(ENABLE_MP) && !defined(linux)
-  /* if we are running with multiple threads rand_r give _much_
-     better performance than rand */
-  unsigned int seed;
-  seed = random_table [y % RANDOM_TABLE_SIZE];
-  for (b = 0; b < x; b++)
-    rand_r(&seed);
+#if defined(ENABLE_MP) && defined(__GLIBC__)
+  /* The glibc 2.1 documentation recommends using the SVID random functions
+   * instead of rand_r
+   */
+  struct drand48_data seed;
+  long temp_val;
 
+  srand48_r (random_table[y % RANDOM_TABLE_SIZE], &seed);
+  for (b = 0; b < x; b++)
+    lrand48_r (&seed, &temp_val);
+#elif defined(ENABLE_MP) && !defined(__GLIBC__)
+  /* If we are running with multiple threads rand_r give _much_ better
+   * performance than rand
+   */
+  unsigned int seed;
+  seed = random_table[y % RANDOM_TABLE_SIZE];
+  for (b = 0; b < x; b++)
+    rand_r (&seed);
 #else
-  /*  Set up the random number generator  */
-  srand (random_table [y % RANDOM_TABLE_SIZE]);
+  /* Set up the random number generator */
+  srand (random_table[y % RANDOM_TABLE_SIZE]);
   for (b = 0; b < x; b++)
     rand ();
 #endif
+
   alpha = db - 1;
 
-  while (length --)
+  while (length--)
     {
       /*  preserve the intensity values  */
       for (b = 0; b < alpha; b++)
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
-#if  defined(ENABLE_MP) && !defined(linux)
-      rand_val = (rand_r(&seed) & 0xFF);
+#if defined(ENABLE_MP) && defined(__GLIBC__)
+      lrand48_r (&seed, &temp_val);
+      rand_val = temp_val & 0xff;
+#elif defined(ENABLE_MP) && !defined(__GLIBC__)
+      rand_val = (rand_r (&seed) & 0xff);
 #else
-      rand_val = (rand() & 0xFF);
+      rand_val = (rand () & 0xff);
 #endif
       if (has_alpha)
 	dest[alpha] = (rand_val > src[alpha]) ? 0 : src[alpha];
@@ -1049,12 +1049,8 @@ dissolve_pixels (const unsigned char *src,
 	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE_OPACITY;
 
       dest += db;
-      src += sb;
+      src  += sb;
     }
-#if  defined(ENABLE_MP) && defined(linux)
-  }
-  pthread_mutex_unlock(&mutex);
-#endif /* defined(ENABLE_MP) && !defined(_SGI_REENTRANT_FUNCTIONS) */
 }
 
 void

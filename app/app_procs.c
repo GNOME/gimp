@@ -100,43 +100,19 @@
 #define SHOW_NOW 2
 
 /*  Function prototype for affirmation dialog when exiting application  */
-static void      really_quit_dialog (void);
-static Argument* quit_invoker       (Argument *args);
-static void make_initialization_status_window(void);
-static void destroy_initialization_status_window(void);
-static int splash_logo_load (GtkWidget *window);
-static int splash_logo_load_size (GtkWidget *window);
-static void splash_logo_draw (GtkWidget *widget);
-static void splash_text_draw (GtkWidget *widget);
-static void splash_logo_expose (GtkWidget *widget);
-static void toast_old_temp_files (void);
+static void really_quit_dialog                   (void);
+static void make_initialization_status_window    (void);
+static void destroy_initialization_status_window (void);
+static int  splash_logo_load                     (GtkWidget *window);
+static int  splash_logo_load_size                (GtkWidget *window);
+static void splash_logo_draw                     (GtkWidget *widget);
+static void splash_text_draw                     (GtkWidget *widget);
+static void splash_logo_expose                   (GtkWidget *widget);
+static void toast_old_temp_files                 (void);
 
 
 static gint is_app_exit_finish_done = FALSE;
 int we_are_exiting = FALSE;
-
-static ProcArg quit_args[] =
-{
-  { PDB_INT32,
-    "kill",
-    "Flag specifying whether to kill the gimp process or exit normally" },
-};
-
-static ProcRecord quit_proc =
-{
-  "gimp_quit",
-  "Causes the gimp to exit gracefully",
-  "The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  1,
-  quit_args,
-  0,
-  NULL,
-  { { quit_invoker } },
-};
 
 
 void
@@ -318,21 +294,24 @@ splash_logo_draw (GtkWidget *widget)
 		   widget->style->black_gc,
 		   logo_pixmap,
 		   0, 0,
-		   ((logo_area_width - logo_width) / 2), ((logo_area_height - logo_height) / 2),
+		   ((logo_area_width - logo_width) / 2),
+		   ((logo_area_height - logo_height) / 2),
 		   logo_width, logo_height);
 }
 
 static void
 splash_logo_expose (GtkWidget *widget)
 {
-  switch (show_logo) {
-     case SHOW_NEVER:
-     case SHOW_LATER:
-       splash_text_draw (widget);
-       break;
-     case SHOW_NOW:
-       splash_logo_draw (widget);
-  }
+  switch (show_logo)
+    {
+    case SHOW_NEVER:
+    case SHOW_LATER:
+      splash_text_draw (widget);
+      break;
+    case SHOW_NOW:
+      splash_logo_draw (widget);
+      break;
+    }
 }
 
 static GtkWidget *win_initstatus = NULL;
@@ -369,11 +348,13 @@ make_initialization_status_window(void)
 	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
 			      GTK_SIGNAL_FUNC (gtk_true),
 			      NULL);
-	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
+	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup",
+	      			  "Gimp");
 	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
 		               _("GIMP Startup"));
 
-	  if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus))
+	  if (no_splash_image == FALSE &&
+	      splash_logo_load_size (win_initstatus))
 	    {
 	      show_logo = SHOW_LATER;
 	    }
@@ -388,30 +369,30 @@ make_initialization_status_window(void)
 
 	  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
 			      (GtkSignalFunc) splash_logo_expose, NULL);
-	  logo_area_width = ( logo_width > LOGO_WIDTH_MIN ) ? logo_width : LOGO_WIDTH_MIN;
-	  logo_area_height = ( logo_height > LOGO_HEIGHT_MIN ) ? logo_height : LOGO_HEIGHT_MIN;
-	  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_area_width, logo_area_height);
+	  logo_area_width = MAX (logo_width, LOGO_WIDTH_MIN);
+	  logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
+	  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
+	      			 logo_area_width, logo_area_height);
 	  gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
 
-	  label1 = gtk_label_new("");
-	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
-	  label2 = gtk_label_new("");
-	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label2);
+	  label1 = gtk_label_new ("");
+	  gtk_box_pack_start_defaults (GTK_BOX(vbox), label1);
+	  label2 = gtk_label_new ("");
+	  gtk_box_pack_start_defaults (GTK_BOX(vbox), label2);
 
-	  pbar = gtk_progress_bar_new();
-	  gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
+	  pbar = gtk_progress_bar_new ();
+	  gtk_box_pack_start_defaults (GTK_BOX(vbox), pbar);
 
-	  gtk_widget_show(vbox);
-	  gtk_widget_show(logo_hbox);
-	  gtk_widget_show(logo_area);
-	  gtk_widget_show(label1);
-	  gtk_widget_show(label2);
-	  gtk_widget_show(pbar);
+	  gtk_widget_show (vbox);
+	  gtk_widget_show (logo_hbox);
+	  gtk_widget_show (logo_area);
+	  gtk_widget_show (label1);
+	  gtk_widget_show (label2);
+	  gtk_widget_show (pbar);
 
-	  gtk_window_position(GTK_WINDOW(win_initstatus),
-			      GTK_WIN_POS_CENTER);
+	  gtk_window_position (GTK_WINDOW(win_initstatus), GTK_WIN_POS_CENTER);
 
-	  gtk_widget_show(win_initstatus);
+	  gtk_widget_show (win_initstatus);
 
 	  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
 	  /*
@@ -427,23 +408,20 @@ make_initialization_status_window(void)
 }
 
 void
-app_init_update_status(char *label1val,
-		       char *label2val,
-		       float pct_progress)
+app_init_update_status (char *label1val,
+		        char *label2val,
+		        float pct_progress)
 {
   char *temp;
 
-  if(no_interface == FALSE && no_splash == FALSE && win_initstatus)
+  if (no_interface == FALSE && no_splash == FALSE && win_initstatus)
     {
-      if(label1val
-	 && strcmp(label1val, GTK_LABEL(label1)->label))
+      if (label1val && strcmp (label1val, GTK_LABEL (label1)->label))
+	gtk_label_set (GTK_LABEL (label1), label1val);
+
+      if (label2val && strcmp (label2val, GTK_LABEL (label2)->label))
 	{
-	  gtk_label_set(GTK_LABEL(label1), label1val);
-	}
-      if(label2val
-	 && strcmp(label2val, GTK_LABEL(label2)->label))
-	{
-	  while ( strlen (label2val) > max_label_length )
+	  while (strlen (label2val) > max_label_length)
 	    {
 	      temp = strchr (label2val, G_DIR_SEPARATOR);
 	      if (temp == NULL)  /* for sanity */
@@ -451,8 +429,10 @@ app_init_update_status(char *label1val,
 	      temp++;
 	      label2val = temp;
 	    }
-	  gtk_label_set(GTK_LABEL(label2), label2val);
+
+	  gtk_label_set (GTK_LABEL (label2), label2val);
 	}
+
       if (pct_progress >= 0.0 && pct_progress <= 1.0 && 
 	  gtk_progress_get_current_percentage (&(GTK_PROGRESS_BAR (pbar)->progress)) != pct_progress)
 	/*
@@ -461,12 +441,14 @@ app_init_update_status(char *label1val,
 	{
 	  gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), pct_progress);
 	}
-      while (gtk_events_pending())
-	gtk_main_iteration();
+
+      while (gtk_events_pending ())
+	gtk_main_iteration ();
+
       /* We sync here to make sure things get drawn before continuing,
        * is the improved look worth the time? I'm not sure...
        */
-      gdk_flush();
+      gdk_flush ();
     }
 }
 
@@ -488,14 +470,14 @@ app_init (void)
 
   if (no_interface == FALSE)
       get_standard_colormaps ();
+
   make_initialization_status_window();
-  if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
+
+  if (no_interface == FALSE && no_splash == FALSE && win_initstatus)
     splash_text_draw (logo_area);
-  }
 
   /* Create the context of all existing images */
-
-  image_context=gimp_set_new(GIMP_TYPE_IMAGE, TRUE);
+  image_context = gimp_set_new (GIMP_TYPE_IMAGE, TRUE);
 
   /*
    *  Initialize the procedural database
@@ -505,8 +487,6 @@ app_init (void)
   procedural_db_init ();
   RESET_BAR();
   internal_procs_init ();
-  RESET_BAR();
-  procedural_db_register (&quit_proc);
 
   RESET_BAR();
   init_parse_buffers ();
@@ -518,18 +498,20 @@ app_init (void)
 
   /* make sure the monitor resolution is valid */
   if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
-  {
-    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
-    using_xserver_resolution = TRUE;
-  }	 
+    {
+      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+      using_xserver_resolution = TRUE;
+    }
 
   /* Now we are ready to draw the splash-screen-image to the start-up window */
   if (no_interface == FALSE)
     {
-      if (no_splash_image == FALSE && show_logo && splash_logo_load (win_initstatus)) {
-	show_logo = SHOW_NOW;
-	splash_logo_draw (logo_area);
-      }
+      if (no_splash_image == FALSE && show_logo &&
+	  splash_logo_load (win_initstatus))
+	{
+	  show_logo = SHOW_NOW;
+	  splash_logo_draw (logo_area);
+        }
     }
 
   RESET_BAR();
@@ -564,7 +546,7 @@ app_init (void)
   tile_swap_add (path, NULL, NULL);
   g_free (path);
 
-  destroy_initialization_status_window();
+  destroy_initialization_status_window ();
 
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
@@ -590,10 +572,10 @@ app_init (void)
 
   if (no_interface == FALSE)
     {
-      devices_restore(); /* Must be done AFTER get_active_{brush|pattern} 
-			 * because these functions set the brush/pattern.
-			 */
-      session_restore();
+      devices_restore (); /* Must be done AFTER get_active_{brush|pattern} 
+			   * because these functions set the brush/pattern.
+			   */
+      session_restore ();
     }
 }
 
@@ -657,7 +639,7 @@ void
 app_exit (int kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
-  if (kill_it == 0 && gdisplays_dirty () && no_interface == FALSE)
+  if (kill_it == FALSE && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
   else if (no_interface == FALSE)
     {
@@ -678,7 +660,7 @@ really_quit_callback (GtkButton *button,
 {
   gtk_widget_destroy (dialog);
   toolbox_free ();
-  close_idea_window();
+  close_idea_window ();
 }
 
 static void
@@ -696,12 +678,11 @@ really_quit_delete_callback (GtkWidget *widget,
 			     gpointer client_data)
 {
   really_quit_cancel_callback (widget, (GtkWidget *) client_data);
-
   return TRUE;
 }
 
 static void
-really_quit_dialog ()
+really_quit_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *button;
@@ -743,20 +724,6 @@ really_quit_dialog ()
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
-}
-
-static Argument*
-quit_invoker (Argument *args)
-{
-  Argument *return_args;
-  int kill_it;
-
-  kill_it = args[0].value.pdb_int;
-  app_exit (kill_it);
-
-  return_args = procedural_db_return_args (&quit_proc, TRUE);
-
-  return return_args;
 }
 
 static void

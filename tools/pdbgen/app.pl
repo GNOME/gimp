@@ -60,6 +60,19 @@ sub format_code_frag {
     $code;
 }
 
+sub arg_value {
+    my ($arg, $argc) = @_;
+    my $cast = "";
+
+    my $type = &arg_ptype($arg);
+
+    if ($type eq 'pointer' || $arg->{type} =~ /int(16|8)$/) {
+	$cast = "($arg->{type}) ";
+    }
+
+    return "${cast}args[$argc].value.pdb_$type";
+}
+
 sub make_arg_test {
     my ($arg, $reverse, $test) = @_;
     my $result = "";
@@ -221,25 +234,19 @@ sub marshal_inargs {
     foreach (@inargs) {
 	my($pdbtype, @typeinfo) = &arg_parse($_->{type});
 	my $arg = $arg_types{$pdbtype};
-	my $type = &arg_ptype($arg);
 	my $var = &arg_vname($_);
+	my $value = &arg_value($arg, $argc++);
 	
 	if (exists $arg->{id_func}) {
 	    my $id_func = $arg->{id_func};
 	    $id_func = $_->{id_func} if exists $_->{id_func};
 
-	    $result .= "  $var = $id_func (args[$argc].value.pdb_$type);\n";
+	    $result .= "  $var = $id_func ($value);\n";
 	    $result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 				      "$var == NULL");
 	}
 	else {
-	    $result .= ' ' x 2 . "$var =";
-
-	    my $cast = "";
-	    if ($type eq 'pointer' || $arg->{type} =~ /int(16|8)$/) {
-		$cast = " ($arg->{type})";
-	    }
-	    $result .= "$cast args[$argc].value.pdb_$type";
+	    $result .= ' ' x 2 . "$var = $value";
 	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
 	    $result .= ";\n";
 
@@ -368,7 +375,7 @@ CODE
 	    }
 	}
 
-	$argc++; $result .= "\n";
+	$result .= "\n";
     }
 
     $result = "\n" . $result if $result;
@@ -462,7 +469,36 @@ CODE
 
 	my $code = "";
 
-	if (exists $proc->{invoke}->{pass_through}) {
+	if (exists $proc->{invoke}->{proc}) {
+	    my ($procname, $args) = @{$proc->{invoke}->{proc}};
+	    my ($exec, $fail, $argtype);
+	    my $custom = $proc->{invoke}->{code};
+
+	    $exec = "procedural_db_execute ($procname, $args)";
+	    $fail = "procedural_db_return_args (\&${name}_proc, FALSE)";
+
+	    $argtype = 'Argument';
+	    if (exists $proc->{invoke}->{args}) {
+		foreach (@{$proc->{invoke}->{args}}) {
+		    $code .= "  $argtype *$_;\n";
+		}
+	    }
+
+	    foreach (qw(exec fail argtype)) { $custom =~ s/%%$_%%/"\$$_"/eeg }
+
+	    my $pos = 0;
+	    foreach (@{$proc->{inargs}}) {
+		my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
+		my $var = &arg_vname($_);
+		$custom =~ s/%%$var%%/&arg_value($arg, $pos)/e;
+		$pos++;
+	    }
+
+	    $code .= &declare_vars($proc);
+	    $code .= "\n" if length($code);
+	    $code .= &format_code_frag($custom, 0) . "}\n";
+	}
+	elsif (exists $proc->{invoke}->{pass_through}) {
 	    my $invoke = $proc->{invoke};
 
 	    my $argc = 0;
@@ -633,9 +669,36 @@ GPL
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
 
-	my $headers = "";
-	foreach (sort map { s/^</!/; $_ } keys %{$out->{headers}}) {
-	    s/^\!/</; $headers .= "#include $_\n";
+	my @headers = sort {
+	    my ($x, $y) = ($a, $b);
+	    foreach ($x, $y) {
+		$_ = "!$_" if $_ eq '"config.h"';
+		$_ = "~$_" if /libgimp/;
+		s/^</!/;
+	    }
+	    $x cmp $y;
+	} keys %{$out->{headers}};
+	my $headers = ""; my $lib = 0; my $seen = 0;
+	foreach (@headers) {
+	    if ($_ eq '<unistd.h>') {
+		$headers .= "\n" if $seen;
+		$headers .= "#ifdef HAVE_UNISTD_H\n";
+	    }
+
+	    $seen++ if /^</;
+	    $headers .= "\n" if $seen && !/^</;
+	    $seen = 0 if !/^</;
+
+	    $headers .= "\n" if /libgimp/ && !$lib++ && $headers;
+
+	    $headers .= "#include $_\n";
+
+	    if ($_ eq '<unistd.h>') {
+		$headers .= "#endif\n\n";
+		$seen = 0;
+ 	    }
+
+	    $headers .= "\n" if $_ eq '"config.h"';
 	}
 
 	my $extra = {};

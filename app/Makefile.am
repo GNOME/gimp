@@ -143,6 +143,7 @@ gimp_SOURCES = \
 	equalize.h		\
 	fileops.c		\
 	fileops.h		\
+	fileops_cmds.c		\
 	flip_tool.c		\
 	flip_tool.h		\
 	floating_sel.c		\

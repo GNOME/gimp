@@ -24,6 +24,7 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpparasite.h"
+
 #include "libgimp/parasite.h"
 
 static ProcRecord parasite_new_proc;

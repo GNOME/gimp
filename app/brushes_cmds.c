@@ -21,6 +21,7 @@
 #include "procedural_db.h"
 
 #include <string.h>
+
 #include "gimpbrush.h"
 #include "gimpbrushlistP.h"
 #include "gimplist.h"

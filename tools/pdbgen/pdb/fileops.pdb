@@ -1,0 +1,315 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
+# Copyright (C) 1997 Josh MacDonald
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Josh MacDonald';
+    $date = '1997';
+}
+
+sub list_arg {
+    my ($type, $name, $desc, $example) = @_;
+    push @inargs, { name => $name, type => 'string', no_success => 1,
+		    desc => qq/comma separated list of $desc this handler
+			       can $type (i.e. "$example")/ }
+}
+
+sub handler_args {
+    my $type = shift;
+
+    my $action = $type;
+    $action =~ s/e$//;
+    $action .= 'ing';
+
+    push @inargs, { name => 'procedure_name', type => 'string',
+		    desc => "The name of the procedure to be used for $action",
+		    alias => 'name' };
+
+    foreach ([ 'extensions', 'jpg,jpeg' ], [ 'prefixes', 'http:,ftp:' ]) {
+	&list_arg($type, $_->[0], @$_);
+    }
+}
+
+# The defs
+
+sub file_load {
+    $blurb = 'Loads a file by extension.';
+
+    $help = <<'HELP';
+This procedure invokes the correct file load handler according to the file's
+extension and/or prefix. The name of the file to load is typically a full
+pathname, and the name entered is what the user actually typed before
+prepending a directory path. The reason for this is that if the user types
+http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname will not
+look like a URL.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'run_mode',
+	  type => 'enum RunModeType (no RUN_WITH_LAST_VALS)',
+	  desc => 'The run mode: %%desc%%' },
+	{ name => 'filename', type => 'string',
+	  desc => 'The name of the file to load' },
+	{ name => 'raw_filename', type => 'string',
+	  desc => 'The name entered' }
+    );
+
+    @outargs = ( &std_image_arg );
+    $outargs[0]->{desc} = 'The output image';
+
+    %invoke = (
+	proc => [ 'proc->name', 'args' ],
+	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
+	code => <<'CODE'
+{
+  file_proc = file_proc_find (load_procs, %%raw_filename%%);
+  if (!file_proc)
+    return %%fail%%;
+
+  proc = &file_proc->db_info;
+
+  return %%exec%%;
+}
+CODE
+    );
+}
+
+sub file_save {
+    $blurb = 'Saves a file by extension.';
+
+    $help = <<'HELP';
+This procedure invokes the correct file save handler according to the file's
+extension and/or prefix. The name of the file to save is typically a full
+pathname, and the name entered is what the user actually typed before
+prepending a directory path. The reason for this is that if the user types
+http://www.xcf/~gimp/ she wants to fetch a URL, and the full pathname will not
+look like a URL.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'run_mode',
+	  type => 'enum RunModeType (no RUN_WITH_LAST_VALS)',
+	  desc => 'The run mode: %%desc%%' },
+	{ name => 'image', type => 'image',
+	  desc => 'Input image' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Drawable to save' },
+	{ name => 'filename', type => 'string',
+	  desc => 'The name of the file to save the image in' },
+	{ name => 'raw_filename', type => 'string',
+	  desc => 'The name of the file to save the image in' }
+    );
+
+
+    %invoke = (
+	headers => [ qw(<string.h>) ],
+	proc => [ 'proc->name', 'new_args' ],
+	args => [ 'new_args', 'return_vals' ],
+	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
+	code => <<'CODE'
+{
+  file_proc = file_proc_find (load_procs, %%raw_filename%%);
+  if (!file_proc) 
+    return %%fail%%;
+
+  proc = &file_proc->db_info;
+
+  new_args = g_new (%%argtype%%, proc->num_args);
+  memset (new_args, 0, sizeof (%%argtype%%) * proc->num_args);
+  memcpy (new_args, args, sizeof (%%argtype%%) * 5);
+
+  return_vals = %%exec%%;
+  g_free (new_args);
+
+  return return_vals;
+}
+CODE
+    );
+}
+
+sub temp_name {
+    $blurb = 'Generates a unique filename.';
+
+    $help = <<'HELP';
+Generates a unique filename using the temp path supplied in the user's gimprc.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'extension', type => 'string',
+	  desc => 'The extension the file will have' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string', init => 1,
+	  desc => 'The new temp filename' }
+    );
+
+    %invoke = (
+	headers => [ qw("gimprc.h") ],
+	vars => [ 'static gint id = 0', 'static gint pid' ],
+	code => <<'CODE'
+{
+  if (id == 0)
+    pid = getpid();
+
+  name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
+			  temp_path, pid, id++, extension);
+}
+CODE
+    );
+}
+
+sub register_magic_load_handler {
+    $blurb = 'Registers a file load handler procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called to load files of a 
+particular file format using magic file information.
+HELP
+
+    &std_pdb_misc;
+
+    &handler_args('load');
+    &list_arg('load', 'magics', 'magic file information', '0,string,GIF');
+
+    %invoke = (
+	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
+	code => <<'CODE'
+{
+  success = FALSE;
+
+  proc = procedural_db_lookup (name);
+
+  if (proc && ((proc->num_args < 3) ||
+	       (proc->num_values < 1) ||
+	       (proc->args[0].arg_type != PDB_INT32) ||
+	       (proc->args[1].arg_type != PDB_STRING) ||
+	       (proc->args[2].arg_type != PDB_STRING) ||
+	       (proc->values[0].arg_type != PDB_IMAGE)))
+    {
+      g_message (_("load handler \"%s\" does not take the standard load handler args"),
+		 name);
+      goto done;
+    }
+
+  file_proc = plug_in_file_handler (name, extensions, prefixes, magics);
+
+  if (!file_proc)
+    {
+      g_message (_("attempt to register non-existant load handler \"%s\""),
+		 name);
+      goto done;
+    }
+
+  load_procs = g_slist_prepend (load_procs, file_proc);
+
+  success = TRUE;
+
+done:
+}
+CODE
+    );
+}
+
+sub register_load_handler {
+    $blurb = 'Registers a file load handler procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called to load files of a
+particular file format.
+HELP
+
+    &std_pdb_misc;
+
+    &handler_args('load');
+
+    %invoke = (
+	pass_through => 'register_magic_load_handler',
+	pass_args => [ 0..2 ],
+	make_args => [ { type => 'string', code => '%%arg%% = NULL;' } ]
+    );
+}
+
+sub register_save_handler {
+    $blurb = 'Registers a file save handler procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called to save files in a
+particular file format.
+HELP
+
+    &std_pdb_misc;
+
+    &handler_args('save');
+
+    %invoke = (
+	vars => [ 'ProcRecord *proc', 'PlugInProcDef *file_proc' ],
+	code => <<'CODE'
+{
+  success = FALSE;
+
+  proc = procedural_db_lookup (name);
+
+  if (proc && ((proc->num_args < 5) ||
+	       (proc->args[0].arg_type != PDB_INT32) ||
+	       (proc->args[1].arg_type != PDB_IMAGE) ||
+	       (proc->args[2].arg_type != PDB_DRAWABLE) ||
+	       (proc->args[3].arg_type != PDB_STRING) ||
+	       (proc->args[4].arg_type != PDB_STRING)))
+    {
+      g_message (_("save handler \"%s\" does not take the standard save handler args"),
+		 name);
+      goto done;
+    }
+
+  file_proc = plug_in_file_handler (name, extensions, prefixes, NULL);
+
+  if (!file_proc)
+    {
+      g_message (_("attempt to register non-existant save handler \"%s\""),
+		 name);
+      goto done;
+    }
+
+  save_procs = g_slist_prepend (save_procs, file_proc);
+
+  success = TRUE;
+
+done:
+}
+CODE
+    );
+}
+
+@headers = qw("fileops.h" "plug_in.h" "config.h" "libgimp/gimpintl.h"
+	      <unistd.h>);
+
+@procs = qw(file_load file_save temp_name register_magic_load_handler
+	    register_load_handler register_save_handler);
+%exports = (app => [@procs]);
+
+$desc = 'File Operations';
+
+1;

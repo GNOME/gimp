@@ -17,9 +17,13 @@
  */
 
 
+#include "config.h"
+
 #include "appenv.h"
 #include "gimprc.h"
 #include "ops_buttons.h"
+
+#include "libgimp/gimpintl.h"
 
 void ops_button_pressed_callback (GtkWidget*, GdkEventButton*, gpointer);
 void ops_button_extended_callback (GtkWidget*, gpointer);

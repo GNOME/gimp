@@ -19,7 +19,8 @@
 #define __PLUG_IN_H__
 
 
-#include "gtk/gtk.h"
+#include <sys/types.h>
+#include <gtk/gtk.h>
 #include "procedural_db.h"
 #include "gimpprogress.h"
 
@@ -35,11 +36,11 @@
 
 
 
-typedef enum
+typedef enum  /*< chop=RUN_ >*/
 {
-  RUN_INTERACTIVE    = 0x0,
-  RUN_NONINTERACTIVE = 0x1,
-  RUN_WITH_LAST_VALS = 0x2
+  RUN_INTERACTIVE    = 0,
+  RUN_NONINTERACTIVE = 1,
+  RUN_WITH_LAST_VALS = 2
 } RunModeType;
 
 

@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1999 Manish Singh
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub version {
     $blurb = <<'BLURB';
@@ -36,7 +38,30 @@ HELP
     %invoke = ( headers => [ qw("libgimp/gimpfeatures.h") ] );
 }
 
-@procs = qw(version);
+sub quit {
+    $blurb = 'Causes the gimp to exit gracefully.';
+
+    $help = <<'HELP';
+The internal procedure which can either be used to make the gimp quit normally,
+or to have the gimp clean up its resources and exit immediately. The normaly
+shutdown process allows for querying the user to save any dirty images.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'kill', type => 'boolean', alias => 'kill_it',
+	  desc => 'Flag specifying whether to kill the gimp process or exit
+		   normally' }
+    );
+
+    %invoke = (
+	headers => [ qw("app_procs.h") ],
+	code => 'app_exit (kill_it);'
+    );
+}
+
+@procs = qw(version quit);
 %exports = (app => [@procs]);
 
 $desc = 'Miscellaneous';

@@ -21,6 +21,7 @@
 #include "procedural_db.h"
 
 #include <string.h>
+
 #include "patterns.h"
 
 static ProcRecord patterns_get_pattern_proc;

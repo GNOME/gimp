@@ -19,8 +19,8 @@
 #define __FILE_IO_H__
 
 
-#include "gtk/gtk.h"
-
+#include <gtk/gtk.h>
+#include "plug_in.h"
 #include "gimpimageF.h"
 
 
@@ -43,7 +43,12 @@ int  file_open                       (char      *filename,
 int  file_save                       (GimpImage*  gimage,
 				      char      *filename,
 				      char      *raw_filename,
-                                      gint      mode);
+				      gint      mode);
 
+PlugInProcDef* file_proc_find        (GSList *procs,
+				      char   *filename);
+
+extern GSList *load_procs;
+extern GSList *save_procs;
 
 #endif /* FILE_IO_H */

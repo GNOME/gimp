@@ -377,6 +377,18 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(APPLY DISCARD) ],
 	  mapping => { APPLY => '0',
 		       DISCARD => '1' }
+	},
+    RunModeType =>
+	{ contig => 1,
+	  header => 'plug_in.h',
+	  symbols => [ qw(RUN_INTERACTIVE RUN_NONINTERACTIVE
+			  RUN_WITH_LAST_VALS) ],
+	  mapping => { RUN_INTERACTIVE => '0',
+		       RUN_NONINTERACTIVE => '1',
+		       RUN_WITH_LAST_VALS => '2' },
+	  nicks   => { RUN_INTERACTIVE => 'INTERACTIVE',
+		       RUN_NONINTERACTIVE => 'NONINTERACTIVE',
+		       RUN_WITH_LAST_VALS => 'WITH_LAST_VALS' }
 	}
 );
 

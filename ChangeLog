@@ -1,3 +1,47 @@
+Fri Apr 30 13:31:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: listed tools first in SUBDIRS, so xgettext can grab
+	the autogenned files
+
+	* acconfig.h: removed unused HAVE_XSHM_H
+
+	* tools/pdbgen/app.pl: added proc invoke method, nicer header
+	formatting
+
+	* tools/pdbgen/pdb/layer.pdb: use layer_mask type for return value
+	for layer_create_mask
+
+	* tools/pdbgen/pdb/misc.pdb: added quit proc
+
+	* tools/pdbgen/pdb/tools.pdb: added ink proc, but not added to @procs
+	since it's incomplete
+
+	* tools/pdbgen/pdb/fileops.pdb: new file
+
+	* app/Makefile.am: added fileops_cmds.c
+
+	* app/app_procs.c
+	* app/fileops.c
+	* app/ink.c: removed PDB procs (the one in ink.c was incomplete)
+
+	* app/fileops.h: exported load_procs, save_procs, and file_proc_find()
+
+	* app/plug_in.h: exported enum, #include <sys/types.h>
+
+	* app/brushes_cmds.c
+	* app/fileops_cmds.c
+	* app/layer_cmds.c
+	* app/misc_cmds.c
+	* app/parasite_cmds.c
+	* app/patterns_cmds.c
+	* app/procedural_db_cmds.c
+	* app/text_tool_cmds.c
+	* app/internal_procs.c: pdbgen updates
+
+	* app/paint_funcs.c: the glibc 2.1 docs say using SVID threadsafe
+	random functions are preferable to rand_r, so use them instead of
+	a mutex
+
 1999-04-30  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* plug-ins/gdyntext/*: updated version 1.4.2

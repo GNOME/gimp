@@ -299,7 +299,7 @@ HELP
     $inargs[0]->{desc} .= ' to which to add the mask';
 
     @outargs = (
-	{ name => 'mask', type => 'channel',
+	{ name => 'mask', type => 'layer_mask',
 	  desc => 'The newly created mask', init => 1 }
     );
 

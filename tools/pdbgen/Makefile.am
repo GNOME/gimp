@@ -10,6 +10,7 @@ pdb_sources = \
 	pdb/convert.pdb		\
 	pdb/drawable.pdb	\
 	pdb/edit.pdb		\
+	pdb/fileops.pdb		\
 	pdb/floating_sel.pdb	\
 	pdb/gdisplay.pdb	\
 	pdb/gimage.pdb		\
@@ -63,7 +64,8 @@ enum_headers = \
 	$(top_srcdir)/app/color_balance.h	\
 	$(top_srcdir)/app/hue_saturation.h	\
 	$(top_srcdir)/app/layerF.h		\
-	$(top_srcdir)/app/layer.h
+	$(top_srcdir)/app/layer.h	\
+	$(top_srcdir)/app/plug_in.h
 
 pdb_scripts = \
 	$(srcdir)/pdbgen.pl	\
