@@ -106,15 +106,15 @@ msgstr ""
 
 #: app/bezier_select.c:469
 msgid "Bezier path already closed."
-msgstr "Bezier-käyrä on jo suljettu."
+msgstr "Bezier-polku on jo suljettu."
 
 #: app/bezier_select.c:490
 msgid "Corrupt curve"
-msgstr "Käyrä viallinen"
+msgstr "Polku viallinen"
 
 #: app/bezier_select.c:2855
 msgid "Curve not closed!"
-msgstr "Käyrä ei ole suljettu!"
+msgstr "Polku ei ole suljettu!"
 
 #: app/bezier_select.c:3142 app/gimage_mask.c:604
 msgid "Paintbrush operation failed."
@@ -133,7 +133,6 @@ msgid "FG to Transparent"
 msgstr "Edustaväristä läpinäkyvään"
 
 #: app/blend.c:265
-#, fuzzy
 msgid "Custom from Editor"
 msgstr "Räärälöity muokkaimesta"
 
@@ -186,12 +185,10 @@ msgid "None"
 msgstr "Ei mitään"
 
 #: app/blend.c:299
-#, fuzzy
 msgid "Sawtooth Wave"
 msgstr "Sahalaita-aalto"
 
 #: app/blend.c:301
-#, fuzzy
 msgid "Triangular Wave"
 msgstr "Kolmioaalto"
 
@@ -204,16 +201,14 @@ msgid "Blend:"
 msgstr "Sekoita:"
 
 #: app/blend.c:354
-#, fuzzy
 msgid "Gradient:"
-msgstr "Värilukuma"
+msgstr "Värilukuma:"
 
 #: app/blend.c:362
 msgid "Repeat:"
 msgstr "Toista:"
 
 #: app/blend.c:381
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Adaptiivinen ylinäytteistys"
 
@@ -474,7 +469,6 @@ msgstr "Y:"
 
 #. The wrap around option
 #: app/channel_ops.c:165
-#, fuzzy
 msgid "Wrap Around"
 msgstr "Reunan yli kierto"
 
@@ -511,7 +505,7 @@ msgstr "Laske kanavaa"
 
 #: app/channels_dialog.c:199
 msgid "Duplicate Channel"
-msgstr "Duplikoi kanava"
+msgstr "Kahdenna kanava"
 
 #: app/channels_dialog.c:204
 msgid ""
@@ -880,7 +874,6 @@ msgid "Crop & Resize Options"
 msgstr "Rajaa & muokkaa kokoa -asetukset"
 
 #: app/crop.c:188
-#, fuzzy
 msgid "Current Layer Only"
 msgstr "Vain nykyinen taso"
 
@@ -1621,7 +1614,6 @@ msgid "Paste Into"
 msgstr "Liimaa johonkin"
 
 #: app/global_edit.c:698
-#, fuzzy
 msgid "Paste as New"
 msgstr "Liimaa uutena"
 
@@ -2749,7 +2741,7 @@ msgstr "Loisproseduurit"
 
 #: app/internal_procs.c:133 app/lc_dialog.c:180
 msgid "Paths"
-msgstr "Käyrät"
+msgstr "Polut"
 
 #: app/internal_procs.c:136
 msgid "Pattern UI"
@@ -3213,9 +3205,8 @@ msgstr "astetta"
 
 #. <Toolbox>
 #: app/menus.c:83
-#, fuzzy
 msgid "/Xtns/Animation"
-msgstr "/Suotimet/Animaatio"
+msgstr ""
 
 #: app/menus.c:84
 msgid "/Xtns/Perl-Fu"
@@ -3226,34 +3217,28 @@ msgid "/Xtns/Perl-Fu/Logos"
 msgstr ""
 
 #: app/menus.c:86
-#, fuzzy
 msgid "/Xtns/Perl"
-msgstr "/Laajennukset"
+msgstr ""
 
 #: app/menus.c:87
-#, fuzzy
 msgid "/Xtns/Render"
-msgstr "/Suotimet/Muodosta kuva"
+msgstr ""
 
 #: app/menus.c:88
-#, fuzzy
 msgid "/Xtns/Render/Logos"
-msgstr "/Suotimet/Tee kuva/Pilvet"
+msgstr ""
 
 #: app/menus.c:89
-#, fuzzy
 msgid "/Xtns/Render/Povray"
-msgstr "/Suotimet/Tee kuva/Kuviot"
+msgstr ""
 
 #: app/menus.c:90
-#, fuzzy
 msgid "/Xtns/Script-Fu"
-msgstr "/Script-Fu"
+msgstr "/Laajennukset/Script-Fu"
 
 #: app/menus.c:91
-#, fuzzy
 msgid "/Xtns/Script-Fu/Logos"
-msgstr "/Script-Fu"
+msgstr "/Laajennukset/Script-Fu/Logot"
 
 #: app/menus.c:92
 msgid "/Xtns/Script-Fu/Patterns"
@@ -3264,33 +3249,28 @@ msgid "/Xtns/Script-Fu/Web Page Themes"
 msgstr ""
 
 #: app/menus.c:94
-#, fuzzy
 msgid "/Xtns/Script-Fu/Utils"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:95
-#, fuzzy
 msgid "/Xtns/Script-Fu/Buttons"
-msgstr "/Script-Fu"
+msgstr "/Laajennukset/Script-Fu/Painikkeet"
 
 #: app/menus.c:96
 msgid "/Xtns/Script-Fu/Make Brush"
 msgstr ""
 
 #: app/menus.c:97
-#, fuzzy
 msgid "/Xtns/Script-Fu/Misc"
-msgstr "/Script-Fu"
+msgstr "/Laajennukset/Script-Fu/Sekalaiset"
 
 #: app/menus.c:98
-#, fuzzy
 msgid "/Xtns/Script-Fu/Test"
-msgstr "/Script-Fu"
+msgstr "/Laajennukset/Script-Fu/Testit"
 
 #: app/menus.c:99
-#, fuzzy
 msgid "/Xtns/Web Browser"
-msgstr "/Laajennukset/Moduuliselain..."
+msgstr ""
 
 #. <Image>
 #: app/menus.c:102
@@ -3314,58 +3294,48 @@ msgid "/Filters/Misc"
 msgstr "/Suotimet/Sekalaiset"
 
 #: app/menus.c:107
-#, fuzzy
 msgid "/Script-Fu/Decor"
-msgstr "/Script-Fu"
+msgstr "/Script-Fu/Koristelu"
 
 #: app/menus.c:108
-#, fuzzy
 msgid "/Script-Fu/Modify"
-msgstr "/Script-Fu"
+msgstr "/Script-Fu/Muokkaa"
 
 #: app/menus.c:109
-#, fuzzy
 msgid "/Script-Fu/Utils"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:110
-#, fuzzy
 msgid "/Script-Fu/Animators"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:111
-#, fuzzy
 msgid "/Script-Fu/Stencil Ops"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:112
-#, fuzzy
 msgid "/Script-Fu/Alchemy"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:113
-#, fuzzy
 msgid "/Script-Fu/Selection"
-msgstr "Pienennä valinta"
+msgstr ""
 
 #: app/menus.c:114
-#, fuzzy
 msgid "/Script-Fu/Shadow"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:115
-#, fuzzy
 msgid "/Script-Fu/Render"
-msgstr "/Script-Fu"
+msgstr ""
 
 #: app/menus.c:116
 msgid "/Guides"
 msgstr ""
 
 #: app/menus.c:117
-#, fuzzy
 msgid "/Video"
-msgstr "/Näytä"
+msgstr ""
 
 #: app/menus.c:118
 msgid "/Video/Encode"
@@ -3471,7 +3441,6 @@ msgid "/Help/Context Help..."
 msgstr "/Apua/Yhteysriippuva avustus..."
 
 #: app/menus.c:218
-#, fuzzy
 msgid "/Help/Tip of the Day..."
 msgstr "/Apua/Päivän vihje..."
 
@@ -3488,7 +3457,6 @@ msgid "/File/Save"
 msgstr "/Tiedosto/Talleta"
 
 #: app/menus.c:246
-#, fuzzy
 msgid "/File/Save As..."
 msgstr "/Tiedosto/Talleta nimellä..."
 
@@ -3530,9 +3498,8 @@ msgid "/Edit/Paste Into"
 msgstr "/Muokkaa/Liimaa johonkin"
 
 #: app/menus.c:280
-#, fuzzy
 msgid "/Edit/Paste as New"
-msgstr "/Muokkaa/Liimaa nimetty"
+msgstr "/Muokkaa/Liimaa uutena"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:285
@@ -3605,7 +3572,6 @@ msgid "/Select/Border..."
 msgstr "/Valitse/Reuna..."
 
 #: app/menus.c:334
-#, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "/Valitse/Talleta kanavalle"
 
@@ -3664,7 +3630,6 @@ msgid "/View/Zoom/1:16"
 msgstr "/Näytä/Zoom/1:16"
 
 #: app/menus.c:369
-#, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "/Näytä/Piste pisteeltä"
 
@@ -3677,9 +3642,8 @@ msgid "/View/Nav. Window..."
 msgstr "/Näytä/Ikkunan tiedot..."
 
 #: app/menus.c:378
-#, fuzzy
 msgid "/View/Undo History..."
-msgstr "/Muokkaa/Toimintohistoria..."
+msgstr "/Näytä/Toimintohistoria..."
 
 #: app/menus.c:383
 msgid "/View/Toggle Selection"
@@ -3698,7 +3662,6 @@ msgid "/View/Toggle Guides"
 msgstr "/Näytä/Vaihda apuviivat"
 
 #: app/menus.c:391
-#, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "/Näytä/Naksahda apuviivoihin"
 
@@ -3786,7 +3749,7 @@ msgstr "/Kuva/Skaalaa..."
 
 #: app/menus.c:472
 msgid "/Image/Duplicate"
-msgstr "/Kuva/Duplikoi"
+msgstr "/Kuva/Kahdenna"
 
 #. <Image>/Layers
 #: app/menus.c:480
@@ -3832,9 +3795,8 @@ msgid "/Layers/Rotate"
 msgstr "/Tasot/Kierrätä"
 
 #: app/menus.c:509
-#, fuzzy
 msgid "/Layers/Layer to Imagesize"
-msgstr "/Tasot/Yhdistä kuva"
+msgstr "/Tasot/Tasosta kuvan kokoinen"
 
 #: app/menus.c:514
 msgid "/Layers/Anchor Layer"
@@ -3849,7 +3811,6 @@ msgid "/Layers/Flatten Image"
 msgstr "/Tasot/Yhdistä kuva"
 
 #: app/menus.c:523
-#, fuzzy
 msgid "/Layers/Mask to Selection"
 msgstr "/Tasot/Maski valinnaksi"
 
@@ -3858,9 +3819,8 @@ msgid "/Layers/Add Alpha Channel"
 msgstr "/Tasot/Lisää alfakanava"
 
 #: app/menus.c:530
-#, fuzzy
 msgid "/Layers/Alpha to Selection"
-msgstr "/Tasot/Alfa valinnaksi"
+msgstr "/Tasot/Alfakanava valinnaksi"
 
 #. <Image>/Tools
 #: app/menus.c:538
@@ -3885,12 +3845,10 @@ msgid "/Filters"
 msgstr "/Suotimet"
 
 #: app/menus.c:554
-#, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "/Suotimet/Toista edellinen"
 
 #: app/menus.c:556
-#, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "/Suotimet/Näytä uudelleen edellinen"
 
@@ -4059,7 +4017,7 @@ msgstr "/Pino/Alenna taso pohjimmaiseksi"
 
 #: app/menus.c:707
 msgid "/Duplicate Layer"
-msgstr "/Duplikoi taso"
+msgstr "/Kahdenna taso"
 
 #: app/menus.c:709
 msgid "/Anchor Layer"
@@ -4074,9 +4032,8 @@ msgid "/Layer Boundary Size..."
 msgstr ""
 
 #: app/menus.c:718
-#, fuzzy
 msgid "/Layer to Imagesize"
-msgstr "/Tasot/Yhdistä kuva"
+msgstr "/Taso kuvan kokoiseksi"
 
 #: app/menus.c:720
 msgid "/Scale Layer..."
@@ -4128,7 +4085,7 @@ msgstr "/Laske kanava"
 
 #: app/menus.c:762
 msgid "/Duplicate Channel"
-msgstr "/Duplikoi kanava"
+msgstr "/Kahdenna kanava"
 
 #: app/menus.c:767
 msgid "/Channel to Selection"
@@ -4139,12 +4096,10 @@ msgid "/Add to Selection"
 msgstr "/Lisää valintaan"
 
 #: app/menus.c:771
-#, fuzzy
 msgid "/Subtract from Selection"
 msgstr "/Vähennä valinnasta"
 
 #: app/menus.c:773
-#, fuzzy
 msgid "/Intersect with Selection"
 msgstr "/Leikkaa valinnan kanssa"
 
@@ -4154,35 +4109,35 @@ msgstr "/Poista kanava"
 
 #: app/menus.c:789
 msgid "/New Path"
-msgstr "/Uusi käyrä"
+msgstr "/Uusi polku"
 
 #: app/menus.c:791
 msgid "/Duplicate Path"
-msgstr "/Duplikoi käyrä"
+msgstr "/Kahdenna polku"
 
 #: app/menus.c:793
 msgid "/Path to Selection"
-msgstr "/Käyrä valinnaksi"
+msgstr "/Polku valinnaksi"
 
 #: app/menus.c:795
 msgid "/Selection to Path"
-msgstr "/Valinta käyräksi"
+msgstr "/Valinta poluksi"
 
 #: app/menus.c:797
 msgid "/Stroke Path"
-msgstr ""
+msgstr "/Piittä polkua pitkin"
 
 #: app/menus.c:799
 msgid "/Delete Path"
-msgstr "/Poista käyrä"
+msgstr "/Poista polku"
 
 #: app/menus.c:804
 msgid "/Copy Path"
-msgstr "/Kopioi käyrä"
+msgstr "/Kopioi polku"
 
 #: app/menus.c:806
 msgid "/Paste Path"
-msgstr "/Liimaa käyrä"
+msgstr "/Liimaa polku"
 
 #: app/menus.c:808
 msgid "/Import Path..."
@@ -4294,7 +4249,7 @@ msgstr "Siirtotyökalun asetukset asetukset"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, fuzzy, c-format
+#, c-format
 msgid "Navigation: %s-%d.%d"
 msgstr "Ikkuna-navigointi:%s-%d.%d"
 
@@ -4472,7 +4427,6 @@ msgid "Source:"
 msgstr "Lähde:"
 
 #: app/palette.c:3178
-#, fuzzy
 msgid "Indexed Palette"
 msgstr "Indeksoitu paletti"
 
@@ -4492,33 +4446,32 @@ msgid "Palette Selection"
 msgstr "Paletin valinta"
 
 #: app/path_tool.c:1411
-#, fuzzy
 msgid "Path Tool Options"
-msgstr "Työkalujen asetukset"
+msgstr "Polkutyökalun asetukset"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
-msgstr "Uusi käyrä"
+msgstr "Uusi polku"
 
 #: app/paths_dialog.c:173
 msgid "Duplicate Path"
-msgstr "Duplikoi käyrä"
+msgstr "Kahdenna polku"
 
 #: app/paths_dialog.c:177
 msgid "Path to Selection"
-msgstr "Käyrä valinnaksi"
+msgstr "Polku valinnaksi"
 
 #: app/paths_dialog.c:181
 msgid "Selection to Path"
-msgstr "Valinta käyräksi"
+msgstr "Valinta poluksi"
 
 #: app/paths_dialog.c:185
 msgid "Stroke Path"
-msgstr "Piirrä käyrää pitkin"
+msgstr "Piirrä polkua pitkin"
 
 #: app/paths_dialog.c:189
 msgid "Delete Path"
-msgstr "Poista käyrä"
+msgstr "Poista polku"
 
 #: app/paths_dialog.c:198
 msgid "New Point"
@@ -4539,11 +4492,11 @@ msgstr "Muokkaa pistettä"
 #: app/paths_dialog.c:452
 #, c-format
 msgid "Path %d"
-msgstr "Käyrä %d"
+msgstr "Polku %d"
 
 #: app/paths_dialog.c:1236
 msgid "Rename path"
-msgstr "Nimeä käyrä uudelleen"
+msgstr "Nimeä polku uudelleen"
 
 #: app/paths_dialog.c:1239
 msgid "Enter a new name for the path"
@@ -4580,11 +4533,11 @@ msgstr ""
 
 #: app/paths_dialog.c:2392
 msgid "Load Path"
-msgstr "Lue käyrä"
+msgstr "Lue polku"
 
 #: app/paths_dialog.c:2414
 msgid "Store Path"
-msgstr "Tallenna käyrä"
+msgstr "Tallenna pólku"
 
 #. The shell
 #: app/pattern_select.c:162
@@ -5055,7 +5008,6 @@ msgid "Save Window Positions on Exit"
 msgstr "Talleta ikkunoiden sijainnit poistuttaessa"
 
 #: app/preferences_dialog.c:1989
-#, fuzzy
 msgid "Clear Saved Window Positions Now"
 msgstr "Unohda tallennetut ikkunoiden sijainnit"
 
@@ -5459,7 +5411,6 @@ msgid "gimp_tips.txt"
 msgstr ""
 
 #: app/tips_dialog.c:70
-#, fuzzy
 msgid "GIMP Tip of the Day"
 msgstr "Päivän GIMP-vihje"
 
@@ -5522,9 +5473,8 @@ msgid "Feather"
 msgstr "Pehmennä"
 
 #: app/tool_options.c:386
-#, fuzzy
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Suhde:"
+msgstr "Kiinteä koko / kuvasuhde"
 
 #: app/tool_options.c:538
 msgid "Bucket Fill Options"
@@ -5579,9 +5529,8 @@ msgid "Incremental"
 msgstr ""
 
 #: app/tool_options.c:783
-#, fuzzy
 msgid "Pressure Sensitivity"
-msgstr "Säilytä valoisuus"
+msgstr "Paineherkkyys"
 
 #: app/tool_options.c:801
 msgid "Opacity"
@@ -5653,7 +5602,7 @@ msgstr "/Työkalut/Bezier-valinta"
 
 #: app/tools.c:158
 msgid "Select regions using Bezier curves"
-msgstr "Valitse Bezier-käyrien rajaamia alueita"
+msgstr "Valitse Bezier-polkujen rajaamia alueita"
 
 #: app/tools.c:170
 msgid "Intelligent Scissors"
@@ -5899,15 +5848,15 @@ msgstr "Luonnollinen ruisku"
 
 #: app/tools.c:578
 msgid "Path"
-msgstr "Käyrä"
+msgstr "Polku"
 
 #: app/tools.c:580
 msgid "/Tools/Path"
-msgstr "/Työkalut/Käyrä"
+msgstr "/Työkalut/Polku"
 
 #: app/tools.c:583
 msgid "Manipulate paths"
-msgstr "Muokkaa käyriä"
+msgstr "Muokkaa polkuja"
 
 #: app/tools.c:597
 msgid "By Color Select"
@@ -5963,7 +5912,7 @@ msgstr "Vähennä värien lukumäärä kahteen"
 
 #: app/tools.c:701
 msgid "/Image/Colors/Curves..."
-msgstr "/Kuva/Värit/Käyrät..."
+msgstr "/Kuva/Värit/Värikäyrät..."
 
 #: app/tools.c:704
 msgid "Adjust color curves"
@@ -6042,14 +5991,12 @@ msgstr ""
 
 #. the show grid toggle button
 #: app/transform_tool.c:292
-#, fuzzy
 msgid "Show Grid"
-msgstr "Näytä viivottimet"
+msgstr "Näytä apuviivat"
 
 #: app/transform_tool.c:303
-#, fuzzy
 msgid "Density:"
-msgstr "Voimakkuus:"
+msgstr "Tiheys:"
 
 #. the smoothing toggle button
 #: app/transform_tool.c:333
@@ -6063,9 +6010,8 @@ msgstr ""
 
 #. the show_path toggle button
 #: app/transform_tool.c:355
-#, fuzzy
 msgid "Show Path"
-msgstr "Näytä käyrä"
+msgstr "Näytä polku"
 
 #: app/undo_history.c:432 app/undo_history.c:753
 #, c-format

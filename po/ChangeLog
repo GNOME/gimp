@@ -1,3 +1,7 @@
+1999-12-18  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Fix fuzzy translations. Some terminology changes.
+
 Thu Dec 16 21:09:23 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* it.po: updates from Daniele Medri <madrid@linux.it>
