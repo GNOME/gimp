@@ -287,6 +287,10 @@ dodge/burn/sponge/smudge tools:
 	several people have commented on the need for this. Anyone
 	know how to do it well?
 
+	Maybe integrate iwarp stuff into 'convolve' tool (or into a separate
+	one)? Iwarp gui could be put into the tool options dialog 
+	-tigert
+
 session management
 
 Text Tool
