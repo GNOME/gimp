@@ -1,3 +1,9 @@
+Tue Nov 17 17:34:34 1998  Raph Levien  <raph@acm.org>
+
+	* plug-ins/waterselect/waterselect.c: Trying to make the response
+	a little more polished (i.e. it only picks up paint when you press
+	down, not when you pick up). Some Gtk 1.0 fixes.
+
 Mon Nov 16 21:46:39 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/edit_cmds.c

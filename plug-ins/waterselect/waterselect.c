@@ -15,12 +15,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* This simple plug-in does an automatic contrast stretch.  For each
-   channel in the image, it finds the minimum and maximum values... it
-   uses those values to stretch the individual histograms to the full
-   contrast range.  For some images it may do just what you want; for
-   others it may be total crap :) */
-
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -273,7 +267,7 @@ waterselect_destroy_callback (GtkWidget *widget, void *dummy)
 static gboolean
 waterselect_delete_callback (GtkWidget *widget, void *dummy)
 {
-  return TRUE;
+  return FALSE;
 }
 
 static void
@@ -356,6 +350,9 @@ draw_brush (GtkWidget *widget, gboolean erase,
 	    gdouble x, gdouble y, gdouble pressure)
 {
   gdouble much; /* how much pigment to mix in */
+
+  if (pressure < last_pressure)
+    last_pressure = pressure;
 
   much = sqrt ((x - last_x) * (x - last_x) +
 	       (y - last_y) * (y - last_y) +
@@ -446,7 +443,7 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
       coords = gdk_input_motion_events (event->window, event->deviceid,
 					motion_time, event->time,
 					&nevents);
-      erase = (!(event->state & GDK_BUTTON1_MASK)) ||
+      erase = (event->state & (GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
 	(event->source == GDK_SOURCE_ERASER);
       motion_time = event->time;
       if (coords)
