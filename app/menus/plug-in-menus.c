@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "regex.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
 
@@ -135,6 +136,8 @@ static Argument* message_handler_get_invoker (Argument *args);
 static Argument* message_handler_set_invoker (Argument *args);
 
 static Argument* plugin_temp_PDB_name_invoker (Argument *args);
+
+static Argument* plugins_query_invoker (Argument *args);
 
 
 
@@ -304,6 +307,92 @@ static ProcRecord plugin_temp_PDB_name_proc =
   { { plugin_temp_PDB_name_invoker } },
 };
 
+/* The number keeps getting repeated here because in is required 
+ * by the PDB interface for *ARRAY types.
+ */
+static ProcArg plugins_query_out_args[] =
+{
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_STRINGARRAY,
+    "menu_path",
+    "the menu path of the plugin"
+  },
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_STRINGARRAY,
+    "plugin_accelerator",
+    "String representing keyboard accelerator (could be empty string)"
+  },
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_STRINGARRAY,
+    "plugin_location",
+    "Location of the plugin program" 
+  },
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_STRINGARRAY,
+    "plugin_image_type",
+    "Type of image that this plugin will work on"
+  },
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_INT32ARRAY,
+    "plugin_install_time",
+    "Time that the plugin was installed"
+  },
+  { PDB_INT32,
+    "num_plugins",
+    "the number of plugins"
+  },
+  { PDB_STRINGARRAY,
+    "plugin_real_name",
+    "The internal name of the plugin"
+  }
+};
+
+static ProcArg plugins_query_in_args[] =
+{
+  { PDB_STRING,
+    "search_string",
+    "If not an empty string then use this as a search pattern" 
+  }
+};
+
+
+ProcRecord plugin_query_proc =
+{
+  "gimp_plugins_query",
+  "Queries the plugin database for its contents",
+  "This procedure queries the contents of the plugin database",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(plugins_query_in_args) / sizeof(plugins_query_in_args[0]),
+  plugins_query_in_args,
+
+  /*  Output arguments  */
+  sizeof(plugins_query_out_args) / sizeof(plugins_query_out_args[0]),
+  plugins_query_out_args,
+
+  /*  Exec method  */
+  { { plugins_query_invoker } },
+};
+
 
 void
 plug_in_init ()
@@ -324,8 +413,12 @@ plug_in_init ()
   procedural_db_register (&message_handler_get_proc);
   procedural_db_register (&message_handler_set_proc);
 
-  /* initialize the message box procedural db calls */
+  /* initialize the temp name PDB interafce */
   procedural_db_register (&plugin_temp_PDB_name_proc);
+
+  /* initialize the plugin browser */
+  procedural_db_register (&plugin_query_proc);
+  
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -423,6 +516,7 @@ plug_in_init ()
 	  proc_def = tmp2->data;
 	  tmp2 = tmp2->next;
 
+ 	  proc_def->mtime = plug_in_def->mtime; 
 	  plug_in_proc_def_insert (proc_def);
 	}
     }
@@ -1723,6 +1817,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   proc_def->magics = NULL;
   proc_def->image_types = g_strdup (proc_install->image_types);
   proc_def->image_types_val = plug_in_image_types_parse (proc_def->image_types);
+  /* Install temp one use todays time */
+  proc_def->mtime = time(NULL);
 
   proc = &proc_def->db_info;
 
@@ -3170,6 +3266,136 @@ plugin_temp_PDB_name_invoker (Argument *args)
   return_args = procedural_db_return_args (&plugin_temp_PDB_name_proc, TRUE);
   sprintf(temp_area,proc_name,proc_number++);
   return_args[1].value.pdb_pointer = g_strdup(temp_area);
+  return return_args;
+}
+
+static int
+match_strings (regex_t * preg,
+               char *    a)
+{
+  int ret = regexec (preg, a, 0, NULL, 0);
+  return ret;
+}
+
+static Argument*
+plugins_query_invoker (Argument *args)
+{
+  Argument *return_args;
+  PlugInProcDef *proc_def;
+  gchar * search_str;
+  GSList *tmp;
+  gint i = 0;
+  guint num_plugins = 0;
+  gchar * *menu_strs;
+  gchar * *accel_strs;
+  gchar * *prog_strs;
+  gchar * *types_strs;
+  gchar * *realname_strs;
+  gint  *time_ints;
+  regex_t sregex;
+
+  /* Get the search string */
+  search_str = args[0].value.pdb_pointer;
+
+  if(search_str && strlen(search_str) > 0)
+    {
+      regcomp(&sregex,search_str,REG_ICASE);
+    }
+  else
+    search_str = NULL;
+
+  /* count number of plugin entries */
+  /* then allocate 4 arrays of correct size where we can store the
+   * strings.
+   */
+
+  tmp = proc_defs;
+  while (tmp)
+    {
+      proc_def = tmp->data;
+      tmp = tmp->next;
+      if (proc_def->prog && proc_def->menu_path)
+	{
+	  gchar * name = strrchr (proc_def->menu_path, '/');
+	  
+	  if (name)
+	    name = name + 1;
+	  else
+	    name = proc_def->menu_path;
+
+	  if(search_str && match_strings(&sregex,name))
+	    continue;
+
+	  num_plugins++;
+	}
+    }
+
+  return_args = procedural_db_return_args (&plugin_query_proc, TRUE);
+
+  menu_strs = g_new(gchar *,num_plugins);
+  accel_strs = g_new(gchar *,num_plugins);
+  prog_strs = g_new(gchar *,num_plugins);
+  types_strs = g_new(gchar *,num_plugins);
+  realname_strs = g_new(gchar *,num_plugins);
+  time_ints = g_new(gint ,num_plugins);
+
+  return_args[1].value.pdb_int = num_plugins;
+  return_args[2].value.pdb_pointer = menu_strs;
+
+  return_args[3].value.pdb_int = num_plugins;
+  return_args[4].value.pdb_pointer = accel_strs;
+
+  return_args[5].value.pdb_int = num_plugins;
+  return_args[6].value.pdb_pointer = prog_strs;
+
+  return_args[7].value.pdb_int = num_plugins;
+  return_args[8].value.pdb_pointer = types_strs;
+
+  return_args[9].value.pdb_int = num_plugins;
+  return_args[10].value.pdb_pointer = time_ints;
+
+  return_args[11].value.pdb_int = num_plugins;
+  return_args[12].value.pdb_pointer = realname_strs;
+
+  tmp = proc_defs;
+  while (tmp)
+    {
+
+      if(i > num_plugins)
+	g_error (_("Internal error counting plugins"));
+
+      proc_def = tmp->data;
+      tmp = tmp->next;
+
+      if (proc_def->prog && proc_def->menu_path);
+	{
+	  ProcRecord *pr = &proc_def->db_info;
+
+	  gchar * name = strrchr (proc_def->menu_path, '/');
+	  
+	  if (name)
+	    name = name + 1;
+	  else
+	    name = proc_def->menu_path;
+	  
+	  if(search_str && match_strings(&sregex,name))
+	    continue;
+
+	  menu_strs[i] = g_strdup(proc_def->menu_path);
+	  accel_strs[i] = g_strdup(proc_def->accelerator);
+	  prog_strs[i] = g_strdup(proc_def->prog);
+	  types_strs[i] = g_strdup(proc_def->image_types);
+	  time_ints[i] = proc_def->mtime;
+	  realname_strs[i] = g_strdup(pr->name);
+
+	  i++;
+	}
+    }
+
+  /* This I hope frees up internal stuff */
+  if(search_str)
+    free (sregex.buffer);
+  
   return return_args;
 }
 

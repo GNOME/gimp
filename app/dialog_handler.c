@@ -117,16 +117,6 @@ dialog_show_all()
 
 /* Handle the tool box in a special way */
 
-static void
-dialog_show_toolbox()
-{
-  if(toolbox_shell && 
-     toolbox_shell->state == WAS_SHOWING && 
-     !GTK_WIDGET_VISIBLE (toolbox_shell->d))
-    {
-      gtk_widget_show(toolbox_shell->d);
-    }
-}
 
 static void
 dialog_hide_toolbox()
@@ -139,6 +129,18 @@ dialog_hide_toolbox()
 }
 
 /* public */
+
+void
+dialog_show_toolbox()
+{
+  if(toolbox_shell && 
+     toolbox_shell->state == WAS_SHOWING && 
+     !GTK_WIDGET_VISIBLE (toolbox_shell->d))
+    {
+      gtk_widget_show(toolbox_shell->d);
+    }
+}
+
 
 /* Set hourglass cursor on all currently registered dialogs */
 

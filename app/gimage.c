@@ -18,6 +18,7 @@
 #include "general.h"
 #include "appenv.h"
 #include "gimpset.h"
+#include "dialog_handler.h"
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
    to proper places. That is, the handlers should be moved to
@@ -103,6 +104,26 @@ gimage_dirty_handler (GimpImage* gimage){
 }
 
 static void
+gimlist_cb(gpointer im, gpointer data){
+	GSList** l=(GSList**)data;
+	*l=g_slist_prepend(*l, im);
+}
+
+gint
+gimage_image_count()
+{
+  GSList *list=NULL;
+  gint num_images = 0;
+
+  gimage_foreach(gimlist_cb, &list);
+  num_images = g_slist_length (list);
+
+  g_slist_free(list);
+
+  return (num_images);
+}
+
+static void
 gimage_destroy_handler (GimpImage* gimage)
 {
 
@@ -110,6 +131,11 @@ gimage_destroy_handler (GimpImage* gimage)
   undo_free (gimage);
 
   palette_import_image_destroyed(gimage);
+
+  if(gimage_image_count() == 1) /* This is the last image */
+    {
+      dialog_show_toolbox();
+    }
 }
 
 static void gimage_cmap_change_handler (GimpImage* gimage, gint ncol,

@@ -26,6 +26,7 @@ void dialog_unregister       (GtkWidget *dialog);
 void dialog_toggle           (void);
 void dialog_idle_all         (void);
 void dialog_unidle_all       (void);
+void dialog_show_toolbox     (void);
 
 #endif  /* __DIALOG_HANDLER_H_ */
 

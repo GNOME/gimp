@@ -1147,6 +1147,7 @@ parse_plug_in_def (gpointer val1p,
 
   while (parse_proc_def (&proc_def))
     {
+      proc_def->mtime = plug_in_def->mtime;
       proc_def->prog = g_strdup (plug_in_def->prog);
       plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
     }

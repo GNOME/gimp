@@ -1,3 +1,22 @@
+Sat Jan 30 23:51:04 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Changed:-
+
+	* app/dialog_handler.c
+	* app/dialog_handler.h
+	* app/gimage.c
+	* app/gimprc.c
+	* app/plug_in.c
+	* app/plug_in.h
+
+	Fixed problem with TAB key hiding all dialogs. With some WM
+	you could hide all the windows with TAB then close the last image
+	down... opps how do you get back to the main dialog. Main 
+	dialog is now poped up when last image is closed and we had
+	used TAB key to hide it.
+
+	New PDB functions to query plugin info. Plugin to follow...
+
 Sat Jan 30 23:47:37 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/menus.c (menus_init_mru): Don't g_snprintf into a NULL pointer.
