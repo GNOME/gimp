@@ -135,7 +135,7 @@ get_prefix (gchar slash)
   char *p, *q, *r;
   struct stat st;
 
-  path = g_find_program_in_path ("gimp-1.3.exe");
+  path = g_find_program_in_path ("gimp-@GIMP_APP_VERSION@.exe");
 
   if (path == NULL)
     path = g_find_program_in_path ("gimp.exe");
@@ -161,7 +161,7 @@ get_prefix (gchar slash)
 	}
     }
 
-  fprintf (stderr, "Cannot determine GIMP @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@ installation location\n");
+  fprintf (stderr, "Cannot determine GIMP @GIMP_APP_VERSION@ installation location\n");
   exit (1);
 #else
   return "@prefix@";
