@@ -1,3 +1,11 @@
+
+Sat Oct 31 21:47:14 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/gradient.c
+	
+	Fixed for problems with renaming + fix for interactions between editor
+	and gradient selection popups.
+
 Sat Oct 31 14:57:40 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/gradient.c

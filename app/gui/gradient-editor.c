@@ -576,6 +576,9 @@ static void sel_update_dialogs(gint row, gradient_t *grad);
 static void grad_sel_free_all();
 static void grad_sel_refill_all();
 static void grad_sel_rename_all(gint n, gradient_t *grad);
+static void grad_sel_new_all(gint n, gradient_t *grad);
+static void grad_sel_copy_all(gint n, gradient_t *grad);
+static void grad_sel_delete_all(gint n);
 
 /* Procedural database functions */
 
@@ -1487,6 +1490,8 @@ ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer ca
 	curr_gradient = grad;
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
+
+	grad_sel_new_all(pos,grad);
 } /* ed_do_new_gradient_callback */
 
 /*****/
@@ -1494,7 +1499,8 @@ ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer ca
 static void
 ed_do_rename_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer call_data)
 {
-	gradient_t *grad = NULL;
+	gradient_t *grad = (gradient_t *)client_data;
+	gradient_t *grad_list = NULL;
 	char       *gradient_name;
 	GSList     *tmp;
 	int         n;
@@ -1510,25 +1516,26 @@ ed_do_rename_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer
 	tmp = gradients_list;
 
 	while (tmp) {
-		grad = tmp->data;
+		grad_list = tmp->data;
 
-		if (strcmp(gradient_name, grad->name) <= 0)
-			break; /* We found the one we want */
+		if(grad_list == grad)
+		        break;
 
 		n++;
 		tmp = g_slist_next(tmp);
 	} /* while */
 
-	if (!grad) {
-		g_message ("ed_do_rename_gradient_callback(): oops, can't find gradient to delete");
+	if (!grad || !grad_list) {
+		g_message ("ed_do_rename_gradient_callback(): oops, can't find gradient to rename");
 		return;
 	} /* if */
 
+	/* leak? */
 	grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
 	grad->dirty    = 1;
 
 	/* Delete file and free gradient */
-	unlink(curr_gradient->filename);
+	unlink(grad->filename);
 
 	grad->filename = build_user_filename(grad->name, gradient_path);
 
@@ -1621,6 +1628,8 @@ ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer c
 	curr_gradient = grad;
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
+
+	grad_sel_copy_all(pos,grad);
 } /* ed_do_copy_gradient_callback */
 
 
@@ -1750,6 +1759,9 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 	/* Update! */
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
+
+	grad_sel_delete_all(real_pos);
+
 } /* ed_do_delete_gradient_callback */
 
 
@@ -1782,7 +1794,7 @@ ed_rename_grads_callback(GtkWidget *widget, gpointer client_data)
 	query_string_box("Rename gradient",
 			 "Enter a new name for the gradient",
 			 curr_gradient->name,
-			 ed_do_rename_gradient_callback, NULL);
+			 ed_do_rename_gradient_callback, curr_gradient);
 }
 
 /*****/
@@ -6677,6 +6689,71 @@ grad_sel_rename_all(gint n, gradient_t *grad)
 }
 
 static void
+grad_sel_new_all(gint pos, gradient_t *grad)
+{
+  GSList *list = active_dialogs;
+  GradSelectP gsp; 
+
+  while(list)
+    {
+      gsp = (GradSelectP)list->data;
+      gtk_clist_freeze(GTK_CLIST(gsp->clist));
+      ed_insert_in_gradients_listbox(gsp->gc,gsp->clist,grad, pos, 1);
+      gtk_clist_thaw(GTK_CLIST(gsp->clist));
+      list = g_slist_next(list);
+    }
+
+  if(gradient_select_dialog)
+    {
+      gtk_clist_freeze(GTK_CLIST(gradient_select_dialog->clist));
+      ed_insert_in_gradients_listbox(gradient_select_dialog->gc,gradient_select_dialog->clist,grad, pos, 1);
+      gtk_clist_thaw(GTK_CLIST(gradient_select_dialog->clist));
+    }
+}
+
+static void
+grad_sel_copy_all(gint pos, gradient_t *grad)
+{
+  GSList *list = active_dialogs;
+  GradSelectP gsp; 
+
+  while(list)
+    {
+      gsp = (GradSelectP)list->data;
+      gtk_clist_freeze(GTK_CLIST(gsp->clist));
+      ed_insert_in_gradients_listbox(gsp->gc,gsp->clist,grad, pos, 1);
+      gtk_clist_thaw(GTK_CLIST(gsp->clist));
+      list = g_slist_next(list);
+    }
+
+  if(gradient_select_dialog)
+    {
+      gtk_clist_freeze(GTK_CLIST(gradient_select_dialog->clist));
+      ed_insert_in_gradients_listbox(gradient_select_dialog->gc,gradient_select_dialog->clist,grad, pos, 1);
+      gtk_clist_thaw(GTK_CLIST(gradient_select_dialog->clist));
+    }
+}
+
+static void
+grad_sel_delete_all(gint n)
+{
+  GSList *list = active_dialogs;
+  GradSelectP gsp; 
+
+  while(list)
+    {
+      gsp = (GradSelectP)list->data;
+      gtk_clist_remove(GTK_CLIST(gsp->clist), n);
+      list = g_slist_next(list);
+    }
+
+  if(gradient_select_dialog)
+    {
+      gtk_clist_remove(GTK_CLIST(gradient_select_dialog->clist), n);
+    }
+}
+
+static void
 grad_sel_free_all()
 {
   GSList *list = active_dialogs;
@@ -7286,7 +7363,7 @@ gradients_set_popup_invoker (Argument *args)
 	while (tmp) {
 		active = tmp->data;
 
-		if (strcmp(gradient_name, active->name) <= 0)
+		if (strcmp(gradient_name, active->name) == 0)
 			break; /* We found the one we want */
 
 		pos++;
