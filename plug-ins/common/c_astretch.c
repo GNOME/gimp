@@ -145,7 +145,7 @@ indexed_c_astretch (gint32 image_ID)
   gint    ncols, i;
   gint    rhi = 0, ghi = 0, bhi = 0, rlo = 255, glo = 255, blo = 255;
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   if (!cmap)
     {
@@ -173,7 +173,7 @@ indexed_c_astretch (gint32 image_ID)
         cmap[i * 3 + 2] = (255 * (cmap[i * 3 + 2] - blo)) / (bhi - blo);
     }
 
-  gimp_image_set_cmap (image_ID, cmap, ncols);
+  gimp_image_set_colormap (image_ID, cmap, ncols);
 }
 
 typedef struct {

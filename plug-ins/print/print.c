@@ -481,7 +481,7 @@ run (const gchar      *name,
 	{
 	  stp_image_t *image = Image_GimpDrawable_new (drawable);
 	  stp_set_app_gamma (vars, gimp_gamma ());
-	  stp_merge_printvars (vars, 
+	  stp_merge_printvars (vars,
                                stp_printer_get_printvars (current_printer));
 
 	  /*
@@ -489,7 +489,7 @@ run (const gchar      *name,
 	   */
 
 	  if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
-	    stp_set_cmap (vars, gimp_image_get_cmap (image_ID, &ncolors));
+	    stp_set_cmap (vars, gimp_image_get_colormap (image_ID, &ncolors));
 	  else
 	    stp_set_cmap (vars, NULL);
 

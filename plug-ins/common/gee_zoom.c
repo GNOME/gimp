@@ -250,7 +250,7 @@ do_fun (void)
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)
-    palette = gimp_image_get_cmap (image_id, &ncolours);
+    palette = gimp_image_get_colormap (image_id, &ncolours);
 
   /* cache hint */
   gimp_tile_cache_ntiles (1);

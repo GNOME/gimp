@@ -907,17 +907,17 @@ load_image (const gchar *filename,
           /*  keep at least one entry  */
           empty = MIN (empty, info->num_palette - 1);
 
-          gimp_image_set_cmap (image, (guchar *) (info->palette + empty),
-                               info->num_palette - empty);
+          gimp_image_set_colormap (image, (guchar *) (info->palette + empty),
+                                   info->num_palette - empty);
         }
       else
         {
-          gimp_image_set_cmap (image, (guchar *) info->palette,
-                               info->num_palette);
+          gimp_image_set_colormap (image, (guchar *) info->palette,
+                                   info->num_palette);
         }
 #else
-      gimp_image_set_cmap (image, (guchar *) info->palette,
-                           info->num_palette);
+      gimp_image_set_colormap (image, (guchar *) info->palette,
+                               info->num_palette);
 #endif /* PNG_LIBPNG_VER > 99 */
 
     }
@@ -1238,7 +1238,7 @@ save_image (const gchar *filename,
       info->color_type = PNG_COLOR_TYPE_PALETTE;
       info->valid |= PNG_INFO_PLTE;
       info->palette =
-        (png_colorp) gimp_image_get_cmap (image_ID, &num_colors);
+        (png_colorp) gimp_image_get_colormap (image_ID, &num_colors);
       info->num_palette = num_colors;
       break;
     case GIMP_INDEXEDA_IMAGE:
@@ -1494,7 +1494,7 @@ respin_cmap (png_structp pp,
   guchar       *pixels;
   gint          numpixels;
 
-  before = gimp_image_get_cmap (image_ID, &colors);
+  before = gimp_image_get_colormap (image_ID, &colors);
 
   /*
    * Make sure there is something in the colormap.

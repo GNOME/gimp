@@ -1835,7 +1835,7 @@ load_ps (const gchar *filename,
   if (pnmtype == 4)   /* Read bitimage ? Must be mapped to indexed */
     {static unsigned char BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
-    gimp_image_set_cmap (image_ID, BWColorMap, 2);
+    gimp_image_set_colormap (image_ID, BWColorMap, 2);
 
     for (i = 0; i < height; i++)
       {
@@ -2197,7 +2197,7 @@ save_ps_preview (FILE   *ofp,
   cmap = NULL;     /* Check if we need a colour table */
   if (gimp_drawable_type (drawable_ID) == GIMP_INDEXED_IMAGE)
     cmap = (guchar *)
-      gimp_image_get_cmap (gimp_drawable_get_image (drawable_ID), &ncols);
+      gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID), &ncols);
 
   for (y = 0; y < height; y++)
     {
@@ -2383,7 +2383,7 @@ save_bw (FILE   *ofp,
   static char *hex = "0123456789abcdef";
   gint level2 = (psvals.level > 1);
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -2515,7 +2515,7 @@ save_index (FILE   *ofp,
   static char *background = "000000";
   int level2 = (psvals.level > 1);
 
-  cmap = cmap_start = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = cmap_start = gimp_image_get_colormap (image_ID, &ncols);
 
   ct = coltab;
   bw = 1;

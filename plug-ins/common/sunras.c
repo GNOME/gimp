@@ -886,7 +886,7 @@ set_color_table (gint32           image_ID,
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
 	    ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
-  gimp_image_set_cmap (image_ID, ColorMap, ncols);
+  gimp_image_set_colormap (image_ID, ColorMap, ncols);
 }
 
 
@@ -1351,7 +1351,7 @@ save_index (FILE    *ofp,
     }
   else
     {
-      cmap = gimp_image_get_cmap (image_ID, &ncols);
+      cmap = gimp_image_get_colormap (image_ID, &ncols);
 
       for (j = 0; j < ncols; j++)
 	{

@@ -288,7 +288,7 @@ CB_CopyImage (gboolean interactive,
 
 	  /* get the gimp colormap */
 	  if (GIMP_GRAY_IMAGE != drawable_type)
-	    cmap = gimp_image_get_cmap (image_ID, &nColors);
+	    cmap = gimp_image_get_colormap (image_ID, &nColors);
 
 	  if (cmap)
 	    {
@@ -619,7 +619,7 @@ CB_PasteImage (gboolean interactive,
 	      cmap[c*3+1] = pPal[c].rgbGreen;
 	      cmap[c*3+2] = pPal[c].rgbBlue;
 	    }
-	  gimp_image_set_cmap (image_ID, cmap, nColors);
+	  gimp_image_set_colormap (image_ID, cmap, nColors);
 	  g_free (cmap);
 	}
 

@@ -470,8 +470,8 @@ do_optimizations (GimpRunMode run_mode,
 
   if (imagetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_cmap (image_id, &ncolours);
-      gimp_image_set_cmap (new_image_id, palette, ncolours);
+      palette = gimp_image_get_colormap (image_id, &ncolours);
+      gimp_image_set_colormap (new_image_id, palette, ncolours);
     }
 
 #if 1

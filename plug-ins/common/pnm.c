@@ -836,11 +836,11 @@ save_image (const gchar *filename,
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     {
-      int i;
+      gint    i;
       guchar *cmap;
-      int colors;
+      gint    colors;
 
-      cmap = gimp_image_get_cmap (image_ID, &colors);
+      cmap = gimp_image_get_colormap (image_ID, &colors);
 
       for (i = 0; i < colors; i++)
 	{

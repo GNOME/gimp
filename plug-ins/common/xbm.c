@@ -861,7 +861,7 @@ load_image (const gchar *filename)
     }
 
   /* Set a black-and-white colormap. */
-  gimp_image_set_cmap (image_ID, cmap, 2);
+  gimp_image_set_colormap (image_ID, cmap, 2);
 
   layer_ID = gimp_layer_new (image_ID,
 			     _("Background"),
@@ -952,7 +952,7 @@ save_image (const gchar *filename,
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
   height   = drawable->height;
-  cmap     = gimp_image_get_cmap (image_ID, &colors);
+  cmap     = gimp_image_get_colormap (image_ID, &colors);
 
   if (! gimp_drawable_is_indexed (drawable_ID) || colors > 2)
     {

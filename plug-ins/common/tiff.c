@@ -797,7 +797,7 @@ load_image (const gchar *filename)
               cmap[j++] = greenmap[i] >> 8;
               cmap[j++] = bluemap[i] >> 8;
             }
-          gimp_image_set_cmap (image, cmap, (1 << bps));
+          gimp_image_set_colormap (image, cmap, (1 << bps));
         }
 
       /* Allocate channel_data for all channels, even the background layer */
@@ -1859,7 +1859,7 @@ save_image (const gchar *filename,
       bytesperrow     = cols;
       alpha           = FALSE;
 
-      cmap = gimp_image_get_cmap (image, &colors);
+      cmap = gimp_image_get_colormap (image, &colors);
 
       for (i = 0; i < colors; i++)
         {
@@ -1891,7 +1891,7 @@ save_image (const gchar *filename,
         extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
       else
         extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
-      
+
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
     }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);

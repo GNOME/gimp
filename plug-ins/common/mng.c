@@ -434,7 +434,7 @@ respin_cmap (png_structp  png_ptr,
   gint           cols, rows;
   GimpPixelRgn   pixel_rgn;
 
-  before = gimp_image_get_cmap (image_id, &colors);
+  before = gimp_image_get_colormap (image_id, &colors);
 
   /*
    * Make sure there is something in the colormap.
@@ -747,7 +747,7 @@ mng_save_image (const gchar *filename,
       guchar *palette;
       gint    numcolors;
 
-      palette = gimp_image_get_cmap (image_id, &numcolors);
+      palette = gimp_image_get_colormap (image_id, &numcolors);
 
       if (numcolors != 0 &&
           (ret = mng_putchunk_plte (handle, numcolors, (mng_palette8e *) palette))
@@ -1014,7 +1014,7 @@ mng_save_image (const gchar *filename,
           png_info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
           png_info_ptr->valid |= PNG_INFO_PLTE;
           png_info_ptr->palette =
-            (png_colorp) gimp_image_get_cmap (image_id, &num_colors);
+            (png_colorp) gimp_image_get_colormap (image_id, &num_colors);
           png_info_ptr->num_palette = num_colors;
           break;
         case GIMP_INDEXEDA_IMAGE:

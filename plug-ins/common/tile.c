@@ -340,8 +340,8 @@ tile (gint32  image_id,
       gint    ncols;
       guchar *cmap;
 
-      cmap = gimp_image_get_cmap (image_id, &ncols);
-      gimp_image_set_cmap (new_image_id, cmap, ncols);
+      cmap = gimp_image_get_colormap (image_id, &ncols);
+      gimp_image_set_colormap (new_image_id, cmap, ncols);
       g_free (cmap);
     }
 

@@ -185,7 +185,7 @@ indexed_autostretch_hsv (gint32 image_ID)
   AutostretchData data = {0.0, 1.0, 0.0, 1.0};
   gint ncols, i;
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   if (!cmap)
     {
@@ -203,7 +203,7 @@ indexed_autostretch_hsv (gint32 image_ID)
       autostretch_hsv_func (&cmap[i * 3], &cmap[i * 3], 3, &data);
     }
 
-  gimp_image_set_cmap (image_ID, cmap, ncols);
+  gimp_image_set_colormap (image_ID, cmap, ncols);
 }
 
 static void

@@ -862,7 +862,7 @@ save_index (FITS_FILE *ofp,
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = (guchar *)g_malloc (width * height * bpp);
 
-  cmapptr = cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmapptr = cmap = gimp_image_get_colormap (image_ID, &ncols);
   if (ncols > sizeof (red)) ncols = sizeof (red);
   for (i = 0; i < ncols; i++)
     {

@@ -923,7 +923,7 @@ ReadImage (FILE        *fp,
   gimp_image_set_filename (image_ID, filename);
 
   if (info->colorMapType == 1)
-    gimp_image_set_cmap(image_ID, gimp_cmap, info->colorMapLength);
+    gimp_image_set_colormap(image_ID, gimp_cmap, info->colorMapLength);
 
   layer_ID = gimp_layer_new (image_ID,
 			     _("Background"),
@@ -1041,7 +1041,7 @@ save_image (const gchar *filename,
 
   if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE)
     {
-      gimp_cmap = gimp_image_get_cmap (image_ID, &num_colors);
+      gimp_cmap = gimp_image_get_colormap (image_ID, &num_colors);
 
       header[1] = 1; /* cmap type */
       header[2] = (tsvals.rle) ? 9 : 1;

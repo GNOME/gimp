@@ -220,7 +220,7 @@ save_image (const gchar *filename,
     case GIMP_INDEXED_IMAGE:
       fprintf (fp, "#define HEADER_PIXEL(data,pixel) {\\\n  pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n  pixel[1] = header_data_cmap[(unsigned char)data[0]][1]; \\\n  pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \\\n  data ++; }\n\n");
       /* save colormap */
-      cmap = gimp_image_get_cmap (image_ID, &colors);
+      cmap = gimp_image_get_colormap (image_ID, &colors);
 
       fprintf (fp, "static char header_data_cmap[256][3] = {");
       fprintf(fp, "\n\t{%3d,%3d,%3d}", (int)cmap[0], (int)cmap[1], (int)cmap[2]);

@@ -463,7 +463,7 @@ raw_load_palette (RawGimpData *data,
         }
     }
 
-  gimp_image_set_cmap (data->image_id, data->cmap, 256);
+  gimp_image_set_colormap (data->image_id, data->cmap, 256);
 
   return TRUE;
 }
@@ -496,7 +496,7 @@ save_image (gchar  *filename,
   if (gimp_drawable_is_indexed (drawable_id))
     {
       bpp  = 1;
-      cmap = gimp_image_get_cmap (image_id, &palsize);
+      cmap = gimp_image_get_colormap (image_id, &palsize);
     }
 
   width  = drawable->width;

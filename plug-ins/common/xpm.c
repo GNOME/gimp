@@ -706,7 +706,7 @@ save_image (const gchar *filename,
 
   if (indexed)
     {
-      guchar *cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      guchar *cmap = gimp_image_get_colormap (image_ID, &ncolors);
       guchar *c;
 
       c = cmap;

@@ -557,7 +557,7 @@ load_image (const gchar *filename,
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
-  gimp_image_set_cmap (image_id, cm, 256);
+  gimp_image_set_colormap (image_id, cm, 256);
 
   fclose (file);
 
@@ -648,7 +648,7 @@ save_image (const gchar *filename,
     case GIMP_INDEXED:
       max = MAXDIFF;
       bg = 0;
-      cmap = gimp_image_get_cmap (image_id, &colors);
+      cmap = gimp_image_get_colormap (image_id, &colors);
       for (i = 0; i < MIN (colors, 256); i++)
 	{
 	  cm[i*3+0] = cmap[i*3+0];

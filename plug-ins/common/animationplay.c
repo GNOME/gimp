@@ -550,7 +550,7 @@ do_playback (void)
   imagetype = gimp_image_base_type (image_id);
 
   if (imagetype == GIMP_INDEXED)
-    palette = gimp_image_get_cmap (image_id, &ncolours);
+    palette = gimp_image_get_colormap (image_id, &ncolours);
   else if (imagetype == GIMP_GRAY)
     {
       /* This is a bit sick, until this plugin ever gets

@@ -607,20 +607,20 @@ img_get_channels(PyGimpImage *self, void *closure)
 }
 
 static PyObject *
-img_get_cmap(PyGimpImage *self, void *closure)
+img_get_colormap(PyGimpImage *self, void *closure)
 {
     guchar *cmap;
     gint n_colours;
     PyObject *ret;
     
-    cmap = gimp_image_get_cmap(self->ID, &n_colours);
+    cmap = gimp_image_get_colormap(self->ID, &n_colours);
     ret = PyString_FromStringAndSize(cmap, n_colours * 3);
     g_free(cmap);
     return ret;
 }
 
 static int
-img_set_cmap(PyGimpImage *self, PyObject *value, void *closure)
+img_set_colormap(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
 	PyErr_SetString(PyExc_TypeError, "cannot delete cmap");
@@ -630,8 +630,8 @@ img_set_cmap(PyGimpImage *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
-    gimp_image_set_cmap(self->ID, PyString_AsString(value),
-			PyString_Size(value) / 3);
+    gimp_image_set_colormap(self->ID, PyString_AsString(value),
+                            PyString_Size(value) / 3);
     return 0;
 }
 
@@ -818,7 +818,7 @@ static PyGetSetDef img_getsets[] = {
       (setter)img_set_active_layer },
     { "base_type", (getter)img_get_base_type, (setter)0 },
     { "channels", (getter)img_get_channels, (setter)0 },
-    { "cmap", (getter)img_get_cmap, (setter)img_set_cmap },
+    { "colormap", (getter)img_get_colormap, (setter)img_set_colormap },
     { "filename", (getter)img_get_filename, (setter)img_set_filename },
     { "floating_selection", (getter)img_get_floating_selection, (setter)0 },
     { "floating_sel_attached_to", (getter)img_get_floating_sel_attached_to,

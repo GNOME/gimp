@@ -160,7 +160,7 @@ WriteBMP (const gchar *filename,
         }
       break;
     case GIMP_INDEXED_IMAGE:
-      cmap     = gimp_image_get_cmap (image, &colors);
+      cmap     = gimp_image_get_colormap (image, &colors);
       MapSize  = 4 * colors;
       channels = 1;
 

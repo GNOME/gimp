@@ -215,11 +215,11 @@ indexed_Color_Enhance (gint32 image_ID)
   gint ncols,i;
   gdouble vhi = 0.0, vlo = 1.0;
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   if (!cmap)
     {
-      g_message(_("Color_Enhance: cmap was NULL!  Quitting...\n"));
+      g_message ("colormap was NULL!  Quitting.");
       gimp_quit();
     }
 
@@ -236,7 +236,7 @@ indexed_Color_Enhance (gint32 image_ID)
       enhance_it (&cmap[3 * i], &cmap[3 * i], vlo, vhi);
     }
 
-  gimp_image_set_cmap (image_ID, cmap, ncols);
+  gimp_image_set_colormap (image_ID, cmap, ncols);
 }
 
 typedef struct {

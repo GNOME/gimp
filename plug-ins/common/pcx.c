@@ -349,13 +349,13 @@ load_image (const gchar *filename)
     {
       dest = (guchar *) g_malloc (width * height);
       load_1 (fd, width, height, dest, qtohs (pcx_header.bytesperline));
-      gimp_image_set_cmap (image, mono, 2);
+      gimp_image_set_colormap (image, mono, 2);
     }
   else if (pcx_header.planes == 4 && pcx_header.bpp == 1)
     {
       dest = (guchar *) g_malloc (width * height);
       load_4(fd, width, height, dest, qtohs (pcx_header.bytesperline));
-      gimp_image_set_cmap (image, pcx_header.colormap, 16);
+      gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.planes == 1 && pcx_header.bpp == 8)
     {
@@ -363,7 +363,7 @@ load_image (const gchar *filename)
       load_8(fd, width, height, dest, qtohs (pcx_header.bytesperline));
       fseek(fd, -768L, SEEK_END);
       fread(cmap, 768, 1, fd);
-      gimp_image_set_cmap (image, cmap, 256);
+      gimp_image_set_colormap (image, cmap, 256);
     }
   else if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
@@ -554,7 +554,7 @@ save_image (const gchar *filename,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_cmap (image, &colors);
+      cmap = gimp_image_get_colormap (image, &colors);
       pcx_header.bpp = 8;
       pcx_header.bytesperline = htoqs (width);
       pcx_header.planes = 1;

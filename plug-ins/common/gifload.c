@@ -194,7 +194,7 @@ run (const gchar      *name,
 #endif
       if (!promote_to_rgb)
 	{
-	  gimp_image_set_cmap (image_ID, gimp_cmap, highest_used_index+1);
+	  gimp_image_set_colormap (image_ID, gimp_cmap, highest_used_index+1);
 	}
 
       if (image_ID != -1)
@@ -859,7 +859,7 @@ ReadImage (FILE        *fd,
 	  used_cmap[2][i] = gimp_cmap[j++] = cmap[2][i];
 	}
 
-      gimp_image_set_cmap (image_ID, gimp_cmap, ncols);
+      gimp_image_set_colormap (image_ID, gimp_cmap, ncols);
 
       if (Gif89.delayTime < 0)
 	framename = g_strdup (_("Background"));

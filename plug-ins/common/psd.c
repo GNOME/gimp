@@ -2162,9 +2162,9 @@ load_image (const gchar *name)
 	      if (psd_image.colmaplen==768)
 		{
 		  reshuffle_cmap(psd_image.colmapdata);
-		  gimp_image_set_cmap (image_ID,
-				       psd_image.colmapdata,
-				       256);
+		  gimp_image_set_colormap (image_ID,
+                                           psd_image.colmapdata,
+                                           256);
 		}
 	    }
 

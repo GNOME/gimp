@@ -627,8 +627,8 @@ convert_to_rgb (GimpDrawable *srcdrawable,
 
    case GIMP_INDEXED_IMAGE:
    case GIMP_INDEXEDA_IMAGE:
-     cmap = gimp_image_get_cmap (gimp_drawable_get_image (srcdrawable->drawable_id),
-                                 &ncols);
+     cmap = gimp_image_get_colormap (gimp_drawable_get_image (srcdrawable->drawable_id),
+                                     &ncols);
      if (cmap)
        {
 	 from = src;

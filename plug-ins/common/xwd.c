@@ -1016,7 +1016,7 @@ set_bw_color_table (gint32 image_ID)
   printf ("Set GIMP b/w-colortable:\n");
 #endif
 
-  gimp_image_set_cmap (image_ID, BWColorMap, 2);
+  gimp_image_set_colormap (image_ID, BWColorMap, 2);
 }
 
 
@@ -1122,7 +1122,7 @@ set_color_table (gint32           image_ID,
             ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
-  gimp_image_set_cmap (image_ID, ColorMap, 256);
+  gimp_image_set_colormap (image_ID, ColorMap, 256);
 }
 
 
@@ -2087,7 +2087,7 @@ save_index (FILE    *ofp,
   else
     {
       vclass = 3;
-      cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      cmap = gimp_image_get_colormap (image_ID, &ncolors);
 
       for (j = 0; j < ncolors; j++)
 	{

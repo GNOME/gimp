@@ -727,8 +727,8 @@ save_color_mode_data (FILE *fd, gint32 image_id)
     case GIMP_INDEXED:
       IFDBG printf ("      Image type: INDEXED\n");
 
-      cmap = gimp_image_get_cmap (image_id, &nColors);
-      IFDBG printf ("      Length of colormap returned by gimp_image_get_cmap: %d\n", nColors);
+      cmap = gimp_image_get_colormap (image_id, &nColors);
+      IFDBG printf ("      Length of colormap returned by gimp_image_get_colormap: %d\n", nColors);
 
       if (nColors == 0)
         {

@@ -477,7 +477,7 @@ load_image (const gchar *file,
             }
         }
 
-      gimp_image_set_cmap (image, palette + 3, colours - 1);
+      gimp_image_set_colormap (image, palette + 3, colours - 1);
 
       /* Close palette file, give back allocated memory */
 
@@ -592,7 +592,7 @@ save_image (const gchar *file,
   /* Work out whether to save as 8bit or 4bit */
   if (bpp < 32)
     {
-      g_free (gimp_image_get_cmap (image, &colours));
+      g_free (gimp_image_get_colormap (image, &colours));
       if (colours > 15)
         {
           header[5] = 8;

@@ -388,7 +388,7 @@ ico_image_get_reduced_buf (guint32   layer,
 					  FALSE,
 					  "dummy");
 
-      cmap = gimp_image_get_cmap (tmp_image, num_colors);
+      cmap = gimp_image_get_colormap (tmp_image, num_colors);
 
       if (*num_colors == (1 << bpp) &&
           !ico_cmap_contains_black(cmap, *num_colors))
@@ -411,10 +411,10 @@ ico_image_get_reduced_buf (guint32   layer,
 					      "dummy");
 	}
 
-      cmap = gimp_image_get_cmap(tmp_image, num_colors);
+      cmap = gimp_image_get_colormap (tmp_image, num_colors);
       *cmap_out = g_memdup (cmap, *num_colors * 3);
 
-      result = gimp_image_convert_rgb(tmp_image);
+      result = gimp_image_convert_rgb (tmp_image);
 
       gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get(tmp_layer),
 			   0, 0, w, h, TRUE, FALSE);

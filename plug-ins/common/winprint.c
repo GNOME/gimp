@@ -1,6 +1,6 @@
 /* Print plug-in for the GIMP on Windows.
  * Copyright 1999 Tor Lillqvist <tml@iki.fi>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -350,7 +350,7 @@ run (const gchar      *name,
 	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams >= 3)	/* Printer name? */
 	    {
-	      
+
 	    }
 	  if (nparams >= 5)	/* PPD file */
 	    {
@@ -371,7 +371,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  /* Check if support for BitBlt */
-	  if (!(GetDeviceCaps(vars.prDlg.hDC, RASTERCAPS) & RC_BITBLT)) 
+	  if (!(GetDeviceCaps(vars.prDlg.hDC, RASTERCAPS) & RC_BITBLT))
 	    {
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	      g_message (_("Printer doesn't support bitmaps"));
@@ -381,23 +381,23 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  /* Set the tile cache size. */
-	  
+
 	  if (height > width)
 	    gimp_tile_cache_ntiles((drawable->height + gimp_tile_width() - 1) /
 				   gimp_tile_width() + 1);
 	  else
 	    gimp_tile_cache_ntiles((width + gimp_tile_width() - 1) /
 				   gimp_tile_width() + 1);
-	  
+
 	  /* Is the image indexed?  If so we need the colourmap. */
-	  
+
 	  if (gimp_image_base_type(param[1].data.d_image) == GIMP_INDEXED)
-	    cmap = gimp_image_get_cmap(param[1].data.d_image, &ncolours);
+	    cmap = gimp_image_get_colormap(param[1].data.d_image, &ncolours);
 	  else if (gimp_image_base_type(param[1].data.d_image) == GIMP_GRAY)
 	    ncolours = 256;
 	  else
 	    ncolours = 0;
-	  
+
 	  /* Start print job. */
 	  docInfo.cbSize = sizeof (DOCINFO);
 	  docInfo.lpszDocName = gimp_image_get_name (param[1].data.d_image);
@@ -419,7 +419,7 @@ run (const gchar      *name,
 	      AbortDoc (vars.prDlg.hDC);
 	    }
 	}
-      
+
       /* Actually print. */
 
       if (status == GIMP_PDB_SUCCESS)
@@ -433,7 +433,7 @@ run (const gchar      *name,
 	  inRow = g_malloc (width * drawable->bpp);
 
 	  hdcMem = CreateCompatibleDC (vars.prDlg.hDC);
-	  
+
 	  bmHeader.bV4Size = sizeof (BITMAPV4HEADER);
 	  bmHeader.bV4Width = width;
 	  bmHeader.bV4Height = -1;
@@ -446,7 +446,7 @@ run (const gchar      *name,
 	  bmHeader.bV4ClrUsed = 0;
 	  bmHeader.bV4ClrImportant = 0;
 	  bmHeader.bV4CSType = 0;
-	  
+
 	  hBitmap = CreateDIBSection (hdcMem,
 				      (BITMAPINFO *) &bmHeader,
 				      DIB_RGB_COLORS,
@@ -472,8 +472,8 @@ run (const gchar      *name,
 	  else
 	    pixel_transfer = rgb_to_bgr;
 
-	  devResX = GetDeviceCaps(vars.prDlg.hDC, LOGPIXELSX); 
-	  devResY = GetDeviceCaps(vars.prDlg.hDC, LOGPIXELSY); 
+	  devResX = GetDeviceCaps(vars.prDlg.hDC, LOGPIXELSX);
+	  devResY = GetDeviceCaps(vars.prDlg.hDC, LOGPIXELSY);
 	  gimp_image_get_resolution (param[1].data.d_image,
 				     &imgResX, &imgResY);
 
@@ -495,7 +495,7 @@ run (const gchar      *name,
 	    g_message (_("SetStretchBltMode failed (warning only)"));
 
 	  oldBm = SelectObject (hdcMem, hBitmap);
-	  
+
 	  if (vars.psDlg.Flags & PSD_MARGINS)
 	    if (vars.psDlg.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
 	      {
@@ -578,7 +578,7 @@ run (const gchar      *name,
 	  DeleteObject (hBitmap);
 	  gimp_progress_update (1.0);
 	}
-      
+
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (EndPage (vars.prDlg.hDC) <= 0)
@@ -699,14 +699,14 @@ run (const gchar      *name,
 		   (dmp->dmDitherType == DMDITHER_LINEART ? "LINEART" :
 		    (dmp->dmDitherType == DMDITHER_ERRORDIFFUSION ? "ERRORDIFFUSION" :
 		     (dmp->dmDitherType == DMDITHER_GRAYSCALE ? "GRAYSCALE" :
-		     
+
 		      "?")))))));
 #endif
       gimp_set_data (NAME_PRINT "devmode", dmp, vars.devmodeSize);
       GlobalUnlock (hDevMode);
       gimp_set_data (NAME_PRINT, &vars, sizeof(vars));
     }
-  
+
   if (hDevMode != NULL)
     GlobalFree (hDevMode);
   if (hDevNames != NULL)

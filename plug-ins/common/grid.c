@@ -365,7 +365,7 @@ grid (gint32        image_ID,
       break;
 
     case GIMP_INDEXED:
-      cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      cmap = gimp_image_get_colormap (image_ID, &ncolors);
 
       hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
       vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);

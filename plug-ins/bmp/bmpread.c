@@ -697,7 +697,7 @@ ReadImage (FILE     *fd,
 			   0, 0, drawable->width, drawable->height);
 
   if ((!grey) && (bpp<= 8))
-    gimp_image_set_cmap (image, gimp_cmap, ncols);
+    gimp_image_set_colormap (image, gimp_cmap, ncols);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);

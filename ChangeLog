@@ -1,5 +1,50 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/film.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/header.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/png.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/raw.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/common/winclipboard.c
+	* plug-ins/common/winprint.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c
+	* plug-ins/fits/fits.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/imagemap/imap_preview.c
+	* plug-ins/print/print.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/winicon/main.c: use the new "colormap" functions
+	instead of the deprecated "cmap" ones.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	More final API cleanup:
 
 	* tools/pdbgen/pdb/image.pdb: added gimp_image_set,get_colormap()

@@ -154,18 +154,18 @@ indexed_vinvert (gint32 image_ID)
   guchar *cmap;
   gint    ncols;
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   g_return_if_fail (cmap != NULL);
 
   vinvert_render_row (cmap, cmap, ncols, 3);
 
-  gimp_image_set_cmap (image_ID, cmap, ncols);
+  gimp_image_set_colormap (image_ID, cmap, ncols);
 
   g_free (cmap);
 }
 
-static void 
+static void
 vinvert_func (const guchar *src,
 	      guchar       *dest,
 	      gint          bpp,

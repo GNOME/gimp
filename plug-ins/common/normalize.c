@@ -157,7 +157,7 @@ indexed_normalize (gint32 image_ID)  /* a.d.m. */
   gint ncols,i;
   gint hi=0,lo=255;
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   if (cmap==NULL)
     {
@@ -183,10 +183,11 @@ indexed_normalize (gint32 image_ID)  /* a.d.m. */
 	cmap[i*3 +2] = (255 * (cmap[i*3 +2] - lo)) / (hi-lo);
       }
 
-  gimp_image_set_cmap (image_ID, cmap, ncols);
+  gimp_image_set_colormap (image_ID, cmap, ncols);
 }
 
-typedef struct {
+typedef struct
+{
   guchar  lut[256];
   gdouble min;
   gdouble max;
