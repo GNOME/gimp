@@ -31,9 +31,9 @@ SUBDIRS = \
 scriptdata =
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-2.2 gimp-console-2.2
+bin_PROGRAMS = gimp-2.3 gimp-console-2.3
 else
-bin_PROGRAMS = gimp-2.2
+bin_PROGRAMS = gimp-2.3
 endif
 
 app_sources = \
@@ -50,7 +50,7 @@ app_sources = \
 	units.h		\
 	gimp-intl.h
 
-gimp_2_2_SOURCES = $(app_sources)
+gimp_2_3_SOURCES = $(app_sources)
 
 
 EXTRA_DIST = \
@@ -86,9 +86,9 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS) \
 	-I$(includedir)
 
-gimp_2_2_LDFLAGS = $(mwindows)
+gimp_2_3_LDFLAGS = $(mwindows)
 
-gimp_2_2_LDADD = \
+gimp_2_3_LDADD = \
 	gui/libappgui.a			\
 	actions/libappactions.a		\
 	dialogs/libappdialogs.a		\
@@ -129,15 +129,15 @@ gimp_2_2_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 
-gimp_console_2_2_SOURCES = $(app_sources)
+gimp_console_2_3_SOURCES = $(app_sources)
 
-gimp_console_2_2_CPPFLAGS = \
+gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_2_LDFLAGS = $(gimp_2_2_LDFLAGS)
+gimp_console_2_3_LDFLAGS = $(gimp_2_3_LDFLAGS)
 
-gimp_console_2_2_LDADD = \
+gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
