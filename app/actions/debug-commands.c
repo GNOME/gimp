@@ -28,7 +28,6 @@
 
 #include "core/gimpobject.h"
 
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
 #include "debug-commands.h"
@@ -47,7 +46,7 @@ static void   debug_dump_menus_recurse_menu (GtkWidget *menu,
 /*  public functions  */
 
 void
-debug_dump_menus_cmd_callback (GtkWidget *widget,
+debug_dump_menus_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GList *list;
@@ -56,10 +55,10 @@ debug_dump_menus_cmd_callback (GtkWidget *widget,
        list;
        list = g_list_next (list))
     {
-      GimpMenuFactoryEntry *entry;
+#if 0
+      FIXME
+      GimpMenuFactoryEntry *entry = list->data;
       GimpItemFactory      *item_factory;
-
-      entry = list->data;
 
       item_factory = gimp_item_factory_from_path (entry->identifier);
 
@@ -80,11 +79,12 @@ debug_dump_menus_cmd_callback (GtkWidget *widget,
 
           g_print ("\n");
         }
+#endif
     }
 }
 
 void
-debug_mem_profile_cmd_callback (GtkWidget *widget,
+debug_mem_profile_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   extern gboolean gimp_debug_memsize;
@@ -104,6 +104,7 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
                                gint       depth,
                                gchar     *path)
 {
+#if 0
   GtkItemFactory *item_factory;
   GtkWidget      *menu_item;
   GList          *list;
@@ -141,6 +142,7 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
 	  g_free (full_path);
 	}
     }
+#endif
 }
 
 #endif /* ENABLE_DEBUG_MENU */

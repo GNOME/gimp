@@ -52,9 +52,8 @@
 
 
 void
-tools_default_colors_cmd_callback (GtkWidget *widget,
-				   gpointer   data,
-                                   guint      action)
+tools_default_colors_cmd_callback (GtkAction *action,
+				   gpointer   data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);
@@ -63,9 +62,8 @@ tools_default_colors_cmd_callback (GtkWidget *widget,
 }
 
 void
-tools_swap_colors_cmd_callback (GtkWidget *widget,
-				gpointer   data,
-                                guint      action)
+tools_swap_colors_cmd_callback (GtkAction *action,
+				gpointer   data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);
@@ -74,21 +72,18 @@ tools_swap_colors_cmd_callback (GtkWidget *widget,
 }
 
 void
-tools_select_cmd_callback (GtkWidget *widget,
-			   gpointer   data,
-			   guint      action)
+tools_select_cmd_callback (GtkAction   *action,
+                           const gchar *value,
+			   gpointer     data)
 {
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GimpContext  *context;
   GimpDisplay  *gdisp;
-  const gchar  *identifier;
   return_if_no_gimp (gimp, data);
 
-  identifier = g_quark_to_string ((GQuark) action);
-
   tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (gimp->tool_info_list, identifier);
+    gimp_container_get_child_by_name (gimp->tool_info_list, value);
 
   context = gimp_get_user_context (gimp);
 

@@ -20,9 +20,9 @@
 #define __PALETTES_COMMANDS_H__
 
 
-void   palettes_import_palette_cmd_callback (GtkWidget *widget,
+void   palettes_import_palette_cmd_callback (GtkAction *action,
 					     gpointer   data);
-void   palettes_merge_palettes_cmd_callback (GtkWidget *widget,
+void   palettes_merge_palettes_cmd_callback (GtkAction *action,
 					     gpointer   data);
 
 

@@ -43,15 +43,16 @@
 
 #include "tools/gimp-tools.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "actions/actions.h"
@@ -106,12 +107,9 @@ static void       gui_image_disconnect          (GimpImage          *gimage,
 
 /*  private variables  */
 
-static Gimp            *the_gui_gimp                = NULL;
-
-static GQuark           image_disconnect_handler_id = 0;
-
-static GimpItemFactory *toolbox_item_factory        = NULL;
-static GimpItemFactory *image_item_factory          = NULL;
+static Gimp          *the_gui_gimp                = NULL;
+static GQuark         image_disconnect_handler_id = 0;
+static GimpUIManager *image_ui_manager            = NULL;
 
 
 /*  public functions  */
@@ -342,17 +340,9 @@ gui_restore_after_callback (Gimp               *gimp,
   if (gui_config->restore_accels)
     menus_restore (gimp);
 
-  toolbox_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
-                                                     "<Toolbox>",
-                                                     GTK_TYPE_MENU_BAR,
-                                                     gimp,
-                                                     TRUE);
-
-  image_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
-                                                   "<Image>",
-                                                   GTK_TYPE_MENU,
-                                                   gimp,
-                                                   TRUE);
+  image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
+                                                    "<Image>",
+                                                    gimp, TRUE);
 
   gimp_devices_restore (gimp);
 
@@ -379,9 +369,15 @@ gui_exit_callback (Gimp     *gimp,
   if (! force && gimp_displays_dirty (gimp))
     {
       GtkWidget *dialog;
+      GList     *list;
 
-      gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Quit", FALSE);
-      gimp_item_factories_set_sensitive ("<Image>",   "/File/Quit", FALSE);
+      for (list = gimp_action_groups_from_name ("file");
+           list;
+           list = g_list_next (list))
+        {
+          gimp_action_group_set_action_sensitive (list->data, "file-quit",
+                                                  FALSE);
+        }
 
       dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
                                        NULL,
@@ -435,11 +431,8 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
   image_disconnect_handler_id = 0;
 
-  g_object_unref (toolbox_item_factory);
-  toolbox_item_factory = NULL;
-
-  g_object_unref (image_item_factory);
-  image_item_factory = NULL;
+  g_object_unref (image_ui_manager);
+  image_ui_manager = NULL;
 
   menus_exit (gimp);
   actions_exit (gimp);
@@ -468,8 +461,15 @@ gui_really_quit_callback (GtkWidget *button,
     }
   else
     {
-      gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Quit", TRUE);
-      gimp_item_factories_set_sensitive ("<Image>",   "/File/Quit", TRUE);
+      GList     *list;
+
+      for (list = gimp_action_groups_from_name ("file");
+           list;
+           list = g_list_next (list))
+        {
+          gimp_action_group_set_action_sensitive (list->data, "file-quit",
+                                                  TRUE);
+        }
     }
 }
 
@@ -518,7 +518,7 @@ gui_display_changed (GimpContext *context,
 		     GimpDisplay *display,
 		     Gimp        *gimp)
 {
-  gimp_item_factory_update (gimp_item_factory_from_path ("<Image>"), display);
+  gimp_ui_manager_update (image_ui_manager, display);
 }
 
 static void

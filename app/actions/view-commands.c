@@ -37,9 +37,10 @@
 #include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpuimanager.h"
 
 #include "gui/dialogs.h"
 #include "gui/info-dialog.h"
@@ -60,13 +61,18 @@
   if (! gdisp) \
     return
 
+#define SET_ACTIVE(manager,group_name,action_name,active) \
+  { GimpActionGroup *group = \
+      gimp_ui_manager_get_action_group (manager, group_name); \
+    gimp_action_group_set_action_active (group, action_name, active); }
+
 #define IS_ACTIVE_DISPLAY(gdisp) \
   ((gdisp) == \
    gimp_context_get_display (gimp_get_user_context ((gdisp)->gimage->gimp)))
 
 
 void
-view_zoom_out_cmd_callback (GtkWidget *widget,
+view_zoom_out_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -77,7 +83,7 @@ view_zoom_out_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_zoom_in_cmd_callback (GtkWidget *widget,
+view_zoom_in_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -88,7 +94,7 @@ view_zoom_in_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_zoom_fit_cmd_callback (GtkWidget *widget,
+view_zoom_fit_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -98,69 +104,62 @@ view_zoom_fit_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_zoom_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-			guint    scale)
+view_zoom_cmd_callback (GtkAction *action,
+                        GtkAction *current,
+			gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  return_if_no_display (gdisp, data);
-
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if (fabs (scale - shell->scale) > 0.0001)
-    gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) scale / 10000);
-}
-
-void
-view_zoom_other_cmd_callback (GtkWidget *widget,
-                              gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  return_if_no_display (gdisp, data);
-
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
-    return;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  /*  check if we are activated by the user or from image_menu_set_zoom()  */
-  if (shell->scale != shell->other_scale)
-    gimp_display_shell_scale_dialog (shell);
-}
-
-void
-view_dot_for_dot_cmd_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
+  gint              value;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (shell->dot_for_dot != GTK_CHECK_MENU_ITEM (widget)->active)
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (value == 0 /* Other... */)
     {
-      gimp_display_shell_scale_set_dot_for_dot (shell,
-                                                GTK_CHECK_MENU_ITEM (widget)->active);
-
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Dot for Dot",
-                                    shell->dot_for_dot);
-
-      if (IS_ACTIVE_DISPLAY (gdisp))
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                      "/View/Dot for Dot",
-                                      shell->dot_for_dot);
+      /* check if we are activated by the user
+       * or from view_actions_set_zoom()
+       */
+      if (shell->scale != shell->other_scale)
+        gimp_display_shell_scale_dialog (shell);
+    }
+  else
+    {
+      if (fabs (value - shell->scale) > 0.0001)
+        gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) value / 10000);
     }
 }
 
 void
-view_info_window_cmd_callback (GtkWidget *widget,
+view_dot_for_dot_cmd_callback (GtkAction *action,
+			       gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != shell->dot_for_dot)
+    {
+      gimp_display_shell_scale_set_dot_for_dot (shell, active);
+
+      SET_ACTIVE (shell->menubar_manager, "view", "view-dot-for-dot",
+                  shell->dot_for_dot);
+
+      if (IS_ACTIVE_DISPLAY (gdisp))
+        SET_ACTIVE (shell->popup_manager, "view", "view-dot-for-dot",
+                    shell->dot_for_dot);
+    }
+}
+
+void
+view_info_window_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
   GimpDisplay      *gdisp;
@@ -188,7 +187,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_navigation_window_cmd_callback (GtkWidget *widget,
+view_navigation_window_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpDisplay      *gdisp;
@@ -198,12 +197,12 @@ view_navigation_window_cmd_callback (GtkWidget *widget,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (widget),
+                                    gtk_widget_get_screen (gdisp->shell),
                                     "gimp-navigation-view", -1);
 }
 
 void
-view_display_filters_cmd_callback (GtkWidget *widget,
+view_display_filters_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplay      *gdisp;
@@ -225,171 +224,168 @@ view_display_filters_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_toggle_selection_cmd_callback (GtkWidget *widget,
+view_toggle_selection_cmd_callback (GtkAction *action,
 				    gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_selection (shell,
-                                         GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_selection (shell, active);
 }
 
 void
-view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
+view_toggle_layer_boundary_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_layer (shell,
-                                     GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_layer (shell, active);
 }
 
 void
-view_toggle_menubar_cmd_callback (GtkWidget *widget,
+view_toggle_menubar_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_menubar (shell,
-                                       GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_menubar (shell, active);
 }
 
 void
-view_toggle_rulers_cmd_callback (GtkWidget *widget,
+view_toggle_rulers_cmd_callback (GtkAction *action,
 				 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_rulers (shell,
-                                      GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_rulers (shell, active);
 }
 
 void
-view_toggle_scrollbars_cmd_callback (GtkWidget *widget,
+view_toggle_scrollbars_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_scrollbars (shell,
-                                          GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_scrollbars (shell, active);
 }
 
 void
-view_toggle_statusbar_cmd_callback (GtkWidget *widget,
+view_toggle_statusbar_cmd_callback (GtkAction *action,
 				    gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_statusbar (shell,
-                                         GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_statusbar (shell, active);
 }
 
 void
-view_toggle_guides_cmd_callback (GtkWidget *widget,
+view_toggle_guides_cmd_callback (GtkAction *action,
 				 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_guides (shell,
-                                      GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_show_guides (shell, active);
 }
 
 void
-view_snap_to_guides_cmd_callback (GtkWidget *widget,
+view_snap_to_guides_cmd_callback (GtkAction *action,
 				  gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (shell->snap_to_guides != GTK_CHECK_MENU_ITEM (widget)->active)
-    {
-      shell->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Snap to Guides",
-                                    shell->snap_to_guides);
-
-      if (IS_ACTIVE_DISPLAY (gdisp))
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                      "/View/Snap to Guides",
-                                      shell->snap_to_guides);
-    }
+  gimp_display_shell_set_snap_to_guides (shell, active);
 }
 
 
 void
-view_toggle_grid_cmd_callback (GtkWidget *widget,
+view_toggle_grid_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_show_grid (shell,
-                                    GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
+  gimp_display_shell_set_show_grid (shell, active);
 }
 
 void
-view_snap_to_grid_cmd_callback (GtkWidget *widget,
+view_snap_to_grid_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (shell->snap_to_grid != GTK_CHECK_MENU_ITEM (widget)->active)
-    {
-      shell->snap_to_grid = GTK_CHECK_MENU_ITEM (widget)->active;
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Snap to Grid",
-                                    shell->snap_to_grid);
-
-      if (IS_ACTIVE_DISPLAY (gdisp))
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                      "/View/Snap to Grid",
-                                      shell->snap_to_grid);
-    }
+  gimp_display_shell_set_snap_to_grid (shell, active);
 }
 
 void
-view_new_view_cmd_callback (GtkWidget *widget,
+view_new_view_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -400,7 +396,7 @@ view_new_view_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_shrink_wrap_cmd_callback (GtkWidget *widget,
+view_shrink_wrap_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -410,31 +406,31 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_fullscreen_cmd_callback (GtkWidget *widget,
+view_fullscreen_cmd_callback (GtkAction *action,
 			      gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  gboolean          active;
   gboolean          fullscreen;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_fullscreen (shell,
-                                     GTK_CHECK_MENU_ITEM (widget)->active);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_fullscreen (shell, active);
 
   fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 
-  if (fullscreen != GTK_CHECK_MENU_ITEM (widget)->active)
+  if (active != fullscreen)
     {
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Fullscreen",
-                                    fullscreen);
+      SET_ACTIVE (shell->menubar_manager, "view", "view-fullscreen",
+                  fullscreen);
 
       if (IS_ACTIVE_DISPLAY (gdisp))
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                      "/View/Fullscreen",
-                                      fullscreen);
+        SET_ACTIVE (shell->popup_manager, "view", "view-fullscreen",
+                    fullscreen);
     }
 }
 
@@ -460,7 +456,7 @@ view_change_screen_destroy_callback (GtkWidget *query_box,
 }
 
 void
-view_change_screen_cmd_callback (GtkWidget *widget,
+view_change_screen_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplay *gdisp;

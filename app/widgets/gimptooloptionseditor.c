@@ -36,7 +36,6 @@
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
@@ -321,18 +320,17 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
   GtkWidget  *menu;
 
-#if 0
   gimp_ui_manager_update (gimp_editor->ui_manager,
                           gimp_editor->popup_data);
   gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                            gimp_editor->ui_identifier,
+                            gimp_editor->ui_path,
                             gimp_editor->popup_data,
                             GTK_WIDGET (button),
-                            foo, foo, foo);
-#else
+                            NULL, NULL, NULL);
+
+#if 0
   gimp_item_factory_update (gimp_editor->item_factory,
                             gimp_editor->popup_data);
-#endif
 
   menu =
     gtk_item_factory_get_widget (GTK_ITEM_FACTORY (gimp_editor->item_factory),
@@ -342,6 +340,7 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
     gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
                     gimp_tool_options_editor_menu_pos, button,
                     0, GDK_CURRENT_TIME);
+#endif
 }
 
 static void
@@ -354,6 +353,7 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
     }
   else
     {
+#if 0
       GtkItemFactory *item_factory;
       GtkWidget      *item;
 
@@ -364,6 +364,7 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
 
       if (item)
         gtk_widget_activate (item);
+#endif
     }
 }
 

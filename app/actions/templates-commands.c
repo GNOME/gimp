@@ -50,7 +50,7 @@
 /*  public functions */
 
 void
-templates_new_template_cmd_callback (GtkWidget *widget,
+templates_new_template_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
@@ -59,7 +59,7 @@ templates_new_template_cmd_callback (GtkWidget *widget,
 }
 
 void
-templates_duplicate_template_cmd_callback (GtkWidget *widget,
+templates_duplicate_template_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
@@ -68,7 +68,7 @@ templates_duplicate_template_cmd_callback (GtkWidget *widget,
 }
 
 void
-templates_edit_template_cmd_callback (GtkWidget *widget,
+templates_edit_template_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
@@ -77,7 +77,7 @@ templates_edit_template_cmd_callback (GtkWidget *widget,
 }
 
 void
-templates_create_image_cmd_callback (GtkWidget *widget,
+templates_create_image_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
@@ -86,7 +86,7 @@ templates_create_image_cmd_callback (GtkWidget *widget,
 }
 
 void
-templates_delete_template_cmd_callback (GtkWidget *widget,
+templates_delete_template_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);

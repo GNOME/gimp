@@ -47,10 +47,9 @@ static void        gimp_editor_destroy           (GtkObject       *object);
 static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
 
-static GimpItemFactory * gimp_editor_get_menu    (GimpDocked      *docked,
-                                                  gpointer        *popup_data,
-                                                  GimpUIManager  **manager,
-                                                  const gchar    **ui_identifier);
+static GimpUIManager * gimp_editor_get_menu      (GimpDocked      *docked,
+                                                  const gchar    **ui_path,
+                                                  gpointer        *popup_data);
 
 static GtkIconSize gimp_editor_ensure_button_box (GimpEditor      *editor);
 
@@ -137,12 +136,11 @@ gimp_editor_class_init (GimpEditorClass *klass)
 static void
 gimp_editor_init (GimpEditor *editor)
 {
-  editor->menu_factory  = NULL;
-  editor->item_factory  = NULL;
-  editor->ui_manager    = NULL;
-  editor->ui_identifier = NULL;
-  editor->popup_data    = NULL;
-  editor->button_box    = NULL;
+  editor->menu_factory = NULL;
+  editor->ui_manager   = NULL;
+  editor->ui_path      = NULL;
+  editor->popup_data   = NULL;
+  editor->button_box   = NULL;
 }
 
 static void
@@ -156,22 +154,16 @@ gimp_editor_destroy (GtkObject *object)
 {
   GimpEditor *editor = GIMP_EDITOR (object);
 
-  if (editor->item_factory)
-    {
-      g_object_unref (editor->item_factory);
-      editor->item_factory = NULL;
-    }
-
   if (editor->ui_manager)
     {
       g_object_unref (editor->ui_manager);
       editor->ui_manager = NULL;
     }
 
-  if (editor->ui_identifier)
+  if (editor->ui_path)
     {
-      g_free (editor->ui_identifier);
-      editor->ui_identifier = NULL;
+      g_free (editor->ui_path);
+      editor->ui_path = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -195,19 +187,17 @@ gimp_editor_style_set (GtkWidget *widget,
     gimp_editor_set_box_style (editor, GTK_BOX (editor->button_box));
 }
 
-static GimpItemFactory *
-gimp_editor_get_menu (GimpDocked     *docked,
-                      gpointer       *popup_data,
-                      GimpUIManager **ui_manager,
-                      const gchar   **ui_identifier)
+static GimpUIManager *
+gimp_editor_get_menu (GimpDocked   *docked,
+                      const gchar **ui_path,
+                      gpointer     *popup_data)
 {
   GimpEditor *editor = GIMP_EDITOR (docked);
 
-  *ui_manager    = editor->ui_manager;
-  *ui_identifier = editor->ui_identifier;
-  *popup_data    = editor->popup_data;
+  *ui_path    = editor->ui_path;
+  *popup_data = editor->popup_data;
 
-  return editor->item_factory;
+  return editor->ui_manager;
 }
 
 GtkWidget *
@@ -224,23 +214,16 @@ void
 gimp_editor_create_menu (GimpEditor      *editor,
                          GimpMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
-                         const gchar     *ui_identifier,
+                         const gchar     *ui_path,
                          gpointer         callback_data)
 {
   g_return_if_fail (GIMP_IS_EDITOR (editor));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
   g_return_if_fail (menu_identifier != NULL);
-  g_return_if_fail (ui_identifier != NULL);
-
-  if (editor->item_factory)
-    g_object_unref (editor->item_factory);
+  g_return_if_fail (ui_path != NULL);
 
   editor->menu_factory = menu_factory;
-  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     menu_identifier,
-                                                     GTK_TYPE_MENU,
-                                                     callback_data,
-                                                     FALSE);
+
   if (editor->ui_manager)
     g_object_unref (editor->ui_manager);
 
@@ -249,10 +232,10 @@ gimp_editor_create_menu (GimpEditor      *editor,
                                                       callback_data,
                                                       FALSE);
 
-  if (editor->ui_identifier)
-    g_free (editor->ui_identifier);
+  if (editor->ui_path)
+    g_free (editor->ui_path);
 
-  editor->ui_identifier = g_strdup (ui_identifier);
+  editor->ui_path = g_strdup (ui_path);
 
   editor->popup_data = callback_data;
 }

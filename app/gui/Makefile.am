@@ -59,56 +59,20 @@ dialogs_sources = \
 	user-install-dialog.h
 
 menus_sources = \
-	brushes-menu.c			\
-	brushes-menu.h			\
-	buffers-menu.c			\
-	buffers-menu.h			\
-	channels-menu.c			\
-	channels-menu.h			\
-	colormap-editor-menu.c		\
-	colormap-editor-menu.h		\
-	dialogs-menu.c			\
-	dialogs-menu.h			\
-	documents-menu.c		\
-	documents-menu.h		\
-	error-console-menu.c		\
-	error-console-menu.h		\
 	file-open-menu.c		\
 	file-open-menu.h		\
 	file-save-menu.c		\
 	file-save-menu.h		\
-	fonts-menu.c			\
-	fonts-menu.h			\
-	gradient-editor-menu.c		\
-	gradient-editor-menu.h		\
-	gradients-menu.c		\
-	gradients-menu.h		\
 	image-menu.c			\
 	image-menu.h			\
-	images-menu.c			\
-	images-menu.h			\
-	layers-menu.c			\
-	layers-menu.h			\
 	menus.c				\
 	menus.h				\
-	palette-editor-menu.c		\
-	palette-editor-menu.h		\
-	palettes-menu.c			\
-	palettes-menu.h			\
-	patterns-menu.c			\
-	patterns-menu.h			\
 	plug-in-menus.c			\
 	plug-in-menus.h			\
-	qmask-menu.c			\
-	qmask-menu.h			\
-	templates-menu.c		\
-	templates-menu.h		\
 	tool-options-menu.c		\
 	tool-options-menu.h		\
 	toolbox-menu.c			\
-	toolbox-menu.h			\
-	vectors-menu.c			\
-	vectors-menu.h
+	toolbox-menu.h
 
 libappgui_a_SOURCES = \
 	$(dialogs_sources)		\

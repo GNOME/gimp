@@ -20,7 +20,7 @@
 #define __FONTS_COMMANDS_H__
 
 
-void   fonts_refresh_cmd_callback (GtkWidget *widget,
+void   fonts_refresh_cmd_callback (GtkAction *action,
                                    gpointer   data);
 
 

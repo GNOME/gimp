@@ -57,7 +57,9 @@
     </menu>
 
     <menu action="extensions-menu" name="Xtns">
-      <menuitem action="dialogs-module-manager" />
+      <placeholder name="Extensions">
+	<menuitem action="dialogs-module-manager" />
+      </placeholder>
       <separator />
     </menu>
 

@@ -32,7 +32,7 @@
 /*  public functions  */
 
 void
-colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
+colormap_editor_edit_color_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
@@ -42,13 +42,13 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
 }
 
 void
-colormap_editor_add_color_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+colormap_editor_add_color_cmd_callback (GtkAction *action,
+                                        gint       value,
+                                        gpointer   data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
   if (GTK_WIDGET_SENSITIVE (editor->add_button))
     gimp_button_extended_clicked (GIMP_BUTTON (editor->add_button),
-                                  action ? GDK_CONTROL_MASK : 0);
+                                  value ? GDK_CONTROL_MASK : 0);
 }

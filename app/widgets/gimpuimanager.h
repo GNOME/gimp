@@ -72,6 +72,8 @@ GList         * gimp_ui_managers_from_name  (const gchar            *name);
 
 void            gimp_ui_manager_update      (GimpUIManager          *manager,
                                              gpointer                update_data);
+GimpActionGroup * gimp_ui_manager_get_action_group (GimpUIManager   *manager,
+                                                    const gchar     *name);
 
 void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
                                              const gchar            *ui_path,

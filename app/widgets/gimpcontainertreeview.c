@@ -38,7 +38,6 @@
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpdnd.h"
-#include "gimpitemfactory.h"
 #include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -354,34 +353,19 @@ gimp_container_tree_view_popup_menu (GtkWidget *widget)
   tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
   editor    = GIMP_EDITOR (widget);
 
-  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL))
+  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL) &&
+      editor->ui_manager)
     {
-#if 0
-      if (editor->ui_manager)
-        {
-          gimp_ui_manager_update (editor->ui_manager,
-                                  editor->popup_data);
-          gimp_ui_manager_ui_popup (editor->ui_manager,
-                                    editor->ui_identifier,
-                                    editor->popup_data,
-                                    GTK_WIDGET (editor),
-                                    gimp_container_tree_view_menu_position,
-                                    editor,
-                                    NULL);
-          return TRUE;
-        }
-#endif
-
-      if (editor->item_factory)
-        {
-          gimp_item_factory_popup_with_data (editor->item_factory,
-                                             editor->popup_data,
-                                             GTK_WIDGET (editor),
-                                             gimp_container_tree_view_menu_position,
-                                             editor,
-                                             NULL);
-          return TRUE;
-        }
+      gimp_ui_manager_update (editor->ui_manager,
+                              editor->popup_data);
+      gimp_ui_manager_ui_popup (editor->ui_manager,
+                                editor->ui_path,
+                                editor->popup_data,
+                                GTK_WIDGET (editor),
+                                gimp_container_tree_view_menu_position,
+                                editor,
+                                NULL);
+      return TRUE;
     }
 
   return FALSE;

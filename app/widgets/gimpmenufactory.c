@@ -163,8 +163,7 @@ gimp_menu_factory_menu_register (GimpMenuFactory           *factory,
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (title != NULL);
   g_return_if_fail (help_id != NULL);
-  g_return_if_fail (n_entries > 0);
-  g_return_if_fail (entries != NULL);
+  g_return_if_fail (entries == NULL || n_entries > 0);
 
   entry = g_new0 (GimpMenuFactoryEntry, 1);
 

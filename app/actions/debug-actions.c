@@ -32,8 +32,7 @@
 
 static GimpActionEntry debug_actions[] =
 {
-  { "debug-menu", NULL,
-    "/File/D_ebug" },
+  { "debug-menu", NULL, "D_ebug" },
 
   { "debug-mem-profile", NULL,
     "_Mem Profile", NULL, NULL,

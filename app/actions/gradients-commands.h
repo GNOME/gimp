@@ -20,7 +20,7 @@
 #define __GRADIENTS_COMMANDS_H__
 
 
-void   gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
+void   gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
 					       gpointer   data);
 
 

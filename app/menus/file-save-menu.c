@@ -38,7 +38,6 @@
 #include "actions/file-commands.h"
 
 #include "file-save-menu.h"
-#include "menus.h"
 
 #include "gimp-intl.h"
 
@@ -50,7 +49,7 @@ GimpItemFactoryEntry file_save_menu_entries[] =
     NULL,
     GIMP_HELP_FILE_SAVE_BY_EXTENSION, NULL },
 
-  MENU_SEPARATOR ("/---")
+  { { "/---", NULL, NULL, 0, "<Separator>" }, NULL, NULL, NULL }
 };
 
 gint n_file_save_menu_entries = G_N_ELEMENTS (file_save_menu_entries);

@@ -43,7 +43,6 @@
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
 #include "gimpsessioninfo.h"
@@ -586,20 +585,13 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
     {
       GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-#if 0
       gimp_ui_manager_update (gimp_editor->ui_manager,
                               gimp_editor->popup_data);
       gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                gimp_editor->ui_identifier,
+                                gimp_editor->ui_path,
                                 gimp_editor->popup_data,
                                 GTK_WIDGET (editor),
                                 NULL, NULL, NULL);
-#else
-      gimp_item_factory_popup_with_data (gimp_editor->item_factory,
-                                         gimp_editor->popup_data,
-                                         GTK_WIDGET (editor),
-                                         NULL, NULL, NULL);
-#endif
     }
 
   return TRUE;
@@ -610,7 +602,7 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
                                         GdkEventButton    *bevent,
                                         GimpPaletteEditor *editor)
 {
-  GimpDataEditor *data_editor;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GimpPalette    *palette;
   GimpContext    *user_context;
   GList          *list;
@@ -618,8 +610,6 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
   gint            entry_height;
   gint            row, col;
   gint            pos;
-
-  data_editor = GIMP_DATA_EDITOR (editor);
 
   palette = GIMP_PALETTE (data_editor->data);
 

@@ -34,48 +34,46 @@ struct _GimpDockedInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void              (* title_changed) (GimpDocked   *docked);
+  void            (* title_changed) (GimpDocked   *docked);
 
   /*  virtual functions  */
-  void              (* set_aux_info)  (GimpDocked   *docked,
-                                       GList        *aux_info);
-  GList           * (* get_aux_info)  (GimpDocked   *docked);
+  void            (* set_aux_info)  (GimpDocked   *docked,
+                                     GList        *aux_info);
+  GList         * (* get_aux_info)  (GimpDocked   *docked);
 
-  GtkWidget       * (* get_preview)   (GimpDocked   *docked,
-                                       GimpContext  *context,
-                                       GtkIconSize   size);
-  GimpItemFactory * (* get_menu)      (GimpDocked   *docked,
-                                       gpointer     *popup_data,
-                                       GimpUIManager **manager,
-                                       const gchar   **ui_identifier);
-  gchar           * (* get_title)     (GimpDocked   *docked);
+  GtkWidget     * (* get_preview)   (GimpDocked   *docked,
+                                     GimpContext  *context,
+                                     GtkIconSize   size);
+  GimpUIManager * (* get_menu)      (GimpDocked   *docked,
+                                     const gchar **ui_path,
+                                     gpointer     *popup_data);
+  gchar         * (* get_title)     (GimpDocked   *docked);
 
-  void              (* set_context)   (GimpDocked   *docked,
+  void            (* set_context)   (GimpDocked   *docked,
                                        GimpContext  *context,
                                        GimpContext  *prev_context);
 };
 
 
-GType             gimp_docked_interface_get_type (void) G_GNUC_CONST;
+GType           gimp_docked_interface_get_type (void) G_GNUC_CONST;
 
-void              gimp_docked_title_changed      (GimpDocked   *docked);
+void            gimp_docked_title_changed      (GimpDocked   *docked);
 
-void              gimp_docked_set_aux_info       (GimpDocked   *docked,
-                                                  GList        *aux_info);
-GList           * gimp_docked_get_aux_info       (GimpDocked   *docked);
+void            gimp_docked_set_aux_info       (GimpDocked   *docked,
+                                                GList        *aux_info);
+GList         * gimp_docked_get_aux_info       (GimpDocked   *docked);
 
-GtkWidget       * gimp_docked_get_preview        (GimpDocked   *docked,
-                                                  GimpContext  *context,
-                                                  GtkIconSize   size);
-GimpItemFactory * gimp_docked_get_menu           (GimpDocked   *docked,
-                                                  gpointer     *popup_data,
-                                                  GimpUIManager **manager,
-                                                  const gchar   **ui_idenfier);
-gchar           * gimp_docked_get_title          (GimpDocked   *docked);
+GtkWidget     * gimp_docked_get_preview        (GimpDocked   *docked,
+                                                GimpContext  *context,
+                                                GtkIconSize   size);
+GimpUIManager * gimp_docked_get_menu           (GimpDocked   *docked,
+                                                const gchar **ui_path,
+                                                gpointer     *popup_data);
+gchar         * gimp_docked_get_title          (GimpDocked   *docked);
 
-void              gimp_docked_set_context        (GimpDocked   *docked,
-                                                  GimpContext  *context,
-                                                  GimpContext  *prev_context);
+void            gimp_docked_set_context        (GimpDocked   *docked,
+                                                GimpContext  *context,
+                                                GimpContext  *prev_context);
 
 
 #endif  /* __GIMP_DOCKED_H__ */

@@ -20,19 +20,19 @@
 #define __DRAWABLE_COMMANDS_H__
 
 
-void   drawable_desaturate_cmd_callback (GtkWidget *widget,
+void   drawable_desaturate_cmd_callback (GtkAction *action,
                                          gpointer   data);
-void   drawable_invert_cmd_callback     (GtkWidget *widget,
+void   drawable_invert_cmd_callback     (GtkAction *action,
                                          gpointer   data);
-void   drawable_equalize_cmd_callback   (GtkWidget *widget,
+void   drawable_equalize_cmd_callback   (GtkAction *action,
                                          gpointer   data);
-void   drawable_flip_cmd_callback       (GtkWidget *widget,
-                                         gpointer   data,
-                                         guint      action);
-void   drawable_rotate_cmd_callback     (GtkWidget *widget,
-                                         gpointer   data,
-                                         guint      action);
-void   drawable_offset_cmd_callback     (GtkWidget *widget,
+void   drawable_flip_cmd_callback       (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data);
+void   drawable_rotate_cmd_callback     (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data);
+void   drawable_offset_cmd_callback     (GtkAction *action,
                                          gpointer   data);
 
 

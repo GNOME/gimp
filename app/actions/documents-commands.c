@@ -32,7 +32,7 @@
 /*  public functions */
 
 void
-documents_open_document_cmd_callback (GtkWidget *widget,
+documents_open_document_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -41,7 +41,7 @@ documents_open_document_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_raise_or_open_document_cmd_callback (GtkWidget *widget,
+documents_raise_or_open_document_cmd_callback (GtkAction *action,
                                                gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -51,7 +51,7 @@ documents_raise_or_open_document_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_file_open_dialog_cmd_callback (GtkWidget *widget,
+documents_file_open_dialog_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -61,7 +61,7 @@ documents_file_open_dialog_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_remove_document_cmd_callback (GtkWidget *widget,
+documents_remove_document_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -71,7 +71,7 @@ documents_remove_document_cmd_callback (GtkWidget *widget,
 
 
 void
-documents_recreate_preview_cmd_callback (GtkWidget *widget,
+documents_recreate_preview_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -80,7 +80,7 @@ documents_recreate_preview_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_reload_previews_cmd_callback (GtkWidget *widget,
+documents_reload_previews_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);
@@ -90,7 +90,7 @@ documents_reload_previews_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_delete_dangling_documents_cmd_callback (GtkWidget *widget,
+documents_delete_dangling_documents_cmd_callback (GtkAction *action,
                                                   gpointer   data)
 {
   GimpDocumentView *view = GIMP_DOCUMENT_VIEW (data);

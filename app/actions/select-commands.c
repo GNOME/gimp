@@ -102,7 +102,7 @@ static gboolean  selection_shrink_edge_lock  = FALSE;
 
 
 void
-select_invert_cmd_callback (GtkWidget *widget,
+select_invert_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
@@ -113,7 +113,7 @@ select_invert_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_all_cmd_callback (GtkWidget *widget,
+select_all_cmd_callback (GtkAction *action,
 			 gpointer   data)
 {
   GimpImage *gimage;
@@ -124,7 +124,7 @@ select_all_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_none_cmd_callback (GtkWidget *widget,
+select_none_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
   GimpImage *gimage;
@@ -135,7 +135,7 @@ select_none_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_from_vectors_cmd_callback (GtkWidget *widget,
+select_from_vectors_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage *gimage;
@@ -155,7 +155,7 @@ select_from_vectors_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_float_cmd_callback (GtkWidget *widget,
+select_float_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
@@ -169,7 +169,7 @@ select_float_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_feather_cmd_callback (GtkWidget *widget,
+select_feather_cmd_callback (GtkAction *action,
 			     gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -192,7 +192,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_sharpen_cmd_callback (GtkWidget *widget,
+select_sharpen_cmd_callback (GtkAction *action,
 			     gpointer   data)
 {
   GimpImage *gimage;
@@ -203,7 +203,7 @@ select_sharpen_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_shrink_cmd_callback (GtkWidget *widget,
+select_shrink_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -239,7 +239,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_grow_cmd_callback (GtkWidget *widget,
+select_grow_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -262,7 +262,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_border_cmd_callback (GtkWidget *widget,
+select_border_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -285,22 +285,22 @@ select_border_cmd_callback (GtkWidget *widget,
 }
 
 void
-select_save_cmd_callback (GtkWidget *widget,
+select_save_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
-  gimp_selection_save (gimp_image_get_mask (gimage));
-  gimp_image_flush (gimage);
+  gimp_selection_save (gimp_image_get_mask (gdisp->gimage));
+  gimp_image_flush (gdisp->gimage);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (widget),
+                                    gtk_widget_get_screen (gdisp->shell),
                                     "gimp-channel-list", -1);
 }
 
 void
-select_toggle_quickmask_cmd_callback (GtkWidget *widget,
+select_toggle_quickmask_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   GimpImage *gimage;

@@ -57,7 +57,6 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -207,10 +206,9 @@ static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->gdisp                 = NULL;
-  shell->menubar_factory       = NULL;
+
   shell->menubar_manager       = NULL;
-  shell->popup_factory         = NULL;
-  shell->qmask_factory         = NULL;
+  shell->popup_manager         = NULL;
 
   shell->scale                 = 1.0;
   shell->other_scale           = 0.0;
@@ -370,25 +368,13 @@ gimp_display_shell_destroy (GtkObject *object)
   if (shell->gdisp)
     gimp_display_shell_disconnect (shell);
 
-  if (shell->menubar_factory)
-    {
-      g_object_unref (shell->menubar_factory);
-      shell->menubar_factory = NULL;
-    }
-
   if (shell->menubar_manager)
     {
       g_object_unref (shell->menubar_manager);
       shell->menubar_manager = NULL;
     }
 
-  shell->popup_factory = NULL;
-
-  if (shell->qmask_factory)
-    {
-      g_object_unref (shell->qmask_factory);
-      shell->qmask_factory = NULL;
-    }
+  shell->popup_manager = NULL;
 
   if (shell->select)
     {
@@ -485,22 +471,19 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   gimp_display_shell_update_title (shell);
 
   /* update the <Image>/View/Zoom menu */
-  gimp_item_factory_update (shell->menubar_factory, shell);
-#if 0
   gimp_ui_manager_update (shell->menubar_manager, shell);
-#endif
 
   user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
 
   if (shell->gdisp == gimp_context_get_display (user_context))
-    gimp_item_factory_update (shell->popup_factory, shell);
+    gimp_ui_manager_update (shell->popup_manager, shell);
 }
 
 GtkWidget *
 gimp_display_shell_new (GimpDisplay     *gdisp,
                         gdouble          scale,
                         GimpMenuFactory *menu_factory,
-                        GimpItemFactory *popup_factory)
+                        GimpUIManager   *popup_manager)
 {
   GimpDisplayShell  *shell;
   GimpDisplayConfig *config;
@@ -520,7 +503,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (popup_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
@@ -599,29 +582,15 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 	n_height = s_height;
     }
 
-
-  shell->menubar_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                       "<Image>",
-                                                       GTK_TYPE_MENU_BAR,
-                                                       gdisp,
-                                                       FALSE);
   shell->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
                                                           "<Image>",
                                                           gdisp,
                                                           FALSE);
 
-  shell->popup_factory = popup_factory;
+  shell->popup_manager = popup_manager;
 
-  shell->qmask_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     "<QMask>",
-                                                     GTK_TYPE_MENU,
-                                                     shell,
-                                                     FALSE);
-
-
-  /*  The accelerator table for images  */
   gtk_window_add_accel_group (GTK_WINDOW (shell),
-                              GTK_ITEM_FACTORY (shell->menubar_factory)->accel_group);
+                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have
@@ -667,32 +636,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
-  menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
-
-  if (shell->options->show_menubar)
-    gtk_widget_show (menubar);
-
-  /*  make sure we can activate accels even if the menubar is invisible
-   *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
-   */
-  g_signal_connect (menubar, "can-activate-accel",
-                    G_CALLBACK (gtk_true),
-                    NULL);
-
-  /*  active display callback  */
-  g_signal_connect (menubar, "button_press_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
-  g_signal_connect (menubar, "button_release_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
-  g_signal_connect (menubar, "key_press_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
-
-#if 0
   menubar = gimp_ui_manager_ui_get (shell->menubar_manager,
                                     "/image-menubar");
   gtk_ui_manager_ensure_update (GTK_UI_MANAGER (shell->menubar_manager));
@@ -718,7 +661,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   g_signal_connect (menubar, "key_press_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-#endif
 
   /*  another vbox for everything except the statusbar  */
   disp_vbox = gtk_vbox_new (FALSE, 1);

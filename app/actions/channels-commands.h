@@ -20,24 +20,24 @@
 #define __CHANNELS_COMMANDS_H__
 
 
-void   channels_new_cmd_callback             (GtkWidget   *widget,
+void   channels_new_cmd_callback             (GtkAction   *action,
                                               gpointer     data);
-void   channels_raise_cmd_callback           (GtkWidget   *widget,
+void   channels_raise_cmd_callback           (GtkAction   *action,
                                               gpointer     data);
-void   channels_raise_to_top_cmd_callback    (GtkWidget   *widget,
+void   channels_raise_to_top_cmd_callback    (GtkAction   *action,
                                               gpointer     data);
-void   channels_lower_cmd_callback           (GtkWidget   *widget,
+void   channels_lower_cmd_callback           (GtkAction   *action,
                                               gpointer     data);
-void   channels_lower_to_bottom_cmd_callback (GtkWidget   *widget,
+void   channels_lower_to_bottom_cmd_callback (GtkAction   *action,
                                               gpointer     data);
-void   channels_duplicate_cmd_callback       (GtkWidget   *widget,
+void   channels_duplicate_cmd_callback       (GtkAction   *action,
                                               gpointer     data);
-void   channels_delete_cmd_callback          (GtkWidget   *widget,
+void   channels_delete_cmd_callback          (GtkAction   *action,
                                               gpointer     data);
-void   channels_to_selection_cmd_callback    (GtkWidget   *widget,
-                                              gpointer     data,
-                                              guint        action);
-void   channels_edit_attributes_cmd_callback (GtkWidget   *widget,
+void   channels_to_selection_cmd_callback    (GtkAction   *action,
+                                              gint         value,
+                                              gpointer     data);
+void   channels_edit_attributes_cmd_callback (GtkAction   *action,
                                               gpointer     data);
 
 void   channels_new_channel_query            (GimpImage   *gimage,

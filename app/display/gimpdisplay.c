@@ -31,7 +31,6 @@
 #include "core/gimpimage-projection.h"
 #include "core/gimplist.h"
 
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpuimanager.h"
 
 #include "tools/gimptool.h"
@@ -204,7 +203,7 @@ GimpDisplay *
 gimp_display_new (GimpImage       *gimage,
                   gdouble          scale,
                   GimpMenuFactory *menu_factory,
-                  GimpItemFactory *popup_factory)
+                  GimpUIManager   *popup_manager)
 {
   GimpDisplay *gdisp;
 
@@ -223,7 +222,7 @@ gimp_display_new (GimpImage       *gimage,
 
   /*  create the shell for the image  */
   gdisp->shell = gimp_display_shell_new (gdisp, scale,
-                                         menu_factory, popup_factory);
+                                         menu_factory, popup_manager);
 
   gtk_widget_show (gdisp->shell);
 
@@ -511,15 +510,12 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
     {
       GimpContext *user_context;
 
-      gimp_item_factory_update (shell->menubar_factory, shell);
-#if 0
       gimp_ui_manager_update (shell->menubar_manager, shell);
-#endif
 
       user_context = gimp_get_user_context (gdisp->gimage->gimp);
 
       if (gdisp == gimp_context_get_display (user_context))
-        gimp_item_factory_update (shell->popup_factory, shell);
+        gimp_ui_manager_update (shell->popup_manager, shell);
     }
 }
 

@@ -20,15 +20,15 @@
 #define __DATA_COMMANDS_H__
 
 
-void   data_new_data_cmd_callback       (GtkWidget *widget,
+void   data_new_data_cmd_callback       (GtkAction *action,
 					 gpointer   data);
-void   data_duplicate_data_cmd_callback (GtkWidget *widget,
+void   data_duplicate_data_cmd_callback (GtkAction *action,
 					 gpointer   data);
-void   data_edit_data_cmd_callback      (GtkWidget *widget,
+void   data_edit_data_cmd_callback      (GtkAction *action,
 					 gpointer   data);
-void   data_delete_data_cmd_callback    (GtkWidget *widget,
+void   data_delete_data_cmd_callback    (GtkAction *action,
 					 gpointer   data);
-void   data_refresh_data_cmd_callback   (GtkWidget *widget,
+void   data_refresh_data_cmd_callback   (GtkAction *action,
 					 gpointer   data);
 
 

@@ -32,7 +32,7 @@
 /*  public functionss */
 
 void
-buffers_paste_buffer_cmd_callback (GtkWidget *widget,
+buffers_paste_buffer_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (data);
@@ -41,7 +41,7 @@ buffers_paste_buffer_cmd_callback (GtkWidget *widget,
 }
 
 void
-buffers_paste_buffer_into_cmd_callback (GtkWidget *widget,
+buffers_paste_buffer_into_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (data);
@@ -50,7 +50,7 @@ buffers_paste_buffer_into_cmd_callback (GtkWidget *widget,
 }
 
 void
-buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
+buffers_paste_buffer_as_new_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (data);
@@ -59,7 +59,7 @@ buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
 }
 
 void
-buffers_delete_buffer_cmd_callback (GtkWidget *widget,
+buffers_delete_buffer_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpBufferView *view = GIMP_BUFFER_VIEW (data);

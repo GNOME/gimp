@@ -36,8 +36,8 @@
 
 #include "widgets/gimpeditor.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimptooloptionseditor.h"
+#include "widgets/gimpuimanager.h"
 
 #include "tool-options-commands.h"
 
@@ -57,7 +57,7 @@ static void   tool_options_rename_callback (GtkWidget   *widget,
 /*  public functions  */
 
 void
-tool_options_save_to_cmd_callback (GtkWidget *widget,
+tool_options_save_to_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
@@ -73,7 +73,7 @@ tool_options_save_to_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_save_new_cmd_callback (GtkWidget *widget,
+tool_options_save_new_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpEditor   *editor = GIMP_EDITOR (data);
@@ -81,7 +81,7 @@ tool_options_save_new_cmd_callback (GtkWidget *widget,
   GimpToolInfo *tool_info;
   GtkWidget    *qbox;
 
-  context   = gimp_get_user_context (editor->item_factory->gimp);
+  context   = gimp_get_user_context (editor->ui_manager->gimp);
   tool_info = gimp_context_get_tool (context);
 
   qbox = gimp_query_string_box (_("Save Tool Options"),
@@ -96,7 +96,7 @@ tool_options_save_new_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_restore_from_cmd_callback (GtkWidget *widget,
+tool_options_restore_from_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
@@ -106,14 +106,14 @@ tool_options_restore_from_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_rename_saved_cmd_callback (GtkWidget *widget,
+tool_options_rename_saved_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
   GtkWidget       *qbox;
 
   qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
-                                widget,
+                                NULL /* FIXME */,
 				gimp_standard_help_func,
 				GIMP_HELP_TOOL_OPTIONS_DIALOG,
 				_("Enter a new name for the saved options"),
@@ -124,7 +124,7 @@ tool_options_rename_saved_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_delete_saved_cmd_callback (GtkWidget *widget,
+tool_options_delete_saved_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
@@ -134,7 +134,7 @@ tool_options_delete_saved_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_reset_cmd_callback (GtkWidget *widget,
+tool_options_reset_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);
@@ -144,7 +144,7 @@ tool_options_reset_cmd_callback (GtkWidget *widget,
 }
 
 void
-tool_options_reset_all_cmd_callback (GtkWidget *widget,
+tool_options_reset_all_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);

@@ -37,11 +37,11 @@
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 #include "gimptoolbox-dnd.h"
 #include "gimptoolbox-indicator-area.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gtkhwrapbox.h"
 
@@ -165,9 +165,9 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
-  GimpItemFactory *toolbox_factory;
-  GtkWidget       *main_vbox;
-  GtkWidget       *vbox;
+  GimpUIManager *manager;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
 
   gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
 
@@ -178,14 +178,14 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
 
-  toolbox_factory = gimp_item_factory_from_path ("<Toolbox>");
+  manager = gimp_ui_managers_from_name ("<Image>")->data;
 
-  toolbox->menu_bar = GTK_ITEM_FACTORY (toolbox_factory)->widget;
+  toolbox->menu_bar = gimp_ui_manager_ui_get (manager, "/toolbox-menubar");
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->menu_bar, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->menu_bar);
 
   gtk_window_add_accel_group (GTK_WINDOW (toolbox),
-                              GTK_ITEM_FACTORY (toolbox_factory)->accel_group);
+                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager)));
 
   toolbox->wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
@@ -607,12 +607,17 @@ static void
 toolbox_create_tools (GimpToolbox *toolbox,
                       GimpContext *context)
 {
+#if 0
+  FIXME
   GimpItemFactory *item_factory;
+#endif
   GimpToolInfo    *active_tool;
   GList           *list;
   GSList          *group = NULL;
 
+#if 0
   item_factory = gimp_item_factory_from_path ("<Image>");
+#endif
 
   active_tool = gimp_context_get_tool (context);
 
@@ -661,6 +666,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
+#if 0
       if (item_factory)
         {
           GtkWidget *menu_item;
@@ -709,6 +715,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
               g_list_free (accel_closures);
             }
         }
+#endif
     }
 }
 

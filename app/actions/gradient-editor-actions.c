@@ -44,33 +44,22 @@ static GimpActionEntry gradient_editor_actions[] =
 {
   { "gradient-editor-popup", GIMP_STOCK_GRADIENT, N_("Gradient Editor Menu") },
 
+  { "gradient-editor-load-left-color",  NULL, N_("_Load Left Color From")  },
+  { "gradient-editor-save-left-color",  NULL, N_("_Save Left Color To")    },
+  { "gradient-editor-load-right-color", NULL, N_("Load Right Color Fr_om") },
+  { "gradient-editor-save-right-color", NULL, N_("Sa_ve Right Color To")   },
+  { "gradient-editor-blending-func",    NULL, "blending-function"          },
+  { "gradient-editor-coloring-type",    NULL, "coloring-type"              },
+
   { "gradient-editor-left-color", NULL,
     N_("L_eft Endpoint's Color..."), NULL, NULL,
     G_CALLBACK (gradient_editor_left_color_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
-  { "gradient-editor-load-left-color", NULL,
-    N_("_Load Left Color From") },
-
-  { "gradient-editor-save-left-color", NULL,
-    N_("/_Save Left Color To") },
-
   { "gradient-editor-right-color", NULL,
     N_("R_ight Endpoint's Color..."), NULL, NULL,
     G_CALLBACK (gradient_editor_right_color_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
-
-  { "gradient-editor-load-right-color", NULL,
-    N_("Load Right Color Fr_om") },
-
-  { "gradient-editor-save-right-color", NULL,
-    N_("Sa_ve Right Color To") },
-
-  { "gradient-editor-blending-func", NULL,
-    "blending-function" },
-
-  { "gradient-editor-coloring-type", NULL,
-    "coloring-type" },
 
   { "gradient-editor-flip", NULL,
     "flip", "F", NULL,
@@ -489,7 +478,8 @@ gradient_editor_actions_update (GimpActionGroup *group,
                  _("_Delete Segment"));
       SET_LABEL ("gradient-editor-recenter",
                  _("Re-_center Segment's Midpoint"));
-      SET_LABEL ("/redistribute",     _("Re-distribute _Handles in Segment"));
+      SET_LABEL ("gradient-editor-redistribute",
+                 _("Re-distribute _Handles in Segment"));
     }
   else
     {

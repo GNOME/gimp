@@ -69,7 +69,6 @@
 #include "gimpdnd.h"
 #include "gimpgradienteditor.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderergradient.h"
 #include "gimpuimanager.h"
@@ -712,20 +711,13 @@ preview_events (GtkWidget          *widget,
             {
               GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-#if 0
               gimp_ui_manager_update (gimp_editor->ui_manager,
                                       gimp_editor->popup_data);
-              gimp_ui_manager_ui_pupup (gimp_editor->ui_manager,
-                                        gimp_editor->ui_identifier,
+              gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
+                                        gimp_editor->ui_path,
                                         gimp_editor->popup_data,
                                         GTK_WIDGET (editor),
                                         NULL, NULL, NULL);
-#else
-              gimp_item_factory_popup_with_data (gimp_editor->item_factory,
-                                                 gimp_editor->popup_data,
-                                                 GTK_WIDGET (editor),
-                                                 NULL, NULL, NULL);
-#endif
             }
 	  break;
 
@@ -1162,20 +1154,13 @@ control_button_press (GimpGradientEditor *editor,
     {
       GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-#if 0
       gimp_ui_manager_update (gimp_editor->ui_manager,
                               gimp_editor->popup_data);
-      gimp_ui_manager_ui_pupup (gimp_editor->ui_manager,
-                                gimp_editor->ui_identifier,
+      gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
+                                gimp_editor->ui_path,
                                 gimp_editor->popup_data,
                                 GTK_WIDGET (editor),
                                 NULL, NULL, NULL);
-#else
-      gimp_item_factory_popup_with_data (gimp_editor->item_factory,
-                                         gimp_editor->popup_data,
-                                         GTK_WIDGET (editor),
-                                         NULL, NULL, NULL);
-#endif
       return;
     }
 

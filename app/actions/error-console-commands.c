@@ -32,7 +32,7 @@
 /*  public functions  */
 
 void
-error_console_clear_cmd_callback (GtkWidget *widget,
+error_console_clear_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
@@ -42,7 +42,7 @@ error_console_clear_cmd_callback (GtkWidget *widget,
 }
 
 void
-error_console_save_all_cmd_callback (GtkWidget *widget,
+error_console_save_all_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
@@ -52,7 +52,7 @@ error_console_save_all_cmd_callback (GtkWidget *widget,
 }
 
 void
-error_console_save_selection_cmd_callback (GtkWidget *widget,
+error_console_save_selection_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);

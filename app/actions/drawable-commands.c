@@ -41,8 +41,10 @@
 
 #include "display/gimpdisplay.h"
 
-#include "drawable-commands.h"
+#include "gui/dialogs.h"
 #include "gui/offset-dialog.h"
+
+#include "drawable-commands.h"
 
 #include "gimp-intl.h"
 
@@ -68,11 +70,26 @@
   if (! drawable) \
     return
 
+#define return_if_no_widget(widget,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    widget = ((GimpDisplay *) data)->shell; \
+  else if (GIMP_IS_GIMP (data)) \
+    widget = dialogs_get_toolbox (); \
+  else if (GIMP_IS_DOCK (data)) \
+    widget = data; \
+  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
+    widget = data; \
+  else \
+    widget = NULL; \
+  \
+  if (! widget) \
+    return
+
 
 /*  public functions  */
 
 void
-drawable_desaturate_cmd_callback (GtkWidget *widget,
+drawable_desaturate_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage    *gimage;
@@ -90,7 +107,7 @@ drawable_desaturate_cmd_callback (GtkWidget *widget,
 }
 
 void
-drawable_invert_cmd_callback (GtkWidget *widget,
+drawable_invert_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage    *gimage;
@@ -108,7 +125,7 @@ drawable_invert_cmd_callback (GtkWidget *widget,
 }
 
 void
-drawable_equalize_cmd_callback (GtkWidget *widget,
+drawable_equalize_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage    *gimage;
@@ -126,9 +143,9 @@ drawable_equalize_cmd_callback (GtkWidget *widget,
 }
 
 void
-drawable_flip_cmd_callback (GtkWidget *widget,
-                            gpointer   data,
-                            guint      action)
+drawable_flip_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
 {
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
@@ -142,7 +159,7 @@ drawable_flip_cmd_callback (GtkWidget *widget,
 
   gimp_item_offsets (item, &off_x, &off_y);
 
-  switch ((GimpOrientationType) action)
+  switch ((GimpOrientationType) value)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       axis = ((gdouble) off_x + (gdouble) gimp_item_width (item) / 2.0);
@@ -162,7 +179,7 @@ drawable_flip_cmd_callback (GtkWidget *widget,
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                  _("Flip Layer"));
 
-  gimp_item_flip (item, context, (GimpOrientationType) action, axis, FALSE);
+  gimp_item_flip (item, context, (GimpOrientationType) value, axis, FALSE);
 
   if (gimp_item_get_linked (item))
     {
@@ -175,9 +192,9 @@ drawable_flip_cmd_callback (GtkWidget *widget,
 }
 
 void
-drawable_rotate_cmd_callback (GtkWidget *widget,
-                              gpointer   data,
-                              guint      action)
+drawable_rotate_cmd_callback (GtkAction *action,
+                              gint       value,
+                              gpointer   data)
 {
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
@@ -200,12 +217,12 @@ drawable_rotate_cmd_callback (GtkWidget *widget,
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                  _("Rotate Layer"));
 
-  gimp_item_rotate (item, context, (GimpRotationType) action,
+  gimp_item_rotate (item, context, (GimpRotationType) value,
                     center_x, center_y, FALSE);
 
   if (gimp_item_get_linked (item))
     {
-      gimp_item_linked_rotate (item, context, (GimpRotationType) action,
+      gimp_item_linked_rotate (item, context, (GimpRotationType) value,
                                center_x, center_y, FALSE);
       gimp_image_undo_group_end (gimage);
     }
@@ -214,13 +231,15 @@ drawable_rotate_cmd_callback (GtkWidget *widget,
 }
 
 void
-drawable_offset_cmd_callback (GtkWidget *widget,
+drawable_offset_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;
+  GtkWidget    *widget;
   GtkWidget    *dialog;
   return_if_no_drawable (gimage, drawable, data);
+  return_if_no_widget (widget, data);
 
   dialog = offset_dialog_new (drawable, widget);
   gtk_widget_show (dialog);

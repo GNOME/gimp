@@ -264,3 +264,21 @@ dialogs_exit (Gimp *gimp)
       global_dock_factory = NULL;
     }
 }
+
+GtkWidget *
+dialogs_get_toolbox (void)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (global_toolbox_factory), NULL);
+
+  for (list = global_toolbox_factory->open_dialogs;
+       list;
+       list = g_list_next (list))
+    {
+      if (GTK_WIDGET_TOPLEVEL (list->data))
+        return list->data;
+    }
+
+  return NULL;
+}

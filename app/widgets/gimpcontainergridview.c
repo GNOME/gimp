@@ -34,7 +34,6 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainergridview.h"
-#include "gimpitemfactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
@@ -377,34 +376,18 @@ gimp_container_grid_view_popup_menu (GtkWidget *widget)
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (widget);
   GimpEditor            *editor    = GIMP_EDITOR (widget);
 
-  if (grid_view->selected_item)
+  if (grid_view->selected_item && editor->ui_manager)
     {
-#if 0
-      if (editor->ui_manager)
-        {
-          gimp_ui_manager_update (editor->ui_manager,
-                                  editor->popup_data);
-          gimp_ui_manager_ui_popup (editor->ui_manager,
-                                    editor->ui_identifier,
-                                    editor->popup_data,
-                                    GTK_WIDGET (editor),
-                                    gimp_container_grid_view_menu_position,
-                                    grid_view->selected_item,
-                                    NULL);
-          return TRUE;
-        }
-#else
-      if (editor->item_factory)
-        {
-          gimp_item_factory_popup_with_data (editor->item_factory,
-                                             editor->popup_data,
-                                             GTK_WIDGET (editor),
-                                             gimp_container_grid_view_menu_position,
-                                             grid_view->selected_item,
-                                             NULL);
-          return TRUE;
-        }
-#endif
+      gimp_ui_manager_update (editor->ui_manager,
+                              editor->popup_data);
+      gimp_ui_manager_ui_popup (editor->ui_manager,
+                                editor->ui_path,
+                                editor->popup_data,
+                                GTK_WIDGET (editor),
+                                gimp_container_grid_view_menu_position,
+                                grid_view->selected_item,
+                                NULL);
+      return TRUE;
     }
 
   return FALSE;

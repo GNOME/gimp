@@ -486,7 +486,7 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "visible", visible, NULL);
+  g_object_set (action, "visible", visible ? TRUE : FALSE, NULL);
 }
 
 void
@@ -509,7 +509,7 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "sensitive", sensitive, NULL);
+  g_object_set (action, "sensitive", sensitive ? TRUE : FALSE, NULL);
 }
 
 void
@@ -540,7 +540,8 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), active);
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                active ? TRUE : FALSE);
 }
 
 void
@@ -747,5 +748,5 @@ gimp_action_group_set_action_important (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "is-important", is_important, NULL);
+  g_object_set (action, "is-important", is_important ? TRUE : FALSE, NULL);
 }

@@ -35,7 +35,6 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdocked.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
@@ -66,10 +65,9 @@ static GtkWidget    * gimp_container_editor_get_preview (GimpDocked       *docke
 static void           gimp_container_editor_set_context (GimpDocked       *docked,
                                                          GimpContext      *context,
                                                          GimpContext      *prev_context);
-static GimpItemFactory * gimp_container_editor_get_menu (GimpDocked       *docked,
-                                                         gpointer         *popup_data,
-                                                         GimpUIManager   **manager,
-                                                         const gchar     **ui_identifier);
+static GimpUIManager * gimp_container_editor_get_menu   (GimpDocked       *docked,
+                                                         const gchar     **ui_path,
+                                                         gpointer         *popup_data);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -266,25 +264,17 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
     {
       GimpEditor *gimp_editor = GIMP_EDITOR (editor->view);
 
-#if 0
       if (gimp_editor->ui_manager)
         {
           gimp_ui_manager_update (gimp_editor->ui_manager,
                                   gimp_editor->popup_data);
           gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                    gimp_editor->ui_identifier,
+                                    gimp_editor->ui_path,
                                     gimp_editor->popup_data,
                                     GTK_WIDGET (editor),
                                     NULL, NULL, NULL);
           return;
         }
-#else
-      if (gimp_editor->item_factory)
-        gimp_item_factory_popup_with_data (gimp_editor->item_factory,
-                                           gimp_editor->popup_data,
-                                           GTK_WIDGET (editor),
-                                           NULL, NULL, NULL);
-#endif
     }
 }
 
@@ -310,14 +300,12 @@ gimp_container_editor_set_context (GimpDocked  *docked,
                            context, prev_context);
 }
 
-static GimpItemFactory *
-gimp_container_editor_get_menu (GimpDocked     *docked,
-                                gpointer       *popup_data,
-                                GimpUIManager **manager,
-                                const gchar   **ui_identifier)
+static GimpUIManager *
+gimp_container_editor_get_menu (GimpDocked   *docked,
+                                const gchar **ui_path,
+                                gpointer     *popup_data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
 
-  return gimp_docked_get_menu (GIMP_DOCKED (editor->view), popup_data,
-                               manager, ui_identifier);
+  return gimp_docked_get_menu (GIMP_DOCKED (editor->view), ui_path, popup_data);
 }

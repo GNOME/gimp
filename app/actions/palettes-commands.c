@@ -51,23 +51,19 @@ static void   palettes_merge_palettes_callback (GtkWidget           *widget,
 /*  public functionss */
 
 void
-palettes_import_palette_cmd_callback (GtkWidget *widget,
+palettes_import_palette_cmd_callback (GtkAction *action,
 				      gpointer   data)
 {
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
 
   palette_import_dialog_show (editor->view->context->gimp);
 }
 
 void
-palettes_merge_palettes_cmd_callback (GtkWidget *widget,
+palettes_merge_palettes_cmd_callback (GtkAction *action,
 				      gpointer   data)
 {
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
 
   palettes_merge_palettes_query (editor);
 }

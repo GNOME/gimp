@@ -38,8 +38,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gui/plug-in-menus.h"
-
 #include "plug-in-commands.h"
 
 
@@ -57,23 +55,28 @@
 
 
 void
-plug_in_run_cmd_callback (GtkWidget *widget,
-                          gpointer   data)
+plug_in_run_cmd_callback (GtkAction     *action,
+                          PlugInProcDef *proc_def,
+                          gpointer       data)
 {
-  GtkItemFactory *item_factory;
-  Gimp           *gimp;
-  ProcRecord     *proc_rec;
-  Argument       *args;
-  gint            gdisp_ID = -1;
-  gint            i;
-  gint            argc;
-  GimpImageType   drawable_type = GIMP_RGB_IMAGE;
+  Gimp          *gimp;
+  ProcRecord    *proc_rec;
+  Argument      *args;
+  gint           gdisp_ID = -1;
+  gint           i;
+  gint           argc;
+  GimpImageType  drawable_type = GIMP_RGB_IMAGE;
 
-  item_factory = gtk_item_factory_from_widget (widget);
+  if (GIMP_IS_DISPLAY (data))
+    gimp = ((GimpDisplay *) data)->gimage->gimp;
+  else if (GIMP_IS_GIMP (data))
+    gimp = data;
+  else if (GIMP_IS_DOCK (data))
+    gimp = ((GimpDock *) data)->context->gimp;
+  else
+    return;
 
-  gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
-
-  proc_rec = (ProcRecord *) data;
+  proc_rec = &proc_def->db_info;
 
   /* construct the procedures arguments */
   args = g_new0 (Argument, proc_rec->num_args);
@@ -150,16 +153,19 @@ plug_in_run_cmd_callback (GtkWidget *widget,
       proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
     {
       gimp->last_plug_in = proc_rec;
+#if 0
+      FIXME
       plug_in_menus_update (GIMP_ITEM_FACTORY (item_factory), drawable_type);
+#endif
     }
 
   g_free (args);
 }
 
 void
-plug_in_repeat_cmd_callback (GtkWidget *widget,
-                             gpointer   data,
-                             guint      action)
+plug_in_repeat_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
 {
   GimpDisplay  *gdisp;
   GimpDrawable *drawable;
@@ -171,7 +177,7 @@ plug_in_repeat_cmd_callback (GtkWidget *widget,
   if (! drawable)
     return;
 
-  interactive = action ? TRUE : FALSE;
+  interactive = value ? TRUE : FALSE;
 
   plug_in_repeat (gdisp->gimage->gimp,
                   gimp_get_user_context (gdisp->gimage->gimp),

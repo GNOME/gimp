@@ -46,8 +46,9 @@
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -235,6 +236,8 @@ gimp_display_shell_events (GtkWidget        *widget,
                                                 options->padding_mode,
                                                 &options->padding_color);
 
+#if 0
+        FIXME
         gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
 				      "/View/Fullscreen", fullscreen);
 
@@ -242,6 +245,7 @@ gimp_display_shell_events (GtkWidget        *widget,
             gimp_context_get_display (gimp_get_user_context (gimp)))
 	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
 				      "/View/Fullscreen", fullscreen);
+#endif
       }
       break;
 
@@ -421,12 +425,12 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
   gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
                             shell->gdisp);
 
-  gimp_item_factory_popup_with_data (shell->popup_factory,
-                                     shell->gdisp,
-                                     GTK_WIDGET (shell),
-                                     gimp_display_shell_origin_menu_position,
-                                     shell->origin,
-                                     NULL);
+  gimp_ui_manager_ui_popup (shell->popup_manager, "/image-popup",
+                            shell->gdisp,
+                            GTK_WIDGET (shell),
+                            gimp_display_shell_origin_menu_position,
+                            shell->origin,
+                            NULL);
 
   return TRUE;
 }
@@ -732,10 +736,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_item_factory_popup_with_data (shell->popup_factory,
-                                               gdisp,
-                                               GTK_WIDGET (shell),
-                                               NULL, NULL, NULL);
+            gimp_ui_manager_ui_popup (shell->popup_manager, "/image-popup",
+                                      gdisp,
+                                      GTK_WIDGET (shell),
+                                      NULL, NULL, NULL);
             return_val = TRUE;
             break;
 
@@ -1510,9 +1514,10 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      gimp_item_factory_popup_with_data (shell->qmask_factory, shell,
-                                         GTK_WIDGET (shell),
-                                         NULL, NULL, NULL);
+      gimp_ui_manager_ui_popup (shell->menubar_manager, "/qmask-popup",
+                                shell,
+                                GTK_WIDGET (shell),
+                                NULL, NULL, NULL);
 
       return TRUE;
     }

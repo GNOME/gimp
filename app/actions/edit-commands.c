@@ -96,7 +96,7 @@ static void   copy_named_buffer_callback (GtkWidget   *widget,
 /*  public functions  */
 
 void
-edit_undo_cmd_callback (GtkWidget *widget,
+edit_undo_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   GimpImage *gimage;
@@ -107,7 +107,7 @@ edit_undo_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_redo_cmd_callback (GtkWidget *widget,
+edit_redo_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   GimpImage *gimage;
@@ -118,7 +118,7 @@ edit_redo_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_cut_cmd_callback (GtkWidget *widget,
+edit_cut_cmd_callback (GtkAction *action,
                        gpointer   data)
 {
   GimpImage    *gimage;
@@ -130,7 +130,7 @@ edit_cut_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_copy_cmd_callback (GtkWidget *widget,
+edit_copy_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   GimpImage    *gimage;
@@ -165,7 +165,7 @@ edit_paste (GimpDisplay *gdisp,
 }
 
 void
-edit_paste_cmd_callback (GtkWidget *widget,
+edit_paste_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -175,7 +175,7 @@ edit_paste_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_paste_into_cmd_callback (GtkWidget *widget,
+edit_paste_into_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -185,7 +185,7 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_paste_as_new_cmd_callback (GtkWidget *widget,
+edit_paste_as_new_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -200,7 +200,7 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_named_cut_cmd_callback (GtkWidget *widget,
+edit_named_cut_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -219,7 +219,7 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_named_copy_cmd_callback (GtkWidget *widget,
+edit_named_copy_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -238,16 +238,19 @@ edit_named_copy_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_named_paste_cmd_callback (GtkWidget *widget,
+edit_named_paste_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (widget),
+                                    gtk_widget_get_screen (gdisp->shell),
                                     "gimp-buffer-list|gimp-buffer-grid", -1);
 }
 
 void
-edit_clear_cmd_callback (GtkWidget *widget,
+edit_clear_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpImage    *gimage;
@@ -259,16 +262,16 @@ edit_clear_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_fill_cmd_callback (GtkWidget *widget,
-                        gpointer   data,
-                        guint      action)
+edit_fill_cmd_callback (GtkAction *action,
+                        gint       value,
+                        gpointer   data)
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;
   GimpFillType  fill_type;
   return_if_no_drawable (gimage, drawable, data);
 
-  fill_type = (GimpFillType) action;
+  fill_type = (GimpFillType) value;
 
   gimp_edit_fill (gimage, drawable, gimp_get_user_context (gimage->gimp),
                   fill_type);
@@ -276,14 +279,16 @@ edit_fill_cmd_callback (GtkWidget *widget,
 }
 
 void
-edit_stroke_cmd_callback (GtkWidget *widget,
+edit_stroke_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
+  GimpDisplay  *gdisp;
   GimpImage    *gimage;
   GimpDrawable *drawable;
+  return_if_no_display (gdisp, data);
   return_if_no_drawable (gimage, drawable, data);
 
-  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
+  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), gdisp->shell);
 }
 
 void

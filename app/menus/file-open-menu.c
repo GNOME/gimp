@@ -37,7 +37,6 @@
 #include "actions/file-commands.h"
 
 #include "file-open-menu.h"
-#include "menus.h"
 
 #include "gimp-intl.h"
 
@@ -49,7 +48,7 @@ GimpItemFactoryEntry file_open_menu_entries[] =
     NULL,
     GIMP_HELP_FILE_OPEN_BY_EXTENSION, NULL },
 
-  MENU_SEPARATOR ("/---")
+  { { "/---", NULL, NULL, 0, "<Separator>" }, NULL, NULL, NULL }
 };
 
 gint n_file_open_menu_entries = G_N_ELEMENTS (file_open_menu_entries);

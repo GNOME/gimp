@@ -58,6 +58,7 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
+#include "gui/dialogs.h"
 #include "gui/resize-dialog.h"
 
 #include "layers-commands.h"
@@ -99,11 +100,25 @@ static void   layers_resize_layer_query   (GimpImage   *gimage,
   if (! layer) \
     return
 
+#define return_if_no_widget(widget,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    widget = ((GimpDisplay *) data)->shell; \
+  else if (GIMP_IS_GIMP (data)) \
+    widget = dialogs_get_toolbox (); \
+  else if (GIMP_IS_DOCK (data)) \
+    widget = data; \
+  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
+    widget = data; \
+  else \
+    widget = NULL; \
+  if (! widget) \
+    return
+
 
 /*  public functions  */
 
 void
-layers_select_previous_cmd_callback (GtkWidget *widget,
+layers_select_previous_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpImage *gimage;
@@ -128,7 +143,7 @@ layers_select_previous_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_select_next_cmd_callback (GtkWidget *widget,
+layers_select_next_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpImage *gimage;
@@ -151,7 +166,7 @@ layers_select_next_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_select_top_cmd_callback (GtkWidget *widget,
+layers_select_top_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage *gimage;
@@ -169,7 +184,7 @@ layers_select_top_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_select_bottom_cmd_callback (GtkWidget *widget,
+layers_select_bottom_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpImage *gimage;
@@ -193,7 +208,7 @@ layers_select_bottom_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_raise_cmd_callback (GtkWidget *widget,
+layers_raise_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
@@ -205,7 +220,7 @@ layers_raise_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_lower_cmd_callback (GtkWidget *widget,
+layers_lower_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
@@ -217,7 +232,7 @@ layers_lower_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_raise_to_top_cmd_callback (GtkWidget *widget,
+layers_raise_to_top_cmd_callback (GtkAction *action,
 				  gpointer   data)
 {
   GimpImage *gimage;
@@ -229,7 +244,7 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
+layers_lower_to_bottom_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
@@ -241,17 +256,19 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_new_cmd_callback (GtkWidget *widget,
+layers_new_cmd_callback (GtkAction *action,
 			 gpointer   data)
 {
   GimpImage *gimage;
+  GtkWidget *widget;
   return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
   layers_new_layer_query (gimage, NULL, TRUE, widget);
 }
 
 void
-layers_duplicate_cmd_callback (GtkWidget *widget,
+layers_duplicate_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
   GimpImage *gimage;
@@ -269,7 +286,7 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_anchor_cmd_callback (GtkWidget *widget,
+layers_anchor_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
@@ -284,7 +301,7 @@ layers_anchor_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_merge_down_cmd_callback (GtkWidget *widget,
+layers_merge_down_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
   GimpImage *gimage;
@@ -298,7 +315,7 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_delete_cmd_callback (GtkWidget *widget,
+layers_delete_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
@@ -314,7 +331,7 @@ layers_delete_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_text_discard_cmd_callback (GtkWidget *widet,
+layers_text_discard_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage *gimage;
@@ -326,18 +343,20 @@ layers_text_discard_cmd_callback (GtkWidget *widet,
 }
 
 void
-layers_resize_cmd_callback (GtkWidget *widget,
+layers_resize_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
+  GtkWidget *widget;
   return_if_no_layer (gimage, active_layer, data);
+  return_if_no_widget (widget, data);
 
   layers_resize_layer_query (gimage, active_layer, widget);
 }
 
 void
-layers_resize_to_image_cmd_callback (GtkWidget *widget,
+layers_resize_to_image_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
@@ -350,19 +369,21 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_scale_cmd_callback (GtkWidget *widget,
+layers_scale_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
+  GtkWidget *widget;
   return_if_no_layer (gimage, active_layer, data);
+  return_if_no_widget (widget, data);
 
   layers_scale_layer_query (GIMP_IS_DISPLAY (data) ? data : NULL,
                             gimage, active_layer, widget);
 }
 
 void
-layers_crop_cmd_callback (GtkWidget *widget,
+layers_crop_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpImage *gimage;
@@ -396,18 +417,20 @@ layers_crop_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_mask_add_cmd_callback (GtkWidget *widget,
+layers_mask_add_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
+  GtkWidget *widget;
   return_if_no_layer (gimage, active_layer, data);
+  return_if_no_widget (widget, data);
 
   layers_add_mask_query (active_layer, widget);
 }
 
 void
-layers_mask_apply_cmd_callback (GtkWidget *widget,
+layers_mask_apply_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage *gimage;
@@ -422,7 +445,7 @@ layers_mask_apply_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_mask_delete_cmd_callback (GtkWidget *widget,
+layers_mask_delete_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpImage *gimage;
@@ -437,9 +460,9 @@ layers_mask_delete_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_mask_to_selection_cmd_callback (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action)
+layers_mask_to_selection_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
@@ -447,7 +470,7 @@ layers_mask_to_selection_cmd_callback (GtkWidget *widget,
   GimpLayerMask  *mask;
   return_if_no_layer (gimage, active_layer, data);
 
-  op = (GimpChannelOps) action;
+  op = (GimpChannelOps) value;
 
   mask = gimp_layer_get_mask (active_layer);
 
@@ -467,7 +490,7 @@ layers_mask_to_selection_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_alpha_add_cmd_callback (GtkWidget *widget,
+layers_alpha_add_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpImage *gimage;
@@ -482,16 +505,16 @@ layers_alpha_add_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+layers_alpha_to_selection_cmd_callback (GtkAction *action,
+                                        gint       value,
+                                        gpointer   data)
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
   GimpLayer      *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  op = (GimpChannelOps) action;
+  op = (GimpChannelOps) value;
 
   gimp_channel_select_alpha (gimp_image_get_mask (gimage),
                              GIMP_DRAWABLE (active_layer),
@@ -500,17 +523,19 @@ layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_merge_layers_cmd_callback (GtkWidget *widget,
+layers_merge_layers_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage *gimage;
+  GtkWidget *widget;
   return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
   image_layers_merge_query (gimage, TRUE, widget);
 }
 
 void
-layers_flatten_image_cmd_callback (GtkWidget *widget,
+layers_flatten_image_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpImage *gimage;
@@ -521,23 +546,27 @@ layers_flatten_image_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_text_tool_cmd_callback (GtkWidget *widget,
+layers_text_tool_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
+  GtkWidget *widget;
   return_if_no_layer (gimage, active_layer, data);
+  return_if_no_widget (widget, data);
 
   layers_text_tool (active_layer, widget);
 }
 
 void
-layers_edit_attributes_cmd_callback (GtkWidget *widget,
+layers_edit_attributes_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *active_layer;
+  GtkWidget *widget;
   return_if_no_layer (gimage, active_layer, data);
+  return_if_no_widget (widget, data);
 
   layers_edit_layer_query (active_layer, widget);
 }

@@ -292,8 +292,10 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
       label = p2 + 1;
 
+#if 0
       g_print ("adding plug-in action '%s' (%s)\n",
                proc_def->db_info.name, label);
+#endif
 
       action = gimp_plug_in_action_new (proc_def->db_info.name,
                                         label, NULL, NULL,
@@ -335,8 +337,10 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
 
   if (action)
     {
+#if 0
       g_print ("removing plug-in action '%s'\n",
                proc_def->db_info.name);
+#endif
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
     }
@@ -377,8 +381,10 @@ plug_in_actions_build_path (GimpActionGroup *group,
 
       label = p2 + 1;
 
+#if 0
       g_print ("adding plug-in submenu '%s' (%s)\n",
                path_original, label);
+#endif
 
       action = gtk_action_new (path_original, label, NULL, NULL);
       gtk_action_group_add_action (GTK_ACTION_GROUP (group), action);

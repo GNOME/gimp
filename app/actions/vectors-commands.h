@@ -20,40 +20,40 @@
 #define __VECTORS_COMMANDS_H__
 
 
-void   vectors_new_cmd_callback                  (GtkWidget   *widget,
+void   vectors_new_cmd_callback                  (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_raise_cmd_callback                (GtkWidget   *widget,
+void   vectors_raise_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_raise_to_top_cmd_callback         (GtkWidget   *widget,
+void   vectors_raise_to_top_cmd_callback         (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_lower_cmd_callback                (GtkWidget   *widget,
+void   vectors_lower_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_lower_to_bottom_cmd_callback      (GtkWidget   *widget,
+void   vectors_lower_to_bottom_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_duplicate_cmd_callback            (GtkWidget   *widget,
+void   vectors_duplicate_cmd_callback            (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_delete_cmd_callback               (GtkWidget   *widget,
+void   vectors_delete_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_merge_visible_cmd_callback        (GtkWidget   *widget,
+void   vectors_merge_visible_cmd_callback        (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_to_selection_cmd_callback         (GtkWidget   *widget,
-                                                  gpointer     data,
-                                                  guint        action);
-void   vectors_selection_to_vectors_cmd_callback (GtkWidget   *widget,
+void   vectors_to_selection_cmd_callback         (GtkAction   *action,
+                                                  gint         value,
                                                   gpointer     data);
-void   vectors_stroke_cmd_callback               (GtkWidget   *widget,
+void   vectors_selection_to_vectors_cmd_callback (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_copy_cmd_callback                 (GtkWidget   *widget,
+void   vectors_stroke_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_paste_cmd_callback                (GtkWidget   *widget,
+void   vectors_copy_cmd_callback                 (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_import_cmd_callback               (GtkWidget   *widget,
+void   vectors_paste_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_export_cmd_callback               (GtkWidget   *widget,
+void   vectors_import_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_vectors_tool_cmd_callback         (GtkWidget   *widget,
+void   vectors_export_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_edit_attributes_cmd_callback      (GtkWidget   *widget,
+void   vectors_vectors_tool_cmd_callback         (GtkAction   *action,
+                                                  gpointer     data);
+void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);
 
 void   vectors_stroke_vectors                    (GimpItem    *item,

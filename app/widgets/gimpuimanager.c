@@ -314,11 +314,33 @@ gimp_ui_manager_update (GimpUIManager *manager,
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
 
   for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
-           list;
-           list = g_list_next (list))
+       list;
+       list = g_list_next (list))
     {
       gimp_action_group_update (list->data, update_data);
     }
+}
+
+GimpActionGroup *
+gimp_ui_manager_get_action_group (GimpUIManager   *manager,
+                                  const gchar     *name)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+           list;
+           list = g_list_next (list))
+    {
+      GimpActionGroup *group = list->data;
+
+      if (! strcmp (gtk_action_group_get_name (GTK_ACTION_GROUP (group)), name))
+        return group;
+    }
+
+  return NULL;
 }
 
 void

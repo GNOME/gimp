@@ -70,11 +70,8 @@ struct _GimpDisplayShell
 
   GimpDisplay      *gdisp;
 
-  GimpItemFactory  *menubar_factory;
   GimpUIManager    *menubar_manager;
-
-  GimpItemFactory  *popup_factory;
-  GimpItemFactory  *qmask_factory;
+  GimpUIManager    *popup_manager;
 
   gdouble           monitor_xres;
   gdouble           monitor_yres;
@@ -178,7 +175,7 @@ GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
                                                       gdouble           scale,
                                                       GimpMenuFactory  *menu_factory,
-                                                      GimpItemFactory  *popup_factory);
+                                                      GimpUIManager    *popup_manager);
 
 void        gimp_display_shell_close                 (GimpDisplayShell *shell,
                                                       gboolean          kill_it);

@@ -110,7 +110,7 @@ static void     image_scale_implement     (ImageResize *image_scale);
 /*  public functions  */
 
 void
-image_convert_rgb_cmd_callback (GtkWidget *widget,
+image_convert_rgb_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
   GimpImage *gimage;
@@ -121,7 +121,7 @@ image_convert_rgb_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_convert_grayscale_cmd_callback (GtkWidget *widget,
+image_convert_grayscale_cmd_callback (GtkAction *action,
 				      gpointer   data)
 {
   GimpImage *gimage;
@@ -132,19 +132,19 @@ image_convert_grayscale_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_convert_indexed_cmd_callback (GtkWidget *widget,
+image_convert_indexed_cmd_callback (GtkAction *action,
 				    gpointer   data)
 {
-  GimpImage *gimage;
-  GtkWidget *dialog;
-  return_if_no_image (gimage, data);
+  GimpDisplay *gdisp;
+  GtkWidget   *dialog;
+  return_if_no_display (gdisp, data);
 
-  dialog = convert_dialog_new (gimage, widget);
+  dialog = convert_dialog_new (gdisp->gimage, gdisp->shell);
   gtk_widget_show (dialog);
 }
 
 void
-image_resize_cmd_callback (GtkWidget *widget,
+image_resize_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -184,7 +184,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_scale_cmd_callback (GtkWidget *widget,
+image_scale_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -224,9 +224,9 @@ image_scale_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_flip_cmd_callback (GtkWidget *widget,
-                         gpointer   data,
-                         guint      action)
+image_flip_cmd_callback (GtkAction *action,
+                         gint       value,
+                         gpointer   data)
 {
   GimpDisplay  *gdisp;
   GimpProgress *progress;
@@ -235,7 +235,7 @@ image_flip_cmd_callback (GtkWidget *widget,
   progress = gimp_progress_start (gdisp, _("Flipping..."), TRUE, NULL, NULL);
 
   gimp_image_flip (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
-                   (GimpOrientationType) action,
+                   (GimpOrientationType) value,
                    gimp_progress_update_and_flush, progress);
 
   gimp_progress_end (progress);
@@ -244,9 +244,9 @@ image_flip_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_rotate_cmd_callback (GtkWidget *widget,
-                           gpointer   data,
-                           guint      action)
+image_rotate_cmd_callback (GtkAction *action,
+                           gint       value,
+                           gpointer   data)
 {
   GimpDisplay  *gdisp;
   GimpProgress *progress;
@@ -255,7 +255,7 @@ image_rotate_cmd_callback (GtkWidget *widget,
   progress = gimp_progress_start (gdisp, _("Rotating..."), TRUE, NULL, NULL);
 
   gimp_image_rotate (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
-                     (GimpRotationType) action,
+                     (GimpRotationType) value,
                      gimp_progress_update_and_flush, progress);
 
   gimp_progress_end (progress);
@@ -264,7 +264,7 @@ image_rotate_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_crop_cmd_callback (GtkWidget *widget,
+image_crop_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -284,7 +284,7 @@ image_crop_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_duplicate_cmd_callback (GtkWidget *widget,
+image_duplicate_cmd_callback (GtkAction *action,
 			      gpointer   data)
 {
   GimpImage *gimage;
@@ -299,17 +299,17 @@ image_duplicate_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_merge_layers_cmd_callback (GtkWidget *widget,
+image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
-  image_layers_merge_query (gimage, TRUE, widget);
+  image_layers_merge_query (gdisp->gimage, TRUE, gdisp->shell);
 }
 
 void
-image_flatten_image_cmd_callback (GtkWidget *widget,
+image_flatten_image_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage *gimage;
@@ -320,7 +320,7 @@ image_flatten_image_cmd_callback (GtkWidget *widget,
 }
 
 void
-image_configure_grid_cmd_callback (GtkWidget *widget,
+image_configure_grid_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplay      *gdisp;
@@ -329,14 +329,14 @@ image_configure_grid_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gimage = GIMP_IMAGE (gdisp->gimage);
+  gimage = gdisp->gimage;
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (GIMP_IMAGE (gimage), widget);
+      shell->grid_dialog = grid_dialog_new (gdisp->gimage, gdisp->shell);
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
-                                    GTK_WINDOW (shell));
+                                    GTK_WINDOW (gdisp->shell));
       gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
                                           TRUE);
 

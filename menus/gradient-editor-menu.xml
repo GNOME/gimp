@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup action="gradient-editor-menu">
+  <popup action="gradient-editor-popup">
     <menuitem action="gradient-editor-left-color" />
     <menu action="gradient-editor-load-left-color">
       <menuitem action="gradient-editor-load-left-left-neighbor" />
@@ -53,19 +53,19 @@
       <menuitem action="gradient-editor-load-right-10" />
     </menu>
     <menu action="gradient-editor-save-right-color">
-      <menuitem action="gradient-editor-saveright-01" />
-      <menuitem action="gradient-editor-saveright-02" />
-      <menuitem action="gradient-editor-saveright-03" />
-      <menuitem action="gradient-editor-saveright-04" />
-      <menuitem action="gradient-editor-saveright-05" />
-      <menuitem action="gradient-editor-saveright-06" />
-      <menuitem action="gradient-editor-saveright-07" />
-      <menuitem action="gradient-editor-saveright-08" />
-      <menuitem action="gradient-editor-saveright-09" />
-      <menuitem action="gradient-editor-saveright-10" />
+      <menuitem action="gradient-editor-save-right-01" />
+      <menuitem action="gradient-editor-save-right-02" />
+      <menuitem action="gradient-editor-save-right-03" />
+      <menuitem action="gradient-editor-save-right-04" />
+      <menuitem action="gradient-editor-save-right-05" />
+      <menuitem action="gradient-editor-save-right-06" />
+      <menuitem action="gradient-editor-save-right-07" />
+      <menuitem action="gradient-editor-save-right-08" />
+      <menuitem action="gradient-editor-save-right-09" />
+      <menuitem action="gradient-editor-save-right-10" />
     </menu>
     <separator />
-    <menu action="gradient-editor-blending">
+    <menu action="gradient-editor-blending-func">
       <menuitem action="gradient-editor-blending-linear" />
       <menuitem action="gradient-editor-blending-curved" />
       <menuitem action="gradient-editor-blending-sine" />
@@ -73,7 +73,7 @@
       <menuitem action="gradient-editor-blending-sphere-decreasing" />
       <menuitem action="gradient-editor-blending-varies" />
     </menu>
-    <menu action="gradient-editor-coloring">
+    <menu action="gradient-editor-coloring-type">
       <menuitem action="gradient-editor-coloring-rgb" />
       <menuitem action="gradient-editor-coloring-hsv-ccw" />
       <menuitem action="gradient-editor-coloring-hsv-cw" />

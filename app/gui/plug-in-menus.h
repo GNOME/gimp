@@ -32,16 +32,5 @@ void   plug_in_menus_add_proc     (GimpUIManager   *manager,
 void   plug_in_menus_remove_proc  (GimpUIManager   *manager,
                                    PlugInProcDef   *proc_def);
 
-void   plug_in_menus_create       (GimpItemFactory *item_factory,
-                                   GSList          *proc_defs);
-void   plug_in_menus_create_entry (GimpItemFactory *item_factory,
-                                   PlugInProcDef   *proc_def,
-                                   const gchar     *locale_domain,
-                                   const gchar     *help_domain);
-void   plug_in_menus_delete_entry (PlugInProcDef   *proc_def);
-
-void   plug_in_menus_update       (GimpItemFactory *item_factory,
-                                   GimpImageType    type);
-
 
 #endif /* __PLUG_IN_MENUS_H__ */

@@ -26,13 +26,32 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gui/dialogs.h"
 #include "dialogs-commands.h"
+
+
+#define return_if_no_widget(widget,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    widget = ((GimpDisplay *) data)->shell; \
+  else if (GIMP_IS_GIMP (data)) \
+    widget = dialogs_get_toolbox (); \
+  else if (GIMP_IS_DOCK (data)) \
+    widget = data; \
+  else \
+    widget = NULL; \
+  \
+  if (! widget) \
+    return
 
 
 /*  local function prototypes  */
@@ -46,50 +65,47 @@ static void   dialogs_create_dock (GdkScreen   *screen,
 /*  public functions  */
 
 void
-dialogs_show_toolbox_cmd_callback (GtkWidget *widget,
+dialogs_show_toolbox_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   dialogs_show_toolbox ();
 }
 
 void
-dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
-				      gpointer   data,
-				      guint      action)
+dialogs_create_toplevel_cmd_callback (GtkAction   *action,
+                                      const gchar *value,
+				      gpointer     data)
 {
-  if (action)
-    {
-      const gchar *identifier = g_quark_to_string ((GQuark) action);
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
 
-      if (identifier)
-	gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                        gtk_widget_get_screen (widget),
-                                        identifier, -1);
-    }
+  if (value)
+    gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                    gtk_widget_get_screen (widget),
+                                    value, -1);
 }
 
 void
-dialogs_create_dockable_cmd_callback (GtkWidget *widget,
-				      gpointer   data,
-				      guint      action)
+dialogs_create_dockable_cmd_callback (GtkAction   *action,
+                                      const gchar *value,
+				      gpointer     data)
 {
-  if (action)
-    {
-      const gchar *identifier = g_quark_to_string ((GQuark) action);
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
 
-      if (!identifier)
-        return;
-
-      gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                        gtk_widget_get_screen (widget),
-                                        identifier, -1);
-    }
+  if (value)
+    gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                      gtk_widget_get_screen (widget),
+                                      value, -1);
 }
 
 void
-dialogs_create_lc_cmd_callback (GtkWidget *widget,
+dialogs_create_lc_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
+
   static const gchar *tabs[] =
   {
     "gimp-layer-list",
@@ -103,9 +119,12 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_create_data_cmd_callback (GtkWidget *widget,
+dialogs_create_data_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
+
   static const gchar *tabs[] =
   {
     "gimp-brush-grid",
@@ -120,9 +139,12 @@ dialogs_create_data_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_create_stuff_cmd_callback (GtkWidget *widget,
+dialogs_create_stuff_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
+
   static const gchar *tabs[] =
   {
     "gimp-buffer-list",

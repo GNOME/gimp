@@ -35,8 +35,7 @@
 
 static GimpActionEntry help_actions[] =
 {
-  { "help-menu", NULL,
-    N_("/_Help") },
+  { "help-menu", NULL, N_("_Help") },
 
   { "help-help", GTK_STOCK_HELP,
     N_("_Help"), "F1", NULL,

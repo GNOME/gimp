@@ -20,12 +20,12 @@
 #define __QMASK_COMMANDS_H__
 
 
-void   qmask_toggle_cmd_callback    (GtkWidget *widget,
+void   qmask_toggle_cmd_callback    (GtkAction *action,
                                      gpointer   data);
-void   qmask_invert_cmd_callback    (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action);
-void   qmask_configure_cmd_callback (GtkWidget *widget,
+void   qmask_invert_cmd_callback    (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data);
+void   qmask_configure_cmd_callback (GtkAction *action,
                                      gpointer   data);
 
 

@@ -36,7 +36,7 @@
 /*  public functionss */
 
 void
-images_raise_views_cmd_callback (GtkWidget *widget,
+images_raise_views_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);
@@ -46,7 +46,7 @@ images_raise_views_cmd_callback (GtkWidget *widget,
 }
 
 void
-images_new_view_cmd_callback (GtkWidget *widget,
+images_new_view_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);
@@ -56,7 +56,7 @@ images_new_view_cmd_callback (GtkWidget *widget,
 }
 
 void
-images_delete_image_cmd_callback (GtkWidget *widget,
+images_delete_image_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImageView *view = GIMP_IMAGE_VIEW (data);

@@ -20,53 +20,51 @@
 #define __VIEW_COMMANDS_H__
 
 
-void   view_zoom_out_cmd_callback              (GtkWidget *widget,
+void   view_zoom_out_cmd_callback              (GtkAction *action,
                                                 gpointer   data);
-void   view_zoom_in_cmd_callback               (GtkWidget *widget,
+void   view_zoom_in_cmd_callback               (GtkAction *action,
                                                 gpointer   data);
-void   view_zoom_fit_cmd_callback              (GtkWidget *widget,
+void   view_zoom_fit_cmd_callback              (GtkAction *action,
                                                 gpointer   data);
-void   view_zoom_cmd_callback                  (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      scale);
-void   view_zoom_other_cmd_callback            (GtkWidget *widget,
+void   view_zoom_cmd_callback                  (GtkAction *action,
+                                                GtkAction *current,
                                                 gpointer   data);
-void   view_dot_for_dot_cmd_callback           (GtkWidget *widget,
+void   view_dot_for_dot_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
-void   view_info_window_cmd_callback           (GtkWidget *widget,
+void   view_info_window_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
-void   view_navigation_window_cmd_callback     (GtkWidget *widget,
+void   view_navigation_window_cmd_callback     (GtkAction *action,
                                                 gpointer   data);
-void   view_display_filters_cmd_callback       (GtkWidget *widget,
+void   view_display_filters_cmd_callback       (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_selection_cmd_callback      (GtkWidget *widget,
+void   view_toggle_selection_cmd_callback      (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
+void   view_toggle_layer_boundary_cmd_callback (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_menubar_cmd_callback        (GtkWidget *widget,
+void   view_toggle_menubar_cmd_callback        (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_rulers_cmd_callback         (GtkWidget *widget,
+void   view_toggle_rulers_cmd_callback         (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_scrollbars_cmd_callback     (GtkWidget *widget,
+void   view_toggle_scrollbars_cmd_callback     (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_statusbar_cmd_callback      (GtkWidget *widget,
+void   view_toggle_statusbar_cmd_callback      (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_guides_cmd_callback         (GtkWidget *widget,
+void   view_toggle_guides_cmd_callback         (GtkAction *action,
                                                 gpointer   data);
-void   view_snap_to_guides_cmd_callback        (GtkWidget *widget,
+void   view_snap_to_guides_cmd_callback        (GtkAction *action,
                                                 gpointer   data);
-void   view_toggle_grid_cmd_callback           (GtkWidget *widget,
+void   view_toggle_grid_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
-void   view_snap_to_grid_cmd_callback          (GtkWidget *widget,
+void   view_snap_to_grid_cmd_callback          (GtkAction *action,
                                                 gpointer   data);
-void   view_new_view_cmd_callback              (GtkWidget *widget,
+void   view_new_view_cmd_callback              (GtkAction *action,
                                                 gpointer   data);
 
-void   view_shrink_wrap_cmd_callback           (GtkWidget *widget,
+void   view_shrink_wrap_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
-void   view_fullscreen_cmd_callback            (GtkWidget *widget,
+void   view_fullscreen_cmd_callback            (GtkAction *action,
 						gpointer   data);
-void   view_change_screen_cmd_callback         (GtkWidget *widget,
+void   view_change_screen_cmd_callback         (GtkAction *action,
 						gpointer   data);
 
 

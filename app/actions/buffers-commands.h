@@ -20,13 +20,13 @@
 #define __BUFFERS_COMMANDS_H__
 
 
-void   buffers_paste_buffer_cmd_callback        (GtkWidget *widget,
+void   buffers_paste_buffer_cmd_callback        (GtkAction *action,
                                                  gpointer   data);
-void   buffers_paste_buffer_into_cmd_callback   (GtkWidget *widget,
+void   buffers_paste_buffer_into_cmd_callback   (GtkAction *action,
                                                  gpointer   data);
-void   buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
+void   buffers_paste_buffer_as_new_cmd_callback (GtkAction *action,
                                                  gpointer   data);
-void   buffers_delete_buffer_cmd_callback       (GtkWidget *widget,
+void   buffers_delete_buffer_cmd_callback       (GtkAction *action,
                                                  gpointer   data);
 
 

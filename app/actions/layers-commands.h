@@ -20,70 +20,70 @@
 #define __LAYERS_COMMANDS_H__
 
 
-void   layers_select_previous_cmd_callback    (GtkWidget *widet,
+void   layers_select_previous_cmd_callback    (GtkAction *action,
                                                gpointer   data);
-void   layers_select_next_cmd_callback        (GtkWidget *widet,
+void   layers_select_next_cmd_callback        (GtkAction *action,
                                                gpointer   data);
-void   layers_select_top_cmd_callback         (GtkWidget *widet,
+void   layers_select_top_cmd_callback         (GtkAction *action,
                                                gpointer   data);
-void   layers_select_bottom_cmd_callback      (GtkWidget *widet,
-                                               gpointer   data);
-
-void   layers_raise_cmd_callback              (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_lower_cmd_callback              (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_raise_to_top_cmd_callback       (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_lower_to_bottom_cmd_callback    (GtkWidget *widet,
+void   layers_select_bottom_cmd_callback      (GtkAction *action,
                                                gpointer   data);
 
-void   layers_new_cmd_callback                (GtkWidget *widet,
+void   layers_raise_cmd_callback              (GtkAction *action,
                                                gpointer   data);
-void   layers_duplicate_cmd_callback          (GtkWidget *widet,
+void   layers_lower_cmd_callback              (GtkAction *action,
                                                gpointer   data);
-void   layers_anchor_cmd_callback             (GtkWidget *widet,
+void   layers_raise_to_top_cmd_callback       (GtkAction *action,
                                                gpointer   data);
-void   layers_merge_down_cmd_callback         (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_delete_cmd_callback             (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_text_discard_cmd_callback       (GtkWidget *widet,
+void   layers_lower_to_bottom_cmd_callback    (GtkAction *action,
                                                gpointer   data);
 
-void   layers_resize_cmd_callback             (GtkWidget *widet,
+void   layers_new_cmd_callback                (GtkAction *action,
                                                gpointer   data);
-void   layers_resize_to_image_cmd_callback    (GtkWidget *widet,
+void   layers_duplicate_cmd_callback          (GtkAction *action,
                                                gpointer   data);
-void   layers_scale_cmd_callback              (GtkWidget *widet,
+void   layers_anchor_cmd_callback             (GtkAction *action,
                                                gpointer   data);
-void   layers_crop_cmd_callback               (GtkWidget *widet,
+void   layers_merge_down_cmd_callback         (GtkAction *action,
                                                gpointer   data);
-
-void   layers_mask_add_cmd_callback           (GtkWidget *widet,
+void   layers_delete_cmd_callback             (GtkAction *action,
                                                gpointer   data);
-void   layers_mask_apply_cmd_callback         (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_mask_delete_cmd_callback        (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_mask_to_selection_cmd_callback  (GtkWidget *widet,
-                                               gpointer   data,
-                                               guint      action);
-
-void   layers_alpha_add_cmd_callback          (GtkWidget *widet,
-                                               gpointer   data);
-void   layers_alpha_to_selection_cmd_callback (GtkWidget *widet,
-                                               gpointer   data,
-                                               guint      action);
-
-void   layers_merge_layers_cmd_callback       (GtkWidget *widget,
-                                               gpointer   data);
-void   layers_flatten_image_cmd_callback      (GtkWidget *widget,
+void   layers_text_discard_cmd_callback       (GtkAction *action,
                                                gpointer   data);
 
-void   layers_text_tool_cmd_callback          (GtkWidget *widet,
+void   layers_resize_cmd_callback             (GtkAction *action,
                                                gpointer   data);
-void   layers_edit_attributes_cmd_callback    (GtkWidget *widet,
+void   layers_resize_to_image_cmd_callback    (GtkAction *action,
+                                               gpointer   data);
+void   layers_scale_cmd_callback              (GtkAction *action,
+                                               gpointer   data);
+void   layers_crop_cmd_callback               (GtkAction *action,
+                                               gpointer   data);
+
+void   layers_mask_add_cmd_callback           (GtkAction *action,
+                                               gpointer   data);
+void   layers_mask_apply_cmd_callback         (GtkAction *action,
+                                               gpointer   data);
+void   layers_mask_delete_cmd_callback        (GtkAction *action,
+                                               gpointer   data);
+void   layers_mask_to_selection_cmd_callback  (GtkAction *action,
+                                               gint       value,
+                                               gpointer   data);
+
+void   layers_alpha_add_cmd_callback          (GtkAction *action,
+                                               gpointer   data);
+void   layers_alpha_to_selection_cmd_callback (GtkAction *action,
+                                               gint       value,
+                                               gpointer   data);
+
+void   layers_merge_layers_cmd_callback       (GtkAction *action,
+                                               gpointer   data);
+void   layers_flatten_image_cmd_callback      (GtkAction *action,
+                                               gpointer   data);
+
+void   layers_text_tool_cmd_callback          (GtkAction *action,
+                                               gpointer   data);
+void   layers_edit_attributes_cmd_callback    (GtkAction *action,
                                                gpointer   data);
 
 void   layers_text_tool                       (GimpLayer *layer,

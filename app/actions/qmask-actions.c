@@ -116,14 +116,15 @@ qmask_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, (color), FALSE)
 
-  SET_ACTIVE ("qmask-toggle", gimage->qmask_state);
+  SET_ACTIVE ("qmask-toggle", gimage && gimage->qmask_state);
 
-  if (gimage->qmask_inverted)
+  if (gimage && gimage->qmask_inverted)
     SET_ACTIVE ("qmask-invert-on", TRUE);
   else
     SET_ACTIVE ("qmask-invert-off", TRUE);
 
-  SET_COLOR ("qmask-configure", &gimage->qmask_color);
+  if (gimage)
+    SET_COLOR ("qmask-configure", &gimage->qmask_color);
 
 #undef SET_SENSITIVE
 #undef SET_COLOR

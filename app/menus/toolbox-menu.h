@@ -20,15 +20,8 @@
 #define __TOOLBOX_MENU_H__
 
 
-extern GimpItemFactoryEntry toolbox_menu_entries[];
-extern gint                 n_toolbox_menu_entries;
-
-
-void   toolbox_menu_setup2 (GimpUIManager   *manager,
-                            const gchar     *ui_path);
-
-void   toolbox_menu_setup  (GimpItemFactory *factory,
-                            gpointer         callback_data);
+void   toolbox_menu_setup (GimpUIManager *manager,
+                           const gchar   *ui_path);
 
 
 #endif /* __TOOLBOX_MENU_H__ */

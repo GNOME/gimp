@@ -47,7 +47,7 @@ static void   gradients_save_as_pov_response (GtkWidget           *dialog,
 /*  public functions  */
 
 void
-gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
+gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
 					gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);

@@ -29,7 +29,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpactiongroup.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -45,6 +46,11 @@
 #define GET_OPTIONS(shell) \
   (gimp_display_shell_get_fullscreen (shell) ? \
    shell->fullscreen_options : shell->options)
+
+#define SET_ACTIVE(manager,group_name,action_name,active) \
+  { GimpActionGroup *group = \
+      gimp_ui_manager_get_action_group (manager, group_name); \
+    gimp_action_group_set_action_active (group, action_name, active); }
 
 #define IS_ACTIVE_DISPLAY(shell) \
   ((shell)->gdisp == \
@@ -89,7 +95,8 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
+  menubar = gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
+                                       "/image-menubar");
   vbox    = GTK_CONTAINER (shell->qmask->parent->parent);
 
   if (show)
@@ -102,12 +109,10 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
   else
     gtk_container_set_border_width (vbox, 0);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Menubar", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-menubar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Menubar", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-menubar", show);
 }
 
 gboolean
@@ -152,12 +157,10 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
       gtk_table_set_row_spacing (table, 0, 0);
     }
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Rulers", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-rulers", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Rulers", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-rulers", show);
 }
 
 gboolean
@@ -208,12 +211,10 @@ gimp_display_shell_set_show_scrollbars (GimpDisplayShell *shell,
       gtk_box_set_spacing (vbox, 0);
     }
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Scrollbars", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-scrollbars", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Scrollbars", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-scrollbars", show);
 }
 
 gboolean
@@ -249,12 +250,10 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
   else
     gtk_container_set_border_width (vbox, 0);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Statusbar", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-statusbar", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Statusbar", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-statusbar", show);
 }
 
 gboolean
@@ -280,12 +279,10 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
   if (shell->select)
     gimp_display_shell_selection_set_hidden (shell->select, ! show);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Selection", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-selection", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Selection", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-selection", show);
 }
 
 gboolean
@@ -311,12 +308,10 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
   if (shell->select)
     gimp_display_shell_selection_layer_set_hidden (shell->select, ! show);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Layer Boundary", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-layer-boundary", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Layer Boundary", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-layer-boundary", show);
 }
 
 gboolean
@@ -342,12 +337,10 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
   if (shell->gdisp->gimage->grid)
     gimp_display_shell_expose_full (shell);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Grid", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-grid", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Grid", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-grid", show);
 }
 
 gboolean
@@ -368,12 +361,10 @@ gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
     {
       shell->snap_to_grid = snap ? TRUE : FALSE;
 
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Snap to Grid", snap);
+      SET_ACTIVE (shell->menubar_manager, "view", "view-snap-to-grid", snap);
 
       if (IS_ACTIVE_DISPLAY (shell))
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                      "/View/Snap to Grid", snap);
+        SET_ACTIVE (shell->popup_manager, "view", "view-snap-to-grid", snap);
     }
 }
 
@@ -400,12 +391,10 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
   if (shell->gdisp->gimage->guides)
     gimp_display_shell_expose_full (shell);
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                "/View/Show Guides", show);
+  SET_ACTIVE (shell->menubar_manager, "view", "view-show-guides", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                  "/View/Show Guides", show);
+    SET_ACTIVE (shell->popup_manager, "view", "view-show-guides", show);
 }
 
 gboolean
@@ -414,6 +403,31 @@ gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return GET_OPTIONS (shell)->show_guides;
+}
+
+void
+gimp_display_shell_set_snap_to_guides (GimpDisplayShell *shell,
+                                       gboolean          snap)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (snap != shell->snap_to_guides)
+    {
+      shell->snap_to_guides = snap ? TRUE : FALSE;
+
+      SET_ACTIVE (shell->menubar_manager, "view", "view-snap-to-guides", snap);
+
+      if (IS_ACTIVE_DISPLAY (shell))
+        SET_ACTIVE (shell->popup_manager, "view", "view-snap-to-guides", snap);
+    }
+}
+
+gboolean
+gimp_display_shell_get_snap_to_guides (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->snap_to_guides;
 }
 
 void

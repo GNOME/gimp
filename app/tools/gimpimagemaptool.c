@@ -36,9 +36,9 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptooldialog.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -294,8 +294,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   {
     GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-    gimp_item_factory_update (shell->menubar_factory, shell);
-    gimp_item_factory_update (shell->popup_factory,   shell);
+    gimp_ui_manager_update (shell->menubar_manager, shell);
+    gimp_ui_manager_update (shell->popup_manager,   shell);
   }
 
   return TRUE;
@@ -438,11 +438,11 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
       gimp_tool_control_set_preserve (tool->control, FALSE);
 
-      gimp_item_factory_update (shell->menubar_factory, shell);
+      gimp_ui_manager_update (shell->menubar_manager, shell);
 
       if (shell->gdisp == gimp_context_get_display
           (gimp_get_user_context (shell->gdisp->gimage->gimp)))
-        gimp_item_factory_update (shell->popup_factory, shell);
+        gimp_ui_manager_update (shell->popup_manager, shell);
 
       tool->gdisp    = NULL;
       tool->drawable = NULL;

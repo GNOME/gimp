@@ -74,7 +74,6 @@
   if (! gimp) \
     return
 
-
 #define return_if_no_display(gdisp,data) \
   if (GIMP_IS_DISPLAY (data)) \
     gdisp = data; \
@@ -85,6 +84,18 @@
   else \
     gdisp = NULL; \
   if (! gdisp) \
+    return
+
+#define return_if_no_widget(widget,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    widget = ((GimpDisplay *) data)->shell; \
+  else if (GIMP_IS_GIMP (data)) \
+    widget = dialogs_get_toolbox (); \
+  else if (GIMP_IS_DOCK (data)) \
+    widget = data; \
+  else \
+    widget = NULL; \
+  if (! widget) \
     return
 
 
@@ -101,17 +112,18 @@ static void   file_revert_confirm_callback (GtkWidget   *widget,
 /*  public functions  */
 
 void
-file_new_cmd_callback (GtkWidget *widget,
-		       gpointer   data,
-		       guint      action)
+file_new_cmd_callback (GtkAction *action,
+		       gpointer   data)
 {
   Gimp      *gimp;
   GimpImage *gimage;
+  GtkWidget *widget;
   GtkWidget *dialog;
   return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
 
   /*  if called from the image menu  */
-  if (action)
+  if (GIMP_IS_DISPLAY (data))
     gimage = gimp_context_get_image (gimp_get_user_context (gimp));
   else
     gimage = NULL;
@@ -125,25 +137,26 @@ file_new_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_type_cmd_callback (GtkWidget *widget,
+file_type_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (data),
-                                  g_object_get_data (G_OBJECT (widget),
+                                  g_object_get_data (G_OBJECT (action),
                                                      "file-proc"));
 }
 
 void
-file_open_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-                        guint      action)
+file_open_cmd_callback (GtkAction *action,
+			gpointer   data)
 {
   Gimp      *gimp;
   GimpImage *gimage;
+  GtkWidget *widget;
   return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
 
   /*  if called from the image menu  */
-  if (action)
+  if (GIMP_IS_DISPLAY (data))
     gimage = gimp_context_get_image (gimp_get_user_context (gimp));
   else
     gimage = NULL;
@@ -152,22 +165,22 @@ file_open_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_last_opened_cmd_callback (GtkWidget *widget,
-			       gpointer   data,
-			       guint      action)
+file_last_opened_cmd_callback (GtkAction *action,
+                               gint       value,
+			       gpointer   data)
 {
   Gimp          *gimp;
   GimpImagefile *imagefile;
-  guint          num_entries;
+  gint           num_entries;
   return_if_no_gimp (gimp, data);
 
   num_entries = gimp_container_num_children (gimp->documents);
 
-  if (action >= num_entries)
+  if (value >= num_entries)
     return;
 
   imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_index (gimp->documents, action);
+    gimp_container_get_child_by_index (gimp->documents, value);
 
   if (imagefile)
     {
@@ -196,7 +209,7 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_save_cmd_callback (GtkWidget *widget,
+file_save_cmd_callback (GtkAction *action,
 			gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -214,7 +227,7 @@ file_save_cmd_callback (GtkWidget *widget,
 
       if (! uri)
 	{
-	  file_save_as_cmd_callback (widget, data);
+	  file_save_as_cmd_callback (action, data);
 	}
       else
 	{
@@ -243,27 +256,28 @@ file_save_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_save_as_cmd_callback (GtkWidget *widget,
+file_save_as_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_dialog_show (gdisp->gimage, global_menu_factory, widget);
+  file_save_dialog_show (gdisp->gimage, global_menu_factory, gdisp->shell);
 }
 
 void
-file_save_a_copy_cmd_callback (GtkWidget *widget,
+file_save_a_copy_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_a_copy_dialog_show (gdisp->gimage, global_menu_factory, widget);
+  file_save_a_copy_dialog_show (gdisp->gimage, global_menu_factory,
+                                gdisp->shell);
 }
 
 void
-file_save_template_cmd_callback (GtkWidget *widget,
+file_save_template_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -282,7 +296,7 @@ file_save_template_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_revert_cmd_callback (GtkWidget *widget,
+file_revert_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -342,7 +356,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_close_cmd_callback (GtkWidget *widget,
+file_close_cmd_callback (GtkAction *action,
 			 gpointer   data)
 {
   GimpDisplay *gdisp;
@@ -352,7 +366,7 @@ file_close_cmd_callback (GtkWidget *widget,
 }
 
 void
-file_quit_cmd_callback (GtkWidget *widget,
+file_quit_cmd_callback (GtkAction *action,
 			gpointer   data)
 {
   Gimp *gimp;
@@ -400,9 +414,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 			      gboolean   revert,
 			      gpointer   data)
 {
-  GimpImage *old_gimage;
-
-  old_gimage = (GimpImage *) data;
+  GimpImage *old_gimage = GIMP_IMAGE (data);
 
   g_object_set_data (G_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
 

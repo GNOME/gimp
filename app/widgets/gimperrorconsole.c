@@ -58,7 +58,6 @@
 
 #include "gimperrorconsole.h"
 #include "gimphelp-ids.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -305,20 +304,14 @@ gimp_error_console_button_press (GtkWidget        *widget,
     {
       GimpEditor *editor = GIMP_EDITOR (console);
 
-#if 0
       gimp_ui_manager_update (editor->ui_manager,
                               editor->popup_data);
       gimp_ui_manager_ui_popup (editor->ui_manager,
-                                editor->ui_identifier,
+                                editor->ui_path,
                                 editor->popup_data,
                                 GTK_WIDGET (editor),
                                 NULL, NULL, NULL);
-#else
-      gimp_item_factory_popup_with_data (editor->item_factory,
-                                         editor->popup_data,
-                                         GTK_WIDGET (editor),
-                                         NULL, NULL, NULL);
-#endif
+
       return TRUE;
     }
 

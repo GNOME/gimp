@@ -43,6 +43,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gui/dialogs.h"
+
 #include "channels-commands.h"
 
 #include "gimp-intl.h"
@@ -79,21 +81,41 @@ static void   channels_color_changed  (GimpColorButton *button,
   if (! channel) \
     return
 
+#define return_if_no_widget(widget,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    widget = ((GimpDisplay *) data)->shell; \
+  else if (GIMP_IS_GIMP (data)) \
+    widget = dialogs_get_toolbox (); \
+  else if (GIMP_IS_DOCK (data)) \
+    widget = data; \
+  else if (GIMP_IS_COMPONENT_EDITOR (data)) \
+    widget = data; \
+  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
+    widget = data; \
+  else \
+    widget = NULL; \
+  \
+  if (! widget) \
+    return
+
+
 
 /*  public functions  */
 
 void
-channels_new_cmd_callback (GtkWidget *widget,
+channels_new_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpImage *gimage;
+  GtkWidget *widget;
   return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
   channels_new_channel_query (gimage, NULL, TRUE, widget);
 }
 
 void
-channels_raise_cmd_callback (GtkWidget *widget,
+channels_raise_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpImage   *gimage;
@@ -105,7 +127,7 @@ channels_raise_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_raise_to_top_cmd_callback (GtkWidget *widget,
+channels_raise_to_top_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpImage   *gimage;
@@ -117,7 +139,7 @@ channels_raise_to_top_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_lower_cmd_callback (GtkWidget *widget,
+channels_lower_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpImage   *gimage;
@@ -129,7 +151,7 @@ channels_lower_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_lower_to_bottom_cmd_callback (GtkWidget *widget,
+channels_lower_to_bottom_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpImage   *gimage;
@@ -141,7 +163,7 @@ channels_lower_to_bottom_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_duplicate_cmd_callback (GtkWidget *widget,
+channels_duplicate_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpImage   *gimage;
@@ -193,7 +215,7 @@ channels_duplicate_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_delete_cmd_callback (GtkWidget *widget,
+channels_delete_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage   *gimage;
@@ -205,14 +227,14 @@ channels_delete_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_to_selection_cmd_callback (GtkWidget *widget,
-                                    gpointer   data,
-                                    guint      action)
+channels_to_selection_cmd_callback (GtkAction *action,
+                                    gint       value,
+                                    gpointer   data)
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
 
-  op = (GimpChannelOps) action;
+  op = (GimpChannelOps) value;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -239,12 +261,14 @@ channels_to_selection_cmd_callback (GtkWidget *widget,
 }
 
 void
-channels_edit_attributes_cmd_callback (GtkWidget *widget,
+channels_edit_attributes_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
+  GtkWidget   *widget;
   return_if_no_channel (gimage, active_channel, data);
+  return_if_no_widget (widget, data);
 
   channels_edit_channel_query (active_channel, widget);
 }

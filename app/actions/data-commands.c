@@ -30,7 +30,7 @@
 
 
 void
-data_new_data_cmd_callback (GtkWidget *widget,
+data_new_data_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
@@ -40,7 +40,7 @@ data_new_data_cmd_callback (GtkWidget *widget,
 }
 
 void
-data_duplicate_data_cmd_callback (GtkWidget *widget,
+data_duplicate_data_cmd_callback (GtkAction *action,
 				  gpointer   data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
@@ -50,7 +50,7 @@ data_duplicate_data_cmd_callback (GtkWidget *widget,
 }
 
 void
-data_edit_data_cmd_callback (GtkWidget *widget,
+data_edit_data_cmd_callback (GtkAction *action,
 			     gpointer   data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
@@ -60,7 +60,7 @@ data_edit_data_cmd_callback (GtkWidget *widget,
 }
 
 void
-data_delete_data_cmd_callback (GtkWidget *widget,
+data_delete_data_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
@@ -70,7 +70,7 @@ data_delete_data_cmd_callback (GtkWidget *widget,
 }
 
 void
-data_refresh_data_cmd_callback (GtkWidget *widget,
+data_refresh_data_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);

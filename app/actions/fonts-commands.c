@@ -32,7 +32,7 @@
 /*  public functionss */
 
 void
-fonts_refresh_cmd_callback (GtkWidget *widget,
+fonts_refresh_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpFontView *view = GIMP_FONT_VIEW (data);

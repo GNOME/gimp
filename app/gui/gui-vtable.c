@@ -38,7 +38,6 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -196,20 +195,20 @@ gui_display_new (GimpImage *gimage,
 {
   GimpDisplayShell *shell;
   GimpDisplay      *gdisp;
+  GList            *image_managers;
+
+  image_managers = gimp_ui_managers_from_name ("<Image>");
 
   gdisp = gimp_display_new (gimage, scale,
                             global_menu_factory,
-                            gimp_item_factory_from_path ("<Image>"));
+
+                            image_managers->data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
-#if 0
   gimp_ui_manager_update (shell->menubar_manager, shell);
-#else
-  gimp_item_factory_update (shell->menubar_factory, shell);
-#endif
 
   return GIMP_OBJECT (gdisp);
 }
@@ -226,10 +225,7 @@ static void
 gui_menus_create_entry (Gimp          *gimp,
                         PlugInProcDef *proc_def)
 {
-  const gchar *progname;
-  const gchar *locale_domain;
-  const gchar *help_domain;
-  GList       *list;
+  GList *list;
 
   for (list = gimp_action_groups_from_name ("plug-in");
        list;
@@ -252,13 +248,6 @@ gui_menus_create_entry (Gimp          *gimp,
           plug_in_menus_add_proc (list->data, "/image-popup",   proc_def);
         }
     }
-
-  progname = plug_in_proc_def_get_progname (proc_def);
-
-  locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
-  help_domain   = plug_ins_help_domain (gimp, progname, NULL);
-
-  plug_in_menus_create_entry (NULL, proc_def, locale_domain, help_domain);
 }
 
 static void
@@ -266,8 +255,6 @@ gui_menus_delete_entry (Gimp          *gimp,
                         PlugInProcDef *proc_def)
 {
   GList *list;
-
-  plug_in_menus_delete_entry (proc_def);
 
   for (list = gimp_ui_managers_from_name ("<Image>");
        list;

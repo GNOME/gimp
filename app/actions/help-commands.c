@@ -24,19 +24,37 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
+#include "widgets/gimpdock.h"
+
+#include "display/gimpdisplay.h"
+
+#include "gui/dialogs.h"
+
 #include "help-commands.h"
 
 
 void
-help_help_cmd_callback (GtkWidget *widget,
+help_help_cmd_callback (GtkAction *action,
 			gpointer   data)
 {
   gimp_standard_help_func (NULL, NULL);
 }
 
 void
-help_context_help_cmd_callback (GtkWidget *widget,
+help_context_help_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
-  gimp_context_help (widget);
+  GtkWidget *widget = NULL;
+
+  if (GIMP_IS_GIMP (data))
+    widget = dialogs_get_toolbox ();
+  else if (GIMP_IS_DISPLAY (data))
+    widget = GIMP_DISPLAY (data)->shell;
+  else if (GIMP_IS_DOCK (data))
+    widget = data;
+
+  if (widget)
+    gimp_context_help (widget);
 }

@@ -100,31 +100,33 @@ static void   qmask_query_color_changed (GimpColorButton  *button,
 /*  public functionss */
 
 void
-qmask_toggle_cmd_callback (GtkWidget *widget,
+qmask_toggle_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpImage *gimage;
+  gboolean   active;
   return_if_no_image (gimage, data);
 
-  if (GTK_CHECK_MENU_ITEM (widget)->active !=
-      gimp_image_get_qmask_state (gimage))
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != gimp_image_get_qmask_state (gimage))
     {
-      gimp_image_set_qmask_state (gimage, GTK_CHECK_MENU_ITEM (widget)->active);
+      gimp_image_set_qmask_state (gimage, active);
       gimp_image_flush (gimage);
     }
 }
 
 void
-qmask_invert_cmd_callback (GtkWidget *widget,
-                           gpointer   data,
-                           guint      action)
+qmask_invert_cmd_callback (GtkAction *action,
+                           gint       value,
+                           gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  if (GTK_CHECK_MENU_ITEM (widget)->active)
+  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
     {
-      if (action != gimage->qmask_inverted)
+      if (value != gimage->qmask_inverted)
         {
           gimp_image_qmask_invert (gimage);
 
@@ -135,7 +137,7 @@ qmask_invert_cmd_callback (GtkWidget *widget,
 }
 
 void
-qmask_configure_cmd_callback (GtkWidget *widget,
+qmask_configure_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpDisplay *gdisp;

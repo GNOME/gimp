@@ -143,23 +143,21 @@ gimp_docked_get_preview (GimpDocked  *docked,
   return NULL;
 }
 
-GimpItemFactory *
+GimpUIManager *
 gimp_docked_get_menu (GimpDocked     *docked,
-                      gpointer       *popup_data,
-                      GimpUIManager **manager,
-                      const gchar   **ui_identifier)
+                      const gchar   **ui_path,
+                      gpointer       *popup_data)
 {
   GimpDockedInterface *docked_iface;
 
   g_return_val_if_fail (GIMP_IS_DOCKED (docked), NULL);
+  g_return_val_if_fail (ui_path != NULL, NULL);
   g_return_val_if_fail (popup_data != NULL, NULL);
-  g_return_val_if_fail (manager != NULL, NULL);
-  g_return_val_if_fail (ui_identifier != NULL, NULL);
 
   docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
 
   if (docked_iface->get_menu)
-    return docked_iface->get_menu (docked, popup_data, manager, ui_identifier);
+    return docked_iface->get_menu (docked, ui_path, popup_data);
 
   return NULL;
 }

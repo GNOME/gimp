@@ -70,7 +70,7 @@ gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
                                            gboolean             reorderable,
                                            GimpMenuFactory     *menu_factory,
                                            const gchar         *menu_identifier,
-                                           const gchar         *ui_identifier);
+                                           const gchar         *ui_path);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

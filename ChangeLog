@@ -1,3 +1,103 @@
+2004-04-29  Michael Natterer  <mitch@gimp.org>
+
+	Switch from GtkItemFactory to GtkUIManager. The migration is
+	almost complete, still stuff missing/incomplete, definitely added
+	a bunch of new bugs...
+
+	* app/actions/*-commands.[ch]: converted all callback from
+	GtkItemFactory callbacks to GtkAction callbacks.
+
+	* app/actions/debug-actions.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/help-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/qmask-actions.c
+	* app/actions/tool-options-actions.c: various fixes.
+
+	* app/display/gimpdisplay.[ch]
+	* app/display/gimpdisplayshell-appearance.[ch]
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.[ch]: move everything from
+	GtkItemFactory to GtkUIManager.
+
+	* app/gui/dialogs.[ch]: added new function dialogs_get_toolbox().
+	Needed because the action callbacks don't have a widget parameter
+	and sometimes we need a parent window for showing dialogs.
+
+	* app/gui/Makefile.am
+	* app/gui/brushes-menu.[ch]
+	* app/gui/buffers-menu.[ch]
+	* app/gui/channels-menu.[ch]
+	* app/gui/colormap-editor-menu.[ch]
+	* app/gui/dialogs-menu.[ch]
+	* app/gui/documents-menu.[ch]
+	* app/gui/error-console-menu.[ch]
+	* app/gui/fonts-menu.[ch]
+	* app/gui/gradient-editor-menu.[ch]
+	* app/gui/gradients-menu.[ch]
+	* app/gui/images-menu.[ch]
+	* app/gui/layers-menu.[ch]
+	* app/gui/palette-editor-menu.[ch]
+	* app/gui/palettes-menu.[ch]
+	* app/gui/patterns-menu.[ch]
+	* app/gui/qmask-menu.[ch]
+	* app/gui/templates-menu.[ch]
+	* app/gui/vectors-menu.[ch]: removed these files.
+
+	* app/gui/gui.c: create a global UI manager for the image popup
+	menu and the toolbox menubar.
+
+	* app/gui/menus.[ch]: removed all GtkItemFactory code.
+
+	* app/gui/image-menu.[ch]
+	* app/gui/toolbox-menu.[ch]: removed everything except the trivial
+	setup_funcs.
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c
+	* app/gui/tool-options-menu.c: don't use the macros from menus.h
+	any more, they are gone.
+
+	* app/gui/gui-vtable.c
+	* app/gui/plug-in-menus.[ch]: create/destroy the dynamic plug-in
+	menu entries.
+
+	* app/tools/gimpimagemaptool.c: s/gimp_item_factory_update/
+	gimp_ui_manager_update/g
+
+	* app/widgets/gimpuimanager.[ch]: added API to get an action
+	group by name.
+
+	* app/widgets/gimpmenufactory.c: don't choke on the item_factory
+	entries being NULL.
+
+	* app/widgets/gimpactiongroup.c: make sure booleans set using
+	g_object_set() only have TRUE or FALSE values.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdocked.[ch]
+	* app/widgets/gimpeditor.[ch]
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c: removed all GtkItemFactory
+	code and enable the #if 0'ed UI manager stuff.
+
+	* menus/gradient-editor-menu.xml: fixed typos.
+
+	* menus/image-menu.xml: duplicate everything so we have both
+	an image menubar and an image popup menu. Badly cries for an
+	XSL processor.
+
+	* menus/toolbox-menu.xml: added an "Extensions" placeholder.
+
 2004-04-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

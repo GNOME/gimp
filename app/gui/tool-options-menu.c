@@ -40,6 +40,10 @@
 #include "gimp-intl.h"
 
 
+#define MENU_BRANCH(path) \
+        { { (path), NULL, NULL, 0, "<Branch>" }, NULL, NULL, NULL }
+
+
 /*  local function prototypes  */
 
 static void tool_options_menu_update_presets (GtkItemFactory         *factory,

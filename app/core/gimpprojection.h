@@ -76,7 +76,7 @@ GType         gimp_display_get_type             (void) G_GNUC_CONST;
 GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
                                                  gdouble          scale,
                                                  GimpMenuFactory *menu_factory,
-                                                 GimpItemFactory *popup_factory);
+                                                 GimpUIManager   *popup_manager);
 void          gimp_display_delete               (GimpDisplay     *gdisp);
 
 gint          gimp_display_get_ID               (GimpDisplay     *gdisp);

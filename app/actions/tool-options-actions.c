@@ -93,9 +93,9 @@ tool_options_actions_setup (GimpActionGroup *group)
                                  tool_options_actions,
                                  G_N_ELEMENTS (tool_options_actions));
 
-  SET_IMPORTANT ("tool-options-restore-menu", FALSE);
-  SET_IMPORTANT ("tool-options-rename-menu",  FALSE);
-  SET_IMPORTANT ("tool-options-delete-menu",  FALSE);
+  SET_IMPORTANT ("tool-options-restore-menu", TRUE);
+  SET_IMPORTANT ("tool-options-rename-menu",  TRUE);
+  SET_IMPORTANT ("tool-options-delete-menu",  TRUE);
 }
 
 void

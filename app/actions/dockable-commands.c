@@ -41,39 +41,32 @@
 /*  public functions  */
 
 void
-dockable_add_tab_cmd_callback (GtkWidget *widget,
-                               gpointer   data,
-                               guint      action)
+dockable_add_tab_cmd_callback (GtkAction   *action,
+                               const gchar *value,
+                               gpointer     data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  if (action)
+  if (value)
     {
-      GtkWidget   *dockable;
-      const gchar *identifier;
+      GtkWidget *dockable;
 
-      identifier = g_quark_to_string ((GQuark) action);
+      dockable =
+        gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
+                                          dockbook->dock,
+                                          value, -1);
 
-      if (identifier)
-	{
-	  dockable =
-            gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
-                                              dockbook->dock,
-                                              identifier,
-                                              -1);
-
-	  /*  Maybe gimp_dialog_factory_dockable_new() returned an already
-	   *  existing singleton dockable, so check if it already is
-	   *  attached to a dockbook.
-	   */
-	  if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
-	    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
-	}
+      /*  Maybe gimp_dialog_factory_dockable_new() returned an already
+       *  existing singleton dockable, so check if it already is
+       *  attached to a dockbook.
+       */
+      if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
+        gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
     }
 }
 
 void
-dockable_close_tab_cmd_callback (GtkWidget *widget,
+dockable_close_tab_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
@@ -90,7 +83,7 @@ dockable_close_tab_cmd_callback (GtkWidget *widget,
 }
 
 void
-dockable_detach_tab_cmd_callback (GtkWidget *widget,
+dockable_detach_tab_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
@@ -107,19 +100,17 @@ dockable_detach_tab_cmd_callback (GtkWidget *widget,
 }
 
 void
-dockable_toggle_view_cmd_callback (GtkWidget *widget,
-                                   gpointer   data,
-                                   guint      action)
+dockable_toggle_view_cmd_callback (GtkAction *action,
+                                   GtkAction *current,
+                                   gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
   GimpViewType  view_type;
   gint          page_num;
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
-    return;
-
-  view_type = (GimpViewType) action;
+  view_type = (GimpViewType)
+    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -196,19 +187,16 @@ dockable_toggle_view_cmd_callback (GtkWidget *widget,
 }
 
 void
-dockable_preview_size_cmd_callback (GtkWidget *widget,
-                                    gpointer   data,
-                                    guint      action)
+dockable_preview_size_cmd_callback (GtkAction *action,
+                                    GtkAction *current,
+                                    gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
   gint          preview_size;
   gint          page_num;
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
-    return;
-
-  preview_size = (gint) action;
+  preview_size = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -228,19 +216,17 @@ dockable_preview_size_cmd_callback (GtkWidget *widget,
 }
 
 void
-dockable_tab_style_cmd_callback (GtkWidget *widget,
-                                 gpointer   data,
-                                 guint      action)
+dockable_tab_style_cmd_callback (GtkAction *action,
+                                 GtkAction *current,
+                                 gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
   GimpTabStyle  tab_style;
   gint          page_num;
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
-    return;
-
-  tab_style = (gint) action;
+  tab_style = (GimpTabStyle)
+    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -262,25 +248,31 @@ dockable_tab_style_cmd_callback (GtkWidget *widget,
 }
 
 void
-dockable_toggle_image_menu_cmd_callback (GtkWidget *widget,
+dockable_toggle_image_menu_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  gboolean      active;
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
-                                         GTK_CHECK_MENU_ITEM (widget)->active);
+                                         active);
 }
 
 void
-dockable_toggle_auto_cmd_callback (GtkWidget *widget,
+dockable_toggle_auto_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  gboolean      active;
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
-                                            GTK_CHECK_MENU_ITEM (widget)->active);
+                                            active);
 }
 
 static void
@@ -305,7 +297,7 @@ dockable_change_screen_destroy_callback (GtkWidget *query_box,
 }
 
 void
-dockable_change_screen_cmd_callback (GtkWidget *widget,
+dockable_change_screen_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
