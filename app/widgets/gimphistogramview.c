@@ -208,7 +208,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
-  gint               x;
+  gint               x, y;
   gint               x1, x2;
   gint               width, height;
   gdouble            max;
@@ -243,22 +243,32 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   /*  Draw the spikes  */
   for (x = 0; x < width; x++)
     {
-      gint    y;
-      gdouble v = gimp_histogram_get_value (view->histogram,
-					    view->channel,
-                                            (x * 256) / width);
+      gdouble v, value = 0.0;
+      gint    i, j;
 
-      if (v <= 0.0)
+      i = (x * 256) / width;
+      j = ((x + 1) * 256) / width;
+
+      do
+        {
+          v = gimp_histogram_get_value (view->histogram, view->channel, i++);
+
+          if (v > value)
+            value = v;
+        }
+      while (i < j);
+
+      if (value <= 0.0)
 	continue;
 
       switch (view->scale)
 	{
 	case GIMP_HISTOGRAM_SCALE_LINEAR:
-	  y = (gint) ((height * v) / max);
+	  y = (gint) ((height * value) / max);
 	  break;
 
 	case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
-	  y = (gint) ((height * log (v)) / max);
+	  y = (gint) ((height * log (value)) / max);
 	  break;
 
 	default:

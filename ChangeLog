@@ -1,5 +1,11 @@
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose): if
+	multiple histogram values fall onto the same x value, display the
+	maximum value.
+
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.c (gimp_histogram_get_mean): forgot to
 	also add a range check here.
 
