@@ -468,10 +468,11 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   /* frame for Comment */
-  text = g_strdup_printf ("<b>%s</b>", _("Image _Comment"));
+  text = g_strdup_printf ("<b>%s</b>", _("Image Co_mment"));
   expander = g_object_new (GTK_TYPE_EXPANDER,
-                           "label",      text,
-                           "use_markup", TRUE,
+                           "label",         text,
+                           "use_markup",    TRUE,
+                           "use_underline", TRUE,
                            NULL);
   g_free (text);
 
