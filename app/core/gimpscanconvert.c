@@ -295,7 +295,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
         sc->vpath[i].x *= sc->ratio_xy;
     }
 
-  if (dash_info)
+  if (dash_info && dash_info->len >= 2)
     {
       ArtVpath     *dash_vpath;
       ArtVpathDash  dash;
@@ -312,37 +312,94 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
       dash.n_dash = dash_info->len;
       dash.dash = dashes;
 
-      dash_vpath = art_vpath_dash (sc->vpath, &dash);
-      art_free (sc->vpath);
-      sc->vpath = dash_vpath;
+      /* correct 0.0 in the first element (starts with a gap) */
+
+      if (dash.dash[0] == 0.0)
+        {
+          gdouble first;
+
+          first = dash.dash[1];
+
+          /* shift the pattern to really starts with a dash and
+           * use the offset to skip into it.
+           */
+          for (i=0; i < dash_info->len - 2; i++)
+            {
+              dash.dash[i] = dash.dash[i+2];
+              dash.offset += dash.dash[i];
+            }
+
+          if (dash_info->len % 2 == 1)
+            {
+              dash.dash[dash_info->len - 2] = first;
+              dash.n_dash --;
+            }
+          else
+            {
+              if (dash_info->len < 3)
+                {
+                  /* empty stroke */
+                  art_free (sc->vpath);
+                  sc->vpath = NULL;
+                }
+              else
+                {
+                  dash.dash [dash_info->len - 3] += first;
+                  dash.n_dash -= 2;
+                }
+            }
+        }
+      
+      /* correct odd number of dash specifiers */
+
+      if (dash.n_dash % 2 == 1)
+        {
+          gdouble last;
+
+          last = dash.dash[dash.n_dash - 1];
+          dash.dash[0] += last;
+          dash.offset += last;
+          dash.n_dash --;
+        }
+
+
+      if (sc->vpath)
+        {
+          dash_vpath = art_vpath_dash (sc->vpath, &dash);
+          art_free (sc->vpath);
+          sc->vpath = dash_vpath;
+        }
 
       g_free (dashes);
     }
 
-  stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
-                                 width, miter, 0.2);
-
-  if (sc->ratio_xy != 1.0)
+  if (sc->vpath)
     {
-      ArtSVPSeg *segment;
-      ArtPoint  *point;
-      gint       i, j;
+      stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
+                                     width, miter, 0.2);
 
-      for (i = 0; i < stroke->n_segs; i++)
+      if (sc->ratio_xy != 1.0)
         {
-          segment = stroke->segs + i;
-          segment->bbox.x0 /= sc->ratio_xy;
-          segment->bbox.x1 /= sc->ratio_xy;
+          ArtSVPSeg *segment;
+          ArtPoint  *point;
+          gint       i, j;
 
-          for (j=0; j < segment->n_points  ; j++)
+          for (i = 0; i < stroke->n_segs; i++)
             {
-              point = segment->points + j;
-              point->x /= sc->ratio_xy;
+              segment = stroke->segs + i;
+              segment->bbox.x0 /= sc->ratio_xy;
+              segment->bbox.x1 /= sc->ratio_xy;
+
+              for (j=0; j < segment->n_points  ; j++)
+                {
+                  point = segment->points + j;
+                  point->x /= sc->ratio_xy;
+                }
             }
         }
-    }
 
-  sc->svp = stroke;
+      sc->svp = stroke;
+    }
 }
 
 
@@ -366,6 +423,9 @@ gimp_scan_convert_render (GimpScanConvert *sc,
   g_return_if_fail (tile_manager != NULL);
 
   gimp_scan_convert_finish (sc);
+
+  if (!sc->svp)
+    return;
 
   pixel_region_init (&maskPR, tile_manager, 0, 0,
                      tile_manager_width (tile_manager),
@@ -416,7 +476,9 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
   ArtVpath *pert_vpath;
   ArtSVP   *svp, *svp2;
 
-  g_return_if_fail (sc->vpath != NULL);
+  /* return gracefully on empty path */
+  if (!sc->vpath)
+    return;
 
   if (sc->need_closing)
     gimp_scan_convert_close_add_points (sc);

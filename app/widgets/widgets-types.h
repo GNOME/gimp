@@ -110,6 +110,8 @@ typedef struct _GimpHistogramView       GimpHistogramView;
 typedef struct _GimpHistogramBox        GimpHistogramBox;
 typedef struct _GimpHistogramEditor     GimpHistogramEditor;
 
+typedef struct _GimpDashEditor          GimpDashEditor;
+
 typedef struct _GimpTextEditor          GimpTextEditor;
 typedef struct _GimpColorDisplayEditor  GimpColorDisplayEditor;
 

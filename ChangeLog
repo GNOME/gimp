@@ -1,3 +1,23 @@
+2003-12-27  Simon Budig  <simon@gimp.org>
+
+	Dashed stroking is here...  :-)
+
+	* app/core/gimpdrawable-stroke.c: actually use the dash pattern
+	from the options
+
+	* app/core/gimpscanconvert.c: Normalize the dash pattern, so
+	that libart does the right thing.
+
+	* app/core/gimpstrokeoptions.c: Fix default value for dash
+	offset, handle the property_get for PROP_DASH_INFO correct.
+
+	* app/widgets/gimpdasheditor.[ch]
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: New widget to edit a dash
+	pattern.
+
+	* app/widgets/gimpstrokeeditor.c: Use it.
+
 2003-12-27  Manish Singh  <yosh@gimp.org>
 
 	* app/main.c

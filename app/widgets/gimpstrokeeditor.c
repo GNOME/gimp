@@ -28,6 +28,7 @@
 #include "core/gimpstrokeoptions.h"
 
 #include "gimppropwidgets.h"
+#include "gimpdasheditor.h"
 #include "gimpstrokeeditor.h"
 
 #include "gimp-intl.h"
@@ -148,7 +149,7 @@ gimp_stroke_editor_get_property (GObject    *object,
     case PROP_OPTIONS:
       g_value_set_object (value, editor->options);
       break;
-   case PROP_RESOLUTION:
+    case PROP_RESOLUTION:
       g_value_set_double (value, editor->resolution);
       break;
 
@@ -167,6 +168,7 @@ gimp_stroke_editor_constructor (GType                   type,
   GtkWidget        *table;
   GtkWidget        *box;
   GtkWidget        *size;
+  GtkWidget        *dash_editor;
   GtkWidget        *button;
   GObject          *object;
   gint              row = 0;
@@ -209,6 +211,11 @@ gimp_stroke_editor_constructor (GType                   type,
                              _("_Miter Limit:"),
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
+
+  dash_editor = gimp_dash_editor_new (editor->options);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Dash Pattern:"), 1.0, 0.5, dash_editor, 1, FALSE);
+  gtk_widget_show (dash_editor);
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
                                        _("_Antialiasing"));

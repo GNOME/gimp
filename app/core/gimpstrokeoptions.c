@@ -134,7 +134,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
                                    "dash-offset", NULL,
-                                   0.0, 2000.0, 10.0,
+                                   0.0, 2000.0, 0.0,
                                    0);
 
   array_spec = g_param_spec_double ("dash-length", NULL, NULL,
@@ -260,11 +260,10 @@ gimp_stroke_options_get_property (GObject    *object,
     case PROP_DASH_INFO:
       {
         GValueArray *val_array;
-        GValue       item;
+        GValue       item = { 0, };
         gint         i;
 
-        if (options->dash_info)
-          g_array_free (options->dash_info, TRUE);
+        g_value_init (&item, G_TYPE_DOUBLE);
 
         if (options->dash_info == NULL || options->dash_info->len == 0)
           {

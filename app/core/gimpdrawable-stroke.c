@@ -211,7 +211,6 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
 {
   /* Stroke options */
   gdouble      width;
-  GArray      *dash_array = NULL;
   TileManager *base;
   TileManager *mask;
   gint         x, y, w, h;
@@ -260,7 +259,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                             options->join_style,
                             options->cap_style,
                             options->miter,
-                            0.0, dash_array);
+                            options->dash_offset,
+                            options->dash_info);
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape
    * of the stroke.
