@@ -1355,14 +1355,18 @@ gimp_config (GPConfig *config)
 
   if (config->version < GP_VERSION)
     {
-      g_message ("%s:\nThe GIMP is using an older version of the "
-		 "plug-in protocol than this plug-in.", progname);
+      g_message ("Could not execute Plug-In \"%s\"\n(%s)\n\n"
+		 "The GIMP is using an older version of the "
+		 "Plug-In protocol than this Plug-In.",
+		 g_basename (progname), progname);
       gimp_quit ();
     }
   else if (config->version > GP_VERSION)
     {
-      g_message ("%s:\nThe GIMP is using a newer version of the "
-		 "plug-in protocol than this plug-in.", progname);
+      g_message ("Could not execute Plug-In \"%s\"\n(%s)\n\n"
+		 "The GIMP is using an older version of the "
+		 "Plug-In protocol than this Plug-In.",
+		 g_basename (progname), progname);
       gimp_quit ();
     }
 

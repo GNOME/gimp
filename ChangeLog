@@ -1,3 +1,13 @@
+2000-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in.c: be a bit more verbose in the "Plug-In crashed"
+	message: Warn the user that Gimp's internal state may be messed
+	up and that the safe way is to restart Gimp.
+	Unified all plug-in error messages.
+
+	* libgimp/gimp.c: also changed to messages that the Gimp is using
+	a newer/older wire protocol than the plug-in.
+
 2000-05-17  Sven Neumann  <sven@gimp.org>
 
 	* app/layers_dialog.c: corrected the usage of the 

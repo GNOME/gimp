@@ -177,17 +177,17 @@ static GSList *gimprc_proc_defs = NULL;
 static GSList *open_plug_ins = NULL;
 static GSList *blocked_plug_ins = NULL;
 
-static GSList *plug_in_stack = NULL;
+static GSList     *plug_in_stack = NULL;
 static GIOChannel *current_readchannel = NULL;
 static GIOChannel *current_writechannel = NULL;
-static gint current_write_buffer_index = 0;
-static gchar *current_write_buffer = NULL;
-static Argument *current_return_vals = NULL;
-static gint current_return_nvals = 0;
+static gint        current_write_buffer_index = 0;
+static gchar      *current_write_buffer = NULL;
+static Argument   *current_return_vals = NULL;
+static gint        current_return_nvals = 0;
 
 static ProcRecord *last_plug_in = NULL;
 
-static gint shm_ID = -1;
+static gint    shm_ID = -1;
 static guchar *shm_addr = NULL;
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
@@ -211,13 +211,13 @@ plug_in_init_shm (void)
   shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
   
   if (shm_ID == -1)
-    g_message ("shmget failed...disabling shared memory tile transport");
+    g_message ("shmget() failed: Disabling shared memory tile transport.");
   else
     {
       shm_addr = (guchar *) shmat (shm_ID, NULL, 0);
       if (shm_addr == (guchar *) -1)
 	{
-	  g_message ("shmat failed...disabling shared memory tile transport");
+	  g_message ("shmat() failed: Disabling shared memory tile transport.");
 	  shmctl (shm_ID, IPC_RMID, NULL);
 	  shm_ID = -1;
 	}
@@ -232,9 +232,9 @@ plug_in_init_shm (void)
   /* Use Win32 shared memory mechanisms for
    * transfering tile data.
    */
-  int pid;
-  char fileMapName[MAX_PATH];
-  int tileByteSize = TILE_WIDTH * TILE_HEIGHT * 4;
+  gint  pid;
+  gchar fileMapName[MAX_PATH];
+  gint  tileByteSize = TILE_WIDTH * TILE_HEIGHT * 4;
   
   /* Our shared memory id will be our process ID */
   pid = GetCurrentProcessId ();
@@ -273,10 +273,10 @@ plug_in_init_shm (void)
 void
 plug_in_init (void)
 {
-  extern int use_shm;
-  char *filename;
+  extern gboolean use_shm;
+  gchar  *filename;
   GSList *tmp, *tmp2;
-  PlugInDef *plug_in_def;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
   gfloat nplugins, nth;
 
@@ -333,7 +333,7 @@ plug_in_init (void)
 	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
 	  plug_in_query (plug_in_def->prog, plug_in_def);
 	}
-      app_init_update_status(NULL, plug_in_def->prog, nth/nplugins);
+      app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
     }
 
@@ -382,8 +382,8 @@ plug_in_init (void)
   tmp = proc_defs;
   if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print (_("Starting extensions: "));
-  app_init_update_status(_("Extensions"), "", 0);
-  nplugins = g_slist_length(tmp); nth = 0;
+  app_init_update_status (_("Extensions"), "", 0);
+  nplugins = g_slist_length (tmp); nth = 0;
 
   while (tmp)
     {
@@ -396,8 +396,8 @@ plug_in_init (void)
 	{
 	  if ((be_verbose == TRUE) || (no_splash == TRUE))
 	    g_print ("%s ", proc_def->db_info.name);
-	  app_init_update_status(NULL, proc_def->db_info.name,
-				 nth/nplugins);
+	  app_init_update_status (NULL, proc_def->db_info.name,
+				  nth / nplugins);
 
 	  plug_in_run (&proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}
@@ -535,13 +535,15 @@ plug_in_image_types (gchar *name)
   return NULL;
 }
 
-GSList*
+GSList *
 plug_in_extensions_parse (gchar *extensions)
 {
   GSList *list;
-  gchar *extension;
-  gchar *next_token;
+  gchar  *extension;
+  gchar  *next_token;
+
   list = NULL;
+
   /* EXTENSIONS can be NULL.  Avoid calling strtok if it is.  */
   if (extensions)
     {
@@ -565,13 +567,13 @@ plug_in_add_internal (PlugInProcDef *proc_def)
   proc_defs = g_slist_prepend (proc_defs, proc_def);
 }
 
-PlugInProcDef*
+PlugInProcDef *
 plug_in_file_handler (gchar *name,
 		      gchar *extensions,
 		      gchar *prefixes,
 		      gchar *magics)
 {
-  PlugInDef *plug_in_def;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
   GSList *tmp;
 
@@ -672,10 +674,10 @@ plug_in_def_free (PlugInDef *plug_in_def,
 void
 plug_in_def_add (PlugInDef *plug_in_def)
 {
-  GSList *tmp;
-  PlugInDef *tplug_in_def;
+  PlugInDef     *tplug_in_def;
   PlugInProcDef *proc_def;
-  gchar *t1, *t2;
+  GSList *tmp;
+  gchar  *t1, *t2;
 
   t1 = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
   if (t1)
@@ -767,18 +769,18 @@ plug_in_menu_path (gchar *name)
   return NULL;
 }
 
-PlugIn*
+PlugIn *
 plug_in_new (gchar *name)
 {
   PlugIn *plug_in;
-  gchar *path;
+  gchar  *path;
 
   if (!g_path_is_absolute (name))
     {
       path = search_in_path (plug_in_path, name);
       if (!path)
 	{
-	  g_message (_("Unable to locate plug-in: \"%s\""), name);
+	  g_message (_("Unable to locate Plug-In: \"%s\""), name);
 	  return NULL;
 	}
     }
@@ -913,7 +915,8 @@ plug_in_open (PlugIn *plug_in)
        */
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
-	  g_message ("unable to open pipe");
+	  g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
+		     g_basename (plug_in->args[0]), plug_in->args[0]);
 	  return FALSE;
 	}
 
@@ -1002,7 +1005,8 @@ plug_in_open (PlugIn *plug_in)
       else if (plug_in->pid == -1)
 #endif
 	{
-          g_message ("unable to run plug-in: %s", plug_in->args[0]);
+          g_message ("fork() failed: Unable to run Plug-In: \"%s\"\n(%s)",
+		     g_basename (plug_in->args[0]), plug_in->args[0]);
           plug_in_destroy (plug_in);
           return FALSE;
 	}
@@ -1020,7 +1024,7 @@ plug_in_open (PlugIn *plug_in)
 	{
 	  if (!wire_read_int32 (plug_in->my_read, &plug_in->his_thread_id, 1))
 	    {
-	      g_message ("unable to read plug-ins's thread id");
+	      g_message ("Unable to read Plug-In's thread id");
 	      plug_in_destroy (plug_in);
 	      return FALSE;
 	    }
@@ -1143,7 +1147,7 @@ plug_in_close (PlugIn   *plug_in,
 	  plug_in->his_write = NULL;
 	}
 
-      wire_clear_error();
+      wire_clear_error ();
 
       /* Destroy the progress dialog if it exists
        */
@@ -1237,10 +1241,10 @@ plug_in_run (ProcRecord *proc_rec,
 	     gboolean    destroy_values,
 	     gint        gdisp_ID)
 {
-  GPConfig config;
-  GPProcRun proc_run;
-  Argument *return_vals;
-  PlugIn *plug_in;
+  GPConfig   config;
+  GPProcRun  proc_run;
+  Argument  *return_vals;
+  PlugIn    *plug_in;
 
   return_vals = NULL;
 
@@ -1294,7 +1298,8 @@ plug_in_run (ProcRecord *proc_rec,
 	   *  If this is an automatically installed extension, wait for an
 	   *   installation-confirmation message
 	   */
-	  if ((proc_rec->proc_type == PDB_EXTENSION) && (proc_rec->num_args == 0))
+	  if ((proc_rec->proc_type == PDB_EXTENSION) &&
+	      (proc_rec->num_args == 0))
 	    gtk_main ();
 
 	  if (plug_in->recurse)
@@ -1306,7 +1311,7 @@ plug_in_run (ProcRecord *proc_rec,
 	}
     }
   
-done:
+ done:
   if (return_vals && destroy_values)
     {
       procedural_db_destroy_args (return_vals, proc_rec->num_values);
@@ -1393,6 +1398,12 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	    }
 	}
     }
+
+  if (!last_plug_in)
+    {
+      menus_set_sensitive ("<Image>/Filters/Repeat Last", FALSE);
+      menus_set_sensitive ("<Image>/Filters/Re-Show Last", FALSE);
+    }
 }
 
 static gboolean
@@ -1436,7 +1447,10 @@ plug_in_recv_message (GIOChannel  *channel,
     }
 
   if (!got_message)
-    g_message (_("Plug-In crashed: %s\n(%s)"),
+    g_message (_("Plug-In crashed: \"%s\"\n(%s)\n\n"
+		 "The dying Plug-In may have messed up GIMP's internal state.\n"
+		 "You may want to save your images and restart GIMP\n"
+		 "to be on the safe side."),
 	       g_basename (current_plug_in->args[0]),
 	       current_plug_in->args[0]);
 
@@ -1464,11 +1478,11 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_tile_req (msg->data);
       break;
     case GP_TILE_ACK:
-      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
+      g_warning ("plug_in_handle_message(): received a tile ack message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_DATA:
-      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
+      g_warning ("plug_in_handle_message(): received a tile data message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_PROC_RUN:
@@ -1514,11 +1528,11 @@ plug_in_handle_quit (void)
 static void
 plug_in_handle_tile_req (GPTileReq *tile_req)
 {
-  GPTileData tile_data;
-  GPTileData *tile_info;
-  WireMessage msg;
+  GPTileData   tile_data;
+  GPTileData  *tile_info;
+  WireMessage  msg;
   TileManager *tm;
-  Tile *tile;
+  Tile        *tile;
 
   if (tile_req->drawable_ID == -1)
     {
@@ -1612,12 +1626,12 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	}
 
       tile_data.drawable_ID = tile_req->drawable_ID;
-      tile_data.tile_num = tile_req->tile_num;
-      tile_data.shadow = tile_req->shadow;
-      tile_data.bpp = tile_bpp(tile);
-      tile_data.width = tile_ewidth(tile);
-      tile_data.height = tile_eheight(tile);
-      tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
+      tile_data.tile_num    = tile_req->tile_num;
+      tile_data.shadow      = tile_req->shadow;
+      tile_data.bpp         = tile_bpp (tile);
+      tile_data.width       = tile_ewidth (tile);
+      tile_data.height      = tile_eheight (tile);
+      tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
 
       if (tile_data.use_shm)
 	memcpy (shm_addr, tile_data_pointer (tile, 0, 0), tile_size (tile));
@@ -1654,10 +1668,10 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 static void
 plug_in_handle_proc_run (GPProcRun *proc_run)
 {
-  GPProcReturn proc_return;
-  ProcRecord *proc_rec;
-  Argument *args;
-  Argument *return_vals;
+  GPProcReturn   proc_return;
+  ProcRecord    *proc_rec;
+  Argument      *args;
+  Argument      *return_vals;
   PlugInBlocked *blocked;
 
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
@@ -1777,9 +1791,12 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if ((proc_install->nparams < 1) ||
 	      (proc_install->params[0].type != PDB_INT32))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
-			 current_plug_in->args[0], proc_install->name);
+	      g_message ("Plug-In \"%s\"\n(%s)\n"
+			 "attempted to install procedure \"%s\"\n"
+			 "which does not take the standard Plug-In args.",
+			 g_basename (current_plug_in->args[0]),
+			 current_plug_in->args[0],
+			 proc_install->name);
 	      return;
 	    }
 	}
@@ -1790,9 +1807,12 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_IMAGE) ||
 	      (proc_install->params[2].type != PDB_DRAWABLE))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
-			 current_plug_in->args[0], proc_install->name);
+	      g_message ("Plug-In \"%s\"\n(%s)\n"
+			 "attempted to install procedure \"%s\"\n"
+			 "which does not take the standard Plug-In args.",
+			 g_basename (current_plug_in->args[0]),
+			 current_plug_in->args[0],
+			 proc_install->name);
 	      return;
 	    }
 	}
@@ -1803,9 +1823,12 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_STRING) ||
 	      (proc_install->params[2].type != PDB_STRING))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
-			 current_plug_in->args[0], proc_install->name);
+	      g_message ("Plug-In \"%s\"\n(%s)\n"
+			 "attempted to install procedure \"%s\"\n"
+			 "which does not take the standard Plug-In args.",
+			 g_basename (current_plug_in->args[0]),
+			 current_plug_in->args[0],
+			 proc_install->name);
 	      return;
 	    }
 	}
@@ -1818,18 +1841,25 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[3].type != PDB_STRING) ||
 	      (proc_install->params[4].type != PDB_STRING))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
-			 current_plug_in->args[0], proc_install->name);
+	      g_message ("Plug-In \"%s\"\n(%s)\n"
+			 "attempted to install procedure \"%s\"\n"
+			 "which does not take the standard Plug-In args.",
+			 g_basename (current_plug_in->args[0]),
+			 current_plug_in->args[0],
+			 proc_install->name);
 	      return;
 	    }
 	}
       else
 	{
-	  g_message ("plug-in \"%s\" attempted to install procedure \"%s\" in "
-		     "an invalid menu location.  Use either \"<Toolbox>\", \"<Image>\", "
+	  g_message ("Plug-In \"%s\"\n(%s)\n"
+		     "attempted to install procedure \"%s\"\n"
+		     "in an invalid menu location.\n"
+		     "Use either \"<Toolbox>\", \"<Image>\", "
 		     "\"<Load>\", or \"<Save>\".",
-		     current_plug_in->args[0], proc_install->name);
+		     g_basename (current_plug_in->args[0]),
+		     current_plug_in->args[0],
+		     proc_install->name);
 	  return;
 	}
     }
@@ -1846,10 +1876,13 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	   proc_install->params[i].type == PDB_STRINGARRAY) &&
 	  proc_install->params[i-1].type != PDB_INT32) 
 	{
-	  g_message ("plug_in \"%s\" attempted to install procedure \"%s\" "
-		     "which fails to comply with the array parameter "
+	  g_message ("Plug-In \"%s\"\n(%s)\n"
+		     "attempted to install procedure \"%s\"\n"
+		     "which fails to comply with the array parameter\n"
 		     "passing standard.  Argument %d is noncompliant.", 
-		     current_plug_in->args[0], proc_install->name, i);
+		     g_basename (current_plug_in->args[0]),
+		     current_plug_in->args[0],
+		     proc_install->name, i);
 	  return;
 	}
     }
