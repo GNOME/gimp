@@ -38,6 +38,7 @@ gimp_SOURCES = \
 	apptypes.h		\
 	asupsample.c		\
 	asupsample.h		\
+	authors.h		\
 	batch.c			\
 	batch.h			\
 	bezier_select.c		\

@@ -4,6 +4,12 @@ else
 D_pdbgen=
 endif
 
+if WITH_AUTHORSGEN
+D_authorgen=authorsgen
+else
+D_authorgen=
+endif
+
 bin_PROGRAMS = $(GIMP_REMOTE)
 
 EXTRA_PROGRAMS = \
@@ -29,4 +35,4 @@ INCLUDES = \
 #D_gcg=
 #endif
 
-SUBDIRS = $(D_pdbgen) #$(D_gcg)
+SUBDIRS = $(D_pdbgen) $(D_authorgen) #$(D_gcg)

@@ -595,6 +595,7 @@ if test "x$enable_perl" != xno || test "x$with_pdbgen" = xyes ; then
 fi
 
 AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
+AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
 
 rm -f plug-ins/perl/config.status
 
@@ -670,6 +671,9 @@ if test -n "$DISTMAKE"; then
   XJT=xjt XPM=xpm GIMPDOCS=docs
 fi
 
+dnl eek, what a hack...
+GIMP_CONTRIBUTORS=`cat tools/authorsgen/contributors | sed -e '/^#/d' -e 's/\.*\[.*\]//' -e 's/^ *//' -e 's/ *$//' -e '/^$/d' | awk '{ ORS = ", "; print; }' | sed -e 's/, $/./'`
+
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 
 AC_SUBST(GIMP_MAJOR_VERSION)
@@ -729,6 +733,8 @@ AC_SUBST(HELPBROWSER)
 AC_SUBST(GTKXMHTML_CFLAGS)
 AC_SUBST(GTKXMHTML_LIBS)
 AC_SUBST(HTML_DIR)
+
+AC_SUBST(GIMP_CONTRIBUTORS)
 
 dnl easy way to skip the plug-in build
 GIMP_PLUGINS=plug-ins
@@ -811,6 +817,7 @@ po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 intl/Makefile
 tools/Makefile
+tools/authorsgen/Makefile
 tools/pdbgen/Makefile
 tips/Makefile
 help/Makefile

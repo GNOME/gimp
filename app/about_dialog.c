@@ -25,8 +25,9 @@
 
 #include <gtk/gtk.h>
 
-#include "appenv.h"
 #include "about_dialog.h"
+#include "appenv.h"
+#include "authors.h"
 #include "gimpdnd.h"
 #include "gimphelp.h"
 
@@ -60,194 +61,28 @@ static void      about_dialog_tool_drop   (GtkWidget      *widget,
 static gint      about_dialog_timer       (gpointer        data);
 
 
-static GtkWidget *about_dialog  = NULL;
-static GtkWidget *logo_area     = NULL;
-static GtkWidget *scroll_area   = NULL;
-static GdkPixmap *logo_pixmap   = NULL;
-static GdkPixmap *scroll_pixmap = NULL;
-static guchar    *dissolve_map  = NULL;
+static GtkWidget *about_dialog     = NULL;
+static GtkWidget *logo_area        = NULL;
+static GtkWidget *scroll_area      = NULL;
+static GdkPixmap *logo_pixmap      = NULL;
+static GdkPixmap *scroll_pixmap    = NULL;
+static guchar    *dissolve_map     = NULL;
 static gint       dissolve_width;
 static gint       dissolve_height;
-static gint       logo_width  = 0;
-static gint       logo_height = 0;
-static gboolean   do_animation = FALSE;
-static gboolean   do_scrolling = FALSE;
-static gint       scroll_state = 0;
-static gint       frame  = 0;
-static gint       offset = 0;
-static gint       timer  = 0;
-
-/* See the end of the list for how to add names with Non-ASCII characters */
-static gchar *scroll_text[] =
-{
-  "Lauri Alanko",
-  "Shawn Amundson",
-  "Sven Anders",
-  "Karl-Johan Andersson",
-  "John Beale",
-  "Zach Beane",
-  "Tom Bech",
-  "Marc Bless",
-  "Edward Blevins",
-  "Reagan Blundell",
-  "Xavier Bouchoux",
-  "Roberto Boyd",
-  "Stanislav Brabec",
-  "Robert Brady",
-  "Hans Breuer",
-  "Simon Budig",
-  "Carey Bunks",
-  "Seth Burgess",
-  "Brent Burton",
-  "Francisco Bustamante",
-  "Albert Cahalan",
-  "Sean Cier",
-  "Winston Chang",
-  "Kenneth Christiansen",
-  "Zbigniew Chyla",
-  "Ed Connel",
-  "Piers Cornwell",
-  "Daniel Cotting",
-  "Jay Cox",
-  "Brian Degenhardt",
-  "Gert Dewit",
-  "Andreas Dilger",
-  "Austin Donnelly",
-  "Scott Draves",
-  "Daniel Dunbar",
-  "Misha Dynin",
-  "Daniel Egger",
-  "Morton Eriksen",
-  "Larry Ewing",
-  "Nick Fetchak",
-  "Valek Filippov",
-  "David Forsyth",
-  "Raphael Francois",
-  "Jochen Friedrich",
-  "Sami Gerdt",
-  "Jim Geuther",
-  "Graeme Gill",
-  "Scott Goehring",
-  "Heiko Goller",
-  "Marcelo de Gomensoro Malheiros",
-  "Pavel Grinfeld",
-  "Michael Hammel",
-  "Henrik Hansen",
-  "James Henstridge",
-  "Eric Hernes",
-  "Christoph Hoegl",
-  "Wolfgang Hofer",
-  "Jan Hubicka",
-  "Andreas Hyden",
-  "Ben Jackson",
-  "Krzysztof Jakubowski",
-  "Simon Janes",
-  "Tim Janik",
-  "Fellmann Joaquim",
-  "Andrew Kieschnick",
-  "Peter Kirchgessner",
-  "Philipp Klaus",
-  "David Koblas",
-  "Tuomas Kuosmanen",
-  "Karin Kylander",
-  "Olof S Kylander",
-  "Karl La Rocca",
-  "Chris Lahey",
-  "Nick Lamb",
-  "Marco Lamberto",
-  "Jens Lautenbacher",
-  "Laramie Leavitt",
-  "Elliot Lee",
-  "Marc Lehmann",
-  "Ray Lahtiniemi",
-  "Raph Levien",
-  "Wing Tung Leung",
-  "Adrian Likins",
-  "Tor Lillqvist",
-  "Ingo Luetkebohle",
-  "Josh MacDonald",
-  "Ed Mackey",
-  "Vidar Madsen",
-  "Ian Main",
-  "Kjartan Maraas",
-  "Kelly Martin",
-  "Torsten Martinsen",
-  "Gordon Matzigkeit",
-  "Gregory McLean",
-  "Daniele Medri",
-  "Federico Mena Quintero",
-  "James Mitchell",
-  "Hirotsuna Mizuno",
-  "David Monniaux",
-  "Adam D Moss",
-  "Balazs Nagy",
-  "Yukihiro Nakai",
-  "Sung-Hyun Nam",
-  "Shuji Narazaki",
-  "Felix Natter",
-  "Michael Natterer",
-  "Sven Neumann",
-  "Stephen Robert Norris",
-  "Tim Newsome",
-  "Erik Nygren",
-  "Miles O'Neal",
-  "Thom van Os",
-  "Garry R. Osgood",
-  "Alan Paeth",
-  "Jay Painter",
-  "Sergey Panov",
-  "Asbjorn Pettersen",
-  "Mike Phillips",
-  "Artur Polaczyaski",
-  "Raphael Quinet",
-  "Vincent Renardias",
-  "Jens Restemeier",
-  "Maurits Rijk",
-  "Daniel Risacher",
-  "James Robinson",
-  "Tim Rowley",
-  "Pablo Saratxaga",
-  "Mike Schaeffer",
-  "John Schlag",
-  "Norbert Schmitz",
-  "Thorsten Schnier",
-  "Alexander Schulz",
-  "Tracy Scott",
-  "Craig Setera",
-  "Aaron Sherman",
-  "Manish Singh",
-  "Daniel Skarda",
-  "Nathan Summers",
-  "Mike Sweet",
-  "Yuri Syrota",
-  "Eiichi Takamori",
-  "Tristan Tarrant",
-  "Michael Taylor",
-  "Owen Taylor",
-  "Ian Tester",
-  "Andy Thomas",
-  "Kevin Turner",
-  "Martin Weber",
-  "James Wang",
-  "Kris Wehner",
-  "Nigel Wetten",
-  "Calvin Williamson",
-  "Matthew Wilson",
-  "Shirasaki Yasuhiro",
-#ifndef GDK_USE_UTF8_MBS
-  "Ville Hautam‰ki",
-  "Tomas ÷gren",
-#else  /* Win32 GDK uses UTF-8 */
-  "Ville Hautam√§ki",
-  "Tomas √ñgren",
-#endif
-};
-static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
-static gint scroll_text_widths[sizeof (scroll_text) / sizeof (scroll_text[0])];
-static gint cur_scroll_text  = 0;
-static gint cur_scroll_index = 0;
-
-static gint shuffle_array[sizeof (scroll_text) / sizeof (scroll_text[0])];
+static gint       logo_width       = 0;
+static gint       logo_height      = 0;
+static gboolean   do_animation     = FALSE;
+static gboolean   do_scrolling     = FALSE;
+static gint       scroll_state     = 0;
+static gint       frame            = 0;
+static gint       offset           = 0;
+static gint       timer            = 0;
+static gchar    **scroll_text      = authors;
+static gint       nscroll_texts    = sizeof (authors) / sizeof (authors[0]);
+static gint       scroll_text_widths[sizeof (authors) / sizeof (authors[0])];
+static gint       cur_scroll_text  = 0;
+static gint       cur_scroll_index = 0;
+static gint       shuffle_array[sizeof (authors) / sizeof (authors[0])];
 
 /*  dnd stuff  */
 static GtkTargetEntry tool_target_table[] =
@@ -256,6 +91,14 @@ static GtkTargetEntry tool_target_table[] =
 };
 static guint n_tool_targets = (sizeof (tool_target_table) /
                                sizeof (tool_target_table[0]));
+
+static gchar *drop_text[] = 
+{ 
+  "We are The GIMP." ,
+  "Prepare to be manipulated.",
+  "Resistance is futile."
+};
+
 
 void
 about_dialog_create (void)
@@ -374,7 +217,11 @@ about_dialog_create (void)
 						    scroll_text[i]);
 	  max_width = MAX (max_width, scroll_text_widths[i]);
 	}
-
+      for (i = 0; i < (sizeof (drop_text) / sizeof (drop_text[0])); i++)
+	{
+	  max_width = MAX (max_width, 
+			   gdk_string_width (aboutframe->style->font, drop_text[i]));
+	}
       scroll_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (scroll_area),
 			     max_width + 10,
@@ -605,7 +452,7 @@ about_dialog_tool_drop (GtkWidget *widget,
   gint width  = 0;
   gint height = 0;
   gint i;
-
+  
   if (do_animation)
     return;
 
@@ -657,10 +504,8 @@ about_dialog_tool_drop (GtkWidget *widget,
   gdk_pixmap_unref (pixmap);
   gdk_bitmap_unref (mask);
 
-  scroll_text[0] = "We are The GIMP.";
-  scroll_text[1] = "Prepare to be assimilated.";
-  scroll_text[2] = "Resistance is futile.";
-  nscroll_texts = 3;
+  scroll_text = drop_text;
+  nscroll_texts = sizeof (drop_text) / sizeof (drop_text[0]);
 
   for (i = 0; i < nscroll_texts; i++)
     {

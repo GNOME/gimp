@@ -1,20 +1,17 @@
-The GIMP: Authors
-=================
-
-The people that made it happen!
-
-1. Main Authors
-===============
-
-Spencer Kimball
-Peter Mattis
-
-2. Contributers
-===============
-
-With patches, fixes, plugins, extensions, scripts, translations, documentation,
-and more from (in alphabetical order):
-
+# This file lists all GIMP authors and contributors. 
+#
+# Please do always modify this file, then run authorgen.pl
+# to create the files AUTHORS, gimp.1.in and app/authors.h.  
+#
+# The format is one name per line in alphabetical order. 
+# Names are 7bit ASCII. To include special characters, append
+# an ISO-8859-1 encoded string in brackets on the same line. 
+# We might want to change to UTF-8 as soon as all ports use 
+# GTK+-2.0. Right now the authorsgen script takes care of 
+# converting to UTF-8. 
+#
+# Spencer Kimball and Peter Mattis are always listed separatly.
+#
 Lauri Alanko
 Shawn Amundson
 Sven Anders
@@ -68,7 +65,7 @@ Marcelo de Gomensoro Malheiros
 Pavel Grinfeld
 Michael Hammel
 Henrik Hansen
-Ville Hautamaki 
+Ville Hautamaki [Ville Hautamäki]
 James Henstridge
 Eric Hernes
 Christoph Hoegl
@@ -126,7 +123,7 @@ Sven Neumann
 Stephen Robert Norris
 Tim Newsome
 Erik Nygren
-Tomas Ogren 
+Tomas Ogren [Tomas Ögren]
 Miles O'Neal
 Thom van Os
 Garry R. Osgood

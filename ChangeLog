@@ -1,3 +1,20 @@
+2000-07-25  Sven Neumann  <sven@gimp.org>
+
+	* AUTHORS
+	* configure.in
+	* gimp.1.in
+	* app/Makefile.am
+	* app/about_dialog.c: see below
+	
+	* app/authors.h
+	* tools/authorsgen/Makefile.am
+	* tools/authorsgen/authorsgen.pl
+	* tools/authorsgen/contributors: new files
+
+	Very hackerish attempt to create all three lists of authors
+	from one source. The file 'contributors' lists all the names 
+	and is the only one you should dare to edit from now on.
+	
 2000-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* AUTHORS
