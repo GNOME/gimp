@@ -43,8 +43,10 @@ Gimp/Module.pm
 Gimp/Compat.pm
 embed/Makefile.PL
 embed/perlmod.c
-nolib/Makefile.PL
-nolib/Module.xs
+Module/Makefile.PL
+Module/Module.xs
+Net/Makefile.PL
+Net/Net.xs
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float
