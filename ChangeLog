@@ -1,3 +1,10 @@
+Thu Oct 22 04:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/checkerboard/checkerboard.c: fixed a buglet that
+	caused an FP exception in PsychoBilly mode
+
+	* added borderaverage, wind, jigsaw, and newsprint plug-ins
+
 Thu Oct 22 02:30:38 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/Makefile.am

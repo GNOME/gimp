@@ -28,6 +28,7 @@ SUBDIRS = 			\
 	blinds			\
 	blur			\
 	bmp			\
+	borderaverage		\
 	bumpmap			\
 	bz2			\
 	c_astretch		\
@@ -75,12 +76,14 @@ SUBDIRS = 			\
 	ifscompose		\
 	illusion		\
 	iwarp			\
+	jigsaw			\
 	laplace			\
 	mail			\
 	max_rgb			\
 	maze			\
 	mblur			\
 	mosaic			\
+	newsprint		\
 	nlfilt			\
 	noisify			\
 	normalize		\
@@ -130,6 +133,7 @@ SUBDIRS = 			\
 	waterselect		\
 	waves			\
 	whirlpinch		\
+	wind			\
 	xwd			\
 	zealouscrop
 

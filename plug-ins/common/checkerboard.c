@@ -301,6 +301,10 @@ inblock( gint pos, gint size)
     static gint *in = NULL;		/* initialized first time */
     gint i,j,k, len;
 
+    /* avoid a FP exception */
+    if (size == 1)
+      size = 2;
+
     len = size*size;
     /*
      * Initialize the array; since we'll be called thousands of

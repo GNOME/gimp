@@ -543,6 +543,7 @@ plug-ins/autostretch_hsv/Makefile
 plug-ins/blinds/Makefile
 plug-ins/blur/Makefile
 plug-ins/bmp/Makefile
+plug-ins/borderaverage/Makefile
 plug-ins/bumpmap/Makefile
 plug-ins/bz2/Makefile
 plug-ins/c_astretch/Makefile
@@ -591,12 +592,14 @@ plug-ins/hrz/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/illusion/Makefile
 plug-ins/iwarp/Makefile
+plug-ins/jigsaw/Makefile
 plug-ins/laplace/Makefile
 plug-ins/mail/Makefile
 plug-ins/max_rgb/Makefile
 plug-ins/maze/Makefile
 plug-ins/mblur/Makefile
 plug-ins/mosaic/Makefile
+plug-ins/newsprint/Makefile
 plug-ins/nlfilt/Makefile
 plug-ins/noisify/Makefile
 plug-ins/normalize/Makefile
@@ -646,6 +649,7 @@ plug-ins/vpropagate/Makefile
 plug-ins/waterselect/Makefile
 plug-ins/waves/Makefile
 plug-ins/whirlpinch/Makefile
+plug-ins/wind/Makefile
 plug-ins/xwd/Makefile
 plug-ins/zealouscrop/Makefile
 app/Makefile
