@@ -1,10 +1,15 @@
+2000-03-30  Sven Neumann  <sven@gimp.org>
+
+	* *.po: something went wrong when Yosh updated the po-files for the
+	1.1.19 release. Bring them uptodate.
+
 2000-03-30  Kjartan Maraas  <kmaraas@online.no>
 
 	* ru.po: Updated Russian translation from Valek Filippov
 	<frob@df.ru>.
 	* no.po: Updated Norwegian translation.	
 
-2000-03-29  Sven Neumann  <neo@wintermute.ochsenblut.de>
+2000-03-29  Sven Neumann  <sven@gimp.org>
 
 	* script-fu-xgettext: removed the check for broken versions of 
 	perl, since it seems to work. If make or update.sh goes into an 
