@@ -250,7 +250,7 @@ d_update_line (GdkPoint *pnt)
 
 void
 d_line_start (GdkPoint *pnt,
-              gint      shift_down)
+              gboolean  shift_down)
 {
   if (!obj_creating || !shift_down)
     {
@@ -267,7 +267,7 @@ d_line_start (GdkPoint *pnt,
 
 void
 d_line_end (GdkPoint *pnt,
-            gint      shift_down)
+            gboolean  shift_down)
 {
   /* Undraw the last circle */
   draw_circle (pnt);

@@ -1,5 +1,11 @@
 2004-11-15  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/gfig/gfig.c: added a blurb proposed by Alan Horkan.
+
+	* plug-ins/gfig/gfig-line.[ch]: smallish style fix.
+
+2004-11-15  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/gfig/images/stock-ellipse.png: better icon for the ellipse
 	tool (a lot more elliptical) by Jimmac and Zigomar.
 

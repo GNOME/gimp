@@ -121,7 +121,13 @@ query (void)
 
   gimp_install_procedure ("plug_in_gfig",
                           "Create Geometrical shapes with the Gimp",
-                          "More here later",
+                          "Draw Vector Graphics and paint them onto your images.  "
+                          "Gfig allows you to draw many types of objects "
+                          "inlcuding Lines, Circles, Ellipses, Curves, Polygons, "
+                          "pointed stars, Bezier curves, and Spirals.  "
+                          "Objects can be painted using Brushes or other tools"
+                          "or filled using colours or patterns.  "
+                          "Gfig objects can also be used to create selections.  ",
                           "Andy Thomas",
                           "Andy Thomas",
                           "1997",

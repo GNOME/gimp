@@ -35,9 +35,9 @@ Dobject *d_copy_line              (Dobject  *obj);
 
 void     d_update_line            (GdkPoint *pnt);
 void     d_line_start             (GdkPoint *pnt,
-                                   gint      shift_down);
+                                   gboolean  shift_down);
 void     d_line_end               (GdkPoint *pnt,
-                                   gint      shift_down);
+                                   gboolean  shift_down);
 void     d_line_object_class_init (void);
 
 #endif /* __GFIG_LINE_H__ */
