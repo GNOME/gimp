@@ -15,7 +15,7 @@ The communication protocol between GIMP and it's plug-ins.
 #libgimp-gimpwire
 </para>
 
-<!-- ##### MACRO GP_VERSION ##### -->
+<!-- ##### MACRO GIMP_PROTOCOL_VERSION ##### -->
 <para>
 
 </para>

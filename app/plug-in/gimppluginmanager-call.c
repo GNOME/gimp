@@ -94,7 +94,7 @@ plug_in_run (Gimp       *gimp,
           goto done;
         }
 
-      config.version        = GP_VERSION;
+      config.version        = GIMP_PROTOCOL_VERSION;
       config.tile_width     = TILE_WIDTH;
       config.tile_height    = TILE_HEIGHT;
       config.shm_ID         = plug_in_shm_get_ID (gimp);

@@ -23,8 +23,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpprotocol.h"
+
 #include "plug-in-types.h"
 
+#include "config/gimpconfig-error.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
@@ -59,7 +63,8 @@ static GTokenType plug_in_has_init_deserialize   (GScanner      *scanner,
 
 enum
 {
-  PLUG_IN_DEF = 1,
+  PROTOCOL_VERSION = 1,
+  PLUG_IN_DEF,
   PROC_DEF,
   LOCALE_DEF,
   HELP_DEF,
@@ -69,21 +74,27 @@ enum
 
 
 gboolean
-plug_in_rc_parse (Gimp        *gimp,
-                  const gchar *filename)
+plug_in_rc_parse (Gimp         *gimp,
+                  const gchar  *filename,
+                  GError      **error)
 {
   GScanner   *scanner;
   GTokenType  token;
-  GError     *error = NULL;
+  gboolean    retval  = FALSE;
+  gint        version = GIMP_PROTOCOL_VERSION;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  scanner = gimp_scanner_new_file (filename, &error);
+  scanner = gimp_scanner_new_file (filename, error);
 
   if (! scanner)
     return TRUE;
 
+  g_scanner_scope_add_symbol (scanner, 0,
+                              "protocol-version",
+                              GINT_TO_POINTER (PROTOCOL_VERSION));
   g_scanner_scope_add_symbol (scanner, 0,
                               "plug-in-def", GINT_TO_POINTER (PLUG_IN_DEF));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
@@ -99,7 +110,8 @@ plug_in_rc_parse (Gimp        *gimp,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  while (g_scanner_peek_next_token (scanner) == token)
+  while (version == GIMP_PROTOCOL_VERSION &&
+         g_scanner_peek_next_token (scanner) == token)
     {
       token = g_scanner_get_next_token (scanner);
 
@@ -110,13 +122,22 @@ plug_in_rc_parse (Gimp        *gimp,
           break;
 
         case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == GINT_TO_POINTER (PLUG_IN_DEF))
+          switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
+            case PROTOCOL_VERSION:
+              token = G_TOKEN_INT;
+              if (gimp_scanner_parse_int (scanner, &version))
+                token = G_TOKEN_RIGHT_PAREN;
+              break;
+            case PLUG_IN_DEF:
               g_scanner_set_scope (scanner, PLUG_IN_DEF);
               token = plug_in_def_deserialize (gimp, scanner);
               g_scanner_set_scope (scanner, 0);
+              break;
+            default:
+              break;
             }
-          break;
+              break;
 
         case G_TOKEN_RIGHT_PAREN:
           token = G_TOKEN_LEFT_PAREN;
@@ -127,19 +148,26 @@ plug_in_rc_parse (Gimp        *gimp,
         }
     }
 
-  if (token != G_TOKEN_LEFT_PAREN)
+  if (version != GIMP_PROTOCOL_VERSION)
+    {
+      g_set_error (error,
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_VERSION,
+                   _("Skipping '%s': wrong GIMP protocol version."), filename);
+    }
+  else if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
-
-      g_message (error->message);
-      g_clear_error (&error);
+    }
+  else
+    {
+      retval = TRUE;
     }
 
   gimp_scanner_destroy (scanner);
 
-  return (token != G_TOKEN_EOF);
+  return retval;
 }
 
 static GTokenType
@@ -406,6 +434,11 @@ plug_in_rc_write (GSList       *plug_in_defs,
 					error);
   if (!writer)
     return FALSE;
+
+  gimp_config_writer_open (writer, "protocol-version");
+  gimp_config_writer_printf (writer, "%d", GIMP_PROTOCOL_VERSION);
+  gimp_config_writer_close (writer);
+  gimp_config_writer_linefeed (writer);
 
   for (list = plug_in_defs; list; list = list->next)
     {

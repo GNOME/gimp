@@ -24,10 +24,11 @@
 
 typedef enum
 {
-  GIMP_CONFIG_ERROR_OPEN,         /*  open failed          */
-  GIMP_CONFIG_ERROR_OPEN_ENOENT,  /*  file does not exist  */
-  GIMP_CONFIG_ERROR_WRITE,        /*  write failed         */
-  GIMP_CONFIG_ERROR_PARSE         /*  parser error         */
+  GIMP_CONFIG_ERROR_OPEN,         /*  open failed                            */
+  GIMP_CONFIG_ERROR_OPEN_ENOENT,  /*  file does not exist                    */
+  GIMP_CONFIG_ERROR_WRITE,        /*  write failed                           */
+  GIMP_CONFIG_ERROR_PARSE,        /*  parser error                           */
+  GIMP_CONFIG_ERROR_VERSION       /*  parser failed due to version mismatch  */
 } GimpConfigError;
 
 #define GIMP_CONFIG_ERROR (gimp_config_error_quark ())

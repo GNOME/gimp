@@ -8,7 +8,9 @@
 
   <bookinfo>
     <title>GIMP Application Reference Manual</title>
-    <releaseinfo>for GIMP &version;</releaseinfo>
+    <releaseinfo>
+      for GIMP <xi:include href="version" parse="text"/>
+    </releaseinfo>
   </bookinfo>
  
   <part id="app-hierarchy-part">

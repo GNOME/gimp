@@ -70,7 +70,7 @@ gimp_pixpipe_params_build
 
 <SECTION>
 <FILE>gimpprotocol</FILE>
-GP_VERSION
+GIMP_PROTOCOL_VERSION
 GPConfig
 GPTileReq
 GPTileAck

@@ -1551,7 +1551,7 @@ gimp_loop (void)
 static void
 gimp_config (GPConfig *config)
 {
-  if (config->version < GP_VERSION)
+  if (config->version < GIMP_PROTOCOL_VERSION)
     {
       g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because the GIMP is using an older version of the "
@@ -1559,7 +1559,7 @@ gimp_config (GPConfig *config)
 		 g_get_prgname (), progname);
       gimp_quit ();
     }
-  else if (config->version > GP_VERSION)
+  else if (config->version > GIMP_PROTOCOL_VERSION)
     {
       g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because it uses an obsolete version of the "

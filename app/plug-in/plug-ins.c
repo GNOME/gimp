@@ -94,6 +94,7 @@ plug_ins_init (Gimp               *gimp,
   gdouble        n_plugins;
   gdouble        n_extensions;
   gdouble        nth;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
@@ -120,7 +121,7 @@ plug_ins_init (Gimp               *gimp,
       if (!g_path_is_absolute (filename))
         {
           gchar *tmp = g_build_filename (gimp_directory (), filename, NULL);
-          
+
           g_free (filename);
           filename = tmp;
         }
@@ -131,7 +132,12 @@ plug_ins_init (Gimp               *gimp,
     }
 
   (* status_callback) (_("Resource configuration"), filename, -1);
-  plug_in_rc_parse (gimp, filename);
+
+  if (! plug_in_rc_parse (gimp, filename, &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
 
   /*  Query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
@@ -184,7 +190,7 @@ plug_ins_init (Gimp               *gimp,
               g_warning ("removing duplicate PDB procedure \"%s\"",
                          overridden_proc_def->db_info.name);
 
-              /* search the plugin list to see if any plugins had references to 
+              /* search the plugin list to see if any plugins had references to
                * the overridden_proc_def.
                */
               for (tmp2 = gimp->plug_in_defs; tmp2; tmp2 = g_slist_next (tmp2))
@@ -746,9 +752,9 @@ plug_ins_image_types_parse (gchar *image_types)
   gchar           *type_spec = image_types;
   PlugInImageType  types     = 0;
 
-  /* 
+  /*
    *  If the plug_in registers with image_type == NULL or "", return 0
-   *  By doing so it won't be touched by plug_in_set_menu_sensitivity() 
+   *  By doing so it won't be touched by plug_in_set_menu_sensitivity()
    */
   if (!image_types)
     return types;
@@ -914,7 +920,7 @@ plug_ins_add_to_db (Gimp *gimp)
             {
               return_vals =
 		procedural_db_execute (gimp,
-				       "gimp_register_save_handler", 
+				       "gimp_register_save_handler",
 				       args);
               g_free (return_vals);
             }
@@ -922,7 +928,7 @@ plug_ins_add_to_db (Gimp *gimp)
             {
               return_vals =
 		procedural_db_execute (gimp,
-				       "gimp_register_magic_load_handler", 
+				       "gimp_register_magic_load_handler",
 				       args);
               g_free (return_vals);
             }

@@ -1,3 +1,19 @@
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-error.h: added GIMP_CONFIG_ERROR_VERSION
+	to GimpConfigError enum.
+
+	* libgimpbase/gimpprotocol.h: renamed GP_VERSION to
+	GIMP_PROTOCOL_VERSION.
+
+	* libgimp/gimp.c
+	* app/plug-in/plug-in-run.c: changed accordingly.
+
+	* app/plug-in/plug-in-rc.[ch]: write the protocol version to the
+	pluginrc and stop parsing when a wrong protocol version is found.
+
+	* app/plug-in/plug-ins.c: pass a GError to plug_in_rc_parse().
+
 2003-11-07  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpprotocol.[ch]: added "wm_name", "wm_class",
