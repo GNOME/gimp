@@ -5065,7 +5065,7 @@ msgstr ""
 
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
-msgstr "gimp_tips-sk.txt"
+msgstr "gimp_tips.sk.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
