@@ -36,7 +36,7 @@ struct _BlobSpan {
 struct _Blob {
   int y;
   int height;
-  BlobSpan data[0];		/* slightly in violation of ANSI-C? */
+  BlobSpan data[1];
 };
 
 
@@ -44,4 +44,4 @@ Blob *blob_convex_union (Blob *b1, Blob *b2);
 Blob *blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq);
 void blob_bounds(Blob *b, int *x, int *y, int *width, int *height);
 
-#endif __BLOB_H__
+#endif /* __BLOB_H__ */

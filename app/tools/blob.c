@@ -36,7 +36,7 @@ blob_new (int y, int height)
 {
   Blob *result;
 
-  result = g_malloc (sizeof (Blob) +  sizeof(BlobSpan) * height);
+  result = g_malloc (sizeof (Blob) +  sizeof(BlobSpan) * (height-1));
   result->y = y;
   result->height = height;
 
@@ -46,7 +46,7 @@ blob_new (int y, int height)
 typedef enum {
   NONE = 0,
   LEFT = 1 << 0,
-  RIGHT = 1 << 1,
+  RIGHT = 1 << 1
 } EdgeType;
 
 Blob *

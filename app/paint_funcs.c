@@ -3914,7 +3914,7 @@ thin_region(PixelRegion *src, gint16 radius)
       max[i][j] = 255;
   }
   max += radius;
-  out =  (char *)g_malloc(src->w);
+  out = (guchar *)g_malloc(src->w);
 
   circ = (short *)g_malloc((diameter)*sizeof(gint16));
   compute_border(circ, radius);
@@ -4068,7 +4068,7 @@ border_region(PixelRegion *src, gint16 radius)
   }
   if (radius == 0)
   {
-    char color[] = "\0\0\0\0";
+    unsigned char color[] = "\0\0\0\0";
     color_region(src, color);
     return;
   }
@@ -4121,7 +4121,7 @@ border_region(PixelRegion *src, gint16 radius)
   for (i = 0; i < radius +1; i++)
   {
     transition[i] = (guchar *)g_malloc (src->w+2*radius);
-    bzero(transition[i], src->w+2*radius);
+    memset(transition[i], 0, src->w+2*radius);
     transition[i] += radius;
   }
   out = (guchar *)g_malloc ((src->w)*sizeof(guchar));

@@ -966,7 +966,7 @@ layer_pick_correlate (layer, x, y)
        */
       tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, TRUE, FALSE);
 
-      val = * (unsigned char*) (tile_data_pointer (tile,
+      val = * ((unsigned char*) tile_data_pointer (tile,
 						   x % TILE_WIDTH,
 						   y % TILE_HEIGHT) +
 				tile_bpp (tile) - 1);

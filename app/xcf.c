@@ -1150,7 +1150,7 @@ xcf_save_tile_rle (XcfInfo *info,
 
   for (i = 0; i < bpp; i++)
     {
-      data = tile_data_pointer (tile, 0, 0) + i;
+      data = (guchar*)tile_data_pointer (tile, 0, 0) + i;
 
       state = 0;
       length = 0;
@@ -2046,7 +2046,7 @@ xcf_load_tile_rle (XcfInfo *info,
 
   for (i = 0; i < bpp; i++)
     {
-      data = tile_data_pointer (tile, 0, 0) + i;
+      data = (guchar*)tile_data_pointer (tile, 0, 0) + i;
       size = tile_ewidth (tile) * tile_eheight (tile);
       count = 0;
 

@@ -73,7 +73,7 @@ gimage_delete (GImage *gimage)
   gimage->ref_count--;
    if (gimage->ref_count <= 0)
      gtk_object_unref (GTK_OBJECT(gimage));
-};
+}
 
 static void
 invalidate_cb(gpointer image, gpointer user_data){

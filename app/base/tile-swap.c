@@ -227,6 +227,7 @@ out:
 #ifdef USE_PTHREADS
   pthread_mutex_unlock(&swapfile_mutex);
 #endif
+  return;
 }
 
 void
@@ -330,6 +331,7 @@ out:
 #ifdef USE_PTHREADS
   pthread_mutex_unlock(&swapfile_mutex);
 #endif
+  return;
 }
 
 static void

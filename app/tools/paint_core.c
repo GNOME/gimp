@@ -681,7 +681,7 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
 	  refd = 1;
 	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
 					     TRUE, FALSE);
-	  s = tile_data_pointer (undo_tile, 0, 0) +
+	  s = (unsigned char*)tile_data_pointer (undo_tile, 0, 0) +
 	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
 	}

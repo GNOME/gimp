@@ -1146,7 +1146,7 @@ device_update_brush(GimpBrushP brush,int preview_id)
 static void
 device_update_pattern(GPatternP pattern,int preview_id)
 {
-  gchar *buffer = NULL; 
+  guchar *buffer = NULL; 
   TempBuf * pattern_buf;
   unsigned char * src, *s = NULL;
   unsigned char *b;
@@ -1160,7 +1160,7 @@ device_update_pattern(GPatternP pattern,int preview_id)
   /* Set the tip to be the name of the brush */
   gtk_tooltips_set_tip(tool_tips,deviceD->patterns[preview_id],pattern->name,NULL);
 
-  buffer = g_new (gchar, pattern->mask->width * 3);
+  buffer = g_new (guchar, pattern->mask->width * 3);
   pattern_buf = pattern->mask;
 
   /* Limit to cell size */

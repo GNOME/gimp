@@ -1280,7 +1280,7 @@ static gboolean id_cmp_func(gconstpointer id1, gconstpointer id2){
 }
 
 static void add_cb(GimpSet* set, GimpImage* gimage, gpointer data){
-	guint* id=g_new(gint,1);
+	guint* id=g_new(guint,1);
 	*id=next_image_id++;
 	gtk_object_set_data(GTK_OBJECT(gimage), "pdb_id", id);
 	g_hash_table_insert(image_hash, id, gimage);

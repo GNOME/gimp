@@ -27,7 +27,7 @@ typedef enum {
   DEVICE_BRUSH = 1 << 3,
   DEVICE_TOOL = 1 << 4,
   DEVICE_FOREGROUND = 1 << 5,
-  DEVICE_PATTERN = 1 << 6,
+  DEVICE_PATTERN = 1 << 6
 } DeviceValues;
 
 /* Create device info dialog */
