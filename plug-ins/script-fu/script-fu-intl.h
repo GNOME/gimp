@@ -18,8 +18,13 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SCRIPT_FU_INTL_H__
 #define __SCRIPT_FU_INTL_H__
+
+#ifndef GETTEXT_PACKAGE
+#error "config.h must be included prior to script-fu-intl.h"
+#endif
 
 #include "libgimp/gimpintl.h"
 

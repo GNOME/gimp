@@ -54,8 +54,7 @@
 #include "libgimp/gimpintl.h"
 
 
-#define STD_PLUGINS_DOMAIN "gimp14-std-plug-ins"
-#define SCRIPT_FU_DOMAIN   "gimp14-script-fu"
+#define STD_PLUGINS_DOMAIN GETTEXT_PACKAGE "-std-plug-ins"
 
 
 typedef struct _PlugInLocaleDomainDef PlugInLocaleDomainDef;

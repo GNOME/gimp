@@ -29,10 +29,10 @@
 #include <libintl.h>
 
 
-#define _(String) dgettext ("gimp14-libgimp", String)
+#define _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
 
 #undef gettext
-#define gettext(String) dgettext ("gimp14-libgimp", String)
+#define gettext(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
 
 #ifdef gettext_noop
 #    define N_(String) gettext_noop (String)
