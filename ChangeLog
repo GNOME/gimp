@@ -1,3 +1,9 @@
+2003-07-29  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 1.3.18.
+
+	* INSTALL: documented new option --with-gif-compression.
+
 2003-07-29  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gif.c: Trivial -- tabs-to-spaces.
@@ -8,7 +14,7 @@
 	<cameron@bloke.com> which allows a compile-time choice of the 
 	comression algorithm to be used in the gif plug-in.
 
-	* configure.in: Added --with-gif-compress flag to allow 
+	* configure.in: Added --with-gif-compression option to allow 
 	specification of compression algorithm via configure.
 
 2003-07-28  Helvetix Victorinox  <helvetix@gimp.org>
@@ -25,7 +31,6 @@
 	coarse fix to enable app/composite to build on a wider variety of
 	platforms.  Ideally, this will be refined to encompass different
 	versions of the compiler(s) supporting inline assembly code.
-
 
 2003-07-28  Henrik Brix Andersen  <brix@gimp.org>
 

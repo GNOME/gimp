@@ -96,6 +96,11 @@ recognizes. These are:
      use --without-mng to disable it expliticely. The same switch exists
      for aalib, use --without-aa if you run into problems.
 
+  --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
+     algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
+     patent, you can go for simple run-length encoding or even configure
+     the plug-in to create uncompressed GIFs.
+
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
      included in a standard tarball, so you will only need this if you

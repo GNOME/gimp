@@ -497,7 +497,7 @@ case "$host_os" in
 esac
 
 shmtype=auto
-AC_ARG_WITH(shm, [  --with-shm=none/sysv/auto     shared memory transport type (default=auto)], shmtype=$with_shm)
+AC_ARG_WITH(shm, [  --with-shm=none|sysv|auto     shared memory transport type (default=auto)], shmtype=$with_shm)
 
 case $shmtype in
   none|sysv) ;;
@@ -831,26 +831,6 @@ AC_SUBST(LIBMNG)
 
 
 ############################################################
-# GIF compression: Allow builder to specify at compile time
-# which compression style she wants to use for gifs. The default
-# is LZW. The flag is --with-gif-compression=[lzw|rle|none] 
-# LZW: Unisys patented Lempel-Ziff encoding.
-# RLE: Simple runlenght encoding - produces files about twice as
-# big as the LZW compressed equivalent
-# None: Raw data.
-############################################################
-
-AC_ARG_WITH(gif-compression, 
-            [  --with-gif-compression=lzw|rle|none Default: lzw])
-
-if test x$with_gif_compression = xnone; then
-  AC_DEFINE(GIF_UN, 1, [Defined when we will use no compression for GIFs])
-elif test x$with_gif_compression = xrle; then
-  AC_DEFINE(GIF_RLE, 1, [Defined when we will use RLE to compress GIFs])
-fi
-
-
-############################################################
 # libexif: Library to allow exif tags to be read from, and
 # saved to, jpeg files. Currently, this permits exif data to
 # avoid destruction, but no data modification is performed.
@@ -955,6 +935,26 @@ AC_SUBST(PRINT_LIBS)
 AC_SUBST(PRINT_CFLAGS)
 AM_CONDITIONAL(BUILD_PRINT,
                test x$enable_print != xno && test x$have_gimp_print = xyes)
+
+
+############################################################
+# GIF compression: Allow builder to specify at compile time
+# which compression style she wants to use for GIFs.
+# LZW: Unisys patented Lempel-Ziff encoding.
+# RLE: Runlength encoding (produces files about twice as big
+#			   as the LZW compressed equivalent).
+# None: Raw data.
+############################################################
+
+AC_ARG_WITH(gif-compression, 
+            [  --with-gif-compression=lzw|rle|none     GIF compression style (default=lzw)])
+
+case x"$with_gif_compression" in
+  xnone)
+    AC_DEFINE(GIF_UN, 1, [Define to 1 for no GIF compression]) ;;
+  xrle)
+    AC_DEFINE(GIF_RLE, 1, [Define to 1 for RLE GIF compression]) ;;
+esac
 
 
 ####################
