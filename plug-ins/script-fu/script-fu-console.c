@@ -38,7 +38,7 @@
 
 #include "script-fu-intl.h"
 
-#include "siod.h"
+#include "siod-wrapper.h"
 #include "script-fu-console.h"
 
 #include <plug-ins/dbbrowser/dbbrowser_utils.h>
@@ -85,8 +85,8 @@ static gboolean script_fu_cc_key_function    (GtkWidget    *widget,
 					      GdkEventKey  *event,
 					      gpointer      data);
 
-static FILE   * script_fu_open_siod_console  (void);
-static void     script_fu_close_siod_console (void);
+static void  script_fu_open_siod_console (void);
+static void  script_fu_close_siod_console(void);
 
 /*
  *  Local variables
@@ -113,9 +113,6 @@ static gint   history_cur = 0;
 static gint   history_max = 50;
 
 static gint  siod_output_pipe[2];
-extern gint  siod_verbose_level;
-extern gchar siod_err_msg[];
-extern FILE *siod_output;
 
 
 #define message(string) printf("(%s): %d ::: %s\n", __PRETTY_FUNCTION__, __LINE__, string)
@@ -498,7 +495,7 @@ script_fu_cc_key_function (GtkWidget   *widget,
       gtk_entry_set_text (GTK_ENTRY (cint.cc), "");
       gdk_flush ();
 
-      repl_c_string ((char *) list->data, 0, 0, 1);
+      siod_interpret_string ((char *) list->data);
       gimp_displays_flush ();
 
       history = g_list_append (history, NULL);
@@ -575,36 +572,49 @@ script_fu_cc_key_function (GtkWidget   *widget,
   return FALSE;
 }
 
-
-static FILE *
+static void
 script_fu_open_siod_console (void)
 {
+  FILE *siod_output;
+
+  siod_output = siod_get_output_file ();
+
   if (siod_output == stdout)
     {
-      if (pipe (siod_output_pipe))
-	{
-	  gimp_message (_("Unable to open SIOD output pipe"));
-	}
-      else if ((siod_output = fdopen (siod_output_pipe [1], "w")) == NULL)
-	{
-	  gimp_message (_("Unable to open a stream on the SIOD output pipe"));
-	  siod_output = stdout;
-	}
+      if (pipe (siod_output_pipe) == 0)
+        {
+          siod_output = fdopen (siod_output_pipe [1], "w");
+          if (siod_output != NULL)
+            {
+              siod_set_verbose_level (2);
+              siod_print_welcome ();
+            }
+          else 
+            {
+              gimp_message (_("Unable to open a stream on the SIOD output pipe"));
+              siod_output = stdout;
+            }
+        } 
       else
-	{
-	  siod_verbose_level = 2;
-	  print_welcome ();
-	}
+        {
+          gimp_message (_("Unable to open the SIOD output pipe"));
+          siod_output = stdout;
+        }
     }
 
-  return siod_output;
+  siod_set_output_file (siod_output);
 }
 
 static void
 script_fu_close_siod_console (void)
 {
+  FILE *siod_output;
+
+  siod_output = siod_get_output_file ();
+
   if (siod_output != stdout)
     fclose (siod_output);
+
   close (siod_output_pipe[0]);
   close (siod_output_pipe[1]);
 }
@@ -645,3 +655,4 @@ script_fu_eval_run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
+

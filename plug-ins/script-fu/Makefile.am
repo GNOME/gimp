@@ -14,6 +14,8 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	script-fu.c		\
 	script-fu-console.c	\
 	script-fu-console.h	\
+	script-fu-text-console.h	\
+	script-fu-text-console.c	\
 	script-fu-constants.c	\
 	script-fu-constants.h	\
 	script-fu-intl.h	\
@@ -24,6 +26,8 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	script-fu-enums.h	\
 	siod.h			\
 	siodp.h			\
+	siod-wrapper.c		\
+	siod-wrapper.h		\
 @STRIP_END@
 
 AM_CPPFLAGS = -DLOCALEDIR=\""$(localedir)"\"

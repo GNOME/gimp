@@ -42,7 +42,7 @@
 #include "script-fu-intl.h"
 
 #include "gtk/gtk.h"
-#include "siod.h"
+#include "siod-wrapper.h"
 #include "script-fu-server.h"
 
 
@@ -130,11 +130,6 @@ static void      ok_callback        (GtkWidget *widget,
 
 
 /*
- *  Global variables
- */
-gint server_mode = FALSE;
-
-/*
  *  Local variables
  */
 static gint         server_sock;
@@ -145,6 +140,8 @@ static FILE        *server_log_file = NULL;
 static GHashTable  *clientname_ht   = NULL;
 static SELECT_MASK  server_active;
 static SELECT_MASK  server_read;
+static gboolean     script_fu_done  = FALSE;
+static gboolean     server_mode     = FALSE;
 
 static ServerInterface sint =
 {
@@ -157,13 +154,22 @@ static ServerInterface sint =
   FALSE  /*  run  */
 };
 
-extern gboolean  script_fu_done;
-extern gchar     siod_err_msg[];
-extern LISP      repl_return_val;
-
 /*
  *  Server interface functions
  */
+
+void 
+script_fu_server_quit (void)
+{
+  script_fu_done = TRUE;
+}
+
+gint 
+script_fu_server_get_mode (void)
+{
+  return server_mode;
+}
+
 
 void
 script_fu_server_run (gchar       *name,
@@ -355,36 +361,32 @@ server_start (gint   port,
 static gboolean
 execute_command (SFCommand *cmd)
 {
-  guchar    buffer[RESPONSE_HEADER];
-  gchar    *response;
-  time_t    clock1;
-  time_t    clock2;
-  gint      response_len;
-  gboolean  error;
-  gint      i;
+  guchar       buffer[RESPONSE_HEADER];
+  const gchar *response;
+  time_t       clock1;
+  time_t       clock2;
+  gint         response_len;
+  gboolean     error;
+  gint         i;
 
   /*  Get the client address from the address/socket table  */
   server_log ("Processing request #%d\n", cmd->request_no);
   time (&clock1);
 
   /*  run the command  */
-  if (repl_c_string (cmd->command, 0, 0, 1) != 0)
+  if (siod_interpret_string (cmd->command) != 0)
     {
       error = TRUE;
-      response_len = strlen (siod_err_msg);
-      response = siod_err_msg;
+      response = siod_get_error_msg ();
+      response_len = strlen (response);
 
-      server_log ("%s\n", siod_err_msg);
+      server_log ("%s\n", response);
     }
   else
     {
       error = FALSE;
 
-      if (TYPEP (repl_return_val, tc_string))
-	response = get_c_string (repl_return_val);
-      else
-	response = "Success";
-
+      response = siod_get_success_msg ();
       response_len = strlen (response);
 
       time (&clock2);

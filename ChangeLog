@@ -1,3 +1,53 @@
+2001-07-17  Mathieu Lacage  <mathieu@gnome.org>
+
+	* app/batch.c: new code to call the script_fuc_text_console pdb function.
+	* app/main.c: (main): remove batch command code.
+
+	* plug-ins/script-fu/Makefile.am: add siod-wrapper.h/c
+	* plug-ins/script-fu/script-fu-console.c:
+	(script_fu_cc_key_function), 
+	(script_fu_open_siod_console),
+	(script_fu_close_siod_console):
+	* plug-ins/script-fu/script-fu-scripts.h: 
+	* plug-ins/script-fu/script-fu-server.c: 
+	(script_fu_server_quit),
+	(script_fu_server_get_mode), 
+	(execute_command):
+	Replace all direct calls to the scheme interpreter with calls to the siod-wrapper.
+	* plug-ins/script-fu/script-fu-console.h: remove run_eval.
+	* plug-ins/script-fu/script-fu-server.h:
+	* plug-ins/script-fu/script-fu-text-console.c:
+	(script_fu_text_console_run), 
+	(read_command),
+	(script_fu_text_console_interface):
+	The actual new text console.
+	* plug-ins/script-fu/script-fu-text-console.h: header.
+	* plug-ins/script-fu/script-fu.c: 
+	(script_fu_quit),
+	(script_fu_query), 
+	(script_fu_run): rename to better words.
+	move most of the code to siod-wrapper.c/h
+	* plug-ins/script-fu/siod-wrapper.c: 
+	(siod_get_output_file),
+	(siod_set_output_file), 
+	(siod_get_verbose_level),
+	(siod_set_verbose_level), 
+	(siod_print_welcome),
+	(siod_interpret_string), 
+	(siod_get_error_msg),
+	(siod_get_success_msg), 
+	(siod_init), 
+	(init_procedures),
+	(init_constants), 
+	(convert_string), 
+	(sputs_fcn), 
+	(lprin1s),
+	(marshall_proc_db_call), 
+	(script_fu_register_call),
+	(script_fu_quit_call):
+	All the funcitons dealing with the internals of the scheme interpreter.
+	* plug-ins/script-fu/siod-wrapper.h: the header.
+
 2001-07-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/path.[ch]: removed path_to_beziersel() so this file can be

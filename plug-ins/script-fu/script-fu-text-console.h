@@ -16,11 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BATCH_H__
-#define __BATCH_H__
+#ifndef __SCRIPT_FU_TEXT_CONSOLE_H__
+#define __SCRIPT_FU_TEXT_CONSOLE_H__
 
+void  script_fu_text_console_run (gchar       *name,
+				  gint         nparams,
+				  GimpParam   *params,
+				  gint        *nreturn_vals,
+				  GimpParam  **return_vals);
 
-void   batch_init (Gimp *gimp);
-
-
-#endif /* __BATCH_H__ */
+#endif /*  __SCRIPT_FU_CONSOLE__  */

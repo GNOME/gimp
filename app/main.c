@@ -63,6 +63,7 @@ gboolean         no_data                 = FALSE;
 gboolean         no_splash               = FALSE;
 gboolean         no_splash_image         = FALSE;
 gboolean         be_verbose              = FALSE;
+gboolean         use_stdin               = FALSE;
 gboolean         use_shm                 = FALSE;
 gboolean         use_debug_handler       = FALSE;
 gboolean         console_messages        = FALSE;
@@ -70,7 +71,6 @@ gboolean         restore_session         = FALSE;
 StackTraceMode   stack_trace_mode        = STACK_TRACE_QUERY;
 gchar           *alternate_gimprc        = NULL;
 gchar           *alternate_system_gimprc = NULL;
-gchar          **batch_cmds              = NULL;
 
 /*  other global variables  */
 gchar              *prog_name       = NULL;  /* our executable name */
@@ -93,9 +93,6 @@ gboolean            double_speed    = FALSE;
  *      left are assumed to be image files the GIMP should
  *      display.
  *
- *      The exception is the batch switch.  When this is
- *      encountered, all remaining args are treated as batch
- *      commands.
  */
 
 int
@@ -133,8 +130,6 @@ main (int    argc,
   use_shm = TRUE;
 #endif
 
-  batch_cmds    = g_new (char *, argc);
-  batch_cmds[0] = NULL;
 
   for (i = 1; i < argc; i++)
     {
@@ -148,15 +143,7 @@ main (int    argc,
 	       (strcmp (argv[i], "-b") == 0))
 	{
 	  argv[i] = NULL;
-	  for (j = 0, i++ ; i < argc; j++, i++)
-	    {
-	      batch_cmds[j] = argv[i];
-	      argv[i] = NULL;
-	    }
-	  batch_cmds[j] = NULL;
-
-	  if (batch_cmds[0] == NULL)  /* We need at least one batch command */
-	    show_help = TRUE;
+	  use_stdin = TRUE;
 	}
       else if (strcmp (argv[i], "--system-gimprc") == 0)  
 	{
@@ -292,7 +279,7 @@ main (int    argc,
     {
       g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), argv[0]);
       g_print (_("Options:\n"));
-      g_print (_("  -b, --batch <commands>   Run in batch mode.\n"));
+      g_print (_("  -b, --batch              Read scheme statements from stdin.\n"));
       g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
       g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
       g_print (_("  -i, --no-interface       Run without a user interface.\n"));
