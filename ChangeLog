@@ -1,3 +1,8 @@
+2003-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.c: factored button_box creation out to a
+	utility function.
+
 2003-04-01  Manish Singh  <yosh@gimp.org>
 
 	* config/gimpguiconfig.[ch]: added gboolean can_change_accels
