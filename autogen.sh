@@ -115,8 +115,6 @@ else
     echo
     DIE=1
 fi
-AUTOMAKE=automake-1.9
-ACLOCAL=aclocal-1.9
 
 if test x$AUTOMAKE != x; then
     VER=`$AUTOMAKE --version \
