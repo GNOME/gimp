@@ -1010,5 +1010,11 @@ static gint
 script_fu_menu_compare (gconstpointer a,
                         gconstpointer b)
 {
-  return g_utf8_collate (a, b);
+  const SFMenu *menu_a = a;
+  const SFMenu *menu_b = b;
+
+  if (menu_a->menu_path && menu_b->menu_path)
+    return g_utf8_collate (menu_a->menu_path, menu_b->menu_path);
+
+  return 0;
 }
