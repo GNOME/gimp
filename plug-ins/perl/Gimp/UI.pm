@@ -10,7 +10,7 @@ $VERSION = $Gimp::VERSION;
 
 =head1 NAME
 
-Gimp::UI - "simulation of libgimpui"
+Gimp::UI - "simulation of libgimpui", and more!
 
 =head1 SYNOPSIS
 
@@ -31,6 +31,8 @@ reimplement all of it in perl.
  $button = new Gimp::UI::PatternSelect;
  $button = new Gimp::UI::BrushSelect;
  $button = new Gimp::UI::GradientSelect;
+
+ $button = new Gimp::UI::ColorSelectButton;
 
 =back
 
@@ -101,6 +103,7 @@ sub register_types {
       Gtk::Button->register_subtype(Gimp::UI::PatternSelect);
       Gtk::Button->register_subtype(Gimp::UI::BrushSelect);
       Gtk::Button->register_subtype(Gimp::UI::GradientSelect);
+      Gtk::Button->register_subtype(Gimp::UI::ColorSelectButton);
    }
 }
 
@@ -308,9 +311,132 @@ sub new {
    new Gtk::Widget @_;
 }
 
+package Gimp::UI::ColorSelectButton;
+
+use strict;
+use vars qw($VERSION @ISA);
+use Gtk;
+
+@ISA = qw(Gtk::Button);
+
+# Class defaults data
+my @class_def_color = (255,175,0);
+
+sub GTK_CLASS_INIT {
+	my($class) = shift;
+	
+	if (Gtk->major_version < 1 or (Gtk->major_version == 1 and Gtk->minor_version < 1)) {
+		add_arg_type $class "color", "string", 3; #R/W
+	} else {
+		add_arg_type $class "color", "GtkString", 3; #R/W
+	}
+}
+
+sub GTK_OBJECT_INIT {
+    my (@color) = @class_def_color;
+    
+    my($color_button) = @_;
+    
+    $color_button->{_color} ||= [@color];
+
+    my $preview = new Gtk::Preview -color;
+    
+    $color_button->{_preview} = $preview;
+    
+    # work around funny bug somewhere in gtk...
+    $preview->size(300,50);
+    $preview->show;
+    $color_button->add($preview);
+        
+    signal_connect $color_button "size_allocate" => sub {
+    	my($self,$allocation) = @_;
+    	my($x,$y,$w,$h) = @$allocation;
+    	$w -= 6;
+    	$h -= 6;
+    	$self->{_preview_width} = $w;
+    	$self->{_preview_height} = $h;
+        $self->{_preview}->size($self->{_preview_width},$self->{_preview_height});
+    	$self->update_color;
+    };
+    
+    signal_connect $color_button "clicked" => \&cb_color_button;
+}
+
+sub GTK_OBJECT_SET_ARG {
+   my($self,$arg,$id, $value) = @_;
+   $self->{_color} = [split(' ',$value)];
+   $self->update_color;
+}
+
+sub GTK_OBJECT_GET_ARG {
+   my($self,$arg,$id) = @_;
+   return join(' ',@{$self->{_color}});
+}
+
+sub update_color($) {
+    my($this) = shift;
+    
+    return unless defined $this->{_preview} and defined $this->{_preview_width};
+    
+    my($preview, $color) = ($this->{_preview}, $this->{_color});
+    my($width, $height) = ($this->{_preview_width}, $this->{_preview_height});
+    
+    my($buf) = pack("C3", @$color) x $width;
+
+    for(0..$height-1) {
+       $preview->draw_row($buf, 0, $_, $width);
+    }
+    $preview->draw(undef);
+}
+
+sub color_selection_ok {
+    my($widget, $dialog, $color_button) = @_;
+	
+    my(@color) = $dialog->colorsel->get_color;
+    @{$color_button->{_color}} = map(int(255.99*$_),@color);
+
+    $color_button->update_color();
+    $dialog->destroy();
+    delete $color_button->{_cs_window};
+}
+
+sub cb_color_button {
+    my($color_button) = @_;
+    
+    if (defined $color_button->{_cs_window}) {
+    	if (!$color_button->{_cs_window}->mapped) {
+	    	$color_button->{_cs_window}->hide;
+	    }
+    	$color_button->{_cs_window}->show;
+    	$color_button->{_cs_window}->window->raise;
+    	return;
+    }
+
+    my $cs_window=new Gtk::ColorSelectionDialog("Color");
+    $cs_window->colorsel->set_color(map($_*1/255,@{$color_button->{_color}}));
+    $cs_window->show();
+    $cs_window->ok_button->signal_connect("clicked",
+					  \&color_selection_ok,
+					  $cs_window,
+					  $color_button);
+    $cs_window->cancel_button->signal_connect("clicked",
+					      sub { $cs_window->destroy; delete $color_button->{_cs_window} });
+    $color_button->{_cs_window} = $cs_window;
+}
+
+sub new {
+    my $pkg = shift;
+   Gimp::UI::PreviewSelect::register_types;
+    return new Gtk::Widget $pkg, @_;
+}
+
+1;
+
 =head1 AUTHOR
 
-Marc Lehmann <pcg@goof.com>
+Marc Lehmann <pcg@goof.com>. The ColorSelectButton code is written by
+Dov Grobgeld <dov@imagic.weizmann.ac.il>, with modifications by Kenneth
+Albanowski <kjahds@kjahds.com>.
 
 =head1 SEE ALSO
 

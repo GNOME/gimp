@@ -168,7 +168,6 @@ sub interact($$$@) {
    init Gtk; # gross hack...
    parse Gtk::Rc Gimp->gtkrc;
 
-   require Gtk::ColorSelectButton; import Gtk::ColorSelectButton;
    require Gimp::UI; import Gimp::UI;
 
    my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
@@ -266,23 +265,23 @@ sub interact($$$@) {
            
         } elsif($type == PF_COLOR) {
            $a=new Gtk::HBox (0,5);
-           my $b=new Gtk::ColorSelectButton -width => 90, -height => 18;
+           my $b=new Gimp::UI::ColorSelectButton -width => 90, -height => 18;
            $a->pack_start ($b,1,1,0);
            $value = [216, 152, 32] unless defined $value;
-           push(@setvals,sub{$b->color(join " ",@{Gimp::canonicalize_color $_[0]})});
-           push(@getvals,sub{[split ' ',$b->color]});
+           push(@setvals,sub{$b->set('color', "@{Gimp::canonicalize_color $_[0]}")});
+           push(@getvals,sub{[split ' ',$b->get('color')]});
            set_tip $t $b,$desc;
            
            my $c = new Gtk::Button "FG";
            signal_connect $c "clicked", sub {
-             $b->color(join " ",@{Gimp::Palette->get_foreground});
+             $b->set('color', "@{Gimp::Palette->get_foreground}");
            };
            set_tip $t $c,"get current foreground colour from the gimp";
            $a->pack_start ($c,1,1,0);
            
            my $d = new Gtk::Button "BG";
            signal_connect $d "clicked", sub {
-             $b->color(join " ",@{Gimp::Palette->get_background});
+             $b->set('color', "@{Gimp::Palette->get_background}");
            };
            set_tip $t $d,"get current background colour from the gimp";
            $a->pack_start ($d,1,1,0);

@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it
           is the same as the one passed in.
         - append imagenumber to "Untitled"-images in widget.
@@ -15,6 +16,8 @@ Revision history for Gimp-Perl extension.
         - use _much_ saner defaults for the Scale types in Gimp::Fu.
         - Gimp::Fu's optionmenus didn't work in net()-mode.
         - implemented PF_CUSTOM (untested).
+        - added Gimp::UI::ColorSelectbutton, I was utterly fed up with
+          GtkColorSelectbutton never working.
         
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.
