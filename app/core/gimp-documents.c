@@ -202,17 +202,17 @@ gimp_documents_save (Gimp *gimp)
   g_free (rc_filename);
 }
 
-void
+GimpImagefile *
 gimp_documents_add (Gimp        *gimp,
-		    const gchar *filename)
+		    const gchar *uri)
 {
   GimpImagefile *imagefile;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (filename != NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (uri != NULL, NULL);
 
   imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_name (gimp->documents, filename);
+    gimp_container_get_child_by_name (gimp->documents, uri);
 
   if (imagefile)
     {
@@ -220,9 +220,10 @@ gimp_documents_add (Gimp        *gimp,
     }
   else
     {
-      imagefile = gimp_imagefile_new (filename);
-
+      imagefile = gimp_imagefile_new (uri);
       gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
       g_object_unref (G_OBJECT (imagefile));
     }
+
+  return imagefile;
 }

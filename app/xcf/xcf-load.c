@@ -345,7 +345,7 @@ xcf_load_image (Gimp    *gimp,
   if (info->active_channel)
     gimp_image_set_active_channel (gimage, info->active_channel);
 
-  gimp_object_set_name (GIMP_OBJECT (gimage), info->filename);
+  gimp_image_set_filename (gimage, info->filename);
 
   return gimage;
 

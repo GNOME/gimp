@@ -20,14 +20,14 @@
 #define __GIMP_DOCUMENTS_H__
 
 
-void   gimp_documents_init (Gimp        *gimp);
-void   gimp_documents_exit (Gimp        *gimp);
+void            gimp_documents_init (Gimp        *gimp);
+void            gimp_documents_exit (Gimp        *gimp);
 
-void   gimp_documents_load (Gimp        *gimp);
-void   gimp_documents_save (Gimp        *gimp);
+void            gimp_documents_load (Gimp        *gimp);
+void            gimp_documents_save (Gimp        *gimp);
 
-void   gimp_documents_add  (Gimp        *gimp,
-			    const gchar *filename);
+GimpImagefile * gimp_documents_add  (Gimp        *gimp,
+                                     const gchar *uri);
 
 
 #endif  /*  __GIMP_DOCUMENTS_H__  */

@@ -1,3 +1,21 @@
+2002-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdocuments.[ch] (gimp_documents_add): speak in terms
+	of "uri", not "filename". Return the created imagefile.
+
+	* app/core/gimpimagefile.[ch]: factored out private function
+	gimp_imagefile_save_png_thumb() and call it from
+	gimp_imagefile_create_thumbnail().
+	Added public function gimp_imagefile_save_thumbnail() which takes
+	an imagefile and an image.
+
+	* app/file/file-open.c: create thumbnails for all images opened
+	interactively using gimp_imagefile_save_thumbnail().
+
+	* app/xcf/xcf-load.c (xcf_load_image): set the filename with
+	gimp_image_set_filename() so it gets converted to an URI as for
+	external plug-ins.
+
 2002-04-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.c: oops, thumbnails were created in the

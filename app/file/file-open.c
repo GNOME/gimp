@@ -42,7 +42,9 @@
 #include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "core/gimpdocuments.h"
 
 #include "pdb/procedural_db.h"
@@ -186,6 +188,8 @@ file_open_with_proc_and_display (Gimp          *gimp,
 				 GIMP_RUN_INTERACTIVE,
 				 &status)) != NULL)
     {
+      GimpImagefile *imagefile;
+
       /* enable & clear all undo steps */
       gimp_image_undo_enable (gimage);
 
@@ -196,7 +200,13 @@ file_open_with_proc_and_display (Gimp          *gimp,
 
       g_object_unref (G_OBJECT (gimage));
 
-      gimp_documents_add (gimp, uri);
+      imagefile = gimp_documents_add (gimp, uri);
+
+      if (gimp->config->write_thumbnails)
+        {
+          /* save a thumbnail of every opened image */
+          gimp_imagefile_save_thumbnail (imagefile, gimage);
+        }
     }
 
   return status;
