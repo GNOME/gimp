@@ -32,6 +32,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbycolorselecttool.h"
 #include "gimpellipseselecttool.h"
@@ -394,18 +395,20 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
 
-    table = gtk_table_new (1, 3, FALSE);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-    gtk_container_add (GTK_CONTAINER (frame), table);
-    gtk_widget_show (table);
-
     button = gimp_prop_check_button_new (config, "feather",
                                          _("Feather edges"));
     gtk_frame_set_label_widget (GTK_FRAME (frame), button);
     gtk_widget_show (button);
 
-    gtk_widget_set_sensitive (table, options->feather);
-    g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+    table = gtk_table_new (1, 3, FALSE);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+    gtk_container_add (GTK_CONTAINER (frame), table);
+    if (options->feather)
+      gtk_widget_show (table);
+
+    g_signal_connect_object (button, "toggled",
+                             G_CALLBACK (gimp_toggle_button_set_visible),
+                             table, 0);
 
     /*  the feather radius scale  */
     gimp_prop_scale_entry_new (config, "feather-radius",
@@ -481,17 +484,19 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      gtk_widget_show (vbox2);
-
       button = gimp_prop_check_button_new (config, "auto-shrink",
                                            _("Auto shrink selection"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
-      gtk_widget_set_sensitive (vbox2, options->auto_shrink);
-      g_object_set_data (G_OBJECT (button), "set_sensitive", vbox2);
+      vbox2 = gtk_vbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      if (options->auto_shrink)
+        gtk_widget_show (vbox2);
+
+      g_signal_connect_object (button, "toggled",
+                               G_CALLBACK (gimp_toggle_button_set_visible),
+                               vbox2, 0);
 
       button = gimp_prop_check_button_new (config, "shrink-merged",
                                            _("Sample merged"));

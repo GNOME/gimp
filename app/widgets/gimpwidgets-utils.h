@@ -80,5 +80,8 @@ gboolean      gimp_text_buffer_save      (GtkTextBuffer   *buffer,
                                           gboolean         selection_only,
                                           GError         **error);
 
+void      gimp_toggle_button_set_visible (GtkToggleButton *toggle,
+                                          GtkWidget       *widget);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

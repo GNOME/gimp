@@ -1,5 +1,21 @@
 2004-11-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: added new function
+	gimp_toggle_button_set_visible() which can be used as "toggled"
+	callback on a GtkToggleButton and sets a widget (in)visible
+	according to the toggle's "active" state.
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c: use it to hide (rather than
+	just insensitize) the seldomly used "Feather edges", "Autoshrink
+	selection", "Adaptive supersampling", "Fade out" and "Use color
+	from gradient" widgets when their enabling toggle is unchecked.
+	Makes the affected tool options much less crowded and noisy in
+	their default appearance. Fixes bug #159008.
+
+2004-11-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus/plug-in-menus.c (plug_in_menus_add_proc): create
 	dynamic sub-menus using a separate, ui-manager-global merge_id
 	instead of the procedure's merge_id. Has the effect that the ui

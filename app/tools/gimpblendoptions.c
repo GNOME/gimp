@@ -32,6 +32,7 @@
 
 #include "widgets/gimpenumcombobox.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpblendoptions.h"
 #include "gimppaintoptions-gui.h"
@@ -44,7 +45,7 @@ enum
   PROP_0,
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
-  PROP_GRADIENT_REPEAT,  /*  overrides an GimpPaintOptions property  */
+  PROP_GRADIENT_REPEAT,  /*  overrides a GimpPaintOptions property  */
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -269,26 +270,26 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /*  frame for supersampling options  */
+  /*  supersampling options  */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  table for supersampling options  */
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  /*  supersampling toggle  */
   button = gimp_prop_check_button_new (config, "supersample",
                                        _("Adaptive supersampling"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  gtk_widget_set_sensitive (table, GIMP_BLEND_OPTIONS (config)->supersample);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  if (GIMP_BLEND_OPTIONS (config)->supersample)
+    gtk_widget_show (table);
+
+  g_signal_connect_object (button, "toggled",
+                           G_CALLBACK (gimp_toggle_button_set_visible),
+                           table, 0);
 
   /*  max depth scale  */
   gimp_prop_scale_entry_new (config, "supersample-depth",

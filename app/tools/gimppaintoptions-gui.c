@@ -34,6 +34,7 @@
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gtkhwrapbox.h"
 
 #include "gimpairbrushtool.h"
@@ -308,18 +309,20 @@ fade_options_gui (GimpFadeOptions  *fade,
     {
       frame = gimp_frame_new (NULL);
 
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
-
       button = gimp_prop_check_button_new (config, "use-fade",
                                            _("Fade out"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
-      gtk_widget_set_sensitive (table, fade->use_fade);
-      g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+      table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+      if (fade->use_fade)
+        gtk_widget_show (table);
+
+      g_signal_connect_object (button, "toggled",
+                               G_CALLBACK (gimp_toggle_button_set_visible),
+                               table, 0);
 
       /*  the fade-out sizeentry  */
       spinbutton = gimp_prop_spin_button_new (config, "fade-length",
@@ -360,19 +363,23 @@ gradient_options_gui (GimpGradientOptions *gradient,
     {
       frame = gimp_frame_new (NULL);
 
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
-
       button = gimp_prop_check_button_new (config, "use-gradient",
                                            _("Use color from gradient"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
-      gtk_widget_set_sensitive (table, gradient->use_gradient);
-      g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+      if (gradient->use_gradient)
+        gtk_widget_show (table);
+
+      g_signal_connect_object (button, "toggled",
+                               G_CALLBACK (gimp_toggle_button_set_visible),
+                               table, 0);
+
+      gtk_widget_set_sensitive (incremental_toggle, ! gradient->use_gradient);
       g_object_set_data (G_OBJECT (button), "inverse_sensitive",
                          incremental_toggle);
 
@@ -405,8 +412,6 @@ gradient_options_gui (GimpGradientOptions *gradient,
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                                  _("Repeat:"), 0.0, 0.5,
                                  combo, 2, FALSE);
-
-      gtk_widget_show (table);
     }
 
   return frame;
