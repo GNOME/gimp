@@ -22,6 +22,7 @@ Overview of Changes in GIMP 1.3.10
 - Added GimpPickButton widget [Mitch]
 - Added a color selector dock [Mitch]
 - Added new layer modes (Softlight, Grain Extract, Grain Merge) [UnNamed]
+- Included Gimp-Python with the tarball (try --enable-python)
 - Lots of bug fixes
 
 Other contributors:

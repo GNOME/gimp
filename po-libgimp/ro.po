@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
+"POT-Creation-Date: 2002-11-06 22:59+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -175,6 +175,42 @@ msgstr "Nimic"
 msgid "percent"
 msgstr "procent"
 
+#: libgimpmodule/gimpmodule.c:174
+#, fuzzy, c-format
+msgid "Loading module: '%s'\n"
+msgstr "încarc modulul: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
+#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
+#: libgimpmodule/gimpmodule.c:386
+#, fuzzy, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr "eroare la încãrcare modul: %s: %s"
+
+#: libgimpmodule/gimpmodule.c:260
+#, fuzzy, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "ignor modulul: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:363
+msgid "Module error"
+msgstr "Eroare în modul"
+
+#: libgimpmodule/gimpmodule.c:364
+#, fuzzy
+msgid "Loaded"
+msgstr "Incãrcat cu SUCCES"
+
+#: libgimpmodule/gimpmodule.c:365
+msgid "Load failed"
+msgstr "Incãrcarea a eºuat"
+
+#: libgimpmodule/gimpmodule.c:366
+msgid "Not loaded"
+msgstr ""
+
 #: libgimpwidgets/gimpcolorbutton.c:85
 #, fuzzy
 msgid "/Foreground Color"
@@ -195,6 +231,78 @@ msgstr "Numai negru"
 msgid "/White"
 msgstr "Alb"
 
+#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_H"
+msgstr "H"
+
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_S"
+msgstr "S"
+
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_V"
+msgstr "V"
+
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_R"
+msgstr "R"
+
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_G"
+msgstr "G"
+
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
+msgid "_B"
+msgstr "B"
+
+#: libgimpwidgets/gimpcolorscales.c:168
+#, fuzzy
+msgid "_A"
+msgstr "A"
+
+#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
+msgid "Hue"
+msgstr "Nuanþã"
+
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
+msgid "Saturation"
+msgstr "Saturare"
+
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
+msgid "Value"
+msgstr "Valoare"
+
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
+msgid "Red"
+msgstr "Roºu"
+
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
+msgid "Green"
+msgstr "Verde"
+
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
+msgid "Blue"
+msgstr "Albastru"
+
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
+msgid "Alpha"
+msgstr "Alfa"
+
+#: libgimpwidgets/gimpcolorscales.c:252
+msgid "Hexadecimal color notation as used in HTML"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:266
+#, fuzzy
+msgid "He_x Triplet:"
+msgstr "Triplet hexazecimal:"
+
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
 msgid "Select Folder"
@@ -204,6 +312,12 @@ msgstr "Selecteazã"
 #, fuzzy
 msgid "Select File"
 msgstr "Selecteazã"
+
+#: libgimpwidgets/gimppickbutton.c:141
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
 
 #: libgimpwidgets/gimpstock.c:88
 #, fuzzy
@@ -246,36 +360,36 @@ msgstr ""
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:136
 #, fuzzy
 msgid "L_etter Spacing"
 msgstr "Spaþiere:"
 
-#: libgimpwidgets/gimpstock.c:132
+#: libgimpwidgets/gimpstock.c:137
 #, fuzzy
 msgid "L_ine Spacing"
 msgstr "Salvare de fiºiere"
 
-#: libgimpwidgets/gimpstock.c:153
+#: libgimpwidgets/gimpstock.c:158
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:176
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:174
+#: libgimpwidgets/gimpstock.c:179
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:181
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -299,40 +413,89 @@ msgstr "Unitate de masurã:"
 msgid "Factor"
 msgstr "Panã"
 
-#: libgimpwidgets/gimpwidgets.c:879
+#: libgimpwidgets/gimpwidgets.c:976
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:884
+#: libgimpwidgets/gimpwidgets.c:981
 #, fuzzy
 msgid "_Time"
 msgstr "imagine"
 
-#: libgimpwidgets/gimpwidgets.c:893
+#: libgimpwidgets/gimpwidgets.c:990
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1219
+#: libgimpwidgets/gimpwidgets.c:1316
 #, fuzzy
 msgid "Bytes"
 msgstr "%d Octeþi"
 
-#: libgimpwidgets/gimpwidgets.c:1220
+#: libgimpwidgets/gimpwidgets.c:1317
 msgid "KiloBytes"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1221
+#: libgimpwidgets/gimpwidgets.c:1318
 msgid "MegaBytes"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1222
+#: libgimpwidgets/gimpwidgets.c:1319
 #, fuzzy
 msgid "GigaBytes"
 msgstr "%d Octeþi"
+
+#: modules/cdisplay_gamma.c:89
+msgid "Gamma color display filter"
+msgstr ""
+
+#: modules/cdisplay_gamma.c:155
+msgid "Gamma"
+msgstr ""
+
+#: modules/cdisplay_gamma.c:316
+msgid "Gamma:"
+msgstr ""
+
+#: modules/cdisplay_highcontrast.c:89
+msgid "High Contrast color display filter"
+msgstr ""
+
+#: modules/cdisplay_highcontrast.c:155
+#, fuzzy
+msgid "Contrast"
+msgstr "Contrast:"
+
+#: modules/cdisplay_highcontrast.c:314
+#, fuzzy
+msgid "Contrast Cycles:"
+msgstr "Contrast:"
+
+#: modules/colorsel_triangle.c:107
+msgid "Painter-style triangle color selector"
+msgstr ""
+
+#: modules/colorsel_triangle.c:179
+#, fuzzy
+msgid "_Triangle"
+msgstr "Triunghi"
+
+#: modules/colorsel_water.c:103
+#, fuzzy
+msgid "Watercolor style color selector"
+msgstr "Tipul de colorare pentru selecþie"
+
+#: modules/colorsel_water.c:175
+#, fuzzy
+msgid "_Watercolor"
+msgstr "Culoarea Apei"
+
+#: modules/colorsel_water.c:250
+msgid "Pressure"
+msgstr "Presiune"
 
 #~ msgid "pixel"
 #~ msgstr "punct ecran"
@@ -510,23 +673,11 @@ msgstr "%d Octeþi"
 #~ msgid "Empty Channel Copy"
 #~ msgstr "Copie goalã a canalului"
 
-#~ msgid "Red"
-#~ msgstr "Roºu"
-
-#~ msgid "Green"
-#~ msgstr "Verde"
-
-#~ msgid "Blue"
-#~ msgstr "Albastru"
-
 #~ msgid "Gray"
 #~ msgstr "Gri"
 
 #~ msgid "Indexed"
 #~ msgstr "Indexat"
-
-#~ msgid "Alpha"
-#~ msgstr "Alfa"
 
 #~ msgid "New Channel Color"
 #~ msgstr "Culoarea pentru noul canal"
@@ -549,44 +700,11 @@ msgstr "%d Octeþi"
 #~ msgid "Color Selection"
 #~ msgstr "Selecþie culoare"
 
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "G"
-#~ msgstr "G"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Hue"
-#~ msgstr "Nuanþã"
-
-#~ msgid "Saturation"
-#~ msgstr "Saturare"
-
-#~ msgid "Value"
-#~ msgstr "Valoare"
-
 #~ msgid "Close"
 #~ msgstr "Închide"
 
 #~ msgid "Revert to Old Color"
 #~ msgstr "Înapoi la vechea culoare"
-
-#~ msgid "Hex Triplet:"
-#~ msgstr "Triplet hexazecimal:"
 
 #~ msgid "Add the current color to the color history"
 #~ msgstr "Adaugã culoarea curentã la istoricul de culori"
@@ -1348,9 +1466,6 @@ msgstr "%d Octeþi"
 
 #~ msgid "Replicate segment"
 #~ msgstr "Replicare segment"
-
-#~ msgid "Coloring type for selection"
-#~ msgstr "Tipul de colorare pentru selecþie"
 
 #~ msgid "Split segments at midpoints"
 #~ msgstr "Împarte segmentele în punctele mediane"
@@ -2301,15 +2416,6 @@ msgstr "%d Octeþi"
 #~ msgid "Error opening file: %s\n"
 #~ msgstr "Eroare la deschiderea fiºierului: %s\n"
 
-#~ msgid "Module error"
-#~ msgstr "Eroare în modul"
-
-#~ msgid "Loaded OK"
-#~ msgstr "Incãrcat cu SUCCES"
-
-#~ msgid "Load failed"
-#~ msgstr "Incãrcarea a eºuat"
-
 #~ msgid "Unload requested"
 #~ msgstr "Solicitare de descãrcare"
 
@@ -2318,15 +2424,6 @@ msgstr "%d Octeþi"
 
 #~ msgid "Refresh"
 #~ msgstr "Reîmprospãtare"
-
-#~ msgid "load module: \"%s\"\n"
-#~ msgstr "încarc modulul: \"%s\"\n"
-
-#~ msgid "skipping module: \"%s\"\n"
-#~ msgstr "ignor modulul: \"%s\"\n"
-
-#~ msgid "module load error: %s: %s"
-#~ msgstr "eroare la încãrcare modul: %s: %s"
 
 #~ msgid "<No modules>"
 #~ msgstr "<Fãrã module>"
@@ -3823,9 +3920,6 @@ msgstr "%d Octeþi"
 #~ msgid "Brightness:"
 #~ msgstr "Luminozitate:"
 
-#~ msgid "Contrast:"
-#~ msgstr "Contrast:"
-
 #~ msgid "FG Color Fill"
 #~ msgstr "Umplere cu culoarea de prim-plan"
 
@@ -4313,12 +4407,3 @@ msgstr "%d Octeþi"
 
 #~ msgid "Clip Result"
 #~ msgstr "Decupeazã imaginea rezultatã"
-
-#~ msgid "Triangle"
-#~ msgstr "Triunghi"
-
-#~ msgid "Watercolor"
-#~ msgstr "Culoarea Apei"
-
-#~ msgid "Pressure"
-#~ msgstr "Presiune"

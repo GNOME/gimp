@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.1\n"
-"POT-Creation-Date: 2002-10-10 05:38+0200\n"
+"POT-Creation-Date: 2002-10-10 23:19+0200\n"
 "PO-Revision-Date: 2002-10-11 01:26GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -104,18 +104,18 @@ msgstr ""
 "Nejméně jedno ze zvolených písem je neplatné.\n"
 "Zkontrolujte si nastavení.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
 #: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1968
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1968
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1974
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1974
 msgid "Date:"
 msgstr "Datum:"
 
@@ -575,7 +575,8 @@ msgstr "Nahoru"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Rozš./Skript-fu/Témata z webu/Mimozemská záře/Vodorovná čára..."
+msgstr ""
+"<Toolbox>/Rozš./Skript-fu/Témata z webu/Mimozemská záře/Vodorovná čára..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -1394,15 +1395,19 @@ msgid "Shadow Color"
 msgstr "Barva stínu"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Rozš./Skript-fu/Témata z webu/Gimp.org/Obecné nápisy na trubici..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+"<Toolbox>/Rozš./Skript-fu/Témata z webu/Gimp.org/Obecné nápisy na trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr "<Toolbox>/Rozš./Skript-fu/Témata z webu/Gimp.org/Nápis tlačítka na trubici..."
+msgstr ""
+"<Toolbox>/Rozš./Skript-fu/Témata z webu/Gimp.org/Nápis tlačítka na trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Rozš./Skript-fu/Témata z webu/Gimp.org/Nápis podtlačítka na "
 "trubici..."
@@ -2294,4 +2299,3 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
 
 #~ msgid "Cancel"
 #~ msgstr "Zrušit"
-

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.23\n"
-"POT-Creation-Date: 2002-10-10 23:12+0200\n"
+"POT-Creation-Date: 2002-11-06 22:57+0100\n"
 "PO-Revision-Date: 2000-08-27 12:00-0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -257,7 +257,7 @@ msgstr "Greamaigh"
 msgid "Cut"
 msgstr "Féindheanamh"
 
-#: app/undo.c:3616
+#: app/tools/gimptexttool.c:148 app/undo.c:3616
 msgid "Text"
 msgstr "Teacs"
 
@@ -425,83 +425,78 @@ msgstr ""
 msgid "Cubic (Best)"
 msgstr ""
 
-#: app/base/base-enums.c:70 app/core/core-enums.c:194
+#: app/base/base-enums.c:73 app/core/core-enums.c:194
 #: app/gui/preferences-dialog.c:2080
 msgid "Small"
 msgstr "Beag"
 
-#: app/base/base-enums.c:71 app/core/core-enums.c:195
+#: app/base/base-enums.c:74 app/core/core-enums.c:195
 #: app/gui/preferences-dialog.c:2083
 msgid "Medium"
 msgstr "Gnáth"
 
-#: app/base/base-enums.c:72 app/core/core-enums.c:196
+#: app/base/base-enums.c:75 app/core/core-enums.c:196
 #: app/gui/preferences-dialog.c:2086
 msgid "Large"
 msgstr "Mór"
 
-#: app/base/base-enums.c:90
+#: app/base/base-enums.c:93
 msgid "Light Checks"
 msgstr ""
 
-#: app/base/base-enums.c:91
+#: app/base/base-enums.c:94
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: app/base/base-enums.c:92
+#: app/base/base-enums.c:95
 msgid "Dark Checks"
 msgstr ""
 
-#: app/base/base-enums.c:93
+#: app/base/base-enums.c:96
 msgid "White Only"
 msgstr ""
 
-#: app/base/base-enums.c:94
+#: app/base/base-enums.c:97
 msgid "Gray Only"
 msgstr ""
 
-#: app/base/base-enums.c:95
+#: app/base/base-enums.c:98
 msgid "Black Only"
 msgstr ""
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:306
-#: app/widgets/gimpwidgets-constructors.c:68
-#: app/widgets/gimpwidgets-constructors.c:98
+#: app/base/base-enums.c:116 app/widgets/gimpwidgets-constructors.c:71
+#: app/widgets/gimpwidgets-constructors.c:104
 msgid "Value"
 msgstr "Luach"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:307
-#: app/tools/gimpcolorbalancetool.c:306
+#: app/base/base-enums.c:117 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Dearg"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:308
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/base/base-enums.c:118 app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Glas"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:309
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/base/base-enums.c:119 app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Gorm"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:310
-#: app/widgets/gimpcomponentlistitem.c:486
+#: app/base/base-enums.c:120 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alpha"
 
-#: app/base/base-enums.c:135
+#: app/base/base-enums.c:138
 msgid "Shadows"
 msgstr ""
 
-#: app/base/base-enums.c:136
+#: app/base/base-enums.c:139
 msgid "Midtones"
 msgstr ""
 
-#: app/base/base-enums.c:137
+#: app/base/base-enums.c:140
 msgid "Highlights"
 msgstr ""
 
@@ -553,8 +548,7 @@ msgstr ""
 
 #: app/config/gimpscanner.c:74 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
-#: app/tools/gimpcurvestool.c:1398 app/tools/gimpcurvestool.c:1414
-#: app/tools/gimplevelstool.c:1309 app/tools/gimplevelstool.c:1325
+#: app/tools/gimpcurvestool.c:1440 app/tools/gimplevelstool.c:1411
 #, fuzzy, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Teip ar oscáilte: %s"
@@ -758,49 +752,49 @@ msgid "Backward (Corrective)"
 msgstr ""
 
 #. register all internal procedures
-#: app/core/gimp.c:522
+#: app/core/gimp.c:523
 msgid "Procedural Database"
 msgstr ""
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:535
+#: app/core/gimp.c:536
 msgid "Looking for data files"
 msgstr ""
 
-#: app/core/gimp.c:535
+#: app/core/gimp.c:536
 msgid "Parasites"
 msgstr ""
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:539 app/gui/dialogs-constructors.c:370
-#: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:2771
+#: app/core/gimp.c:540 app/gui/dialogs-constructors.c:373
+#: app/gui/dialogs-constructors.c:521 app/gui/preferences-dialog.c:2771
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr ""
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:543 app/gui/dialogs-constructors.c:391
-#: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:2775
+#: app/core/gimp.c:544 app/gui/dialogs-constructors.c:394
+#: app/gui/dialogs-constructors.c:542 app/gui/preferences-dialog.c:2775
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr ""
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:547 app/gui/dialogs-constructors.c:433
-#: app/gui/dialogs-constructors.c:581 app/gui/preferences-dialog.c:2779
+#: app/core/gimp.c:548 app/gui/dialogs-constructors.c:436
+#: app/gui/dialogs-constructors.c:584 app/gui/preferences-dialog.c:2779
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr ""
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:551 app/gui/dialogs-constructors.c:412
-#: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:2783
+#: app/core/gimp.c:552 app/gui/dialogs-constructors.c:415
+#: app/gui/dialogs-constructors.c:563 app/gui/preferences-dialog.c:2783
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr ""
 
 #. initialize the document history
-#: app/core/gimp.c:555
+#: app/core/gimp.c:556
 msgid "Documents"
 msgstr ""
 
@@ -812,26 +806,26 @@ msgstr ""
 msgid "FG to BG (HSV clockwise hue)"
 msgstr ""
 
-#: app/core/gimpbrush.c:510
+#: app/core/gimpbrush.c:511
 #, c-format
 msgid ""
 "Fatal parsing error (unknown version %d):\n"
 "Brush file '%s'"
 msgstr ""
 
-#: app/core/gimpbrush.c:531 app/core/gimpbrush.c:559 app/core/gimpbrush.c:578
+#: app/core/gimpbrush.c:532 app/core/gimpbrush.c:560 app/core/gimpbrush.c:579
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
 "Brush file '%s' appears truncated."
 msgstr ""
 
-#: app/core/gimpbrush.c:539 app/core/gimpbrushpipe.c:330
+#: app/core/gimpbrush.c:540 app/core/gimpbrushpipe.c:330
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
-#: app/core/gimpbrush.c:547 app/core/gimpbrushpipe.c:332
+#: app/core/gimpbrush.c:548 app/core/gimpbrushpipe.c:332
 #: app/core/gimpcontext.c:1212 app/core/gimpgradient.c:354
 #: app/core/gimppalette.c:345 app/core/gimppattern.c:346
 msgid "Unnamed"
@@ -907,30 +901,32 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpimage-mask.c:373
-msgid "Cannot float selection: No selection made."
+msgid ""
+"Cannot float selection because the\n"
+"selected region is empty."
 msgstr ""
 
-#: app/core/gimpimage-mask.c:390 app/gui/layers-commands.c:821
+#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:821
 msgid "Floating Selection"
 msgstr ""
 
-#: app/core/gimpimage-mask.c:594
+#: app/core/gimpimage-mask.c:595
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/core/gimpimage-mask.c:618
+#: app/core/gimpimage-mask.c:619
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/core/gimpimage-mask.c:671
+#: app/core/gimpimage-mask.c:672
 msgid "No selection to stroke."
 msgstr ""
 
-#: app/core/gimpimage-mask.c:725
+#: app/core/gimpimage-mask.c:726
 msgid "Paint operation failed."
 msgstr ""
 
@@ -979,7 +975,7 @@ msgid "Text Layer"
 msgstr ""
 
 #: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:203
-#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:598
+#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3632 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Gan-tidéal"
@@ -1142,27 +1138,6 @@ msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
 "layer mask or channel."
-msgstr ""
-
-#: app/core/gimpmoduleinfo.c:286 app/core/gimpmoduleinfo.c:307
-#, c-format
-msgid ""
-"Module '%s' load error:\n"
-"%s"
-msgstr ""
-
-#: app/core/gimpmoduleinfo.c:304
-msgid "Missing module_init() symbol"
-msgstr ""
-
-#: app/core/gimpmodules.c:277
-#, c-format
-msgid "loading module: '%s'\n"
-msgstr ""
-
-#: app/core/gimpmodules.c:284
-#, c-format
-msgid "skipping module: '%s'\n"
 msgstr ""
 
 #: app/core/gimppalette.c:293
@@ -1401,37 +1376,51 @@ msgid ""
 "Close anyway?"
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:117
+#: app/display/gimpdisplayshell-filter-dialog.c:125
 msgid "Color Display Filters"
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:153
+#: app/display/gimpdisplayshell-filter-dialog.c:165
 msgid "Available Filters"
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:179
+#: app/display/gimpdisplayshell-filter-dialog.c:191
 msgid "Add the selected filter to the list of active filters."
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:196
+#: app/display/gimpdisplayshell-filter-dialog.c:208
 msgid "Remove the selected filter from the list of active filters."
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:210
+#: app/display/gimpdisplayshell-filter-dialog.c:222
 msgid "Move the selected filter up"
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:219
+#: app/display/gimpdisplayshell-filter-dialog.c:231
 msgid "Move the selected filter down"
 msgstr ""
 
-#: app/display/gimpdisplayshell-filter-dialog.c:228
-msgid "Configure the selected filter"
-msgstr ""
-
-#: app/display/gimpdisplayshell-filter-dialog.c:255
+#: app/display/gimpdisplayshell-filter-dialog.c:257
 msgid "Active Filters"
 msgstr ""
+
+#: app/display/gimpdisplayshell-filter-dialog.c:289
+msgid "Reset the selected filter to default values"
+msgstr ""
+
+#: app/display/gimpdisplayshell-filter-dialog.c:661
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr ""
+
+#: app/display/gimpdisplayshell-filter-dialog.c:668
+msgid "No Filter Selected"
+msgstr ""
+
+#: app/display/gimpdisplayshell-filter-dialog.c:672
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "/Tóg/By Color..."
 
 #: app/display/gimpdisplayshell-layer-select.c:106
 msgid "Layer Select"
@@ -1576,70 +1565,20 @@ msgstr "Beál"
 msgid "Edit Channel Attributes"
 msgstr ""
 
-#. Hue
-#: app/gui/color-notebook.c:288
-msgid "H"
-msgstr ""
-
-#. Saturation
-#: app/gui/color-notebook.c:290
-msgid "S"
-msgstr ""
-
-#. Value
-#: app/gui/color-notebook.c:292
-msgid "V"
-msgstr ""
-
-#. Red
-#: app/gui/color-notebook.c:294
-msgid "R"
-msgstr "D"
-
-#. Green
-#: app/gui/color-notebook.c:296
-msgid "G"
-msgstr "Gl"
-
-#. Blue
-#: app/gui/color-notebook.c:298
-msgid "B"
-msgstr "Go"
-
-#. Alpha
-#: app/gui/color-notebook.c:300
-#, fuzzy
-msgid "A"
-msgstr "A:"
-
-#: app/gui/color-notebook.c:304 app/widgets/gimpwidgets-constructors.c:65
-#: app/widgets/gimpwidgets-constructors.c:95
-msgid "Hue"
-msgstr ""
-
-#: app/gui/color-notebook.c:305 app/widgets/gimpwidgets-constructors.c:66
-#: app/widgets/gimpwidgets-constructors.c:96
-msgid "Saturation"
-msgstr ""
-
-#: app/gui/color-notebook.c:479
+#: app/gui/color-notebook.c:399
 msgid "Current:"
 msgstr ""
 
-#: app/gui/color-notebook.c:500
+#: app/gui/color-notebook.c:420
 msgid "Old:"
 msgstr ""
 
-#: app/gui/color-notebook.c:522
+#: app/gui/color-notebook.c:441
 msgid "Revert to old color"
 msgstr ""
 
-#: app/gui/color-notebook.c:626
+#: app/gui/color-notebook.c:478
 msgid "Add the current color to the color history"
-msgstr ""
-
-#: app/gui/color-notebook.c:686
-msgid "He_x Triplet:"
 msgstr ""
 
 #: app/gui/colormap-editor-commands.c:108
@@ -1728,187 +1667,193 @@ msgstr "Dulra"
 msgid "Background: %d, %d, %d"
 msgstr "Dúlra"
 
-#: app/gui/dialogs-constructors.c:304 app/gui/preferences-dialog.c:2180
+#: app/gui/dialogs-constructors.c:307 app/gui/preferences-dialog.c:2180
 #: app/gui/preferences-dialog.c:2183
 msgid "Tool Options"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:324
+#: app/gui/dialogs-constructors.c:327
 msgid "Error Console"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:324
+#: app/gui/dialogs-constructors.c:327
 msgid "Errors"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:348
+#: app/gui/dialogs-constructors.c:351
 #, fuzzy
 msgid "Image List"
 msgstr "Meid Íomhá: %s"
 
-#: app/gui/dialogs-constructors.c:348 app/gui/dialogs-constructors.c:496
+#: app/gui/dialogs-constructors.c:351 app/gui/dialogs-constructors.c:499
 #, fuzzy
 msgid "Images"
 msgstr "Íomha"
 
-#: app/gui/dialogs-constructors.c:370
+#: app/gui/dialogs-constructors.c:373
 msgid "Brush List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:391
+#: app/gui/dialogs-constructors.c:394
 msgid "Pattern List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:412
+#: app/gui/dialogs-constructors.c:415
 #, fuzzy
 msgid "Gradient List"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:433
+#: app/gui/dialogs-constructors.c:436
 #, fuzzy
 msgid "Palette List"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:452
+#: app/gui/dialogs-constructors.c:455
 #, fuzzy
 msgid "Tool List"
 msgstr "/Uirlisí/Teacs"
 
-#: app/gui/dialogs-constructors.c:452 app/gui/dialogs-constructors.c:600
+#: app/gui/dialogs-constructors.c:455 app/gui/dialogs-constructors.c:603
 #, fuzzy
 msgid "Tools"
 msgstr "/Uirlisí/Teacs"
 
-#: app/gui/dialogs-constructors.c:472
+#: app/gui/dialogs-constructors.c:475
 msgid "Buffer List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:472 app/gui/dialogs-constructors.c:620
+#: app/gui/dialogs-constructors.c:475 app/gui/dialogs-constructors.c:623
 msgid "Buffers"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:496
+#: app/gui/dialogs-constructors.c:499
 #, fuzzy
 msgid "Image Grid"
 msgstr "Íomha"
 
-#: app/gui/dialogs-constructors.c:518
+#: app/gui/dialogs-constructors.c:521
 msgid "Brush Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:539
+#: app/gui/dialogs-constructors.c:542
 msgid "Pattern Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:560
+#: app/gui/dialogs-constructors.c:563
 #, fuzzy
 msgid "Gradient Grid"
 msgstr "Gradan"
 
-#: app/gui/dialogs-constructors.c:581
+#: app/gui/dialogs-constructors.c:584
 #, fuzzy
 msgid "Palette Grid"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:600
+#: app/gui/dialogs-constructors.c:603
 msgid "Tool Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:620
+#: app/gui/dialogs-constructors.c:623
 msgid "Buffer Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:664
+#: app/gui/dialogs-constructors.c:667
 #, fuzzy
 msgid "Layer List"
 msgstr "Airde"
 
-#: app/gui/dialogs-constructors.c:664
+#: app/gui/dialogs-constructors.c:667
 #, fuzzy
 msgid "Layers"
 msgstr "Bóg:"
 
-#: app/gui/dialogs-constructors.c:703
+#: app/gui/dialogs-constructors.c:706
 #, fuzzy
 msgid "Channel List"
 msgstr "Beál"
 
-#: app/gui/dialogs-constructors.c:703
+#: app/gui/dialogs-constructors.c:706
 #, fuzzy
 msgid "Channels"
 msgstr "Beál"
 
-#: app/gui/dialogs-constructors.c:758
+#: app/gui/dialogs-constructors.c:761
 #, fuzzy
 msgid "Paths List"
 msgstr "Slíanna"
 
-#: app/gui/dialogs-constructors.c:758 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:761 app/pdb/internal_procs.c:154
 msgid "Paths"
 msgstr "Slíanna"
 
-#: app/gui/dialogs-constructors.c:784
+#: app/gui/dialogs-constructors.c:787
 msgid "Old Path List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:784
+#: app/gui/dialogs-constructors.c:787
 #, fuzzy
 msgid "Old Paths"
 msgstr "Slíanna"
 
-#: app/gui/dialogs-constructors.c:807
+#: app/gui/dialogs-constructors.c:810
 #, fuzzy
 msgid "Indexed Palette"
 msgstr "Slí Nua"
 
-#: app/gui/dialogs-constructors.c:807
+#: app/gui/dialogs-constructors.c:810
 #, fuzzy
 msgid "Colormap"
 msgstr "Dath"
 
-#: app/gui/dialogs-constructors.c:834
+#: app/gui/dialogs-constructors.c:837
 #, fuzzy
 msgid "Selection Editor"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:834 app/gui/layers-commands.c:917
+#: app/gui/dialogs-constructors.c:837 app/gui/layers-commands.c:917
 msgid "Selection"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:862
+#: app/gui/dialogs-constructors.c:860
+#, fuzzy
+msgid "Color Editor"
+msgstr "Dún"
+
+#: app/gui/dialogs-constructors.c:860 app/pdb/internal_procs.c:88
+#: app/tools/paint_options.c:394 app/widgets/gimpwidgets-constructors.c:70
+#: app/widgets/gimpwidgets-constructors.c:103
+msgid "Color"
+msgstr "Dath"
+
+#: app/gui/dialogs-constructors.c:881
 msgid "Document History"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:862
+#: app/gui/dialogs-constructors.c:881
 #, fuzzy
 msgid "History"
 msgstr "Stair Dath"
 
-#: app/gui/dialogs-constructors.c:883
+#: app/gui/dialogs-constructors.c:902
 msgid "Brush Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:910
+#: app/gui/dialogs-constructors.c:929
 msgid "Gradient Editor"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:937
+#: app/gui/dialogs-constructors.c:956
 #, fuzzy
 msgid "Palette Editor"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/dialogs-constructors.c:971
+#: app/gui/dialogs-constructors.c:990
 msgid "Display Navigation"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:971
+#: app/gui/dialogs-constructors.c:990
 msgid "Navigation"
 msgstr ""
-
-#: app/gui/dialogs-constructors.c:1153 app/gui/dialogs-constructors.c:1197
-#, fuzzy, c-format
-msgid "%s Options"
-msgstr "Roghanna Beál Nua"
 
 #: app/gui/drawable-commands.c:72
 msgid "Desaturate operates only on RGB color drawables."
@@ -1967,18 +1912,18 @@ msgid ""
 msgstr "Teip ar oscáilte: %s"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:438
+#: app/gui/file-commands.c:184 app/gui/file-save-dialog.c:444
 #, fuzzy, c-format
 msgid "Saving '%s' failed."
 msgstr "Teip ar oscáilte: %s"
 
-#: app/gui/file-commands.c:215
+#: app/gui/file-commands.c:229
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
 
-#: app/gui/file-commands.c:229
+#: app/gui/file-commands.c:243
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -1988,12 +1933,12 @@ msgid ""
 "including all undo information)"
 msgstr ""
 
-#: app/gui/file-commands.c:237
+#: app/gui/file-commands.c:251
 #, fuzzy
 msgid "Revert Image"
 msgstr "Íomhá Nua"
 
-#: app/gui/file-commands.c:321
+#: app/gui/file-commands.c:337
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2074,48 +2019,48 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr ""
 
-#: app/gui/file-open-dialog.c:181 app/gui/file-open-dialog.c:198
+#: app/gui/file-open-dialog.c:208 app/gui/file-open-dialog.c:232
 #, fuzzy
 msgid "Open Image"
 msgstr "Íomhá Nua"
 
-#: app/gui/file-open-dialog.c:244
+#: app/gui/file-open-dialog.c:278
 msgid ""
 "Click to update preview\n"
 "<Ctrl> Click to force update even if preview is up-to-date"
 msgstr ""
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:256 app/tools/gimpimagemaptool.c:225
+#: app/gui/file-open-dialog.c:290 app/tools/gimpimagemaptool.c:225
 #, fuzzy
 msgid "_Preview"
 msgstr "Réamhradharc"
 
-#: app/gui/file-open-dialog.c:309 app/gui/file-open-dialog.c:428
+#: app/gui/file-open-dialog.c:343 app/gui/file-open-dialog.c:462
 msgid "No Selection"
 msgstr ""
 
-#: app/gui/file-open-dialog.c:517 app/gui/file-open-dialog.c:547
+#: app/gui/file-open-dialog.c:551 app/gui/file-open-dialog.c:581
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:174 app/gui/file-save-dialog.c:234
+#: app/gui/file-save-dialog.c:172 app/gui/file-save-dialog.c:240
 msgid "Save Image"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:213
+#: app/gui/file-save-dialog.c:219
 msgid "Save a Copy of the Image"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:371
+#: app/gui/file-save-dialog.c:377
 #, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:374
+#: app/gui/file-save-dialog.c:380
 msgid "File Exists!"
 msgstr ""
 
@@ -2298,24 +2243,24 @@ msgstr ""
 msgid "Save \"%s\" as POV-Ray"
 msgstr ""
 
-#: app/gui/gui.c:158 app/gui/gui.c:169
+#: app/gui/gui.c:156 app/gui/gui.c:167
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr ""
 
-#: app/gui/gui.c:373
+#: app/gui/gui.c:369
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Faoi an GIMP"
 
-#: app/gui/gui.c:377
+#: app/gui/gui.c:373
 msgid ""
 "Some files are unsaved.\n"
 "\n"
 "Really quit The GIMP?"
 msgstr ""
 
-#: app/gui/gui.c:479
+#: app/gui/gui.c:474
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -2585,16 +2530,16 @@ msgid "/_File"
 msgstr "/_Comhad"
 
 #. <Image>/File
-#: app/gui/menus.c:120 app/gui/menus.c:305
+#: app/gui/menus.c:120 app/gui/menus.c:325
 msgid "/File/New..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:125 app/gui/menus.c:310
+#: app/gui/menus.c:125 app/gui/menus.c:330
 msgid "/File/Open..."
 msgstr "/Comhad/Oscáil..."
 
 #. <Toolbox>/File/Open Recent
-#: app/gui/menus.c:133 app/gui/menus.c:318
+#: app/gui/menus.c:133 app/gui/menus.c:338
 msgid "/File/Open Recent/(None)"
 msgstr ""
 
@@ -2627,1365 +2572,1408 @@ msgid "/File/Dialogs/Device Status..."
 msgstr ""
 
 #: app/gui/menus.c:170
-msgid "/File/Dialogs/Brushes..."
-msgstr ""
+#, fuzzy
+msgid "/File/Dialogs/Layers..."
+msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:175
-msgid "/File/Dialogs/Patterns..."
-msgstr ""
+#: app/gui/menus.c:174
+#, fuzzy
+msgid "/File/Dialogs/Channels..."
+msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:180
-msgid "/File/Dialogs/Gradients..."
-msgstr ""
+#: app/gui/menus.c:178
+#, fuzzy
+msgid "/File/Dialogs/Paths..."
+msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:185
-msgid "/File/Dialogs/Palettes..."
-msgstr ""
-
-#: app/gui/menus.c:190
+#: app/gui/menus.c:182
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr ""
 
-#: app/gui/menus.c:195
-#, fuzzy
-msgid "/File/Dialogs/Buffers..."
-msgstr "/Comhad/Nua..."
-
-#: app/gui/menus.c:203
+#: app/gui/menus.c:187
 #, fuzzy
 msgid "/File/Dialogs/Selection Editor..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:208
+#: app/gui/menus.c:192
 #, fuzzy
 msgid "/File/Dialogs/Navigation..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:213
+#: app/gui/menus.c:200
+#, fuzzy
+msgid "/File/Dialogs/Colors..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:205
+msgid "/File/Dialogs/Brushes..."
+msgstr ""
+
+#: app/gui/menus.c:210
+msgid "/File/Dialogs/Patterns..."
+msgstr ""
+
+#: app/gui/menus.c:215
+msgid "/File/Dialogs/Gradients..."
+msgstr ""
+
+#: app/gui/menus.c:220
+msgid "/File/Dialogs/Palettes..."
+msgstr ""
+
+#: app/gui/menus.c:225
+#, fuzzy
+msgid "/File/Dialogs/Buffers..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:233
 #, fuzzy
 msgid "/File/Dialogs/Images..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:217
+#: app/gui/menus.c:237
 msgid "/File/Dialogs/Document History..."
 msgstr ""
 
-#: app/gui/menus.c:222
+#: app/gui/menus.c:242
 msgid "/File/Dialogs/Error Console..."
 msgstr ""
 
-#: app/gui/menus.c:252 app/gui/menus.c:350
+#: app/gui/menus.c:272 app/gui/menus.c:370
 msgid "/File/Quit"
 msgstr "/Comhad/Ealu"
 
 #. <Toolbox>/Xtns
-#: app/gui/menus.c:260
+#: app/gui/menus.c:280
 msgid "/_Xtns"
 msgstr ""
 
-#: app/gui/menus.c:262
+#: app/gui/menus.c:282
 msgid "/Xtns/Module Browser..."
 msgstr ""
 
 #. <Toolbox>/Help
-#: app/gui/menus.c:271
+#: app/gui/menus.c:291
 msgid "/_Help"
 msgstr "/C_únamh"
 
-#: app/gui/menus.c:273
+#: app/gui/menus.c:293
 msgid "/Help/Help..."
 msgstr "/Cúnamh/Cúnamh..."
 
-#: app/gui/menus.c:278
+#: app/gui/menus.c:298
 #, fuzzy
 msgid "/Help/Context Help..."
 msgstr "/Cúnamh/Conext Help..."
 
-#: app/gui/menus.c:283
+#: app/gui/menus.c:303
 #, fuzzy
 msgid "/Help/Tip of the Day..."
 msgstr "/Cúnamh/Tip of the Day..."
 
-#: app/gui/menus.c:288
+#: app/gui/menus.c:308
 #, fuzzy
 msgid "/Help/About..."
 msgstr "/Cúnamh/Faoi..."
 
-#: app/gui/menus.c:323
+#: app/gui/menus.c:343
 msgid "/File/Save"
 msgstr ""
 
-#: app/gui/menus.c:328
+#: app/gui/menus.c:348
 #, fuzzy
 msgid "/File/Save as..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:333
+#: app/gui/menus.c:353
 #, fuzzy
 msgid "/File/Save a Copy..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:337
+#: app/gui/menus.c:357
 #, fuzzy
 msgid "/File/Revert..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:345
+#: app/gui/menus.c:365
 msgid "/File/Close"
 msgstr ""
 
 #. <Image>/Edit
-#: app/gui/menus.c:360
+#: app/gui/menus.c:380
 msgid "/Edit/Undo"
 msgstr ""
 
-#: app/gui/menus.c:365
+#: app/gui/menus.c:385
 msgid "/Edit/Redo"
 msgstr ""
 
-#: app/gui/menus.c:373
+#: app/gui/menus.c:393
 msgid "/Edit/Cut"
 msgstr ""
 
-#: app/gui/menus.c:378
+#: app/gui/menus.c:398
 msgid "/Edit/Copy"
 msgstr ""
 
-#: app/gui/menus.c:383
+#: app/gui/menus.c:403
 msgid "/Edit/Paste"
 msgstr ""
 
-#: app/gui/menus.c:388
+#: app/gui/menus.c:408
 msgid "/Edit/Paste Into"
 msgstr ""
 
-#: app/gui/menus.c:393
+#: app/gui/menus.c:413
 msgid "/Edit/Paste as New"
 msgstr ""
 
 #. <Image>/Edit/Buffer
-#: app/gui/menus.c:401
+#: app/gui/menus.c:421
 msgid "/Edit/Buffer/Cut Named..."
 msgstr ""
 
-#: app/gui/menus.c:406
+#: app/gui/menus.c:426
 msgid "/Edit/Buffer/Copy Named..."
 msgstr ""
 
-#: app/gui/menus.c:411
+#: app/gui/menus.c:431
 msgid "/Edit/Buffer/Paste Named..."
 msgstr ""
 
-#: app/gui/menus.c:419
+#: app/gui/menus.c:439
 msgid "/Edit/Clear"
 msgstr ""
 
-#: app/gui/menus.c:424
+#: app/gui/menus.c:444
 msgid "/Edit/Fill with FG Color"
 msgstr ""
 
-#: app/gui/menus.c:429
+#: app/gui/menus.c:449
 msgid "/Edit/Fill with BG Color"
 msgstr ""
 
-#: app/gui/menus.c:434
+#: app/gui/menus.c:454
 msgid "/Edit/Stroke"
 msgstr ""
 
 #. <Image>/Select
-#: app/gui/menus.c:444
+#: app/gui/menus.c:464
 msgid "/Select/Invert"
 msgstr ""
 
-#: app/gui/menus.c:449
+#: app/gui/menus.c:469
 msgid "/Select/All"
 msgstr ""
 
-#: app/gui/menus.c:454
+#: app/gui/menus.c:474
 msgid "/Select/None"
 msgstr ""
 
-#: app/gui/menus.c:459
+#: app/gui/menus.c:479
 msgid "/Select/Float"
 msgstr ""
 
-#: app/gui/menus.c:466
+#: app/gui/menus.c:486
 msgid "/Select/Feather..."
 msgstr ""
 
-#: app/gui/menus.c:470
+#: app/gui/menus.c:490
 msgid "/Select/Sharpen"
 msgstr ""
 
-#: app/gui/menus.c:474
+#: app/gui/menus.c:494
 msgid "/Select/Shrink..."
 msgstr ""
 
-#: app/gui/menus.c:479
+#: app/gui/menus.c:499
 msgid "/Select/Grow..."
 msgstr ""
 
-#: app/gui/menus.c:484
+#: app/gui/menus.c:504
 msgid "/Select/Border..."
 msgstr ""
 
-#: app/gui/menus.c:491
+#: app/gui/menus.c:511
 msgid "/Select/Toggle QuickMask"
 msgstr ""
 
-#: app/gui/menus.c:496
+#: app/gui/menus.c:516
 msgid "/Select/Save to Channel"
 msgstr ""
 
 #. <Image>/View
-#: app/gui/menus.c:504
+#: app/gui/menus.c:524
 msgid "/View/Zoom In"
 msgstr ""
 
-#: app/gui/menus.c:509
+#: app/gui/menus.c:529
 msgid "/View/Zoom Out"
 msgstr ""
 
-#: app/gui/menus.c:514
+#: app/gui/menus.c:534
 msgid "/View/Zoom to Fit Window"
 msgstr ""
 
-#: app/gui/menus.c:519
+#: app/gui/menus.c:539
 msgid "/View/Shrink Wrap"
 msgstr ""
 
 #. <Image>/View/Zoom
-#: app/gui/menus.c:526
+#: app/gui/menus.c:546
 msgid "/View/Zoom/16:1"
 msgstr ""
 
-#: app/gui/menus.c:531
+#: app/gui/menus.c:551
 msgid "/View/Zoom/8:1"
 msgstr ""
 
-#: app/gui/menus.c:536
+#: app/gui/menus.c:556
 msgid "/View/Zoom/4:1"
 msgstr ""
 
-#: app/gui/menus.c:541
+#: app/gui/menus.c:561
 msgid "/View/Zoom/2:1"
 msgstr ""
 
-#: app/gui/menus.c:546
+#: app/gui/menus.c:566
 msgid "/View/Zoom/1:1"
 msgstr ""
 
-#: app/gui/menus.c:551
+#: app/gui/menus.c:571
 msgid "/View/Zoom/1:2"
 msgstr ""
 
-#: app/gui/menus.c:556
+#: app/gui/menus.c:576
 msgid "/View/Zoom/1:4"
 msgstr ""
 
-#: app/gui/menus.c:561
+#: app/gui/menus.c:581
 msgid "/View/Zoom/1:8"
 msgstr ""
 
-#: app/gui/menus.c:566
+#: app/gui/menus.c:586
 msgid "/View/Zoom/1:16"
 msgstr ""
 
-#: app/gui/menus.c:572
+#: app/gui/menus.c:592
 msgid "/View/Dot for Dot"
 msgstr ""
 
-#: app/gui/menus.c:579
+#: app/gui/menus.c:599
 msgid "/View/Info Window..."
 msgstr ""
 
-#: app/gui/menus.c:584
+#: app/gui/menus.c:604
 msgid "/View/Navigation Window..."
 msgstr ""
 
-#: app/gui/menus.c:589
+#: app/gui/menus.c:609
 msgid "/View/Display Filters..."
 msgstr ""
 
-#: app/gui/menus.c:596
+#: app/gui/menus.c:616
 msgid "/View/Toggle Selection"
 msgstr ""
 
-#: app/gui/menus.c:600
+#: app/gui/menus.c:620
 msgid "/View/Toggle Layer Boundary"
 msgstr ""
 
-#: app/gui/menus.c:604
+#: app/gui/menus.c:624
 msgid "/View/Toggle Guides"
 msgstr ""
 
-#: app/gui/menus.c:608
+#: app/gui/menus.c:628
 msgid "/View/Snap to Guides"
 msgstr ""
 
-#: app/gui/menus.c:615
+#: app/gui/menus.c:635
 msgid "/View/Toggle Rulers"
 msgstr ""
 
-#: app/gui/menus.c:619
+#: app/gui/menus.c:639
 msgid "/View/Toggle Statusbar"
 msgstr ""
 
-#: app/gui/menus.c:626
+#: app/gui/menus.c:646
 msgid "/View/New View"
 msgstr ""
 
 #. <Image>/Image/Mode
-#: app/gui/menus.c:634
+#: app/gui/menus.c:654
 msgid "/Image/Mode/RGB"
 msgstr ""
 
-#: app/gui/menus.c:639
+#: app/gui/menus.c:659
 msgid "/Image/Mode/Grayscale"
 msgstr ""
 
-#: app/gui/menus.c:644
+#: app/gui/menus.c:664
 msgid "/Image/Mode/Indexed..."
 msgstr ""
 
 #. <Image>/Image/Transform
-#: app/gui/menus.c:654
+#: app/gui/menus.c:674
 #, fuzzy
 msgid "/Image/Transform"
 msgstr "/Íomha/Histogram..."
 
-#: app/gui/menus.c:660
+#: app/gui/menus.c:680
 msgid "/Image/Canvas Size..."
 msgstr ""
 
-#: app/gui/menus.c:665
+#: app/gui/menus.c:685
 msgid "/Image/Scale Image..."
 msgstr ""
 
-#: app/gui/menus.c:670
+#: app/gui/menus.c:690
 #, fuzzy
 msgid "/Image/Crop Image"
 msgstr "Lód Íomha"
 
-#: app/gui/menus.c:675
+#: app/gui/menus.c:695
 msgid "/Image/Duplicate"
 msgstr ""
 
-#: app/gui/menus.c:683
+#: app/gui/menus.c:703
 msgid "/Image/Merge Visible Layers..."
 msgstr ""
 
-#: app/gui/menus.c:687
+#: app/gui/menus.c:707
 msgid "/Image/Flatten Image"
 msgstr ""
 
-#: app/gui/menus.c:694
+#: app/gui/menus.c:714
 msgid "/Image/Undo History..."
 msgstr ""
 
 #. <Image>/Layer
 #. <Image>/Layer/Stack
-#: app/gui/menus.c:703
+#: app/gui/menus.c:723
 msgid "/Layer/Stack/Previous Layer"
 msgstr ""
 
-#: app/gui/menus.c:707
+#: app/gui/menus.c:727
 msgid "/Layer/Stack/Next Layer"
 msgstr ""
 
-#: app/gui/menus.c:711
+#: app/gui/menus.c:731
 msgid "/Layer/Stack/Raise Layer"
 msgstr ""
 
-#: app/gui/menus.c:716
+#: app/gui/menus.c:736
 msgid "/Layer/Stack/Lower Layer"
 msgstr ""
 
-#: app/gui/menus.c:721
+#: app/gui/menus.c:741
 msgid "/Layer/Stack/Layer to Top"
 msgstr ""
 
-#: app/gui/menus.c:726
+#: app/gui/menus.c:746
 msgid "/Layer/Stack/Layer to Bottom"
 msgstr ""
 
-#: app/gui/menus.c:734
+#: app/gui/menus.c:754
 msgid "/Layer/New Layer..."
 msgstr ""
 
-#: app/gui/menus.c:739
+#: app/gui/menus.c:759
 #, fuzzy
 msgid "/Layer/Duplicate Layer"
 msgstr "Gradan Nua"
 
-#: app/gui/menus.c:744
+#: app/gui/menus.c:764
 msgid "/Layer/Anchor Layer"
 msgstr ""
 
-#: app/gui/menus.c:749
+#: app/gui/menus.c:769
 msgid "/Layer/Merge Down"
 msgstr ""
 
-#: app/gui/menus.c:754
+#: app/gui/menus.c:774
 #, fuzzy
 msgid "/Layer/Delete Layer"
 msgstr "Dealaigh"
 
-#: app/gui/menus.c:762
+#: app/gui/menus.c:782
 msgid "/Layer/Layer Boundary Size..."
 msgstr ""
 
-#: app/gui/menus.c:767
+#: app/gui/menus.c:787
 msgid "/Layer/Layer to Imagesize"
 msgstr ""
 
-#: app/gui/menus.c:772
+#: app/gui/menus.c:792
 msgid "/Layer/Scale Layer..."
 msgstr ""
 
-#: app/gui/menus.c:777
+#: app/gui/menus.c:797
 #, fuzzy
 msgid "/Layer/Crop Layer"
 msgstr "Dealaigh"
 
-#: app/gui/menus.c:787
+#: app/gui/menus.c:807
 msgid "/Layer/Transform/Offset..."
 msgstr ""
 
-#: app/gui/menus.c:798
+#: app/gui/menus.c:818
 #, fuzzy
 msgid "/Layer/Colors/Desaturate"
 msgstr "/Íomha/Dathanna/Hue-Saturation..."
 
-#: app/gui/menus.c:803
+#: app/gui/menus.c:823
 #, fuzzy
 msgid "/Layer/Colors/Invert"
 msgstr "/Íomha/Dathanna/Levels..."
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/menus.c:813
+#: app/gui/menus.c:833
 msgid "/Layer/Colors/Auto/Equalize"
 msgstr ""
 
 #. <Image>/Layer/Mask
-#: app/gui/menus.c:822
+#: app/gui/menus.c:842
 msgid "/Layer/Mask/Add Layer Mask..."
 msgstr ""
 
-#: app/gui/menus.c:826
+#: app/gui/menus.c:846
 msgid "/Layer/Mask/Apply Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:830
+#: app/gui/menus.c:850
 msgid "/Layer/Mask/Delete Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:835
+#: app/gui/menus.c:855
 msgid "/Layer/Mask/Mask to Selection"
 msgstr ""
 
 #. <Image>/Layer/Alpha
-#: app/gui/menus.c:843
+#: app/gui/menus.c:863
 msgid "/Layer/Alpha/Add Alpha Channel"
 msgstr ""
 
-#: app/gui/menus.c:847
+#: app/gui/menus.c:867
 msgid "/Layer/Alpha/Alpha to Selection"
 msgstr ""
 
 #. <Image>/Tools
-#: app/gui/menus.c:859
+#: app/gui/menus.c:879
 msgid "/Tools/Toolbox"
 msgstr ""
 
-#: app/gui/menus.c:863
+#: app/gui/menus.c:883
 msgid "/Tools/Default Colors"
 msgstr ""
 
-#: app/gui/menus.c:868
+#: app/gui/menus.c:888
 msgid "/Tools/Swap Colors"
 msgstr ""
 
-#: app/gui/menus.c:873
+#: app/gui/menus.c:893
 #, fuzzy
 msgid "/Tools/Swap Contexts"
 msgstr "/Uirlisí/Teacs"
 
-#: app/gui/menus.c:880
+#: app/gui/menus.c:900
 #, fuzzy
 msgid "/Tools/Selection Tools"
 msgstr "/Uirlisí/Select Tools/Rect Select"
 
-#: app/gui/menus.c:881
+#: app/gui/menus.c:901
 #, fuzzy
 msgid "/Tools/Paint Tools"
 msgstr "/Uirlisí/Paint Tools/Ink"
 
-#: app/gui/menus.c:882
+#: app/gui/menus.c:902
 #, fuzzy
 msgid "/Tools/Transform Tools"
 msgstr "/Uirlisí/Transform Tools/Bóg"
 
 #. <Image>/Dialogs
-#: app/gui/menus.c:886
+#: app/gui/menus.c:906
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr ""
 
-#: app/gui/menus.c:890
+#: app/gui/menus.c:910
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
 msgstr ""
 
-#: app/gui/menus.c:894
+#: app/gui/menus.c:914
 msgid "/Dialogs/Tool Options..."
 msgstr ""
 
-#: app/gui/menus.c:899
+#: app/gui/menus.c:919
 msgid "/Dialogs/Device Status..."
 msgstr ""
 
-#: app/gui/menus.c:906
-msgid "/Dialogs/Brushes..."
-msgstr ""
-
-#: app/gui/menus.c:911
-msgid "/Dialogs/Patterns..."
-msgstr ""
-
-#: app/gui/menus.c:916
-msgid "/Dialogs/Gradients..."
-msgstr ""
-
-#: app/gui/menus.c:921
-msgid "/Dialogs/Palettes..."
-msgstr ""
-
 #: app/gui/menus.c:926
+#, fuzzy
+msgid "/Dialogs/Layers..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:930
+#, fuzzy
+msgid "/Dialogs/Channels..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:934
+#, fuzzy
+msgid "/Dialogs/Paths..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:938
 msgid "/Dialogs/Indexed Palette..."
 msgstr ""
 
-#: app/gui/menus.c:931
-msgid "/Dialogs/Buffers..."
-msgstr ""
-
-#: app/gui/menus.c:939
+#: app/gui/menus.c:943
 #, fuzzy
 msgid "/Dialogs/Selection Editor..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:944
+#: app/gui/menus.c:948
 #, fuzzy
 msgid "/Dialogs/Navigation..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:949
+#: app/gui/menus.c:956
+#, fuzzy
+msgid "/Dialogs/Colors..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:961
+msgid "/Dialogs/Brushes..."
+msgstr ""
+
+#: app/gui/menus.c:966
+msgid "/Dialogs/Patterns..."
+msgstr ""
+
+#: app/gui/menus.c:971
+msgid "/Dialogs/Gradients..."
+msgstr ""
+
+#: app/gui/menus.c:976
+msgid "/Dialogs/Palettes..."
+msgstr ""
+
+#: app/gui/menus.c:981
+msgid "/Dialogs/Buffers..."
+msgstr ""
+
+#: app/gui/menus.c:989
 #, fuzzy
 msgid "/Dialogs/Images..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:953
+#: app/gui/menus.c:993
 msgid "/Dialogs/Document History..."
 msgstr ""
 
-#: app/gui/menus.c:958
+#: app/gui/menus.c:998
 msgid "/Dialogs/Error Console..."
 msgstr ""
 
 #. <Image>/Filters
-#: app/gui/menus.c:968
+#: app/gui/menus.c:1008
 msgid "/Filters/Repeat Last"
 msgstr ""
 
-#: app/gui/menus.c:973
+#: app/gui/menus.c:1013
 msgid "/Filters/Re-Show Last"
 msgstr ""
 
-#: app/gui/menus.c:981
+#: app/gui/menus.c:1021
 msgid "/Filters/Blur"
 msgstr ""
 
-#: app/gui/menus.c:982
+#: app/gui/menus.c:1022
 msgid "/Filters/Colors"
 msgstr ""
 
-#: app/gui/menus.c:983
+#: app/gui/menus.c:1023
 msgid "/Filters/Noise"
 msgstr ""
 
-#: app/gui/menus.c:984
+#: app/gui/menus.c:1024
 msgid "/Filters/Edge-Detect"
 msgstr ""
 
-#: app/gui/menus.c:985
+#: app/gui/menus.c:1025
 msgid "/Filters/Enhance"
 msgstr ""
 
-#: app/gui/menus.c:986
+#: app/gui/menus.c:1026
 msgid "/Filters/Generic"
 msgstr ""
 
-#: app/gui/menus.c:990
+#: app/gui/menus.c:1030
 msgid "/Filters/Glass Effects"
 msgstr ""
 
-#: app/gui/menus.c:991
+#: app/gui/menus.c:1031
 msgid "/Filters/Light Effects"
 msgstr ""
 
-#: app/gui/menus.c:992
+#: app/gui/menus.c:1032
 msgid "/Filters/Distorts"
 msgstr ""
 
-#: app/gui/menus.c:993
+#: app/gui/menus.c:1033
 msgid "/Filters/Artistic"
 msgstr ""
 
-#: app/gui/menus.c:994
+#: app/gui/menus.c:1034
 msgid "/Filters/Map"
 msgstr ""
 
-#: app/gui/menus.c:995
+#: app/gui/menus.c:1035
 msgid "/Filters/Render"
 msgstr ""
 
-#: app/gui/menus.c:996
+#: app/gui/menus.c:1036
 #, fuzzy
 msgid "/Filters/Text"
 msgstr "/Uirlisí/Teacs"
 
-#: app/gui/menus.c:997
+#: app/gui/menus.c:1037
 msgid "/Filters/Web"
 msgstr ""
 
-#: app/gui/menus.c:1001
+#: app/gui/menus.c:1041
 msgid "/Filters/Animation"
 msgstr ""
 
-#: app/gui/menus.c:1002
+#: app/gui/menus.c:1042
 msgid "/Filters/Combine"
 msgstr ""
 
-#: app/gui/menus.c:1006
+#: app/gui/menus.c:1046
 msgid "/Filters/Toys"
 msgstr ""
 
-#: app/gui/menus.c:1014
+#: app/gui/menus.c:1054
 msgid "/Automatic"
 msgstr "/Uath"
 
-#: app/gui/menus.c:1027
+#: app/gui/menus.c:1067
 msgid "/By Extension"
 msgstr ""
 
-#: app/gui/menus.c:1040
+#: app/gui/menus.c:1080
 msgid "/New Layer..."
 msgstr ""
 
-#: app/gui/menus.c:1046
+#: app/gui/menus.c:1086
 msgid "/Raise Layer"
 msgstr ""
 
-#: app/gui/menus.c:1051
+#: app/gui/menus.c:1091
 msgid "/Layer to Top"
 msgstr ""
 
-#: app/gui/menus.c:1056
+#: app/gui/menus.c:1096
 msgid "/Lower Layer"
 msgstr ""
 
-#: app/gui/menus.c:1061
+#: app/gui/menus.c:1101
 msgid "/Layer to Bottom"
 msgstr ""
 
-#: app/gui/menus.c:1067
+#: app/gui/menus.c:1107
 msgid "/Duplicate Layer"
 msgstr ""
 
-#: app/gui/menus.c:1072
+#: app/gui/menus.c:1112
 msgid "/Anchor Layer"
 msgstr ""
 
-#: app/gui/menus.c:1077
+#: app/gui/menus.c:1117
 msgid "/Merge Down"
 msgstr ""
 
-#: app/gui/menus.c:1082
+#: app/gui/menus.c:1122
 msgid "/Delete Layer"
 msgstr ""
 
-#: app/gui/menus.c:1090
+#: app/gui/menus.c:1130
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/gui/menus.c:1095
+#: app/gui/menus.c:1135
 msgid "/Layer to Imagesize"
 msgstr ""
 
-#: app/gui/menus.c:1100
+#: app/gui/menus.c:1140
 msgid "/Scale Layer..."
 msgstr ""
 
-#: app/gui/menus.c:1108
+#: app/gui/menus.c:1148
 msgid "/Add Layer Mask..."
 msgstr ""
 
-#: app/gui/menus.c:1112
+#: app/gui/menus.c:1152
 msgid "/Apply Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:1116
+#: app/gui/menus.c:1156
 msgid "/Delete Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:1121
+#: app/gui/menus.c:1161
 msgid "/Mask to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1129
+#: app/gui/menus.c:1169
 msgid "/Add Alpha Channel"
 msgstr ""
 
-#: app/gui/menus.c:1133
+#: app/gui/menus.c:1173
 msgid "/Alpha to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1141
+#: app/gui/menus.c:1181
 msgid "/Edit Layer Attributes..."
 msgstr ""
 
-#: app/gui/menus.c:1153
+#: app/gui/menus.c:1193
 msgid "/New Channel..."
 msgstr ""
 
-#: app/gui/menus.c:1158
+#: app/gui/menus.c:1198
 msgid "/Raise Channel"
 msgstr ""
 
-#: app/gui/menus.c:1163
+#: app/gui/menus.c:1203
 msgid "/Lower Channel"
 msgstr ""
 
-#: app/gui/menus.c:1168
+#: app/gui/menus.c:1208
 msgid "/Duplicate Channel"
 msgstr ""
 
-#: app/gui/menus.c:1176
+#: app/gui/menus.c:1216
 msgid "/Channel to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1181 app/gui/menus.c:1247
+#: app/gui/menus.c:1221 app/gui/menus.c:1287
 msgid "/Add to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1186 app/gui/menus.c:1252
+#: app/gui/menus.c:1226 app/gui/menus.c:1292
 msgid "/Subtract from Selection"
 msgstr ""
 
-#: app/gui/menus.c:1191 app/gui/menus.c:1257
+#: app/gui/menus.c:1231 app/gui/menus.c:1297
 msgid "/Intersect with Selection"
 msgstr ""
 
-#: app/gui/menus.c:1199
+#: app/gui/menus.c:1239
 msgid "/Delete Channel"
 msgstr ""
 
-#: app/gui/menus.c:1207
+#: app/gui/menus.c:1247
 msgid "/Edit Channel Attributes..."
 msgstr ""
 
-#: app/gui/menus.c:1219
+#: app/gui/menus.c:1259
 #, fuzzy
 msgid "/New Path..."
 msgstr "Slí Nua"
 
-#: app/gui/menus.c:1224
+#: app/gui/menus.c:1264
 #, fuzzy
 msgid "/Raise Path"
 msgstr "Slí Nua"
 
-#: app/gui/menus.c:1229
+#: app/gui/menus.c:1269
 #, fuzzy
 msgid "/Lower Path"
 msgstr "Taispeán Clí"
 
-#: app/gui/menus.c:1234 app/gui/menus.c:1329
+#: app/gui/menus.c:1274 app/gui/menus.c:1369
 msgid "/Duplicate Path"
 msgstr ""
 
-#: app/gui/menus.c:1242 app/gui/menus.c:1334
+#: app/gui/menus.c:1282 app/gui/menus.c:1374
 msgid "/Path to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1263 app/gui/menus.c:1339
+#: app/gui/menus.c:1303 app/gui/menus.c:1379
 msgid "/Selection to Path"
 msgstr ""
 
-#: app/gui/menus.c:1268 app/gui/menus.c:1344
+#: app/gui/menus.c:1308 app/gui/menus.c:1384
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/gui/menus.c:1276 app/gui/menus.c:1357
+#: app/gui/menus.c:1316 app/gui/menus.c:1397
 msgid "/Copy Path"
 msgstr ""
 
-#: app/gui/menus.c:1281 app/gui/menus.c:1362
+#: app/gui/menus.c:1321 app/gui/menus.c:1402
 msgid "/Paste Path"
 msgstr ""
 
-#: app/gui/menus.c:1286 app/gui/menus.c:1367
+#: app/gui/menus.c:1326 app/gui/menus.c:1407
 msgid "/Import Path..."
 msgstr ""
 
-#: app/gui/menus.c:1291 app/gui/menus.c:1372
+#: app/gui/menus.c:1331 app/gui/menus.c:1412
 msgid "/Export Path..."
 msgstr ""
 
-#: app/gui/menus.c:1299 app/gui/menus.c:1349
+#: app/gui/menus.c:1339 app/gui/menus.c:1389
 msgid "/Delete Path"
 msgstr ""
 
-#: app/gui/menus.c:1307
+#: app/gui/menus.c:1347
 #, fuzzy
 msgid "/Path Tool"
 msgstr "Slí %d"
 
-#: app/gui/menus.c:1312 app/gui/menus.c:1380
+#: app/gui/menus.c:1352 app/gui/menus.c:1420
 msgid "/Edit Path Attributes..."
 msgstr ""
 
-#: app/gui/menus.c:1324
+#: app/gui/menus.c:1364
 msgid "/New Path"
 msgstr ""
 
-#: app/gui/menus.c:1399
+#: app/gui/menus.c:1439
 #, fuzzy
 msgid "/Select Tab"
 msgstr "Tóg Fillteán Sealadach"
 
-#: app/gui/menus.c:1402
-msgid "/Add Tab/Layers..."
-msgstr ""
-
-#: app/gui/menus.c:1403
-msgid "/Add Tab/Channels..."
-msgstr ""
-
-#: app/gui/menus.c:1404
-msgid "/Add Tab/Paths..."
-msgstr ""
-
-#: app/gui/menus.c:1405
+#: app/gui/menus.c:1442
 #, fuzzy
 msgid "/Add Tab/Tool Options..."
 msgstr "Gradan"
 
-#: app/gui/menus.c:1410
-msgid "/Add Tab/Brushes..."
+#: app/gui/menus.c:1447
+msgid "/Add Tab/Layers..."
 msgstr ""
 
-#: app/gui/menus.c:1412
-msgid "/Add Tab/Patterns..."
+#: app/gui/menus.c:1448
+msgid "/Add Tab/Channels..."
 msgstr ""
 
-#: app/gui/menus.c:1414
-#, fuzzy
-msgid "/Add Tab/Gradients..."
-msgstr "Gradan"
-
-#: app/gui/menus.c:1416
-msgid "/Add Tab/Palettes..."
+#: app/gui/menus.c:1449
+msgid "/Add Tab/Paths..."
 msgstr ""
 
-#: app/gui/menus.c:1418
+#: app/gui/menus.c:1450
 msgid "/Add Tab/Indexed Palette..."
 msgstr ""
 
-#: app/gui/menus.c:1420
-#, fuzzy
-msgid "/Add Tab/Buffers..."
-msgstr "/Comhad/Nua..."
-
-#: app/gui/menus.c:1425
+#: app/gui/menus.c:1452
 #, fuzzy
 msgid "/Add Tab/Selection Editor..."
 msgstr "Gradan"
 
-#: app/gui/menus.c:1427
+#: app/gui/menus.c:1454
 #, fuzzy
 msgid "/Add Tab/Navigation..."
 msgstr "Gradan"
 
-#: app/gui/menus.c:1429
+#: app/gui/menus.c:1459
+#, fuzzy
+msgid "/Add Tab/Colors..."
+msgstr "Gradan"
+
+#: app/gui/menus.c:1461
+msgid "/Add Tab/Brushes..."
+msgstr ""
+
+#: app/gui/menus.c:1463
+msgid "/Add Tab/Patterns..."
+msgstr ""
+
+#: app/gui/menus.c:1465
+#, fuzzy
+msgid "/Add Tab/Gradients..."
+msgstr "Gradan"
+
+#: app/gui/menus.c:1467
+msgid "/Add Tab/Palettes..."
+msgstr ""
+
+#: app/gui/menus.c:1469
+#, fuzzy
+msgid "/Add Tab/Buffers..."
+msgstr "/Comhad/Nua..."
+
+#: app/gui/menus.c:1474
 msgid "/Add Tab/Images..."
 msgstr ""
 
-#: app/gui/menus.c:1430
+#: app/gui/menus.c:1475
 msgid "/Add Tab/Document History..."
 msgstr ""
 
-#: app/gui/menus.c:1432
+#: app/gui/menus.c:1477
 msgid "/Add Tab/Error Console..."
 msgstr ""
 
-#: app/gui/menus.c:1437
+#: app/gui/menus.c:1482
 msgid "/Add Tab/Tools..."
 msgstr ""
 
-#: app/gui/menus.c:1438
+#: app/gui/menus.c:1483
 #, fuzzy
 msgid "/Add Tab/Old Paths..."
 msgstr "Gradan"
 
-#: app/gui/menus.c:1440
+#: app/gui/menus.c:1485
 #, fuzzy
 msgid "/Remove Tab"
 msgstr "Scríos"
 
-#: app/gui/menus.c:1448
+#: app/gui/menus.c:1493
 #, fuzzy
 msgid "/Preview Size/Tiny"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1453
+#: app/gui/menus.c:1498
 #, fuzzy
 msgid "/Preview Size/Extra Small"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1454
+#: app/gui/menus.c:1499
 #, fuzzy
 msgid "/Preview Size/Small"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1455
+#: app/gui/menus.c:1500
 #, fuzzy
 msgid "/Preview Size/Medium"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1456
+#: app/gui/menus.c:1501
 #, fuzzy
 msgid "/Preview Size/Large"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1457
+#: app/gui/menus.c:1502
 #, fuzzy
 msgid "/Preview Size/Extra Large"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1458
+#: app/gui/menus.c:1503
 #, fuzzy
 msgid "/Preview Size/Huge"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1459
+#: app/gui/menus.c:1504
 #, fuzzy
 msgid "/Preview Size/Enormous"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1460
+#: app/gui/menus.c:1505
 #, fuzzy
 msgid "/Preview Size/Gigantic"
 msgstr "Méid Réamhradharc:"
 
-#: app/gui/menus.c:1462
+#: app/gui/menus.c:1507
 msgid "/View as List"
 msgstr ""
 
-#: app/gui/menus.c:1465
+#: app/gui/menus.c:1510
 msgid "/View as Grid"
 msgstr ""
 
-#: app/gui/menus.c:1471
+#: app/gui/menus.c:1516
 msgid "/Show Image Menu"
 msgstr ""
 
-#: app/gui/menus.c:1474
+#: app/gui/menus.c:1519
 msgid "/Auto Follow Active Image"
 msgstr ""
 
-#: app/gui/menus.c:1487
+#: app/gui/menus.c:1532
 msgid "/New Brush"
 msgstr ""
 
-#: app/gui/menus.c:1492
+#: app/gui/menus.c:1537
 msgid "/Duplicate Brush"
 msgstr ""
 
-#: app/gui/menus.c:1497
+#: app/gui/menus.c:1542
 msgid "/Edit Brush..."
 msgstr ""
 
-#: app/gui/menus.c:1502
+#: app/gui/menus.c:1547
 msgid "/Delete Brush..."
 msgstr ""
 
-#: app/gui/menus.c:1510
+#: app/gui/menus.c:1555
 msgid "/Refresh Brushes"
 msgstr ""
 
-#: app/gui/menus.c:1522
+#: app/gui/menus.c:1567
 #, fuzzy
 msgid "/New Pattern"
 msgstr "Slí Nua"
 
-#: app/gui/menus.c:1527
+#: app/gui/menus.c:1572
 msgid "/Duplicate Pattern"
 msgstr ""
 
-#: app/gui/menus.c:1532
+#: app/gui/menus.c:1577
 msgid "/Edit Pattern..."
 msgstr ""
 
-#: app/gui/menus.c:1537
+#: app/gui/menus.c:1582
 msgid "/Delete Pattern..."
 msgstr ""
 
-#: app/gui/menus.c:1545
+#: app/gui/menus.c:1590
 msgid "/Refresh Patterns"
 msgstr ""
 
-#: app/gui/menus.c:1570
+#: app/gui/menus.c:1615
 msgid "/Left Endpoint's Color..."
 msgstr ""
 
-#: app/gui/menus.c:1575
+#: app/gui/menus.c:1620
 msgid "/Load Left Color From/Left Neighbor's Right Endpoint"
 msgstr ""
 
-#: app/gui/menus.c:1579
+#: app/gui/menus.c:1624
 msgid "/Load Left Color From/Right Endpoint"
 msgstr ""
 
-#: app/gui/menus.c:1583
+#: app/gui/menus.c:1628
 msgid "/Load Left Color From/FG Color"
 msgstr ""
 
-#: app/gui/menus.c:1587
+#: app/gui/menus.c:1632
 msgid "/Load Left Color From/BG Color"
 msgstr ""
 
-#: app/gui/menus.c:1605
+#: app/gui/menus.c:1650
 msgid "/Save Left Color To"
 msgstr ""
 
-#: app/gui/menus.c:1620
+#: app/gui/menus.c:1665
 msgid "/Right Endpoint's Color..."
 msgstr ""
 
-#: app/gui/menus.c:1625
+#: app/gui/menus.c:1670
 msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
 msgstr ""
 
-#: app/gui/menus.c:1629
+#: app/gui/menus.c:1674
 msgid "/Load Right Color From/Left Endpoint"
 msgstr ""
 
-#: app/gui/menus.c:1633
+#: app/gui/menus.c:1678
 msgid "/Load Right Color From/FG Color"
 msgstr ""
 
-#: app/gui/menus.c:1637
+#: app/gui/menus.c:1682
 msgid "/Load Right Color From/BG Color"
 msgstr ""
 
-#: app/gui/menus.c:1655
+#: app/gui/menus.c:1700
 msgid "/Save Right Color To"
 msgstr ""
 
-#: app/gui/menus.c:1670
+#: app/gui/menus.c:1715
 msgid "/blendingfunction/Linear"
 msgstr ""
 
-#: app/gui/menus.c:1675
+#: app/gui/menus.c:1720
 msgid "/blendingfunction/Curved"
 msgstr ""
 
-#: app/gui/menus.c:1680
+#: app/gui/menus.c:1725
 msgid "/blendingfunction/Sinusodial"
 msgstr ""
 
-#: app/gui/menus.c:1685
+#: app/gui/menus.c:1730
 msgid "/blendingfunction/Spherical (increasing)"
 msgstr ""
 
-#: app/gui/menus.c:1690
+#: app/gui/menus.c:1735
 msgid "/blendingfunction/Spherical (decreasing)"
 msgstr ""
 
-#: app/gui/menus.c:1695
+#: app/gui/menus.c:1740
 msgid "/blendingfunction/(Varies)"
 msgstr ""
 
-#: app/gui/menus.c:1700
+#: app/gui/menus.c:1745
 msgid "/coloringtype/RGB"
 msgstr ""
 
-#: app/gui/menus.c:1705
+#: app/gui/menus.c:1750
 msgid "/coloringtype/HSV (counter-clockwise hue)"
 msgstr ""
 
-#: app/gui/menus.c:1710
+#: app/gui/menus.c:1755
 msgid "/coloringtype/HSV (clockwise hue)"
 msgstr ""
 
-#: app/gui/menus.c:1715
+#: app/gui/menus.c:1760
 msgid "/coloringtype/(Varies)"
 msgstr ""
 
-#: app/gui/menus.c:1753
+#: app/gui/menus.c:1798
 msgid "/Blend Endpoints' Colors"
 msgstr ""
 
-#: app/gui/menus.c:1757
+#: app/gui/menus.c:1802
 msgid "/Blend Endpoints' Opacity"
 msgstr ""
 
-#: app/gui/menus.c:1773
+#: app/gui/menus.c:1818
 #, fuzzy
 msgid "/New Gradient"
 msgstr "Gradan Nua"
 
-#: app/gui/menus.c:1778
+#: app/gui/menus.c:1823
 #, fuzzy
 msgid "/Duplicate Gradient"
 msgstr "Gradan Nua"
 
-#: app/gui/menus.c:1783
+#: app/gui/menus.c:1828
 #, fuzzy
 msgid "/Edit Gradient..."
 msgstr "Gradan"
 
-#: app/gui/menus.c:1788
+#: app/gui/menus.c:1833
 #, fuzzy
 msgid "/Delete Gradient..."
 msgstr "Gradan Nua"
 
-#: app/gui/menus.c:1796
+#: app/gui/menus.c:1841
 #, fuzzy
 msgid "/Refresh Gradients"
 msgstr "Gradan Nua"
 
-#: app/gui/menus.c:1804
+#: app/gui/menus.c:1849
 #, fuzzy
 msgid "/Save as POV-Ray..."
 msgstr "/Comhad/Nua..."
 
-#: app/gui/menus.c:1816
+#: app/gui/menus.c:1861
 #, fuzzy
 msgid "/New Color"
 msgstr "Dath"
 
-#: app/gui/menus.c:1821 app/gui/menus.c:1917
+#: app/gui/menus.c:1866 app/gui/menus.c:1962
 #, fuzzy
 msgid "/Edit Color..."
 msgstr "/Tóg/By Color..."
 
-#: app/gui/menus.c:1826
+#: app/gui/menus.c:1871
 #, fuzzy
 msgid "/Delete Color"
 msgstr "/Tóg/By Color..."
 
-#: app/gui/menus.c:1838
+#: app/gui/menus.c:1883
 #, fuzzy
 msgid "/New Palette"
 msgstr "Slí Nua"
 
-#: app/gui/menus.c:1843
+#: app/gui/menus.c:1888
 msgid "/Duplicate Palette"
 msgstr ""
 
-#: app/gui/menus.c:1848
+#: app/gui/menus.c:1893
 msgid "/Edit Palette..."
 msgstr ""
 
-#: app/gui/menus.c:1853
+#: app/gui/menus.c:1898
 msgid "/Delete Palette..."
 msgstr ""
 
-#: app/gui/menus.c:1861
+#: app/gui/menus.c:1906
 msgid "/Refresh Palettes"
 msgstr ""
 
-#: app/gui/menus.c:1869
+#: app/gui/menus.c:1914
 msgid "/Import Palette..."
 msgstr ""
 
-#: app/gui/menus.c:1874
+#: app/gui/menus.c:1919
 msgid "/Merge Palettes..."
 msgstr ""
 
-#: app/gui/menus.c:1885
+#: app/gui/menus.c:1930
 msgid "/Paste Buffer"
 msgstr ""
 
-#: app/gui/menus.c:1890
+#: app/gui/menus.c:1935
 msgid "/Paste Buffer Into"
 msgstr ""
 
-#: app/gui/menus.c:1895
+#: app/gui/menus.c:1940
 msgid "/Paste Buffer as New"
 msgstr ""
 
-#: app/gui/menus.c:1900
+#: app/gui/menus.c:1945
 #, fuzzy
 msgid "/Delete Buffer"
 msgstr "Dealaigh"
 
-#: app/gui/menus.c:1912
+#: app/gui/menus.c:1957
 #, fuzzy
 msgid "/Add Color"
 msgstr "Dath"
 
-#: app/gui/menus.c:1929
+#: app/gui/menus.c:1974
 #, fuzzy
 msgid "/Raise Displays"
 msgstr "Slí Nua"
 
-#: app/gui/menus.c:1933
+#: app/gui/menus.c:1978
 #, fuzzy
 msgid "/New Display"
 msgstr "Comhad Nua"
 
-#: app/gui/menus.c:1937
+#: app/gui/menus.c:1982
 #, fuzzy
 msgid "/Delete Image"
 msgstr "Íomhá Nua"
 
-#: app/gui/menus.c:1948
+#: app/gui/menus.c:1993
 #, fuzzy
 msgid "/Open Image"
 msgstr "Íomhá Nua"
 
-#: app/gui/menus.c:1952
+#: app/gui/menus.c:1997
 msgid "/Raise or Open Image"
 msgstr ""
 
-#: app/gui/menus.c:1956
+#: app/gui/menus.c:2001
 #, fuzzy
 msgid "/File Open Dialog..."
 msgstr "/Comhad/Oscáil..."
 
-#: app/gui/menus.c:1960
+#: app/gui/menus.c:2005
 #, fuzzy
 msgid "/Remove Entry"
 msgstr "Scríos"
 
-#: app/gui/menus.c:1967
+#: app/gui/menus.c:2012
 msgid "/Recreate Preview"
 msgstr ""
 
-#: app/gui/menus.c:1971
+#: app/gui/menus.c:2016
 msgid "/Reload all Previews"
 msgstr ""
 
-#: app/gui/menus.c:1975
+#: app/gui/menus.c:2020
 #, fuzzy
 msgid "/Remove Dangling Entries"
 msgstr "Scríos"
 
-#: app/gui/menus.c:1986
+#: app/gui/menus.c:2031
 msgid "/QMask Active"
 msgstr ""
 
-#: app/gui/menus.c:1992
+#: app/gui/menus.c:2037
 msgid "/Mask Selected Areas"
 msgstr ""
 
-#: app/gui/menus.c:1995
+#: app/gui/menus.c:2040
 msgid "/Mask Unselected Areas"
 msgstr ""
 
-#: app/gui/menus.c:2001
+#: app/gui/menus.c:2046
 msgid "/Configure Color and Opacity..."
 msgstr ""
 
-#: app/gui/module-browser.c:108
-msgid "Module DB"
+#: app/gui/module-browser.c:121
+msgid "Module Browser"
 msgstr ""
 
-#: app/gui/module-browser.c:166 app/widgets/gimpdatafactoryview.c:227
-msgid "Refresh"
+#: app/gui/module-browser.c:123
+msgid "Browse & Manage Loadable Modules"
 msgstr ""
 
-#: app/gui/module-browser.c:367
-msgid "Module error"
-msgstr ""
+#: app/gui/module-browser.c:165
+#, fuzzy
+msgid "Autoload"
+msgstr "Uath"
 
-#: app/gui/module-browser.c:368
-msgid "Loaded OK"
-msgstr ""
+#: app/gui/module-browser.c:172
+#, fuzzy
+msgid "Module Path"
+msgstr "Lódáil Slí"
 
-#: app/gui/module-browser.c:369
-msgid "Load failed"
-msgstr ""
-
-#: app/gui/module-browser.c:370
-msgid "Unload requested"
-msgstr ""
-
-#: app/gui/module-browser.c:371
-msgid "Unloaded OK"
-msgstr ""
-
-#: app/gui/module-browser.c:382
+#: app/gui/module-browser.c:419
 msgid "<No modules>"
 msgstr ""
 
-#: app/gui/module-browser.c:395 app/gui/module-browser.c:404
+#: app/gui/module-browser.c:431 app/gui/module-browser.c:440
 msgid "On disk"
 msgstr ""
 
-#: app/gui/module-browser.c:395
+#: app/gui/module-browser.c:431
 msgid "Only in memory"
 msgstr ""
 
-#: app/gui/module-browser.c:404
+#: app/gui/module-browser.c:440
 #, fuzzy
 msgid "No longer available"
 msgstr "(Gan réamhradharc)"
 
-#: app/gui/module-browser.c:436
+#: app/gui/module-browser.c:476
 msgid "Load"
 msgstr "Lódáil"
 
-#: app/gui/module-browser.c:441 app/gui/module-browser.c:446
+#: app/gui/module-browser.c:478
+msgid "Query"
+msgstr ""
+
+#: app/gui/module-browser.c:485
 msgid "Unload"
 msgstr ""
 
-#: app/gui/module-browser.c:462
+#: app/gui/module-browser.c:500
 msgid "Purpose:"
 msgstr ""
 
-#: app/gui/module-browser.c:463
+#: app/gui/module-browser.c:501
 #, fuzzy
 msgid "Author:"
 msgstr "Údar: "
 
-#: app/gui/module-browser.c:464
+#: app/gui/module-browser.c:502
 #, fuzzy
 msgid "Version:"
 msgstr "Leagan: "
 
-#: app/gui/module-browser.c:465
+#: app/gui/module-browser.c:503
 #, fuzzy
 msgid "Copyright:"
 msgstr "Cóipcheart: "
 
-#: app/gui/module-browser.c:466
+#: app/gui/module-browser.c:504
 #, fuzzy
 msgid "Date:"
 msgstr "Dáta: "
 
-#: app/gui/module-browser.c:467
+#: app/gui/module-browser.c:505
 #, fuzzy
 msgid "Location:"
 msgstr "Áit: "
 
-#: app/gui/module-browser.c:468
+#: app/gui/module-browser.c:506
 #, fuzzy
 msgid "State:"
 msgstr "Stát: "
 
-#: app/gui/module-browser.c:487
-msgid "Autoload during start-up"
+#: app/gui/module-browser.c:507
+msgid "Last Error:"
+msgstr ""
+
+#: app/gui/module-browser.c:508
+msgid "Available Types:"
 msgstr ""
 
 #: app/gui/offset-dialog.c:92
@@ -4041,67 +4029,67 @@ msgstr ""
 msgid "Edit Color Palette Entry"
 msgstr ""
 
-#: app/gui/palette-import-dialog.c:173
+#: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
 msgstr ""
 
-#: app/gui/palette-import-dialog.c:175
+#: app/gui/palette-import-dialog.c:168
 #, fuzzy
 msgid "Import a New Palette"
 msgstr "Slí Nua"
 
-#: app/gui/palette-import-dialog.c:182
+#: app/gui/palette-import-dialog.c:175
 msgid "_Import"
 msgstr ""
 
 #. The "Source" frame
-#: app/gui/palette-import-dialog.c:208
+#: app/gui/palette-import-dialog.c:201
 #, fuzzy
 msgid "Select Source"
 msgstr "/Tóg/By Color..."
 
-#: app/gui/palette-import-dialog.c:220
+#: app/gui/palette-import-dialog.c:213
 #, fuzzy
 msgid "_Gradient"
 msgstr "Gradan"
 
-#: app/gui/palette-import-dialog.c:232
+#: app/gui/palette-import-dialog.c:225
 #, fuzzy
 msgid "I_mage"
 msgstr "Íomha"
 
 #. The "Import" frame
-#: app/gui/palette-import-dialog.c:290
+#: app/gui/palette-import-dialog.c:283
 #, fuzzy
 msgid "Import Options"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/palette-import-dialog.c:304
+#: app/gui/palette-import-dialog.c:297
 #, fuzzy
 msgid "New Import"
 msgstr "Íomhá Nua"
 
-#: app/gui/palette-import-dialog.c:306
+#: app/gui/palette-import-dialog.c:299
 #, fuzzy
 msgid "Palette _Name:"
 msgstr "Eagarthóir Gradan"
 
-#: app/gui/palette-import-dialog.c:312
+#: app/gui/palette-import-dialog.c:305
 #, fuzzy
 msgid "N_umber of Colors:"
 msgstr "# do Dathannna:"
 
-#: app/gui/palette-import-dialog.c:325
+#: app/gui/palette-import-dialog.c:318
 msgid "C_olumns:"
 msgstr ""
 
-#: app/gui/palette-import-dialog.c:337
+#: app/gui/palette-import-dialog.c:330
 #, fuzzy
 msgid "I_nterval:"
 msgstr "Intíre"
 
 #. The "Preview" frame
-#: app/gui/palette-import-dialog.c:349
+#: app/gui/palette-import-dialog.c:342
 msgid "Preview"
 msgstr "Réamhradharc"
 
@@ -4855,7 +4843,7 @@ msgstr ""
 msgid "GIMP Startup"
 msgstr "Socrú GIMP"
 
-#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:163
+#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:183
 msgid "The GIMP"
 msgstr "An GIMP"
 
@@ -5302,12 +5290,12 @@ msgid "Registered"
 msgstr ""
 
 #: app/paint/paint-enums.c:52 app/widgets/gimpwidgets-constructors.c:55
-#: app/widgets/gimpwidgets-constructors.c:85
+#: app/widgets/gimpwidgets-constructors.c:88
 msgid "Dodge"
 msgstr ""
 
 #: app/paint/paint-enums.c:53 app/widgets/gimpwidgets-constructors.c:56
-#: app/widgets/gimpwidgets-constructors.c:86
+#: app/widgets/gimpwidgets-constructors.c:89
 msgid "Burn"
 msgstr ""
 
@@ -5356,12 +5344,6 @@ msgstr ""
 #: app/pdb/internal_procs.c:85
 msgid "Channel"
 msgstr "Beál"
-
-#: app/pdb/internal_procs.c:88 app/tools/paint_options.c:394
-#: app/widgets/gimpwidgets-constructors.c:67
-#: app/widgets/gimpwidgets-constructors.c:97
-msgid "Color"
-msgstr "Dath"
 
 #: app/pdb/internal_procs.c:91
 msgid "Convert"
@@ -5497,12 +5479,12 @@ msgstr ""
 msgid "Temporary Procedure"
 msgstr ""
 
-#: app/plug-in/plug-in.c:403
+#: app/plug-in/plug-in.c:402
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr ""
 
-#: app/plug-in/plug-in.c:995
+#: app/plug-in/plug-in.c:994
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5513,54 +5495,46 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/plug-in/plug-ins.c:116
+#: app/plug-in/plug-ins.c:114
 msgid "Resource configuration"
 msgstr ""
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:122
+#: app/plug-in/plug-ins.c:120
 #, fuzzy
 msgid "Querying new Plug-ins"
 msgstr "Plogála"
 
-#: app/plug-in/plug-ins.c:134
+#: app/plug-in/plug-ins.c:132
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:169
+#: app/plug-in/plug-ins.c:167
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr ""
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:186
+#: app/plug-in/plug-ins.c:184
 msgid "Initializing Plug-ins"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:195
+#: app/plug-in/plug-ins.c:193
 #, c-format
 msgid "initializing plug-in: \"%s\"\n"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:207
+#: app/plug-in/plug-ins.c:205
 msgid "Starting extensions: "
 msgstr ""
 
-#: app/plug-in/plug-ins.c:209
+#: app/plug-in/plug-ins.c:207
 #, fuzzy
 msgid "Starting Extensions"
 msgstr "Eagarthóir Gradan"
-
-#: app/tools/tools-enums.c:13
-msgid "Crop"
-msgstr ""
-
-#: app/tools/tools-enums.c:14
-msgid "Resize"
-msgstr ""
 
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush"
@@ -5963,67 +5937,67 @@ msgstr ""
 msgid "Allow Enlarging (<Alt>)"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:171
+#: app/tools/gimpcurvestool.c:173
 msgid "Curves"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:172
+#: app/tools/gimpcurvestool.c:174
 msgid "Adjust color curves"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:173
+#: app/tools/gimpcurvestool.c:175
 #, fuzzy
 msgid "/Layer/Colors/Curves..."
 msgstr "/Íomha/Dathanna/Curves..."
 
-#: app/tools/gimpcurvestool.c:243
+#: app/tools/gimpcurvestool.c:246
 msgid "Adjust Color Curves"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:309
+#: app/tools/gimpcurvestool.c:312
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:587 app/tools/gimplevelstool.c:361
+#: app/tools/gimpcurvestool.c:622 app/tools/gimplevelstool.c:392
 #, fuzzy
 msgid "R_eset Channel"
 msgstr "Beál Nua"
 
-#: app/tools/gimpcurvestool.c:596
+#: app/tools/gimpcurvestool.c:631
 msgid "Modify Curves for Channel:"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:603
+#: app/tools/gimpcurvestool.c:638
 msgid "Smooth"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:606
+#: app/tools/gimpcurvestool.c:641
 msgid "Free"
 msgstr "Saor"
 
-#: app/tools/gimpcurvestool.c:612
+#: app/tools/gimpcurvestool.c:647
 msgid "Curve Type:"
 msgstr ""
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:668 app/tools/gimplevelstool.c:563
+#: app/tools/gimpcurvestool.c:707 app/tools/gimplevelstool.c:647
 #, fuzzy
 msgid "All Channels"
 msgstr "Beál"
 
-#: app/tools/gimpcurvestool.c:682
+#: app/tools/gimpcurvestool.c:721
 msgid "Read curves settings from file"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:692
+#: app/tools/gimpcurvestool.c:731
 msgid "Save curves settings to file"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:1322
+#: app/tools/gimpcurvestool.c:1367
 msgid "Load Curves"
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:1341
+#: app/tools/gimpcurvestool.c:1386
 msgid "Save Curves"
 msgstr ""
 
@@ -6097,7 +6071,7 @@ msgid "Hard Edge"
 msgstr ""
 
 #: app/tools/gimpfliptool.c:94
-msgid "Flip Tool"
+msgid "Flip"
 msgstr ""
 
 #: app/tools/gimpfliptool.c:95
@@ -6135,57 +6109,57 @@ msgstr ""
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Uirlisí/Select Tools/Fuzzy Select"
 
-#: app/tools/gimphistogramtool.c:132
+#: app/tools/gimphistogramtool.c:120
 msgid "Histogram"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:133
+#: app/tools/gimphistogramtool.c:121
 msgid "View image histogram"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:134
+#: app/tools/gimphistogramtool.c:122
 #, fuzzy
 msgid "/Layer/Colors/Histogram..."
 msgstr "/Íomha/Histogram..."
 
-#: app/tools/gimphistogramtool.c:195
+#: app/tools/gimphistogramtool.c:183
 msgid "Histogram does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:344
+#: app/tools/gimphistogramtool.c:328
 msgid "Mean:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:345
+#: app/tools/gimphistogramtool.c:329
 msgid "Std Dev:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:330
 msgid "Median:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:347
+#: app/tools/gimphistogramtool.c:331
 msgid "Pixels:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:348
+#: app/tools/gimphistogramtool.c:332
 msgid "Count:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:333
 msgid "Percentile:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:362
+#: app/tools/gimphistogramtool.c:346
 #, fuzzy
 msgid "View Image Histogram"
 msgstr "Meid Íomhá: %s"
 
-#: app/tools/gimphistogramtool.c:384
+#: app/tools/gimphistogramtool.c:364
 msgid "Information on Channel:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:397
+#: app/tools/gimphistogramtool.c:377
 msgid "Intensity Range:"
 msgstr ""
 
@@ -6275,59 +6249,59 @@ msgstr "Áit: "
 msgid "R_eset Color"
 msgstr "/Tóg/By Color..."
 
-#: app/tools/gimpinktool.c:257
-msgid "Ink Tool"
+#: app/tools/gimpinktool.c:256
+msgid "Ink"
 msgstr ""
 
-#: app/tools/gimpinktool.c:258
+#: app/tools/gimpinktool.c:257
 msgid "Draw in ink"
 msgstr ""
 
-#: app/tools/gimpinktool.c:259
+#: app/tools/gimpinktool.c:258
 #, fuzzy
 msgid "/Tools/Paint Tools/Ink"
 msgstr "/Uirlisí/Paint Tools/Ink"
 
 #. adjust sliders
-#: app/tools/gimpinktool.c:1444
+#: app/tools/gimpinktool.c:1413
 msgid "Adjustment"
 msgstr ""
 
-#: app/tools/gimpinktool.c:1457 app/tools/gimpinktool.c:1493
+#: app/tools/gimpinktool.c:1426 app/tools/gimpinktool.c:1462
 msgid "Size:"
 msgstr "Méid:"
 
-#: app/tools/gimpinktool.c:1469 app/tools/gimpmeasuretool.c:400
+#: app/tools/gimpinktool.c:1438 app/tools/gimpmeasuretool.c:400
 #: app/tools/gimprotatetool.c:192 app/widgets/gimpbrusheditor.c:188
 msgid "Angle:"
 msgstr ""
 
 #. sens sliders
-#: app/tools/gimpinktool.c:1480
+#: app/tools/gimpinktool.c:1449
 msgid "Sensitivity"
 msgstr ""
 
-#: app/tools/gimpinktool.c:1505
+#: app/tools/gimpinktool.c:1474
 msgid "Tilt:"
 msgstr ""
 
-#: app/tools/gimpinktool.c:1517
+#: app/tools/gimpinktool.c:1486
 #, fuzzy
 msgid "Speed:"
 msgstr "Luas:"
 
 #. Brush type radiobuttons
-#: app/tools/gimpinktool.c:1533
+#: app/tools/gimpinktool.c:1502
 msgid "Type"
 msgstr "Saghas"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:1605
+#: app/tools/gimpinktool.c:1564
 msgid "Shape"
 msgstr ""
 
 #: app/tools/gimpiscissorstool.c:276
-msgid "Intelligent Scissors"
+msgid "Scissors"
 msgstr ""
 
 #: app/tools/gimpiscissorstool.c:277
@@ -6339,69 +6313,80 @@ msgstr ""
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Uirlisí/Select Tools/Intelligent Scissors"
 
-#: app/tools/gimplevelstool.c:151
+#: app/tools/gimplevelstool.c:156
 msgid "Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:152
+#: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:153
+#: app/tools/gimplevelstool.c:158
 #, fuzzy
 msgid "/Layer/Colors/Levels..."
 msgstr "/Íomha/Dathanna/Levels..."
 
-#: app/tools/gimplevelstool.c:219
+#: app/tools/gimplevelstool.c:225
 #, fuzzy
 msgid "Adjust Color Levels"
 msgstr "/Íomha/Dathanna/Levels..."
 
-#: app/tools/gimplevelstool.c:268
+#: app/tools/gimplevelstool.c:275
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimplevelstool.c:349
+#: app/tools/gimplevelstool.c:380
 msgid "Modify Levels for Channel:"
 msgstr ""
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:371
+#: app/tools/gimplevelstool.c:402
 msgid "Input Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:462 modules/cdisplay_gamma.c:35
-#: modules/cdisplay_gamma.c:331
+#: app/tools/gimplevelstool.c:479
+msgid "Pick Black Point"
+msgstr ""
+
+#: app/tools/gimplevelstool.c:511
+msgid "Pick Gray Point"
+msgstr ""
+
+#: app/tools/gimplevelstool.c:527
 msgid "Gamma"
 msgstr "Gamma"
 
+#: app/tools/gimplevelstool.c:544
+msgid "Pick White Point"
+msgstr ""
+
 #. Output levels frame
-#: app/tools/gimplevelstool.c:484
+#: app/tools/gimplevelstool.c:568
 msgid "Output Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:574
+#: app/tools/gimplevelstool.c:658
 #, fuzzy
 msgid "_Auto"
 msgstr "Uath"
 
-#: app/tools/gimplevelstool.c:577
+#: app/tools/gimplevelstool.c:661
 msgid "Adjust levels automatically"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:587
+#: app/tools/gimplevelstool.c:671
 msgid "Read levels settings from file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:597
+#: app/tools/gimplevelstool.c:681
 msgid "Save levels settings to file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:1233
+#: app/tools/gimplevelstool.c:1338
 msgid "Load Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:1252
+#: app/tools/gimplevelstool.c:1357
 msgid "Save Levels"
 msgstr ""
 
@@ -6454,8 +6439,8 @@ msgid "Use Info Window"
 msgstr ""
 
 #: app/tools/gimpmovetool.c:119
-msgid "Move Tool"
-msgstr ""
+msgid "Move"
+msgstr "Bóg"
 
 #: app/tools/gimpmovetool.c:120
 msgid "Move layers & selections"
@@ -6500,10 +6485,10 @@ msgstr ""
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Uirlisí/Paint Tools/Paintbrush"
 
-#: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
+#: app/tools/gimppathtool.c:116
 #, fuzzy
-msgid "Path Tool"
-msgstr "Slí %d"
+msgid "Path"
+msgstr "Slíanna"
 
 #: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
@@ -6528,8 +6513,9 @@ msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Uirlisí/Paint Tools/Pencil"
 
 #: app/tools/gimpperspectivetool.c:82
-msgid "Perspective Tool"
-msgstr ""
+#, fuzzy
+msgid "Perspective"
+msgstr "/Íomha/Histogram..."
 
 #: app/tools/gimpperspectivetool.c:83
 msgid "Change perspective of the layer or selection"
@@ -6643,9 +6629,10 @@ msgstr ""
 msgid "Rotating..."
 msgstr ""
 
-#: app/tools/gimpscaletool.c:97
-msgid "Scale Tool"
-msgstr ""
+#: app/tools/gimpscaletool.c:97 app/tools/gimpscaletool.c:179
+#, fuzzy
+msgid "Scale"
+msgstr "Sábháil"
 
 #: app/tools/gimpscaletool.c:98
 msgid "Scale the layer or selection"
@@ -6655,11 +6642,6 @@ msgstr ""
 #, fuzzy
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Uirlisí/Transform Tools/Bóg"
-
-#: app/tools/gimpscaletool.c:179
-#, fuzzy
-msgid "Scale"
-msgstr "Sábháil"
 
 #: app/tools/gimpscaletool.c:181
 msgid "Scaling Information"
@@ -6673,9 +6655,10 @@ msgstr ""
 msgid "Scale Ratio X:"
 msgstr ""
 
-#: app/tools/gimpsheartool.c:99
-msgid "Shear Tool"
-msgstr ""
+#: app/tools/gimpsheartool.c:99 app/tools/gimpsheartool.c:173
+#, fuzzy
+msgid "Shear"
+msgstr "Glan"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear the layer or selection"
@@ -6685,11 +6668,6 @@ msgstr ""
 #, fuzzy
 msgid "/Tools/Transform Tools/Shear"
 msgstr "/Uirlisí/Transform Tools/Bóg"
-
-#: app/tools/gimpsheartool.c:173
-#, fuzzy
-msgid "Shear"
-msgstr "Glan"
 
 #: app/tools/gimpsheartool.c:175
 #, fuzzy
@@ -6716,44 +6694,62 @@ msgstr ""
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Uirlisí/Paint Tools/Smudge"
 
-#: app/tools/gimptexttool.c:139
-msgid "Text Tool"
-msgstr ""
-
-#: app/tools/gimptexttool.c:140
+#: app/tools/gimptexttool.c:149
 msgid "Add text to the image"
 msgstr ""
 
-#: app/tools/gimptexttool.c:141
+#: app/tools/gimptexttool.c:150
 msgid "/Tools/Text"
 msgstr "/Uirlisí/Teacs"
 
-#: app/tools/gimptexttool.c:341
+#: app/tools/gimptexttool.c:348
 msgid "No font chosen or font invalid."
 msgstr ""
 
-#: app/tools/gimptexttool.c:436
+#: app/tools/gimptexttool.c:443
 msgid "Font:"
 msgstr ""
 
-#: app/tools/gimptexttool.c:440
+#: app/tools/gimptexttool.c:447
 #, fuzzy
 msgid "_Size:"
 msgstr "Méid:"
 
-#: app/tools/gimptexttool.c:453
+#: app/tools/gimptexttool.c:460
 #, fuzzy
 msgid "_Border:"
 msgstr "Mód:"
 
-#: app/tools/gimptexttool.c:469 app/tools/selection_options.c:428
+#: app/tools/gimptexttool.c:476 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr ""
 
-#: app/tools/gimptexttool.c:554
+#: app/tools/gimptexttool.c:563
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Eagarthóir Gradan"
+
+#: app/tools/gimptexttool.c:588
+msgid "Load Text from File"
+msgstr ""
+
+#: app/tools/gimptexttool.c:592
+msgid "Clear all Text"
+msgstr ""
+
+#: app/tools/gimptexttool.c:633
+msgid "Open Text File (UTF-8)"
+msgstr ""
+
+#: app/tools/gimptexttool.c:683
+#, fuzzy, c-format
+msgid "Error opening file '%s': %s"
+msgstr "Teip ar oscáilte: %s"
+
+#: app/tools/gimptexttool.c:712
+#, c-format
+msgid "Invalid UTF-8 data in file '%s'."
+msgstr ""
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -6776,7 +6772,7 @@ msgstr ""
 msgid "Threshold does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:249
 msgid "Threshold Range:"
 msgstr ""
 
@@ -6788,8 +6784,8 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:115
 #, fuzzy
-msgid "Vector Tool"
-msgstr "Slí %d"
+msgid "Vectors"
+msgstr "Fillteáin"
 
 #: app/tools/gimpvectortool.c:116
 msgid "Vector angles and lengths"
@@ -6797,7 +6793,7 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:117
 #, fuzzy
-msgid "/Tools/Vector"
+msgid "/Tools/Vectors"
 msgstr "/Uirlisí/Teacs"
 
 #: app/tools/paint_options.c:182
@@ -6839,6 +6835,11 @@ msgstr ""
 #: app/tools/paint_options.c:564
 msgid "Type:"
 msgstr "Saghas:"
+
+#: app/tools/path_tool.c:1413
+#, fuzzy
+msgid "Path Tool"
+msgstr "Slí %d"
 
 #: app/tools/selection_options.c:112
 msgid "Replace the current selection"
@@ -7026,14 +7027,18 @@ msgstr ""
 msgid "Edit"
 msgstr "Eagar"
 
-#: app/widgets/gimpdatafactoryview.c:402
+#: app/widgets/gimpdatafactoryview.c:227
+msgid "Refresh"
+msgstr ""
+
+#: app/widgets/gimpdatafactoryview.c:410
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
 
-#: app/widgets/gimpdatafactoryview.c:406
+#: app/widgets/gimpdatafactoryview.c:414
 #, fuzzy
 msgid "Delete Data Object"
 msgstr "Dealaigh Gradan"
@@ -7174,11 +7179,11 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr ""
 
-#: app/widgets/gimpimagedock.c:164
+#: app/widgets/gimpimagedock.c:158
 msgid "Auto"
 msgstr "Uath"
 
-#: app/widgets/gimpimagedock.c:263
+#: app/widgets/gimpimagedock.c:257
 #, c-format
 msgid "Gimp Dock #%d"
 msgstr ""
@@ -7234,22 +7239,22 @@ msgstr ""
 msgid "Columns:"
 msgstr ""
 
-#: app/widgets/gimpselectioneditor.c:178
+#: app/widgets/gimpselectioneditor.c:176
 #, fuzzy
 msgid "Invert Selection"
 msgstr "Báin as Beál"
 
-#: app/widgets/gimpselectioneditor.c:186
+#: app/widgets/gimpselectioneditor.c:184
 #, fuzzy
 msgid "Select All"
 msgstr "Tóg Fillteán Sealadach"
 
-#: app/widgets/gimpselectioneditor.c:194
+#: app/widgets/gimpselectioneditor.c:192
 #, fuzzy
 msgid "Select None"
 msgstr "Tóg Fillteán Sealadach"
 
-#: app/widgets/gimpselectioneditor.c:202
+#: app/widgets/gimpselectioneditor.c:200
 #, fuzzy
 msgid "Save Selection to Channel"
 msgstr "Báin as Beál"
@@ -7282,7 +7287,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 
-#: app/widgets/gimptoolbox.c:671
+#: app/widgets/gimptoolbox.c:723
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7297,12 +7302,12 @@ msgid ""
 msgstr ""
 
 #: app/widgets/gimpwidgets-constructors.c:45
-#: app/widgets/gimpwidgets-constructors.c:77
+#: app/widgets/gimpwidgets-constructors.c:80
 msgid "Normal"
 msgstr ""
 
 #: app/widgets/gimpwidgets-constructors.c:46
-#: app/widgets/gimpwidgets-constructors.c:78
+#: app/widgets/gimpwidgets-constructors.c:81
 msgid "Dissolve"
 msgstr ""
 
@@ -7316,75 +7321,102 @@ msgid "Color Erase"
 msgstr "Dún"
 
 #: app/widgets/gimpwidgets-constructors.c:50
-#: app/widgets/gimpwidgets-constructors.c:80
+#: app/widgets/gimpwidgets-constructors.c:83
 msgid "Multiply"
 msgstr ""
 
 #: app/widgets/gimpwidgets-constructors.c:51
-#: app/widgets/gimpwidgets-constructors.c:81
+#: app/widgets/gimpwidgets-constructors.c:84
 msgid "Divide"
 msgstr ""
 
 #: app/widgets/gimpwidgets-constructors.c:52
-#: app/widgets/gimpwidgets-constructors.c:82
+#: app/widgets/gimpwidgets-constructors.c:85
 #, fuzzy
 msgid "Screen"
 msgstr "Glas"
 
 #: app/widgets/gimpwidgets-constructors.c:53
-#: app/widgets/gimpwidgets-constructors.c:83
+#: app/widgets/gimpwidgets-constructors.c:86
 msgid "Overlay"
 msgstr ""
 
 #: app/widgets/gimpwidgets-constructors.c:57
-#: app/widgets/gimpwidgets-constructors.c:87
+#: app/widgets/gimpwidgets-constructors.c:90
 #, fuzzy
 msgid "Hard Light"
 msgstr "Airde"
 
+#: app/widgets/gimpwidgets-constructors.c:58
+#: app/widgets/gimpwidgets-constructors.c:91
+#, fuzzy
+msgid "Soft Light"
+msgstr "Airde"
+
 #: app/widgets/gimpwidgets-constructors.c:59
-#: app/widgets/gimpwidgets-constructors.c:89
+#: app/widgets/gimpwidgets-constructors.c:92
+#, fuzzy
+msgid "Grain Extract"
+msgstr "Eagarthóir Gradan"
+
+#: app/widgets/gimpwidgets-constructors.c:60
+#: app/widgets/gimpwidgets-constructors.c:93
+msgid "Grain Merge"
+msgstr ""
+
+#: app/widgets/gimpwidgets-constructors.c:62
+#: app/widgets/gimpwidgets-constructors.c:95
 #, fuzzy
 msgid "Difference"
 msgstr "Roghanna"
 
-#: app/widgets/gimpwidgets-constructors.c:60
-#: app/widgets/gimpwidgets-constructors.c:90
+#: app/widgets/gimpwidgets-constructors.c:63
+#: app/widgets/gimpwidgets-constructors.c:96
 msgid "Addition"
 msgstr ""
 
-#: app/widgets/gimpwidgets-constructors.c:61
-#: app/widgets/gimpwidgets-constructors.c:91
+#: app/widgets/gimpwidgets-constructors.c:64
+#: app/widgets/gimpwidgets-constructors.c:97
 msgid "Subtract"
 msgstr ""
 
-#: app/widgets/gimpwidgets-constructors.c:62
-#: app/widgets/gimpwidgets-constructors.c:92
+#: app/widgets/gimpwidgets-constructors.c:65
+#: app/widgets/gimpwidgets-constructors.c:98
 msgid "Darken Only"
 msgstr ""
 
-#: app/widgets/gimpwidgets-constructors.c:63
-#: app/widgets/gimpwidgets-constructors.c:93
+#: app/widgets/gimpwidgets-constructors.c:66
+#: app/widgets/gimpwidgets-constructors.c:99
 msgid "Lighten Only"
 msgstr ""
 
-#: app/widgets/gimpwidgets-utils.c:93
+#: app/widgets/gimpwidgets-constructors.c:68
+#: app/widgets/gimpwidgets-constructors.c:101
+msgid "Hue"
+msgstr ""
+
+#: app/widgets/gimpwidgets-constructors.c:69
+#: app/widgets/gimpwidgets-constructors.c:102
+msgid "Saturation"
+msgstr ""
+
+#: app/widgets/gimpwidgets-utils.c:95
 #, c-format
-msgid "Message repeated %d times"
+msgid "Message repeated %d times."
 msgstr ""
 
-#: app/widgets/gimpwidgets-utils.c:106
-msgid "Message repeated once"
+#: app/widgets/gimpwidgets-utils.c:104
+msgid "Message repeated once."
 msgstr ""
 
-#: app/widgets/gimpwidgets-utils.c:120
+#: app/widgets/gimpwidgets-utils.c:121
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr."
 msgstr ""
 
-#: app/widgets/gimpwidgets-utils.c:128
+#: app/widgets/gimpwidgets-utils.c:129
 msgid "GIMP Message"
 msgstr ""
 
@@ -7399,55 +7431,15 @@ msgstr ""
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: app/xcf/xcf.c:261
+#: app/xcf/xcf.c:262
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 
-#: app/xcf/xcf.c:320
+#: app/xcf/xcf.c:321
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr ""
-
-#: modules/cdisplay_gamma.c:94
-msgid "Gamma color display filter"
-msgstr ""
-
-#: modules/cdisplay_gamma.c:353
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:36 modules/cdisplay_highcontrast.c:324
-msgid "High Contrast"
-msgstr ""
-
-#: modules/cdisplay_highcontrast.c:95
-msgid "High Contrast color display filter"
-msgstr ""
-
-#: modules/cdisplay_highcontrast.c:346
-msgid "Contrast Cycles:"
-msgstr ""
-
-#: modules/colorsel_triangle.c:84
-msgid "Painter-style color selector as a pluggable color selector"
-msgstr ""
-
-#: modules/colorsel_triangle.c:150 modules/colorsel_triangle.c:152
-msgid "Triangle"
-msgstr ""
-
-#: modules/colorsel_water.c:88
-msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
-
-#: modules/colorsel_water.c:110 modules/colorsel_water.c:113
-msgid "Watercolor"
-msgstr ""
-
-#: modules/colorsel_water.c:472
-msgid "Pressure"
-msgstr "Brú"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
@@ -7456,6 +7448,41 @@ msgstr ""
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr ""
+
+#: libgimptool/gimptoolenums.c:14
+msgid "Crop"
+msgstr ""
+
+#: libgimptool/gimptoolenums.c:15
+msgid "Resize"
+msgstr ""
+
+#~ msgid "R"
+#~ msgstr "D"
+
+#~ msgid "G"
+#~ msgstr "Gl"
+
+#~ msgid "B"
+#~ msgstr "Go"
+
+#, fuzzy
+#~ msgid "A"
+#~ msgstr "A:"
+
+#, fuzzy
+#~ msgid "%s Options"
+#~ msgstr "Roghanna Beál Nua"
+
+#, fuzzy
+#~ msgid "Vector Tool"
+#~ msgstr "Slí %d"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
+
+#~ msgid "Pressure"
+#~ msgstr "Brú"
 
 #, fuzzy
 #~ msgid "Replicate segment"
@@ -7522,9 +7549,6 @@ msgstr ""
 
 #~ msgid "misc"
 #~ msgstr "teibi."
-
-#~ msgid "Directories"
-#~ msgstr "Fillteáin"
 
 #, fuzzy
 #~ msgid "Tool Plug-Ins Directories"
@@ -7598,9 +7622,6 @@ msgstr ""
 
 #~ msgid "Copy gradient"
 #~ msgstr "Cóip gradan"
-
-#~ msgid "Move"
-#~ msgstr "Bóg"
 
 #, fuzzy
 #~ msgid "/Tools/Transform Tools/Magnify"

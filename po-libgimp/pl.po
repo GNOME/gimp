@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
+"POT-Creation-Date: 2002-11-06 22:59+0100\n"
 "PO-Revision-Date: 2002-06-08 17:43+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -166,6 +166,41 @@ msgstr "Brak"
 msgid "percent"
 msgstr "procent"
 
+#: libgimpmodule/gimpmodule.c:174
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
+#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
+#: libgimpmodule/gimpmodule.c:386
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:260
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:363
+msgid "Module error"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:364
+msgid "Loaded"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:365
+msgid "Load failed"
+msgstr ""
+
+#: libgimpmodule/gimpmodule.c:366
+msgid "Not loaded"
+msgstr ""
+
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Bieżący kolor"
@@ -182,6 +217,70 @@ msgstr "/Czarny"
 msgid "/White"
 msgstr "/Biały"
 
+#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
+msgid "_H"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+msgid "_S"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+msgid "_V"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+msgid "_R"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+msgid "_G"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+msgid "_B"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:168
+msgid "_A"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
+msgid "Hue"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
+msgid "Saturation"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
+msgid "Value"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
+msgid "Red"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
+msgid "Green"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
+msgid "Blue"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
+msgid "Alpha"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:252
+msgid "Hexadecimal color notation as used in HTML"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorscales.c:266
+msgid "He_x Triplet:"
+msgstr ""
+
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
 msgstr "Wybór folderu"
@@ -189,6 +288,12 @@ msgstr "Wybór folderu"
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Wybór pliku"
+
+#: libgimpwidgets/gimppickbutton.c:141
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"
@@ -227,34 +332,34 @@ msgstr "Widoczny"
 msgid "_Resize"
 msgstr "Z_resetuj"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
 #, fuzzy
 msgid "_Scale"
 msgstr "Przeskaluj"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:136
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:132
+#: libgimpwidgets/gimpstock.c:137
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:153
+#: libgimpwidgets/gimpstock.c:158
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:176
 #, fuzzy
 msgid "_Transform"
 msgstr "Przekształcenie"
 
-#: libgimpwidgets/gimpstock.c:174
+#: libgimpwidgets/gimpstock.c:179
 #, fuzzy
 msgid "_Rotate"
 msgstr "Obróć"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:181
 #, fuzzy
 msgid "_Shear"
 msgstr "Zetnij"
@@ -275,7 +380,7 @@ msgstr "Jednostka"
 msgid "Factor"
 msgstr "Współczynnik"
 
-#: libgimpwidgets/gimpwidgets.c:879
+#: libgimpwidgets/gimpwidgets.c:976
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -284,11 +389,11 @@ msgstr ""
 "wykorzystana do zainicjowania generatora liczb losowych, co pozwoli na "
 "powtórzenie określonej \"losowej\" operacji."
 
-#: libgimpwidgets/gimpwidgets.c:884
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Time"
 msgstr "_Czas"
 
-#: libgimpwidgets/gimpwidgets.c:893
+#: libgimpwidgets/gimpwidgets.c:990
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -296,18 +401,62 @@ msgstr ""
 "Inicjowanie generatora liczb losowych na podstawie bieżącego czasu. "
 "Gwarantuje to dość dobrą losowość."
 
-#: libgimpwidgets/gimpwidgets.c:1219
+#: libgimpwidgets/gimpwidgets.c:1316
 msgid "Bytes"
 msgstr "Bajty"
 
-#: libgimpwidgets/gimpwidgets.c:1220
+#: libgimpwidgets/gimpwidgets.c:1317
 msgid "KiloBytes"
 msgstr "Kilobajty"
 
-#: libgimpwidgets/gimpwidgets.c:1221
+#: libgimpwidgets/gimpwidgets.c:1318
 msgid "MegaBytes"
 msgstr "Megabajty"
 
-#: libgimpwidgets/gimpwidgets.c:1222
+#: libgimpwidgets/gimpwidgets.c:1319
 msgid "GigaBytes"
 msgstr "Gigabajty"
+
+#: modules/cdisplay_gamma.c:89
+msgid "Gamma color display filter"
+msgstr ""
+
+#: modules/cdisplay_gamma.c:155
+msgid "Gamma"
+msgstr ""
+
+#: modules/cdisplay_gamma.c:316
+msgid "Gamma:"
+msgstr ""
+
+#: modules/cdisplay_highcontrast.c:89
+msgid "High Contrast color display filter"
+msgstr ""
+
+#: modules/cdisplay_highcontrast.c:155
+msgid "Contrast"
+msgstr ""
+
+#: modules/cdisplay_highcontrast.c:314
+msgid "Contrast Cycles:"
+msgstr ""
+
+#: modules/colorsel_triangle.c:107
+msgid "Painter-style triangle color selector"
+msgstr ""
+
+#: modules/colorsel_triangle.c:179
+msgid "_Triangle"
+msgstr ""
+
+#: modules/colorsel_water.c:103
+msgid "Watercolor style color selector"
+msgstr ""
+
+#: modules/colorsel_water.c:175
+msgid "_Watercolor"
+msgstr ""
+
+#: modules/colorsel_water.c:250
+msgid "Pressure"
+msgstr ""

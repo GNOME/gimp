@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-11-07 14:25+0100\n"
+"POT-Creation-Date: 2002-11-06 22:57+0100\n"
 "PO-Revision-Date: 2002-11-07 14:26+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -205,7 +205,7 @@ msgstr "Kan inte ångra %s"
 msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
-#: app/undo.c:3599 app/gui/resize-dialog.c:200
+#: app/gui/resize-dialog.c:200 app/undo.c:3599
 msgid "Scale Image"
 msgstr "Skala bild"
 
@@ -221,7 +221,7 @@ msgstr "Konvertera bild"
 msgid "Crop Image"
 msgstr "Beskär bild"
 
-#: app/undo.c:3603 app/gui/image-commands.c:298
+#: app/gui/image-commands.c:298 app/undo.c:3603
 msgid "Merge Layers"
 msgstr "Sammanfoga lager"
 
@@ -237,7 +237,7 @@ msgstr "Hjälplinje"
 msgid "Layer Properties"
 msgstr "Lageregenskaper"
 
-#: app/undo.c:3607 app/gui/resize-dialog.c:192
+#: app/gui/resize-dialog.c:192 app/undo.c:3607
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
@@ -273,7 +273,7 @@ msgstr "Klistra in"
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: app/undo.c:3616 app/tools/gimptexttool.c:148
+#: app/tools/gimptexttool.c:148 app/undo.c:3616
 msgid "Text"
 msgstr "Text"
 
@@ -297,7 +297,7 @@ msgstr "Ta bort parasit"
 msgid "Plug-In"
 msgstr "Insticksmodul"
 
-#: app/undo.c:3623 app/pdb/internal_procs.c:124
+#: app/pdb/internal_procs.c:124 app/undo.c:3623
 msgid "Image"
 msgstr "Bild"
 
@@ -305,12 +305,12 @@ msgstr "Bild"
 msgid "Image Mod"
 msgstr "Bildmod"
 
-#: app/undo.c:3625 app/gui/file-new-dialog.c:374
+#: app/gui/file-new-dialog.c:374 app/undo.c:3625
 msgid "Image Type"
 msgstr "Bildtyp"
 
 #. Image size frame
-#: app/undo.c:3626 app/gui/file-new-dialog.c:144
+#: app/gui/file-new-dialog.c:144 app/undo.c:3626
 msgid "Image Size"
 msgstr "Bildstorlek"
 
@@ -318,7 +318,7 @@ msgstr "Bildstorlek"
 msgid "Resolution Change"
 msgstr "Ändring av upplösning"
 
-#: app/undo.c:3630 app/core/gimpchannel.c:505
+#: app/core/gimpchannel.c:505 app/undo.c:3630
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
@@ -326,7 +326,7 @@ msgstr "Markeringsmask"
 msgid "Rename Item"
 msgstr "Byt namn på objekt"
 
-#: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
+#: app/gui/layers-commands.c:601 app/gui/layers-commands.c:633 app/undo.c:3632
 msgid "New Layer"
 msgstr "Nytt lager"
 
@@ -338,7 +338,7 @@ msgstr "Ta bort lager"
 msgid "Layer Mod"
 msgstr "Lagermod"
 
-#: app/undo.c:3635 app/gui/layers-commands.c:888
+#: app/gui/layers-commands.c:888 app/undo.c:3635
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
 
@@ -354,8 +354,8 @@ msgstr "Ompositionering av lager"
 msgid "Layer Move"
 msgstr "Lagerflytt"
 
-#: app/undo.c:3639 app/gui/channels-commands.c:314
-#: app/gui/channels-commands.c:351
+#: app/gui/channels-commands.c:314 app/gui/channels-commands.c:351
+#: app/undo.c:3639
 msgid "New Channel"
 msgstr "Ny kanal"
 
@@ -2049,7 +2049,6 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:638
-#, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 

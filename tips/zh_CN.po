@@ -34,8 +34,8 @@ msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
 msgstr ""
-"使用变换工具的旋转模式时，<tt>Ctrl</tt>+拖动可以控制旋转角度限制在 15 度的整倍"
-"数。"
+"使用变换工具的旋转模式时，<tt>Ctrl</tt>+拖动可以控制旋转角度限制在 15 度的整"
+"倍数。"
 
 #: tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -67,8 +67,8 @@ msgid ""
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"点击并拖动标尺可以在图像中放置参考线。所有拖动的选区都会被吸附到参考线上。"
-"你可以用移动工具把参考线拖出图像外来删除它们。"
+"点击并拖动标尺可以在图像中放置参考线。所有拖动的选区都会被吸附到参考线上。你"
+"可以用移动工具把参考线拖出图像外来删除它们。"
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -123,8 +123,8 @@ msgid ""
 "Nearly all image operations are performed by right-clicking on the image. "
 "And don't worry, you can undo most mistakes..."
 msgstr ""
-"几乎所有的图像操作都是通过右点图像进行的。而且不必担心，你可以撤销大多数的"
-"错误操作……"
+"几乎所有的图像操作都是通过右点图像进行的。而且不必担心，你可以撤销大多数的错"
+"误操作……"
 
 #: tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -252,8 +252,8 @@ msgid ""
 "You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
 "it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
-"你可以从“图层、通道和路径”对话框中拖动一个图层到工具箱中释放。这样会创建"
-"一幅只含有那个图层的新图像。"
+"你可以从“图层、通道和路径”对话框中拖动一个图层到工具箱中释放。这样会创建一幅"
+"只含有那个图层的新图像。"
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""

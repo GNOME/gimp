@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-11-04 10:02+0100\n"
+"POT-Creation-Date: 2002-11-06 22:59+0100\n"
 "PO-Revision-Date: 2002-11-04 22:43GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -162,13 +162,14 @@ msgstr "Nic"
 msgid "percent"
 msgstr "procenta"
 
-#: libgimpmodule/gimpmodule.c:175
+#: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Načítá se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:192 libgimpmodule/gimpmodule.c:285
-#: libgimpmodule/gimpmodule.c:310 libgimpmodule/gimpmodule.c:378
+#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
+#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
+#: libgimpmodule/gimpmodule.c:386
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -177,26 +178,27 @@ msgstr ""
 "Chyba při načítání modulu '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:252
+#: libgimpmodule/gimpmodule.c:260
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynechává se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:355
+#: libgimpmodule/gimpmodule.c:363
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:356
-msgid "Loaded OK"
+#: libgimpmodule/gimpmodule.c:364
+#, fuzzy
+msgid "Loaded"
 msgstr "Načteno úspěšně"
 
-#: libgimpmodule/gimpmodule.c:357
+#: libgimpmodule/gimpmodule.c:365
 msgid "Load failed"
 msgstr "Načtení selhalo"
 
-#: libgimpmodule/gimpmodule.c:358
-msgid "Unloaded OK"
-msgstr "Uvolněno úspěšně"
+#: libgimpmodule/gimpmodule.c:366
+msgid "Not loaded"
+msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -214,74 +216,67 @@ msgstr "/Černá"
 msgid "/White"
 msgstr "/Bílá"
 
-#. Hue
-#: libgimpwidgets/gimpcolorscales.c:154
+#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_O"
 
-#. Saturation
-#: libgimpwidgets/gimpcolorscales.c:156
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_S"
 
-#. Value
-#: libgimpwidgets/gimpcolorscales.c:158
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_H"
 
-#. Red
-#: libgimpwidgets/gimpcolorscales.c:160
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#. Green
-#: libgimpwidgets/gimpcolorscales.c:162
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_G"
 
-#. Blue
-#: libgimpwidgets/gimpcolorscales.c:164
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
-#. Alpha
-#: libgimpwidgets/gimpcolorscales.c:166
+#: libgimpwidgets/gimpcolorscales.c:168
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Odstín"
 
-#: libgimpwidgets/gimpcolorscales.c:171
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
 msgstr "Sytost"
 
-#: libgimpwidgets/gimpcolorscales.c:172
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Hodnota"
 
-#: libgimpwidgets/gimpcolorscales.c:173
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Červená (Red)"
 
-#: libgimpwidgets/gimpcolorscales.c:174
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Zelená (Green)"
 
-#: libgimpwidgets/gimpcolorscales.c:175
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Modrá (Blue)"
 
-#: libgimpwidgets/gimpcolorscales.c:176
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:240
+#: libgimpwidgets/gimpcolorscales.c:252
 msgid "Hexadecimal color notation as used in HTML"
 msgstr "Hexadecimální barevná notace jako v HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:254
+#: libgimpwidgets/gimpcolorscales.c:266
 msgid "He_x Triplet:"
 msgstr "Trojice he_x:"
 
@@ -292,6 +287,12 @@ msgstr "Výběr adresáře"
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Výběr souboru"
+
+#: libgimpwidgets/gimppickbutton.c:141
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"
@@ -329,31 +330,31 @@ msgstr "Viditelný"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: libgimpwidgets/gimpstock.c:135
+#: libgimpwidgets/gimpstock.c:136
 msgid "L_etter Spacing"
 msgstr "Roz_estup písmen"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:137
 msgid "L_ine Spacing"
 msgstr "Řá_dkování"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:158
 msgid "Crop"
 msgstr "Ořezat"
 
-#: libgimpwidgets/gimpstock.c:175
+#: libgimpwidgets/gimpstock.c:176
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: libgimpwidgets/gimpstock.c:178
+#: libgimpwidgets/gimpstock.c:179
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:181
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -389,7 +390,8 @@ msgstr "Ča_s"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "Hnízdo náhodného generátoru z aktuálního času - zaručuje přiměřenou náhodnost"
+msgstr ""
+"Hnízdo náhodného generátoru z aktuálního času - zaručuje přiměřenou náhodnost"
 
 #: libgimpwidgets/gimpwidgets.c:1316
 msgid "Bytes"
@@ -447,9 +449,12 @@ msgstr "Výběr barev ve stylu vodovek"
 msgid "_Watercolor"
 msgstr "_Vodová barva"
 
-#: modules/colorsel_water.c:249
+#: modules/colorsel_water.c:250
 msgid "Pressure"
 msgstr "Tlak"
+
+#~ msgid "Unloaded OK"
+#~ msgstr "Uvolněno úspěšně"
 
 #~ msgid "OK"
 #~ msgstr "OK"
@@ -477,4 +482,3 @@ msgstr "Tlak"
 
 #~ msgid "picas"
 #~ msgstr "pik"
-
