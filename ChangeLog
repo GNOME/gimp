@@ -185,7 +185,7 @@ Wed Jun 21 20:18:16 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/rotate.c: slight speedup for 180-degrees
 
-2000-05-20  Nick Lamb  <njl195@zepler.org.uk>
+2000-06-18  Nick Lamb  <njl195@zepler.org.uk>
 
 	* devel-docs/parasites.txt
 	* plug-ins/common/tiff.c: Add support for ICC profiles
