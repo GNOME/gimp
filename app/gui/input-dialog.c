@@ -42,6 +42,7 @@
 #include "tools.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpcolorarea.h"
 #include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
@@ -49,16 +50,13 @@
 
 #define CELL_SIZE 20 /* The size of the preview cells */
 
-#define PREVIEW_EVENT_MASK  GDK_BUTTON_PRESS_MASK | \
-			    GDK_BUTTON_RELEASE_MASK | \
-			    GDK_ENTER_NOTIFY_MASK | \
-                            GDK_LEAVE_NOTIFY_MASK
+#define DEVICE_CONTEXT_MASK (GIMP_CONTEXT_TOOL_MASK       | \
+                             GIMP_CONTEXT_FOREGROUND_MASK | \
+                             GIMP_CONTEXT_BACKGROUND_MASK | \
+			     GIMP_CONTEXT_BRUSH_MASK      | \
+			     GIMP_CONTEXT_PATTERN_MASK    | \
+                             GIMP_CONTEXT_GRADIENT_MASK)
 
-#define DEVICE_CONTEXT_MASK GIMP_CONTEXT_TOOL_MASK | \
-                            GIMP_CONTEXT_FOREGROUND_MASK | \
-			    GIMP_CONTEXT_BRUSH_MASK | \
-			    GIMP_CONTEXT_PATTERN_MASK | \
-                            GIMP_CONTEXT_GRADIENT_MASK
 
 typedef struct _DeviceInfo DeviceInfo;
 
@@ -94,7 +92,8 @@ struct _DeviceInfoDialog
 
   GtkWidget **frames;
   GtkWidget **tools;
-  GtkWidget **colors;
+  GtkWidget **foregrounds;
+  GtkWidget **backgrounds;
   GtkWidget **brushes;
   GtkWidget **patterns;
   GtkWidget **gradients;
@@ -123,12 +122,10 @@ static ToolType device_status_drag_tool        (GtkWidget   *widget,
 static void     device_status_drop_tool        (GtkWidget   *widget,
 						ToolType     tool,
 						gpointer     data);
-static void     device_status_drag_color       (GtkWidget   *widget,
-						GimpRGB     *color,
-						gpointer     data);
-static void     device_status_drop_color       (GtkWidget   *widget,
-						GimpRGB     *color,
-						gpointer     data);
+static void     device_status_foreground_changed (GtkWidget   *widget,
+						  gpointer     data);
+static void     device_status_background_changed (GtkWidget   *widget,
+						  gpointer     data);
 static void     device_status_drop_brush       (GtkWidget   *widget,
 						GimpBrush   *brush,
 						gpointer     data);
@@ -165,12 +162,6 @@ static GtkTargetEntry tool_target_table[] =
 static guint n_tool_targets = (sizeof (tool_target_table) /
 			       sizeof (tool_target_table[0]));
 
-static GtkTargetEntry color_area_target_table[] =
-{
-  GIMP_TARGET_COLOR
-};
-static guint n_color_area_targets = (sizeof (color_area_target_table) /
-				     sizeof (color_area_target_table[0]));
 
 
 /*  utility functions for the device lists  */
@@ -694,6 +685,11 @@ devices_write_rc_device (DeviceInfo *device_info,
 
     fprintf (fp, "\n        (foreground %f %f %f %f)",
 	     color.r, color.g, color.b, color.a);
+
+    gimp_context_get_background (device_info->context, &color);
+
+    fprintf (fp, "\n        (background %f %f %f %f)",
+	     color.r, color.g, color.b, color.a);
   }
 
   if (gimp_context_get_brush (device_info->context))
@@ -743,6 +739,7 @@ device_status_create (void)
 {
   DeviceInfo *device_info;
   GtkWidget  *label;
+  GimpRGB     color;
   GList      *list;
   gint        i;
   
@@ -777,21 +774,22 @@ device_status_create (void)
 	}
 
       /*  devices table  */
-      deviceD->table = gtk_table_new (deviceD->num_devices, 6, FALSE);
+      deviceD->table = gtk_table_new (deviceD->num_devices, 7, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (deviceD->table), 3);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (deviceD->shell)->vbox),
 			 deviceD->table);
       gtk_widget_realize (deviceD->table);
       gtk_widget_show (deviceD->table);
 
-      deviceD->ids        = g_new (guint32, deviceD->num_devices);
-      deviceD->frames     = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->tools      = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->colors     = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->brushes    = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->patterns   = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->gradients  = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->eventboxes = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->ids         = g_new (guint32, deviceD->num_devices);
+      deviceD->frames      = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->tools       = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->foregrounds = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->backgrounds = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->brushes     = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->patterns    = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->gradients   = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->eventboxes  = g_new (GtkWidget *, deviceD->num_devices);
 
       for (list = device_info_list, i = 0; list; list = g_list_next (list), i++)
 	{
@@ -819,7 +817,7 @@ device_status_create (void)
 
 	  /*  the tool  */
 
-	  deviceD->eventboxes[i] = gtk_event_box_new();
+	  deviceD->eventboxes[i] = gtk_event_box_new ();
 
 	  deviceD->tools[i] = gtk_pixmap_new (tool_get_pixmap (RECT_SELECT), 
 					      tool_get_mask (RECT_SELECT));
@@ -848,27 +846,34 @@ device_status_create (void)
 
 	  /*  the foreground color  */
 
-	  deviceD->colors[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
-	  gtk_widget_set_events (deviceD->colors[i], PREVIEW_EVENT_MASK);
-	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]),
-			    CELL_SIZE, CELL_SIZE);
-	  gtk_drag_source_set (deviceD->colors[i],
-			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-			       color_area_target_table, n_color_area_targets,
-			       GDK_ACTION_COPY);
-	  gimp_dnd_color_source_set (deviceD->colors[i],
-				     device_status_drag_color, 
-				     GUINT_TO_POINTER (device_info->device));
- 	  gtk_drag_dest_set (deviceD->colors[i],
- 			     GTK_DEST_DEFAULT_HIGHLIGHT |
-			     GTK_DEST_DEFAULT_MOTION |
- 			     GTK_DEST_DEFAULT_DROP,
- 			     color_area_target_table, n_color_area_targets,
- 			     GDK_ACTION_COPY); 
- 	  gimp_dnd_color_dest_set (deviceD->colors[i], device_status_drop_color, 
-				   GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->colors[i],
+	  deviceD->foregrounds[i] = 
+	    gimp_color_area_new (&color,
+				 GIMP_COLOR_AREA_SMALL_CHECKS,
+				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+	  gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
+	  gtk_signal_connect (GTK_OBJECT (deviceD->foregrounds[i]), 
+			      "color_changed",
+			      GTK_SIGNAL_FUNC (device_status_foreground_changed),
+			      GUINT_TO_POINTER (device_info->device));
+	  gtk_table_attach (GTK_TABLE (deviceD->table), 
+			    deviceD->foregrounds[i],
 			    2, 3, i, i+1,
+			    0, 0, 2, 2);
+
+	  /*  the background color  */
+
+	  deviceD->backgrounds[i] = 
+	    gimp_color_area_new (&color,
+				 GIMP_COLOR_AREA_SMALL_CHECKS,
+				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+	  gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
+	  gtk_signal_connect (GTK_OBJECT (deviceD->backgrounds[i]), 
+			      "color_changed",
+			      GTK_SIGNAL_FUNC (device_status_background_changed),
+			      GUINT_TO_POINTER (device_info->device));
+	  gtk_table_attach (GTK_TABLE (deviceD->table), 
+			    deviceD->backgrounds[i],
+			    3, 4, i, i+1,
 			    0, 0, 2, 2);
 
 	  /*  the brush  */
@@ -880,7 +885,7 @@ device_status_create (void)
 				      GTK_SIGNAL_FUNC (device_status_drop_brush),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->brushes[i],
-			    3, 4, i, i+1,
+			    4, 5, i, i+1,
 			    0, 0, 2, 2);
 
 	  /*  the pattern  */
@@ -892,7 +897,7 @@ device_status_create (void)
 				      GTK_SIGNAL_FUNC (device_status_drop_pattern),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
-			    4, 5, i, i+1,
+			    5, 6, i, i+1,
 			    0, 0, 2, 2);
 
 	  /*  the gradient  */
@@ -904,7 +909,7 @@ device_status_create (void)
 				      GTK_SIGNAL_FUNC (device_status_drop_gradient),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
-			    5, 6, i, i+1,
+			    6, 7, i, i+1,
 			    0, 0, 2, 2);
 
 	  device_status_update (device_info->device);
@@ -935,7 +940,8 @@ device_status_destroy_callback (void)
   g_free (deviceD->frames);
   g_free (deviceD->tools);
   g_free (deviceD->eventboxes);
-  g_free (deviceD->colors);
+  g_free (deviceD->foregrounds);
+  g_free (deviceD->backgrounds);
   g_free (deviceD->brushes);
   g_free (deviceD->patterns);
   g_free (deviceD->gradients);
@@ -992,9 +998,9 @@ device_status_update (guint32 deviceid)
   GdkDeviceInfo *gdk_info;
   DeviceInfo    *device_info;
   GimpRGB        color;
-  guchar         buffer[CELL_SIZE * 3];
-  gchar          ttbuf[20]; /* [xxx,xxx,xxx] + null */
-  gint           i, j;
+  guchar         red, green, blue, alpha;
+  gchar          ttbuf[64];
+  gint           i;
 
   if (!deviceD || suppress_update)
     return;
@@ -1018,7 +1024,8 @@ device_status_update (guint32 deviceid)
       gtk_widget_hide (deviceD->frames[i]);
       gtk_widget_hide (deviceD->tools[i]);
       gtk_widget_hide (deviceD->eventboxes[i]);
-      gtk_widget_hide (deviceD->colors[i]);
+      gtk_widget_hide (deviceD->foregrounds[i]);
+      gtk_widget_hide (deviceD->backgrounds[i]);
       gtk_widget_hide (deviceD->brushes[i]);
       gtk_widget_hide (deviceD->patterns[i]);
       gtk_widget_hide (deviceD->gradients[i]);
@@ -1039,29 +1046,33 @@ device_status_update (guint32 deviceid)
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].tool_desc,
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].private_tip);
 
+      /*  foreground color  */
       gimp_context_get_foreground (device_info->context, &color);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (deviceD->foregrounds[i]), 
+				 &color);
+      gtk_widget_show (deviceD->foregrounds[i]);
 
-      for (j = 0; j < CELL_SIZE * 3; j += 3)
-	{
-	  gimp_rgb_get_uchar (&color,
-			      &buffer[j],
-			      &buffer[j + 1],
-			      &buffer[j + 2]);
-	}
+      /*  Set the tip to be the RGBA value  */
+      gimp_rgba_get_uchar (&color, &red, &green, &blue, &alpha);
+      g_snprintf (ttbuf, sizeof (ttbuf), _("Foreground: %d, %d, %d, %d"),
+		  red, green, blue, alpha);
+      gtk_widget_add_events (deviceD->foregrounds[i],
+			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+      gimp_help_set_help_data (deviceD->foregrounds[i], ttbuf, NULL);
 
-      for (j = 0; j < CELL_SIZE; j++)
-	gtk_preview_draw_row (GTK_PREVIEW(deviceD->colors[i]), buffer, 
-			      0, j, CELL_SIZE);
-      gtk_widget_draw (deviceD->colors[i], NULL);
-      gtk_widget_show (deviceD->colors[i]);
+      /*  background color  */
+      gimp_context_get_background (device_info->context, &color);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (deviceD->backgrounds[i]), 
+				 &color);
+      gtk_widget_show (deviceD->backgrounds[i]);
 
-      /*  Set the tip to be the RGB value  */
-      g_snprintf (ttbuf, sizeof (ttbuf), "[%3d,%3d,%3d]",
-		  buffer[0],
-		  buffer[1],
-		  buffer[2]);
-
-      gimp_help_set_help_data (deviceD->colors[i], ttbuf, NULL);
+      /*  Set the tip to be the RGBA value  */
+      gimp_rgba_get_uchar (&color, &red, &green, &blue, &alpha);
+      g_snprintf (ttbuf, sizeof (ttbuf), _("Background: %d, %d, %d, %d"),
+		  red, green, blue, alpha);
+      gtk_widget_add_events (deviceD->backgrounds[i],
+			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+      gimp_help_set_help_data (deviceD->backgrounds[i], ttbuf, NULL);
 
       if (gimp_context_get_brush (device_info->context))
 	{
@@ -1125,36 +1136,34 @@ device_status_drop_tool (GtkWidget *widget,
 }
 
 static void
-device_status_drag_color (GtkWidget *widget,
-			  GimpRGB   *color,
-			  gpointer   data)
+device_status_foreground_changed (GtkWidget *widget,
+				  gpointer   data)
 {
   DeviceInfo *device_info;
-
-  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
-
-  if (device_info)
-    {
-      gimp_context_get_foreground (device_info->context, color);
-    }
-  else
-    {
-      gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
-    }
-}
-
-static void
-device_status_drop_color (GtkWidget *widget,
-			  GimpRGB   *color,
-			  gpointer   data)
-{
-  DeviceInfo *device_info;
+  GimpRGB     color;
 
   device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_foreground (device_info->context, color);
+      gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
+      gimp_context_set_foreground (device_info->context, &color);
+    }
+}
+
+static void
+device_status_background_changed (GtkWidget *widget,
+				  gpointer   data)
+{
+  DeviceInfo *device_info;
+  GimpRGB     color;
+
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
+
+  if (device_info && device_info->is_present)
+    {
+      gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
+      gimp_context_set_background (device_info->context, &color);
     }
 }
 
@@ -1222,6 +1231,9 @@ device_status_context_connect  (GimpContext *context,
 				guint32      deviceid)
 {
   gtk_signal_connect (GTK_OBJECT (context), "foreground_changed",
+		      GTK_SIGNAL_FUNC (device_status_data_changed),
+		      (gpointer) deviceid);
+  gtk_signal_connect (GTK_OBJECT (context), "background_changed",
 		      GTK_SIGNAL_FUNC (device_status_data_changed),
 		      (gpointer) deviceid);
   gtk_signal_connect (GTK_OBJECT (context), "tool_changed",
