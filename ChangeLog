@@ -1,3 +1,8 @@
+2003-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcroptool.c: update the crop dialog in
+	crop_recalc(), not in gimp_crop_tool_draw().
+
 2003-12-19  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: Removed private statusbar

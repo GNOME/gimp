@@ -816,8 +816,6 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
                               crop->dcw, crop->dch,
                               GTK_ANCHOR_SOUTH_EAST,
                               FALSE);
-
-  crop_info_update (crop);
 }
 
 static void
@@ -862,6 +860,9 @@ crop_recalc (GimpCropTool *crop)
 
 #undef SRW
 #undef SRH
+
+  if (crop->crop_info)
+    crop_info_update (crop);
 }
 
 static void
@@ -1086,10 +1087,11 @@ crop_response (GtkWidget    *widget,
   if (gimp_tool_control_is_active (GIMP_TOOL (crop)->control))
     gimp_tool_control_halt (GIMP_TOOL (crop)->control);
 
-  GIMP_TOOL (crop)->gdisp = NULL;
-
   if (crop->crop_info)
     info_dialog_popdown (crop->crop_info);
+
+  tool->gdisp    = NULL;
+  tool->drawable = NULL;
 }
 
 static void
