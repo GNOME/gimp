@@ -362,6 +362,7 @@ lc_dialog_create (GimpImage* gimage)
 
       gtk_widget_show (notebook);
 
+      gtk_widget_show (lc_shell);
       gtk_widget_show (lc_subshell);
 
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
@@ -374,8 +375,6 @@ lc_dialog_create (GimpImage* gimage)
       gtk_widget_show (button);
 
       gtk_widget_show (GTK_DIALOG(lc_shell)->action_area);
-
-      gtk_widget_show (lc_shell);
 
       /*  Make sure the channels page is realized  */
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);

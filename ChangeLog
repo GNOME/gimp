@@ -1,3 +1,10 @@
+Fri Jul 24 14:40:55 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/layers_dialog.c (lc_dialog_create): moved 
+	gtk_widget_show (lc_shell) so that the layers show up in the
+	dialog again.  I've told Owen about this problem, we'll see what
+	comes up.
+
 Fri Jul 24 19:36:33 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* app/appenv.h app/brightness_contrast.c app/color_balance.c
