@@ -1,3 +1,10 @@
+2005-03-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/dialogs/print-size-dialog.c (print_size_dialog_response):
+	handle the resolution unit correctly, fixes bug #170200.
+
 2005-03-13  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
