@@ -1,3 +1,7 @@
+2001-08-12  Sven Neumann  <sven@gimp.org>
+
+	* TODO.xml: fixed an error, updated some numbers and added new items.
+
 2001-08-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: return the created layer.
