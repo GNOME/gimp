@@ -164,13 +164,13 @@
 #define DEFAULT_COMMENT     "Created with The GIMP"
 
 /* sg - these should not be global... */
-static gint32 volatile  image_ID_global = -1;
-static gint32           orig_image_ID_global;
-static gint32           drawable_ID_global = -1;
-static gint32           layer_ID_global = -1;
-static GtkWidget       *preview_size = NULL;
-static GimpDrawable       *drawable_global = NULL;
-
+static gint32 volatile  image_ID_global       = -1;
+static gint32           orig_image_ID_global  = -1;
+static gint32           drawable_ID_global    = -1;
+static gint32           layer_ID_global       = -1;
+static GtkWidget       *preview_size          = NULL;
+static GimpDrawable    *drawable_global       = NULL;
+ 
 typedef struct
 {
   gdouble quality;
@@ -192,17 +192,17 @@ typedef struct
 typedef struct 
 {
   struct jpeg_compress_struct cinfo;
-  gint       tile_height;
-  FILE      *outfile;
-  gint       has_alpha;
-  gint       rowstride;
-  guchar    *temp;
-  guchar    *data;
-  guchar    *src;
+  gint          tile_height;
+  FILE         *outfile;
+  gint          has_alpha;
+  gint          rowstride;
+  guchar       *temp;
+  guchar       *data;
+  guchar       *src;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
-  gchar     *file_name;
-  gint       abort_me;
+  gchar        *file_name;
+  gint          abort_me;
 } preview_persistent;
 
 gint *abort_me = NULL;
@@ -210,43 +210,37 @@ gint *abort_me = NULL;
 /* Declare local functions.
  */
 static void   query                     (void);
-static void   run                       (gchar         *name,
-					 gint           nparams,
+static void   run                       (gchar            *name,
+					 gint              nparams,
 					 GimpParam        *param,
-					 gint          *nreturn_vals,
+					 gint             *nreturn_vals,
 					 GimpParam       **return_vals);
-static gint32 load_image                (gchar         *filename, 
+static gint32 load_image                (gchar            *filename, 
 					 GimpRunModeType   runmode, 
-					 gint           preview);
-static gint   save_image                (gchar         *filename,
-					 gint32         image_ID,
-					 gint32         drawable_ID,
-					 gint32         orig_image_ID,
-					 gint           preview);
-
-static void   add_menu_item             (GtkWidget *menu,
-					 char *label,
-					 guint op_no,
-					 GtkSignalFunc callback);
+					 gint              preview);
+static gint   save_image                (gchar            *filename,
+					 gint32            image_ID,
+					 gint32            drawable_ID,
+					 gint32            orig_image_ID,
+					 gint              preview);
 
 static gint   save_dialog                (void);
 
-static void   save_close_callback        (GtkWidget *widget,
-					  gpointer   data);
-static void   save_ok_callback           (GtkWidget *widget,
-					  gpointer   data);
-static void   save_restart_toggle_update (GtkWidget     *toggle,
-					  GtkAdjustment *adjustment);
-static void   save_restart_update        (GtkAdjustment *adjustment,
-					  GtkWidget     *toggle);
+static void   save_close_callback        (GtkWidget       *widget,
+					  gpointer         data);
+static void   save_ok_callback           (GtkWidget       *widget,
+					  gpointer         data);
+static void   save_restart_toggle_update (GtkWidget       *toggle,
+					  GtkAdjustment   *adjustment);
+static void   save_restart_update        (GtkAdjustment   *adjustment,
+					  GtkWidget       *toggle);
 
 static void   make_preview               (void);
 static void   destroy_preview            (void);
 
-static void   subsmp_callback            (GtkWidget *widget, 
-					  gpointer data);
-static void   dct_callback               (GtkWidget *widget, 
-					  gpointer data);
+static void   menu_callback              (GtkWidget       *widget, 
+					  gpointer         data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1275,7 +1269,7 @@ save_image (char   *filename,
    * Four fields of the cinfo struct must be filled in:
    */
   /* image width and height, in pixels */
-  cinfo.image_width = drawable->width;
+  cinfo.image_width  = drawable->width;
   cinfo.image_height = drawable->height;
   /* colorspace of input image */
   cinfo.in_color_space = (drawable_type == GIMP_RGB_IMAGE ||
@@ -1540,20 +1534,6 @@ destroy_preview (void)
     }
 }
 
-static void
-add_menu_item (GtkWidget        *menu, 
-	       gchar            *label, 
-	       guint             op_no, 
-	       GtkSignalFunc     callback)
-{
-  GtkWidget *menu_item = gtk_menu_item_new_with_label (label);
-
-  gtk_container_add (GTK_CONTAINER (menu), menu_item);
-  gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-		      (GtkSignalFunc) callback, &op_no);
-  gtk_widget_show (menu_item);
-}
-
 static gint
 save_dialog (void)
 {
@@ -1576,8 +1556,6 @@ save_dialog (void)
   /* GtkWidget *preview_size; -- global */
 
   GtkWidget *menu;
-  GtkWidget *subsmp_menu;
-  GtkWidget *dct_menu;
   
   GtkWidget *text;
   GtkWidget *com_frame;
@@ -1778,49 +1756,40 @@ save_dialog (void)
 				jsvals.baseline);
   gtk_widget_show (baseline);
 
-  /* build option menu (code taken from app/buildmenu.c) */
-  menu = gtk_menu_new ();
+  /* Subsampling */
+  menu = 
+    gimp_option_menu_new2 (FALSE, 
+			   menu_callback, 
+			   &jsvals.subsmp, GINT_TO_POINTER (jsvals.subsmp),
+			   "2x2,1x1,1x1",  GINT_TO_POINTER (0), NULL, 
+			   "2x1,1x1,1x1 (4:2:2)", GINT_TO_POINTER (1), NULL,
+			   "1x1,1x1,1x1",  GINT_TO_POINTER (2), NULL,
+			   NULL);
 
-  add_menu_item (menu, "2x2,1x1,1x1", 0, subsmp_callback);
-  add_menu_item (menu, "2x1,1x1,1x1 (4:2:2)", 1, subsmp_callback);
-  add_menu_item (menu, "1x1,1x1,1x1", 2, subsmp_callback);
-
-  subsmp_menu = gtk_option_menu_new ();
-
-  label = gtk_label_new (_("Subsampling:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 2, 7, 8,
-		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), subsmp_menu, 2, 3, 7, 8,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (subsmp_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (subsmp_menu), menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1, 7, 
+			     _("Subsampling:"),
+			     1.0, 0.5,
+			     menu, 1, FALSE);
 
   /* DCT method */
-  menu = gtk_menu_new ();
+  menu = 
+    gimp_option_menu_new2 (FALSE, 
+			   menu_callback, 
+			   &jsvals.dct, GINT_TO_POINTER (jsvals.dct),
+			   _("Fast Integer"),   GINT_TO_POINTER (1), NULL, 
+			   _("Integer"),        GINT_TO_POINTER (0), NULL,
+			   _("Floating-Point"), GINT_TO_POINTER (2), NULL,
+			   NULL);
 
-  add_menu_item (menu, _("Fast integer"),   1, dct_callback);
-  add_menu_item (menu, _("Integer"),        0, dct_callback);
-  add_menu_item (menu, _("Floating-point"), 2, dct_callback);
-
-  dct_menu = gtk_option_menu_new ();
- 
-  label = gtk_label_new (_("DCT method (Speed/quality tradeoff):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 2, 8, 9,
-		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), dct_menu, 2, 3, 8, 9,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (dct_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (dct_menu), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (dct_menu), 1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1, 8, 
+			     _("DCT method (Speed/quality tradeoff):"),
+			     1.0, 0.5,
+			     menu, 1, FALSE);
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE) 
     {
-      gtk_widget_set_sensitive (subsmp_menu, FALSE);
+      gtk_widget_set_sensitive (menu, FALSE);
     }
 
   com_frame = gtk_frame_new (_("Image comments"));
@@ -1926,17 +1895,9 @@ save_restart_update (GtkAdjustment *adjustment,
 }
 
 static void
-subsmp_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  jsvals.subsmp = *((guchar *) data);
-  make_preview ();
-}
-
-static void
-dct_callback (GtkWidget *widget,
+menu_callback (GtkWidget *widget,
 	      gpointer   data)
 {
-  jsvals.dct = *((guchar *) data);
+  gimp_menu_item_update (widget, data);
   make_preview ();
 }

@@ -1,5 +1,10 @@
 2000-11-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/jpeg.c: fixed the option_menu code for the
+	DCT and subsampling options. Fixes bug #31253.
+
+2000-11-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c: cleaned up the code and 
 	moved interface variables into a structure, thus getting rid of 
 	most global variables. When a script is run, we now check that 
