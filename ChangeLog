@@ -1,3 +1,23 @@
+Tue Sep 15 21:27:10 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/gif.c:
+	The facility to specify the background colour of
+	a transparent/animated GIF for non-transparent
+	viewers now works very much more consistantly.
+	The only situations in which it will fail to work
+	as expected now are those where file size can be reduced
+	(abeit not by much, as the plugin is sometimes more pessimistic
+	than it need be) by re-using an existing unused colour
+	index rather than using another bit per pixel in the
+	encoded file.  That will never be an issue with an image
+	which was freshly converted from RGB to INDEXED with the
+	Quantize option, as that option removes any unused colours
+	from the image.
+
+	Let me know if you find the consistancy/size tradeoff more
+	annoying than helpful and I can adjust it.  IMHO it is too
+	arcane a feature to present to any user as a runtime option.
+
 Wed Sep  9 02:41:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: added -std1 check for DU4
