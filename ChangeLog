@@ -1,3 +1,8 @@
+2004-11-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-preview.c: Eliminated about 96
+	floating-point divides per frame in the persective preview.
+
 2004-11-13  Manish Singh  <yosh@gimp.org>
 
 	Fix a bunch of warnings from Sparse:
