@@ -1,5 +1,9 @@
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-transform.c: include stdlib.h for abs().
+
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: applied a patch from
 	Pedro Gimeno that fixes the display render problems at high zoom
 	levels (bug #109933).
