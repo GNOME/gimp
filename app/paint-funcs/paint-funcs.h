@@ -34,7 +34,7 @@ void  blend_pixels          (const guchar *src1,
 			     const guchar *src2,
 			     guchar *dest, 
 			     guchar blend, guint w, 
-			     guint bytes, guint has_alpha);
+			     guint bytes);
 
 void  shade_pixels          (const guchar *src, guchar *dest,
 			     const guchar *color,

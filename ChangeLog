@@ -1,3 +1,15 @@
+2003-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): fixed typo: use x1 instead
+	of the uninitialized variable x.
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.[ch]: removed unused variable
+	has_alpha from blend_pixels() function.
+
+	* app/base/temp-buf.c: cosmetics.
+
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/vectors-commands.[ch]: added new function

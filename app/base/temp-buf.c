@@ -241,10 +241,10 @@ temp_buf_new (gint    width,
    parameters into a newly allocated tempbuf */
 
 TempBuf *
-temp_buf_new_check (gint width,
-		    gint height,
-		    GimpCheckType check_type,
-	            GimpCheckSize check_size)
+temp_buf_new_check (gint           width,
+		    gint           height,
+		    GimpCheckType  check_type,
+	            GimpCheckSize  check_size)
 {
   TempBuf *newbuf;
   guchar  *data;
@@ -495,15 +495,13 @@ temp_buf_copy_area (TempBuf *src,
   srcPR.w         = width;
   srcPR.h         = height;
   srcPR.rowstride = src->bytes * src->width;
-  srcPR.data      = (temp_buf_data (src) +
-                     y1 * srcPR.rowstride +
-                     x1 * srcPR.bytes);
+  srcPR.data      = temp_buf_data (src) + (y1 * srcPR.rowstride +
+					   x1 * srcPR.bytes);
 
   destPR.bytes     = dest->bytes;
   destPR.rowstride = new->bytes * new->width;
-  destPR.data      = (temp_buf_data (new) +
-                      dest_y * destPR.rowstride +
-                      dest_x * destPR.bytes);
+  destPR.data      = temp_buf_data (new) + (dest_y * destPR.rowstride +
+					    dest_x * destPR.bytes);
 
   copy_region (&srcPR, &destPR);
 

@@ -169,8 +169,7 @@ blend_pixels (const guchar *src1,
 	      guchar       *dest,
 	      guchar        blend,
 	      guint         w,
-	      guint         bytes,
-	      guint         has_alpha)
+	      guint         bytes)
 {
   guint b;
   const guchar blend2 = (255 - blend);

@@ -240,7 +240,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                 tile_manager_bpp (orig_tiles));
   pixel_region_init (&destPR, new_tiles,
-                     0, 0, x2 - x, y2 - y1, TRUE);
+                     0, 0, x2 - x1, y2 - y1, TRUE);
   tile_manager_set_offsets (new_tiles, x1, y1);
 
   /* initialise the pixel_surround and pixel_cache accessors */
@@ -571,8 +571,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Transform"));
+  gimp_image_undo_group_start (gimage,
+			       GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, &new_layer);

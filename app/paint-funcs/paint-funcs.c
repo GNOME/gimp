@@ -2103,7 +2103,7 @@ blend_region (PixelRegion *src1,
 
       while (h --)
 	{
-          blend_pixels (s1, s2, d, blend, src1->w, src1->bytes, FALSE);
+          blend_pixels (s1, s2, d, blend, src1->w, src1->bytes);
 	  s1 += src1->rowstride;
 	  s2 += src2->rowstride;
 	  d += dest->rowstride;
