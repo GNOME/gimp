@@ -29,10 +29,10 @@ extern "C" {
 
 #define gimp_attach_parasite	gimp_parasite_attach
 #define gimp_detach_parasite	gimp_parasite_detach
-#define gimp_find_parasite	gimp_parasite_find
+#define gimp_parasite_find	gimp_parasite_find
 #define gimp_image_attach_parasite	gimp_image_parasite_attach
 #define gimp_image_detach_parasite	gimp_image_parasite_detach
-#define gimp_image_find_parasite	gimp_image_parasite_find
+#define gimp_image_parasite_find	gimp_image_parasite_find
 #define gimp_drawable_attach_parasite	gimp_drawable_parasite_attach
 #define gimp_drawable_detach_parasite	gimp_drawable_parasite_detach
 #define gimp_drawable_channel	gimp_drawable_is_channel
