@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
-"POT-Creation-Date: 2002-08-28 22:23+0200\n"
-"PO-Revision-Date: 2002-08-28 22:23+0100\n"
+"POT-Creation-Date: 2002-08-31 16:57+0200\n"
+"PO-Revision-Date: 2002-08-31 17:24+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,11 +37,11 @@ msgstr "Auswählen..."
 
 #: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Kann mit dem SIOD-Ausgabe-pipe keinen Stream erstellen"
+msgstr "Mit dem SIOD-Ausgabe-Weiterleitung konnte kein Stream erstellt werden"
 
 #: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
-msgstr "Kann SIOD Ausgabe-Pipe nicht öffnen"
+msgstr "SIOD konnte Ausgabe-Weiterleitung nicht geöffnet werden"
 
 #: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -61,7 +61,7 @@ msgstr "Skript-Fu: %s"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1235
 msgid "About"
-msgstr "Über"
+msgstr "Info"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1245
@@ -98,11 +98,9 @@ msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1661
-msgid ""
-"At least one font you've choosen is invalid.\n"
+msgid "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
-msgstr ""
-"Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
+msgstr "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1961
@@ -135,8 +133,8 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
-"Skript-Fu Fehler bei der Ausführung von\n"
-"%s\n"
+"Skript-Fu Fehler beim Ausführen von\n"
+" %s\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:569
@@ -159,7 +157,8 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Konsole..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
 msgstr "Alle Skripte neu einlesen"
 
@@ -740,18 +739,15 @@ msgstr "Durchmesser"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -847,7 +843,7 @@ msgstr "Glühen hinzufügen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
-msgstr ""
+msgstr "Nach dem Glühen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid ""
@@ -1096,11 +1092,9 @@ msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
 msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken Only\n"
+msgid "Darken Only\n"
 "(Better, but only for Images with alot of White)"
-msgstr ""
-"Dunkle Farbe\n"
+msgstr "Dunkle Farbe\n"
 "(Besser, aber nur für Bilder mit viel Weiß)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1390,7 +1384,7 @@ msgstr "Hintergrund entfernen"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-By-Color Threshold"
-msgstr "\"Nach Farbe auswählen\"-Schwellenwert"
+msgstr "»Nach Farbe auswählen«-Schwellenwert"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
@@ -1398,28 +1392,20 @@ msgid "Shadow Color"
 msgstr "Schattenfarbe"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
-"Label..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button "
-"Beschriftung..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button Beschriftung..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
@@ -1546,7 +1532,7 @@ msgstr "Start Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Benutze Auswahl anstelle dem unten Angegebenen"
+msgstr "Auswahl anstelle dem unten Angegebenen verwenden"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
@@ -2278,3 +2264,4 @@ msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
+
