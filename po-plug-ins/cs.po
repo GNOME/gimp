@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.21.
+# Czech translation of GIMP plugins 1.1.22.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.21\n"
-"POT-Creation-Date: 2000-05-14 13:42-0700\n"
-"PO-Revision-Date: 2000-05-09 09:27+02:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.22\n"
+"POT-Creation-Date: 2000-05-16 20:35+0200\n"
+"PO-Revision-Date: 2000-05-16 20:40+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8478,7 +8478,7 @@ msgid "Move Path Animated Preview"
 msgstr "Cesta pøesunu animovaného náhledu"
 
 #: plug-ins/gap/gap_mov_dialog.c:886
-msgid "Generate Animate Preview failed\n"
+msgid "Generate Animated Preview failed\n"
 msgstr "Generování animovaného náhledu selhalo\n"
 
 #. filesel is already open
@@ -9813,7 +9813,7 @@ msgstr "Aktualizuje se stará vrstva GDynText do %s\n"
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
-"  A newer version is reqired to handle this layer.\n"
+"  A newer version is required to handle this layer.\n"
 "  Get it from %s\n"
 msgstr ""
 "VAROVÁNÍ: pøíli¹ starý GDynText!\n"

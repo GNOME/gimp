@@ -1,12 +1,12 @@
-# Czech translation of GIMP script-fu 1.1.21.
+# Czech translation of GIMP script-fu 1.1.22.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.21\n"
-"POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-10 13:04+02:00\n"
+"Project-Id-Version: gimp-script-fu 1.1.22\n"
+"POT-Creation-Date: 2000-05-16 20:36+0200\n"
+"PO-Revision-Date: 2000-05-16 20:41+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1251,7 +1251,7 @@ msgid "Gradient"
 msgstr "Pøechod"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0 - 15)"
+msgid "Granularity (0-15)"
 msgstr "Zrnitost (0-15)"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
