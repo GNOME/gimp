@@ -94,7 +94,8 @@ static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass)
 static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
 
 static void      gimp_display_shell_destroy            (GtkObject        *object);
-static void      gimp_display_shell_realize            (GtkWidget        *widget);
+static void      gimp_display_shell_screen_changed     (GtkWidget        *widget,
+                                                        GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
 							GdkEventAny      *aevent);
 
@@ -178,15 +179,15 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->destroy      = gimp_display_shell_destroy;
+  object_class->destroy        = gimp_display_shell_destroy;
 
-  widget_class->realize      = gimp_display_shell_realize;
-  widget_class->delete_event = gimp_display_shell_delete_event;
-  widget_class->popup_menu   = gimp_display_shell_popup_menu;
+  widget_class->screen_changed = gimp_display_shell_screen_changed;
+  widget_class->delete_event   = gimp_display_shell_delete_event;
+  widget_class->popup_menu     = gimp_display_shell_popup_menu;
 
-  klass->scaled              = gimp_display_shell_real_scaled;
-  klass->scrolled            = NULL;
-  klass->reconnect           = NULL;
+  klass->scaled                = gimp_display_shell_real_scaled;
+  klass->scrolled              = NULL;
+  klass->reconnect             = NULL;
 }
 
 static void
@@ -420,19 +421,17 @@ gimp_display_shell_destroy (GtkObject *object)
 }
 
 static void
-gimp_display_shell_realize (GtkWidget *widget)
+gimp_display_shell_screen_changed (GtkWidget *widget,
+                                   GdkScreen *previous)
 {
   GimpDisplayShell  *shell;
   GimpDisplayConfig *config;
 
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
 
   shell = GIMP_DISPLAY_SHELL (widget);
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
-  /*  We set the monitor resolution in the realize method so that
-   *  it is changed when the display shell is migrated to another screen.
-   */
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
     {
       gimp_get_screen_resolution (gtk_widget_get_screen (widget),
@@ -533,6 +532,17 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    * probably should be a user-configurable option.
    */
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+
+  if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
+    {
+      gimp_get_screen_resolution (screen,
+                                  &shell->monitor_xres, &shell->monitor_yres);
+    }
+  else
+    {
+      shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
+      shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+    }
 
   s_width  = gdk_screen_get_width (screen)  * 0.75;
   s_height = gdk_screen_get_height (screen) * 0.75;

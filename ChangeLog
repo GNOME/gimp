@@ -1,5 +1,10 @@
 2003-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c: set the screen resolution before
+	setting the initial scale; update it in GtkWidget::screen_changed.
+
+2003-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/Makefile.am: added missing file.
 
 2003-10-05  Sven Neumann  <sven@gimp.org>
