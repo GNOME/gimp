@@ -44,23 +44,30 @@ enum
 #define DEFAULT_CHECK_TYPE  GIMP_CHECK_TYPE_GRAY_CHECKS
 
 
-static void      gimp_preview_area_class_init    (GimpPreviewAreaClass *klass);
-static void      gimp_preview_area_init          (GimpPreviewArea *area);
+static void      gimp_preview_area_class_init       (GimpPreviewAreaClass *klass);
+static void      gimp_preview_area_init             (GimpPreviewArea *area);
 
-static void      gimp_preview_area_finalize      (GObject         *object);
-static void      gimp_preview_area_set_property  (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
-static void      gimp_preview_area_get_property  (GObject         *object,
-                                                  guint            property_id,
-                                                  GValue          *value,
-                                                  GParamSpec      *pspec);
+static void      gimp_preview_area_finalize         (GObject         *object);
+static void      gimp_preview_area_set_property     (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
+static void      gimp_preview_area_get_property     (GObject         *object,
+                                                     guint            property_id,
+                                                     GValue          *value,
+                                                     GParamSpec      *pspec);
 
-static void      gimp_preview_area_size_allocate (GtkWidget       *widget,
-                                                  GtkAllocation   *allocation);
-static gboolean  gimp_preview_area_expose        (GtkWidget       *widget,
-                                                  GdkEventExpose  *event);
+static void      gimp_preview_area_size_allocate    (GtkWidget       *widget,
+                                                     GtkAllocation   *allocation);
+static gboolean  gimp_preview_area_expose           (GtkWidget       *widget,
+                                                     GdkEventExpose  *event);
+
+static void      gimp_preview_area_queue_draw       (GimpPreviewArea *area,
+                                                     gint             x,
+                                                     gint             y,
+                                                     gint             width,
+                                                     gint             height);
+static gint      gimp_preview_area_image_type_bytes (GimpImageType type);
 
 
 static GtkDrawingAreaClass *parent_class = NULL;
@@ -281,6 +288,19 @@ gimp_preview_area_expose (GtkWidget      *widget,
     }
 
   return FALSE;
+}
+
+static void      gimp_preview_area_queue_draw    (GimpPreviewArea *area,
+                                                  gint             x,
+                                                  gint             y,
+                                                  gint             width,
+                                                  gint             height)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+
+  x += (GTK_WIDGET(area)->allocation.width  - area->width)  / 2;
+  y += (GTK_WIDGET(area)->allocation.height - area->height) / 2;
+  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
 }
 
 static gint
@@ -566,7 +586,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       break;
     }
 
-  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+  gimp_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
@@ -943,7 +963,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       break;
     }
 
-  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+  gimp_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
@@ -1498,7 +1518,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       break;
     }
 
-  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+  gimp_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**
@@ -1582,7 +1602,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
       memcpy (d, dest, width * 3);
     }
 
-  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+  gimp_preview_area_queue_draw (area, x, y, width, height);
 }
 
 /**

@@ -1,3 +1,11 @@
+2004-09-09  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreviewarea.c: added a utility function
+	gimp_preview_area_queue_draw(), which queue the right part of the
+	preview to be redrawn. And use it in all the drawing functions. This
+	fix a problem where the preview wasn't updated correctly after a
+	resize.
+
 2004-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/cartoon.c
