@@ -1,3 +1,7 @@
+2001-06-22  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation
+
 2001-06-19  Sven Neumann  <sven@gimp.org>
 
 	* da.po: removed translation of <Image> menu path, fixes bug #51631.

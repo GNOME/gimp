@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-06-18 14:09+0200\n"
-"PO-Revision-Date: 2001-06-18 14:10+0200\n"
+"POT-Creation-Date: 2001-06-22 14:40+0200\n"
+"PO-Revision-Date: 2001-06-22 14:41+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1439,6 +1439,10 @@ msgstr "Gitterlinien Y"
 msgid "Height"
 msgstr "Höhe"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr "Hexagone"
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1641,6 +1645,10 @@ msgstr "Anzahl der Kacheln in Y-Richtung"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Nummer"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr "Octagone"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
