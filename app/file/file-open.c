@@ -106,7 +106,7 @@ file_open_image (Gimp               *gimp,
       return NULL;
     }
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
+  filename = file_utils_filename_from_uri (uri);
 
   if (filename)
     {
@@ -224,7 +224,7 @@ file_open_thumbnail (Gimp          *gimp,
       gint               image_id;
       gint               i;
 
-      filename = g_filename_from_uri (uri, NULL, NULL);
+      filename = file_utils_filename_from_uri (uri);
 
       args = g_new0 (Argument, proc->num_args);
 
