@@ -1583,13 +1583,14 @@ gimp_image_raise_layer (GimpImage *gimage, Layer *layer_arg)
 	      x1 = MAX (off_x, off2_x);
 	      y1 = MAX (off_y, off2_y);
 	      x2 = MIN (off_x + drawable_width (GIMP_DRAWABLE(layer)),
-			    off2_x + drawable_width (GIMP_DRAWABLE(prev_layer)));
+			off2_x + drawable_width (GIMP_DRAWABLE(prev_layer)));
 	      y2 = MIN (off_y + drawable_height (GIMP_DRAWABLE(layer)),
-			    off2_y + drawable_height (GIMP_DRAWABLE(prev_layer)));
+			off2_y + drawable_height (GIMP_DRAWABLE(prev_layer)));
+
 	      if ((x2 - x1) > 0 && (y2 - y1) > 0)
-		      gtk_signal_emit(GTK_OBJECT(gimage),
-				      gimp_image_signals[REPAINT],
-				      x1, x2, x2-x1, y2-y1);
+		gtk_signal_emit(GTK_OBJECT(gimage),
+				gimp_image_signals[REPAINT],
+				x1, y1, x2-x1, y2-y1);
 
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
@@ -1649,19 +1650,20 @@ gimp_image_lower_layer (GimpImage *gimage, Layer *layer_arg)
 	      next->data = layer;
 	      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 	      drawable_offsets (GIMP_DRAWABLE(next_layer), &off2_x, &off2_y);
-
+	      
 	      /*  calculate minimum area to update  */
 	      x1 = MAX (off_x, off2_x);
 	      y1 = MAX (off_y, off2_y);
 	      x2 = MIN (off_x + drawable_width (GIMP_DRAWABLE(layer)),
-			    off2_x + drawable_width (GIMP_DRAWABLE(next_layer)));
+			off2_x + drawable_width (GIMP_DRAWABLE(next_layer)));
 	      y2 = MIN (off_y + drawable_height (GIMP_DRAWABLE(layer)),
-			    off2_y + drawable_height (GIMP_DRAWABLE(next_layer)));
-	      if ((x2 - x1) > 0 && (y2 - y1) > 0)
-		      gtk_signal_emit(GTK_OBJECT(gimage),
-				      gimp_image_signals[REPAINT],
-				      x1, y1, x2-x1, y2-y1);
+			off2_y + drawable_height (GIMP_DRAWABLE(next_layer)));
 
+	      if ((x2 - x1) > 0 && (y2 - y1) > 0)
+		gtk_signal_emit(GTK_OBJECT(gimage),
+				gimp_image_signals[REPAINT],
+				x1, y1, x2-x1, y2-y1);
+	      
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
 

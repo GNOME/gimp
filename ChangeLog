@@ -1,3 +1,8 @@
+Wed Jul  8 21:08:03 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/gimpimage.c (gimp_image_raise_layer): fixed a small typo
+	that prevented the composite image from being updated properly
+
 Wed Jul  8 10:47:51 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/preferences_dialog.c: replaced old invalidate calls
