@@ -1,5 +1,10 @@
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icosave.c (ico_create_palette): fixed parameter
+	check, NULL is valid for an empty palette. Fixes bug #170812.
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c (gimp_image_convert): added missing
 	period in newly added message.
 

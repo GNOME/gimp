@@ -354,7 +354,7 @@ ico_create_palette(guchar *cmap,
   guchar *palette;
   gint    i;
 
-  g_return_val_if_fail (cmap != NULL, NULL);
+  g_return_val_if_fail (cmap != NULL || num_colors_used == 0, NULL);
   g_return_val_if_fail (num_colors_used <= num_colors, NULL);
 
   palette = g_new0 (guchar, num_colors * 4);
