@@ -28,7 +28,7 @@ PREFS_IMAGES = \
 	new-image.png			\
 	session.png			\
 	tool-options.png		\
-	window-manager.png
+	window-management.png
 
 themedata_DATA = $(PREFS_IMAGES)
 

@@ -1778,21 +1778,21 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
 
-  /********************/
-  /*  Window Manager  */
-  /********************/
+  /***********************/
+  /*  Window Management  */
+  /***********************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Window Manager"),
-                                     "window-manager.png",
+				     _("Window Management"),
+                                     "window-management.png",
 				     GTK_TREE_STORE (tree),
-				     _("Window Manager"),
-				     GIMP_HELP_PREFS_WINDOW_MANAGER,
+				     _("Window Management"),
+				     GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
 				     NULL,
 				     &top_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Decorations"),
+  vbox2 = prefs_frame_new (_("Window Type Hints"),
                            GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
