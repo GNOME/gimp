@@ -719,6 +719,7 @@
     <chapter id="app-gui-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/gui.xml"/>
+      <xi:include href="xml/gui-vtable.xml"/>
       <xi:include href="xml/session.xml"/>
       <xi:include href="xml/themes.xml"/>
     </chapter>

@@ -149,10 +149,10 @@ GimpPDBDialogsCheckFunc
 <TITLE>Gimp</TITLE>
 Gimp
 gimp_new
-gimp_set_config
 gimp_initialize
 gimp_restore
 gimp_exit
+gimp_load_config
 gimp_threads_enter
 gimp_threads_leave
 gimp_set_busy
@@ -3694,6 +3694,7 @@ gimp_dockbook_new
 gimp_dockbook_add
 gimp_dockbook_remove
 gimp_dockbook_get_tab_widget
+gimp_dockbook_drop_dockable
 <SUBSECTION Standard>
 GimpDockbookClass
 GIMP_DOCKBOOK
@@ -5584,6 +5585,7 @@ gimp_marshal_VOID__OBJECT
 gimp_marshal_VOID__OBJECT_INT
 gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
+gimp_marshal_VOID__POINTER_BOOLEAN
 gimp_marshal_VOID__STRING_FLAGS
 gimp_marshal_VOID__VOID
 </SECTION>
@@ -6018,14 +6020,16 @@ stroke_dialog_new
 
 <SECTION>
 <FILE>gui</FILE>
-gui_init
 gui_libs_init
-gui_environ_init
-gui_themes_init
-gui_restore
+gui_init
 gui_post_init
 </SECTION>
 
+<SECTION>
+<FILE>gui-vtable</FILE>
+gui_vtable_init
+</SECTION>
+ 
 <SECTION>
 <FILE>themes</FILE>
 themes_init
@@ -6364,7 +6368,7 @@ tools_select_cmd_callback
 
 <SECTION>
 <FILE>user-install-dialog</FILE>
-user_install_dialog_create
+user_install_dialog_run
 </SECTION>
 
 <SECTION>
