@@ -1,5 +1,9 @@
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
+	* HACKING: some minor updates.
+
+2004-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c (gimp_text_layer_render): if there's a
 	layer mask, resize it with the layer.
 

@@ -3,7 +3,7 @@ Requirements
 If you want to hack on the GIMP project, it will make your life easier
 to have the following packages (or newer versions) installed:
 
-    * GNU autoconf 2.52
+    * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
     * GNU automake 1.7  (1.8 and 1.6 will also work)
         - ftp://ftp.gnu.org/gnu/automake/
@@ -112,6 +112,9 @@ We encourage you to follow the GIMP coding style throughout the GIMP
 project.  For the core components (application and libs) this coding
 style is enforced.  The GIMP coding style is defined as follows:
 
+    * There's a single space between the function name and the opening
+      bracket.
+
     * Function names are lowercase, words separated by underscores.
 
     * Macros and enums are all uppercase, words seperated by
@@ -142,7 +145,7 @@ detailed description of the include policy.
 
 Don't use the GTK wrappers around the GLib object and signal system.
 
-One goal of the 1.3 development branch is to make the GIMP code more
-readable and understandable. Please help us to achieve this goal by
-cleaning up the present code and make sure that all new code follows
-the coding guidelines.
+One goal of GIMP development is to make the GIMP code more readable
+and understandable. Please help us to achieve this goal by cleaning up
+the present code and make sure that all new code follows the coding
+guidelines.
