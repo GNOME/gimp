@@ -1,5 +1,15 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c (app_init): cast batch_cmds to (const gchar **)
+	when passing them to batch_init().
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): moved the call just added
+	inside the if(view->container) because it will fail if selecting
+	the item destroyed the widget.
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerpopup.c
 	(gimp_container_popup_real_confirm): don't use
 	gimp_context_copy_property() but gimp_context_get_by_type()

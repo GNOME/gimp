@@ -254,7 +254,7 @@ app_init (gint    gimp_argc,
         }
     }
 
-  batch_init (the_gimp, batch_cmds);
+  batch_init (the_gimp, (const gchar **) batch_cmds);
 
   if (! no_interface)
     {
