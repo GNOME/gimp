@@ -1,29 +1,6 @@
 EXPORTS
-	_gimp_channel_new
-	_gimp_drawable_thumbnail
-	_gimp_gradients_get_gradient_data
-	_gimp_image_get_cmap
-	_gimp_image_set_cmap
-	_gimp_image_thumbnail
-	_gimp_layer_copy
-	_gimp_layer_new
-	_gimp_procedural_db_get_data
-	_gimp_procedural_db_proc_info
-	_gimp_procedural_db_set_data
-	_gimp_selection_float
-	_gimp_unit_get_abbreviation
-	_gimp_unit_get_deletion_flag
-	_gimp_unit_get_digits
-	_gimp_unit_get_factor
-	_gimp_unit_get_identifier
-	_gimp_unit_get_number_of_built_in_units
-	_gimp_unit_get_number_of_units
-	_gimp_unit_get_plural
-	_gimp_unit_get_singular
-	_gimp_unit_get_symbol
-	_gimp_unit_new
-	_gimp_unit_set_deletion_flag
 	_readchannel
+	_gimp_layer_copy ; used by iwarp
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
@@ -362,6 +339,7 @@ EXPORTS
 	gimp_selection_bounds
 	gimp_selection_clear
 	gimp_selection_float
+	gimp_selection_invert
 	gimp_selection_is_empty
 	gimp_selection_load
 	gimp_selection_none
