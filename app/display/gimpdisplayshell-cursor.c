@@ -124,8 +124,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   new_cursor = (shell->draw_cursor &&
                 shell->proximity   &&
-                x > 0              &&
-                y > 0);
+                x >= 0             &&
+                y >= 0);
 
   /* Erase old cursor, if necessary */
 
@@ -145,7 +145,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   shell->cursor_x    = x;
   shell->cursor_y    = y;
 
-  if (x > 0 && y > 0)
+  if (x >= 0 && y >= 0)
     {
       gimp_display_shell_untransform_xy (shell, x, y, &t_x, &t_y, FALSE, FALSE);
     }

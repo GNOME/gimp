@@ -438,6 +438,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
+
+        update_cursor = TRUE;
       }
       break;
 

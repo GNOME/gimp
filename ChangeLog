@@ -1,5 +1,17 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): update the cursor on
+	GDK_ENTER_NOTIFY.
+
+	* app/display/gimpdisplayshell-cursor.c
+	(gimp_display_shell_update_cursor): argh, "0" coordinates are
+	*inside* the canvas.
+
+	Together fixes bug #113239.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppaletteeditor.c (color_palette_target_table): 
 	removed GIMP_TARGET_PALETTE. Fixes bug #113237.
 
