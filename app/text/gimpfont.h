@@ -48,7 +48,9 @@ struct _GimpFontClass
 };
 
 
-GType gimp_font_get_type (void) G_GNUC_CONST;
+GType      gimp_font_get_type     (void) G_GNUC_CONST;
+
+GimpFont * gimp_font_get_standard (void);
 
 
 #endif /* __GIMP_FONT_H__ */

@@ -19,6 +19,8 @@ libapptext_a_sources = \
 	text-enums.h		\
 	gimpfont.c		\
 	gimpfont.h		\
+	gimpfontlist.c		\
+	gimpfontlist.h		\
 	gimptext.c		\
 	gimptext.h		\
 	gimptext-compat.c	\

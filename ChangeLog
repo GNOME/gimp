@@ -1,5 +1,13 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/Makefile.am
+	* app/text/text-types.h
+	* app/text/gimpfontlist.[ch]: new GimpList subclass. Unused...
+
+	* app/text/gimpfont.[ch]: added gimp_font_get_standard().
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c: added GIMP_CONTEXT_PATTERN_MASK to the
 	context properties which are remembered per tool options.
 

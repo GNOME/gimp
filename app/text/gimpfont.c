@@ -109,3 +109,16 @@ gimp_font_get_memsize (GimpObject *object)
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
+
+GimpFont *
+gimp_font_get_standard (void)
+{
+  static GimpFont *standard_font = NULL;
+
+  if (! standard_font)
+    standard_font = g_object_new (GIMP_TYPE_FONT,
+                                  "name", "Sans",
+                                  NULL);
+
+  return standard_font;
+}
