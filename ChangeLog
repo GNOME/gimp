@@ -1,3 +1,16 @@
+2001-01-14  Sven Neumann  <sven@gimp.org>
+
+	Merged fixes from gimp-1-2:
+
+	* app/menus.c
+	* app/plug-in.c: added some sanity checks for passed string pointers
+	to various public functions in an attempt to fix bug #37622.
+
+	* plug-ins/common/sharpen.c: applied a patch from Jerome Zago 
+        <jzago@ifhamy.insa-lyon.fr> that fixes a longstanding bug in the
+        sharpen filter which sometimes got the last line wrong. 
+	Fixes bug #34155.
+	
 2001-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h

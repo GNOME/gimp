@@ -855,12 +855,18 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 				  gpointer              callback_data)
 {
   GtkItemFactory *item_factory;
-  gchar *path;
+  gchar          *path;
+
+  g_return_if_fail (entry != NULL);
 
   if (!menus_initialized)
     menus_init ();
 
   path = entry->entry.path;
+
+  if (!path)
+    return;
+
   item_factory = gtk_item_factory_from_path (path);
 
   if (!item_factory)
@@ -888,6 +894,9 @@ menus_create_branches (GtkItemFactory       *item_factory,
   gint     factory_length;
   gchar   *p;
   gchar   *path;
+
+  if (! entry->entry.path)
+    return;
 
   tearoff_path = g_string_new ("");
 
@@ -1205,6 +1214,9 @@ menus_set_sensitive (gchar    *path,
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
 
+  if (! path)
+    return;
+
   if (!menus_initialized)
     menus_init ();
 
@@ -1353,6 +1365,8 @@ menus_last_opened_add (gchar *filename)
   GSList    *list;
   GtkWidget *menu_item;
   guint      num_entries;
+
+  g_return_if_fail (filename != NULL);
 
   /*  do nothing if we've already got the filename on the list  */
   for (list = last_opened_raw_filenames; list; list = g_slist_next (list))
@@ -1816,7 +1830,9 @@ menu_translate (const gchar *path,
 	  complete = g_strconcat (factory, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
-	  while (*complete && *translation && strcmp (complete, menupath))
+	  while (complete && *complete && 
+		 translation && *translation && 
+		 strcmp (complete, menupath))
 	    {
 	      p = strrchr (complete, '/');
 	      t = strrchr (translation, '/');

@@ -498,6 +498,8 @@ plug_in_add (gchar *prog,
   PlugInProcDef *proc_def;
   GSList        *tmp;
 
+  g_return_if_fail (prog != NULL);
+
   if (strncmp ("plug_in_", prog, 8) != 0)
     {
       gchar *t = g_strdup_printf ("plug_in_%s", prog);
@@ -553,6 +555,8 @@ plug_in_image_types (gchar *name)
   PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
   GSList        *tmp;
+
+  g_return_val_if_fail (name != NULL, NULL);
 
   if (current_plug_in)
     {
@@ -617,6 +621,8 @@ plug_in_file_handler (gchar *name,
   PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
   GSList        *tmp;
+
+  g_return_val_if_fail (name != NULL, NULL);
 
   if (current_plug_in)
     {
@@ -782,6 +788,8 @@ plug_in_menu_path (gchar *name)
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
   GSList *tmp, *tmp2;
+
+  g_return_val_if_fail (name != NULL, NULL);
 
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -1764,7 +1772,8 @@ plug_in_handle_proc_return (GPProcReturn *proc_return)
 	  blocked = tmp->data;
 	  tmp = tmp->next;
 
-	  if (strcmp (blocked->proc_name, proc_return->name) == 0)
+	  if (blocked->proc_name && proc_return->name && 
+	      strcmp (blocked->proc_name, proc_return->name) == 0)
 	    {
 	      plug_in_push (blocked->plug_in);
 	      if (!gp_proc_return_write (current_writechannel, proc_return))
