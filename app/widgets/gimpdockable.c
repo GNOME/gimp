@@ -32,6 +32,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpitemfactory.h"
+#include "gimpwidgets-utils.h"
 
 
 static void        gimp_dockable_class_init       (GimpDockableClass *klass);
@@ -198,16 +199,16 @@ gimp_dockable_destroy (GtkObject *object)
   if (dockable->context)
     gimp_dockable_set_context (dockable, NULL);
 
+  if (dockable->blurb && dockable->blurb != dockable->name)
+    {
+      g_free (dockable->blurb);
+      dockable->blurb = NULL;
+    }
+
   if (dockable->name)
     {
       g_free (dockable->name);
       dockable->name = NULL;
-    }
-
-  if (dockable->blurb)
-    {
-      g_free (dockable->blurb);
-      dockable->blurb = NULL;
     }
 
   if (dockable->stock_id)
@@ -476,16 +477,19 @@ gimp_dockable_new (const gchar                *name,
   GimpDockable *dockable;
 
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
   dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
 
   dockable->name     = g_strdup (name);
-  dockable->blurb    = g_strdup (blurb);
   dockable->stock_id = g_strdup (stock_id);
   dockable->help_id  = g_strdup (help_id);
+
+  if (blurb)
+    dockable->blurb  = g_strdup (blurb);
+  else
+    dockable->blurb  = dockable->name;
 
   dockable->get_preview_func = get_preview_func;
   dockable->get_preview_data = get_preview_data;

@@ -257,7 +257,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   return dialogs_dockable_new (view,
-                               _("Tool Options"), _("Tool Options"),
+                               _("Tool Options"), NULL,
                                GIMP_STOCK_TOOL_OPTIONS,
                                GIMP_HELP_TOOL_OPTIONS_DIALOG,
                                dialogs_tool_options_preview_func, NULL,
@@ -327,7 +327,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Images"), _("Image List"),
+			       _("Images"), NULL,
                                GIMP_STOCK_IMAGES,
                                GIMP_HELP_IMAGE_DIALOG,
 			       NULL, NULL,
@@ -351,7 +351,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
                                       factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Brushes"), _("Brush List"),
+			       _("Brushes"), NULL,
                                GIMP_STOCK_TOOL_PAINTBRUSH,
                                GIMP_HELP_BRUSH_DIALOG,
 			       dialogs_viewable_preview_func, "brush",
@@ -374,7 +374,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
-			       _("Patterns"), _("Pattern List"),
+			       _("Patterns"), NULL,
                                GIMP_STOCK_TOOL_BUCKET_FILL,
                                GIMP_HELP_PATTERN_DIALOG,
 			       dialogs_viewable_preview_func, "pattern",
@@ -397,7 +397,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
                                      factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
-			       _("Gradients"), _("Gradient List"),
+			       _("Gradients"), NULL,
                                GIMP_STOCK_TOOL_BLEND,
                                GIMP_HELP_GRADIENT_DIALOG,
 			       dialogs_viewable_preview_func, "gradient",
@@ -420,7 +420,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
                                      factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
-			       _("Palettes"), _("Palette List"),
+			       _("Palettes"), NULL,
                                GTK_STOCK_SELECT_COLOR,
                                GIMP_HELP_PALETTE_DIALOG,
 			       dialogs_viewable_preview_func, "palette",
@@ -441,7 +441,7 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
                                        FALSE);
 
   return dialogs_dockable_new (view,
-			       _("Fonts"), _("Font List"),
+			       _("Fonts"), NULL,
                                GTK_STOCK_SELECT_FONT,
                                GIMP_HELP_FONT_DIALOG,
 			       dialogs_viewable_preview_func, "font",
@@ -462,7 +462,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
                                        FALSE);
 
   return dialogs_dockable_new (view,
-			       _("Tools"), _("Tool List"),
+			       _("Tools"), NULL,
                                GTK_STOCK_MISSING_IMAGE,
                                GIMP_HELP_TOOL_DIALOG,
 			       dialogs_viewable_preview_func, "tool",
@@ -484,7 +484,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
                                factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Buffers"), _("Buffer List"),
+			       _("Buffers"), NULL,
                                GTK_STOCK_PASTE,
                                GIMP_HELP_BUFFER_DIALOG,
                                NULL, NULL,
@@ -507,7 +507,7 @@ dialogs_document_list_new (GimpDialogFactory *factory,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("History"), _("Document History List"),
+			       _("History"), _("Document History"),
                                GTK_STOCK_OPEN,
                                GIMP_HELP_DOCUMENT_DIALOG,
                                NULL, NULL,
@@ -536,7 +536,7 @@ dialogs_template_list_new (GimpDialogFactory *factory,
   template_view->edit_template_func = templates_edit_template_dialog;
 
   return dialogs_dockable_new (view,
-			       _("Templates"), _("List of Templates"),
+			       _("Templates"), NULL,
                                GIMP_STOCK_TEMPLATE,
                                GIMP_HELP_TEMPLATE_DIALOG,
 			       NULL, NULL,
@@ -561,7 +561,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Images"), _("Image Grid"),
+			       _("Images"), NULL,
                                GIMP_STOCK_IMAGES,
                                GIMP_HELP_IMAGE_DIALOG,
 			       NULL, NULL,
@@ -585,7 +585,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
                                       factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Brushes"), _("Brush Grid"),
+			       _("Brushes"), NULL,
                                GIMP_STOCK_TOOL_PAINTBRUSH,
                                GIMP_HELP_BRUSH_DIALOG,
 			       dialogs_viewable_preview_func, "brush",
@@ -608,7 +608,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
-			       _("Patterns"), _("Pattern Grid"),
+			       _("Patterns"), NULL,
                                GIMP_STOCK_TOOL_BUCKET_FILL,
                                GIMP_HELP_PATTERN_DIALOG,
 			       dialogs_viewable_preview_func, "pattern",
@@ -631,7 +631,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
                                      factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
-			       _("Gradients"), _("Gradient Grid"),
+			       _("Gradients"), NULL,
                                GIMP_STOCK_TOOL_BLEND,
                                GIMP_HELP_GRADIENT_DIALOG,
 			       dialogs_viewable_preview_func, "gradient",
@@ -654,7 +654,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
                                      factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
-			       _("Palettes"), _("Palette Grid"),
+			       _("Palettes"), NULL,
                                GTK_STOCK_SELECT_COLOR,
                                GIMP_HELP_PALETTE_DIALOG,
 			       dialogs_viewable_preview_func, "palette",
@@ -675,7 +675,7 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
                                        FALSE);
 
   return dialogs_dockable_new (view,
-			       _("Fonts"), _("Font Grid"),
+			       _("Fonts"), NULL,
                                GTK_STOCK_SELECT_FONT,
                                GIMP_HELP_FONT_DIALOG,
 			       dialogs_viewable_preview_func, "font",
@@ -696,7 +696,7 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
                                        FALSE);
 
   return dialogs_dockable_new (view,
-			       _("Tools"), _("Tool Grid"),
+			       _("Tools"), NULL,
                                GTK_STOCK_MISSING_IMAGE,
                                GIMP_HELP_TOOL_DIALOG,
 			       dialogs_viewable_preview_func, "tool",
@@ -718,7 +718,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
                                factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Buffers"), _("Buffer Grid"),
+			       _("Buffers"), NULL,
                                GTK_STOCK_PASTE,
                                GIMP_HELP_BUFFER_DIALOG,
 			       NULL, NULL,
@@ -741,7 +741,7 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("History"), _("Document History Grid"),
+			       _("History"), _("Document History"),
                                GTK_STOCK_OPEN,
                                GIMP_HELP_DOCUMENT_DIALOG,
                                NULL, NULL,
@@ -777,7 +777,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Layers>");
 
   dockable = dialogs_dockable_new (view,
-				   _("Layers"), _("Layer List"),
+				   _("Layers"), NULL,
                                    GIMP_STOCK_LAYERS,
                                    GIMP_HELP_LAYER_DIALOG,
 				   NULL, NULL,
@@ -814,7 +814,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Channels>");
 
   dockable = dialogs_dockable_new (view,
-				   _("Channels"), _("Channel List"),
+				   _("Channels"), NULL,
                                    GIMP_STOCK_CHANNELS,
                                    GIMP_HELP_CHANNEL_DIALOG,
 				   NULL, NULL,
@@ -857,7 +857,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   vectors_view->selection_to_vectors_func = vectors_selection_to_vectors;
 
   dockable = dialogs_dockable_new (view,
-				   _("Paths"), _("Path List"),
+				   _("Paths"), NULL,
                                    GIMP_STOCK_PATHS,
                                    GIMP_HELP_PATH_DIALOG,
 				   NULL, NULL,
@@ -1022,7 +1022,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
   brush_editor = gimp_brush_editor_new (context->gimp);
 
   return dialogs_dockable_new (GTK_WIDGET (brush_editor),
-                               _("Brush Editor"), _("Brush Editor"),
+                               _("Brush Editor"), NULL,
                                GIMP_STOCK_TOOL_PAINTBRUSH,
                                GIMP_HELP_BRUSH_EDITOR_DIALOG,
                                NULL, NULL,
@@ -1053,7 +1053,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
                                               factory->menu_factory);
 
   return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
-			       _("Gradient Editor"), _("Gradient Editor"),
+			       _("Gradient Editor"), NULL,
                                GIMP_STOCK_TOOL_BLEND,
                                GIMP_HELP_GRADIENT_EDITOR_DIALOG,
 			       NULL, NULL,
@@ -1085,7 +1085,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
                                             factory->menu_factory);
 
   return dialogs_dockable_new (GTK_WIDGET (palette_editor),
-			       _("Palette Editor"), _("Palette Editor"),
+			       _("Palette Editor"), NULL,
                                GTK_STOCK_SELECT_COLOR,
                                GIMP_HELP_PALETTE_EDITOR_DIALOG,
 			       NULL, NULL,

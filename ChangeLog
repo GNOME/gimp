@@ -1,3 +1,11 @@
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_new): accept NULL
+	as blurb and use the name as fallback for a missing blurb.
+
+	* app/gui/dialogs-constructors.c: removed the "Foo List" and "Foo
+	Grid" blurbs. Only left blurbs where the longer name makes sense.
+
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/tool-options-menu.c: added a "Rename Saved Options"
