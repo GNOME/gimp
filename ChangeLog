@@ -1,3 +1,14 @@
+Mon Jan  3 02:49:37 CET 2000  Sven Neumann <sven@gimp.org>
+	
+	* libgimp/gimpcolorspace.c
+	* libgimp/gimpcolorspace.h: Prefixed all functions with gimp_
+	to avoid namespace collisions. 
+	
+	Changed the License in the header to LGPL. If you don't like this, 
+	please remove those files! (But I would like them to stay since 
+	moving those functions into libgimp is something that should have
+	happened much earlier.) Nice work, Daniel!
+
 Sun Jan  2 21:37:02 CET 2000  Marc Lehmann <pcg@goof.com>
 
         Applied Patch by Daniel Egger, slightly modified.

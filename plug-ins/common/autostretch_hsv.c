@@ -163,7 +163,7 @@ indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
   for (i=0;i<ncols;i++)
     {
       double h, s, v;
-      rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
+      gimp_rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
       if (s > shi) shi = s;
       if (s < slo) slo = s;
       if (v > vhi) vhi = v;
@@ -173,12 +173,12 @@ indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
   for (i=0;i<ncols;i++)
     {
       double h, s, v;
-      rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
+      gimp_rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
       if (shi!=slo)
 	s = (s-slo) / (shi-slo);
       if (vhi!=vlo)
 	v = (v-vlo) / (vhi-vlo);
-      hsv_to_rgb4(&cmap[i*3], h, s, v);
+      gimp_hsv_to_rgb4(&cmap[i*3], h, s, v);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
@@ -221,7 +221,7 @@ autostretch_hsv (GDrawable *drawable)
 	      if (!has_alpha || (has_alpha && s[alpha])) 
 		{
 		  double h, z, v;
-		  rgb_to_hsv4(s, &h, &z, &v);
+		  gimp_rgb_to_hsv4(s, &h, &z, &v);
 		  if (z > shi) shi = z;
 		  if (z < slo) slo = z;
 		  if (v > vhi) vhi = v;
@@ -257,12 +257,12 @@ autostretch_hsv (GDrawable *drawable)
 	  for (x = 0; x < src_rgn.w; x++)
 	    {
 	      double h, z, v;
-	      rgb_to_hsv4(s, &h, &z, &v);
+	      gimp_rgb_to_hsv4(s, &h, &z, &v);
 	      if (shi!=slo)
 		z = (z-slo) / (shi-slo);
 	      if (vhi!=vlo)
 		v = (v-vlo) / (vhi-vlo);
-	      hsv_to_rgb4(d, h, z, v);
+	      gimp_hsv_to_rgb4(d, h, z, v);
 
 	      if (has_alpha)
 		d[alpha] = s[alpha];

@@ -1314,7 +1314,7 @@ gradient_render_pixel (double   x,
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
       if (rbd->blend_mode == FG_BG_HSV_MODE)
-	hsv_to_rgb_double (&color->r, &color->g, &color->b);
+	gimp_hsv_to_rgb_double (&color->r, &color->g, &color->b);
     }
 }
 
@@ -1409,8 +1409,8 @@ gradient_fill_region (GImage          *gimage,
     case FG_BG_HSV_MODE:
       /* Convert to HSV */
 
-      rgb_to_hsv_double(&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
-      rgb_to_hsv_double(&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
+      gimp_rgb_to_hsv_double(&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
+      gimp_rgb_to_hsv_double(&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
 
       break;
 

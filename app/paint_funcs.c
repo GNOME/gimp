@@ -33,6 +33,7 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+#include "libgimp/gimpcolorspace.h"
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
@@ -821,8 +822,8 @@ hsv_only_pixels (const unsigned char *src1,
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      rgb_to_hsv (&r1, &g1, &b1);
-      rgb_to_hsv (&r2, &g2, &b2);
+      gimp_rgb_to_hsv (&r1, &g1, &b1);
+      gimp_rgb_to_hsv (&r2, &g2, &b2);
 
       switch (mode)
 	{
@@ -838,7 +839,7 @@ hsv_only_pixels (const unsigned char *src1,
 	}
 
       /*  set the destination  */
-      hsv_to_rgb (&r1, &g1, &b1);
+      gimp_hsv_to_rgb (&r1, &g1, &b1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
@@ -873,15 +874,15 @@ color_only_pixels (const unsigned char *src1,
     {
       r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
       r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      rgb_to_hls (&r1, &g1, &b1);
-      rgb_to_hls (&r2, &g2, &b2);
+      gimp_rgb_to_hls (&r1, &g1, &b1);
+      gimp_rgb_to_hls (&r2, &g2, &b2);
 
       /*  transfer hue and saturation to the source pixel  */
       r1 = r2;
       b1 = b2;
 
       /*  set the destination  */
-      hls_to_rgb (&r1, &g1, &b1);
+      gimp_hls_to_rgb (&r1, &g1, &b1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 

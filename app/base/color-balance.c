@@ -25,6 +25,7 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+#include "libgimp/gimpcolorspace.h"
 
 #define CYAN_RED       0x1
 #define MAGENTA_GREEN  0x2
@@ -104,9 +105,9 @@ color_balance (PixelRegion *srcPR,
 
 	  if (cbd->preserve_luminosity)
 	    {
-	      rgb_to_hls (&r_n, &g_n, &b_n);
-	      g_n = rgb_to_l (r, g, b);
-	      hls_to_rgb (&r_n, &g_n, &b_n);
+	      gimp_rgb_to_hls (&r_n, &g_n, &b_n);
+	      g_n = gimp_rgb_to_l (r, g, b);
+	      gimp_hls_to_rgb (&r_n, &g_n, &b_n);
 	    }
 
 	  d[RED_PIX] = r_n;

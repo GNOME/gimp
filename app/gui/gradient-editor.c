@@ -708,8 +708,8 @@ gradient_get_color_at (gradient_t *gradient,
       s1 = seg->g1;
       v1 = seg->b1;
 
-      rgb_to_hsv_double(&h0, &s0, &v0);
-      rgb_to_hsv_double(&h1, &s1, &v1);
+      gimp_rgb_to_hsv_double(&h0, &s0, &v0);
+      gimp_rgb_to_hsv_double(&h1, &s1, &v1);
 
       s0 = s0 + (s1 - s0) * factor;
       v0 = v0 + (v1 - v0) * factor;
@@ -749,7 +749,7 @@ gradient_get_color_at (gradient_t *gradient,
       *g = s0;
       *b = v0;
 
-      hsv_to_rgb_double (r, g, b);
+      gimp_hsv_to_rgb_double (r, g, b);
     }
 }
 
@@ -2289,7 +2289,7 @@ prev_set_hint (gint x)
   s = g;
   v = b;
 
-  rgb_to_hsv_double (&h, &s, &v);
+  gimp_rgb_to_hsv_double (&h, &s, &v);
 
   g_snprintf (str, sizeof (str), _("Position: %0.6f    "
 				   "RGB (%0.3f, %0.3f, %0.3f)    "

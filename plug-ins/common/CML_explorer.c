@@ -784,7 +784,7 @@ MAIN_FUNCTION (gint preview_p)
 	  gimp_pixel_rgn_get_pixel (&src_rgn, buffer,
 				    x1 + (index * VALS.scale), y1);
 	  for (i = 0; i < 3; i++) rgbi[i] = buffer[i];
-	  rgb_to_hsv (rgbi, rgbi + 1, rgbi + 2);
+	  gimp_rgb_to_hsv (rgbi, rgbi + 1, rgbi + 2);
 	  hues[index] = (gdouble) rgbi[0] / (gdouble) 255;
 	  sats[index] = (gdouble) rgbi[1] / (gdouble) 255;
 	  vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
@@ -823,7 +823,7 @@ MAIN_FUNCTION (gint preview_p)
 	  v = b = CANNONIZE (VALS.val, vals[dx]);
 
 	  if (! dest_is_gray)
-	    hsv_to_rgb (&r, &g, &b);
+	    gimp_hsv_to_rgb (&r, &g, &b);
 	  /* render destination */
 	  for (offset_y = 0;
 	       (offset_y < VALS.scale) && (dy + offset_y < height_by_pixel);
@@ -846,12 +846,12 @@ MAIN_FUNCTION (gint preview_p)
 		      b = rgbi[0];
 		    else
 		      {
-			rgb_to_hsv (rgbi, rgbi + 1, rgbi + 2);
+			gimp_rgb_to_hsv (rgbi, rgbi + 1, rgbi + 2);
 
 			r = (VALS.hue.function == CML_KEEP_VALUES) ? rgbi[0] : h;
 			g = (VALS.sat.function == CML_KEEP_VALUES) ? rgbi[1] : s;
 			b = (VALS.val.function == CML_KEEP_VALUES) ? rgbi[2] : v;
-			hsv_to_rgb (&r, &g, &b);
+			gimp_hsv_to_rgb (&r, &g, &b);
 		      }
 		  }
 		dest_offset = offset_y * dest_bpl + (dx * VALS.scale + offset_x) * dest_bpp;
@@ -1714,7 +1714,7 @@ function_graph_new (GtkWidget *widget, gpointer data)
 	rgbi[0] = rgbi[1] = rgbi[2] = 127;
 	if ((0 <= channel_id) && (channel_id <= 2))
 	  rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
-	hsv_to_rgb (rgbi, rgbi+1, rgbi+2);
+	gimp_hsv_to_rgb (rgbi, rgbi+1, rgbi+2);
 	for (y = 0; y < 3; y++)
 	  rgbc[y] = rgbi[y];
 #endif

@@ -1052,7 +1052,7 @@ fspike (GPixelRgn *dest_rgn,
  	       r = color[0];
  	       g = color[1];
  	       b = color[2];             
-               rgb_to_hls(&r, &g, &b);  
+               gimp_rgb_to_hls(&r, &g, &b);  
                r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
                if (r >= 255.0)
 		 r -= 255.0;
@@ -1060,7 +1060,7 @@ fspike (GPixelRgn *dest_rgn,
                  r += 255.0;
                b+= (svals.random_saturation * (2 * (gdouble) rand() / (gdouble) RAND_MAX - 1.0))*255;
                if (b > 1.0) b = 1.0;
-               hls_to_rgb(&r, &g, &b);
+               gimp_hls_to_rgb(&r, &g, &b);
                color[0] = r;
                color[1] = g;
                color[2] = b;

@@ -1,20 +1,20 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * Copyright (C) 1999 Daniel Egger
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ * Library General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include <glib.h>
@@ -26,9 +26,9 @@
  *********************************/
 
 void
-rgb_to_hsv (int *r,
-	    int *g,
-	    int *b)
+gimp_rgb_to_hsv (int *r,
+		 int *g,
+		 int *b)
 {
   int red, green, blue;
   float h, s, v;
@@ -98,9 +98,9 @@ rgb_to_hsv (int *r,
 }
 
 void
-hsv_to_rgb (int *h,
-	    int *s,
-	    int *v)
+gimp_hsv_to_rgb (int *h,
+		 int *s,
+		 int *v)
 {
   float hue, saturation, value;
   float f, p, q, t;
@@ -159,9 +159,9 @@ hsv_to_rgb (int *h,
 }
 
 void
-rgb_to_hls (int *r,
-	    int *g,
-	    int *b)
+gimp_rgb_to_hls (int *r,
+		 int *g,
+		 int *b)
 {
   int red, green, blue;
   float h, l, s;
@@ -234,9 +234,9 @@ rgb_to_hls (int *r,
 }
 
 int
-rgb_to_l (int red,
-	  int green,
-	  int blue)
+gimp_rgb_to_l (int red,
+	       int green,
+	       int blue)
 {
   int min, max;
 
@@ -269,9 +269,9 @@ rgb_to_l (int red,
 }
 
 int
-hls_value (float n1,
-	   float n2,
-	   float hue)
+gimp_hls_value (float n1,
+		float n2,
+		float hue)
 {
   float value;
 
@@ -292,9 +292,9 @@ hls_value (float n1,
 }
 
 void
-hls_to_rgb (int *h,
-	    int *l,
-	    int *s)
+gimp_hls_to_rgb (int *h,
+		 int *l,
+		 int *s)
 {
   float hue, lightness, saturation;
   float m1, m2;
@@ -320,16 +320,16 @@ hls_to_rgb (int *h,
       m1 = (lightness / 127.5) - m2;
 
       /*  chromatic case  */
-      *h = hls_value (m1, m2, hue + 85);
-      *l = hls_value (m1, m2, hue);
-      *s = hls_value (m1, m2, hue - 85);
+      *h = gimp_hls_value (m1, m2, hue + 85);
+      *l = gimp_hls_value (m1, m2, hue);
+      *s = gimp_hls_value (m1, m2, hue - 85);
     }
 }
 
 void
-rgb_to_hsv_double (double *r,
-		   double *g,
-		   double *b)
+gimp_rgb_to_hsv_double (double *r,
+			double *g,
+			double *b)
 {
   double red, green, blue;
   double h, s, v;
@@ -403,9 +403,9 @@ rgb_to_hsv_double (double *r,
 }
 
 void
-hsv_to_rgb_double (double *h,
-		   double *s,
-		   double *v)
+gimp_hsv_to_rgb_double (double *h,
+			double *s,
+			double *v)
 {
   double hue, saturation, value;
   double f, p, q, t;
@@ -472,10 +472,10 @@ hsv_to_rgb_double (double *h,
 }
 
 void
-rgb_to_hsv4 (guchar *rgb, 
-	     double *hue, 
-	     double *sat, 
-	     double *val)
+gimp_rgb_to_hsv4 (guchar *rgb, 
+		  double *hue, 
+		  double *sat, 
+		  double *val)
 {
   double red, green, blue;
   double h, s, v;
@@ -547,10 +547,10 @@ rgb_to_hsv4 (guchar *rgb,
 }
 
 void
-hsv_to_rgb4 (guchar *rgb, 
-	     double  h, 
-	     double  s, 
-             double  v)
+gimp_hsv_to_rgb4 (guchar *rgb, 
+		  double  h, 
+		  double  s, 
+		  double  v)
 {
   double hue, saturation, value;
   double f, p, q, t;
