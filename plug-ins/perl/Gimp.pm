@@ -10,7 +10,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
 use subs qw(init end lock unlock canonicalize_color);
 
 BEGIN {
-   $VERSION = 1.21;
+   $VERSION = 1.201;
    eval {
       require XSLoader;
       XSLoader::load Gimp $VERSION;
@@ -244,16 +244,14 @@ sub canonicalize_colour {
       [map {eval "0x$_"} ($1,$2,$3)];
    } else {
       unless (%rgb_db) {
-         local *RGB_TEXT;
          if ($rgb_db_path) {
-            open RGB_TEXT, "<$rgb_db_path" or croak __"unable to open $rgb_db_path";
+            open RGB_TEXT,"<$rgb_db_path" or croak __"unable to open $rgb_db_path";
          } else {
-            *RGB_TEXT = *DATA;
-            seek RGB_TEXT, 0, 0;
+            *RGB_TEXT=*DATA;
          }
          while(<RGB_TEXT>) {
             next unless /^\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*$/;
-            $rgb_db{lc($4)} = [$1,$2,$3];
+            $rgb_db{lc($4)}=[$1,$2,$3];
          }
          close RGB_TEXT;
       }
@@ -610,7 +608,6 @@ sub new($$$$)		{ shift; [@_] }
 package Gimp::run_mode;
 
 # I guess I now use almost every perl feature available ;)
-# [except pseudo hashes. pseudo hashes must die!]
 
 use overload fallback => 1,
              '0+'     => sub { ${$_[0]} };
