@@ -1,3 +1,7 @@
+2003-02-03  Daniel Yacob  <locales@geez.org>
+
+	* am.po: Updated Amharic translation.
+	
 2003-02-01  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/widgets/gimptexteditor.c.
