@@ -5,3 +5,30 @@
 
 This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
+
+
+Changes in GIMP 2.3
+===================
+
+- added Recompose plug-in
+- added rectangle tool in GFig plug-in
+- improved palette editor color DND
+- improved EXIF handling in JPEG plug-in
+- smoother autoscrolling in image display
+- added Snap to Canvas Border and Snap to Path (yet unimplemented)
+- added previews to Mosaic, Pixelize and Sparkle plug-ins
+- added Lanczos interpolation method
+- added Open as Image menu entries to brushes and patterns dialogs
+- improved drag-n-drop of drawables within GIMP
+- added a prototype of a new rectangular select tool
+- moved a bunch of enums from core into libgimpbase
+- moved GimpConfig functionality from core into libgimpconfig
+- moved GimpEnumStore and GimpEnumComboBox to libgimpwidgets
+- moved convenience constructors for property views to libgimpwidgets
+- ported ImageMap plug-in to action based menus.
+- first steps towards color management
+- use GOptionContext for command-line parsing
+- added a gnome-vfs backend for the uri plug-in (former url plug-in)
+- prepared code for accessing remote files in the file-chooser
+- let all dialogs obey the gtk-alternative-button-order setting
+- extended GimpProgress PDB API
