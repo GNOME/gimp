@@ -1,3 +1,8 @@
+1999-08-25  Tomas Ogren  <stric@ing.umu.se>
+
+	* POTFILES.in: Added some files
+	* sv.po: Updated
+
 Tue Aug 24 12:52:40 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* POTFILES.in: added measure.c
