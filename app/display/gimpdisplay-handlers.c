@@ -173,6 +173,22 @@ static void
 gimp_display_size_changed_handler (GimpImage   *gimage,
                                    GimpDisplay *gdisp)
 {
+#if 0
+  /*  stop rendering and free all update area lists because
+   *  their coordinates have been invalidated by the resize
+   */
+  if (gdisp->idle_render.idle_id)
+    {
+      g_source_remove (gdisp->idle_render.idle_id);
+      gdisp->idle_render.idle_id = 0;
+    }
+
+  gimp_display_area_list_free (gdisp->update_areas);
+  gimp_display_area_list_free (gdisp->idle_render.update_areas);
+  gdisp->update_areas = NULL;
+  gdisp->idle_render.update_areas = NULL;
+#endif
+
   gimp_display_add_update_area (gdisp,
                                 0, 0,
                                 gdisp->gimage->width,

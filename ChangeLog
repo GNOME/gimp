@@ -1,9 +1,28 @@
+2004-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: removed all drawing functions.
+	The file was still too large.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-draw.[ch]: new files containing
+	the drawing functions.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/tools/gimpmovetool.c: changed #includes accordingly.
+
+	* app/display/gimpdisplay-handlers.c
+	(gimp_display_size_changed_handler): added some #if 0'ed code I'm
+	not sure about. Actually, some of the handlers in this file could
+	need the same code, so it could be abstracted as
+	gimp_display_stop_draw() or something. Please have a look.
+
 2004-02-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorselect.c: let the color selector widget
 	expand. Removes the ugly empty spaces and improves the color
 	selection experience ;)
-	
+
 2004-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_mask_bounds):

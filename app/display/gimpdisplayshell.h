@@ -211,23 +211,6 @@ void        gimp_display_shell_flush                 (GimpDisplayShell *shell,
 void        gimp_display_shell_pause                 (GimpDisplayShell *shell);
 void        gimp_display_shell_resume                (GimpDisplayShell *shell);
 
-void        gimp_display_shell_draw_area             (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y,
-                                                      gint              w,
-                                                      gint              h);
-void        gimp_display_shell_draw_cursor           (GimpDisplayShell *shell);
-void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
-                                                      GimpGuide        *guide,
-                                                      gboolean          active);
-void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
-
-void        gimp_display_shell_draw_grid             (GimpDisplayShell *shell);
-
-void        gimp_display_shell_draw_vector           (GimpDisplayShell *shell,
-                                                      GimpVectors      *vectors);
-void        gimp_display_shell_draw_vectors          (GimpDisplayShell *shell);
-
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);

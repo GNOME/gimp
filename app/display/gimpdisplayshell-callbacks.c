@@ -57,6 +57,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"

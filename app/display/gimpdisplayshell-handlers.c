@@ -38,6 +38,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-title.h"

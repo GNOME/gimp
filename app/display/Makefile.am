@@ -38,6 +38,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-cursor.h		\
 	gimpdisplayshell-dnd.c			\
 	gimpdisplayshell-dnd.h			\
+	gimpdisplayshell-draw.c			\
+	gimpdisplayshell-draw.h			\
 	gimpdisplayshell-handlers.c		\
 	gimpdisplayshell-handlers.h		\
 	gimpdisplayshell-filter.c		\
