@@ -174,8 +174,8 @@ msgstr ""
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Дозволити налагодження обробник╕в си╜нал╕в для "
-"нефатальних си╜нал╕в.\n"
+"  --debug-handlers         Дозволити налагодження обробник╕в сигнал╕в для "
+"нефатальних сигнал╕в.\n"
 
 #: app/main.c:350
 msgid "  --display <display>      Use the designated X display.\n"
@@ -192,7 +192,7 @@ msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
-"                       Режим налагодження для фатальних си╜нал╕в.\n"
+"                       Режим налагодження для фатальних сигнал╕в.\n"
 "\n"
 
 #: app/main.c:370
@@ -1106,7 +1106,7 @@ msgid ""
 "Couldn't write thumbnail for '%s'\n"
 "as '%s'.\n"
 "%s"
-msgstr "(Невдалося записати файл м╕н╕атюри)"
+msgstr "(Не вдалося записати файл м╕н╕атюри)"
 
 #: app/core/gimpimagefile.c:459 app/core/gimpimagefile.c:970
 #, fuzzy, c-format
@@ -1118,7 +1118,7 @@ msgstr "Не вдалося перев╕дкрити %s\n"
 #: app/core/gimpimagefile.c:658
 #, fuzzy
 msgid "Remote image"
-msgstr "g-зобаження"
+msgstr "g-зображення"
 
 #: app/core/gimpimagefile.c:663
 #, fuzzy
@@ -1211,7 +1211,7 @@ msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
-"Неожливо додати маску до шару,\n"
+"Неможливо додати маску до шару,\n"
 "що нема╓ альфа-каналу."
 
 #: app/core/gimplayer.c:585
@@ -1429,7 +1429,7 @@ msgstr "П╕ктограма ╕нструменту"
 
 #: app/display/display-enums.c:14
 msgid "Tool Icon with Crosshair"
-msgstr "П╕ктограма ╕нтсрументу з перехрестям"
+msgstr "П╕ктограма ╕нструменту з перехрестям"
 
 #: app/display/display-enums.c:15
 msgid "Crosshair only"
@@ -1792,7 +1792,7 @@ msgstr "Використовувати пал╕тру оптим╕зовану для WWW"
 #: app/gui/convert-dialog.c:223
 #, fuzzy
 msgid "Use Black and White (1-Bit) Palette"
-msgstr "Використовувати чорноб╕лу (1-б╕тну) пал╕тру"
+msgstr "Використовувати чорно-б╕лу (1-б╕тну) пал╕тру"
 
 #: app/gui/convert-dialog.c:239
 msgid "Remove Unused Colors from Final Palette"
@@ -1817,14 +1817,13 @@ msgid "[ Warning ]"
 msgstr "[ Увага ]"
 
 #: app/gui/convert-dialog.c:336
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Ви намага╓тесь перетворити зображення з альфа/шарами з RGB/Градац╕й с╕рого в "
+"Ви намага╓тесь перетворити зображення з альфа/шарами в "
 "╕ндексоване.\n"
 "Ви не повинн╕ генерувати пал╕тру б╕льш н╕ж з 255 кольор╕в, якщо ви "
 "спод╕ва╓тесь створити прозорий чи ан╕мований GIF-файл з цього зображення."
@@ -1853,13 +1852,12 @@ msgid "Tool Options"
 msgstr "Параметри ╕нструменту"
 
 #: app/gui/dialogs-constructors.c:318
-#, fuzzy
 msgid "Error Console"
-msgstr "Консоль помилок GIMP"
+msgstr "Консоль помилок"
 
 #: app/gui/dialogs-constructors.c:318
 msgid "Errors"
-msgstr ""
+msgstr "Помилки"
 
 #: app/gui/dialogs-constructors.c:342
 #, fuzzy
@@ -1867,7 +1865,6 @@ msgid "Image List"
 msgstr "Маска зображення"
 
 #: app/gui/dialogs-constructors.c:342 app/gui/dialogs-constructors.c:490
-#, fuzzy
 msgid "Images"
 msgstr "Зображення"
 
@@ -1993,12 +1990,11 @@ msgstr "Кол╕р"
 #: app/gui/dialogs-constructors.c:832
 #, fuzzy
 msgid "Document History"
-msgstr "/Д╕алоги/╤сторя в╕дм╕н..."
+msgstr "/Д╕алоги/╤стор╕я в╕дм╕н..."
 
 #: app/gui/dialogs-constructors.c:832
-#, fuzzy
 msgid "History"
-msgstr "Г╕стограма"
+msgstr "╤стор╕я"
 
 #: app/gui/dialogs-constructors.c:853
 msgid "Brush Editor"
@@ -2018,14 +2014,13 @@ msgid "Display Navigation"
 msgstr ""
 
 #: app/gui/dialogs-constructors.c:941
-#, fuzzy
 msgid "Navigation"
-msgstr "Нав╕гац╕я: %s-%d.%d"
+msgstr "Нав╕гац╕я"
 
 #: app/gui/dialogs-constructors.c:1123 app/gui/dialogs-constructors.c:1167
-#, fuzzy, c-format
+#, c-format
 msgid "%s Options"
-msgstr "Параметри:\n"
+msgstr "Параметри %s"
 
 #: app/gui/drawable-commands.c:72
 msgid "Desaturate operates only on RGB color drawables."
@@ -2052,9 +2047,8 @@ msgid "Copy Named"
 msgstr "Скоп╕ювати з названого буферу"
 
 #: app/gui/edit-commands.c:297 app/gui/edit-commands.c:326
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "Вставити з названого буферу"
+msgstr "(Неназваний буфер)"
 
 #: app/gui/error-console-dialog.c:129
 #, fuzzy
@@ -2070,7 +2064,6 @@ msgid "Write selection to file..."
 msgstr "Записати вид╕лення у файл..."
 
 #: app/gui/error-console-dialog.c:280
-#, fuzzy
 msgid "Cannot save. Nothing is selected."
 msgstr "Зберегти неможливо, н╕чого не вибрано!"
 
@@ -2079,22 +2072,20 @@ msgid "Save error log to file..."
 msgstr "Зберегти помилки у файл╕..."
 
 #: app/gui/error-console-dialog.c:339
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error opening file '%s':\n"
 "%s"
-msgstr "Помилка в╕дкривання файлу %s: %s"
+msgstr "Помилка в╕дкривання файлу %s:\n"
+"%s"
 
 #. Error message should be added. --bex
 #: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:436
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s' failed."
-msgstr ""
-"Збереження не вдалось.\n"
-"%s"
+msgstr "Збереження '%s' не вдалось."
 
 #: app/gui/file-commands.c:215
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -2103,7 +2094,7 @@ msgstr ""
 "Нема╓ пов'язано╖ з цим зображенням назви файлу."
 
 #: app/gui/file-commands.c:229
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?\n"
@@ -2111,24 +2102,23 @@ msgid ""
 "(You will lose all your changes,\n"
 "including all undo information)"
 msgstr ""
-"В╕дновлення %s до\n"
+"В╕дновити '%s' до\n"
 "%s\n"
 "\n"
 "(Ви втратите вс╕ зм╕ни включаючи\n"
 "всю ╕нформац╕ю про в╕дм╕ни операц╕й)"
 
 #: app/gui/file-commands.c:237
-#, fuzzy
 msgid "Revert Image"
-msgstr "В╕дновити зображення?"
+msgstr "В╕дновити зображення"
 
 #: app/gui/file-commands.c:321
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "%s"
 msgstr ""
-"В╕дновлення не вдалось.\n"
+"В╕дновлення до '%s' не вдалось.\n"
 "%s"
 
 #: app/gui/file-dialog-utils.c:102
@@ -2182,7 +2172,7 @@ msgid "Fill Type"
 msgstr "Тип заповнення"
 
 #: app/gui/file-new-dialog.c:540
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "You are trying to create an image with\n"
 "an initial size of %s.\n"
@@ -2196,11 +2186,11 @@ msgid ""
 "setting (currently %s) in the\n"
 "Preferences dialog."
 msgstr ""
-"Ви намага╓тесь створити зображення, вих╕дий\n"
+"Ви намага╓тесь створити зображення, вих╕дний\n"
 "розм╕р якого р╕вний %s.\n"
 "\n"
-"Вибер╕те \"Так\", щоб створити його.\n"
-"Вибер╕те \"В╕дм╕на\", якщо ви не хот╕ли\n"
+"Вибер╕ть \"Так\", щоб створити його.\n"
+"Вибер╕ть \"В╕дм╕на\", якщо ви не хот╕ли\n"
 "створювати таке велике зображення.\n"
 "\n"
 "Щоб запоб╕гти появ╕ цього попередження,\n"
@@ -2213,9 +2203,8 @@ msgid "Confirm Image Size"
 msgstr "П╕дтвердження розм╕ру зображення"
 
 #: app/gui/file-open-dialog.c:177 app/gui/file-open-dialog.c:194
-#, fuzzy
 msgid "Open Image"
-msgstr "Нове зображення"
+msgstr "В╕дкрити зображення"
 
 #: app/gui/file-open-dialog.c:240
 msgid ""
@@ -2224,12 +2213,10 @@ msgid ""
 msgstr ""
 
 #: app/gui/file-open-dialog.c:252
-#, fuzzy
 msgid "_Preview"
 msgstr "Попередн╕й перегляд"
 
 #: app/gui/file-open-dialog.c:305 app/gui/file-open-dialog.c:424
-#, fuzzy
 msgid "No Selection"
 msgstr "Н╕чого не вибрано."
 
@@ -2247,29 +2234,27 @@ msgid "Save a Copy of the Image"
 msgstr "Зберегти коп╕ю зображення"
 
 #: app/gui/file-save-dialog.c:369
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
-msgstr "%s ╕сну╓, переписати?"
+msgstr "Файл '%s' ╕сну╓, переписати?"
 
 #: app/gui/file-save-dialog.c:372
 msgid "File Exists!"
 msgstr "Файл ╕сну╓!"
 
 #: app/gui/gradient-editor-commands.c:85
-#, fuzzy
 msgid "Left Endpoint Color"
 msgstr "Кол╕р л╕во╖ крайньо╖ точки"
 
 #: app/gui/gradient-editor-commands.c:208
-#, fuzzy
 msgid "Right Endpoint Color"
 msgstr "Кол╕р крайньо╖ право╖ точки"
 
 #: app/gui/gradient-editor-commands.c:541
 msgid "Replicate segment"
-msgstr "Розмножити се╜мент"
+msgstr "Розмножити сегмент"
 
 #: app/gui/gradient-editor-commands.c:542
 msgid "Replicate selection"
@@ -2281,17 +2266,14 @@ msgstr "Розмножити"
 
 #. Instructions
 #: app/gui/gradient-editor-commands.c:563
-#, fuzzy
 msgid "Select the number of times"
 msgstr "Вибер╕ть ск╕льки раз╕в"
 
 #: app/gui/gradient-editor-commands.c:568
-#, fuzzy
 msgid "to replicate the selected segment"
-msgstr "ви хочете в╕дтворити вид╕лений се╜мент"
+msgstr "ви хочете в╕дтворити вид╕лений сегмент"
 
 #: app/gui/gradient-editor-commands.c:569
-#, fuzzy
 msgid "to replicate the selection"
 msgstr "ви хочете в╕дтворити вид╕лення"
 
@@ -2299,13 +2281,12 @@ msgstr "ви хочете в╕дтворити вид╕лення"
 #: app/gui/gradient-editor-commands.c:1069
 #, fuzzy
 msgid "Split Segment Uniformly"
-msgstr "Розд╕лити се╜мент на р╕вн╕ частини"
+msgstr "Розд╕лити сегмент на р╕вн╕ частини"
 
 #: app/gui/gradient-editor-commands.c:646
 #: app/gui/gradient-editor-commands.c:1081
-#, fuzzy
 msgid "Split Segments Uniformly"
-msgstr "Род╕лити се╜менти на р╕вн╕ частини"
+msgstr "Розд╕лити сегменти на р╕вн╕ частини"
 
 #: app/gui/gradient-editor-commands.c:656
 msgid "Split"
@@ -2317,54 +2298,49 @@ msgid "Please select the number of uniform parts"
 msgstr "Вибер╕ть к╕льк╕сть частин"
 
 #: app/gui/gradient-editor-commands.c:674
-#, fuzzy
 msgid "in which to split the selected segment"
-msgstr "на яку ви хочите розд╕лити вид╕лений се╜мент"
+msgstr "на яку ви хочете розд╕лити вид╕лений сегмент"
 
 #: app/gui/gradient-editor-commands.c:675
 #, fuzzy
 msgid "in which to split the segments in the selection"
-msgstr "на яку ви хочете розд╕лити се╜менти у вид╕лен╕"
+msgstr "на яку ви хочете розд╕лити сегменти у вид╕лен╕"
 
 #: app/gui/gradient-editor-commands.c:1064
 #, fuzzy
 msgid "Flip Segment"
-msgstr "В╕дбити се╜мент"
+msgstr "В╕дбити сегмент"
 
 #: app/gui/gradient-editor-commands.c:1065
-#, fuzzy
 msgid "Replicate Segment"
-msgstr "Розмножити се╜мент"
+msgstr "Розмножити сегмент"
 
 #: app/gui/gradient-editor-commands.c:1066
 #, fuzzy
 msgid "Blending Function for Segment"
-msgstr "Тип розмальовування для се╜мента"
+msgstr "Тип розмальовування для сегмента"
 
 #: app/gui/gradient-editor-commands.c:1067
-#, fuzzy
 msgid "Coloring Type for Segment"
-msgstr "Тип розмальовування для се╜мента"
+msgstr "Тип розмальовування для сегмента"
 
 #: app/gui/gradient-editor-commands.c:1068
-#, fuzzy
 msgid "Split Segment at Midpoint"
-msgstr "Розд╕лити се╜мент в середн╕й точц╕"
+msgstr "Розд╕лити сегмент в середн╕й точц╕"
 
 #: app/gui/gradient-editor-commands.c:1070
-#, fuzzy
 msgid "Delete Segment"
-msgstr "Видалити се╜мент"
+msgstr "Видалити сегмент"
 
 #: app/gui/gradient-editor-commands.c:1071
 #, fuzzy
 msgid "Re-center Segment's Midpoint"
-msgstr "Перевизначити середню точку се╜мента"
+msgstr "Перевизначити середню точку сегмента"
 
 #: app/gui/gradient-editor-commands.c:1072
 #, fuzzy
 msgid "Re-distribute Handles in Segment"
-msgstr "Перерозпод╕лити позначки в се╜мент╕"
+msgstr "Перерозпод╕лити позначки в сегмент╕"
 
 #: app/gui/gradient-editor-commands.c:1076
 #, fuzzy
@@ -2389,7 +2365,7 @@ msgstr "Тип розмальовування вид╕лено╖ д╕лянки"
 #: app/gui/gradient-editor-commands.c:1080
 #, fuzzy
 msgid "Split Segments at Midpoints"
-msgstr "Розд╕лити се╜менти в середн╕х точках"
+msgstr "Розд╕лити сегменти в середн╕х точках"
 
 #: app/gui/gradient-editor-commands.c:1082
 #, fuzzy
@@ -2418,22 +2394,20 @@ msgid ""
 msgstr ""
 
 #: app/gui/gradients-commands.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Save \"%s\" as POV-Ray"
-msgstr "Зберегти як POV-Ray"
+msgstr "Зберегти \"%s\" як POV-Ray"
 
 #: app/gui/gui.c:158 app/gui/gui.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing '%s'\n"
 msgstr "анал╕з \"%s\"\n"
 
 #: app/gui/gui.c:373
-#, fuzzy
 msgid "Quit The GIMP?"
-msgstr "Про GIMP"
+msgstr "Вийти з GIMP"
 
 #: app/gui/gui.c:377
-#, fuzzy
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2478,7 +2452,7 @@ msgstr "В╕дс╕кати по зображенню"
 
 #: app/gui/image-commands.c:324
 msgid "Clipped to bottom layer"
-msgstr "В╕дсикати по нижньому шару"
+msgstr "В╕дс╕кати по нижньому шару"
 
 #: app/gui/image-commands.c:364
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -2691,7 +2665,7 @@ msgid ""
 "Both must be positive."
 msgstr ""
 "Нев╕рн╕ ширина чи висота.\n"
-"╤хн╕ значення мусять бути позитивними."
+"╥хн╕ значення мусять бути позитивними."
 
 #. <Toolbox>/File
 #: app/gui/menus.c:118
@@ -2752,9 +2726,8 @@ msgid "/File/Dialogs/Gradients..."
 msgstr "/Файл/Д╕алоги/Град╕╓нти..."
 
 #: app/gui/menus.c:185
-#, fuzzy
 msgid "/File/Dialogs/Palettes..."
-msgstr "/Файл/Д╕алоги/Пал╕тра..."
+msgstr "/Файл/Д╕алоги/Пал╕три..."
 
 #: app/gui/menus.c:190
 msgid "/File/Dialogs/Indexed Palette..."
@@ -2771,9 +2744,8 @@ msgid "/File/Dialogs/Navigation..."
 msgstr "/Файл/Д╕алоги/В╕зерунки..."
 
 #: app/gui/menus.c:208
-#, fuzzy
 msgid "/File/Dialogs/Images..."
-msgstr "/Файл/Д╕алоги/В╕зерунки..."
+msgstr "/Файл/Д╕алоги/Зображення..."
 
 #: app/gui/menus.c:212
 #, fuzzy
@@ -2890,7 +2862,7 @@ msgstr "/Редагування/Заповнити кольором переднього плану"
 
 #: app/gui/menus.c:425
 msgid "/Edit/Fill with BG Color"
-msgstr "/Редагування/Заповненити кольором тла"
+msgstr "/Редагування/Заповнити кольором тла"
 
 #: app/gui/menus.c:430
 msgid "/Edit/Stroke"
@@ -2947,9 +2919,8 @@ msgid "/View/Zoom Out"
 msgstr "/Вигляд/Зменшити"
 
 #: app/gui/menus.c:500
-#, fuzzy
 msgid "/View/Zoom to Fit Window"
-msgstr "/Вигляд/Зб╕льшити"
+msgstr "/Вигляд/Зб╕льшити до розм╕ру в╕кна "
 
 #: app/gui/menus.c:505
 msgid "/View/Shrink Wrap"
@@ -3001,7 +2972,6 @@ msgid "/View/Info Window..."
 msgstr "/Вигляд/╤нформац╕йне в╕кно..."
 
 #: app/gui/menus.c:570
-#, fuzzy
 msgid "/View/Navigation Window..."
 msgstr "/Вигляд/Нав╕гац╕йне в╕кно..."
 
@@ -3054,9 +3024,8 @@ msgstr "/Зображення/Режим/╤ндексований..."
 
 #. <Image>/Image/Transform
 #: app/gui/menus.c:640
-#, fuzzy
 msgid "/Image/Transform"
-msgstr "/Зображення/Перетворення/Обернути"
+msgstr "/Зображення/Перетворення"
 
 #: app/gui/menus.c:646
 msgid "/Image/Canvas Size..."
@@ -3076,9 +3045,8 @@ msgid "/Image/Duplicate"
 msgstr "/Зображення/Дублювати"
 
 #: app/gui/menus.c:669
-#, fuzzy
 msgid "/Image/Merge Visible Layers..."
-msgstr "/Шари/Об'╓днати видим╕ шари..."
+msgstr "/Зображення/Об'╓днати видим╕ шари..."
 
 #: app/gui/menus.c:673
 #, fuzzy
@@ -3088,7 +3056,7 @@ msgstr "/Шари/Звести зображення"
 #: app/gui/menus.c:680
 #, fuzzy
 msgid "/Image/Undo History..."
-msgstr "/Д╕алоги/╤сторя в╕дм╕н..."
+msgstr "/Д╕алоги/╤стор╕я в╕дм╕н..."
 
 #. <Image>/Layer
 #. <Image>/Layer/Stack
@@ -3123,17 +3091,14 @@ msgid "/Layer/Stack/Layer to Bottom"
 msgstr "/Шари/Купка/Шар до низу"
 
 #: app/gui/menus.c:720
-#, fuzzy
 msgid "/Layer/New Layer..."
-msgstr "/Новий шар..."
+msgstr "/Шари/Новий шар..."
 
 #: app/gui/menus.c:725
-#, fuzzy
 msgid "/Layer/Duplicate Layer"
-msgstr "/Дублювати шар"
+msgstr "/Шари/Дублювати шар"
 
 #: app/gui/menus.c:730
-#, fuzzy
 msgid "/Layer/Anchor Layer"
 msgstr "/Шари/Причепити шар"
 
@@ -3143,14 +3108,12 @@ msgid "/Layer/Merge Down"
 msgstr "/Об'╓днати з попередн╕м"
 
 #: app/gui/menus.c:740
-#, fuzzy
 msgid "/Layer/Delete Layer"
-msgstr "/Видалити шар"
+msgstr "/Шари/Видалити шар"
 
 #: app/gui/menus.c:748
-#, fuzzy
 msgid "/Layer/Layer Boundary Size..."
-msgstr "/Розм╕ри границь шару..."
+msgstr "/Шари/Розм╕ри границь шару..."
 
 #: app/gui/menus.c:753
 #, fuzzy
@@ -3158,9 +3121,8 @@ msgid "/Layer/Layer to Imagesize"
 msgstr "/Шари/Розм╕р шару до зображення"
 
 #: app/gui/menus.c:758
-#, fuzzy
 msgid "/Layer/Scale Layer..."
-msgstr "/Маштабувати шар..."
+msgstr "/Шари/Масштабувати шар..."
 
 #: app/gui/menus.c:763
 #, fuzzy
@@ -3168,14 +3130,12 @@ msgid "/Layer/Crop Layer"
 msgstr "/Шари/Причепити шар"
 
 #: app/gui/menus.c:773
-#, fuzzy
 msgid "/Layer/Transform/Offset..."
-msgstr "/Зображення/Перетворення/Зсув..."
+msgstr "/Шари/Перетворення/Зсув..."
 
 #: app/gui/menus.c:784
-#, fuzzy
 msgid "/Layer/Colors/Desaturate"
-msgstr "/Зображення/Кольори/Знебарвити"
+msgstr "/Шари//Кольори/Знебарвити"
 
 #: app/gui/menus.c:789
 #, fuzzy
@@ -3184,9 +3144,8 @@ msgstr "/Зображення/Кольори/╤нвертувати"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/menus.c:798
-#, fuzzy
 msgid "/Layer/Colors/Auto/Equalize"
-msgstr "/Зображення/Кольори/Авто/Вир╕внювання"
+msgstr "/Шари/Кольори/Авто/Вир╕внювання"
 
 #. <Image>/Layer/Mask
 #: app/gui/menus.c:807
@@ -3283,9 +3242,8 @@ msgid "/Dialogs/Gradients..."
 msgstr "/Д╕алоги/Град╕╓нти..."
 
 #: app/gui/menus.c:904
-#, fuzzy
 msgid "/Dialogs/Palettes..."
-msgstr "/Д╕алоги/Пал╕тра..."
+msgstr "/Д╕алоги/Пал╕три..."
 
 #: app/gui/menus.c:909
 msgid "/Dialogs/Indexed Palette..."
@@ -3309,7 +3267,7 @@ msgstr "/Д╕алоги/В╕зерунки..."
 #: app/gui/menus.c:931
 #, fuzzy
 msgid "/Dialogs/Document History..."
-msgstr "/Д╕алоги/╤сторя в╕дм╕н..."
+msgstr "/Д╕алоги/╤стор╕я в╕дм╕н..."
 
 #: app/gui/menus.c:936
 msgid "/Dialogs/Error Console..."
@@ -3451,7 +3409,7 @@ msgstr "/Шар до розм╕ру зображення"
 
 #: app/gui/menus.c:1078
 msgid "/Scale Layer..."
-msgstr "/Маштабувати шар..."
+msgstr "/Масштабувати шар..."
 
 #: app/gui/menus.c:1086
 msgid "/Add Layer Mask..."
@@ -3522,9 +3480,8 @@ msgid "/Edit Channel Attributes..."
 msgstr "/Редагування атрибут╕в каналу"
 
 #: app/gui/menus.c:1197
-#, fuzzy
 msgid "/New Path..."
-msgstr "/Новий контур"
+msgstr "/Новий контур..."
 
 #: app/gui/menus.c:1202
 #, fuzzy
@@ -3786,9 +3743,8 @@ msgid "/Refresh Patterns"
 msgstr "В╕зерунки"
 
 #: app/gui/menus.c:1546
-#, fuzzy
 msgid "/Left Endpoint's Color..."
-msgstr "Кол╕р л╕во╖ крайньо╖ точки"
+msgstr "/Кол╕р л╕во╖ крайньо╖ точки..."
 
 #: app/gui/menus.c:1551
 #, fuzzy
@@ -3813,9 +3769,8 @@ msgid "/Save Left Color To"
 msgstr ""
 
 #: app/gui/menus.c:1596
-#, fuzzy
 msgid "/Right Endpoint's Color..."
-msgstr "Кол╕р крайньо╖ право╖ точки"
+msgstr "/Кол╕р крайньо╖ право╖ точки..."
 
 #: app/gui/menus.c:1601
 #, fuzzy
@@ -3847,7 +3802,7 @@ msgstr "Функц╕я затемнення вид╕лено╖ д╕лянки"
 #: app/gui/menus.c:1651
 #, fuzzy
 msgid "/blendingfunction/Curved"
-msgstr "Функц╕я затемнення для се╜мента"
+msgstr "Функц╕я затемнення для сегмента"
 
 #: app/gui/menus.c:1656
 msgid "/blendingfunction/Sinusodial"
@@ -3866,7 +3821,7 @@ msgstr "Сферичний (зменшення)"
 #: app/gui/menus.c:1671
 #, fuzzy
 msgid "/blendingfunction/(Varies)"
-msgstr "Функц╕я затемнення для се╜мента"
+msgstr "Функц╕я затемнення для сегмента"
 
 #: app/gui/menus.c:1676
 msgid "/coloringtype/RGB"
@@ -3897,14 +3852,12 @@ msgid "/Blend Endpoints' Opacity"
 msgstr "Непрозор╕сть крайн╕х точок затемнення"
 
 #: app/gui/menus.c:1749
-#, fuzzy
 msgid "/New Gradient"
-msgstr "Град╕╓нт"
+msgstr "/Новий град╕╓нт"
 
 #: app/gui/menus.c:1754
-#, fuzzy
 msgid "/Duplicate Gradient"
-msgstr "/Дублювати контур"
+msgstr "/Дублювати град╕╓нт"
 
 #: app/gui/menus.c:1759
 #, fuzzy
@@ -3912,9 +3865,8 @@ msgid "/Edit Gradient..."
 msgstr "/Д╕алоги/Град╕╓нти..."
 
 #: app/gui/menus.c:1764
-#, fuzzy
 msgid "/Delete Gradient..."
-msgstr "/Д╕алоги/Град╕╓нти..."
+msgstr "/Видалити град╕╓нт..."
 
 #: app/gui/menus.c:1772
 #, fuzzy
@@ -3922,14 +3874,12 @@ msgid "/Refresh Gradients"
 msgstr "Град╕╓нти"
 
 #: app/gui/menus.c:1780
-#, fuzzy
 msgid "/Save as POV-Ray..."
-msgstr "Зберегти як POV-Ray"
+msgstr "/Зберегти як POV-Ray..."
 
 #: app/gui/menus.c:1792
-#, fuzzy
 msgid "/New Color"
-msgstr "Повнокольорове"
+msgstr "/Новий кольор"
 
 #: app/gui/menus.c:1797 app/gui/menus.c:1893
 #, fuzzy
@@ -3937,29 +3887,24 @@ msgid "/Edit Color..."
 msgstr "Кол╕р л╕во╖ крайньо╖ точки"
 
 #: app/gui/menus.c:1802
-#, fuzzy
 msgid "/Delete Color"
-msgstr "/╤нструменти/Типов╕ кольори"
+msgstr "/Видалити кольор"
 
 #: app/gui/menus.c:1814
-#, fuzzy
 msgid "/New Palette"
-msgstr "/Новий контур"
+msgstr "/Нова пал╕тра"
 
 #: app/gui/menus.c:1819
-#, fuzzy
 msgid "/Duplicate Palette"
-msgstr "/Дублювати контур"
+msgstr "/Дублювати пал╕тру"
 
 #: app/gui/menus.c:1824
-#, fuzzy
 msgid "/Edit Palette..."
-msgstr "Зм╕нити кол╕р пал╕три"
+msgstr "/Зм╕нити пал╕тру..."
 
 #: app/gui/menus.c:1829
-#, fuzzy
 msgid "/Delete Palette..."
-msgstr "/Видалити контур"
+msgstr "/Видалити пал╕тру..."
 
 #: app/gui/menus.c:1837
 #, fuzzy
@@ -3967,14 +3912,12 @@ msgid "/Refresh Palettes"
 msgstr "Об'╓днання пал╕тр"
 
 #: app/gui/menus.c:1845
-#, fuzzy
 msgid "/Import Palette..."
-msgstr "╤мпортувати пал╕тру"
+msgstr "/╤мпортувати пал╕тру..."
 
 #: app/gui/menus.c:1850
-#, fuzzy
 msgid "/Merge Palettes..."
-msgstr "Об'╓днання пал╕тр"
+msgstr "/Об'╓днання пал╕тр..."
 
 #: app/gui/menus.c:1861
 #, fuzzy
@@ -3992,14 +3935,12 @@ msgid "/Paste Buffer as New"
 msgstr "Вставити новий"
 
 #: app/gui/menus.c:1876
-#, fuzzy
 msgid "/Delete Buffer"
-msgstr "/Видалити шар"
+msgstr "/Видалити буфер"
 
 #: app/gui/menus.c:1888
-#, fuzzy
 msgid "/Add Color"
-msgstr "Повнокольорове"
+msgstr "/Додати кольор"
 
 #: app/gui/menus.c:1905
 #, fuzzy
@@ -4012,14 +3953,12 @@ msgid "/New Display"
 msgstr "В╕дображення"
 
 #: app/gui/menus.c:1913
-#, fuzzy
 msgid "/Delete Image"
-msgstr "/Видалити шар"
+msgstr "/Видалити зображення"
 
 #: app/gui/menus.c:1924
-#, fuzzy
 msgid "/Open Image"
-msgstr "/Звести зображення"
+msgstr "/В╕дкрити зображення"
 
 #: app/gui/menus.c:1928
 msgid "/Raise or Open Image"
@@ -4151,7 +4090,6 @@ msgid "State:"
 msgstr "Стан:"
 
 #: app/gui/module-browser.c:487
-#, fuzzy
 msgid "Autoload during start-up"
 msgstr "Автозавантаження на старт╕"
 
@@ -4312,24 +4250,25 @@ msgid "Enter a new name for the path"
 msgstr "Введ╕ть нову назву контуру"
 
 #: app/gui/paths-dialog.c:1886
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to open file '%s'\n"
 "Error: %s."
-msgstr "Неможливо в╕дкрити файл %s"
+msgstr "Неможливо в╕дкрити файл '%s'\n"
+"Помилка: %s."
 
 #: app/gui/paths-dialog.c:1902
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read from '%s'"
 msgstr "Не вдалось зчитати з %s"
 
 #: app/gui/paths-dialog.c:1917
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read path from '%s'"
 msgstr "Не вдалося зчитати контур з %s"
 
 #: app/gui/paths-dialog.c:1924
-#, fuzzy, c-format
+#, c-format
 msgid "No points specified in path file '%s'"
 msgstr "Нема╓ вказаних точок у файл╕ контуру %s"
 
@@ -4339,27 +4278,25 @@ msgid "Failed to read path points from %s"
 msgstr "Не вдалося зчитати точки контуру з %s"
 
 #: app/gui/paths-dialog.c:2011
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "%s"
 msgstr ""
-"В╕дкривання не вдалось.\n"
+"В╕дкривання '%s' не вдалось:\n"
 "%s"
 
 #: app/gui/paths-dialog.c:2034
-#, fuzzy
 msgid "Load and Save Bezier Curves"
-msgstr "Завантаження/Збереження кривих Безь╓"
+msgstr "Завантаження та збереження кривих Безь╓"
 
 #: app/gui/paths-dialog.c:2074
 msgid "Load Path"
 msgstr "Завантажити контур"
 
 #: app/gui/paths-dialog.c:2096
-#, fuzzy
 msgid "Save Path"
-msgstr "Зберегти в"
+msgstr "Зберегти контур"
 
 #: app/gui/pattern-select.c:263
 msgid ""
@@ -4416,7 +4353,7 @@ msgstr "Щоб ц╕ зм╕ни вступили в д╕ю, необх╕дно перезапустити GIMP."
 #: app/gui/preferences-dialog.c:1128
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "Коментар╕й типово обмежений %d символами."
+msgstr "Коментар типово обмежений %d символами."
 
 #. Create the dialog
 #: app/gui/preferences-dialog.c:1731
@@ -4488,7 +4425,6 @@ msgstr "Розм╕р списку документ╕в, що в╕дкривалися:"
 
 #. Dialog Bahaviour
 #: app/gui/preferences-dialog.c:2091
-#, fuzzy
 msgid "Dialog Behavior"
 msgstr "Повед╕нка д╕алогу"
 
@@ -4533,7 +4469,7 @@ msgstr "Показувати п╕дказки"
 
 #: app/gui/preferences-dialog.c:2143
 msgid "Context Sensitive Help with \"F1\""
-msgstr "Контексна допомога через \"F1\""
+msgstr "Контекстна допомога через \"F1\""
 
 #: app/gui/preferences-dialog.c:2146
 msgid "Help Browser"
@@ -4594,12 +4530,12 @@ msgstr "Використовувати \"Точка за точкою\" типово"
 
 #: app/gui/preferences-dialog.c:2292
 msgid "Resize Window on Zoom"
-msgstr "Зм╕н╕вати розм╕р в╕кна при масштабуванн╕"
+msgstr "Зм╕нювати розм╕р в╕кна при масштабуванн╕"
 
 #: app/gui/preferences-dialog.c:2294
 #, fuzzy
 msgid "Resize Window on Image Size Change"
-msgstr "Зм╕н╕вати розм╕р в╕кна при масштабуванн╕"
+msgstr "Зм╕нювати розм╕р в╕кна при масштабуванн╕"
 
 #: app/gui/preferences-dialog.c:2296
 msgid "Show Rulers"
@@ -4627,11 +4563,11 @@ msgstr "Показувати масштаб у в╕дсотках"
 
 #: app/gui/preferences-dialog.c:2333
 msgid "Show zoom ratio"
-msgstr "Показувати масштабний коф╕ц╕╓нт"
+msgstr "Показувати масштабний коеф╕ц╕╓нт"
 
 #: app/gui/preferences-dialog.c:2334
 msgid "Show reversed zoom ratio"
-msgstr "Показувати зворотн╕й масштабний коф╕ц╕╓нт"
+msgstr "Показувати зворотн╕й масштабний коеф╕ц╕╓нт"
 
 #: app/gui/preferences-dialog.c:2335
 msgid "Show memory usage"
@@ -4712,7 +4648,6 @@ msgid "Calibrate"
 msgstr "В╕дкал╕брувати"
 
 #: app/gui/preferences-dialog.c:2559
-#, fuzzy
 msgid "From Windowing System"
 msgstr "З в╕конно╖ системи"
 
@@ -4775,9 +4710,8 @@ msgid "Size of Thumbnails Files:"
 msgstr "Спробувати записати файл еск╕зу:"
 
 #: app/gui/preferences-dialog.c:2703 app/gui/preferences-dialog.c:2706
-#, fuzzy
 msgid "Folders"
-msgstr "Каталог своп╕нгу:"
+msgstr "Каталоги"
 
 #: app/gui/preferences-dialog.c:2721
 msgid "Temp Dir:"
@@ -4796,58 +4730,48 @@ msgid "Select Swap Dir"
 msgstr "Вибер╕ть каталог своп╕нгу"
 
 #: app/gui/preferences-dialog.c:2756
-#, fuzzy
 msgid "Brush Folders"
-msgstr "Пензл╕"
+msgstr "Каталог пензл╕в"
 
 #: app/gui/preferences-dialog.c:2758
-#, fuzzy
 msgid "Select Brush Folders"
 msgstr "Вибер╕ть каталог пензл╕в"
 
 #: app/gui/preferences-dialog.c:2760
-#, fuzzy
 msgid "Pattern Folders"
-msgstr "Заповнення в╕зерунком"
+msgstr "Каталоги в╕зерунк╕в"
 
 #: app/gui/preferences-dialog.c:2762
-#, fuzzy
 msgid "Select Pattern Folders"
-msgstr "Вибер╕ть каталог в╕зерунк╕в"
+msgstr "Вибер╕ть каталоги в╕зерунк╕в"
 
 #: app/gui/preferences-dialog.c:2764
-#, fuzzy
 msgid "Palette Folders"
-msgstr "Пал╕три"
+msgstr "Каталоги пал╕тр"
 
 #: app/gui/preferences-dialog.c:2766
-#, fuzzy
 msgid "Select Palette Folders"
-msgstr "Вибер╕ть каталог пал╕тр"
+msgstr "Вибер╕ть каталоги пал╕тр"
 
 #: app/gui/preferences-dialog.c:2768
-#, fuzzy
 msgid "Gradient Folders"
-msgstr "Град╕╓нти"
+msgstr "Каталоги град╕╓нт╕в"
 
 #: app/gui/preferences-dialog.c:2770
-#, fuzzy
 msgid "Select Gradient Folders"
-msgstr "Вибер╕ть каталог град╕╓нт╕в"
+msgstr "Вибер╕ть каталоги град╕╓нт╕в"
 
 #: app/gui/preferences-dialog.c:2772
 msgid "Plug-Ins"
 msgstr "Доповнення"
 
 #: app/gui/preferences-dialog.c:2772
-#, fuzzy
 msgid "Plug-In Folders"
-msgstr "Доповнення"
+msgstr "Каталог доповненнь"
 
 #: app/gui/preferences-dialog.c:2774
-#, fuzzy
 msgid "Select Plug-In Folders"
-msgstr "Вибер╕ть каталог доповнень"
+msgstr "Вибер╕ть каталоги доповнень"
 
 #: app/gui/preferences-dialog.c:2776
 #, fuzzy
@@ -4869,27 +4793,24 @@ msgid "Modules"
 msgstr "Модул╕"
 
 #: app/gui/preferences-dialog.c:2780
-#, fuzzy
 msgid "Module Folders"
-msgstr "Помилка модуля"
+msgstr "Каталоги модул╕в"
 
 #: app/gui/preferences-dialog.c:2782
-#, fuzzy
 msgid "Select Module Folders"
-msgstr "Вибер╕ть каталог модул╕в"
+msgstr "Вибер╕ть каталоги модул╕в"
 
 #: app/gui/preferences-dialog.c:2784
 msgid "Themes"
-msgstr ""
+msgstr "Теми"
 
 #: app/gui/preferences-dialog.c:2784
 msgid "Theme Folders"
-msgstr ""
+msgstr "Каталоги тем"
 
 #: app/gui/preferences-dialog.c:2786
-#, fuzzy
 msgid "Select Theme Folders"
-msgstr "Вибер╕ть каталог тимчасових файл╕в"
+msgstr "Вибер╕ть каталоги тем"
 
 #: app/gui/qmask-commands.c:169
 msgid "Edit Qmask Color"
@@ -4940,9 +4861,8 @@ msgid "Offset"
 msgstr "Зм╕шення"
 
 #: app/gui/resize-dialog.c:485
-#, fuzzy
 msgid "Center"
-msgstr "Центр X:"
+msgstr "Центр"
 
 #: app/gui/resize-dialog.c:523
 msgid "Print Size & Display Unit"
@@ -4959,7 +4879,7 @@ msgstr "В╕дкал╕брувати розд╕льну здатн╕сть мон╕тора"
 
 #: app/gui/resolution-calibrate-dialog.c:236
 msgid "Measure the rulers and enter their lengths below."
-msgstr "Вим╕ряйте л╕н╕йки та введ╕ть ╖х довжини н╕жче."
+msgstr "Вим╕ряйте л╕н╕йки та введ╕ть ╖х довжини нижче."
 
 #: app/gui/resolution-calibrate-dialog.c:258
 msgid "Horizontal:"
@@ -4987,7 +4907,7 @@ msgstr "Зменшити вид╕лення за:"
 
 #: app/gui/select-commands.c:177
 msgid "Shrink from image border"
-msgstr "Зменшити за межою зображення"
+msgstr "Зменшити за межею зображення"
 
 #: app/gui/select-commands.c:198
 msgid "Grow Selection"
@@ -5026,24 +4946,21 @@ msgid "Show tip next time GIMP starts"
 msgstr "Показувати п╕дказку наступного разу"
 
 #: app/gui/tips-dialog.c:201
-#, fuzzy
 msgid "_Previous Tip"
 msgstr "Попередня п╕дказка"
 
 #: app/gui/tips-dialog.c:211
-#, fuzzy
 msgid "_Next Tip"
 msgstr "Наступна п╕дказка"
 
 #: app/gui/tips-parser.c:166
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called '%"
 "s'. Please check your installation."
 msgstr ""
-"Схоже ваш файл порад GIMP в╕дсутний!\n"
-"Це ма╓ бути файл gimp_tips.uk.txt в п╕дкаталогз╕\n"
-"п╕дказок каталогу даних GIMP.\n"
+"Схоже ваш файл порад GIMP в╕дсутн╕й!\n"
+"Це ма╓ бути файл '%s'.\n"
 "Будь ласка, перев╕рте вашу ╕нсталяц╕ю."
 
 #. This is a special string to specify the language identifier to
@@ -5077,7 +4994,7 @@ msgid ""
 "here."
 msgstr ""
 "gimprc використову╓ться для збер╕гання особистих установок\n"
-"таких як типова повед╕ка GIMP.\n"
+"таких як типова повед╕нка GIMP.\n"
 "Шляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в, в╕зерунк╕в, доповнень\n"
 "та модул╕в також вказуються тут."
 
@@ -5099,7 +5016,7 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 "Доповнення та розширення - це зовн╕шн╕ програми, що\n"
-"запуска╓ GIMP, як╕ надють додатков╕ можливост╕.  Ц╕\n"
+"запуска╓ GIMP, як╕ надають додатков╕ можливост╕.  Ц╕\n"
 "програми шукаються на запуску й ╕нформац╕я про ╖хн╕\n"
 "функц╕╖ та час модиф╕кац╕й кешу╓ться у цьому файл╕.\n"
 "Цей файл призначено  лише для зчитування  програмою\n"
@@ -5139,7 +5056,7 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"unitrc використову╓ться для збереженя вашо╖ бази даних\n"
+"unitrc використову╓ться для збереження вашо╖ бази даних\n"
 "одиниць вим╕ру. Ви можете визначити додатков╕ одиниц╕ та\n"
 "використовувати ╖х так само, як ╕ владнан╕ одиниц╕: дюйми,\n"
 "м╕л╕метри, пункти ╕ п╕ки. Цей файл перепису╓ться щоразу,\n"
@@ -5190,7 +5107,7 @@ msgid ""
 "palettes."
 msgstr ""
 "Це п╕дкаталог, котрий може бути використано для\n"
-"збереження створених користувачем взерунк╕в. Типово\n"
+"збереження створених користувачем в╕зерунк╕в. Типово\n"
 "у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
 "на додаток до системного при пошуку шаблон╕в."
 
@@ -5203,7 +5120,7 @@ msgid ""
 "patterns."
 msgstr ""
 "Це п╕дкаталог, котрий може бути використано для\n"
-"збереження створених користувачем взерунк╕в. Типово\n"
+"збереження створених користувачем в╕зерунк╕в. Типово\n"
 "у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
 "на додаток до системного при пошуку шаблон╕в."
 
@@ -5235,7 +5152,7 @@ msgstr ""
 "тримуваних системою динам╕чно завантажуваних модул╕в.\n"
 "Типово у файл╕ gimprc вказано перев╕рку цього п╕дкаталогу,\n"
 "на додаток до системного при пошуку модул╕в, що за-\n"
-"вантажуються при ╕нц╕ал╕зац╕╖."
+"вантажуються при ╕н╕ц╕ал╕зац╕╖."
 
 #: app/gui/user-install-dialog.c:221
 #, fuzzy
@@ -5336,7 +5253,6 @@ msgstr ""
 "цього п╕дкаталогу, на додаток до системного при пошуку даних."
 
 #: app/gui/user-install-dialog.c:333
-#, fuzzy
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -5365,14 +5281,13 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Клацн╕ть \"Продовжити\" щоб ув╕йти в користувацьку ╕нсталяц╕ю."
 
 #: app/gui/user-install-dialog.c:689
-#, fuzzy
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2002\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2000\n"
+"Copyright (C) 1995-2002\n"
 "Spencer Kimball, Peter Mattis та команда розробки GIMP."
 
 #: app/gui/user-install-dialog.c:699
@@ -5412,17 +5327,15 @@ msgstr ""
 "MA 02111-1307, USA."
 
 #: app/gui/user-install-dialog.c:735
-#, fuzzy
 msgid "Personal GIMP Folder"
 msgstr "Особистий каталог GIMP"
 
 #: app/gui/user-install-dialog.c:736
-#, fuzzy
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Клацн╕ть \"Продовжити\" щоб створити ваш особистий каталог GIMP."
 
 #: app/gui/user-install-dialog.c:773
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
 "%s needs to be created."
@@ -5431,7 +5344,6 @@ msgstr ""
 "каталог %s."
 
 #: app/gui/user-install-dialog.c:779
-#, fuzzy
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -5477,7 +5389,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:882
 msgid "Aborting Installation..."
-msgstr "Переривання ╕нсталац╕╖..."
+msgstr "Переривання ╕нсталяц╕╖..."
 
 #: app/gui/user-install-dialog.c:956
 msgid "does not exist.  Cannot install."
@@ -5494,7 +5406,7 @@ msgid ""
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 "Ви отримували як╕-небудь пов╕домлення про помилки в консольному\n"
-"в╕кн╕? Якщ╕ н╕ - ╕нсталяц╕я була усп╕шною!\n"
+"в╕кн╕? Якщо н╕ - ╕нсталяц╕я була усп╕шною!\n"
 "╤накше, вийд╕ть та досл╕д╕ть можлив╕ причини..."
 
 #: app/gui/user-install-dialog.c:1080
@@ -5544,7 +5456,6 @@ msgstr ""
 "\"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1162
-#, fuzzy
 msgid "Swap Folder:"
 msgstr "Каталог своп╕нгу:"
 
@@ -5563,7 +5474,7 @@ msgstr "Отримати розд╕льну здатн╕сть в╕д в╕конно╖ системи (Зараз %d x %d т/д)"
 
 #: app/gui/user-install-dialog.c:1231
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "Кр╕м того, ви можете встановити розд╕льну здатн╕сть монитора вручну."
+msgstr "Кр╕м того, ви можете встановити розд╕льну здатн╕сть мон╕тора вручну."
 
 #: app/gui/user-install-dialog.c:1244
 msgid "Monitor Resolution X:"
@@ -5575,7 +5486,7 @@ msgid ""
 "which lets you determine your monitor resolution interactively."
 msgstr ""
 "Ви можете також натиснути кнопку \"В╕дкал╕брувати\", щоб в╕дкрити в╕кно\n"
-"котре дозволить вам ╕нтерактивно визначити розд╕льну здатн╕сть монитора."
+"котре дозволить вам ╕нтерактивно визначити розд╕льну здатн╕сть мон╕тора."
 
 #: app/gui/vectors-commands.c:283
 msgid "There is no active Layer or Channel to stroke to"
@@ -5681,9 +5592,8 @@ msgid "Convert"
 msgstr "Перетворення"
 
 #: app/pdb/internal_procs.c:94
-#, fuzzy
 msgid "GimpDisplay procedures"
-msgstr "Процедури GDisplay"
+msgstr "Процедури GimpDisplay"
 
 #: app/pdb/internal_procs.c:97
 msgid "Drawable procedures"
@@ -5797,7 +5707,7 @@ msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
-"Нев╕рн╕ аргументи були передан╕ дл procedural_db_run_proc:\n"
+"Нев╕рн╕ аргументи були передан╕ для procedural_db_run_proc:\n"
 "Аргумент %d в \"%s\" ма╓ бути %s, а було передано %s"
 
 #: app/pdb/procedural_db_cmds.c:77
@@ -5843,12 +5753,11 @@ msgid "Resource configuration"
 msgstr "Конф╕гурування ресурс╕в"
 
 #: app/plug-in/plug-ins.c:123
-#, fuzzy
 msgid "New Plug-ins"
-msgstr "Доповнення"
+msgstr "Нов╕ доповнення"
 
 #: app/plug-in/plug-ins.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "запит доповнення: \"%s\"\n"
 
@@ -6316,7 +6225,7 @@ msgstr "Зм╕нити крив╕ для каналу:"
 #. The option menu for selecting the drawing method
 #: app/tools/gimpcurvestool.c:759
 msgid "Curve Type:"
-msgstr "Тип краво╖:"
+msgstr "Тип криво╖:"
 
 #: app/tools/gimpcurvestool.c:766
 msgid "Smooth"
@@ -6584,7 +6493,7 @@ msgstr "Кут:"
 #. sens sliders
 #: app/tools/gimpinktool.c:1479
 msgid "Sensitivity"
-msgstr "Чутлив╕ть"
+msgstr "Чутлив╕сть"
 
 #: app/tools/gimpinktool.c:1504
 msgid "Tilt:"
@@ -6635,7 +6544,7 @@ msgstr "/Зображення/Кольори/╤нвертувати"
 
 #: app/tools/gimplevelstool.c:281
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "Р╕вн╕ для ╕ндексованих зображень неможуть бути в╕дрегульован╕."
+msgstr "Р╕вн╕ для ╕ндексованих зображень не можуть бути в╕дрегульован╕."
 
 #: app/tools/gimplevelstool.c:432
 msgid "Modify Levels for Channel:"
@@ -6686,7 +6595,6 @@ msgid "Measure Tool"
 msgstr "Вим╕рювач"
 
 #: app/tools/gimpmeasuretool.c:140
-#, fuzzy
 msgid "Measure angles and lengths"
 msgstr "Вим╕рювати в╕дстан╕ та кути"
 
@@ -6936,11 +6844,11 @@ msgstr "╤нформац╕я про викривлення"
 
 #: app/tools/gimpsheartool.c:179
 msgid "Shear Magnitude X:"
-msgstr "Коф╕ц╕ент викривлення по X:"
+msgstr "Коеф╕ц╕╓нт викривлення по X:"
 
 #: app/tools/gimpsheartool.c:212
 msgid "Shearing..."
-msgstr "Викравлення..."
+msgstr "Викривлення..."
 
 #: app/tools/gimpsmudgetool.c:57
 #, fuzzy
@@ -6950,7 +6858,7 @@ msgstr "Величезний"
 #: app/tools/gimpsmudgetool.c:58
 #, fuzzy
 msgid "Smudge image"
-msgstr "g-зобаження"
+msgstr "g-зображення"
 
 #: app/tools/gimpsmudgetool.c:59
 #, fuzzy
@@ -6984,7 +6892,7 @@ msgstr "К╕льк╕сть:"
 
 #: app/tools/gimptexttool.c:627
 msgid "Border:"
-msgstr "Обрамленя:"
+msgstr "Обрамлення:"
 
 #: app/tools/gimptexttool.c:643 app/tools/selection_options.c:431
 msgid "Unit:"
@@ -7134,7 +7042,7 @@ msgstr ""
 
 #: app/tools/selection_options.c:382
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Ф╕ксований ром╕р / в╕дношення стор╕н"
+msgstr "Ф╕ксований розм╕р / в╕дношення стор╕н"
 
 #: app/tools/tool_options.c:47
 msgid "This tool has no options."
@@ -7250,9 +7158,8 @@ msgstr ""
 
 #: app/widgets/gimpcontainergridview.c:135
 #: app/widgets/gimpcontainergridview.c:436
-#, fuzzy
 msgid "(None)"
-msgstr "Нема╓"
+msgstr "(Нема╓)"
 
 #: app/widgets/gimpdataeditor.c:136
 msgid "Revert"
@@ -7284,7 +7191,6 @@ msgid "Delete Data Object"
 msgstr "Видалити контур"
 
 #: app/widgets/gimpdocumentview.c:162
-#, fuzzy
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -7321,17 +7227,14 @@ msgid "_Style:"
 msgstr "Стан:"
 
 #: app/widgets/gimpgradienteditor.c:386 app/widgets/gimppaletteeditor.c:277
-#, fuzzy
 msgid "Zoom All"
 msgstr "Масштабувати все"
 
 #: app/widgets/gimpgradienteditor.c:393 app/widgets/gimppaletteeditor.c:284
-#, fuzzy
 msgid "Zoom In"
 msgstr "Зб╕льшити"
 
 #: app/widgets/gimpgradienteditor.c:400 app/widgets/gimppaletteeditor.c:291
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Зменшити"
 
@@ -7452,9 +7355,8 @@ msgid "Create a new display for this image"
 msgstr ""
 
 #: app/widgets/gimpimageview.c:161
-#, fuzzy
 msgid "Delete this image"
-msgstr "Видалити канал"
+msgstr "Видалити це зображення"
 
 #: app/widgets/gimpitemfactory.c:525
 #, c-format
@@ -7861,7 +7763,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "This brush cannot be edited."
-#~ msgstr "Нажаль цей пензель не можна редагувати."
+#~ msgstr "На жаль цей пензель не можна редагувати."
 
 #~ msgid "Default"
 #~ msgstr "Типовий"
@@ -7917,7 +7819,7 @@ msgstr ""
 #~ msgstr "видалення каналу"
 
 #~ msgid "gimage"
-#~ msgstr "g-зобаження"
+#~ msgstr "g-зображення"
 
 #~ msgid "float selection"
 #~ msgstr "плаваюче вид╕лення"
