@@ -982,46 +982,38 @@ run_temp_proc (gchar   *name,
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
-  gchar *help_path = NULL;
-  gchar *locale    = NULL;
-  gchar *help_file = NULL;
+  gchar *help_path;
+  gchar *locale;
+  gchar *help_file;
   gchar *path;
 
-  /*  Make sure all the arguments are there!  */
-  if ((nparams != 3) ||
-      !param[1].data.d_string ||
-      !strlen (param[1].data.d_string) ||
-      !param[2].data.d_string ||
-      !strlen (param[2].data.d_string))
-    {
-      help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
-			       GIMP_HELP_PREFIX, NULL);
-      locale    = g_strdup ("C");
-      help_file = g_strdup ("welcome.html");
-    }
+  /*  set default values  */
+  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
+			   GIMP_HELP_PREFIX, NULL);
+  locale    = g_strdup ("C");
+  help_file = g_strdup ("welcome.html");
 
+  /*  Make sure all the arguments are there!  */
   if (nparams == 3)
     {
-      if (!param[0].data.d_string ||
-	  !strlen (param[0].data.d_string))
+      if (param[0].data.d_string && strlen (param[0].data.d_string))
 	{
-	  help_path = g_strconcat (gimp_data_directory(),
-				   G_DIR_SEPARATOR_S, 
-				   GIMP_HELP_PREFIX, NULL);
-	  locale    = g_strdup (param[1].data.d_string);
-	  help_file = g_strdup (param[2].data.d_string);
-	}
-      else
-	{
+	  g_free (help_path);
 	  help_path = g_strdup (param[0].data.d_string);
-	  locale    = g_strdup (param[1].data.d_string);
-	  help_file = g_strdup (param[2].data.d_string);
-
 	  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
 	}
+      if (param[1].data.d_string && strlen (param[1].data.d_string))
+	{
+	  g_free (locale);
+	  locale    = g_strdup (param[1].data.d_string);
+	}
+      if (param[2].data.d_string && strlen (param[2].data.d_string))
+	{
+	  g_free (help_file);
+	  help_file = g_strdup (param[2].data.d_string);
+	  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
+	}
     }
-
-  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
 
   path = g_strconcat (help_path, G_DIR_SEPARATOR_S, 
 		      locale, G_DIR_SEPARATOR_S,
@@ -1166,37 +1158,31 @@ run (gchar   *name,
         case RUN_INTERACTIVE:
         case RUN_NONINTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+	  /*  set default values  */
+	  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
+				   GIMP_HELP_PREFIX, NULL);
+	  locale    = g_strdup ("C");
+	  help_file = g_strdup ("welcome.html");
+	  
 	  /*  Make sure all the arguments are there!  */
-          if ((nparams != 4) ||
-	      !param[2].data.d_string ||
-	      !strlen (param[2].data.d_string) ||
-	      !param[3].data.d_string ||
-	      !strlen (param[3].data.d_string))
-	    {
-	      help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
-				       GIMP_HELP_PREFIX, NULL);
-	      locale    = g_strdup ("C");
-	      help_file = g_strdup ("welcome.html");
-	    }
-
 	  if (nparams == 4)
 	    {
-	      if (!param[1].data.d_string ||
-		  !strlen (param[1].data.d_string))
+	      if (param[1].data.d_string && strlen (param[1].data.d_string))
 		{
-		  help_path = g_strconcat (gimp_data_directory(),
-					   G_DIR_SEPARATOR_S, 
-					   GIMP_HELP_PREFIX, NULL);
-		  locale    = g_strdup (param[2].data.d_string);
-		  help_file = g_strdup (param[3].data.d_string);
-		}
-	      else
-		{
+		  g_free (help_path);
 		  help_path = g_strdup (param[1].data.d_string);
-		  locale    = g_strdup (param[2].data.d_string);
-		  help_file = g_strdup (param[3].data.d_string);
-
 		  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
+		}
+	      if (param[2].data.d_string && strlen (param[2].data.d_string))
+		{
+		  g_free (locale);
+		  locale = g_strdup (param[2].data.d_string);
+		}
+	      if (param[3].data.d_string && strlen (param[3].data.d_string))
+		{
+		  g_free (help_file);
+		  help_file = g_strdup (param[3].data.d_string);
+		  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
 		}
 	    }
           break;
@@ -1208,8 +1194,6 @@ run (gchar   *name,
 
       if (status == STATUS_SUCCESS)
         {
-	  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
-
        	  if (!open_url (help_path, locale, help_file))
             values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	  else

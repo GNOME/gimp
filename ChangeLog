@@ -1,3 +1,9 @@
+2000-06-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c: simplified the
+	mucho weirdo code which obviously wasn't working as
+	expected. Should fix bug #15284.
+
 Sun Jun 25 22:44:12 CEST 2000  Marc Lehmann <pcg@goof.com>
 
 	* paint_funcs.c: Fix small bug in last patch.
