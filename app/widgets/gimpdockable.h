@@ -54,6 +54,9 @@ struct _GimpDockable
   GdkWindow    *title_window;
   GtkWidget    *menu_button;
   GtkWidget    *close_button;
+
+  guint         blink_timeout_id;
+  gint          blink_counter;
 };
 
 struct _GimpDockableClass
@@ -86,6 +89,8 @@ GimpUIManager * gimp_dockable_get_menu       (GimpDockable   *dockable,
                                               gpointer       *popup_data);
 
 void            gimp_dockable_detach         (GimpDockable   *dockable);
+
+void            gimp_dockable_blink          (GimpDockable   *dockable);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */
