@@ -49,9 +49,9 @@ require      Exporter;
                );
 #@EXPORT_OK = qw();
 
-$VERSION=$Gimp::VERSION;
-
 use Gimp;
+
+$VERSION=$Gimp::VERSION;
 
 ##############################################################################
 =pod

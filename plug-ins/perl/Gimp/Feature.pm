@@ -5,19 +5,14 @@ require Exporter;
 @ISA=(Exporter);
 @EXPORT = ();
 
-my($gtk,$gtk_10,$gtk_11);
+my $gtk;
 
 sub _check_gtk {
-   return if defined $gtk;
-
-   eval { require Gtk }; $gtk = $@ eq "" && $Gtk::VERSION>=0.3;
-
-   if ($gtk) {
-      $gtk_10 = (Gtk->major_version==1 && Gtk->minor_version==0);
-      $gtk_11 = (Gtk->major_version==1 && Gtk->minor_version>=1) || Gtk->major_version>1;
-      $gtk_12 = (Gtk->major_version==1 && Gtk->minor_version>=2) || Gtk->major_version>1;
-      $gtk_13 = (Gtk->major_version==1 && Gtk->minor_version>=3) || Gtk->major_version>1;
+   unless (defined $gtk) {
+      eval { require Gtk }; $gtk = $@ eq "" && $Gtk::VERSION>=0.5;
    }
+   $gtk;
+
 }
 
 my %description = (
@@ -25,8 +20,12 @@ my %description = (
    'gtk-1.1'    => 'gtk+ version 1.1 or higher',
    'gtk-1.2'    => 'gtk+ version 1.2 or higher',
    'gtk-1.3'    => 'gtk+ version 1.3 or higher',
+   'gtk-1.4'    => 'gtk+ version 1.4 or higher',
+
    'gimp-1.1'   => 'gimp version 1.1 or higher',
    'gimp-1.2'   => 'gimp version 1.2 or higher',
+   'gimp-1.3'   => 'gimp version 1.3 or higher',
+
    'perl-5.005' => 'perl version 5.005 or higher',
    'pdl'        => 'compiled-in PDL support',
    'gnome'      => 'the gnome perl module',
@@ -59,17 +58,23 @@ sub present {
    local $_ = shift;
 
    if ($_ eq "gtk") {
-      _check_gtk; $gtk;
+      _check_gtk;
    } elsif ($_ eq "gtk-1.1") {
-      _check_gtk; $gtk_11;
+      _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=1) || Gtk->major_version>1;
    } elsif ($_ eq "gtk-1.2") {
-      _check_gtk; $gtk_12;
+      _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=2) || Gtk->major_version>1;
    } elsif ($_ eq "gtk-1.3") {
-      _check_gtk; $gtk_13;
+      _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=3) || Gtk->major_version>1;
+   } elsif ($_ eq "gtk-1.4") {
+      _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=4) || Gtk->major_version>1;
+
    } elsif ($_ eq "gimp-1.1") {
       (Gimp->major_version==1 && Gimp->minor_version>=1) || Gimp->major_version>1;
    } elsif ($_ eq "gimp-1.2") {
       (Gimp->major_version==1 && Gimp->minor_version>=2) || Gimp->major_version>1;
+   } elsif ($_ eq "gimp-1.3") {
+      (Gimp->major_version==1 && Gimp->minor_version>=3) || Gimp->major_version>1;
+
    } elsif ($_ eq "perl-5.005") {
       $] >= 5.005;
    } elsif ($_ eq "pdl") {

@@ -1,5 +1,9 @@
 Revision history for Gimp-Perl extension.
 
+	- testsuite failed when !HAVE_PDL (and the whole package broke on
+          systems with underpowered dynamic linkers).
+        - gtk-1.0.x and gimp < 1.0.4 are no longer "officially" supported.
+
 1.091 Sun May 23 13:21:34 CEST 1999
 	- include a fake typemap.pdl.
 

@@ -203,9 +203,11 @@ static SV *new_gdrawable (gint32 id)
        if (!gdr)
          croak ("unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)", id);
 
+#if HAVE_PDL
        /* this needs to be called once before ANY pdl functions can be called. */
        /* placing this here will suffice. */
        need_pdl ();
+#endif
 
        if (!stash)
          stash = gv_stashpv (PKG_GDRAWABLE, 1);

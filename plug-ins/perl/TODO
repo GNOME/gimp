@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.
   * KILL :auto from default(!)
   * auto-flush of gdrawable when merge_shadow(?)

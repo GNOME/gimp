@@ -40,7 +40,7 @@ register "webify",
 
    eval { $img->undo_group_end };
 
-   $new ? ($img->clean_all, $img) : undef;
+   $new ? ($img->clean_all, $img) : ();
 };
 
 exit main;

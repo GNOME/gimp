@@ -2,15 +2,13 @@
 
 #BEGIN {$^W=1};
 
-use Gimp::Feature qw(perl-5.005 gtk);
+use Gimp::Feature qw(perl-5.005 gtk-1.2);
 use Gimp (':consts');
 use Gimp::Fu;
 use Gtk;
 use Gtk::Gdk;
 
 Gtk->init;
-
-$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
 
 #Gimp::set_trace(TRACE_ALL);
 
@@ -393,11 +391,11 @@ sub create_main {
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
-   $gtk_10 ? $cs->add ($clist) : $cs->add_with_viewport ($clist);
+   $cs->add_with_viewport ($clist);
 
    my $rs = new Gtk::ScrolledWindow undef,undef;
    $rs->set_policy(-automatic,-automatic);
-   $gtk_10 ? $rs->add ($rlist) : $rs->add_with_viewport ($rlist);
+   $rs->add_with_viewport ($rlist);
    $rs->set_usize(0,200);
 
    $result = new Gtk::Entry;
