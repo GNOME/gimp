@@ -257,7 +257,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       else
         {
           gint    width, height;
-          gdouble scale;
+          gdouble scale = 1.0;
 
           width  = UNSCALEX (shell, win_width);
           height = UNSCALEY (shell, win_height);

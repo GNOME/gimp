@@ -1,3 +1,8 @@
+2003-05-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	initialize scale to please the compiler.
+
 2003-05-09  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/jigsaw.c: Pass the buffer size to all functions
