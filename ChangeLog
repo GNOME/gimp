@@ -1,3 +1,13 @@
+Tue Jan 12 23:25:46 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* app/menus.c: doh, we build tool menus on the fly
+
+	* configure.in: add nl.po to ALL_LINGUAS
+
+	* acinclude.m4
+	* ltconfig
+	* ltmain.sh: upgrade to libtool 1.2d (with fixes for irix6 and osf)
+
 Mon Jan 11 18:11:32 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/tiff/tiff.c: small patch from Nick Lamb that

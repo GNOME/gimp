@@ -160,6 +160,9 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Layers/Mask To Selection"), NULL, layers_mask_select_cmd_callback, 0 },
   { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
+/* these are built on the fly */
+
+/*
   { N_("/Tools/Ellipse Select"), "E", tools_select_cmd_callback, ELLIPSE_SELECT },
   { N_("/Tools/Free Select"), "F", tools_select_cmd_callback, FREE_SELECT },
   { N_("/Tools/Fuzzy Select"), "Z", tools_select_cmd_callback, FUZZY_SELECT },
@@ -186,6 +189,8 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
+*/
+
   { N_("/Filters/"), NULL, NULL, 0 },
   { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },

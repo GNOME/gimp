@@ -177,3 +177,7 @@
 
 /* Define if you have the i library (-li).  */
 #undef HAVE_LIBI
+
+/* define if compiled symbols have a leading underscore */
+#undef WITH_SYMBOL_UNDERSCORE
+
