@@ -65,8 +65,8 @@ static void   plug_ins_proc_def_insert (PlugInProcDef     *proc_def,
 static void   plug_ins_proc_def_dead   (void              *freed_proc_def);
 
 
-GSList *proc_defs          = NULL;
-gchar  *std_plugins_domain = "gimp14-std-plug-ins";
+GSList      *proc_defs          = NULL;
+const gchar *std_plugins_domain = "gimp14-std-plug-ins";
 
 static GSList   *plug_in_defs       = NULL;
 static GSList   *gimprc_proc_defs   = NULL;

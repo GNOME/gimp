@@ -55,8 +55,8 @@ GSList          * plug_ins_extensions_parse  (gchar         *extensions);
 PlugInImageType   plug_ins_image_types_parse (gchar         *image_types);
 
 
-extern GSList *proc_defs;
-extern gchar  *std_plugins_domain;
+extern GSList      *proc_defs;
+extern const gchar *std_plugins_domain;
 
 
 #endif /* __PLUG_INS_H__ */

@@ -83,9 +83,9 @@ int		runme = FALSE;		/* True if print should proceed */
 stp_printer_t current_printer = 0;	/* Current printer index */
 gint32          image_ID;	        /* image ID */
 
-const char *image_filename;
-int image_width;
-int image_height;
+gchar *image_filename;
+gint   image_width;
+gint   image_height;
 
 static void
 check_plist(int count)
@@ -153,7 +153,6 @@ query (void)
     { GIMP_PDB_STRING,	"dither_algorithm", "Dither algorithm" },
     { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   static gchar *blurb = "This plug-in prints images from The GIMP.";
   static gchar *help  = "Prints images to PostScript, PCL, or ESC/P2 printers.";
@@ -167,7 +166,7 @@ query (void)
 			  N_("<Image>/File/Print..."),
 			  types,
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -231,7 +230,7 @@ run (gchar      *name,		/* I - Name of print program. */
   GimpRunMode    run_mode;	/* Current run mode */
   FILE		*prn = NULL;	/* Print file/command */
   int		 ncolors;	/* Number of colors in colormap */
-  GimpParam	*values;	/* Return values */
+  GimpParam	 values[1];	/* Return values */
 #ifdef __EMX__
   char		*tmpfile;	/* temp filename */
 #endif
@@ -265,8 +264,6 @@ run (gchar      *name,		/* I - Name of print program. */
   current_printer = stp_get_printer_by_index (0);
   run_mode = (GimpRunMode) param[0].data.d_int32;
 
-  values = g_new (GimpParam, 1);
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
@@ -277,7 +274,8 @@ run (gchar      *name,		/* I - Name of print program. */
   drawable_ID = param[2].data.d_int32;
 
   image_filename = gimp_image_get_filename (image_ID);
-  if (strchr(image_filename, '/'))
+
+  if (strchr (image_filename, '/'))
     image_filename = strrchr(image_filename, '/') + 1;
 
   /*  eventually export the image */
@@ -574,8 +572,10 @@ run (gchar      *name,		/* I - Name of print program. */
   gimp_drawable_detach (drawable);
 
  cleanup:
+
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);
+
   stp_free_vars(vars);
 }
 

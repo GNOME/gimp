@@ -56,20 +56,20 @@ extern guchar *thumbnail_data;
 extern gint    adjusted_thumbnail_bpp;
 extern guchar *adjusted_thumbnail_data;
 
-extern stp_vars_t           vars;
+extern stp_vars_t       vars;
 extern gint             plist_count;	   /* Number of system printers */
 extern gint             plist_current;     /* Current system printer */
-extern gp_plist_t         *plist;		  /* System printers */
+extern gp_plist_t      *plist;		   /* System printers */
 extern gint32           image_ID;
-extern const gchar     *image_filename;
+extern gchar           *image_filename;
 extern gint             image_width;
 extern gint             image_height;
-extern stp_printer_t current_printer;
+extern stp_printer_t    current_printer;
 extern gint             runme;
 extern gint             saveme;
 
-extern GtkWidget *gimp_color_adjust_dialog;
-extern GtkWidget *dither_algo_combo;
+extern GtkWidget  *gimp_color_adjust_dialog;
+extern GtkWidget  *dither_algo_combo;
 extern stp_vars_t *pv;
 
 /*

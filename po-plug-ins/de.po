@@ -10448,7 +10448,6 @@ msgstr ""
 #. * The "image size" button
 #.
 #: plug-ins/print/gimp_main_window.c:1275
-#, fuzzy
 msgid ""
 "Use Original\n"
 "Image Size"

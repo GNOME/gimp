@@ -28,17 +28,6 @@
 
 #include <locale.h>
 
-/* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com>
- * Modified by Daniel Egger <Daniel.Egger@t-online.de> and others.
- */ 
-
-#ifndef LOCALEDIR
-#define LOCALEDIR g_strconcat (gimp_data_directory (), \
-			       G_DIR_SEPARATOR_S, \
-			       "locale", \
-			       NULL)
-#endif
-
 #ifdef ENABLE_NLS
 #    include <libintl.h>
 #    define _(String) gettext (String)

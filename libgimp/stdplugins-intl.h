@@ -29,9 +29,9 @@
   setlocale (LC_ALL, "");                                           \
   bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);             \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");     \
-  bindtextdomain(GETTEXT_PACKAGE"-std-plugins", LOCALEDIR);         \
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-std-plugins", "UTF-8"); \
-  textdomain(GETTEXT_PACKAGE"-std-plugins");		            \
+  bindtextdomain(GETTEXT_PACKAGE"-std-plug-ins", LOCALEDIR);         \
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-std-plug-ins", "UTF-8"); \
+  textdomain(GETTEXT_PACKAGE"-std-plug-ins");		            \
 }G_STMT_END
 
 #define INIT_I18N_UI()	INIT_I18N()

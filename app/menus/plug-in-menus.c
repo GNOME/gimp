@@ -186,10 +186,11 @@ plug_in_make_menu_entry (gpointer         foo,
   {
     GimpItemFactory *item_factory;
 
-    item_factory = gimp_item_factory_from_path (menu_entry->proc_def->menu_path);
+    item_factory = 
+      gimp_item_factory_from_path (menu_entry->proc_def->menu_path);
 
     g_object_set_data (G_OBJECT (item_factory), "textdomain",
-                       menu_entry->domain);
+                       (gpointer) menu_entry->domain);
 
     gimp_item_factory_create_item (item_factory,
                                    &entry, 

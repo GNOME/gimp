@@ -64,8 +64,8 @@ struct _PlugIn
 struct _PlugInMenuEntry
 {
   PlugInProcDef *proc_def;
-  gchar         *domain;
-  gchar         *help_path;
+  const gchar   *domain;
+  const gchar   *help_path;
 };
 
 

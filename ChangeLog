@@ -1,3 +1,20 @@
+2002-05-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpintl.h: removed (wrong) definition of LOCALEDIR.
+
+	* libgimp/stdplugins-intl.h: fixed typo in domainname that broke i18n
+	of plug-ins.
+
+	* app/gui/Makefile.am: define LOCALEDIR.
+
+	* app/gui/plug-in-menus.c
+	* app/plug-in/plug-in.h
+	* app/plug-in/plug-ins.[ch]: declared translation domain and help path
+	as const strings.
+
+	* plug-ins/print/print.c
+	* plug-ins/print/print_gimp.h: minor cleanups.
+
 2002-05-07  David Monniaux  <david@picsou.chatons>
 
 	* app/arch/i386/mmx/paint_funcs_mmx.S.m4: original source of
