@@ -1,3 +1,9 @@
+1999-12-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialog_handler.c
+	* app/ops_buttons.h: Removed trailing comma from enums to avoid
+	compiler warnings with Irix CC. Fixes bugs #3994 and #3995.
+
 Thu Dec  2 23:49:17 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/bezier_select.c

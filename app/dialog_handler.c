@@ -27,7 +27,7 @@ typedef enum
 {
   INVISIBLE,
   VISIBLE,
-  UNKNOWN,
+  UNKNOWN
 } VisibilityState;
 
 typedef struct _DialogState DialogState;
@@ -38,15 +38,15 @@ struct _DialogState
   VisibilityState  saved_state;
 };
 
-/*  This keeps track of the state the dialogs are in  */
-/*  ie how many times we have pressed the tab key     */
-
+/*  This keeps track of the state the dialogs are in
+ *  ie how many times we have pressed the tab key
+ */
 typedef enum
 {
   SHOW_ALL,
   HIDE_ALL,
   SHOW_TOOLBOX,
-  LAST_SHOW_STATE,
+  LAST_SHOW_STATE
 } ShowState;
 
 /*  Start off with all dialogs showing  */
@@ -64,7 +64,7 @@ static GSList * active_dialogs = NULL;
 static DialogState * toolbox_shell  = NULL;
 static DialogState * fileload_shell = NULL;
 
-/* Private */
+/*  Private  */
 
 /*  Hide all currently registered dialogs  */
 
@@ -109,7 +109,6 @@ dialog_show_all (void)
 
 /*  Handle the tool box in a special way  */
 
-
 static void
 dialog_hide_toolbox (void)
 {
@@ -132,7 +131,6 @@ dialog_show_toolbox (void)
       gtk_widget_show (toolbox_shell->dialog);
     }
 }
-
 
 /*  Set hourglass cursor on all currently registered dialogs  */
 
@@ -257,10 +255,10 @@ dialog_unregister (GtkWidget *dialog)
 void 
 dialog_toggle (void)
 {
-  if(doing_update == FALSE)
-    doing_update = TRUE;
-  else
+  if (doing_update)
     return;
+
+  doing_update = TRUE;
 
   switch (dialogs_showing)
     {
@@ -289,4 +287,3 @@ dialog_toggle (void)
 
   doing_update = FALSE;
 }
-
