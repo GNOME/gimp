@@ -26,8 +26,8 @@ HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h
 CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
-IGNORE_HFILES =
-
+IGNORE_HFILES = \
+	gimpwidgets-private.h
 
 # Images to copy into HTML directory
 IMAGES_DIR = $(top_srcdir)/themes/Default/images

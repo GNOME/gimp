@@ -39,6 +39,7 @@
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
+#include "gimpwidgets-private.h"
 
 
 typedef enum
@@ -335,13 +336,13 @@ gimp_help_tips_query_idle_show_help (gpointer data)
               gchar *help_text;
 
               help_text = g_strconcat (help_data, help_index, NULL);
-              gimp_standard_help_func (help_text);
+              _gimp_eek.standard_help_func (help_text);
               g_free (help_text);
             }
         }
       else
         {
-          gimp_standard_help_func (help_data);
+          _gimp_eek.standard_help_func (help_data);
         }
     }
 

@@ -33,47 +33,13 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpchainbutton.h"
-#include "gimphelpui.h"
 #include "gimppixmap.h"
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
-
-#include "themes/Default/images/gimp-wilber-pixbufs.h"
+#include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
-
-
-void
-gimp_widgets_init (void)
-{
-  GdkPixbuf *pixbuf;
-  GList     *icon_list = NULL;
-  gint       i;
-
-  const guint8 *inline_pixbufs[] =
-  {
-    stock_wilber_16,
-    stock_wilber_32,
-    stock_wilber_48,
-    stock_wilber_64
-  };
-
-  gimp_stock_init ();
-
-  for (i = 0; i < G_N_ELEMENTS (inline_pixbufs); i++)
-    {
-      pixbuf = gdk_pixbuf_new_from_inline (-1, inline_pixbufs[i], FALSE, NULL);
-      icon_list = g_list_prepend (icon_list, pixbuf);
-    }
-
-  gtk_window_set_default_icon_list (icon_list);
-
-  g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
-  g_list_free (icon_list);
-
-  _gimp_help_init ();
-}
 
 
 /*
@@ -1480,7 +1446,7 @@ gimp_unit_menu_update (GtkWidget *widget,
 
   digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
 	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
+	     (MIN (6, MAX (3, _gimp_eek.unit_get_digits (*val))))));
 
   spinbutton = g_object_get_data (G_OBJECT (widget), "set_digits");
   while (spinbutton)

@@ -25,6 +25,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "gui-types.h"
 
@@ -97,6 +98,10 @@ static GHashTable *themes_hash = NULL;
 static GimpItemFactory *toolbox_item_factory = NULL;
 static GimpItemFactory *image_item_factory   = NULL;
 
+/*  forward declarations to avoid inclusion of libgimp-glue.h  */
+gboolean gimp_palette_get_background (GimpRGB *color);
+gboolean gimp_palette_get_foreground (GimpRGB *color);
+
 
 /*  public functions  */
 
@@ -104,13 +109,31 @@ gboolean
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
+  GimpWidgetsVTable vtable;
+
   g_return_val_if_fail (argc != NULL, FALSE);
   g_return_val_if_fail (argv != NULL, FALSE);
 
   if (!gtk_init_check (argc, argv))
     return FALSE;
 
-  gimp_widgets_init ();
+  /*  Initialize the eeky vtable needed by libgimpwidgets  */
+  vtable.standard_help_func       = gimp_standard_help_func;
+
+  vtable.palette_get_background   = gimp_palette_get_background;
+  vtable.palette_get_foreground   = gimp_palette_get_foreground;
+
+  vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
+  vtable.unit_get_number_of_built_in_units = gimp_unit_get_number_of_built_in_units;
+  vtable.unit_get_factor          = gimp_unit_get_factor;
+  vtable.unit_get_digits          = gimp_unit_get_digits;
+  vtable.unit_get_identifier      = gimp_unit_get_identifier;
+  vtable.unit_get_symbol          = gimp_unit_get_symbol;
+  vtable.unit_get_abbreviation    = gimp_unit_get_abbreviation;
+  vtable.unit_get_singular        = gimp_unit_get_singular;
+  vtable.unit_get_plural          = gimp_unit_get_plural;
+
+  gimp_widgets_init (&vtable);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
   

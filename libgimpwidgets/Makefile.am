@@ -105,7 +105,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpstock.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
-	libgimp-glue.c
+	gimpwidgets-private.c	\
+	gimpwidgets-private.h
 
 libgimpwidgets_1_3_la_built_sources = \
 	gimpwidgetsmarshal.c	\

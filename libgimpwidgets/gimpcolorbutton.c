@@ -30,8 +30,7 @@
 
 #include "gimpcolorarea.h"
 #include "gimpcolorbutton.h"
-
-#include "libgimp/gimppalette_pdb.h"
+#include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -465,10 +464,10 @@ gimp_color_button_use_color (gpointer   callback_data,
   switch (type)
     {
     case GIMP_COLOR_BUTTON_COLOR_FG:
-      gimp_palette_get_foreground (&color);
+      _gimp_eek.palette_get_foreground (&color);
       break;
     case GIMP_COLOR_BUTTON_COLOR_BG:
-      gimp_palette_get_background (&color);
+      _gimp_eek.palette_get_background (&color);
       break;
     case GIMP_COLOR_BUTTON_COLOR_BLACK:
       gimp_rgb_set (&color, 0.0, 0.0, 0.0);

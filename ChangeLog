@@ -1,3 +1,27 @@
+2003-05-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets-private.[ch]: new files. Moved
+	gimp_widgets_init() here and added a vtable parameter. The vtable
+	has entries for all the symbols that are either provided by libgimp
+	or gimp itself depending on who is using the library.
+
+	* libgimpwidgets/libgimp-glue.c: removed this file that uses to
+	provide a Win32 only hack that is now not needed any longer.
+
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c
+	* libgimpwidgets/gimpwidgets.[ch]: don't call the offending
+	functions directly, but use the vtable entries. This is ugly but
+	the ugliness is restricted to our code. There are plans to clean
+	this up further... (Fixes #113410 once more.)
+
+	* app/gui/gui.c (gui_libs_init)
+	* libgimp/gimpui.c (gimp_ui_init): initialize libgimpwidgets with
+	the proper vtable.
+
 2003-05-23  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/imagemap/Makefile.am: added rules for rebuilding the
