@@ -390,6 +390,9 @@ gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
 {
   GSList *uris = gtk_file_chooser_get_uris (chooser);
 
+#ifdef __GNUC__
+#warning FIXME: remove version check as soon as we depend on GTK+ 2.4.1
+#endif
   if (gtk_check_version (2, 4, 1))
     {
       if (uris)
@@ -406,8 +409,6 @@ gimp_file_dialog_update_preview (GtkFileChooser *chooser,
                                  GimpFileDialog *dialog)
 {
   gchar *uri = gtk_file_chooser_get_preview_uri (chooser);
-
-  g_printerr ("gimp_file_dialog_update_preview: %s\n", uri);
 
   gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
 

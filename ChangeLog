@@ -1,5 +1,11 @@
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.c: removed debugging output, added
+	#warning about runtime version check that can be removed as soon
+	as we depend on GTK+ 2.4.1.
+
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-dialog-actions.c (file_dialog_actions_setup):
 	don't forget to set the action's accelerator.
 
