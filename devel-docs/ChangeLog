@@ -1,3 +1,7 @@
+Tue Feb  8 00:51:54 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpexport.sgml: documented the enums
+	
 2000-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt
