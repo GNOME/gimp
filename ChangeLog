@@ -1,3 +1,10 @@
+1998-03-11  Larry Ewing  <lewing@discord.isc.tamu.edu>
+
+	* app/undo.c
+	* app/gimage.h
+	* app/gimage.c: added a simple reference count to the guides so that
+	undo does not free them too early...
+
 Tue Mar 10 21:31:21 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: scrollbars in the drawing area shouldn't
