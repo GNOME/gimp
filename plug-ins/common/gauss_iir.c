@@ -18,6 +18,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -79,7 +80,6 @@ static void      gauss_toggle_update   (GtkWidget *widget,
 					gpointer   data);
 static void      gauss_entry_callback  (GtkWidget *widget,
 					gpointer   data);
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -121,7 +121,8 @@ query ()
 
   gimp_install_procedure ("plug_in_gauss_iir",
 			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results.",
+			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independent
+ly invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
@@ -387,6 +388,8 @@ gauss_iir (GDrawable *drawable,
   gint progress, max_progress;
   gint initial_p[4];
   gint initial_m[4];
+  guchar *guc_tmp1, *guc_tmp2;
+  gint *gi_tmp1, *gi_tmp2;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
@@ -395,11 +398,11 @@ gauss_iir (GDrawable *drawable,
   bytes = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->id);
 
-  val_p = (gdouble *) malloc (MAX (width, height) * bytes * sizeof (gdouble));
-  val_m = (gdouble *) malloc (MAX (width, height) * bytes * sizeof (gdouble));
+  val_p = (gdouble *) g_malloc (MAX (width, height) * bytes * sizeof (gdouble));
+  val_m = (gdouble *) g_malloc (MAX (width, height) * bytes * sizeof (gdouble));
 
-  src = (guchar *) malloc (MAX (width, height) * bytes);
-  dest = (guchar *) malloc (MAX (width, height) * bytes);
+  src = (guchar *) g_malloc (MAX (width, height) * bytes);
+  dest = (guchar *) g_malloc (MAX (width, height) * bytes);
 
   /*  derive the constants for calculating the gaussian from the std dev  */
   find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
@@ -416,10 +419,8 @@ gauss_iir (GDrawable *drawable,
       /*  First the vertical pass  */
       for (col = 0; col < width; col++)
 	{
-	  for (i = 0; i < height * bytes; i++)
-	    {
-	      val_p[i] = val_m[i] = 0;
-	    }
+	  memset(val_p, 0, height * bytes * sizeof (gdouble));
+	  memset(val_m, 0, height * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
 
@@ -432,29 +433,41 @@ gauss_iir (GDrawable *drawable,
 	  vm = val_m + (height - 1) * bytes;
 
 	  /*  Set up the first vals  */
+#ifndef ORIGINAL_READABLE_CODE
+	  for(guc_tmp1 = sp_p, guc_tmp2 = sp_m,
+		gi_tmp1 = initial_p, gi_tmp2 = initial_m;
+	      (guc_tmp1 - sp_p) < bytes;)
+	    {
+	      *gi_tmp1++ = *guc_tmp1++;
+	      *gi_tmp2++ = *guc_tmp2++;
+	    }
+#else
 	  for (i = 0; i < bytes; i++)
 	    {
 	      initial_p[i] = sp_p[i];
 	      initial_m[i] = sp_m[i];
 	    }
+#endif
 
 	  for (row = 0; row < height; row++)
 	    {
+	      gdouble *vpptr, *vmptr;
 	      terms = (row < 4) ? row : 4;
 
 	      for (b = 0; b < bytes; b++)
 		{
+		  vpptr = vp + b; vmptr = vm + b;
 		  for (i = 0; i <= terms; i++)
 		    {
-		      vp[b] += n_p[i] * sp_p[(-i * bytes) + b] -
+		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
 			d_p[i] * vp[(-i * bytes) + b];
-		      vm[b] += n_m[i] * sp_m[(i * bytes) + b] -
+		      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
 			d_m[i] * vm[(i * bytes) + b];
 		    }
 		  for (j = i; j <= 4; j++)
 		    {
-		      vp[b] += (n_p[j] - bd_p[j]) * initial_p[b];
-		      vm[b] += (n_m[j] - bd_m[j]) * initial_m[b];
+		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
 		    }
 		}
 
@@ -476,19 +489,17 @@ gauss_iir (GDrawable *drawable,
 	    gimp_progress_update ((double) progress / (double) max_progress);
 	}
 
-      /*  prepare for the horizontal pass  */
-      gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE);
     }
 
   if (horz)
     {
+      /*  prepare for the horizontal pass  */
+      gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE);
       /*  Now the horizontal pass  */
       for (row = 0; row < height; row++)
 	{
-	  for (i = 0; i < width * bytes; i++)
-	    {
-	      val_p[i] = val_m[i] = 0;
-	    }
+	  memset(val_p, 0, width * bytes * sizeof (gdouble));
+	  memset(val_m, 0, width * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
 
@@ -501,29 +512,41 @@ gauss_iir (GDrawable *drawable,
 	  vm = val_m + (width - 1) * bytes;
 
 	  /*  Set up the first vals  */
+#ifndef ORIGINAL_READABLE_CODE
+	  for(guc_tmp1 = sp_p, guc_tmp2 = sp_m,
+		gi_tmp1 = initial_p, gi_tmp2 = initial_m;
+	      (guc_tmp1 - sp_p) < bytes;)
+	    {
+	      *gi_tmp1++ = *guc_tmp1++;
+	      *gi_tmp2++ = *guc_tmp2++;
+	    }
+#else
 	  for (i = 0; i < bytes; i++)
 	    {
 	      initial_p[i] = sp_p[i];
 	      initial_m[i] = sp_m[i];
 	    }
+#endif
 
 	  for (col = 0; col < width; col++)
 	    {
+	      gdouble *vpptr, *vmptr;
 	      terms = (col < 4) ? col : 4;
 
 	      for (b = 0; b < bytes; b++)
 		{
+		  vpptr = vp + b; vmptr = vm + b;
 		  for (i = 0; i <= terms; i++)
 		    {
-		      vp[b] += n_p[i] * sp_p[(-i * bytes) + b] -
+		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
 			d_p[i] * vp[(-i * bytes) + b];
-		      vm[b] += n_m[i] * sp_m[(i * bytes) + b] -
+		      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
 			d_m[i] * vm[(i * bytes) + b];
 		    }
 		  for (j = i; j <= 4; j++)
 		    {
-		      vp[b] += (n_p[j] - bd_p[j]) * initial_p[b];
-		      vm[b] += (n_m[j] - bd_m[j]) * initial_m[b];
+		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
 		    }
 		}
 
@@ -552,10 +575,31 @@ gauss_iir (GDrawable *drawable,
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free up buffers  */
-  free (val_p);
-  free (val_m);
-  free (src);
-  free (dest);
+  g_free (val_p);
+  g_free (val_m);
+  g_free (src);
+  g_free (dest);
+}
+
+static void
+transfer_pixels (gdouble *src1,
+		 gdouble *src2,
+		 guchar  *dest,
+		 gint     bytes,
+		 gint     width)
+{
+  gint b;
+  gint bend = bytes * width;
+  gdouble sum;
+
+  for(b = 0; b < bend; b++)
+    {
+      sum = *src1++ + *src2++;
+      if (sum > 255) sum = 255;
+      else if(sum < 0) sum = 0;
+	  
+      *dest++ = (guchar) sum;
+    }
 }
 
 static void
@@ -613,8 +657,12 @@ find_constants (gdouble n_p[],
     2 * cos (constants[3]) * exp (constants[1] + 2 * constants[0]);
   d_p [4] = exp (2 * constants[0] + 2 * constants[1]);
 
+#ifndef ORIGINAL_READABLE_CODE
+  memcpy(d_m, d_p, 5 * sizeof(gdouble));
+#else
   for (i = 0; i <= 4; i++)
     d_m [i] = d_p [i];
+#endif
 
   n_m[0] = 0.0;
   for (i = 1; i <= 4; i++)
@@ -634,8 +682,14 @@ find_constants (gdouble n_p[],
 	sum_d += d_p[i];
       }
 
+#ifndef ORIGINAL_READABLE_CODE
+    sum_d++;
+    a = sum_n_p / sum_d;
+    b = sum_n_m / sum_d;
+#else
     a = sum_n_p / (1 + sum_d);
     b = sum_n_m / (1 + sum_d);
+#endif
 
     for (i = 0; i <= 4; i++)
       {
@@ -643,32 +697,6 @@ find_constants (gdouble n_p[],
 	bd_m[i] = d_m[i] * b;
       }
   }
-}
-
-static void
-transfer_pixels (gdouble *src1,
-		 gdouble *src2,
-		 guchar  *dest,
-		 gint     bytes,
-		 gint     width)
-{
-  gint b;
-  gdouble sum;
-
-  while (width --)
-    {
-      for (b = 0; b < bytes; b++)
-	{
-	  sum = src1[b] + src2[b];
-	  if (sum > 255) sum = 255;
-	  else if (sum < 0) sum = 0;
-
-	  dest[b] = (guchar) sum;
-	}
-      src1 += bytes;
-      src2 += bytes;
-      dest += bytes;
-    }
 }
 
 /*  Gauss interface functions  */

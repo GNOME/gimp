@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = gauss_iir
 
 gauss_iir_SOURCES = \
-	gauss_iir.c   
+	gauss_iir.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
