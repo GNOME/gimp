@@ -1,3 +1,11 @@
+2004-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainereditor.c
+	(gimp_container_editor_construct): call
+	gimp_container_editor_select_item() manually at construction time
+	so views show the initially selected object's state correctly
+	(e.g. the brush spacing). Fixes bug #151227.
+
 2004-08-27  DindinX  <david@dindinx.org>
 
 	* app/widgets/gimpnavigationpreview.c
