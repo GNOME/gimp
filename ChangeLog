@@ -1,3 +1,7 @@
+1999-07-27  Tomas Ogren  <stric@ing.umu.se>
+
+	* configure.in: Added 'cs' to ALL_LINGUAS
+
 1999-07-27  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/commands.c
