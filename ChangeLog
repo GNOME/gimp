@@ -10,10 +10,16 @@
 	* plug-ins/common/snoise.c 
 	* plug-ins/common/sparkle.c 
 	* plug-ins/common/warp.c 
-	* plug-ins/common/wind.c: Apply old fix for #67386 on Win32, to
-	avoid having uncommitted source changes in the Win32 build. Keep
-	old code as such on Unix (even if presumably wrong on many Unix
-	variants).
+	* plug-ins/common/wind.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/ifscompose/ifscompose_utils.c: Apply old fix for #67386
+	on Win32, to avoid having uncommitted source changes in the Win32
+	build. Keep old code as such on Unix (even if presumably wrong on
+	many Unix variants).
+
+	* plug-ins/flame/cmap.c
+	* plug-ins/gimpressionist/plasma.c: Include gimpmath.h for random
+	number funcs on Win32.
 
 2003-02-09  Tor Lillqvist  <tml@iki.fi>
 

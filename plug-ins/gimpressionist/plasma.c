@@ -4,6 +4,8 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
+#include <libgimp/gimpmath.h>
+
 int pfix(int n)
 {
   if(n<1) return 1;

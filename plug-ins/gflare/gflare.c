@@ -2020,15 +2020,25 @@ calc_place_sflare ()
       prob[i] = sum2 / sum;
     }
 
+#ifdef G_OS_WIN32
   if (gflare->sflare_seed_time)
+    SRAND_FUNC (time (NULL));
+  else
+    SRAND_FUNC (gflare->sflare_seed);
+#else
     srand (time (NULL));
   else
     srand (gflare->sflare_seed);
+#endif
 
   for (n = 0; n < SFLARE_NUM; n++)
     {
       sflare = g_new (CalcSFlare, 1);
+#ifdef G_OS_WIN32
+      rnd = (double) RAND_FUNC () / G_MAXRAND;
+#else
       rnd = (double) rand () / G_MAXRAND;
+#endif
       for (i = 0; i < GRADIENT_RESOLUTION; i++)
 	if (prob[i] >= rnd)
 	  break;
@@ -5129,10 +5139,18 @@ gradient_get_random (gint    seed,
   /*
     This is really simple  -- gaussian noise might be better
    */
+#ifdef G_OS_WIN32
+  SRAND_FUNC (seed);
+#else
   srand (seed);
+#endif
   for (i = 0; i < nvalues; i++)
     {
+#ifdef G_OS_WIN32
+      inten = RAND_FUNC () % 256;
+#else
       inten = rand () % 256;
+#endif
       for (j = 0; j < 3; j++)
 	*v++ = inten;
       *v++ = 255;

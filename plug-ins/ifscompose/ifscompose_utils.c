@@ -19,6 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -810,7 +812,11 @@ ifs_render(AffElement **elements, gint num_elements,
     {
       if (!preview && !(i % 5000))
 	gimp_progress_update ((gdouble) i / (gdouble) nsteps);
+#ifdef G_OS_WIN32
+      p0 = RAND_FUNC();
+#else
       p0 = rand();
+#endif
       k=0;
       while (p0 > prob[k])
 	k++;

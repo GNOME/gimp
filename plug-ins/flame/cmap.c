@@ -18,6 +18,8 @@
 */
 
 
+#include "config.h"
+
 #include "cmap.h"
 
 #include <stdio.h>
@@ -25,6 +27,7 @@
 #include <stdlib.h>
 
 #include <glib.h>		/* Needed on Win32 where RAND_FUNC is from GLib */
+#include <libgimp/gimpmath.h>
 
 #include "config.h"
 
