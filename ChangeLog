@@ -1,3 +1,8 @@
+2005-03-05  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c: default args for layer
+	constructor.
+
 2005-03-04  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/enumcode-py.pl: include Parasite flag values.

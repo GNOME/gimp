@@ -1695,18 +1695,18 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     PyGimpImage *img;
     char *name;
     unsigned int width, height;
-    GimpImageType type;
-    double opacity;
-    GimpLayerModeEffects mode;
+    GimpImageType type = GIMP_RGB_IMAGE;
+    double opacity = 100.0;
+    GimpLayerModeEffects mode = GIMP_NORMAL_MODE;
 	
 
-    if (!PyArg_ParseTuple(args, "O!siiidi:gimp.Layer.__init__",
+    if (!PyArg_ParseTuple(args, "O!sii|idi:gimp.Layer.__init__",
 			  &PyGimpImage_Type, &img, &name, &width, &height,
 			  &type, &opacity, &mode))
 	return -1;
 
-    self->ID = gimp_layer_new(img->ID, name, width,
-			      height, type, opacity, mode);
+    self->ID = gimp_layer_new(img->ID, name, width, height,
+			      type, opacity, mode);
 
     self->drawable = NULL;
 
