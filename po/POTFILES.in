@@ -38,7 +38,7 @@ app/gimprc.c
 app/gimpui.c
 app/gimpunit.c
 app/global_edit.c
-app/gradient.c
+app/gradient_editor.c
 app/gradient_select.c
 app/image_new.c
 app/indicator_area.c
