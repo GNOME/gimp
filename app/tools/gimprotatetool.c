@@ -60,25 +60,23 @@
 
 /*  local function prototypes  */
 
-static void          gimp_rotate_tool_class_init (GimpRotateToolClass *klass);
-static void          gimp_rotate_tool_init       (GimpRotateTool      *rotate_tool);
+static void   gimp_rotate_tool_class_init (GimpRotateToolClass *klass);
+static void   gimp_rotate_tool_init       (GimpRotateTool      *rotate_tool);
 
-static void          gimp_rotate_tool_dialog    (GimpTransformTool *tr_tool);
-static void          gimp_rotate_tool_prepare   (GimpTransformTool *tr_tool,
-						 GimpDisplay       *gdisp);
-static void          gimp_rotate_tool_motion    (GimpTransformTool *tr_tool,
-						 GimpDisplay       *gdisp);
-static void          gimp_rotate_tool_recalc    (GimpTransformTool *tr_tool,
-						 GimpDisplay       *gdisp);
-static TileManager * gimp_rotate_tool_transform (GimpTransformTool *tr_tool,
-						 GimpDisplay       *gdisp);
+static void   gimp_rotate_tool_dialog     (GimpTransformTool   *tr_tool);
+static void   gimp_rotate_tool_prepare    (GimpTransformTool   *tr_tool,
+                                           GimpDisplay         *gdisp);
+static void   gimp_rotate_tool_motion     (GimpTransformTool   *tr_tool,
+                                           GimpDisplay         *gdisp);
+static void   gimp_rotate_tool_recalc     (GimpTransformTool   *tr_tool,
+                                           GimpDisplay         *gdisp);
 
-static void          rotate_info_update         (GimpTransformTool *tr_tool);
+static void   rotate_info_update          (GimpTransformTool   *tr_tool);
 
-static void          rotate_angle_changed       (GtkWidget         *entry,
-						 gpointer           data);
-static void          rotate_center_changed      (GtkWidget         *entry,
-						 gpointer           data);
+static void   rotate_angle_changed        (GtkWidget           *entry,
+                                           GimpTransformTool   *tr_tool);
+static void   rotate_center_changed       (GtkWidget           *entry,
+                                           GimpTransformTool   *tr_tool);
 
 
 /*  variables local to this file  */
@@ -149,11 +147,10 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  trans_class->dialog    = gimp_rotate_tool_dialog;
-  trans_class->prepare   = gimp_rotate_tool_prepare;
-  trans_class->motion    = gimp_rotate_tool_motion;
-  trans_class->recalc    = gimp_rotate_tool_recalc;
-  trans_class->transform = gimp_rotate_tool_transform;
+  trans_class->dialog  = gimp_rotate_tool_dialog;
+  trans_class->prepare = gimp_rotate_tool_prepare;
+  trans_class->motion  = gimp_rotate_tool_motion;
+  trans_class->recalc  = gimp_rotate_tool_recalc;
 }
 
 static void
@@ -167,7 +164,8 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_ROTATE_TOOL_CURSOR);
 
-  tr_tool->shell_desc = _("Rotation Information");
+  tr_tool->shell_desc    = _("Rotation Information");
+  tr_tool->progress_text = _("Rotating...");
 }
 
 static void
@@ -352,14 +350,6 @@ gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
   rotate_info_update (tr_tool);
 }
 
-static TileManager *
-gimp_rotate_tool_transform (GimpTransformTool *tr_tool,
-			    GimpDisplay       *gdisp)
-{
-  return gimp_transform_tool_transform_tiles (tr_tool,
-                                              _("Rotating..."));
-}
-
 static void
 rotate_info_update (GimpTransformTool *tr_tool)
 {
@@ -372,61 +362,51 @@ rotate_info_update (GimpTransformTool *tr_tool)
 }
 
 static void
-rotate_angle_changed (GtkWidget *widget,
-		      gpointer   data)
+rotate_angle_changed (GtkWidget         *widget,
+                      GimpTransformTool *tr_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
-  gdouble            value;
-
-  tool           = GIMP_TOOL (data);
-  transform_tool = GIMP_TRANSFORM_TOOL (data);
+  gdouble value;
 
   value = gimp_deg_to_rad (GTK_ADJUSTMENT (widget)->value);
 
 #define ANGLE_EPSILON 0.0001
 
-  if (ABS (value - transform_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
+  if (ABS (value - tr_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      transform_tool->trans_info[ANGLE] = value;
+      tr_tool->trans_info[ANGLE] = value;
 
-      gimp_rotate_tool_recalc (transform_tool, tool->gdisp);
+      gimp_rotate_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
 #undef ANGLE_EPSILON
 }
 
 static void
-rotate_center_changed (GtkWidget *widget,
-		       gpointer   data)
+rotate_center_changed (GtkWidget         *widget,
+                       GimpTransformTool *tr_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
-  gdouble            cx;
-  gdouble            cy;
-
-  tool           = GIMP_TOOL (data);
-  transform_tool = GIMP_TRANSFORM_TOOL (data);
+  gdouble cx;
+  gdouble cy;
 
   cx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   cy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
-  if ((cx != transform_tool->trans_info[CENTER_X]) ||
-      (cy != transform_tool->trans_info[CENTER_Y]))
+  if ((cx != tr_tool->trans_info[CENTER_X]) ||
+      (cy != tr_tool->trans_info[CENTER_Y]))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      transform_tool->trans_info[CENTER_X] = cx;
-      transform_tool->trans_info[CENTER_Y] = cy;
-      transform_tool->cx = cx;
-      transform_tool->cy = cy;
+      tr_tool->trans_info[CENTER_X] = cx;
+      tr_tool->trans_info[CENTER_Y] = cy;
+      tr_tool->cx = cx;
+      tr_tool->cy = cy;
 
-      gimp_rotate_tool_recalc (transform_tool, tool->gdisp);
+      gimp_rotate_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 }

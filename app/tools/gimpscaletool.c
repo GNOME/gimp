@@ -49,26 +49,24 @@
 
 /*  local function prototypes  */
 
-static void          gimp_scale_tool_class_init   (GimpScaleToolClass *klass);
+static void   gimp_scale_tool_class_init   (GimpScaleToolClass *klass);
 
-static void          gimp_scale_tool_init         (GimpScaleTool      *sc_tool);
+static void   gimp_scale_tool_init         (GimpScaleTool      *sc_tool);
 
-static void          gimp_scale_tool_dialog       (GimpTransformTool  *tr_tool);
-static void          gimp_scale_tool_prepare      (GimpTransformTool  *tr_tool,
-                                                   GimpDisplay        *gdisp);
-static void          gimp_scale_tool_motion       (GimpTransformTool  *tr_tool,
-                                                   GimpDisplay        *gdisp);
-static void          gimp_scale_tool_recalc       (GimpTransformTool  *tr_tool,
-                                                   GimpDisplay        *gdisp);
-static TileManager * gimp_scale_tool_transform    (GimpTransformTool  *tr_tool,
-                                                   GimpDisplay        *gdisp);
+static void   gimp_scale_tool_dialog       (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_prepare      (GimpTransformTool  *tr_tool,
+                                            GimpDisplay        *gdisp);
+static void   gimp_scale_tool_motion       (GimpTransformTool  *tr_tool,
+                                            GimpDisplay        *gdisp);
+static void   gimp_scale_tool_recalc       (GimpTransformTool  *tr_tool,
+                                            GimpDisplay        *gdisp);
 
-static void          gimp_scale_tool_info_update  (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_info_update  (GimpTransformTool  *tr_tool);
 
-static void          gimp_scale_tool_size_changed (GtkWidget          *widget,
-                                                   gpointer            data);
-static void          gimp_scale_tool_unit_changed (GtkWidget          *widget,
-                                                   gpointer            data);
+static void   gimp_scale_tool_size_changed (GtkWidget          *widget,
+                                            GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_unit_changed (GtkWidget          *widget,
+                                            GimpTransformTool  *tr_tool);
 
 
 /*  storage for information dialog fields  */
@@ -136,21 +134,16 @@ gimp_scale_tool_get_type (void)
 static void
 gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 {
-  GtkObjectClass         *object_class;
-  GimpToolClass          *tool_class;
-  GimpTransformToolClass *transform_class;
+  GimpTransformToolClass *trans_class;
 
-  object_class      = (GtkObjectClass *) klass;
-  tool_class        = (GimpToolClass *) klass;
-  transform_class   = (GimpTransformToolClass *) klass;
+  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  transform_class->dialog    = gimp_scale_tool_dialog;
-  transform_class->prepare   = gimp_scale_tool_prepare;
-  transform_class->motion    = gimp_scale_tool_motion;
-  transform_class->recalc    = gimp_scale_tool_recalc;
-  transform_class->transform = gimp_scale_tool_transform;
+  trans_class->dialog  = gimp_scale_tool_dialog;
+  trans_class->prepare = gimp_scale_tool_prepare;
+  trans_class->motion  = gimp_scale_tool_motion;
+  trans_class->recalc  = gimp_scale_tool_recalc;
 }
 
 static void
@@ -164,7 +157,8 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_RESIZE_TOOL_CURSOR);
 
-  tr_tool->shell_desc = _("Scaling Information");
+  tr_tool->shell_desc    = _("Scaling Information");
+  tr_tool->progress_text = _("Scaling...");
 }
 
 static void
@@ -410,23 +404,15 @@ gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
   gimp_scale_tool_info_update (tr_tool);
 }
 
-static TileManager *
-gimp_scale_tool_transform (GimpTransformTool *tr_tool,
-		           GimpDisplay       *gdisp)
-{
-  return gimp_transform_tool_transform_tiles (tr_tool,
-                                              _("Scaling..."));
-}
-
 static void
 gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
 {
-  GimpTool          *tool;
-  gdouble            ratio_x, ratio_y;
-  gint               x1, y1, x2, y2, x3, y3, x4, y4;
-  GimpUnit           unit;
-  gdouble            unit_factor;
-  gchar              format_buf[16];
+  GimpTool *tool;
+  gdouble   ratio_x, ratio_y;
+  gint      x1, y1, x2, y2, x3, y3, x4, y4;
+  GimpUnit  unit;
+  gdouble   unit_factor;
+  gchar     format_buf[16];
 
   static GimpUnit  label_unit = GIMP_UNIT_PIXEL;
 
@@ -485,16 +471,11 @@ gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_scale_tool_size_changed (GtkWidget *widget,
-	         	      gpointer   data)
+gimp_scale_tool_size_changed (GtkWidget         *widget,
+                              GimpTransformTool *tr_tool)
 {
-  GimpTransformTool *tr_tool;
-  GimpTool          *tool;
-  gint               width;
-  gint               height;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (data);
-  tool    = GIMP_TOOL (data);
+  gint width;
+  gint height;
 
   width  = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
   height = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
@@ -504,20 +485,20 @@ gimp_scale_tool_size_changed (GtkWidget *widget,
       (height != (tr_tool->trans_info[Y1] -
                   tr_tool->trans_info[Y0])))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
       tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
       tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
-      gimp_scale_tool_recalc (tr_tool, tool->gdisp);
+      gimp_scale_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 }
 
 static void
-gimp_scale_tool_unit_changed (GtkWidget *widget,
-	         	      gpointer   data)
+gimp_scale_tool_unit_changed (GtkWidget         *widget,
+	         	      GimpTransformTool *tr_tool)
 {
-  gimp_scale_tool_info_update (GIMP_TRANSFORM_TOOL (data));
+  gimp_scale_tool_info_update (tr_tool);
 }

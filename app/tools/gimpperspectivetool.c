@@ -50,17 +50,15 @@
 static void   gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass);
 static void   gimp_perspective_tool_init       (GimpPerspectiveTool      *tool);
 
-static void          gimp_perspective_tool_dialog    (GimpTransformTool *tr_tool);
-static void          gimp_perspective_tool_prepare   (GimpTransformTool *tr_tool,
-                                                      GimpDisplay       *gdisp);
-static void          gimp_perspective_tool_motion    (GimpTransformTool *tr_tool,
-                                                      GimpDisplay       *gdisp);
-static void          gimp_perspective_tool_recalc    (GimpTransformTool *tr_tool,
-                                                      GimpDisplay       *gdisp);
-static TileManager * gimp_perspective_tool_transform (GimpTransformTool *tr_tool,
-                                                      GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_dialog     (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_prepare    (GimpTransformTool *tr_tool,
+                                                GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_motion     (GimpTransformTool *tr_tool,
+                                                GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_recalc     (GimpTransformTool *tr_tool,
+                                                GimpDisplay       *gdisp);
 
-static void          perspective_info_update         (GimpTransformTool *tr_tool);
+static void   perspective_info_update          (GimpTransformTool *tr_tool);
 
 
 /*  storage for information dialog fields  */
@@ -124,11 +122,10 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  trans_class->dialog    = gimp_perspective_tool_dialog;
-  trans_class->prepare   = gimp_perspective_tool_prepare;
-  trans_class->motion    = gimp_perspective_tool_motion;
-  trans_class->recalc    = gimp_perspective_tool_recalc;
-  trans_class->transform = gimp_perspective_tool_transform;
+  trans_class->dialog  = gimp_perspective_tool_dialog;
+  trans_class->prepare = gimp_perspective_tool_prepare;
+  trans_class->motion  = gimp_perspective_tool_motion;
+  trans_class->recalc  = gimp_perspective_tool_recalc;
 }
 
 static void
@@ -143,7 +140,8 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_PERSPECTIVE_TOOL_CURSOR);
 
-  tr_tool->shell_desc = _("Perspective Transform Information");
+  tr_tool->shell_desc    = _("Perspective Transform Information");
+  tr_tool->progress_text = _("Perspective...");
 }
 
 static void
@@ -236,14 +234,6 @@ gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
 
   /*  update the information dialog  */
   perspective_info_update (tr_tool);
-}
-
-static TileManager *
-gimp_perspective_tool_transform (GimpTransformTool *tr_tool,
-				 GimpDisplay       *gdisp)
-{
-  return gimp_transform_tool_transform_tiles (tr_tool,
-                                              _("Perspective..."));
 }
 
 static void

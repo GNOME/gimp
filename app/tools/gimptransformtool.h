@@ -91,6 +91,7 @@ struct _GimpTransformTool
 
   /*  transform info dialog  */
   const gchar    *shell_desc;
+  const gchar    *progress_text;
 
   InfoDialog     *info_dialog;
 };
@@ -114,8 +115,6 @@ struct _GimpTransformToolClass
 
 GType   gimp_transform_tool_get_type               (void) G_GNUC_CONST;
 
-TileManager * gimp_transform_tool_transform_tiles  (GimpTransformTool *tr_tool,
-                                                    const gchar       *progress_text);
 void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
 
 void	gimp_transform_tool_grid_density_changed   (GimpTransformTool *tr_tool);

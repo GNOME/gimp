@@ -35,7 +35,6 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-transform.h"
@@ -63,7 +62,7 @@
 #include "libgimp/gimpintl.h"
 
 
-#define HANDLE 10
+#define HANDLE_SIZE 10
 
 
 /*  local function prototypes  */
@@ -107,6 +106,10 @@ static void   gimp_transform_tool_cursor_update    (GimpTool          *tool,
 
 static void   gimp_transform_tool_draw             (GimpDrawTool      *draw_tool);
 
+static TileManager *
+              gimp_transform_tool_real_transform   (GimpTransformTool *tr_tool,
+                                                    GimpDisplay       *gdisp);
+
 static void   gimp_transform_tool_reset            (GimpTransformTool *tr_tool);
 static void   gimp_transform_tool_bounds           (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
@@ -117,8 +120,6 @@ static void   gimp_transform_tool_recalc           (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
 static void   gimp_transform_tool_doit             (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void   gimp_transform_tool_setup_grid       (GimpTransformTool *tr_tool,
-                                                    TransformOptions  *options);
 static void   gimp_transform_tool_grid_recalc      (GimpTransformTool *tr_tool);
 
 static void   transform_reset_callback             (GtkWidget         *widget,
@@ -189,7 +190,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   klass->prepare             = NULL;
   klass->motion              = NULL;
   klass->recalc              = NULL;
-  klass->transform           = NULL;
+  klass->transform           = gimp_transform_tool_real_transform;
 }
 
 static void
@@ -214,14 +215,16 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   gimp_matrix3_identity (tr_tool->transform);
 
-  tr_tool->use_grid     = TRUE;
-  tr_tool->use_center   = TRUE;
-  tr_tool->ngx          = 0;
-  tr_tool->ngy          = 0;
-  tr_tool->grid_coords  = NULL;
-  tr_tool->tgrid_coords = NULL;
+  tr_tool->use_grid      = TRUE;
+  tr_tool->use_center    = TRUE;
+  tr_tool->ngx           = 0;
+  tr_tool->ngy           = 0;
+  tr_tool->grid_coords   = NULL;
+  tr_tool->tgrid_coords  = NULL;
 
-  tr_tool->info_dialog  = NULL;
+  tr_tool->shell_desc    = NULL;
+  tr_tool->progress_text = _("Transforming...");
+  tr_tool->info_dialog   = NULL;
 }
 
 static void
@@ -561,7 +564,7 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
                                     coords->x, coords->y,
                                     GIMP_HANDLE_CIRCLE,
                                     tr_tool->tcx, tr_tool->tcy,
-                                    HANDLE, HANDLE,
+                                    HANDLE_SIZE, HANDLE_SIZE,
                                     GTK_ANCHOR_CENTER,
                                     FALSE))
 	{
@@ -677,25 +680,25 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_SQUARE,
                               tr_tool->tx1, tr_tool->ty1,
-                              HANDLE, HANDLE,
+                              HANDLE_SIZE, HANDLE_SIZE,
                               GTK_ANCHOR_CENTER,
                               FALSE);
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_SQUARE,
                               tr_tool->tx2, tr_tool->ty2,
-                              HANDLE, HANDLE,
+                              HANDLE_SIZE, HANDLE_SIZE,
                               GTK_ANCHOR_CENTER,
                               FALSE);
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_SQUARE,
                               tr_tool->tx3, tr_tool->ty3,
-                              HANDLE, HANDLE,
+                              HANDLE_SIZE, HANDLE_SIZE,
                               GTK_ANCHOR_CENTER,
                               FALSE);
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_SQUARE,
                               tr_tool->tx4, tr_tool->ty4,
-                              HANDLE, HANDLE,
+                              HANDLE_SIZE, HANDLE_SIZE,
                               GTK_ANCHOR_CENTER,
                               FALSE);
 
@@ -705,7 +708,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_FILLED_CIRCLE,
                                   tr_tool->tcx, tr_tool->tcy,
-                                  HANDLE, HANDLE,
+                                  HANDLE_SIZE, HANDLE_SIZE,
                                   GTK_ANCHOR_CENTER,
                                   FALSE);
     }
@@ -726,6 +729,42 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       path_transform_draw_current (GIMP_TOOL (draw_tool)->gdisp,
                                    draw_tool, tmp_matrix);
     }
+}
+
+static TileManager *
+gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
+                                    GimpDisplay       *gdisp)
+{
+  GimpTool         *tool;
+  TransformOptions *options;
+  GimpProgress     *progress;
+  TileManager      *ret;
+
+  tool = GIMP_TOOL (tr_tool);
+
+  options = (TransformOptions *) tool->tool_info->tool_options;
+
+  if (tr_tool->info_dialog)
+    gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
+
+  progress = gimp_progress_start (gdisp, tr_tool->progress_text, FALSE,
+                                  NULL, NULL);
+
+  ret = gimp_drawable_transform_tiles_affine (gimp_image_active_drawable (tool->gdisp->gimage),
+                                              tr_tool->original,
+                                              options->interpolation,
+                                              options->clip,
+                                              tr_tool->transform,
+                                              options->direction,
+                                              progress ?
+                                              gimp_progress_update_and_flush : 
+                                              NULL,
+                                              progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  return ret;
 }
 
 static void
@@ -770,11 +809,8 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
   /*  Send the request for the transformation to the tool...
    */
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform)
-    new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
-                                                                    gdisp);
-  else
-    new_tiles = NULL;
+  new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
+                                                                  gdisp);
 
   gimp_transform_tool_prepare (tr_tool, gdisp);
   gimp_transform_tool_recalc (tr_tool, gdisp);
@@ -817,45 +853,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   gimp_transform_tool_reset (tr_tool);
 }
 
-TileManager *
-gimp_transform_tool_transform_tiles (GimpTransformTool *tr_tool,
-                                     const gchar       *progress_text)
-{
-  GimpTool         *tool;
-  TransformOptions *options;
-  GimpProgress     *progress;
-  TileManager      *ret;
-
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
-  g_return_val_if_fail (progress_text != NULL, NULL);
-
-  if (tr_tool->info_dialog)
-    gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
-
-  tool = GIMP_TOOL (tr_tool);
-
-  options = (TransformOptions *) tool->tool_info->tool_options;
-
-  progress = gimp_progress_start (tool->gdisp, progress_text, FALSE,
-                                  NULL, NULL);
-
-  ret = gimp_drawable_transform_tiles_affine (gimp_image_active_drawable (tool->gdisp->gimage),
-                                              tr_tool->original,
-                                              options->interpolation,
-                                              options->clip,
-                                              tr_tool->transform,
-                                              options->direction,
-                                              progress ?
-                                              gimp_progress_update_and_flush : 
-                                              NULL,
-                                              progress);
-
-  if (progress)
-    gimp_progress_end (progress);
-
-  return ret;
-}
-
 void
 gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 {
@@ -890,9 +887,9 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 	{
 	  gimp_matrix3_transform_point (tr_tool->transform,
 					tr_tool->grid_coords[gci],
-					tr_tool->grid_coords[gci+1],
-					&(tr_tool->tgrid_coords[gci]),
-					&(tr_tool->tgrid_coords[gci+1]));
+					tr_tool->grid_coords[gci + 1],
+					&tr_tool->tgrid_coords[gci],
+					&tr_tool->tgrid_coords[gci + 1]);
 	  gci += 2;
 	}
     }
@@ -1015,60 +1012,49 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 
   if (options->show_grid)
     {
-      gimp_transform_tool_setup_grid (tr_tool, options);
-    }
-}
+      GimpTool *tool;
+      gint      i, gci;
+      gdouble  *coords;
 
-static void
-gimp_transform_tool_setup_grid (GimpTransformTool *tr_tool,
-                                TransformOptions  *options)
-{
-  GimpTool *tool;
-  gint      i, gci;
-  gdouble  *coords;
+      tool = GIMP_TOOL (tr_tool);
 
-  tool = GIMP_TOOL (tr_tool);
+      tr_tool->ngx = (tr_tool->x2 - tr_tool->x1) / options->grid_size;
+      if (tr_tool->ngx > 0)
+        tr_tool->ngx--;
 
-  /*  We use the gimp_transform_tool_grid_size function only here, even
-   *  if the user changes the grid size in the middle of an
-   *  operation, nothing happens.
-   */
-  tr_tool->ngx = (tr_tool->x2 - tr_tool->x1) / options->grid_size;
-  if (tr_tool->ngx > 0)
-    tr_tool->ngx--;
+      tr_tool->ngy = (tr_tool->y2 - tr_tool->y1) / options->grid_size;
+      if (tr_tool->ngy > 0)
+        tr_tool->ngy--;
 
-  tr_tool->ngy = (tr_tool->y2 - tr_tool->y1) / options->grid_size;
-  if (tr_tool->ngy > 0)
-    tr_tool->ngy--;
+      tr_tool->grid_coords = coords =
+        g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
 
-  tr_tool->grid_coords = coords =
-    g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
+      tr_tool->tgrid_coords =
+        g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
 
-  tr_tool->tgrid_coords =
-    g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
+      gci = 0;
 
-  gci = 0;
+      for (i = 1; i <= tr_tool->ngx; i++)
+        {
+          coords[gci]     = tr_tool->x1 + (((gdouble) i) / (tr_tool->ngx + 1) *
+                                           (tr_tool->x2 - tr_tool->x1));
+          coords[gci + 1] = tr_tool->y1;
+          coords[gci + 2] = coords[gci];
+          coords[gci + 3] = tr_tool->y2;
 
-  for (i = 1; i <= tr_tool->ngx; i++)
-    {
-      coords[gci]     = tr_tool->x1 + (((gdouble) i) / (tr_tool->ngx + 1) *
-                                       (tr_tool->x2 - tr_tool->x1));
-      coords[gci + 1] = tr_tool->y1;
-      coords[gci + 2] = coords[gci];
-      coords[gci + 3] = tr_tool->y2;
+          gci += 4;
+        }
 
-      gci += 4;
-    }
+      for (i = 1; i <= tr_tool->ngy; i++)
+        {
+          coords[gci]     = tr_tool->x1;
+          coords[gci + 1] = tr_tool->y1 + (((gdouble) i) / (tr_tool->ngy + 1) *
+                                           (tr_tool->y2 - tr_tool->y1));
+          coords[gci + 2] = tr_tool->x2;
+          coords[gci + 3] = coords[gci + 1];
 
-  for (i = 1; i <= tr_tool->ngy; i++)
-    {
-      coords[gci]     = tr_tool->x1;
-      coords[gci + 1] = tr_tool->y1 + (((gdouble) i) / (tr_tool->ngy + 1) *
-                                       (tr_tool->y2 - tr_tool->y1));
-      coords[gci + 2] = tr_tool->x2;
-      coords[gci + 3] = coords[gci + 1];
-
-      gci += 4;
+          gci += 4;
+        }
     }
 }
 
