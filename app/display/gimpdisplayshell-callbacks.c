@@ -166,8 +166,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           break;
 
 	case GDK_Escape:
-	  if (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN)
-	    gimp_display_shell_toggle_fullscreen (shell);
+          gimp_display_shell_set_fullscreen (shell, FALSE);
 	  break;
 
         default:
@@ -193,7 +192,7 @@ gimp_display_shell_events (GtkWidget        *widget,
 
 	shell->window_state = sevent->new_window_state;
 
-	fullscreen = shell->window_state & GDK_WINDOW_STATE_FULLSCREEN;
+	fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 
 	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
 				      "/View/Fullscreen",

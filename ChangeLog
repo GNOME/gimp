@@ -3,6 +3,14 @@
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.[ch]
 	* app/gui/image-menu.c
+	* app/gui/view-commands.c: rewrote the fullscreen mode
+	implementation so that it doesn't loop infinitely.
+
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/gui/image-menu.c
 	* app/gui/view-commands.[ch]: added a fullscreen mode for the
 	image display by means of gtk_window_fullscreen/unfullscreen.
 	Depends on the window manager implementing _NET_WM_STATE_FULLSCREEN.

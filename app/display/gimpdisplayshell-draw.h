@@ -233,7 +233,8 @@ void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
                                                       GimpSelectionControl  control);
-void        gimp_display_shell_toggle_fullscreen     (GimpDisplayShell *shell);
+void        gimp_display_shell_set_fullscreen        (GimpDisplayShell *shell,
+                                                      gboolean          fullscreen);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

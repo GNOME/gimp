@@ -132,16 +132,20 @@ view_fullscreen_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_toggle_fullscreen (shell);
+  gimp_display_shell_set_fullscreen (shell,
+                                     GTK_CHECK_MENU_ITEM (widget)->active);
 
-  fullscreen = shell->window_state & GDK_WINDOW_STATE_FULLSCREEN;
+  fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
 
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-				"/View/Fullscreen",
-				fullscreen);
-  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-				"/View/Fullscreen",
-				fullscreen);
+  if (fullscreen != GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Fullscreen",
+                                    fullscreen);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Fullscreen",
+                                    fullscreen);
+    }
 }
 
 void

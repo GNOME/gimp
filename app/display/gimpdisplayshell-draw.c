@@ -1628,12 +1628,21 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
 }
 
 void
-gimp_display_shell_toggle_fullscreen (GimpDisplayShell *shell)
+gimp_display_shell_set_fullscreen (GimpDisplayShell *shell,
+                                   gboolean          fullscreen)
 {
-  if (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN)
-    gtk_window_unfullscreen (GTK_WINDOW (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (fullscreen)
+    {
+      if (! (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN))
+        gtk_window_fullscreen (GTK_WINDOW (shell));
+    }
   else
-    gtk_window_fullscreen (GTK_WINDOW (shell));
+    {
+      if (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN)
+        gtk_window_unfullscreen (GTK_WINDOW (shell));
+    }
 }
 
 
