@@ -687,9 +687,13 @@ if test "$gdk_target" = x11; then
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
     fi
+
+   dnl screenshot plug-in needs to link to X11 explicitely
+   LIBSCREENSHOT="$X_LIBS -lX11"
 fi
 
 AC_SUBST(LIBXMU)
+AC_SUBST(LIBSCREENSHOT)
 AC_SUBST(GIMP_REMOTE)
 
 ## webbrowser has ifdefs for Win32
