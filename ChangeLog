@@ -1,3 +1,9 @@
+1998-09-11  Tristan Tarrant  <ttarrant@etnoteam.it>
+
+	* po/it.po: New file with Italian translations (some).
+
+	* configure.in (ALL_LINGUAS): Added "it"
+
 Thu Sep 10 13:26:51 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in
