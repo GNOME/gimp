@@ -40,7 +40,7 @@
  * had potential to be a useful plugin, so I started adding features and
  * and making a nice UI.
  *
- * It's still not very usefull, but I did manage to significantly improve my
+ * It's still not very useful, but I did manage to significantly improve my
  * C programming skills in the process, so it was worth it.
  *
  * If you happen to find it usefull I would appreciate any email about it.
@@ -60,6 +60,8 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
+#include "pixmaps/eek.xpm"
 
 /* Typedefs */
 
@@ -116,7 +118,7 @@ static void   run        (gchar   *name,
 
 static gint   save_image  (gchar     *filename,
 			   GDrawable *drawable);
-static gint   save_dialog (void);
+static gint   save_dialog (gint32     image_ID);
 
 static gint   color_comp               (guchar    *buffer,
 					guchar    *buf2);
@@ -196,7 +198,7 @@ run (gchar   *name,
 
   gimp_get_data ("file_GTM_save", &gtmvals);
 
-  if (save_dialog ())
+  if (save_dialog (param[1].data.d_int32))
     {
       if (save_image (param[3].data.d_string, drawable))
 	{
@@ -350,7 +352,7 @@ save_image (gchar     *filename,
 }
 
 static gint
-save_dialog (void)
+save_dialog (image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -396,6 +398,32 @@ save_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
+
+  if (gimp_image_width (image_ID) * gimp_image_height (image_ID) > 4096)
+    {
+      GtkWidget *eek;
+      GtkWidget *label;
+      GtkWidget *hbox;
+
+      frame = gtk_frame_new (_("Warning"));
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      
+      eek = gimp_pixmap_new (eek_xpm);
+      gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 4);
+
+      label = gtk_label_new (_("Are you crazy?\n\n"
+			       "You are about to create a huge\n"
+			       "HTML file which will most likely\n"
+			       "crash your browser."));
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+
+      gtk_widget_show_all (frame);
+    }
 
   /* HTML Page Options */
   frame = gtk_frame_new (_("HTML Page Options"));

@@ -1,3 +1,8 @@
+Wed Feb 23 01:15:12 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gtm.c: added a warning in the case the user
+	tries to save a large image as an HTML table
+
 Tue Feb 22 22:25:29 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/grid.c: added support for indexed images and
