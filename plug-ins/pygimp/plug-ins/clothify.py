@@ -29,7 +29,7 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
     layer_one = gimp.Layer(img, "X Dots", width, height, RGB_IMAGE,
 			   100, NORMAL_MODE)
     img.disable_undo()
-    pdb.gimp_edit_fill(layer_one, BG_IMAGE_FILL)
+    pdb.gimp_edit_fill(layer_one, BACKGROUND_FILL)
     img.add_layer(layer_one, 0)
     pdb.plug_in_noisify(img, layer_one, 0, 0.7, 0.7, 0.7, 0.7)
     layer_two = layer_one.copy()

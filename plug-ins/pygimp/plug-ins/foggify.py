@@ -10,7 +10,7 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
 		     opacity, NORMAL_MODE)
     oldbg = gimp.get_background()
     gimp.set_background(colour)
-    pdb.gimp_edit_fill(fog, BG_IMAGE_FILL)
+    pdb.gimp_edit_fill(fog, BACKGROUND_FILL)
     gimp.set_background(oldbg)
 
     img.add_layer(fog, 0)

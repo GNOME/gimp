@@ -40,7 +40,7 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
     img.add_layer(drawable, 0)
     gimp.set_foreground(sphere_colour)
     gimp.set_background(bg_colour)
-    pdb.gimp_edit_fill(drawable, BG_IMAGE_FILL)
+    pdb.gimp_edit_fill(drawable, BACKGROUND_FILL)
     gimp.set_background(20, 20, 20)
     if (light >= 45 and light <= 75 or light <= 135 and
 	light >= 105) and shadow:
@@ -51,14 +51,14 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
 	if shadow_w < 0:
 	    shadow_x = cx + shadow_w
 	    shadow_w = -shadow_w
-	pdb.gimp_ellipse_select(img, shadow_x, shadow_y,
-				shadow_w, shadow_h, REPLACE, 1, 1, 7.5)
+	pdb.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
+				CHANNEL_OP_REPLACE, TRUE, TRUE, 7.5)
 	pdb.gimp_bucket_fill(drawable, BG_BUCKET_FILL,
-			     MULTIPLY_MODE, 100, 0, 0, 0, 0)
-    pdb.gimp_ellipse_select(img, cx - radius, cy - radius,
-			    2 * radius, 2 * radius, REPLACE, 1, 0, 0)
-    pdb.gimp_blend(drawable, FG_BG_RGB, NORMAL_MODE, RADIAL,
-		   100, offset, REPEAT_NONE, 0, 0, 0, light_x,
+			     MULTIPLY_MODE, 100, 0, FALSE, 0, 0)
+    pdb.gimp_ellipse_select(img, cx - radius, cy - radius, 2 * radius,
+			    2 * radius, CHANNEL_OP_REPLACE, TRUE, FALSE, 0)
+    pdb.gimp_blend(drawable, FG_BG_RGB_MODE, NORMAL_MODE, RADIAL,
+		   100, offset, REPEAT_NONE, FALSE, 0, 0, light_x,
 		   light_y, light_end_x, light_end_y)
     pdb.gimp_selection_none(img)
     gimp.set_background(old_bg)
