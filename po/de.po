@@ -4826,7 +4826,10 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:863
 msgid "Aborting Installation..."
-msgstr "Installation wird abgebrochen..."
+msgstr ""
+"Die Existenz wie Sie sie kennen\n"
+"ist beendet!"
+
 
 #: app/gui/user-install-dialog.c:933
 msgid "does not exist.  Cannot install."
