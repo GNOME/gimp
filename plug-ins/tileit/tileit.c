@@ -57,9 +57,6 @@
 
 #define MAX_SEGS 6
 
-#define TRUE 1
-#define FALSE 0
-
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
                        GDK_BUTTON_PRESS_MASK | \
 		       GDK_BUTTON_MOTION_MASK

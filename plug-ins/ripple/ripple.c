@@ -48,9 +48,6 @@
 #define SAWTOOTH 0
 #define SINE 1
 
-#define TRUE 1
-#define FALSE 0
-
 typedef struct {
     gint period;
     gint amplitude;

@@ -1,7 +1,5 @@
 #include <libgimp/gimp.h>
 
-#define TRUE             1
-#define FALSE            0
 #define MAXCOLORS       256
 #define Image		gint32
 

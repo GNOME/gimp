@@ -516,7 +516,7 @@ gimp_layer_set_opacity (gint32  layer_ID,
   return_vals = gimp_run_procedure ("gimp_layer_set_opacity",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
-				    PARAM_INT32, opacity,
+				    PARAM_FLOAT, opacity,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -1,3 +1,21 @@
+Tue May 26 01:17:14 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: added --install-script. Use @INSTALL@ stuff
+
+	* libgimp/gimpimage.c
+	* libgimp/gimplayer.c: fixes for silly errors from Marc Lehmann
+
+	* libgimp/gimpchannel.c: implemented gimp_channel_set_show_masked
+	and gimp_channel_get_show_masked (already in gimp.h>
+
+	* plug-ins/blinds/blinds.c
+	* plug-ins/bmp/bmp.h
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/ripple/ripple.c
+	* plug-ins/tga/tga.c
+	* plug-ins/tileit/tileit.c: remove definitions of TRUE and FALSE
+	since glib does it for us
+
 Sun May 24 08:41:34 EST 1998 Stephen Norris <srn@fn.com.au>
 
 	* plug-ins/displace/displace.c: Fix to GUI bug.

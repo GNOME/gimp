@@ -43,9 +43,6 @@
 
 #define  SQR(x)          ((x) * (x))
 
-#define  TRUE            1
-#define  FALSE           0
-
 #define  HORIZONTAL      0
 #define  VERTICAL        1
 #define  OPAQUE          255

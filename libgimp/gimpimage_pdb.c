@@ -301,7 +301,7 @@ gimp_image_merge_visible_layers (gint32 image_ID,
 
   layer_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[0].data.d_layer;
+    layer_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -326,7 +326,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
 
   layer_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[0].data.d_layer;
+    layer_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
