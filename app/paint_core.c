@@ -245,6 +245,8 @@ paint_core_button_press (Tool           *tool,
       paint_core->startwheel    = paint_core->lastwheel    = paint_core->curwheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */
       paint_core->distance   = 0.0;
+      paint_core->lastpaintx = -1e6;
+      paint_core->lastpainty = -1e6;
     }
 
   /*  If shift is down and this is not the first paint
@@ -359,6 +361,8 @@ paint_core_button_press (Tool           *tool,
 				   ->klass)->select_brush) (paint_core);
 
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+          paint_core->lastpaintx = paint_core->curx;
+          paint_core->lastpainty = paint_core->cury;
 	}
     }
 
@@ -839,6 +843,27 @@ paint_core_init (PaintCore    *paint_core,
   return TRUE;
 }
 
+/**
+ * gimp_avoid_exact_integer
+ * @x: points to a gdouble
+ *
+ * Adjusts *x such that it is not too close to an integer. This is used
+ * for decision algorithms that would be vulnerable to rounding glitches
+ * if exact integers were input.
+ *
+ * Side effects: Changes the value of *x
+ **/
+static void
+gimp_avoid_exact_integer (gdouble *x)
+{
+  gdouble integral = floor(*x);
+  gdouble fractional = *x - integral;
+  if (fractional < EPSILON)
+    *x = integral + EPSILON;
+  else if (fractional > (1-EPSILON))
+    *x = integral + (1-EPSILON);
+}
+
 void
 paint_core_interpolate (PaintCore    *paint_core, 
 			GimpDrawable *drawable)
@@ -852,9 +877,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 #endif /* GTK_HAVE_SIX_VALUATORS */
   /*   double spacing; */
   /*   double lastscale, curscale; */
-  gdouble n;
-  gdouble left;
-  gdouble t;
+  gdouble t0, dt, tn;
+  gint    n, num_points;
+  gdouble st_factor, st_offset;
   gdouble initial;
   gdouble dist;
   gdouble total;
@@ -863,6 +888,11 @@ paint_core_interpolate (PaintCore    *paint_core,
   gdouble xd, yd;
   gdouble mag;
 
+  gimp_avoid_exact_integer (&paint_core->lastx);
+  gimp_avoid_exact_integer (&paint_core->lasty);
+  gimp_avoid_exact_integer (&paint_core->curx);
+  gimp_avoid_exact_integer (&paint_core->cury);
+  
   delta.x   = paint_core->curx        - paint_core->lastx;
   delta.y   = paint_core->cury        - paint_core->lasty;
   dpressure = paint_core->curpressure - paint_core->lastpressure;
@@ -901,40 +931,169 @@ paint_core_interpolate (PaintCore    *paint_core,
   /*   curscale = MIN (paint_core->curpressure,  1/256); */
   /*   spacing = paint_core->spacing * sqrt (0.5 * (lastscale + curscale)); */
 
-  while (paint_core->distance < total)
+  /*  Compute spacing parameters such that a brush position will be
+   *  made each time the line crosses the *center* of a pixel row or
+   *  column, according to whether the line is mostly horizontal or
+   *  mostly vertical. The term "stripe" will mean "column" if the
+   *  line is horizontalish; "row" if the line is verticalish.
+   *
+   *  We start by deriving coefficients for a new parameter 's':
+   *      s = t * st_factor + st_offset
+   *  such that the "nice" brush positions are the ones with *integer*
+   *  s values. (Actually the value of s will be 1/2 less than the nice
+   *  brush position's x or y coordinate - note that st_factor may
+   *  be negative!)
+   */
+  
+  if (delta.x*delta.x > delta.y*delta.y)
     {
-      n = (int) (paint_core->distance / paint_core->spacing + 1.0 + EPSILON);
-      left = n * paint_core->spacing - paint_core->distance;
+      st_factor = delta.x;
+      st_offset = paint_core->lastx - 0.5;
+    }
+  else
+    {
+      st_factor = delta.y;
+      st_offset = paint_core->lasty - 0.5;
+    }
+  
+  if( fabs (st_factor) > dist / paint_core->spacing )
+    {
+      /*  The stripe principle leads to brush positions that are spaced
+       *  *closer* than the official brush spacing. Use the official
+       *  spacing instead. This is the common case when the brush spacing
+       *  is large.
+       *  The net effect is then to put a lower bound on the spacing, but
+       *  one that varies with the slope of the line. This is suppose to
+       *  make thin lines (say, with a 1x1 brush) prettier while leaving
+       *  lines with larger brush spacing as they used to look in 1.2.x.
+       */
+      dt = paint_core->spacing / dist;
+      n = (gint) (initial / paint_core->spacing + 1.0 + EPSILON);
+      t0 = (n * paint_core->spacing - initial) / dist;
+      num_points = 1 + (gint) floor ((1 + EPSILON-t0) / dt);
+    }
+  else if (fabs (st_factor) < EPSILON)
+    {
+      /* Hm, we've hardly moved at all. Don't draw anything, but reset the
+       * old coordinates and hope we've gone longer the next time.
+       */
+      paint_core->curx = paint_core->lastx;
+      paint_core->cury = paint_core->lasty;
+      /* ... but go along with the current pressure, tilt and wheel */
+      return;
+    }
+  else
+    {
+      gint    direction = st_factor > 0 ? 1 : -1;
+      gint    x, y;
+      gint    s0, sn;
+
+      /*  Choose the first and last stripe to paint.
+       *    FIRST PRIORITY is to avoid gaps painting with a 1x1 aliasing
+       *  brush when a horizontalish line segment follows a verticalish
+       *  one or vice versa - no matter what the angle between the two
+       *  lines is. This will also limit the local thinning that a 1x1
+       *  subsampled brush may suffer in the same situation.
+       *    SECOND PRIORITY is to avoid making free-hand drawings
+       *  unpleasantly fat by plotting redundant points.
+       *    These are achieved by the following rules, but it is a little
+       *  tricky to see just why. Do not change this algorithm unless you
+       *  are sure you know what you're doing!
+       */
       
-      paint_core->distance += left;
+      /*  Basic case: round the beginning and ending point to nearest
+       *  stripe center.
+       */
+      s0 = (gint) floor (st_offset + 0.5);
+      sn = (gint) floor (st_offset + st_factor + 0.5);
 
-      if (paint_core->distance <= (total+EPSILON))
-	{
-	  t = (paint_core->distance - initial) / dist;
+      t0 = (s0 - st_offset) / st_factor;
+      tn = (sn - st_offset) / st_factor;
+      
+      x = (gint) floor (paint_core->lastx + t0 * delta.x);
+      y = (gint) floor (paint_core->lasty + t0 * delta.y);
+      if (t0 < 0.0 && !( x == (gint) floor (paint_core->lastx) &&
+                         y == (gint) floor (paint_core->lasty) ))
+        {
+          /*  Exception A: If the first stripe's brush position is
+           *  EXTRApolated into a different pixel square than the
+           *  ideal starting point, dont't plot it.
+           */
+          s0 += direction;
+        }
+      else if (x == (gint) floor (paint_core->lastpaintx) &&
+               y == (gint) floor (paint_core->lastpainty) )
+        {
+          /*  Exception B: If first stripe's brush position is within the
+           *  same pixel square as the last plot of the previous line,
+           *  don't plot it either.
+           */
+          s0 += direction;
+        }
 
-	  paint_core->curx        = paint_core->lastx + delta.x * t;
-	  paint_core->cury        = paint_core->lasty + delta.y * t;
-	  paint_core->pixel_dist  = pixel_initial + pixel_dist * t;
-	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
-	  paint_core->curxtilt    = paint_core->lastxtilt + dxtilt * t;
-	  paint_core->curytilt    = paint_core->lastytilt + dytilt * t;
+      x = (gint) floor (paint_core->lastx + tn * delta.x);
+      y = (gint) floor (paint_core->lasty + tn * delta.y);
+      if (tn > 1.0 && !( x == (gint) floor (paint_core->curx) &&
+                         y == (gint) floor (paint_core->cury) ))
+        {
+          /*  Exception C: If the last stripe's brush position is
+           *  EXTRApolated into a different pixel square than the
+           *  ideal ending point, don't plot it.
+           */
+          sn -= direction;
+        }
+
+      t0 = (s0 - st_offset) / st_factor;
+      tn = (sn - st_offset) / st_factor;
+      dt         =     direction * 1.0/st_factor;
+      num_points = 1 + direction * (sn-s0);
+
+      if (num_points >= 1)
+        {
+          /*  Hack the reported total distance such that it looks to the
+           *  next line as if the the last pixel plotted were at an integer
+           *  multiple of the brush spacing. This helps prevent artifacts
+           *  for connected lines when the brush spacing is such that some
+           *  slopes will use the stripe regime and other slopes will use
+           *  the nominal brush spacing.
+           */
+          if (tn < 1)
+            total = initial + tn * dist;
+          total = paint_core->spacing * (gint) (total / paint_core->spacing + 0.5);
+          total += (1.0-tn) * dist;
+        }
+    }
+
+  for (n = 0; n < num_points; n++)
+    {
+      gdouble    t = t0 + n*dt;
+
+      paint_core->curx        = paint_core->lastx + delta.x * t;
+      paint_core->cury        = paint_core->lasty + delta.y * t;
+      paint_core->pixel_dist  = pixel_initial + pixel_dist * t;
+      paint_core->distance    = paint_core->distance + dist * t;
+      paint_core->curpressure = paint_core->lastpressure + dpressure * t;
+      paint_core->curxtilt    = paint_core->lastxtilt + dxtilt * t;
+      paint_core->curytilt    = paint_core->lastytilt + dytilt * t;
 #ifdef GTK_HAVE_SIX_VALUATORS
-          paint_core->curwheel    = paint_core->lastwheel + dwheel * t;
+      paint_core->curwheel    = paint_core->lastwheel + dwheel * t;
 #endif /* GTK_HAVE_SIX_VALUATORS */
 
-	  /*  save the current brush  */
-	  current_brush = paint_core->brush;
+      /*  save the current brush  */
+      current_brush = paint_core->brush;
 
-	  if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
-	    paint_core->brush     =
-	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
-				   ->klass)->select_brush) (paint_core);
-	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
-
-	  /*  restore the current brush pointer  */
-	  paint_core->brush = current_brush;
-	}
+      if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
+        paint_core->brush     =
+          (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+                               ->klass)->select_brush) (paint_core);
+      (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+      paint_core->lastpaintx = paint_core->curx;
+      paint_core->lastpainty = paint_core->cury;
+      
+      /*  restore the current brush pointer  */
+      paint_core->brush = current_brush;
     }
+
   paint_core->distance    = total;
   paint_core->pixel_dist  = pixel_initial + pixel_dist;
   paint_core->curx        = paint_core->lastx + delta.x;

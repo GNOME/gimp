@@ -79,6 +79,9 @@ struct _paint_core
   double          lastwheel;     /*  last wheel                 */ 
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
 
+  double          lastpaintx;    /*  last actually painted x    */
+  double          lastpainty;    /*  last actually painted x    */
+  
   int             state;         /*  state of buttons and keys  */
 
   double          distance;      /*  distance traveled by brush */

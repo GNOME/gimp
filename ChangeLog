@@ -1,5 +1,9 @@
 2003-05-23  Raphael Quinet  <quinet@gamers.org>
 
+	* app/paint_core.[ch]: applied a patch (backported from HEAD) from
+	Henning Makholm <henning@makholm.net> that vastly improves the
+	drawing of thin lines.  Fixes bug #69773.
+
 	* plug-ins/imagemap/Makefile.am: added rules for rebuilding the
 	source .c files from the .l (lex/flex) and .y (yacc/bison) files.
 	Fixes a non-critical part of bug #113445.
