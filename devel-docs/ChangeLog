@@ -1,3 +1,8 @@
+2003-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/tmpl/gimpmodule.sgml: regenerated, removed
+	some old cruft.
+
 2002-12-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: removed the functions Nathan added

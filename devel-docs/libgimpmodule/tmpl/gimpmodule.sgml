@@ -28,6 +28,7 @@ Common definitions for creating a pluggable GIMP module.
 
 </para>
 
+@abi_version: 
 @purpose: 
 @author: 
 @version: 
@@ -71,8 +72,6 @@ Common definitions for creating a pluggable GIMP module.
 @load_inhibit: 
 @verbose: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@inhibit_str: 
 
 
 <!-- ##### FUNCTION gimp_module_modified ##### -->
@@ -99,8 +98,6 @@ Common definitions for creating a pluggable GIMP module.
 
 @module: 
 @load_inhibit: 
-<!-- # Unused Parameters # -->
-@inhibit_list: 
 
 
 <!-- ##### FUNCTION gimp_module_state_name ##### -->
@@ -117,6 +114,7 @@ Common definitions for creating a pluggable GIMP module.
 
 </para>
 
+@abi_version: 
 @purpose: 
 @author: 
 @version: 
