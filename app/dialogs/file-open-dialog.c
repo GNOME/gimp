@@ -100,7 +100,7 @@ file_open_dialog_create (Gimp            *gimp,
 
   dialog = gimp_file_dialog_new (gimp, gimp->load_procs,
                                  GTK_FILE_CHOOSER_ACTION_OPEN,
-                                 menu_factory, "<Load>",
+                                 menu_factory, "<Load>", "/file-open-popup",
                                  _("Open Image"), "gimp-file-open",
                                  GTK_STOCK_OPEN,
                                  GIMP_HELP_FILE_OPEN);

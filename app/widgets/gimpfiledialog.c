@@ -39,9 +39,9 @@
 #include "plug-in/plug-in-proc.h"
 
 #include "gimpfiledialog.h"
-#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpthumbbox.h"
+#include "gimpuimanager.h"
 
 #include "gimppreviewrendererimagefile.h"
 #include "gimppreview.h"
@@ -117,10 +117,10 @@ gimp_file_dialog_destroy (GtkObject *object)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
 
-  if (dialog->item_factory)
+  if (dialog->manager)
     {
-      g_object_unref (dialog->item_factory);
-      dialog->item_factory = NULL;
+      g_object_unref (dialog->manager);
+      dialog->manager = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -142,6 +142,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
                       GtkFileChooserAction  action,
                       GimpMenuFactory      *menu_factory,
                       const gchar          *menu_identifier,
+                      const gchar          *ui_path,
                       const gchar          *title,
                       const gchar          *role,
                       const gchar          *stock_id,
@@ -158,6 +159,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   g_return_val_if_fail (file_procs != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
+  g_return_val_if_fail (ui_path != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
@@ -179,12 +181,11 @@ gimp_file_dialog_new (Gimp                 *gimp,
   gimp_help_connect (GTK_WIDGET (dialog), gimp_standard_help_func,
                      help_id, NULL);
 
-  dialog->gimp         = gimp;
-  dialog->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     menu_identifier,
-                                                     GTK_TYPE_MENU,
-                                                     dialog,
-                                                     FALSE);
+  dialog->gimp    = gimp;
+  dialog->manager = gimp_menu_factory_manager_new (menu_factory,
+                                                   menu_identifier,
+                                                   dialog,
+                                                   FALSE);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
@@ -192,7 +193,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   option_menu = gtk_option_menu_new ();
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                            GTK_ITEM_FACTORY (dialog->item_factory)->widget);
+                            gimp_ui_manager_ui_get (dialog->manager, ui_path));
   gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
   gtk_widget_show (option_menu);
 
@@ -376,8 +377,8 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   if (uri)
     gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
-  gimp_item_factory_update (dialog->item_factory,
-                            gimp_image_active_drawable (gimage));
+  gimp_ui_manager_update (dialog->manager,
+                          gimp_image_active_drawable (gimage));
 }
 
 

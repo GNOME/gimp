@@ -1,5 +1,30 @@
 2004-04-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/Makefile.am
+	* app/actions/file-open-actions.[ch]
+	* app/actions/file-save-actions.[ch]: actions for the <Load> and
+	<Save> menus...
+
+	* menus/Makefile.am
+	* menus/file-open-menu.xml
+	* menus/file-save-menu.xml: ...and the menus.
+
+	* app/gui/file-open-menu.[ch]
+	* app/gui/file-save-menu.[ch]: ported to UI Manager.
+
+	* app/widgets/gimpfiledialog.[ch]: ditto.
+
+	* app/actions/actions.c
+	* app/gui/menus.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: changed accordingly.
+
+	* app/widgets/gimpuimanager.c: removed debugging code which
+	automatically loaded all registered menus. They are now loaded on
+	demand only.
+
+2004-04-29  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimputils.[ch] (gimp_escape_uline): new function
 	which does the opposite of gimp_strip_uline().
 

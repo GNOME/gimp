@@ -16,6 +16,8 @@ app/actions/drawable-actions.c
 app/actions/edit-actions.c
 app/actions/error-console-actions.c
 app/actions/file-actions.c
+app/actions/file-open-actions.c
+app/actions/file-save-actions.c
 app/actions/fonts-actions.c
 app/actions/gradient-editor-actions.c
 app/actions/gradients-actions.c
@@ -121,9 +123,7 @@ app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
-app/gui/file-open-menu.c
 app/gui/file-save-dialog.c
-app/gui/file-save-menu.c
 app/gui/font-select.c
 app/gui/gradient-select.c
 app/gui/grid-dialog.c

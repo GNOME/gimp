@@ -1,4 +1,4 @@
-/* The GIMP -- an open manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FILE_SAVE_MENU_H__
-#define __FILE_SAVE_MENU_H__
+#ifndef __FILE_OPEN_ACTIONS_H__
+#define __FILE_OPEN_ACTIONS_H__
 
 
-void   file_save_menu_setup (GimpUIManager *manager,
-                             const gchar   *ui_path);
+void   file_open_actions_setup  (GimpActionGroup *group);
+void   file_open_actions_update (GimpActionGroup *group,
+                                 gpointer         data);
 
 
-#endif /* __FILE_SAVE_MENU_H__ */
+#endif /* __FILE_OPEN_ACTIONS_H__ */

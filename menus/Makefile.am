@@ -10,6 +10,8 @@ menudata_DATA = \
 	dockable-menu.xml		\
 	documents-menu.xml		\
 	error-console-menu.xml		\
+	file-open-menu.xml		\
+	file-save-menu.xml		\
 	fonts-menu.xml			\
 	gradient-editor-menu.xml	\
 	gradients-menu.xml		\

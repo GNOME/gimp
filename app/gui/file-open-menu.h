@@ -20,12 +20,8 @@
 #define __FILE_OPEN_MENU_H__
 
 
-extern GimpItemFactoryEntry file_open_menu_entries[];
-extern gint                 n_file_open_menu_entries;
-
-
-void   file_open_menu_setup (GimpItemFactory *factory,
-                             gpointer         callback_data);
+void   file_open_menu_setup (GimpUIManager *manager,
+                             const gchar   *ui_path);
 
 
 #endif /* __FILE_OPEN_MENU_H__ */

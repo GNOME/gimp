@@ -40,7 +40,7 @@ struct _GimpFileDialog
   GtkFileChooserDialog  parent_instance;
 
   Gimp             *gimp;
-  GimpItemFactory  *item_factory;
+  GimpUIManager    *manager;
   PlugInProcDef    *file_proc;
 
   GimpImage        *gimage;
@@ -63,6 +63,7 @@ GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
                                             GtkFileChooserAction  action,
                                             GimpMenuFactory      *menu_factory,
                                             const gchar          *menu_identifier,
+                                            const gchar          *ui_path,
                                             const gchar          *title,
                                             const gchar          *role,
                                             const gchar          *stock_id,

@@ -119,17 +119,28 @@ menus_init (Gimp *gimp)
   gimp_menu_factory_menu_register (global_menu_factory, "<Load>",
                                    _("Open Menu"),
                                    GIMP_HELP_FILE_OPEN,
-                                   file_open_menu_setup, NULL, FALSE,
-                                   n_file_open_menu_entries,
-                                   file_open_menu_entries);
+                                   NULL, NULL, FALSE,
+                                   0, NULL);
+  gimp_menu_factory_manager_register (global_menu_factory, "<Load>",
+                                      "file-open",
+                                      NULL,
+                                      "/file-open-popup",
+                                      "file-open-menu.xml",
+                                      file_open_menu_setup,
+                                      NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Save>",
                                    _("Save Menu"),
                                    GIMP_HELP_FILE_SAVE,
-                                   file_save_menu_setup,
-                                   file_save_menu_update, FALSE,
-                                   n_file_save_menu_entries,
-                                   file_save_menu_entries);
+                                   NULL, NULL, FALSE,
+                                   0, NULL);
+  gimp_menu_factory_manager_register (global_menu_factory, "<Save>",
+                                      "file-save",
+                                      NULL,
+                                      "/file-save-popup",
+                                      "file-save-menu.xml",
+                                      file_save_menu_setup,
+                                      NULL);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Layers>",
                                    _("Layers Menu"),

@@ -148,7 +148,7 @@ file_save_dialog_create (Gimp            *gimp,
 
   save_dialog = gimp_file_dialog_new (gimp, gimp->save_procs,
                                       GTK_FILE_CHOOSER_ACTION_SAVE,
-                                      menu_factory, "<Save>",
+                                      menu_factory, "<Save>", "/file-save-popup",
                                       _("Save Image"), "gimp-file-save",
                                       GTK_STOCK_SAVE,
                                       GIMP_HELP_FILE_SAVE);

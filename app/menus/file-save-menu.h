@@ -20,14 +20,8 @@
 #define __FILE_SAVE_MENU_H__
 
 
-extern GimpItemFactoryEntry file_save_menu_entries[];
-extern gint                 n_file_save_menu_entries;
-
-
-void   file_save_menu_setup  (GimpItemFactory *factory,
-                              gpointer         callback_data);
-void   file_save_menu_update (GtkItemFactory  *item_factory,
-                              gpointer         update_data);
+void   file_save_menu_setup (GimpUIManager *manager,
+                             const gchar   *ui_path);
 
 
 #endif /* __FILE_SAVE_MENU_H__ */
