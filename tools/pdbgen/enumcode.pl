@@ -156,11 +156,12 @@ _gimp_enums_init (void)
 {
   GimpGetTypeFunc *funcs;
   gint             i;
-  GType            type;
 
-  for (i = 0, funcs = get_type_funcs; *funcs; i++, funcs++)
+  for (i = 0, funcs = get_type_funcs;
+       i < G_N_ELEMENTS (get_type_funcs);
+       i++, funcs++)
     {
-      type = (*funcs) ();
+      GType type = (*funcs) ();
 
       g_type_class_ref (type);
     }
