@@ -477,7 +477,8 @@ gimp_image_dock_image_changed (GimpContext *context,
 
   image_dock = GIMP_IMAGE_DOCK (dock);
 
-  if (! gimage && image_dock->image_container->num_children > 0)
+  if (gimage == NULL &&
+      gimp_container_num_children (image_dock->image_container) > 0)
     {
       gimage = GIMP_IMAGE (gimp_container_get_child_by_index (image_dock->image_container, 0));
 
@@ -494,22 +495,26 @@ gimp_image_dock_image_changed (GimpContext *context,
 	  g_signal_stop_emission_by_name (context, "image_changed");
 	}
     }
-  else if (image_dock->display_container->num_children > 0)
+  else if (gimage != NULL &&
+           gimp_container_num_children (image_dock->display_container) > 0)
     {
       GimpObject *gdisp;
+      GimpImage  *gdisp_gimage;
       gboolean    find_display = TRUE;
 
       gdisp = gimp_context_get_display (context);
 
       if (gdisp)
         {
-          GimpImage *gdisp_gimage;
-
           g_object_get (gdisp, "image", &gdisp_gimage, NULL);
-          g_object_unref (gdisp_gimage);
 
-          if (gdisp_gimage == gimage)
-            find_display = FALSE;
+          if (gdisp_gimage)
+            {
+              g_object_unref (gdisp_gimage);
+
+              if (gdisp_gimage == gimage)
+                find_display = FALSE;
+            }
         }
 
       if (find_display)
@@ -520,24 +525,28 @@ gimp_image_dock_image_changed (GimpContext *context,
                list;
                list = g_list_next (list))
             {
-              GimpImage *gdisp_gimage;
-
               gdisp = GIMP_OBJECT (list->data);
 
               g_object_get (gdisp, "image", &gdisp_gimage, NULL);
-              g_object_unref (gdisp_gimage);
 
-              if (gdisp_gimage == gimage)
+              if (gdisp_gimage)
                 {
-                  /*  this invokes this function recursively but we don't enter
-                   *  the if(find_display) branch the second time
-                   */
-                  gimp_context_set_display (context, gdisp);
+                  g_object_unref (gdisp_gimage);
 
-                  /*  don't stop signal emission here because the context's
-                   *  image was not changed by the recursive call
-                   */
-                  break;
+                  if (gdisp_gimage == gimage)
+                    {
+                      /*  this invokes this function recursively but we
+                       *  don't enter the if(find_display) branch the
+                       *  second time
+                       */
+                      gimp_context_set_display (context, gdisp);
+
+                      /*  don't stop signal emission here because the
+                       *  context's image was not changed by the
+                       *  recursive call
+                       */
+                      break;
+                    }
                 }
             }
         }
@@ -557,10 +566,12 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
   if (image_dock->auto_follow_active)
     {
       if (gimp_context_get_display (dock->dialog_factory->context))
-        gimp_context_copy_property (dock->dialog_factory->context, dock->context,
+        gimp_context_copy_property (dock->dialog_factory->context,
+                                    dock->context,
                                     GIMP_CONTEXT_PROP_DISPLAY);
       else
-        gimp_context_copy_property (dock->dialog_factory->context, dock->context,
+        gimp_context_copy_property (dock->dialog_factory->context,
+                                    dock->context,
                                     GIMP_CONTEXT_PROP_IMAGE);
     }
 }

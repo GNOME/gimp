@@ -93,6 +93,8 @@ gimp_display_connect (GimpDisplay *gdisp,
 void
 gimp_display_disconnect (GimpDisplay *gdisp)
 {
+  GimpImage *gimage;
+
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gdisp->gimage));
 
@@ -119,8 +121,14 @@ gimp_display_disconnect (GimpDisplay *gdisp)
            G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
 #endif
 
-  g_object_unref (gdisp->gimage);
+  /*  set gdisp->gimage to NULL before unrefing because there may be code
+   *  that listenes for image removals and then iterates the display list
+   *  to find a valid display.
+   */
+  gimage = gdisp->gimage;
   gdisp->gimage = NULL;
+
+  g_object_unref (gimage);
 }
 
 

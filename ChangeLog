@@ -1,5 +1,23 @@
 2003-05-17  Michael Natterer  <mitch@gimp.org>
 
+	Fixed File->Revert, which was completely broken before:
+
+	* app/gui/file-commands.c (file_revert_confirm_callback): set the
+	new image on all GimpContexts which had the old image set.  Unref
+	the new image after the displays are reconnected.
+
+	Added some paranoia code for similar future situations (the
+	functions below were not broken, but affected by the above bug):
+
+	* app/display/gimpdisplay-handlers.c (gimp_display_disconnect):
+	set gdisp->gimage to NULL before unrefing the image.
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_image_changed):
+	unref the gimage pointer returned by g_object_get() only if it is
+	non-NULL. Cleanup.
+
+2003-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_set_filename): treat the empty
 	string as NULL filename. Fixes bug #113179.
 

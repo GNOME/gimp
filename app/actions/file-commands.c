@@ -426,30 +426,48 @@ file_revert_confirm_callback (GtkWidget *widget,
 
   if (revert)
     {
+      Gimp              *gimp;
       GimpImage         *new_gimage;
       const gchar       *uri;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
+      gimp = old_gimage->gimp;
+
       uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
-      new_gimage = file_open_image (old_gimage->gimp,
-				    uri,
-                                    uri,
-				    NULL,
+      new_gimage = file_open_image (gimp, uri, uri, NULL,
 				    GIMP_RUN_INTERACTIVE,
-				    &status,
-                                    &error);
+				    &status, &error);
 
       if (new_gimage)
 	{
+          GList *contexts = NULL;
+          GList *list;
+
+          /*  remember which contexts refer to old_gimage  */
+          for (list = gimp->context_list; list; list = g_list_next (list))
+            {
+              GimpContext *context = list->data;
+
+              if (gimp_context_get_image (context) == old_gimage)
+                contexts = g_list_prepend (contexts, list->data);
+            }
+
 	  gimp_image_undo_free (new_gimage);
-
-	  gimp_displays_reconnect (old_gimage->gimp, old_gimage, new_gimage);
-
+	  gimp_displays_reconnect (gimp, old_gimage, new_gimage);
 	  gimp_image_clean_all (new_gimage);
-
           gimp_image_flush (new_gimage);
+
+          /*  set the new_gimage on the remembered contexts (in reverse
+           *  order, since older contexts are usually the parents of
+           *  newer ones)
+           */
+          g_list_foreach (contexts, (GFunc) gimp_context_set_image, new_gimage);
+          g_list_free (contexts);
+
+          /*  the displays own the image now  */
+          g_object_unref (new_gimage);
 	}
       else if (status != GIMP_PDB_CANCEL)
 	{
