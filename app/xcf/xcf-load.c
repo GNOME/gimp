@@ -757,6 +757,7 @@ xcf_load_layer (XcfInfo   *info,
   gint           type;
   gint           add_floating_sel;
   gchar         *name;
+  GimpText      *text = NULL;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -787,23 +788,11 @@ xcf_load_layer (XcfInfo   *info,
                                       gimp_text_parasite_name ());
   if (parasite)
     {
-      GimpText *text = gimp_text_from_parasite (parasite);
+      text = gimp_text_from_parasite (parasite);
 
       if (text)
-        {
-          gboolean active;
-
-          gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
-                                     gimp_parasite_name (parasite));
-
-          active = (info->active_layer == layer);
-
-          /* convert the layer to a text layer */
-          layer = gimp_text_layer_from_layer (layer, text);
-
-          if (active)
-            info->active_layer = layer;
-        }
+        gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
+                                   gimp_parasite_name (parasite));
     }
   else
     {
@@ -812,20 +801,21 @@ xcf_load_layer (XcfInfo   *info,
                                           gimp_text_gdyntext_parasite_name ());
 
       if (parasite)
-        {
-          GimpText *text = gimp_text_from_gdyntext_parasite (parasite);
+        text = gimp_text_from_gdyntext_parasite (parasite);
+    }
 
-          if (text)
-            {
-              gboolean active = (info->active_layer == layer);
-              
-              /* convert the layer to a text layer */
-              layer = gimp_text_layer_from_layer (layer, text);
-              
-              if (active)
-                info->active_layer = layer;
-            }
-        }
+  /* if there's a text object, convert the layer to a text layer */
+  if (text)
+    {
+      gboolean active   = (info->active_layer == layer);
+      gboolean floating = (info->floating_sel == layer);
+      
+      layer = gimp_text_layer_from_layer (layer, text);
+      
+      if (active)
+        info->active_layer = layer;  
+      if (floating)
+        info->floating_sel = layer;
     }
 
   /* read the hierarchy and layer mask offsets */
@@ -863,12 +853,7 @@ xcf_load_layer (XcfInfo   *info,
 
   /* attach the floating selection... */
   if (add_floating_sel)
-    {
-      GimpLayer *floating_sel;
-
-      floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE (layer));
-    }
+    floating_sel_attach (info->floating_sel, GIMP_DRAWABLE (layer));
 
   return layer;
 

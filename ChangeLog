@@ -1,5 +1,12 @@
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c (splash_create): don't ignore the delete event
+	on the splash screen, but quit gimp immidiately by calling exit().
+
+	* app/xcf/xcf-load.c (xcf_load_layer): reduced code duplication.
+
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/file-commands.c (file_save_cmd_callback): warn if the
 	image has no active drawable instead of silently returning. Not
 	sure if this is correct, but it could help to resolve #116936.

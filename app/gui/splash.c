@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
  
 #include "libgimpbase/gimpbase.h"
@@ -58,8 +60,8 @@ splash_create (gboolean show_image)
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
 
-  g_signal_connect (win_initstatus, "delete_event",
-                    G_CALLBACK (gtk_true), NULL);
+  g_signal_connect_swapped (win_initstatus, "delete_event",
+                            G_CALLBACK (exit), GINT_TO_POINTER (0));
 
   /* we don't want the splash screen to send the startup notification */
   gtk_window_set_auto_startup_notification (FALSE);
