@@ -31,20 +31,20 @@
 #include "gimppreview.h"
 
 
-static void   gimp_container_list_view_class_init   (GimpContainerListViewClass *klass);
-static void   gimp_container_list_view_init         (GimpContainerListView      *panel);
-static void   gimp_container_list_view_destroy      (GtkObject                  *object);
+static void     gimp_container_list_view_class_init   (GimpContainerListViewClass *klass);
+static void     gimp_container_list_view_init         (GimpContainerListView      *panel);
+static void     gimp_container_list_view_destroy      (GtkObject                  *object);
 
-static void   gimp_container_list_view_add_foreach  (GimpViewable               *viewable,
-						     GimpContainerListView      *list_view);
-static void   gimp_container_list_view_add          (GimpContainerListView      *list_view,
-						     GimpViewable               *viewable,
-						     GimpContainer              *container);
-static void   gimp_container_list_view_remove       (GimpContainerListView      *list_view,
-						     GimpViewable               *viewable,
-						     GimpContainer              *container);
-static void   gimp_container_list_view_name_changed (GimpContainerListView      *list_view,
-						     GimpViewable               *viewable);
+static gpointer gimp_container_list_view_insert_item  (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gint                    index);
+static void     gimp_container_list_view_remove_item  (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gpointer                insert_data);
+static void     gimp_container_list_view_clear_items  (GimpContainerView      *view);
+
+static void     gimp_container_list_view_name_changed (GimpContainerListView  *list_view,
+						       GimpViewable           *viewable);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -88,6 +88,10 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
   parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_VIEW);
 
   object_class->destroy = gimp_container_list_view_destroy;
+
+  container_view_class->insert_item  = gimp_container_list_view_insert_item;
+  container_view_class->remove_item  = gimp_container_list_view_remove_item;
+  container_view_class->clear_items   = gimp_container_list_view_clear_items;
 }
 
 static void
@@ -114,8 +118,6 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 
   gtk_widget_show (list_view->gtk_list);
   gtk_widget_show (scrolled_win);
-
-  list_view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
 
 static void
@@ -124,8 +126,6 @@ gimp_container_list_view_destroy (GtkObject *object)
   GimpContainerListView *list_view;
 
   list_view = GIMP_CONTAINER_LIST_VIEW (object);
-
-  g_hash_table_destroy (list_view->hash_table);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -144,37 +144,26 @@ gimp_container_list_view_new (GimpContainer *container)
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
-  view->container = container;
-
-  gimp_container_foreach (container,
-			  (GFunc) gimp_container_list_view_add_foreach,
-			  list_view);
-
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (container), "add",
-					 GTK_SIGNAL_FUNC (gimp_container_list_view_add),
-					 GTK_OBJECT (list_view));
-
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (container), "remove",
-					 GTK_SIGNAL_FUNC (gimp_container_list_view_remove),
-					 GTK_OBJECT (list_view));
+  gimp_container_view_set_container (view, container);
 
   return GTK_WIDGET (list_view);
 }
 
-static void
-gimp_container_list_view_insert (GimpContainerListView *list_view,
-				 GimpViewable          *viewable,
-				 gint                   index)
+static gpointer
+gimp_container_list_view_insert_item (GimpContainerView *view,
+				      GimpViewable      *viewable,
+				      gint               index)
 {
-  GtkWidget *list_item;
-  GtkWidget *hbox;
-  GtkWidget *preview;
-  GtkWidget *label;
-  GList     *list;
+  GimpContainerListView *list_view;
+  GtkWidget             *list_item;
+  GtkWidget             *hbox;
+  GtkWidget             *preview;
+  GtkWidget             *label;
+  GList                 *list;
+
+  list_view = GIMP_CONTAINER_LIST_VIEW (view);
 
   list_item = gtk_list_item_new ();
-
-  g_hash_table_insert (list_view->hash_table, viewable, list_item);
 
   gtk_signal_connect_object_while_alive (GTK_OBJECT (viewable), "name_changed",
 					 GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
@@ -206,36 +195,19 @@ gimp_container_list_view_insert (GimpContainerListView *list_view,
   else
     gtk_list_insert_items (GTK_LIST (list_view->gtk_list), list, index);
 
+  return (gpointer) list_item;
 }
 
 static void
-gimp_container_list_view_add_foreach (GimpViewable          *viewable,
-				      GimpContainerListView *list_view)
+gimp_container_list_view_remove_item (GimpContainerView *view,
+				      GimpViewable      *viewable,
+				      gpointer           insert_data)
 {
-  gimp_container_list_view_insert (list_view, viewable, -1);
-}
+  GimpContainerListView *list_view;
+  GtkWidget             *list_item;
 
-static void
-gimp_container_list_view_add (GimpContainerListView *list_view,
-			      GimpViewable          *viewable,
-			      GimpContainer         *container)
-{
-  gint index;
-
-  index = gimp_container_get_child_index (container,
-					  GIMP_OBJECT (viewable));
-
-  gimp_container_list_view_insert (list_view, viewable, index);
-}
-
-static void
-gimp_container_list_view_remove (GimpContainerListView *list_view,
-				 GimpViewable          *viewable,
-				 GimpContainer         *container)
-{
-  GtkWidget *list_item;
-
-  list_item = g_hash_table_lookup (list_view->hash_table, viewable);
+  list_view = GIMP_CONTAINER_LIST_VIEW (view);
+  list_item = GTK_WIDGET (insert_data);
 
   if (list_item)
     {
@@ -244,9 +216,17 @@ gimp_container_list_view_remove (GimpContainerListView *list_view,
       list = g_list_prepend (NULL, list_item);
 
       gtk_list_remove_items (GTK_LIST (list_view->gtk_list), list);
-
-      g_hash_table_remove (list_view->hash_table, viewable);
     }
+}
+
+static void
+gimp_container_list_view_clear_items (GimpContainerView *view)
+{
+  GimpContainerListView *list_view;
+
+  list_view = GIMP_CONTAINER_LIST_VIEW (view);
+
+  gtk_list_clear_items (GTK_LIST (list_view->gtk_list), 0, -1);
 }
 
 static void
@@ -255,7 +235,8 @@ gimp_container_list_view_name_changed (GimpContainerListView *list_view,
 {
   GtkWidget *list_item;
 
-  list_item = g_hash_table_lookup (list_view->hash_table, viewable);
+  list_item = g_hash_table_lookup (GIMP_CONTAINER_VIEW (list_view)->hash_table,
+				   viewable);
 
   if (list_item)
     {

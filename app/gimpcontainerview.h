@@ -38,15 +38,28 @@ struct _GimpContainerView
   GtkVBox        parent_instance;
 
   GimpContainer *container;
+
+  GHashTable    *hash_table;
 };
 
 struct _GimpContainerViewClass
 {
   GtkVBoxClass  parent_class;
+
+  gpointer (* insert_item) (GimpContainerView *view,
+			    GimpViewable      *object,
+			    gint               index);
+  void     (* remove_item) (GimpContainerView *view,
+			    GimpViewable      *object,
+			    gpointer           insert_data);
+  void     (* clear_items) (GimpContainerView *view);
 };
 
 
-GtkType   gimp_container_view_get_type (void);
+GtkType   gimp_container_view_get_type      (void);
+
+void      gimp_container_view_set_container (GimpContainerView *view,
+					     GimpContainer     *container);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

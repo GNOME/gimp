@@ -37,7 +37,6 @@ struct _GimpContainerListView
   GimpContainerView  parent_instance;
 
   GtkWidget         *gtk_list;
-  GHashTable        *hash_table;  /*  container child --> list item mapping  */
 };
 
 struct _GimpContainerListViewClass

@@ -1,5 +1,14 @@
 2001-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontainerlistview.[ch]
+	* app/gimpcontainerview.[ch]
+	* app/gimpmarshal.[ch]: moved the signal connecting stuff to the
+	GimpContainerViewClass which has virtual functions for insert,
+	remove and clear now which are implemented by the
+	GimpContainerListViewClass.
+
+2001-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpcontainer.[ch]
 	* app/gimplist.[ch]: made the "get_by_name" and the "by_index"
 	access functions methods of the GimpContainerClass. The semantic
