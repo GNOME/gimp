@@ -199,7 +199,7 @@ gimp_param_memsize_get_type (void)
         NULL, NULL, 
         (GClassInitFunc) gimp_param_memsize_class_init, 
         NULL, NULL,
-        sizeof (GParamSpecUInt),
+        sizeof (GParamSpecULong),
         0, NULL, NULL
       };
 

@@ -1,3 +1,8 @@
+2002-12-14  Manish Singh  <yosh@gimp.org>
+
+	* app/config/gimpconfig-params.c (gimp_param_memsize_get_type):
+	size should be from GParamSpecULong, not GParamSpecUInt.
+
 2002-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]
@@ -1505,7 +1510,7 @@
 	buttons again). We have the color dockable which can be always
 	open now and don't need this hack any more.
 
-2002-11-16  Manish Sing  <yosh@gimp.org>
+2002-11-16  Manish Singh  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.c: use g_spawn_async now. If the OS/2 port
 	is still being maintained, there needs to be work done Glib side.
