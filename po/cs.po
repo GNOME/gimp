@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-29 18:56+0100\n"
-"PO-Revision-Date: 2000-01-29 22:52+01:00\n"
+"POT-Creation-Date: 2000-01-31 14:50+0100\n"
+"PO-Revision-Date: 2000-01-31 15:28+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,11 +82,11 @@ msgstr "Konec"
 
 #: app/app_procs.c:748 app/brightness_contrast.c:217 app/channel_ops.c:90
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
-#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:508
+#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:505
 #: app/curves.c:583 app/file_new_dialog.c:198 app/file_new_dialog.c:369
 #: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:369 app/gimpprogress.c:114
-#: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1789
-#: app/gradient.c:4876 app/gradient.c:5437 app/hue_saturation.c:376
+#: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1788
+#: app/gradient.c:4875 app/gradient.c:5436 app/hue_saturation.c:376
 #: app/interface.c:967 app/layers_dialog.c:3325 app/layers_dialog.c:3516
 #: app/layers_dialog.c:3616 app/layers_dialog.c:3718 app/layers_dialog.c:3981
 #: app/levels.c:354 app/palette.c:1852 app/posterize.c:200
@@ -137,7 +137,7 @@ msgstr "Pozadí do prùhlednosti"
 msgid "Custom from Editor"
 msgstr "Vlastní z editoru"
 
-#: app/blend.c:270 app/gradient.c:528 app/preferences_dialog.c:2199
+#: app/blend.c:270 app/gradient.c:527 app/preferences_dialog.c:2199
 msgid "Linear"
 msgstr "Lineární"
 
@@ -255,7 +255,7 @@ msgstr "Jas-kontrast"
 
 #: app/brightness_contrast.c:213 app/channel_ops.c:88
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
-#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:506
+#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:503
 #: app/curves.c:579 app/file_new_dialog.c:196 app/file_new_dialog.c:365
 #: app/gdisplay_color_ui.c:126 app/gimpui.c:77 app/gimpui.c:457
 #: app/hue_saturation.c:372 app/layers_dialog.c:3323 app/layers_dialog.c:3514
@@ -300,7 +300,7 @@ msgstr "Editor stop"
 #: app/color_notebook.c:112 app/color_picker.c:296 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1053 app/devices.c:755
 #: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:367
-#: app/gradient.c:800 app/gradient_select.c:152 app/histogram_tool.c:292
+#: app/gradient.c:799 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
 #: app/palette.c:3179 app/palette_select.c:63 app/pattern_select.c:171
@@ -331,7 +331,7 @@ msgstr "Úhel:"
 msgid "Brush Selection"
 msgstr "Výbìr stopy"
 
-#: app/brush_select.c:277 app/gradient.c:798 app/module_db.c:320
+#: app/brush_select.c:277 app/gradient.c:797 app/module_db.c:320
 #: app/palette.c:2115 app/pattern_select.c:169
 msgid "Refresh"
 msgstr "Zaktualizovat"
@@ -359,7 +359,7 @@ msgstr "Nový"
 msgid "Edit"
 msgstr "Úpravy"
 
-#: app/brush_select.c:479 app/global_edit.c:736 app/gradient.c:1787
+#: app/brush_select.c:479 app/global_edit.c:736 app/gradient.c:1786
 #: app/palette.c:1208 app/palette.c:1850 app/palette.c:2313
 msgid "Delete"
 msgstr "Smazat"
@@ -368,17 +368,15 @@ msgstr "Smazat"
 msgid "Spacing:"
 msgstr "Rozestup:"
 
-#: app/brush_select.c:1790
-msgid ""
-"We are all fresh out of brush editors today,\n"
-"please write your own or try back tomorrow\n"
-msgstr ""
-"Dnes jsme ji¾ v¹ichni vyèerpání editory stop,\n"
-"napi¹te prosím svùj nebo zkuste pøí¹tì\n"
+#. this should never happen
+#: app/brush_select.c:1791
+msgid "Sorry, this brush can't be edited."
+msgstr "Bohu¾el, tento ¹tìtec nelze editovat."
 
-#: app/brush_select.c:1819
-msgid "Wilber says: \"I don't know how to delete that brush.\""
-msgstr "Wilber øíká: \"Nevím, jak smazat tuto stopu.\""
+#. this should never happen
+#: app/brush_select.c:1820
+msgid "Sorry, this brush can't be deleted."
+msgstr "Bohu¾el, tento ¹tìtec nelze smazat."
 
 #: app/bucket_fill.c:146 app/color_picker.c:155 app/tool_options.c:246
 msgid "Sample Merged"
@@ -448,7 +446,7 @@ msgid "copy"
 msgstr "kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1616 app/layer.c:318 app/layer.c:1543
+#: app/channel.c:195 app/gradient.c:1615 app/layer.c:318 app/layer.c:1543
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -775,71 +773,72 @@ msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: app/convert.c:500
+#: app/convert.c:497
 msgid "Indexed Color Conversion"
 msgstr "Pøevod indexované barvy"
 
-#: app/convert.c:519
+#: app/convert.c:516
 msgid "General Palette Options"
 msgstr "Obecné volby palety"
 
-#: app/convert.c:532
-msgid "Generate optimal palette:"
+#: app/convert.c:529
+msgid "Generate Optimal Palette:"
 msgstr "Generovat optimální paletu:"
 
-#: app/convert.c:565
-msgid "# of colors:"
-msgstr "poèet barev:"
+#: app/convert.c:562
+msgid "# of Colors:"
+msgstr "Poèet barev:"
 
-#: app/convert.c:581
-msgid "Use custom palette"
-msgstr "Pou¾ít vlastní palety"
-
-#: app/convert.c:613
-msgid "Use WWW-optimised palette"
-msgstr "Pou¾ít WWW-optimalizované palety"
-
-#: app/convert.c:629
-msgid "Use black/white (1-bit) palette"
-msgstr "Pou¾ít èernobílé (1bitové) palety"
-
-#: app/convert.c:640
-msgid "Dither Options"
-msgstr "Volby rozptylu"
-
-#: app/convert.c:653
-msgid "No colour dithering"
-msgstr "®ádný barevný rozptyl"
-
-#: app/convert.c:667
-msgid "Positioned colour dithering"
-msgstr "Pozièní barevný rozptyl"
-
-#: app/convert.c:681
-msgid "Floyd-Steinberg colour dithering (reduced colour bleeding)"
-msgstr "Floyd-Steinbergùv barevný rozptyl (sní¾ené rozpou¹tìní barev)"
-
-#: app/convert.c:694
-msgid "Floyd-Steinberg colour dithering (normal)"
-msgstr "Floyd-Steinbergùv rozptyl (bì¾ný)"
-
-#: app/convert.c:708
-msgid "Enable dithering of transparency"
-msgstr "Povolit rozptyl prùhlednosti"
-
-#: app/convert.c:718
+#. create the custom_frame here, it'll be added later
+#: app/convert.c:578
 msgid "Custom Palette Options"
 msgstr "Volby vlastní palety"
 
-#: app/convert.c:744
-msgid "Remove unused colours from final palette"
-msgstr "Odstranit nepou¾ité barvy z koneèné palety"
+#: app/convert.c:584
+msgid "Remove Unused Colors from Final Palette"
+msgstr "Odstranit z koneèné palety nepou¾ité barvy"
 
-#: app/convert.c:769
+#: app/convert.c:596
+msgid "Use Custom Palette:"
+msgstr "Pou¾ít vlastní palety:"
+
+#: app/convert.c:630
+msgid "Use WWW-Optimized Palette"
+msgstr "Pou¾ít WWW-optimalizované palety"
+
+#: app/convert.c:646
+msgid "Use Black/White (1-Bit) Palette"
+msgstr "Pou¾ít èernobílé (1bitové) palety"
+
+#: app/convert.c:657
+msgid "Dither Options"
+msgstr "Volby rozptylu"
+
+#: app/convert.c:670
+msgid "No Color Dithering"
+msgstr "®ádný barevný rozptyl"
+
+#: app/convert.c:684
+msgid "Positioned Color Dithering"
+msgstr "Pozièní barevný rozptyl"
+
+#: app/convert.c:698
+msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
+msgstr "Floydùv-Steinbergùv barevný rozptyl (sní¾ený odbìr barev)"
+
+#: app/convert.c:711
+msgid "Floyd-Steinberg Color Dithering (Normal)"
+msgstr "Floydùv-Steinbergùv rozptyl (bì¾ný)"
+
+#: app/convert.c:725
+msgid "Enable Dithering of Transparency"
+msgstr "Povolit rozptyl prùhlednosti"
+
+#: app/convert.c:754
 msgid "[ Warning ]"
 msgstr "[ Varování ]"
 
-#: app/convert.c:779
+#: app/convert.c:764
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -851,7 +850,7 @@ msgstr ""
 "Není vhodné vytváøet paletu z více ne¾ 255 barev, zamý¹líte-li z tohoto "
 "obrázku vytvoøit prùhledný nebo animovaný GIF."
 
-#: app/convert.c:978
+#: app/convert.c:964
 msgid "Select Custom Palette"
 msgstr "Zvolte vlastní paletu"
 
@@ -1684,120 +1683,120 @@ msgstr "Zadejte jméno tohoto bufferu"
 msgid "Copy Named"
 msgstr "Kopírovat pojmenované"
 
-#: app/gradient.c:529
+#: app/gradient.c:528
 msgid "Curved"
 msgstr "Køivkový"
 
-#: app/gradient.c:530
+#: app/gradient.c:529
 msgid "Sinusoidal"
 msgstr "Sinusoidní"
 
-#: app/gradient.c:531
+#: app/gradient.c:530
 msgid "Spherical (increasing)"
 msgstr "Sférický (vzestupný)"
 
-#: app/gradient.c:532
+#: app/gradient.c:531
 msgid "Spherical (decreasing)"
 msgstr "Sférický (sestupný)"
 
-#: app/gradient.c:537
+#: app/gradient.c:536
 msgid "Plain RGB"
 msgstr "Obecné RGB barvy"
 
-#: app/gradient.c:538
+#: app/gradient.c:537
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (odstín proti smìru hodinových ruèièek)"
 
-#: app/gradient.c:539
+#: app/gradient.c:538
 msgid "HSV (clockwise hue)"
 msgstr "HSV (odstín ve smìru hodinových ruèièek)"
 
-#: app/gradient.c:792
+#: app/gradient.c:791
 msgid "Gradient Editor"
 msgstr "Editor pøechodù"
 
-#: app/gradient.c:823 app/gradient_select.c:206 app/paintbrush.c:287
+#: app/gradient.c:822 app/gradient_select.c:206 app/paintbrush.c:287
 #: app/palette.c:3235
 msgid "Gradient"
 msgstr "Pøechod"
 
-#: app/gradient.c:824 app/gradient_select.c:207 app/palette.c:2274
+#: app/gradient.c:823 app/gradient_select.c:207 app/palette.c:2274
 #: app/palette_select.c:83
 msgid "Name"
 msgstr "Jméno"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:869
+#: app/gradient.c:868
 msgid "Gradient Ops"
 msgstr "Práce s pøechody"
 
 #. Buttons for gradient functions
-#: app/gradient.c:877
+#: app/gradient.c:876
 msgid "New Gradient"
 msgstr "Nový pøechod"
 
-#: app/gradient.c:885
+#: app/gradient.c:884
 msgid "Copy Gradient"
 msgstr "Kopírovat pøechod"
 
-#: app/gradient.c:893
+#: app/gradient.c:892
 msgid "Delete Gradient"
 msgstr "Smazat pøechod"
 
-#: app/gradient.c:901
+#: app/gradient.c:900
 msgid "Rename Gradient"
 msgstr "Pøejmenovat pøechod"
 
-#: app/gradient.c:909 app/gradient.c:1889
+#: app/gradient.c:908 app/gradient.c:1888
 msgid "Save as POV-Ray"
 msgstr "Zapsat jako POV-Ray"
 
 #. Zoom all button
-#: app/gradient.c:927
+#: app/gradient.c:926
 msgid "Zoom all"
 msgstr "Zvìt¹it v¹e"
 
-#: app/gradient.c:993
+#: app/gradient.c:992
 msgid "Instant update"
 msgstr "Rychlá aktualizace"
 
-#: app/gradient.c:1128 app/gradient.c:2006
+#: app/gradient.c:1127 app/gradient.c:2005
 msgid "Default"
 msgstr "Implicitní"
 
-#: app/gradient.c:1555
+#: app/gradient.c:1554
 msgid "New gradient"
 msgstr "Nový pøechod"
 
-#: app/gradient.c:1558
+#: app/gradient.c:1557
 msgid "Enter a name for the new gradient"
 msgstr "Zadejte jméno nového pøechodu"
 
-#: app/gradient.c:1559
+#: app/gradient.c:1558
 msgid "untitled"
 msgstr "bez názvu"
 
-#: app/gradient.c:1618
+#: app/gradient.c:1617
 msgid "Copy gradient"
 msgstr "Kopírovat pøechod"
 
-#: app/gradient.c:1621
+#: app/gradient.c:1620
 msgid "Enter a name for the copied gradient"
 msgstr "Zadejte jméno kopie pøechodu"
 
-#: app/gradient.c:1704
+#: app/gradient.c:1703
 msgid "Rename gradient"
 msgstr "Pøejmenovat pøechod"
 
-#: app/gradient.c:1707
+#: app/gradient.c:1706
 msgid "Enter a new name for the gradient"
 msgstr "Zadejte nové jméno pøechodu"
 
-#: app/gradient.c:1781
+#: app/gradient.c:1780
 msgid "Delete gradient"
 msgstr "Smazat pøechod"
 
-#: app/gradient.c:1800 app/palette.c:1863
+#: app/gradient.c:1799 app/palette.c:1863
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -1806,12 +1805,12 @@ msgstr ""
 "Urèitì chcete smazat\n"
 "\"%s\" ze seznamu a z disku?"
 
-#: app/gradient.c:2043
+#: app/gradient.c:2042
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zvìt¹ení: %d:1    Zobrazuje se [%0.6f, %0.6f]"
 
-#: app/gradient.c:2294
+#: app/gradient.c:2293
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1820,30 +1819,30 @@ msgstr ""
 "Poloha: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Krytí: %0.3f"
 
-#: app/gradient.c:2319
+#: app/gradient.c:2318
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Barva popøedí nastavena na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2343
+#: app/gradient.c:2342
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Barva pozadí nastavena na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2649
+#: app/gradient.c:2648
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Táhnutí: posun    Pøeøaïovaè+táhnutí: posun a komprese"
 
-#: app/gradient.c:2651 app/gradient.c:2654
+#: app/gradient.c:2650 app/gradient.c:2653
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr"
 
-#: app/gradient.c:2659
+#: app/gradient.c:2658
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr    Táhnutí: posun"
 
-#: app/gradient.c:2671
+#: app/gradient.c:2670
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1851,176 +1850,176 @@ msgstr ""
 "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr    Táhnutí: posun    "
 "Pøeøaïovaè+táhnutí: posun a komprese"
 
-#: app/gradient.c:2913 app/gradient.c:2922
+#: app/gradient.c:2912 app/gradient.c:2921
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Poloha øídícího bodu: %0.6f"
 
-#: app/gradient.c:2940
+#: app/gradient.c:2939
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Vzdálenost: %0.6f"
 
-#: app/gradient.c:3427 app/gradient.c:4485
+#: app/gradient.c:3426 app/gradient.c:4484
 msgid "Left endpoint's color"
 msgstr "Barva levého koncového bodu"
 
-#: app/gradient.c:3438 app/gradient.c:3480
+#: app/gradient.c:3437 app/gradient.c:3479
 msgid "Load from"
 msgstr "Naèíst..."
 
-#: app/gradient.c:3442
+#: app/gradient.c:3441
 msgid "Left neighbor's right endpoint"
 msgstr "Pravý koncový bod levého souseda"
 
-#: app/gradient.c:3443
+#: app/gradient.c:3442
 msgid "Right endpoint"
 msgstr "Pravý koncový bod"
 
-#: app/gradient.c:3453 app/gradient.c:3495
+#: app/gradient.c:3452 app/gradient.c:3494
 msgid "Save to"
 msgstr "Zapsat jako..."
 
-#: app/gradient.c:3469 app/gradient.c:4563
+#: app/gradient.c:3468 app/gradient.c:4562
 msgid "Right endpoint's color"
 msgstr "Barva pravého koncového bodu"
 
-#: app/gradient.c:3484
+#: app/gradient.c:3483
 msgid "Right neighbor's left endpoint"
 msgstr "Levý koncový bod pravého souseda"
 
-#: app/gradient.c:3485
+#: app/gradient.c:3484
 msgid "Left endpoint"
 msgstr "Levý koncový bod"
 
-#: app/gradient.c:3596
+#: app/gradient.c:3595
 msgid "Selection operations"
 msgstr "Operace výbìru"
 
-#: app/gradient.c:3768
+#: app/gradient.c:3767
 msgid "Blending function for segment"
 msgstr "Funkce mísení pro segment"
 
-#: app/gradient.c:3770
+#: app/gradient.c:3769
 msgid "Coloring type for segment"
 msgstr "Typ vybarvení pro segment"
 
-#: app/gradient.c:3772
+#: app/gradient.c:3771
 msgid "Split segment at midpoint"
 msgstr "Rozdìlit segment ve støedním bodì"
 
-#: app/gradient.c:3774 app/gradient.c:4866
+#: app/gradient.c:3773 app/gradient.c:4865
 msgid "Split segment uniformly"
 msgstr "Rozdìlit segment stejnomìrnì"
 
-#: app/gradient.c:3776
+#: app/gradient.c:3775
 msgid "Delete segment"
 msgstr "Smazat segment"
 
-#: app/gradient.c:3778
+#: app/gradient.c:3777
 msgid "Re-center segment's midpoint"
 msgstr "Pøecentrovat støedový bod segmentu"
 
-#: app/gradient.c:3780
+#: app/gradient.c:3779
 msgid "Re-distribute handles in segment"
 msgstr "Pøerozdìlit øídící body v segmentu"
 
-#: app/gradient.c:3782
+#: app/gradient.c:3781
 msgid "Flip segment"
 msgstr "Pøevrátit segment"
 
-#: app/gradient.c:3784 app/gradient.c:5427
+#: app/gradient.c:3783 app/gradient.c:5426
 msgid "Replicate segment"
 msgstr "Replikovat segment"
 
-#: app/gradient.c:3789
+#: app/gradient.c:3788
 msgid "Blending function for selection"
 msgstr "Funkce mísení pro výbìr"
 
-#: app/gradient.c:3791
+#: app/gradient.c:3790
 msgid "Coloring type for selection"
 msgstr "Typ vybarvení pro výbìr"
 
-#: app/gradient.c:3793
+#: app/gradient.c:3792
 msgid "Split segments at midpoints"
 msgstr "Rozdìlit segmenty ve støedních bodech"
 
-#: app/gradient.c:3795 app/gradient.c:4867
+#: app/gradient.c:3794 app/gradient.c:4866
 msgid "Split segments uniformly"
 msgstr "Rozdìlit segmenty stejnomìrnì"
 
-#: app/gradient.c:3797
+#: app/gradient.c:3796
 msgid "Delete selection"
 msgstr "Smazat výbìr"
 
-#: app/gradient.c:3799
+#: app/gradient.c:3798
 msgid "Re-center midpoints in selection"
 msgstr "Pøecentrovat støedové body ve výbìru"
 
-#: app/gradient.c:3801
+#: app/gradient.c:3800
 msgid "Re-distribute handles in selection"
 msgstr "Pøerozdìlit øídící body ve výbìru"
 
-#: app/gradient.c:3803
+#: app/gradient.c:3802
 msgid "Flip selection"
 msgstr "Pøevrátit výbìr"
 
-#: app/gradient.c:3805 app/gradient.c:5428
+#: app/gradient.c:3804 app/gradient.c:5427
 msgid "Replicate selection"
 msgstr "Replikovat výbìr"
 
-#: app/gradient.c:4089
+#: app/gradient.c:4088
 msgid "FG color"
 msgstr "Barva popøedí"
 
-#: app/gradient.c:4137
+#: app/gradient.c:4136
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4652 app/gradient.c:4722
+#: app/gradient.c:4651 app/gradient.c:4721
 msgid "(Varies)"
 msgstr "(Promìnná)"
 
-#: app/gradient.c:4874
+#: app/gradient.c:4873
 msgid "Split"
 msgstr "Rozdìlit"
 
 #. Instructions
-#: app/gradient.c:4888
+#: app/gradient.c:4887
 msgid "Please select the number of uniform parts"
 msgstr "Prosím zvolte poèet stejných èástí"
 
-#: app/gradient.c:4894
+#: app/gradient.c:4893
 msgid "in which you want to split the selected segment"
 msgstr "na které chcete rozdìlit zvolený segment"
 
-#: app/gradient.c:4895
+#: app/gradient.c:4894
 msgid "in which you want to split the segments in the selection"
 msgstr "na které chcete rozdìlit segmenty ve výbìru"
 
-#: app/gradient.c:5255
+#: app/gradient.c:5254
 msgid "Blend endpoints' colors"
 msgstr "Barvy koncových bodù mísení"
 
-#: app/gradient.c:5267
+#: app/gradient.c:5266
 msgid "Blend endpoints' opacity"
 msgstr "Krytí koncových bodù mísení"
 
-#: app/gradient.c:5435
+#: app/gradient.c:5434
 msgid "Replicate"
 msgstr "Replikovat"
 
 #. Instructions
-#: app/gradient.c:5448
+#: app/gradient.c:5447
 msgid "Please select the number of times"
 msgstr "Prosím vyberte kolikrát"
 
-#: app/gradient.c:5453
+#: app/gradient.c:5452
 msgid "you want to replicate the selected segment"
 msgstr "chcete replikovat zvolený segment"
 
-#: app/gradient.c:5454
+#: app/gradient.c:5453
 msgid "you want to replicate the selection"
 msgstr "chcete replikovat výbìr"
 
@@ -5996,10 +5995,6 @@ msgstr ""
 msgid "Transformation"
 msgstr "Transformace"
 
-#: app/transform_core.c:1586
-msgid "transform_core_paste: layer_new_frome_tiles() failed"
-msgstr "transform_jádro_vlo¾: vrstva_nová_z_dla¾dic() selhalo"
-
 #: app/transform_tool.c:190
 msgid "Transform Tool Options"
 msgstr "Volby transformace"
@@ -6317,11 +6312,11 @@ msgid "Gamma:"
 msgstr "Gama:"
 
 #: modules/colorsel_gtk.c:48
-msgid "GTK colour selector as a pluggable colour selector"
+msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK panel barevného výbìru v modulárním provedení"
 
 #: modules/colorsel_triangle.c:78
-msgid "Painter-style colour selector as a pluggable colour selector"
+msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Výbìr barev na malíøský zpùsob v modulárním provedení"
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
