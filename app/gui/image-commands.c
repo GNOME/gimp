@@ -45,6 +45,7 @@
 
 #include "convert-dialog.h"
 #include "image-commands.h"
+#include "grid-dialog.h"
 #include "resize-dialog.h"
 
 #include "gimp-intl.h"
@@ -293,6 +294,32 @@ image_flatten_image_cmd_callback (GtkWidget *widget,
 
   gimp_image_flatten (gimage);
   gimp_image_flush (gimage);
+}
+
+void
+image_configure_grid_cmd_callback (GtkWidget *widget,
+                                   gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (! shell->grid_dialog)
+    {
+      shell->grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
+
+      gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
+                                    GTK_WINDOW (shell));
+      gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
+                                          TRUE);
+
+      g_object_add_weak_pointer (G_OBJECT (shell->grid_dialog),
+                                 (gpointer *) &shell->grid_dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (shell->grid_dialog));
 }
 
 

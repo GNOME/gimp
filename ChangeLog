@@ -1,5 +1,19 @@
 2003-07-27  Henrik Brix Andersen  <brix@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): moved Configure Grid
+	entry to the <Image>/Image branch
+
+	* app/gui/view-commands.[ch] (view_configure_grid_cmd_callback):
+	removed function
+
+	* app/gui/image-commands.[ch] (image_configure_grid_cmd_callback):
+	added function here
+
+	* app/gui/grid-dialog.c: removed snap and show options from the
+	dialog
+
+2003-07-27  Henrik Brix Andersen  <brix@gimp.org>
+
 	* app/base/tile-swap.c: re-added fallback definitions for
 	_O_BINARY and _O_TEMPORARY
 

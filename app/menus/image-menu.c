@@ -433,10 +433,6 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/View/---"),
 
-  { { N_("/View/Configure G_rid..."), NULL,
-      view_configure_grid_cmd_callback, 0, NULL },
-    NULL,
-    "view/configure_grid.html", NULL },
   { { N_("/View/S_how Grid"), NULL,
       view_toggle_grid_cmd_callback, 0, "<ToggleItem>" },
     NULL,
@@ -570,6 +566,13 @@ GimpItemFactoryEntry image_menu_entries[] =
       image_flatten_image_cmd_callback, 0 },
     NULL,
     "layers/flatten_image.html", NULL },
+
+  MENU_SEPARATOR ("/Image/---"),
+
+  { { N_("/Image/Configure G_rid..."), NULL,
+      image_configure_grid_cmd_callback, 0, NULL },
+    NULL,
+    "image/dialogs/configure_grid.html", NULL },
 
   /*  <Image>/Layer  */
 

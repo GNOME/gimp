@@ -37,7 +37,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
 
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimppropwidgets.h"
@@ -77,17 +76,11 @@ grid_dialog_new (GimpDisplay *gdisp)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *type;
   GtkWidget *color_button;
   GtkWidget *sizeentry;
-  GtkWidget *show_button;
-  GtkWidget *snap_button;
-
-  gboolean   show_grid;
-  gboolean   snap_to_grid;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
@@ -105,7 +98,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
                                      gimp_standard_help_func,
                                      "dialogs/configure_grid.html",
-                                     
+
                                      GIMP_STOCK_RESET, reset_callback,
                                      NULL, NULL, NULL, FALSE, FALSE,
 
@@ -126,29 +119,6 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
 		     main_vbox);
 
-  /* misc options */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-
-  show_button = gtk_check_button_new_with_mnemonic (_("S_how Grid"));
-  gtk_box_pack_start (GTK_BOX (vbox), show_button, FALSE, FALSE, 0);
-
-  show_grid = gimp_display_shell_get_show_grid (GIMP_DISPLAY_SHELL (shell));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (show_button),
-                                show_grid);
-  gtk_widget_show (show_button);
- 
-  snap_button = gtk_check_button_new_with_mnemonic (_("S_nap to Grid"));
-  gtk_box_pack_start (GTK_BOX (vbox), snap_button, FALSE, FALSE, 0);
-
-  snap_to_grid = gimp_display_shell_get_snap_to_grid (GIMP_DISPLAY_SHELL (shell));
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (snap_button),
-                                snap_to_grid);
-  gtk_widget_show (snap_button);
-  gtk_widget_show (vbox);
-
   /* the appearance frame */
   frame = gtk_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -159,7 +129,7 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  
+
   type = gimp_prop_enum_option_menu_new (G_OBJECT (grid), "type",
                                          GIMP_GRID_TYPE_INTERSECTION,
                                          GIMP_GRID_TYPE_SOLID);
@@ -288,9 +258,6 @@ grid_dialog_new (GimpDisplay *gdisp)
   g_object_set_data_full (G_OBJECT (dialog), "grid", grid,
                           (GDestroyNotify) g_object_unref);
 
-  g_object_set_data (G_OBJECT (dialog), "show-button", show_button);
-  g_object_set_data (G_OBJECT (dialog), "snap-button", snap_button);
-
   return dialog;
 }
 
@@ -307,16 +274,10 @@ reset_callback (GtkWidget  *widget,
   GimpGrid         *grid_orig;
   GimpGrid         *grid;
   GimpUnit          unit_orig;
-  GtkWidget        *show_button;
-  GtkWidget        *snap_button;
-  gboolean          show_grid;
-  gboolean          snap_to_grid;
 
   gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   shell       = g_object_get_data (G_OBJECT (dialog), "shell");
-  show_button = g_object_get_data (G_OBJECT (dialog), "show-button");
-  snap_button = g_object_get_data (G_OBJECT (dialog), "snap-button");
 
   grid_orig   = gimp_image_get_grid (GIMP_IMAGE (gimage));
   unit_orig   = gimp_image_get_unit (GIMP_IMAGE (gimage));
@@ -340,14 +301,6 @@ reset_callback (GtkWidget  *widget,
 
       g_object_thaw_notify (G_OBJECT (grid));
     }
-
-  show_grid = gimp_display_shell_get_show_grid (GIMP_DISPLAY_SHELL (shell));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (show_button),
-                                show_grid);
-
-  snap_to_grid = gimp_display_shell_get_snap_to_grid (GIMP_DISPLAY_SHELL (shell));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (snap_button),
-                                snap_to_grid);
 }
 
 static void
@@ -356,7 +309,7 @@ remove_callback (GtkWidget  *widget,
 {
   GimpImage        *gimage;
   GimpDisplayShell *shell;
-  
+
   gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
   shell  = g_object_get_data (G_OBJECT (dialog), "shell");
 
@@ -381,28 +334,16 @@ ok_callback (GtkWidget  *widget,
   GimpDisplayShell *shell;
   GimpGrid         *grid;
   GimpGrid         *grid_orig;
-  GtkWidget        *show_button;
-  GtkWidget        *snap_button;
-  gboolean          show_grid;
-  gboolean          snap_to_grid;
 
   gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   shell       = g_object_get_data (G_OBJECT (dialog), "shell");
-  show_button = g_object_get_data (G_OBJECT (dialog), "show-button");
-  snap_button = g_object_get_data (G_OBJECT (dialog), "snap-button");
 
   grid_orig   = gimp_image_get_grid (GIMP_IMAGE (gimage));
 
   if (grid_orig == NULL || ! gimp_config_is_equal_to (G_OBJECT (grid_orig),
                                                       G_OBJECT (grid)))
     gimp_image_set_grid (GIMP_IMAGE (gimage), grid, TRUE);
-
-  show_grid = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (show_button));
-  gimp_display_shell_set_show_grid (GIMP_DISPLAY_SHELL (shell), show_grid);
-
-  snap_to_grid = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (snap_button));
-  gimp_display_shell_set_snap_to_grid (GIMP_DISPLAY_SHELL (shell), snap_to_grid);
 
   gtk_widget_destroy (dialog);
 }

@@ -42,7 +42,6 @@
 #include "dialogs.h"
 #include "info-dialog.h"
 #include "info-window.h"
-#include "grid-dialog.h"
 #include "view-commands.h"
 
 
@@ -349,32 +348,6 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
                                     "/View/Snap to Guides",
                                     shell->snap_to_guides);
     }
-}
-
-void
-view_configure_grid_cmd_callback (GtkWidget *widget,
-                                  gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  return_if_no_display (gdisp, data);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if (! shell->grid_dialog)
-    {
-      shell->grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
-
-      gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
-                                    GTK_WINDOW (shell));
-      gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
-                                          TRUE);
-
-      g_object_add_weak_pointer (G_OBJECT (shell->grid_dialog),
-                                 (gpointer *) &shell->grid_dialog);
-    }
-
-  gtk_window_present (GTK_WINDOW (shell->grid_dialog));
 }
 
 

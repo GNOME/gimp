@@ -59,8 +59,6 @@ void   view_snap_to_guides_cmd_callback        (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_grid_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
-void   view_configure_grid_cmd_callback        (GtkWidget *widget,
-                                                gpointer   data);
 void   view_snap_to_grid_cmd_callback          (GtkWidget *widget,
                                                 gpointer   data);
 void   view_new_view_cmd_callback              (GtkWidget *widget,
