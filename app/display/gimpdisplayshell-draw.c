@@ -1427,17 +1427,17 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
     {
       switch (grid->type)
         {
-        case GIMP_GRID_TYPE_ON_OFF_DASH:
+        case GIMP_GRID_ON_OFF_DASH:
           values.line_style = GDK_LINE_ON_OFF_DASH;
           break;
 
-        case GIMP_GRID_TYPE_DOUBLE_DASH:
+        case GIMP_GRID_DOUBLE_DASH:
           values.line_style = GDK_LINE_DOUBLE_DASH;
           break;
 
-        case GIMP_GRID_TYPE_DOTS:
-        case GIMP_GRID_TYPE_INTERSECTIONS:
-        case GIMP_GRID_TYPE_SOLID:
+        case GIMP_GRID_DOTS:
+        case GIMP_GRID_INTERSECTIONS:
+        case GIMP_GRID_SOLID:
           values.line_style = GDK_LINE_SOLID;
           break;
         }
@@ -1468,7 +1468,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
       switch (grid->type)
         {
-        case GIMP_GRID_TYPE_DOTS:
+        case GIMP_GRID_DOTS:
           for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
               for (y = grid->yoffset; y <= height; y += grid->yspacing)
@@ -1487,7 +1487,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
             }
           break;
 
-        case GIMP_GRID_TYPE_INTERSECTIONS:
+        case GIMP_GRID_INTERSECTIONS:
           for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
               for (y = grid->yoffset; y <= height; y += grid->yspacing)
@@ -1516,9 +1516,9 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
             }
           break;
 
-        case GIMP_GRID_TYPE_ON_OFF_DASH:
-        case GIMP_GRID_TYPE_DOUBLE_DASH:
-        case GIMP_GRID_TYPE_SOLID:
+        case GIMP_GRID_ON_OFF_DASH:
+        case GIMP_GRID_DOUBLE_DASH:
+        case GIMP_GRID_SOLID:
           for (x = grid->xoffset; x < width; x += grid->xspacing)
             {
               gimp_display_shell_transform_xy (shell,

@@ -152,8 +152,7 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   type = gimp_prop_enum_option_menu_new (G_OBJECT (grid), "type",
-                                         GIMP_GRID_TYPE_DOTS,
-                                         GIMP_GRID_TYPE_SOLID);
+                                         GIMP_GRID_DOTS, GIMP_GRID_SOLID);
   g_signal_connect (type, "changed",
                     G_CALLBACK (grid_changed_cb),
                     gimage);

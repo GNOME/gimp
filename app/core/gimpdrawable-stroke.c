@@ -56,8 +56,8 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
                               GimpRGB              *color,
                               GimpLayerModeEffects  paint_mode,
                               gdouble               width,
-                              GimpJoinType          jointype,
-                              GimpCapType           captype,
+                              GimpJoinStyle         join,
+                              GimpCapStyle          cap,
                               gboolean              antialias)
 {
   GimpScanConvert *scan_convert;
@@ -69,15 +69,15 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   guchar           ucolor[4] = { 255, 127, 0, 255 };
   guchar           bg[1] = { 0, };
   PixelRegion      maskPR, basePR;
-  
+
   /* what area do we operate on? */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  
+
   w = x2 - x1;
   h = y2 - y1;
 
   scan_convert = gimp_scan_convert_new (w, h, antialias ? 1 : 0);
-  
+
   /* For each Stroke in the vector, interpolate it, and add it to the
    * ScanConvert */
   for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
@@ -96,14 +96,14 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
       if (coords && coords->len)
         {
           points = g_new0 (GimpVector2, coords->len);
-      
+
           for (i = 0; i < coords->len; i++)
             {
               points[i].x = g_array_index (coords, GimpCoords, i).x;
               points[i].y = g_array_index (coords, GimpCoords, i).y;
               num_coords++;
             }
-      
+
           gimp_scan_convert_add_polyline (scan_convert, coords->len,
                                           points, closed);
 
@@ -117,7 +117,7 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
       return;
     }
 
-  gimp_scan_convert_stroke (scan_convert, jointype, captype, width);
+  gimp_scan_convert_stroke (scan_convert, join, cap, width);
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape
    * of the stroke. */
@@ -125,10 +125,10 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   tile_manager_set_offsets (mask, x1, y1);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
   color_region (&maskPR, bg);
-  
+
   /* render the stroke into it */
   gimp_scan_convert_render (scan_convert, mask);
-  
+
   gimp_scan_convert_free (scan_convert);
 
   bytes = drawable->bytes;

@@ -1,3 +1,16 @@
+2003-09-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: renamed new enums to use "style" instead
+	of the overloaded term "type". Also renamed GimpGridType while I was
+	on it.
+
+	* app/core/gimpdrawable-stroke.[ch]
+	* app/core/gimpgrid.[ch]
+	* app/core/gimpscanconvert.[ch]
+	* app/display/gimpdisplayshell.c
+	* app/vectors/gimpvectors.c
+	* app/gui/grid-dialog.c: changed accordingly.
+
 2003-09-21  Simon Budig  <simon@gimp.org>
             Dave Neary  <bolsh@gimp.org>
 

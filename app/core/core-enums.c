@@ -232,29 +232,29 @@ gimp_gradient_type_get_type (void)
 }
 
 
-static const GEnumValue gimp_grid_type_enum_values[] =
+static const GEnumValue gimp_grid_style_enum_values[] =
 {
-  { GIMP_GRID_TYPE_DOTS, N_("Intersections (dots)"), "dots" },
-  { GIMP_GRID_TYPE_INTERSECTIONS, N_("Intersections (crosshairs)"), "intersections" },
-  { GIMP_GRID_TYPE_ON_OFF_DASH, N_("Dashed"), "on-off-dash" },
-  { GIMP_GRID_TYPE_DOUBLE_DASH, N_("Double Dashed"), "double-dash" },
-  { GIMP_GRID_TYPE_SOLID, N_("Solid"), "solid" },
+  { GIMP_GRID_DOTS, N_("Intersections (dots)"), "dots" },
+  { GIMP_GRID_INTERSECTIONS, N_("Intersections (crosshairs)"), "intersections" },
+  { GIMP_GRID_ON_OFF_DASH, N_("Dashed"), "on-off-dash" },
+  { GIMP_GRID_DOUBLE_DASH, N_("Double Dashed"), "double-dash" },
+  { GIMP_GRID_SOLID, N_("Solid"), "solid" },
   { 0, NULL, NULL }
 };
 
 GType
-gimp_grid_type_get_type (void)
+gimp_grid_style_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpGridType", gimp_grid_type_enum_values);
+    enum_type = g_enum_register_static ("GimpGridStyle", gimp_grid_style_enum_values);
 
   return enum_type;
 }
 
 
-static const GEnumValue gimp_join_type_enum_values[] =
+static const GEnumValue gimp_join_style_enum_values[] =
 {
   { GIMP_JOIN_MITER, N_("Miter"), "miter" },
   { GIMP_JOIN_ROUND, N_("Round"), "round" },
@@ -263,18 +263,18 @@ static const GEnumValue gimp_join_type_enum_values[] =
 };
 
 GType
-gimp_join_type_get_type (void)
+gimp_join_style_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpJoinType", gimp_join_type_enum_values);
+    enum_type = g_enum_register_static ("GimpJoinStyle", gimp_join_style_enum_values);
 
   return enum_type;
 }
 
 
-static const GEnumValue gimp_cap_type_enum_values[] =
+static const GEnumValue gimp_cap_style_enum_values[] =
 {
   { GIMP_CAP_BUTT, N_("Butt"), "butt" },
   { GIMP_CAP_ROUND, N_("Round"), "round" },
@@ -283,12 +283,12 @@ static const GEnumValue gimp_cap_type_enum_values[] =
 };
 
 GType
-gimp_cap_type_get_type (void)
+gimp_cap_style_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpCapType", gimp_cap_type_enum_values);
+    enum_type = g_enum_register_static ("GimpCapStyle", gimp_cap_style_enum_values);
 
   return enum_type;
 }

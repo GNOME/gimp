@@ -210,14 +210,14 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_stroke (GimpScanConvert *sc, 
-                          GimpJoinType     join,
-                          GimpCapType      cap,
+gimp_scan_convert_stroke (GimpScanConvert *sc,
+                          GimpJoinStyle    join,
+                          GimpCapStyle     cap,
                           gdouble          width)
 {
   ArtSVP                *stroke;
-  ArtPathStrokeJoinType  artjoin;
-  ArtPathStrokeCapType   artcap;
+  ArtPathStrokeJoinType  artjoin = 0;
+  ArtPathStrokeCapType   artcap  = 0;
 
   g_return_if_fail (sc->svp == NULL);
 
@@ -249,7 +249,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
 
   stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
                                  width, 10.0, 1.0);
-  
+
   sc->svp = stroke;
 }
 
@@ -278,24 +278,24 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
  *
  * You cannot add additional polygons after this command.
  */
-void 
+void
 gimp_scan_convert_render (GimpScanConvert *sc,
                           TileManager     *tile_manager)
 {
   PixelRegion  maskPR;
-  gpointer     pr;  
+  gpointer     pr;
 
   gint         i, j, x0, y0;
   guchar      *dest, *d;
-  
+
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
-  
+
   gimp_scan_convert_finish (sc);
 
   tile_manager_get_offsets (tile_manager, &x0, &y0);
 
-  pixel_region_init (&maskPR, tile_manager, 0, 0, 
+  pixel_region_init (&maskPR, tile_manager, 0, 0,
                      tile_manager_width (tile_manager),
                      tile_manager_height (tile_manager),
                      TRUE);
@@ -336,7 +336,7 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 /* private function to convert the vpath to a svp when not using
  * gimp_scan_convert_stroke
  */
-static void 
+static void
 gimp_scan_convert_finish (GimpScanConvert *sc)
 {
   ArtVpath    *pert_vpath;
@@ -346,7 +346,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
 
   /* gimp_scan_convert_stroke (sc, GIMP_JOIN_MITER, GIMP_CAP_BUTT, 15.0);
    */
-  
+
   if (sc->svp)
     return;   /* We already have a valid SVP */
 
@@ -388,7 +388,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
 
   svp2 = art_svp_uncross (svp);
   art_free (svp);
-  
+
   svp = art_svp_rewind_uncrossed (svp2, ART_WIND_RULE_ODDEVEN);
   art_free (svp2);
 

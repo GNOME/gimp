@@ -60,12 +60,12 @@ void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
  */
 
 void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
-                                                GimpJoinType     join,
-                                                GimpCapType      cap,
+                                                GimpJoinStyle    join,
+                                                GimpCapStyle     cap,
                                                 gdouble          width);
 
 /* Return a new Channel according to the polygonal shapes defined with
- * the commands above. 
+ * the commands above.
  *
  * You cannot add additional polygons after this command.
  */

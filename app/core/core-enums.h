@@ -181,42 +181,42 @@ typedef enum
 } GimpGradientType;
 
 
-#define GIMP_TYPE_GRID_TYPE (gimp_grid_type_get_type ())
+#define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
 
-GType gimp_grid_type_get_type (void) G_GNUC_CONST;
+GType gimp_grid_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_GRID_TYPE_DOTS,           /*< desc="Intersections (dots)"       >*/
-  GIMP_GRID_TYPE_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
-  GIMP_GRID_TYPE_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
-  GIMP_GRID_TYPE_DOUBLE_DASH,    /*< desc="Double Dashed"              >*/
-  GIMP_GRID_TYPE_SOLID           /*< desc="Solid"                      >*/
-} GimpGridType;
+  GIMP_GRID_DOTS,           /*< desc="Intersections (dots)"       >*/
+  GIMP_GRID_INTERSECTIONS,  /*< desc="Intersections (crosshairs)" >*/
+  GIMP_GRID_ON_OFF_DASH,    /*< desc="Dashed"                     >*/
+  GIMP_GRID_DOUBLE_DASH,    /*< desc="Double Dashed"              >*/
+  GIMP_GRID_SOLID           /*< desc="Solid"                      >*/
+} GimpGridStyle;
 
 
-#define GIMP_TYPE_JOIN_TYPE (gimp_join_type_get_type ())
+#define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
 
-GType gimp_join_type_get_type (void) G_GNUC_CONST;
+GType gimp_join_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
   GIMP_JOIN_MITER,  /*< desc="Miter" >*/
   GIMP_JOIN_ROUND,  /*< desc="Round" >*/
   GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
-} GimpJoinType;
+} GimpJoinStyle;
 
 
-#define GIMP_TYPE_CAP_TYPE (gimp_cap_type_get_type ())
+#define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
 
-GType gimp_cap_type_get_type (void) G_GNUC_CONST;
+GType gimp_cap_style_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
   GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
   GIMP_CAP_ROUND,  /*< desc="Round"  >*/
   GIMP_CAP_SQUARE  /*< desc="Square" >*/
-} GimpCapType;
+} GimpCapStyle;
 
 
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())

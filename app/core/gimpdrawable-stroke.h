@@ -29,8 +29,8 @@ void gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
                                    GimpRGB              *color,
                                    GimpLayerModeEffects  paint_mode,
                                    gdouble               width,
-                                   GimpJoinType          jointype,
-                                   GimpCapType           captype,
+                                   GimpJoinStyle         join,
+                                   GimpCapStyle          cap,
                                    gboolean              antialias);
 
 #endif  /*  __GIMP_DRAWABLE_STROKE_H__  */

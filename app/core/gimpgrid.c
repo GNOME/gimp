@@ -156,8 +156,8 @@ gimp_grid_class_init (GimpGridClass *klass)
 				  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TYPE,
                                  "type", NULL,
-                                 GIMP_TYPE_GRID_TYPE,
-                                 GIMP_GRID_TYPE_INTERSECTIONS,
+                                 GIMP_TYPE_GRID_STYLE,
+                                 GIMP_GRID_INTERSECTIONS,
                                  0);
 }
 

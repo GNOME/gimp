@@ -40,15 +40,15 @@ struct _GimpGrid
 {
   GimpObject    parent_instance;
 
-  gdouble       xspacing;
-  gdouble       yspacing;
-  GimpUnit      spacing_unit;
-  gdouble       xoffset;
-  gdouble       yoffset;
-  GimpUnit      offset_unit;
-  GimpRGB       fgcolor;
-  GimpRGB       bgcolor;
-  GimpGridType  type;
+  gdouble        xspacing;
+  gdouble        yspacing;
+  GimpUnit       spacing_unit;
+  gdouble        xoffset;
+  gdouble        yoffset;
+  GimpUnit       offset_unit;
+  GimpRGB        fgcolor;
+  GimpRGB        bgcolor;
+  GimpGridStyle  type;
 };
 
 

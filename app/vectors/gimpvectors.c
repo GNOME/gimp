@@ -542,10 +542,8 @@ gimp_vectors_stroke (GimpItem      *item,
                      GimpDrawable  *drawable,
                      GimpPaintInfo *paint_info)
 {
-  GimpVectors   *vectors;
-  GimpPaintCore *core;
-  gboolean       retval;
-  GimpRGB        color;
+  GimpVectors *vectors;
+  gboolean     retval;
 
   vectors = GIMP_VECTORS (item);
 
@@ -556,20 +554,26 @@ gimp_vectors_stroke (GimpItem      *item,
     }
 
 #ifdef LIBART_STROKE
-  gimp_rgba_set (&color, 0.0, 0.7, 0.5, 1.0);
+  {
+    GimpRGB  color;
 
-  gimp_drawable_stroke_vectors (drawable, vectors, 0.5, &color,
-                                GIMP_NORMAL_MODE, 15, GIMP_JOIN_MITER,
-                                GIMP_CAP_SQUARE, TRUE);
-  retval = TRUE;
+    gimp_rgba_set (&color, 0.0, 0.7, 0.5, 1.0);
+
+    gimp_drawable_stroke_vectors (drawable, vectors, 0.5, &color,
+                                  GIMP_NORMAL_MODE, 15,
+                                  GIMP_JOIN_MITER, GIMP_CAP_SQUARE, TRUE);
+    retval = TRUE;
+  }
 #else
-  core = g_object_new (paint_info->paint_type, NULL);
+  {
+    GimpPaintCore *core = g_object_new (paint_info->paint_type, NULL);
 
-  retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                           paint_info->paint_options,
-                                           vectors);
+    retval = gimp_paint_core_stroke_vectors (core, drawable,
+                                             paint_info->paint_options,
+                                             vectors);
 
-  g_object_unref (core);
+    g_object_unref (core);
+  }
 #endif
 
   return retval;
