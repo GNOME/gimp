@@ -1830,20 +1830,15 @@ undo_pop_layer_mod (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   lmu_ptr)
 {
-  LayerModUndo *lmu;
-  gint          layer_type;
-  gint          offset_x, offset_y;
-  TileManager  *tiles;
-  TileManager  *temp;
-  GimpLayer    *layer;
-  gboolean      old_has_alpha;
+  LayerModUndo  *lmu;
+  GimpImageType  layer_type;
+  gint           offset_x, offset_y;
+  TileManager   *tiles;
+  GimpLayer     *layer;
 
   lmu = (LayerModUndo *) lmu_ptr;
 
-  layer    = lmu->layer;
-  tiles    = lmu->tiles;
-  offset_x = lmu->offset_x;
-  offset_y = lmu->offset_y;
+  layer = lmu->layer;
 
   /*  Issue the first update  */
   gimp_image_update (gimage,
@@ -1852,18 +1847,16 @@ undo_pop_layer_mod (GimpImage *gimage,
                      GIMP_DRAWABLE (layer)->width,
                      GIMP_DRAWABLE (layer)->height);
 
-  /*  Create a tile manager to store the current layer contents  */
-  temp       = GIMP_DRAWABLE (layer)->tiles;
-  
+  tiles      = lmu->tiles;
+  layer_type = lmu->type;
+  offset_x   = lmu->offset_x;
+  offset_y   = lmu->offset_y;
+
+  lmu->tiles    = GIMP_DRAWABLE (layer)->tiles;
+  lmu->type     = GIMP_DRAWABLE (layer)->type;
   lmu->offset_x = GIMP_DRAWABLE (layer)->offset_x;
   lmu->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
-  layer_type = lmu->type;
-  lmu->type = GIMP_DRAWABLE (layer)->type;
-
-  old_has_alpha = GIMP_DRAWABLE (layer)->has_alpha;
-
-  /*  restore the layer's data  */
   GIMP_DRAWABLE (layer)->tiles     = tiles;
   GIMP_DRAWABLE (layer)->width     = tile_manager_width (tiles);
   GIMP_DRAWABLE (layer)->height    = tile_manager_height (tiles);
@@ -1872,20 +1865,25 @@ undo_pop_layer_mod (GimpImage *gimage,
   GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type);
   GIMP_DRAWABLE (layer)->offset_x  = offset_x;
   GIMP_DRAWABLE (layer)->offset_y  = offset_y;
+
   if (layer->mask) 
     {
       GIMP_DRAWABLE (layer->mask)->offset_x = offset_x;
       GIMP_DRAWABLE (layer->mask)->offset_y = offset_y;
     }
 
-  if (GIMP_DRAWABLE (layer)->has_alpha != old_has_alpha &&
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type) !=
+      GIMP_IMAGE_TYPE_HAS_ALPHA (lmu->type) &&
       GIMP_ITEM (layer)->gimage->layers->num_children == 1)
     {
       gimp_image_alpha_changed (GIMP_ITEM (layer)->gimage);
     }
 
-  /*  Set the new tile manager  */
-  lmu->tiles = temp;
+  if (GIMP_DRAWABLE (layer)->width  != tile_manager_width (lmu->tiles) ||
+      GIMP_DRAWABLE (layer)->height != tile_manager_height (lmu->tiles))
+    {
+      gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
+    }
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -2416,13 +2414,11 @@ undo_pop_channel_mod (GimpImage *gimage,
 {
   ChannelModUndo *cmu;
   TileManager    *tiles;
-  TileManager    *temp;
   GimpChannel    *channel;
 
   cmu = (ChannelModUndo *) cmu_ptr;
 
   channel = cmu->channel;
-  tiles   = cmu->tiles;
 
   /*  Issue the first update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -2430,15 +2426,20 @@ undo_pop_channel_mod (GimpImage *gimage,
 			GIMP_DRAWABLE (channel)->width,
 			GIMP_DRAWABLE (channel)->height);
 
-  temp = GIMP_DRAWABLE (channel)->tiles;
+  tiles = cmu->tiles;
+
+  cmu->tiles = GIMP_DRAWABLE (channel)->tiles;
 
   GIMP_DRAWABLE (channel)->tiles       = tiles;
   GIMP_DRAWABLE (channel)->width       = tile_manager_width (tiles);
   GIMP_DRAWABLE (channel)->height      = tile_manager_height (tiles);
   GIMP_CHANNEL (channel)->bounds_known = FALSE; 
 
-  /*  Set the new buffer  */
-  cmu->tiles = temp;
+  if (GIMP_DRAWABLE (channel)->width  != tile_manager_width (cmu->tiles) ||
+      GIMP_DRAWABLE (channel)->height != tile_manager_height (cmu->tiles))
+    {
+      gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
+    }
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),

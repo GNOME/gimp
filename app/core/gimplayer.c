@@ -1010,6 +1010,8 @@ gimp_layer_scale_lowlevel (GimpLayer             *layer,
 			0, 0,
 			GIMP_DRAWABLE (layer)->width, 
 			GIMP_DRAWABLE (layer)->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
 }
 
 /**
@@ -1297,6 +1299,8 @@ gimp_layer_resize (GimpLayer *layer,
 			0, 0,
 			GIMP_DRAWABLE (layer)->width,
 			GIMP_DRAWABLE (layer)->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
 }
 
 void

@@ -680,8 +680,12 @@ gimp_image_size_changed (GimpViewable *viewable)
 
   gimage = GIMP_IMAGE (viewable);
 
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_image_invalidate_channel_previews (gimage);
+  gimp_container_foreach (gimage->layers, 
+			  (GFunc) gimp_viewable_size_changed,
+			  NULL);
+  gimp_container_foreach (gimage->channels,
+			  (GFunc) gimp_viewable_size_changed,
+			  NULL);
 }
 
 static TempBuf *

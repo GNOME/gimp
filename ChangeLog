@@ -1,3 +1,19 @@
+2003-01-29  Michael Natterer  <mitch@gimp.org>
+
+	Fixed bug #97449:
+
+	* app/core/gimpchannel.c (gimp_channel_scale,resize)
+	* app/core/gimplayer.c (gimp_layer_scale,resize)
+	* app/undo.c (undo_pop_layer_mod,channel_mod): emit "size_changed"
+	whenever the size has changed. Cleaned up the two undo_pop
+	functions.
+
+	* app/core/gimpimage.c (gimp_image_size_changed): emit
+	"size_changed" on all layers/channels so their previews are
+	updated correctly on image resize and image resize undo. Don't
+	invalidate layers/channels previews here because it's the
+	layers'/channels' job to invalidate themselves if needed.
+
 2003-01-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.[ch]: removed unused function

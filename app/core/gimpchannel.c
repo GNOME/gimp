@@ -383,6 +383,8 @@ gimp_channel_scale (GimpChannel           *channel,
 			0, 0,
 			GIMP_DRAWABLE (channel)->width,
 			GIMP_DRAWABLE (channel)->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
 }
 
 void
@@ -487,6 +489,8 @@ gimp_channel_resize (GimpChannel *channel,
 			0, 0,
 			GIMP_DRAWABLE (channel)->width,
 			GIMP_DRAWABLE (channel)->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
 }
 
 
