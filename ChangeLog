@@ -1,3 +1,9 @@
+Sat Apr 15 15:10:39 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* autogen.sh: tightened the regexs for build tool sanity checks
+
+	* configure.in: more gtkxmhtml lib fixes (blargh)
+
 2000-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay_ops.c (gdisplay_shrink_wrap): after resizing the

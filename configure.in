@@ -404,6 +404,47 @@ if test "$have_glib_inline" = "no"; then
   AC_C_INLINE
 fi  
 
+dnl This is for the help browser
+AC_PATH_PROG(GNOME_CONFIG,gnome-config,no)
+if test "$GNOME_CONFIG" = "no"; then
+  dnl Test for standalone GtkXMHTML widget
+  HELPBROWSER=
+  if test -n "$LIBPNG" && test -n "$LIBJPEG" && test -n "$LIBXPM"; then
+    helpbrowser_save_LIBS=$LIBS
+    LIBS="$LIBS $LIBPNG $LIBJPEG $LIBXPM"
+    AC_CHECK_LIB(gtkxmhtml, gtk_xmhtml_new,
+      GTKXMHTML_CFLAGS=$GTK_CFLAGS
+      GTKXMHTML_LIBS="-lgtkxmhtml $GTK_LIBS $LIBPNG $LIBJPEG $LIBXPM"
+      HELPBROWSER=helpbrowser,
+      AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML library not found) ***))
+    LIBS=$helpbrowser_save_LIBS
+  else
+    AC_MSG_WARN(*** Help browser plug-in will not be built (PNG, JPEG or XPM libraries not found) ***)
+  fi
+else
+  GTKXMHTML_CFLAGS=`$GNOME_CONFIG --cflags gnomeui`
+  GTKXMHTML_LIBS=`$GNOME_CONFIG --libs gtkxmhtml`
+  HELPBROWSER=helpbrowser
+fi
+
+dnl Sanity check to make sure the headers are there too and that gnome-config
+dnl didn't lie to us
+if test -n "$HELPBROWSER"; then
+  CPPFLAGS="$CPPFLAGS $GTKXMHTML_CFLAGS"
+  LDFLAGS="$LDFLAGS `echo $GTKXMHTML_LIBS | sed 's/\(.*\)\(-lgtkxmhtml.*\)/\1/'`"
+  LIBS="$LIBS $GTKXMHTML_LIBS"
+
+  AC_MSG_CHECKING([to see if we can build with GtkXMHTML])
+  AC_TRY_LINK([#include <gtk-xmhtml/gtk-xmhtml.h>], [return 0;],
+    gtkxmhtml_ok=yes, gtkxmhtml_ok=no)
+  AC_MSG_RESULT($gtkxmhtml_ok)
+
+  if test "$gtkxmhtml_ok" = no; then
+    AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML setup busted) ***)
+    HELPBROWSER=
+  fi
+fi
+
 CPPFLAGS="$gimp_save_CPPFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 LIBS="$gimp_save_LIBS"
@@ -539,48 +580,6 @@ AC_PATH_PROG(LPC_COMMAND, "lpc", $lpc_path,
 
 if test $ac_cv_path_LPC_COMMAND != ":"; then
   LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
-fi
-
-dnl This is for the help browser
-AC_PATH_PROG(GNOME_CONFIG,gnome-config,no)
-if test "$GNOME_CONFIG" = "no"; then
-  HELPBROWSER=
-  dnl Test for standalone GtkXMHTML widget
-  AC_CHECK_LIB(gtkxmhtml, gtk_xmhtml_new,
-    GTKXMHTML_CFLAGS=$GTK_CFLAGS
-    GTKXMHTML_LIBS="-lgtkxmhtml $GTK_LIBS"
-    HELPBROWSER=helpbrowser,
-    AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML library not found) ***))
-else
-  GTKXMHTML_CFLAGS=`$GNOME_CONFIG --cflags gnomeui`
-  GTKXMHTML_LIBS=`$GNOME_CONFIG --libs gtkxmhtml`
-  HELPBROWSER=helpbrowser
-fi
-
-dnl Sanity check to make sure the headers are there too and that gnome-config
-dnl didn't lie to us
-if test -n "$HELPBROWSER"; then
-  gimp_save_CPPFLAGS="$CPPFLAGS"
-  gimp_save_LDFLAGS="$LDFLAGS"
-  gimp_save_LIBS="$LIBS"
-
-  CPPFLAGS="$CPPFLAGS $GTKXMHTML_CFLAGS"
-  LDFLAGS="$LDFLAGS `echo $GTKXMHTML_LIBS | sed 's/\(.*\)\(-lgtkxmhtml.*\)/\1/'`"
-  LIBS="$LIBS $GTKXMHTML_LIBS"
-
-  AC_MSG_CHECKING([to see if we can build with GtkXMHTML])
-  AC_TRY_LINK([#include <gtk-xmhtml/gtk-xmhtml.h>], [return 0;],
-    gtkxmhtml_ok=yes, gtkxmhtml_ok=no)
-  AC_MSG_RESULT($gtkxmhtml_ok)
-
-  if test "$gtkxmhtml_ok" = no; then
-    AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML setup busted) ***)
-    HELPBROWSER=
-  fi
-
-  CPPFLAGS="$gimp_save_CPPFLAGS"
-  LDFLAGS="$gimp_save_LDFLAGS"
-  LIBS="$gimp_save_LIBS"
 fi
 
 dnl This is for the gimp-perl plug-in

@@ -34,7 +34,7 @@ echo "see the file HACKING for more information..."
 echo
 
 echo "Testing autoconf... "
-VER=`autoconf --version | sed "s/[a-zA-Z]*//g"`
+VER=`autoconf --version | sed "s/.* \([0-9.]*\)$/\1/"`
 if expr $VER \>= 2.13 >/dev/null; then
 	echo "looks OK."
 else
@@ -43,7 +43,7 @@ else
 fi
 
 echo "Testing automake... "
-VER=`automake --version | grep automake | sed "s/[a-zA-Z()]//g"`
+VER=`automake --version | grep automake | sed "s/.* \([0-9.]*\)$/\1/"`
 if expr $VER \>= 1.4 >/dev/null; then
 	echo "looks OK."
 else
@@ -52,7 +52,7 @@ else
 fi
 
 echo "Testing gettextize... "
-VER=`gettextize --version | grep gettext | sed "s#[a-zA-Z()/]##g;s/0.//"`
+VER=`gettextize --version | grep gettext | sed "s/.* \([0-9.]*\)$/\1/;s/0.//"`
 if expr $VER \>= 10.35 >/dev/null; then
 	echo "looks OK."
 else
