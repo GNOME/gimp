@@ -1,3 +1,7 @@
+2004-02-03  Manish Singh  <yosh@gimp.org>
+
+	* gimptool-2.0.in: use GIMP_API_VERSION.
+
 2004-02-03  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c
