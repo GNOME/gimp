@@ -1,3 +1,23 @@
+2002-04-06  Sven Neumann  <sven@gimp.org>
+
+	* app/bezier_select.c (bezier_stroke): silently return if there's no
+	active drawable.
+	* app/paths_dialog.c
+	(paths_dialog_path_to_sel_callback, paths_dialog_sel_to_path_callback):
+	silently return if !paths_dialog->gimage.
+	(paths_dialog_set_menu_sensitivity): set buttons insensitive if no
+	image is present. Fixes segfault reported by Massimiliano Benini.
+
+	* app/crop.c: always update the info dialog when recalculating the
+	crop area.
+	
+	* app/fileops.c (file_open_with_proc): don't try to add a menu entry
+	if gimp was started with --no-interface.
+
+	* plug-ins/rcm/rcm_dialog.c:
+	* plug-ins/rcm/rcm_misc.c (rcm_reduce_image): take the drawable offsets
+	into account when calculating the preview. Fixes bug #67018.
+
 2002-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c (file_open_genbutton_callback): removed a call to

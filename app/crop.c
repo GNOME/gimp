@@ -338,8 +338,6 @@ crop_button_release (Tool           *tool,
 	  /*  Finish the tool  */
 	  crop_close_callback (NULL, NULL);
 	}
-      else
-	crop_info_update (tool);
     }
 }
 
@@ -416,7 +414,9 @@ crop_motion (Tool           *tool,
   if (crop->function == CROPPING)
     return;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &curx, &cury, TRUE, FALSE);
+  gdisplay_untransform_coords (gdisp, 
+                               mevent->x, mevent->y, 
+                               &curx, &cury, TRUE, FALSE);
   x1 = crop->startx;
   y1 = crop->starty;
   x2 = curx;
@@ -539,7 +539,6 @@ crop_motion (Tool           *tool,
     }
   
   draw_core_resume (crop->core, tool);
-  crop_info_update (tool);
 }
 
 static void
@@ -975,6 +974,8 @@ crop_recalc (Tool *tool,
 			     &crop->x1, &crop->y1, FALSE);
   gdisplay_transform_coords (gdisp, crop->tx2, crop->ty2,
 			     &crop->x2, &crop->y2, FALSE);
+
+  crop_info_update (tool);
 }
 
 static void

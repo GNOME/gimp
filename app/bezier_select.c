@@ -346,7 +346,7 @@ bezier_draw_curve (BezierSelect    *bezier_sel,
     {
       do {
 	point_counts = count_points_on_curve(points);
-	if(point_counts >= 4)
+	if (point_counts >= 4)
 	  {
 	    do {
 	      bezier_draw_segment (bezier_sel, points,
@@ -354,7 +354,7 @@ bezier_draw_curve (BezierSelect    *bezier_sel,
 				   func,
 				   udata);
 	      
-	      points = next_anchor(points,&next_curve);
+	      points = next_anchor (points, &next_curve);
 	      /* 	  g_print ("next_anchor = %p\n",points); */
 	    } while (points != start_pt && points);
 	    if(cnt)
@@ -366,7 +366,7 @@ bezier_draw_curve (BezierSelect    *bezier_sel,
 	  break; /* must be last curve since only this one is allowed < 4
 		  * points.
 		  */
-      } while(next_curve);
+      } while (next_curve);
     }
 }
 
@@ -3213,17 +3213,17 @@ bezier_gen_points(BezierSelect     *bezier_sel,
   points = bezier_sel->points;
   start_pt = bezier_sel->points;
       
-  if(bezier_sel->num_points >= 4)
+  if (bezier_sel->num_points >= 4)
     {
       do {
- 	point_counts = count_points_on_curve(points); 
-	if(point_counts < 4)
+ 	point_counts = count_points_on_curve (points); 
+	if (point_counts < 4)
 	  return(TRUE);
 	do {
 	  bezier_draw_segment (bezier_sel, points,
 			       SUBDIVIDE, AA_IMAGE_COORDS,
 			       bezier_stack_points,
-			       (gpointer)next_rpnts);
+			       (gpointer) next_rpnts);
 	  
 	  points = next_anchor(points,&next_curve);
 	} while (points != start_pt && points);
@@ -3231,7 +3231,7 @@ bezier_gen_points(BezierSelect     *bezier_sel,
 	points = next_curve;
 	if(next_curve)
 	  {
-	    next_rpnts->next_curve = g_new0(BezierRenderPnts,1);
+	    next_rpnts->next_curve = g_new0 (BezierRenderPnts, 1);
 	    next_rpnts = next_rpnts->next_curve;
 	  }
       } while (next_curve);
@@ -3247,55 +3247,65 @@ bezier_stroke (BezierSelect *bezier_sel,
 	       int	    open_path)
 {
   Argument *return_vals;
-  int nreturn_vals;
   BezierRenderPnts *next_rpnts;
-  BezierRenderPnts *rpnts = g_new0(BezierRenderPnts,1);
+  BezierRenderPnts *rpnts;
+  GimpDrawable *drawable;
+  gint offset_x, offset_y;
+  gint nreturn_vals;
+
+  drawable = gimage_active_drawable (gdisp->gimage);
+
+  if (!drawable)
+    return;
+
+  rpnts = g_new0 (BezierRenderPnts, 1);
+
+  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   /*  Start an undo group  */
   undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
 
-  bezier_gen_points(bezier_sel,open_path,rpnts);
+  bezier_gen_points (bezier_sel, open_path, rpnts);
   do
     {
-  if (rpnts->stroke_points)
-    {
-      GimpDrawable *drawable;
-      int offset_x, offset_y;
-      gdouble *ptr;
-    
-      drawable = gimage_active_drawable (gdisp->gimage);
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      if (rpnts->stroke_points)
+        {
+          gdouble *ptr;
+          
+          ptr = rpnts->stroke_points;
+          while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
+            {
+              *ptr /= SUPERSAMPLE;
+              *ptr++ -= offset_x;
+              *ptr /= SUPERSAMPLE;
+              *ptr++ -= offset_y;
+            }
+          
+          /* Stroke with the correct tool */
+          return_vals = 
+            procedural_db_run_proc (tool_active_PDB_string(),
+                                    &nreturn_vals,
+                                    PDB_DRAWABLE, drawable_ID (drawable),
+                                    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
+                                    PDB_FLOATARRAY, rpnts->stroke_points,
+                                    PDB_END);
+          
+          if (return_vals && return_vals[0].value.pdb_int != PDB_SUCCESS)
+            g_message (_("Paintbrush operation failed."));
+          
+          procedural_db_destroy_args (return_vals, nreturn_vals);
+          
+          g_free (rpnts->stroke_points);
+        }
 
-      ptr = rpnts->stroke_points;
-      while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
-	{
-	  *ptr /= SUPERSAMPLE;
-	  *ptr++ -= offset_x;
-	  *ptr /= SUPERSAMPLE;
-	  *ptr++ -= offset_y;
-	}
-
-      /* Stroke with the correct tool */
-      return_vals = procedural_db_run_proc (tool_active_PDB_string(),
-					    &nreturn_vals,
-					    PDB_DRAWABLE, drawable_ID (drawable),
-					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
-					    PDB_FLOATARRAY, rpnts->stroke_points,
-					    PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message (_("Paintbrush operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-
-      g_free (rpnts->stroke_points);
+      next_rpnts = rpnts->next_curve;
+      rpnts->stroke_points = NULL;
+      rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
+      g_free (rpnts);
+      rpnts = next_rpnts;
     }
-    next_rpnts = rpnts->next_curve;
-    rpnts->stroke_points = NULL;
-    rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
-    g_free(rpnts);
-    rpnts = next_rpnts;
-    } while (rpnts);
+  while (rpnts);
+  
   /*  End an undo group  */
   undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();

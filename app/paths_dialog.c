@@ -216,7 +216,7 @@ paths_dialog_set_menu_sensitivity (void)
 {
   gboolean gimage = FALSE;  /*  is there a gimage  */
   gboolean pp     = FALSE;  /*  paths present  */
-  gboolean cpp    = FALSE;  /*  is there a path in the pate buffer  */
+  gboolean cpp    = FALSE;  /*  is there a path in the paste buffer  */
 
   if (! paths_dialog)
     return;
@@ -246,13 +246,13 @@ paths_dialog_set_menu_sensitivity (void)
   SET_OPS_SENSITIVE (1, pp);
 
   SET_SENSITIVE ("Path to Selection", pp);
-  SET_OPS_SENSITIVE (2, pp);
+  SET_OPS_SENSITIVE (2, pp && gimage);
 
   SET_SENSITIVE ("Selection to Path", gimage);
-  SET_OPS_SENSITIVE (3, gimage);
+  SET_OPS_SENSITIVE (3, pp && gimage);
 
   SET_SENSITIVE ("Stroke Path", pp);
-  SET_OPS_SENSITIVE (4, pp);
+  SET_OPS_SENSITIVE (4, pp && gimage);
 
   SET_SENSITIVE ("Delete Path", pp);
   SET_OPS_SENSITIVE (5, pp);
@@ -1351,14 +1351,18 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   GimpImage  *gimage;
   GDisplay   *gdisp;
 
+  gimage = paths_dialog->gimage;
+
+  if (!gimage || !gimage_active_drawable (gimage))
+    return;
+
   /*  find the sel2path PDB record  */
   if ((proc_rec = procedural_db_lookup ("plug_in_sel2path")) == NULL)
     {
-      g_message ("paths_dialog_sel_to_path_callback(): selection to path procedure lookup failed");
+      g_message ("paths_dialog_sel_to_path_callback(): "
+                 "selection to path procedure lookup failed");
       return;
     }
-
-  gimage = paths_dialog->gimage;
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
@@ -1388,6 +1392,9 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
   GDisplay  * gdisp;
   gint row = paths_dialog->selected_row_num;
 
+  if (!paths_dialog->gimage)
+    return;
+
   g_return_if_fail (paths_dialog->current_path_list != NULL);
 
   /* Get current selection... ignore if none */
@@ -1408,7 +1415,7 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
 
   if (!bzp->closed)
     {
-      Path* bzpcopy = path_copy (paths_dialog->gimage,bzp);
+      Path* bzpcopy = path_copy (paths_dialog->gimage, bzp);
       /* Close it */
       path_close (bzpcopy);
       bezier_sel = path_to_beziersel (bzpcopy);
@@ -1438,6 +1445,9 @@ paths_dialog_stroke_path_callback (GtkWidget *widget,
   gint row = paths_dialog->selected_row_num;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
+
+  if (!paths_dialog->gimage)
+    return;
 
   /* Get current selection... ignore if none */
   if (paths_dialog->selected_row_num < 0)

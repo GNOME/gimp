@@ -852,7 +852,8 @@ file_open_with_proc (gchar         *filename,
 
       absolute = file_absolute_filename (filename);
       document_index_add (absolute);
-      menus_last_opened_add (absolute);
+      if (!no_interface)
+        menus_last_opened_add (absolute);
       g_free (absolute);
     }
 
