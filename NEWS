@@ -36,6 +36,7 @@ Bugs fixed in GIMP 2.0pre3
 - 131902: Improved handling of missing tags in TIFF loader (Andrey Kiselev)
 - 93806:  Validate script-fu input (Yosh)
 - 132214: Differentiate writable and readonly data directories (Mitch)
+- 131964: Zoom ratio problem (Simon)
 
 Other contributions:
   Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer, Sven Neumann

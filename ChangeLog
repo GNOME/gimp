@@ -35,6 +35,8 @@
 
 	* app/pdb/display_cmds.c: regenerated
 
+	Fixes bug #131964 and makes bug #131563 easy to resolve.
+
 2004-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.[ch]: removed the last artefact of context
