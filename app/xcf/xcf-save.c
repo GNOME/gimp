@@ -86,10 +86,34 @@ void
 xcf_save_choose_format (XcfInfo   *info,
 			GimpImage *gimage)
 {
+  GimpLayer *layer;
+  GList     *list;
+
   gint save_version = 0;                /* default to oldest */
 
   if (gimage->cmap) 
     save_version = 1;                   /* need version 1 for colormaps */
+
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list && save_version < 2;
+       list = g_list_next (list))
+    {
+      layer = GIMP_LAYER (list->data);
+
+      switch (layer->mode)
+        {
+          /* new layer modes not supported by gimp-1.2 */
+        case GIMP_SOFTLIGHT_MODE:
+        case GIMP_GRAIN_EXTRACT_MODE:
+        case GIMP_GRAIN_MERGE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+          save_version = 2;
+          break;
+
+        default:
+          break;
+        }
+    }
 
   info->file_version = save_version;
 }

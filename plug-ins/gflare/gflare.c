@@ -87,26 +87,26 @@ static char rcsid[] = "$Id$";
 #define GFLARE_FILE_HEADER  "GIMP GFlare 0.25\n"
 #define SFLARE_NUM	     30
 
-#define DLG_PREVIEW_WIDTH  256
-#define DLG_PREVIEW_HEIGHT 256
-#define DLG_PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-			   GDK_BUTTON_PRESS_MASK
-#define DLG_LISTBOX_WIDTH  80
-#define DLG_LISTBOX_HEIGHT 40
+#define DLG_PREVIEW_WIDTH   256
+#define DLG_PREVIEW_HEIGHT  256
+#define DLG_PREVIEW_MASK    GDK_EXPOSURE_MASK | \
+			    GDK_BUTTON_PRESS_MASK
+#define DLG_LISTBOX_WIDTH   80
+#define DLG_LISTBOX_HEIGHT  40
 
-#define ED_PREVIEW_WIDTH  256
-#define ED_PREVIEW_HEIGHT 256
+#define ED_PREVIEW_WIDTH    256
+#define ED_PREVIEW_HEIGHT   256
 
-#define GM_PREVIEW_WIDTH  80
-#define GM_PREVIEW_HEIGHT 16
+#define GM_PREVIEW_WIDTH    80
+#define GM_PREVIEW_HEIGHT   16
 
-#define SCALE_WIDTH 100
-#define ENTRY_WIDTH   8
+#define SCALE_WIDTH         80
 
 #ifndef OPAQUE
-#define OPAQUE	   255
+#define OPAQUE	            255
 #endif
-#define GRAY50	   128
+#define GRAY50	            128
+
 
 /* drawable coord to preview coord */
 #define DX2PX(DX)  ((double) PREVIEW_WIDTH * ((DX) - dinfo->win.x0) / (dinfo->win.x1 - dinfo->win.x0))
@@ -750,7 +750,8 @@ static void dlg_selector_do_delete_callback (GtkWidget *widget,
 					     gboolean   delete,
 					     gpointer   data);
 
-static void ed_run                (GFlare               *target_gflare,
+static void ed_run                (GtkWindow            *parent,
+                                   GFlare               *target_gflare,
 				   GFlareEditorCallback  callback,
 				   gpointer              calldata);
 static void ed_close_callback     (GtkWidget    *widget,
@@ -835,16 +836,16 @@ plugin_query (void)
   static GimpParamDef args[]=
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image", "Input image (unused)" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_STRING,   "gflare_name", "The name of GFlare" },
-    { GIMP_PDB_INT32,    "xcenter", "X coordinate of center of GFlare" },
-    { GIMP_PDB_INT32,    "ycenter", "Y coordinate of center of GFlare" },
-    { GIMP_PDB_FLOAT,    "radius",	"Radius of GFlare (pixel)" },
+    { GIMP_PDB_INT32,    "xcenter",  "X coordinate of center of GFlare" },
+    { GIMP_PDB_INT32,    "ycenter",  "Y coordinate of center of GFlare" },
+    { GIMP_PDB_FLOAT,    "radius",   "Radius of GFlare (pixel)" },
     { GIMP_PDB_FLOAT,    "rotation", "Rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT,    "hue", "Hue rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT,    "vangle", "Vector angle for second flares (degree)" },
-    { GIMP_PDB_FLOAT,    "vlength", "Vector length for second flares (percentage to Radius)" },
+    { GIMP_PDB_FLOAT,    "hue",      "Hue rotation of GFlare (degree)" },
+    { GIMP_PDB_FLOAT,    "vangle",   "Vector angle for second flares (degree)" },
+    { GIMP_PDB_FLOAT,    "vlength",  "Vector length for second flares (percentage to Radius)" },
     { GIMP_PDB_INT32,    "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
     { GIMP_PDB_INT32,    "asupsample_max_depth", "Max depth for adaptive supersampling"},
     { GIMP_PDB_FLOAT,   "asupsample_threshold", "Threshold for adaptive supersampling"}
@@ -2994,7 +2995,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("_Radius:"), SCALE_WIDTH, 6,
 			      pvals.radius, 0.0, drawable->width / 2,
 			      1.0, 10.0, 1,
 			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
@@ -3007,7 +3008,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Ro_tation:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("Ro_tation:"), SCALE_WIDTH, 6,
 			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3019,7 +3020,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Hue Rotation:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("_Hue Rotation:"), SCALE_WIDTH, 6,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3031,7 +3032,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector _Angle:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("Vector _Angle:"), SCALE_WIDTH, 6,
 			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3043,7 +3044,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector _Length:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("Vector _Length:"), SCALE_WIDTH, 6,
 			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -3185,7 +3186,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
 
-  gtk_widget_set_usize (listbox, DLG_LISTBOX_WIDTH, DLG_LISTBOX_HEIGHT);
+  gtk_widget_set_size_request (listbox, DLG_LISTBOX_WIDTH, DLG_LISTBOX_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
 
   list = dlg->selector_list = gtk_list_new ();
@@ -3354,7 +3355,8 @@ dlg_selector_edit_callback (GtkWidget *widget,
 {
   preview_render_end (dlg->preview);
   gtk_widget_set_sensitive (dlg->shell, FALSE);
-  ed_run (dlg->gflare, dlg_selector_edit_done_callback, NULL);
+  ed_run (GTK_WINDOW (dlg->shell),
+          dlg->gflare, dlg_selector_edit_done_callback, NULL);
 }
 
 static void
@@ -3515,7 +3517,8 @@ dlg_selector_do_delete_callback (GtkWidget *widget,
  */
 
 static void
-ed_run (GFlare		     *target_gflare,
+ed_run (GtkWindow            *parent,
+        GFlare		     *target_gflare,
 	GFlareEditorCallback  callback,
 	gpointer	      calldata)
 {
@@ -3543,11 +3546,11 @@ ed_run (GFlare		     *target_gflare,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
-
 		     _("Rescan Gradients"), ed_rescan_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
 
 		     GTK_STOCK_OK, ed_ok_callback,
 		     NULL, NULL, NULL, TRUE, FALSE,
@@ -3557,6 +3560,8 @@ ed_run (GFlare		     *target_gflare,
   g_signal_connect (G_OBJECT (shell), "destroy",
                     G_CALLBACK (ed_close_callback),
                     NULL);
+
+  gtk_window_set_transient_for (GTK_WINDOW (shell), parent);
 
   /*
    *    main hbox
@@ -3674,7 +3679,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Opacity:"), SCALE_WIDTH, 0,
+			      _("Opacity:"), SCALE_WIDTH, 6,
 			      gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3704,7 +3709,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Opacity:"), SCALE_WIDTH, 0,
+			      _("Opacity:"), SCALE_WIDTH, 6,
 			      gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3734,7 +3739,7 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Opacity:"), SCALE_WIDTH, 0,
+			      _("Opacity:"), SCALE_WIDTH, 6,
 			      gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3821,7 +3826,7 @@ ed_make_page_glow (GFlareEditor *ed,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Size (%):"), SCALE_WIDTH, 0,
+			      _("Size (%):"), SCALE_WIDTH, 6,
 			      gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
@@ -3833,7 +3838,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Rotation:"), SCALE_WIDTH, 0,
+			      _("Rotation:"), SCALE_WIDTH, 6,
 			      gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3845,7 +3850,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      _("Hue Rotation:"), SCALE_WIDTH, 6,
 			      gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3931,7 +3936,7 @@ ed_make_page_rays (GFlareEditor *ed,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Size (%):"), SCALE_WIDTH, 0,
+			      _("Size (%):"), SCALE_WIDTH, 6,
 			      gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
@@ -3943,7 +3948,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Rotation:"), SCALE_WIDTH, 0,
+			      _("Rotation:"), SCALE_WIDTH, 6,
 			      gflare->rays_rotation,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
@@ -3956,7 +3961,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      _("Hue Rotation:"), SCALE_WIDTH, 6,
 			      gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3968,7 +3973,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("# of Spikes:"), SCALE_WIDTH, 0,
+			      _("# of Spikes:"), SCALE_WIDTH, 6,
 			      gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
@@ -3980,7 +3985,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Spike Thickness:"), SCALE_WIDTH, 0,
+			      _("Spike Thickness:"), SCALE_WIDTH, 6,
 			      gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
 			      FALSE, 0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -4073,7 +4078,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Size (%):"), SCALE_WIDTH, 0,
+			      _("Size (%):"), SCALE_WIDTH, 6,
 			      gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
@@ -4085,7 +4090,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Rotation:"), SCALE_WIDTH, 0,
+			      _("Rotation:"), SCALE_WIDTH, 6,
 			      gflare->sflare_rotation,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
@@ -4098,7 +4103,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      _("Hue Rotation:"), SCALE_WIDTH, 6,
 			      gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -4154,7 +4159,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (toggle);
 
   entry = ed->polygon_entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
   g_snprintf (buf, sizeof (buf), "%d", gflare->sflare_nverts);
   gtk_entry_set_text (GTK_ENTRY (entry), buf);
   g_signal_connect (G_OBJECT (entry), "changed",

@@ -157,7 +157,8 @@ static PlugInProcDef xcf_plug_in_save_proc =
 static GimpXcfLoaderFunc *xcf_loaders[] =
 {
   xcf_load_image,	/* version 0 */
-  xcf_load_image	/* version 1 */
+  xcf_load_image,   /* version 1 */
+  xcf_load_image    /* version 2 */
 };
 static gint n_xcf_loaders = sizeof (xcf_loaders) / sizeof (xcf_loaders[0]);
 
