@@ -1,3 +1,7 @@
+2004-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/dialogs/vectors-[im|ex]port-dialog.c
+
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added app/dialogs/image-merge-layers-dialog.c
