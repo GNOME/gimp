@@ -27,6 +27,8 @@ libappconfig_a_SOURCES = \
 	gimpdisplayconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
+	gimppluginconfig.c		\
+	gimppluginconfig.h		\
 	gimprc.c			\
 	gimprc.h			\
 	gimprc-blurbs.h			\

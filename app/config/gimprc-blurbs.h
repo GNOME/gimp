@@ -71,6 +71,10 @@
 "Set the default vertical resolution for new images and for the " \
 "File/New dialog. This value is always in dpi (dots per inch)."
 
+#define FRACTALEXPLORER_PATH_BLURB \
+"This path will be searched for fractals when you use the "\
+"Fractal Explorer plug-in."
+
 #define GAMMA_CORRECTION_BLURB \
 "This setting is ignored."
 #if 0
@@ -82,6 +86,15 @@
 "the gimp has gamma-correction turned on.  If you are going to work with " \
 "images of this sort, turn gamma correction off by setting the value to 1.0."
 #endif
+
+#define GFIG_PATH_BLURB \
+"Where to search for GFig figures used by the GFig plug-in."
+
+#define GFLARE_PATH_BLURB \
+"Where to search for gflares used by the GFlare plug-in."
+
+#define GIMPRESSIONIST_PATH_BLURB \
+"Where to search for data used by the Gimpressionist plug-in."
 
 #define GRADIENT_PATH_BLURB \
 "Set the gradient search path."

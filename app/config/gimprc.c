@@ -34,13 +34,13 @@
 #endif
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpbase.h"
 
 #include "config-types.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
+#include "gimpconfig-path.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
 #include "gimprc.h"
@@ -115,7 +115,7 @@ gimp_rc_get_type (void)
         NULL            /* iface_data     */
       };
 
-      rc_type = g_type_register_static (GIMP_TYPE_GUI_CONFIG, 
+      rc_type = g_type_register_static (GIMP_TYPE_PLUGIN_CONFIG, 
                                         "GimpRc", &rc_info, 0);
 
       g_type_add_interface_static (rc_type,
@@ -512,6 +512,18 @@ gimp_rc_query (GimpRc      *rc,
     }
 
   g_free (property_specs);
+
+  /* for backward compatibility, expand the value */
+  if (retval)
+    {
+      gchar *tmp = gimp_config_path_expand (retval, FALSE, NULL);
+
+      if (tmp)
+        {
+          g_free (retval);
+          retval = tmp;
+        }
+    }
 
   return retval;
 }

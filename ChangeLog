@@ -1,3 +1,15 @@
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimppluginconfig.[ch]: new files that define plug-in
+	specific configuration.
+
+	* app/config/config-types.h
+	* app/config/gimprc-blurbs.h
+	* app/gimprc.[ch]: derive GimpRc from GimpPluginConfig.
+
+	* etc/gimprc: regenerated (gimp-config-dump --system-gimprc).
+
 2002-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c: another fix for #102016.

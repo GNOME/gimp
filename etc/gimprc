@@ -377,3 +377,23 @@
 #
 # (help-browser gimp)
 
+# This path will be searched for fractals when you use the Fractal Explorer
+# plug-in.  This is a colon-separated list of directories to search.
+#
+# (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
+
+# Where to search for GFig figures used by the GFig plug-in.  This is a
+# colon-separated list of directories to search.
+#
+# (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
+
+# Where to search for gflares used by the GFlare plug-in.  This is a
+# colon-separated list of directories to search.
+#
+# (gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
+
+# Where to search for data used by the Gimpressionist plug-in.  This is a
+# colon-separated list of directories to search.
+#
+# (gimpressionist-path "${gimp_dir}/gimpressionist:${gimp_data_dir}/gimpressionist")
+

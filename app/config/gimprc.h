@@ -22,7 +22,7 @@
 #ifndef __GIMP_RC_H__
 #define __GIMP_RC_H__
 
-#include "config/gimpguiconfig.h"
+#include "config/gimppluginconfig.h"
 
 
 #define GIMP_TYPE_RC            (gimp_rc_get_type ())
@@ -36,18 +36,18 @@ typedef struct _GimpRcClass GimpRcClass;
 
 struct _GimpRc
 {
-  GimpGuiConfig  parent_instance;
+  GimpPluginConfig  parent_instance;
 
-  gchar         *user_gimprc;
-  gchar         *system_gimprc;
-  gboolean       verbose;
-  gboolean       autosave;
-  guint          save_idle_id;
+  gchar            *user_gimprc;
+  gchar            *system_gimprc;
+  gboolean          verbose;
+  gboolean          autosave;
+  guint             save_idle_id;
 };
 
 struct _GimpRcClass
 {
-  GimpGuiConfigClass  parent_class;
+  GimpPluginConfigClass  parent_class;
 };
 
 
