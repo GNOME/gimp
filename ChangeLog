@@ -19,6 +19,7 @@ Fri Aug 13 16:39:25 1999 Adrian Likins <alikins@redhat.com>
 	* app/eraser.c
 	* app/eraser.h
 	* app/tools_cmds.c
+	* app/paint_func.[ch]
 	* tools/pdbgen/pdb/tools.pdb
 
 	Applied patch from  Shuji Narazaki <narazaki@gimp.org>

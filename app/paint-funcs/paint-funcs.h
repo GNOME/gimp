@@ -555,7 +555,9 @@ void  initial_region                      (PixelRegion *, PixelRegion *,
 #define REPLACE_INDEXED                   23
 #define ERASE_INTEN                       24
 #define ERASE_INDEXED                     25
-#define NO_COMBINATION                    26
+#define ANTI_ERASE_INTEN                  26
+#define ANTI_ERASE_INDEXED                27
+#define NO_COMBINATION                    28
 
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
@@ -600,6 +602,7 @@ typedef enum {
   DIVIDE_MODE,
   ERASE_MODE,         /*< skip >*/
   REPLACE_MODE,       /*< skip >*/
+  ANTI_ERASE_MODE,    /*< skip >*/
 } LayerModeEffects;
 
 /*  Applying layer modes...  */

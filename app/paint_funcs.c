@@ -93,7 +93,8 @@ LayerMode layer_modes[] =
   { 0, 0, 0, N_("Value") },
   { 0, 0, 0, N_("Divide (Dodge)") },
   { 1, 0, 1, N_("Erase") },
-  { 1, 1, 1, N_("Replace") }
+  { 1, 1, 1, N_("Replace") },
+  { 1, 0, 1, N_("Anti Erase") }
 };
 
 /*  ColorHash structure  */
@@ -2843,6 +2844,81 @@ erase_indexed_pixels (const unsigned char *src1,
     }
 }
 
+void
+anti_erase_inten_pixels (const unsigned char *src1,
+			 const unsigned char *src2,
+			 unsigned char       *dest,
+			 const unsigned char *mask,
+			 int                  opacity,
+			 const int           *affect,
+			 int                  length,
+			 int                  bytes)
+{
+  int alpha, b;
+  unsigned char src2_alpha;
+  const unsigned char * m;
+  long tmp;
+
+  if (mask)
+    m = mask;
+  else
+    m = &no_mask;
+
+  alpha = bytes - 1;
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = src1[b];
+
+      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      dest[alpha] = src1[alpha] + INT_MULT((255 - src1[alpha]), src2_alpha, tmp);
+
+      if (mask)
+	m++;
+
+      src1 += bytes;
+      src2 += bytes;
+      dest += bytes;
+    }
+}
+
+void
+anti_erase_indexed_pixels (const unsigned char *src1,
+			   const unsigned char *src2,
+			   unsigned char       *dest,
+			   const unsigned char *mask,
+			   int                  opacity,
+			   const int           *affect,
+			   int                  length,
+			   int                  bytes)
+{
+  int alpha, b;
+  unsigned char src2_alpha;
+  const unsigned char * m;
+  long tmp;
+  if (mask)
+    m = mask;
+  else
+    m = &no_mask;
+
+  alpha = bytes - 1;
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	dest[b] = src1[b];
+
+      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      dest[alpha] = (src2_alpha > 127) ? OPAQUE_OPACITY : src1[alpha];
+
+      if (mask)
+	m++;
+
+      src1 += bytes;
+      src2 += bytes;
+      dest += bytes;
+    }
+}
+
 
 void
 extract_from_inten_pixels (unsigned char *src,
@@ -5316,6 +5392,16 @@ combine_sub_region(struct combine_regions_struct *st,
 				affect, src1->w, src1->bytes);
 	  break;
 	    
+	case ANTI_ERASE_INTEN:
+	  anti_erase_inten_pixels (s1, s, d, m, opacity,
+				   affect, src1->w, src1->bytes);
+	  break;
+	    
+	case ANTI_ERASE_INDEXED:
+	  anti_erase_indexed_pixels (s1, s, d, m, opacity,
+				     affect, src1->w, src1->bytes);
+	  break;
+	    
 	case NO_COMBINATION:
 	  g_warning("NO_COMBINATION");
 	  break;
@@ -5892,6 +5978,11 @@ apply_layer_mode (unsigned char  *src1,
        *  Otherwise, just combine in the normal manner
        */
       combine = (has_alpha1 && has_alpha2) ? ERASE_INTEN : combine;
+      break;
+
+    case ANTI_ERASE_MODE:
+      *dest = src2;
+      combine = (has_alpha1 && has_alpha2) ? ANTI_ERASE_INTEN : combine;
       break;
 
     default :
