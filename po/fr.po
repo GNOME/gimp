@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-03-08 16:36-0800\n"
+"POT-Creation-Date: 1999-03-11 13:02+0100\n"
 "PO-Revision-Date: 1998-11-07 18:15+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -35,7 +35,7 @@ msgstr "Spencer Kimball et Peter Mattis"
 
 #: app/about_dialog.c:241
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Visitez http://www.gimp.com/ pour plus d'informations"
+msgstr "Visitez http://www.gimp.org/ pour plus d'informations"
 
 #. the main label
 #: app/airbrush.c:97
@@ -52,7 +52,7 @@ msgstr "Pression: "
 
 #: app/airbrush.c:160
 msgid "killing stray timer, please report to lewing@gimp.org"
-msgstr ""
+msgstr "killing stray timer, please report to lewing@gimp.org"
 
 #: app/app_procs.c:372
 msgid "GIMP Startup"
@@ -311,9 +311,8 @@ msgid "Blending..."
 msgstr "Mélange en cours..."
 
 #: app/blend.c:717 app/blend.c:727
-#, fuzzy
 msgid "Blend: "
-msgstr "Mélange:"
+msgstr "Mélange: "
 
 #: app/blend.c:1373
 #, c-format
@@ -604,7 +603,7 @@ msgstr "Intersection"
 
 #: app/by_color_select.c:565
 msgid "By Color Selection"
-msgstr ""
+msgstr "Sélection Par Couleur"
 
 #: app/by_color_select.c:608
 msgid "Inactive"
@@ -698,7 +697,7 @@ msgstr "Effacer Canal"
 
 #: app/channels_dialog.c:165
 msgid "Channel To Selection"
-msgstr ""
+msgstr "Canal Vers Sélection"
 
 #: app/channels_dialog.c:605 app/channels_dialog.c:659
 #, c-format
@@ -758,9 +757,8 @@ msgid "Pattern Source"
 msgstr "Source du Motif"
 
 #: app/clone.c:121
-#, fuzzy
 msgid "Non Aligned"
-msgstr "Aligné"
+msgstr "Non Aligné"
 
 #: app/clone.c:122
 msgid "Aligned"
@@ -768,7 +766,7 @@ msgstr "Aligné"
 
 #: app/clone.c:123
 msgid "Registered"
-msgstr ""
+msgstr "Enregistré"
 
 #. the main label
 #: app/clone.c:135
@@ -782,9 +780,8 @@ msgstr "Source"
 
 #. the radio frame and box
 #: app/clone.c:161
-#, fuzzy
 msgid "Alignment"
-msgstr "Aligné"
+msgstr "Alignement"
 
 #: app/clone.c:288
 msgid "No patterns available for this operation."
@@ -844,7 +841,7 @@ msgstr ""
 
 #: app/color_notebook.c:111 app/color_select.c:186
 msgid "Color Selection"
-msgstr ""
+msgstr "Sélection de Couleurs"
 
 #: app/color_notebook.c:182 app/color_select.c:205
 msgid "Revert to Old Color"
@@ -853,11 +850,11 @@ msgstr ""
 #. the main label
 #: app/color_picker.c:104
 msgid "Color Picker Options"
-msgstr ""
+msgstr "Option du choix des couleurs"
 
 #: app/color_picker.c:149 app/tools.c:323
 msgid "Color Picker"
-msgstr ""
+msgstr "Choix des Couleurs"
 
 #: app/color_picker.c:159 app/color_picker.c:165 app/color_picker.c:174
 #: app/curves.c:317 app/levels.c:324
@@ -931,19 +928,19 @@ msgstr ""
 
 #: app/commands.c:405
 msgid "Grow Selection"
-msgstr ""
+msgstr "Agrandir la Sélection"
 
 #: app/commands.c:405
 msgid "Grow selection by:"
-msgstr ""
+msgstr "Agrandir la Sélection de:"
 
 #: app/commands.c:419
 msgid "Shrink Selection"
-msgstr ""
+msgstr "Repetisser la sélection"
 
 #: app/commands.c:419
 msgid "Shrink selection by:"
-msgstr ""
+msgstr "Repetisser la sélection de:"
 
 #: app/commands.c:1118
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -1030,9 +1027,8 @@ msgid "Current layer only"
 msgstr "Calque courant seulement"
 
 #: app/crop.c:411 app/crop.c:419
-#, fuzzy
 msgid "Crop: "
-msgstr "Compte: "
+msgstr "Découpé: "
 
 #: app/crop.c:805
 msgid "Crop: 0 x 0"
@@ -1196,9 +1192,8 @@ msgid "Move: 0, 0"
 msgstr "Déplacer: 0, 0"
 
 #: app/edit_selection.c:351 app/edit_selection.c:361
-#, fuzzy
 msgid "Move: "
-msgstr "Mode: "
+msgstr "Déplacer: "
 
 #: app/equalize.c:58
 msgid "Equalize does not operate on indexed drawables."
@@ -1267,9 +1262,8 @@ msgstr "Résolution"
 
 #: app/file_new_dialog.c:417 app/file_new_dialog.c:442
 #: app/preferences_dialog.c:1149 app/preferences_dialog.c:1779
-#, fuzzy
 msgid "pixels per "
-msgstr " pixels par  "
+msgstr "pixels par "
 
 #: app/file_new_dialog.c:436 app/flip_tool.c:73 app/preferences_dialog.c:1146
 #: app/preferences_dialog.c:1773
@@ -1326,6 +1320,7 @@ msgstr ""
 #, c-format
 msgid "attempt to register non-existant load handler \"%s\""
 msgstr ""
+"tentative d'enregistrer un gestionnaire de chargement non-existant \"%s\""
 
 #: app/fileops.c:484
 #, c-format
@@ -1336,6 +1331,7 @@ msgstr ""
 #, c-format
 msgid "attempt to register non-existant save handler \"%s\""
 msgstr ""
+"tentative d'enregistrer un gestionnaire d'enregistrement non-existant \"%s\""
 
 #: app/fileops.c:525 app/fileops.c:554
 msgid "Load Image"
@@ -2548,9 +2544,8 @@ msgid "Angle adjust:"
 msgstr ""
 
 #: app/ink.c:280
-#, fuzzy
 msgid "Type:"
-msgstr "Type de remplissage: "
+msgstr "Type:"
 
 #: app/ink.c:336
 msgid "Shape:"
@@ -2610,44 +2605,51 @@ msgstr ""
 
 #: app/install.c:159
 msgid "it under the terms of the GNU General Public License as published by\n"
-msgstr ""
+msgstr "sous les termes de la licence Publique GNU telle que publiée\n"
 
 #: app/install.c:161
 msgid "the Free Software Foundation; either version 2 of the License, or\n"
 msgstr ""
+"par la Free Software Foundation; soit la version 2 de cette Licence, ou\n"
 
 #: app/install.c:163
 msgid "(at your option) any later version.\n"
-msgstr ""
+msgstr "(selon votre choix) toute autre version ultérieure.\n"
 
 #: app/install.c:167
 msgid "This program is distributed in the hope that it will be useful,\n"
 msgstr ""
+"Ce programme est distribué car potentiellement utile, mais SANS AUCUNE "
+"GARANTIE,\n"
 
 #: app/install.c:169
 msgid "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-msgstr ""
+msgstr "ni explicite ni implicite, y compris les garanties de\n"
 
 #: app/install.c:171
 msgid "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-msgstr ""
+msgstr "commercialisation ou d'adaptation dans un but spécifique..\n"
 
 #: app/install.c:173
 msgid "See the GNU General Public License for more details.\n"
 msgstr ""
+"Reportez-vous à la Licence Publique Générale GNU pour plus de détails.\n"
 
 #: app/install.c:177
 msgid "You should have received a copy of the GNU General Public License\n"
-msgstr ""
+msgstr "Vous devez avoir reçu une copie de la Licence Publique Générale GNU\n"
 
 #: app/install.c:179
 msgid "along with this program; if not, write to the Free Software\n"
 msgstr ""
+"en même temps que ce programme ; si ce n'est pas le cas, écrivez à la\n"
 
 #: app/install.c:181
 msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 msgstr ""
+"Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA "
+"02111-1307, États-Unis.\n"
 
 #: app/install.c:186
 msgid ""
@@ -2740,23 +2742,24 @@ msgstr ""
 
 #: app/install.c:226 app/install.c:238 app/install.c:292 app/install.c:306
 msgid "\t\tchecks this subdirectory in addition to the system-\n"
-msgstr ""
+msgstr "\t\tvérifie ce répertoire en plus du répertoire système\n"
 
 #: app/install.c:228
 msgid "\t\twide gimp brushes installation when searching for\n"
-msgstr ""
+msgstr "\t\tpour les brosses lorsque gimp recherche ses\n"
 
 #: app/install.c:230
 msgid "\t\tbrushes.\n"
-msgstr ""
+msgstr "\t\tbrosses.\n"
 
 #: app/install.c:232
 msgid "gradients\n"
-msgstr ""
+msgstr "dégradées\n"
 
 #: app/install.c:236
 msgid "\t\tuser defined gradients.  The default gimprc file\n"
 msgstr ""
+"\t\tdégradés définies par l'utilisateur. Le fichier gimprc par défaut\n"
 
 #: app/install.c:240
 msgid "\t\twide gimp gradients installation when searching for\n"
@@ -2764,27 +2767,29 @@ msgstr ""
 
 #: app/install.c:242
 msgid "\t\tgradients.\n"
-msgstr ""
+msgstr "\t\tdégradées.\n"
 
 #: app/install.c:244
 msgid "gfig\n"
-msgstr ""
+msgstr "gfig\n"
 
 #: app/install.c:248
 msgid "\t\tuser defined figures to be used by the gfig plug-in.\n"
 msgstr ""
+"\t\tfigures définies par l'utilisateur pour être utilisées par le plug-in "
+"gfig.\n"
 
 #: app/install.c:250 app/install.c:262
 msgid "\t\tThe default gimprc file checks this subdirectory in\n"
-msgstr ""
+msgstr "\t\tLe fichier gimprc par défaut vérifie dans ce sous-répertoire\n"
 
 #: app/install.c:252
 msgid "\t\taddition to the systemwide gimp gfig installation\n"
-msgstr ""
+msgstr "\t\ten plus du répertoire système gfig\n"
 
 #: app/install.c:254
 msgid "\t\twhen searching for gfig figures.\n"
-msgstr ""
+msgstr "\t\tlorsqu'il recherche des figures gfig.\n"
 
 #: app/install.c:256
 msgid "gflares\n"
@@ -2804,43 +2809,45 @@ msgstr ""
 
 #: app/install.c:268
 msgid "palettes\n"
-msgstr ""
+msgstr "palettes\n"
 
 #: app/install.c:272
 msgid "\t\tuser defined palettes.  The default gimprc file\n"
 msgstr ""
+"\t\tpalettes définies par l'utilisateur. Le fichier gimprc par défaut\n"
 
 #: app/install.c:274
 msgid "\t\tchecks only this subdirectory (not the system-wide\n"
-msgstr ""
+msgstr "\t\tvérifie dans ce sous-répertoire (mais pas le répertoire\n"
 
 #: app/install.c:276
 msgid "\t\tinstallation) when searching for palettes.  During\n"
 msgstr ""
+"\t\td'installation commun au système) lorsqu'il recherce les palettes\n"
 
 #: app/install.c:278
 msgid "\t\tinstallation, the system palettes will be copied\n"
-msgstr ""
+msgstr "\t\tPendant l'installation, les palettes systèmes y\n"
 
 #: app/install.c:280
 msgid "\t\there.  This is done to allow modifications made to\n"
-msgstr ""
+msgstr "\t\tseront copiées; Cela pour permettre aux modifications\n"
 
 #: app/install.c:282
 msgid "\t\tpalettes during GIMP execution to persist across\n"
-msgstr ""
+msgstr "\t\tfaites aux palettes durant les sessions GIMP de persister\n"
 
 #: app/install.c:284
 msgid "\t\tsessions.\n"
-msgstr ""
+msgstr "\t\td'une session à une autre.\n"
 
 #: app/install.c:286
 msgid "patterns\n"
-msgstr ""
+msgstr "motifs\n"
 
 #: app/install.c:290
 msgid "\t\tuser defined patterns.  The default gimprc file\n"
-msgstr ""
+msgstr "\t\tmotifs définis par l'utilisateur. Le fichier gimprc par défaut\n"
 
 #: app/install.c:294
 msgid "\t\twide gimp patterns installation when searching for\n"
@@ -2848,19 +2855,19 @@ msgstr ""
 
 #: app/install.c:296
 msgid "\t\tpatterns.\n"
-msgstr ""
+msgstr "\t\tpatterns.\n"
 
 #: app/install.c:298
 msgid "plug-ins\n"
-msgstr ""
+msgstr "plugs-ins\n"
 
 #: app/install.c:302
 msgid "\t\tuser created, temporary, or otherwise non-system-\n"
-msgstr ""
+msgstr "\t\tmodules crées par l'utilisateurs, temporaires\n"
 
 #: app/install.c:304
 msgid "\t\tsupported plug-ins.  The default gimprc file\n"
-msgstr ""
+msgstr "\t\tou non-systèmes. Le fichier gimprc par défaut\n"
 
 #: app/install.c:308
 msgid "\t\twide GIMP plug-in directories when searching for\n"
@@ -2871,9 +2878,8 @@ msgid "\t\tplug-ins.\n"
 msgstr ""
 
 #: app/install.c:312
-#, fuzzy
 msgid "modules\n"
-msgstr "chargement du module: \"%s\"\n"
+msgstr "modules\n"
 
 #: app/install.c:314
 #, fuzzy
@@ -3018,7 +3024,7 @@ msgstr "Procédures GImage"
 
 #: app/internal_procs.c:204
 msgid "GImage mask procedures"
-msgstr ""
+msgstr "Procédures masques GImage"
 
 #: app/internal_procs.c:226
 msgid "Layer procedures"
@@ -3031,7 +3037,7 @@ msgstr "Procédure GIMP interne"
 #: app/internal_procs.c:280
 #, fuzzy
 msgid "Drawable procedures"
-msgstr "Procédure GIMP interne"
+msgstr "Procédures Drawable"
 
 #: app/internal_procs.c:310
 msgid "Floating selections"
@@ -3048,20 +3054,20 @@ msgstr "Palette"
 #: app/internal_procs.c:340
 #, fuzzy
 msgid "Interface procedures"
-msgstr "Procédure GIMP interne"
+msgstr "Procédures Interface"
 
 #: app/internal_procs.c:376
 #, fuzzy
 msgid "Image procedures"
-msgstr "Image source"
+msgstr "Procédures images"
 
 #: app/internal_procs.c:399
 msgid "Channel ops"
-msgstr ""
+msgstr "Opérations canal"
 
 #: app/internal_procs.c:406
 msgid "gimprc ops"
-msgstr ""
+msgstr "Opérations gimprc"
 
 #: app/internal_procs.c:411
 msgid "parasites"
@@ -3073,11 +3079,11 @@ msgstr "Base de données procédurales"
 
 #: app/invert.c:45
 msgid "Invert does not operate on indexed drawables."
-msgstr ""
+msgstr "L'Inversion n'opére pas sur les images indexées."
 
 #: app/invert.c:55
 msgid "Invert operation failed."
-msgstr ""
+msgstr "Echec de l'opération d'inversion."
 
 #. the main label
 #: app/iscissors.c:320 app/rect_select.c:129
@@ -3100,9 +3106,8 @@ msgid "Feather Radius: "
 msgstr "Rayon:"
 
 #: app/iscissors.c:369
-#, fuzzy
 msgid "Curve Resolution: "
-msgstr "Résolution"
+msgstr "Résolution de la Courbe: "
 
 #: app/iscissors.c:389
 msgid "Edge Detect Threshold: "
@@ -3119,27 +3124,27 @@ msgstr "Convertir en courbe de Bezier"
 
 #: app/iscissors.c:957
 msgid "Unable to reallocate segment array in iscissors."
-msgstr ""
+msgstr "Impossible de reallouer le tableau de segments dans iscissors."
 
 #: app/iscissors.c:1000
 msgid "Unable to reallocate points array in iscissors."
-msgstr ""
+msgstr "Impossible de reallouer le tableau de points dans iscissors."
 
 #: app/iscissors.c:1804
 msgid "Boundary contains < 4 points!  Cannot bezierify."
-msgstr ""
+msgstr "La bordure contiens < 4 points! Impossible de Bézier-ifier."
 
 #: app/layer.c:246
 msgid "Zero width or height layers not allowed."
-msgstr ""
+msgstr "Les calques de hauteur ou largeur nulle ne sont pas authorisées."
 
 #: app/layer.c:352
 msgid "layer_copy: could not allocate new layer"
-msgstr ""
+msgstr "layer_copy: impossible d'allouer le nouveau calque"
 
 #: app/layer.c:429
 msgid "layer_from_tiles: could not allocate new layer"
-msgstr ""
+msgstr "layer_from_tiles: impossible d'allouer le nouveau calque"
 
 #: app/layer.c:484
 #, c-format
@@ -3185,11 +3190,11 @@ msgstr "Redimensionner Calque"
 
 #: app/layers_dialog.c:241
 msgid "Add Layer Mask"
-msgstr ""
+msgstr "Ajouter Masque de Calque"
 
 #: app/layers_dialog.c:243
 msgid "Apply Layer Mask"
-msgstr ""
+msgstr "Appliquer Masque de Calque"
 
 #: app/layers_dialog.c:245 app/layers_dialog.c:295
 msgid "Anchor Layer"
@@ -3204,19 +3209,16 @@ msgid "Merge Down"
 msgstr ""
 
 #: app/layers_dialog.c:251
-#, fuzzy
 msgid "Flatten Image"
-msgstr "Enregistrer image"
+msgstr "Applatir l'Image"
 
 #: app/layers_dialog.c:253
-#, fuzzy
 msgid "Alpha To Selection"
-msgstr "Sélection de la brosse"
+msgstr "Alpha Vers Sélection"
 
 #: app/layers_dialog.c:255
-#, fuzzy
 msgid "Mask To Selection"
-msgstr "Sélection"
+msgstr "Masque Vers Sélection"
 
 #: app/layers_dialog.c:257
 msgid "Add Alpha Channel"
@@ -3224,11 +3226,11 @@ msgstr "Ajouter Canal Alpha"
 
 #: app/layers_dialog.c:259
 msgid "Layer to Top"
-msgstr ""
+msgstr "Calque en Haut"
 
 #: app/layers_dialog.c:261
 msgid "Layer to Bottom"
-msgstr ""
+msgstr "Calque en Bas"
 
 #: app/layers_dialog.c:321
 msgid "Layers & Channels"
@@ -3243,17 +3245,16 @@ msgid "Channels"
 msgstr "Canaux"
 
 #: app/layers_dialog.c:377
-#, fuzzy
 msgid "Paths"
-msgstr "Motifs"
+msgstr "Chemins"
 
 #: app/layers_dialog.c:709
 msgid "Keep Trans."
-msgstr ""
+msgstr "Garder Trans."
 
 #: app/layers_dialog.c:882
 msgid "layersD->layer_widgets not empty!"
-msgstr ""
+msgstr "layersD->layer_widgets non vide!"
 
 #: app/layers_dialog.c:1454
 msgid "Unknown layer mode"
@@ -3265,12 +3266,11 @@ msgstr "Sélection Flottante"
 
 #: app/layers_dialog.c:3078
 msgid "new_layer_query_ok_callback: could not allocate new layer"
-msgstr ""
+msgstr "new_layer_query_ok_callback: impossible d'allouer le nouveau calque"
 
 #: app/layers_dialog.c:3190
-#, fuzzy
 msgid "New Layer Options"
-msgstr "Options d'enregistrement"
+msgstr "Options Nouveau Calque"
 
 #. the name entry hbox, label and entry
 #: app/layers_dialog.c:3207
@@ -3328,9 +3328,8 @@ msgid "Discard"
 msgstr "Jeter"
 
 #: app/layers_dialog.c:3656
-#, fuzzy
 msgid "Layer Mask Options"
-msgstr "Options d'enregistrement"
+msgstr "Options Masque de Calque"
 
 #. the name entry hbox, label and entry
 #: app/layers_dialog.c:3671
@@ -3354,9 +3353,8 @@ msgid "Clipped to bottom layer"
 msgstr ""
 
 #: app/layers_dialog.c:3994
-#, fuzzy
 msgid "Layer Merge Options"
-msgstr "Options de la palette"
+msgstr "Options Fusion de Calque"
 
 #: app/layers_dialog.c:4009
 msgid "Final, merged layer should be:"
@@ -3375,9 +3373,8 @@ msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
 #: app/levels.c:411
-#, fuzzy
 msgid "Auto Levels"
-msgstr "Niveaux"
+msgstr "Niveaux Auto"
 
 #: app/levels.c:442 app/tools.c:579
 msgid "Levels"
@@ -3401,22 +3398,21 @@ msgstr ""
 
 #. the main label
 #: app/magnify.c:133
-#, fuzzy
 msgid "Magnify Options"
-msgstr "Options d'ouverture"
+msgstr "Options d'Agrandissement"
 
 #: app/magnify.c:141
 msgid "Allow Window Resizing"
-msgstr ""
+msgstr "Authoriser le Redimensionnement de Fenêtre"
 
 #: app/main.c:280
 msgid "GIMP version"
 msgstr "Version GIMP"
 
 #: app/main.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Usage: %s [option ...] [fichiers ...]\n"
+msgstr "Usage: %s [option ...] [fichiers ...]\n"
 
 #: app/main.c:285
 msgid "Valid options are:\n"
@@ -3547,9 +3543,8 @@ msgid "unknown signal"
 msgstr "signal inconnu"
 
 #: app/menus.c:43
-#, fuzzy
 msgid "/File/MRU00 "
-msgstr "/Fichier/MRU%02d"
+msgstr "/Fichier/MRU00 "
 
 #: app/menus.c:53 app/menus.c:80
 msgid "/File/New"
@@ -3616,9 +3611,8 @@ msgid "/File/Dialogs/Error Console..."
 msgstr "/Fichier/Dialogues/Console d'Erreur..."
 
 #: app/menus.c:69
-#, fuzzy
 msgid "/File/Dialogs/Module Browser..."
-msgstr "/Fichier/Dialogues/Brosses..."
+msgstr "/Fichier/Dialogues/Navigateur de Modules..."
 
 #: app/menus.c:76 app/menus.c:89
 msgid "/File/Quit"
@@ -3641,9 +3635,8 @@ msgid "/File/Close"
 msgstr "/Fichier/Fermer"
 
 #: app/menus.c:90
-#, fuzzy
 msgid "/File/---moved"
-msgstr "/Fichier/---"
+msgstr "/Fichier/---déplacé"
 
 #: app/menus.c:92
 msgid "/Edit/Cut"
@@ -3947,9 +3940,8 @@ msgid "/Tools/Default Colors"
 msgstr "/Outils/Couleurs par défaut"
 
 #: app/menus.c:200
-#, fuzzy
 msgid "/Tools/Swap Colors"
-msgstr "/Outils/Couleurs par défaut"
+msgstr "/Outils/Échanger les Couleurs"
 
 #: app/menus.c:201
 msgid "/Tools/---"
@@ -4090,37 +4082,32 @@ msgid "Black"
 msgstr "Noir"
 
 #: app/palette.c:1351
-#, fuzzy
 msgid "New Palette"
-msgstr "Nouvelle Image"
+msgstr "Nouvelle Palette"
 
 #: app/palette.c:1351
-#, fuzzy
 msgid "Enter a name for new palette"
-msgstr "Entrez un nom pour ce tampon"
+msgstr "Entrez un nom pour la nouvelle palette"
 
 #: app/palette.c:1718 app/palette.c:1737 app/palette.c:2465
 msgid "New"
 msgstr "Nouveau"
 
 #: app/palette.c:2195 app/palette.c:2360
-#, fuzzy
 msgid "Undefined"
-msgstr "Indéxée"
+msgstr "Non défini"
 
 #: app/palette.c:2291
-#, fuzzy
 msgid "Color Palette Edit"
-msgstr "Balance de couleurs"
+msgstr "Edition de la Palette de Couleurs"
 
 #: app/palette.c:2295
-#, fuzzy
 msgid "Color Palette"
-msgstr "Balance de couleurs"
+msgstr "Palette de Couleurs"
 
 #: app/palette.c:2427 app/palette_select.c:277
 msgid "Ncols"
-msgstr ""
+msgstr "Ncols"
 
 #: app/palette.c:2450
 msgid "Palette Ops"
@@ -4159,9 +4146,8 @@ msgid "Name:"
 msgstr "Nom:"
 
 #: app/palette.c:3088
-#, fuzzy
 msgid "Source:"
-msgstr "Source"
+msgstr "Source:"
 
 #. gtk_widget_set_usize (entry1, 100, -1);
 #: app/palette.c:3116
@@ -4169,28 +4155,24 @@ msgid "new_import"
 msgstr "new_import"
 
 #: app/palette.c:3156
-#, fuzzy
 msgid "select"
-msgstr "Effacer"
+msgstr "selection"
 
 #: app/palette.c:3170
 msgid "import"
 msgstr "import"
 
 #: app/palette.c:3177
-#, fuzzy
 msgid "close"
-msgstr "Fermer"
+msgstr "fermer"
 
 #: app/palette_select.c:307
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Sélection"
+msgstr "Sélection de Palette"
 
 #: app/pattern_select.c:112
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Sélection"
+msgstr "Sélection de Motif"
 
 #: app/pattern_select.c:255
 msgid "failed to run pattern callback function"
@@ -4270,9 +4252,9 @@ msgid "unable to open pipe"
 msgstr "impossible d'ouvrir un tube"
 
 #: app/plug_in.c:1151
-#, fuzzy, c-format
+#, c-format
 msgid "unable to run plug-in: %s"
-msgstr "impossible d'exécuter le plug-in: %s\n"
+msgstr "impossible d'exécuter le plug-in: %s"
 
 #: app/plug_in.c:1518
 msgid "<Image>/Filters/Repeat last"
@@ -4551,9 +4533,8 @@ msgid "Default image type"
 msgstr "Type d'imgae par défaut"
 
 #: app/preferences_dialog.c:1206
-#, fuzzy
 msgid "File"
-msgstr "Type de Remplissage"
+msgstr "Fichier"
 
 #. Display page
 #: app/preferences_dialog.c:1210
@@ -4635,9 +4616,8 @@ msgid "Show zoom percentage"
 msgstr ""
 
 #: app/preferences_dialog.c:1416
-#, fuzzy
 msgid "Show zoom ratio"
-msgstr "Afficher les bulles d'aide"
+msgstr "Afficher le taux de zoom"
 
 #: app/preferences_dialog.c:1421
 msgid "Show reversed zoom ratio"
@@ -4822,9 +4802,8 @@ msgid "Selection: REPLACE"
 msgstr "Sélection: REMPLACER"
 
 #: app/rect_select.c:599 app/rect_select.c:606
-#, fuzzy
 msgid "Selection: "
-msgstr "Sélection"
+msgstr "Sélection: "
 
 #: app/resize.c:140
 msgid "Image Scale"
@@ -5108,13 +5087,12 @@ msgid "GIMP Tip of the day"
 msgstr "Conseil du jour GIMP"
 
 #: app/tips_dialog.c:122
-#, fuzzy
 msgid "Previous Tip"
-msgstr "Conseil précédent"
+msgstr "Conseil Précédent"
 
 #: app/tips_dialog.c:130
 msgid "Next Tip"
-msgstr "Conseil suivant"
+msgstr "Conseil Suivant"
 
 #: app/tips_dialog.c:150
 msgid "Show tip next time"
@@ -5688,219 +5666,3 @@ msgstr ") ou \\) sans correspondance"
 msgid "No previous regular expression"
 msgstr "Aucune expression régulière antèrieure"
 
-#~ msgid "Named Bezier Buffer"
-#~ msgstr "Tampon de Bézier Nommé"
-
-#~ msgid "Edit Curve"
-#~ msgstr "Editer la courbe"
-
-#~ msgid "Add Point"
-#~ msgstr "Ajouter un point"
-
-#~ msgid "Remove Point"
-#~ msgstr "Enlever un point"
-
-#~ msgid "Load"
-#~ msgstr "Charger"
-
-#~ msgid "Paste Bezier Named Buffer"
-#~ msgstr "Coller Tampon de Bézier Nommé"
-
-#~ msgid "Select a buffer to operate:"
-#~ msgstr "Sélectionnez un tampon sur lequel oppérer:"
-
-#~ msgid "Blend: %d, %d"
-#~ msgstr "Mélange: %d, %d"
-
-#~ msgid "Move: %d, %d"
-#~ msgstr "Déplacer: %d, %d"
-
-#~ msgid "inches"
-#~ msgstr "pouces"
-
-#~ msgid "cm"
-#~ msgstr "cm"
-
-#~ msgid "inch"
-#~ msgstr "pouce"
-
-#~ msgid "warning: no home directory."
-#~ msgstr "avertissement: pas de répertoire personnel."
-
-#~ msgid "Can't open gimprc; permission problems"
-#~ msgstr "Impossible d'ouvrir gimprc; problème de permissions"
-
-#~ msgid "Can't open gimprc; file does not exist"
-#~ msgstr "Impossible d'ouvrir gimprc; le fichier n'existe pas"
-
-#~ msgid "Can't open gimprc, reason unknown"
-#~ msgstr "Impossible d'ouvrir gimprc; raison inconnue"
-
-#~ msgid "Can't rename gimprc to gimprc.old; permission problems"
-#~ msgstr "Impossible de renommer gimprc en gimprc.old; problème de permission"
-
-#~ msgid "Can't rename gimprc to gimprc.old; gimprc.old is a directory"
-#~ msgstr ""
-#~ "Impossible de renommer gimprc en gimprc.old; gimprc.old est un répertoire"
-
-#~ msgid "Can't rename gimprc to gimprc.old, reason unknown"
-#~ msgstr "Impossible de renommer gimprc en gimprc.old; raison inconnue"
-
-#~ msgid "Can't write to gimprc; permission problems"
-#~ msgstr "Impossible d'écrire dans gimprc; problème de permission"
-
-#~ msgid "Can't write to gimprc, reason unknown"
-#~ msgstr "Impossible d'écrire dans gimprc; raison inconnue"
-
-#~ msgid "No home directory--skipping GIMP user installation."
-#~ msgstr ""
-#~ "Pas de répertoire personnel--installation personnelle de GIMP non effectuée"
-
-#~ msgid "refresh"
-#~ msgstr "rafraichir"
-
-#~ msgid " by "
-#~ msgstr " par "
-
-#~ msgid "Selection: %d x %d"
-#~ msgstr "Sélection: %d x %d"
-
-#~ msgid "/Filters/"
-#~ msgstr "/Filtres/"
-
-#~ msgid "module load error: %s: %s"
-#~ msgstr "erreur de chargement du module: %s: %s"
-
-#~ msgid "%s: module_init() symbol not found"
-#~ msgstr "%s: symbol module_init() non trouvé"
-
-#~ msgid "Interactive, non-interactive"
-#~ msgstr "Interactif, non-interactif"
-
-#~ msgid "Input image (unused)"
-#~ msgstr "Image d'entrée (inutilisée)"
-
-#~ msgid "Left or Right: 0 or 1"
-#~ msgstr "Gauche ou droite: 0 ou 1"
-
-#~ msgid "Nigel Wetten"
-#~ msgstr "Nigel Wetten"
-
-#~ msgid "1998"
-#~ msgstr "1998"
-
-#, fuzzy
-#~ msgid "Rendering Wind..."
-#~ msgstr "Mélange en cours..."
-
-#, fuzzy
-#~ msgid "Rendering Blast..."
-#~ msgstr "Mélange en cours..."
-
-#~ msgid "Ooops!"
-#~ msgstr "Ooops!"
-
-#~ msgid "Style"
-#~ msgstr "Style"
-
-#~ msgid "Direction"
-#~ msgstr "Direction"
-
-#~ msgid "Left"
-#~ msgstr "Gauche"
-
-#~ msgid "Right"
-#~ msgstr "Droite"
-
-#~ msgid "Edge affected"
-#~ msgstr "Coté affecté"
-
-#, fuzzy
-#~ msgid "Leading"
-#~ msgstr "lecture de %s\n"
-
-#, fuzzy
-#~ msgid "Trailing"
-#~ msgstr "Traditionnel"
-
-#~ msgid "Both"
-#~ msgstr "Les Deux"
-
-#~ msgid "\tDeletion finished.\n"
-#~ msgstr "\tEffacement terminé.\n"
-
-#~ msgid "Mode :"
-#~ msgstr "Mode :"
-
-#~ msgid "the image"
-#~ msgstr "l'image"
-
-#~ msgid "Convert specified image to RGB color"
-#~ msgstr "Convertir l'image spécifiée aux couleurs RVB"
-
-#~ msgid "the width of the ellipse: width > 0"
-#~ msgstr "la largeur de l'ellipse: largeur > 0"
-
-#~ msgid "the height of the ellipse: height > 0"
-#~ msgstr "la hauteur de l'ellipse: hauteur > 0"
-
-#~ msgid "Interactive, non-interactive."
-#~ msgstr "Interactif, non-interactif."
-
-#~ msgid "The name of the file to load."
-#~ msgstr "Le nom du fichier à charger."
-
-#~ msgid "The name entered."
-#~ msgstr "Le nom entré."
-
-#~ msgid "Loads a file by extension"
-#~ msgstr "Charger un fichier par extension"
-
-#~ msgid "The temp name."
-#~ msgstr "Le nom temporaire."
-
-#~ msgid " exists, overwrite?"
-#~ msgstr " existe, écraser?"
-
-#, fuzzy
-#~ msgid "Delete Palette"
-#~ msgstr "Effacer"
-
-#~ msgid "the x coordinate in the source image"
-#~ msgstr "la coordonnée x dans l'image source"
-
-#~ msgid "the y coordinate in the source image"
-#~ msgstr "la coordonnée y dans l'image source"
-
-#~ msgid "Message to use in the progress dialog."
-#~ msgstr "Message à utiliser dans les dialogues d'avancement."
-
-#~ msgid "Width:"
-#~ msgstr "Largeur:"
-
-#~ msgid "Height:"
-#~ msgstr "Hauteur:"
-
-#~ msgid " Width: "
-#~ msgstr " Largeur: "
-
-#~ msgid " Height: "
-#~ msgstr "Hauteur: "
-
-#~ msgid "the width of the rectangle: width > 0"
-#~ msgstr "la largeur du rectangle: largeur > 0"
-
-#~ msgid "the height of the rectangle: height > 0"
-#~ msgstr "la hauteur du rectangle: hauteur > 0"
-
-#~ msgid "Create a rectangular selection over the specified image"
-#~ msgstr "Créée une sélection rectangulaire autour de l'image spécifiée"
-
-#~ msgid "The name of the file to load"
-#~ msgstr "Le nom du fichier à charger"
-
-#~ msgid "loads file saved in the .xcf file format"
-#~ msgstr "charge un fichier enregistré au format .xcf"
-
-#~ msgid "saves file in the .xcf file format"
-#~ msgstr "enregistre le fichier au format .xcf"
