@@ -1,3 +1,8 @@
+Mon Oct 15 10:52:22 PDT 2001 Manish Singh <yosh@gimp.org>
+
+	* configure.in: bumped version to 1.2.3, correct library ages (back
+	to 1.2.1 compatibility), added comment regarding these
+
 2001-10-15  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: 
