@@ -149,10 +149,6 @@ tools_select (ToolType type)
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
 
-  /* Update the device-information dialog */
-  
-  device_status_update (current_device);
-
   /*  Set the paused count variable to 0
    */
   active_tool->paused_count = 0;
@@ -160,6 +156,10 @@ tools_select (ToolType type)
   active_tool->drawable = NULL;
   active_tool->ID = global_tool_ID++;
   active_tool_type = active_tool->type;
+
+  /* Update the device-information dialog */
+  
+  device_status_update (current_device);
 }
 
 void
