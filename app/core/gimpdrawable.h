@@ -154,11 +154,13 @@ gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);
+GimpImageType   gimp_drawable_type_without_alpha (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
+gint            gimp_drawable_bytes_without_alpha(const GimpDrawable *drawable);
 
 TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 

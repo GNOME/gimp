@@ -934,6 +934,14 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 }
 
+GimpImageType
+gimp_drawable_type_without_alpha (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  return GIMP_IMAGE_TYPE_WITHOUT_ALPHA (gimp_drawable_type (drawable));
+}
+
 gboolean
 gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
@@ -974,6 +982,18 @@ gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
   type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
+
+  return GIMP_IMAGE_TYPE_BYTES (type);
+}
+
+gint
+gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
+{
+  GimpImageType type;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
 }

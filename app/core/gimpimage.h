@@ -43,6 +43,15 @@
                                            ((t) == GIMP_INDEXED_IMAGE ||     \
                                             (t) == GIMP_INDEXEDA_IMAGE) ?    \
                                            GIMP_INDEXEDA_IMAGE : -1)
+#define GIMP_IMAGE_TYPE_WITHOUT_ALPHA(t)  (((t) == GIMP_RGB_IMAGE ||         \
+                                            (t) == GIMP_RGBA_IMAGE) ?        \
+                                           GIMP_RGB_IMAGE :                  \
+                                           ((t) == GIMP_GRAY_IMAGE ||        \
+                                            (t) == GIMP_GRAYA_IMAGE) ?       \
+                                           GIMP_GRAY_IMAGE :                 \
+                                           ((t) == GIMP_INDEXED_IMAGE ||     \
+                                            (t) == GIMP_INDEXEDA_IMAGE) ?    \
+                                           GIMP_INDEXED_IMAGE : -1)
 #define GIMP_IMAGE_TYPE_BYTES(t)           ((t) == GIMP_RGBA_IMAGE     ? 4 : \
                                             (t) == GIMP_RGB_IMAGE      ? 3 : \
                                             (t) == GIMP_GRAYA_IMAGE    ? 2 : \
@@ -213,7 +222,7 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   gint                width,
                                                   gint                height,
                                                   GimpImageBaseType   base_type);
- 
+
 GimpImageBaseType  gimp_image_base_type            (const GimpImage  *gimage);
 GimpImageType	   gimp_image_base_type_with_alpha (const GimpImage  *gimage);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,

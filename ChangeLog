@@ -1,5 +1,14 @@
 2004-01-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.h: added GIMP_IMAGE_TYPE_WITHOUT_ALPHA()
+	macro as counterpart to GIMP_IMAGE_TYPE_WITH_ALPHA().
+
+	* app/core/gimpdrawable.[ch]: added
+	gimp_drawable_type_without_alpha() and
+	gimp_drawable_bytes_without_alpha() convenience functions.
+
+2004-01-14  Michael Natterer  <mitch@gimp.org>
+
 	Some code review:
 
 	* app/core/gimpimage.c: named the gint paramater in all
